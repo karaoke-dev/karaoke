@@ -1,15 +1,15 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Game.Rulesets.KaraokeRuleset.Objects;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 
-namespace osu.Game.Rulesets.KaraokeRuleset.Scoring
+namespace osu.Game.Rulesets.Karaoke.Scoring
 {
-    public class KaraokeRulesetScoreProcessor : ScoreProcessor<KaraokeRulesetHitObject>
+    public class KaraokeScoreProcessor : ScoreProcessor<KaraokeHitObject>
     {
-        public KaraokeRulesetScoreProcessor(DrawableRuleset<KaraokeRulesetHitObject> ruleset)
+        public KaraokeScoreProcessor(DrawableRuleset<KaraokeHitObject> ruleset)
             : base(ruleset)
         {
         }

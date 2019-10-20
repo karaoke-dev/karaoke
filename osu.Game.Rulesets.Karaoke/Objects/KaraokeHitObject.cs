@@ -6,9 +6,9 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Types;
 using osuTK;
 
-namespace osu.Game.Rulesets.KaraokeRuleset.Objects
+namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class KaraokeRulesetHitObject : HitObject, IHasPosition
+    public class KaraokeHitObject : HitObject, IHasPosition
     {
         public override Judgement CreateJudgement() => new Judgement();
 

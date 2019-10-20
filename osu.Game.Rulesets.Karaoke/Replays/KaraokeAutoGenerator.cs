@@ -4,19 +4,19 @@
 using System.Collections.Generic;
 using osu.Game.Beatmaps;
 using osu.Game.Replays;
-using osu.Game.Rulesets.KaraokeRuleset.Objects;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Replays;
 
-namespace osu.Game.Rulesets.KaraokeRuleset.Replays
+namespace osu.Game.Rulesets.Karaoke.Replays
 {
-    public class KaraokeRulesetAutoGenerator : AutoGenerator
+    public class KaraokeAutoGenerator : AutoGenerator
     {
         protected Replay Replay;
         protected List<ReplayFrame> Frames => Replay.Frames;
 
-        public new Beatmap<KaraokeRulesetHitObject> Beatmap => (Beatmap<KaraokeRulesetHitObject>)base.Beatmap;
+        public new Beatmap<KaraokeHitObject> Beatmap => (Beatmap<KaraokeHitObject>)base.Beatmap;
 
-        public KaraokeRulesetAutoGenerator(IBeatmap beatmap)
+        public KaraokeAutoGenerator(IBeatmap beatmap)
             : base(beatmap)
         {
             Replay = new Replay();
@@ -24,11 +24,11 @@ namespace osu.Game.Rulesets.KaraokeRuleset.Replays
 
         public override Replay Generate()
         {
-            Frames.Add(new KaraokeRulesetReplayFrame());
+            Frames.Add(new KaraokeReplayFrame());
 
-            foreach (KaraokeRulesetHitObject hitObject in Beatmap.HitObjects)
+            foreach (KaraokeHitObject hitObject in Beatmap.HitObjects)
             {
-                Frames.Add(new KaraokeRulesetReplayFrame
+                Frames.Add(new KaraokeReplayFrame
                 {
                     Time = hitObject.StartTime,
                     Position = hitObject.Position,

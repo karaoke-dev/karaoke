@@ -6,7 +6,7 @@ using osu.Framework;
 using osu.Framework.Platform;
 using osu.Game.Tests;
 
-namespace osu.Game.Rulesets.KaraokeRuleset.Tests
+namespace osu.Game.Rulesets.Karaoke.Tests
 {
     public static class VisualTestRunner
     {
