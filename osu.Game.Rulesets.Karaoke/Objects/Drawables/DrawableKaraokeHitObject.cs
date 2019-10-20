@@ -1,49 +1,34 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Graphics;
+using osu.Game.Rulesets.Judgements;
+using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Objects.Drawables;
-using osu.Game.Rulesets.Scoring;
-using osuTK;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
     public class DrawableKaraokeHitObject : DrawableHitObject<KaraokeHitObject>
     {
-        public DrawableKaraokeHitObject(KaraokeHitObject hitObject)
+        protected DrawableKaraokeHitObject(KaraokeHitObject hitObject)
             : base(hitObject)
         {
-            Size = new Vector2(40);
-            Origin = Anchor.Centre;
-
-            Position = hitObject.Position;
-
-            // todo: add visuals.
         }
 
-        protected override void CheckForResult(bool userTriggered, double timeOffset)
-        {
-            if (timeOffset >= 0)
-                // todo: implement judgement logic
-                ApplyResult(r => r.Type = HitResult.Perfect);
-        }
+        protected sealed override double InitialLifetimeOffset => HitObject.TimePreempt;
 
         protected override void UpdateStateTransforms(ArmedState state)
         {
-            const double duration = 1000;
+            base.UpdateStateTransforms(state);
 
             switch (state)
             {
-                case ArmedState.Hit:
-                    this.FadeOut(duration, Easing.OutQuint).Expire();
-                    break;
-
-                case ArmedState.Miss:
-                    this.FadeColour(Color4.Red, duration);
-                    this.FadeOut(duration, Easing.InQuint).Expire();
+                case ArmedState.Idle:
+                    // Manually set to reduce the number of future alive objects to a bare minimum.
+                    LifetimeStart = HitObject.StartTime - HitObject.TimePreempt;
                     break;
             }
         }
+
+        protected override JudgementResult CreateResult(Judgement judgement) => new KaraokeJudgementResult(HitObject, judgement);
     }
 }

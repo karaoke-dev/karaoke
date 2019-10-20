@@ -6,19 +6,12 @@ using System.Collections.Generic;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
-using osu.Game.Rulesets.Objects.Types;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
     public class KaraokeBeatmapConverter : BeatmapConverter<KaraokeHitObject>
     {
-        protected override IEnumerable<Type> ValidConversionTypes { get; } = new[]
-        {
-            // todo: Populate with conversion types that should be supported other than position (ie. typeof(IHasCurve))
-            // https://github.com/ppy/osu/tree/master/osu.Game/Rulesets/Objects/Types
-            typeof(IHasPosition)
-        };
+        protected override IEnumerable<Type> ValidConversionTypes => new[] { typeof(KaraokeHitObject) };
 
         public KaraokeBeatmapConverter(IBeatmap beatmap)
             : base(beatmap)
@@ -27,12 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         protected override IEnumerable<KaraokeHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap)
         {
-            yield return new KaraokeHitObject
-            {
-                Samples = original.Samples,
-                StartTime = original.StartTime,
-                Position = (original as IHasPosition)?.Position ?? Vector2.Zero,
-            };
+            // Because karaoke does not support any ruleset, so should not goes to here
+            yield return new LyricLine();
         }
     }
 }

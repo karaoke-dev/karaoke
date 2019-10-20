@@ -1,39 +1,38 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
-using osu.Framework.Allocation;
 using osu.Framework.Input;
 using osu.Game.Beatmaps;
-using osu.Game.Input.Handlers;
-using osu.Game.Replays;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Replays;
-using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects.Drawables;
-using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
+using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    [Cached]
     public class DrawableKaraokeRuleset : DrawableRuleset<KaraokeHitObject>
     {
-        public DrawableKaraokeRuleset(KaraokeRuleset ruleset, IWorkingBeatmap beatmap, IReadOnlyList<Mod> mods)
+        public DrawableKaraokeRuleset(Ruleset ruleset, IWorkingBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)
         {
         }
 
-        public override ScoreProcessor CreateScoreProcessor() => new KaraokeScoreProcessor(this);
-
         protected override Playfield CreatePlayfield() => new KaraokePlayfield();
 
-        protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new KaraokeFramedReplayInputHandler(replay);
+        protected override PassThroughInputManager CreateInputManager() =>
+            new KaraokeInputManager(Ruleset.RulesetInfo);
 
-        public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h) => new DrawableKaraokeHitObject(h);
+        public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h)
+        {
+            switch (h)
+            {
+                case LyricLine lyric:
+                    return new DrawableLyricLine(lyric);
+            }
 
-        protected override PassThroughInputManager CreateInputManager() => new KaraokeInputManager(Ruleset?.RulesetInfo);
+            return null;
+        }
     }
 }
