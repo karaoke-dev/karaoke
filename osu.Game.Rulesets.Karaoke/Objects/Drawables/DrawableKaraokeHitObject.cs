@@ -7,11 +7,11 @@ using osu.Game.Rulesets.Scoring;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.KaraokeRuleset.Objects.Drawables
+namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
-    public class DrawableKaraokeRulesetHitObject : DrawableHitObject<KaraokeRulesetHitObject>
+    public class DrawableKaraokeHitObject : DrawableHitObject<KaraokeHitObject>
     {
-        public DrawableKaraokeRulesetHitObject(KaraokeRulesetHitObject hitObject)
+        public DrawableKaraokeHitObject(KaraokeHitObject hitObject)
             : base(hitObject)
         {
             Size = new Vector2(40);

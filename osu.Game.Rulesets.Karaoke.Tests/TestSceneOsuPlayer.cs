@@ -4,13 +4,13 @@
 using NUnit.Framework;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.KaraokeRuleset.Tests
+namespace osu.Game.Rulesets.Karaoke.Tests
 {
     [TestFixture]
     public class TestSceneOsuPlayer : PlayerTestScene
     {
         public TestSceneOsuPlayer()
-            : base(new KaraokeRulesetRuleset())
+            : base(new KaraokeRuleset())
         {
         }
     }

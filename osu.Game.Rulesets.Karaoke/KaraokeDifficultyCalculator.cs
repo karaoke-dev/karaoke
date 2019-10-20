@@ -9,11 +9,11 @@ using osu.Game.Rulesets.Difficulty.Preprocessing;
 using osu.Game.Rulesets.Difficulty.Skills;
 using osu.Game.Rulesets.Mods;
 
-namespace osu.Game.Rulesets.KaraokeRuleset
+namespace osu.Game.Rulesets.Karaoke
 {
-    public class KaraokeRulesetDifficultyCalculator : DifficultyCalculator
+    public class KaraokeDifficultyCalculator : DifficultyCalculator
     {
-        public KaraokeRulesetDifficultyCalculator(Ruleset ruleset, WorkingBeatmap beatmap)
+        public KaraokeDifficultyCalculator(Ruleset ruleset, WorkingBeatmap beatmap)
             : base(ruleset, beatmap)
         {
         }

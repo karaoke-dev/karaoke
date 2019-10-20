@@ -4,14 +4,14 @@
 using System;
 using System.Collections.Generic;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
-using osu.Game.Rulesets.KaraokeRuleset.Objects;
 using osu.Game.Rulesets.Objects.Types;
 using osuTK;
 
-namespace osu.Game.Rulesets.KaraokeRuleset.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
-    public class KaraokeRulesetBeatmapConverter : BeatmapConverter<KaraokeRulesetHitObject>
+    public class KaraokeBeatmapConverter : BeatmapConverter<KaraokeHitObject>
     {
         protected override IEnumerable<Type> ValidConversionTypes { get; } = new[]
         {
@@ -20,14 +20,14 @@ namespace osu.Game.Rulesets.KaraokeRuleset.Beatmaps
             typeof(IHasPosition)
         };
 
-        public KaraokeRulesetBeatmapConverter(IBeatmap beatmap)
+        public KaraokeBeatmapConverter(IBeatmap beatmap)
             : base(beatmap)
         {
         }
 
-        protected override IEnumerable<KaraokeRulesetHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap)
+        protected override IEnumerable<KaraokeHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap)
         {
-            yield return new KaraokeRulesetHitObject
+            yield return new KaraokeHitObject
             {
                 Samples = original.Samples,
                 StartTime = original.StartTime,

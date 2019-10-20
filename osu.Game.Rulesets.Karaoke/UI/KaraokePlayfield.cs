@@ -5,10 +5,10 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.UI;
 
-namespace osu.Game.Rulesets.KaraokeRuleset.UI
+namespace osu.Game.Rulesets.Karaoke.UI
 {
     [Cached]
-    public class KaraokeRulesetPlayfield : Playfield
+    public class KaraokePlayfield : Playfield
     {
         [BackgroundDependencyLoader]
         private void load()

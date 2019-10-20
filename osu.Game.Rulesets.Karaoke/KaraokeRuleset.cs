@@ -10,19 +10,19 @@ using osu.Framework.Input.Bindings;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Difficulty;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Mods;
+using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
-using osu.Game.Rulesets.KaraokeRuleset.Beatmaps;
-using osu.Game.Rulesets.KaraokeRuleset.Mods;
-using osu.Game.Rulesets.KaraokeRuleset.UI;
 using osu.Game.Rulesets.UI;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.KaraokeRuleset
+namespace osu.Game.Rulesets.Karaoke
 {
-    public class KaraokeRulesetRuleset : Ruleset
+    public class KaraokeRuleset : Ruleset
     {
-        public KaraokeRulesetRuleset(RulesetInfo rulesetInfo = null)
+        public KaraokeRuleset(RulesetInfo rulesetInfo = null)
             : base(rulesetInfo)
         {
         }
@@ -30,20 +30,20 @@ namespace osu.Game.Rulesets.KaraokeRuleset
         public override string Description => "a very karaokeruleset ruleset";
 
         public override DrawableRuleset CreateDrawableRulesetWith(IWorkingBeatmap beatmap, IReadOnlyList<Mod> mods) =>
-            new DrawableKaraokeRulesetRuleset(this, beatmap, mods);
+            new DrawableKaraokeRuleset(this, beatmap, mods);
 
         public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) =>
-            new KaraokeRulesetBeatmapConverter(beatmap);
+            new KaraokeBeatmapConverter(beatmap);
 
         public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) =>
-            new KaraokeRulesetDifficultyCalculator(this, beatmap);
+            new KaraokeDifficultyCalculator(this, beatmap);
 
         public override IEnumerable<Mod> GetModsFor(ModType type)
         {
             switch (type)
             {
                 case ModType.Automation:
-                    return new[] { new KaraokeRulesetModAutoplay() };
+                    return new[] { new KaraokeModAutoplay() };
 
                 default:
                     return new Mod[] { null };
@@ -54,8 +54,8 @@ namespace osu.Game.Rulesets.KaraokeRuleset
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
         {
-            new KeyBinding(InputKey.Z, KaraokeRulesetAction.Button1),
-            new KeyBinding(InputKey.X, KaraokeRulesetAction.Button2),
+            new KeyBinding(InputKey.Z, KaraokeAction.Button1),
+            new KeyBinding(InputKey.X, KaraokeAction.Button2),
         };
 
         public override Drawable CreateIcon() => new Icon(ShortName[0]);

@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using osu.Game.Rulesets.Replays;
 using osuTK;
 
-namespace osu.Game.Rulesets.KaraokeRuleset.Replays
+namespace osu.Game.Rulesets.Karaoke.Replays
 {
-    public class KaraokeRulesetReplayFrame : ReplayFrame
+    public class KaraokeReplayFrame : ReplayFrame
     {
-        public List<KaraokeRulesetAction> Actions = new List<KaraokeRulesetAction>();
+        public List<KaraokeAction> Actions = new List<KaraokeAction>();
         public Vector2 Position;
 
-        public KaraokeRulesetReplayFrame(KaraokeRulesetAction? button = null)
+        public KaraokeReplayFrame(KaraokeAction? button = null)
         {
             if (button.HasValue)
                 Actions.Add(button.Value);

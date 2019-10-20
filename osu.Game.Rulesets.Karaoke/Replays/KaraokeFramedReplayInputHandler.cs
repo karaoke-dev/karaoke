@@ -10,16 +10,16 @@ using osu.Game.Replays;
 using osu.Game.Rulesets.Replays;
 using osuTK;
 
-namespace osu.Game.Rulesets.KaraokeRuleset.Replays
+namespace osu.Game.Rulesets.Karaoke.Replays
 {
-    public class KaraokeRulesetFramedReplayInputHandler : FramedReplayInputHandler<KaraokeRulesetReplayFrame>
+    public class KaraokeFramedReplayInputHandler : FramedReplayInputHandler<KaraokeReplayFrame>
     {
-        public KaraokeRulesetFramedReplayInputHandler(Replay replay)
+        public KaraokeFramedReplayInputHandler(Replay replay)
             : base(replay)
         {
         }
 
-        protected override bool IsImportant(KaraokeRulesetReplayFrame frame) => frame.Actions.Any();
+        protected override bool IsImportant(KaraokeReplayFrame frame) => frame.Actions.Any();
 
         protected Vector2 Position
         {
@@ -44,9 +44,9 @@ namespace osu.Game.Rulesets.KaraokeRuleset.Replays
                 {
                     Position = GamefieldToScreenSpace(Position),
                 },
-                new ReplayState<KaraokeRulesetAction>
+                new ReplayState<KaraokeAction>
                 {
-                    PressedActions = CurrentFrame?.Actions ?? new List<KaraokeRulesetAction>(),
+                    PressedActions = CurrentFrame?.Actions ?? new List<KaraokeAction>(),
                 }
             };
         }

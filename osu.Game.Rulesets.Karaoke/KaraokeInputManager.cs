@@ -5,17 +5,17 @@ using System.ComponentModel;
 using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.UI;
 
-namespace osu.Game.Rulesets.KaraokeRuleset
+namespace osu.Game.Rulesets.Karaoke
 {
-    public class KaraokeRulesetInputManager : RulesetInputManager<KaraokeRulesetAction>
+    public class KaraokeInputManager : RulesetInputManager<KaraokeAction>
     {
-        public KaraokeRulesetInputManager(RulesetInfo ruleset)
+        public KaraokeInputManager(RulesetInfo ruleset)
             : base(ruleset, 0, SimultaneousBindingMode.Unique)
         {
         }
     }
 
-    public enum KaraokeRulesetAction
+    public enum KaraokeAction
     {
         [Description("Button 1")]
         Button1,
