@@ -2,41 +2,62 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Objects.Types;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 using Newtonsoft.Json;
 using System.Linq;
-using System;
 using System.Collections.Generic;
+using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Game.Rulesets.Judgements;
+using osu.Game.Rulesets.Karaoke.Judgements;
+using osu.Framework.Bindables;
+using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class LyricLine : KaraokeHitObject, IHasEndTime, IHasText
+    public class LyricLine : KaraokeHitObject, IHasEndTime
     {
+        public readonly Bindable<string> TextBindable = new Bindable<string>();
+
         /// <summary>
         /// Text of the lyric
         /// </summary>
-        public string Text { get; set; }
+        public string Text
+        {
+            get => TextBindable.Value;
+            set => TextBindable.Value = value;
+        }
+
+        public readonly Bindable<IReadOnlyDictionary<TimeTagIndex, double>> TimeTagsBindable = new Bindable<IReadOnlyDictionary<TimeTagIndex, double>>();
 
         /// <summary>
-        /// List of time tags
+        /// Time tags
         /// </summary>
-        public TimeTag[] TimeTags { get; set; }
+        public IReadOnlyDictionary<TimeTagIndex, double> TimeTags
+        {
+            get => TimeTagsBindable.Value;
+            set => TimeTagsBindable.Value = value;
+        }
 
-        /// <summary>
-        /// Filter time tag that has value
-        /// </summary>
-        [JsonIgnore]
-        protected TimeTag[] AvailableTimeTags => TimeTags?.Where(x => x.StartTime > 0).ToArray();
+        public readonly Bindable<RubyTag[]> RubyTagsBindable = new Bindable<RubyTag[]>();
 
         /// <summary>
         /// List of ruby tags
         /// </summary>
-        public RubyTag[] RubyTags { get; set; }
+        public RubyTag[] RubyTags
+        {
+            get => RubyTagsBindable.Value;
+            set => RubyTagsBindable.Value = value;
+        }
+
+        public readonly Bindable<RomajiTag[]> RomajiTagsBindable = new Bindable<RomajiTag[]>();
 
         /// <summary>
         /// List of ruby tags
         /// </summary>
-        public RomajiTag[] RomajiTags { get; set; }
+        public RomajiTag[] RomajiTags
+        {
+            get => RomajiTagsBindable.Value;
+            set => RomajiTagsBindable.Value = value;
+        }
 
         /// <summary>
         /// Duration
@@ -48,88 +69,75 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// </summary>
         public double EndTime { get; set; }
 
+        public readonly Bindable<int> FontIndexBindable = new Bindable<int>();
+
         /// <summary>
         /// Font index
         /// </summary>
-        public int FontIndex { get; set; }
+        public int FontIndex
+        {
+            get => FontIndexBindable.Value;
+            set => FontIndexBindable.Value = value;
+        }
+
+        public readonly Bindable<int> LayoutIndexBindable = new Bindable<int>();
 
         /// <summary>
         /// Layout index
         /// </summary>
         [JsonIgnore]
-        public int LayoutIndex { get; set; }
+        public int LayoutIndex
+        {
+            get => LayoutIndexBindable.Value;
+            set => LayoutIndexBindable.Value = value;
+        }
+
+        public readonly Bindable<string> TranslateTextBindable = new Bindable<string>();
 
         /// <summary>
         /// Translate text
         /// </summary>
         [JsonIgnore]
-        public string TranslateText { get; set; }
-
-        public DisplayPercentage GetPercentageByTime(double time)
+        public string TranslateText
         {
-            if (time < StartTime)
-                return new DisplayPercentage(endIndex: 0);
-
-            if (time > EndTime)
-                return new DisplayPercentage(startIndex: int.MaxValue);
-
-            var startTagTime = AvailableTimeTags?.LastOrDefault(x => x.StartTime < time) ?? AvailableTimeTags?.FirstOrDefault();
-            var endTagTime = AvailableTimeTags?.FirstOrDefault(x => x.StartTime > time) ?? AvailableTimeTags?.LastOrDefault();
-
-            int startIndex = getTextIndexByTimeTag(startTagTime);
-            int endIndex = getTextIndexByTimeTag(endTagTime);
-
-            var precentage = (time - startTagTime.StartTime) / (endTagTime.StartTime - startTagTime.StartTime);
-            if (precentage > 1)
-                precentage = 1;
-
-            return new DisplayPercentage
-            {
-                StartIndex = startIndex,
-                EndIndex = endIndex,
-                TextPercentage = precentage
-            };
+            get => TranslateTextBindable.Value;
+            set => TranslateTextBindable.Value = value;
         }
 
-        public IEnumerable<KaraokeNote> CreateDefaultNotes()
+        public IEnumerable<Note> CreateDefaultNotes()
         {
-            for (int i = 0; i < AvailableTimeTags.Length - 1; i++)
+            foreach (var timeTag in TimeTags)
             {
-                var startTag = AvailableTimeTags[i];
-                var endTag = AvailableTimeTags[i + 1];
+                var nextTag = TimeTags.GetNext(timeTag);
 
-                int startIndex = getTextIndexByTimeTag(startTag);
-                int endIndex = getTextIndexByTimeTag(endTag);
+                if (nextTag.Key.Index <= 0)
+                    continue;
+
+                var startTime = timeTag.Value;
+                var endTime = nextTag.Value;
+
+                int startIndex = timeTag.Key.Index;
+                int endIndex = nextTag.Key.Index;
 
                 var text = Text.Substring(startIndex, endIndex - startIndex);
+                var ruby = RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Ruby;
+
                 if (!string.IsNullOrEmpty(text))
-                    yield return new KaraokeNote
+                {
+                    yield return new Note
                     {
-                        StartTime = startTag.StartTime,
-                        EndTime = endTag.StartTime,
+                        StartTime = startTime,
+                        EndTime = endTime,
+                        StartIndex = startIndex,
+                        EndIndex = endIndex,
                         Text = text,
+                        AlternativeText = ruby,
+                        ParentLyric = this
                     };
+                }
             }
         }
 
-        private int getTextIndexByTimeTag(TimeTag timeTag) => (int)Math.Ceiling((double)(Array.IndexOf(TimeTags, timeTag) - 1) / 2);
-
-        public struct DisplayPercentage
-        {
-            public DisplayPercentage(int startIndex = -1, int endIndex = int.MaxValue, float percentage = 0)
-            {
-                StartIndex = startIndex;
-                EndIndex = endIndex;
-                TextPercentage = percentage;
-            }
-
-            public int StartIndex { get; set; }
-
-            public int EndIndex { get; set; }
-
-            public double TextPercentage { get; set; }
-
-            public bool Available => StartIndex >= 0 && EndIndex < int.MaxValue;
-        }
+        public override Judgement CreateJudgement() => new KaraokeLyricJudgement();
     }
 }

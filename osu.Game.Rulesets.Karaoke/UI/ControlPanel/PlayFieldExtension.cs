@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel
         public static double LastObjectTime(this KaraokePlayfield karaokeField)
         {
             var hitObjects = karaokeField.GetListHitObjects();
-            return ((hitObjects.Last() as IHasEndTime)?.EndTime ?? hitObjects.Last().StartTime) + 1;
+            return hitObjects.Last().GetEndTime() + 1;
         }
 
         /// <summary>
@@ -166,6 +166,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel
             var listObjects = karaokeField.GetListHitObjects();
 
             for (var i = 0; i < listObjects.Count; i++)
+            {
                 if (listObjects[i].StartTime >= currentTime + PrepareTime)
                 {
                     if (i == 0)
@@ -173,6 +174,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel
 
                     return listObjects[i - 1];
                 }
+            }
 
             return null;
         }
@@ -189,9 +191,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel
                 return -1;
 
             var listObjects = karaokeField.GetListHitObjects();
+
             for (var i = 0; i < listObjects.Count; i++)
+            {
                 if (listObjects[i] == hitObject)
                     return i;
+            }
 
             //404
             return -1;

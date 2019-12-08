@@ -7,6 +7,7 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input.Bindings;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.UI.ControlPanel.Pieces;
@@ -16,7 +17,7 @@ using ProgressBar = osu.Game.Rulesets.Karaoke.UI.ControlPanel.Pieces.ProgressBar
 
 namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel
 {
-    public class KaraokePanelOverlay : Container
+    public class KaraokePanelOverlay : Container, IKeyBindingHandler<KaraokeAction>
     {
         private const float content_width = 0.8f;
         private const int object_height = 30;
@@ -181,6 +182,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel
                                                                         {
                                                                             // TODO : move into PlayStateButton
                                                                             if (karaokePlayfield != null)
+                                                                            {
                                                                                 if (PlayPauseButton.State == PlayState.Pause)
                                                                                 {
                                                                                     karaokePlayfield?.Pause();
@@ -191,6 +193,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel
                                                                                     karaokePlayfield?.Play();
                                                                                     PlayPauseButton.State = PlayState.Pause;
                                                                                 }
+                                                                            }
                                                                         }
                                                                     },
                                                                 }
@@ -368,12 +371,15 @@ namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel
                 case KaraokeAction.FirstLyric:
                     FirstLyricButton.Action?.Invoke();
                     break;
+
                 case KaraokeAction.PreviousLyric:
                     PreviousLyricButton.Action?.Invoke();
                     break;
+
                 case KaraokeAction.NextLyric:
                     NextLyricButton.Action?.Invoke();
                     break;
+
                 case KaraokeAction.PlayAndPause:
                     PlayPauseButton.Action?.Invoke();
                     break;
@@ -387,9 +393,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel
                 case KaraokeAction.IncreaseTempo:
                     TempoSlider.TriggerIncrease();
                     break;
+
                 case KaraokeAction.DecreaseTempo:
                     TempoSlider.TriggerDecrease();
                     break;
+
                 case KaraokeAction.ResetTempo:
                     TempoSlider.ResetToDefauleValue();
                     break;
@@ -398,9 +406,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel
                 case KaraokeAction.IncreasePitch:
                     PitchSlider.TriggerIncrease();
                     break;
+
                 case KaraokeAction.DecreasePitch:
                     PitchSlider.TriggerDecrease();
                     break;
+
                 case KaraokeAction.ResetPitch:
                     PitchSlider.ResetToDefauleValue();
                     break;
@@ -409,9 +419,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel
                 case KaraokeAction.IncreaseLyricAppearTime:
                     LyricOffectSlider.TriggerIncrease();
                     break;
+
                 case KaraokeAction.DecreaseLyricAppearTime:
                     LyricOffectSlider.TriggerDecrease();
                     break;
+
                 case KaraokeAction.ResetLyricAppearTime:
                     LyricOffectSlider.ResetToDefauleValue();
                     break;
@@ -431,5 +443,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel
         }
 
         public void ToggleVisibility() => Panel.ToggleVisibility();
+
+        public bool OnReleased(KaraokeAction action)
+        {
+            return true;
+        }
     }
 }

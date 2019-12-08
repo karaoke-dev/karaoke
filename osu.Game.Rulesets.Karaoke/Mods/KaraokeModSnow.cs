@@ -21,6 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public override string Acronym => "SW";
         public override double ScoreMultiplier => 1.0f;
         public override IconUsage Icon => FontAwesome.Regular.Snowflake;
+        public override ModType Type => ModType.Fun;
 
         public void ApplyToHUD(HUDOverlay overlay)
         {
@@ -85,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 var currentTime = Time.Current;
 
                 var isCreateShow = !Children.Any() ||
-                                   (Children.LastOrDefault() as SnowSpitie).CreateTime
+                                   (Children.LastOrDefault() as SnowSpitie)?.CreateTime
                                    + 1000 / SnowGenerateParSecond < currentTime;
 
                 // If can generate new snow
@@ -101,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                         Position = new Vector2(random.Next(-width / 2, width / 2), -40),
                         Depth = 1,
                         CreateTime = currentTime,
-                        Size = new Vector2(50,50),
+                        Size = new Vector2(50, 50),
                         Scale = new Vector2(1, 1) * SnowSize,
                         Alpha = currentAlpha,
                         HorizontalSpeed = random.Next(-100, 100) + WingAffection * 10

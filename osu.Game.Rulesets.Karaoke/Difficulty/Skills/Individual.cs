@@ -28,12 +28,12 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
 
         protected override double StrainValueOf(DifficultyHitObject current)
         {
-            var maniaCurrent = (KaraokeDifficultyHitObject)current;
-            var endTime = maniaCurrent.BaseObject?.EndTime ?? maniaCurrent.BaseObject.StartTime;
+            var karaokeCurrent = (KaraokeDifficultyHitObject)current;
+            var endTime = karaokeCurrent.BaseObject.EndTime;
 
             try
             {
-                if (maniaCurrent.BaseObject.Tone != column)
+                if (karaokeCurrent.BaseObject.Tone.Scale != column)
                     return 0;
 
                 // We give a slight bonus if something is held meanwhile
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
             }
             finally
             {
-                holdEndTimes[maniaCurrent.BaseObject.Tone - minColumn] = endTime;
+                holdEndTimes[karaokeCurrent.BaseObject.Tone.Scale - minColumn] = endTime;
             }
         }
     }

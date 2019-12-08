@@ -4,10 +4,14 @@
 using System.Collections.Generic;
 using osu.Framework.Input.Bindings;
 using osu.Game.Beatmaps;
+using osu.Game.Configuration;
+using osu.Game.Overlays.Settings;
+using osu.Game.Rulesets.Configuration;
 using osu.Game.Rulesets.Difficulty;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Difficulty;
 using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Mods;
@@ -27,43 +31,81 @@ namespace osu.Game.Rulesets.Karaoke
 
         public const string SHORT_NAME = "karaoke";
 
-        public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) => new[]
+        public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0)
         {
-            // Basic control
-            new KeyBinding(InputKey.Number1, KaraokeAction.FirstLyric),
-            new KeyBinding(InputKey.Left, KaraokeAction.PreviousLyric),
-            new KeyBinding(InputKey.Right, KaraokeAction.NextLyric),
-            new KeyBinding(InputKey.Space, KaraokeAction.PlayAndPause),
+            switch (variant)
+            {
+                case 0:
+                    return new[]
+                    {
+                        // Basic control
+                        new KeyBinding(InputKey.Number1, KaraokeAction.FirstLyric),
+                        new KeyBinding(InputKey.Left, KaraokeAction.PreviousLyric),
+                        new KeyBinding(InputKey.Right, KaraokeAction.NextLyric),
+                        new KeyBinding(InputKey.Space, KaraokeAction.PlayAndPause),
 
-            // Panel
-            new KeyBinding(InputKey.P, KaraokeAction.OpenPanel),
+                        // Panel
+                        new KeyBinding(InputKey.P, KaraokeAction.OpenPanel),
 
-            // Advance control
-            new KeyBinding(InputKey.Q, KaraokeAction.IncreaseTempo),
-            new KeyBinding(InputKey.A, KaraokeAction.DecreaseTempo),
-            new KeyBinding(InputKey.Z, KaraokeAction.ResetTempo),
-            new KeyBinding(InputKey.W, KaraokeAction.IncreasePitch),
-            new KeyBinding(InputKey.S, KaraokeAction.DecreasePitch),
-            new KeyBinding(InputKey.X, KaraokeAction.ResetPitch),
-            new KeyBinding(InputKey.E, KaraokeAction.IncreaseLyricAppearTime),
-            new KeyBinding(InputKey.D, KaraokeAction.DecreaseLyricAppearTime),
-            new KeyBinding(InputKey.C, KaraokeAction.ResetLyricAppearTime),
-        };
+                        // Advance control
+                        new KeyBinding(InputKey.Q, KaraokeAction.IncreaseTempo),
+                        new KeyBinding(InputKey.A, KaraokeAction.DecreaseTempo),
+                        new KeyBinding(InputKey.Z, KaraokeAction.ResetTempo),
+                        new KeyBinding(InputKey.W, KaraokeAction.IncreasePitch),
+                        new KeyBinding(InputKey.S, KaraokeAction.DecreasePitch),
+                        new KeyBinding(InputKey.X, KaraokeAction.ResetPitch),
+                        new KeyBinding(InputKey.E, KaraokeAction.IncreaseLyricAppearTime),
+                        new KeyBinding(InputKey.D, KaraokeAction.DecreaseLyricAppearTime),
+                        new KeyBinding(InputKey.C, KaraokeAction.ResetLyricAppearTime),
+                    };
+
+                case 1:
+                    //Vocal
+                    return new KeyBinding[0];
+
+                default:
+                    return new KeyBinding[0];
+            }
+        }
 
         public override IEnumerable<Mod> GetModsFor(ModType type)
         {
             switch (type)
             {
+                case ModType.DifficultyIncrease:
+                    return new Mod[]
+                    {
+                        new KaraokeModHiddenRuby(),
+                        new KaraokeModHiddenNote(),
+                        new KaraokeModFlashlight(),
+                        new MultiMod(new KaraokeModSuddenDeath(), new KaraokeModPerfect(), new KaroakeModWindowsUpdate()),
+                    };
+
                 case ModType.DifficultyReduction:
                     return new Mod[]
                     {
+                        new KaraokeModNoFail(),
                         new KaraokeModPractice(),
                     };
+
+                case ModType.Automation:
+                    return new Mod[]
+                    {
+                        new KaraokeModAutoplay(),
+                    };
+
                 case ModType.Fun:
                     return new Mod[]
                     {
                         new KaraokeModSnow(),
                     };
+
+                case ModType.System:
+                    return new Mod[]
+                    {
+                        new KaraokeModDisableNote(),
+                    };
+
                 default:
                     return new Mod[] { };
             }
@@ -80,6 +122,10 @@ namespace osu.Game.Rulesets.Karaoke
         public override ISkin CreateLegacySkinProvider(ISkinSource source) => new KaraokeLegacySkinTransformer(source);
 
         public override int? LegacyID => 111;
+
+        public override IRulesetConfigManager CreateConfig(SettingsStore settings) => new KaraokeRulesetConfigManager(settings, RulesetInfo);
+
+        public override RulesetSettingsSubsection CreateSettings() => new KaraokeSettingsSubsection(this);
 
         public KaraokeRuleset(RulesetInfo rulesetInfo = null)
             : base(rulesetInfo)

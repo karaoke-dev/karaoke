@@ -5,6 +5,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 {
     public enum KaraokeSkinConfiguration
     {
-        // TODO : define all the skin value
+        LyricStyle,
+
+        LyricLayout,
+
+        NoteStyle
     }
 }

@@ -1,0 +1,13 @@
+﻿karaoke file format v1
+
+[HitObjects]
+@[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]
+@[00:06.00]大[00:07.00]好[00:08.00]き[00:09.00]
+
+@tr[zh-TW]=卡拉OK
+@tr[zh-TW]=喜歡
+
+@tr[en-US]=karaoke
+@tr[en-US]=like it
+
+end

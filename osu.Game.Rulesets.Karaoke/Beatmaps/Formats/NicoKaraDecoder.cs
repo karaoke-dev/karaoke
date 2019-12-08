@@ -10,9 +10,10 @@ using NicoKaraParser.Model.Font.Font;
 using NicoKaraParser.Model.Font.Shadow;
 using NicoKaraParser.Model.Layout;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Objects;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osuTK;
 using osuTK.Graphics;
 using BrushInfo = NicoKaraParser.Model.Font.Brush.BrushInfo;
@@ -29,21 +30,22 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         protected override void ParseStreamInto(LineBufferedReader stream, KaroakeSkin output)
         {
-            var nicoKaraProject = new Project();
+            Project nicoKaraProject;
+
             using (TextReader sr = new StringReader(stream.ReadToEnd()))
             {
                 nicoKaraProject = new Parser().Deserialize(sr);
             }
 
             // Clean-up layour
-            output.DefinedLayouts = new List<Objects.KaraokeLayout>();
+            output.DefinedLayouts = new List<Skinning.Components.KaraokeLayout>();
 
             foreach (var nicoKaraLayour in nicoKaraProject.KaraokeLayouts)
             {
-                Enum.TryParse(nicoKaraLayour.SmartHorizon.ToString(), out Objects.SmartHorizon smartHorizon);
-                Enum.TryParse(nicoKaraLayour.RubyAlignment.ToString(), out Objects.RubyAlignment rubyAlignment);
+                Enum.TryParse(nicoKaraLayour.SmartHorizon.ToString(), out KaraokeTextSmartHorizon smartHorizon);
+                Enum.TryParse(nicoKaraLayour.RubyAlignment.ToString(), out LyricTextAlignment rubyAlignment);
 
-                output.DefinedLayouts.Add(new Objects.KaraokeLayout
+                output.DefinedLayouts.Add(new Skinning.Components.KaraokeLayout
                 {
                     Name = nicoKaraLayour.Name,
                     Alignment = convertAnchor(nicoKaraLayour.HorizontalAlignment, nicoKaraLayour.VerticalAlignment),
@@ -108,9 +110,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 return horizontalAnchor | verticalAnchor;
             }
 
-            Objects.FontInfo convertFontInfo(FontInfo info)
+            Skinning.Components.FontInfo convertFontInfo(FontInfo info)
             {
-                return new Objects.FontInfo
+                return new Skinning.Components.FontInfo
                 {
                     FontName = info.FontName,
                     Bold = info.FontStyle == FontStyle.Bold,
@@ -119,23 +121,23 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 };
             }
 
-            Objects.BrushInfo convertBrushInfo(BrushInfo info)
+            Skinning.Components.BrushInfo convertBrushInfo(BrushInfo info)
             {
                 Enum.TryParse(info.Type.ToString(), out BrushType type);
 
                 // Convert BrushGradient
-                List<Objects.BrushInfo.BrushGradient> brushGradient = new List<Objects.BrushInfo.BrushGradient>();
+                List<Skinning.Components.BrushInfo.BrushGradient> brushGradient = new List<Skinning.Components.BrushInfo.BrushGradient>();
 
                 for (int i = 0; i < info.GradientPositions.Count; i++)
                 {
-                    brushGradient.Add(new Objects.BrushInfo.BrushGradient
+                    brushGradient.Add(new Skinning.Components.BrushInfo.BrushGradient
                     {
                         XPosition = info.GradientPositions[i],
                         Color = convertColor(info.GradientColors[i])
                     });
                 }
 
-                return new Objects.BrushInfo
+                return new Skinning.Components.BrushInfo
                 {
                     Type = type,
                     SolidColor = convertColor(info.SolidColor),

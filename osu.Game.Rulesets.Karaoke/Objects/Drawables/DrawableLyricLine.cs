@@ -2,28 +2,22 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Objects.Drawables;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
 using osuTK;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
     public class DrawableLyricLine : DrawableKaraokeHitObject
     {
-        private readonly Container frontKaraokeTextContainer;
-        private readonly KaraokeText frontKaraokeText;
-
-        private readonly Container backKaraokeTextContainer;
-        private readonly KaraokeText backKaraokeText;
-
+        private readonly KarakeSpriteText karoakText;
         private readonly OsuSpriteText translateText;
 
         public new LyricLine HitObject => (LyricLine)base.HitObject;
@@ -33,149 +27,129 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
             Scale = new Vector2(2f);
             AutoSizeAxes = Axes.Both;
-            AddInternal(new Container
+            InternalChildren = new Drawable[]
             {
-                AutoSizeAxes = Axes.Both,
-                Children = new Drawable[]
+                karoakText = new KarakeSpriteText(),
+                translateText = new OsuSpriteText
                 {
-                    backKaraokeTextContainer = new Container
-                    {
-                        AutoSizeAxes = Axes.Both,
-                        Masking = true,
-                        Child = backKaraokeText = new KaraokeText
-                        {
-                            Margin = new MarginPadding(30),
-                        }
-                    },
-                    frontKaraokeTextContainer = new Container
-                    {
-                        AutoSizeAxes = Axes.Y,
-                        Masking = true,
-                        Child = frontKaraokeText = new KaraokeText
-                        {
-                            Margin = new MarginPadding(30),
-                        }
-                    }
+                    Anchor = Anchor.BottomLeft,
+                    Origin = Anchor.TopLeft,
+                    Text = hitObject.TranslateText
                 }
-            });
+            };
 
-            AddInternal(translateText = new OsuSpriteText
+            hitObject.TextBindable.BindValueChanged(text =>
             {
-                Anchor = Anchor.BottomLeft,
-                Origin = Anchor.TopLeft,
-                Text = hitObject.TranslateText
-            });
+                karoakText.Text = text.NewValue;
+            }, true);
 
-            ApplyHitObject(frontKaraokeText, hitObject);
-            ApplyHitObject(backKaraokeText, hitObject);
+            hitObject.TimeTagsBindable.BindValueChanged(timeTags =>
+            {
+                karoakText.TimeTags = timeTags.NewValue;
+            }, true);
+
+            hitObject.RubyTagsBindable.BindValueChanged(rubyTags =>
+            {
+                karoakText.Rubies = rubyTags.NewValue?.Select(x => new PositionText(x.Ruby, x.StartIndex, x.EndIndex)).ToArray();
+            }, true);
+
+            hitObject.RomajiTagsBindable.BindValueChanged(romajiTags =>
+            {
+                karoakText.Romajies = romajiTags.NewValue?.Select(x => new PositionText(x.Romaji, x.StartIndex, x.EndIndex)).ToArray();
+            }, true);
+
+            hitObject.FontIndexBindable.BindValueChanged(index =>
+            {
+                ApplySkin(CurrentSkin, false);
+            }, true);
+
+            hitObject.LayoutIndexBindable.BindValueChanged(index =>
+            {
+                ApplySkin(CurrentSkin, false);
+            }, true);
+
+            hitObject.TranslateTextBindable.BindValueChanged(text =>
+            {
+                translateText.Text = text.NewValue ?? "";
+            }, true);
+
+            LifetimeEnd = hitObject.EndTime + 1000;
         }
 
-        protected void ApplyHitObject(KaraokeText text, LyricLine lyricLine)
+        protected override void ClearInternal(bool disposeChildren = true)
         {
-            text.Text = lyricLine.Text;
-            text.Rubies = lyricLine.RubyTags?.Select(x => new PositionText(x.Ruby, x.StartIndex, x.EndIndex)).ToArray();
-            text.Romajies = lyricLine.RomajiTags?.Select(x => new PositionText(x.Romaji, x.StartIndex, x.EndIndex)).ToArray();
-        }
-
-        protected override void Update()
-        {
-            var percentage = HitObject.GetPercentageByTime(Time.Current);
-            var startIndex = percentage.StartIndex;
-            var endIndex = percentage.EndIndex;
-            var textPercentage = (float)percentage.TextPercentage;
-
-            if (percentage.Available && startIndex != endIndex)
-            {
-                // Update front karaoke text's width
-                var width = backKaraokeText.GetPrecentageWidth(startIndex, endIndex, textPercentage);
-                frontKaraokeTextContainer.Width = width;
-            }
-
-            base.Update();
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)
         {
             base.ApplySkin(skin, allowFallback);
 
-            var karaokeFont = skin.GetConfig<KaraokeFontLookup, KaraokeFont>(new KaraokeFontLookup { FontIndex = HitObject.FontIndex })?.Value;
+            if (CurrentSkin == null)
+                return;
+
+            var karaokeFont = skin.GetConfig<KaraokeSkinLookup, KaraokeFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.FontIndex))?.Value;
             if (karaokeFont != null)
                 ApplyFont(karaokeFont);
 
-            var karaokeLayout = skin.GetConfig<KaraokeLayoutLookup, KaraokeLayout>(new KaraokeLayoutLookup { LayoutIndex = HitObject.LayoutIndex })?.Value;
+            var karaokeLayout = skin.GetConfig<KaraokeSkinLookup, KaraokeLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, HitObject.LayoutIndex))?.Value;
             if (karaokeLayout != null)
                 ApplyLayout(karaokeLayout);
         }
 
         protected void ApplyFont(KaraokeFont font)
         {
-            applyTextBrushInfo(frontKaraokeText, font.FrontTextBrushInfo);
-            applyTextBrushInfo(backKaraokeText, font.BackTextBrushInfo);
+            // From text sample
+            karoakText.FrontTextTexture = new SolidTexture { SolidColor = Color4.Blue }; // font.FrontTextBrushInfo.TextBrush.ConvertToTextureSample();
+            karoakText.FrontBorderTexture = font.FrontTextBrushInfo.BorderBrush.ConvertToTextureSample();
+            karoakText.FrontTextShadowTexture = font.FrontTextBrushInfo.ShadowBrush.ConvertToTextureSample();
 
-            applyTextFontInfo(frontKaraokeText);
-            applyTextFontInfo(backKaraokeText);
+            // Back text sample
+            karoakText.BackTextTexture = font.BackTextBrushInfo.TextBrush.ConvertToTextureSample();
+            karoakText.BackBorderTexture = font.BackTextBrushInfo.BorderBrush.ConvertToTextureSample();
+            karoakText.BackTextShadowTexture = font.BackTextBrushInfo.ShadowBrush.ConvertToTextureSample();
 
-            applyShadow(frontKaraokeText);
-            applyShadow(backKaraokeText);
+            // Apply text font info
+            var lyricFont = font.LyricTextFontInfo.LyricTextFontInfo;
+            karoakText.Font = new FontUsage(size: lyricFont.CharSize); // TODO : FontName and Bold
+            karoakText.Border = lyricFont.EdgeSize > 0;
+            karoakText.BorderRadius = lyricFont.EdgeSize;
 
-            void applyTextBrushInfo(KaraokeText text, KaraokeFont.TextBrushInfo brushInfo)
-            {
-                // TODO : implement TextBrush and BorderBrush
-                var textBrush = brushInfo.TextBrush;
-                text.Colour = textBrush.SolidColor;
+            var rubyFont = font.RubyTextFontInfo.LyricTextFontInfo;
+            karoakText.RubyFont = new FontUsage(size: rubyFont.CharSize);
 
-                // TODO : maybe mixed color in the future
-                var shadowBrush = brushInfo.ShadowBrush;
-                text.ShadowColour = shadowBrush.SolidColor;
-            }
-
-            void applyTextFontInfo(KaraokeText text)
-            {
-                // TODO : FontName, Bold and EdgeSize
-                var lyricFont = font.LyricTextFontInfo.LyricTextFontInfo;
-                text.Font = new FontUsage(size: lyricFont.CharSize);
-
-                var rubyFont = font.RubyTextFontInfo.LyricTextFontInfo;
-                text.RubyFont = new FontUsage(size: rubyFont.CharSize);
-            }
-
-            void applyShadow(KaraokeText text)
-            {
-                text.Shadow = font.UseShadow;
-                text.ShadowOffset = font.ShadowOffset / 60;
-            }
+            // Apply shadow
+            karoakText.Shadow = font.UseShadow;
+            karoakText.ShadowOffset = font.ShadowOffset;
         }
 
         protected void ApplyLayout(KaraokeLayout layout)
         {
+            // Layout relative to parent
             Anchor = layout.Alignment;
             Origin = layout.Alignment;
             Margin = new MarginPadding
             {
-                Left = layout.HorizontalMargin,
-                Right = layout.HorizontalMargin,
-                Top = layout.VerticalMargin,
-                Bottom = layout.VerticalMargin
+                Left = layout.Alignment.HasFlag(Anchor.x0) ? layout.HorizontalMargin : 0,
+                Right = layout.Alignment.HasFlag(Anchor.x2) ? layout.HorizontalMargin : 0,
+                Top = layout.Alignment.HasFlag(Anchor.y0) ? layout.VerticalMargin : 0,
+                Bottom = layout.Alignment.HasFlag(Anchor.y2) ? layout.VerticalMargin : 0
             };
+            Padding = new MarginPadding(30);
 
-            // Apply text property
-            applyKarokeTextProperty(frontKaraokeText);
-            applyKarokeTextProperty(backKaraokeText);
+            // Layout to text
+            karoakText.Continuous = layout.Continuous;
+            karoakText.KaraokeTextSmartHorizon = layout.SmartHorizon;
+            karoakText.Spacing = new Vector2(layout.LyricsInterval, karoakText.Spacing.Y);
 
-            void applyKarokeTextProperty(KaraokeText text)
-            {
-                // TODO : Continuous
-                // TODO : SmartHorizon
+            // Ruby
+            karoakText.RubySpacing = new Vector2(layout.RubyInterval, karoakText.RubySpacing.Y);
+            karoakText.RubyAlignment = layout.RubyAlignment;
+            karoakText.RubyMargin = layout.RubyMargin;
 
-                text.Spacing = new Vector2(layout.LyricsInterval, text.Spacing.Y);
-                text.RubySpacing = new Vector2(layout.RubyInterval, text.RubySpacing.Y);
-                text.RomajiSpacing = new Vector2(layout.RubyInterval, text.RomajiSpacing.Y);
-
-                // TODO : RubyAlignment
-
-                text.RubyMargin = layout.RubyMargin;
-                text.RomajiMargin = layout.RomajiMargin;
-            }
+            // Romaji
+            karoakText.RomajiSpacing = new Vector2(layout.RomajiInterval, karoakText.RomajiSpacing.Y);
+            karoakText.RomajiAlignment = layout.RomajiAlignment;
+            karoakText.RomajiMargin = layout.RomajiMargin;
         }
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
@@ -183,7 +157,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (userTriggered || Time.Current < HitObject.EndTime)
                 return;
 
-            ApplyResult(r => { r.Type = HitResult.Miss; });
+            ApplyResult(r => { r.Type = HitResult.Meh; });
         }
 
         protected override void UpdateStateTransforms(ArmedState state)
@@ -192,7 +166,30 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             using (BeginDelayedSequence(HitObject.Duration, true))
             {
-                this.FadeOut(500);
+                const float fade_out_time = 500;
+                this.FadeOut(fade_out_time);
+            }
+        }
+
+        public override double LifetimeStart
+        {
+            get => base.LifetimeStart;
+            set
+            {
+                base.LifetimeStart = value;
+                karoakText.LifetimeStart = value;
+                translateText.LifetimeStart = value;
+            }
+        }
+
+        public override double LifetimeEnd
+        {
+            get => base.LifetimeEnd;
+            set
+            {
+                base.LifetimeEnd = value;
+                karoakText.LifetimeEnd = value;
+                translateText.LifetimeEnd = value;
             }
         }
     }

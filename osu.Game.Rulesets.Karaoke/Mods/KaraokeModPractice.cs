@@ -3,7 +3,9 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Input.Bindings;
 using osu.Framework.Timing;
+using osu.Game.Input.Bindings;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.ControlPanel;
@@ -13,7 +15,7 @@ using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModPractice : Mod, IApplicableToDrawableRuleset<KaraokeHitObject>, IApplicableToHUD
+    public class KaraokeModPractice : ModNoFail, IApplicableToDrawableRuleset<KaraokeHitObject>, IApplicableToHUD
     {
         public override string Name => "Practice";
         public override string Acronym => "Practice";
@@ -21,24 +23,34 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public override IconUsage Icon => FontAwesome.Solid.Adjust;
 
         private KaraokePlayfield playfield;
+        private RulesetInfo rulesetInfo;
 
         public void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
         {
             playfield = drawableRuleset.Playfield as KaraokePlayfield;
+            rulesetInfo = drawableRuleset.Ruleset.RulesetInfo;
         }
 
-        public void ApplyToHUD(HUDOverlay overlay)
+        public new void ApplyToHUD(HUDOverlay overlay)
         {
-            // Create overpay
-            var karaokePanelOverlay = new KaraokePanelOverlay(playfield)
+            // Create overlay
+            overlay.Add(new KarokeActionContainer(rulesetInfo)
             {
-                Clock = new FramedClock(new StopwatchClock(true)),
-                RelativeSizeAxes = Axes.Both
-            };
-            overlay.Add(karaokePanelOverlay);
+                RelativeSizeAxes = Axes.Both,
+                Child = new KaraokePanelOverlay(playfield)
+                {
+                    Clock = new FramedClock(new StopwatchClock(true)),
+                    RelativeSizeAxes = Axes.Both
+                }
+            });
+        }
 
-            // Trigger overlay
-            playfield.Pressed = pressedAction => { karaokePanelOverlay.OnPressed(pressedAction); };
+        public class KarokeActionContainer : DatabasedKeyBindingContainer<KaraokeAction>
+        {
+            public KarokeActionContainer(RulesetInfo ruleset)
+                : base(ruleset, 0, SimultaneousBindingMode.Unique)
+            {
+            }
         }
     }
 }

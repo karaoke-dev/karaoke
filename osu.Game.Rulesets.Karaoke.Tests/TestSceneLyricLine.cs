@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -29,40 +30,21 @@ namespace osu.Game.Rulesets.Karaoke.Tests
 
         private Drawable testSingle(bool auto = false, double timeOffset = 0)
         {
-            var starttime = Time.Current + 1000 + timeOffset;
-            var endTime = starttime + 2500;
+            var startTime = Time.Current + 1000 + timeOffset;
+            var endTime = startTime + 2500;
 
             var lyric = new LyricLine
             {
-                StartTime = starttime,
+                StartTime = startTime,
                 EndTime = endTime,
                 Text = "カラオケ！",
-                TimeTags = new[]
+                TimeTags = new Dictionary<TimeTagIndex, double>
                 {
-                    new TimeTag
-                    {
-                        StartTime = starttime + 500,
-                    },
-                    //カ
-                    new TimeTag
-                    {
-                        StartTime = starttime + 600,
-                    },
-                    //ラ
-                    new TimeTag
-                    {
-                        StartTime = starttime + 1000,
-                    },
-                    //オ
-                    new TimeTag
-                    {
-                        StartTime = starttime + 1500,
-                    },
-                    //ケ
-                    new TimeTag
-                    {
-                        StartTime = starttime + 2000,
-                    },
+                    { new TimeTagIndex(0), startTime + 500 },
+                    { new TimeTagIndex(1), startTime + 600 },
+                    { new TimeTagIndex(2), startTime + 1000 },
+                    { new TimeTagIndex(3), startTime + 1500 },
+                    { new TimeTagIndex(4), startTime + 2000 },
                 },
                 RubyTags = new[]
                 {
@@ -93,7 +75,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                         EndIndex = 4,
                         Romaji = "ke"
                     }
-                }
+                },
+                TranslateText = "karaoke"
             };
 
             lyric.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
@@ -118,12 +101,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests
 
         protected class TestDrawableLyricLine : DrawableLyricLine
         {
-            private readonly bool auto;
-
             public TestDrawableLyricLine(LyricLine h, bool auto)
                 : base(h)
             {
-                this.auto = auto;
             }
         }
     }

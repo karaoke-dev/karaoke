@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Preprocessing
 {
     public class KaraokeDifficultyHitObject : DifficultyHitObject
     {
-        public new KaraokeNote BaseObject => (KaraokeNote)base.BaseObject;
+        public new Note BaseObject => (Note)base.BaseObject;
 
         public KaraokeDifficultyHitObject(HitObject hitObject, HitObject lastObject, double clockRate)
             : base(hitObject, lastObject, clockRate)

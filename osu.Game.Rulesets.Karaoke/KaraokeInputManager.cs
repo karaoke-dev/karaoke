@@ -2,17 +2,50 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Input.Bindings;
+using osu.Framework.Input.StateChanges.Events;
+using osu.Game.Input.Handlers;
 using osu.Game.Rulesets.UI;
 using System.ComponentModel;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke
 {
-    public class KaraokeInputManager : RulesetInputManager<KaraokeAction>
+    public class KaraokeInputManager : RulesetInputManager<KaraokeSoundAction>
     {
         public KaraokeInputManager(RulesetInfo ruleset)
-            : base(ruleset, 0, SimultaneousBindingMode.Unique)
+            : base(ruleset, 1, SimultaneousBindingMode.All)
         {
         }
+
+        public override void HandleInputStateChange(InputStateChangeEvent inputStateChange)
+        {
+            if (inputStateChange is ReplayInputHandler.ReplayStateChangeEvent<KaraokeSoundAction> replayStateChanged
+                && replayStateChanged.Input is ReplayInputHandler.ReplayState<KaraokeSoundAction> replayState)
+            {
+                // Release event should be trigger first
+                if (replayStateChanged.ReleasedActions.Any() && !replayState.PressedActions.Any())
+                {
+                    foreach (var action in replayStateChanged.ReleasedActions)
+                        KeyBindingContainer.TriggerReleased(action);
+                }
+
+                // If any key pressed, the continuous send press event
+                if (replayState.PressedActions.Any())
+                {
+                    foreach (var action in replayState.PressedActions)
+                        KeyBindingContainer.TriggerPressed(action);
+                }
+            }
+            else
+            {
+                base.HandleInputStateChange(inputStateChange);
+            }
+        }
+    }
+
+    public struct KaraokeSoundAction
+    {
+        public float Scale { get; set; }
     }
 
     public enum KaraokeAction

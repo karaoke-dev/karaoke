@@ -1,7 +1,8 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
@@ -10,8 +11,9 @@ using osu.Framework.Graphics.Textures;
 using osu.Game.Audio;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Objects;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Skinning;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
@@ -19,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     {
         private readonly ISkin source;
 
-        private KaroakeSkin skin;
+        private readonly KaroakeSkin skin;
 
         public KaraokeLegacySkinTransformer(ISkinSource source)
         {
@@ -27,13 +29,26 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             // TODO : need a better way to load resource
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = @"osu.Game.Rulesets.Karaoke.Resources.Skin.default.nkmproj";
+            const string resource_name = @"osu.Game.Rulesets.Karaoke.Resources.Skin.default.nkmproj";
 
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            using (var stream = assembly.GetManifestResourceStream(resource_name))
             using (var reader = new LineBufferedReader(stream))
             {
                 skin = new NicoKaraDecoder().Decode(reader);
             }
+
+            // TODO : get note style from file
+            skin.DefinedNoteSkins = new List<NoteSkin>
+            {
+                new NoteSkin
+                {
+                    Name = "Note skin 0",
+                    NoteColor = new Color4(68, 170, 221, 255),
+                    BlinkColor = new Color4(255, 102, 170, 255),
+                    TextColor = Color4.White,
+                    BoldText = true,
+                }
+            };
         }
 
         public Drawable GetDrawableComponent(ISkinComponent component)
@@ -59,12 +74,39 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         public IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
         {
-            switch (lookup)
+            if (lookup is KaraokeSkinLookup skinLookup)
             {
-                case KaraokeFontLookup fontLookup:
-                    return SkinUtils.As<TValue>(new Bindable<KaraokeFont>(skin.DefinedFonts[fontLookup.FontIndex]));
-                case KaraokeLayoutLookup layoutLookup:
-                    return SkinUtils.As<TValue>(new Bindable<KaraokeLayout>(skin.DefinedLayouts[layoutLookup.LayoutIndex]));
+                var config = skinLookup.Config;
+                var lookupNumber = skinLookup.Lookup;
+
+                switch (config)
+                {
+                    case KaraokeSkinConfiguration.LyricStyle:
+                        return SkinUtils.As<TValue>(new Bindable<KaraokeFont>(skin.DefinedFonts[lookupNumber]));
+
+                    case KaraokeSkinConfiguration.LyricLayout:
+                        return SkinUtils.As<TValue>(new Bindable<KaraokeLayout>(skin.DefinedLayouts[lookupNumber]));
+
+                    case KaraokeSkinConfiguration.NoteStyle:
+                        return SkinUtils.As<TValue>(new Bindable<NoteSkin>(skin.DefinedNoteSkins[lookupNumber]));
+                }
+            }
+            else if (lookup is KaraokeIndexLookup indexLookup)
+            {
+                switch (indexLookup)
+                {
+                    case KaraokeIndexLookup.Layout:
+                        var layoutDictionary = skin.DefinedLayouts.ToDictionary(k => skin.DefinedLayouts.IndexOf(k), y => y.Name);
+                        return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(layoutDictionary));
+
+                    case KaraokeIndexLookup.Style:
+                        var fontDictionary = skin.DefinedFonts.ToDictionary(k => skin.DefinedFonts.IndexOf(k), y => y.Name);
+                        return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(fontDictionary));
+
+                    case KaraokeIndexLookup.Note:
+                        var noteDictionary = skin.DefinedNoteSkins.ToDictionary(k => skin.DefinedNoteSkins.IndexOf(k), y => y.Name);
+                        return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(noteDictionary));
+                }
             }
 
             return source.GetConfig<TLookup, TValue>(lookup);

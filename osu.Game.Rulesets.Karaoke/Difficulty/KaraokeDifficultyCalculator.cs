@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
         protected override DifficultyAttributes CreateDifficultyAttributes(IBeatmap beatmap, Mod[] mods, Skill[] skills, double clockRate)
         {
             // Only karaoke note can be apply in difficulty calculation
-            var notes = beatmap.HitObjects.OfType<KaraokeNote>().ToList();
+            var notes = beatmap.HitObjects.OfType<Note>().ToList();
 
             if (!notes.Any())
                 return new KaraokeDifficultyAttributes { Mods = mods, Skills = skills };
@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
         protected override IEnumerable<DifficultyHitObject> CreateDifficultyHitObjects(IBeatmap beatmap, double clockRate)
         {
             // Only karaoke note can be apply in difficulty calculation
-            var notes = beatmap.HitObjects.OfType<KaraokeNote>().ToList();
+            var notes = beatmap.HitObjects.OfType<Note>().ToList();
 
             for (int i = 1; i < notes.Count; i++)
                 yield return new KaraokeDifficultyHitObject(notes[i], notes[i - 1], clockRate);
@@ -91,28 +91,26 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
         protected override Skill[] CreateSkills(IBeatmap beatmap)
         {
             // Only karaoke note can be apply in difficulty calculation
-            var notes = beatmap.HitObjects.OfType<KaraokeNote>().ToList();
+            var notes = beatmap.HitObjects.OfType<Note>().ToList();
 
             // TODO : need to get real value in the future
             var maxNoteColumn = notes.Max(x => x.Tone);
             var minNoteColumn = notes.Min(x => x.Tone);
 
-            int columnCount = maxNoteColumn - minNoteColumn + 1;
+            int columnCount = maxNoteColumn.Scale - minNoteColumn.Scale + 1;
 
-            var skills = new List<Skill> { new Overall(columnCount, minNoteColumn) };
+            var skills = new List<Skill> { new Overall(columnCount, minNoteColumn.Scale) };
 
             for (int i = 0; i < columnCount; i++)
-                skills.Add(new Individual(i, columnCount, minNoteColumn));
+                skills.Add(new Individual(i, columnCount, minNoteColumn.Scale));
 
             return skills.ToArray();
         }
 
-        protected override Mod[] DifficultyAdjustmentMods
-        {
-            get => new Mod[]
-                {
-                    new KaraokeModPractice(),
-                };
-        }
+        protected override Mod[] DifficultyAdjustmentMods =>
+            new Mod[]
+            {
+                new KaraokeModPractice(),
+            };
     }
 }

@@ -32,6 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             {
                 case LyricLine line:
                     yield return createConvertValue(line);
+
                     break;
             }
 

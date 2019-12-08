@@ -26,19 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
             // re-arrange layout
             layoutArrangement(lyrics);
-
-            // apply default note if not any
-            var note = Beatmap.HitObjects.OfType<KaraokeNote>().ToList();
-
-            if ((Beatmap is Beatmap<KaraokeHitObject> karaokeBeatmap))
-            {
-                foreach (var lyric in lyrics)
-                {
-                    // create default not if not any
-                    if (!note.Any(x => x.StartTime >= lyric.StartTime && x.EndTime <= lyric.EndTime))
-                        karaokeBeatmap.HitObjects.AddRange(lyric.CreateDefaultNotes());
-                }
-            }
         }
 
         /// <summary>
@@ -69,18 +56,18 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         private void layoutArrangement(IList<LyricLine> lyrics, bool bottomOnly = false)
         {
             // Force change to new line if lyric has long time
-            var newLyricLineTime = 15000;
-            var numberOfLine = 2;
+            const int new_lyric_line_time = 15000;
+            const int number_of_line = 2;
 
             // Applay layout index
             for (int i = 0; i < lyrics.Count; i++)
             {
-                var periousCycleLyric = (i >= numberOfLine) ? lyrics[i - numberOfLine] : null;
+                var periousCycleLyric = (i >= number_of_line) ? lyrics[i - number_of_line] : null;
                 var perviousLyric = (i >= 1) ? lyrics[i - 1] : null;
                 var lyric = lyrics[i];
 
                 // Force change layout
-                if ((lyric.StartTime - perviousLyric?.EndTime) > newLyricLineTime)
+                if ((lyric.StartTime - perviousLyric?.EndTime) > new_lyric_line_time)
                     lyric.LayoutIndex = 1;
                 // Change to next layout
                 else if (perviousLyric?.LayoutIndex == 1)
@@ -93,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             // Apply start time
             for (int i = 0; i < lyrics.Count; i++)
             {
-                var lastLyricLine = i >= numberOfLine ? lyrics[i - numberOfLine] : null;
+                var lastLyricLine = i >= number_of_line ? lyrics[i - number_of_line] : null;
                 var lyricLine = lyrics[i];
 
                 if (lastLyricLine != null)

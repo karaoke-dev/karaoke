@@ -6,11 +6,11 @@ using osu.Framework.Graphics;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osuTK.Graphics;
-using System.IO;
 using System.Linq;
+using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Tests
 {
@@ -40,10 +40,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 Assert.AreEqual(firstLayout.HorizontalMargin, 30);
                 Assert.AreEqual(firstLayout.VerticalMargin, 45);
                 Assert.AreEqual(firstLayout.Continuous, false);
-                Assert.AreEqual(firstLayout.SmartHorizon, SmartHorizon.Multi);
+                Assert.AreEqual(firstLayout.SmartHorizon, KaraokeTextSmartHorizon.Multi);
                 Assert.AreEqual(firstLayout.LyricsInterval, 4);
                 Assert.AreEqual(firstLayout.RubyInterval, 2);
-                Assert.AreEqual(firstLayout.RubyAlignment, RubyAlignment.Auto);
+                Assert.AreEqual(firstLayout.RubyAlignment, LyricTextAlignment.Auto);
                 Assert.AreEqual(firstLayout.RubyMargin, 4);
 
                 // Testing style

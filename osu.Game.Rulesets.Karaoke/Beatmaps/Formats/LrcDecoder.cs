@@ -1,9 +1,11 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using LyricMaker.Extensions;
 using LyricMaker.Parser;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
@@ -11,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
-    public class LrcDecoder : Decoder<KaraokeBeatmap>
+    public class LrcDecoder : Decoder<Beatmap>
     {
         public static void Register()
         {
@@ -19,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             AddDecoder<Beatmap>("[", m => new LrcDecoder());
         }
 
-        protected override void ParseStreamInto(LineBufferedReader stream, KaraokeBeatmap output)
+        protected override void ParseStreamInto(LineBufferedReader stream, Beatmap output)
         {
             // Clear all hitobjects
             output.HitObjects.Clear();
@@ -37,13 +39,13 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     // Start time and end time should be re-assigned
                     StartTime = line.TimeTags.FirstOrDefault(x => x.Time > 0).Time,
                     EndTime = line.TimeTags.LastOrDefault(x => x.Time > 0).Time,
-                    TimeTags = line.TimeTags.Select(tag => new TimeTag
+                    TimeTags = line.TimeTags.Where(x => x.Check).ToDictionary(k => 
                     {
-                        StartTime = tag.Time,
-                        Check = tag.Check,
-                        KeyUp = tag.KeyUp
-                    }).ToArray(),
-                    // Get ruby from each line
+                        var index = (int)Math.Ceiling((double)(Array.IndexOf(line.TimeTags, k) - 1) / 2);
+                        var state = ((Array.IndexOf(line.TimeTags, k) - 1) % 2) == 0 ? TimeTagIndex.IndexState.Start : TimeTagIndex.IndexState.End;
+
+                        return new TimeTagIndex(index, state);
+                    }, v => (double)v.Time),
                     RubyTags = result.QueryRubies(lyric).Select(ruby => new RubyTag
                     {
                         Ruby = ruby.Ruby.Ruby,

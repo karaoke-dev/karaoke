@@ -27,8 +27,8 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
 
         protected override double StrainValueOf(DifficultyHitObject current)
         {
-            var maniaCurrent = (KaraokeDifficultyHitObject)current;
-            var endTime = maniaCurrent.BaseObject?.EndTime ?? maniaCurrent.BaseObject.StartTime;
+            var karaokeCurrent = (KaraokeDifficultyHitObject)current;
+            var endTime = karaokeCurrent.BaseObject.EndTime;
 
             double holdFactor = 1.0; // Factor in case something else is held
             double holdAddition = 0; // Addition to the current note in case it's a hold and has to be released awkwardly
@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
                     holdFactor = 1.25;
             }
 
-            holdEndTimes[maniaCurrent.BaseObject.Tone - minColumn] = endTime;
+            holdEndTimes[karaokeCurrent.BaseObject.Tone.Scale - minColumn] = endTime;
 
             return (1 + holdAddition) * holdFactor;
         }

@@ -27,6 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.ControlPanel.Pieces
                         playButton.Icon = FontAwesome.Regular.PlayCircle;
                         TooltipText = "Play";
                         break;
+
                     case PlayState.Pause:
                         playButton.Icon = FontAwesome.Regular.PauseCircle;
                         TooltipText = "Pause";

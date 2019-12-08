@@ -4,7 +4,6 @@
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Objects;
 
-
 namespace osu.Game.Rulesets.Karaoke.Judgements
 {
     public class KaraokeJudgementResult : JudgementResult
