@@ -12,8 +12,7 @@
     <PackageReference Include="osu.KaraokeFramework" Version="1.1.5" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ppy.osu.Framework" Version="2019.1011.0" />
-    <PackageReference Include="ppy.osu.Game" Version="2019.1011.0" />
+    <PackageReference Include="ppy.osu.Game" Version="2019.1113.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Samples\Gameplay" />
