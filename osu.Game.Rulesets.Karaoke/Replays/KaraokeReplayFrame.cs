@@ -1,21 +1,30 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using osu.Game.Rulesets.Replays;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Replays
 {
     public class KaraokeReplayFrame : ReplayFrame
     {
-        public List<KaraokeAction> Actions = new List<KaraokeAction>();
-        public Vector2 Position;
+        /// <summary>
+        /// Use for SaitenPlayfield
+        /// Maybe format will be changed, but i have no idea now.
+        /// </summary>
+        public float Scale { get; set; }
 
-        public KaraokeReplayFrame(KaraokeAction? button = null)
+        // To record this frame has sound.
+        public bool Sound { get; set; }
+
+        public KaraokeReplayFrame()
         {
-            if (button.HasValue)
-                Actions.Add(button.Value);
+        }
+
+        public KaraokeReplayFrame(double time, float scale)
+            : base(time)
+        {
+            Scale = scale;
+            Sound = true;
         }
     }
 }

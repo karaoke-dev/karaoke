@@ -1,14 +1,10 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using osu.Framework.Input.StateChanges;
-using osu.Framework.MathUtils;
 using osu.Game.Replays;
 using osu.Game.Rulesets.Replays;
-using osuTK;
+using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Replays
 {
@@ -19,36 +15,22 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         {
         }
 
-        protected override bool IsImportant(KaraokeReplayFrame frame) => frame.Actions.Any();
+        protected override bool IsImportant(KaraokeReplayFrame frame) => frame.Sound;
 
-        protected Vector2 Position
+        public override List<IInput> GetPendingInputs() => new List<IInput>
         {
-            get
+            new ReplayState<KaraokeSoundAction>
             {
-                var frame = CurrentFrame;
-
-                if (frame == null)
-                    return Vector2.Zero;
-
-                Debug.Assert(CurrentTime != null);
-
-                return Interpolation.ValueAt(CurrentTime.Value, frame.Position, NextFrame.Position, frame.Time, NextFrame.Time);
+                PressedActions = CurrentFrame?.Sound ?? false
+                    ? new List<KaraokeSoundAction>
+                    {
+                        new KaraokeSoundAction
+                        {
+                            Scale = CurrentFrame.Scale
+                        }
+                    }
+                    : new List<KaraokeSoundAction>()
             }
-        }
-
-        public override List<IInput> GetPendingInputs()
-        {
-            return new List<IInput>
-            {
-                new MousePositionAbsoluteInput
-                {
-                    Position = GamefieldToScreenSpace(Position),
-                },
-                new ReplayState<KaraokeAction>
-                {
-                    PressedActions = CurrentFrame?.Actions ?? new List<KaraokeAction>(),
-                }
-            };
-        }
+        };
     }
 }

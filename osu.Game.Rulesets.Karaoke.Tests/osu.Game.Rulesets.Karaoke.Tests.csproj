@@ -1,26 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-      <StartupObject>osu.Game.Rulesets.Karaoke.Tests.VisualTestRunner</StartupObject>
-    </PropertyGroup>
-    <ItemGroup Label="Service">
-      <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-    </ItemGroup>
-    <PropertyGroup>
-      <GenerateProgramFile>false</GenerateProgramFile>
-    </PropertyGroup>
+  <Import Project="..\osu.TestProject.props" />
+  <PropertyGroup>
+    <StartupObject>osu.Game.Rulesets.Karaoke.Tests.VisualTestRunner</StartupObject>
+  </PropertyGroup>
+  <ItemGroup Label="Service">
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <GenerateProgramFile>false</GenerateProgramFile>
+  </PropertyGroup>
   <ItemGroup Label="Package References">
     <PackageReference Include="Appveyor.TestLogger" Version="2.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
     <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Resources\TestResources.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\osu.Game.Rulesets.Karaoke\osu.Game.Rulesets.Karaoke.csproj" />
   </ItemGroup>
   <PropertyGroup Label="Project">
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>osu.Game.Rulesets.Karaoke.Tests</RootNamespace>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 </Project>
