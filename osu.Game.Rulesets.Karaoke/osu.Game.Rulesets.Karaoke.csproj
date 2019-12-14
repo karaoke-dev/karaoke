@@ -1,18 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\osu.Game.props" />
   <PropertyGroup Label="Project">
     <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyTitle>osu.Game.Rulesets.Sample</AssemblyTitle>
     <OutputType>Library</OutputType>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Description>UwU.</Description>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RootNamespace>osu.Game.Rulesets.Karaoke</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="LyricMaker" Version="1.1.1" />
-    <PackageReference Include="NicoKaraParser" Version="1.1.0" />
-    <PackageReference Include="osu.KaraokeFramework" Version="1.1.5" />
+    <EmbeddedResource Include="Resources\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ppy.osu.Game" Version="2019.1113.0" />
+    <PackageReference Include="ppy.osu.Game" Version="2019.1213.0" />
+    <PackageReference Include="LyricMaker" Version="1.1.1" />
+    <PackageReference Include="NicoKaraParser" Version="1.1.0" />
+    <PackageReference Include="osu.KaraokeFramework" Version="1.1.8" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\Samples\Gameplay" />
