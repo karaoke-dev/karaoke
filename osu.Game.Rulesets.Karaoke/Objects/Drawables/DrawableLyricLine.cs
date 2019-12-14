@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             karoakText.ShadowOffset = font.ShadowOffset;
         }
 
-        protected void ApplyLayout(KaraokeLayout layout)
+        protected virtual void ApplyLayout(KaraokeLayout layout)
         {
             // Layout relative to parent
             Anchor = layout.Alignment;

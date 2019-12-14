@@ -10,6 +10,8 @@ using osu.Game.Rulesets.UI.Scrolling;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Framework.Graphics.Containers;
+using osuTK;
+using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
@@ -25,6 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public NotePlayfield NotePlayfield => notePlayfield;
         private readonly NotePlayfield notePlayfield;
+
+        public BindableBool DisplayCursor { get; set; } = new BindableBool();
+        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => DisplayCursor.Value ? false : base.ReceivePositionalInputAt(screenSpacePos);
 
         public KaraokePlayfield()
         {
@@ -75,6 +80,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public void Add(BarLine barline)
         {
             notePlayfield.Add(barline);
+        }
+
+        [BackgroundDependencyLoader]
+        private void Load(KaraokeRulesetConfigManager rulesetConfig)
+        {
+            rulesetConfig?.BindWith(KaraokeRulesetSetting.ShowCursor, DisplayCursor);
         }
     }
 }

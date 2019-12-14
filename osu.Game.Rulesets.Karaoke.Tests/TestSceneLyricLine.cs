@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
 
             var drawable = CreateDrawableLyricLine(lyric, auto);
 
-            foreach (var mod in Mods.Value.OfType<IApplicableToDrawableHitObjects>())
+            foreach (var mod in SelectedMods.Value.OfType<IApplicableToDrawableHitObjects>())
                 mod.ApplyToDrawableHitObjects(new[] { drawable });
 
             return drawable;

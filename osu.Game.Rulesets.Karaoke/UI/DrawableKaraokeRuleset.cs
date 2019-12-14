@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
 
-        public DrawableKaraokeRuleset(Ruleset ruleset, IWorkingBeatmap beatmap, IReadOnlyList<Mod> mods)
+        public DrawableKaraokeRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)
         {
             positionCalculator = new PositionCalculator(9);
@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         protected override Playfield CreatePlayfield() => new KaraokePlayfield();
 
-        public override ScoreProcessor CreateScoreProcessor() => new KaraokeScoreProcessor(this);
+        public override ScoreProcessor CreateScoreProcessor() => new KaraokeScoreProcessor(Beatmap);
 
         protected override PassThroughInputManager CreateInputManager() =>
             new KaraokeInputManager(Ruleset.RulesetInfo);

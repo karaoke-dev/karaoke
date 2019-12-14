@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
-using osu.Framework.IO.File;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -22,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class DrawableKaraokeEditRuleset : DrawableKaraokeRuleset
     {
-        public DrawableKaraokeEditRuleset(Ruleset ruleset, IWorkingBeatmap beatmap, IReadOnlyList<Mod> mods)
+        public DrawableKaraokeEditRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)
         {
         }
@@ -45,7 +44,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             if (e.Key == osuTK.Input.Key.S)
             {
-                var path = FileSafety.GetTempPath("karaoke.txt");
+                string directory = Path.Combine(Path.GetTempPath(), @"osu!");
+                Directory.CreateDirectory(directory);
+                var path = Path.Combine(directory, "karaoke.txt");
 
                 using (var sw = new StreamWriter(path))
                 {

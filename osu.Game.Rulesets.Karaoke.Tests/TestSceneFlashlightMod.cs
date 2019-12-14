@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
     {
         protected override Player CreatePlayer(Ruleset ruleset)
         {
-            Mods.Value = new[] { new KaraokeModFlashlight() };
+            SelectedMods.Value = new[] { new KaraokeModFlashlight() };
 
             return base.CreatePlayer(ruleset);
         }

@@ -4,8 +4,8 @@
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.UI.ControlPanel;
 using osu.Game.Tests.Visual;
+using static osu.Game.Rulesets.Karaoke.Mods.KaraokeModPractice;
 
 namespace osu.Game.Rulesets.Karaoke.Tests
 {
@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         {
             base.LoadComplete();
 
-            Add(KaraokePanelOverlay = new KaraokePanelOverlay
+            Add(KaraokePanelOverlay = new KaraokePanelOverlay(null,null)
             {
                 RelativeSizeAxes = Axes.Both,
             });

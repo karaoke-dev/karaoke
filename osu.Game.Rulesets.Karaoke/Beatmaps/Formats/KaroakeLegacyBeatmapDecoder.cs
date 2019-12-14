@@ -42,12 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 return;
             }
 
-            if (line.StartsWith("@["))
-            {
-                // Remove @ in timetag and add into lrc queue
-                lrcLines.Add(line.Substring(1));
-            }
-            else if (line.ToLower().StartsWith("@ruby") || line.ToLower().StartsWith("@romaji"))
+            if (line.ToLower().StartsWith("@ruby") || line.ToLower().StartsWith("@romaji"))
             {
                 // lrc queue
                 lrcLines.Add(line);
@@ -66,6 +61,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             {
                 // add translate queue
                 translates.Add(line);
+            }
+            else if (line.StartsWith("@"))
+            {
+                // Remove @ in timetag and add into lrc queue
+                lrcLines.Add(line.Substring(1));
             }
             else if (line.ToLower() == "end")
             {

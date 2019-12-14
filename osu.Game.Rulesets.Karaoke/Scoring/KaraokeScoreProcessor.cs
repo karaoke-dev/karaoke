@@ -3,13 +3,11 @@
 
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Scoring;
-using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Karaoke.Scoring
 {
-    internal class KaraokeScoreProcessor : ScoreProcessor<KaraokeHitObject>
+    internal class KaraokeScoreProcessor : ScoreProcessor
     {
         /// <summary>
         /// The hit HP multiplier at OD = 0.
@@ -51,12 +49,12 @@ namespace osu.Game.Rulesets.Karaoke.Scoring
         /// </summary>
         private double hpMultiplier = 1;
 
-        public KaraokeScoreProcessor(DrawableRuleset<KaraokeHitObject> drawableRuleset)
-            : base(drawableRuleset)
+        public KaraokeScoreProcessor(IBeatmap beatmap)
+            : base(beatmap)
         {
         }
 
-        protected override void ApplyBeatmap(Beatmap<KaraokeHitObject> beatmap)
+        protected override void ApplyBeatmap(IBeatmap beatmap)
         {
             base.ApplyBeatmap(beatmap);
 
@@ -65,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Scoring
             hpMissMultiplier = BeatmapDifficulty.DifficultyRange(difficulty.DrainRate, hp_multiplier_miss_min, hp_multiplier_miss_mid, hp_multiplier_miss_max);
         }
 
-        protected override void SimulateAutoplay(Beatmap<KaraokeHitObject> beatmap)
+        protected override void SimulateAutoplay(IBeatmap beatmap)
         {
             while (true)
             {

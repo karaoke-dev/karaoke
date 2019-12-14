@@ -24,6 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             Set(KaraokeRulesetSetting.DisplayAlternativeText, false);
             Set(KaraokeRulesetSetting.UseTranslate, true);
             Set(KaraokeRulesetSetting.PerferLanguage, "en-US");
+            Set(KaraokeRulesetSetting.ShowCursor, false);
         }
 
         public override TrackedSettings CreateTrackedSettings() => new TrackedSettings
@@ -38,6 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         ScrollDirection,
         DisplayAlternativeText,
         UseTranslate,
-        PerferLanguage
+        PerferLanguage,
+        ShowCursor,
     }
 }
