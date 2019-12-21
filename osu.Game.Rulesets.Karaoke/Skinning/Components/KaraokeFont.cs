@@ -17,6 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Components
 
         public TextFontInfo RubyTextFontInfo { get; set; }
 
+        public TextFontInfo RomajiTextFontInfo { get; set; }
+
         public class TextBrushInfo
         {
             public BrushInfo TextBrush { get; set; }
@@ -30,8 +32,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Components
         {
             public FontInfo LyricTextFontInfo { get; set; }
 
+            // This property might be ignore now
             public FontInfo NakaTextFontInfo { get; set; }
 
+            // This property might be ignore now
             public FontInfo EnTextFontInfo { get; set; }
         }
 

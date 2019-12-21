@@ -1,6 +1,7 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using osu.Framework.Input.Bindings;
 using osu.Game.Beatmaps;
@@ -15,9 +16,11 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Difficulty;
 using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Mods;
+using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 using osu.Game.Skinning;
 
@@ -26,6 +29,7 @@ namespace osu.Game.Rulesets.Karaoke
     public class KaraokeRuleset : Ruleset
     {
         public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod> mods = null) => new DrawableKaraokeRuleset(this, beatmap, mods);
+        public override ScoreProcessor CreateScoreProcessor(IBeatmap beatmap) => new KaraokeScoreProcessor(beatmap);
         public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new KaraokeBeatmapConverter(beatmap);
         public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new KaraokeBeatmapProcessor(beatmap);
 
@@ -61,10 +65,10 @@ namespace osu.Game.Rulesets.Karaoke
 
                 case 1:
                     //Vocal
-                    return new KeyBinding[0];
+                    return Array.Empty<KeyBinding>();
 
                 default:
-                    return new KeyBinding[0];
+                    return Array.Empty<KeyBinding>();
             }
         }
 
@@ -107,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke
                     };
 
                 default:
-                    return new Mod[] { };
+                    return Array.Empty<Mod>();
             }
         }
 
@@ -127,8 +131,7 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override RulesetSettingsSubsection CreateSettings() => new KaraokeSettingsSubsection(this);
 
-        public KaraokeRuleset(RulesetInfo rulesetInfo = null)
-            : base(rulesetInfo)
+        public KaraokeRuleset()
         {
             // It's a tricky to let lazer to read karaoke testing beatmap
             KaroakeLegacyBeatmapDecoder.Register();

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -23,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         protected readonly IBindable<double> TimeRange = new Bindable<double>();
 
-        [System.Obsolete]
+        [Obsolete("Use UpdateInitialTransforms()/UpdateStateTransforms() instead")]
         protected override bool UseTransformStateManagement => false;
 
         protected DrawableKaraokeScrollingHitObject(KaraokeHitObject hitObject)

@@ -93,6 +93,13 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                         LyricTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[3]),
                         NakaTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[4]),
                         EnTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[5]),
+                    },
+                    RomajiTextFontInfo = new KaraokeFont.TextFontInfo
+                    {
+                        // Just copied from ruby setting
+                        LyricTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[3]),
+                        NakaTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[4]),
+                        EnTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[5]),
                     }
                 });
             }
