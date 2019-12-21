@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 ApplyLayout(karaokeLayout);
         }
 
-        protected void ApplyFont(KaraokeFont font)
+        protected virtual void ApplyFont(KaraokeFont font)
         {
             // From text sample
             karoakText.FrontTextTexture = new SolidTexture { SolidColor = Color4.Blue }; // font.FrontTextBrushInfo.TextBrush.ConvertToTextureSample();
@@ -115,7 +115,10 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             karoakText.BorderRadius = lyricFont.EdgeSize;
 
             var rubyFont = font.RubyTextFontInfo.LyricTextFontInfo;
-            karoakText.RubyFont = new FontUsage(size: rubyFont.CharSize);
+            karoakText.RubyFont = new FontUsage(size: rubyFont.CharSize); // TODO : FontName and Bold
+
+            var romajiFont = font.RomajiTextFontInfo.LyricTextFontInfo;
+            karoakText.RomajiFont = new FontUsage(size: romajiFont.CharSize); // TODO : FontName and Bold
 
             // Apply shadow
             karoakText.Shadow = font.UseShadow;

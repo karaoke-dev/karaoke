@@ -130,7 +130,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var translates = beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault()?.Translates;
 
                 // Check translate count
-                Assert.AreEqual(translates.Count(), 2);
+                Assert.AreEqual(translates.Count, 2);
 
                 // Check chinese
                 Assert.AreEqual(translates["zh-TW"].Count, 2);

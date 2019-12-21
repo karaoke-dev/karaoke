@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 var language = translateDirectionaty.Translates[translateLanguage];
 
                 // Apply translate
-                for (int i = 0; i < Math.Min(lyric.Count(), language.Count()); i++)
+                for (int i = 0; i < Math.Min(lyric.Count, language.Count); i++)
                 {
                     lyric[i].TranslateText = language[i];
                 }
@@ -81,8 +81,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         }
 
         protected override Playfield CreatePlayfield() => new KaraokePlayfield();
-
-        public override ScoreProcessor CreateScoreProcessor() => new KaraokeScoreProcessor(Beatmap);
 
         protected override PassThroughInputManager CreateInputManager() =>
             new KaraokeInputManager(Ruleset.RulesetInfo);

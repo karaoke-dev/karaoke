@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                 new FillFlowContainer
                                 {
                                     RelativeSizeAxes = Axes.Both,
-                                    Margin = new MarginPadding(5),
+                                    Padding = new MarginPadding(5),
                                     Spacing = new Vector2(10),
                                     Children = new Drawable[]
                                     {
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 new OsuSpriteText { Text = "Anchor" },
                                                 alignmentDropdown = new OsuDropdown<Anchor>
                                                 {
-                                                    Width = 200,
+                                                    RelativeSizeAxes = Axes.X,
                                                     Items = (Anchor[])Enum.GetValues(typeof(Anchor))
                                                 }
                                             }
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 new OsuSpriteText { Text = "Horizontal margin" },
                                                 horizontalMarginSliderBar = new OsuSliderBar<int>
                                                 {
-                                                    Width = 200,
+                                                    RelativeSizeAxes = Axes.X,
                                                     Current = new BindableNumber<int>
                                                     {
                                                         MinValue = 0,
@@ -130,7 +130,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 new OsuSpriteText { Text = "Vertical margin" },
                                                 verticalMarginSliderBar = new OsuSliderBar<int>
                                                 {
-                                                    Width = 200,
+                                                    RelativeSizeAxes = Axes.X,
                                                     Current = new BindableNumber<int>
                                                     {
                                                         MinValue = 0,
@@ -141,14 +141,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 }
                                             }
                                         },
-                                        new EditSection
+                                        continuousCheckbox = new OsuCheckbox()
                                         {
                                             Name = "Continuous section",
-                                            Children = new Drawable[]
-                                            {
-                                                new OsuSpriteText { Text = "Continuous" },
-                                                continuousCheckbox = new OsuCheckbox()
-                                            }
+                                            LabelText = "Continuous"
                                         },
                                         new EditSection
                                         {
@@ -158,7 +154,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 new OsuSpriteText { Text = "Smart horizon" },
                                                 smartHorizonDropdown = new OsuDropdown<KaraokeTextSmartHorizon>
                                                 {
-                                                    Width = 200,
+                                                    RelativeSizeAxes = Axes.X,
                                                     Items = (KaraokeTextSmartHorizon[])Enum.GetValues(typeof(KaraokeTextSmartHorizon))
                                                 }
                                             }
@@ -171,7 +167,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 new OsuSpriteText { Text = "Lyrics interval" },
                                                 lyricInvervalSliderBar = new OsuSliderBar<int>
                                                 {
-                                                    Width = 200,
+                                                    RelativeSizeAxes = Axes.X,
                                                     Current = new BindableNumber<int>
                                                     {
                                                         MinValue = 0,
@@ -190,7 +186,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 new OsuSpriteText { Text = "Ruby interval" },
                                                 rubyInvervalSliderBar = new OsuSliderBar<int>
                                                 {
-                                                    Width = 200,
+                                                    RelativeSizeAxes = Axes.X,
                                                     Current = new BindableNumber<int>
                                                     {
                                                         MinValue = 0,
@@ -209,7 +205,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 new OsuSpriteText { Text = "Romaji interval" },
                                                 romajiInvervalSliderBar = new OsuSliderBar<int>
                                                 {
-                                                    Width = 200,
+                                                    RelativeSizeAxes = Axes.X,
                                                     Current = new BindableNumber<int>
                                                     {
                                                         MinValue = 0,
@@ -228,7 +224,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 new OsuSpriteText { Text = "Ruby alignment" },
                                                 rubyAligmentDropdown = new OsuDropdown<LyricTextAlignment>
                                                 {
-                                                    Width = 200,
+                                                    RelativeSizeAxes = Axes.X,
                                                     Items = (LyricTextAlignment[])Enum.GetValues(typeof(LyricTextAlignment))
                                                 }
                                             }
@@ -241,7 +237,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 new OsuSpriteText { Text = "Romaji alignment" },
                                                 romajiAligmentDropdown = new OsuDropdown<LyricTextAlignment>
                                                 {
-                                                    Width = 200,
+                                                    RelativeSizeAxes = Axes.X,
                                                     Items = (LyricTextAlignment[])Enum.GetValues(typeof(LyricTextAlignment))
                                                 }
                                             }
@@ -254,7 +250,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 new OsuSpriteText { Text = "Ruby margin" },
                                                 rubyMarginSliderBar = new OsuSliderBar<int>
                                                 {
-                                                    Width = 200,
+                                                    RelativeSizeAxes = Axes.X,
                                                     Current = new BindableNumber<int>
                                                     {
                                                         MinValue = 0,
@@ -273,7 +269,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 new OsuSpriteText { Text = "Romaji margin" },
                                                 romajiMarginSliderBar = new OsuSliderBar<int>
                                                 {
-                                                    Width = 200,
+                                                    RelativeSizeAxes = Axes.X,
                                                     Current = new BindableNumber<int>
                                                     {
                                                         MinValue = 0,
@@ -361,7 +357,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 }
                 , "karaoke")));
             AddStep("Large size lyric layout", () => initialLyricLine(createDefaultLyricLine("@灰色(いろ)(いろ)の景色(いろ)(いろ)さえ色づき始める",
-                 new string[] { }, new string[] { }, "karaoke")));
+                 Array.Empty<string>(), Array.Empty<string>(), "karaoke")));
         }
 
         private void initialLyricLine(LyricLine lyricLine) => layoutArea.Child = drawableLyricLine = new TestDrawableLyricLine(this, lyricLine);
@@ -468,8 +464,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         {
             public EditSection()
             {
-                AutoSizeAxes = Axes.Both;
-                Direction = FillDirection.Vertical;
+                RelativeSizeAxes = Axes.X;
+                AutoSizeAxes = Axes.Y;
                 Spacing = new Vector2(0, 5);
             }
         }
