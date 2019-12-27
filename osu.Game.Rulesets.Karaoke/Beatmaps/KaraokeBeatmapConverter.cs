@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
@@ -11,12 +12,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
     public class KaraokeBeatmapConverter : BeatmapConverter<KaraokeHitObject>
     {
-        protected override IEnumerable<Type> ValidConversionTypes => new[] { typeof(KaraokeHitObject) };
-
-        public KaraokeBeatmapConverter(IBeatmap beatmap)
-            : base(beatmap)
+        public KaraokeBeatmapConverter(IBeatmap beatmap, Ruleset ruleset)
+            : base(beatmap, ruleset)
         {
         }
+
+        public override bool CanConvert() => Beatmap.HitObjects.All(h => h is KaraokeHitObject);
 
         protected override IEnumerable<KaraokeHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap)
         {
