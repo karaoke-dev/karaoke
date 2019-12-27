@@ -11,7 +11,7 @@ before_build:
   - ps: dotnet --info # Useful when version mismatch between CI and local
   - ps: nuget restore -verbosity quiet # Only nuget.exe knows both new (.NET Core) and old (Xamarin) projects
 build:
-  project: osu.sln
+  project: osu.Game.Rulesets.Karaoke.sln
   parallel: true
   verbosity: minimal
   publish_nuget: true
