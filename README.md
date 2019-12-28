@@ -5,3 +5,5 @@
 [![NuGet](https://img.shields.io/badge/月子我婆-passed-ff69b4.svg)](https://github.com/osu-Karaoke/osu-Karaoke)
 
 The release version of `osu!karaoke`
+
+This repo is under [GPL V3](LICENSE) license.
