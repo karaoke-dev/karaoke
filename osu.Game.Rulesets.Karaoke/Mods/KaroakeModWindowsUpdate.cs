@@ -33,9 +33,9 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             this.overlay = overlay;
         }
 
-        protected override bool FailCondition(ScoreProcessor scoreProcessor, JudgementResult result)
+        protected override bool FailCondition(HealthProcessor healthProcessor, JudgementResult result)
         {
-            var displayWindowsUpdateScreen = base.FailCondition(scoreProcessor, result);
+            var displayWindowsUpdateScreen = base.FailCondition(healthProcessor, result);
             if (displayWindowsUpdateScreen && windowsUpdateContainer == null)
             {
                 overlay.Add(windowsUpdateContainer = new WindowsUpdateContainer

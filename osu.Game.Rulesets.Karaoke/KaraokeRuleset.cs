@@ -29,8 +29,8 @@ namespace osu.Game.Rulesets.Karaoke
     public class KaraokeRuleset : Ruleset
     {
         public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod> mods = null) => new DrawableKaraokeRuleset(this, beatmap, mods);
-        public override ScoreProcessor CreateScoreProcessor(IBeatmap beatmap) => new KaraokeScoreProcessor(beatmap);
-        public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new KaraokeBeatmapConverter(beatmap);
+        public override ScoreProcessor CreateScoreProcessor() => new KaraokeScoreProcessor();
+        public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new KaraokeBeatmapConverter(beatmap, this);
         public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new KaraokeBeatmapProcessor(beatmap);
 
         public const string SHORT_NAME = "karaoke";
@@ -124,8 +124,6 @@ namespace osu.Game.Rulesets.Karaoke
         public override string ShortName => "osu!karaoke";
 
         public override ISkin CreateLegacySkinProvider(ISkinSource source) => new KaraokeLegacySkinTransformer(source);
-
-        public override int? LegacyID => 111;
 
         public override IRulesetConfigManager CreateConfig(SettingsStore settings) => new KaraokeRulesetConfigManager(settings, RulesetInfo);
 

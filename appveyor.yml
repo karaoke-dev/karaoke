@@ -1,6 +1,9 @@
 clone_depth: 1
 version: '{branch}-{build}'
 image: Visual Studio 2019
+branches:
+  only:
+    - master
 dotnet_csproj:
   patch: true
   file: 'osu.Game.Rulesets.Karaoke\osu.Game.Rulesets.Karaoke.csproj' # Use wildcard when it's able to exclude Xamarin projects
