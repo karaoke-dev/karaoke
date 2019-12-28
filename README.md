@@ -5,4 +5,6 @@
 
 The release version of `osu!karaoke`
 
+## License
+
 This repo is under [GPL V3](LICENSE) license.
