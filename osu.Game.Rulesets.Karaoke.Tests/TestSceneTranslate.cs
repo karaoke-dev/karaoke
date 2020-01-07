@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             beatmap = CreateBeatmap(new KaraokeRuleset().RulesetInfo);
             timePreview.LyricLines = lyricLines;
             lyricPreview.LyricLines = lyricLines;
-            translateEditor.LanguageDropdown.Items = new string[]
+            translateEditor.LanguageDropdown.Items = new[]
             {
                 "zh-TW",
                 "en-US",
@@ -98,22 +98,25 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             translateEditor.LanguageDropdown.Current.BindValueChanged(value =>
             {
                 // Save translate first
-                if (translateDictionary?.Translates != null && !string.IsNullOrEmpty(value.OldValue))
+                var oldLanguageCode = value.OldValue;
+
+                if (!string.IsNullOrEmpty(oldLanguageCode))
                 {
-                    if (translateDictionary.Translates.ContainsKey(value.OldValue))
-                        translateDictionary.Translates[value.OldValue] = translateEditor.Translates.ToList();
+                    // Get translate and fill empty
+                    var insertTranslate = translateEditor.Translates.ToList();
+                    insertTranslate.AddRange(new string[lyricLines.Length - insertTranslate.Count]);
+
+                    if (translateDictionary.Translates.ContainsKey(oldLanguageCode))
+                        translateDictionary.Translates[oldLanguageCode] = insertTranslate;
                     else
-                        translateDictionary.Translates.Add(value.OldValue, translateEditor.Translates.ToList());
+                        translateDictionary.Translates.Add(oldLanguageCode, insertTranslate);
                 }
 
-                if (translateDictionary?.Translates!=null && translateDictionary.Translates.TryGetValue(value.NewValue, out var translate))
-                {
-                    translateEditor.Translates = translate.ToArray();
-                }
-                else
-                {
-                    translateEditor.Translates = lyricLines.Select(x => "").ToArray();
-                }
+                // Apply new translate to editor
+                var newLanguageCode = value.NewValue;
+                translateEditor.Translates = translateDictionary.Translates.TryGetValue(newLanguageCode, out var translate)
+                    ? translate.ToArray()
+                    : lyricLines.Select(x => "").ToArray();
             }, true);
         }
 
@@ -154,7 +157,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                             AutoSizeAxes = Axes.Y,
                             Spacing = new Vector2(SPACING),
                             Margin = new MarginPadding { Left = SPACING, Right = SPACING },
-                            Y = (TEXT_HEIGHT) / 2 - SPACING
+                            Y = TEXT_HEIGHT / 2 - SPACING
                         }
                     }
                 };
@@ -194,7 +197,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         public class LyricPreview : Container
         {
             private readonly Box background;
-            private readonly FillFlowContainer<OsuSpriteText> priviewSpriteTexts;
+            private readonly FillFlowContainer<OsuSpriteText> previewSpriteTexts;
 
             public LyricPreview()
             {
@@ -215,14 +218,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                             Origin = Anchor.Centre,
                             RelativeSizeAxes = Axes.Both,
                         },
-                        priviewSpriteTexts = new FillFlowContainer<OsuSpriteText>
+                        previewSpriteTexts = new FillFlowContainer<OsuSpriteText>
                         {
                             Direction = FillDirection.Vertical,
                             RelativeSizeAxes = Axes.X,
                             AutoSizeAxes = Axes.Y,
                             Spacing = new Vector2(SPACING),
                             Margin = new MarginPadding { Left = SPACING, Right = SPACING },
-                            Y = (TEXT_HEIGHT) / 2 - SPACING
+                            Y = TEXT_HEIGHT / 2 - SPACING
                         }
                     }
                 };
@@ -236,7 +239,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 set
                 {
                     lyricLines = value;
-                    priviewSpriteTexts.Children = LyricLines.Select(x => new OsuSpriteText
+                    previewSpriteTexts.Children = LyricLines.Select(x => new OsuSpriteText
                     {
                         Text = x.Text,
                         RelativeSizeAxes = Axes.X,
@@ -255,9 +258,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests
 
         public class TranslateEditor : FillFlowContainer
         {
-            public OsuDropdown<string> LanguageDropdown { get; private set; }
+            public OsuDropdown<string> LanguageDropdown { get; }
 
-            private readonly FillFlowContainer<OsuTextBox> translateTextBoxs;
+            private readonly FillFlowContainer<OsuTextBox> translateTextBoxes;
 
             public TranslateEditor()
             {
@@ -269,7 +272,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                     {
                         RelativeSizeAxes = Axes.X,
                     },
-                    translateTextBoxs = new FillFlowContainer<OsuTextBox>
+                    translateTextBoxes = new FillFlowContainer<OsuTextBox>
                     {
                         Direction = FillDirection.Vertical,
                         RelativeSizeAxes = Axes.X,
@@ -279,29 +282,29 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 };
             }
 
-            private string[] translates;
+            private string[] translates = Array.Empty<string>();
 
             public string[] Translates
             {
                 get => translates;
                 set
                 {
-                    translates = value;
+                    translates = value ?? Array.Empty<string>();
 
-                    translateTextBoxs.Children = Translates?.Select(x =>
+                    translateTextBoxes.Children = Translates?.Select(x =>
                     {
-                        var textbox = new OsuTextBox
+                        var textBox = new OsuTextBox
                         {
                             Text = x,
                             RelativeSizeAxes = Axes.X,
                             Height = TEXT_HEIGHT
                         };
-                        textbox.Current.BindValueChanged(textBoxValue =>
+                        textBox.Current.BindValueChanged(textBoxValue =>
                         {
-                            var index = translateTextBoxs.Children.IndexOf(textbox);
+                            var index = translateTextBoxes.Children.IndexOf(textBox);
                             Translates[index] = textBoxValue.NewValue;
                         });
-                        return textbox;
+                        return textBox;
                     }).ToList();
                 }
             }

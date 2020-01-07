@@ -36,11 +36,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         private readonly OsuSliderBar<int> verticalMarginSliderBar;
         private readonly OsuCheckbox continuousCheckbox;
         private readonly OsuDropdown<KaraokeTextSmartHorizon> smartHorizonDropdown;
-        private readonly OsuSliderBar<int> lyricInvervalSliderBar;
-        private readonly OsuSliderBar<int> rubyInvervalSliderBar;
-        private readonly OsuSliderBar<int> romajiInvervalSliderBar;
-        private readonly OsuDropdown<LyricTextAlignment> rubyAligmentDropdown;
-        private readonly OsuDropdown<LyricTextAlignment> romajiAligmentDropdown;
+        private readonly OsuSliderBar<int> lyricIntervalSliderBar;
+        private readonly OsuSliderBar<int> rubyIntervalSliderBar;
+        private readonly OsuSliderBar<int> romajiIntervalSliderBar;
+        private readonly OsuDropdown<LyricTextAlignment> rubyAlignmentDropdown;
+        private readonly OsuDropdown<LyricTextAlignment> romajiAlignmentDropdown;
         private readonly OsuSliderBar<int> rubyMarginSliderBar;
         private readonly OsuSliderBar<int> romajiMarginSliderBar;
 
@@ -52,11 +52,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             Child = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                ColumnDimensions = new Dimension[]
+                ColumnDimensions = new[]
                 {
                     new Dimension(GridSizeMode.Absolute, 210f)
                 },
-                Content = new Drawable[][]
+                Content = new[]
                 {
                     new Drawable[]
                     {
@@ -141,7 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                                 }
                                             }
                                         },
-                                        continuousCheckbox = new OsuCheckbox()
+                                        continuousCheckbox = new OsuCheckbox
                                         {
                                             Name = "Continuous section",
                                             LabelText = "Continuous"
@@ -165,7 +165,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                             Children = new Drawable[]
                                             {
                                                 new OsuSpriteText { Text = "Lyrics interval" },
-                                                lyricInvervalSliderBar = new OsuSliderBar<int>
+                                                lyricIntervalSliderBar = new OsuSliderBar<int>
                                                 {
                                                     RelativeSizeAxes = Axes.X,
                                                     Current = new BindableNumber<int>
@@ -184,7 +184,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                             Children = new Drawable[]
                                             {
                                                 new OsuSpriteText { Text = "Ruby interval" },
-                                                rubyInvervalSliderBar = new OsuSliderBar<int>
+                                                rubyIntervalSliderBar = new OsuSliderBar<int>
                                                 {
                                                     RelativeSizeAxes = Axes.X,
                                                     Current = new BindableNumber<int>
@@ -203,7 +203,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                             Children = new Drawable[]
                                             {
                                                 new OsuSpriteText { Text = "Romaji interval" },
-                                                romajiInvervalSliderBar = new OsuSliderBar<int>
+                                                romajiIntervalSliderBar = new OsuSliderBar<int>
                                                 {
                                                     RelativeSizeAxes = Axes.X,
                                                     Current = new BindableNumber<int>
@@ -222,7 +222,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                             Children = new Drawable[]
                                             {
                                                 new OsuSpriteText { Text = "Ruby alignment" },
-                                                rubyAligmentDropdown = new OsuDropdown<LyricTextAlignment>
+                                                rubyAlignmentDropdown = new OsuDropdown<LyricTextAlignment>
                                                 {
                                                     RelativeSizeAxes = Axes.X,
                                                     Items = (LyricTextAlignment[])Enum.GetValues(typeof(LyricTextAlignment))
@@ -235,7 +235,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                             Children = new Drawable[]
                                             {
                                                 new OsuSpriteText { Text = "Romaji alignment" },
-                                                romajiAligmentDropdown = new OsuDropdown<LyricTextAlignment>
+                                                romajiAlignmentDropdown = new OsuDropdown<LyricTextAlignment>
                                                 {
                                                     RelativeSizeAxes = Axes.X,
                                                     Items = (LyricTextAlignment[])Enum.GetValues(typeof(LyricTextAlignment))
@@ -312,52 +312,52 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             verticalMarginSliderBar.Current.BindValueChanged(x => applyChange(l => l.VerticalMargin = x.NewValue));
             continuousCheckbox.Current.BindValueChanged(x => applyChange(l => l.Continuous = x.NewValue));
             smartHorizonDropdown.Current.BindValueChanged(x => applyChange(l => l.SmartHorizon = x.NewValue));
-            lyricInvervalSliderBar.Current.BindValueChanged(x => applyChange(l => l.LyricsInterval = x.NewValue));
-            rubyInvervalSliderBar.Current.BindValueChanged(x => applyChange(l => l.RubyInterval = x.NewValue));
-            romajiInvervalSliderBar.Current.BindValueChanged(x => applyChange(l => l.RomajiInterval = x.NewValue));
-            rubyAligmentDropdown.Current.BindValueChanged(x => applyChange(l => l.RubyAlignment = x.NewValue));
-            romajiAligmentDropdown.Current.BindValueChanged(x => applyChange(l => l.RomajiAlignment = x.NewValue));
+            lyricIntervalSliderBar.Current.BindValueChanged(x => applyChange(l => l.LyricsInterval = x.NewValue));
+            rubyIntervalSliderBar.Current.BindValueChanged(x => applyChange(l => l.RubyInterval = x.NewValue));
+            romajiIntervalSliderBar.Current.BindValueChanged(x => applyChange(l => l.RomajiInterval = x.NewValue));
+            rubyAlignmentDropdown.Current.BindValueChanged(x => applyChange(l => l.RubyAlignment = x.NewValue));
+            romajiAlignmentDropdown.Current.BindValueChanged(x => applyChange(l => l.RomajiAlignment = x.NewValue));
             rubyMarginSliderBar.Current.BindValueChanged(x => applyChange(l => l.RubyMargin = x.NewValue));
             romajiMarginSliderBar.Current.BindValueChanged(x => applyChange(l => l.RomajiMargin = x.NewValue));
 
             AddStep("Small size lyric layout",
                 () => initialLyricLine(createDefaultLyricLine("@カラオケ",
-                new string[]
-                {
-                    "@Ruby1=カ,か",
-                    "@Ruby2=ラ,ら",
-                    "@Ruby3=オ,お",
-                    "@Ruby4=ケ,け"
-                },
-                new string[]
-                {
-                    "@Romaji1=カ,ka",
-                    "@Romaji2=ラ,ra",
-                    "@Romaji3=オ,o",
-                    "@Romaji4=ケ,ke"
-                }
-                , "karaoke")));
+                    new[]
+                    {
+                        "@Ruby1=カ,か",
+                        "@Ruby2=ラ,ら",
+                        "@Ruby3=オ,お",
+                        "@Ruby4=ケ,け"
+                    },
+                    new[]
+                    {
+                        "@Romaji1=カ,ka",
+                        "@Romaji2=ラ,ra",
+                        "@Romaji3=オ,o",
+                        "@Romaji4=ケ,ke"
+                    }
+                    , "karaoke")));
             AddStep("Medium size lyric layout",
                 () => initialLyricLine(createDefaultLyricLine("@[00:18:58]た[00:18:81]だ[00:19:36]風[00:20:09]に[00:20:29]揺[00:20:49]ら[00:20:68]れ[00:20:89]て[00:20:93]",
-                new string[]
-                {
-                    "@Ruby1=風,かぜ",
-                    "@Ruby2=揺,ゆ"
-                },
-                new string[]
-                {
-                    "@Romaji1=た,ta",
-                    "@Romaji2=だ,da",
-                    "@Romaji3=風,kaze",
-                    "@Romaji4=に,ni",
-                    "@Romaji5=揺,yu",
-                    "@Romaji6=ら,ra",
-                    "@Romaji7=れ,re",
-                    "@Romaji8=て,te"
-                }
-                , "karaoke")));
+                    new[]
+                    {
+                        "@Ruby1=風,かぜ",
+                        "@Ruby2=揺,ゆ"
+                    },
+                    new[]
+                    {
+                        "@Romaji1=た,ta",
+                        "@Romaji2=だ,da",
+                        "@Romaji3=風,kaze",
+                        "@Romaji4=に,ni",
+                        "@Romaji5=揺,yu",
+                        "@Romaji6=ら,ra",
+                        "@Romaji7=れ,re",
+                        "@Romaji8=て,te"
+                    }
+                    , "karaoke")));
             AddStep("Large size lyric layout", () => initialLyricLine(createDefaultLyricLine("@灰色(いろ)(いろ)の景色(いろ)(いろ)さえ色づき始める",
-                 Array.Empty<string>(), Array.Empty<string>(), "karaoke")));
+                Array.Empty<string>(), Array.Empty<string>(), "karaoke")));
         }
 
         private void initialLyricLine(LyricLine lyricLine) => layoutArea.Child = drawableLyricLine = new TestDrawableLyricLine(this, lyricLine);
@@ -382,7 +382,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 writer.Flush();
                 stream.Position = 0;
 
-                var lyric = new KaroakeLegacyBeatmapDecoder().Decode(reader).HitObjects.OfType<LyricLine>().FirstOrDefault();
+                var lyric = new KaraokeLegacyBeatmapDecoder().Decode(reader).HitObjects.OfType<LyricLine>().FirstOrDefault();
                 lyric.StartTime = startTime;
                 lyric.EndTime = endTime;
                 lyric.TranslateText = translate;
@@ -410,10 +410,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             private KaraokeLayout layout;
             private bool defaultValueAssigned;
 
-            public TestDrawableLyricLine(TestSceneLyricLineLayout testcase, LyricLine hitObject)
+            public TestDrawableLyricLine(TestSceneLyricLineLayout testScene, LyricLine hitObject)
                 : base(hitObject)
             {
-                testScene = testcase;
+                this.testScene = testScene;
             }
 
             protected override void ApplySkin(ISkinSource skin, bool allowFallback)
@@ -443,18 +443,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests
 
                 defaultValueAssigned = true;
 
-                // It's a lazy way to initial testcase's compoment
+                // It's a lazy way to initial test case's component
                 testScene.nameTextBox.Current.Value = layout.Name;
                 testScene.alignmentDropdown.Current.Value = layout.Alignment;
                 testScene.horizontalMarginSliderBar.Current.Value = layout.HorizontalMargin;
                 testScene.verticalMarginSliderBar.Current.Value = layout.VerticalMargin;
                 testScene.continuousCheckbox.Current.Value = layout.Continuous;
                 testScene.smartHorizonDropdown.Current.Value = layout.SmartHorizon;
-                testScene.lyricInvervalSliderBar.Current.Value = layout.LyricsInterval;
-                testScene.rubyInvervalSliderBar.Current.Value = layout.RubyInterval;
-                testScene.romajiInvervalSliderBar.Current.Value = layout.RomajiInterval;
-                testScene.rubyAligmentDropdown.Current.Value = layout.RubyAlignment;
-                testScene.romajiAligmentDropdown.Current.Value = layout.RomajiAlignment;
+                testScene.lyricIntervalSliderBar.Current.Value = layout.LyricsInterval;
+                testScene.rubyIntervalSliderBar.Current.Value = layout.RubyInterval;
+                testScene.romajiIntervalSliderBar.Current.Value = layout.RomajiInterval;
+                testScene.rubyAlignmentDropdown.Current.Value = layout.RubyAlignment;
+                testScene.romajiAlignmentDropdown.Current.Value = layout.RomajiAlignment;
                 testScene.rubyMarginSliderBar.Current.Value = layout.RubyMargin;
                 testScene.romajiMarginSliderBar.Current.Value = layout.RomajiMargin;
             }

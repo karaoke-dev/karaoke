@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Components
 {
-    public class KaroakeSkin
+    public class KaraokeSkin
     {
         public List<KaraokeFont> DefinedFonts { get; set; }
 

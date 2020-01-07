@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 var currentTime = Time.Current;
 
                 var isCreateShow = !Children.Any() ||
-                                   (Children.LastOrDefault() as SnowSpitie)?.CreateTime
+                                   (Children.LastOrDefault() as SnowSprite)?.CreateTime
                                    + 1000 / SnowGenerateParSecond < currentTime;
 
                 // If can generate new snow
@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 {
                     var currentAlpha = (float)random.Next(0, 255) / 255;
                     var width = (int)DrawWidth;
-                    var newFlake = new SnowSpitie
+                    var newFlake = new SnowSprite
                     {
                         Anchor = Anchor.TopCentre,
                         Origin = Anchor.Centre,
@@ -113,11 +113,11 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 // Update each snow position
                 foreach (var drawable in Children)
                 {
-                    var sprite = (SnowSpitie)drawable;
-                    if (!(sprite is SnowSpitie snow)) continue;
+                    var sprite = (SnowSprite)drawable;
+                    if (!(sprite is SnowSprite snow)) continue;
 
-                    snow.X = snow.X + snow.HorizontalSpeed / 1000f;
-                    snow.Y = snow.Y + 1 * Speed;
+                    snow.X += snow.HorizontalSpeed / 1000f;
+                    snow.Y += 1 * Speed;
 
                     // Recycle
                     if (snow.CreateTime + SnowExpireTime < currentTime)
@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             /// <summary>
             /// Show spirit
             /// </summary>
-            public class SnowSpitie : Circle
+            public class SnowSprite : Circle
             {
                 public float HorizontalSpeed { get; set; }
 

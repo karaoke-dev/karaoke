@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Scoring
 
         public override bool IsHitResultAllowed(HitResult result)
         {
-            // In karaoke ruleset, timerange is not the first thing.
+            // In karaoke ruleset, time range is not the first thing.
             switch (result)
             {
                 // Karaoke note hit result

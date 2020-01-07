@@ -23,17 +23,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
 
         public override MenuItem[] ContextMenuItems => new MenuItem[]
         {
-            new OsuMenuItem(HitObject.Display ? "Hide" : "Show",HitObject.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => ChangeDisplay(!HitObject.Display)),
+            new OsuMenuItem(HitObject.Display ? "Hide" : "Show", HitObject.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => ChangeDisplay(!HitObject.Display)),
             new OsuMenuItem("Split", MenuItemType.Destructive, splitNote),
         };
 
         private void splitNote()
         {
             // TODO : percentage should be enter by dialog
-            var splitedNote = HitObject.CopyByPercentage(0.5, 0.5);
-            (placementHandler as KaraokeHitObjectComposer)?.EndNotePlacement(splitedNote);
+            var splittedNote = HitObject.CopyByPercentage(0.5);
+            (placementHandler as KaraokeHitObjectComposer)?.EndNotePlacement(splittedNote);
             // Change object's start time
-            HitObject.EndTime = splitedNote.StartTime;
+            HitObject.EndTime = splittedNote.StartTime;
         }
 
         public void ChangeDisplay(bool display)

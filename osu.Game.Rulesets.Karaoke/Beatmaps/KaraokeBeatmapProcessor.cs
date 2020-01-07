@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         /// -----------
         /// *******     (left)        3
         ///  *****      (left)        4
-        ///      *****  (reft)        5
+        ///      *****  (left)        5
         /// -----------
         /// *******     (left)        6
         ///  *****      (left)        7
@@ -59,18 +59,18 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             const int new_lyric_line_time = 15000;
             const int number_of_line = 2;
 
-            // Applay layout index
+            // Apply layout index
             for (int i = 0; i < lyrics.Count; i++)
             {
-                var periousCycleLyric = (i >= number_of_line) ? lyrics[i - number_of_line] : null;
-                var perviousLyric = (i >= 1) ? lyrics[i - 1] : null;
+                var previousCycleLyric = i >= number_of_line ? lyrics[i - number_of_line] : null;
+                var previousLyric = i >= 1 ? lyrics[i - 1] : null;
                 var lyric = lyrics[i];
 
                 // Force change layout
-                if ((lyric.StartTime - perviousLyric?.EndTime) > new_lyric_line_time)
+                if (lyric.StartTime - previousLyric?.EndTime > new_lyric_line_time)
                     lyric.LayoutIndex = 1;
                 // Change to next layout
-                else if (perviousLyric?.LayoutIndex == 1)
+                else if (previousLyric?.LayoutIndex == 1)
                     lyric.LayoutIndex = 0;
                 // Change to first layout index
                 else

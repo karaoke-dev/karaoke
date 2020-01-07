@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         public KaraokeDifficultyCalculatorTest()
         {
             // It's a tricky to let lazer to read karaoke testing beatmap
-            KaroakeLegacyBeatmapDecoder.Register();
+            KaraokeLegacyBeatmapDecoder.Register();
         }
 
         protected override string ResourceAssembly => "osu.Game.Rulesets.Karaoke.Tests";

@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
     public class DrawableLyricLine : DrawableKaraokeHitObject
     {
-        private readonly KarakeSpriteText karoakText;
+        private readonly KarakeSpriteText karaokeText;
         private readonly OsuSpriteText translateText;
 
         public new LyricLine HitObject => (LyricLine)base.HitObject;
@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             AutoSizeAxes = Axes.Both;
             InternalChildren = new Drawable[]
             {
-                karoakText = new KarakeSpriteText(),
+                karaokeText = new KarakeSpriteText(),
                 translateText = new OsuSpriteText
                 {
                     Anchor = Anchor.BottomLeft,
@@ -40,22 +40,22 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             hitObject.TextBindable.BindValueChanged(text =>
             {
-                karoakText.Text = text.NewValue;
+                karaokeText.Text = text.NewValue;
             }, true);
 
             hitObject.TimeTagsBindable.BindValueChanged(timeTags =>
             {
-                karoakText.TimeTags = timeTags.NewValue;
+                karaokeText.TimeTags = timeTags.NewValue;
             }, true);
 
             hitObject.RubyTagsBindable.BindValueChanged(rubyTags =>
             {
-                karoakText.Rubies = rubyTags.NewValue?.Select(x => new PositionText(x.Ruby, x.StartIndex, x.EndIndex)).ToArray();
+                karaokeText.Rubies = rubyTags.NewValue?.Select(x => new PositionText(x.Ruby, x.StartIndex, x.EndIndex)).ToArray();
             }, true);
 
             hitObject.RomajiTagsBindable.BindValueChanged(romajiTags =>
             {
-                karoakText.Romajies = romajiTags.NewValue?.Select(x => new PositionText(x.Romaji, x.StartIndex, x.EndIndex)).ToArray();
+                karaokeText.Romajies = romajiTags.NewValue?.Select(x => new PositionText(x.Romaji, x.StartIndex, x.EndIndex)).ToArray();
             }, true);
 
             hitObject.FontIndexBindable.BindValueChanged(index =>
@@ -99,30 +99,30 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         protected virtual void ApplyFont(KaraokeFont font)
         {
             // From text sample
-            karoakText.FrontTextTexture = new SolidTexture { SolidColor = Color4.Blue }; // font.FrontTextBrushInfo.TextBrush.ConvertToTextureSample();
-            karoakText.FrontBorderTexture = font.FrontTextBrushInfo.BorderBrush.ConvertToTextureSample();
-            karoakText.FrontTextShadowTexture = font.FrontTextBrushInfo.ShadowBrush.ConvertToTextureSample();
+            karaokeText.FrontTextTexture = new SolidTexture { SolidColor = Color4.Blue }; // font.FrontTextBrushInfo.TextBrush.ConvertToTextureSample();
+            karaokeText.FrontBorderTexture = font.FrontTextBrushInfo.BorderBrush.ConvertToTextureSample();
+            karaokeText.FrontTextShadowTexture = font.FrontTextBrushInfo.ShadowBrush.ConvertToTextureSample();
 
             // Back text sample
-            karoakText.BackTextTexture = font.BackTextBrushInfo.TextBrush.ConvertToTextureSample();
-            karoakText.BackBorderTexture = font.BackTextBrushInfo.BorderBrush.ConvertToTextureSample();
-            karoakText.BackTextShadowTexture = font.BackTextBrushInfo.ShadowBrush.ConvertToTextureSample();
+            karaokeText.BackTextTexture = font.BackTextBrushInfo.TextBrush.ConvertToTextureSample();
+            karaokeText.BackBorderTexture = font.BackTextBrushInfo.BorderBrush.ConvertToTextureSample();
+            karaokeText.BackTextShadowTexture = font.BackTextBrushInfo.ShadowBrush.ConvertToTextureSample();
 
             // Apply text font info
             var lyricFont = font.LyricTextFontInfo.LyricTextFontInfo;
-            karoakText.Font = new FontUsage(size: lyricFont.CharSize); // TODO : FontName and Bold
-            karoakText.Border = lyricFont.EdgeSize > 0;
-            karoakText.BorderRadius = lyricFont.EdgeSize;
+            karaokeText.Font = new FontUsage(size: lyricFont.CharSize); // TODO : FontName and Bold
+            karaokeText.Border = lyricFont.EdgeSize > 0;
+            karaokeText.BorderRadius = lyricFont.EdgeSize;
 
             var rubyFont = font.RubyTextFontInfo.LyricTextFontInfo;
-            karoakText.RubyFont = new FontUsage(size: rubyFont.CharSize); // TODO : FontName and Bold
+            karaokeText.RubyFont = new FontUsage(size: rubyFont.CharSize); // TODO : FontName and Bold
 
             var romajiFont = font.RomajiTextFontInfo.LyricTextFontInfo;
-            karoakText.RomajiFont = new FontUsage(size: romajiFont.CharSize); // TODO : FontName and Bold
+            karaokeText.RomajiFont = new FontUsage(size: romajiFont.CharSize); // TODO : FontName and Bold
 
             // Apply shadow
-            karoakText.Shadow = font.UseShadow;
-            karoakText.ShadowOffset = font.ShadowOffset;
+            karaokeText.Shadow = font.UseShadow;
+            karaokeText.ShadowOffset = font.ShadowOffset;
         }
 
         protected virtual void ApplyLayout(KaraokeLayout layout)
@@ -140,19 +140,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             Padding = new MarginPadding(30);
 
             // Layout to text
-            karoakText.Continuous = layout.Continuous;
-            karoakText.KaraokeTextSmartHorizon = layout.SmartHorizon;
-            karoakText.Spacing = new Vector2(layout.LyricsInterval, karoakText.Spacing.Y);
+            karaokeText.Continuous = layout.Continuous;
+            karaokeText.KaraokeTextSmartHorizon = layout.SmartHorizon;
+            karaokeText.Spacing = new Vector2(layout.LyricsInterval, karaokeText.Spacing.Y);
 
             // Ruby
-            karoakText.RubySpacing = new Vector2(layout.RubyInterval, karoakText.RubySpacing.Y);
-            karoakText.RubyAlignment = layout.RubyAlignment;
-            karoakText.RubyMargin = layout.RubyMargin;
+            karaokeText.RubySpacing = new Vector2(layout.RubyInterval, karaokeText.RubySpacing.Y);
+            karaokeText.RubyAlignment = layout.RubyAlignment;
+            karaokeText.RubyMargin = layout.RubyMargin;
 
             // Romaji
-            karoakText.RomajiSpacing = new Vector2(layout.RomajiInterval, karoakText.RomajiSpacing.Y);
-            karoakText.RomajiAlignment = layout.RomajiAlignment;
-            karoakText.RomajiMargin = layout.RomajiMargin;
+            karaokeText.RomajiSpacing = new Vector2(layout.RomajiInterval, karaokeText.RomajiSpacing.Y);
+            karaokeText.RomajiAlignment = layout.RomajiAlignment;
+            karaokeText.RomajiMargin = layout.RomajiMargin;
         }
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
@@ -180,7 +180,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             set
             {
                 base.LifetimeStart = value;
-                karoakText.LifetimeStart = value;
+                karaokeText.LifetimeStart = value;
                 translateText.LifetimeStart = value;
             }
         }
@@ -191,7 +191,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             set
             {
                 base.LifetimeEnd = value;
-                karoakText.LifetimeEnd = value;
+                karaokeText.LifetimeEnd = value;
                 translateText.LifetimeEnd = value;
             }
         }

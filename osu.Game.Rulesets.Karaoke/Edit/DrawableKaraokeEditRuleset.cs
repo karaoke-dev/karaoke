@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
                 using (var sw = new StreamWriter(path))
                 {
-                    var encoder = new KaroakeLegacyBeatmapEncoder();
+                    var encoder = new KaraokeLegacyBeatmapEncoder();
                     sw.WriteLine(encoder.Encode(new Beatmap
                     {
                         HitObjects = Beatmap.HitObjects.OfType<HitObject>().ToList()

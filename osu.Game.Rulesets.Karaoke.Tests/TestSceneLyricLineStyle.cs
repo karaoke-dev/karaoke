@@ -52,11 +52,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             Child = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                ColumnDimensions = new Dimension[]
+                ColumnDimensions = new[]
                 {
                     new Dimension(GridSizeMode.Absolute, 410f)
                 },
-                Content = new Drawable[][]
+                Content = new[]
                 {
                     new Drawable[]
                     {
@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                         {
                             Name = "Edit container",
                             RelativeSizeAxes = Axes.Both,
-                            Content = new Drawable[][]
+                            Content = new[]
                             {
                                 new Drawable[]
                                 {
@@ -316,7 +316,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 // Update view
                 fontSection.Children.Where(x => x.Name.StartsWith("Shadow ")).ForEach(x => x.Alpha = value.NewValue ? 1 : 0);
 
-                // Update prpoerty
+                // Update property
                 drawableLyricLine.ApplyProperty(x => x.UseShadow = value.NewValue);
             });
 
@@ -387,10 +387,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             public KaraokeFont Font { get; private set; }
             private bool defaultValueAssigned;
 
-            public TestDrawableLyricLine(TestSceneLyricLineStyle testcase, LyricLine hitObject)
+            public TestDrawableLyricLine(TestSceneLyricLineStyle testCase, LyricLine hitObject)
                 : base(hitObject)
             {
-                testScene = testcase;
+                testScene = testCase;
             }
 
             protected override void ApplySkin(ISkinSource skin, bool allowFallback)
@@ -409,7 +409,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
 
                 defaultValueAssigned = true;
 
-                //Assigh default value here
+                // Assign default value here
                 testScene.colorAreaDropdown.Current.TriggerChange();
                 testScene.fontAreaDropdown.Current.TriggerChange();
                 testScene.displayShaderCheckbox.Current.Value = Font.UseShadow;
@@ -431,14 +431,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 {
                     case ColorArea.Front_Text:
                         return Font.FrontTextBrushInfo.TextBrush;
+
                     case ColorArea.Front_Border:
                         return Font.FrontTextBrushInfo.BorderBrush;
+
                     case ColorArea.Front_Shadow:
                         return Font.FrontTextBrushInfo.ShadowBrush;
+
                     case ColorArea.Back_Text:
                         return Font.BackTextBrushInfo.TextBrush;
+
                     case ColorArea.Back_Border:
                         return Font.BackTextBrushInfo.BorderBrush;
+
                     case ColorArea.Back_Shadow:
                         return Font.BackTextBrushInfo.ShadowBrush;
                 }
@@ -452,8 +457,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 {
                     case FontArea.Lyric:
                         return Font.LyricTextFontInfo.LyricTextFontInfo;
+
                     case FontArea.Ruby:
                         return Font.RubyTextFontInfo.LyricTextFontInfo;
+
                     case FontArea.Romaji:
                         return Font.RomajiTextFontInfo.LyricTextFontInfo;
                 }

@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             Set(KaraokeRulesetSetting.ScrollDirection, KaraokeScrollingDirection.Left);
             Set(KaraokeRulesetSetting.DisplayAlternativeText, false);
             Set(KaraokeRulesetSetting.UseTranslate, true);
-            Set(KaraokeRulesetSetting.PerferLanguage, "en-US");
+            Set(KaraokeRulesetSetting.PreferLanguage, "en-US");
             Set(KaraokeRulesetSetting.ShowCursor, false);
         }
 
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         ScrollDirection,
         DisplayAlternativeText,
         UseTranslate,
-        PerferLanguage,
+        PreferLanguage,
         ShowCursor,
     }
 }

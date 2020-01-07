@@ -18,7 +18,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaroakeModWindowsUpdate : ModSuddenDeath, IApplicableToHUD
+    public class KaraokeModWindowsUpdate : ModSuddenDeath, IApplicableToHUD
     {
         public override string Name => "Windows update";
         public override string Acronym => "WD";
@@ -36,6 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         protected override bool FailCondition(HealthProcessor healthProcessor, JudgementResult result)
         {
             var displayWindowsUpdateScreen = base.FailCondition(healthProcessor, result);
+
             if (displayWindowsUpdateScreen && windowsUpdateContainer == null)
             {
                 overlay.Add(windowsUpdateContainer = new WindowsUpdateContainer
@@ -57,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                     {
                         Name = "Background",
                         RelativeSizeAxes = Axes.Both,
-                        Colour = new Color4(0, 120, 215,255)
+                        Colour = new Color4(0, 120, 215, 255)
                     },
                     new LoadingIcon
                     {
@@ -98,7 +99,8 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
             public class LoadingIcon : ModButton
             {
-                public LoadingIcon() : base(new KaroakeModWindowsUpdate())
+                public LoadingIcon()
+                    : base(new KaraokeModWindowsUpdate())
                 {
                     // Hide the text on the bottom.
                     Children.OfType<OsuSpriteText>().ForEach(x => x.Hide());

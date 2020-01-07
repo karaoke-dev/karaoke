@@ -99,8 +99,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
             base.OnTimeRangeChanged(e);
 
-            var paddingsize = 5 + 7 * 1000 / (float)e.NewValue;
-            textPiece.Padding = new MarginPadding { Left = paddingsize, Right = paddingsize };
+            var paddingSize = 5 + 7 * 1000 / (float)e.NewValue;
+            textPiece.Padding = new MarginPadding { Left = paddingSize, Right = paddingSize };
         }
 
         private void changeText(Note note)
@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public bool OnPressed(KaraokeSoundAction action)
         {
             // Make sure the action happened within the body of the hold note
-            if ((Time.Current < HitObject.StartTime && holdStartTime == null) || (Time.Current > HitObject.EndTime && holdStartTime == null))
+            if (Time.Current < HitObject.StartTime && holdStartTime == null || Time.Current > HitObject.EndTime && holdStartTime == null)
                 return false;
 
             if (holdStartTime == null)

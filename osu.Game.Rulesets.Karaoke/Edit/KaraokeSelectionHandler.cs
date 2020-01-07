@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     // Set multi note display property
                     menu = menu.Append(createMultiNoteDisplayPropertyMenuItem(selectedObject)).ToArray();
 
-                    // Combine mulit note if they has same start and end index.
+                    // Combine multi note if they has same start and end index.
                     var firstObject = selectedObject.FirstOrDefault();
                     if (firstObject != null && selectedObject.All(x => x.StartIndex == firstObject.StartIndex && x.EndIndex == firstObject.EndIndex))
                         menu = menu.Append(createCombineNoteMenuItem(selectedObject)).ToArray();
@@ -144,7 +144,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             var moveHeight = dragHeight - lastHeight;
 
             var deltaTone = new Tone();
-            const float trigger_height = (NotePlayfield.COLUMN_SPACING + ColumnBackground.COLUMN_HEIGHT);
+            const float trigger_height = NotePlayfield.COLUMN_SPACING + ColumnBackground.COLUMN_HEIGHT;
 
             if (moveHeight > trigger_height)
                 deltaTone = -new Tone { Half = true };

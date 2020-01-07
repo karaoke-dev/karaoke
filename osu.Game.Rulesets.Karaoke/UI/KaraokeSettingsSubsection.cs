@@ -47,8 +47,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 },
                 new SettingsTextBox
                 {
-                    LabelText = "Perfer language",
-                    Bindable = config.GetBindable<string>(KaraokeRulesetSetting.PerferLanguage)
+                    LabelText = "Prefer language",
+                    Bindable = config.GetBindable<string>(KaraokeRulesetSetting.PreferLanguage)
                 },
                 new SettingsCheckbox
                 {

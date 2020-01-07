@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         }
 
         [Test]
-        public void TestToneComparsion()
+        public void TestToneComparison()
         {
             var tone1 = new Tone
             {

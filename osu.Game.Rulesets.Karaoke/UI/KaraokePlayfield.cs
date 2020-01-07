@@ -22,18 +22,16 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public WorkingBeatmap WorkingBeatmap => beatmap.Value;
 
-        public LyricPlayfield LyricPlayfield => lyricPlayfield;
-        private readonly LyricPlayfield lyricPlayfield;
+        public LyricPlayfield LyricPlayfield { get; }
 
-        public NotePlayfield NotePlayfield => notePlayfield;
-        private readonly NotePlayfield notePlayfield;
+        public NotePlayfield NotePlayfield { get; }
 
         public BindableBool DisplayCursor { get; set; } = new BindableBool();
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => DisplayCursor.Value ? false : base.ReceivePositionalInputAt(screenSpacePos);
+        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => !DisplayCursor.Value && base.ReceivePositionalInputAt(screenSpacePos);
 
         public KaraokePlayfield()
         {
-            AddInternal(lyricPlayfield = new LyricPlayfield
+            AddInternal(LyricPlayfield = new LyricPlayfield
             {
                 RelativeSizeAxes = Axes.Both,
             });
@@ -42,48 +40,59 @@ namespace osu.Game.Rulesets.Karaoke.UI
             {
                 Padding = new MarginPadding(50),
                 RelativeSizeAxes = Axes.Both,
-                Child = notePlayfield = new NotePlayfield(9)
+                Child = NotePlayfield = new NotePlayfield(9)
                 {
                     Alpha = 0,
                     RelativeSizeAxes = Axes.X
                 }
             });
 
-            AddNested(lyricPlayfield);
-            AddNested(notePlayfield);
+            AddNested(LyricPlayfield);
+            AddNested(NotePlayfield);
         }
 
         public override void Add(DrawableHitObject h)
         {
-            if (h is DrawableLyricLine)
-                lyricPlayfield.Add(h);
-            else if (h is DrawableNote)
+            switch (h)
             {
-                // hidden the note playfield until receive any note.
-                notePlayfield.Alpha = 1;
-                notePlayfield.Add(h);
+                case DrawableLyricLine _:
+                    LyricPlayfield.Add(h);
+                    break;
+
+                case DrawableNote _:
+                    // hidden the note playfield until receive any note.
+                    NotePlayfield.Alpha = 1;
+                    NotePlayfield.Add(h);
+                    break;
+
+                default:
+                    base.Add(h);
+                    break;
             }
-            else
-                base.Add(h);
         }
 
         public override bool Remove(DrawableHitObject h)
         {
-            if (h is DrawableLyricLine)
-                return lyricPlayfield.Remove(h);
-            if (h is DrawableNote)
-                return notePlayfield.Remove(h);
+            switch (h)
+            {
+                case DrawableLyricLine _:
+                    return LyricPlayfield.Remove(h);
 
-            return base.Remove(h);
+                case DrawableNote _:
+                    return NotePlayfield.Remove(h);
+
+                default:
+                    return base.Remove(h);
+            }
         }
 
-        public void Add(BarLine barline)
+        public void Add(BarLine barLine)
         {
-            notePlayfield.Add(barline);
+            NotePlayfield.Add(barLine);
         }
 
         [BackgroundDependencyLoader]
-        private void Load(KaraokeRulesetConfigManager rulesetConfig)
+        private void load(KaraokeRulesetConfigManager rulesetConfig)
         {
             rulesetConfig?.BindWith(KaraokeRulesetSetting.ShowCursor, DisplayCursor);
         }
