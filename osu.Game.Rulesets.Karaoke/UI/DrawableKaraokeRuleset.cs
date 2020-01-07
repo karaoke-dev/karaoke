@@ -12,12 +12,10 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Replays;
-using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
-using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
 using System;
@@ -37,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly Bindable<KaraokeScrollingDirection> configDirection = new Bindable<KaraokeScrollingDirection>();
 
         private readonly BindableBool translate = new BindableBool();
-        private readonly Bindable<string> translatelanguage = new Bindable<string>();
+        private readonly Bindable<string> translateLanguage = new Bindable<string>();
 
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
@@ -52,25 +50,25 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             // Change need to translate
             translate.BindValueChanged(x => updateLyricTranslate());
-            translatelanguage.BindValueChanged(x => updateLyricTranslate());
+            translateLanguage.BindValueChanged(x => updateLyricTranslate());
         }
 
         private void updateLyricTranslate()
         {
             var isTranslate = translate.Value;
-            var translateLanguage = translatelanguage.Value;
+            var translateLanguage = this.translateLanguage.Value;
 
             var lyric = Beatmap.HitObjects.OfType<LyricLine>().ToList();
-            var translateDirectionaty = Beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault();
+            var translateDictionary = Beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault();
 
             // Clear exist translate
             lyric.ForEach(x => x.TranslateText = null);
 
             // If contain target language
             if (isTranslate && translateLanguage != null
-                && translateDirectionaty != null && translateDirectionaty.Translates.ContainsKey(translateLanguage))
+                            && translateDictionary != null && translateDictionary.Translates.ContainsKey(translateLanguage))
             {
-                var language = translateDirectionaty.Translates[translateLanguage];
+                var language = translateDictionary.Translates[translateLanguage];
 
                 // Apply translate
                 for (int i = 0; i < Math.Min(lyric.Count, language.Count); i++)
@@ -97,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             // Translate
             Config.BindWith(KaraokeRulesetSetting.UseTranslate, translate);
-            Config.BindWith(KaraokeRulesetSetting.PerferLanguage, translatelanguage);
+            Config.BindWith(KaraokeRulesetSetting.PreferLanguage, translateLanguage);
         }
 
         public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h)

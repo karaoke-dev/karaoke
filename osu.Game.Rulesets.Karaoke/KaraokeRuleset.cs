@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke
                         new KaraokeModHiddenRuby(),
                         new KaraokeModHiddenNote(),
                         new KaraokeModFlashlight(),
-                        new MultiMod(new KaraokeModSuddenDeath(), new KaraokeModPerfect(), new KaroakeModWindowsUpdate()),
+                        new MultiMod(new KaraokeModSuddenDeath(), new KaraokeModPerfect(), new KaraokeModWindowsUpdate()),
                     };
 
                 case ModType.DifficultyReduction:
@@ -123,6 +123,8 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override string ShortName => "osu!karaoke";
 
+        public override string PlayingVerb => "Singing karaoke";
+
         public override ISkin CreateLegacySkinProvider(ISkinSource source) => new KaraokeLegacySkinTransformer(source);
 
         public override IRulesetConfigManager CreateConfig(SettingsStore settings) => new KaraokeRulesetConfigManager(settings, RulesetInfo);
@@ -131,8 +133,8 @@ namespace osu.Game.Rulesets.Karaoke
 
         public KaraokeRuleset()
         {
-            // It's a tricky to let lazer to read karaoke testing beatmap
-            KaroakeLegacyBeatmapDecoder.Register();
+            // It's a tricky to let osu! to read karaoke testing beatmap
+            KaraokeLegacyBeatmapDecoder.Register();
         }
     }
 }

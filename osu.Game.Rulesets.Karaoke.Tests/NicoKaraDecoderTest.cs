@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             using (var resStream = TestResources.OpenNicoKaraResource("default"))
             using (var stream = new LineBufferedReader(resStream))
             {
-                var decoder = Decoder.GetDecoder<KaroakeSkin>(stream);
+                var decoder = Decoder.GetDecoder<KaraokeSkin>(stream);
                 var skin = decoder.Decode(stream);
 
                 // Testing layout

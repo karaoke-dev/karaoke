@@ -54,21 +54,23 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             beatmap = drawableRuleset.Beatmap as KaraokeBeatmap;
             rulesetInfo = drawableRuleset.Ruleset.RulesetInfo;
 
-            if(drawableRuleset.Playfield is KaraokePlayfield karaokePlayfield)
+            if (drawableRuleset.Playfield is KaraokePlayfield karaokePlayfield)
+            {
                 karaokePlayfield.DisplayCursor = new BindableBool
                 {
                     Default = true,
                     Value = true
                 };
+            }
         }
 
         public void ApplyToTrack(Track track)
         {
             // Create overlay
-            overlay?.Add(new KarokeActionContainer(rulesetInfo)
+            overlay?.Add(new KaraokeActionContainer(rulesetInfo)
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = new KaraokePanelOverlay(beatmap,track)
+                Child = new KaraokePanelOverlay(beatmap, track)
                 {
                     Clock = new FramedClock(new StopwatchClock(true)),
                     RelativeSizeAxes = Axes.Both
@@ -79,11 +81,11 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public new void ApplyToHUD(HUDOverlay overlay)
         {
             this.overlay = overlay;
-        }        
+        }
 
-        public class KarokeActionContainer : DatabasedKeyBindingContainer<KaraokeAction>
+        public class KaraokeActionContainer : DatabasedKeyBindingContainer<KaraokeAction>
         {
-            public KarokeActionContainer(RulesetInfo ruleset)
+            public KaraokeActionContainer(RulesetInfo ruleset)
                 : base(ruleset, 0, SimultaneousBindingMode.Unique)
             {
             }
@@ -94,10 +96,10 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             private const float content_width = 0.8f;
             private const int object_height = 30;
             private const int height = 130;
-            private const int horizontal_conponent_spacing = 10;
+            private const int horizontal_component_spacing = 10;
             private const int margin_padding = 10;
 
-            private List<LyricLine> lyrics => beatmap?.HitObjects.OfType<LyricLine>().ToList();
+            private IEnumerable<LyricLine> lyrics => beatmap?.HitObjects.OfType<LyricLine>().ToList();
             private readonly KaraokeBeatmap beatmap;
 
             private readonly Track track;
@@ -110,9 +112,9 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             private readonly ProgressBar timeSlideBar;
             private readonly ButtonSlider tempoSlider;
             private readonly ButtonSlider pitchSlider;
-            private readonly ButtonSlider lyricOffectSlider;
+            private readonly ButtonSlider lyricOffsetSlider;
 
-            public KaraokePanelOverlay(KaraokeBeatmap beatmap,Track track)
+            public KaraokePanelOverlay(KaraokeBeatmap beatmap, Track track)
             {
                 this.beatmap = beatmap;
                 this.track = track;
@@ -190,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                                                                     Anchor = Anchor.CentreLeft,
                                                                     Origin = Anchor.CentreLeft,
                                                                     Direction = FillDirection.Horizontal,
-                                                                    Spacing = new Vector2(horizontal_conponent_spacing),
+                                                                    Spacing = new Vector2(horizontal_component_spacing),
                                                                     AutoSizeAxes = Axes.X,
                                                                     Children = new Drawable[]
                                                                     {
@@ -210,13 +212,13 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                                                                             Action = () =>
                                                                             {
                                                                                 var firstObject = lyrics.FirstOrDefault();
-                                                                                if (firstObject!=null)
+                                                                                if (firstObject != null)
                                                                                     track?.Seek(firstObject.StartTime);
                                                                             }
                                                                         },
                                                                         previousLyricButton = new ToolTipButton
                                                                         {
-                                                                            Name = "Pervious lyric button",
+                                                                            Name = "Previous lyric button",
                                                                             Origin = Anchor.CentreLeft,
                                                                             Width = object_height,
                                                                             Height = object_height,
@@ -228,12 +230,12 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                                                                                     return;
 
                                                                                 var nextLyric = lyrics.FirstOrDefault(x => x.StartTime > track.CurrentTime);
-                                                                                if (nextLyric != null)
+                                                                                if (nextLyric == null)
                                                                                     return;
 
-                                                                                var perviousLyric = lyrics.GetPrevious(nextLyric);
-                                                                                if(perviousLyric!=null)
-                                                                                    track?.Seek(perviousLyric.StartTime);
+                                                                                var previousLyric = lyrics.GetPrevious(nextLyric);
+                                                                                if (previousLyric != null)
+                                                                                    track.Seek(previousLyric.StartTime);
                                                                             }
                                                                         },
                                                                         nextLyricButton = new ToolTipButton
@@ -251,7 +253,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
                                                                                 var nextLyric = lyrics.FirstOrDefault(x => x.StartTime > track.CurrentTime);
                                                                                 if (nextLyric != null)
-                                                                                    track?.Seek(nextLyric.StartTime);
+                                                                                    track.Seek(nextLyric.StartTime);
                                                                             }
                                                                         },
                                                                         new TooltipSpriteText
@@ -293,7 +295,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                                                                     {
                                                                         timeSlideBar = new ProgressBar
                                                                         {
-                                                                            Name = "Time silder",
+                                                                            Name = "Time slider",
                                                                             RelativeSizeAxes = Axes.X,
                                                                             Origin = Anchor.CentreLeft,
                                                                             StartTime = lyrics?.FirstOrDefault()?.StartTime ?? 0,
@@ -340,7 +342,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                                                                                         Name = "Tempo slider",
                                                                                         Origin = Anchor.CentreLeft,
                                                                                         RelativeSizeAxes = Axes.X,
-                                                                                        DefauleValue = 1,
+                                                                                        DefaultValue = 1,
                                                                                         KeyboardStep = 0.05f,
                                                                                         Current = new BindableNumber<double>
                                                                                         {
@@ -378,7 +380,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                                                                                         Name = "Pitch slider",
                                                                                         Origin = Anchor.CentreLeft,
                                                                                         RelativeSizeAxes = Axes.X,
-                                                                                        DefauleValue = 1,
+                                                                                        DefaultValue = 1,
                                                                                         KeyboardStep = 0.05f,
                                                                                         Current = new BindableNumber<double>
                                                                                         {
@@ -411,12 +413,12 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                                                                                 Padding = new MarginPadding { Left = 100, Right = 50 },
                                                                                 Children = new Drawable[]
                                                                                 {
-                                                                                    lyricOffectSlider = new ButtonSlider
+                                                                                    lyricOffsetSlider = new ButtonSlider
                                                                                     {
                                                                                         Name = "Offset slider",
                                                                                         Origin = Anchor.CentreLeft,
                                                                                         RelativeSizeAxes = Axes.X,
-                                                                                        DefauleValue = 0,
+                                                                                        DefaultValue = 0,
                                                                                         KeyboardStep = 0.5f,
                                                                                         Current = new BindableNumber<double>
                                                                                         {
@@ -455,7 +457,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                         track.Frequency.Value = value.NewValue;
                 });
 
-                lyricOffectSlider.Current.BindValueChanged(value =>
+                lyricOffsetSlider.Current.BindValueChanged(value =>
                 {
                     // TODO : adjust offset
                 });
@@ -497,7 +499,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                         break;
 
                     case KaraokeAction.ResetTempo:
-                        tempoSlider.ResetToDefauleValue();
+                        tempoSlider.ResetToDefaultValue();
                         break;
 
                     // Pitch
@@ -510,20 +512,20 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                         break;
 
                     case KaraokeAction.ResetPitch:
-                        pitchSlider.ResetToDefauleValue();
+                        pitchSlider.ResetToDefaultValue();
                         break;
 
                     // Appear time
                     case KaraokeAction.IncreaseLyricAppearTime:
-                        lyricOffectSlider.TriggerIncrease();
+                        lyricOffsetSlider.TriggerIncrease();
                         break;
 
                     case KaraokeAction.DecreaseLyricAppearTime:
-                        lyricOffectSlider.TriggerDecrease();
+                        lyricOffsetSlider.TriggerDecrease();
                         break;
 
                     case KaraokeAction.ResetLyricAppearTime:
-                        lyricOffectSlider.ResetToDefauleValue();
+                        lyricOffsetSlider.ResetToDefaultValue();
                         break;
                 }
 
@@ -553,7 +555,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 private readonly ToolTipButton decreaseButton;
                 private readonly ToolTipButton increaseButton;
 
-                public float DefauleValue { get; set; }
+                public float DefaultValue { get; set; }
 
                 public ButtonSlider()
                 {
@@ -584,7 +586,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                     });
                 }
 
-                public void ResetToDefauleValue() => Current.SetDefault();
+                public void ResetToDefaultValue() => Current.SetDefault();
 
                 public void TriggerDecrease() => decreaseButton.Action?.Invoke();
 

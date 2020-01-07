@@ -25,10 +25,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             new LyricMaker.Model.LyricLine
             {
                 Text = lyric.Text,
-                TimeTags = convertTimetag(lyric.Text, lyric.TimeTags).ToArray(),
+                TimeTags = convertTimeTag(lyric.Text, lyric.TimeTags).ToArray(),
             };
 
-        private IEnumerable<LyricMaker.Model.Tags.TimeTag> convertTimetag(string text, IReadOnlyDictionary<TimeTagIndex, double> tags)
+        private IEnumerable<LyricMaker.Model.Tags.TimeTag> convertTimeTag(string text, IReadOnlyDictionary<TimeTagIndex, double> tags)
         {
             var totalTags = text.Length * 2 + 2;
 

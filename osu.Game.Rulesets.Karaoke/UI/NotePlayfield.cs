@@ -40,9 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly RealTimeSaitenVisualization realTimeSaitenVisualization;
         private readonly SaitenVisualization replaySaitenVisualization;
         private readonly SaitenMarker saitenMarker;
-        private readonly JudgelineMarker judgementLine;
+        private readonly JudgementLineMarker judgementLine;
 
-        public int Columns { get; private set; }
+        public int Columns { get; }
 
         public NotePlayfield(int columns)
         {
@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                             AutoSizeAxes = Axes.Both,
                                             BypassAutoSizeAxes = Axes.Both
                                         },
-                                        judgementLine = new JudgelineMarker(),
+                                        judgementLine = new JudgementLineMarker(),
                                         saitenMarker = new SaitenMarker
                                         {
                                             Alpha = 0
@@ -172,17 +172,17 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
                 //TODO : will apply in skin
                 var judgementAreaPercentage = 0.4f;
-                var juggementPadding = 10;
+                var judgementPadding = 10;
 
                 judgementArea.Size = new Vector2(judgementAreaPercentage, 1);
-                judgementArea.X = left ? 0 : (1 - judgementAreaPercentage);
+                judgementArea.X = left ? 0 : 1 - judgementAreaPercentage;
 
                 judgementLine.Anchor = left ? Anchor.CentreRight : Anchor.CentreLeft;
                 saitenMarker.Anchor = saitenMarker.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
                 saitenMarker.Scale = left ? new Vector2(1, 1) : new Vector2(-1, 1);
 
                 judgements.Anchor = judgements.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
-                judgements.X = left ? -juggementPadding : juggementPadding;
+                judgements.X = left ? -judgementPadding : judgementPadding;
 
                 hitObjectArea.Size = new Vector2(1 - judgementAreaPercentage, 1);
                 hitObjectArea.X = left ? judgementAreaPercentage : 0;
@@ -220,7 +220,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             return true;
         }
 
-        public void Add(BarLine barline) => base.Add(new DrawableBarLine(barline));
+        public void Add(BarLine barLine) => base.Add(new DrawableBarLine(barLine));
 
         public void AddReplay(KaraokeReplayFrame frame)
         {

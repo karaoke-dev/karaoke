@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(lyric?.StartTime, 1000);
                 Assert.AreEqual(lyric?.EndTime, 5000);
 
-                // timetag
+                // time tag
                 var tags = lyric?.TimeTags;
                 var checkedTags = tags.ToArray();
                 Assert.AreEqual(tags.Count, 5);

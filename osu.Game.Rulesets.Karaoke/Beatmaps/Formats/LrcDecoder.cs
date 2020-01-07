@@ -39,10 +39,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     // Start time and end time should be re-assigned
                     StartTime = line.TimeTags.FirstOrDefault(x => x.Time > 0).Time,
                     EndTime = line.TimeTags.LastOrDefault(x => x.Time > 0).Time,
-                    TimeTags = line.TimeTags.Where(x => x.Check).ToDictionary(k => 
+                    TimeTags = line.TimeTags.Where(x => x.Check).ToDictionary(k =>
                     {
                         var index = (int)Math.Ceiling((double)(Array.IndexOf(line.TimeTags, k) - 1) / 2);
-                        var state = ((Array.IndexOf(line.TimeTags, k) - 1) % 2) == 0 ? TimeTagIndex.IndexState.Start : TimeTagIndex.IndexState.End;
+                        var state = (Array.IndexOf(line.TimeTags, k) - 1) % 2 == 0 ? TimeTagIndex.IndexState.Start : TimeTagIndex.IndexState.End;
 
                         return new TimeTagIndex(index, state);
                     }, v => (double)v.Time),

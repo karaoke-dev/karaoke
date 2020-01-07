@@ -9,7 +9,6 @@ using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Lines;
 using osu.Framework.Threading;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.UI.Scrolling;
@@ -164,7 +163,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
                 scrollingInfo.Algorithm.Reset();
             }
 
-            // If addStateCache is invalid, means last path add new vertix
+            // If addStateCache is invalid, means last path add new point
             if (!addStateCache.IsValid)
                 pathInitialStateCache?.LastOrDefault().Value?.Invalidate();
 
@@ -210,7 +209,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             path.Anchor = path.Origin = left ? Anchor.TopLeft : Anchor.TopRight;
 
             var currentTime = Time.Current;
-            
+
             var centerPosition = calculator.CenterPosition();
             var scaleDistance = calculator.Distance();
 
@@ -225,7 +224,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         {
             base.UpdateAfterChildrenLife();
 
-            // We need to calculate hitobject positions as soon as possible after lifetimes so that hitobjects get the final say in their positions
+            // We need to calculate hit object positions as soon as possible after lifetimes so that hitobjects get the final say in their positions
             foreach (var path in AliveObjects)
             {
                 var startTime = paths.FirstOrDefault(x => x.Value == path).Key;

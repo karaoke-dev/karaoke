@@ -8,12 +8,12 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
-    public class KaroakeLegacyBeatmapEncoder
+    public class KaraokeLegacyBeatmapEncoder
     {
         public string Encode(Beatmap output)
         {
             var lrcEncoder = new LrcEncoder();
-            var resluts = new List<string>
+            var results = new List<string>
             {
                 lrcEncoder.Encode(output),
                 string.Join("\n", encodeNote(output)),
@@ -21,10 +21,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 string.Join("\n", encodeTranslate(output)),
             };
 
-            return string.Join("\n\n", resluts.Where(x => !string.IsNullOrEmpty(x)));
+            return string.Join("\n\n", results.Where(x => !string.IsNullOrEmpty(x)));
         }
 
-        private List<string> encodeNote(Beatmap output)
+        private IEnumerable<string> encodeNote(Beatmap output)
         {
             var notes = output.HitObjects.OfType<Note>().ToList();
             var lyrics = output.HitObjects.OfType<LyricLine>().ToList();
@@ -62,6 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         private IEnumerable<string> encodeStyle(Beatmap output)
         {
             var lyricLines = output.HitObjects.OfType<LyricLine>().ToList();
+
             for (var i = 0; i < lyricLines.Count; i++)
             {
                 var lyricLine = lyricLines[i];
@@ -73,14 +74,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         {
             var translateDictionary = output.HitObjects.OfType<TranslateDictionary>().FirstOrDefault();
 
-            if (translateDictionary?.Translates?.Any() ?? false)
+            if (!(translateDictionary?.Translates?.Any() ?? false))
+                yield break;
+
+            foreach (var singleLanguage in translateDictionary.Translates)
             {
-                foreach (var singlaLanguage in translateDictionary.Translates)
+                foreach (var translate in singleLanguage.Value)
                 {
-                    foreach (var translate in singlaLanguage.Value)
-                    {
-                        yield return $"@tr[{singlaLanguage.Key}]={translate}";
-                    }
+                    yield return $"@tr[{singleLanguage.Key}]={translate}";
                 }
             }
         }

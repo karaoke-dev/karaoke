@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         {
             base.LoadComplete();
 
-            Add(KaraokePanelOverlay = new KaraokePanelOverlay(null,null)
+            Add(KaraokePanelOverlay = new KaraokePanelOverlay(null, null)
             {
                 RelativeSizeAxes = Axes.Both,
             });

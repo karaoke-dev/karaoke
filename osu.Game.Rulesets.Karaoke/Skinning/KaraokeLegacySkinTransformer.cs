@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     {
         private readonly ISkin source;
 
-        private readonly KaroakeSkin skin;
+        private readonly KaraokeSkin skin;
 
         public KaraokeLegacySkinTransformer(ISkinSource source)
         {
@@ -74,39 +74,45 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         public IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
         {
-            if (lookup is KaraokeSkinLookup skinLookup)
+            switch (lookup)
             {
-                var config = skinLookup.Config;
-                var lookupNumber = skinLookup.Lookup;
-
-                switch (config)
+                case KaraokeSkinLookup skinLookup:
                 {
-                    case KaraokeSkinConfiguration.LyricStyle:
-                        return SkinUtils.As<TValue>(new Bindable<KaraokeFont>(skin.DefinedFonts[lookupNumber]));
+                    var config = skinLookup.Config;
+                    var lookupNumber = skinLookup.Lookup;
 
-                    case KaraokeSkinConfiguration.LyricLayout:
-                        return SkinUtils.As<TValue>(new Bindable<KaraokeLayout>(skin.DefinedLayouts[lookupNumber]));
+                    switch (config)
+                    {
+                        case KaraokeSkinConfiguration.LyricStyle:
+                            return SkinUtils.As<TValue>(new Bindable<KaraokeFont>(skin.DefinedFonts[lookupNumber]));
 
-                    case KaraokeSkinConfiguration.NoteStyle:
-                        return SkinUtils.As<TValue>(new Bindable<NoteSkin>(skin.DefinedNoteSkins[lookupNumber]));
+                        case KaraokeSkinConfiguration.LyricLayout:
+                            return SkinUtils.As<TValue>(new Bindable<KaraokeLayout>(skin.DefinedLayouts[lookupNumber]));
+
+                        case KaraokeSkinConfiguration.NoteStyle:
+                            return SkinUtils.As<TValue>(new Bindable<NoteSkin>(skin.DefinedNoteSkins[lookupNumber]));
+                    }
+
+                    break;
                 }
-            }
-            else if (lookup is KaraokeIndexLookup indexLookup)
-            {
-                switch (indexLookup)
-                {
-                    case KaraokeIndexLookup.Layout:
-                        var layoutDictionary = skin.DefinedLayouts.ToDictionary(k => skin.DefinedLayouts.IndexOf(k), y => y.Name);
-                        return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(layoutDictionary));
 
-                    case KaraokeIndexLookup.Style:
-                        var fontDictionary = skin.DefinedFonts.ToDictionary(k => skin.DefinedFonts.IndexOf(k), y => y.Name);
-                        return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(fontDictionary));
+                case KaraokeIndexLookup indexLookup:
+                    switch (indexLookup)
+                    {
+                        case KaraokeIndexLookup.Layout:
+                            var layoutDictionary = skin.DefinedLayouts.ToDictionary(k => skin.DefinedLayouts.IndexOf(k), y => y.Name);
+                            return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(layoutDictionary));
 
-                    case KaraokeIndexLookup.Note:
-                        var noteDictionary = skin.DefinedNoteSkins.ToDictionary(k => skin.DefinedNoteSkins.IndexOf(k), y => y.Name);
-                        return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(noteDictionary));
-                }
+                        case KaraokeIndexLookup.Style:
+                            var fontDictionary = skin.DefinedFonts.ToDictionary(k => skin.DefinedFonts.IndexOf(k), y => y.Name);
+                            return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(fontDictionary));
+
+                        case KaraokeIndexLookup.Note:
+                            var noteDictionary = skin.DefinedNoteSkins.ToDictionary(k => skin.DefinedNoteSkins.IndexOf(k), y => y.Name);
+                            return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(noteDictionary));
+                    }
+
+                    break;
             }
 
             return source.GetConfig<TLookup, TValue>(lookup);

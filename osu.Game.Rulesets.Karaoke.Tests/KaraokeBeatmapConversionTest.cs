@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         public KaraokeBeatmapConversionTest()
         {
             // It's a tricky to let lazer to read karaoke testing beatmap
-            KaroakeLegacyBeatmapDecoder.Register();
+            KaraokeLegacyBeatmapDecoder.Register();
         }
 
         [TestCase("karaoke-file-samples")]

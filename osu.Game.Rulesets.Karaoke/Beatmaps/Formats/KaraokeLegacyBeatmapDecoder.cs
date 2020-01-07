@@ -12,27 +12,27 @@ using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
-    public class KaroakeLegacyBeatmapDecoder : LegacyBeatmapDecoder
+    public class KaraokeLegacyBeatmapDecoder : LegacyBeatmapDecoder
     {
         public new const int LATEST_VERSION = 1;
 
         public new static void Register()
         {
-            AddDecoder<Beatmap>(@"karaoke file format v", m => new KaroakeLegacyBeatmapDecoder(Parsing.ParseInt(m.Split('v').Last())));
+            AddDecoder<Beatmap>(@"karaoke file format v", m => new KaraokeLegacyBeatmapDecoder(Parsing.ParseInt(m.Split('v').Last())));
 
             // use this weird way to let all the fall-back beatmap(include karaoke beatmap) become karaoke beatmap.
-            SetFallbackDecoder<Beatmap>(() => new KaroakeLegacyBeatmapDecoder());
+            SetFallbackDecoder<Beatmap>(() => new KaraokeLegacyBeatmapDecoder());
         }
 
-        public KaroakeLegacyBeatmapDecoder(int version = LATEST_VERSION)
+        public KaraokeLegacyBeatmapDecoder(int version = LATEST_VERSION)
             : base(version)
         {
         }
 
-        private IList<string> lrcLines = new List<string>();
-        private IList<string> noteLines = new List<string>();
-        private IList<string> lyricStyles = new List<string>();
-        private IList<string> translates = new List<string>();
+        private readonly IList<string> lrcLines = new List<string>();
+        private readonly IList<string> noteLines = new List<string>();
+        private readonly IList<string> lyricStyles = new List<string>();
+        private readonly IList<string> translates = new List<string>();
 
         protected override void ParseLine(Beatmap beatmap, Section section, string line)
         {
@@ -64,12 +64,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             }
             else if (line.StartsWith("@"))
             {
-                // Remove @ in timetag and add into lrc queue
+                // Remove @ in time tag and add into lrc queue
                 lrcLines.Add(line.Substring(1));
             }
             else if (line.ToLower() == "end")
             {
-                // Statr processing file
+                // Start processing file
                 using (var stream = new MemoryStream())
                 using (var writer = new StreamWriter(stream))
                 using (var reader = new LineBufferedReader(stream))
@@ -88,16 +88,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 }
 
                 processNotes(beatmap, noteLines);
+                processTranslate(beatmap, translates);
 
                 if (lyricStyles.Any())
                     processStyle(beatmap, lyricStyles);
-
-                if (translates.Any())
-                    processTranslate(beatmap, translates);
             }
         }
 
-        private void processNotes(Beatmap beatmap,IList<string> noteLines)
+        private void processNotes(Beatmap beatmap, IList<string> noteLines)
         {
             // Remove all karaoke note
             beatmap.HitObjects.RemoveAll(x => x is Note);
@@ -126,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     var note = notes[i];
                     var defaultNote = defaultNotes[i];
 
-                    // Support multi note in one timetag, format like ([1;0.5;か]|1#|...)
+                    // Support multi note in one time tag, format like ([1;0.5;か]|1#|...)
                     if (!note.StartsWith("(") || !note.EndsWith(")"))
                     {
                         // Process and add note
@@ -211,7 +209,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     }
 
                     if (!int.TryParse(tone, out int scale))
-                        throw new ArgumentOutOfRangeException($"{tone} does not support in {nameof(KaroakeLegacyBeatmapDecoder)}");
+                        throw new ArgumentOutOfRangeException($"{tone} does not support in {nameof(KaraokeLegacyBeatmapDecoder)}");
 
                     return new Tone
                     {
@@ -225,6 +223,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         private void processStyle(Beatmap beatmap, IList<string> styleLines)
         {
             var lyricLines = beatmap.HitObjects.OfType<LyricLine>().ToList();
+
             for (int l = 0; l < lyricLines.Count; l++)
             {
                 var lyricLine = lyricLines[l];
@@ -237,24 +236,25 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 var layoutIndexStr = line.Split(',').FirstOrDefault();
                 var fontIndexStr = line.Split(',').ElementAtOrDefault(1);
 
-                if (int.TryParse(layoutIndexStr, out int layoutindex))
-                    lyricLine.LayoutIndex = layoutindex;
+                if (int.TryParse(layoutIndexStr, out int layoutIndex))
+                    lyricLine.LayoutIndex = layoutIndex;
 
                 if (int.TryParse(fontIndexStr, out int fontIndex))
                     lyricLine.FontIndex = fontIndex;
             }
         }
 
-        private void processTranslate(Beatmap beatmap, IList<string> translateLines)
+        private void processTranslate(Beatmap beatmap, IEnumerable<string> translateLines)
         {
             var dictionary = new TranslateDictionary();
+
             foreach (var translateLine in translateLines)
             {
                 // format should like @tr[en-US]=First translate
-                var translateLanguage = translateLine.Split('=').FirstOrDefault().Split('[').LastOrDefault().Split(']').FirstOrDefault();
+                var translateLanguage = translateLine.Split('=').FirstOrDefault()?.Split('[').LastOrDefault()?.Split(']').FirstOrDefault();
                 var translateStr = translateLine.Split('=').LastOrDefault();
 
-                // Add into directionaty
+                // Add into dictionary
                 if (dictionary.Translates.TryGetValue(translateLanguage, out var list))
                 {
                     list.Add(translateStr);

@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         public KaraokeBeatmapDecoderTest()
         {
             // It's a tricky to let lazer to read karaoke testing beatmap
-            KaroakeLegacyBeatmapDecoder.Register();
+            KaraokeLegacyBeatmapDecoder.Register();
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             using (var stream = new LineBufferedReader(resStream))
             {
                 var decoder = Decoder.GetDecoder<Beatmap>(stream);
-                Assert.AreEqual(typeof(KaroakeLegacyBeatmapDecoder), decoder.GetType());
+                Assert.AreEqual(typeof(KaraokeLegacyBeatmapDecoder), decoder.GetType());
 
                 var working = new TestWorkingBeatmap(decoder.Decode(stream));
 
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 testNote("に", 1, note: notes[4]);
                 testNote("揺", 2, note: notes[5]);
                 testNote("ら", 3, note: notes[6]);
-                testNote("れ", 4, true, note: notes[7]);
+                testNote("れ", 4, true, notes[7]);
                 testNote("て", 3, note: notes[8]);
             }
         }
@@ -62,22 +62,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         [Test]
         public void TestDecodeNote()
         {
-            Beatmap beatmap;
-
             using (var resStream = TestResources.OpenBeatmapResource("karaoke-note-samples"))
             using (var stream = new LineBufferedReader(resStream))
             {
                 // Create karaoke beatmap decoder
-                var lrcDecoder = new KaroakeLegacyBeatmapDecoder();
-                beatmap = lrcDecoder.Decode(stream);
+                var lrcDecoder = new KaraokeLegacyBeatmapDecoder();
+                var beatmap = lrcDecoder.Decode(stream);
 
                 //get lyric
                 var notes = beatmap.HitObjects.OfType<Note>().ToList();
 
                 testNote("か", 1, note: notes[0]);
-                testNote("ら", 2, true, note: notes[1]);
+                testNote("ら", 2, true, notes[1]);
                 testNote("お", 3, note: notes[2]);
-                testNote("け", 3, true, note: notes[3]);
+                testNote("け", 3, true, notes[3]);
                 testNote("け", 4, note: notes[4]);
 
                 // TODO : move into individual test case
@@ -96,14 +94,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         [Test]
         public void TestDecodeStyle()
         {
-            Beatmap beatmap;
-
             using (var resStream = TestResources.OpenBeatmapResource("karaoke-style-samples"))
             using (var stream = new LineBufferedReader(resStream))
             {
                 // Create karaoke beatmap decoder
-                var lrcDecoder = new KaroakeLegacyBeatmapDecoder();
-                beatmap = lrcDecoder.Decode(stream);
+                var lrcDecoder = new KaraokeLegacyBeatmapDecoder();
+                var beatmap = lrcDecoder.Decode(stream);
 
                 //get lyric
                 var lyric = beatmap.HitObjects.OfType<LyricLine>().FirstOrDefault();
@@ -117,14 +113,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         [Test]
         public void TestDecodeTranslate()
         {
-            Beatmap beatmap;
-
             using (var resStream = TestResources.OpenBeatmapResource("karaoke-translate-samples"))
             using (var stream = new LineBufferedReader(resStream))
             {
                 // Create karaoke beatmap decoder
-                var lrcDecoder = new KaroakeLegacyBeatmapDecoder();
-                beatmap = lrcDecoder.Decode(stream);
+                var lrcDecoder = new KaraokeLegacyBeatmapDecoder();
+                var beatmap = lrcDecoder.Decode(stream);
 
                 //get translate
                 var translates = beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault()?.Translates;

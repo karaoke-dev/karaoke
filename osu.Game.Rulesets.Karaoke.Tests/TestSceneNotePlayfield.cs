@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 createNote(2100, 100, -3);
                 createNote(2200, 100, -2);
                 createNote(2300, 100, -1);
-                createNote(2400, 100, -0);
+                createNote(2400, 100);
                 createNote(2500, 100, 1);
                 createNote(2600, 100, 2);
                 createNote(2700, 100, 3);
@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         {
             notePlayfields.ForEach(x =>
             {
-                // Startframe
+                // Start frame
                 x.AddReplay(new KaraokeReplayFrame
                 {
                     Time = Time.Current + increaseTime,

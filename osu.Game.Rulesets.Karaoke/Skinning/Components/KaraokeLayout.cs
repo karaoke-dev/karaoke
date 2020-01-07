@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Components
         public string Name { get; set; }
 
         /// <summary>
-        /// Lyric's aligment
+        /// Lyric alignment
         /// </summary>
         public Anchor Alignment { get; set; } = Anchor.Centre;
 
@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Components
         public int RubyInterval { get; set; }
 
         /// <summary>
-        /// Interval between lyric romajies
+        /// Interval between lyric romajis
         /// </summary>
         public int RomajiInterval { get; set; }
 
