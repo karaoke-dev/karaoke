@@ -11,4 +11,4 @@ This repo is under [GPL V3](LICENSE) license.
 
 ## Thanks to
 
-[osu!](https://github.com/ppy/osu) and it's this [framework](https://github.com/ppy/osu-framework), osu!karaoke is modified from them.
+[osu!](https://github.com/ppy/osu) and it's [framework](https://github.com/ppy/osu-framework), osu!karaoke is modified from them.
