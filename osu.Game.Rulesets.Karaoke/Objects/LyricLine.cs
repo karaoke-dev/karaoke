@@ -120,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 int endIndex = nextTag.Key.Index;
 
                 var text = Text.Substring(startIndex, endIndex - startIndex);
-                var ruby = RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Ruby;
+                var ruby = RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault().Text;
 
                 if (!string.IsNullOrEmpty(text))
                 {

@@ -52,13 +52,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                     {
                         StartIndex = 0,
                         EndIndex = 1,
-                        Ruby = "か"
+                        Text = "か"
                     },
                     new RubyTag
                     {
                         StartIndex = 2,
                         EndIndex = 3,
-                        Ruby = "お"
+                        Text = "お"
                     }
                 },
                 RomajiTags = new[]
@@ -67,13 +67,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                     {
                         StartIndex = 1,
                         EndIndex = 2,
-                        Romaji = "ra"
+                        Text = "ra"
                     },
                     new RomajiTag
                     {
                         StartIndex = 3,
                         EndIndex = 4,
-                        Romaji = "ke"
+                        Text = "ke"
                     }
                 },
                 TranslateText = "karaoke"

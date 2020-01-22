@@ -1,0 +1,172 @@
+﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// See the LICENCE file in the repository root for full licence text.
+
+using osu.Framework.Allocation;
+using osu.Framework.Audio.Track;
+using osu.Framework.Bindables;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
+using osu.Framework.Input.Bindings;
+using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.UI.HUD;
+using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
+using osu.Game.Screens.Play.PlayerSettings;
+using osuTK;
+
+namespace osu.Game.Rulesets.Karaoke.UI
+{
+    public class ControlOverlay : CompositeDrawable, IKeyBindingHandler<KaraokeAction>
+    {
+        private readonly BindableInt bindablePitch = new BindableInt();
+        private readonly BindableInt bindableVocalPitch = new BindableInt();
+        private readonly BindableInt bindableSaitenPitch = new BindableInt();
+
+        private readonly FillFlowContainer<TriggerButton> triggerButtons;
+
+        private readonly GameplaySettingsOverlay gameplaySettingsOverlay;
+
+
+        public ControlOverlay()
+        {
+            InternalChildren = new Drawable[]
+            {
+                triggerButtons = new FillFlowContainer<TriggerButton>
+                {
+                    Anchor = Anchor.CentreRight,
+                    Origin = Anchor.CentreRight,
+                    AutoSizeAxes = Axes.Both,
+                    Spacing = new Vector2(10),
+                    Margin = new MarginPadding(40),
+                    Direction = FillDirection.Vertical,
+                }
+            };
+
+            AddExtraOverlay(new TriggerButton
+            {
+                Name = "Toggle setting button",
+                Text = "Settings",
+                TooltipText = "Open/Close setting",
+                Action = ToggleGameplaySettingsOverlay
+            },
+            gameplaySettingsOverlay = new GameplaySettingsOverlay
+            {
+                RelativeSizeAxes = Axes.Y,
+                Anchor = Anchor.CentreRight,
+                Origin = Anchor.CentreRight,
+            });
+
+            AddSettingsGroup(new VisualSettings { Expanded = false });
+            AddSettingsGroup(new PitchSettings { Expanded = false });
+        }
+
+        public void ToggleGameplaySettingsOverlay() => gameplaySettingsOverlay.ToggleVisibility();
+
+        public virtual bool OnPressed(KaraokeAction action)
+        {
+            switch (action)
+            {
+                // Open adjustment overlay
+                case KaraokeAction.OpenPanel:
+                    ToggleGameplaySettingsOverlay();
+                    break;
+
+                // Pitch
+                case KaraokeAction.IncreasePitch:
+                    bindablePitch.TriggerIncrease();
+                    break;
+
+                case KaraokeAction.DecreasePitch:
+                    bindablePitch.TriggerDecrease();
+                    break;
+
+                case KaraokeAction.ResetPitch:
+                    bindablePitch.SetDefault();
+                    break;
+
+                // Vocal pitch
+                case KaraokeAction.IncreaseVocalPitch:
+                    bindableVocalPitch.TriggerIncrease();
+                    break;
+
+                case KaraokeAction.DecreaseVocalPitch:
+                    bindableVocalPitch.TriggerDecrease();
+                    break;
+
+                case KaraokeAction.ResetVocalPitch:
+                    bindableVocalPitch.SetDefault();
+                    break;
+
+                // Saiten pitch
+                case KaraokeAction.IncreaseSaitenPitch:
+                    bindableSaitenPitch.TriggerIncrease();
+                    break;
+
+                case KaraokeAction.DecreaseSaitenPitch:
+                    bindableSaitenPitch.TriggerDecrease();
+                    break;
+
+                case KaraokeAction.ResetSaitenPitch:
+                    bindableSaitenPitch.SetDefault();
+                    break;
+
+                default:
+                    return false;
+            }
+
+            return true;
+        }
+
+        public virtual bool OnReleased(KaraokeAction action)
+        {
+            return true;
+        }
+
+        public void AddSettingsGroup(PlayerSettingsGroup group)
+        {
+            gameplaySettingsOverlay.Add(group);
+        }
+
+        public void AddExtraOverlay(TriggerButton button, FocusedOverlayContainer container)
+        {
+            triggerButtons.Add(button);
+            AddInternal(container);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(KaroakeSessionStatics session)
+        {
+            session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
+            session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
+            session.BindWith(KaraokeRulesetSession.SaitenPitch, bindableSaitenPitch);
+        }
+
+        public class TriggerButton : TriangleButton, IHasTooltip
+        {
+            public string TooltipText { get; set; }
+
+            public TriggerButton()
+            {
+                Width = 90;
+                Height = 45;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Will move into framework layer
+    /// </summary>
+    public static class BindableNumberExtension
+    {
+        public static void TriggerIncrease(this BindableInt bindableInt)
+        {
+            bindableInt.Value += bindableInt.Precision;
+        }
+
+        public static void TriggerDecrease(this BindableInt bindableInt)
+        {
+            bindableInt.Value -= bindableInt.Precision;
+        }
+    }
+}

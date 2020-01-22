@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public override string Name => "HiddenRuby";
         public override string Acronym => "HR";
         public override double ScoreMultiplier => 1.0;
-        public override IconUsage Icon => FontAwesome.Solid.Gem;
+        public override IconUsage? Icon => FontAwesome.Solid.Gem;
         public override ModType Type => ModType.DifficultyIncrease;
 
         public void ApplyToHitObject(HitObject hitObject)

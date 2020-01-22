@@ -104,6 +104,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 //get lyric
                 var lyric = beatmap.HitObjects.OfType<LyricLine>().FirstOrDefault();
 
+                // Check is not null
+                Assert.IsTrue(lyric != null);
+
                 // Check layout and font index
                 Assert.AreEqual(lyric.LayoutIndex, 2);
                 Assert.AreEqual(lyric.FontIndex, 3);
@@ -122,6 +125,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
                 //get translate
                 var translates = beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault()?.Translates;
+
+                // Check is not null
+                Assert.IsTrue(translates != null);
 
                 // Check translate count
                 Assert.AreEqual(translates.Count, 2);

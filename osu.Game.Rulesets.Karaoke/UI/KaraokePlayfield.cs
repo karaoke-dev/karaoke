@@ -29,6 +29,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public BindableBool DisplayCursor { get; set; } = new BindableBool();
         public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => !DisplayCursor.Value && base.ReceivePositionalInputAt(screenSpacePos);
 
+
+        private readonly BindableInt bindablePitch = new BindableInt();
+        private readonly BindableInt bindableVocalPitch = new BindableInt();
+        private readonly BindableInt bindablePlayback = new BindableInt();
+
         public KaraokePlayfield()
         {
             AddInternal(LyricPlayfield = new LyricPlayfield
@@ -49,6 +54,25 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             AddNested(LyricPlayfield);
             AddNested(NotePlayfield);
+
+            bindablePitch.BindValueChanged(value =>
+            {
+                // Convert between -10 and 10 into 0.5 and 1.5
+                var newValue = 1.0f + (float)value.NewValue / 40;
+                WorkingBeatmap.Track.Frequency.Value = newValue;
+            });
+
+            bindableVocalPitch.BindValueChanged(value =>
+            {
+                // TODO : implement until has vocal track
+            });
+
+            bindablePlayback.BindValueChanged(value =>
+            {
+                // Convert between -10 and 10 into 0.5 and 1.5
+                var newValue = 1.0f + (float)value.NewValue / 40;
+                WorkingBeatmap.Track.Tempo.Value = newValue;
+            });
         }
 
         public override void Add(DrawableHitObject h)
@@ -92,9 +116,13 @@ namespace osu.Game.Rulesets.Karaoke.UI
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager rulesetConfig)
+        private void load(KaraokeRulesetConfigManager rulesetConfig, KaroakeSessionStatics session)
         {
             rulesetConfig?.BindWith(KaraokeRulesetSetting.ShowCursor, DisplayCursor);
+
+            session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
+            session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
+            session.BindWith(KaraokeRulesetSession.PlaybackSpeed, bindablePlayback);
         }
     }
 }

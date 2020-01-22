@@ -13,15 +13,15 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public override string Name => "Disable note";
         public override string Acronym => "DN";
         public override double ScoreMultiplier => 0;
-        public override IconUsage Icon => FontAwesome.Solid.Trash;
-        public override ModType Type => ModType.System;
+        public override IconUsage? Icon => FontAwesome.Solid.Trash;
+        public override ModType Type => ModType.Fun;
 
         public void ApplyToHitObject(HitObject hitObject)
         {
             if (hitObject is Note note)
             {
                 // Disable all the note
-                note.Display = true;
+                note.Display = false;
             }
         }
     }

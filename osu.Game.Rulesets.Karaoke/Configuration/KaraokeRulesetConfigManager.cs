@@ -19,12 +19,30 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         {
             base.InitialiseDefaults();
 
+            // Visual
             Set(KaraokeRulesetSetting.ScrollTime, 5000.0, 1000.0, 10000.0, 100.0);
             Set(KaraokeRulesetSetting.ScrollDirection, KaraokeScrollingDirection.Left);
             Set(KaraokeRulesetSetting.DisplayAlternativeText, false);
+            Set(KaraokeRulesetSetting.ShowCursor, false);
+
+            // Translate
             Set(KaraokeRulesetSetting.UseTranslate, true);
             Set(KaraokeRulesetSetting.PreferLanguage, "en-US");
-            Set(KaraokeRulesetSetting.ShowCursor, false);
+
+            // Pitch
+            Set(KaraokeRulesetSetting.OverridePitchAtGameplay, false);
+            Set(KaraokeRulesetSetting.Pitch, 0, -10, 10);
+            Set(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay, false);
+            Set(KaraokeRulesetSetting.VocalPitch, 0, -10, 10);
+            Set(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay, false);
+            Set(KaraokeRulesetSetting.SaitenPitch, 0, -10, 10);
+
+            // Playback
+            Set(KaraokeRulesetSetting.OverridePlaybackSpeedAtGameplay, false);
+            Set(KaraokeRulesetSetting.PlaybackSpeed, 0, -10, 10);
+
+            // Practice
+            Set(KaraokeRulesetSetting.PracticePreemptTime, 3000.0, 0.0, 5000.0, 100.0);
         }
 
         public override TrackedSettings CreateTrackedSettings() => new TrackedSettings
@@ -35,11 +53,29 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
     public enum KaraokeRulesetSetting
     {
+        // Visual
         ScrollTime,
         ScrollDirection,
         DisplayAlternativeText,
+        ShowCursor,
+
+        // Translate
         UseTranslate,
         PreferLanguage,
-        ShowCursor,
+
+        // Pitch
+        OverridePitchAtGameplay,
+        Pitch,
+        OverrideVocalPitchAtGameplay,
+        VocalPitch,
+        OverrideSaitenPitchAtGameplay,
+        SaitenPitch,
+
+        // Playback
+        OverridePlaybackSpeedAtGameplay,
+        PlaybackSpeed,
+
+        // Practice
+        PracticePreemptTime,
     }
 }

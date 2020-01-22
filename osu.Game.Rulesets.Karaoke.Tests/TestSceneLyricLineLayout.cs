@@ -383,6 +383,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 stream.Position = 0;
 
                 var lyric = new KaraokeLegacyBeatmapDecoder().Decode(reader).HitObjects.OfType<LyricLine>().FirstOrDefault();
+
+                // Check is not null
+                Assert.IsTrue(lyric != null);
+
+                // Apply property
                 lyric.StartTime = startTime;
                 lyric.EndTime = endTime;
                 lyric.TranslateText = translate;

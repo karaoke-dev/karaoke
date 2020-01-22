@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public override string Name => "Snow";
         public override string Acronym => "SW";
         public override double ScoreMultiplier => 1.0f;
-        public override IconUsage Icon => FontAwesome.Regular.Snowflake;
+        public override IconUsage? Icon => FontAwesome.Regular.Snowflake;
         public override ModType Type => ModType.Fun;
 
         public void ApplyToHUD(HUDOverlay overlay)
