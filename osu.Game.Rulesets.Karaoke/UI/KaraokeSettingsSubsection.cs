@@ -25,6 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             Children = new Drawable[]
             {
+                // Visual
                 new SettingsEnumDropdown<KaraokeScrollingDirection>
                 {
                     LabelText = "Scrolling direction",
@@ -42,6 +43,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 },
                 new SettingsCheckbox
                 {
+                    LabelText = "Show cursor while playing",
+                    Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor)
+                },
+                // Translate
+                new SettingsCheckbox
+                {
                     LabelText = "Translate",
                     Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate)
                 },
@@ -50,12 +57,49 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     LabelText = "Prefer language",
                     Bindable = config.GetBindable<string>(KaraokeRulesetSetting.PreferLanguage)
                 },
+                // Pitch
                 new SettingsCheckbox
                 {
-                    LabelText = "Show cursor while playing",
-                    Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor)
-                }
+                    LabelText = "Override pitch at gameplay",
+                    Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay)
+                },
+                new SettingsSlider<int, PitchSlider>
+                {
+                    LabelText = "Pitch",
+                    Bindable = config.GetBindable<int>(KaraokeRulesetSetting.Pitch)
+                },
+                new SettingsCheckbox
+                {
+                    LabelText = "Override vocal pitch at gameplay",
+                    Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay)
+                },
+                new SettingsSlider<int, PitchSlider>
+                {
+                    LabelText = "Vocal pitch",
+                    Bindable = config.GetBindable<int>(KaraokeRulesetSetting.VocalPitch)
+                },
+                new SettingsCheckbox
+                {
+                    LabelText = "Override saiten pitch at gameplay",
+                    Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay)
+                },
+                new SettingsSlider<int, PitchSlider>
+                {
+                    LabelText = "Saiten pitch",
+                    Bindable = config.GetBindable<int>(KaraokeRulesetSetting.SaitenPitch)
+                },
+                // Practice
+                new SettingsSlider<double, TimeSlider>
+                {
+                    LabelText = "Practice preempt time",
+                    Bindable = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime)
+                },
             };
+        }
+
+        private class PitchSlider : OsuSliderBar<int>
+        {
+            public override string TooltipText => (Current.Value >= 0 ? "+" : "") + Current.Value.ToString("N0");
         }
 
         private class TimeSlider : OsuSliderBar<double>

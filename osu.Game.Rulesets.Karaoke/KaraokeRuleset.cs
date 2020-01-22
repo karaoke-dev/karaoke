@@ -58,9 +58,13 @@ namespace osu.Game.Rulesets.Karaoke
                         new KeyBinding(InputKey.W, KaraokeAction.IncreasePitch),
                         new KeyBinding(InputKey.S, KaraokeAction.DecreasePitch),
                         new KeyBinding(InputKey.X, KaraokeAction.ResetPitch),
-                        new KeyBinding(InputKey.E, KaraokeAction.IncreaseLyricAppearTime),
-                        new KeyBinding(InputKey.D, KaraokeAction.DecreaseLyricAppearTime),
-                        new KeyBinding(InputKey.C, KaraokeAction.ResetLyricAppearTime),
+                        new KeyBinding(InputKey.E, KaraokeAction.IncreaseVocalPitch),
+                        new KeyBinding(InputKey.D, KaraokeAction.DecreaseVocalPitch),
+                        new KeyBinding(InputKey.C, KaraokeAction.ResetVocalPitch),
+                        new KeyBinding(InputKey.R, KaraokeAction.IncreaseSaitenPitch),
+                        new KeyBinding(InputKey.F, KaraokeAction.DecreaseSaitenPitch),
+                        new KeyBinding(InputKey.V, KaraokeAction.ResetSaitenPitch),
+
                     };
 
                 case 1:
@@ -76,6 +80,12 @@ namespace osu.Game.Rulesets.Karaoke
         {
             switch (type)
             {
+                case ModType.DifficultyReduction:
+                    return new Mod[]
+                    {
+                        new KaraokeModNoFail(),
+                    };
+
                 case ModType.DifficultyIncrease:
                     return new Mod[]
                     {
@@ -83,13 +93,6 @@ namespace osu.Game.Rulesets.Karaoke
                         new KaraokeModHiddenNote(),
                         new KaraokeModFlashlight(),
                         new MultiMod(new KaraokeModSuddenDeath(), new KaraokeModPerfect(), new KaraokeModWindowsUpdate()),
-                    };
-
-                case ModType.DifficultyReduction:
-                    return new Mod[]
-                    {
-                        new KaraokeModNoFail(),
-                        new KaraokeModPractice(),
                     };
 
                 case ModType.Automation:
@@ -101,13 +104,9 @@ namespace osu.Game.Rulesets.Karaoke
                 case ModType.Fun:
                     return new Mod[]
                     {
-                        new KaraokeModSnow(),
-                    };
-
-                case ModType.System:
-                    return new Mod[]
-                    {
+                        new KaraokeModPractice(),
                         new KaraokeModDisableNote(),
+                        new KaraokeModSnow(),
                     };
 
                 default:

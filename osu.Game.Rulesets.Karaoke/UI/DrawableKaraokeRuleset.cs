@@ -18,7 +18,6 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,16 +25,14 @@ namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHitObject>
     {
+        public KaroakeSessionStatics Session { get; private set; }
         public new KaraokePlayfield Playfield => (KaraokePlayfield)base.Playfield;
 
         public IEnumerable<BarLine> BarLines;
 
-        protected new KaraokeRulesetConfigManager Config => (KaraokeRulesetConfigManager)base.Config;
+        public new KaraokeRulesetConfigManager Config => (KaraokeRulesetConfigManager)base.Config;
 
         private readonly Bindable<KaraokeScrollingDirection> configDirection = new Bindable<KaraokeScrollingDirection>();
-
-        private readonly BindableBool translate = new BindableBool();
-        private readonly Bindable<string> translateLanguage = new Bindable<string>();
 
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
@@ -47,41 +44,19 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             // TODO : it should be moved into NotePlayfield
             BarLines = new BarLineGenerator<BarLine>(Beatmap).BarLines;
-
-            // Change need to translate
-            translate.BindValueChanged(x => updateLyricTranslate());
-            translateLanguage.BindValueChanged(x => updateLyricTranslate());
-        }
-
-        private void updateLyricTranslate()
-        {
-            var isTranslate = translate.Value;
-            var translateLanguage = this.translateLanguage.Value;
-
-            var lyric = Beatmap.HitObjects.OfType<LyricLine>().ToList();
-            var translateDictionary = Beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault();
-
-            // Clear exist translate
-            lyric.ForEach(x => x.TranslateText = null);
-
-            // If contain target language
-            if (isTranslate && translateLanguage != null
-                            && translateDictionary != null && translateDictionary.Translates.ContainsKey(translateLanguage))
-            {
-                var language = translateDictionary.Translates[translateLanguage];
-
-                // Apply translate
-                for (int i = 0; i < Math.Min(lyric.Count, language.Count); i++)
-                {
-                    lyric[i].TranslateText = language[i];
-                }
-            }
         }
 
         protected override Playfield CreatePlayfield() => new KaraokePlayfield();
 
         protected override PassThroughInputManager CreateInputManager() =>
             new KaraokeInputManager(Ruleset.RulesetInfo);
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        {
+            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            dependencies.Cache(Session = new KaroakeSessionStatics(Config, Beatmap));
+            return dependencies;
+        }
 
         [BackgroundDependencyLoader]
         private void load()
@@ -92,10 +67,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
             configDirection.BindValueChanged(direction => Direction.Value = (ScrollingDirection)direction.NewValue, true);
 
             Config.BindWith(KaraokeRulesetSetting.ScrollTime, TimeRange);
-
-            // Translate
-            Config.BindWith(KaraokeRulesetSetting.UseTranslate, translate);
-            Config.BindWith(KaraokeRulesetSetting.PreferLanguage, translateLanguage);
         }
 
         public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h)

@@ -1,0 +1,65 @@
+﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// See the LICENCE file in the repository root for full licence text.
+
+using osu.Framework.Allocation;
+using osu.Framework.Graphics;
+using osu.Game.Graphics.Sprites;
+using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Play.PlayerSettings;
+
+namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
+{
+    public class TranslateSettings : PlayerSettingsGroup
+    {
+        protected override string Title => "Translate";
+
+        private readonly PlayerCheckbox translateCheckBox;
+        private readonly OsuSpriteText translateText;
+        private readonly OsuDropdown<string> translateDropDown;
+
+        public TranslateSettings(TranslateDictionary dictionary)
+        {
+            Children = new Drawable[]
+            {
+                translateCheckBox = new PlayerCheckbox
+                {
+                    LabelText = "Translate"
+                },
+                translateText = new OsuSpriteText
+                {
+                    Text = "Translate language"
+                },
+                translateDropDown = new OsuDropdown<string>
+                {
+                    RelativeSizeAxes = Axes.X,
+                    Items = dictionary.Translates.Keys
+                },
+            };
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(KaroakeSessionStatics session)
+        {
+            // Translate
+            translateCheckBox.Current = session.GetBindable<bool>(KaraokeRulesetSession.UseTranslate);
+            translateDropDown.Current = session.GetBindable<string>(KaraokeRulesetSession.PreferLanguage);
+
+            // hidden dropdown if not translate
+            translateCheckBox.Current.BindValueChanged(value =>
+            {
+                if (value.NewValue)
+                {
+                    translateText.Show();
+                    translateDropDown.Show();
+                }
+                else
+                {
+                    translateText.Hide();
+                    translateDropDown.Hide();
+                }
+            }, true);
+        }
+    }
+}

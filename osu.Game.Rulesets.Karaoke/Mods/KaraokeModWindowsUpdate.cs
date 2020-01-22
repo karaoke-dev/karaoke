@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
     {
         public override string Name => "Windows update";
         public override string Acronym => "WD";
-        public override IconUsage Icon => FontAwesome.Brands.Windows;
+        public override IconUsage? Icon => FontAwesome.Brands.Windows;
         public override string Description => "Once you missed, windows will upppppdate your osu!";
 
         private HUDOverlay overlay;

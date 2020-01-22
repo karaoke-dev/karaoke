@@ -3,8 +3,12 @@
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Types
 {
-    public interface IHasRuby
+    public interface ITag
     {
-        string Ruby { get; }
+        string Text { get; set; }
+
+        int StartIndex { get; set; }
+
+        int EndIndex { get; set; }
     }
 }

@@ -5,12 +5,12 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class RomajiTag : IHasRomaji
+    public struct RomajiTag : ITag
     {
         /// <summary>
         /// If kanji Matched, then apply romaji
         /// </summary>
-        public string Romaji { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// Start index

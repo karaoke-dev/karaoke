@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     }, v => (double)v.Time),
                     RubyTags = result.QueryRubies(lyric).Select(ruby => new RubyTag
                     {
-                        Ruby = ruby.Ruby.Ruby,
+                        Text = ruby.Ruby.Ruby,
                         StartIndex = ruby.StartIndex,
                         EndIndex = ruby.EndIndex
                     }).ToArray()

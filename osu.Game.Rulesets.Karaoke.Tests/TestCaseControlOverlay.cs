@@ -4,15 +4,16 @@
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Tests.Visual;
-using static osu.Game.Rulesets.Karaoke.Mods.KaraokeModPractice;
 
 namespace osu.Game.Rulesets.Karaoke.Tests
 {
     [TestFixture]
-    public class TestCaseKaraokeOverlay : OsuTestScene
+    public class TestCaseControlOverlay : OsuTestScene
     {
-        public KaraokePanelOverlay KaraokePanelOverlay { get; set; }
+        public ControlOverlay ControlOverlay { get; set; }
 
         [BackgroundDependencyLoader]
         private void load(RulesetStore rulesets)
@@ -23,12 +24,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         {
             base.LoadComplete();
 
-            Add(KaraokePanelOverlay = new KaraokePanelOverlay(null, null)
+            // Cannot work now because it need extra BDL in child
+            /*
+            Add(new Container
             {
                 RelativeSizeAxes = Axes.Both,
+                Child = ControlOverlay = new ControlOverlay()
+                {
+                    RelativeSizeAxes = Axes.Both,
+                }
             });
 
-            AddStep("Toggle", KaraokePanelOverlay.ToggleVisibility);
+            AddStep("Toggle setting", ControlOverlay.ToggleGameplaySettingsOverlay);
+            */
         }
     }
 }

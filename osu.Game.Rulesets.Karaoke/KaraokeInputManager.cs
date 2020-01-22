@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke
         [Description("Play and pause")]
         PlayAndPause,
 
-        [Description("Open/Close panel")]
+        [Description("Open/Close adjustment")]
         OpenPanel,
 
         [Description("Increase Speed")]
@@ -74,22 +74,31 @@ namespace osu.Game.Rulesets.Karaoke
         [Description("Reset Speed")]
         ResetTempo,
 
-        [Description("Increase Tone")]
+        [Description("Increase pitch")]
         IncreasePitch,
 
-        [Description("Decrease Tone")]
+        [Description("Decrease pitch")]
         DecreasePitch,
 
-        [Description("Reset Tone")]
+        [Description("Reset pitch")]
         ResetPitch,
 
-        [Description("Increase appear time")]
-        IncreaseLyricAppearTime,
+        [Description("Increase vocal pitch")]
+        IncreaseVocalPitch,
 
-        [Description("Decrease appear time")]
-        DecreaseLyricAppearTime,
+        [Description("Decrease vocal pitch")]
+        DecreaseVocalPitch,
 
-        [Description("Reset appear time")]
-        ResetLyricAppearTime,
+        [Description("Reset vocal pitch")]
+        ResetVocalPitch,
+
+        [Description("Increase saiten pitch")]
+        IncreaseSaitenPitch,
+
+        [Description("Decrease saiten pitch")]
+        DecreaseSaitenPitch,
+
+        [Description("Reset saiten pitch")]
+        ResetSaitenPitch,
     }
 }

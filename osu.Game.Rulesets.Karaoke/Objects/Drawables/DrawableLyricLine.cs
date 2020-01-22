@@ -50,12 +50,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             hitObject.RubyTagsBindable.BindValueChanged(rubyTags =>
             {
-                karaokeText.Rubies = rubyTags.NewValue?.Select(x => new PositionText(x.Ruby, x.StartIndex, x.EndIndex)).ToArray();
+                karaokeText.Rubies = rubyTags.NewValue?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray();
             }, true);
 
             hitObject.RomajiTagsBindable.BindValueChanged(romajiTags =>
             {
-                karaokeText.Romajies = romajiTags.NewValue?.Select(x => new PositionText(x.Romaji, x.StartIndex, x.EndIndex)).ToArray();
+                karaokeText.Romajies = romajiTags.NewValue?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray();
             }, true);
 
             hitObject.FontIndexBindable.BindValueChanged(index =>
