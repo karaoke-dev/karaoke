@@ -16,9 +16,9 @@ using System.Linq;
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 {
     [TestFixture]
-    public class KaraokeBeatmapDecoderTest
+    public class KaraokeLegacyBeatmapDecoderTest
     {
-        public KaraokeBeatmapDecoderTest()
+        public KaraokeLegacyBeatmapDecoderTest()
         {
             // It's a tricky to let lazer to read karaoke testing beatmap
             KaraokeLegacyBeatmapDecoder.Register();
@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var lrcDecoder = new KaraokeLegacyBeatmapDecoder();
                 var beatmap = lrcDecoder.Decode(stream);
 
-                //get lyric
+                // Get notes
                 var notes = beatmap.HitObjects.OfType<Note>().ToList();
 
                 testNote("か", 1, note: notes[0]);
@@ -77,11 +77,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 testNote("お", 3, note: notes[2]);
                 testNote("け", 3, true, notes[3]);
                 testNote("け", 4, note: notes[4]);
-
-                // TODO : move into individual test case
-                //var encoder = new NoteEncoder();
-                //var result = encoder.Encode(beatmap).FirstOrDefault();
-                //Assert.AreEqual(note_text, result);
             }
         }
 
@@ -101,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var lrcDecoder = new KaraokeLegacyBeatmapDecoder();
                 var beatmap = lrcDecoder.Decode(stream);
 
-                //get lyric
+                // Get lyric
                 var lyric = beatmap.HitObjects.OfType<LyricLine>().FirstOrDefault();
 
                 // Check is not null
@@ -123,7 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var lrcDecoder = new KaraokeLegacyBeatmapDecoder();
                 var beatmap = lrcDecoder.Decode(stream);
 
-                //get translate
+                // Get translate
                 var translates = beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault()?.Translates;
 
                 // Check is not null
@@ -132,12 +127,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 // Check translate count
                 Assert.AreEqual(translates.Count, 2);
 
-                // Check chinese
+                // Check chinese translate
                 Assert.AreEqual(translates["zh-TW"].Count, 2);
                 Assert.AreEqual(translates["zh-TW"][0], "卡拉OK");
                 Assert.AreEqual(translates["zh-TW"][1], "喜歡");
 
-                // Check english
+                // Check english translate
                 Assert.AreEqual(translates["en-US"].Count, 2);
                 Assert.AreEqual(translates["en-US"][0], "karaoke");
                 Assert.AreEqual(translates["en-US"][1], "like it");

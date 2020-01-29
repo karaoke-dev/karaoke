@@ -5,5 +5,15 @@ namespace osu.Game.Rulesets.Karaoke.Judgements
 {
     public class KaraokeLyricJudgement : KaraokeJudgement
     {
+        public LyricTime Time { get; set; }
+    }
+
+    public enum LyricTime
+    {
+        NotYet,
+
+        Available,
+
+        Exceed
     }
 }

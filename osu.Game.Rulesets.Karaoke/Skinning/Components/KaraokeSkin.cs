@@ -2,10 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using osu.Game.IO.Serialization;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Components
 {
-    public class KaraokeSkin
+    public class KaraokeSkin : IJsonSerializable
     {
         public List<KaraokeFont> DefinedFonts { get; set; }
 

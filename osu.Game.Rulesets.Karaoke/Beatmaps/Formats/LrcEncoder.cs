@@ -6,6 +6,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
+using System;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -15,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         {
             var lyric = new LyricMaker.Model.Lyric
             {
-                Lines = output.HitObjects.OfType<LyricLine>().Select(encodeLyric).ToArray()
+                Lines = output.HitObjects.OfType<LyricLine>().Select(encodeLyric).ToArray(),
             };
             var encodeResult = new LyricMaker.Parser.LrcParser().Encode(lyric);
             return encodeResult;
@@ -30,6 +31,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private IEnumerable<LyricMaker.Model.Tags.TimeTag> convertTimeTag(string text, IReadOnlyDictionary<TimeTagIndex, double> tags)
         {
+            if (tags == null || !tags.Any())
+                throw new ArgumentNullException($"{nameof(tags)} cannot be null.");
+
             var totalTags = text.Length * 2 + 2;
 
             for (int i = 0; i < totalTags; i++)

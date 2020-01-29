@@ -32,6 +32,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             // Convert line
             foreach (var line in result.Lines)
             {
+                // Empty line should not be imported
+                if (string.IsNullOrEmpty(line.Text))
+                    continue;
+
                 var lyric = line.Text;
                 output.HitObjects.Add(new LyricLine
                 {

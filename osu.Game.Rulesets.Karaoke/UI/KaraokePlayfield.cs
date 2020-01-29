@@ -120,6 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             rulesetConfig?.BindWith(KaraokeRulesetSetting.ShowCursor, DisplayCursor);
 
+            // Pitch
             session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
             session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
             session.BindWith(KaraokeRulesetSession.PlaybackSpeed, bindablePlayback);

@@ -21,6 +21,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests
@@ -304,30 +305,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                     RubyFont = new FontUsage(size: 42),
                     RomajiFont = new FontUsage(size: 42)
                 };
-            }
-        }
-
-        public class PreviewLyricSpriteText : LyricSpriteText
-        {
-            public readonly LyricLine HitObject;
-
-            public PreviewLyricSpriteText(LyricLine hitObject)
-            {
-                HitObject = hitObject;
-                hitObject.TextBindable.BindValueChanged(text =>
-                {
-                    Text = text.NewValue;
-                }, true);
-
-                hitObject.RubyTagsBindable.BindValueChanged(rubyTags =>
-                {
-                    Rubies = rubyTags.NewValue?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray();
-                }, true);
-
-                hitObject.RomajiTagsBindable.BindValueChanged(romajiTags =>
-                {
-                    Romajies = romajiTags.NewValue?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray();
-                }, true);
             }
         }
 

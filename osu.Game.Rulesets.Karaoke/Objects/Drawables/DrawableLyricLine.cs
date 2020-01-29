@@ -12,6 +12,9 @@ using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
 using osuTK;
 using osuTK.Graphics;
+using osu.Game.Rulesets.Karaoke.Judgements;
+using System;
+using osu.Game.Rulesets.Judgements;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
@@ -19,6 +22,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
     {
         private readonly KarakeSpriteText karaokeText;
         private readonly OsuSpriteText translateText;
+
+        /// <summary>
+        /// Invoked when a <see cref="JudgementResult"/> has been applied by this <see cref="DrawableHitObject"/> or a nested <see cref="DrawableHitObject"/>.
+        /// </summary>
+        public event Action<DrawableHitObject, JudgementResult> OnLyricStart;
 
         public new LyricLine HitObject => (LyricLine)base.HitObject;
 
@@ -157,10 +165,28 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
         {
-            if (userTriggered || Time.Current < HitObject.EndTime)
-                return;
+            var judgement = Result.Judgement as KaraokeLyricJudgement;
+            var lyricStartOffset = timeOffset + HitObject.LyricDuration;
 
-            ApplyResult(r => { r.Type = HitResult.Meh; });
+            if (lyricStartOffset < 0)
+            {
+                judgement.Time = LyricTime.NotYet;
+            }
+            else if (!HitObject.HitWindows.CanBeHit(lyricStartOffset) && judgement.Time != LyricTime.Available)
+            {
+                // Apply start hit result
+                judgement.Time = LyricTime.Available;
+                OnLyricStart?.Invoke(this as DrawableHitObject, Result);
+            }
+            else if (!HitObject.HitWindows.CanBeHit(timeOffset))
+            {
+                judgement.Time = LyricTime.Exceed;
+                // Apply end hit result
+                ApplyResult(r =>
+                {
+                    r.Type = HitResult.Meh;
+                });
+            }
         }
 
         protected override void UpdateStateTransforms(ArmedState state)

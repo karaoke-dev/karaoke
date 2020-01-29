@@ -11,6 +11,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public bool Half { get; set; }
 
+        public Tone(int scale, bool half = false)
+        {
+            Scale = scale;
+            Half = half;
+        }
+
         public int CompareTo(Tone other)
         {
             if (Scale > other.Scale)

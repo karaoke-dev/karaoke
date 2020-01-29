@@ -12,7 +12,7 @@ using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Tests
+namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 {
     [TestFixture]
     public class NicoKaraDecoderTest

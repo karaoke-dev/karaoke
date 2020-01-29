@@ -16,12 +16,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         public CenterLine()
         {
             RelativeSizeAxes = Axes.X;
-            Height = ColumnBackground.COLUMN_HEIGHT;
 
             Child = centerLineBox = new Box
             {
                 RelativeSizeAxes = Axes.Both,
-                Alpha = 0.1f
             };
         }
 
