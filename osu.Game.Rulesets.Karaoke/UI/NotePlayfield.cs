@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
@@ -24,7 +24,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class NotePlayfield : ScrollingPlayfield, IKeyBindingHandler<KaraokeSoundAction>
+    public class NotePlayfield : ScrollingPlayfield, IKeyBindingHandler<KaraokeSaitenAction>
     {
         [Resolved]
         private IPositionCalculator calculator { get; set; }
@@ -276,7 +276,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             session.BindWith(KaraokeRulesetSession.SaitenPitch, saitenPitch);
         }
 
-        public bool OnPressed(KaraokeSoundAction action)
+        public bool OnPressed(KaraokeSaitenAction action)
         {
             // TODO : appear marker and move position with delay time
             saitenMarker.Y = calculator.YPositionAt(action);
@@ -288,15 +288,13 @@ namespace osu.Game.Rulesets.Karaoke.UI
             return true;
         }
 
-        public bool OnReleased(KaraokeSoundAction action)
+        public void OnReleased(KaraokeSaitenAction action)
         {
             // TODO : disappear marker
             saitenMarker.Alpha = 0;
 
             // Stop singing
             realTimeSaitenVisualization.Release();
-
-            return true;
         }
     }
 }

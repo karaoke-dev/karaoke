@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
@@ -138,8 +138,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         private void performColumnMovement(Tone lastTone, MoveSelectionEvent moveEvent)
         {
+            if (!(moveEvent.Blueprint is NoteSelectionBlueprint noteBlueprint))
+                return;
+
             // top position
-            var dragHeight = moveEvent.Blueprint.DrawableObject.Parent.ToLocalSpace(moveEvent.ScreenSpacePosition).Y;
+            var dragHeight = noteBlueprint.DrawableObject.Parent.ToLocalSpace(moveEvent.ScreenSpacePosition).Y;
             var lastHeight = convertToneToHeight(lastTone);
             var moveHeight = dragHeight - lastHeight;
 

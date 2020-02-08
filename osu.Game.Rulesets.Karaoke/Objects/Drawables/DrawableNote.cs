@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Diagnostics;
@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
     /// <summary>
     /// Visualises a <see cref="Note"/> hit object.
     /// </summary>
-    public class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKeyBindingHandler<KaraokeSoundAction>
+    public class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKeyBindingHandler<KaraokeSaitenAction>
     {
         private readonly BodyPiece bodyPiece;
         private readonly OsuSpriteText textPiece;
@@ -140,7 +140,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             ApplyResult(r => r.Type = result);
         }
 
-        public bool OnPressed(KaraokeSoundAction action)
+        public bool OnPressed(KaraokeSaitenAction action)
         {
             // Make sure the action happened within the body of the hold note
             if (Time.Current < HitObject.StartTime && holdStartTime == null || Time.Current > HitObject.EndTime && holdStartTime == null)
@@ -153,23 +153,21 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             }
             else if (Time.Current > HitObject.EndTime || Time.Current < HitObject.StartTime)
             {
-                // User stop singing this note
-                return OnReleased(action);
+                // TODO : User stop singing this note
+                //OnReleased(action);
             }
 
             return false;
         }
 
-        public bool OnReleased(KaraokeSoundAction action)
+        public void OnReleased(KaraokeSaitenAction action)
         {
             // Make sure that the user started holding the key during the hold note
             if (!holdStartTime.HasValue)
-                return false;
+                return;
 
             // User stop singing this note
             EndSing();
-
-            return false;
         }
     }
 }

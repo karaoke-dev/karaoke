@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
@@ -80,7 +80,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             return true;
         }
 
-        public bool OnReleased(KaraokeAction action) => true;
+        public void OnReleased(KaraokeAction action)
+        {
+        }
 
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetConfigManager config)

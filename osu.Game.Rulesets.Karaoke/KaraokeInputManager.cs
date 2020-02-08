@@ -1,8 +1,10 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Input.Bindings;
+using osu.Framework.Input.Handlers.Microphone;
 using osu.Framework.Input.StateChanges.Events;
+using osu.Framework.Input.States;
 using osu.Game.Input.Handlers;
 using osu.Game.Rulesets.UI;
 using System.ComponentModel;
@@ -10,18 +12,24 @@ using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke
 {
-    public class KaraokeInputManager : RulesetInputManager<KaraokeSoundAction>
+    public class KaraokeInputManager : RulesetInputManager<KaraokeSaitenAction>
     {
         public KaraokeInputManager(RulesetInfo ruleset)
             : base(ruleset, 1, SimultaneousBindingMode.All)
         {
+            AddHandler(new OsuTKMicrophoneHandler(-1));
+            UseParentInput = false;
         }
+
+        protected override InputState CreateInitialState()
+            => new KaraokeRulesetInputManagerInputState<KaraokeSaitenAction>(new MicrophoneState());
 
         public override void HandleInputStateChange(InputStateChangeEvent inputStateChange)
         {
-            if (inputStateChange is ReplayInputHandler.ReplayStateChangeEvent<KaraokeSoundAction> replayStateChanged
-                && replayStateChanged.Input is ReplayInputHandler.ReplayState<KaraokeSoundAction> replayState)
+            if (inputStateChange is ReplayInputHandler.ReplayStateChangeEvent<KaraokeSaitenAction> replayStateChanged
+                && replayStateChanged.Input is ReplayInputHandler.ReplayState<KaraokeSaitenAction> replayState)
             {
+                // Deal with replay event
                 // Release event should be trigger first
                 if (replayStateChanged.ReleasedActions.Any() && !replayState.PressedActions.Any())
                 {
@@ -36,14 +44,49 @@ namespace osu.Game.Rulesets.Karaoke
                         KeyBindingContainer.TriggerPressed(action);
                 }
             }
+            else if (inputStateChange is MicrophoneSoundChangeEvent microphoneSoundChange)
+            {
+                // Deal with realtime microphone event
+                var inputState = microphoneSoundChange.State as IMicrophoneInputState;
+                var lastState = microphoneSoundChange.LastState;
+                var state = inputState.Microphone;
+
+                // TODO : adjust saiten action by setting
+                var realPitch = ((float)(state.HasSound ? state.Pitch : lastState.Pitch) - 70) / 7;
+
+                var action = new KaraokeSaitenAction
+                {
+                    Scale = realPitch
+                };
+
+                if (!lastState.HasSound && state.HasSound)
+                    KeyBindingContainer.TriggerPressed(action);
+                else if (lastState.HasSound && !state.HasSound)
+                    KeyBindingContainer.TriggerPressed(action);
+                else
+                    KeyBindingContainer.TriggerReleased(action);
+            }
             else
             {
+                // Basically should not goes to here
                 base.HandleInputStateChange(inputStateChange);
             }
         }
     }
 
-    public struct KaraokeSoundAction
+    public class KaraokeRulesetInputManagerInputState<T> : RulesetInputManagerInputState<T>, IMicrophoneInputState
+        where T : struct
+    {
+        public MicrophoneState Microphone { get; }
+
+        public KaraokeRulesetInputManagerInputState(MicrophoneState microphone)
+            : base(null, null, null)
+        {
+            Microphone = microphone;
+        }
+    }
+
+    public struct KaraokeSaitenAction
     {
         public float Scale { get; set; }
     }
