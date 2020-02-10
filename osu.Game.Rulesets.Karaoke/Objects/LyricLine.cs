@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Objects.Types;
@@ -26,6 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => TextBindable.Value = value;
         }
 
+        [JsonIgnore]
         public readonly Bindable<IReadOnlyDictionary<TimeTagIndex, double>> TimeTagsBindable = new Bindable<IReadOnlyDictionary<TimeTagIndex, double>>();
 
         /// <summary>
@@ -37,6 +38,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => TimeTagsBindable.Value = value;
         }
 
+        public double LyricStartTime => TimeTags?.FirstOrDefault().Value ?? StartTime;
+
+        public double LyricEndTime => TimeTags?.LastOrDefault().Value ?? EndTime;
+
+        public double LyricDuration => LyricEndTime - LyricStartTime;
+
+        [JsonIgnore]
         public readonly Bindable<RubyTag[]> RubyTagsBindable = new Bindable<RubyTag[]>();
 
         /// <summary>
@@ -48,6 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => RubyTagsBindable.Value = value;
         }
 
+        [JsonIgnore]
         public readonly Bindable<RomajiTag[]> RomajiTagsBindable = new Bindable<RomajiTag[]>();
 
         /// <summary>
@@ -69,6 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// </summary>
         public double EndTime { get; set; }
 
+        [JsonIgnore]
         public readonly Bindable<int> FontIndexBindable = new Bindable<int>();
 
         /// <summary>
@@ -80,6 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => FontIndexBindable.Value = value;
         }
 
+        [JsonIgnore]
         public readonly Bindable<int> LayoutIndexBindable = new Bindable<int>();
 
         /// <summary>
@@ -92,6 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => LayoutIndexBindable.Value = value;
         }
 
+        [JsonIgnore]
         public readonly Bindable<string> TranslateTextBindable = new Bindable<string>();
 
         /// <summary>

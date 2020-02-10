@@ -1,16 +1,26 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Bindings;
+using osu.Game.Beatmaps;
+using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Screens.Play.PlayerSettings;
+using osuTK;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
@@ -21,8 +31,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
         private readonly PlayerSliderBar<double> preemptTimeSliderBar;
         private readonly LyricPreview lyricPreview;
 
-        public PracticeSettings()
+        public PracticeSettings(IBeatmap beatmap)
         {
+            var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
+
             Children = new Drawable[]
             {
                 new OsuSpriteText
@@ -34,18 +46,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 {
                     Text = "Lyric:"
                 },
-                lyricPreview = new LyricPreview
+                lyricPreview = new LyricPreview(lyrics)
                 {
-                    Height = 500
+                    Height = 580
                 }
             };
-
-            lyricPreview.SelectedLyricLine.BindValueChanged(value =>
-            {
-                var lyricStartTime = value.NewValue?.StartTime;
-
-                // TODO : switch track to target start time.
-            });
         }
 
         public bool OnPressed(KaraokeAction action)
@@ -75,7 +80,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             return true;
         }
 
-        public bool OnReleased(KaraokeAction action) => true;
+        public void OnReleased(KaraokeAction action)
+        {
+        }
 
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetConfigManager config)
@@ -85,19 +92,133 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 
         internal class LyricPreview : Container
         {
-            public Bindable<LyricLine> SelectedLyricLine { get; } = new Bindable<LyricLine>();
+            private readonly Bindable<LyricLine> selectedLyricLine = new Bindable<LyricLine>();
+            private readonly FillFlowContainer<ClickableLyric> lyricTable;
 
-            public LyricPreview()
+            public LyricPreview(List<LyricLine> lyrics)
             {
                 RelativeSizeAxes = Axes.X;
                 Child = new OsuScrollContainer
                 {
-                    RelativeSizeAxes = Axes.Both
+                    RelativeSizeAxes = Axes.Both,
+                    Child = lyricTable = new FillFlowContainer<ClickableLyric>
+                    {
+                        AutoSizeAxes = Axes.Y,
+                        RelativeSizeAxes = Axes.X,
+                        Direction = FillDirection.Vertical,
+                        Spacing = new Vector2(15),
+                        Children = lyrics.Select(x => new ClickableLyric(x)
+                        {
+                            Selected = false,
+                            Action = () => triggerLyricLine(x)
+                        }).ToList()
+                    }
                 };
 
-                // TODO : initial lyrics
+                selectedLyricLine.BindValueChanged(value =>
+                {
+                    var oldValue = value.OldValue;
+                    if (oldValue != null)
+                        lyricTable.Where(x => x.HitObject == oldValue).ForEach(x =>
+                        {
+                            x.Selected = false;
+                        });
 
-                // If can, get event on which lyric line is playing.
+                    var newValue = value.NewValue;
+                    if (newValue != null)
+                        lyricTable.Where(x => x.HitObject == newValue).ForEach(x =>
+                        {
+                            x.Selected = true;
+                        });
+                });
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(KaroakeSessionStatics session)
+            {
+                session.BindWith(KaraokeRulesetSession.NowLyric, selectedLyricLine);
+            }
+
+            private void triggerLyricLine(LyricLine lyric)
+            {
+                if (selectedLyricLine.Value == lyric)
+                    selectedLyricLine.TriggerChange();
+                else
+                    selectedLyricLine.Value = lyric;
+            }
+
+            internal class ClickableLyric : ClickableContainer
+            {
+                private const float fade_duration = 100;
+
+                private Color4 hoverTextColour;
+                private Color4 idolTextColour;
+
+                private readonly Box background;
+                private readonly SpriteIcon icon;
+                private readonly PreviewLyricSpriteText previewLyric;
+
+                public ClickableLyric(LyricLine lyric)
+                {
+                    AutoSizeAxes = Axes.Y;
+                    RelativeSizeAxes = Axes.X;
+                    Masking = true;
+                    CornerRadius = 5;
+                    Children = new Drawable[]
+                    {
+                        background = new Box
+                        {
+                            RelativeSizeAxes = Axes.Both
+                        },
+                        icon = new SpriteIcon
+                        {
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.CentreLeft,
+                            Size = new Vector2(15),
+                            Icon = FontAwesome.Solid.Play,
+                            Margin = new MarginPadding { Left = 5 }
+                        },
+                        previewLyric = new PreviewLyricSpriteText(lyric)
+                        {
+                            Font = new FontUsage(size: 25),
+                            RubyFont = new FontUsage(size: 10),
+                            RomajiFont = new FontUsage(size: 10),
+                            Margin = new MarginPadding{ Left = 25 }
+                        }
+                    };
+                }
+
+                private bool selected;
+
+                public bool Selected
+                {
+                    get => selected;
+                    set
+                    {
+                        if (value == selected) return;
+
+                        selected = value;
+
+                        background.FadeTo(Selected ? 1 : 0, fade_duration);
+                        icon.FadeTo(Selected ? 1 : 0, fade_duration);
+                        previewLyric.FadeColour(Selected ? hoverTextColour : idolTextColour, fade_duration);
+                    }
+                }
+
+                public LyricLine HitObject => previewLyric.HitObject;
+
+                [BackgroundDependencyLoader]
+                private void load(OsuColour colours)
+                {
+                    hoverTextColour = colours.Yellow;
+                    idolTextColour = colours.Gray9;
+
+                    previewLyric.Colour = idolTextColour;
+                    background.Colour = colours.Blue;
+                    background.Alpha = 0;
+                    icon.Colour = hoverTextColour;
+                    icon.Alpha = 0;
+                }
             }
         }
     }

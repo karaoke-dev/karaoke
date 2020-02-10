@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Karaoke.Replays;
@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         {
         }
 
-        public void AddAction(KaraokeSoundAction action)
+        public void AddAction(KaraokeSaitenAction action)
         {
             if (Time.Current <= MaxAvailableTime)
                 return;

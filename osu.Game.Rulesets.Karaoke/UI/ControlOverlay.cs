@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
@@ -118,9 +118,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
             return true;
         }
 
-        public virtual bool OnReleased(KaraokeAction action)
+        public virtual void OnReleased(KaraokeAction action)
         {
-            return true;
         }
 
         public void AddSettingsGroup(PlayerSettingsGroup group)

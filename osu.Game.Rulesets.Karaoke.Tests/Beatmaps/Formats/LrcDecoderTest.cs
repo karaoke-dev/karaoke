@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
@@ -34,24 +34,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 // Get first beatmap
                 var lyric = beatmap.HitObjects.OfType<LyricLine>().FirstOrDefault();
 
-                // lyric
+                // Check lyric
                 Assert.AreEqual(lyric?.Text, "からおけ");
                 Assert.AreEqual(lyric?.StartTime, 1000);
                 Assert.AreEqual(lyric?.EndTime, 5000);
 
-                // time tag
+                // Check time tag
                 var tags = lyric?.TimeTags;
                 var checkedTags = tags.ToArray();
                 Assert.AreEqual(tags.Count, 5);
                 Assert.AreEqual(checkedTags.Length, 5);
                 Assert.AreEqual(string.Join(',', tags.Select(x => x.Key.Index)), "0,1,2,3,4");
                 Assert.AreEqual(string.Join(',', tags.Select(x => x.Value)), "1000,2000,3000,4000,5000");
-
-                // TODO : move to encode test case
-                var encoder = new LrcEncoder();
-                var result = encoder.Encode(beatmap).Replace("\r\n", "");
-
-                Assert.AreEqual(lyric_text, result);
             }
         }
     }

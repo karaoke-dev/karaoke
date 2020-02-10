@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 
         float YPositionAt(Tone tone);
 
-        float YPositionAt(KaraokeSoundAction action);
+        float YPositionAt(KaraokeSaitenAction action);
 
         float CenterPosition();
 

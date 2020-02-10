@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
@@ -35,12 +35,15 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             var overrideSaitenPitch = getvalue<bool>(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay);
             var saitenPitchValue = getvalue<int>(KaraokeRulesetSetting.SaitenPitch);
-            Set(KaraokeRulesetSession.SaitenPitch, overrideSaitenPitch ? saitenPitchValue : 0, -10, 10);
+            Set(KaraokeRulesetSession.SaitenPitch, overrideSaitenPitch ? saitenPitchValue : 0, -8, 8);
 
             // Playback
             var overridePlaybackSpeed = getvalue<bool>(KaraokeRulesetSetting.OverridePlaybackSpeedAtGameplay);
             var playbackSpeedValue = getvalue<int>(KaraokeRulesetSetting.PlaybackSpeed);
             Set(KaraokeRulesetSession.PlaybackSpeed, overridePlaybackSpeed ? playbackSpeedValue : 0, -10, 10);
+
+            // Practice
+            Set<LyricLine>(KaraokeRulesetSession.NowLyric, null);
         }
 
         private T getvalue<T>(KaraokeRulesetSetting setting) => rulesetConfigManager.GetBindable<T>(setting).Value;
@@ -59,5 +62,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
         // Playback
         PlaybackSpeed,
+
+        // Practice
+        NowLyric,
     }
 }

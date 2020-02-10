@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
@@ -9,6 +9,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
@@ -16,6 +17,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Tests.Visual;
 using osuTK;
 
@@ -197,7 +199,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         public class LyricPreview : Container
         {
             private readonly Box background;
-            private readonly FillFlowContainer<OsuSpriteText> previewSpriteTexts;
+            private readonly FillFlowContainer<PreviewLyricSpriteText> previewSpriteTexts;
 
             public LyricPreview()
             {
@@ -218,7 +220,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                             Origin = Anchor.Centre,
                             RelativeSizeAxes = Axes.Both,
                         },
-                        previewSpriteTexts = new FillFlowContainer<OsuSpriteText>
+                        previewSpriteTexts = new FillFlowContainer<PreviewLyricSpriteText>
                         {
                             Direction = FillDirection.Vertical,
                             RelativeSizeAxes = Axes.X,
@@ -239,12 +241,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 set
                 {
                     lyricLines = value;
-                    previewSpriteTexts.Children = LyricLines.Select(x => new OsuSpriteText
+                    previewSpriteTexts.Children = LyricLines.Select(x => new PreviewLyricSpriteText(x)
                     {
-                        Text = x.Text,
                         RelativeSizeAxes = Axes.X,
-                        Font = OsuFont.GetFont(size: 18),
-                        Height = TEXT_HEIGHT
+                        Font = new FontUsage(size: 25),
+                        RubyFont = new FontUsage(size: 10),
+                        RomajiFont = new FontUsage(size: 10),
+                        Height = TEXT_HEIGHT,
                     }).ToList();
                 }
             }

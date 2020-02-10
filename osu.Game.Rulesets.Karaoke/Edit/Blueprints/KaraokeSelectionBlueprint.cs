@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
@@ -12,7 +12,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
 {
-    public class KaraokeSelectionBlueprint : SelectionBlueprint
+    public class KaraokeSelectionBlueprint : OverlaySelectionBlueprint
     {
         public Vector2 ScreenSpaceDragPosition { get; private set; }
         public Vector2 DragPosition { get; private set; }
@@ -21,8 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
 
         protected IClock EditorClock { get; private set; }
 
-        public KaraokeSelectionBlueprint(DrawableHitObject hitObject)
-            : base(hitObject)
+        public KaraokeSelectionBlueprint(DrawableHitObject drawableObject)
+            : base(drawableObject)
         {
             RelativeSizeAxes = Axes.None;
         }
@@ -48,14 +48,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
             return base.OnMouseDown(e);
         }
 
-        protected override bool OnDrag(DragEvent e)
+        protected override void OnDrag(DragEvent e)
         {
-            var result = base.OnDrag(e);
+            base.OnDrag(e);
 
             ScreenSpaceDragPosition = e.ScreenSpaceMousePosition;
             DragPosition = DrawableObject.ToLocalSpace(e.ScreenSpaceMousePosition);
-
-            return result;
         }
 
         public override void Show()

@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Input.StateChanges;
@@ -19,17 +19,17 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
         public override List<IInput> GetPendingInputs() => new List<IInput>
         {
-            new ReplayState<KaraokeSoundAction>
+            new ReplayState<KaraokeSaitenAction>
             {
                 PressedActions = CurrentFrame?.Sound ?? false
-                    ? new List<KaraokeSoundAction>
+                    ? new List<KaraokeSaitenAction>
                     {
-                        new KaraokeSoundAction
+                        new KaraokeSaitenAction
                         {
                             Scale = CurrentFrame.Scale
                         }
                     }
-                    : new List<KaraokeSoundAction>()
+                    : new List<KaraokeSaitenAction>()
             }
         };
     }

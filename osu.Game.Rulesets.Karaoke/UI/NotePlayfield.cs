@@ -1,7 +1,8 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -9,6 +10,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Judgements;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Replays;
@@ -22,12 +24,14 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class NotePlayfield : ScrollingPlayfield, IKeyBindingHandler<KaraokeSoundAction>
+    public class NotePlayfield : ScrollingPlayfield, IKeyBindingHandler<KaraokeSaitenAction>
     {
         [Resolved]
         private IPositionCalculator calculator { get; set; }
 
         public const float COLUMN_SPACING = 1;
+
+        private readonly BindableInt saitenPitch = new BindableInt();
 
         private readonly FillFlowContainer<ColumnBackground> columnFlow;
 
@@ -192,6 +196,24 @@ namespace osu.Game.Rulesets.Karaoke.UI
             }, true);
         }
 
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            saitenPitch.BindValueChanged(value =>
+            {
+                var newValue = value.NewValue;
+                var targetTone = new Tone((newValue < 0 ? newValue - 1 : newValue) / 2, newValue % 2 != 0);
+                var targetY = calculator.YPositionAt(targetTone);
+                var targetHeight = targetTone.Half ? 5 : ColumnBackground.COLUMN_HEIGHT;
+                var alpha = targetTone.Half ? 0.6f : 0.2f;
+
+                centerLine.MoveToY(targetY, 100);
+                centerLine.ResizeHeightTo(targetHeight, 100);
+                centerLine.Alpha = alpha;
+            }, true);
+        }
+
         public void AddColumn(ColumnBackground c)
         {
             columnFlow.Add(c);
@@ -245,14 +267,16 @@ namespace osu.Game.Rulesets.Karaoke.UI
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(OsuColour colours, KaroakeSessionStatics session)
         {
             columnFlow.Children.ForEach(x => x.Colour = x.IsSpecial ? colours.Gray9 : colours.Gray0);
             replaySaitenVisualization.LineColour = Color4.White;
             realTimeSaitenVisualization.LineColour = colours.Yellow;
+
+            session.BindWith(KaraokeRulesetSession.SaitenPitch, saitenPitch);
         }
 
-        public bool OnPressed(KaraokeSoundAction action)
+        public bool OnPressed(KaraokeSaitenAction action)
         {
             // TODO : appear marker and move position with delay time
             saitenMarker.Y = calculator.YPositionAt(action);
@@ -264,15 +288,13 @@ namespace osu.Game.Rulesets.Karaoke.UI
             return true;
         }
 
-        public bool OnReleased(KaraokeSoundAction action)
+        public void OnReleased(KaraokeSaitenAction action)
         {
             // TODO : disappear marker
             saitenMarker.Alpha = 0;
 
             // Stop singing
             realTimeSaitenVisualization.Release();
-
-            return true;
         }
     }
 }

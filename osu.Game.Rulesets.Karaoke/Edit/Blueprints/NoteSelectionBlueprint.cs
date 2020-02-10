@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
     {
         public new DrawableNote DrawableObject => (DrawableNote)base.DrawableObject;
 
-        public Note HitObject => DrawableObject.HitObject;
+        public new Note HitObject => DrawableObject.HitObject;
 
         [Resolved(CanBeNull = false)]
         private IPlacementHandler placementHandler { get; set; }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
@@ -16,12 +16,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         public CenterLine()
         {
             RelativeSizeAxes = Axes.X;
-            Height = ColumnBackground.COLUMN_HEIGHT;
 
             Child = centerLineBox = new Box
             {
                 RelativeSizeAxes = Axes.Both,
-                Alpha = 0.1f
             };
         }
 

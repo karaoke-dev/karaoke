@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
@@ -32,6 +32,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             // Convert line
             foreach (var line in result.Lines)
             {
+                // Empty line should not be imported
+                if (string.IsNullOrEmpty(line.Text))
+                    continue;
+
                 var lyric = line.Text;
                 output.HitObjects.Add(new LyricLine
                 {

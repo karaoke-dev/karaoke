@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
@@ -10,6 +10,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public int Scale { get; set; }
 
         public bool Half { get; set; }
+
+        public Tone(int scale, bool half = false)
+        {
+            Scale = scale;
+            Half = half;
+        }
 
         public int CompareTo(Tone other)
         {
