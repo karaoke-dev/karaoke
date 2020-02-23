@@ -7,6 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Replays;
@@ -34,8 +35,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         private readonly List<NotePlayfield> notePlayfields = new List<NotePlayfield>();
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(RulesetConfigCache configCache)
         {
+            var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(Ruleset.Value.CreateInstance());
+            Dependencies.Cache(new KaroakeSessionStatics(config, null));
+
             Child = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,

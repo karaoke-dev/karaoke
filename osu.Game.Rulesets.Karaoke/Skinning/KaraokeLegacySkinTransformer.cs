@@ -29,12 +29,12 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             // TODO : need a better way to load resource
             var assembly = Assembly.GetExecutingAssembly();
-            const string resource_name = @"osu.Game.Rulesets.Karaoke.Resources.Skin.default.nkmproj";
+            const string resource_name = @"osu.Game.Rulesets.Karaoke.Resources.Skin.default.skin";
 
             using (var stream = assembly.GetManifestResourceStream(resource_name))
             using (var reader = new LineBufferedReader(stream))
             {
-                skin = new NicoKaraDecoder().Decode(reader);
+                skin = new KaraokeSkinDecoder().Decode(reader);
             }
 
             // TODO : get note style from file
