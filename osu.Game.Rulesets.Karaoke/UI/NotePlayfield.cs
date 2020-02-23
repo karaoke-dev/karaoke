@@ -137,14 +137,14 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                             RelativeSizeAxes = Axes.Both,
                                             Child = HitObjectContainer
                                         },
-                                        replaySaitenVisualization = new SaitenVisualization(this)
+                                        replaySaitenVisualization = new SaitenVisualization()
                                         {
                                             Name = "Saiten Visualization",
                                             RelativeSizeAxes = Axes.Both,
                                             PathRadius = 1.5f,
                                             Alpha = 0.6f
                                         },
-                                        realTimeSaitenVisualization = new RealTimeSaitenVisualization(this)
+                                        realTimeSaitenVisualization = new RealTimeSaitenVisualization()
                                         {
                                             Name = "Saiten Visualization",
                                             RelativeSizeAxes = Axes.Both,

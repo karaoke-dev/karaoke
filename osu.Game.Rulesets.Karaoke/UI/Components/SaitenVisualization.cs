@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Caching;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
@@ -33,19 +34,15 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         private IPositionCalculator calculator { get; set; }
 
         private readonly Cached initialStateCache = new Cached();
-        private readonly Cached addStateCache = new Cached();
 
-        private readonly NotePlayfield notePlayfield;
+        private readonly IDictionary<SaitenPath, List<KaraokeReplayFrame>> frames = new Dictionary<SaitenPath, List<KaraokeReplayFrame>>();
+        private readonly IDictionary<SaitenPath, Cached> pathInitialStateCache = new Dictionary<SaitenPath, Cached>();
 
-        private readonly IDictionary<double, SaitenPath> paths = new Dictionary<double, SaitenPath>();
-        private readonly IDictionary<double, List<KaraokeReplayFrame>> frames = new Dictionary<double, List<KaraokeReplayFrame>>();
-        private readonly IDictionary<double, Cached> pathInitialStateCache = new Dictionary<double, Cached>();
+        protected IEnumerable<SaitenPath> Paths => InternalChildren.Cast<SaitenPath>();
+        protected IEnumerable<SaitenPath> AlivePaths => AliveInternalChildren.Cast<SaitenPath>();
 
-        public IEnumerable<SaitenPath> Objects => InternalChildren.Cast<SaitenPath>();
-        public IEnumerable<SaitenPath> AliveObjects => AliveInternalChildren.Cast<SaitenPath>();
-
-        public virtual void Add(Path hitObject) => AddInternal(hitObject);
-        public virtual bool Remove(Path hitObject) => RemoveInternal(hitObject);
+        protected virtual void Add(Path hitObject) => AddInternal(hitObject);
+        protected virtual bool Remove(Path hitObject) => RemoveInternal(hitObject);
 
         public ColourInfo LineColour
         {
@@ -71,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
                 pathRadius = value;
 
-                foreach (var path in Objects)
+                foreach (var path in Paths)
                 {
                     path.PathRadius = pathRadius;
                 }
@@ -81,11 +78,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         protected double MaxAvailableTime => frames.LastOrDefault().Value?.LastOrDefault()?.Time ?? 0;
 
         public SaitenOrientatePosition OrientatePosition { get; set; } = SaitenOrientatePosition.Start;
-
-        public SaitenVisualization(NotePlayfield playfield)
-        {
-            notePlayfield = playfield;
-        }
 
         [BackgroundDependencyLoader]
         private void load()
@@ -101,28 +93,26 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         public void Add(KaraokeReplayFrame frame)
         {
-            // start time should be largest and cannot be removed.
+            // Start time should be largest and cannot be removed.
             var startTime = frame.Time;
             if (startTime <= MaxAvailableTime)
                 throw new ArgumentOutOfRangeException($"{nameof(startTime)} out of range.");
 
             if (!frame.Sound)
             {
+                // Next replay frame will create new path
                 createNew = true;
                 return;
             }
 
-            addStateCache.Invalidate();
-
             if (createNew)
             {
-                var path = new SaitenPath
+                var path = new SaitenPath(startTime)
                 {
                     PathRadius = PathRadius
                 };
-                paths.Add(startTime, path);
-                frames.Add(startTime, new List<KaraokeReplayFrame> { frame });
-                pathInitialStateCache.Add(startTime, new Cached());
+                frames.Add(path, new List<KaraokeReplayFrame> { frame });
+                pathInitialStateCache.Add(path, new Cached());
 
                 Add(path);
 
@@ -148,58 +138,64 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         {
             base.Update();
 
-            if (initialStateCache.IsValid && addStateCache.IsValid)
-                return;
-
             scrollLength = DrawSize.X;
 
-            // If change the speed or direction, mark all the cache is invalid
+            // If change the speed or direction, mark all the cache is invalid and re-calculate life time
             if (!initialStateCache.IsValid)
             {
+                // Reset scroll info
+                scrollingInfo.Algorithm.Reset();
+
                 foreach (var cached in pathInitialStateCache.Values)
                     cached.Invalidate();
 
-                // Reset scroll info
-                scrollingInfo.Algorithm.Reset();
+                foreach (var path in Paths)
+                    computeLifetime(path);
+
+                // Mark all the state is valid
+                initialStateCache.Validate();
             }
 
-            // If addStateCache is invalid, means last path add new point
-            if (!addStateCache.IsValid)
-                pathInitialStateCache?.LastOrDefault().Value?.Invalidate();
-
-            // Re-calculate path if invalid
-            var invalidPaths = paths.Where(x => !pathInitialStateCache[x.Key].IsValid);
-
-            foreach (var invalidPath in invalidPaths)
-            {
-                var startTime = invalidPath.Key;
-                var path = invalidPath.Value;
-
-                computeLifetime(startTime, path);
-                computePath(startTime, path);
-
-                pathInitialStateCache?[startTime].Validate();
-            }
-
-            // Mark all the state is valid
-            initialStateCache.Validate();
-            addStateCache.Validate();
+            // Re-calculate alive path
+            AlivePaths.ForEach(computePath);
         }
 
-        private void computeLifetime(double startTime, SaitenPath path)
+        protected void MarkAsInvalid(SaitenPath path) => pathInitialStateCache[path].Invalidate();
+
+        private void computeLifetime(SaitenPath path)
         {
-            var endTime = frames[startTime].LastOrDefault()?.Time;
+            var startTime = path.StartTime;
+            var endTime = frames[path].LastOrDefault()?.Time;
             if (endTime == null)
                 return;
 
-            path.LifetimeStart = scrollingInfo.Algorithm.GetDisplayStartTime(startTime, timeRange.Value);
+            float originAdjustment = 0.0f;
+            switch (direction.Value)
+            {
+                case ScrollingDirection.Left:
+                    originAdjustment = path.OriginPosition.X;
+                    break;
+
+                case ScrollingDirection.Right:
+                    originAdjustment = path.DrawWidth - path.OriginPosition.X;
+                    break;
+            }
+
+            path.LifetimeStart = scrollingInfo.Algorithm.GetDisplayStartTime(startTime, originAdjustment, timeRange.Value, scrollLength);
             path.LifetimeEnd = scrollingInfo.Algorithm.TimeAt(scrollLength * safe_lifetime_end_multiplier, endTime.Value, timeRange.Value, scrollLength);
         }
 
         // Cant use AddOnce() since the delegate is re-constructed every invocation
-        private void computePath(double startTime, SaitenPath path) => path.Schedule(() =>
+        private void computePath(SaitenPath path) => path.Schedule(() =>
         {
-            var frameList = frames[startTime];
+            var startTime = path.StartTime;
+            if (pathInitialStateCache[path].IsValid)
+                return;
+
+            pathInitialStateCache?[path].Validate();
+
+            // Calculate path
+            var frameList = frames[path];
             if (frameList.Count <= 1)
                 return;
 
@@ -208,14 +204,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             bool left = direction.Value == ScrollingDirection.Left;
             path.Anchor = path.Origin = left ? Anchor.TopLeft : Anchor.TopRight;
 
-            var currentTime = Time.Current;
-
             var centerPosition = calculator.CenterPosition();
             var scaleDistance = calculator.Distance();
 
             foreach (var frame in frameList)
             {
-                var x = scrollingInfo.Algorithm.PositionAt(frame.Time - startTime, currentTime, timeRange.Value, scrollLength);
+                var x = scrollingInfo.Algorithm.GetLength(startTime, frame.Time, timeRange.Value, scrollLength);
                 path.AddVertex(new Vector2(left ? x : -x, frame.Scale * scaleDistance - centerPosition));
             }
         });
@@ -225,24 +219,38 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             base.UpdateAfterChildrenLife();
 
             // We need to calculate hit object positions as soon as possible after lifetimes so that hitobjects get the final say in their positions
-            foreach (var path in AliveObjects)
-            {
-                var startTime = paths.FirstOrDefault(x => x.Value == path).Key;
-                updatePosition(path, startTime, Time.Current);
-            }
+            foreach (var path in AlivePaths)
+                updatePosition(path, Time.Current);
         }
 
-        private void updatePosition(SaitenPath path, double startTime, double currentTime)
+        protected override void OnChildLifetimeBoundaryCrossed(LifetimeBoundaryCrossedEvent e)
         {
-            bool left = direction.Value == ScrollingDirection.Left;
-            var x = scrollingInfo.Algorithm.PositionAt(startTime, currentTime, timeRange.Value, scrollLength) * (left ? 1 : -1);
-            var offset = (OrientatePosition == SaitenOrientatePosition.End ? scrollLength : 0) * (left ? 1 : -1);
-            path.X = x + offset;
+            // Recalculate path if appear
+            if (e.Kind == LifetimeBoundaryKind.Start && e.Child is SaitenPath path)
+                computePath(path);
+
+            base.OnChildLifetimeBoundaryCrossed(e);
+        }
+
+        private void updatePosition(SaitenPath path, double currentTime)
+        {
+            double startTime = path.StartTime;
+            var multiple = direction.Value == ScrollingDirection.Left ? 1 : -1;
+            var x = scrollingInfo.Algorithm.PositionAt(startTime, currentTime, timeRange.Value, scrollLength);
+            var offset = OrientatePosition == SaitenOrientatePosition.End ? scrollLength : 0;
+            path.X = (x + offset) * multiple;
         }
 
         public class SaitenPath : Path
         {
             public override bool RemoveWhenNotAlive => false;
+
+            public double StartTime { get; }
+
+            public SaitenPath(double startTime)
+            {
+                StartTime = startTime;
+            }
 
             /// <summary>
             /// Schedules an <see cref="Action"/> to this <see cref="SaitenPath"/>.
