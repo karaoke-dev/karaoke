@@ -18,7 +18,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Difficulty;
 using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Mods;
-using osu.Game.Rulesets.Karaoke.Resources.Textures;
+using osu.Game.Rulesets.Karaoke.Resources.Fonts;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI;

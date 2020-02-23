@@ -20,7 +20,7 @@ using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
 using osu.Game.Rulesets.Configuration;
-using osu.Game.Rulesets.Karaoke.Resources.Textures;
+using osu.Game.Rulesets.Karaoke.Resources.Fonts;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
