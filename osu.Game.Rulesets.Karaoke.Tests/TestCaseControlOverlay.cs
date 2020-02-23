@@ -5,6 +5,7 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Tests.Visual;
 
@@ -16,16 +17,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         public ControlOverlay ControlOverlay { get; set; }
 
         [BackgroundDependencyLoader]
-        private void load(RulesetStore rulesets)
+        private void load(RulesetConfigCache configCache)
         {
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
+            var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(Ruleset.Value.CreateInstance());
+            Dependencies.Cache(new KaroakeSessionStatics(config, null));
 
             // Cannot work now because it need extra BDL in child
-            /*
             Add(new Container
             {
                 RelativeSizeAxes = Axes.Both,
@@ -36,7 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             });
 
             AddStep("Toggle setting", ControlOverlay.ToggleGameplaySettingsOverlay);
-            */
         }
     }
 }
