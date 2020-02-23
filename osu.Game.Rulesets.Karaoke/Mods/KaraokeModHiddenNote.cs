@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Resources.Textures;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects.Drawables;
 
@@ -17,6 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public override string Description => @"Notes fade out before you sing them!";
         public override double ScoreMultiplier => 1.06;
         public override Type[] IncompatibleMods => new[] { typeof(ModFlashlight<KaraokeHitObject>) };
+        public override IconUsage? Icon => KaraokeIcon.ModHiddenNote;
 
         private const double fade_in_duration_multiplier = -1;
         private const double fade_out_duration_multiplier = 0.3;
