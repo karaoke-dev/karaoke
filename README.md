@@ -9,6 +9,11 @@ The release version of `osu!karaoke`
 
 This repo is under [GPL V3](LICENSE) license.
 
+## Rules
+
+1. If using this repo in commercial, please contact me(andy840119@gmail.com) to got permission first.
+2. Use this repo to create/use `PIRATED` karaoke beatmap is absolutely forbidden.
+
 ## Thanks to
 
 [osu!](https://github.com/ppy/osu) and it's [framework](https://github.com/ppy/osu-framework), osu!karaoke is modified from them.
