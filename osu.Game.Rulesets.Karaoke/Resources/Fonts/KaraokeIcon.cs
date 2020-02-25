@@ -2,20 +2,21 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Resources.Fonts
 {
     public static class KaraokeIcon
     {
-        public static IconUsage Get(int icon) => new IconUsage((char)icon, "karaokeFont");
+        public static IconUsage Get(int icon) => new IconUsage((char)icon, "osuFont");
 
         // ruleset icons in circles
-        public static IconUsage RulesetKaraoke => Get(0xe000);
+        public static IconUsage RulesetKaraoke => FontAwesome.Solid.PlayCircle;
 
         // mod icons
-        public static IconUsage ModDisableNote => Get(0xe049);
-        public static IconUsage ModHiddenNote => Get(0xe050);
-        public static IconUsage ModHiddenRuby => Get(0xe051);
-        public static IconUsage ModPractice => Get(0xe052);
+        public static IconUsage ModDisableNote => FontAwesome.Solid.Eraser;
+        public static IconUsage ModHiddenNote => OsuIcon.ModHidden;
+        public static IconUsage ModHiddenRuby => FontAwesome.Solid.Gem;
+        public static IconUsage ModPractice => FontAwesome.Solid.Music;
     }
 }
