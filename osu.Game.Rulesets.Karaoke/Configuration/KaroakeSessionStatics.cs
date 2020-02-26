@@ -24,6 +24,11 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             Set(KaraokeRulesetSession.UseTranslate, useTranslate);
             Set(KaraokeRulesetSession.PreferLanguage, selectedLanguage);
 
+            var displayRuby = getvalue<bool>(KaraokeRulesetSetting.DisplayRuby);
+            var displayRomaji = getvalue<bool>(KaraokeRulesetSetting.DisplayRomaji);
+            Set(KaraokeRulesetSession.DisplayRuby, displayRuby);
+            Set(KaraokeRulesetSession.DisplayRomaji, displayRomaji);
+
             // Pitch
             var overridePitch = getvalue<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay);
             var pitchValue = getvalue<int>(KaraokeRulesetSetting.Pitch);
@@ -54,6 +59,10 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         // Translate
         UseTranslate,
         PreferLanguage,
+
+        // Ruby/Romaji
+        DisplayRuby,
+        DisplayRomaji,
 
         // Pitch
         Pitch,
