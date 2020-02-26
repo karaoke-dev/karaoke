@@ -2,10 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Caching;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -24,10 +26,15 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public IBeatmap Beatmap => beatmap.Value.Beatmap;
 
+        public new IEnumerable<DrawableLyricLine> AllHitObjects => base.AllHitObjects.OfType<DrawableLyricLine>();
+
         protected IWorkingBeatmap WorkingBeatmap => beatmap.Value;
 
         private readonly BindableBool translate = new BindableBool();
         private readonly Bindable<string> translateLanguage = new Bindable<string>();
+
+        private readonly BindableBool displayRuby = new BindableBool();
+        private readonly BindableBool displayRomaji = new BindableBool();
 
         private readonly BindableDouble preemptTime = new BindableDouble();
         private readonly Bindable<LyricLine> nowLyric = new Bindable<LyricLine>();
@@ -38,6 +45,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
             // Change need to translate
             translate.BindValueChanged(x => updateLyricTranslate());
             translateLanguage.BindValueChanged(x => updateLyricTranslate());
+
+            // Change display ruby/romaji or not
+            displayRuby.BindValueChanged(x => AllHitObjects.ForEach(d => d.DisplayRuby = x.NewValue));
+            displayRomaji.BindValueChanged(x => AllHitObjects.ForEach(d => d.DisplayRomaji = x.NewValue));
 
             // Switch to target time
             nowLyric.BindValueChanged(value =>
@@ -81,7 +92,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public override void Add(DrawableHitObject h)
         {
             if (h is DrawableLyricLine drawableLyric)
+            {
                 drawableLyric.OnLyricStart += OnNewResult;
+                drawableLyric.DisplayRuby = displayRuby.Value;
+                drawableLyric.DisplayRomaji = displayRomaji.Value;
+            }
+                
 
             h.OnNewResult += OnNewResult;
             base.Add(h);
@@ -114,6 +130,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
             // Translate
             session.BindWith(KaraokeRulesetSession.UseTranslate, translate);
             session.BindWith(KaraokeRulesetSession.PreferLanguage, translateLanguage);
+
+            // Ruby/Romaji
+            session.BindWith(KaraokeRulesetSession.DisplayRuby, displayRuby);
+            session.BindWith(KaraokeRulesetSession.DisplayRomaji, displayRomaji);
 
             // Practice
             rulesetConfig.BindWith(KaraokeRulesetSetting.PracticePreemptTime, preemptTime);

@@ -59,6 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             AddSettingsGroup(new VisualSettings { Expanded = false });
             AddSettingsGroup(new PitchSettings { Expanded = false });
+            AddSettingsGroup(new RubyRomajiSettings { Expanded = false });
         }
 
         public void ToggleGameplaySettingsOverlay() => gameplaySettingsOverlay.ToggleVisibility();

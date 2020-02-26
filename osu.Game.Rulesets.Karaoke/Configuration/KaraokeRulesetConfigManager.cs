@@ -29,6 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             Set(KaraokeRulesetSetting.UseTranslate, true);
             Set(KaraokeRulesetSetting.PreferLanguage, "en-US");
 
+            Set(KaraokeRulesetSetting.DisplayRuby, true);
+            Set(KaraokeRulesetSetting.DisplayRomaji, true);
+
             // Pitch
             Set(KaraokeRulesetSetting.OverridePitchAtGameplay, false);
             Set(KaraokeRulesetSetting.Pitch, 0, -10, 10);
@@ -62,6 +65,10 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         // Translate
         UseTranslate,
         PreferLanguage,
+
+        // Ruby/Romaji
+        DisplayRuby,
+        DisplayRomaji,
 
         // Pitch
         OverridePitchAtGameplay,
