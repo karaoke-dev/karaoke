@@ -92,7 +92,6 @@ namespace osu.Game.Rulesets.Karaoke
                 case ModType.DifficultyIncrease:
                     return new Mod[]
                     {
-                        new KaraokeModHiddenRuby(),
                         new KaraokeModHiddenNote(),
                         new KaraokeModFlashlight(),
                         new MultiMod(new KaraokeModSuddenDeath(), new KaraokeModPerfect(), new KaraokeModWindowsUpdate()),
