@@ -58,12 +58,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             hitObject.RubyTagsBindable.BindValueChanged(rubyTags =>
             {
-                karaokeText.Rubies = rubyTags.NewValue?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray();
+                ApplyRuby();
             }, true);
 
             hitObject.RomajiTagsBindable.BindValueChanged(romajiTags =>
             {
-                karaokeText.Romajies = romajiTags.NewValue?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray();
+                ApplyRomaji();
             }, true);
 
             hitObject.FontIndexBindable.BindValueChanged(index =>
@@ -86,6 +86,16 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         protected override void ClearInternal(bool disposeChildren = true)
         {
+        }
+
+        protected virtual void ApplyRuby()
+        {
+            karaokeText.Rubies = DisplayRuby ? HitObject.RubyTags?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray() : null;
+        }
+
+        protected virtual void ApplyRomaji()
+        {
+            karaokeText.Romajies = DisplayRomaji ? HitObject.RomajiTags?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray() : null;
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)
@@ -219,6 +229,33 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 base.LifetimeEnd = value;
                 karaokeText.LifetimeEnd = value;
                 translateText.LifetimeEnd = value;
+            }
+        }
+
+        private bool displayRuby;
+        public bool DisplayRuby {
+            get => displayRuby;
+            set
+            {
+                if (displayRuby == value)
+                    return;
+
+                displayRuby = value;
+                ApplyRuby();
+            }
+        }
+
+        private bool displayRomaji;
+        public bool DisplayRomaji
+        {
+            get => displayRomaji;
+            set
+            {
+                if (displayRomaji == value)
+                    return;
+
+                displayRomaji = value;
+                ApplyRomaji();
             }
         }
     }
