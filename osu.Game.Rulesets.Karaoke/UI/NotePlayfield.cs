@@ -267,7 +267,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, KaroakeSessionStatics session)
+        private void load(OsuColour colours, KaraokeSessionStatics session)
         {
             columnFlow.Children.ForEach(x => x.Colour = x.IsSpecial ? colours.Gray9 : colours.Gray0);
             replaySaitenVisualization.LineColour = Color4.White;

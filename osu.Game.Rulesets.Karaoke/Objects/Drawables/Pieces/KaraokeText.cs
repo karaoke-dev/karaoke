@@ -175,13 +175,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
                 Vector2 getTextPosition(PositionText text, float y)
                 {
                     var x = (charactersBacking[text.StartIndex].DrawRectangle.Left + charactersBacking[text.EndIndex - 1].DrawRectangle.Right) / 2;
-                    var textwidth = text.Text.Sum(c => store.Get(font.FontName, c).Width * font.Size + Spacing.X) - Spacing.X;
-                    return new Vector2(x - textwidth / 2, y);
+                    var textWidth = text.Text.Sum(c => store.Get(font.FontName, c).Width * font.Size + Spacing.X) - Spacing.X;
+                    return new Vector2(x - textWidth / 2, y);
                 }
             }
         }
 
-        public float GetPrecentageWidth(int startIndex, int endIndex, float percentage = 0)
+        public float GetPercentageWidth(int startIndex, int endIndex, float percentage = 0)
         {
             if (Characters == null || !Characters.Any())
                 return 0;

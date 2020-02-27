@@ -133,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaroakeSessionStatics session)
+        private void load(KaraokeSessionStatics session)
         {
             session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
             session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);

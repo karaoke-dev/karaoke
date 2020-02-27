@@ -8,11 +8,11 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
 {
-    public class KaroakeSessionStatics : InMemoryConfigManager<KaraokeRulesetSession>
+    public class KaraokeSessionStatics : InMemoryConfigManager<KaraokeRulesetSession>
     {
         private readonly KaraokeRulesetConfigManager rulesetConfigManager;
 
-        public KaroakeSessionStatics(KaraokeRulesetConfigManager config, IBeatmap beatmap)
+        public KaraokeSessionStatics(KaraokeRulesetConfigManager config, IBeatmap beatmap)
         {
             rulesetConfigManager = config;
 

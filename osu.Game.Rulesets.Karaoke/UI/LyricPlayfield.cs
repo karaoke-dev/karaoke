@@ -124,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager rulesetConfig, KaroakeSessionStatics session)
+        private void load(KaraokeRulesetConfigManager rulesetConfig, KaraokeSessionStatics session)
         {
             // Translate
             session.BindWith(KaraokeRulesetSession.UseTranslate, translate);

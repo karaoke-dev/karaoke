@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHitObject>
     {
-        public KaroakeSessionStatics Session { get; private set; }
+        public KaraokeSessionStatics Session { get; private set; }
         public new KaraokePlayfield Playfield => (KaraokePlayfield)base.Playfield;
 
         public IEnumerable<BarLine> BarLines;
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
             var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-            dependencies.Cache(Session = new KaroakeSessionStatics(Config, Beatmap));
+            dependencies.Cache(Session = new KaraokeSessionStatics(Config, Beatmap));
             return dependencies;
         }
 

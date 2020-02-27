@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                     break;
 
                 case KaraokeAction.PreviousLyric:
-                    // TODO : switch to pervious lyric
+                    // TODO : switch to previous lyric
                     break;
 
                 case KaraokeAction.NextLyric:
@@ -134,7 +134,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             }
 
             [BackgroundDependencyLoader]
-            private void load(KaroakeSessionStatics session)
+            private void load(KaraokeSessionStatics session)
             {
                 session.BindWith(KaraokeRulesetSession.NowLyric, selectedLyricLine);
             }

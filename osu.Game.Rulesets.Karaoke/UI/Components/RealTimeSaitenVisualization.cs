@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         protected override void Update()
         {
-            // If addStateCache is invalid, means last path shoule be re-calculate
+            // If addStateCache is invalid, means last path should be re-calculate
             if (!addStateCache.IsValid)
             {
                 var updatePath = Paths.LastOrDefault();
