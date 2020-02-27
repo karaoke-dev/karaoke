@@ -80,7 +80,6 @@ namespace osu.Game.Rulesets.Karaoke
         public MicrophoneState Microphone { get; }
 
         public KaraokeRulesetInputManagerInputState(MicrophoneState microphone)
-            : base(null, null, null)
         {
             Microphone = microphone;
         }

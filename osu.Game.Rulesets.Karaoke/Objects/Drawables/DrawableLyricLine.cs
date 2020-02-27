@@ -186,7 +186,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             {
                 // Apply start hit result
                 judgement.Time = LyricTime.Available;
-                OnLyricStart?.Invoke(this as DrawableHitObject, Result);
+                OnLyricStart?.Invoke(this, Result);
             }
             else if (!HitObject.HitWindows.CanBeHit(timeOffset))
             {
