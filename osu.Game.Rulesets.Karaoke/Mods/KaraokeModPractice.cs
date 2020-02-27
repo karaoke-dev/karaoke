@@ -24,7 +24,7 @@ using osu.Game.Rulesets.Karaoke.Resources.Fonts;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModPractice : ModAutoplay<KaraokeHitObject>, IApplicableToDrawableRuleset<KaraokeHitObject>, IApplicableToHUD, IApplicableToTrack, IApplicableToBeatmap
+    public class KaraokeModPractice : ModAutoplay<KaraokeHitObject>, IApplicableToHUD, IApplicableToTrack, IApplicableToBeatmap
     {
         public override string Name => "Practice";
         public override string Acronym => "Practice";
@@ -105,18 +105,18 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             public KaraokePracticeContainer(KaraokeBeatmap beatmap, Track track)
             {
                 AddExtraOverlay(new TriggerButton
-                {
-                    Name = "Toggle Practice",
-                    Text = "Practice",
-                    TooltipText = "Open/Close practice overlay",
-                    Action = () => adjustmentOverlay.ToggleVisibility()
-                },
-                adjustmentOverlay = new GameplaySettingsOverlay
-                {
-                    RelativeSizeAxes = Axes.Y,
-                    Anchor = Anchor.CentreRight,
-                    Origin = Anchor.CentreRight,
-                });
+                    {
+                        Name = "Toggle Practice",
+                        Text = "Practice",
+                        TooltipText = "Open/Close practice overlay",
+                        Action = () => adjustmentOverlay.ToggleVisibility()
+                    },
+                    adjustmentOverlay = new GameplaySettingsOverlay
+                    {
+                        RelativeSizeAxes = Axes.Y,
+                        Anchor = Anchor.CentreRight,
+                        Origin = Anchor.CentreRight,
+                    });
 
                 // Add practice group into overlay
                 adjustmentOverlay.Add(new PracticeSettings(beatmap)

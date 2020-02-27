@@ -183,7 +183,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                             Font = new FontUsage(size: 25),
                             RubyFont = new FontUsage(size: 10),
                             RomajiFont = new FontUsage(size: 10),
-                            Margin = new MarginPadding{ Left = 25 }
+                            Margin = new MarginPadding { Left = 25 }
                         }
                     };
                 }

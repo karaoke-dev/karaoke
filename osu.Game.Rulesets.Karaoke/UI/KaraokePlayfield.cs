@@ -29,7 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public BindableBool DisplayCursor { get; set; } = new BindableBool();
         public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => !DisplayCursor.Value && base.ReceivePositionalInputAt(screenSpacePos);
 
-
         private readonly BindableInt bindablePitch = new BindableInt();
         private readonly BindableInt bindableVocalPitch = new BindableInt();
         private readonly BindableInt bindablePlayback = new BindableInt();

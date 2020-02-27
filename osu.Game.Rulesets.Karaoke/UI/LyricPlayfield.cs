@@ -97,7 +97,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 drawableLyric.DisplayRuby = displayRuby.Value;
                 drawableLyric.DisplayRomaji = displayRomaji.Value;
             }
-                
 
             h.OnNewResult += OnNewResult;
             base.Add(h);

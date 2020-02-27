@@ -19,7 +19,6 @@ using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {

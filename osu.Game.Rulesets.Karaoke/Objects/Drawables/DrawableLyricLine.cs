@@ -233,7 +233,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         }
 
         private bool displayRuby;
-        public bool DisplayRuby {
+
+        public bool DisplayRuby
+        {
             get => displayRuby;
             set
             {
@@ -246,6 +248,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         }
 
         private bool displayRomaji;
+
         public bool DisplayRomaji
         {
             get => displayRomaji;

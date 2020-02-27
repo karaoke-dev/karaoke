@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Audio.Track;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -27,7 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         private readonly GameplaySettingsOverlay gameplaySettingsOverlay;
 
-
         public ControlOverlay()
         {
             InternalChildren = new Drawable[]
@@ -44,18 +42,18 @@ namespace osu.Game.Rulesets.Karaoke.UI
             };
 
             AddExtraOverlay(new TriggerButton
-            {
-                Name = "Toggle setting button",
-                Text = "Settings",
-                TooltipText = "Open/Close setting",
-                Action = ToggleGameplaySettingsOverlay
-            },
-            gameplaySettingsOverlay = new GameplaySettingsOverlay
-            {
-                RelativeSizeAxes = Axes.Y,
-                Anchor = Anchor.CentreRight,
-                Origin = Anchor.CentreRight,
-            });
+                {
+                    Name = "Toggle setting button",
+                    Text = "Settings",
+                    TooltipText = "Open/Close setting",
+                    Action = ToggleGameplaySettingsOverlay
+                },
+                gameplaySettingsOverlay = new GameplaySettingsOverlay
+                {
+                    RelativeSizeAxes = Axes.Y,
+                    Anchor = Anchor.CentreRight,
+                    Origin = Anchor.CentreRight,
+                });
 
             AddSettingsGroup(new VisualSettings { Expanded = false });
             AddSettingsGroup(new PitchSettings { Expanded = false });
