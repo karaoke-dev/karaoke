@@ -42,25 +42,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         protected override bool OnKeyDown(KeyDownEvent e)
         {
-            if (e.Key == osuTK.Input.Key.S)
+            if (e.Key != osuTK.Input.Key.S)
+                return base.OnKeyDown(e);
+
+            string directory = Path.Combine(Path.GetTempPath(), @"osu!");
+            Directory.CreateDirectory(directory);
+            var path = Path.Combine(directory, "karaoke.txt");
+
+            using (var sw = new StreamWriter(path))
             {
-                string directory = Path.Combine(Path.GetTempPath(), @"osu!");
-                Directory.CreateDirectory(directory);
-                var path = Path.Combine(directory, "karaoke.txt");
-
-                using (var sw = new StreamWriter(path))
+                var encoder = new KaraokeLegacyBeatmapEncoder();
+                sw.WriteLine(encoder.Encode(new Beatmap
                 {
-                    var encoder = new KaraokeLegacyBeatmapEncoder();
-                    sw.WriteLine(encoder.Encode(new Beatmap
-                    {
-                        HitObjects = Beatmap.HitObjects.OfType<HitObject>().ToList()
-                    }));
-                }
-
-                return true;
+                    HitObjects = Beatmap.HitObjects.OfType<HitObject>().ToList()
+                }));
             }
 
-            return base.OnKeyDown(e);
+            return true;
         }
 
         protected override Playfield CreatePlayfield() => new KaraokeEditPlayfield();

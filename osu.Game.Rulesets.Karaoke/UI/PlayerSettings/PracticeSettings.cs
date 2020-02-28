@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             private readonly Bindable<LyricLine> selectedLyricLine = new Bindable<LyricLine>();
             private readonly FillFlowContainer<ClickableLyric> lyricTable;
 
-            public LyricPreview(List<LyricLine> lyrics)
+            public LyricPreview(IEnumerable<LyricLine> lyrics)
             {
                 RelativeSizeAxes = Axes.X;
                 Child = new OsuScrollContainer

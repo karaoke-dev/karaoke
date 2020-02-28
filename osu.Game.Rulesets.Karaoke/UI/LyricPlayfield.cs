@@ -113,14 +113,14 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         internal void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)
         {
-            if (result.Judgement is KaraokeLyricJudgement karaokeLyricJudgement)
-            {
-                // Update now lyric
-                var targetLyric = karaokeLyricJudgement.Time == LyricTime.Available ? judgedObject.HitObject as LyricLine : null;
-                seekCache.Invalidate();
-                nowLyric.Value = targetLyric;
-                seekCache.Validate();
-            }
+            if (!(result.Judgement is KaraokeLyricJudgement karaokeLyricJudgement))
+                return;
+
+            // Update now lyric
+            var targetLyric = karaokeLyricJudgement.Time == LyricTime.Available ? judgedObject.HitObject as LyricLine : null;
+            seekCache.Invalidate();
+            nowLyric.Value = targetLyric;
+            seekCache.Validate();
         }
 
         [BackgroundDependencyLoader]

@@ -64,13 +64,12 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             {
                 base.Update();
 
-                if (!flashlightProperties.IsValid)
-                {
-                    FlashlightSize = new Vector2(DrawSize.X * flashLightMultiple, DrawHeight);
+                if (flashlightProperties.IsValid)
+                    return;
 
-                    FlashlightPosition = new Vector2(DrawPosition.X, 0) + (scrollingDirection == KaraokeScrollingDirection.Right ? DrawSize : new Vector2());
-                    flashlightProperties.Validate();
-                }
+                FlashlightSize = new Vector2(DrawSize.X * flashLightMultiple, DrawHeight);
+                FlashlightPosition = new Vector2(DrawPosition.X, 0) + (scrollingDirection == KaraokeScrollingDirection.Right ? DrawSize : new Vector2());
+                flashlightProperties.Validate();
             }
 
             [BackgroundDependencyLoader(true)]

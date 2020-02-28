@@ -254,16 +254,16 @@ namespace osu.Game.Rulesets.Karaoke.UI
             if (!judgedObject.DisplayResult || !DisplayJudgements.Value)
                 return;
 
-            if (judgedObject is DrawableNote note)
+            if (!(judgedObject is DrawableNote note))
+                return;
+
+            judgements.Clear();
+            judgements.Add(new DrawableNoteJudgement(result, judgedObject)
             {
-                judgements.Clear();
-                judgements.Add(new DrawableNoteJudgement(result, judgedObject)
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Y = calculator.YPositionAt(note.HitObject.Tone + 2)
-                });
-            }
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Y = calculator.YPositionAt(note.HitObject.Tone + 2)
+            });
         }
 
         [BackgroundDependencyLoader]
