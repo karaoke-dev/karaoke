@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Handlers.Microphone;
 using osu.Framework.Input.StateChanges.Events;
@@ -49,7 +50,10 @@ namespace osu.Game.Rulesets.Karaoke
                 // Deal with realtime microphone event
                 var inputState = microphoneSoundChange.State as IMicrophoneInputState;
                 var lastState = microphoneSoundChange.LastState;
-                var state = inputState.Microphone;
+                var state = inputState?.Microphone;
+
+                if (state == null)
+                    throw new ArgumentNullException($"{nameof(state)} cannot be null.");
 
                 // TODO : adjust saiten action by setting
                 var realPitch = ((float)(state.HasSound ? state.Pitch : lastState.Pitch) - 70) / 7;
@@ -80,7 +84,6 @@ namespace osu.Game.Rulesets.Karaoke
         public MicrophoneState Microphone { get; }
 
         public KaraokeRulesetInputManagerInputState(MicrophoneState microphone)
-            : base(null, null, null)
         {
             Microphone = microphone;
         }

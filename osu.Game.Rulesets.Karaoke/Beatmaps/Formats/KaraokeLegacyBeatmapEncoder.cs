@@ -77,11 +77,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             if (!(translateDictionary?.Translates?.Any() ?? false))
                 yield break;
 
-            foreach (var singleLanguage in translateDictionary.Translates)
+            foreach (var (languageCode, translates) in translateDictionary.Translates)
             {
-                foreach (var translate in singleLanguage.Value)
+                foreach (var translate in translates)
                 {
-                    yield return $"@tr[{singleLanguage.Key}]={translate}";
+                    yield return $"@tr[{languageCode}]={translate}";
                 }
             }
         }

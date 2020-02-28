@@ -67,7 +67,6 @@ namespace osu.Game.Rulesets.Karaoke
                         new KeyBinding(InputKey.R, KaraokeAction.IncreaseSaitenPitch),
                         new KeyBinding(InputKey.F, KaraokeAction.DecreaseSaitenPitch),
                         new KeyBinding(InputKey.V, KaraokeAction.ResetSaitenPitch),
-
                     };
 
                 case 1:
@@ -115,6 +114,7 @@ namespace osu.Game.Rulesets.Karaoke
                     return Array.Empty<Mod>();
             }
         }
+
         public override Drawable CreateIcon() => new SpriteIcon { Icon = KaraokeIcon.RulesetKaraoke };
 
         public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new KaraokeDifficultyCalculator(this, beatmap);

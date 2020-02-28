@@ -45,15 +45,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             return Half ? 1 : 0;
         }
 
-        public bool Equals(Tone other)
-        {
-            return Scale == other.Scale && Half == other.Half;
-        }
+        public bool Equals(Tone other) => Scale == other.Scale && Half == other.Half;
 
-        public bool Equals(int other)
-        {
-            return Scale == other && Half == false;
-        }
+        public bool Equals(int other) => Scale == other && Half == false;
 
         public override bool Equals(object obj)
         {
@@ -71,10 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             }
         }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        public override int GetHashCode() => base.GetHashCode();
 
         public static Tone operator +(Tone left, Tone right) => Add(left, right);
 
@@ -122,9 +113,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public static bool operator <=(Tone tone1, int tone2) => tone1.CompareTo(tone2) <= 0;
 
-        public override string ToString()
-        {
-            return $"Scale:{Scale}, Half:{Half}";
-        }
+        public override string ToString() => $"Scale:{Scale}, Half:{Half}";
     }
 }

@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaroakeSessionStatics session)
+        private void load(KaraokeSessionStatics session)
         {
             // Translate
             translateCheckBox.Current = session.GetBindable<bool>(KaraokeRulesetSession.UseTranslate);

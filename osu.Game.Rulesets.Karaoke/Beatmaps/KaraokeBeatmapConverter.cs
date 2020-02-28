@@ -24,9 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             yield return new LyricLine();
         }
 
-        protected override Beatmap<KaraokeHitObject> CreateBeatmap()
-        {
-            return new KaraokeBeatmap();
-        }
+        protected override Beatmap<KaraokeHitObject> CreateBeatmap() => new KaraokeBeatmap();
     }
 }

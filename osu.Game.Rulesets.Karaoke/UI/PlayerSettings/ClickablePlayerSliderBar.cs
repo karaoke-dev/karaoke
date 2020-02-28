@@ -14,11 +14,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
     public class ClickablePlayerSliderBar : SettingsSlider<int>
     {
         protected const int BUTTON_SIZE = 25;
-        protected const int BOTTON_SPACING = 15;
+        protected const int BUTTON_SPACING = 15;
 
-        private ClickableSliderbar bar => (ClickableSliderbar)Control;
+        private ClickableSliderBar bar => (ClickableSliderBar)Control;
 
-        protected override Drawable CreateControl() => new ClickableSliderbar
+        protected override Drawable CreateControl() => new ClickableSliderBar
         {
             Margin = new MarginPadding { Top = 5, Bottom = 5 },
             RelativeSizeAxes = Axes.X
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 
         public ClickablePlayerSliderBar()
         {
-            Padding = new MarginPadding { Left = BOTTON_SPACING * 2, Right = BOTTON_SPACING * 2 };
+            Padding = new MarginPadding { Left = BUTTON_SPACING * 2, Right = BUTTON_SPACING * 2 };
         }
 
         public void ResetToDefaultValue() => bar.ResetToDefaultValue();
@@ -35,20 +35,20 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 
         public void TriggerIncrease() => bar.TriggerIncrease();
 
-        private class ClickableSliderbar : OsuSliderBar<int>
+        private class ClickableSliderBar : OsuSliderBar<int>
         {
             private readonly ToolTipButton decreaseButton;
             private readonly ToolTipButton increaseButton;
 
             public override string TooltipText => (Current.Value >= 0 ? "+" : "") + Current.Value.ToString("N0");
 
-            public ClickableSliderbar()
+            public ClickableSliderBar()
             {
                 KeyboardStep = 1;
 
                 Add(decreaseButton = new ToolTipButton
                 {
-                    Position = new Vector2(-BOTTON_SPACING, 0),
+                    Position = new Vector2(-BUTTON_SPACING, 0),
                     Origin = Anchor.CentreRight,
                     Anchor = Anchor.CentreLeft,
                     Width = BUTTON_SIZE,
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 
                 Add(increaseButton = new ToolTipButton
                 {
-                    Position = new Vector2(BOTTON_SPACING, 0),
+                    Position = new Vector2(BUTTON_SPACING, 0),
                     Origin = Anchor.CentreLeft,
                     Anchor = Anchor.CentreRight,
                     Width = BUTTON_SIZE,

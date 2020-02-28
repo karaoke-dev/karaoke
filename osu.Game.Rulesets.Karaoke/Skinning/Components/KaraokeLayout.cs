@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Components
         public int RubyInterval { get; set; }
 
         /// <summary>
-        /// Interval between lyric romajis
+        /// Interval between lyric romaji
         /// </summary>
         public int RomajiInterval { get; set; }
 

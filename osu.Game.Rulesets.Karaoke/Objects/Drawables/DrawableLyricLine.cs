@@ -175,7 +175,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
         {
-            var judgement = Result.Judgement as KaraokeLyricJudgement;
+            var judgement = Result.Judgement as KaraokeLyricJudgement ?? throw new ArgumentNullException();
             var lyricStartOffset = timeOffset + HitObject.LyricDuration;
 
             if (lyricStartOffset < 0)
@@ -186,7 +186,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             {
                 // Apply start hit result
                 judgement.Time = LyricTime.Available;
-                OnLyricStart?.Invoke(this as DrawableHitObject, Result);
+                OnLyricStart?.Invoke(this, Result);
             }
             else if (!HitObject.HitWindows.CanBeHit(timeOffset))
             {
@@ -233,7 +233,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         }
 
         private bool displayRuby;
-        public bool DisplayRuby {
+
+        public bool DisplayRuby
+        {
             get => displayRuby;
             set
             {
@@ -246,6 +248,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         }
 
         private bool displayRomaji;
+
         public bool DisplayRomaji
         {
             get => displayRomaji;

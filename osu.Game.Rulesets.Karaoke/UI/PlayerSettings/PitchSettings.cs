@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaroakeSessionStatics session)
+        private void load(KaraokeSessionStatics session)
         {
             pitchSliderBar.Bindable = session.GetBindable<int>(KaraokeRulesetSession.Pitch);
             vocalPitchSliderBar.Bindable = session.GetBindable<int>(KaraokeRulesetSession.VocalPitch);

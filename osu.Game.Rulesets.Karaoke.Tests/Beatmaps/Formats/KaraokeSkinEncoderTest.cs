@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
     public class KaraokeSkinEncoderTest
     {
         private static IEnumerable<string> allSkins => TestResources.GetStore().GetAvailableResources()
-            .Where(res => res.EndsWith(".skin")).Select(x => Path.GetFileNameWithoutExtension(x));
+                                                                    .Where(res => res.EndsWith(".skin")).Select(Path.GetFileNameWithoutExtension);
 
         [TestCaseSource(nameof(allSkins))]
         public void TestDecodeEncodedSkin(string name)

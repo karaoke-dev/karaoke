@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             return false;
         }
 
-        public class WindowsUpdateContainer : Container
+        private class WindowsUpdateContainer : Container
         {
             public WindowsUpdateContainer()
             {

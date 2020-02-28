@@ -8,9 +8,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
     public class KaraokeSkinEncoder
     {
-        public string Encode(KaraokeSkin output)
-        {
-            return output.Serialize();
-        }
+        public string Encode(KaraokeSkin output) => output.Serialize();
     }
 }

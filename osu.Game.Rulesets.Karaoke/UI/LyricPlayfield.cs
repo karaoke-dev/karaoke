@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private void updateLyricTranslate()
         {
             var isTranslate = translate.Value;
-            var translateLanguage = this.translateLanguage.Value;
+            var targetLanguage = translateLanguage.Value;
 
             var lyric = Beatmap.HitObjects.OfType<LyricLine>().ToList();
             var translateDictionary = Beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault();
@@ -76,10 +76,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
             lyric.ForEach(x => x.TranslateText = null);
 
             // If contain target language
-            if (isTranslate && translateLanguage != null
-                            && translateDictionary != null && translateDictionary.Translates.ContainsKey(translateLanguage))
+            if (isTranslate && targetLanguage != null
+                            && translateDictionary != null && translateDictionary.Translates.ContainsKey(targetLanguage))
             {
-                var language = translateDictionary.Translates[translateLanguage];
+                var language = translateDictionary.Translates[targetLanguage];
 
                 // Apply translate
                 for (int i = 0; i < Math.Min(lyric.Count, language.Count); i++)
@@ -97,7 +97,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 drawableLyric.DisplayRuby = displayRuby.Value;
                 drawableLyric.DisplayRomaji = displayRomaji.Value;
             }
-                
 
             h.OnNewResult += OnNewResult;
             base.Add(h);
@@ -114,18 +113,18 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         internal void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)
         {
-            if (result.Judgement is KaraokeLyricJudgement karaokeLyricJudgement)
-            {
-                // Update now lyric
-                var targetLyric = karaokeLyricJudgement.Time == LyricTime.Available ? judgedObject.HitObject as LyricLine : null;
-                seekCache.Invalidate();
-                nowLyric.Value = targetLyric;
-                seekCache.Validate();
-            }
+            if (!(result.Judgement is KaraokeLyricJudgement karaokeLyricJudgement))
+                return;
+
+            // Update now lyric
+            var targetLyric = karaokeLyricJudgement.Time == LyricTime.Available ? judgedObject.HitObject as LyricLine : null;
+            seekCache.Invalidate();
+            nowLyric.Value = targetLyric;
+            seekCache.Validate();
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager rulesetConfig, KaroakeSessionStatics session)
+        private void load(KaraokeRulesetConfigManager rulesetConfig, KaraokeSessionStatics session)
         {
             // Translate
             session.BindWith(KaraokeRulesetSession.UseTranslate, translate);

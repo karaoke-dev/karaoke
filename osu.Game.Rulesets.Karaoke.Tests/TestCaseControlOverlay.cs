@@ -20,13 +20,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         private void load(RulesetConfigCache configCache)
         {
             var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(Ruleset.Value.CreateInstance());
-            Dependencies.Cache(new KaroakeSessionStatics(config, null));
+            Dependencies.Cache(new KaraokeSessionStatics(config, null));
 
             // Cannot work now because it need extra BDL in child
             Add(new Container
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = ControlOverlay = new ControlOverlay()
+                Child = ControlOverlay = new ControlOverlay
                 {
                     RelativeSizeAxes = Axes.Both,
                 }

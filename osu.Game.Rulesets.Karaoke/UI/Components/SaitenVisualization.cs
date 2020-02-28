@@ -170,6 +170,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
                 return;
 
             float originAdjustment = 0.0f;
+
             switch (direction.Value)
             {
                 case ScrollingDirection.Left:
