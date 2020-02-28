@@ -2,6 +2,10 @@
   <PropertyGroup>
     <StartupObject>osu.Game.Rulesets.Karaoke.Tests.VisualTestRunner</StartupObject>
   </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\**" />
+    <EmbeddedResource Remove="Resources\TestResources.cs" />
+  </ItemGroup>
   <ItemGroup Label="Service">
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
