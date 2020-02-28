@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
     {
         public KaraokeLegacyBeatmapDecoderTest()
         {
-            // It's a tricky to let lazer to read karaoke testing beatmap
+            // It's a tricky to let osu! to read karaoke testing beatmap
             KaraokeLegacyBeatmapDecoder.Register();
         }
 

@@ -424,19 +424,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                     base.Update();
 
                     //Re-create content;
-                    if (!tagsCache.IsValid)
-                    {
-                        Content = null;
-                        backgroundFlow.Clear();
+                    if (tagsCache.IsValid) return;
 
-                        if (Tags?.Any() != true)
-                            return;
+                    Content = null;
+                    backgroundFlow.Clear();
 
-                        Columns = createHeaders();
-                        Content = Tags.Select((g, i) => createContent(i, g)).ToArray().ToRectangular();
+                    if (Tags?.Any() != true)
+                        return;
 
-                        tagsCache.Validate();
-                    }
+                    Columns = createHeaders();
+                    Content = Tags.Select((g, i) => createContent(i, g)).ToArray().ToRectangular();
+
+                    tagsCache.Validate();
                 }
 
                 private TableColumn[] createHeaders()

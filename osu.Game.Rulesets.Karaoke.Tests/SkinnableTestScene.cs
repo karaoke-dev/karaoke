@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             Cell(3).Child = createProvider(specialSkin, creationFunction);
         }
 
-        private Drawable createProvider(Skin skin, Func<Drawable> creationFunction)
+        private Drawable createProvider(ISkin skin, Func<Drawable> creationFunction)
         {
             var mainProvider = new SkinProvidingContainer(skin);
 

@@ -306,7 +306,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             };
 
             // Initial bindable
-            nameTextBox.Current.BindValueChanged(x => {/*TODO : maybe do something in the future.*/});
+            nameTextBox.Current.BindValueChanged(x =>
+            {
+                /*TODO : maybe do something in the future.*/
+            });
             alignmentDropdown.Current.BindValueChanged(x => applyChange(l => l.Alignment = x.NewValue));
             horizontalMarginSliderBar.Current.BindValueChanged(x => applyChange(l => l.HorizontalMargin = x.NewValue));
             verticalMarginSliderBar.Current.BindValueChanged(x => applyChange(l => l.VerticalMargin = x.NewValue));

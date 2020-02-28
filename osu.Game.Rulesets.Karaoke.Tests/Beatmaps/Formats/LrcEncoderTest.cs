@@ -16,13 +16,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
     [TestFixture]
     public class LrcEncoderTest
     {
-        private static IEnumerable<string> alllrcs => TestResources.GetStore().GetAvailableResources()
-            .Where(res => res.EndsWith(".lrc")).Select(x => Path.GetFileNameWithoutExtension(x));
+        private static IEnumerable<string> allLrcFileNames => TestResources.GetStore().GetAvailableResources()
+                                                                           .Where(res => res.EndsWith(".lrc")).Select(Path.GetFileNameWithoutExtension);
 
-        [TestCaseSource(nameof(alllrcs))]
-        public void TestDecodeEncodedBeatmap(string name)
+        [TestCaseSource(nameof(allLrcFileNames))]
+        public void TestDecodeEncodedBeatmap(string fileName)
         {
-            var decoded = decode(name, out var encoded);
+            var decoded = decode(fileName, out var encoded);
 
             // Note : this test case does not cover ruby and romaji property
             Assert.That(decoded.HitObjects.Count, Is.EqualTo(encoded.HitObjects.Count));

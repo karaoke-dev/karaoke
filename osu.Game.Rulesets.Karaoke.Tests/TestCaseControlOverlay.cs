@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             Add(new Container
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = ControlOverlay = new ControlOverlay()
+                Child = ControlOverlay = new ControlOverlay
                 {
                     RelativeSizeAxes = Axes.Both,
                 }

@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\osu.TestProject.props" />
   <PropertyGroup>
     <StartupObject>osu.Game.Rulesets.Karaoke.Tests.VisualTestRunner</StartupObject>
   </PropertyGroup>

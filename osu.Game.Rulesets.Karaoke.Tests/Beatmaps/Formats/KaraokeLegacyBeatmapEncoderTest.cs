@@ -19,8 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         public void TestEncodeBeatmapLyric()
         {
             // Because encoder is not fully implemented, so just test not crash during encoding.
-            var startTime = 1000;
-            var endTime = startTime + 2500;
+            const int start_time = 1000;
+            const int end_time = start_time + 2500;
 
             var beatmap = new Beatmap
             {
@@ -28,16 +28,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 {
                     new LyricLine
                     {
-                        StartTime = startTime,
-                        EndTime = endTime,
+                        StartTime = start_time,
+                        EndTime = end_time,
                         Text = "カラオケ！",
                         TimeTags = new Dictionary<TimeTagIndex, double>
                         {
-                            { new TimeTagIndex(0), startTime + 500 },
-                            { new TimeTagIndex(1), startTime + 600 },
-                            { new TimeTagIndex(2), startTime + 1000 },
-                            { new TimeTagIndex(3), startTime + 1500 },
-                            { new TimeTagIndex(4), startTime + 2000 },
+                            { new TimeTagIndex(0), start_time + 500 },
+                            { new TimeTagIndex(1), start_time + 600 },
+                            { new TimeTagIndex(2), start_time + 1000 },
+                            { new TimeTagIndex(3), start_time + 1500 },
+                            { new TimeTagIndex(4), start_time + 2000 },
                         },
                         RubyTags = new[]
                         {
