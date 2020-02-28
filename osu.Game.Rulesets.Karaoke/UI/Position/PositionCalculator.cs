@@ -17,42 +17,22 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
             this.column = column;
         }
 
-        public Tone ToneAt(Vector2 screenSpacePosition)
-        {
-            throw new NotImplementedException();
-        }
+        public Tone ToneAt(Vector2 screenSpacePosition) => throw new NotImplementedException();
 
-        public float YPositionAt(Tone tone)
-        {
-            return -(NotePlayfield.COLUMN_SPACING + ColumnBackground.COLUMN_HEIGHT) * (tone.Scale + (tone.Half ? 0.5f : 0));
-        }
+        public float YPositionAt(Tone tone) => -(NotePlayfield.COLUMN_SPACING + ColumnBackground.COLUMN_HEIGHT) * (tone.Scale + (tone.Half ? 0.5f : 0));
 
-        public float YPositionAt(KaraokeSaitenAction action)
-        {
-            return -(NotePlayfield.COLUMN_SPACING + ColumnBackground.COLUMN_HEIGHT) * action.Scale;
-        }
+        public float YPositionAt(KaraokeSaitenAction action) => -(NotePlayfield.COLUMN_SPACING + ColumnBackground.COLUMN_HEIGHT) * action.Scale;
 
-        public float CenterPosition()
-        {
-            return YPositionAt(new Tone { Scale = column / 2, Half = column % 2 == 1 });
-        }
+        public float CenterPosition() => YPositionAt(new Tone { Scale = column / 2, Half = column % 2 == 1 });
 
-        public float Distance()
-        {
-            return YPositionAt(new Tone { Scale = 1 });
-        }
+        public float Distance() => YPositionAt(new Tone { Scale = 1 });
 
-        public Tone MaxTone()
-        {
-            return new Tone
+        public Tone MaxTone() =>
+            new Tone
             {
                 Scale = column / 2
             };
-        }
 
-        public Tone MinTone()
-        {
-            return -MaxTone();
-        }
+        public Tone MinTone() => -MaxTone();
     }
 }

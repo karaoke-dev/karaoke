@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private void updateLyricTranslate()
         {
             var isTranslate = translate.Value;
-            var translateLanguage = this.translateLanguage.Value;
+            var targetLanguage = translateLanguage.Value;
 
             var lyric = Beatmap.HitObjects.OfType<LyricLine>().ToList();
             var translateDictionary = Beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault();
@@ -76,10 +76,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
             lyric.ForEach(x => x.TranslateText = null);
 
             // If contain target language
-            if (isTranslate && translateLanguage != null
-                            && translateDictionary != null && translateDictionary.Translates.ContainsKey(translateLanguage))
+            if (isTranslate && targetLanguage != null
+                            && translateDictionary != null && translateDictionary.Translates.ContainsKey(targetLanguage))
             {
-                var language = translateDictionary.Translates[translateLanguage];
+                var language = translateDictionary.Translates[targetLanguage];
 
                 // Apply translate
                 for (int i = 0; i < Math.Min(lyric.Count, language.Count); i++)

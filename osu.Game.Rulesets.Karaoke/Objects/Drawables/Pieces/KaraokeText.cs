@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
             createTexts(Rubies, RubyFont, rubyYPosition, RubySpacing);
 
             // Print romaji
-            var romajiYPosition = (charactersBacking.FirstOrDefault().Height) + (RomajiFont.Size / 2) + 5 + RomajiMargin;
+            var romajiYPosition = charactersBacking.FirstOrDefault().Height + RomajiFont.Size / 2 + 5 + RomajiMargin;
             createTexts(Romajies, RomajiFont, romajiYPosition, RomajiSpacing);
 
             // Return TextBuilder that do not renderer text anymore

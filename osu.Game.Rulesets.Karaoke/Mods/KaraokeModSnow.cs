@@ -113,8 +113,8 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 // Update each snow position
                 foreach (var drawable in Children)
                 {
-                    var sprite = (SnowSprite)drawable;
-                    if (!(sprite is SnowSprite snow)) continue;
+                    if (!(drawable is SnowSprite snow))
+                        continue;
 
                     snow.X += snow.HorizontalSpeed / 1000f;
                     snow.Y += 1 * Speed;
