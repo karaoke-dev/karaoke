@@ -33,6 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         private readonly IList<string> noteLines = new List<string>();
         private readonly IList<string> lyricStyles = new List<string>();
         private readonly IList<string> translates = new List<string>();
+        private readonly IList<string> singers = new List<string>();
 
         protected override void ParseLine(Beatmap beatmap, Section section, string line)
         {
@@ -62,6 +63,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 // add translate queue
                 translates.Add(line);
             }
+            else if (line.ToLower().StartsWith("@singer"))
+            {
+                // add singer to queue
+            }
             else if (line.StartsWith("@"))
             {
                 // Remove @ in time tag and add into lrc queue
@@ -89,6 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                 processNotes(beatmap, noteLines);
                 processTranslate(beatmap, translates);
+                processSinger(beatmap, singers);
 
                 if (lyricStyles.Any())
                     processStyle(beatmap, lyricStyles);
@@ -269,6 +275,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             }
 
             beatmap.HitObjects.Add(dictionary);
+        }
+
+        private void processSinger(Beatmap beatmap, IEnumerable<string> singers)
+        {
+            // Create and add singer object
+
         }
     }
 }
