@@ -3,7 +3,6 @@
 
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Audio.Track;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
@@ -24,7 +23,7 @@ using osu.Game.Rulesets.Karaoke.Resources.Fonts;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModPractice : ModAutoplay<KaraokeHitObject>, IApplicableToHUD, IApplicableToTrack, IApplicableToBeatmap
+    public class KaraokeModPractice : ModAutoplay<KaraokeHitObject>, IApplicableToHUD, IApplicableToBeatmap
     {
         public override string Name => "Practice";
         public override string Acronym => "Practice";
@@ -35,8 +34,6 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         private DrawableKaraokeRuleset drawableRuleset;
         private RulesetInfo rulesetInfo;
         private KaraokeBeatmap beatmap;
-
-        private HUDOverlay overlay;
 
         public void ApplyToBeatmap(IBeatmap beatmap) => this.beatmap = beatmap as KaraokeBeatmap;
 
@@ -58,23 +55,18 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             }
         }
 
-        public void ApplyToTrack(Track track)
+        public void ApplyToHUD(HUDOverlay overlay)
         {
             // Create overlay
-            overlay?.Add(new KaraokeActionContainer(rulesetInfo, drawableRuleset)
+            overlay.Add(new KaraokeActionContainer(rulesetInfo, drawableRuleset)
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = new KaraokePracticeContainer(beatmap, track)
+                Child = new KaraokePracticeContainer(beatmap)
                 {
                     Clock = new FramedClock(new StopwatchClock(true)),
                     RelativeSizeAxes = Axes.Both
                 }
             });
-        }
-
-        public void ApplyToHUD(HUDOverlay overlay)
-        {
-            this.overlay = overlay;
         }
 
         public class KaraokeActionContainer : DatabasedKeyBindingContainer<KaraokeAction>
@@ -102,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         {
             private readonly GameplaySettingsOverlay adjustmentOverlay;
 
-            public KaraokePracticeContainer(KaraokeBeatmap beatmap, Track track)
+            public KaraokePracticeContainer(KaraokeBeatmap beatmap)
             {
                 AddExtraOverlay(new TriggerButton
                     {
