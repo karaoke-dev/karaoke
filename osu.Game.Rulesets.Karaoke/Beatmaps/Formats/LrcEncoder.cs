@@ -38,13 +38,13 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
             for (int i = 0; i < totalTags; i++)
             {
-                var lastTag = tags.LastOrDefault();
+                var (lastTag, lastTagTime) = tags.LastOrDefault();
 
-                if (lastTag.Key.Index * 2 == i)
+                if (lastTag.Index * 2 == i)
                 {
                     yield return new LyricMaker.Model.Tags.TimeTag
                     {
-                        Time = (int)lastTag.Value,
+                        Time = (int)lastTagTime,
                         Check = true,
                         KeyUp = true
                     };
@@ -52,13 +52,13 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     continue;
                 }
 
-                var tag = tags.FirstOrDefault(x => x.Key.Index * 2 + 1 == i);
+                var (firstTag, firstTagTime) = tags.FirstOrDefault(x => x.Key.Index * 2 + 1 == i);
 
-                if (tag.Value > 0 && tag.Key != lastTag.Key)
+                if (firstTagTime > 0 && firstTag != lastTag)
                 {
                     yield return new LyricMaker.Model.Tags.TimeTag
                     {
-                        Time = (int)tag.Value,
+                        Time = (int)firstTagTime,
                         Check = true,
                         KeyUp = true
                     };

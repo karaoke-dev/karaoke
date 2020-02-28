@@ -30,14 +30,14 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
             }
         }
 
-        private PositionText[] romajies;
+        private PositionText[] romajis;
 
-        public PositionText[] Romajies
+        public PositionText[] Romajis
         {
-            get => romajies;
+            get => romajis;
             set
             {
-                romajies = filterValidValues(value);
+                romajis = filterValidValues(value);
 
                 // Trigger update text
                 Text = Text;
@@ -144,7 +144,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
 
             // Print romaji
             var romajiYPosition = charactersBacking.FirstOrDefault().Height + RomajiFont.Size / 2 + 5 + RomajiMargin;
-            createTexts(Romajies, RomajiFont, romajiYPosition, RomajiSpacing);
+            createTexts(Romajis, RomajiFont, romajiYPosition, RomajiSpacing);
 
             // Return TextBuilder that do not renderer text anymore
             return new TextBuilder(store, Font, builderMaxWidth, UseFullGlyphHeight,

@@ -120,16 +120,15 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         {
             foreach (var timeTag in TimeTags)
             {
-                var nextTag = TimeTags.GetNext(timeTag);
+                var (key, endTime) = TimeTags.GetNext(timeTag);
 
-                if (nextTag.Key.Index <= 0)
+                if (key.Index <= 0)
                     continue;
 
                 var startTime = timeTag.Value;
-                var endTime = nextTag.Value;
 
                 int startIndex = timeTag.Key.Index;
-                int endIndex = nextTag.Key.Index;
+                int endIndex = key.Index;
 
                 var text = Text.Substring(startIndex, endIndex - startIndex);
                 var ruby = RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault().Text;

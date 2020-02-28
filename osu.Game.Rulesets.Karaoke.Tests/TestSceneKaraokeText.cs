@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             {
                 Text = text,
                 Rubies = rubies?.ToArray(),
-                Romajies = romajies?.ToArray(),
+                Romajis = romajies?.ToArray(),
                 Margin = new MarginPadding(30),
             };
         }

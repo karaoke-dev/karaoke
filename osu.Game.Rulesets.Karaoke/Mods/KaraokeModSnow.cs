@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             /// <summary>
             /// Show spirit
             /// </summary>
-            public class SnowSprite : Circle
+            private class SnowSprite : Circle
             {
                 public float HorizontalSpeed { get; set; }
 
