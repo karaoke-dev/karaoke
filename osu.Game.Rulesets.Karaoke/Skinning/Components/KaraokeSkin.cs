@@ -13,5 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Components
         public List<KaraokeLayout> DefinedLayouts { get; set; }
 
         public List<NoteSkin> DefinedNoteSkins { get; set; }
+
+        public List<Singer> Singers { get; set; }
     }
 }
