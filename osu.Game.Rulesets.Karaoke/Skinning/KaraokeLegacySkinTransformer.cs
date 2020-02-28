@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
 
             // TODO : get note style from file
-            skin.DefinedNoteSkins = new List<NoteSkin>
+            skin.NoteSkins = new List<NoteSkin>
             {
                 new NoteSkin
                 {
@@ -81,13 +81,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     switch (config)
                     {
                         case KaraokeSkinConfiguration.LyricStyle:
-                            return SkinUtils.As<TValue>(new Bindable<KaraokeFont>(skin.DefinedFonts[lookupNumber]));
+                            return SkinUtils.As<TValue>(new Bindable<KaraokeFont>(skin.Fonts[lookupNumber]));
 
                         case KaraokeSkinConfiguration.LyricLayout:
-                            return SkinUtils.As<TValue>(new Bindable<KaraokeLayout>(skin.DefinedLayouts[lookupNumber]));
+                            return SkinUtils.As<TValue>(new Bindable<KaraokeLayout>(skin.Layouts[lookupNumber]));
 
                         case KaraokeSkinConfiguration.NoteStyle:
-                            return SkinUtils.As<TValue>(new Bindable<NoteSkin>(skin.DefinedNoteSkins[lookupNumber]));
+                            return SkinUtils.As<TValue>(new Bindable<NoteSkin>(skin.NoteSkins[lookupNumber]));
                     }
 
                     break;
@@ -97,15 +97,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     switch (indexLookup)
                     {
                         case KaraokeIndexLookup.Layout:
-                            var layoutDictionary = skin.DefinedLayouts.ToDictionary(k => skin.DefinedLayouts.IndexOf(k), y => y.Name);
+                            var layoutDictionary = skin.Layouts.ToDictionary(k => skin.Layouts.IndexOf(k), y => y.Name);
                             return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(layoutDictionary));
 
                         case KaraokeIndexLookup.Style:
-                            var fontDictionary = skin.DefinedFonts.ToDictionary(k => skin.DefinedFonts.IndexOf(k), y => y.Name);
+                            var fontDictionary = skin.Fonts.ToDictionary(k => skin.Fonts.IndexOf(k), y => y.Name);
                             return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(fontDictionary));
 
                         case KaraokeIndexLookup.Note:
-                            var noteDictionary = skin.DefinedNoteSkins.ToDictionary(k => skin.DefinedNoteSkins.IndexOf(k), y => y.Name);
+                            var noteDictionary = skin.NoteSkins.ToDictionary(k => skin.NoteSkins.IndexOf(k), y => y.Name);
                             return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(noteDictionary));
                     }
 

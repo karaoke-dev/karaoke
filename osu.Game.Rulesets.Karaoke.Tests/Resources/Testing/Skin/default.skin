@@ -1,5 +1,5 @@
 {
-  "defined_fonts": [
+  "fonts": [
     {
       "name": "標準配色",
       "front_text_brush_info": {
@@ -267,7 +267,7 @@
       }
     }
   ],
-  "defined_layouts": [
+  "layouts": [
     {
       "name": "下-1",
       "alignment": 36,
@@ -279,7 +279,7 @@
       "ruby_margin": 4
     }
   ],
-  "defined_note_skins": [
+  "note_skins": [
     {
       "name": "Note-1",
       "note_color" : {
@@ -303,7 +303,7 @@
       "bold_text" : "true"
     }
   ],
-  "defined_note_skins": [
+  "singers": [
     {
       "name": "Singer-1",
       "romaji": "Singer-1",

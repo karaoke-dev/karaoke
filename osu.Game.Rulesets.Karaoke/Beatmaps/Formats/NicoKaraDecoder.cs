@@ -39,14 +39,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             }
 
             // Clean-up layout
-            output.DefinedLayouts = new List<Skinning.Components.KaraokeLayout>();
+            output.Layouts = new List<Skinning.Components.KaraokeLayout>();
 
             foreach (var karaokeLayout in nicoKaraProject.KaraokeLayouts)
             {
                 Enum.TryParse(karaokeLayout.SmartHorizon.ToString(), out KaraokeTextSmartHorizon smartHorizon);
                 Enum.TryParse(karaokeLayout.RubyAlignment.ToString(), out LyricTextAlignment rubyAlignment);
 
-                output.DefinedLayouts.Add(new Skinning.Components.KaraokeLayout
+                output.Layouts.Add(new Skinning.Components.KaraokeLayout
                 {
                     Name = karaokeLayout.Name,
                     Alignment = convertAnchor(karaokeLayout.HorizontalAlignment, karaokeLayout.VerticalAlignment),
@@ -62,11 +62,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             }
 
             // Clean-up style
-            output.DefinedFonts = new List<KaraokeFont>();
+            output.Fonts = new List<KaraokeFont>();
 
             foreach (var nicoKaraFont in nicoKaraProject.KaraokeFonts)
             {
-                output.DefinedFonts.Add(new KaraokeFont
+                output.Fonts.Add(new KaraokeFont
                 {
                     Name = nicoKaraFont.Name,
                     UseShadow = nicoKaraFont.UseShadow,

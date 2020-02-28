@@ -26,9 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             var decoded = decode(name, out var encoded);
 
             // Check each property's number.
-            Assert.That(decoded.DefinedFonts.Count, Is.EqualTo(encoded.DefinedFonts.Count));
-            Assert.That(decoded.DefinedLayouts.Count, Is.EqualTo(encoded.DefinedLayouts.Count));
-            Assert.That(decoded.DefinedNoteSkins.Count, Is.EqualTo(encoded.DefinedNoteSkins.Count));
+            Assert.That(decoded.Fonts.Count, Is.EqualTo(encoded.Fonts.Count));
+            Assert.That(decoded.Layouts.Count, Is.EqualTo(encoded.Layouts.Count));
+            Assert.That(decoded.NoteSkins.Count, Is.EqualTo(encoded.NoteSkins.Count));
 
             // Check each property's value.
             Assert.That(encoded.Serialize(), Is.EqualTo(decoded.Serialize()));

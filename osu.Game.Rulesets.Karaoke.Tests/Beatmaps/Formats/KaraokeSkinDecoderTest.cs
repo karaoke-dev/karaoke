@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var skin = decoder.Decode(stream);
 
                 // Checking font decode result
-                var firstDecodedFont = skin.DefinedFonts.FirstOrDefault();
+                var firstDecodedFont = skin.Fonts.FirstOrDefault();
                 Assert.IsNotNull(firstDecodedFont);
                 Assert.AreEqual(firstDecodedFont.Name, "標準配色");
 
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(lyricTextFontInfo.EdgeSize, 10);
 
                 // Checking layout decode result
-                var firstDecodedLayout = skin.DefinedLayouts.FirstOrDefault();
+                var firstDecodedLayout = skin.Layouts.FirstOrDefault();
                 Assert.AreEqual(firstDecodedLayout.Name, "下-1");
                 Assert.AreEqual(firstDecodedLayout.Alignment, Anchor.BottomRight);
                 Assert.AreEqual(firstDecodedLayout.HorizontalMargin, 30);
@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(firstDecodedLayout.RomajiMargin, 0);
 
                 // Checking note decode result
-                var firstDecodedNoteSkin = skin.DefinedNoteSkins.FirstOrDefault();
+                var firstDecodedNoteSkin = skin.NoteSkins.FirstOrDefault();
                 Assert.AreEqual(firstDecodedNoteSkin.Name, "Note-1");
                 Assert.AreEqual(firstDecodedNoteSkin.NoteColor, new Color4(128, 128, 128, 255));
                 Assert.AreEqual(firstDecodedNoteSkin.BlinkColor, new Color4(128, 128, 128, 255));
