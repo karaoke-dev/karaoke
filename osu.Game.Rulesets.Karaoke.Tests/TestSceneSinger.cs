@@ -12,11 +12,11 @@ using System.Collections.Generic;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Graphics.UserInterface;
 using System.Linq;
 using osu.Framework.Extensions;
 using osu.Framework.Allocation;
 using osu.Game.Graphics;
+using osu.Game.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Tests
 {
@@ -27,6 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
 
         private readonly Box background;
         private readonly SingerTableContainer singerTableContainer;
+        private readonly SingerInfoContainer singerInfoContainer;
 
         public TestSceneSinger()
         {
@@ -68,7 +69,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                 },
                                 new OsuScrollContainer
                                 {
-                                    RelativeSizeAxes = Axes.Both
+                                    RelativeSizeAxes = Axes.Both,
+                                    Child = singerInfoContainer = new SingerInfoContainer
+                                    {
+                                        RelativeSizeAxes = Axes.X
+                                    }
                                 }
                             }
                             
@@ -89,6 +94,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests
 
                 singerTableContainer.Singers = singers;
             }, true);
+
+            singerTableContainer.BindableSinger.BindValueChanged(x =>
+            {
+                // Update singer info
+                singerInfoContainer.Singer = x.NewValue;
+            });
         }
 
         [BackgroundDependencyLoader]
@@ -102,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             private const float horizontal_inset = 20;
             private const float row_height = 10;
 
-            public BindableInt BindableLayoutIndex { get; } = new BindableInt();
+            public Bindable<Singer> BindableSinger { get; } = new Bindable<Singer>();
 
             private readonly FillFlowContainer backgroundFlow;
 
@@ -142,7 +153,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                     Content = Singers.Select(s => createContent(s.Key, s.Value)).ToArray().ToRectangular();
 
                     // All the singer is not selected
-                    BindableLayoutIndex.Value = 0;
+                    BindableSinger.Value = singers.FirstOrDefault().Value;
                 }
             }
 
@@ -161,15 +172,89 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             {
                 return new Drawable[]
                     {
-                        new OsuCheckbox
+                        new OsuSpriteText
                         {
-                            
+                            Text = $"# {index}"
                         },
                         new OsuSpriteText
                         {
                             Text = singer.Name
                         },
                     };
+            }
+        }
+
+        public class SingerInfoContainer : TableContainer
+        {
+            private readonly OsuTextBox nameTextBox;
+            private readonly OsuTextBox englishNameTextBox;
+            private readonly OsuTextBox romajiNameTextBox;
+
+            public SingerInfoContainer()
+            {
+                AutoSizeAxes = Axes.Y;
+                RowSize = new Dimension(GridSizeMode.AutoSize);
+                Content = new Drawable[,]
+                {
+                    {
+                        new OsuSpriteText
+                        {
+                            Text = "Singer name :"
+                        },
+                        nameTextBox = new OsuTextBox
+                        {
+                            RelativeSizeAxes = Axes.X,
+                        }
+                    },
+                    {
+                        new OsuSpriteText
+                        {
+                            Text = "English name :"
+                        },
+                        englishNameTextBox = new OsuTextBox
+                        {
+                            RelativeSizeAxes = Axes.X,
+                        }
+                    },
+                    {
+                        new OsuSpriteText
+                        {
+                            Text = "Romaji name :"
+                        },
+                        romajiNameTextBox = new OsuTextBox
+                        {
+                            RelativeSizeAxes = Axes.X,
+                        }
+                    },
+                };
+
+                nameTextBox.Current.BindValueChanged(x =>
+                {
+                    Singer.Name = x.NewValue;
+                });
+
+                englishNameTextBox.Current.BindValueChanged(x =>
+                {
+                    Singer.EnglishName = x.NewValue;
+                });
+
+                romajiNameTextBox.Current.BindValueChanged(x =>
+                {
+                    Singer.Romaji = x.NewValue;
+                });
+            }
+
+            private Singer singer;
+            public Singer Singer
+            {
+                get => singer;
+                set
+                {
+                    singer = value;
+                    nameTextBox.Text = singer.Name;
+                    englishNameTextBox.Text = singer.EnglishName;
+                    romajiNameTextBox.Text = singer.Romaji;
+                }
             }
         }
     }
