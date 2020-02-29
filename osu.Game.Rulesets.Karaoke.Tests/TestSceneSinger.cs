@@ -55,17 +55,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                         {
                             new Dimension(GridSizeMode.Absolute, 300)
                         },
-                        Content = new Drawable[][]
+                        Content = new[]
                         {
-                            new []
+                            new Drawable[]
                             {
                                 new OsuScrollContainer
                                 {
                                     RelativeSizeAxes = Axes.Both,
-                                    Child = singerTableContainer = new SingerTableContainer
-                                    {
-
-                                    }
+                                    Child = singerTableContainer = new SingerTableContainer()
                                 },
                                 new OsuScrollContainer
                                 {
@@ -76,7 +73,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                                     }
                                 }
                             }
-                            
                         }
                     }
                 }
@@ -134,7 +130,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 });
             }
 
-            private IDictionary<int,Singer> singers;
+            private IDictionary<int, Singer> singers;
 
             public IDictionary<int, Singer> Singers
             {
@@ -160,10 +156,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             private TableColumn[] createHeaders()
             {
                 var columns = new List<TableColumn>
-                    {
-                        new TableColumn("Selected", Anchor.Centre, new Dimension(GridSizeMode.Absolute, 50)),
-                        new TableColumn("Singer name", Anchor.Centre),
-                    };
+                {
+                    new TableColumn("Selected", Anchor.Centre, new Dimension(GridSizeMode.Absolute, 50)),
+                    new TableColumn("Singer name", Anchor.Centre),
+                };
 
                 return columns.ToArray();
             }
@@ -171,16 +167,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             private Drawable[] createContent(int index, Singer singer)
             {
                 return new Drawable[]
+                {
+                    new OsuSpriteText
                     {
-                        new OsuSpriteText
-                        {
-                            Text = $"# {index}"
-                        },
-                        new OsuSpriteText
-                        {
-                            Text = singer.Name
-                        },
-                    };
+                        Text = $"# {index}"
+                    },
+                    new OsuSpriteText
+                    {
+                        Text = singer.Name
+                    },
+                };
             }
         }
 
@@ -245,6 +241,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             }
 
             private Singer singer;
+
             public Singer Singer
             {
                 get => singer;

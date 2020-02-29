@@ -13,7 +13,6 @@ using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Skinning;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
