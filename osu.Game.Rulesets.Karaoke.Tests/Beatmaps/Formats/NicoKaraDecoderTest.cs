@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var skin = decoder.Decode(stream);
 
                 // Testing layout
-                var firstLayout = skin.DefinedLayouts.FirstOrDefault();
+                var firstLayout = skin.Layouts.FirstOrDefault();
                 Assert.IsNotNull(firstLayout);
                 Assert.AreEqual(firstLayout.Name, "下-1");
                 Assert.AreEqual(firstLayout.Alignment, Anchor.BottomRight);
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(firstLayout.RubyMargin, 4);
 
                 // Testing style
-                var firstFont = skin.DefinedFonts.FirstOrDefault();
+                var firstFont = skin.Fonts.FirstOrDefault();
                 Assert.IsNotNull(firstFont);
                 Assert.AreEqual(firstFont.Name, "標準配色");
 
