@@ -73,6 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             switch (lookup)
             {
+                // Lookup skin by type and index
                 case KaraokeSkinLookup skinLookup:
                 {
                     var config = skinLookup.Config;
@@ -93,6 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     break;
                 }
 
+                // Lookup list of name by type
                 case KaraokeIndexLookup indexLookup:
                     switch (indexLookup)
                     {
@@ -107,6 +109,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                         case KaraokeIndexLookup.Note:
                             var noteDictionary = skin.NoteSkins.ToDictionary(k => skin.NoteSkins.IndexOf(k), y => y.Name);
                             return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(noteDictionary));
+
+                        case KaraokeIndexLookup.Singer:
+                            var singerDictionary = skin.Singers.ToDictionary(k => skin.Singers.IndexOf(k), y => y.Name);
+                            return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(singerDictionary));
                     }
 
                     break;

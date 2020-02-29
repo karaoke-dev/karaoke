@@ -9,5 +9,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests
     [TestFixture]
     public class TestSceneSinger : OsuTestScene
     {
+        public TestSceneSinger()
+        {
+
+        }
     }
 }

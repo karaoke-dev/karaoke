@@ -13,5 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         Style,
 
         Note,
+
+        Singer,
     }
 }
