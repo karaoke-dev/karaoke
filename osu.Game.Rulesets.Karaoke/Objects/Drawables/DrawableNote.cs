@@ -153,8 +153,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             }
             else if (Time.Current > HitObject.EndTime || Time.Current < HitObject.StartTime)
             {
-                // TODO : User stop singing this note
-                //OnReleased(action);
+                // User stop singing this note
+                OnReleased(action);
             }
 
             return false;
