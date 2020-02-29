@@ -36,19 +36,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             {
                 skin = new KaraokeSkinDecoder().Decode(reader);
             }
-
-            // TODO : get note style from file
-            skin.NoteSkins = new List<NoteSkin>
-            {
-                new NoteSkin
-                {
-                    Name = "Note skin 0",
-                    NoteColor = new Color4(68, 170, 221, 255),
-                    BlinkColor = new Color4(255, 102, 170, 255),
-                    TextColor = Color4.White,
-                    BoldText = true,
-                }
-            };
         }
 
         public Drawable GetDrawableComponent(ISkinComponent component)
@@ -89,6 +76,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                         case KaraokeSkinConfiguration.NoteStyle:
                             return SkinUtils.As<TValue>(new Bindable<NoteSkin>(skin.NoteSkins[lookupNumber]));
+
+                        case KaraokeSkinConfiguration.Singer:
+                            return SkinUtils.As<TValue>(new Bindable<Singer>(skin.Singers[lookupNumber]));
                     }
 
                     break;
@@ -120,7 +110,5 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             return source.GetConfig<TLookup, TValue>(lookup);
         }
-
-        private bool hasFont(string fontName) => source.GetTexture($"{fontName}-0") != null;
     }
 }
