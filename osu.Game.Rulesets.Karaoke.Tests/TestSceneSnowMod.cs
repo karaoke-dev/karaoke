@@ -3,14 +3,14 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
-using osu.Game.Screens.Play;
+using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests
 {
     [TestFixture]
     public class TestSceneSnowMod : TestSceneKaraokePlayer
     {
-        protected override Player CreatePlayer(Ruleset ruleset)
+        protected override TestPlayer CreatePlayer(Ruleset ruleset)
         {
             SelectedMods.Value = new[] { new KaraokeModSnow() };
 

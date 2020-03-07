@@ -23,9 +23,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         protected readonly IBindable<double> TimeRange = new Bindable<double>();
 
-        [Obsolete("Use UpdateInitialTransforms()/UpdateStateTransforms() instead")]
-        protected override bool UseTransformStateManagement => false;
-
         protected DrawableKaraokeScrollingHitObject(KaraokeHitObject hitObject)
             : base(hitObject)
         {
@@ -50,8 +47,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         protected virtual void OnTimeRangeChanged(ValueChangedEvent<double> e)
         {
+        }
+
+        protected override void UpdateInitialTransforms()
+        {
+            base.UpdateInitialTransforms();
             // Adjust life time
-            LifetimeEnd = HitObject.GetEndTime() + e.NewValue;
+            LifetimeEnd = HitObject.GetEndTime() + TimeRange.Value;
         }
     }
 
