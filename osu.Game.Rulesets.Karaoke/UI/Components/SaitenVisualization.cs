@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Lines;
+using osu.Framework.Layout;
 using osu.Framework.Threading;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -33,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         [Resolved]
         private IPositionCalculator calculator { get; set; }
 
-        private readonly Cached initialStateCache = new Cached();
+        private readonly LayoutValue initialStateCache = new LayoutValue(Invalidation.RequiredParentSizeToFit | Invalidation.DrawInfo);
 
         private readonly IDictionary<SaitenPath, List<KaraokeReplayFrame>> frames = new Dictionary<SaitenPath, List<KaraokeReplayFrame>>();
         private readonly IDictionary<SaitenPath, Cached> pathInitialStateCache = new Dictionary<SaitenPath, Cached>();
@@ -43,6 +44,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         protected virtual void Add(Path hitObject) => AddInternal(hitObject);
         protected virtual bool Remove(Path hitObject) => RemoveInternal(hitObject);
+
+        public SaitenVisualization()
+        {
+            AddLayout(initialStateCache);
+        }
 
         public ColourInfo LineColour
         {
@@ -122,14 +128,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             {
                 frames.LastOrDefault().Value.Add(frame);
             }
-        }
-
-        public override bool Invalidate(Invalidation invalidation = Invalidation.All, Drawable source = null, bool shallPropagate = true)
-        {
-            if ((invalidation & (Invalidation.RequiredParentSizeToFit | Invalidation.DrawInfo)) > 0)
-                initialStateCache.Invalidate();
-
-            return base.Invalidate(invalidation, source, shallPropagate);
         }
 
         private float scrollLength;

@@ -6,8 +6,8 @@ using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Caching;
 using osu.Framework.Graphics;
+using osu.Framework.Layout;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
@@ -45,19 +45,14 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         private class KaraokeFlashlight : Flashlight
         {
-            private readonly Cached flashlightProperties = new Cached();
+            private readonly LayoutValue flashlightProperties = new LayoutValue(Invalidation.DrawSize);
 
             private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
             private readonly IBindable<double> timeRange = new Bindable<double>();
 
-            public override bool Invalidate(Invalidation invalidation = Invalidation.All, Drawable source = null, bool shallPropagate = true)
+            public KaraokeFlashlight()
             {
-                if ((invalidation & Invalidation.DrawSize) > 0)
-                {
-                    flashlightProperties.Invalidate();
-                }
-
-                return base.Invalidate(invalidation, source, shallPropagate);
+                AddLayout(flashlightProperties);
             }
 
             protected override void Update()
