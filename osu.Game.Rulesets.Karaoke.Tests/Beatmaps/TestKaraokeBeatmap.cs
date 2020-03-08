@@ -1,11 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
-using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
 {

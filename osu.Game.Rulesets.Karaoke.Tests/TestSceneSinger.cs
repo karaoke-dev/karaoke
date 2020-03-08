@@ -1,22 +1,22 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using NUnit.Framework;
-using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Skinning;
-using osu.Game.Tests.Visual;
-using osu.Framework.Graphics;
-using osu.Framework.Graphics.Shapes;
-using osu.Game.Graphics.Containers;
 using System.Collections.Generic;
-using osu.Framework.Bindables;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
-using osu.Game.Graphics.Sprites;
 using System.Linq;
-using osu.Framework.Extensions;
+using NUnit.Framework;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
+using osu.Framework.Extensions;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Containers;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests
 {
@@ -224,20 +224,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                     },
                 };
 
-                nameTextBox.Current.BindValueChanged(x =>
-                {
-                    Singer.Name = x.NewValue;
-                });
+                nameTextBox.Current.BindValueChanged(x => { Singer.Name = x.NewValue; });
 
-                englishNameTextBox.Current.BindValueChanged(x =>
-                {
-                    Singer.EnglishName = x.NewValue;
-                });
+                englishNameTextBox.Current.BindValueChanged(x => { Singer.EnglishName = x.NewValue; });
 
-                romajiNameTextBox.Current.BindValueChanged(x =>
-                {
-                    Singer.Romaji = x.NewValue;
-                });
+                romajiNameTextBox.Current.BindValueChanged(x => { Singer.Romaji = x.NewValue; });
             }
 
             private Singer singer;
