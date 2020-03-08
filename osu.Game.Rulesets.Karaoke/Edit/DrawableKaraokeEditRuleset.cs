@@ -16,6 +16,7 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osuTK;
+using osuTK.Input;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
@@ -42,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         protected override bool OnKeyDown(KeyDownEvent e)
         {
-            if (e.Key != osuTK.Input.Key.S)
+            if (e.Key != Key.S)
                 return base.OnKeyDown(e);
 
             string directory = Path.Combine(Path.GetTempPath(), @"osu!");

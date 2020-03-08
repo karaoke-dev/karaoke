@@ -3,8 +3,8 @@
 
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.IO.Serialization;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {

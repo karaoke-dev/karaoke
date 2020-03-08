@@ -10,16 +10,16 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Input.Bindings;
+using osu.Game.Rulesets.Configuration;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Mods;
-using osu.Game.Rulesets.UI;
-using osu.Game.Screens.Play;
+using osu.Game.Rulesets.Karaoke.Resources.Fonts;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
-using osu.Game.Rulesets.Configuration;
-using osu.Game.Rulesets.Karaoke.Resources.Fonts;
+using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.UI;
+using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {

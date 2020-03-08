@@ -62,10 +62,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             var display = selectedObject.Count(x => x.Display) >= selectedObject.Count(x => !x.Display);
             var displayText = display ? "Hide" : "Show";
-            return new OsuMenuItem($"{displayText} {selectedObject.Count()} notes.", display ? MenuItemType.Destructive : MenuItemType.Standard, () =>
-            {
-                SelectedBlueprints.OfType<NoteSelectionBlueprint>().ForEach(x => x.ChangeDisplay(!display));
-            });
+            return new OsuMenuItem($"{displayText} {selectedObject.Count()} notes.", display ? MenuItemType.Destructive : MenuItemType.Standard,
+                () => { SelectedBlueprints.OfType<NoteSelectionBlueprint>().ForEach(x => x.ChangeDisplay(!display)); });
         }
 
         private MenuItem createCombineNoteMenuItem(IEnumerable<Note> selectedObject)
