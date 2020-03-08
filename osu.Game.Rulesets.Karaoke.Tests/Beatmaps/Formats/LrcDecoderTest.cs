@@ -1,12 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.IO;
+using System.Linq;
 using NUnit.Framework;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
-using System.IO;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 {

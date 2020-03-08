@@ -1,15 +1,15 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Game.Rulesets.Objects.Types;
-using Newtonsoft.Json;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Judgements;
-using osu.Framework.Bindables;
-using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {

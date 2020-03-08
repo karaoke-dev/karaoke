@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -288,10 +288,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 }
             };
 
-            colorAreaDropdown.Current.BindValueChanged(value =>
-            {
-                brushTypeDropdown.Current.Value = drawableLyricLine.GetBrushInfo(value.NewValue).Type;
-            });
+            colorAreaDropdown.Current.BindValueChanged(value => { brushTypeDropdown.Current.Value = drawableLyricLine.GetBrushInfo(value.NewValue).Type; });
 
             brushTypeDropdown.Current.BindValueChanged(value => drawableLyricLine.ApplyProperty(selectedColorArea, x => x.Type = value.NewValue));
 

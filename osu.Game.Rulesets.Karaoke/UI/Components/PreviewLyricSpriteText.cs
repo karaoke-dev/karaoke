@@ -1,5 +1,5 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
-// See the LICENCE file in the repository root for full licence text.;
+// See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
@@ -14,20 +14,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         public PreviewLyricSpriteText(LyricLine hitObject)
         {
             HitObject = hitObject;
-            hitObject.TextBindable.BindValueChanged(text =>
-            {
-                Text = text.NewValue;
-            }, true);
+            hitObject.TextBindable.BindValueChanged(text => { Text = text.NewValue; }, true);
 
-            hitObject.RubyTagsBindable.BindValueChanged(rubyTags =>
-            {
-                Rubies = rubyTags.NewValue?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray();
-            }, true);
+            hitObject.RubyTagsBindable.BindValueChanged(rubyTags => { Rubies = rubyTags.NewValue?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray(); }, true);
 
-            hitObject.RomajiTagsBindable.BindValueChanged(romajiTags =>
-            {
-                Romajies = romajiTags.NewValue?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray();
-            }, true);
+            hitObject.RomajiTagsBindable.BindValueChanged(romajiTags => { Romajies = romajiTags.NewValue?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray(); }, true);
         }
     }
 }

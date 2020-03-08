@@ -45,6 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
                 // Checking layout decode result
                 var firstDecodedLayout = skin.Layouts.FirstOrDefault();
+                Assert.NotNull(firstDecodedLayout);
                 Assert.AreEqual(firstDecodedLayout.Name, "下-1");
                 Assert.AreEqual(firstDecodedLayout.Alignment, Anchor.BottomRight);
                 Assert.AreEqual(firstDecodedLayout.HorizontalMargin, 30);
@@ -60,18 +61,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
                 // Checking note decode result
                 var firstDecodedNoteSkin = skin.NoteSkins.FirstOrDefault();
+                Assert.NotNull(firstDecodedNoteSkin);
                 Assert.AreEqual(firstDecodedNoteSkin.Name, "Note-1");
                 Assert.AreEqual(firstDecodedNoteSkin.NoteColor, new Color4(68, 170, 221, 255));
                 Assert.AreEqual(firstDecodedNoteSkin.BlinkColor, new Color4(255, 102, 170, 255));
                 Assert.AreEqual(firstDecodedNoteSkin.TextColor, new Color4(255, 255, 255, 255));
                 Assert.AreEqual(firstDecodedNoteSkin.BoldText, true);
 
-                // Checking singerdecode result
-                var firstDecodedSingerin = skin.Singers.FirstOrDefault();
-                Assert.AreEqual(firstDecodedSingerin.Name, "Singer-1");
-                Assert.AreEqual(firstDecodedSingerin.Romaji, "Singer-1");
-                Assert.AreEqual(firstDecodedSingerin.EnglishName, "Singer-1");
-                Assert.AreEqual(firstDecodedSingerin.Color, new Color4(255, 128, 128, 255));
+                // Checking singer decode result
+                var firstDecodedSinger = skin.Singers.FirstOrDefault();
+                Assert.NotNull(firstDecodedSinger);
+                Assert.AreEqual(firstDecodedSinger.Name, "Singer-1");
+                Assert.AreEqual(firstDecodedSinger.Romaji, "Singer-1");
+                Assert.AreEqual(firstDecodedSinger.EnglishName, "Singer-1");
+                Assert.AreEqual(firstDecodedSinger.Color, new Color4(255, 128, 128, 255));
             }
         }
     }

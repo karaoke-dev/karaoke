@@ -105,9 +105,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 });
             }
 
-            Vector2 convertShadowSlide(ShadowSlide side) => new Vector2(side.X, side.Y);
+            static Vector2 convertShadowSlide(ShadowSlide side) => new Vector2(side.X, side.Y);
 
-            Anchor convertAnchor(HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment)
+            static Anchor convertAnchor(HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment)
             {
                 Enum.TryParse((1 << ((int)horizontalAlignment + 3)).ToString(), out Anchor horizontalAnchor);
                 Enum.TryParse((1 << (int)verticalAlignment).ToString(), out Anchor verticalAnchor);
@@ -115,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 return horizontalAnchor | verticalAnchor;
             }
 
-            Skinning.Components.FontInfo convertFontInfo(FontInfo info) =>
+            static Skinning.Components.FontInfo convertFontInfo(FontInfo info) =>
                 new Skinning.Components.FontInfo
                 {
                     FontName = info.FontName,
@@ -124,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     EdgeSize = info.EdgeSize
                 };
 
-            Skinning.Components.BrushInfo convertBrushInfo(BrushInfo info)
+            static Skinning.Components.BrushInfo convertBrushInfo(BrushInfo info)
             {
                 Enum.TryParse(info.Type.ToString(), out BrushType type);
 

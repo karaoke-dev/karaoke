@@ -51,25 +51,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             }, true);
             */
 
-            note.TextBindable.BindValueChanged(_ =>
-            {
-                changeText(note);
-            }, true);
+            note.TextBindable.BindValueChanged(_ => { changeText(note); }, true);
 
-            note.AlternativeTextBindable.BindValueChanged(_ =>
-            {
-                changeText(note);
-            }, true);
+            note.AlternativeTextBindable.BindValueChanged(_ => { changeText(note); }, true);
 
-            note.StyleIndexBindable.BindValueChanged(index =>
-            {
-                ApplySkin(CurrentSkin, false);
-            }, true);
+            note.StyleIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
 
-            note.DisplayBindable.BindValueChanged(display =>
-            {
-                bodyPiece.Display = display.NewValue;
-            }, true);
+            note.DisplayBindable.BindValueChanged(display => { bodyPiece.Display = display.NewValue; }, true);
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)

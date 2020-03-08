@@ -121,15 +121,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                 romajiListPreviewArea.MaxTagPosition = maxLyricPosition;
             }, true);
 
-            rubyListPreviewArea.BindableTag.BindValueChanged(value =>
-            {
-                lyricPreviewArea.LyricLine.RubyTags = value.NewValue.ToArray();
-            });
+            rubyListPreviewArea.BindableTag.BindValueChanged(value => { lyricPreviewArea.LyricLine.RubyTags = value.NewValue.ToArray(); });
 
-            romajiListPreviewArea.BindableTag.BindValueChanged(value =>
-            {
-                lyricPreviewArea.LyricLine.RomajiTags = value.NewValue.ToArray();
-            });
+            romajiListPreviewArea.BindableTag.BindValueChanged(value => { lyricPreviewArea.LyricLine.RomajiTags = value.NewValue.ToArray(); });
         }
 
         public class LyricPreview : Container

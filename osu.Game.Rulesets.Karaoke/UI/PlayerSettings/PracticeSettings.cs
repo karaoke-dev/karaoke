@@ -119,17 +119,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 {
                     var oldValue = value.OldValue;
                     if (oldValue != null)
-                        lyricTable.Where(x => x.HitObject == oldValue).ForEach(x =>
-                        {
-                            x.Selected = false;
-                        });
+                        lyricTable.Where(x => x.HitObject == oldValue).ForEach(x => { x.Selected = false; });
 
                     var newValue = value.NewValue;
                     if (newValue != null)
-                        lyricTable.Where(x => x.HitObject == newValue).ForEach(x =>
-                        {
-                            x.Selected = true;
-                        });
+                        lyricTable.Where(x => x.HitObject == newValue).ForEach(x => { x.Selected = true; });
                 });
             }
 

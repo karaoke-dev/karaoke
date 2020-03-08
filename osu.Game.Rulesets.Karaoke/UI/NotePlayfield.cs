@@ -223,10 +223,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             var note = (Note)h.HitObject;
 
-            note.ToneBindable.BindValueChanged(tone =>
-            {
-                h.Y = calculator.YPositionAt(tone.NewValue);
-            }, true);
+            note.ToneBindable.BindValueChanged(tone => { h.Y = calculator.YPositionAt(tone.NewValue); }, true);
 
             h.OnNewResult += OnNewResult;
 
