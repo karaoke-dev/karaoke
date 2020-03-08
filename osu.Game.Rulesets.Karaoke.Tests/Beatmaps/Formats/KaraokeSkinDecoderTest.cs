@@ -68,13 +68,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(firstDecodedNoteSkin.TextColor, new Color4(255, 255, 255, 255));
                 Assert.AreEqual(firstDecodedNoteSkin.BoldText, true);
 
-                // Checking singerdecode result
-                var firstDecodedSingerin = skin.Singers.FirstOrDefault();
-                Assert.NotNull(firstDecodedSingerin);
-                Assert.AreEqual(firstDecodedSingerin.Name, "Singer-1");
-                Assert.AreEqual(firstDecodedSingerin.Romaji, "Singer-1");
-                Assert.AreEqual(firstDecodedSingerin.EnglishName, "Singer-1");
-                Assert.AreEqual(firstDecodedSingerin.Color, new Color4(255, 128, 128, 255));
+                // Checking singer decode result
+                var firstDecodedSinger = skin.Singers.FirstOrDefault();
+                Assert.NotNull(firstDecodedSinger);
+                Assert.AreEqual(firstDecodedSinger.Name, "Singer-1");
+                Assert.AreEqual(firstDecodedSinger.Romaji, "Singer-1");
+                Assert.AreEqual(firstDecodedSinger.EnglishName, "Singer-1");
+                Assert.AreEqual(firstDecodedSinger.Color, new Color4(255, 128, 128, 255));
             }
         }
     }

@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         public override void ApplyToDrawableHitObjects(IEnumerable<DrawableHitObject> drawables)
         {
-            void adjustFadeIn(KaraokeHitObject h) => h.TimeFadeIn = h.TimePreempt * fade_in_duration_multiplier;
+            static void adjustFadeIn(KaraokeHitObject h) => h.TimeFadeIn = h.TimePreempt * fade_in_duration_multiplier;
 
             foreach (var d in drawables.OfType<DrawableNote>())
             {
