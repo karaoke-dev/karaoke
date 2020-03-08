@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
                     new GridContainer
                     {
                         RelativeSizeAxes = Axes.Both,
-                        ColumnDimensions = new Dimension[]
+                        ColumnDimensions = new[]
                         {
                             new Dimension(GridSizeMode.Absolute, 300)
                         },

@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             }).ToList();
 
             // Convert single note
-            string convertNote(Note note)
+            static string convertNote(Note note)
             {
                 if (!note.Display)
                     return "-";
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 return convertTone(note.Tone);
 
                 // Convert tone to string
-                string convertTone(Tone tone) => tone.Scale + (tone.Half ? "#" : "");
+                static string convertTone(Tone tone) => tone.Scale + (tone.Half ? "#" : "");
             }
         }
 

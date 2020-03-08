@@ -45,6 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
                 // Checking layout decode result
                 var firstDecodedLayout = skin.Layouts.FirstOrDefault();
+                Assert.NotNull(firstDecodedLayout);
                 Assert.AreEqual(firstDecodedLayout.Name, "下-1");
                 Assert.AreEqual(firstDecodedLayout.Alignment, Anchor.BottomRight);
                 Assert.AreEqual(firstDecodedLayout.HorizontalMargin, 30);
@@ -60,6 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
                 // Checking note decode result
                 var firstDecodedNoteSkin = skin.NoteSkins.FirstOrDefault();
+                Assert.NotNull(firstDecodedNoteSkin);
                 Assert.AreEqual(firstDecodedNoteSkin.Name, "Note-1");
                 Assert.AreEqual(firstDecodedNoteSkin.NoteColor, new Color4(68, 170, 221, 255));
                 Assert.AreEqual(firstDecodedNoteSkin.BlinkColor, new Color4(255, 102, 170, 255));
@@ -68,6 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
                 // Checking singerdecode result
                 var firstDecodedSingerin = skin.Singers.FirstOrDefault();
+                Assert.NotNull(firstDecodedSingerin);
                 Assert.AreEqual(firstDecodedSingerin.Name, "Singer-1");
                 Assert.AreEqual(firstDecodedSingerin.Romaji, "Singer-1");
                 Assert.AreEqual(firstDecodedSingerin.EnglishName, "Singer-1");
