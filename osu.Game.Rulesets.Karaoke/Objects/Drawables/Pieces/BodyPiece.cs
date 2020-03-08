@@ -1,13 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osuTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Game.Graphics;
 using osu.Framework.Layout;
+using osu.Game.Graphics;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
 {

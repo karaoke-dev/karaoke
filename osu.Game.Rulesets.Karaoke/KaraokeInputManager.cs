@@ -2,14 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.ComponentModel;
+using System.Linq;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Handlers.Microphone;
 using osu.Framework.Input.StateChanges.Events;
 using osu.Framework.Input.States;
 using osu.Game.Input.Handlers;
 using osu.Game.Rulesets.UI;
-using System.ComponentModel;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke
 {

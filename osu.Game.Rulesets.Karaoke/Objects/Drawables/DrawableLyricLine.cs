@@ -1,20 +1,20 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Graphics;
-using osu.Game.Graphics.Sprites;
-using osu.Game.Rulesets.Objects.Drawables;
+using System;
 using System.Linq;
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Judgements;
+using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
 using osuTK;
 using osuTK.Graphics;
-using osu.Game.Rulesets.Karaoke.Judgements;
-using System;
-using osu.Game.Rulesets.Judgements;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
@@ -46,40 +46,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 }
             };
 
-            hitObject.TextBindable.BindValueChanged(text =>
-            {
-                karaokeText.Text = text.NewValue;
-            }, true);
+            hitObject.TextBindable.BindValueChanged(text => { karaokeText.Text = text.NewValue; }, true);
 
-            hitObject.TimeTagsBindable.BindValueChanged(timeTags =>
-            {
-                karaokeText.TimeTags = timeTags.NewValue;
-            }, true);
+            hitObject.TimeTagsBindable.BindValueChanged(timeTags => { karaokeText.TimeTags = timeTags.NewValue; }, true);
 
-            hitObject.RubyTagsBindable.BindValueChanged(rubyTags =>
-            {
-                ApplyRuby();
-            }, true);
+            hitObject.RubyTagsBindable.BindValueChanged(rubyTags => { ApplyRuby(); }, true);
 
-            hitObject.RomajiTagsBindable.BindValueChanged(romajiTags =>
-            {
-                ApplyRomaji();
-            }, true);
+            hitObject.RomajiTagsBindable.BindValueChanged(romajiTags => { ApplyRomaji(); }, true);
 
-            hitObject.FontIndexBindable.BindValueChanged(index =>
-            {
-                ApplySkin(CurrentSkin, false);
-            }, true);
+            hitObject.FontIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
 
-            hitObject.LayoutIndexBindable.BindValueChanged(index =>
-            {
-                ApplySkin(CurrentSkin, false);
-            }, true);
+            hitObject.LayoutIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
 
-            hitObject.TranslateTextBindable.BindValueChanged(text =>
-            {
-                translateText.Text = text.NewValue ?? "";
-            }, true);
+            hitObject.TranslateTextBindable.BindValueChanged(text => { translateText.Text = text.NewValue ?? ""; }, true);
 
             LifetimeEnd = hitObject.EndTime + 1000;
         }
@@ -192,10 +171,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             {
                 judgement.Time = LyricTime.Exceed;
                 // Apply end hit result
-                ApplyResult(r =>
-                {
-                    r.Type = HitResult.Meh;
-                });
+                ApplyResult(r => { r.Type = HitResult.Meh; });
             }
         }
 
