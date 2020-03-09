@@ -1,0 +1,28 @@
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// See the LICENCE file in the repository root for full licence text.
+
+using osu.Framework.Audio;
+using osu.Framework.Audio.Track;
+using osu.Framework.Graphics.Textures;
+using osu.Framework.Graphics.Video;
+using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
+
+namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.Beatmaps
+{
+    public class SaitenAdjustmentWorkingBeatmap : WorkingBeatmap
+    {
+        public SaitenAdjustmentWorkingBeatmap(Beatmap beatmap) : base(beatmap.BeatmapInfo, null)
+        {
+        }
+
+        protected override Texture GetBackground() => null;
+
+        protected override IBeatmap GetBeatmap() => new KaraokeBeatmap();
+
+        // TODO : get real treak from resourse
+        protected override Track GetTrack() => AudioManager.Tracks.GetVirtual(10000);
+
+        protected override VideoSprite GetVideo() => null;
+    }
+}
