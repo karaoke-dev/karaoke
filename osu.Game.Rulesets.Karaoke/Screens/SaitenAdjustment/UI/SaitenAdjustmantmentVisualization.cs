@@ -11,11 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Resources;
 using osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.UI;
+using osu.Framework.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.UI
 {
@@ -26,8 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.UI
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
             dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-            //var config = dependencies.Get<RulesetConfigCache>().GetConfigFor(new KaraokeRuleset());
-            //dependencies.Cache(config);
             return dependencies;
         }
 
@@ -42,24 +38,22 @@ namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.UI
             var workingBeatmap = new SaitenAdjustmentWorkingBeatmap(beatmap);
             var convertedBeatmap = workingBeatmap.GetPlayableBeatmap(ruleset.RulesetInfo);
 
-            var drawableRuleset = new DrawableSaitenAdjustmentRuleset(ruleset, convertedBeatmap, null);
-
             Children = new[]
             {
-                drawableRuleset
+                new DrawableSaitenAdjustmentRuleset(ruleset, convertedBeatmap, null)
+                {
+                    RelativeSizeAxes = Axes.Both
+                }
             };
         }
 
         public class DrawableSaitenAdjustmentRuleset : DrawableKaraokeRuleset
         {
-            public new NotePlayfield Playfield => (NotePlayfield)base.Playfield;
-
             public DrawableSaitenAdjustmentRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
                 : base(ruleset, beatmap, mods)
             {
+                Playfield.LyricPlayfield.Hide();
             }
-
-            protected override Playfield CreatePlayfield() => new NotePlayfield(9);
 
             public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h)
             {

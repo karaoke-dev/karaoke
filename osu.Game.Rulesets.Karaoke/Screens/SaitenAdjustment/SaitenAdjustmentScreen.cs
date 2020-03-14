@@ -17,7 +17,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment
                 RelativeSizeAxes = Axes.Both,
                 Children = new[]
                 {
-                    new SaitenAdjustmantmentVisualization()
+                    new SaitenAdjustmantmentVisualization
+                    {
+                        RelativeSizeAxes = Axes.Both
+                    }
                 }
             });
         }
