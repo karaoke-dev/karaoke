@@ -14,6 +14,8 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Resources;
 using osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.Beatmaps;
 using osu.Framework.Graphics;
+using osu.Game.Skinning;
+using osu.Game.Rulesets.Karaoke.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.UI
 {
@@ -38,11 +40,16 @@ namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.UI
             var workingBeatmap = new SaitenAdjustmentWorkingBeatmap(beatmap);
             var convertedBeatmap = workingBeatmap.GetPlayableBeatmap(ruleset.RulesetInfo);
 
+            var skin = new KaraokeLegacySkinTransformer(null);
+
             Children = new[]
             {
-                new DrawableSaitenAdjustmentRuleset(ruleset, convertedBeatmap, null)
+                new SkinProvidingContainer(skin)
                 {
-                    RelativeSizeAxes = Axes.Both
+                    Child = new DrawableSaitenAdjustmentRuleset(ruleset, convertedBeatmap, null)
+                    {
+                        RelativeSizeAxes = Axes.Both
+                    }
                 }
             };
         }
