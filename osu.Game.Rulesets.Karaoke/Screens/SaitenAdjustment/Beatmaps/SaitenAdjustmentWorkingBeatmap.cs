@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.Beatmaps
     {
         private readonly IBeatmap beatmap;
 
-        public SaitenAdjustmentWorkingBeatmap(Beatmap beatmap)
+        public SaitenAdjustmentWorkingBeatmap(IBeatmap beatmap)
             : base(beatmap.BeatmapInfo, null)
         {
             this.beatmap = beatmap;
@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.Beatmaps
 
         protected override IBeatmap GetBeatmap() => beatmap;
 
-        // TODO : get real treak from resourse
+        // TODO : get real track from resource
         protected override Track GetTrack() => AudioManager.Tracks.GetVirtual(10000);
 
         protected override VideoSprite GetVideo() => null;

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
@@ -19,8 +20,15 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.UI
 {
-    public class SaitenAdjustmantmentVisualization : Container
+    public class SaitenAdjustmentVisualization : Container
     {
+        private readonly string beatmapName;
+
+        public SaitenAdjustmentVisualization(string resourcesBeatmapName)
+        {
+            beatmapName = resourcesBeatmapName;
+        }
+
         private DependencyContainer dependencies;
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
@@ -32,14 +40,21 @@ namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.UI
         [BackgroundDependencyLoader]
         private void load(RulesetStore rulesets, RulesetConfigCache configCache)
         {
-            var ruleset = rulesets.AvailableRulesets.FirstOrDefault(x => x.Name.ToLower().Contains("karaoke")).CreateInstance();
+            // Get karaoke ruleset
+            var ruleset = rulesets.AvailableRulesets?.FirstOrDefault(x => x.Name.ToLower().Contains("karaoke"))?.CreateInstance();
+            if (ruleset == null)
+                throw new ArgumentNullException($"{nameof(ruleset)} cannot be null.");
+
+            // Cache
             var config = dependencies.Get<RulesetConfigCache>().GetConfigFor(ruleset);
             dependencies.Cache(config);
 
-            var beatmap = KaraokeResources.OpenBeatmap("saiten-result");
+            // Create beatmap
+            var beatmap = KaraokeResources.OpenBeatmap(beatmapName);
             var workingBeatmap = new SaitenAdjustmentWorkingBeatmap(beatmap);
             var convertedBeatmap = workingBeatmap.GetPlayableBeatmap(ruleset.RulesetInfo);
 
+            // Create skin
             var skin = new KaraokeLegacySkinTransformer(null);
 
             Children = new[]
@@ -54,11 +69,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.UI
             };
         }
 
-        public class DrawableSaitenAdjustmentRuleset : DrawableKaraokeRuleset
+        private class DrawableSaitenAdjustmentRuleset : DrawableKaraokeRuleset
         {
             public DrawableSaitenAdjustmentRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
                 : base(ruleset, beatmap, mods)
             {
+                // Hide lyric playfield
                 Playfield.LyricPlayfield.Hide();
             }
 
@@ -66,10 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.UI
             {
                 // Only get drawable note here
                 var drawableHitObject = base.CreateDrawableRepresentation(h);
-                if (drawableHitObject is DrawableNote)
-                    return drawableHitObject;
-
-                return null;
+                return drawableHitObject is DrawableNote ? drawableHitObject : null;
             }
         }
     }
