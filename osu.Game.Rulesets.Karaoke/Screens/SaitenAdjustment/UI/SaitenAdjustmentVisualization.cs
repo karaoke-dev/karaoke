@@ -15,6 +15,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Resources;
 using osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.Beatmaps;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning;
 
@@ -23,6 +24,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.UI
     public class SaitenAdjustmentVisualization : Container
     {
         private readonly string beatmapName;
+        private DrawableSaitenAdjustmentRuleset drawableRuleset;
+
+        public KaraokeSessionStatics Session => drawableRuleset.Session;
 
         public SaitenAdjustmentVisualization(string resourcesBeatmapName)
         {
@@ -61,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.UI
             {
                 new SkinProvidingContainer(skin)
                 {
-                    Child = new DrawableSaitenAdjustmentRuleset(ruleset, convertedBeatmap, null)
+                    Child = drawableRuleset = new DrawableSaitenAdjustmentRuleset(ruleset, convertedBeatmap, null)
                     {
                         RelativeSizeAxes = Axes.Both
                     }
