@@ -32,10 +32,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            Waves.FirstWaveColour = OsuColour.FromHex(@"19b0e2").Opacity(50);
-            Waves.SecondWaveColour = OsuColour.FromHex(@"2280a2").Opacity(50);
-            Waves.ThirdWaveColour = OsuColour.FromHex(@"005774").Opacity(50);
-            Waves.FourthWaveColour = OsuColour.FromHex(@"003a4e").Opacity(50);
+            Waves.FirstWaveColour = Color4Extensions.FromHex(@"19b0e2").Opacity(50);
+            Waves.SecondWaveColour = Color4Extensions.FromHex(@"2280a2").Opacity(50);
+            Waves.ThirdWaveColour = Color4Extensions.FromHex(@"005774").Opacity(50);
+            Waves.FourthWaveColour = Color4Extensions.FromHex(@"003a4e").Opacity(50);
         }
     }
 }

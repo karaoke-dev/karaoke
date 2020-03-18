@@ -14,7 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="osu.Framework.Microphone" Version="1.0.2" />
-    <PackageReference Include="ppy.osu.Game" Version="2020.306.0" />
+    <PackageReference Include="ppy.osu.Game" Version="2020.317.0" />
     <PackageReference Include="LyricMaker" Version="1.1.1" />
     <PackageReference Include="NicoKaraParser" Version="1.1.0" />
     <PackageReference Include="osu.KaraokeFramework" Version="1.2.1" />
