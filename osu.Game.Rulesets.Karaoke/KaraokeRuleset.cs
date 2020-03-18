@@ -29,7 +29,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke
 {
-    public class KaraokeRuleset : Ruleset
+    public class KaraokeRuleset : Ruleset, ILegacyRuleset
     {
         public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod> mods = null) => new DrawableKaraokeRuleset(this, beatmap, mods);
         public override ScoreProcessor CreateScoreProcessor() => new KaraokeScoreProcessor();
@@ -126,6 +126,9 @@ namespace osu.Game.Rulesets.Karaoke
         public override string ShortName => "osu!karaoke";
 
         public override string PlayingVerb => "Singing karaoke";
+
+        // Need to add legacy id because sometimes KaraokeRulesetConfigManager is null if no legacy id
+        public int LegacyID => 111;
 
         public override ISkin CreateLegacySkinProvider(ISkinSource source) => new KaraokeLegacySkinTransformer(source);
 
