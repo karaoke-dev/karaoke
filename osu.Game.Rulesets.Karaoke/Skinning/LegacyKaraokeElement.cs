@@ -25,8 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         /// <param name="skin">The skin from which configuration is retrieved.</param>
         /// <param name="lookup">The value to retrieve.</param>
         /// <param name="index">If not null, denotes the index of the column to which the entry applies.</param>
-        protected virtual IBindable<T> GetKaroakeSkinConfig<T>(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup)
+        protected virtual IBindable<T> GetKaraokeSkinConfig<T>(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, int? index = null)
             => skin.GetConfig<LegacyKaraokeSkinConfigurationLookup, T>(
-                new LegacyKaraokeSkinConfigurationLookup(Playfield.NotePlayfield.Columns, lookup));
+                new LegacyKaraokeSkinConfigurationLookup(Playfield?.NotePlayfield.Columns ?? 4, lookup, index));
     }
 }
