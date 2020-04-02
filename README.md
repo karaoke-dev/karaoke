@@ -21,3 +21,5 @@ This repo is under [GPL V3](LICENSE) license.
 [RhythmKaTTE](http://juna-idler.blogspot.com/2016/05/rhythmkatte-version-01.html) and [RhythmicaLyrics](http://suwa.pupu.jp/RhythmicaLyrics.html), an open-source software to create lyric with time tag.
 
 [ニコカラメーカー](http://shinta0806be.ldblog.jp/tag/%E3%83%8B%E3%82%B3%E3%82%AB%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC), a software to convert `.lrc` file into karaoke video with beautiful text effect.
+
+[Jetbrain](https://www.jetbrains.com/?from=osu-karaoke), thanks for free [rider](https://www.jetbrains.com/rider/) license for clean-up code.
