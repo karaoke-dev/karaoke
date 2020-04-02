@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests
+namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
     [TestFixture]
     public class TestSceneLyricLine : SkinnableTestScene
