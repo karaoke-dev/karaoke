@@ -6,11 +6,11 @@ using osu.Framework.Graphics.Shapes;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class ColumnBackground : Box
+    public class DefaultColumnBackground : Box
     {
         public const float COLUMN_HEIGHT = 20;
 
-        public ColumnBackground(int index)
+        public DefaultColumnBackground(int index)
         {
             RelativeSizeAxes = Axes.X;
             Height = COLUMN_HEIGHT;

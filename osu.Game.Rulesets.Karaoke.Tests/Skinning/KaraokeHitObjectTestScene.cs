@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.X,
-                        Height = ColumnBackground.COLUMN_HEIGHT,
+                        Height = DefaultColumnBackground.COLUMN_HEIGHT,
                         Child = new ScrollingHitObjectContainer
                         {
                             RelativeSizeAxes = Axes.Both,

@@ -4,9 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.UI;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
