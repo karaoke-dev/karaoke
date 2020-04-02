@@ -7,6 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osu.Game.Tests.Visual;
@@ -19,8 +20,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
     /// </summary>
     public abstract class KaraokeSkinnableTestScene : SkinnableTestScene
     {
+        public const int COLUMN_NUMBER = 9;
+
         [Cached(Type = typeof(IScrollingInfo))]
         private readonly TestScrollingInfo scrollingInfo = new TestScrollingInfo();
+
+        [Cached(Type = typeof(IPositionCalculator))]
+        private readonly PositionCalculator positionCalculator = new PositionCalculator(COLUMN_NUMBER);
 
         protected KaraokeSkinnableTestScene()
         {
