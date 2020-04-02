@@ -7,7 +7,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input.Bindings;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
 using osuTK;
@@ -41,8 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             bool hasLeftLine = false;
             bool hasRightLine = false;
 
-            float lightPosition = skin.GetConfig<LegacyKaraokeSkinConfigurationLookup, float>(
-                                      new LegacyKaraokeSkinConfigurationLookup(NotePlayfield?.Columns ?? 4, LegacyKaraokeSkinConfigurationLookups.LightPosition))?.Value
+            float lightPosition = GetKaraokeSkinConfig<float>(skin,LegacyKaraokeSkinConfigurationLookups.LightPosition)?.Value
                                   ?? 0;
 
             InternalChildren = new Drawable[]
@@ -54,30 +52,30 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 },
                 new Box
                 {
-                    RelativeSizeAxes = Axes.Y,
-                    Width = leftLineWidth,
+                    RelativeSizeAxes = Axes.X,
+                    Height = leftLineWidth,
                     Alpha = hasLeftLine ? 1 : 0
                 },
                 new Box
                 {
-                    Anchor = Anchor.TopRight,
-                    Origin = Anchor.TopRight,
-                    RelativeSizeAxes = Axes.Y,
-                    Width = rightLineWidth,
+                    Anchor = Anchor.BottomRight,
+                    Origin = Anchor.BottomRight,
+                    RelativeSizeAxes = Axes.X,
+                    Height = rightLineWidth,
                     Alpha = hasRightLine ? 1 : 0
                 },
                 lightContainer = new Container
                 {
-                    Origin = Anchor.BottomCentre,
+                    Origin = Anchor.CentreLeft,
                     RelativeSizeAxes = Axes.Both,
-                    Padding = new MarginPadding { Bottom = lightPosition },
+                    Padding = new MarginPadding { Left = lightPosition },
                     Child = light = new Sprite
                     {
-                        Anchor = Anchor.BottomCentre,
-                        Origin = Anchor.BottomCentre,
+                        Anchor = Anchor.CentreLeft,
+                        Origin = Anchor.CentreLeft,
                         Texture = skin.GetTexture(lightImage),
-                        RelativeSizeAxes = Axes.X,
-                        Width = 1,
+                        RelativeSizeAxes = Axes.Y,
+                        Height = 1,
                         Alpha = 0
                     }
                 }
@@ -89,14 +87,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         private void onDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
         {
-            if (direction.NewValue == ScrollingDirection.Up)
+            if (direction.NewValue == ScrollingDirection.Left)
             {
-                lightContainer.Anchor = Anchor.TopCentre;
+                lightContainer.Anchor = Anchor.CentreLeft;
                 lightContainer.Scale = new Vector2(1, -1);
             }
             else
             {
-                lightContainer.Anchor = Anchor.BottomCentre;
+                lightContainer.Anchor = Anchor.CentreRight;
                 lightContainer.Scale = Vector2.One;
             }
         }

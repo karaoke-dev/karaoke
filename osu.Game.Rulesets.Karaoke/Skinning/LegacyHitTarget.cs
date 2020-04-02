@@ -28,14 +28,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         private void load(ISkinSource skin, IScrollingInfo scrollingInfo)
         {
             string targetImage = GetKaraokeSkinConfig<string>(skin, LegacyKaraokeSkinConfigurationLookups.HitTargetImage)?.Value
-                                 ?? "mania-stage-hint";
+                                 ?? "karaoke-stage-hint";
 
             bool showJudgementLine = GetKaraokeSkinConfig<bool>(skin, LegacyKaraokeSkinConfigurationLookups.ShowJudgementLine)?.Value
                                      ?? true;
 
             InternalChild = directionContainer = new Container
             {
-                Origin = Anchor.CentreLeft,
+                Origin = Anchor.TopCentre,
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
                 Children = new Drawable[]
@@ -44,14 +44,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     {
                         Texture = skin.GetTexture(targetImage),
                         Scale = new Vector2(1, 0.9f * 1.6025f),
-                        RelativeSizeAxes = Axes.X,
-                        Width = 1
+                        RelativeSizeAxes = Axes.Y,
+                        Height = 1
                     },
                     new Box
                     {
-                        Anchor = Anchor.CentreLeft,
-                        RelativeSizeAxes = Axes.X,
-                        Height = 1,
+                        Anchor = Anchor.TopCentre,
+                        RelativeSizeAxes = Axes.Y,
+                        Width = 1,
                         Alpha = showJudgementLine ? 0.9f : 0
                     }
                 }
@@ -63,14 +63,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         private void onDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
         {
-            if (direction.NewValue == ScrollingDirection.Up)
+            if (direction.NewValue == ScrollingDirection.Left)
             {
-                directionContainer.Anchor = Anchor.TopLeft;
-                directionContainer.Scale = new Vector2(1, -1);
+                directionContainer.Anchor = Anchor.CentreLeft;
+                directionContainer.Scale = new Vector2(-1, 1);
             }
             else
             {
-                directionContainer.Anchor = Anchor.BottomLeft;
+                directionContainer.Anchor = Anchor.CentreRight;
                 directionContainer.Scale = Vector2.One;
             }
         }

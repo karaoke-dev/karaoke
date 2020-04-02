@@ -22,8 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         public LegacyNotePiece()
         {
-            RelativeSizeAxes = Axes.X;
-            AutoSizeAxes = Axes.Y;
+            RelativeSizeAxes = Axes.Y;
+            AutoSizeAxes = Axes.X;
         }
 
         [BackgroundDependencyLoader]
@@ -31,9 +31,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             InternalChild = directionContainer = new Container
             {
-                Origin = Anchor.BottomCentre,
-                RelativeSizeAxes = Axes.X,
-                AutoSizeAxes = Axes.Y,
+                Origin = Anchor.CentreLeft,
+                RelativeSizeAxes = Axes.Y,
+                AutoSizeAxes = Axes.X,
                 Child = noteSprite = new Sprite { Texture = GetTexture(skin) }
             };
 
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             if (noteSprite.Texture != null)
             {
-                var scale = DrawWidth / noteSprite.Texture.DisplayWidth;
+                var scale = DrawHeight / noteSprite.Texture.DisplayHeight;
                 noteSprite.Scale = new Vector2(scale);
             }
         }
@@ -56,12 +56,12 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             if (direction.NewValue == ScrollingDirection.Up)
             {
-                directionContainer.Anchor = Anchor.TopCentre;
-                directionContainer.Scale = new Vector2(1, -1);
+                directionContainer.Anchor = Anchor.CentreLeft;
+                directionContainer.Scale = new Vector2(-1, 1);
             }
             else
             {
-                directionContainer.Anchor = Anchor.BottomCentre;
+                directionContainer.Anchor = Anchor.CentreRight;
                 directionContainer.Scale = Vector2.One;
             }
         }
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             // TODO : Implementation
             string noteImage = GetKaraokeSkinConfig<string>(skin, lookup)?.Value
-                               ?? $"karaoke-note";
+                               ?? "karaoke-note";
 
             return skin.GetTexture(noteImage);
         }
