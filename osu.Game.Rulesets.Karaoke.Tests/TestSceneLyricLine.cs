@@ -12,6 +12,7 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Mods;
+using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests
 {
