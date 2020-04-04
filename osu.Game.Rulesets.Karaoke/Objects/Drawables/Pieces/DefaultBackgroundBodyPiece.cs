@@ -6,7 +6,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Layout;
-using osu.Game.Rulesets.Karaoke.UI.Components;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
@@ -20,7 +19,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
         {
             CornerRadius = DefaultBorderBodyPiece.CORNER_RADIUS;
             Masking = true;
-            Height = DefaultColumnBackground.COLUMN_HEIGHT;
 
             Children = new[]
             {
