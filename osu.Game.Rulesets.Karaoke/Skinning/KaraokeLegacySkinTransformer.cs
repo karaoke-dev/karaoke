@@ -35,7 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             this.source = source;
 
-            source.SourceChanged += sourceChanged;
+            if(source!=null)
+                source.SourceChanged += sourceChanged;
             sourceChanged();
 
             // TODO : need a better way to load resource
@@ -51,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         private void sourceChanged()
         {
-            isLegacySkin = new Lazy<bool>(() => source.GetConfig<LegacySkinConfiguration.LegacySetting, decimal>(LegacySkinConfiguration.LegacySetting.Version) != null);
+            isLegacySkin = new Lazy<bool>(() => source?.GetConfig<LegacySkinConfiguration.LegacySetting, decimal>(LegacySkinConfiguration.LegacySetting.Version) != null);
 
             // todo : need to check skin is really exist
             hasKeyTexture = new Lazy<bool>(() => true);
