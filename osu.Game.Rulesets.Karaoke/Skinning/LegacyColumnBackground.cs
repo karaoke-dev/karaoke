@@ -32,9 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             string lightImage = GetKaraokeSkinConfig<string>(skin, LegacyKaraokeSkinConfigurationLookups.LightImage)?.Value
                                 ?? "karaoke-stage-light";
 
-            float leftLineWidth = GetKaraokeSkinConfig<float>(skin, LegacyKaraokeSkinConfigurationLookups.LeftLineWidth)
+            float leftLineWidth = GetKaraokeSkinConfig<float>(skin, LegacyKaraokeSkinConfigurationLookups.UpLineWidth)
                 ?.Value ?? 1;
-            float rightLineWidth = GetKaraokeSkinConfig<float>(skin, LegacyKaraokeSkinConfigurationLookups.RightLineWidth)
+            float rightLineWidth = GetKaraokeSkinConfig<float>(skin, LegacyKaraokeSkinConfigurationLookups.DownLineWidth)
                 ?.Value ?? 1;
 
             bool hasLeftLine = false;

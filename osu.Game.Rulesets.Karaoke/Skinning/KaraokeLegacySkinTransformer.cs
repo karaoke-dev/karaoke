@@ -47,11 +47,26 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 case KaraokeSkinComponents.ColumnBackground:
                     return new LegacyColumnBackground();
 
-                case KaraokeSkinComponents.HitTarget:
+                case KaraokeSkinComponents.HitTargetBody:
                     return new LegacyHitTarget();
 
-                case KaraokeSkinComponents.Note:
-                    return new LegacyNotePiece();
+                case KaraokeSkinComponents.NoteBackgroundBody:
+                    return new LegacyNoteBackgroundBodyPiece();
+
+                case KaraokeSkinComponents.NoteBackgroundHead:
+                    return new LegacyNoteBackgroundHeadPiece();
+
+                case KaraokeSkinComponents.NoteBackgroundTail:
+                    return new LegacyNoteBackgroundTailPiece();
+
+                case KaraokeSkinComponents.NoteBorderBody:
+                    return new LegacyNoteBorderBodyPiece();
+
+                case KaraokeSkinComponents.NoteBorderHead:
+                    return new LegacyNoteBorderHeadPiece();
+
+                case KaraokeSkinComponents.NoteBorderTail:
+                    return new LegacyNoteBorderTailPiece();
             }
 
             return null;

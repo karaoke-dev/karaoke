@@ -19,17 +19,23 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
     public enum LegacyKaraokeSkinConfigurationLookups
     {
-        ColumnWidth,
+        ColumnHeight,
         ColumnSpacing,
         LightImage,
-        LeftLineWidth,
-        RightLineWidth,
-        HitPosition,
+        UpLineWidth,
+        DownLineWidth,
         LightPosition,
+        HitPosition,
         HitTargetImage,
         ShowJudgementLine,
-        KeyImage,
-        KeyImageDown,
-        NoteImage,
+        NoteHeadImage,
+        NoteTailImage,
+        NoteBodyImage,
+    }
+
+    public enum LegacyKaraokeSkinLayer
+    {
+        Front,
+        Background
     }
 }

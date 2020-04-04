@@ -13,14 +13,14 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
-    public class LegacyNotePiece : LegacyKaraokeColumnElement
+    public abstract class LegacyNotePiece : LegacyKaraokeColumnElement
     {
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
 
         private Container directionContainer;
         private Sprite noteSprite;
 
-        public LegacyNotePiece()
+        protected LegacyNotePiece()
         {
             RelativeSizeAxes = Axes.Y;
             AutoSizeAxes = Axes.X;
@@ -66,9 +66,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
         }
 
-        protected virtual Texture GetTexture(ISkinSource skin) => GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteImage);
+        protected virtual Texture GetTexture(ISkinSource skin)
+            => GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinLayer.Front);
 
-        protected Texture GetTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup)
+        protected Texture GetTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinLayer layer)
         {
             // TODO : Implementation
             string noteImage = GetKaraokeSkinConfig<string>(skin, lookup)?.Value
