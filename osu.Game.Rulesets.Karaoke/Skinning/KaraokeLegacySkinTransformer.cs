@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -22,9 +23,20 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         private readonly KaraokeSkin skin;
 
+        private Lazy<bool> isLegacySkin;
+
+        /// <summary>
+        /// Whether texture for the keys exists.
+        /// Used to determine if the karaoke ruleset is skinned.
+        /// </summary>
+        private Lazy<bool> hasKeyTexture;
+
         public KaraokeLegacySkinTransformer(ISkinSource source)
         {
             this.source = source;
+
+            source.SourceChanged += sourceChanged;
+            sourceChanged();
 
             // TODO : need a better way to load resource
             var assembly = Assembly.GetExecutingAssembly();
@@ -37,9 +49,20 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
         }
 
+        private void sourceChanged()
+        {
+            isLegacySkin = new Lazy<bool>(() => source.GetConfig<LegacySkinConfiguration.LegacySetting, decimal>(LegacySkinConfiguration.LegacySetting.Version) != null);
+
+            // todo : need to check skin is really exist
+            hasKeyTexture = new Lazy<bool>(() => true);
+        }
+
         public Drawable GetDrawableComponent(ISkinComponent component)
         {
             if (!(component is KaraokeSkinComponent karaokeComponent))
+                return null;
+
+            if (!isLegacySkin.Value || !hasKeyTexture.Value)
                 return null;
 
             switch (karaokeComponent.Component)
