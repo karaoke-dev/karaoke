@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
     /// </summary>
     public class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKeyBindingHandler<KaraokeSaitenAction>
     {
-        private readonly BodyPiece bodyPiece;
+        private readonly DefaultBackgroundBodyPiece bodyPiece;
         private readonly OsuSpriteText textPiece;
 
         /// <summary>
@@ -36,7 +36,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             AddRangeInternal(new Drawable[]
             {
-                bodyPiece = new BodyPiece
+                bodyPiece = new DefaultBackgroundBodyPiece
+                {
+                    RelativeSizeAxes = Axes.Both,
+                },
+                new DefaultBorderBodyPiece
                 {
                     RelativeSizeAxes = Axes.Both,
                 },

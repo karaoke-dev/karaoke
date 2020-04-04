@@ -6,24 +6,18 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Layout;
-using osu.Game.Graphics;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
 {
-    /// <summary>
-    /// Represents length-wise portion of a <see cref="Note"/>.
-    /// </summary>
-    public class BodyPiece : Container, IHasAccentColour
+    public class DefaultBackgroundBodyPiece : Container
     {
-        public const float CORNER_RADIUS = 5;
-
         protected readonly Drawable Background;
         protected readonly Drawable Foreground;
 
-        public BodyPiece()
+        public DefaultBackgroundBodyPiece()
         {
-            CornerRadius = CORNER_RADIUS;
+            CornerRadius = DefaultBorderBodyPiece.CORNER_RADIUS;
             Masking = true;
 
             Children = new[]
