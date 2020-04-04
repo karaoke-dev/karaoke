@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.UI.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
 {
@@ -13,6 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
         {
             CornerRadius = CORNER_RADIUS;
             Masking = true;
+            Height = DefaultColumnBackground.COLUMN_HEIGHT;
         }
     }
 }

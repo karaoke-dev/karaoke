@@ -4,6 +4,7 @@
 using System.Diagnostics;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces;
@@ -36,16 +37,42 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             AddRangeInternal(new Drawable[]
             {
-                bodyPiece = new DefaultBackgroundBodyPiece
+                new Container
                 {
                     RelativeSizeAxes = Axes.Both,
+                    Name = "Background layer",
+                    Children = new Drawable[]
+                    {
+                        new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.NoteBackgroundHead), _ => null),
+                        new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.NoteBackgroundBody), _ => new DefaultBackgroundBodyPiece())
+                        {
+                            RelativeSizeAxes = Axes.X,
+                        },
+                        new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.NoteBackgroundTail), _ => null)
+                    }
                 },
-                new DefaultBorderBodyPiece
+                new Container
                 {
                     RelativeSizeAxes = Axes.Both,
+                    Name = "Border layer",
+                    Children = new Drawable[]
+                    {
+                        new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.NoteBorderHead), _ => null),
+                        new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.NoteBorderBody), _ => new DefaultBorderBodyPiece())
+                        {
+                            RelativeSizeAxes = Axes.X,
+                        },
+                        new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.NoteBorderTail), _ => null)
+                    }
                 },
                 textPiece = new OsuSpriteText(),
             });
+
+            // TODO : will be removed
+            bodyPiece = new DefaultBackgroundBodyPiece
+            {
+                RelativeSizeAxes = Axes.Both,
+            };
 
             // Comment it because i'm not sure will it be used in the future or not.
             /*
