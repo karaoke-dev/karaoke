@@ -9,6 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     public class LegacyNoteBackgroundBodyPiece : LegacyNotePiece
     {
         protected override Texture GetTexture(ISkinSource skin)
-            => GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinLayer.Background);
+            => GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Background);
     }
 }

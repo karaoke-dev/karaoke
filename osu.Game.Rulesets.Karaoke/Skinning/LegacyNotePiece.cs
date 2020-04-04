@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -54,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         protected virtual void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
         {
-            if (direction.NewValue == ScrollingDirection.Up)
+            if (direction.NewValue == ScrollingDirection.Left)
             {
                 directionContainer.Anchor = Anchor.CentreLeft;
                 directionContainer.Scale = new Vector2(-1, 1);
@@ -67,13 +68,44 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         }
 
         protected virtual Texture GetTexture(ISkinSource skin)
-            => GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinLayer.Front);
+            => GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Border);
 
-        protected Texture GetTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinLayer layer)
+        protected Texture GetTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
         {
-            // TODO : Implementation
-            string noteImage = GetKaraokeSkinConfig<string>(skin, lookup)?.Value
-                               ?? "karaoke-note";
+            string suffix;
+
+            switch (lookup)
+            {
+                case LegacyKaraokeSkinConfigurationLookups.NoteBodyImage:
+                    suffix = "body";
+                    break;
+
+                case LegacyKaraokeSkinConfigurationLookups.NoteHeadImage:
+                    suffix = "head";
+                    break;
+
+                case LegacyKaraokeSkinConfigurationLookups.NoteTailImage:
+                    suffix = "tail";
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException($"{nameof(lookup)} should be body, head or tail.");
+            }
+
+            string layerSuffix = string.Empty;
+
+            switch (layer)
+            {
+                case LegacyKaraokeSkinNoteLayer.Border:
+                    layerSuffix = "border";
+                    break;
+
+                case LegacyKaraokeSkinNoteLayer.Background:
+                    layerSuffix = "background";
+                    break;
+            }
+
+            string noteImage = $"karaoke-note-{layerSuffix}-{suffix}";
 
             return skin.GetTexture(noteImage);
         }

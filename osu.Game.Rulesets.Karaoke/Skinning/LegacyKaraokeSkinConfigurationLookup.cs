@@ -33,9 +33,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         NoteBodyImage,
     }
 
-    public enum LegacyKaraokeSkinLayer
+    public enum LegacyKaraokeSkinNoteLayer
     {
-        Front,
+        Border,
         Background
     }
 }
