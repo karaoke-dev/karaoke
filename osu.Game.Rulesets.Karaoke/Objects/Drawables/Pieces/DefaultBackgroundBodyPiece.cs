@@ -1,26 +1,47 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using JetBrains.Annotations;
+using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Layout;
+using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Objects.Drawables;
+using osu.Game.Skinning;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
 {
     public class DefaultBackgroundBodyPiece : Container
     {
-        protected readonly Drawable Background;
-        protected readonly Drawable Foreground;
+        protected readonly Bindable<Color4> AccentColour = new Bindable<Color4>();
+        protected readonly Bindable<Color4> HitColour = new Bindable<Color4>();
+
+        private readonly LayoutValue subtractionCache = new LayoutValue(Invalidation.DrawSize);
+        private readonly IBindable<bool> isHitting = new Bindable<bool>();
+        private readonly IBindable<bool> display = new Bindable<bool>();
+        private readonly IBindable<int> styleIndex = new Bindable<int>();
+
+        protected Drawable Background { get; private set; }
+        protected Drawable Foreground { get; private set; }
 
         public DefaultBackgroundBodyPiece()
         {
             CornerRadius = DefaultBorderBodyPiece.CORNER_RADIUS;
             Masking = true;
 
-            Children = new[]
+            AddLayout(subtractionCache);
+        }
+
+        [BackgroundDependencyLoader(true)]
+        private void load([CanBeNull] DrawableHitObject drawableObject, ISkinSource skin)
+        {
+            InternalChildren = new[]
             {
                 Background = new Box
                 {
@@ -32,90 +53,46 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
                 }
             };
 
-            AddLayout(subtractionCache);
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            updateColour();
-        }
-
-        private Color4 accentColour;
-
-        public Color4 AccentColour
-        {
-            get => accentColour;
-            set
+            if (drawableObject != null)
             {
-                if (accentColour == value)
-                    return;
+                var holdNote = (DrawableNote)drawableObject;
 
-                accentColour = value;
-                updateColour();
+                isHitting.BindTo(holdNote.IsHitting);
+                display.BindTo(holdNote.Display);
+                styleIndex.BindTo(holdNote.StyleIndex);
             }
+
+            AccentColour.BindValueChanged(onAccentChanged);
+            HitColour.BindValueChanged(onAccentChanged);
+            isHitting.BindValueChanged(_ => onAccentChanged(), true);
+            display.BindValueChanged(_ => onAccentChanged(), true);
+            styleIndex.BindValueChanged(value => applySkin(skin, value.NewValue), true);
         }
 
-        private Color4 hitColour;
-
-        public Color4 HitColour
+        private void applySkin(ISkinSource skin, int styleIndex)
         {
-            get => hitColour;
-            set
-            {
-                if (hitColour == value)
-                    return;
-
-                hitColour = value;
-                updateColour();
-            }
-        }
-
-        private bool hitting;
-
-        public bool Hitting
-        {
-            get => hitting;
-            set
-            {
-                if (hitting == value)
-                    return;
-
-                hitting = value;
-                updateColour();
-            }
-        }
-
-        private bool display;
-
-        public bool Display
-        {
-            get => display;
-            set
-            {
-                if (display == value)
-                    return;
-
-                display = value;
-                updateColour();
-            }
-        }
-
-        private readonly LayoutValue subtractionCache = new LayoutValue(Invalidation.DrawSize);
-
-        private void updateColour()
-        {
-            if (!IsLoaded)
+            if (skin == null)
                 return;
 
-            Foreground.Colour = HitColour;
-            Background.Colour = Display ? AccentColour : new Color4(23, 41, 46, 255);
+            var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, styleIndex))?.Value;
+            if (noteSkin == null)
+                return;
+
+            AccentColour.Value = noteSkin.NoteColor;
+            HitColour.Value = noteSkin.BlinkColor;
+        }
+
+        private void onAccentChanged() => onAccentChanged(new ValueChangedEvent<Color4>(AccentColour.Value, AccentColour.Value));
+
+        private void onAccentChanged(ValueChangedEvent<Color4> accent)
+        {
+            Foreground.Colour = HitColour.Value;
+            Background.Colour = display.Value ? AccentColour.Value : new Color4(23, 41, 46, 255);
 
             Foreground.ClearTransforms(false, nameof(Foreground.Colour));
             Foreground.Alpha = 0;
 
-            if (hitting)
+            if (isHitting.Value)
             {
                 Foreground.Alpha = 1;
 
@@ -124,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
                 // wait for the next sync point
                 double synchronisedOffset = animation_length * 2 - Time.Current % (animation_length * 2);
                 using (Foreground.BeginDelayedSequence(synchronisedOffset))
-                    Foreground.FadeColour(HitColour.Lighten(0.7f), animation_length).Then().FadeColour(Foreground.Colour, animation_length).Loop();
+                    Foreground.FadeColour(accent.NewValue.Lighten(0.7f), animation_length).Then().FadeColour(Foreground.Colour, animation_length).Loop();
             }
 
             subtractionCache.Invalidate();
