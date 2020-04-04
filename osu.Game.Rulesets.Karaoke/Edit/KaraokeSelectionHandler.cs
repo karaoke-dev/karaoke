@@ -145,7 +145,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             var moveHeight = dragHeight - lastHeight;
 
             var deltaTone = new Tone();
-            const float trigger_height = NotePlayfield.COLUMN_SPACING + ColumnBackground.COLUMN_HEIGHT;
+            const float trigger_height = NotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT;
 
             if (moveHeight > trigger_height)
                 deltaTone = -new Tone { Half = true };

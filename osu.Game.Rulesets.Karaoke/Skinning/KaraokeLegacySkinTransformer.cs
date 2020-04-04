@@ -44,8 +44,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             switch (karaokeComponent.Component)
             {
-                case KaraokeSkinComponents.Snow:
-                    return source.GetTexture("snow") != null ? new LegacySnow() : null;
+                case KaraokeSkinComponents.ColumnBackground:
+                    return new LegacyColumnBackground();
+
+                case KaraokeSkinComponents.HitTarget:
+                    return new LegacyHitTarget();
+
+                case KaraokeSkinComponents.Note:
+                    return new LegacyNotePiece();
             }
 
             return null;

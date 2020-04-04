@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public DrawableNote(Note note)
             : base(note)
         {
-            Height = ColumnBackground.COLUMN_HEIGHT;
+            Height = DefaultColumnBackground.COLUMN_HEIGHT;
 
             AddRangeInternal(new Drawable[]
             {

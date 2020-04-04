@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         private readonly BindableInt saitenPitch = new BindableInt();
 
-        private readonly FillFlowContainer<ColumnBackground> columnFlow;
+        private readonly FillFlowContainer<DefaultColumnBackground> columnFlow;
 
         private readonly Container judgementArea;
         private readonly JudgementContainer<DrawableNoteJudgement> judgements;
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                     Colour = Color4.Black,
                                     Alpha = 0.5f
                                 },
-                                columnFlow = new FillFlowContainer<ColumnBackground>
+                                columnFlow = new FillFlowContainer<DefaultColumnBackground>
                                 {
                                     Name = "Columns",
                                     RelativeSizeAxes = Axes.X,
@@ -162,7 +162,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             for (int i = 0; i < columns; i++)
             {
-                var column = new ColumnBackground(i)
+                var column = new DefaultColumnBackground(i)
                 {
                     IsSpecial = i % 2 == 0
                 };
@@ -205,7 +205,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 var newValue = value.NewValue;
                 var targetTone = new Tone((newValue < 0 ? newValue - 1 : newValue) / 2, newValue % 2 != 0);
                 var targetY = calculator.YPositionAt(targetTone);
-                var targetHeight = targetTone.Half ? 5 : ColumnBackground.COLUMN_HEIGHT;
+                var targetHeight = targetTone.Half ? 5 : DefaultColumnBackground.COLUMN_HEIGHT;
                 var alpha = targetTone.Half ? 0.6f : 0.2f;
 
                 centerLine.MoveToY(targetY, 100);
@@ -214,7 +214,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             }, true);
         }
 
-        public void AddColumn(ColumnBackground c)
+        public void AddColumn(DefaultColumnBackground c)
         {
             columnFlow.Add(c);
         }
