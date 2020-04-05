@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly RealTimeSaitenVisualization realTimeSaitenVisualization;
         private readonly SaitenVisualization replaySaitenVisualization;
         private readonly SaitenMarker saitenMarker;
-        private readonly JudgementLineMarker judgementLine;
+        private readonly DefaultJudgementLine judgementLine;
 
         public int Columns { get; }
 
@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                             AutoSizeAxes = Axes.Both,
                                             BypassAutoSizeAxes = Axes.Both
                                         },
-                                        judgementLine = new JudgementLineMarker(),
+                                        judgementLine = new DefaultJudgementLine(),
                                         saitenMarker = new SaitenMarker
                                         {
                                             Alpha = 0

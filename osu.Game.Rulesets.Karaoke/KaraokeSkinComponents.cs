@@ -7,9 +7,7 @@ namespace osu.Game.Rulesets.Karaoke
     {
         ColumnBackground,
         StageBackground,
-        HitTargetHead,
-        HitTargetTail,
-        HitTargetBody,
+        JudgementLine,
         Note
     }
 }

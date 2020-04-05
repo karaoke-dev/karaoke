@@ -10,13 +10,13 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class JudgementLineMarker : CompositeDrawable
+    public class DefaultJudgementLine : CompositeDrawable
     {
         private const float triangle_width = 20;
         private const float triangle_height = 10;
         private const float bar_width = 2;
 
-        public JudgementLineMarker()
+        public DefaultJudgementLine()
         {
             RelativeSizeAxes = Axes.Y;
             Size = new Vector2(20, 1);

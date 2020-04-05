@@ -13,13 +13,13 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
-    public class LegacyHitTarget : LegacyKaraokeElement
+    public class LegacyJudgementLine : LegacyKaraokeElement
     {
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
 
         private Container directionContainer;
 
-        public LegacyHitTarget()
+        public LegacyJudgementLine()
         {
             RelativeSizeAxes = Axes.Both;
         }
