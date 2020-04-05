@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             AddRangeInternal(new Drawable[]
             {
-                new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.Note), _ => new DefaultBodyPiece{ RelativeSizeAxes = Axes.Both}),
+                new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.Note), _ => new DefaultBodyPiece { RelativeSizeAxes = Axes.Both }),
                 textPiece = new OsuSpriteText(),
             });
 

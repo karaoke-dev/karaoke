@@ -73,10 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
 
         private void applySkin(ISkinSource skin, int styleIndex)
         {
-            if (skin == null)
-                return;
-
-            var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, styleIndex))?.Value;
+            var noteSkin = skin?.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, styleIndex))?.Value;
             if (noteSkin == null)
                 return;
 
