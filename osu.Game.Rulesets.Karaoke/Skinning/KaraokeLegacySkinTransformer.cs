@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             this.source = source;
 
-            if(source!=null)
+            if( source != null)
                 source.SourceChanged += sourceChanged;
             sourceChanged();
 

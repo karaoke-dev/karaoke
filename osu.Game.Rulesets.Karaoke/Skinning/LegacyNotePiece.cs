@@ -142,10 +142,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         private void applySkin(ISkinSource skin, int styleIndex)
         {
-            if (skin == null)
-                return;
-
-            var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, styleIndex))?.Value;
+            var noteSkin = skin?.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, styleIndex))?.Value;
             if (noteSkin == null)
                 return;
 
@@ -179,7 +176,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             if (direction.NewValue == ScrollingDirection.Left)
             {
-                InternalChildren.ForEach(x=> Scale = Vector2.One);
+                InternalChildren.ForEach(x => Scale = Vector2.One);
             }
             else
             {
