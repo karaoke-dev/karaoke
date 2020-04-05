@@ -4,7 +4,6 @@
 using System.Diagnostics;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces;
