@@ -73,6 +73,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Name = "Background body",
+                            Size = Vector2.One,
+                            FillMode = FillMode.Stretch,
+                            RelativeSizeAxes = Axes.X,
                             Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Background)
                         },
                         backgroundTailSprite = new Sprite
@@ -102,6 +105,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Name = "Border body",
+                            Size = Vector2.One,
+                            FillMode = FillMode.Stretch,
+                            RelativeSizeAxes = Axes.X,
                             Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Border)
                         },
                         borderTailSprite = new Sprite
@@ -155,26 +161,18 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             {
                 if (backgroundBodySprite.Texture != null)
                 {
-                    // apply background scale
-                    var backgroundBodyScale = (DrawWidth - (getWidth(backgroundHeadSprite) + getWidth(backgroundTailSprite)) / 2)
-                        / getWidth(backgroundBodySprite);
-                    backgroundBodySprite.Scale = new Vector2(backgroundBodyScale, 1);
-                    backgroundBodySprite.X = (getWidth(backgroundHeadSprite) - getWidth(backgroundTailSprite)) / 4;
+                    backgroundBodySprite.Height = getHeight(backgroundBodySprite);
                 }
 
                 if (borderBodySprite.Texture != null)
                 {
-                    // apply border scale
-                    var borderBodyScale = (DrawWidth - (getWidth(borderHeadSprite) + getWidth(borderTailSprite)) / 2)
-                        / getWidth(borderBodySprite);
-                    borderBodySprite.Scale = new Vector2(borderBodyScale, 1);
-                    borderBodySprite.X = (getWidth(borderHeadSprite) - getWidth(borderTailSprite)) / 4;
+                    borderBodySprite.Height = getHeight(borderBodySprite);
                 }
 
                 subtractionCache.Validate();
             }
 
-            float getWidth(Sprite s) => s.Texture?.DisplayWidth ?? 0;
+            float getHeight(Sprite s) => s.Texture?.DisplayHeight ?? 0;
         }
 
         protected virtual void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
@@ -188,9 +186,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 InternalChildren.ForEach(x => Scale = new Vector2(-1, 1));
             }
         }
-
-        protected virtual Texture GetTexture(ISkinSource skin)
-            => GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Border);
 
         protected Texture GetTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
         {
