@@ -21,13 +21,20 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
     /// </summary>
     public class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKeyBindingHandler<KaraokeSaitenAction>
     {
-        private readonly BodyPiece bodyPiece;
         private readonly OsuSpriteText textPiece;
 
         /// <summary>
         /// Time at which the user started holding this hold note. Null if the user is not holding this hold note.
         /// </summary>
         private double? holdStartTime;
+
+        public IBindable<bool> IsHitting => isHitting;
+
+        private readonly Bindable<bool> isHitting = new Bindable<bool>();
+
+        public IBindable<bool> Display => HitObject.DisplayBindable;
+
+        public IBindable<int> StyleIndex => HitObject.StyleIndexBindable;
 
         public DrawableNote(Note note)
             : base(note)
@@ -36,10 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             AddRangeInternal(new Drawable[]
             {
-                bodyPiece = new BodyPiece
-                {
-                    RelativeSizeAxes = Axes.Both,
-                },
+                new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.Note), _ => new DefaultBodyPiece{ RelativeSizeAxes = Axes.Both}),
                 textPiece = new OsuSpriteText(),
             });
 
@@ -56,8 +60,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             note.AlternativeTextBindable.BindValueChanged(_ => { changeText(note); }, true);
 
             note.StyleIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
-
-            note.DisplayBindable.BindValueChanged(display => { bodyPiece.Display = display.NewValue; }, true);
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)
@@ -71,8 +73,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (noteSkin == null)
                 return;
 
-            bodyPiece.AccentColour = noteSkin.NoteColor;
-            bodyPiece.HitColour = noteSkin.BlinkColor;
             textPiece.Colour = noteSkin.TextColor;
         }
 
@@ -99,13 +99,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         protected void BeginSing()
         {
             holdStartTime = Time.Current;
-            bodyPiece.Hitting = true;
+            isHitting.Value = true;
         }
 
         protected void EndSing()
         {
             holdStartTime = null;
-            bodyPiece.Hitting = false;
+            isHitting.Value = false;
 
             UpdateResult(true);
         }

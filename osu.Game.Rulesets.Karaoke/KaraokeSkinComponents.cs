@@ -6,7 +6,10 @@ namespace osu.Game.Rulesets.Karaoke
     public enum KaraokeSkinComponents
     {
         ColumnBackground,
-        HitTarget,
-        Note,
+        StageBackground,
+        HitTargetHead,
+        HitTargetTail,
+        HitTargetBody,
+        Note
     }
 }
