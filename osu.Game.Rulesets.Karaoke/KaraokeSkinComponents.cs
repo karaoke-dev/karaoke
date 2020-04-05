@@ -10,11 +10,6 @@ namespace osu.Game.Rulesets.Karaoke
         HitTargetHead,
         HitTargetTail,
         HitTargetBody,
-        NoteBorderHead,
-        NoteBorderTail,
-        NoteBorderBody,
-        NoteBackgroundHead,
-        NoteBackgroundTail,
-        NoteBackgroundBody,
+        Note
     }
 }

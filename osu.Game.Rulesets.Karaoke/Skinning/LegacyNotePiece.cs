@@ -14,28 +14,90 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
-    public abstract class LegacyNotePiece : LegacyKaraokeColumnElement
+    public class LegacyNotePiece : LegacyKaraokeColumnElement
     {
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
 
         private Container directionContainer;
         private Sprite noteSprite;
 
-        protected LegacyNotePiece()
+        public LegacyNotePiece()
         {
-            RelativeSizeAxes = Axes.Y;
-            AutoSizeAxes = Axes.X;
+            Anchor = Anchor.Centre;
+            Origin = Anchor.Centre;
+            RelativeSizeAxes = Axes.Both;
         }
 
         [BackgroundDependencyLoader]
         private void load(ISkinSource skin, IScrollingInfo scrollingInfo)
         {
-            InternalChild = directionContainer = new Container
+            InternalChildren = new[]
             {
-                Origin = Anchor.CentreLeft,
-                RelativeSizeAxes = Axes.Y,
-                AutoSizeAxes = Axes.X,
-                Child = noteSprite = new Sprite { Texture = GetTexture(skin) }
+                new Container
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Name = "Background layer",
+                    Children = new Drawable[]
+                    {
+                        new Sprite
+                        {
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.Centre,
+                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteHeadImage, LegacyKaraokeSkinNoteLayer.Background)
+                        },
+                        new Sprite
+                        {
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Background)
+                        },
+                        new Sprite
+                        {
+                            Anchor = Anchor.CentreRight,
+                            Origin = Anchor.Centre,
+                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, LegacyKaraokeSkinNoteLayer.Background)
+                        }
+                    }
+                },
+                new Container
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Name = "Border layer",
+                    Children = new Drawable[]
+                    {
+                        new Sprite
+                        {
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.Centre,
+                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteHeadImage, LegacyKaraokeSkinNoteLayer.Border)
+                        },
+                        new Sprite
+                        {
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Border)
+                        },
+                        new Sprite
+                        {
+                            Anchor = Anchor.CentreRight,
+                            Origin = Anchor.Centre,
+                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, LegacyKaraokeSkinNoteLayer.Border)
+                        }
+                    }
+                },
+            };
+
+            directionContainer = new Container
+            {
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                RelativeSizeAxes = Axes.Both,
+                Child = noteSprite = new Sprite
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Texture = GetTexture(skin)
+                }
             };
 
             direction.BindTo(scrollingInfo.Direction);
@@ -46,25 +108,29 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             base.Update();
 
+            /*
             if (noteSprite.Texture != null)
             {
                 var scale = DrawHeight / noteSprite.Texture.DisplayHeight;
                 noteSprite.Scale = new Vector2(scale);
             }
+            */
         }
 
         protected virtual void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
         {
+            /*
             if (direction.NewValue == ScrollingDirection.Left)
             {
-                directionContainer.Anchor = Anchor.CentreLeft;
+                directionContainer.Anchor = Anchor.Centre;
                 directionContainer.Scale = new Vector2(-1, 1);
             }
             else
             {
-                directionContainer.Anchor = Anchor.CentreRight;
+                directionContainer.Anchor = Anchor.Centre;
                 directionContainer.Scale = Vector2.One;
             }
+            */
         }
 
         protected virtual Texture GetTexture(ISkinSource skin)

@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Components
             Masking = true;
             BorderColour = colours.Yellow;
             BorderThickness = 2;
-            CornerRadius = DefaultBorderBodyPiece.CORNER_RADIUS;
+            CornerRadius = DefaultBodyPiece.CORNER_RADIUS;
             Child = new Box
             {
                 RelativeSizeAxes = Axes.Both,

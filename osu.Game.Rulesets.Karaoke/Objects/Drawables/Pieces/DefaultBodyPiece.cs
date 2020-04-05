@@ -17,8 +17,10 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
 {
-    public class DefaultBackgroundBodyPiece : Container
+    public class DefaultBodyPiece : Container
     {
+        public const float CORNER_RADIUS = 5;
+
         protected readonly Bindable<Color4> AccentColour = new Bindable<Color4>();
         protected readonly Bindable<Color4> HitColour = new Bindable<Color4>();
 
@@ -30,9 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
         protected Drawable Background { get; private set; }
         protected Drawable Foreground { get; private set; }
 
-        public DefaultBackgroundBodyPiece()
+        public DefaultBodyPiece()
         {
-            CornerRadius = DefaultBorderBodyPiece.CORNER_RADIUS;
+            CornerRadius = CORNER_RADIUS;
             Masking = true;
 
             AddLayout(subtractionCache);

@@ -74,23 +74,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 case KaraokeSkinComponents.HitTargetBody:
                     return new LegacyHitTarget();
 
-                case KaraokeSkinComponents.NoteBackgroundBody:
-                    return new LegacyNoteBackgroundBodyPiece();
-
-                case KaraokeSkinComponents.NoteBackgroundHead:
-                    return new LegacyNoteBackgroundHeadPiece();
-
-                case KaraokeSkinComponents.NoteBackgroundTail:
-                    return new LegacyNoteBackgroundTailPiece();
-
-                case KaraokeSkinComponents.NoteBorderBody:
-                    return new LegacyNoteBorderBodyPiece();
-
-                case KaraokeSkinComponents.NoteBorderHead:
-                    return new LegacyNoteBorderHeadPiece();
-
-                case KaraokeSkinComponents.NoteBorderTail:
-                    return new LegacyNoteBorderTailPiece();
+                case KaraokeSkinComponents.Note:
+                    return new LegacyNotePiece();
             }
 
             return null;

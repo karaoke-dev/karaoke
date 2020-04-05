@@ -44,56 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             AddRangeInternal(new Drawable[]
             {
-                new Container
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Name = "Background layer",
-                    Children = new Drawable[]
-                    {
-                        new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.NoteBackgroundHead), _ => null)
-                        {
-                            RelativeSizeAxes = Axes.Y,
-                            Anchor = Anchor.CentreLeft,
-                            Origin = Anchor.Centre
-                        },
-                        new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.NoteBackgroundBody), _ => new DefaultBackgroundBodyPiece{ RelativeSizeAxes = Axes.Both})
-                        {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre
-                        },
-                        new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.NoteBackgroundTail), _ => null)
-                        {
-                            RelativeSizeAxes = Axes.Y,
-                            Anchor = Anchor.CentreRight,
-                            Origin = Anchor.Centre
-                        }
-                    }
-                },
-                new Container
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Name = "Border layer",
-                    Children = new Drawable[]
-                    {
-                        new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.NoteBorderHead), _ => null)
-                        {
-                            RelativeSizeAxes = Axes.Y,
-                            Anchor = Anchor.CentreLeft,
-                            Origin = Anchor.Centre
-                        },
-                        new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.NoteBorderBody), _ => new DefaultBorderBodyPiece{ RelativeSizeAxes = Axes.Both})
-                        {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre
-                        },
-                        new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.NoteBorderTail), _ => null)
-                        {
-                            RelativeSizeAxes = Axes.Y,
-                            Anchor = Anchor.CentreRight,
-                            Origin = Anchor.Centre
-                        }
-                    }
-                },
+                new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.Note), _ => new DefaultBodyPiece{ RelativeSizeAxes = Axes.Both}),
                 textPiece = new OsuSpriteText(),
             });
 
