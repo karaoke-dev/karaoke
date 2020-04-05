@@ -15,7 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         {
             var note = new Note
             {
-                EndTime = 1000,
+                StartTime = 100,
+                EndTime = 900,
                 Text = "カラオケ"
             };
             note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
