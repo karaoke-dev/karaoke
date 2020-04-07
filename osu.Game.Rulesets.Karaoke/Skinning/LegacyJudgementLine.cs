@@ -71,6 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 {
                     judgementLineBodySprite.Width = getWidth(judgementLineBodySprite);
                 }
+
                 subtractionCache.Validate();
             }
 

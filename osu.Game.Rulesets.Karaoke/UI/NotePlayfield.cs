@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                 {
                                     RelativeSizeAxes = Axes.Both,
                                     RelativePositionAxes = Axes.X,
-                                    Children = new Drawable[]
+                                    Children = new[]
                                     {
                                         judgements = new JudgementContainer<DrawableNoteJudgement>
                                         {

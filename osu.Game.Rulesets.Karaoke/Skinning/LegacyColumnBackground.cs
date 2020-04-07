@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             bool hasLeftLine = false;
             bool hasRightLine = false;
 
-            float lightPosition = GetKaraokeSkinConfig<float>(skin,LegacyKaraokeSkinConfigurationLookups.LightPosition)?.Value
+            float lightPosition = GetKaraokeSkinConfig<float>(skin, LegacyKaraokeSkinConfigurationLookups.LightPosition)?.Value
                                   ?? 0;
 
             InternalChildren = new Drawable[]
