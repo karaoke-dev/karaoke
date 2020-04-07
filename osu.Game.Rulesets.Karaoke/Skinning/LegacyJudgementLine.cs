@@ -6,6 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
+using osu.Framework.Layout;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
 using osuTK;
@@ -14,12 +15,18 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 {
     public class LegacyJudgementLine : LegacyKaraokeElement
     {
+        private readonly LayoutValue subtractionCache = new LayoutValue(Invalidation.DrawSize);
+
         public LegacyJudgementLine()
         {
-            RelativeSizeAxes = Axes.X;
+            RelativeSizeAxes = Axes.Y;
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
+
+            AddLayout(subtractionCache);
         }
+
+        private Sprite judgementLineBodySprite;
 
         [BackgroundDependencyLoader]
         private void load(ISkinSource skin, IScrollingInfo scrollingInfo)
@@ -33,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     Name = "Judgement line head",
                     Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineHeadImage)
                 },
-                new Sprite
+                judgementLineBodySprite = new Sprite
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -41,6 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     Name = "Judgement line body",
                     Size = Vector2.One,
                     FillMode = FillMode.Stretch,
+                    Depth = 1,
                     Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage)
                 },
                 new Sprite
@@ -51,6 +59,22 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineTailImage)
                 }
             };
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (!subtractionCache.IsValid && DrawHeight > 0)
+            {
+                if (judgementLineBodySprite.Texture != null)
+                {
+                    judgementLineBodySprite.Width = getWidth(judgementLineBodySprite);
+                }
+                subtractionCache.Validate();
+            }
+
+            float getWidth(Sprite s) => s.Texture?.DisplayWidth ?? 0;
         }
 
         protected Texture GetTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup)

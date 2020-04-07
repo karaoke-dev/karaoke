@@ -76,6 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                             Size = Vector2.One,
                             FillMode = FillMode.Stretch,
                             RelativeSizeAxes = Axes.X,
+                            Depth = 1,
                             Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Background)
                         },
                         backgroundTailSprite = new Sprite
@@ -108,6 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                             Size = Vector2.One,
                             FillMode = FillMode.Stretch,
                             RelativeSizeAxes = Axes.X,
+                            Depth = 1,
                             Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Border)
                         },
                         borderTailSprite = new Sprite
