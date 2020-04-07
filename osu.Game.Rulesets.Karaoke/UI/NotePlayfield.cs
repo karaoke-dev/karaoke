@@ -19,6 +19,7 @@ using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
+using osu.Game.Skinning;
 using osuTK;
 using osuTK.Graphics;
 
@@ -44,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly RealTimeSaitenVisualization realTimeSaitenVisualization;
         private readonly SaitenVisualization replaySaitenVisualization;
         private readonly SaitenMarker saitenMarker;
-        private readonly JudgementLineMarker judgementLine;
+        private readonly Drawable judgementLine;
 
         public int Columns { get; }
 
@@ -108,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                 {
                                     RelativeSizeAxes = Axes.Both,
                                     RelativePositionAxes = Axes.X,
-                                    Children = new Drawable[]
+                                    Children = new[]
                                     {
                                         judgements = new JudgementContainer<DrawableNoteJudgement>
                                         {
@@ -117,7 +118,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                             AutoSizeAxes = Axes.Both,
                                             BypassAutoSizeAxes = Axes.Both
                                         },
-                                        judgementLine = new JudgementLineMarker(),
+                                        judgementLine = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.JudgementLine), _ => new DefaultJudgementLine())
+                                        {
+                                            RelativeSizeAxes = Axes.Y,
+                                            Anchor = Anchor.Centre,
+                                            Origin = Anchor.Centre,
+                                        },
                                         saitenMarker = new SaitenMarker
                                         {
                                             Alpha = 0
