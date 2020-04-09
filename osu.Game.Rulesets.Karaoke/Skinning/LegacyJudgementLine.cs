@@ -3,6 +3,7 @@
 
 using System;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
@@ -15,6 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 {
     public class LegacyJudgementLine : LegacyKaraokeElement
     {
+        private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
         private readonly LayoutValue subtractionCache = new LayoutValue(Invalidation.DrawSize);
 
         public LegacyJudgementLine()
@@ -59,6 +61,21 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineTailImage)
                 }
             };
+
+            direction.BindTo(scrollingInfo.Direction);
+            direction.BindValueChanged(OnDirectionChanged, true);
+        }
+
+        protected virtual void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
+        {
+            if (direction.NewValue == ScrollingDirection.Left)
+            {
+                Scale = Vector2.One;
+            }
+            else
+            {
+                Scale = new Vector2(-1, 1);
+            }
         }
 
         protected override void Update()

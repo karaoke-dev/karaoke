@@ -77,6 +77,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
                             CornerRadius = 5,
                             Children = new Drawable[]
                             {
+                                new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.StageBackground), _ => null)
+                                {
+                                    RelativeSizeAxes = Axes.Both
+                                },
                                 new Box
                                 {
                                     Name = "Background",
