@@ -71,6 +71,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 case KaraokeSkinComponents.ColumnBackground:
                     return new LegacyColumnBackground();
 
+                case KaraokeSkinComponents.StageBackground:
+                    return new LegacyStageBackground();
+
                 case KaraokeSkinComponents.JudgementLine:
                     return new LegacyJudgementLine();
 
