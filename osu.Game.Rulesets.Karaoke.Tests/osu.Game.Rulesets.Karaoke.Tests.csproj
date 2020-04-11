@@ -3,7 +3,6 @@
     <StartupObject>osu.Game.Rulesets.Karaoke.Tests.VisualTestRunner</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\**" />
     <EmbeddedResource Remove="Resources\TestResources.cs" />
   </ItemGroup>
   <ItemGroup Label="Service">
