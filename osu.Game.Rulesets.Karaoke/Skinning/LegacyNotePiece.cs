@@ -41,86 +41,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         }
 
         private Container background;
-        private Sprite backgroundHeadSprite;
-        private Sprite backgroundBodySprite;
-        private Sprite backgroundTailSprite;
-
         private Container border;
-        private Sprite borderHeadSprite;
-        private Sprite borderBodySprite;
-        private Sprite borderTailSprite;
 
         [BackgroundDependencyLoader]
         private void load(DrawableHitObject drawableObject, ISkinSource skin, IScrollingInfo scrollingInfo)
         {
             InternalChildren = new[]
             {
-                background = new Container
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Name = "Background layer",
-                    Children = new Drawable[]
-                    {
-                        backgroundHeadSprite = new Sprite
-                        {
-                            Anchor = Anchor.CentreLeft,
-                            Origin = Anchor.Centre,
-                            Name = "Background head",
-                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteHeadImage, LegacyKaraokeSkinNoteLayer.Background)
-                        },
-                        backgroundBodySprite = new Sprite
-                        {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            Name = "Background body",
-                            Size = Vector2.One,
-                            FillMode = FillMode.Stretch,
-                            RelativeSizeAxes = Axes.X,
-                            Depth = 1,
-                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Background)
-                        },
-                        backgroundTailSprite = new Sprite
-                        {
-                            Anchor = Anchor.CentreRight,
-                            Origin = Anchor.Centre,
-                            Name = "Background tail",
-                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, LegacyKaraokeSkinNoteLayer.Background)
-                        }
-                    }
-                },
-                border = new Container
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Name = "Border layer",
-                    Children = new Drawable[]
-                    {
-                        borderHeadSprite = new Sprite
-                        {
-                            Anchor = Anchor.CentreLeft,
-                            Origin = Anchor.Centre,
-                            Name = "Border head",
-                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteHeadImage, LegacyKaraokeSkinNoteLayer.Border)
-                        },
-                        borderBodySprite = new Sprite
-                        {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            Name = "Border body",
-                            Size = Vector2.One,
-                            FillMode = FillMode.Stretch,
-                            RelativeSizeAxes = Axes.X,
-                            Depth = 1,
-                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Border)
-                        },
-                        borderTailSprite = new Sprite
-                        {
-                            Anchor = Anchor.CentreRight,
-                            Origin = Anchor.Centre,
-                            Name = "Border tail",
-                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, LegacyKaraokeSkinNoteLayer.Border)
-                        }
-                    }
-                },
+                background = createLayer("Background layer", skin, LegacyKaraokeSkinNoteLayer.Background),
+                border = createLayer("Border layer", skin, LegacyKaraokeSkinNoteLayer.Border)
             };
 
             direction.BindTo(scrollingInfo.Direction);
@@ -158,20 +87,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             if (!subtractionCache.IsValid && DrawWidth > 0)
             {
-                if (backgroundBodySprite.Texture != null)
-                {
-                    backgroundBodySprite.Height = getHeight(backgroundBodySprite);
-                }
-
-                if (borderBodySprite.Texture != null)
-                {
-                    borderBodySprite.Height = getHeight(borderBodySprite);
-                }
-
+                // TODO : maybe do something
                 subtractionCache.Validate();
             }
-
-            float getHeight(Sprite s) => s.Texture?.DisplayHeight ?? 0;
         }
 
         protected virtual void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
@@ -184,6 +102,48 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             {
                 InternalChildren.ForEach(x => Scale = new Vector2(-1, 1));
             }
+        }
+
+        private Container createLayer(string name, ISkin skin, LegacyKaraokeSkinNoteLayer layer)
+        {
+            Sprite body;
+            var c = new Container
+            {
+                RelativeSizeAxes = Axes.Both,
+                Name = name,
+                Children = new Drawable[]
+                {
+                    new Sprite
+                    {
+                        Anchor = Anchor.CentreLeft,
+                        Origin = Anchor.Centre,
+                        Name = "Head",
+                        Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteHeadImage, layer)
+                    },
+                    body = new Sprite
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Name = "Body",
+                        Size = Vector2.One,
+                        FillMode = FillMode.Stretch,
+                        RelativeSizeAxes = Axes.X,
+                        Depth = 1,
+                        Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, layer)
+                    },
+                    new Sprite
+                    {
+                        Anchor = Anchor.CentreRight,
+                        Origin = Anchor.Centre,
+                        Name = "Tail",
+                        Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, layer)
+                    }
+                }
+            };
+            body.Height = getHeight(body);
+            return c;
+
+            float getHeight(Sprite s) => s.Texture?.DisplayHeight ?? 0;
         }
 
         protected Texture GetTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
