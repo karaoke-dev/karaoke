@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="osu! Rule Set" Description=" " ToolsVersion="16.0">
+<RuleSet Name="osu!karaoke Rule Set" Description=" " ToolsVersion="16.0">
   <Rules AnalyzerId="Microsoft.CodeQuality.Analyzers" RuleNamespace="Microsoft.CodeQuality.Analyzers">
     <Rule Id="CA1016" Action="None" />
     <Rule Id="CA1028" Action="None" />

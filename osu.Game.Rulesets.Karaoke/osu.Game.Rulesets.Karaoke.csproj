@@ -1,14 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup Label="Project">
     <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyTitle>osu.Game.Rulesets.Sample</AssemblyTitle>
+    <AssemblyTitle>osu.Game.Rulesets.Karaoke</AssemblyTitle>
     <OutputType>Library</OutputType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <RootNamespace>osu.Game.Rulesets.Karaoke</RootNamespace>
   </PropertyGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\**" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="osu.Framework.Microphone" Version="1.0.2" />
     <PackageReference Include="ppy.osu.Game" Version="2020.402.0" />
