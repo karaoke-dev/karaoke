@@ -2,9 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Animations;
@@ -41,8 +43,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             AddLayout(subtractionCache);
         }
 
-        private Container background;
-        private Container border;
+        private LayerContainer background;
+        private LayerContainer foreground;
+        private LayerContainer border;
 
         [BackgroundDependencyLoader]
         private void load(DrawableHitObject drawableObject, ISkinSource skin, IScrollingInfo scrollingInfo)
@@ -50,6 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             InternalChildren = new[]
             {
                 background = createLayer("Background layer", skin, LegacyKaraokeSkinNoteLayer.Background),
+                foreground = createLayer("Foreground layer", skin, LegacyKaraokeSkinNoteLayer.Foreground),
                 border = createLayer("Border layer", skin, LegacyKaraokeSkinNoteLayer.Border)
             };
 
@@ -67,9 +71,34 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             AccentColour.BindValueChanged(onAccentChanged);
             HitColour.BindValueChanged(onAccentChanged);
-            isHitting.BindValueChanged(_ => onAccentChanged(), true);
+            isHitting.BindValueChanged(onIsHittingChanged, true);
             display.BindValueChanged(_ => onAccentChanged(), true);
             styleIndex.BindValueChanged(value => applySkin(skin, value.NewValue), true);
+        }
+
+        private void onIsHittingChanged(ValueChangedEvent<bool> isHitting)
+        {
+            // Update animate
+            InternalChildren.OfType<LayerContainer>().ForEach(x =>
+            {
+                x.Reset();
+                x.IsPlaying = isHitting.NewValue;
+            });
+
+            // Foreground sparkle
+            foreground.ClearTransforms(false, nameof(foreground.Colour));
+            foreground.Alpha = 0;
+            if (isHitting.NewValue)
+            {
+                foreground.Alpha = 1;
+
+                const float animation_length = 50;
+
+                // wait for the next sync point
+                double synchronisedOffset = animation_length * 2 - Time.Current % (animation_length * 2);
+                using (foreground.BeginDelayedSequence(synchronisedOffset))
+                    foreground.FadeColour(AccentColour.Value.Lighten(0.7f), animation_length).Then().FadeColour(foreground.Colour, animation_length).Loop();
+            }
         }
 
         private void applySkin(ISkinSource skin, int styleIndex)
@@ -105,10 +134,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
         }
 
-        private Container createLayer(string name, ISkin skin, LegacyKaraokeSkinNoteLayer layer)
+        private LayerContainer createLayer(string name, ISkin skin, LegacyKaraokeSkinNoteLayer layer)
         {
-            Sprite body;
-            var c = new Container
+            return new LayerContainer
             {
                 RelativeSizeAxes = Axes.Both,
                 Name = name,
@@ -123,7 +151,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                         d.Anchor = Anchor.CentreLeft;
                         d.Origin = Anchor.Centre;
                     }),
-                    body = GetSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, layer).With(d =>
+                    GetSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, layer).With(d =>
                     {
                         if (d == null)
                             return;
@@ -135,6 +163,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                         d.FillMode = FillMode.Stretch;
                         d.RelativeSizeAxes = Axes.X;
                         d.Depth = 1;
+
+                        d.Height = d.Texture?.DisplayHeight ?? 0;
                     }),
                     GetSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, layer).With(d =>
                     {
@@ -147,10 +177,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     }),
                 }
             };
-            body.Height = getHeight(body);
-            return c;
-
-            float getHeight(Sprite s) => s.Texture?.DisplayHeight ?? 0;
         }
 
         protected Sprite GetSpriteFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
@@ -163,6 +189,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 case LegacyKaraokeSkinNoteLayer.Border:
                     return getSpriteByName(name) ?? new Sprite();
 
+                case LegacyKaraokeSkinNoteLayer.Foreground:
+                    return getSpriteByName(name)
+                        ?? getSpriteByName(GetTextureNameFromLookup(lookup, LegacyKaraokeSkinNoteLayer.Background))
+                        ?? new Sprite();
+
                 default:
                     return null;
             }
@@ -174,7 +205,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                 if (d is TextureAnimation animation)
                     animation.IsPlaying = false;
-            })
+            });
         }
 
         protected string GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
@@ -219,11 +250,22 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         private void onAccentChanged(ValueChangedEvent<Color4> accent)
         {
-            background.Colour = display.Value ? AccentColour.Value : new Color4(23, 41, 46, 255);
-
-            // todo : implement is hitting and hit color
+            foreground.Colour = HitColour.Value;
+            background.Colour = display.Value ? accent.NewValue : new Color4(23, 41, 46, 255);
 
             subtractionCache.Invalidate();
+        }
+
+        private class LayerContainer : Container
+        {
+            public IEnumerable<TextureAnimation> AnimateChildren => Children.OfType<TextureAnimation>();
+
+            public bool IsPlaying
+            {
+                set => AnimateChildren.ForEach(d => d.IsPlaying = value);
+            }
+
+            public void Reset() => AnimateChildren.ForEach(d => d.GotoFrame(0));
         }
     }
 }
