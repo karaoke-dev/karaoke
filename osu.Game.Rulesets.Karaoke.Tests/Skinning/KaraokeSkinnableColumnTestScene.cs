@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
         protected KaraokeSkinnableColumnTestScene()
         {
-            scrollingInfo.Direction.Value = ScrollingDirection.Down;
+            scrollingInfo.Direction.Value = ScrollingDirection.Left;
 
             Add(new Box
             {
