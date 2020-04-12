@@ -191,8 +191,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                 case LegacyKaraokeSkinNoteLayer.Foreground:
                     return getSpriteByName(name)
-                        ?? getSpriteByName(GetTextureNameFromLookup(lookup, LegacyKaraokeSkinNoteLayer.Background))
-                        ?? new Sprite();
+                           ?? getSpriteByName(GetTextureNameFromLookup(lookup, LegacyKaraokeSkinNoteLayer.Background))
+                           ?? new Sprite();
 
                 default:
                     return null;

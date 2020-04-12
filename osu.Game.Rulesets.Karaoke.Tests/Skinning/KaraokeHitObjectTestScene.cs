@@ -41,7 +41,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                             Clock = new FramedClock(new StopwatchClock()),
                         }.With(c =>
                         {
-                            c.Add(CreateHitObject().With(h => h.AccentColour.Value = Color4.Orange));
+                            c.Add(CreateHitObject().With(h =>
+                            {
+                                h.HitObject.StartTime = START_TIME;
+                                h.AccentColour.Value = Color4.Orange;
+                            }));
                         })
                     },
                 }
