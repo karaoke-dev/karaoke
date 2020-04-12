@@ -1,7 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Tests.Visual;
 using System;
@@ -11,11 +12,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
     public abstract class KaraokeSkinnableTestScene : SkinnableTestScene
     {
-        protected KaraokeSkinnableTestScene()
-        {
-            // It's a tricky to let osu! to read karaoke testing beatmap
-            KaraokeLegacyBeatmapDecoder.Register();
-        }
 
         public override IReadOnlyList<Type> RequiredTypes => new[]
         {
@@ -24,5 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         };
 
         protected override Ruleset CreateRulesetForSkinProvider() => new KaraokeRuleset();
+
+        protected override IBeatmap CreateBeatmapForSkinProvider() => new KaraokeBeatmap();
     }
 }
