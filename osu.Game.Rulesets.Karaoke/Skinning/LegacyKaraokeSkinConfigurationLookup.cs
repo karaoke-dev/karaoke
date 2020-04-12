@@ -38,6 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     public enum LegacyKaraokeSkinNoteLayer
     {
         Border,
+        Foreground,
         Background
     }
 }
