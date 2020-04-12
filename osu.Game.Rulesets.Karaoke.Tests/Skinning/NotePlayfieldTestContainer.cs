@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.UI;
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
     /// <summary>
-    /// A container to be used in a <see cref="KaraokeSkinnableTestScene"/> to provide a resolvable <see cref="NotePlayfield"/> dependency.
+    /// A container to be used in a <see cref="KaraokeSkinnableColumnTestScene"/> to provide a resolvable <see cref="NotePlayfield"/> dependency.
     /// </summary>
     public class NotePlayfieldTestContainer : Container
     {

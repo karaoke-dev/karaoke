@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
     /// <summary>
     /// A test scene for a karaoke hitobject.
     /// </summary>
-    public abstract class KaraokeHitObjectTestScene : KaraokeSkinnableTestScene
+    public abstract class KaraokeHitObjectTestScene : KaraokeSkinnableColumnTestScene
     {
         protected const float PADDING = 100;
 
