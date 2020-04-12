@@ -17,6 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
     /// </summary>
     public abstract class KaraokeHitObjectTestScene : KaraokeSkinnableTestScene
     {
+        protected const float PADDING = 100;
+
         [BackgroundDependencyLoader]
         private void load()
         {
@@ -27,7 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 RelativeSizeAxes = Axes.Both,
                 Height = 0.7f,
                 Direction = FillDirection.Horizontal,
-                Children = new Drawable[]
+                Padding = new MarginPadding { Left = PADDING, Right = PADDING },
+                Children = new[]
                 {
                     new NotePlayfieldTestContainer(COLUMN_NUMBER)
                     {
