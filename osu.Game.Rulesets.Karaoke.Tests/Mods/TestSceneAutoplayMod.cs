@@ -5,14 +5,14 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests
+namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
     [TestFixture]
-    public class TestSceneFlashlightMod : TestSceneKaraokePlayer
+    public class TestSceneAutoplayMod : TestSceneKaraokePlayer
     {
         protected override TestPlayer CreatePlayer(Ruleset ruleset)
         {
-            SelectedMods.Value = new[] { new KaraokeModFlashlight() };
+            SelectedMods.Value = new[] { new KaraokeModAutoplay() };
 
             return base.CreatePlayer(ruleset);
         }
