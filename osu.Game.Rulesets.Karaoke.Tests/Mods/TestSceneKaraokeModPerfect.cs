@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
         {
         }
 
-        [TestCase(false)]
+        // TODO : test case = false will be added after saiten system is implemented.
         [TestCase(true)]
         public void TestLyric(bool shouldMiss) => CreateHitObjectTest(new HitObjectTestData(new LyricLine
         {
@@ -25,15 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
             EndTime = 2000,
             Text = "カラオケ!",
             TimeTags = new Dictionary<TimeTagIndex, double>()
-        }), shouldMiss);
-
-        [TestCase(false)]
-        [TestCase(true)]
-        public void TestNote(bool shouldMiss) => CreateHitObjectTest(new HitObjectTestData(new Note
-        {
-            StartTime = 1000,
-            EndTime = 2000,
-            Text = "カ-"
         }), shouldMiss);
     }
 }
