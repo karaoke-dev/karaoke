@@ -14,7 +14,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
             AddInternal(new OsuScrollContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = HitObjectContainer
+                Child = HitObjectContainer.With(d=>
+                {
+                    d.RelativeSizeAxes = Axes.X;
+                    d.Height = 1000;
+                })
             });
         }
     }

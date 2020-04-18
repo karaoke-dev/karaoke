@@ -25,7 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
     public class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHitObject>
     {
         public KaraokeSessionStatics Session { get; private set; }
-        public new KaraokePlayfield Playfield => (KaraokePlayfield)base.Playfield;
 
         public IEnumerable<BarLine> BarLines;
 
@@ -60,7 +59,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [BackgroundDependencyLoader]
         private void load()
         {
-            BarLines.ForEach(Playfield.Add);
+            if(Playfield is KaraokePlayfield karaokePlayfield)
+                BarLines.ForEach(karaokePlayfield.Add);
 
             Config.BindWith(KaraokeRulesetSetting.ScrollDirection, configDirection);
             configDirection.BindValueChanged(direction => Direction.Value = (ScrollingDirection)direction.NewValue, true);
