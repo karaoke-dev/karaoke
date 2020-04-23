@@ -5,6 +5,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 
@@ -31,28 +33,47 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             };
         }
 
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            foreach (var obj in beatmap.HitObjects)
+                Schedule(() => addHitObject(obj));
+        }
+
         protected override void LoadComplete()
         {
             base.LoadComplete();
 
             beatmap.HitObjectAdded += addHitObject;
             beatmap.HitObjectRemoved += removeHitObject;
-
-            container.Add(new Container
-            {
-                RelativeSizeAxes = Axes.X,
-                Height = 1000
-            });
         }
 
         private void addHitObject(HitObject hitObject)
         {
             // see how `DrawableEditRulesetWrapper` do
+            if (hitObject is LyricLine lyric)
+            {
+                container.Add(new LyricControl(lyric)
+                {
+                    RelativeSizeAxes = Axes.X,
+                });
+            }
         }
 
         private void removeHitObject(HitObject hitObject)
         {
             
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            if (beatmap != null)
+            {
+                beatmap.HitObjectAdded -= addHitObject;
+                beatmap.HitObjectRemoved -= removeHitObject;
+            }
         }
     }
 }
