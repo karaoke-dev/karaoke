@@ -2,11 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badge
+namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges
 {
     public abstract class Badge : Container
     {
-
+        public Badge(LyricLine lyric)
+        {
+        }
     }
 }

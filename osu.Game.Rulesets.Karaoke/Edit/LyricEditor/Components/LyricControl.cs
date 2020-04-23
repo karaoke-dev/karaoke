@@ -4,6 +4,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
@@ -23,7 +24,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
                 {
                     RelativeSizeAxes = Axes.Both
                 },
-                new DrawableLyricLine(lyric)
+                new DrawableLyricLine(lyric),
+                new FillFlowContainer<Badge>
+                {
+                    Direction = FillDirection.Vertical,
+                    Children = new Badge[]
+                    {
+                        new TimeInfoBadge(lyric),
+                        new StyleInfoBadge(lyric),
+                        new LayoutInfoBadge(lyric),
+                    }
+                }
             };
         }
 
