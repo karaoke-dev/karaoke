@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osuTK;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -8,11 +9,15 @@ using osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Framework.Allocation;
+using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
 {
     public class LyricControl : Container
     {
+        private readonly Box background;
+
         public LyricControl(LyricLine lyric)
         {
             Masking = true;
@@ -20,22 +25,39 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
             AutoSizeAxes = Axes.Y;
             InternalChildren = new Drawable[]
             {
-                new Box
+                background = new Box
                 {
-                    RelativeSizeAxes = Axes.Both
+                    RelativeSizeAxes = Axes.Both,
+                    Alpha = 0.3f
                 },
-                new DrawableLyricLine(lyric),
-                new FillFlowContainer<Badge>
+                new FillFlowContainer
                 {
-                    Direction = FillDirection.Vertical,
-                    Children = new Badge[]
+                    AutoSizeAxes = Axes.Y,
+                    Margin = new MarginPadding(5),
+                    Children = new Drawable[]
                     {
-                        new TimeInfoBadge(lyric),
-                        new StyleInfoBadge(lyric),
-                        new LayoutInfoBadge(lyric),
+                        new FillFlowContainer<Badge>
+                        {
+                            Direction = FillDirection.Horizontal,
+                            AutoSizeAxes = Axes.Both,
+                            Spacing = new Vector2(5),
+                            Children = new Badge[]
+                            {
+                                new TimeInfoBadge(lyric),
+                                new StyleInfoBadge(lyric),
+                                new LayoutInfoBadge(lyric),
+                            }
+                        },
+                        new DrawableLyricLine(lyric)
                     }
                 }
             };
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours)
+        {
+            background.Colour = colours.Gray7;
         }
 
         public class DrawableEditorLyricLine : DrawableLyricLine
