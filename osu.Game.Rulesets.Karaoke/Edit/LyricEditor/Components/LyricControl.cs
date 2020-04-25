@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Framework.Allocation;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
 {
@@ -48,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
                                 new LayoutInfoBadge(lyric),
                             }
                         },
-                        new DrawableLyricLine(lyric)
+                        new DrawableEditorLyricLine(lyric)
                     }
                 }
             };
@@ -76,16 +77,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
                 });
             }
 
+            protected override void UpdateStateTransforms(ArmedState state)
+            {
+                // Do not fade-in / fade-out while changing armed state.
+            }
+
             public override double LifetimeStart
             {
-                get => base.LifetimeStart;
-                set => base.LifetimeStart = value;
+                get => double.MinValue;
+                set => base.LifetimeStart = double.MinValue;
             }
 
             public override double LifetimeEnd
             {
-                get => base.LifetimeEnd;
-                set => base.LifetimeEnd = value;
+                get => double.MaxValue;
+                set => base.LifetimeEnd = double.MaxValue;
             }
         }
     }
