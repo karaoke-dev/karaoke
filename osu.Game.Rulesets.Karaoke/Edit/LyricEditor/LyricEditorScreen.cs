@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Timing;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Timelines;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
@@ -19,6 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
+
+        protected override Drawable CreateTimelineContent() => new KaraokeTimelineBlueprintContainer();
 
         protected override Drawable CreateMainContent()
         {
