@@ -9,8 +9,10 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Timelines;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
+using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
@@ -25,14 +27,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 
         protected override Drawable CreateMainContent()
         {
-            return new OsuScrollContainer
+            return new SkinProvidingContainer(new KaraokeLegacySkinTransformer(null))
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = container = new FillFlowContainer
+                Child = new OsuScrollContainer
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Direction = FillDirection.Vertical,
+                    RelativeSizeAxes = Axes.Both,
+                    Child = container = new FillFlowContainer
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Direction = FillDirection.Vertical,
+                    }
                 }
             };
         }

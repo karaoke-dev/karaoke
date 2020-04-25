@@ -35,6 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
                 {
                     AutoSizeAxes = Axes.Y,
                     Margin = new MarginPadding(5),
+                    Direction = FillDirection.Vertical,
                     Children = new Drawable[]
                     {
                         new FillFlowContainer<Badge>
@@ -66,6 +67,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
             public DrawableEditorLyricLine(LyricLine lyric)
                 : base(lyric)
             {
+                DisplayRuby = true;
+                DisplayRomaji = true;
             }
 
             protected override void ApplyLayout(KaraokeLayout layout)
@@ -73,8 +76,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
                 base.ApplyLayout(new KaraokeLayout
                 {
                     Name = "Edit layout",
-                    Alignment = Anchor.CentreLeft
+                    Alignment = Anchor.TopLeft
                 });
+                Padding = new MarginPadding(0);
             }
 
             protected override void UpdateStateTransforms(ArmedState state)
