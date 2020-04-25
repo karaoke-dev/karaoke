@@ -1,34 +1,57 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Timing;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Timelines;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
+using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
     public class LyricEditorScreen : EditorScreenWithTimeline
     {
-        private FillFlowContainer container;
+        private FillFlowContainer<LyricControl> container;
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
+        protected override Drawable CreateTimelineContent() => new KaraokeTimelineBlueprintContainer();
+
         protected override Drawable CreateMainContent()
         {
-            return new OsuScrollContainer
+            return new SkinProvidingContainer(new KaraokeLegacySkinTransformer(null))
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = container = new FillFlowContainer
+                Child = new OsuScrollContainer
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Direction = FillDirection.Vertical,
+                    RelativeSizeAxes = Axes.Both,
+                    Child = container = new FillFlowContainer<LyricControl>
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Direction = FillDirection.Vertical,
+                        Padding = new MarginPadding { Right = 50 },
+                    }
                 }
             };
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(IFrameBasedClock framedClock)
+        {
+            container.Clock = framedClock;
+
+            foreach (var obj in beatmap.HitObjects)
+                Schedule(() => addHitObject(obj));
         }
 
         protected override void LoadComplete()
@@ -37,22 +60,38 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 
             beatmap.HitObjectAdded += addHitObject;
             beatmap.HitObjectRemoved += removeHitObject;
-
-            container.Add(new Container
-            {
-                RelativeSizeAxes = Axes.X,
-                Height = 1000
-            });
         }
 
         private void addHitObject(HitObject hitObject)
         {
             // see how `DrawableEditRulesetWrapper` do
+            if (hitObject is LyricLine lyric)
+            {
+                container.Add(new LyricControl(lyric)
+                {
+                    RelativeSizeAxes = Axes.X,
+                });
+            }
         }
 
         private void removeHitObject(HitObject hitObject)
         {
-            
+            if (!(hitObject is LyricLine lyric))
+                return;
+
+            var drawableHitObject = container.Children.FirstOrDefault(x => x.Lyric == lyric);
+            container.Remove(drawableHitObject);
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            if (beatmap == null)
+                return;
+
+            beatmap.HitObjectAdded -= addHitObject;
+            beatmap.HitObjectRemoved -= removeHitObject;
         }
     }
 }
