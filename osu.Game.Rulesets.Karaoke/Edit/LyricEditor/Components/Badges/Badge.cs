@@ -15,8 +15,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges
         private readonly Box box;
         private readonly OsuSpriteText badgeText;
 
+        protected LyricLine Lyric { get; }
+
         public Badge(LyricLine lyric)
         {
+            Lyric = lyric;
+
             AutoSizeAxes = Axes.Both;
             Masking = true;
             CornerRadius = 3;

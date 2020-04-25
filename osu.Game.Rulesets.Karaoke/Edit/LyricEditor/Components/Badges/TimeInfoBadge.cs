@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
+using System;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges
 {
@@ -15,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges
             lyric.StartTimeBindable.BindValueChanged(value =>
             {
                 var startTime = value.NewValue;
-                ChangeTime(startTime);
+                ChangeTime();
             }, true);
         }
 
@@ -25,9 +26,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges
             BadgeColour = colours.Gray7;
         }
 
-        private void ChangeTime(double startTime)
+        private void ChangeTime()
         {
-            BadgeText = $"Time : {startTime}";
+            BadgeText = $"{getTime(Lyric.StartTime)} - {getTime(Lyric.EndTime)}";
+
+            string getTime(double time) => TimeSpan.FromMilliseconds(time).ToString(@"mm\:ss\:fff"); ;
         }
     }
 }
