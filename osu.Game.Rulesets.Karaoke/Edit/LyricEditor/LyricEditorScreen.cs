@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
@@ -38,6 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                         RelativeSizeAxes = Axes.X,
                         AutoSizeAxes = Axes.Y,
                         Direction = FillDirection.Vertical,
+                        Padding = new MarginPadding { Right = 50 },
                     }
                 }
             };
