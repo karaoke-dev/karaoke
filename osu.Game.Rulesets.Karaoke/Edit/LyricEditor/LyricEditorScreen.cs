@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -13,13 +14,12 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
     public class LyricEditorScreen : EditorScreenWithTimeline
     {
-        private FillFlowContainer container;
+        private FillFlowContainer<LyricControl> container;
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                 Child = new OsuScrollContainer
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Child = container = new FillFlowContainer
+                    Child = container = new FillFlowContainer<LyricControl>
                     {
                         RelativeSizeAxes = Axes.X,
                         AutoSizeAxes = Axes.Y,
@@ -76,18 +76,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 
         private void removeHitObject(HitObject hitObject)
         {
-            
+            if (!(hitObject is LyricLine lyric))
+                return;
+
+            var drawableHitObject = container.Children.FirstOrDefault(x => x.Lyric == lyric);
+            container.Remove(drawableHitObject);
         }
 
         protected override void Dispose(bool isDisposing)
         {
             base.Dispose(isDisposing);
 
-            if (beatmap != null)
-            {
-                beatmap.HitObjectAdded -= addHitObject;
-                beatmap.HitObjectRemoved -= removeHitObject;
-            }
+            if (beatmap == null)
+                return;
+
+            beatmap.HitObjectAdded -= addHitObject;
+            beatmap.HitObjectRemoved -= removeHitObject;
         }
     }
 }

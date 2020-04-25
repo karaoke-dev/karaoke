@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges
 
         protected LyricLine Lyric { get; }
 
-        public Badge(LyricLine lyric)
+        protected Badge(LyricLine lyric)
         {
             Lyric = lyric;
 

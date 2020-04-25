@@ -20,8 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges
         {
             lyric.StartTimeBindable.BindValueChanged(value =>
             {
-                var startTime = value.NewValue;
-                ChangeTime();
+                changeTime();
             }, true);
         }
 
@@ -37,11 +36,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges
             return base.OnClick(e);
         }
 
-        private void ChangeTime()
+        private void changeTime()
         {
             BadgeText = $"{getTime(Lyric.StartTime)} - {getTime(Lyric.EndTime)}";
 
-            string getTime(double time) => TimeSpan.FromMilliseconds(time).ToString(@"mm\:ss\:fff"); ;
+            static string getTime(double time) => TimeSpan.FromMilliseconds(time).ToString(@"mm\:ss\:fff");
         }
     }
 }

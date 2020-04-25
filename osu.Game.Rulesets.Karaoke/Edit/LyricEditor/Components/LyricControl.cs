@@ -19,8 +19,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
     {
         private readonly Box background;
 
+        public LyricLine Lyric { get; }
+
         public LyricControl(LyricLine lyric)
         {
+            Lyric = lyric;
+
             Masking = true;
             CornerRadius = 5;
             AutoSizeAxes = Axes.Y;
