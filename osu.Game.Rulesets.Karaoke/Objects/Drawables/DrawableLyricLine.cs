@@ -3,6 +3,9 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
+using osu.Framework.Allocation;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Sprites;
@@ -10,6 +13,7 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
@@ -30,6 +34,10 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public event Action<DrawableHitObject, JudgementResult> OnLyricStart;
 
         public new LyricLine HitObject => (LyricLine)base.HitObject;
+
+        [Resolved(CanBeNull = true)]
+        [CanBeNull]
+        protected KaraokePlayfield Playfield { get; private set; }
 
         public DrawableLyricLine(LyricLine hitObject)
             : base(hitObject)
@@ -190,11 +198,18 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         protected override void AddNestedHitObject(DrawableHitObject hitObject)
         {
             base.AddNestedHitObject(hitObject);
+
+            // get note playfield
+            Playfield?.Add(hitObject);
         }
 
         protected override void ClearNestedHitObjects()
         {
             base.ClearNestedHitObjects();
+
+            // get note playfield and remove note
+            Playfield?.NotePlayfield.AllHitObjects.OfType<DrawableNote>()
+                .Where(x => x.HitObject.ParentLyric == HitObject).ForEach(d => Playfield?.Remove(d));
         }
 
         protected override DrawableHitObject CreateNestedHitObject(HitObject hitObject)

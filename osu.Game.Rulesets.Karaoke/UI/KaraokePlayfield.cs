@@ -15,6 +15,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
+    [Cached]
     public class KaraokePlayfield : ScrollingPlayfield
     {
         [Resolved]
