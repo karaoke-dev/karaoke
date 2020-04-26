@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -75,14 +76,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 case LyricLine lyric:
                     return new DrawableLyricLine(lyric);
 
-                case Note note:
-                    if (note.Display)
-                        return new DrawableNote(note);
+                case TranslateDictionary _:
+                    return null;
 
-                    break;
+                default:
+                    throw new NotSupportedException($"{nameof(DrawableKaraokeRuleset)} does not support type of {nameof(h)} hitobject.");
             }
-
-            return null;
         }
 
         protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new KaraokeFramedReplayInputHandler(replay);

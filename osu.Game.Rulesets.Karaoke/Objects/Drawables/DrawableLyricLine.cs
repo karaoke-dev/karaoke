@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
@@ -184,6 +185,27 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 const float fade_out_time = 500;
                 this.FadeOut(fade_out_time);
             }
+        }
+
+        protected override void AddNestedHitObject(DrawableHitObject hitObject)
+        {
+            base.AddNestedHitObject(hitObject);
+        }
+
+        protected override void ClearNestedHitObjects()
+        {
+            base.ClearNestedHitObjects();
+        }
+
+        protected override DrawableHitObject CreateNestedHitObject(HitObject hitObject)
+        {
+            switch (hitObject)
+            {
+                case Note note:
+                    return new DrawableNote(note);
+            }
+            
+            return base.CreateNestedHitObject(hitObject);
         }
 
         public override double LifetimeStart

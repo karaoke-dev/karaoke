@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Beatmaps;
+using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Objects.Types;
@@ -116,7 +118,15 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => TranslateTextBindable.Value = value;
         }
 
-        public IEnumerable<Note> CreateDefaultNotes()
+        /// <summary>
+        /// Get all nasted note by this list
+        /// </summary>
+        public IReadOnlyList<Note> Notes => NestedHitObjects.OfType<Note>().ToList();
+
+        /// <summary>
+        /// Created default nasted note
+        /// </summary>
+        public void CreateDefaultNotes()
         {
             foreach (var timeTag in TimeTags)
             {
@@ -135,7 +145,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
                 if (!string.IsNullOrEmpty(text))
                 {
-                    yield return new Note
+                    AddNested(new Note
                     {
                         StartTime = startTime,
                         EndTime = endTime,
@@ -144,9 +154,26 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                         Text = text,
                         AlternativeText = ruby,
                         ParentLyric = this
-                    };
+                    });
                 }
             }
+        }
+
+        private List<Note> tempNotes = new List<Note>();
+
+        protected override void ApplyDefaultsToSelf(ControlPointInfo controlPointInfo, BeatmapDifficulty difficulty)
+        {
+            tempNotes.AddRange(Notes);
+            base.ApplyDefaultsToSelf(controlPointInfo, difficulty);
+        }
+
+        protected override void CreateNestedHitObjects()
+        {
+            foreach (var note in tempNotes)
+            {
+                AddNested(note);
+            }
+            base.CreateNestedHitObjects();
         }
 
         public override Judgement CreateJudgement() => new KaraokeLyricJudgement();

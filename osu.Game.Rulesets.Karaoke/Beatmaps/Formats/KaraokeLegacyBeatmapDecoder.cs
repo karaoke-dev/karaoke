@@ -97,9 +97,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private void processNotes(Beatmap beatmap, IList<string> noteLines)
         {
-            // Remove all karaoke note
-            beatmap.HitObjects.RemoveAll(x => x is Note);
-
             var lyricLines = beatmap.HitObjects.OfType<LyricLine>().ToList();
 
             for (int l = 0; l < lyricLines.Count; l++)
@@ -110,12 +107,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 // Create default note if not exist
                 if (string.IsNullOrEmpty(line))
                 {
-                    beatmap.HitObjects.AddRange(lyricLine.CreateDefaultNotes());
+                    lyricLine.CreateDefaultNotes();
                     continue;
                 }
 
                 var notes = line.Split(',');
-                var defaultNotes = lyricLine.CreateDefaultNotes().ToList();
+
+                lyricLine.CreateDefaultNotes();
+                var defaultNotes = lyricLine.Notes;
                 var minNoteNumber = Math.Min(notes.Length, defaultNotes.Count);
 
                 // Process each note
@@ -127,9 +126,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     // Support multi note in one time tag, format like ([1;0.5;か]|1#|...)
                     if (!note.StartsWith("(") || !note.EndsWith(")"))
                     {
-                        // Process and add note
+                        // Process note
                         applyNote(defaultNote, note);
-                        beatmap.HitObjects.Add(defaultNote);
                     }
                     else
                     {
@@ -171,9 +169,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                             if (!string.IsNullOrEmpty(ruby))
                                 splitDefaultNote.Text = ruby;
 
-                            // Process and add note
+                            // Process note
                             applyNote(splitDefaultNote, tone);
-                            beatmap.HitObjects.Add(splitDefaultNote);
                         }
                     }
                 }
