@@ -14,6 +14,9 @@ using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
+    /// <summary>
+    /// Display <see cref="KaraokeChangelogBuild"/> detail
+    /// </summary>
     public class ChangelogSingleBuild : ChangelogContent
     {
         private readonly KaraokeChangelogBuild build;
@@ -51,16 +54,16 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
         private class NavigationIconButton : IconButton
         {
-            public Action<string> SelectBuild;
+            public Action<KaraokeChangelogBuild> SelectBuild;
 
-            public NavigationIconButton(string build)
+            public NavigationIconButton(KaraokeChangelogBuild build)
             {
                 Anchor = Anchor.Centre;
                 Origin = Anchor.Centre;
 
                 if (build == null) return;
 
-                TooltipText = build;
+                TooltipText = build.DisplayVersion;
 
                 Action = () =>
                 {

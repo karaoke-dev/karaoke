@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
+    /// <summary>
+    /// Display list of <see cref="KaraokeChangelogBuild"/>
+    /// </summary>
     public class ChangelogListing : ChangelogContent
     {
         private readonly List<KaraokeChangelogBuild> entries;

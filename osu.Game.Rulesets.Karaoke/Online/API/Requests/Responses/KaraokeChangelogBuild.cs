@@ -5,5 +5,6 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
 {
     public class KaraokeChangelogBuild
     {
+        public string DisplayVersion { get; set; }
     }
 }

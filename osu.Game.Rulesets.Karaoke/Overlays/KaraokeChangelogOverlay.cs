@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using JetBrains.Annotations;
+using Octokit;
 using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
@@ -16,7 +17,9 @@ using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays
 {
@@ -114,7 +117,15 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
             switch (action)
             {
                 case GlobalAction.Back:
-                    Hide();
+                    if (Current.Value == null)
+                    {
+                        Hide();
+                    }
+                    else
+                    {
+                        Current.Value = null;
+                        sampleBack?.Play();
+                    }
 
                     return true;
             }
@@ -126,7 +137,44 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         {
             base.PopIn();
 
-            // todo : querying list
+            if (initialFetchTask == null)
+                // fetch and refresh to show listing, if no other request was made via Show methods
+                performAfterFetch(() => Current.TriggerChange());
+        }
+
+        private Task initialFetchTask;
+
+        private void performAfterFetch(Action action) => fetchListing()?.ContinueWith(_ =>
+            Schedule(action), TaskContinuationOptions.OnlyOnRanToCompletion);
+
+        private Task fetchListing()
+        {
+            if (initialFetchTask != null)
+                return initialFetchTask;
+
+            return initialFetchTask = Task.Run(async () =>
+            {
+                var tcs = new TaskCompletionSource<bool>();
+
+                var client = new GitHubClient(new ProductHeaderValue("osu-karaoke"));
+                var reposAscending = await client.Repository.Content.GetAllContents("osu-karaoke", "osu-Karaoke.github.io", "changelog");
+
+                if (reposAscending.Any())
+                {
+                    builds = reposAscending.Select(x => new KaraokeChangelogBuild
+                    {
+                        DisplayVersion = x.Url
+                    }).ToList();
+
+                    tcs.SetResult(true);
+                }
+                else
+                {
+                    tcs.SetResult(false);
+                }
+
+                await tcs.Task;
+            });
         }
 
         private CancellationTokenSource loadContentCancellation;

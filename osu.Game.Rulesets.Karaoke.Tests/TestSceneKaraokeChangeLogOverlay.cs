@@ -36,15 +36,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests
             AddStep(@"Hide", () => changelog.Hide());
         }
 
-        [TestCase]
-        public async Task GetChangeLogDirectory()
-        {
-            var client = new GitHubClient(new ProductHeaderValue("osu-karaoke"));
-            var reposAscending = await client.Repository.Content.GetAllContents("osu-karaoke", "osu-Karaoke.github.io","changelog");
-
-            //reposAscending[0].DownloadUrl;
-        }
-
         private class TestChangelogOverlay : KaraokeChangelogOverlay
         {
             public new ChangelogHeader Header => base.Header;

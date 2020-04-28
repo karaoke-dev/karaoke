@@ -7,6 +7,9 @@ using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
+    /// <summary>
+    /// Change log header, display <see cref="KaraokeChangelogBuild"/> title
+    /// </summary>
     public class ChangelogHeader : BreadcrumbControlOverlayHeader
     {
         public readonly Bindable<KaraokeChangelogBuild> Build = new Bindable<KaraokeChangelogBuild>();
