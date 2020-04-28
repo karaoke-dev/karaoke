@@ -5,6 +5,26 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
 {
     public class KaraokeChangelogBuild
     {
+        /// <summary>
+        /// The URL of the loaded document.
+        /// </summary>
+        public string DocumentUrl { get; set; }
+
+        /// <summary>
+        /// The base URL for all root-relative links.
+        /// </summary>
+        public string RootUrl { get; set; }
+
+        /// <summary>
+        /// Path of the project
+        /// </summary>
+        public string Path { get; set; }
+
+        /// <summary>
+        /// Path to download readme url
+        /// </summary>
+        public string ReadmeDownloadUrl => $"https://raw.githubusercontent.com/osu-Karaoke/osu-Karaoke.github.io/master/{Path}/README.md";
+
         public string DisplayVersion { get; set; }
     }
 }

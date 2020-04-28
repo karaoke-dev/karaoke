@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             {
                 Children = new Drawable[]
                 {
-                    new ChangelogBuildWithNavigation(),
+                    new ChangelogBuildWithNavigation(build),
                     new Box
                     {
                         RelativeSizeAxes = Axes.X,
@@ -47,9 +47,12 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             }
         }
 
-        public class ChangelogBuildWithNavigation : Container
+        public class ChangelogBuildWithNavigation : ChangelogBuild
         {
-            
+            public ChangelogBuildWithNavigation(KaraokeChangelogBuild build)
+                : base(build)
+            {
+            }
         }
 
         private class NavigationIconButton : IconButton
