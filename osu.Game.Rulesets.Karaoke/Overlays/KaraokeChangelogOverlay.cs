@@ -163,7 +163,6 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                 {
                     builds = reposAscending.Select(x => new KaraokeChangelogBuild
                     {
-                        DocumentUrl = x.HtmlUrl,
                         RootUrl = x.HtmlUrl,
                         Path = x.Path,
                         DisplayVersion = x.Name

@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
         /// <summary>
         /// The URL of the loaded document.
         /// </summary>
-        public string DocumentUrl { get; set; }
+        public string DocumentUrl => $"https://raw.githubusercontent.com/osu-Karaoke/osu-Karaoke.github.io/master/{Path}/";
 
         /// <summary>
         /// The base URL for all root-relative links.
@@ -25,6 +25,9 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
         /// </summary>
         public string ReadmeDownloadUrl => $"https://raw.githubusercontent.com/osu-Karaoke/osu-Karaoke.github.io/master/{Path}/README.md";
 
+        /// <summary>
+        /// Display version
+        /// </summary>
         public string DisplayVersion { get; set; }
     }
 }

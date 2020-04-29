@@ -1,10 +1,12 @@
 ﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using Markdig.Syntax;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
@@ -58,6 +60,37 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 using (var httpClient = new HttpClient())
                 {
                     Text = httpClient.GetStringAsync(build.ReadmeDownloadUrl).Result;
+                }
+            }
+
+            protected override MarkdownHeading CreateHeading(HeadingBlock headingBlock) => new ChangeLogMarkdownHeading(headingBlock);
+
+            public class ChangeLogMarkdownHeading : MarkdownHeading
+            {
+                public ChangeLogMarkdownHeading(HeadingBlock heading)
+                    :base(heading)
+                {
+                }
+
+                protected override float GetFontSizeByLevel(int level)
+                {
+                    switch (level)
+                    {
+                        case 1:
+                            return 1.7f;
+
+                        case 2:
+                            return 1.5f;
+
+                        case 3:
+                            return 1.3f;
+
+                        case 4:
+                            return 1.2f;
+
+                        default:
+                            return 1;
+                    }
                 }
             }
         }
