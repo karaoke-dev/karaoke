@@ -2,11 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
+using osu.Framework.Layout;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
@@ -65,6 +67,8 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
             protected override MarkdownHeading CreateHeading(HeadingBlock headingBlock) => new ChangeLogMarkdownHeading(headingBlock);
 
+            public override MarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
+
             public class ChangeLogMarkdownHeading : MarkdownHeading
             {
                 public ChangeLogMarkdownHeading(HeadingBlock heading)
@@ -90,6 +94,50 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
                         default:
                             return 1;
+                    }
+                }
+            }
+
+            public class ChangeLogMarkdownTextFlowContainer : MarkdownTextFlowContainer
+            {
+                protected override void AddImage(LinkInline linkInline) => AddDrawable(new ChangeLogMarkdownImage(linkInline.Url));
+
+                public class ChangeLogMarkdownImage : MarkdownImage
+                {
+                    private readonly LayoutValue widthSizeCache = new LayoutValue(Invalidation.DrawSize);
+
+                    public ChangeLogMarkdownImage(string url)
+                        : base(url)
+                    {
+                        AutoSizeAxes = Axes.None;
+                        RelativeSizeAxes = Axes.X;
+                    }
+
+                    protected override void Update()
+                    {
+                        base.Update();
+
+                        if (!widthSizeCache.IsValid)
+                        {
+                            computeImageSize();
+                            widthSizeCache.Validate();
+                        }
+                    }
+
+                    private void computeImageSize()
+                    {
+                        // if image is larger then parent size, then change into max size instead
+                        var imageWidth = InternalChild.Width;
+                        if (imageWidth > DrawWidth)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+
+                        Height = 100;
                     }
                 }
             }
