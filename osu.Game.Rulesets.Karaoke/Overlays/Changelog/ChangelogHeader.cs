@@ -4,6 +4,7 @@
 using osu.Framework.Bindables;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
+using System;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
@@ -14,13 +15,19 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
     {
         public readonly Bindable<KaraokeChangelogBuild> Build = new Bindable<KaraokeChangelogBuild>();
 
-        protected override OverlayTitle CreateTitle() => new ChangelogHeaderTitle();
+        public Action ListingSelected;
 
         private const string listing_string = "listing";
 
         public ChangelogHeader()
         {
             TabControl.AddItem(listing_string);
+
+            Current.ValueChanged += e =>
+            {
+                if (e.NewValue == listing_string)
+                    ListingSelected?.Invoke();
+            };
 
             Build.BindValueChanged(e =>
             {
@@ -30,9 +37,16 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 if (e.NewValue != null)
                 {
                     TabControl.AddItem(e.NewValue.ToString());
+                    Current.Value = e.NewValue.ToString();
+                }
+                else
+                {
+                    Current.Value = listing_string;
                 }
             });
         }
+
+        protected override OverlayTitle CreateTitle() => new ChangelogHeaderTitle();
 
         private class ChangelogHeaderTitle : OverlayTitle
         {

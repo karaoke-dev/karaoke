@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                         {
                             Header = new ChangelogHeader
                             {
-                                //ListingSelected = ShowListing,
+                                ListingSelected = ShowListing,
                             },
                             content = new Container<ChangelogContent>
                             {
