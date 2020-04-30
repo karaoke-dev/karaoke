@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             {
                 Children = new Drawable[]
                 {
-                    new ChangelogBuildWithNavigation(build),
+                    new ChangelogBuildWithNavigation(build) { SelectBuild = SelectBuild },
                     new Box
                     {
                         RelativeSizeAxes = Axes.X,
@@ -59,12 +59,12 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             {
                 var fill = base.CreateHeader();
 
-                fill.Insert(-1, new NavigationIconButton(Build.Versions?.Previous)
+                fill.Insert(-1, new NavigationIconButton(Build.Versions.Next)
                 {
                     Icon = FontAwesome.Solid.ChevronLeft,
                     SelectBuild = b => SelectBuild(b)
                 });
-                fill.Insert(1, new NavigationIconButton(Build.Versions?.Next)
+                fill.Insert(1, new NavigationIconButton(Build.Versions?.Previous)
                 {
                     Icon = FontAwesome.Solid.ChevronRight,
                     SelectBuild = b => SelectBuild(b)

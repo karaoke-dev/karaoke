@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -170,6 +171,12 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                         Path = x.Path,
                         DisplayVersion = x.Name
                     }).ToList();
+
+                    foreach (var build in builds)
+                    {
+                        build.Versions.Previous = builds.GetPrevious(build);
+                        build.Versions.Next = builds.GetNext(build);
+                    }
 
                     tcs.SetResult(true);
                 }

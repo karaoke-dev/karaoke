@@ -15,6 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
             OrganizationName = organization;
             ProjectName = project;
             Branch = branch;
+            Versions = new VersionNavigation();
         }
 
         /// <summary>
