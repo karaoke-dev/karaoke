@@ -56,5 +56,23 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
         /// Display version
         /// </summary>
         public string DisplayVersion { get; set; }
+
+        /// <summary>
+        /// Version
+        /// </summary>
+        public VersionNavigation Versions { get; set; }
+
+        public class VersionNavigation
+        {
+            /// <summary>
+            /// Next version
+            /// </summary>
+            public KaraokeChangelogBuild Next { get; set; }
+
+            /// <summary>
+            /// Previous version
+            /// </summary>
+            public KaraokeChangelogBuild Previous { get; set; }
+        }
     }
 }

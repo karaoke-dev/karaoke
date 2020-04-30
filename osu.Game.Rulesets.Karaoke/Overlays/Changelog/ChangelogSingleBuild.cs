@@ -11,6 +11,7 @@ using System;
 using osu.Game.Overlays;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
+using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
@@ -52,6 +53,24 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             public ChangelogBuildWithNavigation(KaraokeChangelogBuild build)
                 : base(build)
             {
+            }
+
+            protected override FillFlowContainer CreateHeader()
+            {
+                var fill = base.CreateHeader();
+
+                fill.Insert(-1, new NavigationIconButton(Build.Versions?.Previous)
+                {
+                    Icon = FontAwesome.Solid.ChevronLeft,
+                    SelectBuild = b => SelectBuild(b)
+                });
+                fill.Insert(1, new NavigationIconButton(Build.Versions?.Next)
+                {
+                    Icon = FontAwesome.Solid.ChevronRight,
+                    SelectBuild = b => SelectBuild(b)
+                });
+
+                return fill;
             }
         }
 
