@@ -100,8 +100,8 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         /// <summary>
         /// Fetches and shows a specific build from a specific update stream.
         /// </summary>
-        /// <param name="build">Must contain at least <see cref="APIUpdateStream.Name"/> and
-        /// <see cref="KaraokeChangelogBuild.Version"/>. If <see cref="APIUpdateStream.DisplayName"/> and
+        /// <param name="build">Must contain at least <see cref="KaraokeChangelogBuild.Name"/> and
+        /// <see cref="KaraokeChangelogBuild.Version"/>. If <see cref="KaraokeChangelogBuild.DisplayName"/> and
         /// <see cref="KaraokeChangelogBuild.DisplayVersion"/> are specified, the header will instantly display them.</param>
         public void ShowBuild([NotNull] KaraokeChangelogBuild build)
         {
@@ -154,14 +154,17 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
 
             return initialFetchTask = Task.Run(async () =>
             {
+                const string organization = "osu-karaoke";
+                const string project_name = "osu-Karaoke.github.io";
+
                 var tcs = new TaskCompletionSource<bool>();
 
-                var client = new GitHubClient(new ProductHeaderValue("osu-karaoke"));
-                var reposAscending = await client.Repository.Content.GetAllContents("osu-karaoke", "osu-Karaoke.github.io", "changelog");
+                var client = new GitHubClient(new ProductHeaderValue(organization));
+                var reposAscending = await client.Repository.Content.GetAllContents(organization, project_name, "changelog");
 
                 if (reposAscending.Any())
                 {
-                    builds = reposAscending.Select(x => new KaraokeChangelogBuild
+                    builds = reposAscending.Select(x => new KaraokeChangelogBuild(organization, project_name)
                     {
                         RootUrl = x.HtmlUrl,
                         Path = x.Path,
