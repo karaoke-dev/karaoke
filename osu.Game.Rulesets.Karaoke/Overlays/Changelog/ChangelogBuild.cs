@@ -7,13 +7,13 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Textures;
 using osu.Framework.Layout;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osuTK.Graphics;
+using osuTK;
 using System;
 using System.Net.Http;
 
@@ -111,12 +111,23 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                     {
                         AutoSizeAxes = Axes.None;
                         RelativeSizeAxes = Axes.X;
+
+                        AddLayout(widthSizeCache);
                     }
+
+                    private bool imageLoaded;
 
                     protected override void Update()
                     {
                         base.Update();
 
+                        // unable to get texture size on OnLoadComplete event, so use this way.
+                        if (!imageLoaded && InternalChild.Width != 0)
+                        {
+                            computeImageSize();
+                            imageLoaded = true;
+                        }
+                            
                         if (!widthSizeCache.IsValid)
                         {
                             computeImageSize();
@@ -126,18 +137,11 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
                     private void computeImageSize()
                     {
-                        // if image is larger then parent size, then change into max size instead
-                        var imageWidth = InternalChild.Width;
-                        if (imageWidth > DrawWidth)
-                        {
+                        // if image is larger then parent size, then adjust image scale
+                        var scale = Math.Min(1, DrawWidth / InternalChild.Width);
 
-                        }
-                        else
-                        {
-
-                        }
-
-                        Height = 100;
+                        InternalChild.Scale = new Vector2(scale);
+                        Height = InternalChild.Height * scale;
                     }
                 }
             }
