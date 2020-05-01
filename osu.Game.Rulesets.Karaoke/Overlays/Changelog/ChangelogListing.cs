@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using System;
@@ -29,7 +31,24 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
             foreach (var build in entries)
             {
-                Add(new ChangelogBuild(build) { SelectBuild = SelectBuild });
+                if (Children.Count != 0)
+                {
+                    Add(new Box
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        Height = 2,
+                        Colour = colourProvider.Background6,
+                        Margin = new MarginPadding { Top = 30 },
+                    });
+                }
+
+                Add(new ChangelogBuild(build)
+                {
+                    Masking = true,
+                    AutoSizeAxes = Axes.None,
+                    Height = 300,
+                    SelectBuild = SelectBuild
+                });
             }
         }
     }

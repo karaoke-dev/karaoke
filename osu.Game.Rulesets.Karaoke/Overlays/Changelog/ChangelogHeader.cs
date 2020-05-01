@@ -32,12 +32,12 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             Build.BindValueChanged(e =>
             {
                 if (e.OldValue != null)
-                    TabControl.RemoveItem(e.OldValue.ToString());
+                    TabControl.RemoveItem(e.OldValue.DisplayVersion);
 
                 if (e.NewValue != null)
                 {
-                    TabControl.AddItem(e.NewValue.ToString());
-                    Current.Value = e.NewValue.ToString();
+                    TabControl.AddItem(e.NewValue.DisplayVersion);
+                    Current.Value = e.NewValue.DisplayVersion;
                 }
                 else
                 {
