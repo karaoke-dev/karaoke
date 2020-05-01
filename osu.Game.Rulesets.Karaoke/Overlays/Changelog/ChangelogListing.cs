@@ -6,7 +6,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
-using System;
 using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog

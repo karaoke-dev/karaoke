@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using Markdig.Syntax;
@@ -100,7 +100,8 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 [BackgroundDependencyLoader]
                 private void load()
                 {
-                    if(displaydot)
+                    if (displaydot)
+                    {
                         AddInternal(new SpriteIcon
                         {
                             Anchor = Anchor.CentreLeft,
@@ -109,13 +110,14 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                             Icon = FontAwesome.Solid.DotCircle,
                             Size = new Vector2(10)
                         });
+                    }
                 }
             }
 
             public class ChangeLogMarkdownHeading : MarkdownHeading
             {
                 public ChangeLogMarkdownHeading(HeadingBlock heading)
-                    :base(heading)
+                    : base(heading)
                 {
                 }
 
@@ -170,7 +172,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                             computeImageSize();
                             imageLoaded = true;
                         }
-                            
+
                         if (!widthSizeCache.IsValid)
                         {
                             computeImageSize();

@@ -4,7 +4,6 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Objects.Types;

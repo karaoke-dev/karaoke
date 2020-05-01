@@ -2,13 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
-using Octokit;
 using osu.Game.Rulesets.Karaoke.Overlays;
 using osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 using osu.Game.Tests.Visual;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace osu.Game.Rulesets.Karaoke.Tests
 {
@@ -38,7 +36,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests
 
         private class TestChangelogOverlay : KaraokeChangelogOverlay
         {
-            public new ChangelogHeader Header => base.Header;
         }
     }
 }

@@ -101,9 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         /// <summary>
         /// Fetches and shows a specific build from a specific update stream.
         /// </summary>
-        /// <param name="build">Must contain at least <see cref="KaraokeChangelogBuild.Name"/> and
-        /// <see cref="KaraokeChangelogBuild.Version"/>. If <see cref="KaraokeChangelogBuild.DisplayName"/> and
-        /// <see cref="KaraokeChangelogBuild.DisplayVersion"/> are specified, the header will instantly display them.</param>
+        /// Must contain at least <see cref="KaraokeChangelogBuild"/> and
         public void ShowBuild([NotNull] KaraokeChangelogBuild build)
         {
             if (build == null)

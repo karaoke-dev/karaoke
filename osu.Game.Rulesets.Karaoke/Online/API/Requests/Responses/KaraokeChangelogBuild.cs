@@ -6,10 +6,11 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
     public class KaraokeChangelogBuild
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="organization">Account or organization name</param>
-        /// <param name="project">project name</param>
+        /// <param name="project">Project name</param>
+        /// <param name="branch">Branch name</param>
         public KaraokeChangelogBuild(string organization, string project, string branch = "master")
         {
             OrganizationName = organization;
@@ -61,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
         /// <summary>
         /// Version
         /// </summary>
-        public VersionNavigation Versions { get; set; }
+        public VersionNavigation Versions { get; }
 
         public class VersionNavigation
         {

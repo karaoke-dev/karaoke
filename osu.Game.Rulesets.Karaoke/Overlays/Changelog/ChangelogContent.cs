@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
         public void SelectBuild(KaraokeChangelogBuild build) => BuildSelected?.Invoke(build);
 
-        public ChangelogContent()
+        protected ChangelogContent()
         {
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
