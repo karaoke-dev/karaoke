@@ -16,6 +16,7 @@ using osuTK.Graphics;
 using osuTK;
 using System;
 using System.Net.Http;
+using osu.Framework.Allocation;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
@@ -65,9 +66,51 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 }
             }
 
+            /// <summary>
+            /// Override <see cref="MarkdownHeading"/> to change default heading size.
+            /// </summary>
+            /// <param name="headingBlock"></param>
+            /// <returns></returns>
             protected override MarkdownHeading CreateHeading(HeadingBlock headingBlock) => new ChangeLogMarkdownHeading(headingBlock);
 
+            /// <summary>
+            /// Override <see cref="MarkdownTextFlowContainer"/> to limit image display size
+            /// </summary>
+            /// <returns></returns>
             public override MarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
+
+            /// <summary>
+            /// Override <see cref="MarkdownParagraph"/> to add dot before text.
+            /// </summary>
+            /// <param name="paragraphBlock"></param>
+            /// <param name="level"></param>
+            /// <returns></returns>
+            protected override MarkdownParagraph CreateParagraph(ParagraphBlock paragraphBlock, int level) => new ChangeLogMarkdownParagraph(paragraphBlock);
+
+            public class ChangeLogMarkdownParagraph : MarkdownParagraph
+            {
+                private readonly bool displaydot;
+
+                public ChangeLogMarkdownParagraph(ParagraphBlock paragraphBlock)
+                    : base(paragraphBlock)
+                {
+                    displaydot = paragraphBlock == paragraphBlock.Parent[0];
+                }
+
+                [BackgroundDependencyLoader]
+                private void load()
+                {
+                    if(displaydot)
+                        AddInternal(new SpriteIcon
+                        {
+                            Anchor = Anchor.CentreLeft,
+                            Origin = Anchor.CentreRight,
+                            Margin = new MarginPadding { Right = 10 },
+                            Icon = FontAwesome.Solid.DotCircle,
+                            Size = new Vector2(10)
+                        });
+                }
+            }
 
             public class ChangeLogMarkdownHeading : MarkdownHeading
             {
