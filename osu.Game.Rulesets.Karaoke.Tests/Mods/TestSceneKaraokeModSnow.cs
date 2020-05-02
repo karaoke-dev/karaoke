@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
-using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Tests.Visual;
