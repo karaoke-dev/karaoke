@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Tests.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Tests
+namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
 {
     [TestFixture]
     public class KaraokeBeatmapConversionTest : BeatmapConversionTest<ConvertValue>

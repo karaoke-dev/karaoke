@@ -19,7 +19,7 @@ using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests
+namespace osu.Game.Rulesets.Karaoke.Tests.UI
 {
     [TestFixture]
     public class TestSceneNotePlayfield : OsuTestScene

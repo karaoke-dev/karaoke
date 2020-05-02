@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Difficulty;
 using osu.Game.Tests.Beatmaps;
 
-namespace osu.Game.Rulesets.Karaoke.Tests
+namespace osu.Game.Rulesets.Karaoke.Tests.Difficulty
 {
     [TestFixture]
     public class KaraokeDifficultyCalculatorTest : DifficultyCalculatorTest
