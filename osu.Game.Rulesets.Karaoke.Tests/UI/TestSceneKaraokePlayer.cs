@@ -6,7 +6,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests
+namespace osu.Game.Rulesets.Karaoke.Tests.UI
 {
     [TestFixture]
     public class TestSceneKaraokePlayer : PlayerTestScene
