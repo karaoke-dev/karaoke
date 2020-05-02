@@ -3,14 +3,15 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
+using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
     [TestFixture]
-    public class TestSceneFlashlightMod : ModTestScene
+    public class TestSceneKaraokeModFlashlight : ModTestScene
     {
-        public TestSceneFlashlightMod()
+        public TestSceneKaraokeModFlashlight()
            : base(new KaraokeRuleset())
         {
         }
@@ -20,6 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
         {
             Mod = new KaraokeModFlashlight(),
             Autoplay = true,
+            Beatmap = new TestKaraokeBeatmap(null),
+            PassCondition = () => true
         });
     }
 }
