@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Input;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -27,6 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private void load(OsuGame game)
         {
             var config = (KaraokeRulesetConfigManager)Config;
+            var microphoneManager = new MicrophoneManager();
 
             Children = new Drawable[]
             {
@@ -67,6 +69,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 {
                     LabelText = "Override pitch at gameplay",
                     Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay)
+                },
+                new MicrophoneDeviceSettingsDropdown
+                {
+                    LabelText = "Microphone devices",
+                    Items = microphoneManager.MicrophoneDeviceNames,
+                    Bindable = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
                 },
                 new SettingsSlider<int, PitchSlider>
                 {
@@ -123,6 +131,17 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private class TimeSlider : OsuSliderBar<double>
         {
             public override string TooltipText => Current.Value.ToString("N0") + "ms";
+        }
+
+        private class MicrophoneDeviceSettingsDropdown : SettingsDropdown<string>
+        {
+            protected override OsuDropdown<string> CreateDropdown() => new MicrophoneDeviceDropdownControl();
+
+            private class MicrophoneDeviceDropdownControl : DropdownControl
+            {
+                protected override string GenerateItemText(string item)
+                    => string.IsNullOrEmpty(item) ? "Default" : base.GenerateItemText(item);
+            }
         }
     }
 }
