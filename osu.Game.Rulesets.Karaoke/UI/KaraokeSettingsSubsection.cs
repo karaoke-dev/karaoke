@@ -67,6 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 },
                 new MicrophoneDeviceSettingsDropdown
                 {
+                    LabelText = "Microphone devices",
                     Items = microphoneManager.MicrophoneDeviceNames,
                     Bindable = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
                 },
