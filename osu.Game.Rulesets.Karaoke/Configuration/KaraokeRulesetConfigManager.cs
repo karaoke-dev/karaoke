@@ -46,6 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Practice
             Set(KaraokeRulesetSetting.PracticePreemptTime, 3000.0, 0.0, 5000.0, 100.0);
+
+            // Device
+            Set(KaraokeRulesetSetting.MicrophoneDevice, "");
         }
 
         public override TrackedSettings CreateTrackedSettings() => new TrackedSettings
@@ -84,5 +87,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
         // Practice
         PracticePreemptTime,
+
+        // Device
+        MicrophoneDevice
     }
 }
