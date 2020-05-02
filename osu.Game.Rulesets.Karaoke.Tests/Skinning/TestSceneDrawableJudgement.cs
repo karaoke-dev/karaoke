@@ -10,11 +10,10 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Scoring;
-using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
-    public class TestSceneDrawableJudgement : SkinnableTestScene
+    public class TestSceneDrawableJudgement : KaraokeSkinnableTestScene
     {
         public override IReadOnlyList<Type> RequiredTypes => new[]
         {

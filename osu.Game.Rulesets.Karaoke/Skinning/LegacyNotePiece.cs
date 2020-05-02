@@ -2,13 +2,16 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Animations;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Textures;
 using osu.Framework.Layout;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
@@ -40,87 +43,18 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             AddLayout(subtractionCache);
         }
 
-        private Container background;
-        private Sprite backgroundHeadSprite;
-        private Sprite backgroundBodySprite;
-        private Sprite backgroundTailSprite;
-
-        private Container border;
-        private Sprite borderHeadSprite;
-        private Sprite borderBodySprite;
-        private Sprite borderTailSprite;
+        private LayerContainer background;
+        private LayerContainer foreground;
+        private LayerContainer border;
 
         [BackgroundDependencyLoader]
         private void load(DrawableHitObject drawableObject, ISkinSource skin, IScrollingInfo scrollingInfo)
         {
             InternalChildren = new[]
             {
-                background = new Container
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Name = "Background layer",
-                    Children = new Drawable[]
-                    {
-                        backgroundHeadSprite = new Sprite
-                        {
-                            Anchor = Anchor.CentreLeft,
-                            Origin = Anchor.Centre,
-                            Name = "Background head",
-                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteHeadImage, LegacyKaraokeSkinNoteLayer.Background)
-                        },
-                        backgroundBodySprite = new Sprite
-                        {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            Name = "Background body",
-                            Size = Vector2.One,
-                            FillMode = FillMode.Stretch,
-                            RelativeSizeAxes = Axes.X,
-                            Depth = 1,
-                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Background)
-                        },
-                        backgroundTailSprite = new Sprite
-                        {
-                            Anchor = Anchor.CentreRight,
-                            Origin = Anchor.Centre,
-                            Name = "Background tail",
-                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, LegacyKaraokeSkinNoteLayer.Background)
-                        }
-                    }
-                },
-                border = new Container
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Name = "Border layer",
-                    Children = new Drawable[]
-                    {
-                        borderHeadSprite = new Sprite
-                        {
-                            Anchor = Anchor.CentreLeft,
-                            Origin = Anchor.Centre,
-                            Name = "Border head",
-                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteHeadImage, LegacyKaraokeSkinNoteLayer.Border)
-                        },
-                        borderBodySprite = new Sprite
-                        {
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            Name = "Border body",
-                            Size = Vector2.One,
-                            FillMode = FillMode.Stretch,
-                            RelativeSizeAxes = Axes.X,
-                            Depth = 1,
-                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Border)
-                        },
-                        borderTailSprite = new Sprite
-                        {
-                            Anchor = Anchor.CentreRight,
-                            Origin = Anchor.Centre,
-                            Name = "Border tail",
-                            Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, LegacyKaraokeSkinNoteLayer.Border)
-                        }
-                    }
-                },
+                background = createLayer("Background layer", skin, LegacyKaraokeSkinNoteLayer.Background),
+                foreground = createLayer("Foreground layer", skin, LegacyKaraokeSkinNoteLayer.Foreground),
+                border = createLayer("Border layer", skin, LegacyKaraokeSkinNoteLayer.Border)
             };
 
             direction.BindTo(scrollingInfo.Direction);
@@ -137,9 +71,34 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             AccentColour.BindValueChanged(onAccentChanged);
             HitColour.BindValueChanged(onAccentChanged);
-            isHitting.BindValueChanged(_ => onAccentChanged(), true);
+            isHitting.BindValueChanged(onIsHittingChanged, true);
             display.BindValueChanged(_ => onAccentChanged(), true);
             styleIndex.BindValueChanged(value => applySkin(skin, value.NewValue), true);
+        }
+
+        private void onIsHittingChanged(ValueChangedEvent<bool> isHitting)
+        {
+            // Update animate
+            InternalChildren.OfType<LayerContainer>().ForEach(x =>
+            {
+                x.Reset();
+                x.IsPlaying = isHitting.NewValue;
+            });
+
+            // Foreground sparkle
+            foreground.ClearTransforms(false, nameof(foreground.Colour));
+            foreground.Alpha = 0;
+            if (isHitting.NewValue)
+            {
+                foreground.Alpha = 1;
+
+                const float animation_length = 50;
+
+                // wait for the next sync point
+                double synchronisedOffset = animation_length * 2 - Time.Current % (animation_length * 2);
+                using (foreground.BeginDelayedSequence(synchronisedOffset))
+                    foreground.FadeColour(AccentColour.Value.Lighten(0.7f), animation_length).Then().FadeColour(foreground.Colour, animation_length).Loop();
+            }
         }
 
         private void applySkin(ISkinSource skin, int styleIndex)
@@ -158,20 +117,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             if (!subtractionCache.IsValid && DrawWidth > 0)
             {
-                if (backgroundBodySprite.Texture != null)
-                {
-                    backgroundBodySprite.Height = getHeight(backgroundBodySprite);
-                }
-
-                if (borderBodySprite.Texture != null)
-                {
-                    borderBodySprite.Height = getHeight(borderBodySprite);
-                }
-
+                // TODO : maybe do something
                 subtractionCache.Validate();
             }
-
-            float getHeight(Sprite s) => s.Texture?.DisplayHeight ?? 0;
         }
 
         protected virtual void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
@@ -186,7 +134,81 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
         }
 
-        protected Texture GetTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
+        private LayerContainer createLayer(string name, ISkin skin, LegacyKaraokeSkinNoteLayer layer)
+        {
+            return new LayerContainer
+            {
+                RelativeSizeAxes = Axes.Both,
+                Name = name,
+                Children = new[]
+                {
+                    GetSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteHeadImage, layer).With(d =>
+                    {
+                        if (d == null)
+                            return;
+
+                        d.Name = "Head";
+                        d.Anchor = Anchor.CentreLeft;
+                        d.Origin = Anchor.Centre;
+                    }),
+                    GetSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, layer).With(d =>
+                    {
+                        if (d == null)
+                            return;
+
+                        d.Name = "Body";
+                        d.Anchor = Anchor.Centre;
+                        d.Origin = Anchor.Centre;
+                        d.Size = Vector2.One;
+                        d.FillMode = FillMode.Stretch;
+                        d.RelativeSizeAxes = Axes.X;
+                        d.Depth = 1;
+
+                        d.Height = d.Texture?.DisplayHeight ?? 0;
+                    }),
+                    GetSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, layer).With(d =>
+                    {
+                        if (d == null)
+                            return;
+
+                        d.Name = "Tail";
+                        d.Anchor = Anchor.CentreRight;
+                        d.Origin = Anchor.Centre;
+                    }),
+                }
+            };
+        }
+
+        protected Sprite GetSpriteFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
+        {
+            var name = GetTextureNameFromLookup(lookup, layer);
+
+            switch (layer)
+            {
+                case LegacyKaraokeSkinNoteLayer.Background:
+                case LegacyKaraokeSkinNoteLayer.Border:
+                    return getSpriteByName(name) ?? new Sprite();
+
+                case LegacyKaraokeSkinNoteLayer.Foreground:
+                    return getSpriteByName(name)
+                           ?? getSpriteByName(GetTextureNameFromLookup(lookup, LegacyKaraokeSkinNoteLayer.Background))
+                           ?? new Sprite();
+
+                default:
+                    return null;
+            }
+
+            Sprite getSpriteByName(string name) => (Sprite)skin.GetAnimation(name, true, true).With(d =>
+            {
+                if (d == null)
+                    return;
+
+                if (d is TextureAnimation animation)
+                    animation.IsPlaying = false;
+            });
+        }
+
+        protected string GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
         {
             string suffix;
 
@@ -221,20 +243,29 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     break;
             }
 
-            string noteImage = $"karaoke-note-{layerSuffix}-{suffix}";
-
-            return skin.GetTexture(noteImage);
+            return $"karaoke-note-{layerSuffix}-{suffix}";
         }
 
         private void onAccentChanged() => onAccentChanged(new ValueChangedEvent<Color4>(AccentColour.Value, AccentColour.Value));
 
         private void onAccentChanged(ValueChangedEvent<Color4> accent)
         {
-            background.Colour = display.Value ? AccentColour.Value : new Color4(23, 41, 46, 255);
-
-            // todo : implement is hitting and hit color
+            foreground.Colour = HitColour.Value;
+            background.Colour = display.Value ? accent.NewValue : new Color4(23, 41, 46, 255);
 
             subtractionCache.Invalidate();
+        }
+
+        private class LayerContainer : Container
+        {
+            public IEnumerable<TextureAnimation> AnimateChildren => Children.OfType<TextureAnimation>();
+
+            public bool IsPlaying
+            {
+                set => AnimateChildren.ForEach(d => d.IsPlaying = value);
+            }
+
+            public void Reset() => AnimateChildren.ForEach(d => d.GotoFrame(0));
         }
     }
 }

@@ -10,7 +10,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
-    public class TestSceneColumnBackground : KaraokeSkinnableTestScene
+    public class TestSceneColumnBackground : KaraokeSkinnableColumnTestScene
     {
         [BackgroundDependencyLoader]
         private void load()
