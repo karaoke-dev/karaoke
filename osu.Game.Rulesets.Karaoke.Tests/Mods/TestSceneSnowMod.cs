@@ -8,13 +8,18 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
     [TestFixture]
-    public class TestSceneSnowMod : TestSceneKaraokePlayer
+    public class TestSceneSnowMod : ModTestScene
     {
-        protected override TestPlayer CreatePlayer(Ruleset ruleset)
+        public TestSceneSnowMod()
+            : base(new KaraokeRuleset())
         {
-            SelectedMods.Value = new[] { new KaraokeModSnow() };
-
-            return base.CreatePlayer(ruleset);
         }
+
+        [Test]
+        public void TestMod() => CreateModTest(new ModTestData
+        {
+            Mod = new KaraokeModSnow(),
+            Autoplay = true,
+        });
     }
 }
