@@ -19,6 +19,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
         {
             typeof(ChangelogHeader),
             typeof(ChangelogContent),
+            typeof(ChangelogListing),
+            typeof(ChangelogSingleBuild),
+            typeof(ChangelogBuild),
         };
 
         [SetUp]
@@ -31,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
         public void ShowWithNoFetch()
         {
             AddStep(@"Show", () => changelog.Show());
-            AddStep(@"Hide", () => changelog.Hide());
+            AddAssert(@"listing displayed", () => changelog.Current.Value == null);
         }
 
         private class TestChangelogOverlay : KaraokeChangelogOverlay
