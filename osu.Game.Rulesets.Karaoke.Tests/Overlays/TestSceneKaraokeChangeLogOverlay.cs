@@ -8,7 +8,7 @@ using osu.Game.Tests.Visual;
 using System;
 using System.Collections.Generic;
 
-namespace osu.Game.Rulesets.Karaoke.Tests
+namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 {
     [TestFixture]
     public class TestSceneKaraokeChangeLogOverlay : OsuTestScene
