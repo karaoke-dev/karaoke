@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor
+namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
     [TestFixture]
     public class TestSceneLyricEditorScreen : EditorClockTestScene
