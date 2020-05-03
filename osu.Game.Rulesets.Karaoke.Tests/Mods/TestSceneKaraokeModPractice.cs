@@ -28,6 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
                 var actionContainer = hudOverlay.OfType<KaraokeModPractice.KaraokeActionContainer>().FirstOrDefault();
                 var practiceContainer = actionContainer?.Child as KaraokeModPractice.KaraokePracticeContainer;
 
+                // todo : test overlays is exist.
                 return practiceContainer != null;
             }
         });

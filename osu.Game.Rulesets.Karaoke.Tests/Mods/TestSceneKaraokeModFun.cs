@@ -8,17 +8,26 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public class TestSceneKaraokeModSnow : ModTestScene
+    public class TestSceneKaraokeModFun : ModTestScene
     {
-        public TestSceneKaraokeModSnow()
+        public TestSceneKaraokeModFun()
             : base(new KaraokeRuleset())
         {
         }
 
         [Test]
-        public void TestMod() => CreateModTest(new ModTestData
+        public void TestSnowMod() => CreateModTest(new ModTestData
         {
             Mod = new KaraokeModSnow(),
+            Autoplay = false,
+            Beatmap = new TestKaraokeBeatmap(null),
+            PassCondition = () => true
+        });
+
+        [Test]
+        public void TestWindowsUpdateMod() => CreateModTest(new ModTestData
+        {
+            Mod = new KaraokeModWindowsUpdate(),
             Autoplay = false,
             Beatmap = new TestKaraokeBeatmap(null),
             PassCondition = () => true
