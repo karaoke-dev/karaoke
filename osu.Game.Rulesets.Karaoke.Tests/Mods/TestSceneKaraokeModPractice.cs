@@ -5,6 +5,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Tests.Visual;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
@@ -16,12 +17,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
         }
 
         [Test]
-        public void TestMod() => CreateModTest(new ModTestData
+        public void TestAllPanelExist() => CreateModTest(new ModTestData
         {
             Mod = new KaraokeModPractice(),
             Autoplay = false,
             Beatmap = new TestKaraokeBeatmap(null),
-            PassCondition = () => true
+            PassCondition = () =>
+            {
+                var hudOverlay = Player.HUDOverlay;
+                var actionContainer = hudOverlay.OfType<KaraokeModPractice.KaraokeActionContainer>().FirstOrDefault();
+                var practiceContainer = actionContainer?.Child as KaraokeModPractice.KaraokePracticeContainer;
+
+                // todo : test overlays is exist.
+                return practiceContainer != null;
+            }
         });
     }
 }
