@@ -6,7 +6,6 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    [TestFixture]
     public class TestSceneKaraokeModAutoplay : ModTestScene
     {
         public TestSceneKaraokeModAutoplay()
