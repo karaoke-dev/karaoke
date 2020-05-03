@@ -4,7 +4,9 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Tests.Extensions;
 using osu.Game.Tests.Visual;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
@@ -16,12 +18,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
         }
 
         [Test]
-        public void TestMod() => CreateModTest(new ModTestData
+        public void TestFlashlightExist() => CreateModTest(new ModTestData
         {
             Mod = new KaraokeModFlashlight(),
             Autoplay = true,
             Beatmap = new TestKaraokeBeatmap(null),
-            PassCondition = () => true
+            PassCondition = () =>
+            {
+                var drawableRuleset = Player.GetDrawableRuleset();
+
+                // should has at least one frashlight
+                return drawableRuleset.KeyBindingInputManager.Children.OfType<KaraokeModFlashlight.KaraokeFlashlight>().Any();
+            }
         });
     }
 }
