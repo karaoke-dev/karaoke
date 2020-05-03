@@ -10,7 +10,7 @@
     <EmbeddedResource Include="Resources\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="osu.Framework.Microphone" Version="1.0.2" />
+    <PackageReference Include="osu.Framework.Microphone" Version="1.0.4" />
     <PackageReference Include="ppy.osu.Game" Version="2020.408.1" />
     <PackageReference Include="LyricMaker" Version="1.1.1" />
     <PackageReference Include="NicoKaraParser" Version="1.1.0" />
@@ -19,5 +19,10 @@
   <ItemGroup>
     <Folder Include="Resources\Samples\Gameplay" />
     <Folder Include="Resources\Textures" />
+  </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>$(AssemblyName).Tests</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 </Project>

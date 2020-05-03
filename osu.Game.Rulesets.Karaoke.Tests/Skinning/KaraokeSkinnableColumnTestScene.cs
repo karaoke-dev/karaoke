@@ -7,6 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -52,6 +53,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 Colour = Color4.SlateGray.Opacity(0.2f),
                 Depth = 1
             });
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(RulesetConfigCache configCache)
+        {
+            // Cache ruleset config manager because karaoke input manager need it.
+            var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(Ruleset.Value.CreateInstance());
+            Dependencies.Cache(config);
         }
 
         [Test]
