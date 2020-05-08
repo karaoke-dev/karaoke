@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         public override Flashlight CreateFlashlight() => new KaraokeFlashlight();
 
-        private class KaraokeFlashlight : Flashlight
+        internal class KaraokeFlashlight : Flashlight
         {
             private readonly LayoutValue flashlightProperties = new LayoutValue(Invalidation.DrawSize);
 

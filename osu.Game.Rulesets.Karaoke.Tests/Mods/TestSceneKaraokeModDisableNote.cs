@@ -10,25 +10,28 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public class TestSceneKaraokeModFlashlight : ModTestScene
+    public class TestSceneKaraokeModDisableNote : ModTestScene
     {
-        public TestSceneKaraokeModFlashlight()
+        public TestSceneKaraokeModDisableNote()
             : base(new KaraokeRuleset())
         {
         }
 
         [Test]
-        public void TestFlashlightExist() => CreateModTest(new ModTestData
+        public void TestCheckNoteExistInPlayfield() => CreateModTest(new ModTestData
         {
-            Mod = new KaraokeModFlashlight(),
+            Mod = new KaraokeModDisableNote(),
             Autoplay = true,
             Beatmap = new TestKaraokeBeatmap(null),
             PassCondition = () =>
             {
-                var drawableRuleset = Player.GetDrawableRuleset();
+                var lyricPlayfield = Player.GetLyricPlayfield();
+                var notePlayfield = Player.GetNotePlayfield();
+                if (lyricPlayfield == null || notePlayfield == null)
+                    return false;
 
-                // should has at least one frashlight
-                return drawableRuleset.KeyBindingInputManager.Children.OfType<KaraokeModFlashlight.KaraokeFlashlight>().Any();
+                // check has no note in playfield
+                return lyricPlayfield.AllHitObjects.Any() && notePlayfield.AllHitObjects.Count() == 0;
             }
         });
     }

@@ -88,6 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             // Foreground sparkle
             foreground.ClearTransforms(false, nameof(foreground.Colour));
             foreground.Alpha = 0;
+
             if (isHitting.NewValue)
             {
                 foreground.Alpha = 1;
