@@ -1,6 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -14,8 +16,6 @@ using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osuTK.Graphics;
-using System;
-using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {

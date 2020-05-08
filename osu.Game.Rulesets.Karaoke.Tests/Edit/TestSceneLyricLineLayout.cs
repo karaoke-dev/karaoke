@@ -25,7 +25,7 @@ using osu.Game.Tests.Visual;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Tests
+namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
     [TestFixture]
     public class TestSceneLyricLineLayout : OsuTestScene

@@ -18,7 +18,7 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests
+namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
     [TestFixture]
     public class TestSceneSinger : OsuTestScene
