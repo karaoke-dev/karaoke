@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
     public class DefaultHitExplosion : CompositeDrawable
     {
         // need to check about what is this.
-        public const float NOTE_WIDTH = 6;
+        public const float NOTE_WIDTH = 12;
 
         public override bool RemoveWhenNotAlive => true;
 
@@ -30,11 +30,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             Origin = Anchor.Centre;
 
-            RelativeSizeAxes = Axes.X;
-            Height = NOTE_WIDTH;
+            RelativeSizeAxes = Axes.Y;
+            Width = NOTE_WIDTH;
 
             // scale roughly in-line with visual appearance of notes
-            Scale = new Vector2(1f, 0.6f);
+            Scale = new Vector2(0.6f, 1f);
 
             if (isSmall)
                 Scale *= 0.5f;
@@ -142,15 +142,15 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         private void onDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
         {
-            if (direction.NewValue == ScrollingDirection.Up)
+            if (direction.NewValue == ScrollingDirection.Left)
             {
-                Anchor = Anchor.TopCentre;
-                Y = NOTE_WIDTH / 2;
+                Anchor = Anchor.CentreLeft;
+                X = NOTE_WIDTH / 2;
             }
             else
             {
-                Anchor = Anchor.BottomCentre;
-                Y = -NOTE_WIDTH / 2;
+                Anchor = Anchor.CentreRight;
+                X = -NOTE_WIDTH / 2;
             }
         }
     }

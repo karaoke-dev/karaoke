@@ -9,11 +9,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Karaoke.UI;
-using osu.Game.Rulesets.UI.Scrolling;
+using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Skinning;
 using osuTK;
 using osuTK.Graphics;
@@ -42,8 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
                 CreatedDrawables.OfType<Container>().ForEach(c =>
                 {
+                    var colour = (runcount / 15) % 2 == 0 ? new Color4(94, 0, 57, 255) : new Color4(6, 84, 0, 255);
                     c.Add(new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.HitExplosion),
-                        _ => new DefaultHitExplosion((runcount / 15) % 2 == 0 ? new Color4(94, 0, 57, 255) : new Color4(6, 84, 0, 255), runcount % 6 != 0)
+                        _ => new DefaultHitExplosion(colour, runcount % 6 != 0)
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
@@ -61,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 Origin = Anchor.Centre,
                 RelativePositionAxes = Axes.Y,
                 Y = -0.25f,
-                // Size = new Vector2(Column.COLUMN_WIDTH, DefaultNotePiece.NOTE_HEIGHT),
+                Size = new Vector2(DefaultHitExplosion.NOTE_WIDTH, DefaultColumnBackground.COLUMN_HEIGHT),
             });
         }
     }

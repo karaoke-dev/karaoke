@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         private void load(ISkinSource skin, IScrollingInfo scrollingInfo)
         {
             string imageName = GetKaraokeSkinConfig<string>(skin, LegacyKaraokeSkinConfigurationLookups.ExplosionImage)?.Value
-                               ?? "lightingN";
+                               ?? "karaoke-lighting";
 
             float explosionScale = GetKaraokeSkinConfig<float>(skin, LegacyKaraokeSkinConfigurationLookups.ExplosionScale)?.Value
                                    ?? 1;
@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         private void onDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
         {
             if (explosion != null)
-                explosion.Anchor = direction.NewValue == ScrollingDirection.Up ? Anchor.TopCentre : Anchor.BottomCentre;
+                explosion.Anchor = direction.NewValue == ScrollingDirection.Left ? Anchor.CentreLeft : Anchor.CentreRight;
         }
 
         protected override void LoadComplete()
