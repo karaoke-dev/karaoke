@@ -9,9 +9,11 @@ using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
 using osuTK;
 using osuTK.Graphics;
@@ -19,7 +21,7 @@ using osuTK.Graphics;
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
     [TestFixture]
-    public class TestSceneHitExplosion : KaraokeSkinnableTestScene
+    public class TestSceneHitExplosion : KaraokeSkinnableColumnTestScene
     {
         public override IReadOnlyList<Type> RequiredTypes => new[]
         {
