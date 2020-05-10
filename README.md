@@ -4,7 +4,13 @@
 [![NuGet](https://img.shields.io/badge/月子我婆-passed-ff69b4.svg)](https://github.com/osu-Karaoke/osu-Karaoke)
 ![GitHub last commit](https://img.shields.io/github/last-commit/osu-karaoke/osu-karaoke)
 
-The release version of `osu!karaoke`
+The source code of `osu!karaoke` ruleset
+
+## How to run this project
+
+The fastest way is run [launcher](https://github.com/osu-Karaoke/osu-karaoke-launcher)(you might need to comile yourself).
+
+Or compile `osu.Game.Rulesets.Karaoke`, then throw dll into official osu!lazer's folder(sometimes might not working).
 
 ## License
 
