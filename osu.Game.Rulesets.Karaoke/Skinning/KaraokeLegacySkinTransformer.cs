@@ -79,6 +79,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                 case KaraokeSkinComponents.Note:
                     return new LegacyNotePiece();
+
+                case KaraokeSkinComponents.HitExplosion:
+                    return new LegacyHitExplosion();
             }
 
             return null;

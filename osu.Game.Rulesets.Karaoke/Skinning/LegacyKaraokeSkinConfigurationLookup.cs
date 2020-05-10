@@ -33,6 +33,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         NoteHeadImage,
         NoteTailImage,
         NoteBodyImage,
+        ExplosionImage,
+        ExplosionScale,
     }
 
     public enum LegacyKaraokeSkinNoteLayer
