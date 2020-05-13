@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 Origin = Anchor.Centre,
                 RelativePositionAxes = Axes.Y,
                 Y = -0.25f,
-                Size = new Vector2(DefaultHitExplosion.NOTE_WIDTH, DefaultColumnBackground.COLUMN_HEIGHT),
+                Size = new Vector2(DefaultHitExplosion.EXPLOSION_SIZE, DefaultColumnBackground.COLUMN_HEIGHT),
             });
         }
     }

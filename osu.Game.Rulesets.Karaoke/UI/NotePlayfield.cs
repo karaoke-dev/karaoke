@@ -280,7 +280,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
             var explosion = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.HitExplosion), _ =>
                 new DefaultHitExplosion(judgedObject.AccentColour.Value, judgedObject is DrawableNote))
             {
-                RelativeSizeAxes = Axes.Both,
                 Y = calculator.YPositionAt(note.HitObject.Tone)
             };
 

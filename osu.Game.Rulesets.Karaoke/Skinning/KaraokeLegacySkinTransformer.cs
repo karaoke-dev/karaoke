@@ -60,20 +60,20 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             switch (karaokeComponent.Component)
             {
                 case KaraokeSkinComponents.ColumnBackground:
-                    if (skinExist(LegacyColumnBackground.GetTextureName()))
+                    if (textureExist(LegacyColumnBackground.GetTextureName()))
                         return new LegacyColumnBackground();
 
                     return null;
 
                 case KaraokeSkinComponents.StageBackground:
-                    if (skinExist(LegacyStageBackground.GetTextureName()))
+                    if (textureExist(LegacyStageBackground.GetTextureName()))
                         return new LegacyStageBackground();
 
                     return null;
 
                 case KaraokeSkinComponents.JudgementLine:
                     var judgementLine = LegacyJudgementLine.GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage);
-                    if (skinExist(judgementLine))
+                    if (textureExist(judgementLine))
                         return new LegacyJudgementLine();
 
                     return null;
@@ -81,13 +81,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 case KaraokeSkinComponents.Note:
                     var foregroundBody = LegacyNotePiece.GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Foreground);
                     var backgroundBody = LegacyNotePiece.GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Background);
-                    if (skinExist(foregroundBody, backgroundBody))
+                    if (textureExist(foregroundBody, backgroundBody))
                         return new LegacyNotePiece();
 
                     return null;
 
                 case KaraokeSkinComponents.HitExplosion:
-                    if (skinExist(LegacyHitExplosion.GetTextureName()))
+                    if (animationExist(LegacyHitExplosion.GetTextureName()))
                         return new LegacyHitExplosion();
 
                     return null;
@@ -96,10 +96,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             return null;
         }
 
-        private bool skinExist(params string[] textureNames)
-        {
-            return textureNames.All(x => source.GetTexture(x) != null);
-        }
+        private bool textureExist(params string[] textureNames)
+            => textureNames.All(x => source.GetTexture(x) != null);
+
+        private bool animationExist(params string[] textureNames)
+            => textureNames.All(x => source.GetAnimation(x, true, false) != null);
 
         public Texture GetTexture(string componentName) => source.GetTexture(componentName);
 
