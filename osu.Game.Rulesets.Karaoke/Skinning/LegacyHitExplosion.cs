@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         private void load(ISkinSource skin, IScrollingInfo scrollingInfo)
         {
             string imageName = GetKaraokeSkinConfig<string>(skin, LegacyKaraokeSkinConfigurationLookups.ExplosionImage)?.Value
-                               ?? "karaoke-lighting";
+                               ?? GetTextureName();
 
             float explosionScale = GetKaraokeSkinConfig<float>(skin, LegacyKaraokeSkinConfigurationLookups.ExplosionScale)?.Value
                                    ?? 1;
@@ -69,5 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             explosion?.FadeInFromZero(80)
                      .Then().FadeOut(120);
         }
+
+        public static string GetTextureName() => "karaoke-lighting";
     }
 }

@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
     public class DefaultHitExplosion : CompositeDrawable
     {
         // need to check about what is this.
-        public const float NOTE_WIDTH = 12;
+        public const float EXPLOSION_SIZE = 15;
 
         public override bool RemoveWhenNotAlive => true;
 
@@ -29,9 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public DefaultHitExplosion(Color4 objectColour, bool isSmall = false)
         {
             Origin = Anchor.Centre;
-
-            RelativeSizeAxes = Axes.Y;
-            Width = NOTE_WIDTH;
+            Width = Height = EXPLOSION_SIZE;
 
             // scale roughly in-line with visual appearance of notes
             Scale = new Vector2(0.6f, 1f);
@@ -87,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     Origin = Anchor.Centre,
                     RelativeSizeAxes = Axes.Both,
                     Masking = true,
-                    Size = new Vector2(0.01f, initial_height),
+                    Size = new Vector2(0.1f, initial_height),
                     Blending = BlendingParameters.Additive,
                     Rotation = RNG.NextSingle(-angle_variangle, angle_variangle),
                     EdgeEffect = new EdgeEffectParameters
@@ -104,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     Origin = Anchor.Centre,
                     RelativeSizeAxes = Axes.Both,
                     Masking = true,
-                    Size = new Vector2(0.01f, initial_height),
+                    Size = new Vector2(initial_height),
                     Blending = BlendingParameters.Additive,
                     Rotation = RNG.NextSingle(-angle_variangle, angle_variangle),
                     EdgeEffect = new EdgeEffectParameters
@@ -145,12 +143,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
             if (direction.NewValue == ScrollingDirection.Left)
             {
                 Anchor = Anchor.CentreLeft;
-                X = NOTE_WIDTH / 2;
             }
             else
             {
                 Anchor = Anchor.CentreRight;
-                X = -NOTE_WIDTH / 2;
             }
         }
     }

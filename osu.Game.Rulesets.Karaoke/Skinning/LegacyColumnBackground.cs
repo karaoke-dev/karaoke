@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         private void load(ISkinSource skin, IScrollingInfo scrollingInfo)
         {
             string lightImage = GetKaraokeSkinConfig<string>(skin, LegacyKaraokeSkinConfigurationLookups.LightImage)?.Value
-                                ?? "karaoke-stage-light";
+                                ?? GetTextureName();
 
             float leftLineWidth = GetKaraokeSkinConfig<float>(skin, LegacyKaraokeSkinConfigurationLookups.UpLineWidth)
                 ?.Value ?? 1;
@@ -98,5 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 lightContainer.Scale = Vector2.One;
             }
         }
+
+        public static string GetTextureName() => "karaoke-stage-light";
     }
 }
