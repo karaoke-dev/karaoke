@@ -3,7 +3,6 @@
 
 using osu.Framework.Audio.Track;
 using osu.Framework.Graphics.Textures;
-using osu.Framework.Graphics.Video;
 using osu.Game.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.Beatmaps
@@ -24,7 +23,5 @@ namespace osu.Game.Rulesets.Karaoke.Screens.SaitenAdjustment.Beatmaps
 
         // TODO : get real track from resource
         protected override Track GetTrack() => AudioManager.Tracks.GetVirtual(10000);
-
-        protected override VideoSprite GetVideo() => null;
     }
 }
