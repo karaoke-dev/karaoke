@@ -19,6 +19,7 @@ using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
+using osu.Game.Skinning;
 using osuTK;
 using osuTK.Graphics;
 
@@ -33,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         private readonly BindableInt saitenPitch = new BindableInt();
 
-        private readonly FillFlowContainer<ColumnBackground> columnFlow;
+        private readonly FillFlowContainer<DefaultColumnBackground> columnFlow;
 
         private readonly Container judgementArea;
         private readonly JudgementContainer<DrawableNoteJudgement> judgements;
@@ -44,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly RealTimeSaitenVisualization realTimeSaitenVisualization;
         private readonly SaitenVisualization replaySaitenVisualization;
         private readonly SaitenMarker saitenMarker;
-        private readonly JudgementLineMarker judgementLine;
+        private readonly Drawable judgementLine;
 
         public int Columns { get; }
 
@@ -76,6 +77,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
                             CornerRadius = 5,
                             Children = new Drawable[]
                             {
+                                new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.StageBackground), _ => null)
+                                {
+                                    RelativeSizeAxes = Axes.Both
+                                },
                                 new Box
                                 {
                                     Name = "Background",
@@ -83,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                     Colour = Color4.Black,
                                     Alpha = 0.5f
                                 },
-                                columnFlow = new FillFlowContainer<ColumnBackground>
+                                columnFlow = new FillFlowContainer<DefaultColumnBackground>
                                 {
                                     Name = "Columns",
                                     RelativeSizeAxes = Axes.X,
@@ -108,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                 {
                                     RelativeSizeAxes = Axes.Both,
                                     RelativePositionAxes = Axes.X,
-                                    Children = new Drawable[]
+                                    Children = new[]
                                     {
                                         judgements = new JudgementContainer<DrawableNoteJudgement>
                                         {
@@ -117,7 +122,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                             AutoSizeAxes = Axes.Both,
                                             BypassAutoSizeAxes = Axes.Both
                                         },
-                                        judgementLine = new JudgementLineMarker(),
+                                        judgementLine = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.JudgementLine), _ => new DefaultJudgementLine())
+                                        {
+                                            RelativeSizeAxes = Axes.Y,
+                                            Anchor = Anchor.Centre,
+                                            Origin = Anchor.Centre,
+                                        },
                                         saitenMarker = new SaitenMarker
                                         {
                                             Alpha = 0
@@ -162,7 +172,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             for (int i = 0; i < columns; i++)
             {
-                var column = new ColumnBackground(i)
+                var column = new DefaultColumnBackground(i)
                 {
                     IsSpecial = i % 2 == 0
                 };
@@ -205,7 +215,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 var newValue = value.NewValue;
                 var targetTone = new Tone((newValue < 0 ? newValue - 1 : newValue) / 2, newValue % 2 != 0);
                 var targetY = calculator.YPositionAt(targetTone);
-                var targetHeight = targetTone.Half ? 5 : ColumnBackground.COLUMN_HEIGHT;
+                var targetHeight = targetTone.Half ? 5 : DefaultColumnBackground.COLUMN_HEIGHT;
                 var alpha = targetTone.Half ? 0.6f : 0.2f;
 
                 centerLine.MoveToY(targetY, 100);
@@ -214,7 +224,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             }, true);
         }
 
-        public void AddColumn(ColumnBackground c)
+        public void AddColumn(DefaultColumnBackground c)
         {
             columnFlow.Add(c);
         }
@@ -248,6 +258,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         internal void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)
         {
+            // Add judgement
             if (!judgedObject.DisplayResult || !DisplayJudgements.Value)
                 return;
 
@@ -261,6 +272,22 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 Origin = Anchor.Centre,
                 Y = calculator.YPositionAt(note.HitObject.Tone + 2)
             });
+
+            // Add hit explosion
+            if (!result.IsHit)
+                return;
+
+            var explosion = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.HitExplosion), _ =>
+                new DefaultHitExplosion(judgedObject.AccentColour.Value, judgedObject is DrawableNote))
+            {
+                Y = calculator.YPositionAt(note.HitObject.Tone)
+            };
+
+            // todo : shpuld be added into hitObjectArea.Explosions
+            // see how mania ruleset do
+            hitObjectArea.Add(explosion);
+
+            explosion.Delay(200).Expire(true);
         }
 
         [BackgroundDependencyLoader]

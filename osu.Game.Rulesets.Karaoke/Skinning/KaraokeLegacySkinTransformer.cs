@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -22,9 +23,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         private readonly KaraokeSkin skin;
 
+        private Lazy<bool> isLegacySkin;
+
         public KaraokeLegacySkinTransformer(ISkinSource source)
         {
             this.source = source;
+
+            if (source != null)
+                source.SourceChanged += sourceChanged;
+            sourceChanged();
 
             // TODO : need a better way to load resource
             var assembly = Assembly.GetExecutingAssembly();
@@ -37,19 +44,63 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
         }
 
+        private void sourceChanged()
+        {
+            isLegacySkin = new Lazy<bool>(() => source?.GetConfig<LegacySkinConfiguration.LegacySetting, decimal>(LegacySkinConfiguration.LegacySetting.Version) != null);
+        }
+
         public Drawable GetDrawableComponent(ISkinComponent component)
         {
             if (!(component is KaraokeSkinComponent karaokeComponent))
                 return null;
 
+            if (!isLegacySkin.Value)
+                return null;
+
             switch (karaokeComponent.Component)
             {
-                case KaraokeSkinComponents.Snow:
-                    return source.GetTexture("snow") != null ? new LegacySnow() : null;
+                case KaraokeSkinComponents.ColumnBackground:
+                    if (textureExist(LegacyColumnBackground.GetTextureName()))
+                        return new LegacyColumnBackground();
+
+                    return null;
+
+                case KaraokeSkinComponents.StageBackground:
+                    if (textureExist(LegacyStageBackground.GetTextureName()))
+                        return new LegacyStageBackground();
+
+                    return null;
+
+                case KaraokeSkinComponents.JudgementLine:
+                    var judgementLine = LegacyJudgementLine.GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage);
+                    if (textureExist(judgementLine))
+                        return new LegacyJudgementLine();
+
+                    return null;
+
+                case KaraokeSkinComponents.Note:
+                    var foregroundBody = LegacyNotePiece.GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Foreground);
+                    var backgroundBody = LegacyNotePiece.GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Background);
+                    if (textureExist(foregroundBody, backgroundBody))
+                        return new LegacyNotePiece();
+
+                    return null;
+
+                case KaraokeSkinComponents.HitExplosion:
+                    if (animationExist(LegacyHitExplosion.GetTextureName()))
+                        return new LegacyHitExplosion();
+
+                    return null;
             }
 
             return null;
         }
+
+        private bool textureExist(params string[] textureNames)
+            => textureNames.All(x => source.GetTexture(x) != null);
+
+        private bool animationExist(params string[] textureNames)
+            => textureNames.All(x => source.GetAnimation(x, true, false) != null);
 
         public Texture GetTexture(string componentName) => source.GetTexture(componentName);
 

@@ -130,7 +130,7 @@ namespace osu.Game.Rulesets.Karaoke
         // Need to add legacy id because sometimes KaraokeRulesetConfigManager is null if no legacy id
         public int LegacyID => 111;
 
-        public override ISkin CreateLegacySkinProvider(ISkinSource source) => new KaraokeLegacySkinTransformer(source);
+        public override ISkin CreateLegacySkinProvider(ISkinSource source, IBeatmap beatmap) => new KaraokeLegacySkinTransformer(source);
 
         public override IRulesetConfigManager CreateConfig(SettingsStore settings) => new KaraokeRulesetConfigManager(settings, RulesetInfo);
 
