@@ -10,6 +10,9 @@
     <EmbeddedResource Include="Resources\**" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Remove="Resources\TestResources.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="osu.Framework.Microphone" Version="1.0.4" />
     <PackageReference Include="ppy.osu.Game" Version="2020.408.1" />
     <PackageReference Include="LyricMaker" Version="1.1.1" />

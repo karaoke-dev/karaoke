@@ -1,0 +1,58 @@
+﻿karaoke file format v1
+
+[General]
+AudioFilename: saiten-adjustment.mp3
+AudioLeadIn: 0
+PreviewTime: 0
+Countdown: 0
+SampleSet: Normal
+StackLeniency: 1
+Mode: 111
+LetterboxInBreaks: 0
+WidescreenStoryboard: 1
+
+[Editor]
+DistanceSpacing: 1
+BeatDivisor: 4
+GridSize: 4
+TimelineZoom: 1
+
+[Metadata]
+Title:Saiten result display
+TitleUnicode:Saiten result display
+Artist:andy840119
+ArtistUnicode:andy840119
+Creator:andy840119
+Version:Normal
+Source:andy840119
+Tags:karaoke
+BeatmapID:1
+BeatmapSetID:1
+
+[Difficulty]
+HPDrainRate:2
+CircleSize:3
+OverallDifficulty:2
+ApproachRate:4
+SliderMultiplier:0.8
+SliderTickRate:1
+
+[Events]
+//Background and Video events
+Video,0,"video.mp4"
+0,0,"bg.png",0,0
+
+[Colours]
+
+[HitObjects]
+@[00:00:00]Ra[00:01:00]Ra#[00:02:00]Ra[00:03:00]Ra#[00:04:00]Ra[00:05:00]Ra#[00:06:00]Ra[00:07:00]Ra#[00:08:00]Ra[00:09:00]
+@note1=0,0#,1,1#,2,2#,3,3#,4
+@[00:15:00]Ra[00:16:00]Ra#[00:17:00]Ra[00:18:00]Ra#[00:19:00]Ra[00:20:00]Ra#[00:21:00]Ra[00:22:00]Ra#[00:23:00]Ra[00:24:00]
+@note1=4,3#,3,2#,2,1#,1,0#,0
+
+@[00:30:00]Ra[00:31:00]Ra#[00:32:00]Ra[00:33:00]Ra#[00:34:00]Ra[00:35:00]Ra#[00:36:00]Ra[00:37:00]Ra#[00:38:00]Ra[00:39:00]
+@note1=0,-1#,-1,-2#,-2,-3#,-3,-4#,-4
+@[00:45:00]Ra[00:46:00]Ra#[00:47:00]Ra[00:48:00]Ra#[00:49:00]Ra[00:50:00]Ra#[00:51:00]Ra[00:52:00]Ra#[00:53:00]Ra[00:54:00]
+@note1=-4,-4#,-3,-3#,-2,-2#,-1,-1#,0
+
+end

@@ -20,9 +20,6 @@
     <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Remove="Resources\TestResources.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\osu.Game.Rulesets.Karaoke\osu.Game.Rulesets.Karaoke.csproj" />
   </ItemGroup>
   <PropertyGroup Label="Project">
