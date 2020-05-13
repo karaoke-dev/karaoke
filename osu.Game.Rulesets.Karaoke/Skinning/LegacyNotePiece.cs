@@ -209,7 +209,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             });
         }
 
-        protected string GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
+        public static string GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
         {
             string suffix;
 
