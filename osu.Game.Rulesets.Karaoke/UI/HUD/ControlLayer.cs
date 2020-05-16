@@ -16,7 +16,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class ControlOverlay : CompositeDrawable, IKeyBindingHandler<KaraokeAction>
+    public class ControlLayer : CompositeDrawable, IKeyBindingHandler<KaraokeAction>
     {
         private readonly BindableInt bindablePitch = new BindableInt();
         private readonly BindableInt bindableVocalPitch = new BindableInt();
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         private readonly GameplaySettingsOverlay gameplaySettingsOverlay;
 
-        public ControlOverlay()
+        public ControlLayer()
         {
             InternalChildren = new Drawable[]
             {
