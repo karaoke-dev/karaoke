@@ -58,6 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     Origin = Anchor.CentreRight,
                 });
 
+            // Add common group
             AddSettingsGroup(new VisualSettings { Expanded = false });
             AddSettingsGroup(new PitchSettings { Expanded = false });
             AddSettingsGroup(new RubyRomajiSettings { Expanded = false });
