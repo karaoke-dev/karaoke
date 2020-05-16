@@ -12,9 +12,9 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.UI
 {
     [TestFixture]
-    public class TestCaseControlOverlay : OsuTestScene
+    public class TestCaseControlLayer : OsuTestScene
     {
-        public ControlOverlay ControlOverlay { get; set; }
+        public ControlLayer ControlLayer { get; set; }
 
         [BackgroundDependencyLoader]
         private void load(RulesetConfigCache configCache)
@@ -26,13 +26,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
             Add(new Container
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = ControlOverlay = new ControlOverlay
+                Child = ControlLayer = new ControlLayer(null)
                 {
                     RelativeSizeAxes = Axes.Both,
                 }
             });
 
-            AddStep("Toggle setting", ControlOverlay.ToggleGameplaySettingsOverlay);
+            AddStep("Toggle setting", ControlLayer.ToggleGameplaySettingsOverlay);
         }
     }
 }

@@ -23,7 +23,7 @@ using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModPractice : ModAutoplay<KaraokeHitObject>, IApplicableToHUD, IApplicableToBeatmap
+    public class KaraokeModPractice : ModAutoplay<KaraokeHitObject>, IApplicableToKaraokeHUD, IApplicableToBeatmap
     {
         public override string Name => "Practice";
         public override string Acronym => "Practice";
@@ -55,76 +55,34 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             }
         }
 
-        public void ApplyToHUD(HUDOverlay overlay)
+        public void ApplyToKaraokeHUD(KaraokeHUDOverlay overlay)
         {
-            // Create overlay
-            overlay.Add(new KaraokeActionContainer(rulesetInfo, drawableRuleset)
+            var adjustmentOverlay = new GameplaySettingsOverlay
             {
-                RelativeSizeAxes = Axes.Both,
-                Child = new KaraokePracticeContainer(beatmap)
-                {
-                    Clock = new FramedClock(new StopwatchClock(true)),
-                    RelativeSizeAxes = Axes.Both
-                }
+                RelativeSizeAxes = Axes.Y,
+                Anchor = Anchor.CentreRight,
+                Origin = Anchor.CentreRight,
+            };
+
+            var triggerButton = new ControlLayer.TriggerButton
+            {
+                Name = "Toggle Practice",
+                Text = "Practice",
+                TooltipText = "Open/Close practice overlay",
+                Action = () => adjustmentOverlay.ToggleVisibility()
+            };
+
+            overlay.controlLayer.AddExtraOverlay(triggerButton, adjustmentOverlay);
+
+            // Add practice group into overlay
+            adjustmentOverlay.Add(new PracticeSettings(beatmap)
+            {
+                Expanded = true,
+                Width = 400
             });
-        }
 
-        public class KaraokeActionContainer : DatabasedKeyBindingContainer<KaraokeAction>
-        {
-            private readonly DrawableKaraokeRuleset drawableRuleset;
-
-            protected IRulesetConfigManager Config;
-
-            public KaraokeActionContainer(RulesetInfo ruleset, DrawableKaraokeRuleset drawableRuleset)
-                : base(ruleset, 0, SimultaneousBindingMode.Unique)
-            {
-                this.drawableRuleset = drawableRuleset;
-            }
-
-            protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-            {
-                var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-                dependencies.Cache(drawableRuleset.Config);
-                dependencies.Cache(drawableRuleset.Session);
-                return dependencies;
-            }
-        }
-
-        public class KaraokePracticeContainer : ControlOverlay
-        {
-            private readonly GameplaySettingsOverlay adjustmentOverlay;
-
-            public KaraokePracticeContainer(KaraokeBeatmap beatmap)
-            {
-                AddExtraOverlay(new TriggerButton
-                    {
-                        Name = "Toggle Practice",
-                        Text = "Practice",
-                        TooltipText = "Open/Close practice overlay",
-                        Action = () => adjustmentOverlay.ToggleVisibility()
-                    },
-                    adjustmentOverlay = new GameplaySettingsOverlay
-                    {
-                        RelativeSizeAxes = Axes.Y,
-                        Anchor = Anchor.CentreRight,
-                        Origin = Anchor.CentreRight,
-                    });
-
-                // Add practice group into overlay
-                adjustmentOverlay.Add(new PracticeSettings(beatmap)
-                {
-                    Expanded = true,
-                    Width = 400
-                });
-
-                // Add playback group into main overlay
-                AddSettingsGroup(new PlaybackSettings { Expanded = false });
-
-                // Add translate group if this beatmap has translate
-                var translateDictionary = beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault();
-                if (translateDictionary != null && translateDictionary.Translates.Any())
-                    AddSettingsGroup(new TranslateSettings(translateDictionary) { Expanded = false });
-            }
-        }
+            // Add playback group into main overlay
+            overlay.controlLayer.AddSettingsGroup(new PlaybackSettings { Expanded = false });
+        } 
     }
 }
