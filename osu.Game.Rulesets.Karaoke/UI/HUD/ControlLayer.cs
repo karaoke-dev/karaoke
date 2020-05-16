@@ -7,16 +7,19 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Input.Bindings;
+using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
 using osu.Game.Screens.Play.PlayerSettings;
 using osuTK;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class ControlOverlay : CompositeDrawable, IKeyBindingHandler<KaraokeAction>
+    public class ControlLayer : CompositeDrawable, IKeyBindingHandler<KaraokeAction>
     {
         private readonly BindableInt bindablePitch = new BindableInt();
         private readonly BindableInt bindableVocalPitch = new BindableInt();
@@ -26,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         private readonly GameplaySettingsOverlay gameplaySettingsOverlay;
 
-        public ControlOverlay()
+        public ControlLayer(IBeatmap beatmap)
         {
             InternalChildren = new Drawable[]
             {
@@ -55,9 +58,15 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     Origin = Anchor.CentreRight,
                 });
 
+            // Add common group
             AddSettingsGroup(new VisualSettings { Expanded = false });
             AddSettingsGroup(new PitchSettings { Expanded = false });
             AddSettingsGroup(new RubyRomajiSettings { Expanded = false });
+
+            // Add translate group if this beatmap has translate
+            var translateDictionary = beatmap?.HitObjects?.OfType<TranslateDictionary>().FirstOrDefault();
+            if (translateDictionary != null && translateDictionary.Translates.Any())
+                AddSettingsGroup(new TranslateSettings(translateDictionary) { Expanded = false });
         }
 
         public void ToggleGameplaySettingsOverlay() => gameplaySettingsOverlay.ToggleVisibility();
