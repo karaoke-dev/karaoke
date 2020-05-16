@@ -7,6 +7,7 @@ using NUnit.Framework;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
@@ -119,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var beatmap = lrcDecoder.Decode(stream);
 
                 // Get translate
-                var translates = beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault()?.Translates;
+                var translates = beatmap.GetProperty()?.Translates;
 
                 // Check is not null
                 Assert.IsTrue(translates != null);

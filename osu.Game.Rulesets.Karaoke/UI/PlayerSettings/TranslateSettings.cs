@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
         private readonly OsuSpriteText translateText;
         private readonly OsuDropdown<string> translateDropDown;
 
-        public TranslateSettings(TranslateDictionary dictionary)
+        public TranslateSettings(PropertyDictionary dictionary)
         {
             Children = new Drawable[]
             {

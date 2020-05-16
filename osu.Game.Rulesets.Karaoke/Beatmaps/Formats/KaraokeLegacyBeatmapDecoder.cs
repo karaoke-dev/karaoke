@@ -246,7 +246,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private void processTranslate(Beatmap beatmap, IEnumerable<string> translateLines)
         {
-            var dictionary = new TranslateDictionary();
+            var dictionary = new PropertyDictionary();
 
             foreach (var translateLine in translateLines)
             {
