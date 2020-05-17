@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
     {
         public static PropertyDictionary GetProperty(this IBeatmap beatmap) => beatmap?.HitObjects.OfType<PropertyDictionary>().FirstOrDefault();
 
-        public static bool IsScorable(this IBeatmap beatmap) => beatmap?.HitObjects.OfType<Note>().Any() ?? false;
+        public static bool IsScorable(this IBeatmap beatmap) => beatmap?.HitObjects.OfType<Note>().Any(x => x.Display) ?? false;
 
         public static List<string> GetTranslate(this IBeatmap beatmap, string languageCode)
         {
