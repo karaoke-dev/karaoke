@@ -9,6 +9,7 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Input.Bindings;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
@@ -64,9 +65,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
             AddSettingsGroup(new RubyRomajiSettings { Expanded = false });
 
             // Add translate group if this beatmap has translate
-            var translateDictionary = beatmap?.HitObjects?.OfType<TranslateDictionary>().FirstOrDefault();
-            if (translateDictionary != null && translateDictionary.Translates.Any())
-                AddSettingsGroup(new TranslateSettings(translateDictionary) { Expanded = false });
+            if (beatmap.AnyTranslate())
+                AddSettingsGroup(new TranslateSettings(beatmap.GetProperty()) { Expanded = false });
         }
 
         public void ToggleGameplaySettingsOverlay() => gameplaySettingsOverlay.ToggleVisibility();

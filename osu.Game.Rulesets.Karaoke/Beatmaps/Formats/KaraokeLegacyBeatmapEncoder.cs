@@ -72,12 +72,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private IEnumerable<string> encodeTranslate(Beatmap output)
         {
-            var translateDictionary = output.HitObjects.OfType<TranslateDictionary>().FirstOrDefault();
-
-            if (!(translateDictionary?.Translates?.Any() ?? false))
+            if (!output.AnyTranslate())
                 yield break;
 
-            foreach (var (languageCode, translates) in translateDictionary.Translates)
+            foreach (var (languageCode, translates) in output.GetProperty().Translates)
             {
                 foreach (var translate in translates)
                 {
