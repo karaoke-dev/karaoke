@@ -6,6 +6,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods

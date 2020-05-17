@@ -8,6 +8,7 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Timing;
 using osu.Game.Input.Bindings;
 using osu.Game.Rulesets.Configuration;
+using osu.Game.Rulesets.Karaoke.UI.HUD;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
