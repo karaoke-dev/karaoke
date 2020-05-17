@@ -11,14 +11,11 @@ using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
 using osu.Game.Screens.Play.PlayerSettings;
 using osuTK;
-using System.Linq;
 
-namespace osu.Game.Rulesets.Karaoke.UI
+namespace osu.Game.Rulesets.Karaoke.UI.HUD
 {
     public class ControlLayer : CompositeDrawable, IKeyBindingHandler<KaraokeAction>
     {
