@@ -3,6 +3,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/toy4vlii1t2vl8yr?svg=true)](https://ci.appveyor.com/project/andy840119/osu-karaoke-release)
 [![NuGet](https://img.shields.io/badge/月子我婆-passed-ff69b4.svg)](https://github.com/osu-Karaoke/osu-Karaoke)
 ![GitHub last commit](https://img.shields.io/github/last-commit/osu-karaoke/osu-karaoke)
+[![dev chat](https://discordapp.com/api/guilds/299006062323826688/widget.png?style=shield)](https://discord.gg/ppy)
+
 
 The source code of `osu!karaoke` ruleset
 
