@@ -17,6 +17,9 @@ using osuTK;
 using System;
 using System.Net.Http;
 using osu.Framework.Allocation;
+using Markdig;
+using Markdig.Extensions.AutoIdentifiers;
+using Markdig.Extensions.Yaml;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
@@ -64,6 +67,15 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 {
                     Text = httpClient.GetStringAsync(build.ReadmeDownloadUrl).Result;
                 }
+            }
+
+            protected override void AddMarkdownComponent(IMarkdownObject markdownObject, FillFlowContainer container, int level)
+            {
+                // hide hidden message in markdown document
+                if (markdownObject is YamlFrontMatterBlock)
+                    return;
+
+                base.AddMarkdownComponent(markdownObject, container, level);
             }
 
             /// <summary>
@@ -190,6 +202,12 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                     }
                 }
             }
+
+            protected override MarkdownPipeline CreateBuilder()
+                 => new MarkdownPipelineBuilder().UseAutoIdentifiers(AutoIdentifierOptions.GitHub)
+                                            .UseYamlFrontMatter()
+                                            .UseEmojiAndSmiley()
+                                            .UseAdvancedExtensions().Build();
         }
 
         protected virtual FillFlowContainer CreateHeader() => new FillFlowContainer
