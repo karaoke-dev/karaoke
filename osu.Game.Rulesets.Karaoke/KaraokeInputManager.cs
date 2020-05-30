@@ -79,9 +79,9 @@ namespace osu.Game.Rulesets.Karaoke
                 if (!lastState.HasSound && state.HasSound)
                     KeyBindingContainer.TriggerPressed(action);
                 else if (lastState.HasSound && !state.HasSound)
-                    KeyBindingContainer.TriggerPressed(action);
-                else
                     KeyBindingContainer.TriggerReleased(action);
+                else
+                    KeyBindingContainer.TriggerPressed(action);
             }
             else
             {
