@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke
                 case ModType.Automation:
                     return new Mod[]
                     {
-                        new KaraokeModAutoplay(),
+                        new MultiMod(new KaraokeModAutoplay(), new KaraokeModAutoplayBySinger()),
                     };
 
                 case ModType.Fun:
