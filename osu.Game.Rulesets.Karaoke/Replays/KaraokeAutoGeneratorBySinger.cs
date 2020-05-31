@@ -55,8 +55,8 @@ namespace osu.Game.Rulesets.Karaoke.Replays
                 var length = totalLength;
                 long lengthSum = 0;
 
-                // Microphone at 10 fps's sample size
-                var bytesPerIteration = 3276 * TrackBass.BYTES_PER_SAMPLE;
+                // Microphone at period 10
+                var bytesPerIteration = 3276 * info.Channels * TrackBass.BYTES_PER_SAMPLE;
 
                 var pitches = new Dictionary<double, float?>();
                 var sampleBuffer = new float[bytesPerIteration / TrackBass.BYTES_PER_SAMPLE];
@@ -67,9 +67,13 @@ namespace osu.Game.Rulesets.Karaoke.Replays
                     length = Bass.ChannelGetData(decodeStream, sampleBuffer, bytesPerIteration);
                     lengthSum += length;
 
+                    // usually sample 1 is vocal
+                    var channel0Sample = sampleBuffer.Where((x, i) => i % 2 == 0).ToArray();
+                    //var channel1Sample = sampleBuffer.Where((x, i) => i % 2 != 0).ToArray();
+
                     // Convert buffer to pitch data
-                    var time = lengthSum * trackLength / totalLength ;// todo : get track's time
-                    var pitch = Pitch.FromYin(sampleBuffer, info.Frequency, low: 40, high: 1000);
+                    var time = lengthSum * trackLength / totalLength;
+                    var pitch = Pitch.FromYin(channel0Sample, info.Frequency, low: 40, high: 1000);
                     pitches.Add(time, pitch == 0 ? default(float?) : pitch);
                 }
 
@@ -92,7 +96,10 @@ namespace osu.Game.Rulesets.Karaoke.Replays
             foreach (var pitch in pitches)
             {
                 if (pitch.Value != null)
-                    yield return new KaraokeReplayFrame(pitch.Key, pitch.Value ?? 0);
+                {
+                    var scale = ((pitch.Value ?? 0) - 80) / 7;
+                    yield return new KaraokeReplayFrame(pitch.Key, scale);
+                }
                 else if(lastPitch.Value != null)
                     yield return new KaraokeReplayFrame(pitch.Key);
 
