@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using ManagedBass;
+using NWaves.Features;
 using osu.Framework.Audio.Callbacks;
 using osu.Framework.Audio.Track;
 using osu.Game.Replays;
@@ -9,6 +10,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Replays;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,19 +18,8 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 {
     public class KaraokeAutoGeneratorBySinger : AutoGenerator
     {
-        /// <summary>
-        /// Points are initially generated to a 1ms resolution to cover most use cases.
-        /// </summary>
-        private const float resolution = 0.001f;
-
-
-        /// <summary>
-        /// The data stream is iteratively decoded to provide this many points per iteration so as to not exceed BASS's internal buffer size.
-        /// </summary>
-        private const int points_per_iteration = 100000;
-
         private readonly CancellationTokenSource cancelSource = new CancellationTokenSource();
-        private readonly Task readTask;
+        private readonly Task<Dictionary<double,float?>> readTask;
 
         /// <summary>
         /// Using audio's vioce to generate replay frames
@@ -36,17 +27,20 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         /// </summary>
         /// <param name="beatmap"></param>
         /// <param name="data"></param>
-        public KaraokeAutoGeneratorBySinger(KaraokeBeatmap beatmap, Stream data)
+        public KaraokeAutoGeneratorBySinger(KaraokeBeatmap beatmap, Track track, Stream data)
            : base(beatmap)
         {
             if (data == null)
+                return;
+
+            if (track == null)
                 return;
 
             readTask = Task.Run(() =>
             {
                 // for the time being, this code cannot run if there is no bass device available.
                 if (Bass.CurrentDevice <= 0)
-                    return;
+                    return new Dictionary<double, float?>();
 
                 int decodeStream = 0;
                 using (var fileCallbacks = new FileCallbacks(new DataStreamFileProcedures(data)))
@@ -56,33 +50,54 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
                 Bass.ChannelGetInfo(decodeStream, out ChannelInfo info);
 
-                long length = Bass.ChannelGetLength(decodeStream);
+                var trackLength = track.Length;
+                var totalLength = Bass.ChannelGetLength(decodeStream);
+                var length = totalLength;
+                long lengthSum = 0;
 
-                // Each "point" is generated from a number of samples, each sample contains a number of channels
-                int samplesPerPoint = (int)(info.Frequency * resolution * info.Channels);
+                // Microphone at 10 fps's sample size
+                var bytesPerIteration = 3276 * TrackBass.BYTES_PER_SAMPLE;
 
-                int bytesPerPoint = samplesPerPoint * TrackBass.BYTES_PER_SAMPLE;
-
-                // Each iteration pulls in several samples
-                int bytesPerIteration = bytesPerPoint * points_per_iteration;
+                var pitches = new Dictionary<double, float?>();
                 var sampleBuffer = new float[bytesPerIteration / TrackBass.BYTES_PER_SAMPLE];
 
                 // Read sample data
                 while (length > 0)
                 {
                     length = Bass.ChannelGetData(decodeStream, sampleBuffer, bytesPerIteration);
+                    lengthSum += length;
 
-                    // todo : convert pitch from here
+                    // Convert buffer to pitch data
+                    var time = lengthSum * trackLength / totalLength ;// todo : get track's time
+                    var pitch = Pitch.FromYin(sampleBuffer, info.Frequency, low: 40, high: 1000);
+                    pitches.Add(time, pitch == 0 ? default(float?) : pitch);
                 }
+
+                return pitches;
             }, cancelSource.Token);
         }
 
         public override Replay Generate()
         {
+            var result = readTask.Result;
             return new Replay
             {
-                Frames = new List<ReplayFrame>()
+                Frames = getReplayFrames(result).ToList()
             };
+        }
+
+        private IEnumerable<ReplayFrame> getReplayFrames(IDictionary<double, float?> pitches)
+        {
+            var lastPitch = pitches.FirstOrDefault();
+            foreach (var pitch in pitches)
+            {
+                if (pitch.Value != null)
+                    yield return new KaraokeReplayFrame(pitch.Key, pitch.Value ?? 0);
+                else if(lastPitch.Value != null)
+                    yield return new KaraokeReplayFrame(pitch.Key);
+
+                lastPitch = pitch;
+            }
         }
     }
 }
