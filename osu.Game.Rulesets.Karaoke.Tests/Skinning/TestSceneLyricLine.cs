@@ -18,11 +18,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
     [TestFixture]
     public class TestSceneLyricLine : KaraokeSkinnableTestScene
     {
-        public override IReadOnlyList<Type> RequiredTypes => new[]
-        {
-            typeof(DrawableLyricLine)
-        };
-
         public TestSceneLyricLine()
         {
             AddStep("Default Lyric", () => SetContents(() => testSingle()));

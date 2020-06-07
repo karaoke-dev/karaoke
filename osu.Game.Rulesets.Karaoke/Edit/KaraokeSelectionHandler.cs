@@ -27,7 +27,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Resolved]
         private IPlacementHandler placementHandler { get; set; }
 
-        public override MenuItem[] ContextMenuItems
+        // todo : need to check here is workable or not.
+        public new MenuItem[] ContextMenuItems
         {
             get
             {
