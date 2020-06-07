@@ -15,9 +15,11 @@ using osu.Game.Users;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModAutoplay : ModAutoplay<KaraokeHitObject>
+    public class KaraokeModAutoplay : ModAutoplay<KaraokeHitObject>, IApplicableToMicrophone
     {
         protected Replay Replay;
+
+        public bool MicrophoneEnabled => false;
 
         public override Score CreateReplayScore(IBeatmap beatmap) => new Score
         {
