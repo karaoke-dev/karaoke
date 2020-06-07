@@ -12,7 +12,9 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Handlers.Microphone;
 using osu.Framework.Input.StateChanges.Events;
 using osu.Framework.Input.States;
+using osu.Game.Beatmaps;
 using osu.Game.Input.Handlers;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Mods;
@@ -29,10 +31,14 @@ namespace osu.Game.Rulesets.Karaoke
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager config, IBindable<IReadOnlyList<Mod>> mods)
+        private void load(KaraokeRulesetConfigManager config, IBindable<IReadOnlyList<Mod>> mods, IBindable<WorkingBeatmap> beatmap)
         {
-            var disableMicrophoneDevice = mods.Value.OfType<IApplicableToMicrophone>().Any(x => !x.MicrophoneEnabled);
-            if (disableMicrophoneDevice)
+            var disableMicrophoneDeviceByMod = mods.Value.OfType<IApplicableToMicrophone>().Any(x => !x.MicrophoneEnabled);
+            if (disableMicrophoneDeviceByMod)
+                return;
+
+            var beatmapSaitenable = beatmap.Value.Beatmap.IsScorable();
+            if (!beatmapSaitenable)
                 return;
 
             var selectedDevice = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice).Value;
