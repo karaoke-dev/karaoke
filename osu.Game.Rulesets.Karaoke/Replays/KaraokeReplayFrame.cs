@@ -27,5 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
             Scale = scale;
             Sound = true;
         }
+
+        public override string ToString() => $"{Time}, {Scale}";
     }
 }

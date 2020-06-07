@@ -30,7 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
                 Tone = new Tone(0, true)
             });
 
-            
             var generated = new KaraokeAutoGenerator(beatmap).Generate();
 
             Assert.IsTrue(generated.Frames.Count == 2, "Replay must have 2 frames, start and end.");

@@ -43,7 +43,6 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
                 Bass.ChannelGetInfo(decodeStream, out ChannelInfo info);
 
-
                 var totalLength = Bass.ChannelGetLength(decodeStream);
                 double trackLength = Bass.ChannelBytes2Seconds(decodeStream, totalLength) * 1000;
                 var length = totalLength;
