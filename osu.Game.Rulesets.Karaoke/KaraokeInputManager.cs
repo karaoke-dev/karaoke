@@ -2,16 +2,22 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Input;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Handlers.Microphone;
 using osu.Framework.Input.StateChanges.Events;
 using osu.Framework.Input.States;
+using osu.Game.Beatmaps;
 using osu.Game.Input.Handlers;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Mods;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Karaoke
@@ -25,8 +31,16 @@ namespace osu.Game.Rulesets.Karaoke
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager config)
+        private void load(KaraokeRulesetConfigManager config, IBindable<IReadOnlyList<Mod>> mods, IBindable<WorkingBeatmap> beatmap)
         {
+            var disableMicrophoneDeviceByMod = mods.Value.OfType<IApplicableToMicrophone>().Any(x => !x.MicrophoneEnabled);
+            if (disableMicrophoneDeviceByMod)
+                return;
+
+            var beatmapSaitenable = beatmap.Value.Beatmap.IsScorable();
+            if (!beatmapSaitenable)
+                return;
+
             var selectedDevice = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice).Value;
             var microphoneList = new MicrophoneManager().MicrophoneDeviceNames.ToList();
 
