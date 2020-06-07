@@ -27,13 +27,10 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         /// </summary>
         /// <param name="beatmap"></param>
         /// <param name="data"></param>
-        public KaraokeAutoGeneratorBySinger(KaraokeBeatmap beatmap, Track track, Stream data)
+        public KaraokeAutoGeneratorBySinger(KaraokeBeatmap beatmap, Stream data)
            : base(beatmap)
         {
             if (data == null)
-                return;
-
-            if (track == null)
                 return;
 
             readTask = Task.Run(() =>

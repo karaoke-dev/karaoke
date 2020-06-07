@@ -2,39 +2,29 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
-using osu.Framework.Audio;
-using osu.Framework.Threading;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Tests.Visual;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Replays
 {
     public class TestSceneAutoGenerationBySinger : OsuTestScene
     {
-        private AudioManager manager;
-
-        [SetUp]
-        public void SetUp()
-        {
-            var thread = new AudioThread();
-            manager = new AudioManager(thread, null, null);
-            thread.Start();
-        }
-
         [Test]
         public void TestSingDemoSong()
         {
-            // need to check track's length
-            var track = TestResources.OpenTrackInfo(manager, "demo");
-            //Assert.AreEqual((int)track.Length, 4365);
-
             var data = TestResources.OpenTrackResource("demo");
-            var generated = new KaraokeAutoGeneratorBySinger(null, track, data).Generate();
+            var generated = new KaraokeAutoGeneratorBySinger(null, data).Generate();
 
-            // todo : run some test case.
-            
+            // test total frames
             Assert.IsTrue(generated.Frames.Count == 55, "Replay frame should have 55.");
+            Assert.AreEqual(222, (int)generated.Frames[0].Time, "Incorrect time");
+            Assert.AreEqual(4234, (int)generated.Frames[54].Time, "Incorrect time");
+
+            // test saitenable frames
+            var karoakeFrames = generated.Frames.OfType<KaraokeReplayFrame>();
+            Assert.AreEqual(54, karoakeFrames.Where(x => x.Sound).Count(), "Incorrect time");
         }
     }
 }

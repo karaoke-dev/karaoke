@@ -37,13 +37,12 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         public override IconUsage? Icon => KaraokeIcon.ModAutoPlayBySinger;
 
-        private Track track;
         private Stream trackData;
 
         public override Score CreateReplayScore(IBeatmap beatmap) => new Score
         {
             ScoreInfo = new ScoreInfo { User = new User { Username = "karaoke!singer" } },
-            Replay = Replay = new KaraokeAutoGeneratorBySinger((KaraokeBeatmap)beatmap, track, trackData).Generate(),
+            Replay = Replay = new KaraokeAutoGeneratorBySinger((KaraokeBeatmap)beatmap, trackData).Generate(),
         };
 
         public override void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
@@ -56,7 +55,6 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
             var accessResourceContainer = new AccessResourceContainer(karaokePlayfield.WorkingBeatmap.BeatmapInfo);
             drawableKaraokeRuleset.Overlays.Add(accessResourceContainer);
-            track = karaokePlayfield.WorkingBeatmap.Track;
             trackData = accessResourceContainer.TrackData;
 
             base.ApplyToDrawableRuleset(drawableRuleset);
