@@ -38,10 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
             readTask = Task.Run(() =>
             {
-                // for the time being, this code cannot run if there is no bass device available.
-                if (Bass.CurrentDevice <= 0)
-                    return new Dictionary<double, float?>();
-
                 int decodeStream = 0;
                 using (var fileCallbacks = new FileCallbacks(new DataStreamFileProcedures(data)))
                 {
@@ -50,8 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
                 Bass.ChannelGetInfo(decodeStream, out ChannelInfo info);
 
-                var trackLength = track.Length;
+
                 var totalLength = Bass.ChannelGetLength(decodeStream);
+                double trackLength = Bass.ChannelBytes2Seconds(decodeStream, totalLength) * 1000;
                 var length = totalLength;
                 long lengthSum = 0;
 
