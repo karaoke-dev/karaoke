@@ -16,7 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         // To record this frame has sound.
         public bool Sound { get; set; }
 
-        public KaraokeReplayFrame()
+        public KaraokeReplayFrame(double time)
+             : base(time)
         {
         }
 
@@ -26,5 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
             Scale = scale;
             Sound = true;
         }
+
+        public override string ToString() => $"{Time}, {Scale}";
     }
 }
