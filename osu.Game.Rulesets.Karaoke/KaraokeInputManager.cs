@@ -69,19 +69,17 @@ namespace osu.Game.Rulesets.Karaoke
                     throw new ArgumentNullException($"{nameof(state)} cannot be null.");
 
                 // TODO : adjust saiten action by setting
-                var realPitch = ((float)(state.HasSound ? state.Pitch : lastState.Pitch) - 70) / 7;
+                var realPitch = ((float)(state.HasSound ? state.Pitch : lastState.Pitch) - 60) / 7;
 
                 var action = new KaraokeSaitenAction
                 {
                     Scale = realPitch
                 };
 
-                if (!lastState.HasSound && state.HasSound)
-                    KeyBindingContainer.TriggerPressed(action);
-                else if (lastState.HasSound && !state.HasSound)
-                    KeyBindingContainer.TriggerPressed(action);
-                else
+                if (lastState.HasSound && !state.HasSound)
                     KeyBindingContainer.TriggerReleased(action);
+                else
+                    KeyBindingContainer.TriggerPressed(action);
             }
             else
             {
