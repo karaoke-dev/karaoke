@@ -47,6 +47,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
         }
 
-        private Texture getTexture(ISkinSource skin) => skin.GetTexture("karaoke-stage-background");
+        private Texture getTexture(ISkinSource skin) => skin.GetTexture(GetTextureName());
+
+        public static string GetTextureName() => "karaoke-stage-background";
     }
 }

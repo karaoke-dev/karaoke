@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -10,6 +11,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Input.Handlers;
 using osu.Game.Replays;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Replays;
@@ -43,6 +45,13 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             // TODO : it should be moved into NotePlayfield
             BarLines = new BarLineGenerator<BarLine>(Beatmap).BarLines;
+
+            // create overlay
+            var overlay = new KaraokeHUDOverlay(this);
+            foreach (var mod in mods.OfType<IApplicableToKaraokeHUD>())
+                mod.ApplyToKaraokeHUD(overlay);
+
+            Overlays.Add(overlay);
         }
 
         protected override Playfield CreatePlayfield() => new KaraokePlayfield();
@@ -86,5 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         }
 
         protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new KaraokeFramedReplayInputHandler(replay);
+
+        protected override ReplayRecorder CreateReplayRecorder(Replay replay) => new KaraokeReplayRecorder(replay);
     }
 }

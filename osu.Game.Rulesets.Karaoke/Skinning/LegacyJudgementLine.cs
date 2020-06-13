@@ -96,6 +96,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         }
 
         protected Texture GetTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup)
+            => skin.GetTexture(GetTextureNameFromLookup(lookup));
+
+        public static string GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup)
         {
             string suffix;
 
@@ -117,8 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     throw new ArgumentOutOfRangeException($"{nameof(lookup)} should be body, head or tail.");
             }
 
-            string noteImage = $"karaoke-judgement-line-{suffix}";
-            return skin.GetTexture(noteImage);
+            return $"karaoke-judgement-line-{suffix}";
         }
     }
 }

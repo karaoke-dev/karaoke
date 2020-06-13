@@ -18,11 +18,13 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Difficulty;
 using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Mods;
+using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Resources.Fonts;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.Replays.Types;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 using osu.Game.Skinning;
@@ -99,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke
                 case ModType.Automation:
                     return new Mod[]
                     {
-                        new KaraokeModAutoplay(),
+                        new MultiMod(new KaraokeModAutoplay(), new KaraokeModAutoplayBySinger()),
                     };
 
                 case ModType.Fun:
@@ -131,6 +133,8 @@ namespace osu.Game.Rulesets.Karaoke
         public int LegacyID => 111;
 
         public override ISkin CreateLegacySkinProvider(ISkinSource source, IBeatmap beatmap) => new KaraokeLegacySkinTransformer(source);
+
+        public override IConvertibleReplayFrame CreateConvertibleReplayFrame() => new KaraokeReplayFrame();
 
         public override IRulesetConfigManager CreateConfig(SettingsStore settings) => new KaraokeRulesetConfigManager(settings, RulesetInfo);
 

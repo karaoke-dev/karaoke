@@ -21,12 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             if (Time.Current <= MaxAvailableTime)
                 return;
 
-            Add(new KaraokeReplayFrame
-            {
-                Time = Time.Current,
-                Scale = action.Scale,
-                Sound = true
-            });
+            Add(new KaraokeReplayFrame(Time.Current, action.Scale));
 
             // Trigger update last frame
             addStateCache.Invalidate();
@@ -37,11 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             if (Time.Current < MaxAvailableTime)
                 return;
 
-            Add(new KaraokeReplayFrame
-            {
-                Time = Time.Current + 1,
-                Sound = false
-            });
+            Add(new KaraokeReplayFrame(Time.Current + 1));
         }
 
         protected override void Update()

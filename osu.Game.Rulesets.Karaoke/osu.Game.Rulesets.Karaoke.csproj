@@ -7,7 +7,7 @@
     <RootNamespace>osu.Game.Rulesets.Karaoke</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="osu.Framework.Microphone" Version="1.0.4" />
+    <PackageReference Include="osu.Framework.Microphone" Version="1.0.7" />
     <PackageReference Include="ppy.osu.Game" Version="2020.408.1" />
     <PackageReference Include="LyricMaker" Version="1.1.1" />
     <PackageReference Include="NicoKaraParser" Version="1.1.0" />

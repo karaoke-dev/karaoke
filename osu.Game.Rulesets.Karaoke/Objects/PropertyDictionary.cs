@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class TranslateDictionary : KaraokeHitObject
+    public class PropertyDictionary : KaraokeHitObject
     {
         public IDictionary<string, List<string>> Translates { get; } = new Dictionary<string, List<string>>();
     }

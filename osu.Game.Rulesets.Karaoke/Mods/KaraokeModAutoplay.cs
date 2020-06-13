@@ -15,14 +15,16 @@ using osu.Game.Users;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModAutoplay : ModAutoplay<KaraokeHitObject>
+    public class KaraokeModAutoplay : ModAutoplay<KaraokeHitObject>, IApplicableToMicrophone
     {
-        private Replay replay;
+        protected Replay Replay;
+
+        public bool MicrophoneEnabled => false;
 
         public override Score CreateReplayScore(IBeatmap beatmap) => new Score
         {
             ScoreInfo = new ScoreInfo { User = new User { Username = "osu!7pupu" } },
-            Replay = replay = new KaraokeAutoGenerator((KaraokeBeatmap)beatmap).Generate(),
+            Replay = Replay = new KaraokeAutoGenerator((KaraokeBeatmap)beatmap).Generate(),
         };
 
         public override void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
@@ -33,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 return;
 
             var notePlayfield = karaokePlayfield.NotePlayfield;
-            var frames = replay.Frames.OfType<KaraokeReplayFrame>();
+            var frames = Replay.Frames.OfType<KaraokeReplayFrame>();
 
             foreach (var frame in frames)
             {
