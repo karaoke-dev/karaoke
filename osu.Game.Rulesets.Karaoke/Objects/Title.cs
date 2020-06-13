@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public double Duration { get; set; }
 
-        public double EndTime { get; set; }
+        public double EndTime => StartTime + Duration;
 
         public int LineInterval { get; set; }
 

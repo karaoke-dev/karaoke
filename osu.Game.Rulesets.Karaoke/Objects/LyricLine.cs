@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                     yield return new Note
                     {
                         StartTime = startTime,
-                        Duration = endTime,
+                        Duration = endTime - startTime,
                         StartIndex = startIndex,
                         EndIndex = endIndex,
                         Text = text,
