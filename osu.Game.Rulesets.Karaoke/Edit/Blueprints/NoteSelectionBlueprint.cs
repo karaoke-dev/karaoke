@@ -32,8 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
             // TODO : percentage should be enter by dialog
             var splittedNote = HitObject.CopyByPercentage(0.5);
             (placementHandler as KaraokeHitObjectComposer)?.EndNotePlacement(splittedNote);
-            // Change object's start time
-            HitObject.EndTime = splittedNote.StartTime;
+            // Change object's duration
+            HitObject.Duration = HitObject.Duration - splittedNote.Duration;
         }
 
         public void ChangeDisplay(bool display)

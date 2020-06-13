@@ -328,12 +328,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private LyricLine createDefaultLyricLine()
         {
             var startTime = Time.Current;
-            var endTime = Time.Current + 1000000;
+            var duration = 1000000;
 
             return new LyricLine
             {
                 StartTime = startTime,
-                EndTime = endTime,
+                Duration = duration,
                 Text = "カラオケ！",
                 TimeTags = new Dictionary<TimeTagIndex, double>
                 {

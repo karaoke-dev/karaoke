@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
                 var note = new Note
                 {
                     StartTime = Time.Current + increaseTime,
-                    EndTime = Time.Current + increaseTime + duration,
+                    Duration = duration,
                     Tone = new Tone { Scale = tone },
                     Text = "Here",
                     Display = true

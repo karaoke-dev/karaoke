@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
             var note = new Note
             {
                 StartTime = 100,
-                EndTime = 900,
+                Duration = 800,
                 Text = "カラオケ"
             };
             note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
