@@ -25,6 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
     public abstract class KaraokeSkinnableColumnTestScene : KaraokeSkinnableTestScene
     {
         protected const double START_TIME = 1000000000;
+        protected const double DURATION = 1000000000;
 
         public const int COLUMN_NUMBER = 9;
 

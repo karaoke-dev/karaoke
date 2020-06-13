@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Title : KaraokeHitObject, IHasEndTime
+    public class Title : KaraokeHitObject, IHasDuration
     {
         public string Name { get; set; }
 

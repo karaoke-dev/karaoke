@@ -26,12 +26,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         private Drawable testSingle(bool auto = false, double timeOffset = 0)
         {
             var startTime = Time.Current + 1000 + timeOffset;
-            var endTime = startTime + 2500;
+            var duration = 2500;
 
             var lyric = new LyricLine
             {
                 StartTime = startTime,
-                EndTime = endTime,
+                Duration = duration,
                 Text = "カラオケ！",
                 TimeTags = new Dictionary<TimeTagIndex, double>
                 {
