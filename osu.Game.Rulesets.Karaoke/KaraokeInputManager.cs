@@ -89,7 +89,8 @@ namespace osu.Game.Rulesets.Karaoke
                 // Convert beatmap's pitch to scale setting.
                 var scale = beatmap.PitchToScale(state.HasSound ? state.Pitch : lastState.Pitch);
 
-                // TODO : adjust scale by 
+                // TODO : adjust scale by
+                scale += 5;
 
                 var action = new KaraokeSaitenAction
                 {

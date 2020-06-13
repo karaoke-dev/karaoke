@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         public static float PitchToScale(this IBeatmap beatmap, float pitch)
         {
-            return (pitch - 60) / 7;
+            return pitch / 20 - 7;
         }
     }
 }
