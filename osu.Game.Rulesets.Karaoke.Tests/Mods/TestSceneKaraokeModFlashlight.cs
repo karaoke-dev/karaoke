@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
             {
                 var drawableRuleset = Player.GetDrawableRuleset();
 
-                // should has at least one frashlight
+                // Should has at least one flashlight
                 return drawableRuleset.KeyBindingInputManager.Children.OfType<KaraokeModFlashlight.KaraokeFlashlight>().Any();
             }
         });

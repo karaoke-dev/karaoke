@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
             {
                 if (pitch.Value != null)
                 {
-                    var scale = ((pitch.Value ?? 0) - 80) / 7;
+                    var scale = Beatmap.PitchToScale(pitch.Value ?? 0);
                     yield return new KaraokeReplayFrame(pitch.Key, scale);
                 }
                 else if(lastPitch.Value != null)

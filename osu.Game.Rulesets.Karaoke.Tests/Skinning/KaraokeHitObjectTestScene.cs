@@ -13,7 +13,7 @@ using osuTK.Graphics;
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
     /// <summary>
-    /// A test scene for a karaoke hitobject.
+    /// A test scene for a karaoke hitObject.
     /// </summary>
     public abstract class KaraokeHitObjectTestScene : KaraokeSkinnableColumnTestScene
     {

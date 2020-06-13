@@ -30,9 +30,13 @@ namespace osu.Game.Rulesets.Karaoke
             UseParentInput = false;
         }
 
+        private IBeatmap beatmap;
+
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetConfigManager config, IBindable<IReadOnlyList<Mod>> mods, IBindable<WorkingBeatmap> beatmap)
         {
+            this.beatmap = beatmap.Value.Beatmap;
+
             var disableMicrophoneDeviceByMod = mods.Value.OfType<IApplicableToMicrophone>().Any(x => !x.MicrophoneEnabled);
             if (disableMicrophoneDeviceByMod)
                 return;
@@ -44,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke
             var selectedDevice = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice).Value;
             var microphoneList = new MicrophoneManager().MicrophoneDeviceNames.ToList();
 
-            // find index by selection id
+            // Find index by selection id
             var deviceIndex = microphoneList.IndexOf(selectedDevice);
             AddHandler(new OsuTKMicrophoneHandler(deviceIndex));
         }
@@ -82,8 +86,11 @@ namespace osu.Game.Rulesets.Karaoke
                 if (state == null)
                     throw new ArgumentNullException($"{nameof(state)} cannot be null.");
 
-                // TODO : adjust saiten action by setting
-                var scale = ((state.HasSound ? state.Pitch : lastState.Pitch) - 60) / 7;
+                // Convert beatmap's pitch to scale setting.
+                var scale = beatmap.PitchToScale(state.HasSound ? state.Pitch : lastState.Pitch);
+
+                // TODO : adjust scale by
+                scale += 5;
 
                 var action = new KaraokeSaitenAction
                 {
