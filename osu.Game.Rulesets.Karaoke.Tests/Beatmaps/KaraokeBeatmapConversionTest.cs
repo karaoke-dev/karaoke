@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
                     break;
             }
 
-            ConvertValue createConvertValue(LyricLine obj) => new ConvertValue
+            static ConvertValue createConvertValue(LyricLine obj) => new ConvertValue
             {
                 StartTime = obj.StartTime,
                 EndTime = obj.EndTime,

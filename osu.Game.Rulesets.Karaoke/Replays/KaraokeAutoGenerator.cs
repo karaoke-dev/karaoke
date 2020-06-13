@@ -40,10 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
             if ((next?.StartTime ?? int.MaxValue) - note.EndTime > 500)
             {
-                yield return new KaraokeReplayFrame
-                {
-                    Time = endTime + 1
-                };
+                yield return new KaraokeReplayFrame(endTime + 1);
             }
         }
     }

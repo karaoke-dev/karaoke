@@ -25,5 +25,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         public static string[] AvailableTranslates(this IBeatmap beatmap) => beatmap?.GetProperty()?.Translates.Keys.ToArray();
 
         public static bool AnyTranslate(this IBeatmap beatmap) => beatmap?.AvailableTranslates()?.Any() ?? false;
+
+        public static float PitchToScale(this IBeatmap beatmap, float pitch)
+        {
+            return pitch / 20 - 7;
+        }
     }
 }
