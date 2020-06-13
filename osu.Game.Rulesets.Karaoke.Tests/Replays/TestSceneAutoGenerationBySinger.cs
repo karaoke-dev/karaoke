@@ -7,7 +7,6 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Tests.Visual;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,29 +24,30 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
             var generated = new KaraokeAutoGeneratorBySinger(beatmap, data).Generate();
 
             // Get generated frame and compare frame
-            var karoakeFrames = generated.Frames.OfType<KaraokeReplayFrame>().ToList();
+            var karaokeFrames = generated.Frames.OfType<KaraokeReplayFrame>().ToList();
             var compareFrame = GetCompareResultFromName("demo");
 
             // Check total frames.
-            Assert.AreEqual(karoakeFrames.Count(), compareFrame.Count(), $"Replay frame should have {compareFrame.Count()}.");
+            Assert.AreEqual(karaokeFrames.Count, compareFrame.Count, $"Replay frame should have {compareFrame.Count}.");
 
             // Compare generated frame with result;
             for (int i = 0; i < compareFrame.Count; i++)
             {
-                Assert.AreEqual(karoakeFrames[i].Time, compareFrame[i].Time);
-                Assert.AreEqual(karoakeFrames[i].Sound, compareFrame[i].Sound);
+                Assert.AreEqual(karaokeFrames[i].Time, compareFrame[i].Time);
+                Assert.AreEqual(karaokeFrames[i].Sound, compareFrame[i].Sound);
 
-                if (compareFrame[i].Sound)
-                {
-                    var convertedScale = beatmap.PitchToScale(compareFrame[i].Pitch);
-                    Assert.AreEqual(karoakeFrames[i].Scale, convertedScale);
-                }
+                if (!compareFrame[i].Sound)
+                    continue;
+
+                var convertedScale = beatmap.PitchToScale(compareFrame[i].Pitch);
+                Assert.AreEqual(karaokeFrames[i].Scale, convertedScale);
             }
         }
 
         private static IList<TestKaraokeReplayFrame> GetCompareResultFromName(string name)
         {
             var data = TestResources.OpenResource($"Testing/Track/{name}.json");
+
             using (var reader = new StreamReader(data))
             {
                 string str = reader.ReadToEnd();
