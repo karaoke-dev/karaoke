@@ -1,10 +1,15 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using Newtonsoft.Json;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Tests.Visual;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Replays
@@ -14,27 +19,49 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
         [Test]
         public void TestSingDemoSong()
         {
+            var beatmap = new KaraokeBeatmap();
+
             var data = TestResources.OpenTrackResource("demo");
-            var generated = new KaraokeAutoGeneratorBySinger(null, data).Generate();
+            var generated = new KaraokeAutoGeneratorBySinger(beatmap, data).Generate();
 
-            // test total frames
-            Assert.IsTrue(generated.Frames.Count == 55, "Replay frame should have 55.");
-            Assert.AreEqual(222, (int)generated.Frames[0].Time, "Incorrect time");
-            Assert.AreEqual(4234, (int)generated.Frames[54].Time, "Incorrect time");
+            // Get generated frame and compare frame
+            var karoakeFrames = generated.Frames.OfType<KaraokeReplayFrame>().ToList();
+            var compareFrame = GetCompareResultFromName("demo");
 
-            // test saitenable frames
-            var karoakeFrames = generated.Frames.OfType<KaraokeReplayFrame>();
-            Assert.AreEqual(54, karoakeFrames.Where(x => x.Sound).Count(), "Incorrect time");
+            // Check total frames.
+            Assert.AreEqual(karoakeFrames.Count(), compareFrame.Count(), $"Replay frame should have {compareFrame.Count()}.");
 
-            Assert.IsTrue(karoakeFrames.Take(7).All(x => x.Scale > 6.8 && x.Scale < 7.9), "Incorrect scale range");
-            Assert.IsTrue(karoakeFrames.Skip(7).Take(7).All(x => x.Scale > 9.1 && x.Scale < 10.6), "Incorrect scale range");
-            Assert.IsTrue(karoakeFrames.Skip(14).Take(6).All(x => x.Scale > 11.8 && x.Scale < 12.3), "Incorrect scale range");
-            Assert.IsTrue(karoakeFrames.Skip(20).Take(7).All(x => x.Scale > 13.1 && x.Scale < 13.72), "Incorrect scale range");
-            Assert.IsTrue(karoakeFrames.Skip(27).Take(6).All(x => x.Scale > 16.14 && x.Scale < 16.72), "Incorrect scale range");
-            Assert.IsTrue(karoakeFrames.Skip(33).Take(1).All(x => x.Scale > 17.42 && x.Scale < 17.43), "Incorrect scale range");
-            Assert.IsTrue(karoakeFrames.Skip(34).Take(6).All(x => x.Scale > 19.57 && x.Scale < 20.15), "Incorrect scale range");
-            Assert.IsTrue(karoakeFrames.Skip(40).Take(7).All(x => x.Scale >= 22 && x.Scale < 24.15), "Incorrect scale range");
-            Assert.IsTrue(karoakeFrames.Skip(47).Take(7).All(x => x.Scale > 25.1 && x.Scale < 26.8), "Incorrect scale range");
+            // Compare generated frame with result;
+            for (int i = 0; i < compareFrame.Count; i++)
+            {
+                Assert.AreEqual(karoakeFrames[i].Time, compareFrame[i].Time);
+                Assert.AreEqual(karoakeFrames[i].Sound, compareFrame[i].Sound);
+
+                if (compareFrame[i].Sound)
+                {
+                    var convertedScale = beatmap.PitchToScale(compareFrame[i].Pitch);
+                    Assert.AreEqual(karoakeFrames[i].Scale, convertedScale);
+                }
+            }
+        }
+
+        private static IList<TestKaraokeReplayFrame> GetCompareResultFromName(string name)
+        {
+            var data = TestResources.OpenResource($"Testing/Track/{name}.json");
+            using (var reader = new StreamReader(data))
+            {
+                string str = reader.ReadToEnd();
+                return JsonConvert.DeserializeObject<List<TestKaraokeReplayFrame>>(str);
+            }
+        }
+
+        private class TestKaraokeReplayFrame
+        {
+            public double Time { get; set; }
+
+            public float Pitch { get; set; }
+
+            public bool Sound { get; set; }
         }
     }
 }

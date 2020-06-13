@@ -129,10 +129,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
                 // Start frame
                 x.AddReplay(new KaraokeReplayFrame(Time.Current + increaseTime, scale));
 
-                //End frame
+                // End frame
                 x.AddReplay(new KaraokeReplayFrame(Time.Current + increaseTime + duration - 2, scale));
 
-                //Stop point
+                // Stop point
                 x.AddReplay(new KaraokeReplayFrame(Time.Current + increaseTime + duration - 1));
             });
         }
