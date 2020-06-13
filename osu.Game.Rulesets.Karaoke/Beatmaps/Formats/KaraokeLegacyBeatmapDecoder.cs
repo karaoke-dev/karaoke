@@ -193,7 +193,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     note.Text = ruby;
 
                 if (duration != null)
-                    note.EndTime = note.StartTime + duration.Value;
+                    note.Duration = duration.Value;
 
                 //Support format : 1  1.  1.5  1+  1#
                 Tone convertTone(string tone)

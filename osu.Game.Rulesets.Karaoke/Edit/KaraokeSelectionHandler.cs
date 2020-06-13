@@ -27,7 +27,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Resolved]
         private IPlacementHandler placementHandler { get; set; }
 
-        public override MenuItem[] ContextMenuItems
+        // todo : need to check here is workable or not.
+        public new MenuItem[] ContextMenuItems
         {
             get
             {
@@ -70,14 +71,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             return new OsuMenuItem("Combine", MenuItemType.Standard, () =>
             {
-                var endTime = selectedObject.LastOrDefault()?.EndTime;
-                if (endTime == null)
+                // Select at least two object.
+                if (selectedObject.Count() < 2)
                     return;
 
                 // Recover end time
                 var firstObject = selectedObject.FirstOrDefault();
                 if (firstObject != null)
-                    firstObject.EndTime = endTime.Value;
+                    firstObject.Duration = selectedObject.Sum(x => x.Duration);
 
                 // Delete objects
                 var deleteObjects = selectedObject.Skip(1).ToList();

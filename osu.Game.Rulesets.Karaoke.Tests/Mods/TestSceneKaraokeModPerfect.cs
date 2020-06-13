@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
         public void TestLyric(bool shouldMiss) => CreateHitObjectTest(new HitObjectTestData(new LyricLine
         {
             StartTime = 1000,
-            EndTime = 2000,
+            Duration = 1000,
             Text = "カラオケ!",
             TimeTags = new Dictionary<TimeTagIndex, double>()
         }), shouldMiss);

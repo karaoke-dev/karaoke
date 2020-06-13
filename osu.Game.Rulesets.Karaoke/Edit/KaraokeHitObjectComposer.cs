@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Mods;
+using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osu.Game.Screens.Edit.Compose.Components;
 
@@ -34,7 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         protected override IReadOnlyList<HitObjectCompositionTool> CompositionTools => Array.Empty<HitObjectCompositionTool>();
 
-        protected override ComposeBlueprintContainer CreateBlueprintContainer() => new KaraokeBlueprintContainer(drawableRuleset.Playfield.AllHitObjects);
+        protected override ComposeBlueprintContainer CreateBlueprintContainer(IEnumerable<DrawableHitObject> hitObjects)
+            => new KaraokeBlueprintContainer(hitObjects);
 
         public void EndNotePlacement(Note note)
         {

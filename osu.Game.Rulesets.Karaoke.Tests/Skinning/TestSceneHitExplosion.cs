@@ -29,20 +29,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
         public TestSceneHitExplosion()
         {
-            int runcount = 0;
+            int runCount = 0;
 
             AddRepeatStep("explode", () =>
             {
-                runcount++;
+                runCount++;
 
-                if (runcount % 15 > 12)
+                if (runCount % 15 > 12)
                     return;
 
                 CreatedDrawables.OfType<Container>().ForEach(c =>
                 {
-                    var colour = (runcount / 15) % 2 == 0 ? new Color4(94, 0, 57, 255) : new Color4(6, 84, 0, 255);
+                    var colour = runCount / 15 % 2 == 0 ? new Color4(94, 0, 57, 255) : new Color4(6, 84, 0, 255);
                     c.Add(new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.HitExplosion),
-                        _ => new DefaultHitExplosion(colour, runcount % 6 != 0)
+                        _ => new DefaultHitExplosion(colour, runCount % 6 != 0)
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,

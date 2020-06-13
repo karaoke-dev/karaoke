@@ -2,16 +2,22 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Input;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Handlers.Microphone;
 using osu.Framework.Input.StateChanges.Events;
 using osu.Framework.Input.States;
+using osu.Game.Beatmaps;
 using osu.Game.Input.Handlers;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Mods;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Karaoke
@@ -24,13 +30,25 @@ namespace osu.Game.Rulesets.Karaoke
             UseParentInput = false;
         }
 
+        private IBeatmap beatmap;
+
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager config)
+        private void load(KaraokeRulesetConfigManager config, IBindable<IReadOnlyList<Mod>> mods, IBindable<WorkingBeatmap> beatmap)
         {
+            this.beatmap = beatmap.Value.Beatmap;
+
+            var disableMicrophoneDeviceByMod = mods.Value.OfType<IApplicableToMicrophone>().Any(x => !x.MicrophoneEnabled);
+            if (disableMicrophoneDeviceByMod)
+                return;
+
+            var beatmapSaitenable = beatmap.Value.Beatmap.IsScorable();
+            if (!beatmapSaitenable)
+                return;
+
             var selectedDevice = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice).Value;
             var microphoneList = new MicrophoneManager().MicrophoneDeviceNames.ToList();
 
-            // find index by selection id
+            // Find index by selection id
             var deviceIndex = microphoneList.IndexOf(selectedDevice);
             AddHandler(new OsuTKMicrophoneHandler(deviceIndex));
         }
@@ -68,20 +86,21 @@ namespace osu.Game.Rulesets.Karaoke
                 if (state == null)
                     throw new ArgumentNullException($"{nameof(state)} cannot be null.");
 
-                // TODO : adjust saiten action by setting
-                var realPitch = ((float)(state.HasSound ? state.Pitch : lastState.Pitch) - 70) / 7;
+                // Convert beatmap's pitch to scale setting.
+                var scale = beatmap.PitchToScale(state.HasSound ? state.Pitch : lastState.Pitch);
+
+                // TODO : adjust scale by
+                scale += 5;
 
                 var action = new KaraokeSaitenAction
                 {
-                    Scale = realPitch
+                    Scale = scale
                 };
 
-                if (!lastState.HasSound && state.HasSound)
-                    KeyBindingContainer.TriggerPressed(action);
-                else if (lastState.HasSound && !state.HasSound)
-                    KeyBindingContainer.TriggerPressed(action);
-                else
+                if (lastState.HasSound && !state.HasSound)
                     KeyBindingContainer.TriggerReleased(action);
+                else
+                    KeyBindingContainer.TriggerPressed(action);
             }
             else
             {
