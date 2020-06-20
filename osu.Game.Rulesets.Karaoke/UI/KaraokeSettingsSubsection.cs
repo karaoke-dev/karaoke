@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class KaraokeSettingsSubsection : RulesetSettingsSubsection
     {
-        protected override string Header => "osu!karaoke";
+        protected override string Header => "karaoke!";
 
         public KaraokeSettingsSubsection(Ruleset ruleset)
             : base(ruleset)
