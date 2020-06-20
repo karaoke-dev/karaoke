@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override string Description => "karaoke!";
 
-        public override string ShortName => "osu!karaoke";
+        public override string ShortName => "karaoke!";
 
         public override string PlayingVerb => "Singing karaoke";
 
