@@ -36,9 +36,14 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
 
         private List<KaraokeChangelogBuild> builds;
 
-        public KaraokeChangelogOverlay()
+        private readonly string organizationName;
+
+        private string projectName => $"{organizationName}.github.io";
+
+        public KaraokeChangelogOverlay(string organization)
             : base(OverlayColourScheme.Purple)
         {
+            organizationName = organization;
         }
 
         [BackgroundDependencyLoader]
@@ -153,17 +158,14 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
 
             return initialFetchTask = Task.Run(async () =>
             {
-                const string organization = "osu-karaoke";
-                const string project_name = "osu-Karaoke.github.io";
-
                 var tcs = new TaskCompletionSource<bool>();
 
-                var client = new GitHubClient(new ProductHeaderValue(organization));
-                var reposAscending = await client.Repository.Content.GetAllContents(organization, project_name, "changelog");
+                var client = new GitHubClient(new ProductHeaderValue(organizationName));
+                var reposAscending = await client.Repository.Content.GetAllContents(organizationName, projectName, "changelog");
 
                 if (reposAscending.Any())
                 {
-                    builds = reposAscending.Reverse().Where(x=>x.Type == ContentType.Dir).Select(x => new KaraokeChangelogBuild(organization, project_name)
+                    builds = reposAscending.Reverse().Where(x=>x.Type == ContentType.Dir).Select(x => new KaraokeChangelogBuild(organizationName, projectName)
                     {
                         RootUrl = x.HtmlUrl,
                         Path = x.Path,
