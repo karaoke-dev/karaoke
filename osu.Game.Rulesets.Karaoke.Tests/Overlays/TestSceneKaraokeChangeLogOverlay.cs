@@ -3,10 +3,7 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Overlays;
-using osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 using osu.Game.Tests.Visual;
-using System;
-using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 {
@@ -14,15 +11,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
     public class TestSceneKaraokeChangeLogOverlay : OsuTestScene
     {
         private TestChangelogOverlay changelog;
-
-        public override IReadOnlyList<Type> RequiredTypes => new[]
-        {
-            typeof(ChangelogHeader),
-            typeof(ChangelogContent),
-            typeof(ChangelogListing),
-            typeof(ChangelogSingleBuild),
-            typeof(ChangelogBuild),
-        };
 
         [SetUp]
         public void SetUp() => Schedule(() =>
