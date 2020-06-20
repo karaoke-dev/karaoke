@@ -12,8 +12,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
     public class TestSceneKaraokeModPerfect : ModPerfectTestScene
     {
+        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
+
         public TestSceneKaraokeModPerfect()
-            : base(new KaraokeRuleset(), new KaraokeModPerfect())
+            : base(new KaraokeModPerfect())
         {
         }
 
