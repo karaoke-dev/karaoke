@@ -7,8 +7,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
     public class TestSceneKaraokeModAutoplay : ModTestScene
     {
+        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
+
         public TestSceneKaraokeModAutoplay()
-            : base(new KaraokeRuleset())
         {
         }
 
