@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class KaraokeSettingsSubsection : RulesetSettingsSubsection
     {
-        protected override string Header => "osu!karaoke";
+        protected override string Header => "karaoke!";
 
         public KaraokeSettingsSubsection(Ruleset ruleset)
             : base(ruleset)
@@ -115,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     {
                         var overlayContent = game.Children[3] as Container;
                         if(changelogOverlay == null && !overlayContent.Children.OfType<KaraokeChangelogOverlay>().Any())
-                            overlayContent.Add(changelogOverlay = new KaraokeChangelogOverlay());
+                            overlayContent.Add(changelogOverlay = new KaraokeChangelogOverlay("karaoke-dev"));
 
                         changelogOverlay.Show();
                     }

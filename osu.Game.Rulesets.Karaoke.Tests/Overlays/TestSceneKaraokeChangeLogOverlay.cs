@@ -27,6 +27,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 
         private class TestChangelogOverlay : KaraokeChangelogOverlay
         {
+            public TestChangelogOverlay()
+                : base("karaoke-dev")
+            {
+            }
         }
     }
 }
