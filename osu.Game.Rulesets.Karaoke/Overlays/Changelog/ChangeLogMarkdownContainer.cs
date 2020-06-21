@@ -16,6 +16,9 @@ using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
@@ -171,6 +174,65 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
                     InternalChild.Scale = new Vector2(scale);
                     Height = InternalChild.Height * scale;
+                }
+            }
+
+            private IDictionary<string, string> githubUrls = new Dictionary<string, string>
+            {
+                { "karaoke", "https://github.com/karaoke-dev/karaoke/" },
+                { "edge", "https://github.com/karaoke-dev/karaoke" },
+                { "github.io", "https://github.com/karaoke-dev/karaoke-dev.github.io" },
+                { "launcher", "https://github.com/karaoke-dev/launcher" },
+                { "sample", "https://github.com/karaoke-dev/sample-beatmap" },
+            };
+
+            protected override void AddLinkText(string text, LinkInline linkInline)
+            {
+                if (githubUrls.ContainsKey(text))
+                {
+                    var baseUri = new Uri(githubUrls[text]);
+
+                    // Get hash tag with number
+                    var pattern = @"(\#[0-9]+\b)(?!;)";
+                    var issueOrRequests = Regex.Matches(linkInline.Url, pattern, RegexOptions.IgnoreCase);
+
+                    if (!issueOrRequests.Any())
+                        return;
+
+                    AddText("(");
+                    foreach (var issue in issueOrRequests.Select(x=>x.Value))
+                    {
+                        AddDrawable(new MarkdownLinkText($"{text}{issue}", new LinkInline
+                        {
+                            Url = new Uri(baseUri, $"pull/{issue.Replace("#", "")}").AbsoluteUri
+                        }));
+
+                        if(issue != issueOrRequests.LastOrDefault()?.Value)
+                            AddText(", ");
+                    }
+                    AddText(")");
+
+                    // add use name if has user
+                    var user = linkInline.Url.Split('@').LastOrDefault();
+                    if (!string.IsNullOrEmpty(user))
+                    {
+                        var textScale = new Vector2(0.7f);
+                        AddText(" by:", text =>
+                        {
+                            text.Scale = textScale;
+                        });
+                        AddDrawable(new MarkdownLinkText(user, new LinkInline
+                        {
+                            Url = $"https://github.com/{user}"
+                        })
+                        {
+                            Scale = textScale,
+                        });
+                    }
+                }
+                else
+                {
+                    base.AddLinkText(text, linkInline);
                 }
             }
         }
