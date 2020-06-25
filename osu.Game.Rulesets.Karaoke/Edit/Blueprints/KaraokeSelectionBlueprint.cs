@@ -19,18 +19,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
 
         public new DrawableKaraokeScrollingHitObject DrawableObject => (DrawableKaraokeScrollingHitObject)base.DrawableObject;
 
-        protected IClock EditorClock { get; private set; }
-
         public KaraokeSelectionBlueprint(DrawableHitObject drawableObject)
             : base(drawableObject)
         {
             RelativeSizeAxes = Axes.None;
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(IAdjustableClock clock)
-        {
-            EditorClock = clock;
         }
 
         protected override void Update()
