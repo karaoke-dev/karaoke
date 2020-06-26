@@ -141,7 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         private void performColumnMovement(Tone lastTone, MoveSelectionEvent moveEvent)
         {
-            if (!(moveEvent.Blueprint is NoteSelectionBlueprint noteBlueprint))
+            if (!(moveEvent.Blueprint is NoteSelectionBlueprint))
                 return;
 
             var karaokePlayfield = ((KaraokeHitObjectComposer)composer).Playfield;

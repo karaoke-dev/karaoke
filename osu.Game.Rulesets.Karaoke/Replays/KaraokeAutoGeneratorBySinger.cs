@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
     public class KaraokeAutoGeneratorBySinger : AutoGenerator
     {
         private readonly CancellationTokenSource cancelSource = new CancellationTokenSource();
-        private readonly Task<Dictionary<double,float?>> readTask;
+        private readonly Task<Dictionary<double, float?>> readTask;
 
         /// <summary>
         /// Using audio's vioce to generate replay frames
@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
                     var scale = Beatmap.PitchToScale(pitch.Value ?? 0);
                     yield return new KaraokeReplayFrame(pitch.Key, scale);
                 }
-                else if(lastPitch.Value != null)
+                else if (lastPitch.Value != null)
                     yield return new KaraokeReplayFrame(pitch.Key);
 
                 lastPitch = pitch;

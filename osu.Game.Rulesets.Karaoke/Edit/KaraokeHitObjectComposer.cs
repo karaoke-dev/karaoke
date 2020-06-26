@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             // Only note and lyric playfield can interact with mouse input.
             if (Playfield.NotePlayfield.ReceivePositionalInputAt(screenSpacePosition))
                 return Playfield.NotePlayfield;
-            else if(Playfield.LyricPlayfield.ReceivePositionalInputAt(screenSpacePosition))
+            if (Playfield.LyricPlayfield.ReceivePositionalInputAt(screenSpacePosition))
                 return Playfield.LyricPlayfield;
 
             return null;

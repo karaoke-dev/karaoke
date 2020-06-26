@@ -9,10 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
     {
         protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
 
-        public TestSceneKaraokeModAutoplayBySinger()
-        {
-        }
-
         // mod auto-play will cause crash
         /*
         [Test]
