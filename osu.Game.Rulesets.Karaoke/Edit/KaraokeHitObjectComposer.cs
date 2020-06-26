@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
-using osu.Framework.Input;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
@@ -23,7 +22,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     public class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
     {
         private DrawableKaraokeEditRuleset drawableRuleset;
-        private InputManager inputManager;
 
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
@@ -33,13 +31,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             // Duplicated registration because selection handler need to use it.
             positionCalculator = new PositionCalculator(9);
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            inputManager = GetContainingInputManager();
         }
 
         public new KaraokePlayfield Playfield => drawableRuleset.Playfield;

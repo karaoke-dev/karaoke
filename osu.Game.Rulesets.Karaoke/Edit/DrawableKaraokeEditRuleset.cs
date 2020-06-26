@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
@@ -16,7 +15,6 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
-using osuTK;
 using osuTK.Input;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
@@ -66,15 +64,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         }
 
         protected override Playfield CreatePlayfield() => new KaraokeEditPlayfield();
-
-        public class KaraokeEditPlayfield : KaraokePlayfield
-        {
-            public KaraokeEditPlayfield()
-            {
-                LyricPlayfield.Anchor = LyricPlayfield.Origin = Anchor.BottomCentre;
-                LyricPlayfield.Margin = new MarginPadding { Top = 150, Bottom = -100 };
-                LyricPlayfield.Scale = new Vector2(0.7f);
-            }
-        }
     }
 }
