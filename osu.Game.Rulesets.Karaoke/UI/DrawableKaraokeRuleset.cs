@@ -49,6 +49,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
             // TODO : it should be moved into NotePlayfield
             BarLines = new BarLineGenerator<BarLine>(Beatmap).BarLines;
 
+            // Editor should not generate hud overlay
+            if (mods == null)
+                return;
+
             // create overlay
             var overlay = new KaraokeHUDOverlay(this);
             foreach (var mod in mods.OfType<IApplicableToKaraokeHUD>())

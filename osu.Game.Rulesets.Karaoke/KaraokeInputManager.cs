@@ -19,6 +19,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke
 {
@@ -32,9 +33,12 @@ namespace osu.Game.Rulesets.Karaoke
 
         private IBeatmap beatmap;
 
-        [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager config, IBindable<IReadOnlyList<Mod>> mods, IBindable<WorkingBeatmap> beatmap)
+        [BackgroundDependencyLoader(true)]
+        private void load(KaraokeRulesetConfigManager config, IBindable<IReadOnlyList<Mod>> mods, IBindable<WorkingBeatmap> beatmap, EditorBeatmap editorBeatmap)
         {
+            if (editorBeatmap != null)
+                return;
+
             this.beatmap = beatmap.Value.Beatmap;
 
             var disableMicrophoneDeviceByMod = mods.Value.OfType<IApplicableToMicrophone>().Any(x => !x.MicrophoneEnabled);

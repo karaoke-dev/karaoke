@@ -9,15 +9,10 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
     [TestFixture]
-    [Ignore("Ignore this issue until customer ruleset has it's own encoder/decoder.")]
     public class TestSceneEditor : EditorTestScene
     {
         protected override IBeatmap CreateBeatmap(RulesetInfo ruleset) => new TestKaraokeBeatmap(ruleset);
 
         protected override Ruleset CreateEditorRuleset() => new KaraokeRuleset();
-
-        public TestSceneEditor()
-        {
-        }
     }
 }
