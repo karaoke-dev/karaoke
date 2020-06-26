@@ -3,10 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Input;
-using osu.Framework.Logging;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
@@ -14,7 +12,6 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Mods;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
@@ -26,7 +23,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     public class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
     {
         private DrawableKaraokeEditRuleset drawableRuleset;
-        private KaraokeBeatSnapGrid beatSnapGrid;
         private InputManager inputManager;
 
         [Cached(Type = typeof(IPositionCalculator))]
@@ -37,12 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             // Duplicated registration because selection handler need to use it.
             positionCalculator = new PositionCalculator(9);
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            AddInternal(beatSnapGrid = new KaraokeBeatSnapGrid());
         }
 
         protected override void LoadComplete()
@@ -70,11 +60,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         public override SnapResult SnapScreenSpacePositionToValidTime(Vector2 screenSpacePosition)
         {
             var result = base.SnapScreenSpacePositionToValidTime(screenSpacePosition);
-
-            // todo : implement here to disable vertical scroll and calculate vertical scroll
             if (result.Playfield is NotePlayfield)
             {
-                Logger.LogPrint(screenSpacePosition.ToString());
                 // Apply Y value because it's disappeared.
                 result.ScreenSpacePosition.Y = screenSpacePosition.Y;
                 // then disable time change by moving x
@@ -91,28 +78,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             => new KaraokeBlueprintContainer(hitObjects);
 
         protected override IReadOnlyList<HitObjectCompositionTool> CompositionTools => Array.Empty<HitObjectCompositionTool>();
-
-        protected override void UpdateAfterChildren()
-        {
-            base.UpdateAfterChildren();
-
-            if (BlueprintContainer.CurrentTool is SelectTool)
-            {
-                if (EditorBeatmap.SelectedHitObjects.Any())
-                {
-                    beatSnapGrid.SelectionTimeRange = (EditorBeatmap.SelectedHitObjects.Min(h => h.StartTime), EditorBeatmap.SelectedHitObjects.Max(h => h.GetEndTime()));
-                }
-                else
-                    beatSnapGrid.SelectionTimeRange = null;
-            }
-            else
-            {
-                var result = SnapScreenSpacePositionToValidTime(inputManager.CurrentState.Mouse.Position);
-                if (result.Time is double time)
-                    beatSnapGrid.SelectionTimeRange = (time, time);
-                else
-                    beatSnapGrid.SelectionTimeRange = null;
-            }
-        }
     }
 }
