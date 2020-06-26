@@ -8,6 +8,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
@@ -21,6 +22,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
         [Resolved(CanBeNull = false)]
         private IPlacementHandler placementHandler { get; set; }
 
+        [Resolved]
+        protected EditorBeatmap EditorBeatmap { get; private set; }
+
         public override MenuItem[] ContextMenuItems => new MenuItem[]
         {
             new OsuMenuItem(HitObject.Display ? "Hide" : "Show", HitObject.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => ChangeDisplay(!HitObject.Display)),
@@ -31,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
         {
             // TODO : percentage should be enter by dialog
             var splittedNote = HitObject.CopyByPercentage(0.5);
-            (placementHandler as KaraokeHitObjectComposer)?.EndNotePlacement(splittedNote);
+            EditorBeatmap?.Add(splittedNote);
             // Change object's duration
             HitObject.Duration = HitObject.Duration - splittedNote.Duration;
         }

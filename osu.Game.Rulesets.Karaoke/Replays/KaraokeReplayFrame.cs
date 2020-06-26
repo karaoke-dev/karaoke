@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         }
 
         public KaraokeReplayFrame(double time)
-             : base(time)
+            : base(time)
         {
         }
 

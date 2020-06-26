@@ -167,7 +167,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
 
                 if (reposAscending.Any())
                 {
-                    builds = reposAscending.Reverse().Where(x=>x.Type == ContentType.Dir).Select(x => new KaraokeChangelogBuild(organizationName, projectName, branchName)
+                    builds = reposAscending.Reverse().Where(x => x.Type == ContentType.Dir).Select(x => new KaraokeChangelogBuild(organizationName, projectName, branchName)
                     {
                         RootUrl = x.HtmlUrl,
                         Path = x.Path,
