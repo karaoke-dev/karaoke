@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             var result = new LrcParser().Decode(lyricText);
 
             // Convert line
-            for(int i=0;i < result.Lines.Length; i++)
+            for (int i = 0; i < result.Lines.Length; i++)
             {
                 // Empty line should not be imported
                 var line = result.Lines[i];
@@ -39,12 +39,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                 try
                 {
-
                     // todo : check list ls sorted by time.
-                    var timetags = line.TimeTags;
+                    var timeTags = line.TimeTags;
 
-                    var startTime = timetags.FirstOrDefault(x => x.Time > 0).Time;
-                    var duration = timetags.LastOrDefault(x => x.Time > 0).Time - startTime;
+                    var startTime = timeTags.FirstOrDefault(x => x.Time > 0).Time;
+                    var duration = timeTags.LastOrDefault(x => x.Time > 0).Time - startTime;
 
                     var lyric = line.Text;
                     output.HitObjects.Add(new LyricLine
@@ -53,10 +52,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                         // Start time and end time should be re-assigned
                         StartTime = startTime,
                         Duration = duration,
-                        TimeTags = timetags.Where(x => x.Check).ToDictionary(k =>
+                        TimeTags = timeTags.Where(x => x.Check).ToDictionary(k =>
                         {
-                            var index = (int)Math.Ceiling((double)(Array.IndexOf(timetags, k) - 1) / 2);
-                            var state = (Array.IndexOf(timetags, k) - 1) % 2 == 0 ? TimeTagIndex.IndexState.Start : TimeTagIndex.IndexState.End;
+                            var index = (int)Math.Ceiling((double)(Array.IndexOf(timeTags, k) - 1) / 2);
+                            var state = (Array.IndexOf(timeTags, k) - 1) % 2 == 0 ? TimeTagIndex.IndexState.Start : TimeTagIndex.IndexState.End;
 
                             return new TimeTagIndex(index, state);
                         }, v => (double)v.Time),
@@ -71,8 +70,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 catch (Exception ex)
                 {
                     var message = $"Parsing lyric '{line.Text}' got error in line:{i}" +
-                        $"Please check time tag should be ordered and not duplicated." +
-                        $"Then re-import again.";
+                                  "Please check time tag should be ordered and not duplicated." +
+                                  "Then re-import again.";
                     throw new FormatException(message, ex);
                 }
             }
