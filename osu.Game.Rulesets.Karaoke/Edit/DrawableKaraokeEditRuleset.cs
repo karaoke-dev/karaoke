@@ -15,6 +15,7 @@ using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
+using osu.Game.Rulesets.UI.Scrolling;
 using osuTK;
 using osuTK.Input;
 
@@ -22,6 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class DrawableKaraokeEditRuleset : DrawableKaraokeRuleset
     {
+        public new IScrollingInfo ScrollingInfo => base.ScrollingInfo;
+
         public DrawableKaraokeEditRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)
         {

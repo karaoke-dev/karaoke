@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
@@ -26,6 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         [Resolved]
         private IPlacementHandler placementHandler { get; set; }
+
+        [Resolved]
+        private HitObjectComposer composer { get; set; }
 
         // todo : need to check here is workable or not.
         public new MenuItem[] ContextMenuItems
@@ -140,8 +144,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             if (!(moveEvent.Blueprint is NoteSelectionBlueprint noteBlueprint))
                 return;
 
+            var karaokePlayfield = ((KaraokeHitObjectComposer)composer).Playfield;
+
             // top position
-            var dragHeight = noteBlueprint.DrawableObject.Parent.ToLocalSpace(moveEvent.ScreenSpacePosition).Y;
+            var dragHeight = karaokePlayfield.NotePlayfield.ToLocalSpace(moveEvent.ScreenSpacePosition).Y;
             var lastHeight = convertToneToHeight(lastTone);
             var moveHeight = dragHeight - lastHeight;
 
