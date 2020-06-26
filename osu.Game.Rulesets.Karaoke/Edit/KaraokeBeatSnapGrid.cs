@@ -47,12 +47,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private EditorBeatmap beatmap { get; set; }
 
         [Resolved]
-        private IScrollingInfo scrollingInfo { get; set; }
-
-        [Resolved]
-        private Bindable<WorkingBeatmap> working { get; set; }
-
-        [Resolved]
         private OsuColour colours { get; set; }
 
         [Resolved]

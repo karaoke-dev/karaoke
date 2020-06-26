@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Input;
+using osu.Framework.Logging;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
@@ -55,30 +56,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         public IScrollingInfo ScrollingInfo => drawableRuleset.ScrollingInfo;
 
-        protected override Playfield PlayfieldAtScreenSpacePosition(Vector2 screenSpacePosition) =>
-           Playfield.GetColumnByPosition(screenSpacePosition);
+        protected override Playfield PlayfieldAtScreenSpacePosition(Vector2 screenSpacePosition)
+        {
+            // Only note and lyric playfield can interact with mouse input.
+            if (Playfield.NotePlayfield.ReceivePositionalInputAt(screenSpacePosition))
+                return Playfield.NotePlayfield;
+            else if(Playfield.LyricPlayfield.ReceivePositionalInputAt(screenSpacePosition))
+                return Playfield.LyricPlayfield;
+
+            return null;
+        }
 
         public override SnapResult SnapScreenSpacePositionToValidTime(Vector2 screenSpacePosition)
         {
             var result = base.SnapScreenSpacePositionToValidTime(screenSpacePosition);
 
-            switch (ScrollingInfo.Direction.Value)
+            // todo : implement here to disable vertical scroll and calculate vertical scroll
+            if (result.Playfield is NotePlayfield)
             {
-                case ScrollingDirection.Down:
-                    result.ScreenSpacePosition -= new Vector2(0, getNoteHeight() / 2);
-                    break;
-
-                case ScrollingDirection.Up:
-                    result.ScreenSpacePosition += new Vector2(0, getNoteHeight() / 2);
-                    break;
+                Logger.LogPrint(screenSpacePosition.ToString());
+                // Apply Y value because it's disappeared.
+                result.ScreenSpacePosition.Y = screenSpacePosition.Y;
+                // then disable time change by moving x
+                result.Time = null;
             }
-
+            
             return result;
         }
-
-        private float getNoteHeight() =>
-            Playfield.GetColumn(0).ToScreenSpace(new Vector2(DefaultNotePiece.NOTE_HEIGHT)).Y -
-            Playfield.GetColumn(0).ToScreenSpace(Vector2.Zero).Y;
 
         protected override DrawableRuleset<KaraokeHitObject> CreateDrawableRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
             => drawableRuleset = new DrawableKaraokeEditRuleset(ruleset, beatmap, mods);
