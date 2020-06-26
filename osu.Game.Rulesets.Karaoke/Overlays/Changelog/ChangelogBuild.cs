@@ -204,10 +204,10 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             }
 
             protected override MarkdownPipeline CreateBuilder()
-                 => new MarkdownPipelineBuilder().UseAutoIdentifiers(AutoIdentifierOptions.GitHub)
-                                            .UseYamlFrontMatter()
-                                            .UseEmojiAndSmiley()
-                                            .UseAdvancedExtensions().Build();
+                => new MarkdownPipelineBuilder().UseAutoIdentifiers(AutoIdentifierOptions.GitHub)
+                                                .UseYamlFrontMatter()
+                                                .UseEmojiAndSmiley()
+                                                .UseAdvancedExtensions().Build();
         }
 
         protected virtual FillFlowContainer CreateHeader() => new FillFlowContainer

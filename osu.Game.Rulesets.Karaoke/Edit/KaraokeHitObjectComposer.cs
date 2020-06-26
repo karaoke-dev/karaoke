@@ -51,6 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         public override SnapResult SnapScreenSpacePositionToValidTime(Vector2 screenSpacePosition)
         {
             var result = base.SnapScreenSpacePositionToValidTime(screenSpacePosition);
+
             if (result.Playfield is NotePlayfield)
             {
                 // Apply Y value because it's disappeared.
@@ -58,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 // then disable time change by moving x
                 result.Time = null;
             }
-            
+
             return result;
         }
 

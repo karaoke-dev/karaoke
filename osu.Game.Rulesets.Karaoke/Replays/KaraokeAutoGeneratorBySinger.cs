@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         /// <param name="beatmap"></param>
         /// <param name="data"></param>
         public KaraokeAutoGeneratorBySinger(KaraokeBeatmap beatmap, Stream data)
-           : base(beatmap)
+            : base(beatmap)
         {
             if (data == null)
                 return;
@@ -36,6 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
             readTask = Task.Run(() =>
             {
                 int decodeStream = 0;
+
                 using (var fileCallbacks = new FileCallbacks(new DataStreamFileProcedures(data)))
                 {
                     decodeStream = Bass.CreateStream(StreamSystem.NoBuffer, BassFlags.Decode | BassFlags.Float, fileCallbacks.Callbacks, fileCallbacks.Handle);
@@ -86,6 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         private IEnumerable<ReplayFrame> getReplayFrames(IDictionary<double, float?> pitches)
         {
             var lastPitch = pitches.FirstOrDefault();
+
             foreach (var pitch in pitches)
             {
                 if (pitch.Value != null)

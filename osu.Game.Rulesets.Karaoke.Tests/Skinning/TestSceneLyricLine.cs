@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -26,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         private Drawable testSingle(bool auto = false, double timeOffset = 0)
         {
             var startTime = Time.Current + 1000 + timeOffset;
-            var duration = 2500;
+            const double duration = 2500;
 
             var lyric = new LyricLine
             {
