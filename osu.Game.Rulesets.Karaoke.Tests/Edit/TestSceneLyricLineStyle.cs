@@ -328,7 +328,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private LyricLine createDefaultLyricLine()
         {
             var startTime = Time.Current;
-            var duration = 1000000;
+            const double duration = 1000000;
 
             return new LyricLine
             {

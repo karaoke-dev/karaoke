@@ -368,7 +368,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private LyricLine createDefaultLyricLine(string text, string[] ruby, string[] romaji, string translate)
         {
             var startTime = Time.Current;
-            var duration = 1000000;
+            const double duration = 1000000;
 
             using (var stream = new MemoryStream())
             using (var writer = new StreamWriter(stream))

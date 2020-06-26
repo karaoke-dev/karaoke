@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             // Only note and lyric playfield can interact with mouse input.
             if (Playfield.NotePlayfield.ReceivePositionalInputAt(screenSpacePosition))
                 return Playfield.NotePlayfield;
-            else if(Playfield.LyricPlayfield.ReceivePositionalInputAt(screenSpacePosition))
+            if (Playfield.LyricPlayfield.ReceivePositionalInputAt(screenSpacePosition))
                 return Playfield.LyricPlayfield;
 
             return null;
@@ -51,6 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         public override SnapResult SnapScreenSpacePositionToValidTime(Vector2 screenSpacePosition)
         {
             var result = base.SnapScreenSpacePositionToValidTime(screenSpacePosition);
+
             if (result.Playfield is NotePlayfield)
             {
                 // Apply Y value because it's disappeared.
@@ -58,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 // then disable time change by moving x
                 result.Time = null;
             }
-            
+
             return result;
         }
 

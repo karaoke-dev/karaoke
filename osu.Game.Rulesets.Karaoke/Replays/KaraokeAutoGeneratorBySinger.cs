@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
     public class KaraokeAutoGeneratorBySinger : AutoGenerator
     {
         private readonly CancellationTokenSource cancelSource = new CancellationTokenSource();
-        private readonly Task<Dictionary<double,float?>> readTask;
+        private readonly Task<Dictionary<double, float?>> readTask;
 
         /// <summary>
         /// Using audio's vioce to generate replay frames
@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         /// <param name="beatmap"></param>
         /// <param name="data"></param>
         public KaraokeAutoGeneratorBySinger(KaraokeBeatmap beatmap, Stream data)
-           : base(beatmap)
+            : base(beatmap)
         {
             if (data == null)
                 return;
@@ -36,6 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
             readTask = Task.Run(() =>
             {
                 int decodeStream = 0;
+
                 using (var fileCallbacks = new FileCallbacks(new DataStreamFileProcedures(data)))
                 {
                     decodeStream = Bass.CreateStream(StreamSystem.NoBuffer, BassFlags.Decode | BassFlags.Float, fileCallbacks.Callbacks, fileCallbacks.Handle);
@@ -86,6 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         private IEnumerable<ReplayFrame> getReplayFrames(IDictionary<double, float?> pitches)
         {
             var lastPitch = pitches.FirstOrDefault();
+
             foreach (var pitch in pitches)
             {
                 if (pitch.Value != null)
@@ -93,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
                     var scale = Beatmap.PitchToScale(pitch.Value ?? 0);
                     yield return new KaraokeReplayFrame(pitch.Key, scale);
                 }
-                else if(lastPitch.Value != null)
+                else if (lastPitch.Value != null)
                     yield return new KaraokeReplayFrame(pitch.Key);
 
                 lastPitch = pitch;

@@ -111,13 +111,17 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 {
                     Text = "Change log",
                     TooltipText = "Let's see what karaoke! changed.",
-                    Action = ()=>
+                    Action = () =>
                     {
                         var overlayContent = game.Children[3] as Container;
-                        if(changelogOverlay == null && !overlayContent.Children.OfType<KaraokeChangelogOverlay>().Any())
+
+                        if (overlayContent == null)
+                            return;
+
+                        if (changelogOverlay == null && !overlayContent.Children.OfType<KaraokeChangelogOverlay>().Any())
                             overlayContent.Add(changelogOverlay = new KaraokeChangelogOverlay("karaoke-dev"));
 
-                        changelogOverlay.Show();
+                        changelogOverlay?.Show();
                     }
                 }
             };

@@ -14,10 +14,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
     {
         protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
 
-        public TestSceneKaraokeModDisableNote()
-        {
-        }
-
         [Test]
         public void TestCheckNoteExistInPlayfield() => CreateModTest(new ModTestData
         {

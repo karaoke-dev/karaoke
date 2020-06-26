@@ -15,10 +15,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
     {
         protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
 
-        public TestSceneKaraokeModPractice()
-        {
-        }
-
         [Test]
         public void TestAllPanelExist() => CreateModTest(new ModTestData
         {
@@ -30,10 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
                 var overlays = Player.DrawableRuleset.Overlays;
                 var karaokeHudOverlay = overlays.OfType<KaraokeHUDOverlay>().FirstOrDefault();
                 var actionContainer = karaokeHudOverlay.OfType<KaraokeHUDOverlay.KaraokeActionContainer>().FirstOrDefault();
-                var controlLayer = actionContainer?.Child as ControlLayer;
 
                 // todo : test overlays is exist.
-                return controlLayer != null;
+                return actionContainer?.Child is ControlLayer;
             }
         });
     }

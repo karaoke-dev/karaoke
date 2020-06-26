@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
         }
 
         /// <summary>
-        /// Orgination name
+        /// Organization name
         /// </summary>
         public string OrganizationName { get; }
 

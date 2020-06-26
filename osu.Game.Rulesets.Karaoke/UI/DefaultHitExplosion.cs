@@ -140,14 +140,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         private void onDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
         {
-            if (direction.NewValue == ScrollingDirection.Left)
-            {
-                Anchor = Anchor.CentreLeft;
-            }
-            else
-            {
-                Anchor = Anchor.CentreRight;
-            }
+            Anchor = direction.NewValue == ScrollingDirection.Left ? Anchor.CentreLeft : Anchor.CentreRight;
         }
     }
 }

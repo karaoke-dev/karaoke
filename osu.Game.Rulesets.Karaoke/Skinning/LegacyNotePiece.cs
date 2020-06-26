@@ -199,13 +199,17 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     return null;
             }
 
-            Sprite getSpriteByName(string name) => (Sprite)skin.GetAnimation(name, true, true).With(d =>
+            Sprite getSpriteByName(string spriteName) => (Sprite)skin.GetAnimation(spriteName, true, true).With(d =>
             {
-                if (d == null)
-                    return;
+                switch (d)
+                {
+                    case null:
+                        return;
 
-                if (d is TextureAnimation animation)
-                    animation.IsPlaying = false;
+                    case TextureAnimation animation:
+                        animation.IsPlaying = false;
+                        break;
+                }
             });
         }
 

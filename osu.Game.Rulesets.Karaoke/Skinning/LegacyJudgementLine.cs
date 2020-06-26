@@ -68,14 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         protected virtual void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
         {
-            if (direction.NewValue == ScrollingDirection.Left)
-            {
-                Scale = Vector2.One;
-            }
-            else
-            {
-                Scale = new Vector2(-1, 1);
-            }
+            Scale = direction.NewValue == ScrollingDirection.Left ? Vector2.One : new Vector2(-1, 1);
         }
 
         protected override void Update()
