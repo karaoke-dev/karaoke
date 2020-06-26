@@ -3,10 +3,13 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Input;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Overlays;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
@@ -19,8 +22,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
         }
 
+        private KaraokeChangelogOverlay changelogOverlay;
+
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(OsuGame game)
         {
             var config = (KaraokeRulesetConfigManager)Config;
             var microphoneManager = new MicrophoneManager();
@@ -102,6 +107,19 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     LabelText = "Practice preempt time",
                     Bindable = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime)
                 },
+                new SettingsButton
+                {
+                    Text = "Change log",
+                    TooltipText = "Let's see what karaoke! changed.",
+                    Action = ()=>
+                    {
+                        var overlayContent = game.Children[3] as Container;
+                        if(changelogOverlay == null && !overlayContent.Children.OfType<KaraokeChangelogOverlay>().Any())
+                            overlayContent.Add(changelogOverlay = new KaraokeChangelogOverlay("karaoke-dev"));
+
+                        changelogOverlay.Show();
+                    }
+                }
             };
         }
 

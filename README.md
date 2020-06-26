@@ -8,6 +8,8 @@
 
 The source code of `karaoke!` ruleset
 
+[Notice] : This is edge branch, some crash issue cause by using new package might be ignored.
+
 ## How to run this project
 
 The fastest way is run [launcher](https://github.com/karaoke-dev/launcher)(you might need to comile yourself).

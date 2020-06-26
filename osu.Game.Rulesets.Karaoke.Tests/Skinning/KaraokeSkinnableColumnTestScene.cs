@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
-using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -10,8 +8,6 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Skinning;
-using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
@@ -25,6 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
     public abstract class KaraokeSkinnableColumnTestScene : KaraokeSkinnableTestScene
     {
         protected const double START_TIME = 1000000000;
+        protected const double DURATION = 1000000000;
 
         public const int COLUMN_NUMBER = 9;
 
@@ -33,13 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator = new PositionCalculator(COLUMN_NUMBER);
-
-        public override IReadOnlyList<Type> RequiredTypes => new[]
-        {
-            typeof(KaraokeRuleset),
-            typeof(KaraokeLegacySkinTransformer),
-            typeof(KaraokeSettingsSubsection)
-        };
 
         protected override Ruleset CreateRulesetForSkinProvider() => new KaraokeRuleset();
 
