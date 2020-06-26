@@ -12,8 +12,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
     public class TestSceneKaraokeModPerfect : ModPerfectTestScene
     {
+        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
+
         public TestSceneKaraokeModPerfect()
-            : base(new KaraokeRuleset(), new KaraokeModPerfect())
+            : base(new KaraokeModPerfect())
         {
         }
 
@@ -22,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
         public void TestLyric(bool shouldMiss) => CreateHitObjectTest(new HitObjectTestData(new LyricLine
         {
             StartTime = 1000,
-            EndTime = 2000,
+            Duration = 1000,
             Text = "カラオケ!",
             TimeTags = new Dictionary<TimeTagIndex, double>()
         }), shouldMiss);

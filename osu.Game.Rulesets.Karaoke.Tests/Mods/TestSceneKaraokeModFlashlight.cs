@@ -12,8 +12,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
     public class TestSceneKaraokeModFlashlight : ModTestScene
     {
+        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
+
         public TestSceneKaraokeModFlashlight()
-            : base(new KaraokeRuleset())
         {
         }
 

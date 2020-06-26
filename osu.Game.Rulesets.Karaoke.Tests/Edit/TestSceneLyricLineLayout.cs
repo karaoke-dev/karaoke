@@ -368,7 +368,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private LyricLine createDefaultLyricLine(string text, string[] ruby, string[] romaji, string translate)
         {
             var startTime = Time.Current;
-            var endTime = Time.Current + 1000000;
+            var duration = 1000000;
 
             using (var stream = new MemoryStream())
             using (var writer = new StreamWriter(stream))
@@ -392,12 +392,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
                 // Apply property
                 lyric.StartTime = startTime;
-                lyric.EndTime = endTime;
+                lyric.Duration = duration;
                 lyric.TranslateText = translate;
                 lyric.TimeTags = new Dictionary<TimeTagIndex, double>
                 {
                     { new TimeTagIndex(0), startTime },
-                    { new TimeTagIndex(4), endTime },
+                    { new TimeTagIndex(4), startTime + duration },
                 };
 
                 return lyric;

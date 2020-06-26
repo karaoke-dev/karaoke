@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Title : KaraokeHitObject, IHasEndTime
+    public class Title : KaraokeHitObject, IHasDuration
     {
         public string Name { get; set; }
 
@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public double Duration { get; set; }
 
-        public double EndTime { get; set; }
+        public double EndTime => StartTime + Duration;
 
         public int LineInterval { get; set; }
 

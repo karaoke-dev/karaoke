@@ -12,8 +12,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
     public class TestSceneKaraokeModDisableNote : ModTestScene
     {
+        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
+
         public TestSceneKaraokeModDisableNote()
-            : base(new KaraokeRuleset())
         {
         }
 

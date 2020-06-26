@@ -36,13 +36,16 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 if (string.IsNullOrEmpty(line.Text))
                     continue;
 
+                var startTime = line.TimeTags.FirstOrDefault(x => x.Time > 0).Time;
+                var duration = line.TimeTags.LastOrDefault(x => x.Time > 0).Time - startTime;
+
                 var lyric = line.Text;
                 output.HitObjects.Add(new LyricLine
                 {
                     Text = lyric,
                     // Start time and end time should be re-assigned
-                    StartTime = line.TimeTags.FirstOrDefault(x => x.Time > 0).Time,
-                    EndTime = line.TimeTags.LastOrDefault(x => x.Time > 0).Time,
+                    StartTime = startTime,
+                    Duration = duration,
                     TimeTags = line.TimeTags.Where(x => x.Check).ToDictionary(k =>
                     {
                         var index = (int)Math.Ceiling((double)(Array.IndexOf(line.TimeTags, k) - 1) / 2);

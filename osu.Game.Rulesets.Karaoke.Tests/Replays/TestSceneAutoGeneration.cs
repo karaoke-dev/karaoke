@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
             {
                 Display = true,
                 StartTime = 1000,
-                EndTime = 1050,
+                Duration = 50,
                 Text = "karaoke!",
                 Tone = new Tone(0, true)
             });
@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
             {
                 Display = true,
                 StartTime = 1000,
-                EndTime = 2000,
+                Duration = 1000,
                 Text = "karaoke!",
                 Tone = new Tone(0, true)
             });
@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
             {
                 Display = true,
                 StartTime = 1000,
-                EndTime = 1050,
+                Duration = 50,
                 Text = "kara",
                 Tone = new Tone(0, true)
             });
@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
             {
                 Display = true,
                 StartTime = 1050,
-                EndTime = 1100,
+                Duration = 50,
                 Text = "oke!",
                 Tone = new Tone(1, true)
             });

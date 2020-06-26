@@ -10,6 +10,7 @@ using osu.Framework.Input;
 using osu.Game.Beatmaps;
 using osu.Game.Input.Handlers;
 using osu.Game.Replays;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -38,6 +39,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
 
+        public override bool AllowGameplayOverlays => Beatmap.IsScorable() && !Mods.OfType<KaraokeModPractice>().Any();
+
         public DrawableKaraokeRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)
         {
@@ -45,6 +48,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             // TODO : it should be moved into NotePlayfield
             BarLines = new BarLineGenerator<BarLine>(Beatmap).BarLines;
+
+            // Editor should not generate hud overlay
+            if (mods == null)
+                return;
 
             // create overlay
             var overlay = new KaraokeHUDOverlay(this);
