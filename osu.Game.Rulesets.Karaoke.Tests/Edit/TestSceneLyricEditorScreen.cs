@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Framework.Allocation;
+using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
@@ -40,6 +41,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private void load()
         {
             Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
+
+            // Copied from TestSceneHitObjectComposer
+            var clock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };
+            Dependencies.CacheAs<IAdjustableClock>(clock);
+            Dependencies.CacheAs<IFrameBasedClock>(clock);
+            Dependencies.CacheAs(editorBeatmap);
+            Dependencies.CacheAs<IBeatSnapProvider>(editorBeatmap);
 
             Child = new LyricEditorScreen();
         }
