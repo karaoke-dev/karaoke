@@ -12,7 +12,6 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Timelines;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
@@ -21,6 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
     public class LyricEditorScreen : EditorScreenWithTimeline
     {
+        private KaraokeLyricEditorSkin skin;
         private FillFlowContainer<Button> controls;
         private FillFlowContainer<LyricControl> container;
 
@@ -53,20 +53,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                                 {
                                     Width = 30,
                                     Height = 25,
-                                    Text = "+"
+                                    Text = "+",
+                                    Action = ()=> skin.FontSize+=5,
                                 },
                                 new OsuButton
                                 {
                                     Width = 30,
                                     Height = 25,
-                                    Text = "-"
+                                    Text = "-",
+                                    Action = ()=> skin.FontSize-=5,
                                 },
                             }
                         }
                     },
                     new Drawable[]
                     {
-                        new SkinProvidingContainer(new KaraokeLyricEditorSkin())
+                        new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin())
                         {
                             RelativeSizeAxes = Axes.Both,
                             Child = new OsuScrollContainer

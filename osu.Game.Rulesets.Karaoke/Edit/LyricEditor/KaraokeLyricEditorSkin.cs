@@ -44,6 +44,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             }
         }
 
+        public int FontSize
+        {
+            get => bindableFont.Value.LyricTextFontInfo.LyricTextFontInfo.CharSize;
+            set
+            {
+                var textSize = Math.Max(Math.Min(value, MAX_FONT_SIZE), MIN_FONT_SIZE);
+                bindableFont.Value.LyricTextFontInfo.LyricTextFontInfo.CharSize = textSize;
+                bindableFont.TriggerChange();
+            }
+        }
+
         public Drawable GetDrawableComponent(ISkinComponent component) => null;
 
         public SampleChannel GetSample(ISampleInfo sampleInfo) => null;
