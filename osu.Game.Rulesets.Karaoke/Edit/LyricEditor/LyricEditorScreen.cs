@@ -5,12 +5,13 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Timing;
 using osu.Game.Graphics.Containers;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Timelines;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
@@ -19,6 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
     public class LyricEditorScreen : EditorScreenWithTimeline
     {
+        private KaraokeLyricEditorSkin skin;
+        private FillFlowContainer<Button> controls;
         private FillFlowContainer<LyricControl> container;
 
         [Resolved]
@@ -28,18 +31,58 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 
         protected override Drawable CreateMainContent()
         {
-            return new SkinProvidingContainer(new KaraokeLegacySkinTransformer(null))
+            return new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = new OsuScrollContainer
+                RowDimensions = new[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    Child = container = new FillFlowContainer<LyricControl>
+                    new Dimension(GridSizeMode.Absolute, 30)
+                },
+                Content = new[]
+                {
+                    new Drawable[]
                     {
-                        RelativeSizeAxes = Axes.X,
-                        AutoSizeAxes = Axes.Y,
-                        Direction = FillDirection.Vertical,
-                        Padding = new MarginPadding { Right = 50 },
+                        controls = new FillFlowContainer<Button>
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Direction = FillDirection.Horizontal,
+                            Spacing = new osuTK.Vector2(10),
+                            Children = new[]
+                            {
+                                new OsuButton
+                                {
+                                    Width = 30,
+                                    Height = 25,
+                                    Text = "+",
+                                    Action = () => skin.FontSize += 3,
+                                },
+                                new OsuButton
+                                {
+                                    Width = 30,
+                                    Height = 25,
+                                    Text = "-",
+                                    Action = () => skin.FontSize -= 3,
+                                },
+                            }
+                        }
+                    },
+                    new Drawable[]
+                    {
+                        new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin())
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Child = new OsuScrollContainer
+                            {
+                                RelativeSizeAxes = Axes.Both,
+                                Child = container = new FillFlowContainer<LyricControl>
+                                {
+                                    RelativeSizeAxes = Axes.X,
+                                    AutoSizeAxes = Axes.Y,
+                                    Direction = FillDirection.Vertical,
+                                    Padding = new MarginPadding { Right = 50 },
+                                }
+                            }
+                        }
                     }
                 }
             };

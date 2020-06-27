@@ -84,13 +84,17 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (CurrentSkin == null)
                 return;
 
-            var karaokeFont = skin.GetConfig<KaraokeSkinLookup, KaraokeFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.FontIndex))?.Value;
-            if (karaokeFont != null)
-                ApplyFont(karaokeFont);
+            skin.GetConfig<KaraokeSkinLookup, KaraokeFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.FontIndex))?.BindValueChanged(karaokeFont =>
+            {
+                if (karaokeFont.NewValue != null)
+                    ApplyFont(karaokeFont.NewValue);
+            }, true);
 
-            var karaokeLayout = skin.GetConfig<KaraokeSkinLookup, KaraokeLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, HitObject.LayoutIndex))?.Value;
-            if (karaokeLayout != null)
-                ApplyLayout(karaokeLayout);
+            skin.GetConfig<KaraokeSkinLookup, KaraokeLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, HitObject.LayoutIndex))?.BindValueChanged(karaokeLayout =>
+            {
+                if (karaokeLayout.NewValue != null)
+                    ApplyLayout(karaokeLayout.NewValue);
+            }, true);  
         }
 
         protected virtual void ApplyFont(KaraokeFont font)

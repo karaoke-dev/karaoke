@@ -77,11 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
 
             protected override void ApplyLayout(KaraokeLayout layout)
             {
-                base.ApplyLayout(new KaraokeLayout
-                {
-                    Name = "Edit layout",
-                    Alignment = Anchor.TopLeft
-                });
+                base.ApplyLayout(layout);
                 Padding = new MarginPadding(0);
             }
 
