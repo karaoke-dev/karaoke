@@ -6,10 +6,14 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Audio;
+using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Skinning;
 using System;
+using System.Linq;
+using System.Reflection;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
@@ -18,13 +22,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
     /// </summary>
     public class KaraokeLyricEditorSkin : ISkin
     {
+        public const int MIN_FONT_SIZE = 10;
+        public const int MAX_FONT_SIZE = 45;
+
         private readonly Bindable<KaraokeFont> bindableFont;
         private readonly Bindable<KaraokeLayout> bindableLayout;
 
         public KaraokeLyricEditorSkin()
         {
-            bindableFont = new Bindable<KaraokeFont>();
-            bindableLayout = new Bindable<KaraokeLayout>();
+            // TODO : need a better way to load resource
+            var assembly = Assembly.GetExecutingAssembly();
+            const string resource_name = @"osu.Game.Rulesets.Karaoke.Resources.Skin.lyric-editor.skin";
+
+            using (var stream = assembly.GetManifestResourceStream(resource_name))
+            using (var reader = new LineBufferedReader(stream))
+            {
+                var skin = new KaraokeSkinDecoder().Decode(reader);
+
+                bindableFont = new Bindable<KaraokeFont>(skin.Fonts.FirstOrDefault());
+                bindableLayout = new Bindable<KaraokeLayout>(skin.Layouts.FirstOrDefault());
+            }
         }
 
         public Drawable GetDrawableComponent(ISkinComponent component) => null;
