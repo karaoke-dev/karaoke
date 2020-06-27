@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private readonly OsuDropdown<FontArea> fontAreaDropdown;
         private readonly OsuDropdown<Font> fontDropdown;
         private readonly OsuCheckbox boldCheckbox;
-        private readonly OsuSliderBar<int> fontSizeSliderBar;
+        private readonly OsuSliderBar<float> fontSizeSliderBar;
         private readonly OsuSliderBar<int> borderSliderBar;
         private readonly OsuCheckbox displayShaderCheckbox;
         private readonly OsuSliderBar<float> shadowXSliderBar;
@@ -189,10 +189,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                                         Children = new Drawable[]
                                                         {
                                                             new OsuSpriteText { Text = "Font size" },
-                                                            fontSizeSliderBar = new OsuSliderBar<int>
+                                                            fontSizeSliderBar = new OsuSliderBar<float>
                                                             {
                                                                 RelativeSizeAxes = Axes.X,
-                                                                Current = new BindableInt
+                                                                Current = new BindableFloat
                                                                 {
                                                                     Value = 30,
                                                                     MinValue = 10,

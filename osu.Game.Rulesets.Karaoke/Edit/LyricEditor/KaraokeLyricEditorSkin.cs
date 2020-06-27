@@ -44,13 +44,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             }
         }
 
-        public int FontSize
+        public float FontSize
         {
             get => bindableFont.Value.LyricTextFontInfo.LyricTextFontInfo.CharSize;
             set
             {
                 var textSize = Math.Max(Math.Min(value, MAX_FONT_SIZE), MIN_FONT_SIZE);
-                bindableFont.Value.LyricTextFontInfo.LyricTextFontInfo.CharSize = textSize;
+                var changePercentage = textSize / FontSize;
+                bindableFont.Value.LyricTextFontInfo.LyricTextFontInfo.CharSize *= changePercentage;
+                bindableFont.Value.RubyTextFontInfo.LyricTextFontInfo.CharSize *= changePercentage;
+                bindableFont.Value.RomajiTextFontInfo.LyricTextFontInfo.CharSize *= changePercentage;
+                bindableFont.Value.ShadowOffset *= changePercentage;
                 bindableFont.TriggerChange();
             }
         }
@@ -63,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 
         public IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
         {
-            if(!(lookup is KaraokeSkinLookup skinLookup))
+            if (!(lookup is KaraokeSkinLookup skinLookup))
                 throw new NotSupportedException();
 
             var config = skinLookup.Config;
@@ -72,8 +76,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             {
                 case KaraokeSkinConfiguration.LyricStyle:
                     return SkinUtils.As<TValue>(bindableFont);
+
                 case KaraokeSkinConfiguration.LyricLayout:
                     return SkinUtils.As<TValue>(bindableLayout);
+
                 default:
                     throw new NotSupportedException();
             }

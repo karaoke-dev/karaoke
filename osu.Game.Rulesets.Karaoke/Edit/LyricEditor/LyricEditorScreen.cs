@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                 {
                     new Dimension(GridSizeMode.Absolute, 30)
                 },
-                Content = new Drawable[][]
+                Content = new[]
                 {
                     new Drawable[]
                     {
@@ -47,21 +47,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                             RelativeSizeAxes = Axes.Both,
                             Direction = FillDirection.Horizontal,
                             Spacing = new osuTK.Vector2(10),
-                            Children = new []
+                            Children = new[]
                             {
                                 new OsuButton
                                 {
                                     Width = 30,
                                     Height = 25,
                                     Text = "+",
-                                    Action = ()=> skin.FontSize+=5,
+                                    Action = () => skin.FontSize += 3,
                                 },
                                 new OsuButton
                                 {
                                     Width = 30,
                                     Height = 25,
                                     Text = "-",
-                                    Action = ()=> skin.FontSize-=5,
+                                    Action = () => skin.FontSize -= 3,
                                 },
                             }
                         }

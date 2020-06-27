@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Components
 
         public bool Bold { get; set; }
 
-        public int CharSize { get; set; }
+        public float CharSize { get; set; }
 
         public int EdgeSize { get; set; }
     }
