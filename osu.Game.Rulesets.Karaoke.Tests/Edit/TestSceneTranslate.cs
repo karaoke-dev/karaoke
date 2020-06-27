@@ -15,6 +15,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.UI.Components;
@@ -37,7 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private readonly TranslateEditor translateEditor;
 
         private readonly IBeatmap beatmap;
-        private TranslateDictionary translateDictionary => beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault();
         private LyricLine[] lyricLines => beatmap.HitObjects.OfType<LyricLine>().ToArray();
 
         protected override IBeatmap CreateBeatmap(RulesetInfo ruleset) => new TestKaraokeBeatmap(ruleset);
@@ -108,17 +108,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                     var insertTranslate = translateEditor.Translates.ToList();
                     insertTranslate.AddRange(new string[lyricLines.Length - insertTranslate.Count]);
 
-                    if (translateDictionary.Translates.ContainsKey(oldLanguageCode))
-                        translateDictionary.Translates[oldLanguageCode] = insertTranslate;
+                    if (beatmap.AvailableTranslates().Contains(oldLanguageCode))
+                    {
+                        var translate = beatmap.GetTranslate(oldLanguageCode);
+                        translate.Clear();
+                        translate.AddRange(insertTranslate);
+                    }
                     else
-                        translateDictionary.Translates.Add(oldLanguageCode, insertTranslate);
+                        beatmap.GetProperty().Translates.Add(oldLanguageCode, insertTranslate);
                 }
 
                 // Apply new translate to editor
                 var newLanguageCode = value.NewValue;
-                translateEditor.Translates = translateDictionary.Translates.TryGetValue(newLanguageCode, out var translate)
-                    ? translate.ToArray()
-                    : lyricLines.Select(x => "").ToArray();
+                translateEditor.Translates = beatmap.GetTranslate(newLanguageCode)?.ToArray() ?? lyricLines.Select(x => "").ToArray();
             }, true);
         }
 

@@ -10,10 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
     public class TestSceneKaraokeModFun : ModTestScene
     {
-        public TestSceneKaraokeModFun()
-            : base(new KaraokeRuleset())
-        {
-        }
+        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
 
         [Test]
         public void TestSnowMod() => CreateModTest(new ModTestData

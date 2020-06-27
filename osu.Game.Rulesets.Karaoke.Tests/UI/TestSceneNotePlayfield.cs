@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
                 var note = new Note
                 {
                     StartTime = Time.Current + increaseTime,
-                    EndTime = Time.Current + increaseTime + duration,
+                    Duration = duration,
                     Tone = new Tone { Scale = tone },
                     Text = "Here",
                     Display = true
@@ -127,26 +127,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
             notePlayfields.ForEach(x =>
             {
                 // Start frame
-                x.AddReplay(new KaraokeReplayFrame
-                {
-                    Time = Time.Current + increaseTime,
-                    Scale = scale,
-                    Sound = true
-                });
+                x.AddReplay(new KaraokeReplayFrame(Time.Current + increaseTime, scale));
 
-                //End frame
-                x.AddReplay(new KaraokeReplayFrame
-                {
-                    Time = Time.Current + increaseTime + duration - 2,
-                    Scale = scale,
-                    Sound = true
-                });
+                // End frame
+                x.AddReplay(new KaraokeReplayFrame(Time.Current + increaseTime + duration - 2, scale));
 
-                //Stop point
-                x.AddReplay(new KaraokeReplayFrame
-                {
-                    Time = Time.Current + increaseTime + duration - 1,
-                });
+                // Stop point
+                x.AddReplay(new KaraokeReplayFrame(Time.Current + increaseTime + duration - 1));
             });
         }
 

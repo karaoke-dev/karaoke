@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Note : KaraokeHitObject, IHasEndTime, IHasText
+    public class Note : KaraokeHitObject, IHasDuration, IHasText
     {
         public readonly Bindable<string> TextBindable = new Bindable<string>();
 
@@ -70,13 +70,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// Duration
         /// </summary>
         [JsonIgnore]
-        public double Duration => EndTime - StartTime;
+        public double Duration { get; set; }
 
         /// <summary>
         /// The time at which the HitObject end.
         /// </summary>
         [JsonIgnore]
-        public double EndTime { get; set; }
+        public double EndTime => StartTime + Duration;
 
         public int StartIndex { get; set; }
 
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             return new Note
             {
                 StartTime = startTime,
-                EndTime = startTime + duration,
+                Duration = duration,
                 StartIndex = StartIndex,
                 EndIndex = EndIndex,
                 Text = Text,

@@ -18,5 +18,6 @@ namespace osu.Game.Rulesets.Karaoke.Resources.Fonts
         public static IconUsage ModHiddenNote => OsuIcon.ModHidden;
         public static IconUsage ModHiddenRuby => FontAwesome.Solid.Gem;
         public static IconUsage ModPractice => FontAwesome.Solid.Music;
+        public static IconUsage ModAutoPlayBySinger => FontAwesome.Solid.Music;
     }
 }

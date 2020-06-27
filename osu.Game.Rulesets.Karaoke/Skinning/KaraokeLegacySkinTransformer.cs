@@ -25,12 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         private Lazy<bool> isLegacySkin;
 
-        /// <summary>
-        /// Whether texture for the keys exists.
-        /// Used to determine if the karaoke ruleset is skinned.
-        /// </summary>
-        private Lazy<bool> hasKeyTexture;
-
         public KaraokeLegacySkinTransformer(ISkinSource source)
         {
             this.source = source;
@@ -53,9 +47,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         private void sourceChanged()
         {
             isLegacySkin = new Lazy<bool>(() => source?.GetConfig<LegacySkinConfiguration.LegacySetting, decimal>(LegacySkinConfiguration.LegacySetting.Version) != null);
-
-            // todo : need to check skin is really exist
-            hasKeyTexture = new Lazy<bool>(() => true);
         }
 
         public Drawable GetDrawableComponent(ISkinComponent component)
@@ -63,26 +54,53 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             if (!(component is KaraokeSkinComponent karaokeComponent))
                 return null;
 
-            if (!isLegacySkin.Value || !hasKeyTexture.Value)
+            if (!isLegacySkin.Value)
                 return null;
 
             switch (karaokeComponent.Component)
             {
                 case KaraokeSkinComponents.ColumnBackground:
-                    return new LegacyColumnBackground();
+                    if (textureExist(LegacyColumnBackground.GetTextureName()))
+                        return new LegacyColumnBackground();
+
+                    return null;
 
                 case KaraokeSkinComponents.StageBackground:
-                    return new LegacyStageBackground();
+                    if (textureExist(LegacyStageBackground.GetTextureName()))
+                        return new LegacyStageBackground();
+
+                    return null;
 
                 case KaraokeSkinComponents.JudgementLine:
-                    return new LegacyJudgementLine();
+                    var judgementLine = LegacyJudgementLine.GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage);
+                    if (textureExist(judgementLine))
+                        return new LegacyJudgementLine();
+
+                    return null;
 
                 case KaraokeSkinComponents.Note:
-                    return new LegacyNotePiece();
+                    var foregroundBody = LegacyNotePiece.GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Foreground);
+                    var backgroundBody = LegacyNotePiece.GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Background);
+                    if (textureExist(foregroundBody, backgroundBody))
+                        return new LegacyNotePiece();
+
+                    return null;
+
+                case KaraokeSkinComponents.HitExplosion:
+                    if (animationExist(LegacyHitExplosion.GetTextureName()))
+                        return new LegacyHitExplosion();
+
+                    return null;
             }
 
             return null;
         }
+
+        private bool textureExist(params string[] textureNames)
+            => textureNames.All(x => source.GetTexture(x) != null);
+
+        private bool animationExist(params string[] textureNames)
+            => textureNames.All(x => source.GetAnimation(x, true, false) != null);
 
         public Texture GetTexture(string componentName) => source.GetTexture(componentName);
 

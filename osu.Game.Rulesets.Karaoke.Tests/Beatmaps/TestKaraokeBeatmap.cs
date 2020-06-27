@@ -20,6 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
             Breaks = baseBeatmap.Breaks;
             HitObjects = baseBeatmap.HitObjects;
 
+            BeatmapInfo.RulesetID = 1;
             BeatmapInfo.Ruleset = ruleset;
             BeatmapInfo.BeatmapSet.Metadata = BeatmapInfo.Metadata;
             BeatmapInfo.BeatmapSet.Beatmaps = new List<BeatmapInfo> { BeatmapInfo };

@@ -30,33 +30,50 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             var result = new LrcParser().Decode(lyricText);
 
             // Convert line
-            foreach (var line in result.Lines)
+            for (int i = 0; i < result.Lines.Length; i++)
             {
                 // Empty line should not be imported
+                var line = result.Lines[i];
                 if (string.IsNullOrEmpty(line.Text))
                     continue;
 
-                var lyric = line.Text;
-                output.HitObjects.Add(new LyricLine
+                try
                 {
-                    Text = lyric,
-                    // Start time and end time should be re-assigned
-                    StartTime = line.TimeTags.FirstOrDefault(x => x.Time > 0).Time,
-                    EndTime = line.TimeTags.LastOrDefault(x => x.Time > 0).Time,
-                    TimeTags = line.TimeTags.Where(x => x.Check).ToDictionary(k =>
-                    {
-                        var index = (int)Math.Ceiling((double)(Array.IndexOf(line.TimeTags, k) - 1) / 2);
-                        var state = (Array.IndexOf(line.TimeTags, k) - 1) % 2 == 0 ? TimeTagIndex.IndexState.Start : TimeTagIndex.IndexState.End;
+                    // todo : check list ls sorted by time.
+                    var timeTags = line.TimeTags;
 
-                        return new TimeTagIndex(index, state);
-                    }, v => (double)v.Time),
-                    RubyTags = result.QueryRubies(lyric).Select(ruby => new RubyTag
+                    var startTime = timeTags.FirstOrDefault(x => x.Time > 0).Time;
+                    var duration = timeTags.LastOrDefault(x => x.Time > 0).Time - startTime;
+
+                    var lyric = line.Text;
+                    output.HitObjects.Add(new LyricLine
                     {
-                        Text = ruby.Ruby.Ruby,
-                        StartIndex = ruby.StartIndex,
-                        EndIndex = ruby.EndIndex
-                    }).ToArray()
-                });
+                        Text = lyric,
+                        // Start time and end time should be re-assigned
+                        StartTime = startTime,
+                        Duration = duration,
+                        TimeTags = timeTags.Where(x => x.Check).ToDictionary(k =>
+                        {
+                            var index = (int)Math.Ceiling((double)(Array.IndexOf(timeTags, k) - 1) / 2);
+                            var state = (Array.IndexOf(timeTags, k) - 1) % 2 == 0 ? TimeTagIndex.IndexState.Start : TimeTagIndex.IndexState.End;
+
+                            return new TimeTagIndex(index, state);
+                        }, v => (double)v.Time),
+                        RubyTags = result.QueryRubies(lyric).Select(ruby => new RubyTag
+                        {
+                            Text = ruby.Ruby.Ruby,
+                            StartIndex = ruby.StartIndex,
+                            EndIndex = ruby.EndIndex
+                        }).ToArray()
+                    });
+                }
+                catch (Exception ex)
+                {
+                    var message = $"Parsing lyric '{line.Text}' got error in line:{i}" +
+                                  "Please check time tag should be ordered and not duplicated." +
+                                  "Then re-import again.";
+                    throw new FormatException(message, ex);
+                }
             }
         }
     }

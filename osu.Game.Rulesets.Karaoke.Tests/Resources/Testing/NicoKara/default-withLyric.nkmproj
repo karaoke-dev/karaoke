@@ -2,10 +2,10 @@
 <ProjectSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <AppVer>Ver 7.86</AppVer>
   <IsDefaultStyleNeeded>false</IsDefaultStyleNeeded>
-  <SourceMoviePath>F:\Github\osu-Karaoke\Lyric\ちおちゃんの通学路ed\videoplayback.avi</SourceMoviePath>
-  <SourceMovieRelativePath>..\..\..\..\..\..\osu-Karaoke\Lyric\ちおちゃんの通学路ed\videoplayback.avi</SourceMovieRelativePath>
-  <LyricsPath>F:\Github\osu-Karaoke\Lyric\ちおちゃんの通学路ed\project.lrc</LyricsPath>
-  <LyricsRelativePath>..\..\..\..\..\..\osu-Karaoke\Lyric\ちおちゃんの通学路ed\project.lrc</LyricsRelativePath>
+  <SourceMoviePath>F:\Github\karaoke-dev\Lyric\ちおちゃんの通学路ed\videoplayback.avi</SourceMoviePath>
+  <SourceMovieRelativePath>..\..\..\..\..\..\karaoke-dev\Lyric\ちおちゃんの通学路ed\videoplayback.avi</SourceMovieRelativePath>
+  <LyricsPath>F:\Github\karaoke-dev\Lyric\ちおちゃんの通学路ed\project.lrc</LyricsPath>
+  <LyricsRelativePath>..\..\..\..\..\..\karaoke-dev\Lyric\ちおちゃんの通学路ed\project.lrc</LyricsRelativePath>
   <KaraokeFonts>
     <KaraokeFont>
       <Name>標準配色</Name>
@@ -5042,6 +5042,6 @@
     </TitleInfo>
   </TitleInfos>
   <DestFormat>UnCompressedAvi</DestFormat>
-  <DestMoviePath>F:\Github\osu-Karaoke\Lyric\ちおちゃんの通学路ed\videoplayback_ニコカラメーカー出力.avi</DestMoviePath>
+  <DestMoviePath>F:\Github\karaoke-dev\Lyric\ちおちゃんの通学路ed\videoplayback_ニコカラメーカー出力.avi</DestMoviePath>
   <DoubleFrame>false</DoubleFrame>
 </ProjectSettings>
