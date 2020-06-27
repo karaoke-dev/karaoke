@@ -193,7 +193,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     note.Text = ruby;
 
                 if (duration != null)
-                    note.EndTime = note.StartTime + duration.Value;
+                    note.Duration = duration.Value;
 
                 //Support format : 1  1.  1.5  1+  1#
                 Tone convertTone(string tone)
@@ -246,7 +246,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private void processTranslate(Beatmap beatmap, IEnumerable<string> translateLines)
         {
-            var dictionary = new TranslateDictionary();
+            var dictionary = new PropertyDictionary();
 
             foreach (var translateLine in translateLines)
             {

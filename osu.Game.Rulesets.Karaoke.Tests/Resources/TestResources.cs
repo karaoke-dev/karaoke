@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.IO;
+using osu.Framework.Audio;
+using osu.Framework.Audio.Track;
 using osu.Framework.IO.Stores;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Resources
@@ -19,5 +21,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Resources
         public static Stream OpenLrcResource(string name) => OpenResource($"Testing/Lrc/{name}.lrc");
 
         public static Stream OpenNicoKaraResource(string name) => OpenResource($"Testing/NicoKara/{name}.nkmproj");
+
+        public static Stream OpenTrackResource(string name) => OpenResource($"Testing/Track/{name}.mp3");
+
+        public static Track OpenTrackInfo(AudioManager audioManager, string name) => audioManager.GetTrackStore(GetStore()).Get($"Resources/Testing/Track/{name}.mp3");
     }
 }

@@ -13,7 +13,7 @@ using osuTK.Graphics;
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
     /// <summary>
-    /// A test scene for a karaoke hitobject.
+    /// A test scene for a karaoke hitObject.
     /// </summary>
     public abstract class KaraokeHitObjectTestScene : KaraokeSkinnableColumnTestScene
     {
@@ -47,8 +47,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                             {
                                 h.HitObject.StartTime = START_TIME;
 
-                                if (h.HitObject is IHasEndTime hasEndTimeHitObject)
-                                    hasEndTimeHitObject.EndTime = START_TIME * 2;
+                                if (h.HitObject is IHasDuration hasDurationHitObject)
+                                    hasDurationHitObject.Duration = DURATION;
 
                                 h.AccentColour.Value = Color4.Orange;
                             }));

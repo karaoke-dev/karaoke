@@ -68,14 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         protected virtual void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
         {
-            if (direction.NewValue == ScrollingDirection.Left)
-            {
-                Scale = Vector2.One;
-            }
-            else
-            {
-                Scale = new Vector2(-1, 1);
-            }
+            Scale = direction.NewValue == ScrollingDirection.Left ? Vector2.One : new Vector2(-1, 1);
         }
 
         protected override void Update()
@@ -96,6 +89,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         }
 
         protected Texture GetTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup)
+            => skin.GetTexture(GetTextureNameFromLookup(lookup));
+
+        public static string GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup)
         {
             string suffix;
 
@@ -117,8 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     throw new ArgumentOutOfRangeException($"{nameof(lookup)} should be body, head or tail.");
             }
 
-            string noteImage = $"karaoke-judgement-line-{suffix}";
-            return skin.GetTexture(noteImage);
+            return $"karaoke-judgement-line-{suffix}";
         }
     }
 }

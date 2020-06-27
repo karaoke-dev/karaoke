@@ -7,14 +7,11 @@ using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
-using osu.Game.Rulesets.Karaoke.Skinning;
-using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osuTK.Graphics;
-using System;
-using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
@@ -24,6 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
     public abstract class KaraokeSkinnableColumnTestScene : KaraokeSkinnableTestScene
     {
         protected const double START_TIME = 1000000000;
+        protected const double DURATION = 1000000000;
 
         public const int COLUMN_NUMBER = 9;
 
@@ -32,13 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator = new PositionCalculator(COLUMN_NUMBER);
-
-        public override IReadOnlyList<Type> RequiredTypes => new[]
-        {
-            typeof(KaraokeRuleset),
-            typeof(KaraokeLegacySkinTransformer),
-            typeof(KaraokeSettingsSubsection)
-        };
 
         protected override Ruleset CreateRulesetForSkinProvider() => new KaraokeRuleset();
 
@@ -52,6 +43,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 Colour = Color4.SlateGray.Opacity(0.2f),
                 Depth = 1
             });
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(RulesetConfigCache configCache)
+        {
+            // Cache ruleset config manager because karaoke input manager need it.
+            var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(Ruleset.Value.CreateInstance());
+            Dependencies.Cache(config);
         }
 
         [Test]

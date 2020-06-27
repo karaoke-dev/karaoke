@@ -3,8 +3,8 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
@@ -37,16 +37,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         protected virtual void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> direction)
         {
-            if (direction.NewValue == ScrollingDirection.Left)
-            {
-                Scale = Vector2.One;
-            }
-            else
-            {
-                Scale = new Vector2(-1, 1);
-            }
+            Scale = direction.NewValue == ScrollingDirection.Left ? Vector2.One : new Vector2(-1, 1);
         }
 
-        private Texture getTexture(ISkinSource skin) => skin.GetTexture("karaoke-stage-background");
+        private Texture getTexture(ISkinSource skin) => skin.GetTexture(GetTextureName());
+
+        public static string GetTextureName() => "karaoke-stage-background";
     }
 }

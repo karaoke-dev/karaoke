@@ -10,6 +10,7 @@ using osu.Framework.Caching;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -70,21 +71,21 @@ namespace osu.Game.Rulesets.Karaoke.UI
             var targetLanguage = translateLanguage.Value;
 
             var lyric = Beatmap.HitObjects.OfType<LyricLine>().ToList();
-            var translateDictionary = Beatmap.HitObjects.OfType<TranslateDictionary>().FirstOrDefault();
+            var translateDictionary = Beatmap.GetProperty();
 
             // Clear exist translate
             lyric.ForEach(x => x.TranslateText = null);
 
             // If contain target language
             if (isTranslate && targetLanguage != null
-                            && translateDictionary != null && translateDictionary.Translates.ContainsKey(targetLanguage))
+                            && Beatmap.AvailableTranslates().Contains(targetLanguage))
             {
-                var language = translateDictionary.Translates[targetLanguage];
+                var translate = Beatmap.GetTranslate(targetLanguage);
 
                 // Apply translate
-                for (int i = 0; i < Math.Min(lyric.Count, language.Count); i++)
+                for (int i = 0; i < Math.Min(lyric.Count, translate.Count); i++)
                 {
-                    lyric[i].TranslateText = language[i];
+                    lyric[i].TranslateText = translate[i];
                 }
             }
         }

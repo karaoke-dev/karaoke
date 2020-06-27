@@ -258,6 +258,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         internal void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)
         {
+            // Add judgement
             if (!judgedObject.DisplayResult || !DisplayJudgements.Value)
                 return;
 
@@ -271,6 +272,22 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 Origin = Anchor.Centre,
                 Y = calculator.YPositionAt(note.HitObject.Tone + 2)
             });
+
+            // Add hit explosion
+            if (!result.IsHit)
+                return;
+
+            var explosion = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.HitExplosion), _ =>
+                new DefaultHitExplosion(judgedObject.AccentColour.Value, judgedObject is DrawableNote))
+            {
+                Y = calculator.YPositionAt(note.HitObject.Tone)
+            };
+
+            // todo : shpuld be added into hitObjectArea.Explosions
+            // see how mania ruleset do
+            hitObjectArea.Add(explosion);
+
+            explosion.Delay(200).Expire(true);
         }
 
         [BackgroundDependencyLoader]
