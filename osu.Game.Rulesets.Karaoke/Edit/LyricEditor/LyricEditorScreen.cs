@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                     },
                     new Drawable[]
                     {
-                        new SkinProvidingContainer(new KaraokeLegacySkinTransformer(null))
+                        new SkinProvidingContainer(new KaraokeLyricEditorSkin())
                         {
                             RelativeSizeAxes = Axes.Both,
                             Child = new OsuScrollContainer
