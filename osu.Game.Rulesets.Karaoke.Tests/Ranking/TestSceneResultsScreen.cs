@@ -14,6 +14,7 @@ using osu.Framework.Testing;
 using osu.Framework.Utils;
 using osu.Game.Beatmaps;
 using osu.Game.Online.API;
+using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Scoring;
 using osu.Game.Screens;
 using osu.Game.Screens.Play;
@@ -29,22 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
     [TestFixture]
     public class TestSceneResultsScreen : OsuManualInputManagerTestScene
     {
-        private BeatmapManager beatmaps;
-
-        [BackgroundDependencyLoader]
-        private void load(BeatmapManager beatmaps)
-        {
-            this.beatmaps = beatmaps;
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            var beatmapInfo = beatmaps.QueryBeatmap(b => b.RulesetID == 0);
-            if (beatmapInfo != null)
-                Beatmap.Value = beatmaps.GetWorkingBeatmap(beatmapInfo);
-        }
+        protected override IBeatmap CreateBeatmap(RulesetInfo ruleset) => new TestKaraokeBeatmap(ruleset);
 
         private TestResultsScreen createResultsScreen() => new TestResultsScreen(new TestScoreInfo(new KaraokeRuleset().RulesetInfo));
 
