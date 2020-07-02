@@ -1,4 +1,4 @@
-// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
@@ -7,7 +7,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Scoring;
 using osu.Game.Screens.Ranking.Statistics;
-using osu.Game.Tests;
 using osu.Game.Tests.Visual;
 using System.Collections.Generic;
 
@@ -18,10 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
         [Test]
         public void TestScoreWithStatistics()
         {
-            var score = new TestScoreInfo(new KaraokeRuleset().RulesetInfo)
+            var score = new TestKaraokeScoreInfo()
             {
-                //TODO : add hit event.
-                HitEvents = new List<HitEvent>()
+                HitEvents = TestSceneHitEventTimingDistributionGraph.CreateDistributedHitEvents()
             };
 
             loadPanel(score);
@@ -30,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
         [Test]
         public void TestScoreWithoutStatistics()
         {
-            loadPanel(new TestScoreInfo(new KaraokeRuleset().RulesetInfo));
+            loadPanel(new TestKaraokeScoreInfo());
         }
 
         [Test]
