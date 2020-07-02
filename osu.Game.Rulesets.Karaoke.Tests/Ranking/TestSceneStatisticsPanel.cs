@@ -4,11 +4,9 @@
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Scoring;
 using osu.Game.Scoring;
 using osu.Game.Screens.Ranking.Statistics;
 using osu.Game.Tests.Visual;
-using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 {
@@ -17,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
         [Test]
         public void TestScoreWithStatistics()
         {
-            var score = new TestKaraokeScoreInfo()
+            var score = new TestKaraokeScoreInfo
             {
                 HitEvents = TestSceneHitEventTimingDistributionGraph.CreateDistributedHitEvents()
             };
