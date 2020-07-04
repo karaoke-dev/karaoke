@@ -247,9 +247,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             }
         }
 
-        public class KaraokeSingerEditorSkin : KaraokeLyricEditorSkin
+        public class KaraokeSingerEditorSkin : KaraokeLegacySkinTransformer
         {
-
+            public KaraokeSingerEditorSkin()
+                : base(null)
+            {
+            }
         }
     }
 }

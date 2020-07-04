@@ -539,9 +539,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             F003
         }
 
-        public class KaraokeStyleEditorSkin : KaraokeLyricEditorSkin
+        public class KaraokeStyleEditorSkin : KaraokeInternalSkin
         {
-
+            protected override string ResourceName => @"osu.Game.Rulesets.Karaoke.Resources.Skin.editor.skin";
         }
     }
 }
