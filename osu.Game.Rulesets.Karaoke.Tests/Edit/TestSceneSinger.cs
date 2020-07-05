@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 }
             };
 
-            var bindableSinger = skinTransformer.GetConfig<KaraokeIndexLookup, Dictionary<int, string>>(KaraokeIndexLookup.Singer);
+            var bindableSinger = skinTransformer.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Singer);
             bindableSinger.BindValueChanged(x =>
             {
                 var singers = x.NewValue.ToDictionary(i => i.Key, v =>
