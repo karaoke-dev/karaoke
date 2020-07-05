@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 };
             }
 
-            public class LoadingIcon : ModButton
+            private class LoadingIcon : ModButton
             {
                 public LoadingIcon()
                     : base(new KaraokeModWindowsUpdate())

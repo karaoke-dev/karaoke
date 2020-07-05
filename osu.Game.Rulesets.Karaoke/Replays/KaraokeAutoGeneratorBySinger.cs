@@ -22,8 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         private readonly Task<Dictionary<double, float?>> readTask;
 
         /// <summary>
-        /// Using audio's vioce to generate replay frames
-        /// Logic is copird from <see cref="Waveform"/>
+        /// Using audio's voice to generate replay frames
+        /// Logic is copied from <see cref="Waveform"/>
         /// </summary>
         /// <param name="beatmap"></param>
         /// <param name="data"></param>

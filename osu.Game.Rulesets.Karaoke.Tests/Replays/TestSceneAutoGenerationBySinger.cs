@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
 
             // Get generated frame and compare frame
             var karaokeFrames = generated.Frames.OfType<KaraokeReplayFrame>().ToList();
-            var compareFrame = GetCompareResultFromName("demo");
+            var compareFrame = getCompareResultFromName("demo");
 
             // Check total frames.
             Assert.AreEqual(karaokeFrames.Count, compareFrame.Count, $"Replay frame should have {compareFrame.Count}.");
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
             }
         }
 
-        private static IList<TestKaraokeReplayFrame> GetCompareResultFromName(string name)
+        private static IList<TestKaraokeReplayFrame> getCompareResultFromName(string name)
         {
             var data = TestResources.OpenResource($"Testing/Track/{name}.json");
 

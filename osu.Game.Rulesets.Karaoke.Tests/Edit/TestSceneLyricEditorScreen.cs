@@ -14,7 +14,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
     [TestFixture]
-    [Ignore("Will fail if run muliple tests. No idea how to fix that.")]
+    [Ignore("Will fail if run multiple tests. No idea how to fix that.")]
     public class TestSceneLyricEditorScreen : EditorClockTestScene
     {
         public TestSceneLyricEditorScreen()

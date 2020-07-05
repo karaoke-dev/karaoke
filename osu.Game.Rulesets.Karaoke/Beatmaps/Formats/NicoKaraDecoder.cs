@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     BrushGradients = brushGradient
                 };
 
-                Color4 convertColor(System.Drawing.Color color) => new Color4(color.R, color.G, color.B, color.A);
+                static Color4 convertColor(System.Drawing.Color color) => new Color4(color.R, color.G, color.B, color.A);
             }
         }
     }

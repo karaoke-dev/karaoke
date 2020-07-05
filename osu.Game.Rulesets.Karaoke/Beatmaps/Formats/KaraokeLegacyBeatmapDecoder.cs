@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             }
         }
 
-        private void processNotes(Beatmap beatmap, IList<string> noteLines)
+        private void processNotes(Beatmap beatmap, IList<string> lines)
         {
             // Remove all karaoke note
             beatmap.HitObjects.RemoveAll(x => x is Note);
@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             for (int l = 0; l < lyricLines.Count; l++)
             {
                 var lyricLine = lyricLines[l];
-                var line = noteLines.ElementAtOrDefault(l)?.Split('=').Last();
+                var line = lines.ElementAtOrDefault(l)?.Split('=').Last();
 
                 // Create default note if not exist
                 if (string.IsNullOrEmpty(line))
