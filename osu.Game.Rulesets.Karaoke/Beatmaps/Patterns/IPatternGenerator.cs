@@ -2,11 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
 {
-    public interface IPatternGenerator<T>
+    public interface IPatternGenerator<TObject> where TObject : KaraokeHitObject
     {
-        void Generate(IEnumerable<T> hitObjects);
+        void Generate(IEnumerable<TObject> hitObjects);
     }
 }

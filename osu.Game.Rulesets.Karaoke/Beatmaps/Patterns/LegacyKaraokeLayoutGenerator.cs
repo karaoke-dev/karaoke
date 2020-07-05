@@ -46,9 +46,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
         /// ******      (left)        12
         ///      ****** (right)       13
         /// </example>
-        /// <param name="lyrics"></param>
-        /// <param name="bottomOnly"></param>
-        private void assignLayoutArrangement(IList<LyricLine> lyrics, bool bottomOnly = false)
+        /// <param name="lyrics">Lyrics</param>
+        private void assignLayoutArrangement(IList<LyricLine> lyrics)
         {
             // Force change to new line if lyric has long time
             const int new_lyric_line_time = 15000;
@@ -83,15 +82,15 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
                 var lastLyricLine = i >= number_of_line ? lyrics[i - number_of_line] : null;
                 var lyricLine = lyrics[i];
 
-                if (lastLyricLine != null)
-                {
-                    // Adjust start time and end time
-                    var lyricEndTime = lyricLine.EndTime;
-                    lyricLine.StartTime = lastLyricLine.EndTime + 1000;
+                if (lastLyricLine == null)
+                    continue;
 
-                    // Should re-assign duration here
-                    lyricLine.Duration = lyricEndTime - lyricLine.StartTime;
-                }
+                // Adjust start time and end time
+                var lyricEndTime = lyricLine.EndTime;
+                lyricLine.StartTime = lastLyricLine.EndTime + 1000;
+
+                // Should re-assign duration here
+                lyricLine.Duration = lyricEndTime - lyricLine.StartTime;
             }
         }
     }

@@ -134,7 +134,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Timelines
 
         internal class TimelineSelectionHandler : SelectionHandler
         {
-            // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
+            // for now we always allow movement. snapping is provided by the time line's "distance" snap implementation
             public override bool HandleMovement(MoveSelectionEvent moveEvent) => true;
         }
 
