@@ -7,11 +7,17 @@
 [![dev chat](https://discordapp.com/api/guilds/299006062323826688/widget.png?style=shield)](https://discord.gg/ga2xZXk)
 
 
-The source code of `karaoke!` ruleset.
+The source code of `karaoke!` ruleset, running on [osu!lazer](https://github.com/ppy/osu).
+
+## Status
+
+Some feature is still developing, but exist feature should works fine.
+
+Feel free to report bugs if found.
 
 ## How to run this project
 
-The fastest way is download [release](https://github.com/karaoke-dev/karaoke/releases) `.dil` file and throw into lazer like [other customize ruleset](https://github.com/LumpBloom7/sentakki/wiki/Ruleset-installation-guide) do.    
+The fastest way is download [release](https://github.com/karaoke-dev/karaoke/releases) dil file and throw into lazer like [other customize ruleset](https://github.com/LumpBloom7/sentakki/wiki/Ruleset-installation-guide) do.    
 Or you can compile yourself.
 
 If wants to try on other platform like android or ios, you might use [launcher](https://github.com/karaoke-dev/launcher).    
