@@ -110,12 +110,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             // see how `DrawableEditRulesetWrapper` do
             if (hitObject is LyricLine lyric)
             {
-                Schedule(() =>
+                container.Add(new LyricControl(lyric)
                 {
-                    container.Add(new LyricControl(lyric)
-                    {
-                        RelativeSizeAxes = Axes.X,
-                    });
+                    RelativeSizeAxes = Axes.X,
                 });
             }
         }

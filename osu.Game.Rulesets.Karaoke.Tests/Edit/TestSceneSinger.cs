@@ -14,6 +14,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Edit.LyricEditor;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Tests.Visual;
@@ -23,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
     [TestFixture]
     public class TestSceneSinger : OsuTestScene
     {
-        private readonly KaraokeLegacySkinTransformer skinTransformer;
+        private readonly KaraokeSingerEditorSkin skinTransformer;
 
         private readonly Box background;
         private readonly SingerTableContainer singerTableContainer;
@@ -31,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
         public TestSceneSinger()
         {
-            skinTransformer = new KaraokeLegacySkinTransformer(null);
+            skinTransformer = new KaraokeSingerEditorSkin();
 
             Child = new Container
             {
@@ -78,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 }
             };
 
-            var bindableSinger = skinTransformer.GetConfig<KaraokeIndexLookup, Dictionary<int, string>>(KaraokeIndexLookup.Singer);
+            var bindableSinger = skinTransformer.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Singer);
             bindableSinger.BindValueChanged(x =>
             {
                 var singers = x.NewValue.ToDictionary(i => i.Key, v =>
@@ -243,6 +244,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                     englishNameTextBox.Text = singer.EnglishName;
                     romajiNameTextBox.Text = singer.Romaji;
                 }
+            }
+        }
+
+        public class KaraokeSingerEditorSkin : KaraokeLegacySkinTransformer
+        {
+            public KaraokeSingerEditorSkin()
+                : base(null)
+            {
             }
         }
     }

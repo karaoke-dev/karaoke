@@ -13,6 +13,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Edit.LyricEditor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning;
@@ -278,7 +279,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                     RelativeSizeAxes = Axes.Both,
                                     Colour = Color4.WhiteSmoke
                                 },
-                                layoutArea = new SkinProvidingContainer(new KaraokeLegacySkinTransformer(null))
+                                layoutArea = new SkinProvidingContainer(new KaraokeStyleEditorSkin())
                                 {
                                     RelativeSizeAxes = Axes.Both,
                                 }
@@ -536,6 +537,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             F002,
 
             F003
+        }
+
+        public class KaraokeStyleEditorSkin : KaraokeInternalSkin
+        {
+            protected override string ResourceName => @"osu.Game.Rulesets.Karaoke.Resources.Skin.editor.skin";
         }
     }
 }
