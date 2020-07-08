@@ -11,17 +11,17 @@ The source code of `karaoke!` ruleset, running on [osu!lazer](https://github.com
 
 ## Status
 
-Some feature is still developing, but exist feature should works fine.
+Some feature is still developing, but exist feature should work fine.
 
 Feel free to report bugs if found.
 
 ## How to run this project
 
-The fastest way is download [release](https://github.com/karaoke-dev/karaoke/releases) dil file and throw into lazer like [other customize ruleset](https://github.com/LumpBloom7/sentakki/wiki/Ruleset-installation-guide) do.    
-Or you can compile yourself.
+The fastest way is download [release](https://github.com/karaoke-dev/karaoke/releases) dll file and throw it into lazer like [other custom rulesets](https://github.com/LumpBloom7/sentakki/wiki/Ruleset-installation-guide).
+Or you can compile it by yourself.
 
 If wants to try on other platform like android or ios, you might use [launcher](https://github.com/karaoke-dev/launcher).    
-Notice : Launcher is still under develop so it might not working.
+Notice : The launcher is still under development, so it might not work.
 
 ## License
 
@@ -29,7 +29,7 @@ This repo is under [GPL V3](LICENSE) license.
 
 ## Rules
 
-1. If using this repo in commercial, please contact me(andy840119@gmail.com) to get permission first.
+1. If you plan on using this repo for commercial purposes, please contact me(andy840119@gmail.com) to get permission first.
 2. Use this repo to create/use `PIRATED` karaoke beatmap is absolutely forbidden.
 
 ## Thanks to
