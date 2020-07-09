@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke
         }
 
         protected override InputState CreateInitialState()
-            => new KaraokeRulesetInputManagerInputState<KaraokeSaitenAction>(new MicrophoneState());
+            => new KaraokeRulesetInputManagerInputState<KaraokeSaitenAction>(new MicrophoneInputState(new MicrophoneState()));
 
         public override void HandleInputStateChange(InputStateChangeEvent inputStateChange)
         {
@@ -119,9 +119,10 @@ namespace osu.Game.Rulesets.Karaoke
     {
         public MicrophoneState Microphone { get; }
 
-        public KaraokeRulesetInputManagerInputState(MicrophoneState microphone)
+        public KaraokeRulesetInputManagerInputState(MicrophoneInputState state)
+            : base(state)
         {
-            Microphone = microphone;
+            Microphone = state.Microphone;
         }
     }
 
