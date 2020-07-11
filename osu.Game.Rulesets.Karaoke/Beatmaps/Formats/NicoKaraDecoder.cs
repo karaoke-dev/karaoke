@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using NicoKaraParser;
@@ -17,8 +18,8 @@ using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osuTK;
 using osuTK.Graphics;
-using BrushInfo = NicoKaraParser.Model.Font.Brush.BrushInfo;
-using FontInfo = NicoKaraParser.Model.Font.Font.FontInfo;
+using FontInfo = osu.Game.Rulesets.Karaoke.Skinning.Components.FontInfo;
+using KaraokeLayout = osu.Game.Rulesets.Karaoke.Skinning.Components.KaraokeLayout;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -39,14 +40,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             }
 
             // Clean-up layout
-            output.Layouts = new List<Skinning.Components.KaraokeLayout>();
+            output.Layouts = new List<KaraokeLayout>();
 
             foreach (var karaokeLayout in nicoKaraProject.KaraokeLayouts)
             {
                 Enum.TryParse(karaokeLayout.SmartHorizon.ToString(), out KaraokeTextSmartHorizon smartHorizon);
                 Enum.TryParse(karaokeLayout.RubyAlignment.ToString(), out LyricTextAlignment rubyAlignment);
 
-                output.Layouts.Add(new Skinning.Components.KaraokeLayout
+                output.Layouts.Add(new KaraokeLayout
                 {
                     Name = karaokeLayout.Name,
                     Alignment = convertAnchor(karaokeLayout.HorizontalAlignment, karaokeLayout.VerticalAlignment),
@@ -115,8 +116,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 return horizontalAnchor | verticalAnchor;
             }
 
-            static Skinning.Components.FontInfo convertFontInfo(FontInfo info) =>
-                new Skinning.Components.FontInfo
+            static FontInfo convertFontInfo(NicoKaraParser.Model.Font.Font.FontInfo info) =>
+                new FontInfo
                 {
                     FontName = info.FontName,
                     Bold = info.FontStyle == FontStyle.Bold,
@@ -124,21 +125,21 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     EdgeSize = info.EdgeSize
                 };
 
-            static Skinning.Components.BrushInfo convertBrushInfo(BrushInfo info)
+            static BrushInfo convertBrushInfo(NicoKaraParser.Model.Font.Brush.BrushInfo info)
             {
                 Enum.TryParse(info.Type.ToString(), out BrushType type);
 
                 // Convert BrushGradient
-                var brushGradient = info.GradientPositions.Select((t, i) => new Skinning.Components.BrushInfo.BrushGradient { XPosition = t, Color = convertColor(info.GradientColors[i]) }).ToList();
+                var brushGradient = info.GradientPositions.Select((t, i) => new BrushInfo.BrushGradient { XPosition = t, Color = convertColor(info.GradientColors[i]) }).ToList();
 
-                return new Skinning.Components.BrushInfo
+                return new BrushInfo
                 {
                     Type = type,
                     SolidColor = convertColor(info.SolidColor),
                     BrushGradients = brushGradient
                 };
 
-                static Color4 convertColor(System.Drawing.Color color) => new Color4(color.R, color.G, color.B, color.A);
+                static Color4 convertColor(Color color) => new Color4(color.R, color.G, color.B, color.A);
             }
         }
     }

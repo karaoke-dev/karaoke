@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             {
                 if (karaokeLayout.NewValue != null)
                     ApplyLayout(karaokeLayout.NewValue);
-            }, true);  
+            }, true);
         }
 
         protected virtual void ApplyFont(KaraokeFont font)

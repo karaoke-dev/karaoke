@@ -1,12 +1,14 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
-using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Objects;
-using System.Linq;
-using osu.Framework.Graphics.Sprites;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using LyricMaker.Model;
+using LyricMaker.Model.Tags;
+using LyricMaker.Parser;
+using osu.Framework.Graphics.Sprites;
+using osu.Game.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -14,22 +16,22 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
     {
         public string Encode(Beatmap output)
         {
-            var lyric = new LyricMaker.Model.Lyric
+            var lyric = new Lyric
             {
-                Lines = output.HitObjects.OfType<LyricLine>().Select(encodeLyric).ToArray(),
+                Lines = output.HitObjects.OfType<Objects.LyricLine>().Select(encodeLyric).ToArray(),
             };
-            var encodeResult = new LyricMaker.Parser.LrcParser().Encode(lyric);
+            var encodeResult = new LrcParser().Encode(lyric);
             return encodeResult;
         }
 
-        private LyricMaker.Model.LyricLine encodeLyric(LyricLine lyric) =>
-            new LyricMaker.Model.LyricLine
+        private LyricLine encodeLyric(Objects.LyricLine lyric) =>
+            new LyricLine
             {
                 Text = lyric.Text,
                 TimeTags = convertTimeTag(lyric.Text, lyric.TimeTags).ToArray(),
             };
 
-        private IEnumerable<LyricMaker.Model.Tags.TimeTag> convertTimeTag(string text, IReadOnlyDictionary<TimeTagIndex, double> tags)
+        private IEnumerable<TimeTag> convertTimeTag(string text, IReadOnlyDictionary<TimeTagIndex, double> tags)
         {
             if (tags == null || !tags.Any())
                 throw new ArgumentNullException($"{nameof(tags)} cannot be null.");
@@ -42,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                 if (lastTag.Index * 2 == i)
                 {
-                    yield return new LyricMaker.Model.Tags.TimeTag
+                    yield return new TimeTag
                     {
                         Time = (int)lastTagTime,
                         Check = true,
@@ -56,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                 if (firstTagTime > 0 && firstTag != lastTag)
                 {
-                    yield return new LyricMaker.Model.Tags.TimeTag
+                    yield return new TimeTag
                     {
                         Time = (int)firstTagTime,
                         Check = true,
@@ -66,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     continue;
                 }
 
-                yield return new LyricMaker.Model.Tags.TimeTag();
+                yield return new TimeTag();
             }
         }
     }

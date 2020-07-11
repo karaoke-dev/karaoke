@@ -1,6 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Linq;
+using System.Reflection;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -10,9 +13,6 @@ using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Skinning;
-using System;
-using System.Linq;
-using System.Reflection;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
