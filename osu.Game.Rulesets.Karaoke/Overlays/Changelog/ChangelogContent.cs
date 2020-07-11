@@ -1,10 +1,10 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
-using System;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {

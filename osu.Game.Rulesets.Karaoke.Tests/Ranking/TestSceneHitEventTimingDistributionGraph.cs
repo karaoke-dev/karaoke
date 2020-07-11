@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 
             for (int i = 0; i < 50; i++)
             {
-                int count = (int)(Math.Pow(25 - Math.Abs(i - 25), 2));
+                int count = (int)Math.Pow(25 - Math.Abs(i - 25), 2);
 
                 for (int j = 0; j < count; j++)
                     hitEvents.Add(new HitEvent(i - 25, HitResult.Perfect, new Note(), new Note(), null));

@@ -13,10 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
         private TestChangelogOverlay changelog;
 
         [SetUp]
-        public void SetUp() => Schedule(() =>
-        {
-            Child = changelog = new TestChangelogOverlay();
-        });
+        public void SetUp() => Schedule(() => { Child = changelog = new TestChangelogOverlay(); });
 
         [Test]
         public void ShowWithNoFetch()

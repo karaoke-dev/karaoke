@@ -74,7 +74,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <summary>
         /// Lyric's start time is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.
         /// </summary>
-        public override double StartTime { get => base.StartTime; set => base.StartTime = value; }
+        public override double StartTime
+        {
+            get => base.StartTime;
+            set => base.StartTime = value;
+        }
 
         /// <summary>
         /// Lyric's duration is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.

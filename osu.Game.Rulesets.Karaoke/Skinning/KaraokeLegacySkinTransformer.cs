@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     {
         private readonly ISkin source;
 
-        private readonly IDictionary<int, Bindable<KaraokeFont>> bindableFonts = new Dictionary<int,Bindable<KaraokeFont>>();
+        private readonly IDictionary<int, Bindable<KaraokeFont>> bindableFonts = new Dictionary<int, Bindable<KaraokeFont>>();
         private readonly IDictionary<int, Bindable<KaraokeLayout>> bindableLayouts = new Dictionary<int, Bindable<KaraokeLayout>>();
         private readonly IDictionary<int, Bindable<NoteSkin>> bindableNotes = new Dictionary<int, Bindable<NoteSkin>>();
         private readonly IDictionary<int, Bindable<Singer>> bindableSingers = new Dictionary<int, Bindable<Singer>>();

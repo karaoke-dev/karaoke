@@ -15,6 +15,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
@@ -46,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                         {
                             RelativeSizeAxes = Axes.Both,
                             Direction = FillDirection.Horizontal,
-                            Spacing = new osuTK.Vector2(10),
+                            Spacing = new Vector2(10),
                             Children = new[]
                             {
                                 new OsuButton
