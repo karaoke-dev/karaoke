@@ -37,13 +37,15 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         private List<KaraokeChangelogBuild> builds;
 
         private readonly string organizationName;
+        private readonly string branchName;
 
         private string projectName => $"{organizationName}.github.io";
 
-        public KaraokeChangelogOverlay(string organization)
+        public KaraokeChangelogOverlay(string organization, string branch = "master")
             : base(OverlayColourScheme.Purple)
         {
             organizationName = organization;
+            branchName = branch;
         }
 
         [BackgroundDependencyLoader]
@@ -161,11 +163,11 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                 var tcs = new TaskCompletionSource<bool>();
 
                 var client = new GitHubClient(new ProductHeaderValue(organizationName));
-                var reposAscending = await client.Repository.Content.GetAllContents(organizationName, projectName, "changelog");
+                var reposAscending = await client.Repository.Content.GetAllContentsByRef(organizationName, projectName, "changelog", branchName);
 
                 if (reposAscending.Any())
                 {
-                    builds = reposAscending.Reverse().Where(x => x.Type == ContentType.Dir).Select(x => new KaraokeChangelogBuild(organizationName, projectName)
+                    builds = reposAscending.Reverse().Where(x => x.Type == ContentType.Dir).Select(x => new KaraokeChangelogBuild(organizationName, projectName, branchName)
                     {
                         RootUrl = x.HtmlUrl,
                         Path = x.Path,
