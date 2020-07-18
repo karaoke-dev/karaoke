@@ -17,10 +17,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            Child = changelog = new ChangeLogMarkdownContainer(new KaraokeChangelogBuild("andy840119", "osu-karaoke.github.io", "slave/change-url-to-tag")
+            Child = changelog = new ChangeLogMarkdownContainer(new KaraokeChangelogBuild("karaoke-dev", "karaoke-dev.github.io")
             {
                 Path = "changelog/2020.0620",
-                RootUrl = "https://github.com/andy840119/osu-Karaoke.github.io/tree/slave/change-url-to-tag/changelog/2020.0620"
+                RootUrl = "https://github.com/karaoke-dev/karaoke-dev.github.io/tree/master/changelog/2020.0620"
             });
             Child.RelativeSizeAxes = Axes.Both;
         });
