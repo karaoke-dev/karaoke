@@ -1,15 +1,15 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Tests.Visual;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Replays
 {
@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
 
             // Get generated frame and compare frame
             var karaokeFrames = generated.Frames.OfType<KaraokeReplayFrame>().ToList();
-            var compareFrame = GetCompareResultFromName("demo");
+            var compareFrame = getCompareResultFromName("demo");
 
             // Check total frames.
             Assert.AreEqual(karaokeFrames.Count, compareFrame.Count, $"Replay frame should have {compareFrame.Count}.");
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
             }
         }
 
-        private static IList<TestKaraokeReplayFrame> GetCompareResultFromName(string name)
+        private static IList<TestKaraokeReplayFrame> getCompareResultFromName(string name)
         {
             var data = TestResources.OpenResource($"Testing/Track/{name}.json");
 

@@ -45,10 +45,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     var startTime = timeTags.FirstOrDefault(x => x.Time > 0).Time;
                     var duration = timeTags.LastOrDefault(x => x.Time > 0).Time - startTime;
 
-                    var lyric = line.Text;
-                    output.HitObjects.Add(new LyricLine
+                    var lyric = new LyricLine
                     {
-                        Text = lyric,
+                        Text = line.Text,
                         // Start time and end time should be re-assigned
                         StartTime = startTime,
                         Duration = duration,
@@ -59,13 +58,15 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                             return new TimeTagIndex(index, state);
                         }, v => (double)v.Time),
-                        RubyTags = result.QueryRubies(lyric).Select(ruby => new RubyTag
+                        RubyTags = result.QueryRubies(line.Text).Select(ruby => new RubyTag
                         {
                             Text = ruby.Ruby.Ruby,
                             StartIndex = ruby.StartIndex,
                             EndIndex = ruby.EndIndex
                         }).ToArray()
-                    });
+                    };
+                    lyric.InitialWorkingTime();
+                    output.HitObjects.Add(lyric);
                 }
                 catch (Exception ex)
                 {

@@ -1,6 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using ManagedBass;
 using NWaves.Features;
 using osu.Framework.Audio.Callbacks;
@@ -8,11 +13,6 @@ using osu.Framework.Audio.Track;
 using osu.Game.Replays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Replays;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace osu.Game.Rulesets.Karaoke.Replays
 {
@@ -22,8 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         private readonly Task<Dictionary<double, float?>> readTask;
 
         /// <summary>
-        /// Using audio's vioce to generate replay frames
-        /// Logic is copird from <see cref="Waveform"/>
+        /// Using audio's voice to generate replay frames
+        /// Logic is copied from <see cref="Waveform"/>
         /// </summary>
         /// <param name="beatmap"></param>
         /// <param name="data"></param>

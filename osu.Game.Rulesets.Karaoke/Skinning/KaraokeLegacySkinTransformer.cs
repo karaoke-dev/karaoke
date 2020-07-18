@@ -21,7 +21,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     {
         private readonly ISkin source;
 
-        private readonly KaraokeSkin skin;
+        private readonly IDictionary<int, Bindable<KaraokeFont>> bindableFonts = new Dictionary<int, Bindable<KaraokeFont>>();
+        private readonly IDictionary<int, Bindable<KaraokeLayout>> bindableLayouts = new Dictionary<int, Bindable<KaraokeLayout>>();
+        private readonly IDictionary<int, Bindable<NoteSkin>> bindableNotes = new Dictionary<int, Bindable<NoteSkin>>();
+        private readonly IDictionary<int, Bindable<Singer>> bindableSingers = new Dictionary<int, Bindable<Singer>>();
+
+        private readonly Bindable<IDictionary<int, string>> bindableFontsLookup = new Bindable<IDictionary<int, string>>();
+        private readonly Bindable<IDictionary<int, string>> bindableLayoutsLookup = new Bindable<IDictionary<int, string>>();
+        private readonly Bindable<IDictionary<int, string>> bindableNotesLookup = new Bindable<IDictionary<int, string>>();
+        private readonly Bindable<IDictionary<int, string>> bindableSingersLookup = new Bindable<IDictionary<int, string>>();
 
         private Lazy<bool> isLegacySkin;
 
@@ -40,7 +48,23 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             using (var stream = assembly.GetManifestResourceStream(resource_name))
             using (var reader = new LineBufferedReader(stream))
             {
-                skin = new KaraokeSkinDecoder().Decode(reader);
+                var skin = new KaraokeSkinDecoder().Decode(reader);
+
+                // Create bindables
+                for (int i = 0; i < skin.Fonts.Count; i++)
+                    bindableFonts.Add(i, new Bindable<KaraokeFont>(skin.Fonts[i]));
+                for (int i = 0; i < skin.Layouts.Count; i++)
+                    bindableLayouts.Add(i, new Bindable<KaraokeLayout>(skin.Layouts[i]));
+                for (int i = 0; i < skin.NoteSkins.Count; i++)
+                    bindableNotes.Add(i, new Bindable<NoteSkin>(skin.NoteSkins[i]));
+                for (int i = 0; i < skin.Singers.Count; i++)
+                    bindableSingers.Add(i, new Bindable<Singer>(skin.Singers[i]));
+
+                // Create lookups
+                bindableFontsLookup.Value = skin.Fonts.ToDictionary(k => skin.Fonts.IndexOf(k), y => y.Name);
+                bindableLayoutsLookup.Value = skin.Layouts.ToDictionary(k => skin.Layouts.IndexOf(k), y => y.Name);
+                bindableNotesLookup.Value = skin.NoteSkins.ToDictionary(k => skin.NoteSkins.IndexOf(k), y => y.Name);
+                bindableSingersLookup.Value = skin.Singers.ToDictionary(k => skin.Singers.IndexOf(k), y => y.Name);
             }
         }
 
@@ -119,16 +143,16 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     switch (config)
                     {
                         case KaraokeSkinConfiguration.LyricStyle:
-                            return SkinUtils.As<TValue>(new Bindable<KaraokeFont>(skin.Fonts[lookupNumber]));
+                            return SkinUtils.As<TValue>(bindableFonts[lookupNumber]);
 
                         case KaraokeSkinConfiguration.LyricLayout:
-                            return SkinUtils.As<TValue>(new Bindable<KaraokeLayout>(skin.Layouts[lookupNumber]));
+                            return SkinUtils.As<TValue>(bindableLayouts[lookupNumber]);
 
                         case KaraokeSkinConfiguration.NoteStyle:
-                            return SkinUtils.As<TValue>(new Bindable<NoteSkin>(skin.NoteSkins[lookupNumber]));
+                            return SkinUtils.As<TValue>(bindableNotes[lookupNumber]);
 
                         case KaraokeSkinConfiguration.Singer:
-                            return SkinUtils.As<TValue>(new Bindable<Singer>(skin.Singers[lookupNumber]));
+                            return SkinUtils.As<TValue>(bindableSingers[lookupNumber]);
                     }
 
                     break;
@@ -139,20 +163,16 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     switch (indexLookup)
                     {
                         case KaraokeIndexLookup.Layout:
-                            var layoutDictionary = skin.Layouts.ToDictionary(k => skin.Layouts.IndexOf(k), y => y.Name);
-                            return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(layoutDictionary));
+                            return SkinUtils.As<TValue>(bindableLayoutsLookup);
 
                         case KaraokeIndexLookup.Style:
-                            var fontDictionary = skin.Fonts.ToDictionary(k => skin.Fonts.IndexOf(k), y => y.Name);
-                            return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(fontDictionary));
+                            return SkinUtils.As<TValue>(bindableFontsLookup);
 
                         case KaraokeIndexLookup.Note:
-                            var noteDictionary = skin.NoteSkins.ToDictionary(k => skin.NoteSkins.IndexOf(k), y => y.Name);
-                            return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(noteDictionary));
+                            return SkinUtils.As<TValue>(bindableNotesLookup);
 
                         case KaraokeIndexLookup.Singer:
-                            var singerDictionary = skin.Singers.ToDictionary(k => skin.Singers.IndexOf(k), y => y.Name);
-                            return SkinUtils.As<TValue>(new Bindable<Dictionary<int, string>>(singerDictionary));
+                            return SkinUtils.As<TValue>(bindableSingersLookup);
                     }
 
                     break;

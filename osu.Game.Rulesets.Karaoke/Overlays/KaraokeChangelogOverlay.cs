@@ -1,6 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Octokit;
 using osu.Framework.Allocation;
@@ -16,11 +21,6 @@ using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Overlays.Changelog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays
 {

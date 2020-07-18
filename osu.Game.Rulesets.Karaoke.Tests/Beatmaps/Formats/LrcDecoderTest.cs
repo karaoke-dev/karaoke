@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         }
 
         [Test]
-        public void TestDecodeLyricWithDulicatedTimeTag()
+        public void TestDecodeLyricWithDuplicatedTimeTag()
         {
             const string wrong_lyric_text = "[00:04.00]か[00:04.00]ら[00:05.00]お[00:06.00]け[00:07.00]";
             Assert.Throws<FormatException>(() => decodeLrcLine(wrong_lyric_text));

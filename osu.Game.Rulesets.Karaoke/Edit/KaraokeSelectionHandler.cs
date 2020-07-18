@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         private MenuItem createLayoutMenuItem()
         {
-            var layoutDictionary = source.GetConfig<KaraokeIndexLookup, Dictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
+            var layoutDictionary = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
             return new OsuMenuItem("Layout")
             {
                 Items = layoutDictionary.Select(x => new TernaryStateMenuItem(x.Value, MenuItemType.Standard, state =>
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         private MenuItem createFontMenuItem()
         {
-            var fontDictionary = source.GetConfig<KaraokeIndexLookup, Dictionary<int, string>>(KaraokeIndexLookup.Style)?.Value;
+            var fontDictionary = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Style)?.Value;
             return new OsuMenuItem("Font")
             {
                 Items = fontDictionary.Select(x => new TernaryStateMenuItem(x.Value, MenuItemType.Standard, state =>

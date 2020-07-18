@@ -295,7 +295,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                     RelativeSizeAxes = Axes.Both,
                                     Colour = Color4.WhiteSmoke
                                 },
-                                layoutArea = new SkinProvidingContainer(new KaraokeLegacySkinTransformer(null))
+                                layoutArea = new SkinProvidingContainer(new KaraokeLayoutEditorSkin())
                                 {
                                     RelativeSizeAxes = Axes.Both,
                                 }
@@ -476,6 +476,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 AutoSizeAxes = Axes.Y;
                 Spacing = new Vector2(0, 5);
             }
+        }
+
+        public class KaraokeLayoutEditorSkin : KaraokeInternalSkin
+        {
+            protected override string ResourceName => @"osu.Game.Rulesets.Karaoke.Resources.Skin.editor.skin";
         }
     }
 }

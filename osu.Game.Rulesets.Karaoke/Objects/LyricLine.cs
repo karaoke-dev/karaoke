@@ -7,7 +7,10 @@ using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Beatmaps;
+using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Judgements;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Objects.Types;
 
@@ -69,7 +72,16 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         /// <summary>
-        /// Duration
+        /// Lyric's start time is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.
+        /// </summary>
+        public override double StartTime
+        {
+            get => base.StartTime;
+            set => base.StartTime = value;
+        }
+
+        /// <summary>
+        /// Lyric's duration is created from <see cref="KaraokeBeatmapProcessor"/> and should not be saved.
         /// </summary>
         public double Duration { get; set; }
 
@@ -150,5 +162,22 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         public override Judgement CreateJudgement() => new KaraokeLyricJudgement();
+
+        protected override void ApplyDefaultsToSelf(ControlPointInfo controlPointInfo, BeatmapDifficulty difficulty)
+        {
+            base.ApplyDefaultsToSelf(controlPointInfo, difficulty);
+
+            // Add because it will cause error on exit then enter gameplay.
+            StartTimeBindable.UnbindAll();
+
+            // Initial working start and end time.
+            InitialWorkingTime();
+        }
+
+        public void InitialWorkingTime()
+        {
+            StartTime = LyricStartTime;
+            Duration = LyricDuration;
+        }
     }
 }
