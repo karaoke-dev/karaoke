@@ -35,6 +35,7 @@ using osu.Game.Rulesets.UI;
 using osu.Game.Scoring;
 using osu.Game.Screens.Ranking.Statistics;
 using osu.Game.Skinning;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke
 {
@@ -130,26 +131,22 @@ namespace osu.Game.Rulesets.Karaoke
             AutoSizeAxes = Axes.Both,
             Children = new Drawable[]
             {
+                new Sprite
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Scale = new Vector2(0.9f),
+                    Texture = new TextureStore(new TextureLoaderStore(CreateResourceStore()), false).Get("Textures/logo"),
+                },
                 new SpriteIcon
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
+                    Scale = new Vector2(45f),
                     Icon = FontAwesome.Regular.Circle,
                 },
-                new Sprite
-                {
-                    Texture = new TextureStore(new TextureLoaderStore(CreateResourceStore()), false).Get("Textures/logo"),
-                }
             }
         };
-
-        public class KaraokeIcon : CompositeDrawable
-        {
-            public KaraokeIcon()
-            {
-                
-            }
-        }
 
         public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new KaraokeDifficultyCalculator(this, beatmap);
 
