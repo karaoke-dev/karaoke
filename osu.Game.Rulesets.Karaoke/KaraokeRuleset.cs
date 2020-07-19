@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Testing;
 using osu.Game.Beatmaps;
@@ -123,7 +125,31 @@ namespace osu.Game.Rulesets.Karaoke
             }
         }
 
-        public override Drawable CreateIcon() => new SpriteIcon { Icon = KaraokeIcon.RulesetKaraoke };
+        public override Drawable CreateIcon() => new Container
+        {
+            AutoSizeAxes = Axes.Both,
+            Children = new Drawable[]
+            {
+                new SpriteIcon
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Icon = FontAwesome.Regular.Circle,
+                },
+                new Sprite
+                {
+                    Texture = new TextureStore(new TextureLoaderStore(CreateResourceStore()), false).Get("Textures/logo"),
+                }
+            }
+        };
+
+        public class KaraokeIcon : CompositeDrawable
+        {
+            public KaraokeIcon()
+            {
+                
+            }
+        }
 
         public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new KaraokeDifficultyCalculator(this, beatmap);
 
