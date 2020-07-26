@@ -17,7 +17,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
-    public class KaraokeLegacySkinTransformer : ISkin
+    public class KaraokeLegacySkinTransformer : LegacySkinTransformer
     {
         private readonly ISkin source;
 
@@ -34,6 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         private Lazy<bool> isLegacySkin;
 
         public KaraokeLegacySkinTransformer(ISkinSource source)
+            : base(source)
         {
             this.source = source;
 
@@ -73,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             isLegacySkin = new Lazy<bool>(() => source?.GetConfig<LegacySkinConfiguration.LegacySetting, decimal>(LegacySkinConfiguration.LegacySetting.Version) != null);
         }
 
-        public Drawable GetDrawableComponent(ISkinComponent component)
+        public override Drawable GetDrawableComponent(ISkinComponent component)
         {
             if (!(component is KaraokeSkinComponent karaokeComponent))
                 return null;
@@ -126,11 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         private bool animationExist(params string[] textureNames)
             => textureNames.All(x => source.GetAnimation(x, true, false) != null);
 
-        public Texture GetTexture(string componentName) => source.GetTexture(componentName);
-
-        public SampleChannel GetSample(ISampleInfo sample) => source.GetSample(sample);
-
-        public IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
+        public override IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
         {
             switch (lookup)
             {
