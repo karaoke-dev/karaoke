@@ -17,10 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
         protected override bool IsImportant(KaraokeReplayFrame frame) => frame.Sound;
 
-        public override List<IInput> GetPendingInputs() => new List<IInput>
+        public override void CollectPendingInputs(List<IInput> inputs)
         {
-            new ReplayState<KaraokeSaitenAction>
-            {
+            inputs.Add(new ReplayState<KaraokeSaitenAction> {
                 PressedActions = CurrentFrame?.Sound ?? false
                     ? new List<KaraokeSaitenAction>
                     {
@@ -30,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
                         }
                     }
                     : new List<KaraokeSaitenAction>()
-            }
-        };
+            });
+        }
     }
 }

@@ -7,6 +7,7 @@ using System.Reflection;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.OpenGL.Textures;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Audio;
 using osu.Game.IO;
@@ -45,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         public SampleChannel GetSample(ISampleInfo sampleInfo) => null;
 
-        public Texture GetTexture(string componentName) => null;
+        public Texture GetTexture(string componentName, WrapMode wrapModeS, WrapMode wrapModeT) => null;
 
         public IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
         {
