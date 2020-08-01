@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup Label="Project">
     <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyTitle>osu.Game.Rulesets.Sample</AssemblyTitle>
+    <AssemblyTitle>osu.Game.Rulesets.Karaoke</AssemblyTitle>
     <OutputType>Library</OutputType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <RootNamespace>osu.Game.Rulesets.Karaoke</RootNamespace>
@@ -10,6 +10,7 @@
     <EmbeddedResource Include="Resources\**" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="ILRepack.MSBuild.Task" Version="2.0.13" />
     <PackageReference Include="Octokit" Version="0.48.0" />
     <PackageReference Include="osu.Framework.Microphone" Version="1.0.10" />
     <PackageReference Include="ppy.osu.Game" Version="2020.725.0" />
@@ -26,4 +27,32 @@
       <_Parameter1>$(AssemblyName).Tests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+
+  <!--We need to copy framework assembly to the output, else ILRepack will fail to resolve framework assembly.-->
+  <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <Target Name="ILRepack" AfterTargets="Build" Condition=" '$(Configuration)'=='Release' ">
+    <PropertyGroup>
+      <WorkingDirectory>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)</WorkingDirectory>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <InputAssemblies Include="LyricMaker.dll" />
+      <InputAssemblies Include="NicoKaraParser.dll" />
+      <InputAssemblies Include="NWaves.dll" />
+      <InputAssemblies Include="Octokit.dll" />
+      <InputAssemblies Include="osu.Framework.Microphone.dll" />
+      <InputAssemblies Include="osu.KaraokeFramework.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <InternalizeExcludeAssemblies Include="osu.Game.dll" />
+      <InternalizeExcludeAssemblies Include="osu.Framework.dll" />
+    </ItemGroup>
+
+    <ILRepack OutputType="$(OutputType)" MainAssembly="$(AssemblyName).dll" OutputAssembly="$(AssemblyName).Packed.dll" InputAssemblies="@(InputAssemblies)" InternalizeExcludeAssemblies="@(InternalizeExcludeAssemblies)" WorkingDirectory="$(WorkingDirectory)" />
+
+  </Target>
 </Project>
