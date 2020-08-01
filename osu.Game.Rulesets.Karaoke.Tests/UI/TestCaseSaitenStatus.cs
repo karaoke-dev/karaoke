@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
+using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Tests.Visual;
 
@@ -22,7 +23,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
         {
             AddStep("create mod display", () =>
             {
-                Child = new SaitenStatus(mode);
+                Child = new SaitenStatus(mode)
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre
+                };
             });
         }
     }

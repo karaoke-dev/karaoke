@@ -1,14 +1,85 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using Markdig.Syntax;
+using osu.Framework.Allocation;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Containers.Markdown;
+using osu.Framework.Graphics.Sprites;
+using osuTK;
+using osuTK.Graphics;
 using System.ComponentModel;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class SaitenStatus : Framework.Graphics.Containers.Container
+    [Cached(Type = typeof(IMarkdownTextComponent))]
+    public class SaitenStatus : FillFlowContainer, IMarkdownTextComponent
     {
+        private const float size = 22;
+
+        private Drawable CreateIcon(bool saitenable) => new SpriteIcon
+        {
+            Size = new Vector2(size),
+            Icon = saitenable ? FontAwesome.Regular.DotCircle : FontAwesome.Regular.PauseCircle,
+            Colour = saitenable ? Color4.Red : Color4.LightGray
+        };
+
+        private Drawable CreateStatusSpriteText(string markdownText) => new StatusSpriteText(markdownText)
+        {
+            RelativeSizeAxes = Axes.None,
+            AutoSizeAxes = Axes.Both
+        };
+
+        public SpriteText CreateSpriteText() => new SpriteText();
+
         public SaitenStatus(SaitenStatusMode statusMode)
         {
+            Spacing = new Vector2(5);
+            Direction = FillDirection.Horizontal;
+            AutoSizeAxes = Axes.Both;
+            Children = new Drawable[]
+            {
+                CreateIcon(statusMode == SaitenStatusMode.Saitening),
+                CreateStatusSpriteText(GetSaitenStatusText(statusMode))
+            };
+        }
+
+        protected virtual string GetSaitenStatusText(SaitenStatusMode statusMode)
+        {
+            switch (statusMode)
+            {
+                case SaitenStatusMode.AndroidMicrophonePermissionDeclined:
+                    return "Go to setting to open permission for lazer.";
+                case SaitenStatusMode.AndroidDoesNotSupported:
+                    return "Android device haven't support saiten system yet :(";
+                case SaitenStatusMode.IOSMicrophonePermissionDeclined:
+                    return "Go to setting to open permission for lazer.";
+                case SaitenStatusMode.IOSDoesNotSupported:
+                    return "iOS device haven't support saiten system yet :(";
+                case SaitenStatusMode.OSXMicrophonePermissionDeclined:
+                    return "Go to setting to open permission for lazer.";
+                case SaitenStatusMode.OSXDoesNotSupported:
+                    return "Osx device haven't support saiten system yet :(";
+                case SaitenStatusMode.WindowsMicrophonePermissionDeclined:
+                    return "Open lazer with admin permission to enable saiten system.";
+                case SaitenStatusMode.Saitening:
+                    return "Saiteining...";
+                default:
+                    return "Oops...";
+            }
+        }
+
+        internal class StatusSpriteText : MarkdownTextFlowContainer
+        {
+            public StatusSpriteText(string text)
+            {
+                var block = Markdig.Markdown.Parse(text).OfType<ParagraphBlock>().FirstOrDefault();
+
+                if (block != null)
+                    AddInlineText(block.Inline);
+            }
         }
     }
 
