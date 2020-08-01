@@ -47,6 +47,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly SaitenMarker saitenMarker;
         private readonly Drawable judgementLine;
 
+        private readonly SaitenStatus saitenStatus;
+
         public int Columns { get; }
 
         public NotePlayfield(int columns)
@@ -165,8 +167,13 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                     }
                                 }
                             },
-                        }
+                        },
                     }
+                },
+                new SaitenStatus(SaitenStatusMode.Saitening)
+                {
+                    Anchor = Anchor.BottomLeft,
+                    Origin = Anchor.BottomLeft,
                 }
             };
 

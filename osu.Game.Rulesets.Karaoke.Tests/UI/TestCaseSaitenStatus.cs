@@ -18,6 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
         [TestCase(SaitenStatusMode.OSXMicrophonePermissionDeclined)]
         [TestCase(SaitenStatusMode.OSXDoesNotSupported)]
         [TestCase(SaitenStatusMode.WindowsMicrophonePermissionDeclined)]
+        [TestCase(SaitenStatusMode.NoMicrophoneDevice)]
         [TestCase(SaitenStatusMode.Saitening)]
         public void TestMode(SaitenStatusMode mode)
         {
