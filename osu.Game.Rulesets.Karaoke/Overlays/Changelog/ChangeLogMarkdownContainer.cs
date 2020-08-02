@@ -177,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 }
             }
 
-            private IDictionary<string, string> githubUrls = new Dictionary<string, string>
+            private readonly IDictionary<string, string> githubUrls = new Dictionary<string, string>
             {
                 { "karaoke", "https://github.com/karaoke-dev/karaoke/" },
                 { "edge", "https://github.com/karaoke-dev/karaoke" },
@@ -193,13 +193,14 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                     var baseUri = new Uri(githubUrls[text]);
 
                     // Get hash tag with number
-                    var pattern = @"(\#[0-9]+\b)(?!;)";
+                    const string pattern = @"(\#[0-9]+\b)(?!;)";
                     var issueOrRequests = Regex.Matches(linkInline.Url, pattern, RegexOptions.IgnoreCase);
 
                     if (!issueOrRequests.Any())
                         return;
 
                     AddText("(");
+
                     foreach (var issue in issueOrRequests.Select(x=>x.Value))
                     {
                         AddDrawable(new MarkdownLinkText($"{text}{issue}", new LinkInline
@@ -210,10 +211,12 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                         if(issue != issueOrRequests.LastOrDefault()?.Value)
                             AddText(", ");
                     }
+
                     AddText(")");
 
                     // add use name if has user
                     var user = linkInline.Url.Split('@').LastOrDefault();
+
                     if (!string.IsNullOrEmpty(user))
                     {
                         var textScale = new Vector2(0.7f);

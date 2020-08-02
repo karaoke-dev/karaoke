@@ -42,19 +42,20 @@ namespace osu.Game.Rulesets.Karaoke
             {
                 session.Set(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.Edit);
                 return;
-            }  
+            }
 
             this.beatmap = beatmap.Value.Beatmap;
 
             var disableMicrophoneDeviceByMod = mods.Value.OfType<IApplicableToMicrophone>().Any(x => !x.MicrophoneEnabled);
+
             if (disableMicrophoneDeviceByMod)
             {
                 session.Set(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.AutoPlay);
                 return;
             }
-                
 
             var beatmapSaitenable = beatmap.Value.Beatmap.IsScorable();
+
             if (!beatmapSaitenable)
             {
                 session.Set(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.NotSaitening);
@@ -72,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke
 
                 session.Set(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.Saitening);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.Error(ex, "Microphone initialize error.");
                 // todo : set real error by exception

@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             set
             {
                 statusMode = value;
-                Children = new Drawable[]
+                Children = new[]
                 {
                     CreateIcon(statusMode == SaitenStatusMode.Saitening),
                     CreateStatusSpriteText(GetSaitenStatusText(statusMode))
@@ -64,28 +64,40 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             {
                 case SaitenStatusMode.AndroidMicrophonePermissionDeclined:
                     return "Go to setting to open permission for lazer.";
+
                 case SaitenStatusMode.AndroidDoesNotSupported:
                     return "Android device haven't support saiten system yet :(";
+
                 case SaitenStatusMode.IOSMicrophonePermissionDeclined:
                     return "Go to setting to open permission for lazer.";
+
                 case SaitenStatusMode.IOSDoesNotSupported:
                     return "iOS device haven't support saiten system yet :(";
+
                 case SaitenStatusMode.OSXMicrophonePermissionDeclined:
                     return "Go to setting to open permission for lazer.";
+
                 case SaitenStatusMode.OSXDoesNotSupported:
                     return "Osx device haven't support saiten system yet :(";
+
                 case SaitenStatusMode.WindowsMicrophonePermissionDeclined:
                     return "Open lazer with admin permission to enable saiten system.";
+
                 case SaitenStatusMode.NotSaitening:
                     return "This beatmap is not saitenable.";
+
                 case SaitenStatusMode.AutoPlay:
                     return "Auto play mode.";
+
                 case SaitenStatusMode.Edit:
                     return "Edit mode.";
+
                 case SaitenStatusMode.Saitening:
                     return "Saiteining...";
+
                 case SaitenStatusMode.NotInitialized:
                     return "Seems microphone device is not ready.";
+
                 default:
                     return "Weird... Should not goes to here either :oops:";
             }

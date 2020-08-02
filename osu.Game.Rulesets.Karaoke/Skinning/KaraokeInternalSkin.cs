@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         protected abstract string ResourceName { get; }
 
-        public KaraokeInternalSkin()
+        protected KaraokeInternalSkin()
         {
             // TODO : need a better way to load resource
             var assembly = Assembly.GetExecutingAssembly();
