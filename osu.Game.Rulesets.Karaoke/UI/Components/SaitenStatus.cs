@@ -39,11 +39,23 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             Spacing = new Vector2(5);
             Direction = FillDirection.Horizontal;
             AutoSizeAxes = Axes.Both;
-            Children = new Drawable[]
+            SaitenStatusMode = statusMode;
+        }
+
+        private SaitenStatusMode statusMode;
+
+        public SaitenStatusMode SaitenStatusMode
+        {
+            get => statusMode;
+            set
             {
-                CreateIcon(statusMode == SaitenStatusMode.Saitening),
-                CreateStatusSpriteText(GetSaitenStatusText(statusMode))
-            };
+                statusMode = value;
+                Children = new Drawable[]
+                {
+                    CreateIcon(statusMode == SaitenStatusMode.Saitening),
+                    CreateStatusSpriteText(GetSaitenStatusText(statusMode))
+                };
+            }
         }
 
         protected virtual string GetSaitenStatusText(SaitenStatusMode statusMode)
@@ -64,10 +76,18 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
                     return "Osx device haven't support saiten system yet :(";
                 case SaitenStatusMode.WindowsMicrophonePermissionDeclined:
                     return "Open lazer with admin permission to enable saiten system.";
+                case SaitenStatusMode.NotSaitening:
+                    return "This beatmap is not saitenable.";
+                case SaitenStatusMode.AutoPlay:
+                    return "Auto play mode.";
+                case SaitenStatusMode.Edit:
+                    return "Edit mode.";
                 case SaitenStatusMode.Saitening:
                     return "Saiteining...";
+                case SaitenStatusMode.NotInitialized:
+                    return "Weird... Should not goes to here :thinking:";
                 default:
-                    return "Oops...";
+                    return "Weird... Should not goes to here either :oops:";
             }
         }
 
@@ -142,9 +162,33 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         NoMicrophoneDevice,
 
         /// <summary>
+        /// Beatmap is not scoring.
+        /// </summary>
+        [Description("No saitening.")]
+        NotSaitening,
+
+        /// <summary>
+        /// Beatmap is not scoring.
+        /// </summary>
+        [Description("Autoplay.")]
+        AutoPlay,
+
+        /// <summary>
+        /// In edit mode.
+        /// </summary>
+        [Description("Edit mode.")]
+        Edit,
+
+        /// <summary>
         /// Everything works well.
         /// </summary>
         [Description("Saitening...")]
         Saitening,
+
+        /// <summary>
+        /// Microphone statis is not initialized.
+        /// </summary>
+        [Description("Not initialized.")]
+        NotInitialized,
     }
 }

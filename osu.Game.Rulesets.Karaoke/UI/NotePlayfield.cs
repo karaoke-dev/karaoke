@@ -170,7 +170,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                         },
                     }
                 },
-                new SaitenStatus(SaitenStatusMode.Saitening)
+                saitenStatus = new SaitenStatus(SaitenStatusMode.NotInitialized)
                 {
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
@@ -305,6 +305,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
             realTimeSaitenVisualization.LineColour = colours.Yellow;
 
             session.BindWith(KaraokeRulesetSession.SaitenPitch, saitenPitch);
+
+            session.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e =>
+            {
+                saitenStatus.SaitenStatusMode = e.NewValue;
+            });
         }
 
         public bool OnPressed(KaraokeSaitenAction action)

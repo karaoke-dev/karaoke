@@ -19,7 +19,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
         [TestCase(SaitenStatusMode.OSXDoesNotSupported)]
         [TestCase(SaitenStatusMode.WindowsMicrophonePermissionDeclined)]
         [TestCase(SaitenStatusMode.NoMicrophoneDevice)]
+        [TestCase(SaitenStatusMode.NotSaitening)]
+        [TestCase(SaitenStatusMode.AutoPlay)]
+        [TestCase(SaitenStatusMode.Edit)]
         [TestCase(SaitenStatusMode.Saitening)]
+        [TestCase(SaitenStatusMode.NotInitialized)]
         public void TestMode(SaitenStatusMode mode)
         {
             AddStep("create mod display", () =>
