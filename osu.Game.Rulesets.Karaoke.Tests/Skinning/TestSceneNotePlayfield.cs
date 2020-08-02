@@ -12,9 +12,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         [BackgroundDependencyLoader]
         private void load(RulesetConfigCache configCache)
         {
-            var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(Ruleset.Value.CreateInstance());
-            Dependencies.Cache(new KaraokeSessionStatics(config, null));
-
             SetContents(() => new KaraokeInputManager(new KaraokeRuleset().RulesetInfo)
             {
                 Child = new NotePlayfield(COLUMN_NUMBER)

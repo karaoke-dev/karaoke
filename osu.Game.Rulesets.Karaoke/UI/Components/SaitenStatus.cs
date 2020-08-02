@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
                 case SaitenStatusMode.Saitening:
                     return "Saiteining...";
                 case SaitenStatusMode.NotInitialized:
-                    return "Weird... Should not goes to here :thinking:";
+                    return "Seems microphone device is not ready.";
                 default:
                     return "Weird... Should not goes to here either :oops:";
             }
