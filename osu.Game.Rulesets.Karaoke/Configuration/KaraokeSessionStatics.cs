@@ -6,6 +6,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.UI.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
 {
@@ -50,6 +51,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Practice
             Set<LyricLine>(KaraokeRulesetSession.NowLyric, null);
+
+            // Saiten stsus
+            Set(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.NotInitialized);
         }
 
         private T getValue<T>(KaraokeRulesetSetting setting) => rulesetConfigManager.GetBindable<T>(setting).Value;
@@ -75,5 +79,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
         // Practice
         NowLyric,
+
+        // Saiten status
+        SaitenStatus,
     }
 }
