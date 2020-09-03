@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public new IEnumerable<DrawableLyricLine> AllHitObjects => base.AllHitObjects.OfType<DrawableLyricLine>();
 
-        protected IWorkingBeatmap WorkingBeatmap => beatmap.Value;
+        protected WorkingBeatmap WorkingBeatmap => beatmap.Value;
 
         private readonly BindableBool translate = new BindableBool();
         private readonly Bindable<string> translateLanguage = new Bindable<string>();

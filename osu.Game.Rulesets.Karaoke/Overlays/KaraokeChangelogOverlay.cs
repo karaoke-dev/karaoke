@@ -24,11 +24,9 @@ using osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays
 {
-    public class KaraokeChangelogOverlay : FullscreenOverlay
+    public class KaraokeChangelogOverlay : FullscreenOverlay<ChangelogHeader>
     {
         public readonly Bindable<KaraokeChangelogBuild> Current = new Bindable<KaraokeChangelogBuild>();
-
-        protected ChangelogHeader Header;
 
         private Container<ChangelogContent> content;
 
@@ -42,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         private string projectName => $"{organizationName}.github.io";
 
         public KaraokeChangelogOverlay(string organization, string branch = "master")
-            : base(OverlayColourScheme.Purple)
+            : base(OverlayColourScheme.Purple, new ChangelogHeader())
         {
             organizationName = organization;
             branchName = branch;
@@ -69,10 +67,10 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                         Direction = FillDirection.Vertical,
                         Children = new Drawable[]
                         {
-                            Header = new ChangelogHeader
+                            Header.With(h =>
                             {
-                                ListingSelected = ShowListing,
-                            },
+                                h.ListingSelected = ShowListing;
+                            }),
                             content = new Container<ChangelogContent>
                             {
                                 RelativeSizeAxes = Axes.X,
