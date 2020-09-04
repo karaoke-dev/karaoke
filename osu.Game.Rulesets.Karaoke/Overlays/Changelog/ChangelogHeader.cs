@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             public ChangelogHeaderTitle()
             {
                 Title = "changelog";
-                IconTexture = "Icons/changelog";
+                IconTexture = "Icons/Hexacons/devtools";
             }
         }
     }
