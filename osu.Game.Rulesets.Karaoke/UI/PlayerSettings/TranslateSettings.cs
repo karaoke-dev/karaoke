@@ -13,13 +13,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
     public class TranslateSettings : PlayerSettingsGroup
     {
-        protected override string Title => "Translate";
-
         private readonly PlayerCheckbox translateCheckBox;
         private readonly OsuSpriteText translateText;
         private readonly OsuDropdown<string> translateDropDown;
 
         public TranslateSettings(PropertyDictionary dictionary)
+            : base("Translate")
         {
             Children = new Drawable[]
             {

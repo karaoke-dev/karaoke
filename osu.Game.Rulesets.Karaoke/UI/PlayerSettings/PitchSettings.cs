@@ -11,13 +11,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
     public class PitchSettings : PlayerSettingsGroup
     {
-        protected override string Title => "Pitch";
-
         private readonly ClickablePlayerSliderBar pitchSliderBar;
         private readonly ClickablePlayerSliderBar vocalPitchSliderBar;
         private readonly ClickablePlayerSliderBar saitenPitchSliderBar;
 
         public PitchSettings()
+            : base("Pitch")
         {
             Children = new Drawable[]
             {
