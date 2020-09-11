@@ -10,12 +10,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
     public class RubyRomajiSettings : PlayerSettingsGroup
     {
-        protected override string Title => "Ruby/Romaji";
-
         private readonly PlayerCheckbox displayRubyCheckBox;
         private readonly PlayerCheckbox displayRomajiCheckBox;
 
         public RubyRomajiSettings()
+            : base("Ruby/Romaji")
         {
             Children = new Drawable[]
             {

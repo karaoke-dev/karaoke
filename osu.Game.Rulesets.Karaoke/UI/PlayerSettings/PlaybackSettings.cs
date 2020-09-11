@@ -12,11 +12,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
     public class PlaybackSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
     {
-        protected override string Title => "Playback";
-
         private readonly ClickablePlayerSliderBar playBackSliderBar;
 
         public PlaybackSettings()
+            : base("Playback")
         {
             Children = new Drawable[]
             {

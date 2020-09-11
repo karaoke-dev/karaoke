@@ -26,12 +26,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
     public class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
     {
-        protected override string Title => "Practice";
-
         private readonly PlayerSliderBar<double> preemptTimeSliderBar;
         private readonly LyricPreview lyricPreview;
 
         public PracticeSettings(IBeatmap beatmap)
+            : base("Practice")
         {
             var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
 
