@@ -13,17 +13,35 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
     {
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {
+            int singers = 1;
             int lyrics = HitObjects.Count(s => s is LyricLine);
 
-            return new[]
+            var defaultStatistic = new List<BeatmapStatistic>
             {
+                new BeatmapStatistic
+                {
+                    Name = @"Singer",
+                    Content = singers.ToString(),
+                    CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.User }
+                },
                 new BeatmapStatistic
                 {
                     Name = @"Lyric",
                     Content = lyrics.ToString(),
-                    Icon = FontAwesome.Regular.Circle
+                    CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.AlignLeft }
                 },
             };
+
+            int notes = HitObjects.Count(s => s is Note note && note.Display);
+            if (notes > 0)
+                defaultStatistic.Add(new BeatmapStatistic
+                {
+                    Name = @"Note",
+                    Content = notes.ToString(),
+                    CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.Music }
+                });
+
+            return defaultStatistic.ToArray();
         }
     }
 }
