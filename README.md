@@ -11,14 +11,17 @@ The source code of `karaoke!` ruleset, running on [osu!lazer](https://github.com
 
 ## Status
 
-Some feature is still developing, but exist feature should work fine.
+Some feature is still heavy developing, but exist feature should work fine.
 
-Feel free to report bugs if found.
+If got any problem, you can just ask me in gmail(andy840119@gmail.com) or [discord channel](https://discord.gg/ga2xZXk)(will reply faster) instead of costing too much time in solving problem.
+
+And feel free to report bugs if found.
 
 ## How to run this project
 
-The fastest way is download [release](https://github.com/karaoke-dev/karaoke/releases) dll file and throw it into lazer like [other custom rulesets](https://github.com/LumpBloom7/sentakki/wiki/Ruleset-installation-guide).
-Or you can compile it by yourself.
+See [this tutorial](https://karaoke-dev.github.io/how-to-install/README.html) to get ruleset from exist build.
+
+Or you can compile it by yourself, `release build` then copy `osu.Game.Rulesets.Karaoke.Packed.dll` into [ruleset folder]（https://github.com/LumpBloom7/sentakki/wiki/Ruleset-installation-guide）.
 
 If wants to try on other platform like android or ios, you might use [launcher](https://github.com/karaoke-dev/launcher).    
 Notice : The launcher is still under development, so it might not work.
