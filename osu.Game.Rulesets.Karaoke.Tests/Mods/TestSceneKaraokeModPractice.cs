@@ -24,8 +24,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
             PassCondition = () =>
             {
                 var overlays = Player.DrawableRuleset.Overlays;
-                var karaokeHudOverlay = overlays.OfType<KaraokeHUDOverlay>().FirstOrDefault();
-                var actionContainer = karaokeHudOverlay.OfType<KaraokeHUDOverlay.KaraokeActionContainer>().FirstOrDefault();
+                var settingHUDOverlay = overlays.OfType<SettingHUDOverlay>().FirstOrDefault();
+                var actionContainer = settingHUDOverlay.OfType<SettingHUDOverlay.KaraokeActionContainer>().FirstOrDefault();
 
                 // todo : test overlays is exist.
                 return actionContainer?.Child is ControlLayer;

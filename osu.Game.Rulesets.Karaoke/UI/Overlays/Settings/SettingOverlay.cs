@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
     /// <summary>
     /// Present setting at right side
     /// </summary>
-    public class GameplaySettingsOverlay : OsuFocusedOverlayContainer
+    public class SettingOverlay : OsuFocusedOverlayContainer
     {
         public const float SETTING_MARGIN = 20;
         public const float SETTING_SPACING = 20;
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
         private readonly FillFlowContainer<Drawable> content;
 
-        public GameplaySettingsOverlay()
+        public SettingOverlay()
         {
             InternalChildren = new Drawable[]
             {

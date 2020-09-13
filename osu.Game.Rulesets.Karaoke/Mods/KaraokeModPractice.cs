@@ -44,9 +44,9 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             }
         }
 
-        public void ApplyToKaraokeHUD(KaraokeHUDOverlay overlay)
+        public void ApplyToKaraokeHUD(SettingHUDOverlay overlay)
         {
-            var adjustmentOverlay = new GameplaySettingsOverlay
+            var adjustmentOverlay = new SettingOverlay
             {
                 RelativeSizeAxes = Axes.Y,
                 Anchor = Anchor.CentreRight,

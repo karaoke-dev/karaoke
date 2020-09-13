@@ -12,13 +12,13 @@ using osu.Game.Rulesets.Karaoke.UI.HUD;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class KaraokeHUDOverlay : Container
+    public class SettingHUDOverlay : Container
     {
         public readonly ControlLayer controlLayer;
 
         private readonly DrawableKaraokeRuleset drawableRuleset;
 
-        public KaraokeHUDOverlay(DrawableKaraokeRuleset drawableRuleset)
+        public SettingHUDOverlay(DrawableKaraokeRuleset drawableRuleset)
         {
             this.drawableRuleset = drawableRuleset;
 

@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 return;
 
             // create overlay
-            var overlay = new KaraokeHUDOverlay(this);
+            var overlay = new SettingHUDOverlay(this);
             foreach (var mod in mods.OfType<IApplicableToKaraokeHUD>())
                 mod.ApplyToKaraokeHUD(overlay);
 
