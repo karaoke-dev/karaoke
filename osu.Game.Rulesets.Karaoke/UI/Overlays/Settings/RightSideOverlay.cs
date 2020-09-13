@@ -2,10 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
+using osu.Game.Overlays;
 using osuTK;
 using osuTK.Graphics;
 
@@ -56,6 +58,15 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
                     }
                 }
             };
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            // Use lazy way to force open overlay
+            // Will create ruleset's own overlay eventually.
+            (OverlayActivationMode as Bindable<OverlayActivation>).Value = OverlayActivation.All;
         }
 
         [BackgroundDependencyLoader]
