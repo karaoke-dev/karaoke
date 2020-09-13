@@ -9,7 +9,7 @@ using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.UI.HUD
+namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
 {
     public abstract class PopupOverlay : WaveOverlayContainer
     {
@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
         protected override bool DimMainContent => false;
 
-        public PopupOverlay()
+        protected PopupOverlay()
         {
             AddInternal(new Box
             {

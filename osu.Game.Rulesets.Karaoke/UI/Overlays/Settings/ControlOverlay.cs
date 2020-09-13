@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
             Name = "Toggle setting button",
             Text = "Settings",
             TooltipText = "Open/Close setting",
-            Action = () => ToggleVisibility()
+            Action = ToggleVisibility
         };
     }
 }

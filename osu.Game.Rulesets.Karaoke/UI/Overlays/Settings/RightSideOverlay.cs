@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
 
         public abstract SettingButton CreateToggleButton();
 
-        public RightSideOverlay()
+        protected RightSideOverlay()
         {
             RelativeSizeAxes = Axes.Y;
             Anchor = Anchor.CentreRight;

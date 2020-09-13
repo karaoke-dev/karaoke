@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         /// <summary>
         /// Saiten system does not support android device.
-        /// Will throw this if osu.framework.microphone does not supportu it yet.
+        /// Will throw this if osu.framework.microphone does not support it yet.
         /// Or official client does not open this permission.
         /// </summary>
         [Description("Android target not supported.")]
@@ -139,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         /// <summary>
         /// Saiten system does not support iOS device.
-        /// Will throw this if osu.framework.microphone does not supportu it yet.
+        /// Will throw this if osu.framework.microphone does not support it yet.
         /// Or official client does not open this permission.
         /// </summary>
         [Description("iOS target not supported.")]
@@ -153,7 +153,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         /// <summary>
         /// Saiten system does not support osx device.
-        /// Will throw this if osu.framework.microphone does not supportu it yet.
+        /// Will throw this if osu.framework.microphone does not support it yet.
         /// Or official client does not open this permission.
         /// </summary>
         [Description("osx target not supported.")]
@@ -198,7 +198,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         Saitening,
 
         /// <summary>
-        /// Microphone statis is not initialized.
+        /// Microphone saiten is not initialized.
         /// </summary>
         [Description("Not initialized.")]
         NotInitialized,
