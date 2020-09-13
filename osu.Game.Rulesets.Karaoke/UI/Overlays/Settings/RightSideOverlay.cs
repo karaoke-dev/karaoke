@@ -8,7 +8,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osuTK;
 using osuTK.Graphics;
-using static osu.Game.Rulesets.Karaoke.UI.Overlays.SettingHUDOverlay;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
 {
@@ -27,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
 
         private readonly FillFlowContainer<Drawable> content;
 
-        public abstract TriggerButton CreateToggleButton();
+        public abstract SettingButton CreateToggleButton();
 
         public RightSideOverlay()
         {

@@ -5,11 +5,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Cursor;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Input.Bindings;
 using osu.Game.Rulesets.Configuration;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -23,12 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
     {
         public readonly ControlLayer controlLayer;
 
-        private readonly DrawableKaraokeRuleset drawableRuleset;
-
         public SettingHUDOverlay(DrawableKaraokeRuleset drawableRuleset)
         {
-            this.drawableRuleset = drawableRuleset;
-
             RelativeSizeAxes = Axes.Both;
 
             Children = new Drawable[]
@@ -36,16 +30,14 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
                 new KaraokeActionContainer(drawableRuleset)
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Child = controlLayer = CreateControlLayer()
+                    Child = controlLayer = new ControlLayer(drawableRuleset.Beatmap)
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Clock = new FramedClock(new StopwatchClock(true))
+                    }
                 }
             };
         }
-
-        protected virtual ControlLayer CreateControlLayer() => new ControlLayer(drawableRuleset.Beatmap)
-        {
-            Clock = new FramedClock(new StopwatchClock(true)),
-            RelativeSizeAxes = Axes.Both
-        };
 
         public class KaraokeActionContainer : DatabasedKeyBindingContainer<KaraokeAction>
         {
@@ -74,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
             private readonly BindableInt bindableVocalPitch = new BindableInt();
             private readonly BindableInt bindableSaitenPitch = new BindableInt();
 
-            private readonly FillFlowContainer<TriggerButton> triggerButtons;
+            private readonly FillFlowContainer<SettingButton> triggerButtons;
 
             private readonly ControlOverlay gameplaySettingsOverlay;
 
@@ -82,15 +74,15 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
             {
                 InternalChildren = new Drawable[]
                 {
-                triggerButtons = new FillFlowContainer<TriggerButton>
-                {
-                    Anchor = Anchor.CentreRight,
-                    Origin = Anchor.CentreRight,
-                    AutoSizeAxes = Axes.Both,
-                    Spacing = new Vector2(10),
-                    Margin = new MarginPadding(40),
-                    Direction = FillDirection.Vertical,
-                }
+                    triggerButtons = new FillFlowContainer<SettingButton>
+                    {
+                        Anchor = Anchor.CentreRight,
+                        Origin = Anchor.CentreRight,
+                        AutoSizeAxes = Axes.Both,
+                        Spacing = new Vector2(10),
+                        Margin = new MarginPadding(40),
+                        Direction = FillDirection.Vertical,
+                    }
                 };
 
                 AddExtraOverlay(gameplaySettingsOverlay = new ControlOverlay(beatmap));
@@ -174,17 +166,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
                 session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
                 session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
                 session.BindWith(KaraokeRulesetSession.SaitenPitch, bindableSaitenPitch);
-            }
-        }
-
-        public class TriggerButton : TriangleButton, IHasTooltip
-        {
-            public string TooltipText { get; set; }
-
-            public TriggerButton()
-            {
-                Width = 90;
-                Height = 45;
             }
         }
     }

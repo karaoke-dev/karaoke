@@ -13,7 +13,6 @@ using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
-using static osu.Game.Rulesets.Karaoke.UI.Overlays.SettingHUDOverlay;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
@@ -65,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 });
             }
 
-            public override TriggerButton CreateToggleButton() => new TriggerButton
+            public override SettingButton CreateToggleButton() => new SettingButton
             {
                 Name = "Toggle Practice",
                 Text = "Practice",
