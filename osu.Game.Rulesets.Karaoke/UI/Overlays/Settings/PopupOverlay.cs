@@ -11,7 +11,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI.HUD
 {
-    public class PopupOverlay : WaveOverlayContainer
+    public abstract class PopupOverlay : WaveOverlayContainer
     {
         protected override bool BlockNonPositionalInput => false;
 

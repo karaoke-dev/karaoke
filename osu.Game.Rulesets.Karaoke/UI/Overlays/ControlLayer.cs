@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
         private readonly FillFlowContainer<TriggerButton> triggerButtons;
 
-        private readonly SettingOverlay gameplaySettingsOverlay;
+        private readonly RightSideOverlay gameplaySettingsOverlay;
 
         public ControlLayer(IBeatmap beatmap)
         {
@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                     TooltipText = "Open/Close setting",
                     Action = ToggleGameplaySettingsOverlay
                 },
-                gameplaySettingsOverlay = new SettingOverlay
+                gameplaySettingsOverlay = new RightSideOverlay
                 {
                     RelativeSizeAxes = Axes.Y,
                     Anchor = Anchor.CentreRight,
