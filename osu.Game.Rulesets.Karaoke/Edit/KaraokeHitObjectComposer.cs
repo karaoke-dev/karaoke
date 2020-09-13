@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -70,5 +72,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             => new KaraokeBlueprintContainer(hitObjects);
 
         protected override IReadOnlyList<HitObjectCompositionTool> CompositionTools => Array.Empty<HitObjectCompositionTool>();
+
+        private readonly BindableBool displayRubyToggle = new BindableBool(true) { Description = "Ruby" };
+        private readonly BindableBool displayRomajiToggle = new BindableBool(true) { Description = "Romaji" };
+        private readonly BindableBool displayTranslateToggle = new BindableBool(true) { Description = "Translate" };
+
+        protected override IEnumerable<BindableBool> Toggles => new[]
+        {
+            displayRubyToggle,
+            displayRomajiToggle,
+            displayTranslateToggle
+        };
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            var karaokeSessionStatics = drawableRuleset.Session;
+            karaokeSessionStatics.BindWith(KaraokeRulesetSession.DisplayRuby, displayRubyToggle);
+            karaokeSessionStatics.BindWith(KaraokeRulesetSession.DisplayRomaji, displayRomajiToggle);
+            karaokeSessionStatics.BindWith(KaraokeRulesetSession.UseTranslate, displayTranslateToggle);
+            //displayRubyToggle.BindValueChanged(e => karaokeSessionStatics?.Set(KaraokeRulesetSession.DisplayRuby, e.NewValue));
+        }
     }
 }
