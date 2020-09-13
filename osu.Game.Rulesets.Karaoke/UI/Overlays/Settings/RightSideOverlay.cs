@@ -2,16 +2,21 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
+using osu.Game.Overlays;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.UI.HUD
+namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
 {
-    public class GameplaySettingsOverlay : OsuFocusedOverlayContainer
+    /// <summary>
+    /// Present setting at right side
+    /// </summary>
+    public abstract class RightSideOverlay : OsuFocusedOverlayContainer
     {
         public const float SETTING_MARGIN = 20;
         public const float SETTING_SPACING = 20;
@@ -23,8 +28,14 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
         private readonly FillFlowContainer<Drawable> content;
 
-        public GameplaySettingsOverlay()
+        public abstract SettingButton CreateToggleButton();
+
+        protected RightSideOverlay()
         {
+            RelativeSizeAxes = Axes.Y;
+            Anchor = Anchor.CentreRight;
+            Origin = Anchor.CentreRight;
+
             InternalChildren = new Drawable[]
             {
                 new Box
@@ -47,6 +58,15 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                     }
                 }
             };
+        }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            // Use lazy way to force open overlay
+            // Will create ruleset's own overlay eventually.
+            (OverlayActivationMode as Bindable<OverlayActivation>).Value = OverlayActivation.All;
         }
 
         [BackgroundDependencyLoader]

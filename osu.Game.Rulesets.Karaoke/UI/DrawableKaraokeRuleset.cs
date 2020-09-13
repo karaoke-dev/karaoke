@@ -16,6 +16,7 @@ using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Replays;
+using osu.Game.Rulesets.Karaoke.UI.Overlays;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects;
@@ -54,9 +55,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 return;
 
             // create overlay
-            var overlay = new KaraokeHUDOverlay(this);
-            foreach (var mod in mods.OfType<IApplicableToKaraokeHUD>())
-                mod.ApplyToKaraokeHUD(overlay);
+            var overlay = new SettingHUDOverlay(this);
+            foreach (var mod in mods.OfType<IApplicableToSettingHUDOverlay>())
+                mod.ApplyToOverlay(overlay);
 
             Overlays.Add(overlay);
         }

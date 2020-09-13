@@ -22,12 +22,11 @@ using osu.Game.Screens.Play.PlayerSettings;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
+namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
 {
     public class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
     {
         private readonly PlayerSliderBar<double> preemptTimeSliderBar;
-        private readonly LyricPreview lyricPreview;
 
         public PracticeSettings(IBeatmap beatmap)
             : base("Practice")
@@ -45,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 {
                     Text = "Lyric:"
                 },
-                lyricPreview = new LyricPreview(lyrics)
+                new LyricPreview(lyrics)
                 {
                     Height = 580
                 }
