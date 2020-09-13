@@ -9,9 +9,8 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Input.Bindings;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
+using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings;
 using osu.Game.Screens.Play.PlayerSettings;
 using osuTK;
 
@@ -25,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
         private readonly FillFlowContainer<TriggerButton> triggerButtons;
 
-        private readonly RightSideOverlay gameplaySettingsOverlay;
+        private readonly ControlOverlay gameplaySettingsOverlay;
 
         public ControlLayer(IBeatmap beatmap)
         {
@@ -42,28 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                 }
             };
 
-            AddExtraOverlay(new TriggerButton
-                {
-                    Name = "Toggle setting button",
-                    Text = "Settings",
-                    TooltipText = "Open/Close setting",
-                    Action = ToggleGameplaySettingsOverlay
-                },
-                gameplaySettingsOverlay = new RightSideOverlay
-                {
-                    RelativeSizeAxes = Axes.Y,
-                    Anchor = Anchor.CentreRight,
-                    Origin = Anchor.CentreRight,
-                });
-
-            // Add common group
-            AddSettingsGroup(new VisualSettings { Expanded = false });
-            AddSettingsGroup(new PitchSettings { Expanded = false });
-            AddSettingsGroup(new RubyRomajiSettings { Expanded = false });
-
-            // Add translate group if this beatmap has translate
-            if (beatmap.AnyTranslate())
-                AddSettingsGroup(new TranslateSettings(beatmap.GetProperty()) { Expanded = false });
+            AddExtraOverlay(gameplaySettingsOverlay = new ControlOverlay(beatmap));
         }
 
         public void ToggleGameplaySettingsOverlay() => gameplaySettingsOverlay.ToggleVisibility();
@@ -132,10 +110,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             gameplaySettingsOverlay.Add(group);
         }
 
-        public void AddExtraOverlay(TriggerButton button, FocusedOverlayContainer container)
+        public void AddExtraOverlay(RightSideOverlay container)
         {
-            triggerButtons.Add(button);
             AddInternal(container);
+            triggerButtons.Add(container.CreateToggleButton());
         }
 
         [BackgroundDependencyLoader]

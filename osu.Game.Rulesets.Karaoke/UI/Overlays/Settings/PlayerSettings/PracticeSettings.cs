@@ -22,7 +22,7 @@ using osu.Game.Screens.Play.PlayerSettings;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
+namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
 {
     public class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
     {

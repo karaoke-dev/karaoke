@@ -10,7 +10,8 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Resources.Fonts;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
-using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
+using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings;
+using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
 
@@ -46,31 +47,31 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         public void ApplyToKaraokeHUD(SettingHUDOverlay overlay)
         {
-            var adjustmentOverlay = new RightSideOverlay
+            // Add practice overlay
+            overlay.controlLayer.AddExtraOverlay(new PracticeOverlay(beatmap));
+
+            // Add playback group into main overlay
+            overlay.controlLayer.AddSettingsGroup(new PlaybackSettings { Expanded = false });
+        }
+
+        public class PracticeOverlay : RightSideOverlay
+        {
+            public PracticeOverlay(IBeatmap beatmap)
             {
-                RelativeSizeAxes = Axes.Y,
-                Anchor = Anchor.CentreRight,
-                Origin = Anchor.CentreRight,
-                Child = new PracticeSettings(beatmap)
+                Add(new PracticeSettings(beatmap)
                 {
                     Expanded = true,
                     Width = 400
-                }
-            };
+                });
+            }
 
-            var triggerButton = new ControlLayer.TriggerButton
+            public override ControlLayer.TriggerButton CreateToggleButton() => new ControlLayer.TriggerButton
             {
                 Name = "Toggle Practice",
                 Text = "Practice",
                 TooltipText = "Open/Close practice overlay",
-                Action = () => adjustmentOverlay.ToggleVisibility()
+                Action = () => ToggleVisibility()
             };
-
-            // Add practice overlay
-            overlay.controlLayer.AddExtraOverlay(triggerButton, adjustmentOverlay);
-
-            // Add playback group into main overlay
-            overlay.controlLayer.AddSettingsGroup(new PlaybackSettings { Expanded = false });
         }
     }
 }
