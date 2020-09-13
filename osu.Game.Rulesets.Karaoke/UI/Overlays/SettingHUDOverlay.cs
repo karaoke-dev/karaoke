@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
 {
     public class SettingHUDOverlay : Container
     {
-        public readonly ControlLayer controlLayer;
+        private readonly ControlLayer controlLayer;
 
         public SettingHUDOverlay(DrawableKaraokeRuleset drawableRuleset)
         {
@@ -38,6 +38,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
                 }
             };
         }
+
+        public void AddSettingsGroup(PlayerSettingsGroup group) => controlLayer.AddSettingsGroup(group);
+
+        public void AddExtraOverlay(RightSideOverlay overlay) => controlLayer.AddExtraOverlay(overlay);
 
         public class KaraokeActionContainer : DatabasedKeyBindingContainer<KaraokeAction>
         {

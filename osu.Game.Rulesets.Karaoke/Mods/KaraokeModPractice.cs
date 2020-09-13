@@ -47,10 +47,10 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public void ApplyToOverlay(SettingHUDOverlay overlay)
         {
             // Add practice overlay
-            overlay.controlLayer.AddExtraOverlay(new PracticeOverlay(beatmap));
+            overlay.AddExtraOverlay(new PracticeOverlay(beatmap));
 
             // Add playback group into main overlay
-            overlay.controlLayer.AddSettingsGroup(new PlaybackSettings { Expanded = false });
+            overlay.AddSettingsGroup(new PlaybackSettings { Expanded = false });
         }
 
         public class PracticeOverlay : RightSideOverlay
