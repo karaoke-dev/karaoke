@@ -2,22 +2,22 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Resources.Fonts;
 using osu.Game.Rulesets.Karaoke.UI;
-using osu.Game.Rulesets.Karaoke.UI.HUD;
+using osu.Game.Rulesets.Karaoke.UI.Overlays;
 using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
+using static osu.Game.Rulesets.Karaoke.UI.Overlays.SettingHUDOverlay;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModPractice : ModAutoplay<KaraokeHitObject>, IApplicableToKaraokeHUD, IApplicableToBeatmap
+    public class KaraokeModPractice : ModAutoplay<KaraokeHitObject>, IApplicableToSettingHUDOverlay, IApplicableToBeatmap
     {
         public override string Name => "Practice";
         public override string Acronym => "Practice";
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             }
         }
 
-        public void ApplyToKaraokeHUD(SettingHUDOverlay overlay)
+        public void ApplyToOverlay(SettingHUDOverlay overlay)
         {
             // Add practice overlay
             overlay.controlLayer.AddExtraOverlay(new PracticeOverlay(beatmap));
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 });
             }
 
-            public override ControlLayer.TriggerButton CreateToggleButton() => new ControlLayer.TriggerButton
+            public override TriggerButton CreateToggleButton() => new TriggerButton
             {
                 Name = "Toggle Practice",
                 Text = "Practice",

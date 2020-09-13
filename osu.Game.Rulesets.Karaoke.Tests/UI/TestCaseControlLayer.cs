@@ -6,8 +6,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Tests.Visual;
+using static osu.Game.Rulesets.Karaoke.UI.Overlays.SettingHUDOverlay;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.UI
 {

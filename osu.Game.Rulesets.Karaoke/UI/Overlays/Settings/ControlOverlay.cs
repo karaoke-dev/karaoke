@@ -5,7 +5,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings;
 using osu.Game.Screens.Play.PlayerSettings;
-using static osu.Game.Rulesets.Karaoke.UI.HUD.ControlLayer;
+using static osu.Game.Rulesets.Karaoke.UI.Overlays.SettingHUDOverlay;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
 {
