@@ -11,6 +11,9 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI.HUD
 {
+    /// <summary>
+    /// Present setting at right side
+    /// </summary>
     public class GameplaySettingsOverlay : OsuFocusedOverlayContainer
     {
         public const float SETTING_MARGIN = 20;
