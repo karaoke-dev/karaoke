@@ -115,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                         translate.AddRange(insertTranslate);
                     }
                     else
-                        beatmap.GetProperty().Translates.Add(oldLanguageCode, insertTranslate);
+                        beatmap.GetTranslates().Add(oldLanguageCode, insertTranslate);
                 }
 
                 // Apply new translate to editor

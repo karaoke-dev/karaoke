@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             if (!output.AnyTranslate())
                 yield break;
 
-            foreach (var (languageCode, translates) in output.GetProperty().Translates)
+            foreach (var (languageCode, translates) in output.GetTranslates())
             {
                 foreach (var translate in translates)
                 {

@@ -120,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var beatmap = lrcDecoder.Decode(stream);
 
                 // Get translate
-                var translates = beatmap.GetProperty()?.Translates;
+                var translates = beatmap.GetTranslates();
 
                 // Check is not null
                 Assert.IsTrue(translates != null);

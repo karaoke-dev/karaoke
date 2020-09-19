@@ -10,19 +10,19 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
     public static class KaraokeBeatmapExtension
     {
-        public static PropertyDictionary GetProperty(this IBeatmap beatmap) => beatmap?.HitObjects.OfType<PropertyDictionary>().FirstOrDefault();
+        public static IDictionary<string, List<string>> GetTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.Translates;
 
         public static bool IsScorable(this IBeatmap beatmap) => beatmap?.HitObjects.OfType<Note>().Any(x => x.Display) ?? false;
 
         public static List<string> GetTranslate(this IBeatmap beatmap, string languageCode)
         {
-            if (beatmap.GetProperty().Translates.TryGetValue(languageCode, out var result))
+            if (beatmap.GetTranslates().TryGetValue(languageCode, out var result))
                 return result;
 
             return null;
         }
 
-        public static string[] AvailableTranslates(this IBeatmap beatmap) => beatmap?.GetProperty()?.Translates.Keys.ToArray();
+        public static string[] AvailableTranslates(this IBeatmap beatmap) => beatmap?.GetTranslates()?.Keys.ToArray();
 
         public static bool AnyTranslate(this IBeatmap beatmap) => beatmap?.AvailableTranslates()?.Any() ?? false;
 
