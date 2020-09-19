@@ -6,15 +6,12 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.UI.Overlays;
-using osu.Game.Tests.Visual;
 using static osu.Game.Rulesets.Karaoke.UI.Overlays.SettingHUDOverlay;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public class TestSceneKaraokeModPractice : ModTestScene
+    public class TestSceneKaraokeModPractice : KaraokeModTestScene
     {
-        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
-
         [Test]
         public void TestAllPanelExist() => CreateModTest(new ModTestData
         {

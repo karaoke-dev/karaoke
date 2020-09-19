@@ -4,14 +4,11 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
-using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public class TestSceneKaraokeModFun : ModTestScene
+    public class TestSceneKaraokeModFun : KaraokeModTestScene
     {
-        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
-
         [Test]
         public void TestSnowMod() => CreateModTest(new ModTestData
         {

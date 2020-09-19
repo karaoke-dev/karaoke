@@ -6,14 +6,11 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Extensions;
-using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public class TestSceneKaraokeModFlashlight : ModTestScene
+    public class TestSceneKaraokeModFlashlight : KaraokeModTestScene
     {
-        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
-
         [Test]
         public void TestFlashlightExist() => CreateModTest(new ModTestData
         {
