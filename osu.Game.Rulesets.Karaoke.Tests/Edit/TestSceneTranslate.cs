@@ -40,7 +40,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private readonly IBeatmap beatmap;
         private LyricLine[] lyricLines => beatmap.HitObjects.OfType<LyricLine>().ToArray();
 
-        protected override IBeatmap CreateBeatmap(RulesetInfo ruleset) => new TestKaraokeBeatmap(ruleset);
+        protected override IBeatmap CreateBeatmap(RulesetInfo ruleset)
+        {
+            var originBeatmap = new TestKaraokeBeatmap(ruleset);
+            return new KaraokeBeatmapConverter(originBeatmap, new KaraokeRuleset()).Convert();
+        }
 
         public TestSceneTranslate()
         {
@@ -115,7 +119,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                         translate.AddRange(insertTranslate);
                     }
                     else
-                        beatmap.GetProperty().Translates.Add(oldLanguageCode, insertTranslate);
+                        beatmap.GetTranslates().Add(oldLanguageCode, insertTranslate);
                 }
 
                 // Apply new translate to editor

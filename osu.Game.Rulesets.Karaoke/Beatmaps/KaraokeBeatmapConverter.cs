@@ -18,11 +18,23 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         public override bool CanConvert() => Beatmap.HitObjects.All(h => h is KaraokeHitObject);
 
-        protected override IEnumerable<KaraokeHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap)
+        protected override Beatmap<KaraokeHitObject> ConvertBeatmap(IBeatmap original)
         {
-            // Because karaoke does not support any ruleset, so should not goes to here
-            yield return new LyricLine();
+            var beatmap = base.ConvertBeatmap(original);
+
+            // Apply property created from legacy decoder
+            var propertyDicrionary = beatmap.HitObjects.OfType<LegacyPropertyDictionary>().FirstOrDefault();
+            if (propertyDicrionary != null)
+            {
+                (beatmap as KaraokeBeatmap).Translates = propertyDicrionary.Translates;
+                beatmap.HitObjects.Remove(propertyDicrionary);
+            }
+
+            return beatmap;
         }
+
+        protected override IEnumerable<KaraokeHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap)
+            => throw new System.NotImplementedException();
 
         protected override Beatmap<KaraokeHitObject> CreateBeatmap() => new KaraokeBeatmap();
     }

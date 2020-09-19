@@ -11,6 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
     public class KaraokeBeatmap : Beatmap<KaraokeHitObject>
     {
+        public IDictionary<string, List<string>> Translates { get; set; } = new Dictionary<string, List<string>>();
+
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {
             int singers = 1;

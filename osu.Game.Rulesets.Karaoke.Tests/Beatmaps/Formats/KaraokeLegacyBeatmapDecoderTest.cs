@@ -63,21 +63,75 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         [Test]
         public void TestDecodeNote()
         {
-            using (var resStream = TestResources.OpenBeatmapResource("karaoke-note-samples"))
+            // Karaoke beatmap
+            var beatmap = decodeBeatmap("karaoke-note-samples");
+
+            // Get notes
+            var notes = beatmap.HitObjects.OfType<Note>().ToList();
+
+            testNote("か", 1, note: notes[0]);
+            testNote("ら", 2, true, notes[1]);
+            testNote("お", 3, note: notes[2]);
+            testNote("け", 3, true, notes[3]);
+            testNote("け", 4, note: notes[4]);
+        }
+
+        [Test]
+        public void TestDecodeStyle()
+        {
+            // Karaoke beatmap
+            var beatmap = decodeBeatmap("karaoke-style-samples");
+
+            // Get lyric
+            var lyric = beatmap.HitObjects.OfType<LyricLine>().FirstOrDefault();
+
+            // Check is not null
+            Assert.IsTrue(lyric != null);
+
+            // Check layout and font index
+            Assert.AreEqual(lyric.LayoutIndex, 2);
+            Assert.AreEqual(lyric.FontIndex, 3);
+        }
+
+        [Test]
+        public void TestDecodeTranslate()
+        {
+            // Karaoke beatmap
+            var beatmap = decodeBeatmap("karaoke-translate-samples");
+
+            // Get translate
+            var translates = beatmap.GetTranslates();
+
+            // Check is not null
+            Assert.IsTrue(translates != null);
+
+            // Check translate count
+            Assert.AreEqual(translates.Count, 2);
+
+            // Check chinese translate
+            Assert.AreEqual(translates["zh-TW"].Count, 2);
+            Assert.AreEqual(translates["zh-TW"][0], "卡拉OK");
+            Assert.AreEqual(translates["zh-TW"][1], "喜歡");
+
+            // Check english translate
+            Assert.AreEqual(translates["en-US"].Count, 2);
+            Assert.AreEqual(translates["en-US"][0], "karaoke");
+            Assert.AreEqual(translates["en-US"][1], "like it");
+        }
+
+        private KaraokeBeatmap decodeBeatmap(string fileName)
+        {
+            using (var resStream = TestResources.OpenBeatmapResource(fileName))
             using (var stream = new LineBufferedReader(resStream))
             {
                 // Create karaoke beatmap decoder
                 var lrcDecoder = new KaraokeLegacyBeatmapDecoder();
+
+                // Create initial beatmap
                 var beatmap = lrcDecoder.Decode(stream);
 
-                // Get notes
-                var notes = beatmap.HitObjects.OfType<Note>().ToList();
-
-                testNote("か", 1, note: notes[0]);
-                testNote("ら", 2, true, notes[1]);
-                testNote("お", 3, note: notes[2]);
-                testNote("け", 3, true, notes[3]);
-                testNote("け", 4, note: notes[4]);
+                // Convert to karaoke beatmap
+                return new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
             }
         }
 
@@ -85,59 +139,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         {
             Assert.AreEqual(text, note?.Text);
             Assert.AreEqual(tone, note?.Tone.Scale);
-        }
-
-        [Test]
-        public void TestDecodeStyle()
-        {
-            using (var resStream = TestResources.OpenBeatmapResource("karaoke-style-samples"))
-            using (var stream = new LineBufferedReader(resStream))
-            {
-                // Create karaoke beatmap decoder
-                var lrcDecoder = new KaraokeLegacyBeatmapDecoder();
-                var beatmap = lrcDecoder.Decode(stream);
-
-                // Get lyric
-                var lyric = beatmap.HitObjects.OfType<LyricLine>().FirstOrDefault();
-
-                // Check is not null
-                Assert.IsTrue(lyric != null);
-
-                // Check layout and font index
-                Assert.AreEqual(lyric.LayoutIndex, 2);
-                Assert.AreEqual(lyric.FontIndex, 3);
-            }
-        }
-
-        [Test]
-        public void TestDecodeTranslate()
-        {
-            using (var resStream = TestResources.OpenBeatmapResource("karaoke-translate-samples"))
-            using (var stream = new LineBufferedReader(resStream))
-            {
-                // Create karaoke beatmap decoder
-                var lrcDecoder = new KaraokeLegacyBeatmapDecoder();
-                var beatmap = lrcDecoder.Decode(stream);
-
-                // Get translate
-                var translates = beatmap.GetProperty()?.Translates;
-
-                // Check is not null
-                Assert.IsTrue(translates != null);
-
-                // Check translate count
-                Assert.AreEqual(translates.Count, 2);
-
-                // Check chinese translate
-                Assert.AreEqual(translates["zh-TW"].Count, 2);
-                Assert.AreEqual(translates["zh-TW"][0], "卡拉OK");
-                Assert.AreEqual(translates["zh-TW"][1], "喜歡");
-
-                // Check english translate
-                Assert.AreEqual(translates["en-US"].Count, 2);
-                Assert.AreEqual(translates["en-US"][0], "karaoke");
-                Assert.AreEqual(translates["en-US"][1], "like it");
-            }
         }
     }
 }

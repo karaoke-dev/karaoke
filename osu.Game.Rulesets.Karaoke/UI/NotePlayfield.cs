@@ -51,6 +51,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public int Columns { get; }
 
+        // Note playfield should be present even being hidden.
+        public override bool IsPresent => true;
+
         public NotePlayfield(int columns)
         {
             Columns = columns;

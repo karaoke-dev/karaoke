@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             var targetLanguage = translateLanguage.Value;
 
             var lyric = Beatmap.HitObjects.OfType<LyricLine>().ToList();
-            var translateDictionary = Beatmap.GetProperty();
+            var translateDictionary = Beatmap.GetTranslates();
 
             // Clear exist translate
             lyric.ForEach(x => x.TranslateText = null);

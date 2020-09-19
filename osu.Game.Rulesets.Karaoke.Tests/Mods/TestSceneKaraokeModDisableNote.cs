@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
                     return false;
 
                 // check has no note in playfield
-                return lyricPlayfield.AllHitObjects.Any() && !notePlayfield.AllHitObjects.Any();
+                return lyricPlayfield.AllHitObjects.Any() && notePlayfield.Alpha == 0f;
             }
         });
     }

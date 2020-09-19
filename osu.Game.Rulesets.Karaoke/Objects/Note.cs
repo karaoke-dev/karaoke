@@ -114,6 +114,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             };
         }
 
-        public override Judgement CreateJudgement() => new NoteJudgement();
+        public override Judgement CreateJudgement() => new KaraokeNoteJudgement();
     }
 }

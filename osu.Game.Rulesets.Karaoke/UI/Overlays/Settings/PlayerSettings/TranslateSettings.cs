@@ -8,6 +8,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Play.PlayerSettings;
+using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
 {
@@ -17,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
         private readonly OsuSpriteText translateText;
         private readonly OsuDropdown<string> translateDropDown;
 
-        public TranslateSettings(PropertyDictionary dictionary)
+        public TranslateSettings(IDictionary<string, List<string>> translates)
             : base("Translate")
         {
             Children = new Drawable[]
@@ -33,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
                 translateDropDown = new OsuDropdown<string>
                 {
                     RelativeSizeAxes = Axes.X,
-                    Items = dictionary.Translates.Keys
+                    Items = translates.Keys
                 },
             };
         }
