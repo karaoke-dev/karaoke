@@ -6,6 +6,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
@@ -54,6 +55,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 bodyPiece.AccentColour = colour.NewValue;
             }, true);
             */
+
+            Display.BindValueChanged(e =>
+            {
+                (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue;
+            });
 
             note.TextBindable.BindValueChanged(_ => { changeText(note); }, true);
 

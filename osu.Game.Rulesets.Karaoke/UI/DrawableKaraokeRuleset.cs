@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -41,6 +42,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly PositionCalculator positionCalculator;
 
         public override bool AllowGameplayOverlays => Beatmap.IsScorable() && !Mods.OfType<KaraokeModPractice>().Any();
+
+        public virtual bool DisplayNotePlayfield => Beatmap.IsScorable();
 
         public DrawableKaraokeRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)
@@ -83,6 +86,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
             configDirection.BindValueChanged(direction => Direction.Value = (ScrollingDirection)direction.NewValue, true);
 
             Config.BindWith(KaraokeRulesetSetting.ScrollTime, TimeRange);
+
+            // Hide note playfield.
+            if (!DisplayNotePlayfield)
+                Playfield.NotePlayfield.Hide();
         }
 
         public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h)
@@ -93,13 +100,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     return new DrawableLyricLine(lyric);
 
                 case Note note:
-                    if (note.Display)
-                        return new DrawableNote(note);
+                    return new DrawableNote(note);
 
-                    break;
+                default:
+                    throw new NotSupportedException();
             }
-
-            return null;
         }
 
         protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new KaraokeFramedReplayInputHandler(replay);

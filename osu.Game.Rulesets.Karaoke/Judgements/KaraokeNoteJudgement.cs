@@ -5,10 +5,15 @@ using osu.Game.Rulesets.Scoring;
 
 namespace osu.Game.Rulesets.Karaoke.Judgements
 {
-    public class NoteJudgement : KaraokeJudgement
+    public class KaraokeNoteJudgement : KaraokeJudgement
     {
+        public bool Saitenable { get; set; }
+
         protected override int NumericResultFor(HitResult result)
         {
+            if (!Saitenable)
+                return 0;
+
             switch (result)
             {
                 default:
@@ -29,8 +34,13 @@ namespace osu.Game.Rulesets.Karaoke.Judgements
             }
         }
 
+        public override bool AffectsCombo => Saitenable;
+
         protected override double HealthIncreaseFor(HitResult result)
         {
+            if (!Saitenable)
+                return 0;
+
             switch (result)
             {
                 case HitResult.Miss:
