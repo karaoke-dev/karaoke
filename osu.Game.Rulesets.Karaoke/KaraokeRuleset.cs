@@ -39,7 +39,7 @@ using osuTK;
 namespace osu.Game.Rulesets.Karaoke
 {
     [ExcludeFromDynamicCompile]
-    public class KaraokeRuleset : Ruleset, ILegacyRuleset
+    public class KaraokeRuleset : Ruleset
     {
         public override DrawableRuleset CreateDrawableRulesetWith(IBeatmap beatmap, IReadOnlyList<Mod> mods = null) => new DrawableKaraokeRuleset(this, beatmap, mods);
         public override ScoreProcessor CreateScoreProcessor() => new KaraokeScoreProcessor();
@@ -157,9 +157,6 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override string PlayingVerb => "Singing karaoke";
 
-        // Need to add legacy id because sometimes KaraokeRulesetConfigManager is null if no legacy id
-        public int LegacyID => 111;
-
         public override ISkin CreateLegacySkinProvider(ISkinSource source, IBeatmap beatmap) => new KaraokeLegacySkinTransformer(source);
 
         public override IConvertibleReplayFrame CreateConvertibleReplayFrame() => new KaraokeReplayFrame();
@@ -185,8 +182,12 @@ namespace osu.Game.Rulesets.Karaoke
 
         public KaraokeRuleset()
         {
-            // It's a tricky to let osu! to read karaoke testing beatmap
+            // It's a tricky way to let lazer to read karaoke testing beatmap
             KaraokeLegacyBeatmapDecoder.Register();
+
+            // It's a tricty way to let lazer get ruleset config manager in test case
+            // See RulesetConfigCache.GetConfigFor(Ruleset)
+            RulesetInfo.ID = 111;
         }
     }
 }

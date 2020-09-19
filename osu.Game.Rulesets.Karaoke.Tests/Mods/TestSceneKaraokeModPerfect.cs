@@ -10,10 +10,8 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
-    public class TestSceneKaraokeModPerfect : ModPerfectTestScene
+    public class TestSceneKaraokeModPerfect : KaraokeModPerfectTestScene
     {
-        protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
-
         public TestSceneKaraokeModPerfect()
             : base(new KaraokeModPerfect())
         {
