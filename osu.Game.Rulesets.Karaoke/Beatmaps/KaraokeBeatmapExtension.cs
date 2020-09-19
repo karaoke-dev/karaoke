@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             return null;
         }
 
-        public static string[] AvailableTranslates(this IBeatmap beatmap) => beatmap?.GetTranslates()?.Keys.ToArray();
+        public static string[] AvailableTranslates(this IBeatmap beatmap) => beatmap?.GetTranslates()?.Keys.ToArray() ?? new string[] { };
 
         public static bool AnyTranslate(this IBeatmap beatmap) => beatmap?.AvailableTranslates()?.Any() ?? false;
 
