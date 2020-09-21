@@ -1,0 +1,15 @@
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// See the LICENCE file in the repository root for full licence text.
+
+using osu.Framework.Graphics.Containers;
+using osu.Game.Scoring;
+
+namespace osu.Game.Rulesets.Karaoke.Statistics
+{
+    public class SaitenResultGraph : CompositeDrawable
+    {
+        public SaitenResultGraph(ScoreInfo score)
+        {
+        }
+    }
+}
