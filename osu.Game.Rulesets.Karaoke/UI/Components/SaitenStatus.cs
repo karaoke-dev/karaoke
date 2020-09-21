@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
                     return "Edit mode.";
 
                 case SaitenStatusMode.Saitening:
-                    return "Saiteining...";
+                    return "Saitening...";
 
                 case SaitenStatusMode.NotInitialized:
                     return "Seems microphone device is not ready.";

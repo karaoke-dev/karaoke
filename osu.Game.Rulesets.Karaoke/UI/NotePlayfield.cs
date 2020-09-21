@@ -293,7 +293,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 Y = calculator.YPositionAt(note.HitObject.Tone)
             };
 
-            // todo : shpuld be added into hitObjectArea.Explosions
+            // todo : should be added into hitObjectArea.Explosions
             // see how mania ruleset do
             hitObjectArea.Add(explosion);
 

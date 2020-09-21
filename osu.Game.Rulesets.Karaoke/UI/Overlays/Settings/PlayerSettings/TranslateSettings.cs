@@ -6,7 +6,6 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Play.PlayerSettings;
 using System.Collections.Generic;
 
