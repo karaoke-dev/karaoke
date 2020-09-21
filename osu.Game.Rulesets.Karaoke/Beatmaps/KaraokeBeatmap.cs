@@ -54,7 +54,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                     CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.Times }
                 });
             }
-               
 
             return defaultStatistic.ToArray();
         }
