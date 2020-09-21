@@ -65,8 +65,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
             base.LoadComplete();
 
             // Use lazy way to force open overlay
-            // Will create ruleset's own overlay eventually.
-            (OverlayActivationMode as Bindable<OverlayActivation>).Value = OverlayActivation.All;
+            // Will create ruleset own overlay eventually.
+            ((Bindable<OverlayActivation>)OverlayActivationMode).Value = OverlayActivation.All;
         }
 
         [BackgroundDependencyLoader]

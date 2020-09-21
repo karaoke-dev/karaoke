@@ -34,14 +34,26 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                 },
             };
 
-            int notes = HitObjects.Count(s => s is Note note && note.Display);
-            if (notes > 0)
+            var scorable = this.IsScorable();
+            if (scorable)
+            {
+                int notes = HitObjects.Count(s => s is Note note && note.Display);
                 defaultStatistic.Add(new BeatmapStatistic
                 {
                     Name = @"Note",
                     Content = notes.ToString(),
                     CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.Music }
                 });
+            }
+            else
+            {
+                defaultStatistic.Add(new BeatmapStatistic
+                {
+                    Name = @"This beatmap is not scorable.",
+                    Content = @"This beatmap is not scorable.",
+                    CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.Times }
+                });
+            }
 
             return defaultStatistic.ToArray();
         }
