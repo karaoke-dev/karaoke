@@ -9,14 +9,13 @@ using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Screens.Edit;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 {
-    public class NoteSelectionBlueprint : KaraokeSelectionBlueprint
+    public class NoteSelectionBlueprint : KaraokeSelectionBlueprint<Note>
     {
         public new DrawableNote DrawableObject => (DrawableNote)base.DrawableObject;
-
-        public new Note HitObject => DrawableObject.HitObject;
 
         [Resolved(CanBeNull = true)]
         private IEditorChangeHandler changeHandler { get; set; }
@@ -66,6 +65,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
             base.Update();
 
             Size = DrawableObject.DrawSize;
+            Position = Parent.ToLocalSpace(DrawableObject.ToScreenSpace(Vector2.Zero));
+        }
+
+        public override void Show()
+        {
+            DrawableObject.AlwaysAlive = true;
+            base.Show();
+        }
+
+        public override void Hide()
+        {
+            DrawableObject.AlwaysAlive = false;
+            base.Hide();
         }
     }
 }
