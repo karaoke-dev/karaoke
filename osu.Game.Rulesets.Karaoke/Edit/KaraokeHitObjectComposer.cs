@@ -92,9 +92,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private void load()
         {
             var karaokeSessionStatics = drawableRuleset.Session;
-            //karaokeSessionStatics.BindWith(KaraokeRulesetSession.DisplayRuby, displayRubyToggle);
-            //karaokeSessionStatics.BindWith(KaraokeRulesetSession.DisplayRomaji, displayRomajiToggle);
-            //karaokeSessionStatics.BindWith(KaraokeRulesetSession.UseTranslate, displayTranslateToggle);
+            displayRubyToggle.Value = karaokeSessionStatics.Get<bool>(KaraokeRulesetSession.DisplayRuby) ? TernaryState.True : TernaryState.False;
+            displayRomajiToggle.Value = karaokeSessionStatics.Get<bool>(KaraokeRulesetSession.DisplayRomaji) ? TernaryState.True : TernaryState.False;
+            displayTranslateToggle.Value = karaokeSessionStatics.Get<bool>(KaraokeRulesetSession.UseTranslate) ? TernaryState.True : TernaryState.False;
+            displayRubyToggle.BindValueChanged(x =>
+            {
+                karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.DisplayRuby).Value = x.NewValue == TernaryState.True;
+            });
+            displayRomajiToggle.BindValueChanged(x =>
+            {
+                karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.DisplayRomaji).Value = x.NewValue == TernaryState.True;
+            });
+            displayTranslateToggle.BindValueChanged(x =>
+            {
+                karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.UseTranslate).Value = x.NewValue == TernaryState.True;
+            });
         }
     }
 }
