@@ -67,17 +67,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
             Size = DrawableObject.DrawSize;
             Position = Parent.ToLocalSpace(DrawableObject.ToScreenSpace(Vector2.Zero));
         }
-
-        public override void Show()
-        {
-            DrawableObject.AlwaysAlive = true;
-            base.Show();
-        }
-
-        public override void Hide()
-        {
-            DrawableObject.AlwaysAlive = false;
-            base.Hide();
-        }
     }
 }
