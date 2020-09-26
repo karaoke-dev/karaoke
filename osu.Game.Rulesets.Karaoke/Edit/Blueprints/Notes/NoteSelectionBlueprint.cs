@@ -5,13 +5,13 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 {
     public class NoteSelectionBlueprint : KaraokeSelectionBlueprint
     {
@@ -19,8 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
 
         public new Note HitObject => DrawableObject.HitObject;
 
-        [Resolved(CanBeNull = false)]
-        private IPlacementHandler placementHandler { get; set; }
+        [Resolved(CanBeNull = true)]
+        private IEditorChangeHandler changeHandler { get; set; }
 
         [Resolved]
         protected EditorBeatmap EditorBeatmap { get; private set; }
@@ -42,11 +42,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
 
         public void ChangeDisplay(bool display)
         {
+            changeHandler.BeginChange();
+
             HitObject.Display = display;
 
             // Move to center if note is not display
             if (!HitObject.Display)
                 HitObject.Tone = new Tone();
+
+            changeHandler.EndChange();
         }
 
         public NoteSelectionBlueprint(DrawableNote note)

@@ -3,7 +3,8 @@
 
 using System.Collections.Generic;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Karaoke.Edit.Blueprints;
+using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Screens.Edit.Compose.Components;

@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
@@ -18,9 +19,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         public override bool CanConvert() => Beatmap.HitObjects.All(h => h is KaraokeHitObject);
 
-        protected override Beatmap<KaraokeHitObject> ConvertBeatmap(IBeatmap original)
+        protected override Beatmap<KaraokeHitObject> ConvertBeatmap(IBeatmap original, CancellationToken cancellationToken)
         {
-            var beatmap = base.ConvertBeatmap(original);
+            var beatmap = base.ConvertBeatmap(original, cancellationToken);
 
             // Apply property created from legacy decoder
             var propertyDicrionary = beatmap.HitObjects.OfType<LegacyPropertyDictionary>().FirstOrDefault();
@@ -33,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             return beatmap;
         }
 
-        protected override IEnumerable<KaraokeHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap)
+        protected override IEnumerable<KaraokeHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap, CancellationToken cancellationToken)
             => throw new System.NotImplementedException();
 
         protected override Beatmap<KaraokeHitObject> CreateBeatmap() => new KaraokeBeatmap();
