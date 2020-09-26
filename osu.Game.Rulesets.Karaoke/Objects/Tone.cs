@@ -69,15 +69,17 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public static Tone operator +(Tone left, Tone right) => Add(left, right);
 
+        public static Tone operator +(Tone tone1, int scale) => tone1 + new Tone { Scale = scale };
+
         public static Tone Add(Tone tone1, Tone tone2) => new Tone
         {
             Scale = tone1.Scale + tone2.Scale + (tone1.Half && tone2.Half ? 1 : 0),
             Half = tone1.Half ^ tone2.Half
         };
 
-        public static Tone operator +(Tone tone1, int scale) => tone1 + new Tone { Scale = scale };
-
         public static Tone operator -(Tone tone1, Tone tone2) => Subtract(tone1, tone2);
+
+        public static Tone operator -(Tone tone1, int scale) => tone1 - new Tone { Scale = scale };
 
         public static Tone Subtract(Tone tone1, Tone tone2) => tone1 + -tone2;
 
