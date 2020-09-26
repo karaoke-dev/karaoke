@@ -9,7 +9,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Screens.Edit;
-using osu.Game.Screens.Edit.Compose;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 {
