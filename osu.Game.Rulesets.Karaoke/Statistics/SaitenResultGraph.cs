@@ -1,11 +1,14 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
-using osu.Game.Graphics.Containers;
+using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Scoring;
@@ -18,25 +21,80 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
 {
     public class SaitenResultGraph : CompositeDrawable
     {
-        private readonly LyricPreview lyricGraph;
+        private readonly Box background;
+        private readonly SaitenResultLyricPreview lyricGraph;
         private readonly NoteGraph noteGraph;
 
-        public SaitenResultGraph(ScoreInfo score,IBeatmap beatmap)
+        public SaitenResultGraph(ScoreInfo score, IBeatmap beatmap)
         {
             InternalChildren = new Drawable[]
             {
-                lyricGraph = new LyricPreview(beatmap.HitObjects.OfType<LyricLine>())
+                new Container
                 {
+                    Masking = true,
+                    CornerRadius = 5,
                     RelativeSizeAxes = Axes.Both,
-                    Spacing = new Vector2(10),
+                    Margin = new MarginPadding(30),
+                    Children = new Drawable[]
+                    {
+                        background = new Box
+                        {
+                            Name = "Background",
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            RelativeSizeAxes = Axes.Both,
+                        },
+                        lyricGraph = new SaitenResultLyricPreview(beatmap)
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Spacing = new Vector2(5),
+                        },
+                        noteGraph = new NoteGraph(score)
+                    },
                 },
-                noteGraph = new NoteGraph(score)
             };
 
             lyricGraph.SelectedLyricLine.BindValueChanged(e =>
             {
                 // todo : move noteGraph to target time.
             });
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours)
+        {
+            background.Colour = colours.ContextMenuGray;
+        }
+
+        internal class SaitenResultLyricPreview : LyricPreview
+        {
+            public SaitenResultLyricPreview(IBeatmap beatmap)
+                : base(beatmap.HitObjects.OfType<LyricLine>())
+            {
+            }
+
+            protected override ClickableLyric CreateLyricContainer(LyricLine lyric)
+                => new SaitenResultClickableLyric(lyric);
+
+            internal class SaitenResultClickableLyric : ClickableLyric
+            {
+                public SaitenResultClickableLyric(LyricLine lyric)
+                    : base(lyric)
+                {
+                }
+
+                protected override PreviewLyricSpriteText CreateLyric(LyricLine lyric)
+                    => new PreviewLyricSpriteText(lyric)
+                    {
+                        Font = new FontUsage(size: 15),
+                        RubyFont = new FontUsage(size: 7),
+                        RomajiFont = new FontUsage(size: 7),
+                        Margin = new MarginPadding { Left = 5}
+                    };
+
+                protected override Drawable CreateIcon()
+                    => new Container();
+            }
         }
 
         internal class NoteGraph : CompositeDrawable

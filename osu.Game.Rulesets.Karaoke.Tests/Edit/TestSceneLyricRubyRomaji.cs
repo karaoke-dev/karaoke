@@ -22,7 +22,6 @@ using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
-using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit

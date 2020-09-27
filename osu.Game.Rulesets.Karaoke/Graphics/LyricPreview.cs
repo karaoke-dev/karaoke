@@ -13,7 +13,6 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.UI.Components;
 using osuTK;
 using osuTK.Graphics;
 
@@ -35,11 +34,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
                     AutoSizeAxes = Axes.Y,
                     RelativeSizeAxes = Axes.X,
                     Direction = FillDirection.Vertical,
-                    Children = lyrics.Select(x => new ClickableLyric(x)
+                    Children = lyrics.Select(x => CreateLyricContainer(x).With(c =>
                     {
-                        Selected = false,
-                        Action = () => triggerLyricLine(x)
-                    }).ToList()
+                        c.Selected = false;
+                        c.Action = () => triggerLyricLine(x);
+                    })).ToList()
                 }
             };
 
@@ -65,7 +64,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
 
         public Vector2 Spacing { get => lyricTable.Spacing; set => lyricTable.Spacing = value; }
 
-        internal class ClickableLyric : ClickableContainer
+        protected virtual ClickableLyric CreateLyricContainer(LyricLine lyric) => new ClickableLyric(lyric);
+
+        public class ClickableLyric : ClickableContainer
         {
             private const float fade_duration = 100;
 
@@ -73,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
             private Color4 idolTextColour;
 
             private readonly Box background;
-            private readonly SpriteIcon icon;
+            private readonly Drawable icon;
             private readonly PreviewLyricSpriteText previewLyric;
 
             public ClickableLyric(LyricLine lyric)
@@ -88,23 +89,28 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
                     {
                         RelativeSizeAxes = Axes.Both
                     },
-                    icon = new SpriteIcon
-                    {
-                        Anchor = Anchor.CentreLeft,
-                        Origin = Anchor.CentreLeft,
-                        Size = new Vector2(15),
-                        Icon = FontAwesome.Solid.Play,
-                        Margin = new MarginPadding { Left = 5 }
-                    },
-                    previewLyric = new PreviewLyricSpriteText(lyric)
-                    {
-                        Font = new FontUsage(size: 25),
-                        RubyFont = new FontUsage(size: 10),
-                        RomajiFont = new FontUsage(size: 10),
-                        Margin = new MarginPadding { Left = 25 }
-                    }
+                    icon = CreateIcon(),
+                    previewLyric = CreateLyric(lyric),
                 };
             }
+
+            protected virtual PreviewLyricSpriteText CreateLyric(LyricLine lyric) => new PreviewLyricSpriteText(lyric)
+            {
+                Font = new FontUsage(size: 25),
+                RubyFont = new FontUsage(size: 10),
+                RomajiFont = new FontUsage(size: 10),
+                Margin = new MarginPadding { Left = 25 }
+            };
+
+            protected virtual Drawable CreateIcon() => new SpriteIcon
+            {
+                Anchor = Anchor.CentreLeft,
+                Origin = Anchor.CentreLeft,
+                Size = new Vector2(15),
+                Icon = FontAwesome.Solid.Play,
+                Margin = new MarginPadding { Left = 5 }
+            };
+
 
             private bool selected;
 
