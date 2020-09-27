@@ -4,9 +4,7 @@
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Objects.Drawables;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
 {

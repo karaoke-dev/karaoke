@@ -5,7 +5,7 @@ using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.UI.Components
+namespace osu.Game.Rulesets.Karaoke.Graphics
 {
     public class PreviewLyricSpriteText : LyricSpriteText
     {
@@ -14,10 +14,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         public PreviewLyricSpriteText(LyricLine hitObject)
         {
             HitObject = hitObject;
+
             hitObject.TextBindable.BindValueChanged(text => { Text = text.NewValue; }, true);
-
             hitObject.RubyTagsBindable.BindValueChanged(rubyTags => { Rubies = rubyTags.NewValue?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray(); }, true);
-
             hitObject.RomajiTagsBindable.BindValueChanged(romajiTags => { Romajies = romajiTags.NewValue?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray(); }, true);
         }
     }

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -22,10 +21,10 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Difficulty;
 using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Mods;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Rulesets.Karaoke.Statistics;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Replays.Types;
@@ -165,27 +164,59 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override RulesetSettingsSubsection CreateSettings() => new KaraokeSettingsSubsection(this);
 
-        public override StatisticRow[] CreateStatisticsForScore(ScoreInfo score, IBeatmap playableBeatmap) => new[]
+        public override StatisticRow[] CreateStatisticsForScore(ScoreInfo score, IBeatmap playableBeatmap)
         {
-            new StatisticRow
+            if (playableBeatmap.IsScorable())
             {
-                Columns = new[]
+                return new[]
                 {
-                    new StatisticItem("Timing Distribution", new HitEventTimingDistributionGraph(score.HitEvents.Where(e => e.HitObject is Note).ToList())
+                    new StatisticRow
                     {
-                        RelativeSizeAxes = Axes.X,
-                        Height = 250
-                    }),
-                }
+                        Columns = new[]
+                        {
+                            new StatisticItem("Saiten Result", new SaitenResultGraph(score, playableBeatmap)
+                            {
+                                RelativeSizeAxes = Axes.X,
+                                Height = 250
+                            }),
+                        }
+                    },
+                    new StatisticRow
+                    {
+                        Columns = new[]
+                        {
+                            new StatisticItem("Info", new SimpleStatisticTable(3, new SimpleStatisticItem[]
+                            {
+                                new UnstableRate(score.HitEvents)
+                            }))
+                        }
+                    },
+                };
             }
-        };
+            else
+            {
+                return new[]
+                {
+                    new StatisticRow
+                    {
+                        Columns = new[]
+                        {
+                            new StatisticItem("Info", new SimpleStatisticTable(3, new SimpleStatisticItem[]
+                            {
+                                new UnstableRate(score.HitEvents)
+                            }))
+                        }
+                    }
+                };
+            }
+        }
 
         public KaraokeRuleset()
         {
             // It's a tricky way to let lazer to read karaoke testing beatmap
             KaraokeLegacyBeatmapDecoder.Register();
 
-            // It's a tricty way to let lazer get ruleset config manager in test case
+            // It's a tricky way to let lazer get ruleset config manager in test case
             // See RulesetConfigCache.GetConfigFor(Ruleset)
             RulesetInfo.ID = 111;
         }
