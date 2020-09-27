@@ -26,6 +26,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Rulesets.Karaoke.Statistics;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Replays.Types;
@@ -175,7 +176,7 @@ namespace osu.Game.Rulesets.Karaoke
                     {
                         Columns = new[]
                         {
-                            new StatisticItem("Timing Distribution", new HitEventTimingDistributionGraph(score.HitEvents.Where(e => e.HitObject is Note).ToList())
+                            new StatisticItem("Saiten Result", new SaitenResultGraph(score, playableBeatmap)
                             {
                                 RelativeSizeAxes = Axes.X,
                                 Height = 250

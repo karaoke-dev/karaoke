@@ -5,7 +5,7 @@ using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.UI.Components
+namespace osu.Game.Rulesets.Karaoke.Graphics
 {
     public class PreviewLyricSpriteText : LyricSpriteText
     {

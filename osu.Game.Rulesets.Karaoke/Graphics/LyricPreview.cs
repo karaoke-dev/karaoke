@@ -35,7 +35,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
                     AutoSizeAxes = Axes.Y,
                     RelativeSizeAxes = Axes.X,
                     Direction = FillDirection.Vertical,
-                    Spacing = new Vector2(15),
                     Children = lyrics.Select(x => new ClickableLyric(x)
                     {
                         Selected = false,
@@ -63,6 +62,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
             else
                 SelectedLyricLine.Value = lyric;
         }
+
+        public Vector2 Spacing { get => lyricTable.Spacing; set => lyricTable.Spacing = value; }
 
         internal class ClickableLyric : ClickableContainer
         {

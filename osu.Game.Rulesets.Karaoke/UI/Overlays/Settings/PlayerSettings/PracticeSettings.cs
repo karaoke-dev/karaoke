@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Play.PlayerSettings;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
 {
@@ -38,7 +39,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
                 lyricPreview = new LyricPreview(lyrics)
                 {
                     Height = 580,
-                    RelativeSizeAxes = Axes.X
+                    RelativeSizeAxes = Axes.X,
+                    Spacing = new Vector2(15),
                 }
             };
         }

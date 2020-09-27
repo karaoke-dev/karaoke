@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Scoring;
+using osuTK;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,17 +23,20 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
 
         public SaitenResultGraph(ScoreInfo score,IBeatmap beatmap)
         {
-            InternalChild = new OsuScrollContainer
+            InternalChildren = new Drawable[]
             {
-                Children = new Drawable[]
+                lyricGraph = new LyricPreview(beatmap.HitObjects.OfType<LyricLine>())
                 {
-                    lyricGraph = new LyricPreview(beatmap.HitObjects.OfType<LyricLine>())
-                    {
-                        RelativeSizeAxes = Axes.Both
-                    },
-                    noteGraph = new NoteGraph(score)
-                }
+                    RelativeSizeAxes = Axes.Both,
+                    Spacing = new Vector2(10),
+                },
+                noteGraph = new NoteGraph(score)
             };
+
+            lyricGraph.SelectedLyricLine.BindValueChanged(e =>
+            {
+                // todo : move noteGraph to target time.
+            });
         }
 
         internal class NoteGraph : CompositeDrawable
