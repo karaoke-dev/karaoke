@@ -179,6 +179,12 @@ namespace osu.Game.Rulesets.Karaoke
                                 RelativeSizeAxes = Axes.X,
                                 Height = 250
                             }),
+                        }
+                    },
+                    new StatisticRow
+                    {
+                        Columns = new[]
+                        {
                             new StatisticItem("Info", new SimpleStatisticTable(3, new SimpleStatisticItem[]
                             {
                                 new UnstableRate(score.HitEvents)

@@ -92,6 +92,8 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
         {
             // Only karaoke note can be apply in difficulty calculation
             var notes = beatmap.HitObjects.OfType<Note>().ToList();
+            if (!notes.Any())
+                return new Skill[] { };
 
             // TODO : need to get real value in the future
             var maxNoteColumn = notes.Max(x => x.Tone);

@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -34,7 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                     Masking = true,
                     CornerRadius = 5,
                     RelativeSizeAxes = Axes.Both,
-                    Margin = new MarginPadding(30),
                     Children = new Drawable[]
                     {
                         background = new Box
