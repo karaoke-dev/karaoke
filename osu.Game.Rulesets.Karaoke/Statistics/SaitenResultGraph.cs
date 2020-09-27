@@ -4,49 +4,42 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Game.Beatmaps;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Scoring;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Statistics
 {
     public class SaitenResultGraph : CompositeDrawable
     {
-        private readonly LyricGraph lyricGraph;
+        private readonly LyricPreview lyricGraph;
         private readonly NoteGraph noteGraph;
 
-        public SaitenResultGraph(ScoreInfo score)
+        public SaitenResultGraph(ScoreInfo score,IBeatmap beatmap)
         {
             InternalChild = new OsuScrollContainer
             {
                 Children = new Drawable[]
                 {
-                    lyricGraph = new LyricGraph(score),
+                    lyricGraph = new LyricPreview(beatmap.HitObjects.OfType<LyricLine>())
+                    {
+                        RelativeSizeAxes = Axes.Both
+                    },
                     noteGraph = new NoteGraph(score)
                 }
             };
-        }
-
-        internal class LyricGraph : CompositeDrawable
-        {
-            public LyricGraph(ScoreInfo score)
-            {
-                // TODO : convert into lyric.
-                var events = score.HitEvents.ToList();
-                foreach (var e in events)
-                {
-                    // TOOD : create path
-                }
-            }
         }
 
         internal class NoteGraph : CompositeDrawable
         {
             public NoteGraph(ScoreInfo score)
             {
-                var noteEvents = score.HitEvents.Where(x => x.HitObject is Note note && note.Display).ToList();
+                var noteEvents = score.HitEvents?.Where(x => x.HitObject is Note note && note.Display).ToList() ?? new List<HitEvent>();
                 foreach (var noteEvent in noteEvents)
                 {
                     // TOOD : add note into here
