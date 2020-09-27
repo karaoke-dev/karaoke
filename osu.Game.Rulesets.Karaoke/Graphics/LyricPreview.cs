@@ -111,7 +111,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
                 Margin = new MarginPadding { Left = 5 }
             };
 
-
             private bool selected;
 
             public bool Selected
