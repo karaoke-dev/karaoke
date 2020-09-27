@@ -14,17 +14,17 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 {
-    public class TestSceneSaitenResultGraph : OsuTestScene
+    public class TestSceneBeatmapInfoGraph : OsuTestScene
     {
         [Test]
-        public void TestSaitenResultGraph()
+        public void TestManyDistributedEvents()
         {
             var ruleset = new KaraokeRuleset().RulesetInfo;
             var beatmap = new TestKaraokeBeatmap(ruleset);
-            createTest(new ScoreInfo(), beatmap);
+            createTest(beatmap);
         }
 
-        private void createTest(ScoreInfo score, IBeatmap beatmap) => AddStep("create test", () =>
+        private void createTest(IBeatmap beatmap) => AddStep("create test", () =>
         {
             Children = new Drawable[]
             {
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
                     RelativeSizeAxes = Axes.Both,
                     Colour = Color4Extensions.FromHex("#333")
                 },
-                new SaitenResultGraph(score, beatmap)
+                new BeatmapInfoGraph(beatmap)
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
