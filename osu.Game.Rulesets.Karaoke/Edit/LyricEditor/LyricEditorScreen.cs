@@ -28,6 +28,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
+        public LyricEditorScreen()
+            : base(EditorScreenMode.Compose)
+        {
+        }
+
         protected override Drawable CreateTimelineContent() => new KaraokeTimelineBlueprintContainer();
 
         protected override Drawable CreateMainContent()

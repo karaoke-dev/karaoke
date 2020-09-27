@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -16,6 +18,7 @@ using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
+using osu.Game.Screens.Edit.Components.TernaryButtons;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
 
@@ -73,25 +76,37 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         protected override IReadOnlyList<HitObjectCompositionTool> CompositionTools => Array.Empty<HitObjectCompositionTool>();
 
-        private readonly BindableBool displayRubyToggle = new BindableBool(true) { Description = "Ruby" };
-        private readonly BindableBool displayRomajiToggle = new BindableBool(true) { Description = "Romaji" };
-        private readonly BindableBool displayTranslateToggle = new BindableBool(true) { Description = "Translate" };
+        private readonly Bindable<TernaryState> displayRubyToggle = new Bindable<TernaryState>();
+        private readonly Bindable<TernaryState> displayRomajiToggle = new Bindable<TernaryState>();
+        private readonly Bindable<TernaryState> displayTranslateToggle = new Bindable<TernaryState>();
 
-        protected override IEnumerable<BindableBool> Toggles => new[]
-        {
-            displayRubyToggle,
-            displayRomajiToggle,
-            displayTranslateToggle
-        };
+        protected override IEnumerable<TernaryButton> CreateTernaryButtons()
+            => new[]
+            {
+                new TernaryButton(displayRubyToggle, "Ruby", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
+                new TernaryButton(displayRomajiToggle, "Romaji", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
+                new TernaryButton(displayTranslateToggle, "Translate", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
+            };
 
         [BackgroundDependencyLoader]
         private void load()
         {
             var karaokeSessionStatics = drawableRuleset.Session;
-            karaokeSessionStatics.BindWith(KaraokeRulesetSession.DisplayRuby, displayRubyToggle);
-            karaokeSessionStatics.BindWith(KaraokeRulesetSession.DisplayRomaji, displayRomajiToggle);
-            karaokeSessionStatics.BindWith(KaraokeRulesetSession.UseTranslate, displayTranslateToggle);
-            //displayRubyToggle.BindValueChanged(e => karaokeSessionStatics?.Set(KaraokeRulesetSession.DisplayRuby, e.NewValue));
+            displayRubyToggle.Value = karaokeSessionStatics.Get<bool>(KaraokeRulesetSession.DisplayRuby) ? TernaryState.True : TernaryState.False;
+            displayRomajiToggle.Value = karaokeSessionStatics.Get<bool>(KaraokeRulesetSession.DisplayRomaji) ? TernaryState.True : TernaryState.False;
+            displayTranslateToggle.Value = karaokeSessionStatics.Get<bool>(KaraokeRulesetSession.UseTranslate) ? TernaryState.True : TernaryState.False;
+            displayRubyToggle.BindValueChanged(x =>
+            {
+                karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.DisplayRuby).Value = x.NewValue == TernaryState.True;
+            });
+            displayRomajiToggle.BindValueChanged(x =>
+            {
+                karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.DisplayRomaji).Value = x.NewValue == TernaryState.True;
+            });
+            displayTranslateToggle.BindValueChanged(x =>
+            {
+                karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.UseTranslate).Value = x.NewValue == TernaryState.True;
+            });
         }
     }
 }

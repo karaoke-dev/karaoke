@@ -8,7 +8,8 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Karaoke.Edit.Blueprints;
+using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI;
@@ -31,36 +32,35 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Resolved]
         private HitObjectComposer composer { get; set; }
 
-        // todo : need to check here is workable or not.
-        public new MenuItem[] ContextMenuItems
+        protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint> selection)
         {
-            get
+            if (selection.All(x => x is LyricSelectionBlueprint))
             {
-                var menu = base.ContextMenuItems;
-                menu = menu.ToList().Where(x => x.Text.Value != "Sound" && x.Text.Value != "Delete").ToArray();
-
-                if (SelectedHitObjects.All(x => x is LyricLine))
+                return new[]
                 {
-                    menu = menu.Append(createLayoutMenuItem()).Append(createFontMenuItem()).ToArray();
-                }
+                    createLayoutMenuItem(),
+                    createFontMenuItem()
+                };
+            }
 
-                // If selected more then two notes
-                if (SelectedHitObjects.All(x => x is Note)
-                    && SelectedHitObjects.Count() > 1)
-                {
-                    var selectedObject = SelectedHitObjects.Cast<Note>().OrderBy(x => x.StartTime);
+            if (SelectedHitObjects.All(x => x is Note)
+                && SelectedHitObjects.Count() > 1)
+            {
+                var menu = new List<MenuItem>();
+                var selectedObject = SelectedHitObjects.Cast<Note>().OrderBy(x => x.StartTime);
 
-                    // Set multi note display property
-                    menu = menu.Append(createMultiNoteDisplayPropertyMenuItem(selectedObject)).ToArray();
+                // Set multi note display property
+                menu.Add(createMultiNoteDisplayPropertyMenuItem(selectedObject));
 
-                    // Combine multi note if they has same start and end index.
-                    var firstObject = selectedObject.FirstOrDefault();
-                    if (firstObject != null && selectedObject.All(x => x.StartIndex == firstObject.StartIndex && x.EndIndex == firstObject.EndIndex))
-                        menu = menu.Append(createCombineNoteMenuItem(selectedObject)).ToArray();
-                }
+                // Combine multi note if they has same start and end index.
+                var firstObject = selectedObject.FirstOrDefault();
+                if (firstObject != null && selectedObject.All(x => x.StartIndex == firstObject.StartIndex && x.EndIndex == firstObject.EndIndex))
+                    menu.Add(createCombineNoteMenuItem(selectedObject));
 
                 return menu;
             }
+
+            return new List<MenuItem>();
         }
 
         private MenuItem createMultiNoteDisplayPropertyMenuItem(IEnumerable<Note> selectedObject)
@@ -79,10 +79,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 if (selectedObject.Count() < 2)
                     return;
 
+                ChangeHandler.BeginChange();
+
                 // Recover end time
                 var firstObject = selectedObject.FirstOrDefault();
                 if (firstObject != null)
                     firstObject.Duration = selectedObject.Sum(x => x.Duration);
+
+                ChangeHandler.EndChange();
 
                 // Delete objects
                 var deleteObjects = selectedObject.Skip(1).ToList();
@@ -101,8 +105,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             {
                 Items = layoutDictionary.Select(x => new TernaryStateMenuItem(x.Value, MenuItemType.Standard, state =>
                 {
+                    ChangeHandler.BeginChange();
+
                     if (state == TernaryState.True)
                         SelectedHitObjects.Cast<LyricLine>().ForEach(l => l.LayoutIndex = x.Key);
+
+                    ChangeHandler.EndChange();
                 })).ToArray()
             };
         }
@@ -114,8 +122,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             {
                 Items = fontDictionary.Select(x => new TernaryStateMenuItem(x.Value, MenuItemType.Standard, state =>
                 {
+                    ChangeHandler.BeginChange();
+
                     if (state == TernaryState.True)
                         SelectedHitObjects.Cast<LyricLine>().ForEach(l => l.FontIndex = x.Key);
+
+                    ChangeHandler.EndChange();
                 })).ToArray()
             };
         }

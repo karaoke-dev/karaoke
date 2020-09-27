@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components
 {
     public class EditBodyPiece : Container
     {
