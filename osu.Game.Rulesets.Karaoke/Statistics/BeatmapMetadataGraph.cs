@@ -4,13 +4,18 @@
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osuTK;
 using osuTK.Graphics;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Statistics
 {
@@ -25,6 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             CornerRadius = 5;
 
             var beatmapInfo = beatmap.BeatmapInfo;
+            var karaokeBeatmap = beatmap as KaraokeBeatmap;
             InternalChildren = new Drawable[]
             {
                 new Box
@@ -45,37 +51,40 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                         LayoutDuration = transition_duration,
                         LayoutEasing = Easing.OutQuad,
                         Spacing = new Vector2(spacing),
-                        Children = new[]
+                        Children = new MetadataSection[]
                         {
-                            new MetadataSection("Description")
+                            new TextMetadataSection("Description")
                             {
                                 Text = beatmapInfo?.Version
                             },
-                            new MetadataSection("Source")
+                            new TextMetadataSection("Source")
                             {
                                 Text = beatmapInfo?.Metadata?.Source
                             },
-                            new MetadataSection("Tags")
+                            new TextMetadataSection("Tags")
                             {
                                 Text = beatmapInfo?.Metadata?.Tags
                             },
+                            new SingerMetadataSection("Singer")
+                            {
+                                Singers = karaokeBeatmap?.Singers?.Values.ToArray()
+                            }
                         },
                     },
                 },
             };
         }
 
-        private class MetadataSection : Container
+        private abstract class MetadataSection : Container
         {
-            private readonly FillFlowContainer textContainer;
-            private TextFlowContainer textFlow;
+            protected FillFlowContainer TextContainer { get; }
 
             public MetadataSection(string title)
             {
                 RelativeSizeAxes = Axes.X;
                 AutoSizeAxes = Axes.Y;
 
-                InternalChild = textContainer = new FillFlowContainer
+                InternalChild = TextContainer = new FillFlowContainer
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
@@ -94,6 +103,16 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                         },
                     },
                 };
+            }
+        }
+
+        private class TextMetadataSection : MetadataSection
+        {
+            private TextFlowContainer textFlow;
+
+            public TextMetadataSection(string title)
+                : base(title)
+            {
             }
 
             public string Text
@@ -115,13 +134,90 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             private void setTextAsync(string text)
             {
                 textFlow?.Expire();
-                textContainer.Add(textFlow = new OsuTextFlowContainer(s => s.Font = s.Font.With(size: 14))
+                TextContainer.Add(textFlow = new OsuTextFlowContainer(s => s.Font = s.Font.With(size: 14))
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
                     Colour = Color4.White.Opacity(0.75f),
                     Text = text
                 });
+            }
+        }
+
+        private class SingerMetadataSection : MetadataSection
+        {
+            private FillFlowContainer<SingerSpriteText> textFlow;
+
+            public SingerMetadataSection(string title)
+                : base(title)
+            {
+            }
+
+            public Singer[] Singers
+            {
+                set
+                {
+                    if (value == null || !value.Any())
+                    {
+                        this.FadeOut(transition_duration);
+                        return;
+                    }
+
+                    this.FadeIn(transition_duration);
+
+                    setSingerAsync(value);
+                }
+            }
+
+            private void setSingerAsync(Singer[] singers)
+            {
+                textFlow?.Expire();
+                TextContainer.Add(textFlow = new FillFlowContainer<SingerSpriteText>
+                {
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    Spacing = new Vector2(10),
+                    Colour = Color4.White.Opacity(0.75f),
+                });
+                foreach (var singer in singers)
+                {
+                    textFlow.Add(new SingerSpriteText
+                    {
+                        Singer = singer
+                    });
+                }
+            }
+
+            private class SingerSpriteText : CompositeDrawable, IHasCustomTooltip
+            {
+                private Singer singer;
+                private readonly OsuSpriteText osuSpriteText;
+
+                public object TooltipContent => Singer;
+
+                public SingerSpriteText()
+                {
+                    AutoSizeAxes = Axes.Both;
+                    InternalChildren = new[]
+                    {
+                        osuSpriteText = new OsuSpriteText
+                        {
+                            Font = OsuFont.GetFont(size: 14)
+                        }
+                    };
+                }
+
+                public Singer Singer
+                {
+                    get => singer;
+                    set
+                    {
+                        singer = value;
+                        osuSpriteText.Text = singer?.Name ?? "Known singer";
+                    }
+                }
+
+                public ITooltip GetCustomTooltip() => new SingerToolTip();
             }
         }
     }
