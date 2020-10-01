@@ -14,10 +14,10 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 {
-    public class TestSceneBeatmapInfoGraph : OsuTestScene
+    public class TestSceneBeatmapMetadataGraph : OsuTestScene
     {
         [Test]
-        public void TestBeatmapInfoGraph()
+        public void TestBeatmapMetadataGraph()
         {
             var ruleset = new KaraokeRuleset().RulesetInfo;
             var beatmap = new TestKaraokeBeatmap(ruleset);
@@ -33,11 +33,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
                     RelativeSizeAxes = Axes.Both,
                     Colour = Color4Extensions.FromHex("#333")
                 },
-                new BeatmapInfoGraph(beatmap)
+                new BeatmapMetadataGraph(beatmap)
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    Size = new Vector2(600, 130)
+                    Size = new Vector2(600, 200)
                 }
             };
         });
