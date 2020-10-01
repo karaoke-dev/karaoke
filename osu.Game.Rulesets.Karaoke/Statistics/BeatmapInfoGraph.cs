@@ -6,17 +6,30 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Beatmaps;
 using osu.Framework.Bindables;
 using JetBrains.Annotations;
-using static osu.Game.Screens.Select.BeatmapInfoWedge;
 using System.Linq;
+using osu.Framework.Input.Events;
+using static osu.Game.Screens.Select.BeatmapInfoWedge;
 
 namespace osu.Game.Rulesets.Karaoke.Statistics
 {
-    public class BeatmapInfoGraph : Container
+    public class BeatmapInfoGraph : ClickableContainer
     {
+        [Resolved(CanBeNull = true)]
+        private OsuGame game { get; set; }
+
+        private readonly IBeatmap beatmap;
+
         public BeatmapInfoGraph(IBeatmap beatmap)
         {
+            this.beatmap = beatmap;
             Masking = true;
             CornerRadius = 5;
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            game?.ShowBeatmap(beatmap.BeatmapInfo.ID);
+            return base.OnClick(e);
         }
 
         [BackgroundDependencyLoader(true)]
