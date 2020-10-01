@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
     public class TestSceneBeatmapInfoGraph : OsuTestScene
     {
         [Test]
-        public void TestManyDistributedEvents()
+        public void TestBeatmapInfoGraph()
         {
             var ruleset = new KaraokeRuleset().RulesetInfo;
             var beatmap = new TestKaraokeBeatmap(ruleset);
