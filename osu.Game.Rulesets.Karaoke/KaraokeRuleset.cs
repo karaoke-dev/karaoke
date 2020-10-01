@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -166,49 +167,63 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override StatisticRow[] CreateStatisticsForScore(ScoreInfo score, IBeatmap playableBeatmap)
         {
+            const int fix_height = 560;
+            const int text_size = 14;
+            const int spacing = 15;
+            const int info_height = 200;
+
+            // Always display song info
+            var statistic = new List<StatisticRow>
+            {
+                new StatisticRow
+                {
+                    Columns = new[]
+                    {
+                        new StatisticItem("Info", new BeatmapInfoGraph(playableBeatmap)
+                        {
+                            RelativeSizeAxes = Axes.X,
+                            Height = info_height
+                        }),
+                        new StatisticItem("Other", new Container
+                        {
+                            RelativeSizeAxes = Axes.X,
+                            Height = info_height
+                        })
+                    }
+                },
+            };
+
+            // Set component to remain height
+            var remainHeight = fix_height - text_size - spacing - info_height;
             if (playableBeatmap.IsScorable())
             {
-                return new[]
+                statistic.Add(new StatisticRow
                 {
-                    new StatisticRow
+                    Columns = new[]
                     {
-                        Columns = new[]
+                        new StatisticItem("Saiten Result", new SaitenResultGraph(score, playableBeatmap)
                         {
-                            new StatisticItem("Saiten Result", new SaitenResultGraph(score, playableBeatmap)
-                            {
-                                RelativeSizeAxes = Axes.X,
-                                Height = 250
-                            }),
-                        }
-                    },
-                    new StatisticRow
-                    {
-                        Columns = new[]
-                        {
-                            new StatisticItem("Info", new SimpleStatisticTable(3, new SimpleStatisticItem[]
-                            {
-                                new UnstableRate(score.HitEvents)
-                            }))
-                        }
-                    },
-                };
+                            RelativeSizeAxes = Axes.X,
+                            Height = remainHeight - text_size - spacing
+                        }),
+                    }
+                });
             }
             else
             {
-                return new[]
+                statistic.Add(new StatisticRow
                 {
-                    new StatisticRow
+                    Columns = new[]
                     {
-                        Columns = new[]
+                        new StatisticItem("todo", new Container
                         {
-                            new StatisticItem("Info", new SimpleStatisticTable(3, new SimpleStatisticItem[]
-                            {
-                                new UnstableRate(score.HitEvents)
-                            }))
-                        }
+                            Height = remainHeight - text_size - spacing
+                        })
                     }
-                };
+                });
             }
+
+            return statistic.ToArray();
         }
 
         public KaraokeRuleset()
