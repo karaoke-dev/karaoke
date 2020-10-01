@@ -29,7 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             }
         };
 
-
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {
             int singers = Singers.Count();
