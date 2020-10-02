@@ -15,6 +15,7 @@ using osu.Game.Tests.Visual;
 using osuTK;
 using osuTK.Graphics;
 using System.Collections.Generic;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 {
