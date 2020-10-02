@@ -188,7 +188,7 @@ namespace osu.Game.Rulesets.Karaoke
                         {
                             RelativeSizeAxes = Axes.X,
                             Height = info_height
-                        }, new Dimension(GridSizeMode.Relative, 0.4f))
+                        }, new Dimension(GridSizeMode.Distributed))
                     }
                 },
             };
@@ -215,8 +215,9 @@ namespace osu.Game.Rulesets.Karaoke
                 {
                     Columns = new[]
                     {
-                        new StatisticItem("todo", new Container
+                        new StatisticItem("Result", new NotScorableGraph
                         {
+                            RelativeSizeAxes = Axes.X,
                             Height = remainHeight - text_size - spacing
                         })
                     }
