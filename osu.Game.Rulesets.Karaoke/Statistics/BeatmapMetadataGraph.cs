@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                             },
                             new SingerMetadataSection("Singer")
                             {
-                                Singers = karaokeBeatmap?.Singers?.Values.ToArray()
+                                Singers = karaokeBeatmap?.SingerMetadata?.Singers.ToArray()
                             }
                         },
                     },

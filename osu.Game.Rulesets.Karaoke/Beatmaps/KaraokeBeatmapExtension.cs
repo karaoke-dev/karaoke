@@ -1,18 +1,20 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
     public static class KaraokeBeatmapExtension
     {
-        public static IDictionary<string, List<string>> GetTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.Translates;
-
         public static bool IsScorable(this IBeatmap beatmap) => beatmap?.HitObjects.OfType<Note>().Any(x => x.Display) ?? false;
+
+        public static IDictionary<string, List<string>> GetTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.Translates;
 
         public static List<string> GetTranslate(this IBeatmap beatmap, string languageCode)
         {
@@ -30,5 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         {
             return pitch / 20 - 7;
         }
+
+        public static SingerMetadata GetSingers(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.SingerMetadata;
     }
 }

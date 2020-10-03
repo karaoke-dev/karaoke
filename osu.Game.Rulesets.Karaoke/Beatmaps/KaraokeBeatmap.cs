@@ -16,23 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
     {
         public IDictionary<string, List<string>> Translates { get; set; } = new Dictionary<string, List<string>>();
 
-        public IDictionary<int, Singer> Singers { get; set; } = new Dictionary<int, Singer>
-        {
-            {
-                0,
-                new Singer
-                {
-                    Name = "Default singer",
-                    Romaji = "",
-                    EnglishName = "",
-                    Color = Color4.Blue
-                }
-            }
-        };
+        public SingerMetadata SingerMetadata { get; set; } = new SingerMetadata();
 
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {
-            int singers = Singers.Count();
+            int singers = SingerMetadata.Singers.Count();
             int lyrics = HitObjects.Count(s => s is LyricLine);
 
             var defaultStatistic = new List<BeatmapStatistic>

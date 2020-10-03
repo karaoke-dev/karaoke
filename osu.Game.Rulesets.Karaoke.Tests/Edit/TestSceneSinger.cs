@@ -16,7 +16,6 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Skinning;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
@@ -229,7 +228,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
                 englishNameTextBox.Current.BindValueChanged(x => { Singer.EnglishName = x.NewValue; });
 
-                romajiNameTextBox.Current.BindValueChanged(x => { Singer.Romaji = x.NewValue; });
+                romajiNameTextBox.Current.BindValueChanged(x => { Singer.RomajiName = x.NewValue; });
             }
 
             private Singer singer;
@@ -242,7 +241,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                     singer = value;
                     nameTextBox.Text = singer.Name;
                     englishNameTextBox.Text = singer.EnglishName;
-                    romajiNameTextBox.Text = singer.Romaji;
+                    romajiNameTextBox.Text = singer.RomajiName;
                 }
             }
         }

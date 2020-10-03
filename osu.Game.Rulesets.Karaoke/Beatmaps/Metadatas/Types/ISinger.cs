@@ -5,5 +5,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types
 {
     public interface ISinger
     {
+        int ID { get; }
     }
 }
