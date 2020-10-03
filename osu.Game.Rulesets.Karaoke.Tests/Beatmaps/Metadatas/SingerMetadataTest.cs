@@ -77,6 +77,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
         }
 
         [TestCase(1, 0, new int[] { 1 }, 1)]
+        [TestCase(10, 0, new int[] { 1 , 2, 3 }, 7)]
+        [TestCase(3, 3, new int[] { 1, 4, 5 }, 25)]
         public void TestGetLayoutIndex(int singerAmount, int subSingerAmount, int[] indexs, int targetLayoutIndex)
         {
             var querySingers = new List<ISinger>();
