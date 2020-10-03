@@ -194,7 +194,8 @@ namespace osu.Game.Rulesets.Karaoke
             };
 
             // Set component to remain height
-            var remainHeight = fix_height - text_size - spacing - info_height;
+            const int remain_height = fix_height - text_size - spacing - info_height;
+
             if (playableBeatmap.IsScorable())
             {
                 statistic.Add(new StatisticRow
@@ -204,7 +205,7 @@ namespace osu.Game.Rulesets.Karaoke
                         new StatisticItem("Saiten Result", new SaitenResultGraph(score, playableBeatmap)
                         {
                             RelativeSizeAxes = Axes.X,
-                            Height = remainHeight - text_size - spacing
+                            Height = remain_height - text_size - spacing
                         }),
                     }
                 });
@@ -218,7 +219,7 @@ namespace osu.Game.Rulesets.Karaoke
                         new StatisticItem("Result", new NotScorableGraph
                         {
                             RelativeSizeAxes = Axes.X,
-                            Height = remainHeight - text_size - spacing
+                            Height = remain_height - text_size - spacing
                         })
                     }
                 });

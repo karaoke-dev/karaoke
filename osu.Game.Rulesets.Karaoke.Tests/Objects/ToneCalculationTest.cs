@@ -51,7 +51,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
         [TestCase(1, 1)]
         [TestCase(1.5, 1.5)]
         [TestCase(-1.5, -1.5)]
-        
         public void TestOperatorEqual(double tone1, double tone2)
         {
             Assert.AreEqual(numberToTone(tone1), numberToTone(tone2));
@@ -59,7 +58,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
 
         [TestCase(1, 1)]
         [TestCase(-1, -1)]
-
         public void TestOperatorEqualWithInt(double tone1, int scale1)
         {
             Assert.IsTrue(numberToTone(tone1) == scale1);

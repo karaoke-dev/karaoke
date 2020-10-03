@@ -302,40 +302,5 @@
       },
       "bold_text" : "true"
     }
-  ],
-  "singers": [
-    {
-      "name": "Singer-1",
-      "romaji": "Singer-1",
-      "english_name": "Singer-1",
-      "color" : {
-        "r": 1.0,
-        "g": 0.5019608,
-        "b": 0.5019608,
-        "a": 1.0
-      },
-    },
-    {
-      "name": "Singer-2",
-      "romaji": "Singer-2",
-      "english_name": "Singer-2",
-      "color" : {
-        "r": 0.5019608,
-        "g": 1.0,
-        "b": 0.5019608,
-        "a": 1.0
-      },
-    },
-    {
-      "name": "Singer-3",
-      "romaji": "Singer-3",
-      "english_name": "Singer-3",
-      "color" : {
-        "r": 0.5019608,
-        "g": 0.5019608,
-        "b": 1.0,
-        "a": 1.0
-      },
-    }
   ]
 }

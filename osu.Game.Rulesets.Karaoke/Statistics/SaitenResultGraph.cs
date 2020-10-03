@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                         Font = new FontUsage(size: 15),
                         RubyFont = new FontUsage(size: 7),
                         RomajiFont = new FontUsage(size: 7),
-                        Margin = new MarginPadding { Left = 5}
+                        Margin = new MarginPadding { Left = 5 }
                     };
 
                 protected override Drawable CreateIcon()
@@ -100,6 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             public NoteGraph(ScoreInfo score)
             {
                 var noteEvents = score.HitEvents?.Where(x => x.HitObject is Note note && note.Display).ToList() ?? new List<HitEvent>();
+
                 foreach (var noteEvent in noteEvents)
                 {
                     // TOOD : add note into here

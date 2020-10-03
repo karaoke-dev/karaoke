@@ -62,7 +62,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
                 SelectedLyricLine.Value = lyric;
         }
 
-        public Vector2 Spacing { get => lyricTable.Spacing; set => lyricTable.Spacing = value; }
+        public Vector2 Spacing
+        {
+            get => lyricTable.Spacing;
+            set => lyricTable.Spacing = value;
+        }
 
         protected virtual ClickableLyric CreateLyricContainer(LyricLine lyric) => new ClickableLyric(lyric);
 

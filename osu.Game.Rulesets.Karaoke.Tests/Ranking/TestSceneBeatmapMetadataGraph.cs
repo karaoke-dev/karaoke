@@ -7,14 +7,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Statistics;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Scoring;
 using osu.Game.Tests.Visual;
 using osuTK;
-using osuTK.Graphics;
-using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 {
@@ -26,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
             var ruleset = new KaraokeRuleset().RulesetInfo;
             var originBeatmap = new TestKaraokeBeatmap(ruleset);
             var karaokeBeatmap = new KaraokeBeatmapConverter(originBeatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
-            karaokeBeatmap.Singers = createDefaultSinger();
+            karaokeBeatmap.SingerMetadata = createDefaultSinger();
             createTest(new ScoreInfo(), karaokeBeatmap);
         }
 
@@ -48,41 +46,21 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
             };
         });
 
-        private IDictionary<int, Singer> createDefaultSinger()
+        private SingerMetadata createDefaultSinger()
         {
-            return new Dictionary<int, Singer>
+            var metadata = new SingerMetadata();
+
+            for (int i = 0; i < 10; i++)
             {
+                metadata.CreateSinger(x =>
                 {
-                    0,
-                    new Singer
-                    {
-                        Name = "Singer 001",
-                        Romaji = "",
-                        EnglishName = "",
-                        Color = Color4.Blue
-                    }
-                },
-                {
-                    1,
-                    new Singer
-                    {
-                        Name = "Singer 002",
-                        Romaji = "",
-                        EnglishName = "",
-                        Color = Color4.Red
-                    }
-                },
-                {
-                    2,
-                    new Singer
-                    {
-                        Name = "Singer 003",
-                        Romaji = "",
-                        EnglishName = "",
-                        Color = Color4.Yellow
-                    }
-                }
-            };
+                    x.Name = $"Singer{x}";
+                    x.RomajiName = $"[Romaji]Singer{x}";
+                    x.EnglishName = $"[English]Singer{x}";
+                });
+            }
+
+            return metadata;
         }
     }
 }

@@ -36,10 +36,9 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
         private void load([CanBeNull] IBindable<WorkingBeatmap> workingBeatmap)
         {
             if (workingBeatmap != null)
-                LoadComponentAsync(new BeatmapInfoWedge(workingBeatmap.Value), loaded =>
-                {
-                    Add(loaded);
-                });
+            {
+                LoadComponentAsync(new BeatmapInfoWedge(workingBeatmap.Value), Add);
+            }
         }
 
         public class BeatmapInfoWedge : BufferedWedgeInfo
@@ -58,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                     centerMetadata.Y = -20;
 
                 var shouldBeRemovedLabel = InfoLabelContainer.Children.OfType<InfoLabel>()
-                    .Where(x => x.TooltipText == "Note" || x.TooltipText == "This beatmap is not scorable.").ToList();
+                                                             .Where(x => x.TooltipText == "Note" || x.TooltipText == "This beatmap is not scorable.").ToList();
                 InfoLabelContainer.RemoveRange(shouldBeRemovedLabel);
             }
         }

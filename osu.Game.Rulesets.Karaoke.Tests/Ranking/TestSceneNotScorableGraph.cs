@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
                     RelativeSizeAxes = Axes.Both,
                     Colour = Color4Extensions.FromHex("#333")
                 },
-                new NotScorableGraph()
+                new NotScorableGraph
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,

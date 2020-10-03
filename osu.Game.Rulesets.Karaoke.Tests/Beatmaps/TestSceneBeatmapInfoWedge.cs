@@ -17,6 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
     public class TestSceneBeatmapInfoWedge : OsuTestScene
     {
         private TestBeatmapInfoWedge infoWedge;
+
         protected override void LoadComplete()
         {
             base.LoadComplete();
@@ -48,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
                 var decoder = Decoder.GetDecoder<Beatmap>(stream);
                 var beatmap = decoder.Decode(stream);
                 selectBeatmap(beatmap, fileName);
-            }  
+            }
         }
 
         private void selectBeatmap(IBeatmap b, string fileName)

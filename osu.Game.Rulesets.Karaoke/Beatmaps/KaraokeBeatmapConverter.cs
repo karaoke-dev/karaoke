@@ -25,6 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
             // Apply property created from legacy decoder
             var propertyDicrionary = beatmap.HitObjects.OfType<LegacyPropertyDictionary>().FirstOrDefault();
+
             if (propertyDicrionary != null)
             {
                 (beatmap as KaraokeBeatmap).Translates = propertyDicrionary.Translates;
