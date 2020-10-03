@@ -15,7 +15,6 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
@@ -23,16 +22,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
     [TestFixture]
     public class TestSceneSinger : OsuTestScene
     {
-        private readonly KaraokeSingerEditorSkin skinTransformer;
-
         private readonly Box background;
         private readonly SingerTableContainer singerTableContainer;
         private readonly SingerInfoContainer singerInfoContainer;
 
         public TestSceneSinger()
         {
-            skinTransformer = new KaraokeSingerEditorSkin();
-
             Child = new Container
             {
                 Anchor = Anchor.Centre,
@@ -78,18 +73,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 }
             };
 
-            var bindableSinger = skinTransformer.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Singer);
-            bindableSinger.BindValueChanged(x =>
-            {
-                var singers = x.NewValue.ToDictionary(i => i.Key, v =>
-                {
-                    // TODO : get lookup by number
-                    var lookup = new KaraokeSkinLookup(KaraokeSkinConfiguration.Singer, 0);
-                    return skinTransformer.GetConfig<KaraokeSkinLookup, Singer>(lookup).Value;
-                });
-
-                singerTableContainer.Singers = singers;
-            }, true);
+            // todo : add singer.
+            var singer = new SingerMetadata();
 
             singerTableContainer.BindableSinger.BindValueChanged(x =>
             {
@@ -130,26 +115,27 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 });
             }
 
-            private IDictionary<int, Singer> singers;
+            private SingerMetadata metadata;
 
-            public IDictionary<int, Singer> Singers
+            public SingerMetadata Metadata
             {
-                get => singers;
+                get => metadata;
                 set
                 {
-                    singers = value;
+                    metadata = value;
 
                     Content = null;
                     backgroundFlow.Clear();
 
-                    if (Singers?.Any() != true)
+                    var signer = Metadata.Singers;
+                    if (signer?.Any() != true)
                         return;
 
                     Columns = createHeaders();
-                    Content = Singers.Select(s => createContent(s.Key, s.Value)).ToArray().ToRectangular();
+                    Content = signer.Select(s => createContent(s.ID, s)).ToArray().ToRectangular();
 
                     // All the singer is not selected
-                    BindableSinger.Value = singers.FirstOrDefault().Value;
+                    BindableSinger.Value = signer.FirstOrDefault();
                 }
             }
 
@@ -243,14 +229,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                     englishNameTextBox.Text = singer.EnglishName;
                     romajiNameTextBox.Text = singer.RomajiName;
                 }
-            }
-        }
-
-        public class KaraokeSingerEditorSkin : KaraokeLegacySkinTransformer
-        {
-            public KaraokeSingerEditorSkin()
-                : base(null)
-            {
             }
         }
     }

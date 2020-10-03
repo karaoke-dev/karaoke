@@ -91,7 +91,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
                     x.Name = $"Parent singer {x}";
                     x.RomajiName = $"Singer {x}";
 
-
                     if (indexs.Contains(x.ID))
                         querySingers.Add(x);
                 });

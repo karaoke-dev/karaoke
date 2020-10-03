@@ -56,14 +56,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     bindableLayouts.Add(i, new Bindable<KaraokeLayout>(skin.Layouts[i]));
                 for (int i = 0; i < skin.NoteSkins.Count; i++)
                     bindableNotes.Add(i, new Bindable<NoteSkin>(skin.NoteSkins[i]));
-                for (int i = 0; i < skin.Singers.Count; i++)
-                    bindableSingers.Add(i, new Bindable<Singer>(skin.Singers[i]));
 
                 // Create lookups
                 bindableFontsLookup.Value = skin.Fonts.ToDictionary(k => skin.Fonts.IndexOf(k), y => y.Name);
                 bindableLayoutsLookup.Value = skin.Layouts.ToDictionary(k => skin.Layouts.IndexOf(k), y => y.Name);
                 bindableNotesLookup.Value = skin.NoteSkins.ToDictionary(k => skin.NoteSkins.IndexOf(k), y => y.Name);
-                bindableSingersLookup.Value = skin.Singers.ToDictionary(k => skin.Singers.IndexOf(k), y => y.Name);
             }
         }
 
@@ -165,9 +162,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                         case KaraokeIndexLookup.Note:
                             return SkinUtils.As<TValue>(bindableNotesLookup);
-
-                        case KaraokeIndexLookup.Singer:
-                            return SkinUtils.As<TValue>(bindableSingersLookup);
                     }
 
                     break;
