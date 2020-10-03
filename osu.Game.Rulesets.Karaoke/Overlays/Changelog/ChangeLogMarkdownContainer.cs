@@ -201,14 +201,14 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
                     AddText("(");
 
-                    foreach (var issue in issueOrRequests.Select(x=>x.Value))
+                    foreach (var issue in issueOrRequests.Select(x => x.Value))
                     {
                         AddDrawable(new MarkdownLinkText($"{text}{issue}", new LinkInline
                         {
                             Url = new Uri(baseUri, $"pull/{issue.Replace("#", "")}").AbsoluteUri
                         }));
 
-                        if(issue != issueOrRequests.LastOrDefault()?.Value)
+                        if (issue != issueOrRequests.LastOrDefault()?.Value)
                             AddText(", ");
                     }
 
@@ -241,9 +241,9 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         }
 
         protected override MarkdownPipeline CreateBuilder()
-             => new MarkdownPipelineBuilder().UseAutoIdentifiers(AutoIdentifierOptions.GitHub)
-                                        .UseYamlFrontMatter()
-                                        .UseEmojiAndSmiley()
-                                        .UseAdvancedExtensions().Build();
+            => new MarkdownPipelineBuilder().UseAutoIdentifiers(AutoIdentifierOptions.GitHub)
+                                            .UseYamlFrontMatter()
+                                            .UseEmojiAndSmiley()
+                                            .UseAdvancedExtensions().Build();
     }
 }

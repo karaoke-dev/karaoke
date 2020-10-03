@@ -12,7 +12,6 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osuTK;
 using osuTK.Graphics;
 using System.Linq;
@@ -180,6 +179,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                     Spacing = new Vector2(10),
                     Colour = Color4.White.Opacity(0.75f),
                 });
+
                 foreach (var singer in singers)
                 {
                     textFlow.Add(new SingerSpriteText

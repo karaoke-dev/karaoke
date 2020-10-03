@@ -10,15 +10,15 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 {
     public class SingerMetadata
     {
-        private List<ISinger> singers = new List<ISinger>();
+        private readonly List<ISinger> singers = new List<ISinger>();
 
         public IReadOnlyList<Singer> Singers => singers.OfType<Singer>().ToList();
 
-        public IReadOnlyList<SubSinger> GetSubSingers(Singer singer) => singers.OfType<SubSinger>().Where(x=>x.ParentID == singer.ID).ToList();
+        public IReadOnlyList<SubSinger> GetSubSingers(Singer singer) => singers.OfType<SubSinger>().Where(x => x.ParentID == singer.ID).ToList();
 
         public void CreateSinger(Action<Singer> postProcess)
         {
-            var id = singers.Count() + 1;
+            var id = singers.Count + 1;
             var singer = new Singer(id);
 
             postProcess?.Invoke(singer);
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
             if (parent == null)
                 throw new NullReferenceException("Singer cannot be null.");
 
-            var id = singers.Count() + 1;
+            var id = singers.Count + 1;
             var subSinger = new SubSinger(id, parent.ID);
 
             postProcess?.Invoke(subSinger);

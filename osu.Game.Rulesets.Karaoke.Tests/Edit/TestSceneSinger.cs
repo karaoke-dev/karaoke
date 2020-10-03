@@ -74,7 +74,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             };
 
             // todo : add singer.
-            var singer = new SingerMetadata();
+            var singerMetadata = new SingerMetadata();
+            singerTableContainer.Metadata = singerMetadata;
 
             singerTableContainer.BindableSinger.BindValueChanged(x =>
             {

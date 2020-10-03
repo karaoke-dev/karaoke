@@ -49,6 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
         private SingerMetadata createDefaultSinger()
         {
             var metadata = new SingerMetadata();
+
             for (int i = 0; i < 10; i++)
             {
                 metadata.CreateSinger(x =>
@@ -58,6 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
                     x.EnglishName = $"[English]Singer{x}";
                 });
             }
+
             return metadata;
         }
     }

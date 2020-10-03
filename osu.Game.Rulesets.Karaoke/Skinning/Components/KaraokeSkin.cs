@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using osu.Game.IO.Serialization;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Components
 {

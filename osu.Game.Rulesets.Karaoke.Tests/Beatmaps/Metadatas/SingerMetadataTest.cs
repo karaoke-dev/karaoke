@@ -1,14 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
+namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Metadatas
 {
     [TestFixture]
     public class SingerMetadataTest
@@ -60,11 +59,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
             {
                 // Create sub-ssinger
                 var targetSinger = metadata.Singers.FirstOrDefault(x => x.ID == targetIndex);
+
                 for (int i = 0; i < amount; i++)
                 {
                     metadata.CreateSubSinger(targetSinger, x =>
                     {
-                        x.Description = $"Add sub singer into singer {targetSinger.Name}";
+                        if (targetSinger != null)
+                            x.Description = $"Add sub singer into singer {targetSinger.Name}";
                     });
                 }
 
@@ -76,9 +77,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
             }
         }
 
-        [TestCase(1, 0, new int[] { 1 }, 1)]
-        [TestCase(10, 0, new int[] { 1 , 2, 3 }, 7)]
-        [TestCase(3, 3, new int[] { 1, 4, 5 }, 25)]
+        [TestCase(1, 0, new[] { 1 }, 1)]
+        [TestCase(10, 0, new[] { 1, 2, 3 }, 7)]
+        [TestCase(3, 3, new[] { 1, 4, 5 }, 25)]
         public void TestGetLayoutIndex(int singerAmount, int subSingerAmount, int[] indexs, int targetLayoutIndex)
         {
             var querySingers = new List<ISinger>();
@@ -98,11 +99,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
 
             // Create sub-ssinger
             var targetSinger = metadata.Singers.LastOrDefault();
+
             for (int i = 0; i < subSingerAmount; i++)
             {
                 metadata.CreateSubSinger(targetSinger, x =>
                 {
-                    x.Description = $"Add sub singer into singer {targetSinger.Name}";
+                    if (targetSinger != null)
+                        x.Description = $"Add sub singer into singer {targetSinger.Name}";
 
                     if (indexs.Contains(x.ID))
                         querySingers.Add(x);

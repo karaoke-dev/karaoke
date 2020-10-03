@@ -7,8 +7,6 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
@@ -40,6 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             };
 
             var scorable = this.IsScorable();
+
             if (scorable)
             {
                 int notes = HitObjects.Count(s => s is Note note && note.Display);

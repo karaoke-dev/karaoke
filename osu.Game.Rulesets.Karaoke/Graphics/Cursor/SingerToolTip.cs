@@ -8,7 +8,6 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osuTK;
 using osuTK.Graphics;
 
@@ -37,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                     AutoSizeAxes = Axes.Both,
                     AutoSizeDuration = 200,
                     AutoSizeEasing = Easing.OutQuint,
-                    
+
                     Padding = new MarginPadding(10),
                     Children = new Drawable[]
                     {
@@ -60,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
         public bool SetContent(object content)
         {
             if(!(content is Singer singer))
-                    return false;
+                return false;
 
             // todo : implement
             return true;
