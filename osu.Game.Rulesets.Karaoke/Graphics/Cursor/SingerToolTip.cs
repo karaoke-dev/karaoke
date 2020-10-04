@@ -2,71 +2,116 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Cursor;
-using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Containers;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osuTK;
 using osuTK.Graphics;
+using System;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
-    public class SingerToolTip : VisibilityContainer, ITooltip
+    public class SingerToolTip : BackgroundToolTip
     {
-        private readonly Box background;
-
-        public void Move(Vector2 pos) => Position = pos;
+        private readonly OsuSpriteText singerName;
+        private readonly OsuSpriteText singerEnglishName;
+        private readonly OsuSpriteText singerRomajiName;
+        private readonly OsuTextFlowContainer singerDescription;
 
         public SingerToolTip()
         {
             AutoSizeAxes = Axes.Both;
-            Masking = true;
-            CornerRadius = 5;
-
-            Children = new Drawable[]
+            Child = new FillFlowContainer
             {
-                background = new Box
+                AutoSizeAxes = Axes.Y,
+                Width = 300,
+                Direction = FillDirection.Vertical,
+                Spacing = new Vector2(15),
+                Children = new Drawable[]
                 {
-                    RelativeSizeAxes = Axes.Both
-                },
-                new Container
-                {
-                    AutoSizeAxes = Axes.Both,
-                    AutoSizeDuration = 200,
-                    AutoSizeEasing = Easing.OutQuint,
-
-                    Padding = new MarginPadding(10),
-                    Children = new Drawable[]
+                    new DrawableSingerAvatar
                     {
-                        new Box
+                        Name = "Avatar",
+                        Size = new Vector2(64)
+                    },
+                    new FillFlowContainer
+                    {
+                        Name = "Singer name",
+                        AutoSizeAxes = Axes.Y,
+                        RelativeSizeAxes = Axes.X,
+                        Direction = FillDirection.Horizontal,
+                        Spacing = new Vector2(5),
+                        Children = new []
                         {
-                            Size = new Vector2(100),
-                            Colour = Color4.Red,
+                            singerName = new OsuSpriteText
+                            {
+                                Name = "Singer name",
+                                Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 20),
+                            },
+                            singerEnglishName = new OsuSpriteText
+                            {
+                                Name = "English name",
+                                Anchor = Anchor.BottomLeft,
+                                Origin = Anchor.BottomLeft,
+                                Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 13),
+                                Margin = new MarginPadding{ Bottom = 1}
+                            }
                         }
+                    },
+                    singerRomajiName = new OsuSpriteText
+                    {
+                        Name = "Romaji name"
+                    },
+                    singerDescription = new OsuTextFlowContainer(s => s.Font = s.Font.With(size: 14))
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Colour = Color4.White.Opacity(0.75f),
+                        Name = "Description",
                     }
                 }
             };
         }
 
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
-        {
-            background.Colour = colours.Gray3;
-        }
-
-        public bool SetContent(object content)
+        public override bool SetContent(object content)
         {
             if(!(content is Singer singer))
                 return false;
 
-            // todo : implement
+            singerName.Text = singer.Name;
+            singerEnglishName.Text = singer.EnglishName != null ? $"({singer.EnglishName})" : "";
+            singerRomajiName.Text = singer.RomajiName;
+            singerDescription.Text = singer.Description ?? "<No description>";
+
             return true;
         }
 
-        protected override void PopIn() => this.FadeIn(200, Easing.OutQuint);
+        public class DrawableSingerAvatar : Container
+        {
+            [BackgroundDependencyLoader]
+            private void load(LargeTextureStore textures)
+            {
+                if (textures == null)
+                    throw new ArgumentNullException(nameof(textures));
 
-        protected override void PopOut() => this.FadeOut(200, Easing.OutQuint);
+                // todo : get real texture from beatmap
+                Texture texture = textures.Get(@"Online/avatar-guest");
+
+                Add(new Sprite
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Texture = texture,
+                    FillMode = FillMode.Fit,
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre
+                });
+            }
+        }
     }
 }
