@@ -38,6 +38,31 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Metadatas
             Assert.AreEqual(metadata.Singers.Last().ID, count);
         }
 
+        [TestCase(1, 1)]
+        [TestCase(10, 5)]
+        [TestCase(100, 100)]
+        public void TestRemoveSinger(int createAmount, int removeAmount)
+        {
+            // Create singer
+            for (int i = 0; i < createAmount; i++)
+            {
+                metadata.CreateSinger(x =>
+                {
+                    x.Name = $"Singer {x}";
+                    x.RomajiName = $"Singer {x}";
+                });
+            }
+
+            // Remove singer
+            var existSingers = metadata.Singers.ToList();
+            for (int i = 0; i < removeAmount; i++)
+            {
+                metadata.RemoveSinger(existSingers[i]);
+            }
+
+            Assert.AreEqual(metadata.Singers.Count, createAmount - removeAmount);
+        }
+
         [TestCase(1, 1, 1, true)]
         [TestCase(1, 1, 10, true)]
         [TestCase(10, 10, 1, true)]
@@ -75,6 +100,33 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Metadatas
             {
                 Assert.IsFalse(valid);
             }
+        }
+
+        [Test]
+        public void TestRemoveSubSinger()
+        {
+            // Create singer
+            metadata.CreateSinger(x =>
+            {
+                x.Name = $"Parent singer {x}";
+                x.RomajiName = $"Singer {x}";
+            });
+
+            // Create subsinger
+            var targetSinger = metadata.Singers.FirstOrDefault();
+            metadata.CreateSubSinger(targetSinger, x =>
+            {
+                if (targetSinger != null)
+                    x.Description = $"Add sub singer into singer {targetSinger.Name}";
+            });
+
+            Assert.AreEqual(metadata.GetSubSingers(targetSinger).Count, 1);
+
+            //Remove
+            var subSinger = metadata.GetSubSingers(targetSinger).FirstOrDefault();
+            metadata.RemoveSubSinger(subSinger);
+
+            Assert.AreEqual(metadata.GetSubSingers(targetSinger).Count, 0);
         }
 
         [TestCase(1, 0, new[] { 1 }, 1)]

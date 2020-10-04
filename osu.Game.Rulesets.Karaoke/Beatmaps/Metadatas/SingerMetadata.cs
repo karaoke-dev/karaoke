@@ -25,6 +25,25 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
             singers.Add(singer);
         }
 
+        public void RemoveSinger(Singer singer)
+        {
+            if (singer == null)
+                throw new NullReferenceException("Singer cannot be null.");
+
+            if (!Singers.Contains(singer))
+                throw new ArgumentOutOfRangeException("Singer is not in the list");
+
+            // Remove sub singers.
+            var subsingers = GetSubSingers(singer);
+            foreach (var subsinger in subsingers)
+            {
+                RemoveSubSinger(subsinger);
+            }
+
+            // remove singer
+            singers.Remove(singer);
+        }
+
         public void CreateSubSinger(Singer parent, Action<SubSinger> postProcess)
         {
             if (parent == null)
@@ -35,6 +54,17 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 
             postProcess?.Invoke(subSinger);
             singers.Add(subSinger);
+        }
+
+        public void RemoveSubSinger(SubSinger subSinger)
+        {
+            if (subSinger == null)
+                throw new NullReferenceException("Sub singer cannot be null.");
+
+            if (!singers.Contains(subSinger))
+                throw new ArgumentOutOfRangeException("Sub singer is not in the list");
+
+            singers.Remove(subSinger);
         }
 
         public int GetLayoutIndex(ISinger[] singers)
