@@ -54,9 +54,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
             {
                 metadata.CreateSinger(x =>
                 {
-                    x.Name = $"Singer{x}";
-                    x.RomajiName = $"[Romaji]Singer{x}";
-                    x.EnglishName = $"[English]Singer{x}";
+                    x.Name = $"Singer{i}";
+                    x.RomajiName = $"[Romaji]Singer{i}";
+                    x.EnglishName = $"[English]Singer{i}";
                 });
             }
 
