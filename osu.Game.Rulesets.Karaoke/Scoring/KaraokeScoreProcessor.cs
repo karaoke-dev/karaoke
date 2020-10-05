@@ -7,6 +7,5 @@ namespace osu.Game.Rulesets.Karaoke.Scoring
 {
     internal class KaraokeScoreProcessor : ScoreProcessor
     {
-        public override HitWindows CreateHitWindows() => new KaraokeHitWindows();
     }
 }
