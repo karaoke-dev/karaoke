@@ -84,8 +84,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
                 // Set margin
                 const float padding = 30 * scale;
-                var horizontalMargin = layout.HorizontalMargin * scale + padding;
-                var verticalMargin = layout.VerticalMargin * scale + padding;
+                var horizontalMargin = (layout.HorizontalMargin * scale) + padding;
+                var verticalMargin = (layout.VerticalMargin * scale) + padding;
                 previewLyric.Margin = new MarginPadding
                 {
                     Left = layout.Alignment.HasFlag(Anchor.x0) ? horizontalMargin : 0,

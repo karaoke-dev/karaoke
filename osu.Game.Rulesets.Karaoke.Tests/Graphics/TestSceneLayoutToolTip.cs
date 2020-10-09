@@ -34,7 +34,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
             toolTip.Show();
         });
 
-
         [Test]
         public void TestDisplayToolTip()
         {
@@ -51,7 +50,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         {
             AddStep(testName, () =>
             {
-                var singer = new LyricLine();
+                var singer = new LyricLine
+                {
+                    Text = "karaoke!"
+                };
                 callBack?.Invoke(singer);
                 toolTip.SetContent(singer);
             });
