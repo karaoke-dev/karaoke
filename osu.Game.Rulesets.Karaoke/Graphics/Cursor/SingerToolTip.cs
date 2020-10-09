@@ -26,7 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
         public SingerToolTip()
         {
-            AutoSizeAxes = Axes.Both;
             Child = new FillFlowContainer
             {
                 AutoSizeAxes = Axes.Y,
