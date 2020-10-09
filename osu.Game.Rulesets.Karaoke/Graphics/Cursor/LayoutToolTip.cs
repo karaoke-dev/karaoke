@@ -16,6 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
     public class LayoutToolTip : BackgroundToolTip
     {
+        private const float scale = 0.4f;
+
         private readonly Box background;
         private readonly Box previewLyric;
         private readonly OsuSpriteText notSupportText;
@@ -29,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             {
                 background = new Box
                 {
-                    Size = new Vector2(240, 135),
+                    Size = new Vector2(512 * scale, 384 * scale),
                 },
                 previewLyric = new Box
                 {
@@ -70,17 +72,20 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             {
                 // Display box preview position
                 previewLyric.Show();
-                
+
                 // Set preview width
-                previewLyric.Width = lyric.Text?.Length * 10 ?? 100;
+                const float text_size = 20;
+                previewLyric.Width = (lyric.Text?.Length ?? 10) * text_size * scale;
+                previewLyric.Height = text_size * 1.5f * scale;
 
                 // Set relative position
                 previewLyric.Anchor = layout.Alignment;
                 previewLyric.Origin = layout.Alignment;
 
                 // Set margin
-                var horizontalMargin = layout.HorizontalMargin / 8;
-                var verticalMargin = layout.VerticalMargin / 8;
+                const float padding = 30 * scale;
+                var horizontalMargin = layout.HorizontalMargin * scale + padding;
+                var verticalMargin = layout.VerticalMargin * scale + padding;
                 previewLyric.Margin = new MarginPadding
                 {
                     Left = layout.Alignment.HasFlag(Anchor.x0) ? horizontalMargin : 0,
