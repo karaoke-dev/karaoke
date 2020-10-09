@@ -1,15 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Timing;
-using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Timelines;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
@@ -23,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
     {
         private KaraokeLyricEditorSkin skin;
         private FillFlowContainer<Button> controls;
-        private FillFlowContainer<LyricControl> container;
+        private LyricRearrangeableListContainer container;
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
@@ -77,16 +74,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                         new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin())
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Child = new OsuScrollContainer
+                            Child = container = new LyricRearrangeableListContainer
                             {
                                 RelativeSizeAxes = Axes.Both,
-                                Child = container = new FillFlowContainer<LyricControl>
-                                {
-                                    RelativeSizeAxes = Axes.X,
-                                    AutoSizeAxes = Axes.Y,
-                                    Direction = FillDirection.Vertical,
-                                    Padding = new MarginPadding { Right = 50 },
-                                }
                             }
                         }
                     }
@@ -97,8 +87,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
         [BackgroundDependencyLoader]
         private void load(IFrameBasedClock framedClock)
         {
-            container.Clock = framedClock;
-
             foreach (var obj in beatmap.HitObjects)
                 Schedule(() => addHitObject(obj));
         }
@@ -116,10 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             // see how `DrawableEditRulesetWrapper` do
             if (hitObject is LyricLine lyric)
             {
-                container.Add(new LyricControl(lyric)
-                {
-                    RelativeSizeAxes = Axes.X,
-                });
+                container.Items.Add(lyric);
             }
         }
 
@@ -128,8 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             if (!(hitObject is LyricLine lyric))
                 return;
 
-            var drawableHitObject = container.Children.FirstOrDefault(x => x.Lyric == lyric);
-            container.Remove(drawableHitObject);
+            container.Items.Remove(lyric);
         }
 
         protected override void Dispose(bool isDisposing)

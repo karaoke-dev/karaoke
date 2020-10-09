@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Timing;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -18,6 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
     public class LyricControl : Container
     {
         private readonly Box background;
+        private readonly DrawableLyricLine drawableLyric;
 
         public LyricLine Lyric { get; }
 
@@ -54,15 +56,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
                                 new LayoutInfoBadge(lyric),
                             }
                         },
-                        new DrawableEditorLyricLine(lyric)
+                        drawableLyric = new DrawableEditorLyricLine(lyric)
                     }
                 }
             };
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(OsuColour colours, IFrameBasedClock framedClock)
         {
+            drawableLyric.Clock = framedClock;
             background.Colour = colours.Gray7;
         }
 
