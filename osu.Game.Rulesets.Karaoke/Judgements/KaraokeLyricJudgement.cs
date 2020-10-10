@@ -9,10 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.Judgements
     {
         public LyricTime Time { get; set; }
 
-        protected override int NumericResultFor(HitResult result) => 0;
-
-        public override bool AffectsCombo => false;
-
         public override HitResult MaxResult => HitResult.Perfect;
 
         protected override double HealthIncreaseFor(HitResult result) => 0;

@@ -9,33 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.Judgements
     {
         public bool Saitenable { get; set; }
 
-        protected override int NumericResultFor(HitResult result)
-        {
-            if (!Saitenable)
-                return 0;
-
-            switch (result)
-            {
-                default:
-                    return 0;
-
-                case HitResult.Meh:
-                    return 300;
-
-                case HitResult.Ok:
-                    return 100;
-
-                case HitResult.Good:
-                    return 200;
-
-                case HitResult.Great:
-                case HitResult.Perfect:
-                    return 300;
-            }
-        }
-
-        public override bool AffectsCombo => Saitenable;
-
         protected override double HealthIncreaseFor(HitResult result)
         {
             if (!Saitenable)

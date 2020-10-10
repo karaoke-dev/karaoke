@@ -164,6 +164,33 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override RulesetSettingsSubsection CreateSettings() => new KaraokeSettingsSubsection(this);
 
+        protected override IEnumerable<HitResult> GetValidHitResults()
+        {
+            return new[]
+            {
+                HitResult.Great,
+                HitResult.Ok,
+                HitResult.Meh,
+            };
+        }
+
+        public override string GetDisplayNameForHitResult(HitResult result)
+        {
+            switch (result)
+            {
+                case HitResult.Great:
+                    return "Great";
+
+                case HitResult.Ok:
+                    return "OK";
+
+                case HitResult.Meh:
+                    return "Meh";
+            }
+
+            return base.GetDisplayNameForHitResult(result);
+        }
+
         public override StatisticRow[] CreateStatisticsForScore(ScoreInfo score, IBeatmap playableBeatmap)
         {
             const int fix_height = 560;

@@ -36,76 +36,76 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 new SettingsEnumDropdown<KaraokeScrollingDirection>
                 {
                     LabelText = "Scrolling direction",
-                    Bindable = config.GetBindable<KaraokeScrollingDirection>(KaraokeRulesetSetting.ScrollDirection)
+                    Current = config.GetBindable<KaraokeScrollingDirection>(KaraokeRulesetSetting.ScrollDirection)
                 },
                 new SettingsSlider<double, TimeSlider>
                 {
                     LabelText = "Scroll speed",
-                    Bindable = config.GetBindable<double>(KaraokeRulesetSetting.ScrollTime)
+                    Current = config.GetBindable<double>(KaraokeRulesetSetting.ScrollTime)
                 },
                 new SettingsCheckbox
                 {
                     LabelText = "Display alternative text",
-                    Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.DisplayAlternativeText)
+                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.DisplayAlternativeText)
                 },
                 new SettingsCheckbox
                 {
                     LabelText = "Show cursor while playing",
-                    Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor)
+                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor)
                 },
                 // Translate
                 new SettingsCheckbox
                 {
                     LabelText = "Translate",
-                    Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate)
+                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate)
                 },
                 new SettingsTextBox
                 {
                     LabelText = "Prefer language",
-                    Bindable = config.GetBindable<string>(KaraokeRulesetSetting.PreferLanguage)
+                    Current = config.GetBindable<string>(KaraokeRulesetSetting.PreferLanguage)
                 },
                 // Pitch
                 new SettingsCheckbox
                 {
                     LabelText = "Override pitch at gameplay",
-                    Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay)
+                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay)
                 },
                 new MicrophoneDeviceSettingsDropdown
                 {
                     LabelText = "Microphone devices",
                     Items = microphoneManager.MicrophoneDeviceNames,
-                    Bindable = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
+                    Current = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
                 },
                 new SettingsSlider<int, PitchSlider>
                 {
                     LabelText = "Pitch",
-                    Bindable = config.GetBindable<int>(KaraokeRulesetSetting.Pitch)
+                    Current = config.GetBindable<int>(KaraokeRulesetSetting.Pitch)
                 },
                 new SettingsCheckbox
                 {
                     LabelText = "Override vocal pitch at gameplay",
-                    Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay)
+                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay)
                 },
                 new SettingsSlider<int, PitchSlider>
                 {
                     LabelText = "Vocal pitch",
-                    Bindable = config.GetBindable<int>(KaraokeRulesetSetting.VocalPitch)
+                    Current = config.GetBindable<int>(KaraokeRulesetSetting.VocalPitch)
                 },
                 new SettingsCheckbox
                 {
                     LabelText = "Override saiten pitch at gameplay",
-                    Bindable = config.GetBindable<bool>(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay)
+                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay)
                 },
                 new SettingsSlider<int, PitchSlider>
                 {
                     LabelText = "Saiten pitch",
-                    Bindable = config.GetBindable<int>(KaraokeRulesetSetting.SaitenPitch)
+                    Current = config.GetBindable<int>(KaraokeRulesetSetting.SaitenPitch)
                 },
                 // Practice
                 new SettingsSlider<double, TimeSlider>
                 {
                     LabelText = "Practice preempt time",
-                    Bindable = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime)
+                    Current = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime)
                 },
                 new SettingsButton
                 {

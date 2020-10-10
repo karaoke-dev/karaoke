@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
         [BackgroundDependencyLoader]
         private void load(KaraokeSessionStatics session)
         {
-            playBackSliderBar.Bindable = session.GetBindable<int>(KaraokeRulesetSession.PlaybackSpeed);
+            playBackSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.PlaybackSpeed);
         }
     }
 }
