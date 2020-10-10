@@ -5,7 +5,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Timing;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Timelines;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -85,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
         }
 
         [BackgroundDependencyLoader]
-        private void load(IFrameBasedClock framedClock)
+        private void load()
         {
             foreach (var obj in beatmap.HitObjects)
                 Schedule(() => addHitObject(obj));
