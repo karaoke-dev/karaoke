@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components;
@@ -22,6 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
         public class LyricRearrangeableListItem : OsuRearrangeableListItem<LyricLine>
         {
             private Box background;
+            private Box dragAlert;
             private Box headerBackground;
 
             public LyricRearrangeableListItem(LyricLine item)
@@ -43,6 +45,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                         {
                             RelativeSizeAxes = Axes.Both,
                             Alpha = 0.3f
+                        },
+                        dragAlert = new Box
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Alpha = 0
                         },
                         new GridContainer
                         {
@@ -97,7 +104,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             private void load(OsuColour colours)
             {
                 background.Colour = colours.Gray7;
+                dragAlert.Colour = colours.YellowDarker;
                 headerBackground.Colour = colours.Gray2;
+            }
+
+            protected override bool OnDragStart(DragStartEvent e)
+            {
+                if (!base.OnDragStart(e))
+                    return false;
+
+                dragAlert.Show();
+                return true;
+            }
+
+            protected override void OnDragEnd(DragEndEvent e)
+            {
+                dragAlert.Hide();
+                base.OnDragEnd(e);
             }
 
             public class BadgeFillFlowContainer : FillFlowContainer<Badge>
