@@ -43,11 +43,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 };
             }
 
-            if (SelectedHitObjects.All(x => x is Note)
-                && SelectedHitObjects.Count() > 1)
+            if (EditorBeatmap.SelectedHitObjects.All(x => x is Note)
+                && EditorBeatmap.SelectedHitObjects.Count() > 1)
             {
                 var menu = new List<MenuItem>();
-                var selectedObject = SelectedHitObjects.Cast<Note>().OrderBy(x => x.StartTime);
+                var selectedObject = EditorBeatmap.SelectedHitObjects.Cast<Note>().OrderBy(x => x.StartTime);
 
                 // Set multi note display property
                 menu.Add(createMultiNoteDisplayPropertyMenuItem(selectedObject));
@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     ChangeHandler.BeginChange();
 
                     if (state == TernaryState.True)
-                        SelectedHitObjects.Cast<LyricLine>().ForEach(l => l.LayoutIndex = x.Key);
+                        EditorBeatmap.SelectedHitObjects.Cast<LyricLine>().ForEach(l => l.LayoutIndex = x.Key);
 
                     ChangeHandler.EndChange();
                 })).ToArray()
@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     ChangeHandler.BeginChange();
 
                     if (state == TernaryState.True)
-                        SelectedHitObjects.Cast<LyricLine>().ForEach(l => l.FontIndex = x.Key);
+                        EditorBeatmap.SelectedHitObjects.Cast<LyricLine>().ForEach(l => l.FontIndex = x.Key);
 
                     ChangeHandler.EndChange();
                 })).ToArray()
@@ -174,7 +174,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             if (deltaTone == 0)
                 return;
 
-            foreach (var note in SelectedHitObjects.OfType<Note>())
+            foreach (var note in EditorBeatmap.SelectedHitObjects.OfType<Note>())
             {
                 if (note.Tone >= calculator.MaxTone() && deltaTone > 0)
                     continue;
