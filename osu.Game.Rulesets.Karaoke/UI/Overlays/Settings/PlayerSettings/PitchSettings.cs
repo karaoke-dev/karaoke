@@ -41,9 +41,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
         [BackgroundDependencyLoader]
         private void load(KaraokeSessionStatics session)
         {
-            pitchSliderBar.Bindable = session.GetBindable<int>(KaraokeRulesetSession.Pitch);
-            vocalPitchSliderBar.Bindable = session.GetBindable<int>(KaraokeRulesetSession.VocalPitch);
-            saitenPitchSliderBar.Bindable = session.GetBindable<int>(KaraokeRulesetSession.SaitenPitch);
+            pitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.Pitch);
+            vocalPitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.VocalPitch);
+            saitenPitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.SaitenPitch);
         }
     }
 }
