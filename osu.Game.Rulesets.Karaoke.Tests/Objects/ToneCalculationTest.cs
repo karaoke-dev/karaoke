@@ -1,9 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
-using System;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Objects
 {
@@ -150,7 +150,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
         private Tone numberToTone(double tone)
         {
             var half = Math.Abs(tone) % 1 == 0.5;
-            var scale = tone < 0 ? (((int)tone) - (half ? 1 : 0)) : (int)tone;
+            var scale = tone < 0 ? (int)tone - (half ? 1 : 0) : (int)tone;
             return new Tone(scale, half);
         }
     }

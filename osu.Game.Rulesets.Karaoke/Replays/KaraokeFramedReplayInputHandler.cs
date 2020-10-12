@@ -19,7 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
         public override void CollectPendingInputs(List<IInput> inputs)
         {
-            inputs.Add(new ReplayState<KaraokeSaitenAction> {
+            inputs.Add(new ReplayState<KaraokeSaitenAction>
+            {
                 PressedActions = CurrentFrame?.Sound ?? false
                     ? new List<KaraokeSaitenAction>
                     {

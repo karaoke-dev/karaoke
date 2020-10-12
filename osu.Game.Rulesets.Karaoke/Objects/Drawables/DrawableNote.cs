@@ -56,10 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             }, true);
             */
 
-            Display.BindValueChanged(e =>
-            {
-                (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue;
-            });
+            Display.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue; });
 
             note.TextBindable.BindValueChanged(_ => { changeText(note); }, true);
 

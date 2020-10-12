@@ -1,24 +1,24 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using Markdig.Syntax;
-using Markdig.Syntax.Inlines;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Containers.Markdown;
-using osu.Framework.Layout;
-using osuTK;
-using System.Net.Http;
-using osu.Framework.Allocation;
-using Markdig;
-using Markdig.Extensions.AutoIdentifiers;
-using Markdig.Extensions.Yaml;
-using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
-using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
+using Markdig;
+using Markdig.Extensions.AutoIdentifiers;
+using Markdig.Extensions.Yaml;
+using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
+using osu.Framework.Allocation;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Containers.Markdown;
+using osu.Framework.Graphics.Sprites;
+using osu.Framework.Layout;
+using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
@@ -220,10 +220,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                     if (!string.IsNullOrEmpty(user))
                     {
                         var textScale = new Vector2(0.7f);
-                        AddText(" by:", text =>
-                        {
-                            text.Scale = textScale;
-                        });
+                        AddText(" by:", text => { text.Scale = textScale; });
                         AddDrawable(new MarkdownLinkText(user, new LinkInline
                         {
                             Url = $"https://github.com/{user}"

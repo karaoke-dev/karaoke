@@ -1,10 +1,10 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 {
@@ -35,6 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 
             // Remove sub singers.
             var subsingers = GetSubSingers(singer);
+
             foreach (var subsinger in subsingers)
             {
                 RemoveSubSinger(subsinger);

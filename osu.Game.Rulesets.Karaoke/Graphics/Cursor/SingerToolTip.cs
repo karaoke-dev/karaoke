@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -13,7 +14,6 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osuTK;
 using osuTK.Graphics;
-using System;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                         RelativeSizeAxes = Axes.X,
                         Direction = FillDirection.Horizontal,
                         Spacing = new Vector2(5),
-                        Children = new []
+                        Children = new[]
                         {
                             singerName = new OsuSpriteText
                             {
@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                                 Anchor = Anchor.BottomLeft,
                                 Origin = Anchor.BottomLeft,
                                 Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 13),
-                                Margin = new MarginPadding{ Bottom = 1}
+                                Margin = new MarginPadding { Bottom = 1 }
                             }
                         }
                     },
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
         public override bool SetContent(object content)
         {
-            if(!(content is Singer singer))
+            if (!(content is Singer singer))
                 return false;
 
             singerName.Text = singer.Name;

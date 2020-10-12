@@ -1,13 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Tests.Visual;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 {
@@ -32,12 +32,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         {
             var beatmap = new TestKaraokeBeatmap(null);
             var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
+
             foreach (var lyric in lyrics)
             {
-                AddStep($"Test lyric: {lyric.Text}", () =>
-                {
-                    toolTip.SetContent(lyric);
-                });
+                AddStep($"Test lyric: {lyric.Text}", () => { toolTip.SetContent(lyric); });
             }
         }
     }

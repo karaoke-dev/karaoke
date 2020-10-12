@@ -1,6 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.ComponentModel;
+using System.Linq;
+using Markdig;
 using Markdig.Syntax;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -9,8 +12,6 @@ using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
 using osuTK;
 using osuTK.Graphics;
-using System.ComponentModel;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
@@ -107,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         {
             public StatusSpriteText(string text)
             {
-                var block = Markdig.Markdown.Parse(text).OfType<ParagraphBlock>().FirstOrDefault();
+                var block = Markdown.Parse(text).OfType<ParagraphBlock>().FirstOrDefault();
 
                 if (block != null)
                     AddInlineText(block.Inline);

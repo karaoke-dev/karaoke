@@ -1,13 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Allocation;
-using osu.Framework.Graphics.Containers;
-using osu.Game.Beatmaps;
-using osu.Framework.Bindables;
-using JetBrains.Annotations;
 using System.Linq;
+using JetBrains.Annotations;
+using osu.Framework.Allocation;
+using osu.Framework.Bindables;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
+using osu.Game.Beatmaps;
 using static osu.Game.Screens.Select.BeatmapInfoWedge;
 
 namespace osu.Game.Rulesets.Karaoke.Statistics
