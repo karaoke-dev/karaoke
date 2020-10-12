@@ -309,10 +309,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             session.BindWith(KaraokeRulesetSession.SaitenPitch, saitenPitch);
 
-            session.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e =>
-            {
-                saitenStatus.SaitenStatusMode = e.NewValue;
-            });
+            session.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
         }
 
         public bool OnPressed(KaraokeSaitenAction action)

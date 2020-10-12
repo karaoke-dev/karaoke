@@ -1,12 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
-using osu.Game.Tests.Visual;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using System;
+using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
+using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 {
@@ -29,10 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         [Test]
         public void TestDisplayToolTip()
         {
-            setTooltip("Test normal singer", singer =>
-            {
-                singer.Name = "Normal singer";
-            });
+            setTooltip("Test normal singer", singer => { singer.Name = "Normal singer"; });
 
             setTooltip("Test singer with description", singer =>
             {
@@ -43,7 +40,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
             setTooltip("Test singer with large description", singer =>
             {
                 singer.Name = "Singer with large description";
-                singer.Description = "International superstar vocaloid Hatsune Miku on Sept 9 assumed her new position as Coronavirus Countermeasure Supporter in the Office for Novel Coronavirus Disease Control of the Japanese government’s Cabinet Secretariat.";
+                singer.Description =
+                    "International superstar vocaloid Hatsune Miku on Sept 9 assumed her new position as Coronavirus Countermeasure Supporter in the Office for Novel Coronavirus Disease Control of the Japanese government’s Cabinet Secretariat.";
             });
 
             setTooltip("Test singer with english name", singer =>

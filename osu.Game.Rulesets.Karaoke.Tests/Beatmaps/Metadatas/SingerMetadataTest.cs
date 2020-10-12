@@ -55,6 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Metadatas
 
             // Remove singer
             var existSingers = metadata.Singers.ToList();
+
             for (int i = 0; i < removeAmount; i++)
             {
                 metadata.RemoveSinger(existSingers[i]);

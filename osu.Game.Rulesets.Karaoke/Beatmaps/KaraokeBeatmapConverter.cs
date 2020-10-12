@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -36,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         }
 
         protected override IEnumerable<KaraokeHitObject> ConvertHitObject(HitObject original, IBeatmap beatmap, CancellationToken cancellationToken)
-            => throw new System.NotImplementedException();
+            => throw new NotImplementedException();
 
         protected override Beatmap<KaraokeHitObject> CreateBeatmap() => new KaraokeBeatmap();
     }

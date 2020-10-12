@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             private Box headerBackground;
 
             public LyricRearrangeableListItem(LyricLine item)
-                    : base(item)
+                : base(item)
             {
             }
 
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                                     },
                                     new LyricControl(Model)
                                     {
-                                        Margin = new MarginPadding{ Left = 10},
+                                        Margin = new MarginPadding { Left = 10 },
                                         RelativeSizeAxes = Axes.X,
                                     }
                                 }

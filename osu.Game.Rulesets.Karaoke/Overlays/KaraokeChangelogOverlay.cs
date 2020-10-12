@@ -67,10 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                         Direction = FillDirection.Vertical,
                         Children = new Drawable[]
                         {
-                            Header.With(h =>
-                            {
-                                h.ListingSelected = ShowListing;
-                            }),
+                            Header.With(h => { h.ListingSelected = ShowListing; }),
                             content = new Container<ChangelogContent>
                             {
                                 RelativeSizeAxes = Axes.X,

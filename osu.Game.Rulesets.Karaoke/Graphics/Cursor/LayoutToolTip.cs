@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                 // mark layout as not supported, or skin is not loaded
                 notSupportText.Show();
 
-                if(skinSource == null)
+                if (skinSource == null)
                     notSupportText.Text = "Sorry, skin is not exist.";
                 else
                     notSupportText.Text = "Sorry, layout is not exist.";
@@ -84,8 +84,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
                 // Set margin
                 const float padding = 30 * scale;
-                var horizontalMargin = (layout.HorizontalMargin * scale) + padding;
-                var verticalMargin = (layout.VerticalMargin * scale) + padding;
+                var horizontalMargin = layout.HorizontalMargin * scale + padding;
+                var verticalMargin = layout.VerticalMargin * scale + padding;
                 previewLyric.Margin = new MarginPadding
                 {
                     Left = layout.Alignment.HasFlag(Anchor.x0) ? horizontalMargin : 0,
