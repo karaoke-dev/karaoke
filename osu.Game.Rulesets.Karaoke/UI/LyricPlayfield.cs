@@ -70,23 +70,15 @@ namespace osu.Game.Rulesets.Karaoke.UI
             var isTranslate = translate.Value;
             var targetLanguage = translateLanguage.Value;
 
-            var lyric = Beatmap.HitObjects.OfType<LyricLine>().ToList();
-            var translateDictionary = Beatmap.GetTranslates();
+            var lyrics = Beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var availableTranslates = Beatmap.AvailableTranslates();
 
-            // Clear exist translate
-            lyric.ForEach(x => x.TranslateText = null);
 
             // If contain target language
-            if (isTranslate && targetLanguage != null
-                            && Beatmap.AvailableTranslates().Contains(targetLanguage))
+            var targetTranslateLanguage = availableTranslates.FirstOrDefault(x => x.Name == targetLanguage);
+            if (isTranslate && targetTranslateLanguage != null)
             {
-                var translate = Beatmap.GetTranslate(targetLanguage);
-
-                // Apply translate
-                for (int i = 0; i < Math.Min(lyric.Count, translate.Count); i++)
-                {
-                    lyric[i].TranslateText = translate[i];
-                }
+                lyrics.ForEach(x => x.ApplyDisplayTranslate(targetTranslateLanguage.Id));
             }
         }
 

@@ -119,13 +119,23 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public readonly Bindable<string> TranslateTextBindable = new Bindable<string>();
 
         /// <summary>
-        /// Translate text
+        /// Translates
         /// </summary>
-        [JsonIgnore]
-        public string TranslateText
+        public IDictionary<int, string> Translates { get; set; }
+
+        /// <summary>
+        /// Display target translate
+        /// </summary>
+        /// <param name="id"></param>
+        public bool ApplyDisplayTranslate(int id)
         {
-            get => TranslateTextBindable.Value;
-            set => TranslateTextBindable.Value = value;
+            if (Translates.TryGetValue(id, out string translate))
+            {
+                TranslateTextBindable.Value = translate;
+                return true;
+            }
+
+            return false;
         }
 
         public IEnumerable<Note> CreateDefaultNotes()

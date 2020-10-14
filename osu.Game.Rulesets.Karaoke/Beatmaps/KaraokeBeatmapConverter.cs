@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
             if (propertyDicrionary != null)
             {
-                (beatmap as KaraokeBeatmap).Translates = propertyDicrionary.Translates;
+                (beatmap as KaraokeBeatmap).AvailableTranslates = propertyDicrionary.AvailableTranslates;
                 beatmap.HitObjects.Remove(propertyDicrionary);
             }
 

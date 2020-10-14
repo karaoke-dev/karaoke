@@ -75,11 +75,15 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             if (!output.AnyTranslate())
                 yield break;
 
-            foreach (var (languageCode, translates) in output.GetTranslates())
+            var lyrics = output.HitObjects.OfType<LyricLine>().ToList();
+            var availableTranslates = output.AvailableTranslates();
+
+            foreach (var translate in availableTranslates)
             {
-                foreach (var translate in translates)
+                foreach (var lyric in lyrics)
                 {
-                    yield return $"@tr[{languageCode}]={translate}";
+                    var translateString = lyric.Translates.TryGetValue(translate.Id, out string value) ? value : "";
+                    yield return $"@tr[{translate.Name}]={translateString}";
                 }
             }
         }

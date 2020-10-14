@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
     public class KaraokeBeatmap : Beatmap<KaraokeHitObject>
     {
-        public IDictionary<string, List<string>> Translates { get; set; } = new Dictionary<string, List<string>>();
+        public BeatmapSetOnlineLanguage[] AvailableTranslates { get; set; } = new BeatmapSetOnlineLanguage[] { };
 
         public SingerMetadata SingerMetadata { get; set; } = new SingerMetadata();
 
