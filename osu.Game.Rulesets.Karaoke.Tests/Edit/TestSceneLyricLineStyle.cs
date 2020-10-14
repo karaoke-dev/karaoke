@@ -372,8 +372,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                         EndIndex = 4,
                         Text = "ke"
                     }
-                },
-                TranslateText = "karaoke"
+                }
             };
         }
 

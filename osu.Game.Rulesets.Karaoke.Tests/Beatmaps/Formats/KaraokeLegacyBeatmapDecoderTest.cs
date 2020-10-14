@@ -100,23 +100,27 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             var beatmap = decodeBeatmap("karaoke-translate-samples");
 
             // Get translate
-            var translates = beatmap.GetTranslates();
+            var translates = beatmap.AvailableTranslates();
+            var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
 
             // Check is not null
             Assert.IsTrue(translates != null);
 
             // Check translate count
-            Assert.AreEqual(translates.Count, 2);
+            Assert.AreEqual(translates.Count(), 2);
+
+            // All lyric should have two translates
+            Assert.AreEqual(lyrics[0].Translates.Count, 2);
+            Assert.AreEqual(lyrics[1].Translates.Count, 2);
 
             // Check chinese translate
-            Assert.AreEqual(translates["zh-TW"].Count, 2);
-            Assert.AreEqual(translates["zh-TW"][0], "卡拉OK");
-            Assert.AreEqual(translates["zh-TW"][1], "喜歡");
+            Assert.AreEqual(lyrics[0].Translates[0], "卡拉OK");
+            Assert.AreEqual(lyrics[1].Translates[0], "喜歡");
+
 
             // Check english translate
-            Assert.AreEqual(translates["en-US"].Count, 2);
-            Assert.AreEqual(translates["en-US"][0], "karaoke");
-            Assert.AreEqual(translates["en-US"][1], "like it");
+            Assert.AreEqual(lyrics[0].Translates[1], "karaoke");
+            Assert.AreEqual(lyrics[1].Translates[1], "like it");
         }
 
         private KaraokeBeatmap decodeBeatmap(string fileName)

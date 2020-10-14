@@ -97,16 +97,28 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             lyricPreview.LyricLines = lyricLines;
             translateEditor.LanguageDropdown.Items = new[]
             {
-                "zh-TW",
-                "en-US",
-                "ja-JP"
+                new BeatmapSetOnlineLanguage
+                {
+                    Id = 1,
+                    Name = "zh-TW"
+                },
+                new BeatmapSetOnlineLanguage
+                {
+                    Id = 2,
+                    Name = "en-US"
+                },
+                new BeatmapSetOnlineLanguage
+                {
+                    Id = 3,
+                    Name = "ja-JP"
+                }
             };
             translateEditor.LanguageDropdown.Current.BindValueChanged(value =>
             {
                 // Save translate first
                 var oldLanguageCode = value.OldValue;
 
-                if (!string.IsNullOrEmpty(oldLanguageCode))
+                if (oldLanguageCode != null)
                 {
                     // Get translate and fill empty
                     var insertTranslate = translateEditor.Translates.ToList();
@@ -114,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
                     if (beatmap.AvailableTranslates().Contains(oldLanguageCode))
                     {
-                        var translate = beatmap.GetTranslate(oldLanguageCode);
+                        var translate = beatmap.AvailableTranslates();
                         translate.Clear();
                         translate.AddRange(insertTranslate);
                     }
@@ -267,7 +279,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
         public class TranslateEditor : FillFlowContainer
         {
-            public OsuDropdown<string> LanguageDropdown { get; }
+            public OsuDropdown<BeatmapSetOnlineLanguage> LanguageDropdown { get; }
 
             private readonly FillFlowContainer<OsuTextBox> translateTextBoxes;
 
@@ -277,7 +289,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 Spacing = new Vector2(COLUMN_SPACING);
                 Children = new Drawable[]
                 {
-                    LanguageDropdown = new OsuDropdown<string>
+                    LanguageDropdown = new OsuDropdown<BeatmapSetOnlineLanguage>
                     {
                         RelativeSizeAxes = Axes.X,
                     },
