@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
 
             // Add translate group if this beatmap has translate
             if (beatmap.AnyTranslate())
-                Add(new TranslateSettings(beatmap.GetTranslates()) { Expanded = false });
+                Add(new TranslateSettings(beatmap.AvailableTranslates()) { Expanded = false });
         }
 
         public override SettingButton CreateToggleButton() => new SettingButton

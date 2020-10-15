@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -70,23 +69,15 @@ namespace osu.Game.Rulesets.Karaoke.UI
             var isTranslate = translate.Value;
             var targetLanguage = translateLanguage.Value;
 
-            var lyric = Beatmap.HitObjects.OfType<LyricLine>().ToList();
-            var translateDictionary = Beatmap.GetTranslates();
-
-            // Clear exist translate
-            lyric.ForEach(x => x.TranslateText = null);
+            var lyrics = Beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var availableTranslates = Beatmap.AvailableTranslates();
 
             // If contain target language
-            if (isTranslate && targetLanguage != null
-                            && Beatmap.AvailableTranslates().Contains(targetLanguage))
-            {
-                var translate = Beatmap.GetTranslate(targetLanguage);
+            var targetTranslateLanguage = availableTranslates.FirstOrDefault(x => x.Name == targetLanguage);
 
-                // Apply translate
-                for (int i = 0; i < Math.Min(lyric.Count, translate.Count); i++)
-                {
-                    lyric[i].TranslateText = translate[i];
-                }
+            if (isTranslate && targetTranslateLanguage != null)
+            {
+                lyrics.ForEach(x => x.ApplyDisplayTranslate(targetTranslateLanguage.Id));
             }
         }
 

@@ -70,8 +70,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                         Text = "ke"
                     }
                 },
-                TranslateText = "karaoke"
             };
+
+            lyric.Translates.Add(0, "karaoke");
+            lyric.ApplyDisplayTranslate(0);
 
             lyric.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 

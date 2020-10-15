@@ -69,7 +69,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                                 Text = "ke"
                             }
                         },
-                        TranslateText = "karaoke"
                     }
                 }
             };

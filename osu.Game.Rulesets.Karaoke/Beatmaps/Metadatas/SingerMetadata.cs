@@ -31,14 +31,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
                 throw new NullReferenceException("Singer cannot be null.");
 
             if (!Singers.Contains(singer))
-                throw new ArgumentOutOfRangeException("Singer is not in the list");
+                throw new ArgumentOutOfRangeException("Singer is not in the list.");
 
             // Remove sub singers.
-            var subsingers = GetSubSingers(singer);
+            var subSingers = GetSubSingers(singer);
 
-            foreach (var subsinger in subsingers)
+            foreach (var subSinger in subSingers)
             {
-                RemoveSubSinger(subsinger);
+                RemoveSubSinger(subSinger);
             }
 
             // remove singer

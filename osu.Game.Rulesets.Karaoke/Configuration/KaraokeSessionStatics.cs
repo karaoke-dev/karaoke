@@ -22,9 +22,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             var useTranslate = getValue<bool>(KaraokeRulesetSetting.UseTranslate);
             var preferLanguage = getValue<string>(KaraokeRulesetSetting.PreferLanguage);
             var availableTranslate = beatmap?.AvailableTranslates();
-            var selectedLanguage = availableTranslate?.FirstOrDefault(t => t == preferLanguage) ?? availableTranslate?.FirstOrDefault();
+            var selectedLanguage = availableTranslate?.FirstOrDefault(t => t.Name == preferLanguage) ?? availableTranslate?.FirstOrDefault();
             Set(KaraokeRulesetSession.UseTranslate, useTranslate);
-            Set(KaraokeRulesetSession.PreferLanguage, selectedLanguage);
+            Set(KaraokeRulesetSession.PreferLanguage, selectedLanguage?.Name ?? "");
 
             var displayRuby = getValue<bool>(KaraokeRulesetSetting.DisplayRuby);
             var displayRomaji = getValue<bool>(KaraokeRulesetSetting.DisplayRomaji);

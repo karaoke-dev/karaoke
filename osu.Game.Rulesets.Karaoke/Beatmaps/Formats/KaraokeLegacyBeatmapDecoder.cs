@@ -246,27 +246,41 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private void processTranslate(Beatmap beatmap, IEnumerable<string> translateLines)
         {
-            var dictionary = new LegacyPropertyDictionary();
+            var availableTranslates = new List<BeatmapSetOnlineLanguage>();
 
-            foreach (var translateLine in translateLines)
+            var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var translates = translateLines.Select(translate => new
             {
-                // format should like @tr[en-US]=First translate
-                var translateLanguage = translateLine.Split('=').FirstOrDefault()?.Split('[').LastOrDefault()?.Split(']').FirstOrDefault();
-                var translateStr = translateLine.Split('=').LastOrDefault();
+                key = translate.Split('=').FirstOrDefault()?.Split('[').LastOrDefault()?.Split(']').FirstOrDefault(),
+                value = translate.Split('=').LastOrDefault()
+            }).GroupBy(x => x.key, y => y.value).ToList();
 
-                // Add into dictionary
-                if (dictionary.Translates.TryGetValue(translateLanguage, out var list))
+            for (int i = 0; i < translates.Count(); i++)
+            {
+                var id = i + 1;
+                var singleLanguage = translates[i];
+
+                var key = singleLanguage.Key;
+                var values = singleLanguage.ToList();
+
+                var size = Math.Min(lyrics.Count(), singleLanguage.Count());
+
+                for (int j = 0; j < size; j++)
                 {
-                    list.Add(translateStr);
+                    lyrics[j].Translates.Add(id, values[j]);
                 }
-                else
+
+                availableTranslates.Add(new BeatmapSetOnlineLanguage
                 {
-                    dictionary.Translates.Add(translateLanguage, new List<string>
-                    {
-                        translateStr
-                    });
-                }
+                    Id = id,
+                    Name = key
+                });
             }
+
+            var dictionary = new LegacyPropertyDictionary
+            {
+                AvailableTranslates = availableTranslates.ToArray()
+            };
 
             beatmap.HitObjects.Add(dictionary);
         }

@@ -42,7 +42,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 {
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.TopLeft,
-                    Text = hitObject.TranslateText
                 }
             };
 

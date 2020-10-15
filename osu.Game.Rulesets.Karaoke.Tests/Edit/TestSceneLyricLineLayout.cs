@@ -393,7 +393,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 // Apply property
                 lyric.StartTime = startTime;
                 lyric.Duration = duration;
-                lyric.TranslateText = translate;
+                lyric.Translates.Add(0, translate);
+                lyric.ApplyDisplayTranslate(0);
                 lyric.TimeTags = new Dictionary<TimeTagIndex, double>
                 {
                     { new TimeTagIndex(0), startTime },
