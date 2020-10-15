@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <summary>
         /// Translates
         /// </summary>
-        public IDictionary<int, string> Translates { get; set; }
+        public IDictionary<int, string> Translates { get; set; } = new Dictionary<int, string>();
 
         /// <summary>
         /// Display target translate

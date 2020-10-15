@@ -261,7 +261,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
             for (int i = 0; i < translates.Count(); i++)
             {
-                var id = 1 + 1;
+                var id = i + 1;
                 var singleLanguage = translates[i];
 
                 var key = singleLanguage.Key;

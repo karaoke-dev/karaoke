@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
     {
         public static bool IsScorable(this IBeatmap beatmap) => beatmap?.HitObjects.OfType<Note>().Any(x => x.Display) ?? false;
 
-        public static BeatmapSetOnlineLanguage[] AvailableTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.AvailableTranslates;
+        public static BeatmapSetOnlineLanguage[] AvailableTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.AvailableTranslates ?? new BeatmapSetOnlineLanguage[] { } ;
 
         public static bool AnyTranslate(this IBeatmap beatmap) => beatmap?.AvailableTranslates()?.Any() ?? false;
 

@@ -114,13 +114,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             Assert.AreEqual(lyrics[1].Translates.Count, 2);
 
             // Check chinese translate
-            Assert.AreEqual(lyrics[0].Translates[0], "卡拉OK");
-            Assert.AreEqual(lyrics[1].Translates[0], "喜歡");
+            var chineseLanguageId = translates[0].Id;
+            Assert.AreEqual(lyrics[0].Translates[chineseLanguageId], "卡拉OK");
+            Assert.AreEqual(lyrics[1].Translates[chineseLanguageId], "喜歡");
 
 
             // Check english translate
-            Assert.AreEqual(lyrics[0].Translates[1], "karaoke");
-            Assert.AreEqual(lyrics[1].Translates[1], "like it");
+            var englishLanguageId = translates[1].Id;
+            Assert.AreEqual(lyrics[0].Translates[englishLanguageId], "karaoke");
+            Assert.AreEqual(lyrics[1].Translates[englishLanguageId], "like it");
         }
 
         private KaraokeBeatmap decodeBeatmap(string fileName)
