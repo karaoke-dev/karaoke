@@ -2,7 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.EntityFrameworkCore.Internal;
 using NUnit.Framework;
 using osu.Framework.Allocation;
@@ -95,6 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             beatmap = CreateBeatmap(new KaraokeRuleset().RulesetInfo);
             timePreview.LyricLines = lyricLines;
             lyricPreview.LyricLines = lyricLines;
+            translateEditor.LyricLines = lyricLines;
             translateEditor.LanguageDropdown.Items = new[]
             {
                 new BeatmapSetOnlineLanguage
@@ -113,31 +116,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                     Name = "ja-JP"
                 }
             };
-            translateEditor.LanguageDropdown.Current.BindValueChanged(value =>
-            {
-                // Save translate first
-                var oldLanguageCode = value.OldValue;
-
-                if (oldLanguageCode != null)
-                {
-                    // Get translate and fill empty
-                    var insertTranslate = translateEditor.Translates.ToList();
-                    insertTranslate.AddRange(new string[lyricLines.Length - insertTranslate.Count]);
-
-                    if (beatmap.AvailableTranslates().Contains(oldLanguageCode))
-                    {
-                        var translate = beatmap.AvailableTranslates();
-                        translate.Clear();
-                        translate.AddRange(insertTranslate);
-                    }
-                    else
-                        beatmap.GetTranslates().Add(oldLanguageCode, insertTranslate);
-                }
-
-                // Apply new translate to editor
-                var newLanguageCode = value.NewValue;
-                translateEditor.Translates = beatmap.GetTranslate(newLanguageCode)?.ToArray() ?? lyricLines.Select(x => "").ToArray();
-            }, true);
         }
 
         [BackgroundDependencyLoader]
@@ -279,7 +257,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
         public class TranslateEditor : FillFlowContainer
         {
-            public OsuDropdown<BeatmapSetOnlineLanguage> LanguageDropdown { get; }
+            public LanguageDropdown LanguageDropdown { get; }
 
             private readonly FillFlowContainer<OsuTextBox> translateTextBoxes;
 
@@ -289,7 +267,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 Spacing = new Vector2(COLUMN_SPACING);
                 Children = new Drawable[]
                 {
-                    LanguageDropdown = new OsuDropdown<BeatmapSetOnlineLanguage>
+                    LanguageDropdown = new LanguageDropdown
                     {
                         RelativeSizeAxes = Axes.X,
                     },
@@ -301,34 +279,57 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                         Spacing = new Vector2(SPACING)
                     }
                 };
+
+                LanguageDropdown.Current.BindValueChanged(value =>
+                {
+                    // Reload to switch new laugnage.
+                    LyricLines = LyricLines;
+                }, true);
             }
 
-            private string[] translates = Array.Empty<string>();
+            private LyricLine[] lyricLines;
 
-            public string[] Translates
+            public LyricLine[] LyricLines
             {
-                get => translates;
+                get => lyricLines;
                 set
                 {
-                    translates = value ?? Array.Empty<string>();
+                    lyricLines = value;
 
-                    translateTextBoxes.Children = Translates?.Select(x =>
+                    if (lyricLines == null)
+                        return;
+
+                    translateTextBoxes.Children = LyricLines?.Select(x =>
                     {
+                        if (LanguageDropdown.Current.Value == null)
+                            return new OsuTextBox();
+
+                        var languageId = LanguageDropdown.Current.Value.Id;
+
                         var textBox = new OsuTextBox
                         {
-                            Text = x,
+                            Text = x.Translates.TryGetValue(languageId, out string translate) ? translate : null,
                             RelativeSizeAxes = Axes.X,
                             Height = TEXT_HEIGHT
                         };
                         textBox.Current.BindValueChanged(textBoxValue =>
                         {
                             var index = translateTextBoxes.Children.IndexOf(textBox);
-                            Translates[index] = textBoxValue.NewValue;
+                            var translateText = textBoxValue.NewValue;
+
+                            if (!LyricLines[index].Translates.TryAdd(languageId, translateText))
+                                LyricLines[index].Translates[languageId] = translateText;
                         });
                         return textBox;
                     }).ToList();
                 }
             }
+        }
+
+        public class LanguageDropdown : OsuDropdown<BeatmapSetOnlineLanguage>
+        {
+            protected override string GenerateItemText(BeatmapSetOnlineLanguage item)
+                => item.Name;
         }
     }
 }
