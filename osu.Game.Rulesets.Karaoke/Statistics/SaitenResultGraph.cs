@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
 
                 foreach (var noteEvent in noteEvents)
                 {
-                    // TOOD : add note into here
+                    // TODO : add note into here
                 }
 
                 // todo : add list of note colors to present state.
@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             {
                 internal DrawableNote(HitResult result)
                 {
-                    // TOOD : assign color with different hit result.
+                    // TODO : assign color with different hit result.
                 }
             }
         }

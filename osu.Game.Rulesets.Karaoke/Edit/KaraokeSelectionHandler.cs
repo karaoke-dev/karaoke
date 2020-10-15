@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             }
 
             if (EditorBeatmap.SelectedHitObjects.All(x => x is Note)
-                && EditorBeatmap.SelectedHitObjects.Count() > 1)
+                && EditorBeatmap.SelectedHitObjects.Count > 1)
             {
                 var menu = new List<MenuItem>();
                 var selectedObject = EditorBeatmap.SelectedHitObjects.Cast<Note>().OrderBy(x => x.StartTime);

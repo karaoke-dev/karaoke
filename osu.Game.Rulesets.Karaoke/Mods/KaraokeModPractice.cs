@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 Name = "Toggle Practice",
                 Text = "Practice",
                 TooltipText = "Open/Close practice overlay",
-                Action = () => ToggleVisibility()
+                Action = ToggleVisibility
             };
         }
     }

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -35,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
                 translateDropDown = new OsuDropdown<string>
                 {
                     RelativeSizeAxes = Axes.X,
-                    Items = translates.Select(x=>x.Name)
+                    Items = translates.Select(x => x.Name)
                 },
             };
         }

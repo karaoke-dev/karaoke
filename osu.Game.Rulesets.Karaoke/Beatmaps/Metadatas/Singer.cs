@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 
         public Color4 Color { get; set; }
 
-        public string Avater { get; set; }
+        public string Avatar { get; set; }
 
         public string Description { get; set; }
     }

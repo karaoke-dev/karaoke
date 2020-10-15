@@ -25,12 +25,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             var beatmap = base.ConvertBeatmap(original, cancellationToken);
 
             // Apply property created from legacy decoder
-            var propertyDicrionary = beatmap.HitObjects.OfType<LegacyPropertyDictionary>().FirstOrDefault();
+            var propertyDictionary = beatmap.HitObjects.OfType<LegacyPropertyDictionary>().FirstOrDefault();
 
-            if (propertyDicrionary != null)
+            if (propertyDictionary != null)
             {
-                (beatmap as KaraokeBeatmap).AvailableTranslates = propertyDicrionary.AvailableTranslates;
-                beatmap.HitObjects.Remove(propertyDicrionary);
+                (beatmap as KaraokeBeatmap).AvailableTranslates = propertyDictionary.AvailableTranslates;
+                beatmap.HitObjects.Remove(propertyDictionary);
             }
 
             return beatmap;

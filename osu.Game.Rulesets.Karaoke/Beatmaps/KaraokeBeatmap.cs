@@ -12,13 +12,13 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
     public class KaraokeBeatmap : Beatmap<KaraokeHitObject>
     {
-        public BeatmapSetOnlineLanguage[] AvailableTranslates { get; set; } = new BeatmapSetOnlineLanguage[] { };
+        public BeatmapSetOnlineLanguage[] AvailableTranslates { get; set; } = { };
 
         public SingerMetadata SingerMetadata { get; set; } = new SingerMetadata();
 
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {
-            int singers = SingerMetadata.Singers.Count();
+            int singers = SingerMetadata.Singers.Count;
             int lyrics = HitObjects.Count(s => s is LyricLine);
 
             var defaultStatistic = new List<BeatmapStatistic>

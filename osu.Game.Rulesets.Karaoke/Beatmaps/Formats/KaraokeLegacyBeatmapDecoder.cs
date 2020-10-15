@@ -249,15 +249,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             var availableTranslates = new List<BeatmapSetOnlineLanguage>();
 
             var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
-            var translates = translateLines.Select(translate =>
+            var translates = translateLines.Select(translate => new
             {
-                // format should like @tr[en-US]=First translate
-                return new
-                {
-                    key = translate.Split('=').FirstOrDefault()?.Split('[').LastOrDefault()?.Split(']').FirstOrDefault(),
-                    value = translate.Split('=').LastOrDefault()
-                };
-            }).GroupBy(x => x.key, y=>y.value).ToList();
+                key = translate.Split('=').FirstOrDefault()?.Split('[').LastOrDefault()?.Split(']').FirstOrDefault(),
+                value = translate.Split('=').LastOrDefault()
+            }).GroupBy(x => x.key, y => y.value).ToList();
 
             for (int i = 0; i < translates.Count(); i++)
             {
@@ -268,6 +264,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 var values = singleLanguage.ToList();
 
                 var size = Math.Min(lyrics.Count(), singleLanguage.Count());
+
                 for (int j = 0; j < size; j++)
                 {
                     lyrics[j].Translates.Add(id, values[j]);
