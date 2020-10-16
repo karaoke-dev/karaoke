@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         private readonly LyricPreview lyricPreview;
         private readonly TranslateEditor translateEditor;
 
-        private LyricLine[] lyricLines => beatmap.HitObjects.OfType<LyricLine>().ToArray();
+        private LyricLine[] lyricLines => EditorBeatmap.HitObjects.OfType<LyricLine>().ToArray();
 
         public TranslateScreen()
            : base(EditorScreenMode.SongSetup)
@@ -82,10 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                     }
                 }
             };
-
-            timePreview.LyricLines = lyricLines;
-            lyricPreview.LyricLines = lyricLines;
-            translateEditor.LyricLines = lyricLines;
+            
             translateEditor.LanguageDropdown.Items = new[]
             {
                 new BeatmapSetOnlineLanguage
@@ -110,6 +107,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         private void load(OsuColour colours)
         {
             background.Colour = colours.ContextMenuGray;
+
+            timePreview.LyricLines = lyricLines;
+            lyricPreview.LyricLines = lyricLines;
+            translateEditor.LyricLines = lyricLines;
         }
 
         public class TimePreview : Container
