@@ -14,14 +14,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
     {
         protected override string Title => "Manage translates";
 
-        [Resolved(CanBeNull = true)]
-        private LanguageManager languageManager { get; set; }
-
         public ManageLanguagesDialog()
         {
             RelativeSizeAxes = Axes.Both;
             Size = new Vector2(0.5f, 0.8f);
+        }
 
+        [BackgroundDependencyLoader]
+        private void load(LanguageManager languageManager)
+        {
             Children = new Drawable[]
             {
                 new DrawableLanguageList

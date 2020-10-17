@@ -109,11 +109,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 base.LoadComplete();
 
                 textBox.Current.Value = language.Name;
-                textBox.Current.BindValueChanged(_ => createNewCollection(), true);
+                textBox.Current.BindValueChanged(x => {
+                    // Update name
+                    languageManager.UpdateLanguagename(language, x.NewValue);
+
+                    // Create new 
+                    createNewLanguage();
+                }, true);
                 IsCreated.BindValueChanged(created => textBoxPaddingContainer.Padding = new MarginPadding { Right = created.NewValue ? button_width : 0 }, true);
             }
 
-            private void createNewCollection()
+            private void createNewLanguage()
             {
                 if (IsCreated.Value)
                     return;
@@ -121,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 if (string.IsNullOrEmpty(textBox.Current.Value))
                     return;
 
-                // Add the new collection and disable our placeholder. If all text is removed, the placeholder should not show back again.
+                // Add the new language and disable our placeholder. If all text is removed, the placeholder should not show back again.
                 languageManager?.AddLanguage(language);
                 textBox.PlaceholderText = string.Empty;
 
@@ -218,14 +224,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                     background.FlashColour(Color4.White, 150);
 
                     if (!languageManager?.IsLanguageContaineTranslate(language) ?? false)
-                        deleteCollection();
+                        deleteLanguage();
                     else
-                        dialogOverlay?.Push(new DeleteLanguageDialog(language, deleteCollection));
+                        dialogOverlay?.Push(new DeleteLanguageDialog(language, deleteLanguage));
 
                     return true;
                 }
 
-                private void deleteCollection() => languageManager?.RemoveLanguage(language);
+                private void deleteLanguage() => languageManager?.RemoveLanguage(language);
             }
         }
     }

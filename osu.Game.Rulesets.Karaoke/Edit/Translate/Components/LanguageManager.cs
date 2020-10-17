@@ -4,7 +4,9 @@
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
 {
@@ -15,19 +17,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
     {
         public readonly BindableList<BeatmapSetOnlineLanguage> Languages = new BindableList<BeatmapSetOnlineLanguage>();
 
+        private readonly EditorBeatmap editorBeatmap;
+
         public LanguageManager(EditorBeatmap beatmap)
         {
-            // todo : 
+            editorBeatmap = beatmap;
         }
 
         public void AddLanguage(BeatmapSetOnlineLanguage language)
         {
+            Languages.Add(language);
+        }
 
+        public void UpdateLanguagename(BeatmapSetOnlineLanguage language, string name)
+        {
+            language.Name = name;
         }
 
         public void RemoveLanguage(BeatmapSetOnlineLanguage language)
         {
-
+            Languages.Remove(language);
         }
 
         public bool IsLanguageContaineTranslate(BeatmapSetOnlineLanguage language)
@@ -35,7 +44,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
 
         public int LanguageContaineTranslateAmount(BeatmapSetOnlineLanguage language)
         {
-            return 10;
+            if (language == null)
+                return 0;
+
+            var lyrics = editorBeatmap.HitObjects.OfType<LyricLine>().ToList();
+            return lyrics.Count(x => x.Translates.ContainsKey(language.Id));
         }
     }
 }
