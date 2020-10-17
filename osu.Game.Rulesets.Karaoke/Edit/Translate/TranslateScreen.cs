@@ -15,6 +15,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Translate.Components;
 using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -24,6 +25,73 @@ using osuTK;
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
     public class TranslateScreen : EditorScreen
+    {
+        [Cached]
+        protected readonly OverlayColourProvider ColourProvider;
+
+        public TranslateScreen()
+            : base(EditorScreenMode.SongSetup)
+        {
+            ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours)
+        {
+            Child = new Container
+            {
+                RelativeSizeAxes = Axes.Both,
+                Padding = new MarginPadding(50),
+                Child = new Container
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Masking = true,
+                    CornerRadius = 10,
+                    Children = new Drawable[]
+                    {
+                        new Box
+                        {
+                            Colour = colours.GreySeafoamDark,
+                            RelativeSizeAxes = Axes.Both,
+                        },
+                        new SectionsContainer<Container>
+                        {
+                            FixedHeader = new TranslateScreenHeader(),
+                            RelativeSizeAxes = Axes.Both,
+                            Children = new Container[]
+                            {
+                                new TranslateEditSection(EditorBeatmap)
+                                {
+                                    RelativeSizeAxes = Axes.X,
+                                    AutoSizeAxes = Axes.Y,
+                                },
+                            }
+                        },
+                    }
+                }
+            };
+        }
+
+        internal class TranslateScreenHeader : OverlayHeader
+        {
+            protected override OverlayTitle CreateTitle() => new TranslateScreenTitle();
+
+            private class TranslateScreenTitle : OverlayTitle
+            {
+                public TranslateScreenTitle()
+                {
+                    Title = "translate";
+                    Description = "create translate of your beatmap";
+                    IconTexture = "Icons/Hexacons/social";
+                }
+            }
+        }
+    }
+
+
+
+
+    public class OldTranslateScreen : EditorScreen
     {
         public const int DROPDOWN_SPACING = 40;
         public const int TEXT_HEIGHT = 35;
@@ -37,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
         private LyricLine[] lyricLines => EditorBeatmap.HitObjects.OfType<LyricLine>().ToArray();
 
-        public TranslateScreen()
+        public OldTranslateScreen()
            : base(EditorScreenMode.SongSetup)
         {
             Child = new OsuScrollContainer
@@ -48,7 +116,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                     Masking = true,
                     CornerRadius = 5,
                     AutoSizeAxes = Axes.Both,
-                    Margin = new MarginPadding(30),
                     Children = new Drawable[]
                     {
                         background = new Box
