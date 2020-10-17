@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
     [TestFixture]
     public class TestSceneLayoutToolTip : OsuTestScene
     {
-        private KaraokeLayoutTestSkin skin = new KaraokeLayoutTestSkin();
+        private readonly KaraokeLayoutTestSkin skin = new KaraokeLayoutTestSkin();
         private LayoutToolTip toolTip;
 
         [SetUp]
@@ -38,6 +38,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         public void TestDisplayToolTip()
         {
             var layouts = skin.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
+            if (layouts == null)
+                return;
 
             foreach (var layout in layouts)
             {

@@ -17,43 +17,36 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Translate
         [Test]
         public void TestAddLanguage()
         {
-
         }
 
         [Ignore("Haven't implement.")]
         public void TestAddLanguageUndo()
         {
-
         }
 
         [Ignore("Haven't implement.")]
         public void TestAddLanguageRedo()
         {
-
         }
 
         [Test]
         public void TestRemoveLanguage()
         {
-
         }
 
         [Ignore("Haven't implement.")]
         public void TestRemoveLanguageUndo()
         {
-
         }
 
         [Ignore("Haven't implement.")]
         public void TestRemoveLanguageRedo()
         {
-
         }
 
         [Test]
         public void TestLanguageTranslateAmount()
         {
-
         }
     }
 }
