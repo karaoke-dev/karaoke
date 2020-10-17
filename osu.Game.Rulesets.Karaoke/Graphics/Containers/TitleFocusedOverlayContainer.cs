@@ -84,15 +84,21 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
                             },
                             new Drawable[]
                             {
-                                contentBackground = new Box
+                                new Container
                                 {
                                     RelativeSizeAxes = Axes.Both,
-                                },
-                                content = new Container
-                                {
-                                    RelativeSizeAxes = Axes.Both,
-                                    Padding = new MarginPadding(10)
-                                },
+                                    Children = new Drawable[]
+                                    {
+                                        contentBackground = new Box
+                                        {
+                                            RelativeSizeAxes = Axes.Both,
+                                        },
+                                        content = new Container
+                                        {
+                                            RelativeSizeAxes = Axes.Both,
+                                        },
+                                    }
+                                }
                             },
                         }
                     }
