@@ -30,10 +30,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             var beatmap = new TestKaraokeBeatmap(null);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert();
             var editorBeatmap = new EditorBeatmap(karaokeBeatmap);
+            Dependencies.Cache(editorBeatmap);
 
             base.Content.AddRange(new Drawable[]
             {
-                manager = new LanguageManager(editorBeatmap),
+                manager = new LanguageManager(),
                 Content,
                 dialogOverlay = new DialogOverlay()
             });

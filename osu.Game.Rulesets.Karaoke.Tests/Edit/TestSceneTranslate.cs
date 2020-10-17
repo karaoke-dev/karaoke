@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Framework.Allocation;
+using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Translate;
@@ -22,7 +23,25 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         public TestSceneTranslate()
         {
             var beatmap = new TestKaraokeBeatmap(null);
-            var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert();
+            var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
+            karaokeBeatmap.AvailableTranslates = new[]
+            {
+                new BeatmapSetOnlineLanguage
+                {
+                    Id = 1,
+                    Name = "zh-TW"
+                },
+                new BeatmapSetOnlineLanguage
+                {
+                    Id = 2,
+                    Name = "en-US"
+                },
+                new BeatmapSetOnlineLanguage
+                {
+                    Id = 3,
+                    Name = "ja-JP"
+                }
+            };
 
             editorBeatmap = new EditorBeatmap(karaokeBeatmap);
         }

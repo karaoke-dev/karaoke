@@ -1,9 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using System.Linq;
@@ -17,11 +19,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
     {
         public readonly BindableList<BeatmapSetOnlineLanguage> Languages = new BindableList<BeatmapSetOnlineLanguage>();
 
-        private readonly EditorBeatmap editorBeatmap;
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
 
-        public LanguageManager(EditorBeatmap beatmap)
+        [BackgroundDependencyLoader]
+        private void load()
         {
-            editorBeatmap = beatmap;
+            if (beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap)
+            {
+                Languages.AddRange(karaokeBeatmap.AvailableTranslates);
+                Languages.BindCollectionChanged((a, b) =>
+                {
+                    karaokeBeatmap.AvailableTranslates = Languages.ToArray();
+                });
+            }
         }
 
         public void AddLanguage(BeatmapSetOnlineLanguage language)
@@ -47,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             if (language == null)
                 return 0;
 
-            var lyrics = editorBeatmap.HitObjects.OfType<LyricLine>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
             return lyrics.Count(x => x.Translates.ContainsKey(language.Id));
         }
     }
