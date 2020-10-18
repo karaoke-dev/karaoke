@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
@@ -15,11 +16,16 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.IO;
+using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Rulesets.Karaoke.Edit.Layout;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
 using osuTK;
@@ -28,6 +34,28 @@ using osuTK.Graphics;
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
     [TestFixture]
+    public class TestSceneLayout : EditorClockTestScene
+    {
+        [Cached(typeof(EditorBeatmap))]
+        [Cached(typeof(IBeatSnapProvider))]
+        private readonly EditorBeatmap editorBeatmap;
+
+        public TestSceneLayout()
+        {
+            var beatmap = new TestKaraokeBeatmap(null);
+            var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
+            editorBeatmap = new EditorBeatmap(karaokeBeatmap);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
+            Child = new LayoutScreen();
+        }
+    }
+
+    [Ignore("Will be removed.")]
     public class TestSceneLyricLineLayout : OsuTestScene
     {
         private readonly OsuTextBox nameTextBox;
