@@ -18,14 +18,42 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
+    public class TestSceneLyricRubyRomaji : OsuTestScene
+    {
+        [Cached(typeof(EditorBeatmap))]
+        [Cached(typeof(IBeatSnapProvider))]
+        private readonly EditorBeatmap editorBeatmap;
+
+        public TestSceneLyricRubyRomaji()
+        {
+            var beatmap = new TestKaraokeBeatmap(null);
+            var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
+
+            editorBeatmap = new EditorBeatmap(karaokeBeatmap);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
+            Child = new RubyRomajiScreen();
+        }
+    }
+
+
+    /*
     [TestFixture]
     public class TestSceneLyricRubyRomaji : OsuTestScene
     {
@@ -518,4 +546,5 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             }
         }
     }
+    */
 }
