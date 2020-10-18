@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
                 {
                     Masking = true,
                     RelativeSizeAxes = Axes.Both,
-                    Margin = new MarginPadding { Top = 55 }
+                    Padding = new MarginPadding { Top = 55 }
                 });
             }
         }
