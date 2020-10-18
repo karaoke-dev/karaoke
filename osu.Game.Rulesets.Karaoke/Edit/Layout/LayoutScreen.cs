@@ -31,12 +31,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 RelativeSizeAxes = Axes.Both,
                 ColumnDimensions = new[]
                 {
-                    new Dimension(GridSizeMode.Relative, 0.4f),
+                    new Dimension(GridSizeMode.Relative, 0.3f),
                     new Dimension(GridSizeMode.Distributed)
                 },
                 Content = new[]
                 {
-                    new []
+                    new Drawable[]
                     {
                         new Container
                         {
@@ -62,10 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                                     }
                                 }
                             }
-                        }
-                    },
-                    new Drawable[]
-                    {
+                        },
                         // todo: preview area
                         new Box(),
                     }
