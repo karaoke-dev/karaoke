@@ -6,13 +6,13 @@ using osu.Framework.Bindables;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Graphics;
+using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,28 +23,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
     {
         public Bindable<LyricLine> BindableLyricLine => table.BindableLyricLine;
 
-        private readonly Box background;
+        private readonly CornerBackground background;
         private readonly PreviewLyricTable table;
 
         public LyricList()
         {
-            Child = new Container
+            Children = new Drawable[]
             {
-                Masking = true,
-                CornerRadius = 5,
-                RelativeSizeAxes = Axes.Both,
-                Children = new Drawable[]
+                background = new CornerBackground
                 {
-                    background = new Box
-                    {
-                        Name = "Background",
-                        RelativeSizeAxes = Axes.Both,
-                    },
-                    new OsuScrollContainer
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Child = table = new PreviewLyricTable(),
-                    }
+                    Name = "Background",
+                    RelativeSizeAxes = Axes.Both,
+                },
+                new OsuScrollContainer
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Child = table = new PreviewLyricTable(),
                 }
             };
         }
@@ -129,7 +123,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
                 {
                     new OsuSpriteText
                     {
-                        Text = (index + 1).ToString()
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Font = new FontUsage(size: 32),
+                        Text = $"#{index + 1}"
                     },
                     new ClickablePreviewLyricSpriteText(line, BindableLyricLine)
                     {

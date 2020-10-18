@@ -9,42 +9,36 @@ using osu.Framework.Caching;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
 {
     public class TagListPreview<T> : Container where T : ITag
     {
-        private readonly Box background;
+        private readonly CornerBackground background;
         private readonly PreviewTagTable previewTagTable;
 
         public Bindable<T[]> BindableTag => previewTagTable.BindableTag;
 
         public TagListPreview()
         {
-            Child = new Container
+            Children = new Drawable[]
             {
-                Masking = true,
-                CornerRadius = 5,
-                RelativeSizeAxes = Axes.Both,
-                Children = new Drawable[]
+                background = new CornerBackground
                 {
-                    background = new Box
-                    {
-                        Name = "Background",
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both,
-                    },
-                    new OsuScrollContainer
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Child = previewTagTable = new PreviewTagTable(),
-                    }
+                    Name = "Background",
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                },
+                new OsuScrollContainer
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Child = previewTagTable = new PreviewTagTable(),
                 }
             };
         }
