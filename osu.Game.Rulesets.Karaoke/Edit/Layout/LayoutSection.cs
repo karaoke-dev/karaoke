@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
-                Spacing = new Vector2(20),
+                Spacing = new Vector2(10),
                 Direction = FillDirection.Vertical,
             };
         }

@@ -8,11 +8,14 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Screens.Edit;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
     public class LayoutScreen : EditorScreen
     {
+        private const float section_scale = 0.75f;
+
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
 
@@ -54,6 +57,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                                 {
                                     FixedHeader = new LayoutScreenHeader(),
                                     RelativeSizeAxes = Axes.Both,
+                                    Scale = new Vector2(section_scale),
+                                    Size = new Vector2(1 / section_scale),
                                     Children = new LayoutSection[]
                                     {
                                         new PositionSection(),
