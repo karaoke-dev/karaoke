@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit.Layout.Components;
 using osu.Game.Screens.Edit;
 using osuTK;
 
@@ -43,6 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     {
                         new Container
                         {
+                            Name = "Layout adjustment area",
                             RelativeSizeAxes = Axes.Both,
                             Masking = true,
                             CornerRadius = 10,
@@ -68,8 +70,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                                 }
                             }
                         },
-                        // todo: preview area
-                        new Box(),
+                        new LayoutPreview
+                        {
+                            Name = "Layout preview area",
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Size = new Vector2(0.95f),
+                            RelativeSizeAxes = Axes.Both
+                        },
                     }
                 },
             };
