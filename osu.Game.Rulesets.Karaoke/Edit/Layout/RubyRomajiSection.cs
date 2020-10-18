@@ -18,6 +18,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         private LabelledSliderBar<int> rubyMarginSliderBar;
         private LabelledSliderBar<int> romajiMarginSliderBar;
 
+        protected override string Title => "Ruby/Romaji";
+
         [BackgroundDependencyLoader]
         private void load()
         {

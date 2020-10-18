@@ -18,6 +18,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         private LabelledSliderBar<int> verticalMarginSliderBar;
         private LabelledDropdown<KaraokeTextSmartHorizon> smartHorizonDropdown;
 
+        protected override string Title => "Position";
+
         [BackgroundDependencyLoader]
         private void load()
         {

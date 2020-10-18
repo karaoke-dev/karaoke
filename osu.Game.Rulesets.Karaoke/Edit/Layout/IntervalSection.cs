@@ -13,6 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         private LabelledSliderBar<int> rubyIntervalSliderBar;
         private LabelledSliderBar<int> romajiIntervalSliderBar;
 
+        protected override string Title => "Interval";
+
         [BackgroundDependencyLoader]
         private void load()
         {
@@ -44,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 },
                 romajiIntervalSliderBar = new LabelledSliderBar<int>
                 {
-                    Name = "Romaji interval",
+                    Label = "Romaji interval",
                     Description = "Romaji interval section",
                     Current = new BindableNumber<int>
                     {
