@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         public LayoutScreen()
            : base(EditorScreenMode.SongSetup)
         {
-            ColourProvider = new OverlayColourProvider(OverlayColourScheme.Pink);
+            ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
         }
 
         [BackgroundDependencyLoader]
@@ -29,29 +29,44 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             Child = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                RowDimensions = new[]
+                ColumnDimensions = new[]
                 {
-                    new Dimension(GridSizeMode.Absolute, 500),
+                    new Dimension(GridSizeMode.Relative, 0.4f),
                     new Dimension(GridSizeMode.Distributed)
                 },
-                Content = new []
+                Content = new[]
                 {
                     new []
                     {
-                        new SectionsContainer<LayoutSection>
+                        new Container
                         {
-                            FixedHeader = new LayoutScreenHeader(),
                             RelativeSizeAxes = Axes.Both,
-                            Children = new LayoutSection[]
+                            Masking = true,
+                            CornerRadius = 10,
+                            Children = new Drawable[]
                             {
-                                new PositionSection(),
-                                new IntervalSection(),
-                                new RubyRomajiSection(),
+                                new Box
+                                {
+                                    Colour = ColourProvider.Background2,
+                                    RelativeSizeAxes = Axes.Both,
+                                },
+                                new SectionsContainer<LayoutSection>
+                                {
+                                    FixedHeader = new LayoutScreenHeader(),
+                                    RelativeSizeAxes = Axes.Both,
+                                    Children = new LayoutSection[]
+                                    {
+                                        new PositionSection(),
+                                        new IntervalSection(),
+                                        new RubyRomajiSection(),
+                                    }
+                                }
                             }
                         }
                     },
                     new Drawable[]
                     {
+                        // todo: preview area
                         new Box(),
                     }
                 },
