@@ -66,6 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                                         new PositionSection(),
                                         new IntervalSection(),
                                         new RubyRomajiSection(),
+                                        new PreviewSection(),
                                     }
                                 }
                             }
