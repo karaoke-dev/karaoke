@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Skinning;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
@@ -33,18 +33,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 },
                 previewContainer = new Container
                 {
-                    FillMode = FillMode.Fill,
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Size = new Vector2(0.8f),
+                    FillMode = FillMode.Fit,
+                    RelativeSizeAxes = Axes.Both,
                     Children = new Drawable[]
                     {
                         new LayoutPreviewArea
                         {
                             Name = "Preview size background",
-                            RelativeSizeAxes = Axes.Both
-                        },
-                        new PreviewLyric
-                        {
                             RelativeSizeAxes = Axes.Both,
-                            Masking = true
+                            Child = new PreviewLyric(),
                         },
                     }
                 }
@@ -54,7 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             {
                 // todo : adjust container's ratio
                 var ratio = e.NewValue;
-                previewContainer.FillAspectRatio = ratio;
+                if (ratio > 0)
+                    previewContainer.FillAspectRatio = ratio;
             }, true);
         }
 
@@ -65,37 +66,59 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             {
                 manager.PreviewLyricLine.BindValueChanged(e =>
                 {
-                    Child = new DrawableLyricLine(e.NewValue);
+                    if(e.NewValue != null)
+                        Child = new DrawableLyricLine(e.NewValue);
                 }, true);
             }
         }
 
-        internal class LayoutPreviewArea : CompositeDrawable
+        internal class LayoutPreviewArea : Container
         {
             private OsuSpriteText widthRatioText;
             private OsuSpriteText heightRatioText;
 
-            [BackgroundDependencyLoader]
-            private void load(OverlayColourProvider colourProvider, LayoutManager manager)
+            private readonly Box background;
+            private readonly Container content;
+
+            protected override Container<Drawable> Content => content;
+
+            public LayoutPreviewArea()
             {
                 InternalChildren = new Drawable[]
                 {
-                    new Box
+                    background = new Box
                     {
-                        Colour = colourProvider.Light1,
+                        RelativeSizeAxes = Axes.Both,
+                    },
+                    content = new Container
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        BorderThickness = 20,
+                        Padding = new MarginPadding(20),
+                        Masking = true
                     },
                     widthRatioText = new OsuSpriteText
                     {
                         Anchor = Anchor.BottomCentre,
-                        Origin = Anchor.TopCentre
+                        Origin = Anchor.TopCentre,
+                        Y = 10,
+                        Text = "Width"
                     },
                     heightRatioText = new OsuSpriteText
                     {
                         Anchor = Anchor.CentreRight,
                         Origin = Anchor.CentreLeft,
+                        X = 10,
+                        Text = "Height"
                     }
                 };
+            }
 
+            [BackgroundDependencyLoader]
+            private void load(OverlayColourProvider colourProvider, LayoutManager manager)
+            {
+                background.Colour = colourProvider.Light1;
+                content.BorderColour = colourProvider.Dark1;
                 manager.PreviewPreviewRatio.BindValueChanged(v =>
                 {
                     var newRation = v.NewValue;
