@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 {
                     Label = "Style",
                     Description = "Select different style to check layout is valid.",
-                    Items = manager.Fonts.Select(x => x.Name).ToArray()
+                    Items = manager.PreviewFontSelections.Select(x => x.Value).ToArray()
                 },
             };
         }

@@ -7,7 +7,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit.Layout.Components;
 using osu.Game.Screens.Edit;
 using osuTK;
 

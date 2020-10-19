@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Skinning;
@@ -15,7 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
     {
         public readonly BindableList<KaraokeLayout> Layouts = new BindableList<KaraokeLayout>();
 
-        public readonly BindableList<KaraokeFont> Fonts = new BindableList<KaraokeFont>();
+        public readonly IDictionary<int, string> PreviewFontSelections = new Dictionary<int, string>();
+
+        public readonly IBindable<LyricLine> PreviewLyricLine = new Bindable<LyricLine>();
+
+        public readonly IBindable<float> PreviewPreviewRatio = new Bindable<float>();
 
         [Resolved]
         private ISkinSource source { get; set; }
@@ -35,10 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             var skinLookups = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Style)?.Value;
             foreach (var skinLookup in skinLookups)
             {
-                var lookup = new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, skinLookup.Key);
-                var font = source.GetConfig<KaraokeSkinLookup, KaraokeFont>(lookup)?.Value;
-                if (font != null)
-                    Fonts.Add(font);
+                PreviewFontSelections.Add(skinLookup.Key, skinLookup.Value);
             }
         }
     }
