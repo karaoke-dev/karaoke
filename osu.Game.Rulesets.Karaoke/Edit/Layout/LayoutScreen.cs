@@ -20,10 +20,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
 
+        [Cached]
+        protected readonly LayoutManager LayoutManager;
+
         public LayoutScreen()
            : base(EditorScreenMode.SongSetup)
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
+            Content.Add(LayoutManager = new LayoutManager());
         }
 
         [BackgroundDependencyLoader]

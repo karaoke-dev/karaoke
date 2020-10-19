@@ -36,6 +36,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
     [TestFixture]
     public class TestSceneLayout : EditorClockTestScene
     {
+        private readonly KaraokeLayoutTestSkin skin = new KaraokeLayoutTestSkin();
+
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
         private readonly EditorBeatmap editorBeatmap;
@@ -51,7 +53,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private void load()
         {
             Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
-            Child = new LayoutScreen();
+            Child = new SkinProvidingContainer(skin)
+            {
+                RelativeSizeAxes = Axes.Both,
+                Child = new LayoutScreen(),
+            };
+        }
+
+        public class KaraokeLayoutTestSkin : KaraokeLegacySkinTransformer
+        {
+            public KaraokeLayoutTestSkin()
+                : base(null)
+            {
+            }
         }
     }
 

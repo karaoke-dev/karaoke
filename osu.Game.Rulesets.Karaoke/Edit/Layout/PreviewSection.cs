@@ -6,6 +6,8 @@ using osu.Framework.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using System;
+using System.ComponentModel;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
@@ -14,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         protected override string Title => "Preview(Won't be saved)";
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(LayoutManager manager)
         {
             Children = new Drawable[]
             {
@@ -30,27 +32,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     Description = "Select different lyric to check layout is valid.",
                     Items = (PreviewSample[])Enum.GetValues(typeof(PreviewSample))
                 },
-                new LabelledDropdown<int>
+                new LabelledDropdown<string>
                 {
                     Label = "Style",
-                    Description = "Select different style to check layout is valid."
+                    Description = "Select different style to check layout is valid.",
+                    Items = manager.Fonts.Select(x => x.Name).ToArray()
                 },
             };
         }
 
         internal enum PreviewRatio
         {
+            [Description("16:9")]
             WideScreen,
 
+            [Description("4:3")]
             LegacyScreen,
         }
 
         internal enum PreviewSample
         {
+            [Description("Small lyric")]
             SampeSmall,
 
+            [Description("Medium lyric")]
             SampleMedium,
 
+            [Description("Large lyric")]
             SampleLarge
         }
     }
