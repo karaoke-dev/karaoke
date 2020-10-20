@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         protected override string Title => "Interval";
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(LayoutManager manager)
         {
             Children = new[]
             {
@@ -57,6 +57,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     }
                 }
             };
+
+            manager.CurrentLayout.BindValueChanged(e =>
+            {
+                var layout = e.NewValue;
+                lyricIntervalSliderBar.Current.Value = layout.LyricsInterval;
+                rubyIntervalSliderBar.Current.Value = layout.RubyInterval;
+                romajiIntervalSliderBar.Current.Value = layout.RomajiInterval;
+            }, true);
+
+            lyricIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.LyricsInterval = x.NewValue));
+            rubyIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.RubyInterval = x.NewValue));
+            romajiIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.RomajiInterval = x.NewValue));
         }
     }
 }

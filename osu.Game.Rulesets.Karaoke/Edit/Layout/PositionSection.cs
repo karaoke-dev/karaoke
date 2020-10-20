@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         protected override string Title => "Position";
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(LayoutManager manager)
         {
             Children = new Drawable[]
             {
@@ -66,6 +66,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     Items = (KaraokeTextSmartHorizon[])Enum.GetValues(typeof(KaraokeTextSmartHorizon))
                 }
             };
+
+            manager.CurrentLayout.BindValueChanged(e =>
+            {
+                var layout = e.NewValue;
+                alignmentDropdown.Current.Value = layout.Alignment;
+                horizontalMarginSliderBar.Current.Value = layout.HorizontalMargin;
+                verticalMarginSliderBar.Current.Value = layout.VerticalMargin;
+                smartHorizonDropdown.Current.Value = layout.SmartHorizon;
+            }, true);
+
+            alignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.Alignment = x.NewValue));
+            horizontalMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.HorizontalMargin = x.NewValue));
+            verticalMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.VerticalMargin = x.NewValue));
+            smartHorizonDropdown.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.SmartHorizon = x.NewValue));
         }
     }
 }

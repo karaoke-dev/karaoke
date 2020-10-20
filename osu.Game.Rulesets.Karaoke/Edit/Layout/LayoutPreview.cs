@@ -44,7 +44,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                         {
                             Name = "Preview size background",
                             RelativeSizeAxes = Axes.Both,
-                            Child = new PreviewLyric(),
+                            Child = new PreviewLyric
+                            {
+                                RelativeSizeAxes = Axes.Both,
+                            },
                         },
                     }
                 }

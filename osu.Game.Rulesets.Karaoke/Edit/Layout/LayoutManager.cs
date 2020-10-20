@@ -8,7 +8,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Skinning;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
@@ -16,11 +18,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
     {
         public readonly BindableList<KaraokeLayout> Layouts = new BindableList<KaraokeLayout>();
 
+        public readonly Bindable<KaraokeLayout> CurrentLayout = new Bindable<KaraokeLayout>();
+
         public readonly IDictionary<int, string> PreviewFontSelections = new Dictionary<int, string>();
 
-        public readonly IBindable<LyricLine> PreviewLyricLine = new Bindable<LyricLine>();
+        public readonly Bindable<LyricLine> PreviewLyricLine = new Bindable<LyricLine>();
 
-        public readonly IBindable<float> PreviewPreviewRatio = new Bindable<float>();
+        public readonly Bindable<float> PreviewPreviewRatio = new Bindable<float>();
 
         [Resolved]
         private ISkinSource source { get; set; }
@@ -37,11 +41,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     Layouts.Add(layout);
             }
 
+            CurrentLayout.Value = Layouts.FirstOrDefault();
+
             var skinLookups = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Style)?.Value;
             foreach (var skinLookup in skinLookups)
             {
                 PreviewFontSelections.Add(skinLookup.Key, skinLookup.Value);
             }
+        }
+
+        public void ApplyCurrenyLayoutChange(Action<KaraokeLayout> action)
+        {
+            action?.Invoke(CurrentLayout.Value);
+            CurrentLayout.TriggerChange();
+        }
+
+        public void ChangeCurrenyLayout(KaraokeLayout layout)
+        {
+            CurrentLayout.Value = layout;
         }
     }
 }

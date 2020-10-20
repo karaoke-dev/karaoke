@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         protected override string Title => "Ruby/Romaji";
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(LayoutManager manager)
         {
             Children = new Drawable[]
             {
@@ -62,6 +62,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     }
                 }
             };
+
+            manager.CurrentLayout.BindValueChanged(e =>
+            {
+                var layout = e.NewValue;
+                rubyAlignmentDropdown.Current.Value = layout.RubyAlignment;
+                romajiAlignmentDropdown.Current.Value = layout.RomajiAlignment;
+                rubyMarginSliderBar.Current.Value = layout.RubyMargin;
+                romajiMarginSliderBar.Current.Value = layout.RomajiMargin;
+            }, true);
+
+            rubyAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.RubyAlignment = x.NewValue));
+            romajiAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.RomajiAlignment = x.NewValue));
+            rubyMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.RubyMargin = x.NewValue));
+            romajiMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.RomajiMargin = x.NewValue));
         }
     }
 }

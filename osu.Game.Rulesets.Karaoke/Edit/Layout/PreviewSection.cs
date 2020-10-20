@@ -2,17 +2,27 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
-using osu.Game.Overlays;
+using osu.Framework.Graphics.Sprites;
+using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Objects;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
     internal class PreviewSection : LayoutSection
     {
+        private LabelledDropdown<PreviewRatio> previewRatioDropdown;
+        private LabelledDropdown<PreviewSample> previewSampleDropdown;
+        private LabelledDropdown<string> previewStyleDropdown;
+
         protected override string Title => "Preview(Won't be saved)";
 
         [BackgroundDependencyLoader]
@@ -20,25 +30,130 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         {
             Children = new Drawable[]
             {
-                new LabelledDropdown<PreviewRatio>
+                previewRatioDropdown = new LabelledDropdown<PreviewRatio>
                 {
                     Label = "Ratio",
                     Description = "Adjust to see different preview ratio.",
                     Items = (PreviewRatio[])Enum.GetValues(typeof(PreviewRatio)),
                 },
-                new LabelledDropdown<PreviewSample>
+                previewSampleDropdown = new LabelledDropdown<PreviewSample>
                 {
                     Label = "Lyric",
                     Description = "Select different lyric to check layout is valid.",
-                    Items = (PreviewSample[])Enum.GetValues(typeof(PreviewSample))
+                    Items = (PreviewSample[])Enum.GetValues(typeof(PreviewSample)),
                 },
-                new LabelledDropdown<string>
+                previewStyleDropdown = new LabelledDropdown<string>
                 {
                     Label = "Style",
                     Description = "Select different style to check layout is valid.",
                     Items = manager.PreviewFontSelections.Select(x => x.Value).ToArray()
                 },
             };
+
+            previewRatioDropdown.Current.BindValueChanged(e =>
+            {
+                // todo : get selection to ratio object
+            }, true);
+
+            previewSampleDropdown.Current.BindValueChanged(e =>
+            {
+                manager.PreviewLyricLine.Value = getLyricLineSampleBySelection(e.NewValue);
+            }, true);
+
+            previewStyleDropdown.Current.BindValueChanged(e =>
+            {
+                // todo : get selection to int 
+            }, true);
+        }
+
+        private LyricLine getLyricLineSampleBySelection(PreviewSample previewSample)
+        {
+            switch (previewSample)
+            {
+                case PreviewSample.SampeSmall:
+                    return createDefaultLyricLine("@カラオケ",
+                    new[]
+                    {
+                        "@Ruby1=カ,か",
+                        "@Ruby2=ラ,ら",
+                        "@Ruby3=オ,お",
+                        "@Ruby4=ケ,け"
+                    },
+                    new[]
+                    {
+                        "@Romaji1=カ,ka",
+                        "@Romaji2=ラ,ra",
+                        "@Romaji3=オ,o",
+                        "@Romaji4=ケ,ke"
+                    }
+                    , "karaoke");
+
+                case PreviewSample.SampleMedium:
+                    return createDefaultLyricLine("@[00:18:58]た[00:18:81]だ[00:19:36]風[00:20:09]に[00:20:29]揺[00:20:49]ら[00:20:68]れ[00:20:89]て[00:20:93]",
+                    new[]
+                    {
+                        "@Ruby1=風,かぜ",
+                        "@Ruby2=揺,ゆ"
+                    },
+                    new[]
+                    {
+                        "@Romaji1=た,ta",
+                        "@Romaji2=だ,da",
+                        "@Romaji3=風,kaze",
+                        "@Romaji4=に,ni",
+                        "@Romaji5=揺,yu",
+                        "@Romaji6=ら,ra",
+                        "@Romaji7=れ,re",
+                        "@Romaji8=て,te"
+                    }
+                    , "karaoke");
+                case PreviewSample.SampleLarge:
+                    return createDefaultLyricLine("@灰色(いろ)(いろ)の景色(いろ)(いろ)さえ色づき始める",
+                    Array.Empty<string>(), Array.Empty<string>(), "karaoke");
+                default:
+                    return null;
+            }
+        }
+
+        private LyricLine createDefaultLyricLine(string text, string[] ruby, string[] romaji, string translate)
+        {
+            var startTime = Time.Current;
+            const double duration = 1000000;
+
+            using (var stream = new MemoryStream())
+            using (var writer = new StreamWriter(stream))
+            using (var reader = new LineBufferedReader(stream))
+            {
+                writer.WriteLine("karaoke file format v1");
+                writer.WriteLine("[HitObjects]");
+
+                writer.WriteLine(text);
+                ruby?.ForEach(x => writer.WriteLine(x));
+                romaji?.ForEach(x => writer.WriteLine(x));
+
+                writer.WriteLine("end");
+                writer.Flush();
+                stream.Position = 0;
+
+                var lyric = new KaraokeLegacyBeatmapDecoder().Decode(reader).HitObjects.OfType<LyricLine>().FirstOrDefault();
+
+                // Check is not null
+                if (lyric == null)
+                    throw new ArgumentNullException();
+
+                // Apply property
+                lyric.StartTime = startTime;
+                lyric.Duration = duration;
+                lyric.Translates.Add(0, translate);
+                lyric.ApplyDisplayTranslate(0);
+                lyric.TimeTags = new Dictionary<TimeTagIndex, double>
+                {
+                    { new TimeTagIndex(0), startTime },
+                    { new TimeTagIndex(4), startTime + duration },
+                };
+
+                return lyric;
+            }
         }
 
         internal enum PreviewRatio
