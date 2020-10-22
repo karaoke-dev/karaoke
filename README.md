@@ -7,7 +7,7 @@
 [![dev chat](https://discordapp.com/api/guilds/299006062323826688/widget.png?style=shield)](https://discord.gg/ga2xZXk)
 
 
-The source code of the `karaoke!` ruleset, for [osu!lazer](https://github.com/ppy/osu).
+The source code of the `karaoke!` ruleset, based off of [osu!lazer](https://github.com/ppy/osu).
 
 ## Status
 
