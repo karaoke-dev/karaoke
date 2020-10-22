@@ -34,7 +34,7 @@ Using this repo to create a `PIRATED` karaoke ruleset is absolutely forbidden.
 
 ## Thanks to
 
-- [osu!](https://github.com/ppy/osu) as it's [framework](https://github.com/ppy/osu-framework) for karaoke!
+- [osu!](https://github.com/ppy/osu) and it's [framework](https://github.com/ppy/osu-framework) for karaoke!
 
 - [RhythmKaTTE](http://juna-idler.blogspot.com/2016/05/rhythmkatte-version-01.html) and [RhythmicaLyrics](http://suwa.pupu.jp/RhythmicaLyrics.html), an open-source software used to create lyrics with time tags.
 Parts of the lyrics editor in this ruleset were inspired by them.
