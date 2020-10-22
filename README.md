@@ -36,10 +36,10 @@ Using this repo to create a `PIRATED` karaoke ruleset is absolutely forbidden.
 
 - [osu!](https://github.com/ppy/osu) as it's [framework](https://github.com/ppy/osu-framework) for karaoke!
 
-- [RhythmKaTTE](http://juna-idler.blogspot.com/2016/05/rhythmkatte-version-01.html) and [RhythmicaLyrics](http://suwa.pupu.jp/RhythmicaLyrics.html), an open-source software used to create lyrics with a time tag.
-Some of the lyrics editor in this ruleset is inspired by them.
+- [RhythmKaTTE](http://juna-idler.blogspot.com/2016/05/rhythmkatte-version-01.html) and [RhythmicaLyrics](http://suwa.pupu.jp/RhythmicaLyrics.html), an open-source software used to create lyrics with time tags.
+Parts of the lyrics editor in this ruleset were inspired by them.
 
-- [ニコカラメーカー](http://shinta0806be.ldblog.jp/tag/%E3%83%8B%E3%82%B3%E3%82%AB%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC), a software to convert `.lrc` file into karaoke video with beautiful text effects.
+- [ニコカラメーカー](http://shinta0806be.ldblog.jp/tag/%E3%83%8B%E3%82%B3%E3%82%AB%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC), a software to convert `.lrc` files into karaoke video with beautiful text effects.
 
 - [Jetbrain](https://www.jetbrains.com/?from=osu-karaoke), for contributing a free [rider](https://www.jetbrains.com/rider/) license used to clean-up the code.
 
