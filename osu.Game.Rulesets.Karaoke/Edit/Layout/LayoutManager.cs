@@ -24,7 +24,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
         public readonly Bindable<LyricLine> PreviewLyricLine = new Bindable<LyricLine>();
 
-        public readonly Bindable<DisplayRatio> PreviewPreviewRatio = new Bindable<DisplayRatio>();
+        public readonly Bindable<DisplayRatio> PreviewScreenRatio = new Bindable<DisplayRatio>();
+
+        public readonly Bindable<int> PreviewSkinIndex = new Bindable<int>();
 
         [Resolved]
         private ISkinSource source { get; set; }
@@ -59,6 +61,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         public void ChangeCurrenyLayout(KaraokeLayout layout)
         {
             CurrentLayout.Value = layout;
+        }
+
+        public void ChangePrviewStyle(int styleIndex)
+        {
+            if (styleIndex > 0)
+                PreviewSkinIndex.Value = styleIndex;
         }
     }
 

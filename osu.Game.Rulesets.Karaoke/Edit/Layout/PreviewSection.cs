@@ -5,6 +5,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.UserInterface;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
@@ -21,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
     {
         private LabelledDropdown<PreviewRatio> previewRatioDropdown;
         private LabelledDropdown<PreviewSample> previewSampleDropdown;
-        private LabelledDropdown<string> previewStyleDropdown;
+        private StyleLabelledDropdown previewStyleDropdown;
 
         protected override string Title => "Preview(Won't be saved)";
 
@@ -42,11 +44,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     Description = "Select different lyric to check layout is valid.",
                     Items = (PreviewSample[])Enum.GetValues(typeof(PreviewSample)),
                 },
-                previewStyleDropdown = new LabelledDropdown<string>
+                previewStyleDropdown = new StyleLabelledDropdown
                 {
                     Label = "Style",
                     Description = "Select different style to check layout is valid.",
-                    Items = manager.PreviewFontSelections.Select(x => x.Value).ToArray()
+                    Items = manager.PreviewFontSelections,
                 },
             };
 
@@ -55,14 +57,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 switch (e.NewValue)
                 {
                     case PreviewRatio.WideScreen:
-                        manager.PreviewPreviewRatio.Value = new DisplayRatio
+                        manager.PreviewScreenRatio.Value = new DisplayRatio
                         {
                             Width = 16,
                             Height = 9
                         };
                         break;
                     case PreviewRatio.LegacyScreen:
-                        manager.PreviewPreviewRatio.Value = new DisplayRatio
+                        manager.PreviewScreenRatio.Value = new DisplayRatio
                         {
                             Width = 4,
                             Height = 3
@@ -78,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
             previewStyleDropdown.Current.BindValueChanged(e =>
             {
-                // todo : get selection to int 
+                manager.ChangePrviewStyle(e.NewValue.Key);
             }, true);
         }
 
@@ -191,6 +193,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
             [Description("Large lyric")]
             SampleLarge
+        }
+
+        private class StyleLabelledDropdown : LabelledDropdown<KeyValuePair<int, string>>
+        {
+            protected override Dropdown<KeyValuePair<int, string>> CreateComponent()
+                => new StyleDropdownControl
+                {
+                    RelativeSizeAxes = Axes.X,
+                };
+
+            private class StyleDropdownControl : OsuDropdown<KeyValuePair<int, string>>
+            {
+                protected override string GenerateItemText(KeyValuePair<int, string> item)
+                    => item.Value ?? $"Style{item.Key}";
+            }
         }
     }
 }

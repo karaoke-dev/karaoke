@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 }
             };
 
-            manager.PreviewPreviewRatio.BindValueChanged(e =>
+            manager.PreviewScreenRatio.BindValueChanged(e =>
             {
                 // todo : adjust container's ratio
                 var ratio = e.NewValue;
@@ -71,6 +71,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 {
                     if(e.NewValue != null)
                         Child = new DrawableLyricLine(e.NewValue);
+                }, true);
+
+                manager.PreviewSkinIndex.BindValueChanged(v =>
+                {
+                    if (Child is DrawableLyricLine lyricLine)
+                        lyricLine.HitObject.FontIndex = v.NewValue;
                 }, true);
             }
         }
@@ -122,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             {
                 background.Colour = colourProvider.Light1;
                 content.BorderColour = colourProvider.Dark1;
-                manager.PreviewPreviewRatio.BindValueChanged(v =>
+                manager.PreviewScreenRatio.BindValueChanged(v =>
                 {
                     var newRation = v.NewValue;
                     if (!newRation.isValid())
