@@ -18,7 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
     {
         public readonly BindableList<KaraokeLayout> Layouts = new BindableList<KaraokeLayout>();
 
-        public readonly Bindable<KaraokeLayout> CurrentLayout = new Bindable<KaraokeLayout>();
+        public readonly Bindable<KaraokeLayout> LoadedLayout = new Bindable<KaraokeLayout>();
+
+        public readonly Bindable<KaraokeLayout> EditLayout = new Bindable<KaraokeLayout>();
 
         public readonly IDictionary<int, string> PreviewFontSelections = new Dictionary<int, string>();
 
@@ -43,7 +45,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     Layouts.Add(layout);
             }
 
-            CurrentLayout.Value = Layouts.FirstOrDefault();
+            LoadedLayout.Value = Layouts.FirstOrDefault();
+            EditLayout.Value = Layouts.FirstOrDefault();
 
             var skinLookups = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Style)?.Value;
             foreach (var skinLookup in skinLookups)
@@ -54,13 +57,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
         public void ApplyCurrenyLayoutChange(Action<KaraokeLayout> action)
         {
-            action?.Invoke(CurrentLayout.Value);
-            CurrentLayout.TriggerChange();
+            action?.Invoke(EditLayout.Value);
+            EditLayout.TriggerChange();
         }
 
         public void ChangeCurrenyLayout(KaraokeLayout layout)
         {
-            CurrentLayout.Value = layout;
+            LoadedLayout.Value = layout;
+            EditLayout.Value = layout;
         }
 
         public void ChangePrviewStyle(int styleIndex)

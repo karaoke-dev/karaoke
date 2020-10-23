@@ -78,6 +78,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     if (Child is DrawableLyricLine lyricLine)
                         lyricLine.HitObject.FontIndex = v.NewValue;
                 }, true);
+
+                manager.EditLayout.BindValueChanged(e =>
+                {
+                    // todo : apply edit layout.
+                }, true);
             }
         }
 

@@ -58,12 +58,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 }
             };
 
-            manager.CurrentLayout.BindValueChanged(e =>
+            manager.LoadedLayout.BindValueChanged(e =>
             {
                 var layout = e.NewValue;
-                lyricIntervalSliderBar.Current.Value = layout.LyricsInterval;
-                rubyIntervalSliderBar.Current.Value = layout.RubyInterval;
-                romajiIntervalSliderBar.Current.Value = layout.RomajiInterval;
+                applyCurrent(lyricIntervalSliderBar.Current, layout.LyricsInterval);
+                applyCurrent(rubyIntervalSliderBar.Current, layout.RubyInterval);
+                applyCurrent(romajiIntervalSliderBar.Current, layout.RomajiInterval);
+
+                void applyCurrent<T>(Bindable<T> bindable, T value)
+                    => bindable.Value = bindable.Default = value;
             }, true);
 
             lyricIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.LyricsInterval = x.NewValue));

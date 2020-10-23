@@ -63,13 +63,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 }
             };
 
-            manager.CurrentLayout.BindValueChanged(e =>
+            manager.LoadedLayout.BindValueChanged(e =>
             {
                 var layout = e.NewValue;
-                rubyAlignmentDropdown.Current.Value = layout.RubyAlignment;
-                romajiAlignmentDropdown.Current.Value = layout.RomajiAlignment;
-                rubyMarginSliderBar.Current.Value = layout.RubyMargin;
-                romajiMarginSliderBar.Current.Value = layout.RomajiMargin;
+                applyCurrent(rubyAlignmentDropdown.Current, layout.RubyAlignment);
+                applyCurrent(romajiAlignmentDropdown.Current, layout.RomajiAlignment);
+                applyCurrent(rubyMarginSliderBar.Current, layout.RubyMargin);
+                applyCurrent(romajiMarginSliderBar.Current, layout.RomajiMargin);
+
+                void applyCurrent<T>(Bindable<T> bindable, T value)
+                    => bindable.Value = bindable.Default = value;
             }, true);
 
             rubyAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.RubyAlignment = x.NewValue));
