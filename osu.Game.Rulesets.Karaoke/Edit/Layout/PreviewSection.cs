@@ -52,7 +52,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
             previewRatioDropdown.Current.BindValueChanged(e =>
             {
-                // todo : get selection to ratio object
+                switch (e.NewValue)
+                {
+                    case PreviewRatio.WideScreen:
+                        manager.PreviewPreviewRatio.Value = new DisplayRatio
+                        {
+                            Width = 16,
+                            Height = 9
+                        };
+                        break;
+                    case PreviewRatio.LegacyScreen:
+                        manager.PreviewPreviewRatio.Value = new DisplayRatio
+                        {
+                            Width = 4,
+                            Height = 3
+                        };
+                        break;
+                }
             }, true);
 
             previewSampleDropdown.Current.BindValueChanged(e =>

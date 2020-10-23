@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
         public readonly Bindable<LyricLine> PreviewLyricLine = new Bindable<LyricLine>();
 
-        public readonly Bindable<float> PreviewPreviewRatio = new Bindable<float>();
+        public readonly Bindable<DisplayRatio> PreviewPreviewRatio = new Bindable<DisplayRatio>();
 
         [Resolved]
         private ISkinSource source { get; set; }
@@ -60,5 +60,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         {
             CurrentLayout.Value = layout;
         }
+    }
+
+    public struct DisplayRatio
+    {
+        public float Width { get; set; }
+
+        public float Height { get; set; }
+
+        public bool isValid()
+            => Width > 0 && Height > 0;
     }
 }
