@@ -30,7 +30,7 @@ Notice : The launcher is still under development, so it might not work as intend
 
 This repo is covered under the [GPL V3](LICENSE) license.
 If you plan on using this repo for commercial purposes, please contact me at (andy840119@gmail.com) to get permission first.
-Using this repo to create a `PIRATED` karaoke ruleset is absolutely forbidden.
+Using this repo to create `PIRATED` karaoke songs/beatmaps is absolutely forbidden.
 
 ## Thanks to
 
