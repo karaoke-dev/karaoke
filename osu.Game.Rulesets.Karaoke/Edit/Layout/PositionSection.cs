@@ -5,7 +5,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using System;
 
@@ -14,8 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
     internal class PositionSection : LayoutSection
     {
         private LabelledDropdown<Anchor> alignmentDropdown;
-        private LabelledSliderBar<int> horizontalMarginSliderBar;
-        private LabelledSliderBar<int> verticalMarginSliderBar;
+        private LabelledRealTimeSliderBar<int> horizontalMarginSliderBar;
+        private LabelledRealTimeSliderBar<int> verticalMarginSliderBar;
         private LabelledDropdown<KaraokeTextSmartHorizon> smartHorizonDropdown;
 
         protected override string Title => "Position";
@@ -32,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     RelativeSizeAxes = Axes.X,
                     Items = (Anchor[])Enum.GetValues(typeof(Anchor))
                 },
-                horizontalMarginSliderBar = new LabelledSliderBar<int>
+                horizontalMarginSliderBar = new LabelledRealTimeSliderBar<int>
                 {
                     Label = "Horizontal margin",
                     Description = "Horizontal margin section",
@@ -45,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                         Default = 30
                     }
                 },
-                verticalMarginSliderBar = new LabelledSliderBar<int>
+                verticalMarginSliderBar = new LabelledRealTimeSliderBar<int>
                 {
                     Label = "Vertical margin",
                     Description = "Vertical margin section",

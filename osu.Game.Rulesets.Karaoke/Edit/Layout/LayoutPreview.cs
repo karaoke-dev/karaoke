@@ -5,9 +5,12 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
@@ -44,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                         {
                             Name = "Preview size background",
                             RelativeSizeAxes = Axes.Both,
-                            Child = new PreviewLyric
+                            Child = new LyricPreviewArea
                             {
                                 RelativeSizeAxes = Axes.Both,
                             },
@@ -62,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             }, true);
         }
 
-        internal class PreviewLyric : Container
+        internal class LyricPreviewArea : Container
         {
             [BackgroundDependencyLoader]
             private void load(LayoutManager manager)
@@ -70,19 +73,44 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 manager.PreviewLyricLine.BindValueChanged(e =>
                 {
                     if(e.NewValue != null)
-                        Child = new DrawableLyricLine(e.NewValue);
+                        Child = new PreviewDrawableLyricLine(e.NewValue);
                 }, true);
 
                 manager.PreviewSkinIndex.BindValueChanged(v =>
                 {
-                    if (Child is DrawableLyricLine lyricLine)
+                    if (Child is PreviewDrawableLyricLine lyricLine)
                         lyricLine.HitObject.FontIndex = v.NewValue;
                 }, true);
 
-                manager.EditLayout.BindValueChanged(e =>
+                manager.EditLayout.BindValueChanged(v =>
                 {
-                    // todo : apply edit layout.
+                    if (Child is PreviewDrawableLyricLine lyricLine)
+                        lyricLine.PreviewLayout = v.NewValue;
                 }, true);
+            }
+
+            public class PreviewDrawableLyricLine : DrawableLyricLine
+            {
+                private KaraokeLayout layout;
+
+                public PreviewDrawableLyricLine(LyricLine hitObject)
+                : base(hitObject)
+                {
+                }
+
+                /// <summary>
+                /// It's an tricky to force add layout into here.
+                /// Should be removed eventually.
+                /// </summary>
+                public KaraokeLayout PreviewLayout
+                {
+                    get => layout;
+                    set
+                    {
+                        layout = value;
+                        ApplyLayout(layout);
+                    }
+                }
             }
         }
 
@@ -116,6 +144,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                         Anchor = Anchor.BottomCentre,
                         Origin = Anchor.TopCentre,
                         Y = 10,
+                        Font = OsuFont.GetFont(size: 24),
                         Text = "Width"
                     },
                     heightRatioText = new OsuSpriteText
@@ -123,6 +152,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                         Anchor = Anchor.CentreRight,
                         Origin = Anchor.CentreLeft,
                         X = 10,
+                        Font = OsuFont.GetFont(size: 24),
                         Text = "Height"
                     }
                 };

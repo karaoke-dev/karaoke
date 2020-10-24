@@ -5,7 +5,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using System;
 
@@ -15,8 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
     {
         private LabelledDropdown<LyricTextAlignment> rubyAlignmentDropdown;
         private LabelledDropdown<LyricTextAlignment> romajiAlignmentDropdown;
-        private LabelledSliderBar<int> rubyMarginSliderBar;
-        private LabelledSliderBar<int> romajiMarginSliderBar;
+        private LabelledRealTimeSliderBar<int> rubyMarginSliderBar;
+        private LabelledRealTimeSliderBar<int> romajiMarginSliderBar;
 
         protected override string Title => "Ruby/Romaji";
 
@@ -37,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     Description = "Romaji alignment section",
                     Items = (LyricTextAlignment[])Enum.GetValues(typeof(LyricTextAlignment))
                 },
-                rubyMarginSliderBar = new LabelledSliderBar<int>
+                rubyMarginSliderBar = new LabelledRealTimeSliderBar<int>
                 {
                     Label = "Ruby margin",
                     Description = "Ruby margin section",
@@ -49,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                         Default = 10
                     }
                 },
-                romajiMarginSliderBar = new LabelledSliderBar<int>
+                romajiMarginSliderBar = new LabelledRealTimeSliderBar<int>
                 {
                     Label = "Romaji margin",
                     Description = "Romaji margin section",
