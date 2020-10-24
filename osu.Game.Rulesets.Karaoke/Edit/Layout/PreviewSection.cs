@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.IO;
+using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -197,16 +198,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
         private class StyleLabelledDropdown : LabelledDropdown<KeyValuePair<int, string>>
         {
-            protected override Dropdown<KeyValuePair<int, string>> CreateComponent()
-                => new StyleDropdownControl
+            protected override SettingsDropdown<KeyValuePair<int, string>> CreateComponent()
+                => new StyleDropdown
                 {
                     RelativeSizeAxes = Axes.X,
                 };
 
-            private class StyleDropdownControl : OsuDropdown<KeyValuePair<int, string>>
+            private class StyleDropdown : SettingsDropdown<KeyValuePair<int, string>>
             {
-                protected override string GenerateItemText(KeyValuePair<int, string> item)
+                private class StyleDropdownControl : DropdownControl
+                {
+                    protected override string GenerateItemText(KeyValuePair<int, string> item)
                     => item.Value ?? $"Style{item.Key}";
+                }
             }
         }
     }
