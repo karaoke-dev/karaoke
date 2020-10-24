@@ -3,24 +3,24 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Game.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
     internal class IntervalSection : LayoutSection
     {
-        private LabelledSliderBar<int> lyricIntervalSliderBar;
-        private LabelledSliderBar<int> rubyIntervalSliderBar;
-        private LabelledSliderBar<int> romajiIntervalSliderBar;
+        private LabelledRealTimeSliderBar<int> lyricIntervalSliderBar;
+        private LabelledRealTimeSliderBar<int> rubyIntervalSliderBar;
+        private LabelledRealTimeSliderBar<int> romajiIntervalSliderBar;
 
         protected override string Title => "Interval";
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(LayoutManager manager)
         {
             Children = new[]
             {
-                lyricIntervalSliderBar = new LabelledSliderBar<int>
+                lyricIntervalSliderBar = new LabelledRealTimeSliderBar<int>
                 {
                     Label = "Lyrics interval",
                     Description = "Lyrics interval section",
@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                         Default = 10
                     }
                 },
-                rubyIntervalSliderBar = new LabelledSliderBar<int>
+                rubyIntervalSliderBar = new LabelledRealTimeSliderBar<int>
                 {
                     Label = "Ruby interval",
                     Description = "Ruby interval section",
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                         Default = 10
                     }
                 },
-                romajiIntervalSliderBar = new LabelledSliderBar<int>
+                romajiIntervalSliderBar = new LabelledRealTimeSliderBar<int>
                 {
                     Label = "Romaji interval",
                     Description = "Romaji interval section",
@@ -57,6 +57,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     }
                 }
             };
+
+            manager.LoadedLayout.BindValueChanged(e =>
+            {
+                var layout = e.NewValue;
+                applyCurrent(lyricIntervalSliderBar.Current, layout.LyricsInterval);
+                applyCurrent(rubyIntervalSliderBar.Current, layout.RubyInterval);
+                applyCurrent(romajiIntervalSliderBar.Current, layout.RomajiInterval);
+
+                void applyCurrent<T>(Bindable<T> bindable, T value)
+                    => bindable.Value = bindable.Default = value;
+            }, true);
+
+            lyricIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.LyricsInterval = x.NewValue));
+            rubyIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.RubyInterval = x.NewValue));
+            romajiIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.RomajiInterval = x.NewValue));
         }
     }
 }

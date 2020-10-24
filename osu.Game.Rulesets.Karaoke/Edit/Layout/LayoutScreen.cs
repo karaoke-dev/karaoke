@@ -19,10 +19,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
 
+        [Cached]
+        protected readonly LayoutManager LayoutManager;
+
         public LayoutScreen()
            : base(EditorScreenMode.SongSetup)
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
+            Content.Add(LayoutManager = new LayoutManager());
         }
 
         [BackgroundDependencyLoader]
@@ -43,6 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     {
                         new Container
                         {
+                            Name = "Layout adjustment area",
                             RelativeSizeAxes = Axes.Both,
                             Masking = true,
                             CornerRadius = 10,
@@ -64,12 +69,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                                         new PositionSection(),
                                         new IntervalSection(),
                                         new RubyRomajiSection(),
+                                        new PreviewSection(),
                                     }
                                 }
                             }
                         },
-                        // todo: preview area
-                        new Box(),
+                        new LayoutPreview
+                        {
+                            Name = "Layout preview area",
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Size = new Vector2(0.95f),
+                            RelativeSizeAxes = Axes.Both
+                        },
                     }
                 },
             };

@@ -5,7 +5,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using System;
 
@@ -14,14 +13,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
     internal class PositionSection : LayoutSection
     {
         private LabelledDropdown<Anchor> alignmentDropdown;
-        private LabelledSliderBar<int> horizontalMarginSliderBar;
-        private LabelledSliderBar<int> verticalMarginSliderBar;
+        private LabelledRealTimeSliderBar<int> horizontalMarginSliderBar;
+        private LabelledRealTimeSliderBar<int> verticalMarginSliderBar;
         private LabelledDropdown<KaraokeTextSmartHorizon> smartHorizonDropdown;
 
         protected override string Title => "Position";
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(LayoutManager manager)
         {
             Children = new Drawable[]
             {
@@ -32,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     RelativeSizeAxes = Axes.X,
                     Items = (Anchor[])Enum.GetValues(typeof(Anchor))
                 },
-                horizontalMarginSliderBar = new LabelledSliderBar<int>
+                horizontalMarginSliderBar = new LabelledRealTimeSliderBar<int>
                 {
                     Label = "Horizontal margin",
                     Description = "Horizontal margin section",
@@ -45,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                         Default = 30
                     }
                 },
-                verticalMarginSliderBar = new LabelledSliderBar<int>
+                verticalMarginSliderBar = new LabelledRealTimeSliderBar<int>
                 {
                     Label = "Vertical margin",
                     Description = "Vertical margin section",
@@ -66,6 +65,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     Items = (KaraokeTextSmartHorizon[])Enum.GetValues(typeof(KaraokeTextSmartHorizon))
                 }
             };
+
+            manager.LoadedLayout.BindValueChanged(e =>
+            {
+                var layout = e.NewValue;
+                applyCurrent(alignmentDropdown.Current, layout.Alignment);
+                applyCurrent(horizontalMarginSliderBar.Current, layout.HorizontalMargin);
+                applyCurrent(verticalMarginSliderBar.Current, layout.VerticalMargin);
+                applyCurrent(smartHorizonDropdown.Current, layout.SmartHorizon);
+
+                void applyCurrent<T>(Bindable<T> bindable, T value)
+                    => bindable.Value = bindable.Default = value;
+            }, true);
+
+            alignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.Alignment = x.NewValue));
+            horizontalMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.HorizontalMargin = x.NewValue));
+            verticalMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.VerticalMargin = x.NewValue));
+            smartHorizonDropdown.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.SmartHorizon = x.NewValue));
         }
     }
 }
