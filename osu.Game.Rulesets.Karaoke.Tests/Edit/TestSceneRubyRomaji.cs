@@ -11,13 +11,13 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
-    public class TestSceneLyricRubyRomaji : OsuTestScene
+    public class TestSceneRubyRomaji : OsuTestScene
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
         private readonly EditorBeatmap editorBeatmap;
 
-        public TestSceneLyricRubyRomaji()
+        public TestSceneRubyRomaji()
         {
             var beatmap = new TestKaraokeBeatmap(null);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
