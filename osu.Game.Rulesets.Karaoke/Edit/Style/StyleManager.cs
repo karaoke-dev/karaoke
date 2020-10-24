@@ -22,7 +22,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         [BackgroundDependencyLoader]
         private void load()
         {
-
         }
 
         public void ApplyCurrentStyleChange(Action<KaraokeFont> action)
