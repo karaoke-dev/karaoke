@@ -28,14 +28,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 {
                     Label = "Anchor",
                     Description = "Anchor section",
-                    RelativeSizeAxes = Axes.X,
                     Items = (Anchor[])Enum.GetValues(typeof(Anchor))
                 },
                 horizontalMarginSliderBar = new LabelledRealTimeSliderBar<int>
                 {
                     Label = "Horizontal margin",
                     Description = "Horizontal margin section",
-                    RelativeSizeAxes = Axes.X,
                     Current = new BindableNumber<int>
                     {
                         MinValue = 0,
@@ -48,7 +46,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 {
                     Label = "Vertical margin",
                     Description = "Vertical margin section",
-                    RelativeSizeAxes = Axes.X,
                     Current = new BindableNumber<int>
                     {
                         MinValue = 0,
@@ -61,7 +58,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 {
                     Label = "Smart horizon",
                     Description = "Smart horizon section",
-                    RelativeSizeAxes = Axes.X,
                     Items = (KaraokeTextSmartHorizon[])Enum.GetValues(typeof(KaraokeTextSmartHorizon))
                 }
             };
