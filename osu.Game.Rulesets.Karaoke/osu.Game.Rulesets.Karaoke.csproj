@@ -44,7 +44,7 @@
       <InputAssemblies Include="NWaves.dll" />
       <InputAssemblies Include="Octokit.dll" />
       <InputAssemblies Include="osu.Framework.Microphone.dll" />
-      <InputAssemblies Include="osu.KaraokeFramework.dll" />
+      <InputAssemblies Include="osu.Framework.KaraokeFont.dll" />
     </ItemGroup>
 
     <ItemGroup>
