@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             [BackgroundDependencyLoader]
             private void load(LayoutManager manager)
             {
-                manager.PreviewLyricLine.BindValueChanged(e =>
+                manager.PreviewLyric.BindValueChanged(e =>
                 {
                     if(e.NewValue != null)
                         Child = new PreviewDrawableLyricLine(e.NewValue);

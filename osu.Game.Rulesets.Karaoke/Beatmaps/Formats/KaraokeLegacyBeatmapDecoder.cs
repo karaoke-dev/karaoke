@@ -100,11 +100,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             // Remove all karaoke note
             beatmap.HitObjects.RemoveAll(x => x is Note);
 
-            var lyricLines = beatmap.HitObjects.OfType<Lyric>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
 
-            for (int l = 0; l < lyricLines.Count; l++)
+            for (int l = 0; l < lyrics.Count; l++)
             {
-                var lyricLine = lyricLines[l];
+                var lyricLine = lyrics[l];
                 var line = lines.ElementAtOrDefault(l)?.Split('=').Last();
 
                 // Create default note if not exist
@@ -222,11 +222,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private void processStyle(Beatmap beatmap, IList<string> styleLines)
         {
-            var lyricLines = beatmap.HitObjects.OfType<Lyric>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
 
-            for (int l = 0; l < lyricLines.Count; l++)
+            for (int l = 0; l < lyrics.Count; l++)
             {
-                var lyricLine = lyricLines[l];
+                var lyric = lyrics[l];
                 var line = styleLines.ElementAtOrDefault(l)?.Split('=').Last();
 
                 // TODO : maybe create default layer and style index here?
@@ -237,10 +237,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 var fontIndexStr = line.Split(',').ElementAtOrDefault(1);
 
                 if (int.TryParse(layoutIndexStr, out int layoutIndex))
-                    lyricLine.LayoutIndex = layoutIndex;
+                    lyric.LayoutIndex = layoutIndex;
 
                 if (int.TryParse(fontIndexStr, out int fontIndex))
-                    lyricLine.FontIndex = fontIndex;
+                    lyric.FontIndex = fontIndex;
             }
         }
 

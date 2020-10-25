@@ -79,15 +79,15 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
             // Apply start time
             for (int i = 0; i < lyrics.Count; i++)
             {
-                var lastLyricLine = i >= number_of_line ? lyrics[i - number_of_line] : null;
+                var lastLyric = i >= number_of_line ? lyrics[i - number_of_line] : null;
                 var lyricLine = lyrics[i];
 
-                if (lastLyricLine == null)
+                if (lastLyric == null)
                     continue;
 
                 // Adjust start time and end time
                 var lyricEndTime = lyricLine.EndTime;
-                lyricLine.StartTime = lastLyricLine.EndTime + 1000;
+                lyricLine.StartTime = lastLyric.EndTime + 1000;
 
                 // Should re-assign duration here
                 lyricLine.Duration = lyricEndTime - lyricLine.StartTime;

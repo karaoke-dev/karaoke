@@ -61,11 +61,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private IEnumerable<string> encodeStyle(Beatmap output)
         {
-            var lyricLines = output.HitObjects.OfType<Lyric>().ToList();
+            var lyrics = output.HitObjects.OfType<Lyric>().ToList();
 
-            for (var i = 0; i < lyricLines.Count; i++)
+            for (var i = 0; i < lyrics.Count; i++)
             {
-                var lyricLine = lyricLines[i];
+                var lyricLine = lyrics[i];
                 yield return $"@style{i}={lyricLine.LayoutIndex},{lyricLine.FontIndex}";
             }
         }

@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
             previewSampleDropdown.Current.BindValueChanged(e =>
             {
-                manager.PreviewLyricLine.Value = getLyricLineSampleBySelection(e.NewValue);
+                manager.PreviewLyric.Value = getLyricLineSampleBySelection(e.NewValue);
             }, true);
 
             previewStyleDropdown.Current.BindValueChanged(e =>

@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                 },
             };
 
-            lyricGraph.SelectedLyricLine.BindValueChanged(e =>
+            lyricGraph.SelectedLyric.BindValueChanged(e =>
             {
                 // todo : move noteGraph to target time.
             });

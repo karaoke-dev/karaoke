@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
 {
     public class LyricPreview : CompositeDrawable
     {
-        public Bindable<Lyric> SelectedLyricLine { get; private set; } = new Bindable<Lyric>();
+        public Bindable<Lyric> SelectedLyric { get; private set; } = new Bindable<Lyric>();
 
         private readonly FillFlowContainer<ClickableLyric> lyricTable;
 
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
                 }
             };
 
-            SelectedLyricLine.BindValueChanged(value =>
+            SelectedLyric.BindValueChanged(value =>
             {
                 var oldValue = value.OldValue;
                 if (oldValue != null)
@@ -56,10 +56,10 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
 
         private void triggerLyricLine(Lyric lyric)
         {
-            if (SelectedLyricLine.Value == lyric)
-                SelectedLyricLine.TriggerChange();
+            if (SelectedLyric.Value == lyric)
+                SelectedLyric.TriggerChange();
             else
-                SelectedLyricLine.Value = lyric;
+                SelectedLyric.Value = lyric;
         }
 
         public Vector2 Spacing
