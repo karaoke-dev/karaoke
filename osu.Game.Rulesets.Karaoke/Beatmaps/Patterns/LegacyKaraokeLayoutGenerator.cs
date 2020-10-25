@@ -8,11 +8,11 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
 {
-    public class LegacyKaraokeLayoutGenerator : IPatternGenerator<LyricLine>
+    public class LegacyKaraokeLayoutGenerator : IPatternGenerator<Lyric>
     {
         private const int number_of_line = 2;
 
-        public void Generate(IEnumerable<LyricLine> hitObjects)
+        public void Generate(IEnumerable<Lyric> hitObjects)
         {
             var lyrics = hitObjects.ToList();
 
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
         ///      ****** (right)       13
         /// </example>
         /// <param name="lyrics">Lyrics</param>
-        private void assignLayoutArrangement(IList<LyricLine> lyrics)
+        private void assignLayoutArrangement(IList<Lyric> lyrics)
         {
             // Force change to new line if lyric has long time
             const int new_lyric_line_time = 15000;
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
             }
         }
 
-        private void assignLyricTime(IList<LyricLine> lyrics)
+        private void assignLyricTime(IList<Lyric> lyrics)
         {
             // Reset working time
             lyrics.ForEach(h => h.InitialWorkingTime());

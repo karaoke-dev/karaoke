@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
 {
     public class LyricList : Container
     {
-        public Bindable<LyricLine> BindableLyricLine => table.BindableLyricLine;
+        public Bindable<Lyric> BindableLyricLine => table.BindableLyricLine;
 
         private readonly CornerBackground background;
         private readonly PreviewLyricTable table;
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
             };
         }
 
-        public LyricLine[] LyricLines
+        public Lyric[] LyricLines
         {
             get => table.LyricLines;
             set => table.LyricLines = value;
@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
             private const float horizontal_inset = 20;
             private const float row_height = 10;
 
-            public Bindable<LyricLine> BindableLyricLine { get; } = new Bindable<LyricLine>();
+            public Bindable<Lyric> BindableLyricLine { get; } = new Bindable<Lyric>();
 
             private readonly FillFlowContainer backgroundFlow;
 
@@ -84,9 +84,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
                 });
             }
 
-            private LyricLine[] lyricLines;
+            private Lyric[] lyricLines;
 
-            public LyricLine[] LyricLines
+            public Lyric[] LyricLines
             {
                 get => lyricLines;
                 set
@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
                 return columns.ToArray();
             }
 
-            private Drawable[] createContent(int index, LyricLine line)
+            private Drawable[] createContent(int index, Lyric line)
             {
                 return new Drawable[]
                 {
@@ -141,9 +141,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
 
             public class ClickablePreviewLyricSpriteText : PreviewLyricSpriteText
             {
-                private readonly Bindable<LyricLine> bindableLyricLine;
+                private readonly Bindable<Lyric> bindableLyricLine;
 
-                public ClickablePreviewLyricSpriteText(LyricLine hitObject, Bindable<LyricLine> bindableLyricLine)
+                public ClickablePreviewLyricSpriteText(Lyric hitObject, Bindable<Lyric> bindableLyricLine)
                     : base(hitObject)
                 {
                     this.bindableLyricLine = bindableLyricLine;

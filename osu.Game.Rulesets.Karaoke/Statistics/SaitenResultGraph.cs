@@ -67,21 +67,21 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
         internal class SaitenResultLyricPreview : LyricPreview
         {
             public SaitenResultLyricPreview(IBeatmap beatmap)
-                : base(beatmap.HitObjects.OfType<LyricLine>())
+                : base(beatmap.HitObjects.OfType<Lyric>())
             {
             }
 
-            protected override ClickableLyric CreateLyricContainer(LyricLine lyric)
+            protected override ClickableLyric CreateLyricContainer(Lyric lyric)
                 => new SaitenResultClickableLyric(lyric);
 
             internal class SaitenResultClickableLyric : ClickableLyric
             {
-                public SaitenResultClickableLyric(LyricLine lyric)
+                public SaitenResultClickableLyric(Lyric lyric)
                     : base(lyric)
                 {
                 }
 
-                protected override PreviewLyricSpriteText CreateLyric(LyricLine lyric)
+                protected override PreviewLyricSpriteText CreateLyric(Lyric lyric)
                     => new PreviewLyricSpriteText(lyric)
                     {
                         Font = new FontUsage(size: 15),

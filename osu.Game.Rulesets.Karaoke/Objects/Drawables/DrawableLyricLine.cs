@@ -28,9 +28,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         /// </summary>
         public event Action<DrawableHitObject, JudgementResult> OnLyricStart;
 
-        public new LyricLine HitObject => (LyricLine)base.HitObject;
+        public new Lyric HitObject => (Lyric)base.HitObject;
 
-        public DrawableLyricLine(LyricLine hitObject)
+        public DrawableLyricLine(Lyric hitObject)
             : base(hitObject)
         {
             Scale = new Vector2(2f);

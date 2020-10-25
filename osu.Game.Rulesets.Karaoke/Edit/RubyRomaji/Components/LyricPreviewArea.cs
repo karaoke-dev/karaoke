@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
 
         private PreviewLyricSpriteText previewLyricLine;
 
-        public LyricLine LyricLine
+        public Lyric LyricLine
         {
             get => previewLyricLine?.HitObject;
             set => container.Child = previewLyricLine = new PreviewLyricSpriteText(value)

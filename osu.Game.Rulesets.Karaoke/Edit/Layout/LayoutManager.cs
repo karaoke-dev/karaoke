@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
         public readonly IDictionary<int, string> PreviewFontSelections = new Dictionary<int, string>();
 
-        public readonly Bindable<LyricLine> PreviewLyricLine = new Bindable<LyricLine>();
+        public readonly Bindable<Lyric> PreviewLyricLine = new Bindable<Lyric>();
 
         public readonly Bindable<DisplayRatio> PreviewScreenRatio = new Bindable<DisplayRatio>();
 

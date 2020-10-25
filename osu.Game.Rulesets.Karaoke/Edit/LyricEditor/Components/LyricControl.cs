@@ -16,9 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
     {
         private readonly DrawableLyricLine drawableLyric;
 
-        public LyricLine Lyric { get; }
+        public Lyric Lyric { get; }
 
-        public LyricControl(LyricLine lyric)
+        public LyricControl(Lyric lyric)
         {
             Lyric = lyric;
             CornerRadius = 5;
@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
 
         public class DrawableEditorLyricLine : DrawableLyricLine
         {
-            public DrawableEditorLyricLine(LyricLine lyric)
+            public DrawableEditorLyricLine(Lyric lyric)
                 : base(lyric)
             {
                 DisplayRuby = true;

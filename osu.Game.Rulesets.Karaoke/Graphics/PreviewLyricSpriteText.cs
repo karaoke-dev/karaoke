@@ -9,9 +9,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
 {
     public class PreviewLyricSpriteText : LyricSpriteText
     {
-        public readonly LyricLine HitObject;
+        public readonly Lyric HitObject;
 
-        public PreviewLyricSpriteText(LyricLine hitObject)
+        public PreviewLyricSpriteText(Lyric hitObject)
         {
             HitObject = hitObject;
 

@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             switch (h)
             {
-                case LyricLine lyric:
+                case Lyric lyric:
                     return new DrawableLyricLine(lyric);
 
                 case Note note:

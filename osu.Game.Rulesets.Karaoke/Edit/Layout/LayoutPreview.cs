@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             {
                 private KaraokeLayout layout;
 
-                public PreviewDrawableLyricLine(LyricLine hitObject)
+                public PreviewDrawableLyricLine(Lyric hitObject)
                 : base(hitObject)
                 {
                 }

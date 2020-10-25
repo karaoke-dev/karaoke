@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             }, true);
         }
 
-        private LyricLine getLyricLineSampleBySelection(PreviewSample previewSample)
+        private Lyric getLyricLineSampleBySelection(PreviewSample previewSample)
         {
             switch (previewSample)
             {
@@ -134,7 +134,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             }
         }
 
-        private LyricLine createDefaultLyricLine(string text, string[] ruby, string[] romaji, string translate)
+        private Lyric createDefaultLyricLine(string text, string[] ruby, string[] romaji, string translate)
         {
             var startTime = Time.Current;
             const double duration = 1000000;
@@ -154,7 +154,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 writer.Flush();
                 stream.Position = 0;
 
-                var lyric = new KaraokeLegacyBeatmapDecoder().Decode(reader).HitObjects.OfType<LyricLine>().FirstOrDefault();
+                var lyric = new KaraokeLegacyBeatmapDecoder().Decode(reader).HitObjects.OfType<Lyric>().FirstOrDefault();
 
                 // Check is not null
                 if (lyric == null)

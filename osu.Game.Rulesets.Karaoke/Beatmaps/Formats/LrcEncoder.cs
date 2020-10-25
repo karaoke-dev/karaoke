@@ -18,13 +18,13 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         {
             var lyric = new Lyric
             {
-                Lines = output.HitObjects.OfType<Objects.LyricLine>().Select(encodeLyric).ToArray(),
+                Lines = output.HitObjects.OfType<Objects.Lyric>().Select(encodeLyric).ToArray(),
             };
             var encodeResult = new LrcParser().Encode(lyric);
             return encodeResult;
         }
 
-        private LyricLine encodeLyric(Objects.LyricLine lyric) =>
+        private LyricLine encodeLyric(Objects.Lyric lyric) =>
             new LyricLine
             {
                 Text = lyric.Text,

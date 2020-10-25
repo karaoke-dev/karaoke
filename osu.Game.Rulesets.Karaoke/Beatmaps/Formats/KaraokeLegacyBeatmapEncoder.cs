@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         private IEnumerable<string> encodeNote(Beatmap output)
         {
             var notes = output.HitObjects.OfType<Note>().ToList();
-            var lyrics = output.HitObjects.OfType<LyricLine>().ToList();
+            var lyrics = output.HitObjects.OfType<Lyric>().ToList();
             return notes.GroupBy(x => x.ParentLyric).Select(g =>
             {
                 // Get note group
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private IEnumerable<string> encodeStyle(Beatmap output)
         {
-            var lyricLines = output.HitObjects.OfType<LyricLine>().ToList();
+            var lyricLines = output.HitObjects.OfType<Lyric>().ToList();
 
             for (var i = 0; i < lyricLines.Count; i++)
             {
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             if (!output.AnyTranslate())
                 yield break;
 
-            var lyrics = output.HitObjects.OfType<LyricLine>().ToList();
+            var lyrics = output.HitObjects.OfType<Lyric>().ToList();
             var availableTranslates = output.AvailableTranslates();
 
             foreach (var translate in availableTranslates)

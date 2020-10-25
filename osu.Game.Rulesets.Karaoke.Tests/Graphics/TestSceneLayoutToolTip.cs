@@ -47,11 +47,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
             }
         }
 
-        private void setTooltip(string testName, Action<LyricLine> callBack)
+        private void setTooltip(string testName, Action<Lyric> callBack)
         {
             AddStep(testName, () =>
             {
-                var singer = new LyricLine
+                var singer = new Lyric
                 {
                     Text = "karaoke!"
                 };

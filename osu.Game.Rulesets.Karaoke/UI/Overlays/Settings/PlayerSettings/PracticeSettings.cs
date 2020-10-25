@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
         public PracticeSettings(IBeatmap beatmap)
             : base("Practice")
         {
-            var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
 
             Children = new Drawable[]
             {

@@ -323,14 +323,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             AddStep("Test", () => initialLyricLine(createDefaultLyricLine()));
         }
 
-        private void initialLyricLine(LyricLine lyricLine) => layoutArea.Child = drawableLyricLine = new TestDrawableLyricLine(this, lyricLine);
+        private void initialLyricLine(Lyric lyricLine) => layoutArea.Child = drawableLyricLine = new TestDrawableLyricLine(this, lyricLine);
 
-        private LyricLine createDefaultLyricLine()
+        private Lyric createDefaultLyricLine()
         {
             var startTime = Time.Current;
             const double duration = 1000000;
 
-            return new LyricLine
+            return new Lyric
             {
                 StartTime = startTime,
                 Duration = duration,
@@ -383,7 +383,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             public KaraokeFont Font { get; private set; }
             private bool defaultValueAssigned;
 
-            public TestDrawableLyricLine(TestSceneLyricLineStyle testCase, LyricLine hitObject)
+            public TestDrawableLyricLine(TestSceneLyricLineStyle testCase, Lyric hitObject)
                 : base(hitObject)
             {
                 testScene = testCase;

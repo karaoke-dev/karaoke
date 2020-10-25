@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
             romajiListPreview.BindableTag.BindValueChanged(value => { lyricPreviewArea.LyricLine.RomajiTags = value.NewValue.ToArray(); });
         }
 
-        private LyricLine[] getLyricLine(EditorBeatmap editorBeatmap)
-            => editorBeatmap.HitObjects.OfType<LyricLine>().ToArray();
+        private Lyric[] getLyricLine(EditorBeatmap editorBeatmap)
+            => editorBeatmap.HitObjects.OfType<Lyric>().ToArray();
     }
 }

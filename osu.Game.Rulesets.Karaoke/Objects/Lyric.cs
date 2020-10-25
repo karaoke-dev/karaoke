@@ -16,7 +16,7 @@ using osu.Game.Rulesets.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class LyricLine : KaraokeHitObject, IHasDuration
+    public class Lyric : KaraokeHitObject, IHasDuration
     {
         public readonly Bindable<string> TextBindable = new Bindable<string>();
 

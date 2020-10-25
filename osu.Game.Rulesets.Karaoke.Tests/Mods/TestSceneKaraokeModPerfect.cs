@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 
         // TODO : test case = false will be added after saiten system is implemented.
         [Ignore("Saiten should judgement by note, not lyric.")]
-        public void TestLyric(bool shouldMiss) => CreateHitObjectTest(new HitObjectTestData(new LyricLine
+        public void TestLyric(bool shouldMiss) => CreateHitObjectTest(new HitObjectTestData(new Lyric
         {
             StartTime = 1000,
             Duration = 1000,

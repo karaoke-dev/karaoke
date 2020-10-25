@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
             var startTime = Time.Current + 1000 + timeOffset;
             const double duration = 2500;
 
-            var lyric = new LyricLine
+            var lyric = new Lyric
             {
                 StartTime = startTime,
                 Duration = duration,
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
         private int depthIndex;
 
-        protected virtual TestDrawableLyricLine CreateDrawableLyricLine(LyricLine lyric, bool auto)
+        protected virtual TestDrawableLyricLine CreateDrawableLyricLine(Lyric lyric, bool auto)
             => new TestDrawableLyricLine(lyric, auto)
             {
                 Anchor = Anchor.Centre,
@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
         protected class TestDrawableLyricLine : DrawableLyricLine
         {
-            public TestDrawableLyricLine(LyricLine h, bool auto)
+            public TestDrawableLyricLine(Lyric h, bool auto)
                 : base(h)
             {
             }

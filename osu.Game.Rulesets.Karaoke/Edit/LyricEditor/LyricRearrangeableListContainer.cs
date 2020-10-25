@@ -15,18 +15,18 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
-    public class LyricRearrangeableListContainer : OsuRearrangeableListContainer<LyricLine>
+    public class LyricRearrangeableListContainer : OsuRearrangeableListContainer<Lyric>
     {
-        protected override OsuRearrangeableListItem<LyricLine> CreateOsuDrawable(LyricLine item)
+        protected override OsuRearrangeableListItem<Lyric> CreateOsuDrawable(Lyric item)
             => new LyricRearrangeableListItem(item);
 
-        public class LyricRearrangeableListItem : OsuRearrangeableListItem<LyricLine>
+        public class LyricRearrangeableListItem : OsuRearrangeableListItem<Lyric>
         {
             private Box background;
             private Box dragAlert;
             private Box headerBackground;
 
-            public LyricRearrangeableListItem(LyricLine item)
+            public LyricRearrangeableListItem(Lyric item)
                 : base(item)
             {
             }

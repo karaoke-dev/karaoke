@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             // Remove all karaoke note
             beatmap.HitObjects.RemoveAll(x => x is Note);
 
-            var lyricLines = beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var lyricLines = beatmap.HitObjects.OfType<Lyric>().ToList();
 
             for (int l = 0; l < lyricLines.Count; l++)
             {
@@ -222,7 +222,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private void processStyle(Beatmap beatmap, IList<string> styleLines)
         {
-            var lyricLines = beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var lyricLines = beatmap.HitObjects.OfType<Lyric>().ToList();
 
             for (int l = 0; l < lyricLines.Count; l++)
             {
@@ -248,7 +248,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         {
             var availableTranslates = new List<BeatmapSetOnlineLanguage>();
 
-            var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
             var translates = translateLines.Select(translate => new
             {
                 key = translate.Split('=').FirstOrDefault()?.Split('[').LastOrDefault()?.Split(']').FirstOrDefault(),
