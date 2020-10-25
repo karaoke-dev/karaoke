@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             switch (h)
             {
-                case DrawableLyricLine _:
+                case DrawableLyric _:
                     LyricPlayfield.Add(h);
                     break;
 
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             switch (h)
             {
-                case DrawableLyricLine _:
+                case DrawableLyric _:
                     return LyricPlayfield.Remove(h);
 
                 case DrawableNote _:

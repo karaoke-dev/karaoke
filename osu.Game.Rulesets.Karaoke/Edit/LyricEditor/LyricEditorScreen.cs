@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
         private void addHitObject(HitObject hitObject)
         {
             // see how `DrawableEditRulesetWrapper` do
-            if (hitObject is LyricLine lyric)
+            if (hitObject is Lyric lyric)
             {
                 container.Items.Add(lyric);
             }
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 
         private void removeHitObject(HitObject hitObject)
         {
-            if (!(hitObject is LyricLine lyric))
+            if (!(hitObject is Lyric lyric))
                 return;
 
             container.Items.Remove(lyric);

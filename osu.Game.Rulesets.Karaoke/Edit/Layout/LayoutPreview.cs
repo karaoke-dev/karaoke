@@ -70,30 +70,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             [BackgroundDependencyLoader]
             private void load(LayoutManager manager)
             {
-                manager.PreviewLyricLine.BindValueChanged(e =>
+                manager.PreviewLyric.BindValueChanged(e =>
                 {
                     if(e.NewValue != null)
-                        Child = new PreviewDrawableLyricLine(e.NewValue);
+                        Child = new PreviewDrawableLyric(e.NewValue);
                 }, true);
 
                 manager.PreviewSkinIndex.BindValueChanged(v =>
                 {
-                    if (Child is PreviewDrawableLyricLine lyricLine)
-                        lyricLine.HitObject.FontIndex = v.NewValue;
+                    if (Child is PreviewDrawableLyric lyric)
+                        lyric.HitObject.FontIndex = v.NewValue;
                 }, true);
 
                 manager.EditLayout.BindValueChanged(v =>
                 {
-                    if (Child is PreviewDrawableLyricLine lyricLine)
-                        lyricLine.PreviewLayout = v.NewValue;
+                    if (Child is PreviewDrawableLyric lyric)
+                        lyric.PreviewLayout = v.NewValue;
                 }, true);
             }
 
-            public class PreviewDrawableLyricLine : DrawableLyricLine
+            public class PreviewDrawableLyric : DrawableLyric
             {
                 private KaraokeLayout layout;
 
-                public PreviewDrawableLyricLine(LyricLine hitObject)
+                public PreviewDrawableLyric(Lyric hitObject)
                 : base(hitObject)
                 {
                 }

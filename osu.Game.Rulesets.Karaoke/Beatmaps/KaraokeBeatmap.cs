@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {
             int singers = SingerMetadata.Singers.Count;
-            int lyrics = HitObjects.Count(s => s is LyricLine);
+            int lyrics = HitObjects.Count(s => s is Lyric);
 
             var defaultStatistic = new List<BeatmapStatistic>
             {

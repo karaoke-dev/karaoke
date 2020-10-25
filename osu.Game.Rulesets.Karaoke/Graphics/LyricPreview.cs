@@ -20,11 +20,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
 {
     public class LyricPreview : CompositeDrawable
     {
-        public Bindable<LyricLine> SelectedLyricLine { get; private set; } = new Bindable<LyricLine>();
+        public Bindable<Lyric> SelectedLyric { get; private set; } = new Bindable<Lyric>();
 
         private readonly FillFlowContainer<ClickableLyric> lyricTable;
 
-        public LyricPreview(IEnumerable<LyricLine> lyrics)
+        public LyricPreview(IEnumerable<Lyric> lyrics)
         {
             InternalChild = new OsuScrollContainer
             {
@@ -37,12 +37,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
                     Children = lyrics.Select(x => CreateLyricContainer(x).With(c =>
                     {
                         c.Selected = false;
-                        c.Action = () => triggerLyricLine(x);
+                        c.Action = () => triggerLyric(x);
                     })).ToList()
                 }
             };
 
-            SelectedLyricLine.BindValueChanged(value =>
+            SelectedLyric.BindValueChanged(value =>
             {
                 var oldValue = value.OldValue;
                 if (oldValue != null)
@@ -54,12 +54,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
             });
         }
 
-        private void triggerLyricLine(LyricLine lyric)
+        private void triggerLyric(Lyric lyric)
         {
-            if (SelectedLyricLine.Value == lyric)
-                SelectedLyricLine.TriggerChange();
+            if (SelectedLyric.Value == lyric)
+                SelectedLyric.TriggerChange();
             else
-                SelectedLyricLine.Value = lyric;
+                SelectedLyric.Value = lyric;
         }
 
         public Vector2 Spacing
@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
             set => lyricTable.Spacing = value;
         }
 
-        protected virtual ClickableLyric CreateLyricContainer(LyricLine lyric) => new ClickableLyric(lyric);
+        protected virtual ClickableLyric CreateLyricContainer(Lyric lyric) => new ClickableLyric(lyric);
 
         public class ClickableLyric : ClickableContainer
         {
@@ -81,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
             private readonly Drawable icon;
             private readonly PreviewLyricSpriteText previewLyric;
 
-            public ClickableLyric(LyricLine lyric)
+            public ClickableLyric(Lyric lyric)
             {
                 AutoSizeAxes = Axes.Y;
                 RelativeSizeAxes = Axes.X;
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
                 };
             }
 
-            protected virtual PreviewLyricSpriteText CreateLyric(LyricLine lyric) => new PreviewLyricSpriteText(lyric)
+            protected virtual PreviewLyricSpriteText CreateLyric(Lyric lyric) => new PreviewLyricSpriteText(lyric)
             {
                 Font = new FontUsage(size: 25),
                 RubyFont = new FontUsage(size: 10),
@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
                 }
             }
 
-            public LyricLine HitObject => previewLyric.HitObject;
+            public Lyric HitObject => previewLyric.HitObject;
 
             [BackgroundDependencyLoader]
             private void load(OsuColour colours)

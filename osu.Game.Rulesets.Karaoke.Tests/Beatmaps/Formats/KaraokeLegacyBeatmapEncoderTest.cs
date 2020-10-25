@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             {
                 HitObjects = new List<HitObject>
                 {
-                    new LyricLine
+                    new Lyric
                     {
                         StartTime = start_time,
                         Duration = duration,

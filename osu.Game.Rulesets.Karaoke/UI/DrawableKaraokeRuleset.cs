@@ -96,8 +96,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             switch (h)
             {
-                case LyricLine lyric:
-                    return new DrawableLyricLine(lyric);
+                case Lyric lyric:
+                    return new DrawableLyric(lyric);
 
                 case Note note:
                     return new DrawableNote(note);

@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public int EndIndex { get; set; }
 
-        public LyricLine ParentLyric { get; set; }
+        public Lyric ParentLyric { get; set; }
 
         public Note CopyByPercentage(double startPercentage = 0, double durationPercentage = 0.5)
         {

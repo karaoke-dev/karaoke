@@ -14,18 +14,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
 {
     public class LyricControl : Container
     {
-        private readonly DrawableLyricLine drawableLyric;
+        private readonly DrawableLyric drawableLyric;
 
-        public LyricLine Lyric { get; }
+        public Lyric Lyric { get; }
 
-        public LyricControl(LyricLine lyric)
+        public LyricControl(Lyric lyric)
         {
             Lyric = lyric;
             CornerRadius = 5;
             AutoSizeAxes = Axes.Y;
             InternalChildren = new Drawable[]
             {
-                drawableLyric = new DrawableEditorLyricLine(lyric)
+                drawableLyric = new DrawableEditorLyric(lyric)
             };
         }
 
@@ -35,9 +35,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
             drawableLyric.Clock = framedClock;
         }
 
-        public class DrawableEditorLyricLine : DrawableLyricLine
+        public class DrawableEditorLyric : DrawableLyric
         {
-            public DrawableEditorLyricLine(LyricLine lyric)
+            public DrawableEditorLyric(Lyric lyric)
                 : base(lyric)
             {
                 DisplayRuby = true;

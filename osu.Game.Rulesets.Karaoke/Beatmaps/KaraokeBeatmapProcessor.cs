@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
         {
             base.PostProcess();
 
-            var lyrics = Beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var lyrics = Beatmap.HitObjects.OfType<Lyric>().ToList();
 
             if (!lyrics.Any())
                 return;

@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             if (language == null)
                 return 0;
 
-            var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
             return lyrics.Count(x => x.Translates.ContainsKey(language.Id));
         }
     }

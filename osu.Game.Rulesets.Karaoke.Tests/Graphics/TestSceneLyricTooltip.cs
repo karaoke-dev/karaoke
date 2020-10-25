@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         public void TestDisplayToolTip()
         {
             var beatmap = new TestKaraokeBeatmap(null);
-            var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
 
             foreach (var lyric in lyrics)
             {

@@ -30,13 +30,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
         {
             switch (hitObject)
             {
-                case LyricLine line:
+                case Lyric line:
                     yield return createConvertValue(line);
 
                     break;
             }
 
-            static ConvertValue createConvertValue(LyricLine obj) => new ConvertValue
+            static ConvertValue createConvertValue(Lyric obj) => new ConvertValue
             {
                 StartTime = obj.StartTime,
                 EndTime = obj.EndTime,

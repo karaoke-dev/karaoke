@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public IBeatmap Beatmap => beatmap.Value.Beatmap;
 
-        public new IEnumerable<DrawableLyricLine> AllHitObjects => base.AllHitObjects.OfType<DrawableLyricLine>();
+        public new IEnumerable<DrawableLyric> AllHitObjects => base.AllHitObjects.OfType<DrawableLyric>();
 
         protected WorkingBeatmap WorkingBeatmap => beatmap.Value;
 
@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly BindableBool displayRomaji = new BindableBool();
 
         private readonly BindableDouble preemptTime = new BindableDouble();
-        private readonly Bindable<LyricLine> nowLyric = new Bindable<LyricLine>();
+        private readonly Bindable<Lyric> nowLyric = new Bindable<Lyric>();
         private readonly Cached seekCache = new Cached();
 
         public LyricPlayfield()
@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             var isTranslate = translate.Value;
             var targetLanguage = translateLanguage.Value;
 
-            var lyrics = Beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var lyrics = Beatmap.HitObjects.OfType<Lyric>().ToList();
             var availableTranslates = Beatmap.AvailableTranslates();
 
             // If contain target language
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public override void Add(DrawableHitObject h)
         {
-            if (h is DrawableLyricLine drawableLyric)
+            if (h is DrawableLyric drawableLyric)
             {
                 drawableLyric.OnLyricStart += OnNewResult;
                 drawableLyric.DisplayRuby = displayRuby.Value;
@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public override bool Remove(DrawableHitObject h)
         {
-            if (h is DrawableLyricLine drawableLyric)
+            if (h is DrawableLyric drawableLyric)
                 drawableLyric.OnLyricStart -= OnNewResult;
 
             h.OnNewResult -= OnNewResult;
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 return;
 
             // Update now lyric
-            var targetLyric = karaokeLyricJudgement.Time == LyricTime.Available ? judgedObject.HitObject as LyricLine : null;
+            var targetLyric = karaokeLyricJudgement.Time == LyricTime.Available ? judgedObject.HitObject as Lyric : null;
             seekCache.Invalidate();
             nowLyric.Value = targetLyric;
             seekCache.Validate();

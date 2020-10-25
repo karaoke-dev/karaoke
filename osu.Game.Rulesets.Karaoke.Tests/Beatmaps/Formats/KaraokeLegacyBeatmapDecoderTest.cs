@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(1, working.GetPlayableBeatmap(new KaraokeRuleset().RulesetInfo, Array.Empty<Mod>()).BeatmapInfo.BeatmapVersion);
 
                 // Test lyric part decode result
-                var lyrics = working.Beatmap.HitObjects.OfType<LyricLine>();
+                var lyrics = working.Beatmap.HitObjects.OfType<Lyric>();
                 Assert.AreEqual(54, lyrics.Count());
 
                 // Test note decode part
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             var beatmap = decodeBeatmap("karaoke-style-samples");
 
             // Get lyric
-            var lyric = beatmap.HitObjects.OfType<LyricLine>().FirstOrDefault();
+            var lyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
 
             // Check is not null
             Assert.IsTrue(lyric != null);
@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
             // Get translate
             var translates = beatmap.AvailableTranslates();
-            var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
 
             // Check is not null
             Assert.IsTrue(translates != null);
