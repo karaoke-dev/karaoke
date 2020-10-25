@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
             AutoSizeAxes = Axes.Y;
             InternalChildren = new Drawable[]
             {
-                drawableLyric = new DrawableEditorLyricLine(lyric)
+                drawableLyric = new DrawableEditorLyric(lyric)
             };
         }
 
@@ -35,9 +35,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
             drawableLyric.Clock = framedClock;
         }
 
-        public class DrawableEditorLyricLine : DrawableLyric
+        public class DrawableEditorLyric : DrawableLyric
         {
-            public DrawableEditorLyricLine(Lyric lyric)
+            public DrawableEditorLyric(Lyric lyric)
                 : base(lyric)
             {
                 DisplayRuby = true;

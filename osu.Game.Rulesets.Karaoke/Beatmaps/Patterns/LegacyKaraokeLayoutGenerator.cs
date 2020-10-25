@@ -80,17 +80,17 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
             for (int i = 0; i < lyrics.Count; i++)
             {
                 var lastLyric = i >= number_of_line ? lyrics[i - number_of_line] : null;
-                var lyricLine = lyrics[i];
+                var lyric = lyrics[i];
 
                 if (lastLyric == null)
                     continue;
 
                 // Adjust start time and end time
-                var lyricEndTime = lyricLine.EndTime;
-                lyricLine.StartTime = lastLyric.EndTime + 1000;
+                var lyricEndTime = lyric.EndTime;
+                lyric.StartTime = lastLyric.EndTime + 1000;
 
                 // Should re-assign duration here
-                lyricLine.Duration = lyricEndTime - lyricLine.StartTime;
+                lyric.Duration = lyricEndTime - lyric.StartTime;
             }
         }
     }

@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
 {
     public class LyricList : Container
     {
-        public Bindable<Lyric> BindableLyricLine => table.BindableLyricLine;
+        public Bindable<Lyric> BindableLyric => table.BindableLyric;
 
         private readonly CornerBackground background;
         private readonly PreviewLyricTable table;
@@ -43,10 +43,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
             };
         }
 
-        public Lyric[] LyricLines
+        public Lyric[] Lyrics
         {
-            get => table.LyricLines;
-            set => table.LyricLines = value;
+            get => table.Lyrics;
+            set => table.Lyrics = value;
         }
 
         [BackgroundDependencyLoader]
@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
             private const float horizontal_inset = 20;
             private const float row_height = 10;
 
-            public Bindable<Lyric> BindableLyricLine { get; } = new Bindable<Lyric>();
+            public Bindable<Lyric> BindableLyric { get; } = new Bindable<Lyric>();
 
             private readonly FillFlowContainer backgroundFlow;
 
@@ -84,25 +84,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
                 });
             }
 
-            private Lyric[] lyricLines;
+            private Lyric[] lyrics;
 
-            public Lyric[] LyricLines
+            public Lyric[] Lyrics
             {
-                get => lyricLines;
+                get => lyrics;
                 set
                 {
-                    lyricLines = value;
+                    lyrics = value;
 
                     Content = null;
                     backgroundFlow.Clear();
 
-                    if (LyricLines?.Any() != true)
+                    if (Lyrics?.Any() != true)
                         return;
 
                     Columns = createHeaders();
-                    Content = LyricLines.Select((g, i) => createContent(i, g)).ToArray().ToRectangular();
+                    Content = Lyrics.Select((g, i) => createContent(i, g)).ToArray().ToRectangular();
 
-                    BindableLyricLine.Value = LyricLines.FirstOrDefault();
+                    BindableLyric.Value = Lyrics.FirstOrDefault();
                 }
             }
 
@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
                         Font = new FontUsage(size: 32),
                         Text = $"#{index + 1}"
                     },
-                    new ClickablePreviewLyricSpriteText(line, BindableLyricLine)
+                    new ClickablePreviewLyricSpriteText(line, BindableLyric)
                     {
                         RelativeSizeAxes = Axes.X,
                         Margin = new MarginPadding(10),
@@ -141,17 +141,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
 
             public class ClickablePreviewLyricSpriteText : PreviewLyricSpriteText
             {
-                private readonly Bindable<Lyric> bindableLyricLine;
+                private readonly Bindable<Lyric> bindableLyric;
 
-                public ClickablePreviewLyricSpriteText(Lyric hitObject, Bindable<Lyric> bindableLyricLine)
+                public ClickablePreviewLyricSpriteText(Lyric hitObject, Bindable<Lyric> bindableLyric)
                     : base(hitObject)
                 {
-                    this.bindableLyricLine = bindableLyricLine;
+                    this.bindableLyric = bindableLyric;
                 }
 
                 protected override bool OnClick(ClickEvent e)
                 {
-                    bindableLyricLine.Value = HitObject;
+                    bindableLyric.Value = HitObject;
                     return base.OnClick(e);
                 }
             }

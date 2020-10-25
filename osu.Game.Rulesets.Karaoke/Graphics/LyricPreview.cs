@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
                     Children = lyrics.Select(x => CreateLyricContainer(x).With(c =>
                     {
                         c.Selected = false;
-                        c.Action = () => triggerLyricLine(x);
+                        c.Action = () => triggerLyric(x);
                     })).ToList()
                 }
             };
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
             });
         }
 
-        private void triggerLyricLine(Lyric lyric)
+        private void triggerLyric(Lyric lyric)
         {
             if (SelectedLyric.Value == lyric)
                 SelectedLyric.TriggerChange();

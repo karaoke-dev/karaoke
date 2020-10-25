@@ -15,9 +15,9 @@ using osu.Game.Rulesets.Mods;
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 {
     [TestFixture]
-    public class TestSceneLyricLine : KaraokeSkinnableTestScene
+    public class TestSceneLyric : KaraokeSkinnableTestScene
     {
-        public TestSceneLyricLine()
+        public TestSceneLyric()
         {
             AddStep("Default Lyric", () => SetContents(() => testSingle()));
         }
@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
             lyric.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 
-            var drawable = CreateDrawableLyricLine(lyric, auto);
+            var drawable = CreateDrawableLyric(lyric, auto);
 
             foreach (var mod in SelectedMods.Value.OfType<IApplicableToDrawableHitObjects>())
                 mod.ApplyToDrawableHitObjects(new[] { drawable });
@@ -87,17 +87,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
         private int depthIndex;
 
-        protected virtual TestDrawableLyricLine CreateDrawableLyricLine(Lyric lyric, bool auto)
-            => new TestDrawableLyricLine(lyric, auto)
+        protected virtual TestDrawableLyric CreateDrawableLyric(Lyric lyric, bool auto)
+            => new TestDrawableLyric(lyric, auto)
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Depth = depthIndex++
             };
 
-        protected class TestDrawableLyricLine : DrawableLyric
+        protected class TestDrawableLyric : DrawableLyric
         {
-            public TestDrawableLyricLine(Lyric h, bool auto)
+            public TestDrawableLyric(Lyric h, bool auto)
                 : base(h)
             {
             }

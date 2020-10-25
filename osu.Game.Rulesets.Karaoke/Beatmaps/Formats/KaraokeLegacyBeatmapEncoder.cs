@@ -65,8 +65,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
             for (var i = 0; i < lyrics.Count; i++)
             {
-                var lyricLine = lyrics[i];
-                yield return $"@style{i}={lyricLine.LayoutIndex},{lyricLine.FontIndex}";
+                var lyric = lyrics[i];
+                yield return $"@style{i}={lyric.LayoutIndex},{lyric.FontIndex}";
             }
         }
 

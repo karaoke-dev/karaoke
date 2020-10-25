@@ -81,15 +81,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
                 }
             };
 
-            lyricList.LyricLines = getLyricLine(editorBeatmap);
-            lyricList.BindableLyricLine.BindValueChanged(value =>
+            lyricList.Lyrics = getLyrics(editorBeatmap);
+            lyricList.BindableLyric.BindValueChanged(value =>
             {
                 var newValue = value.NewValue;
                 if (newValue == null)
                     return;
 
                 // Apply new lyric line
-                lyricPreviewArea.LyricLine = newValue;
+                lyricPreviewArea.Lyric = newValue;
 
                 // Apply new tag and max position
                 var maxLyricPosition = newValue.Text.Length - 1;
@@ -99,11 +99,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
                 romajiListPreview.MaxTagPosition = maxLyricPosition;
             }, true);
 
-            rubyListPreview.BindableTag.BindValueChanged(value => { lyricPreviewArea.LyricLine.RubyTags = value.NewValue.ToArray(); });
-            romajiListPreview.BindableTag.BindValueChanged(value => { lyricPreviewArea.LyricLine.RomajiTags = value.NewValue.ToArray(); });
+            rubyListPreview.BindableTag.BindValueChanged(value => { lyricPreviewArea.Lyric.RubyTags = value.NewValue.ToArray(); });
+            romajiListPreview.BindableTag.BindValueChanged(value => { lyricPreviewArea.Lyric.RomajiTags = value.NewValue.ToArray(); });
         }
 
-        private Lyric[] getLyricLine(EditorBeatmap editorBeatmap)
+        private Lyric[] getLyrics(EditorBeatmap editorBeatmap)
             => editorBeatmap.HitObjects.OfType<Lyric>().ToArray();
     }
 }

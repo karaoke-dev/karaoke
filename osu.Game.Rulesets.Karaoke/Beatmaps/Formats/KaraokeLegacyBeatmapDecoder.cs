@@ -104,18 +104,18 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
             for (int l = 0; l < lyrics.Count; l++)
             {
-                var lyricLine = lyrics[l];
+                var lyric = lyrics[l];
                 var line = lines.ElementAtOrDefault(l)?.Split('=').Last();
 
                 // Create default note if not exist
                 if (string.IsNullOrEmpty(line))
                 {
-                    beatmap.HitObjects.AddRange(lyricLine.CreateDefaultNotes());
+                    beatmap.HitObjects.AddRange(lyric.CreateDefaultNotes());
                     continue;
                 }
 
                 var notes = line.Split(',');
-                var defaultNotes = lyricLine.CreateDefaultNotes().ToList();
+                var defaultNotes = lyric.CreateDefaultNotes().ToList();
                 var minNoteNumber = Math.Min(notes.Length, defaultNotes.Count);
 
                 // Process each note
