@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 }, true);
             }
 
-            public class PreviewDrawableLyricLine : DrawableLyricLine
+            public class PreviewDrawableLyricLine : DrawableLyric
             {
                 private KaraokeLayout layout;
 

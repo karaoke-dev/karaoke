@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public IBeatmap Beatmap => beatmap.Value.Beatmap;
 
-        public new IEnumerable<DrawableLyricLine> AllHitObjects => base.AllHitObjects.OfType<DrawableLyricLine>();
+        public new IEnumerable<DrawableLyric> AllHitObjects => base.AllHitObjects.OfType<DrawableLyric>();
 
         protected WorkingBeatmap WorkingBeatmap => beatmap.Value;
 
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public override void Add(DrawableHitObject h)
         {
-            if (h is DrawableLyricLine drawableLyric)
+            if (h is DrawableLyric drawableLyric)
             {
                 drawableLyric.OnLyricStart += OnNewResult;
                 drawableLyric.DisplayRuby = displayRuby.Value;
@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public override bool Remove(DrawableHitObject h)
         {
-            if (h is DrawableLyricLine drawableLyric)
+            if (h is DrawableLyric drawableLyric)
                 drawableLyric.OnLyricStart -= OnNewResult;
 
             h.OnNewResult -= OnNewResult;

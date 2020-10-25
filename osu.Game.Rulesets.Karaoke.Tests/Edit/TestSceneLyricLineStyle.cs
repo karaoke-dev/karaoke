@@ -376,7 +376,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             };
         }
 
-        public class TestDrawableLyricLine : DrawableLyricLine
+        public class TestDrawableLyricLine : DrawableLyric
         {
             private readonly TestSceneLyricLineStyle testScene;
 

@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
 {
     public class LyricControl : Container
     {
-        private readonly DrawableLyricLine drawableLyric;
+        private readonly DrawableLyric drawableLyric;
 
         public Lyric Lyric { get; }
 
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
             drawableLyric.Clock = framedClock;
         }
 
-        public class DrawableEditorLyricLine : DrawableLyricLine
+        public class DrawableEditorLyricLine : DrawableLyric
         {
             public DrawableEditorLyricLine(Lyric lyric)
                 : base(lyric)

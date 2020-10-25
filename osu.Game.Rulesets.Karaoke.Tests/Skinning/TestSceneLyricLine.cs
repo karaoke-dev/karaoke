@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 Depth = depthIndex++
             };
 
-        protected class TestDrawableLyricLine : DrawableLyricLine
+        protected class TestDrawableLyricLine : DrawableLyric
         {
             public TestDrawableLyricLine(Lyric h, bool auto)
                 : base(h)

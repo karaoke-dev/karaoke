@@ -18,7 +18,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
-    public class DrawableLyricLine : DrawableKaraokeHitObject
+    public class DrawableLyric : DrawableKaraokeHitObject
     {
         private readonly KarakeSpriteText karaokeText;
         private readonly OsuSpriteText translateText;
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         public new Lyric HitObject => (Lyric)base.HitObject;
 
-        public DrawableLyricLine(Lyric hitObject)
+        public DrawableLyric(Lyric hitObject)
             : base(hitObject)
         {
             Scale = new Vector2(2f);
