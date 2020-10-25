@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     var startTime = timeTags.FirstOrDefault(x => x.Time > 0).Time;
                     var duration = timeTags.LastOrDefault(x => x.Time > 0).Time - startTime;
 
-                    var lyric = new LyricLine
+                    var lyric = new Lyric
                     {
                         Text = line.Text,
                         // Start time and end time should be re-assigned

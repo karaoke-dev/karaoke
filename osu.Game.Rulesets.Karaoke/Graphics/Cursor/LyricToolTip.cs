@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
     {
         public override bool SetContent(object content)
         {
-            if (!(content is LyricLine lyric))
+            if (!(content is Lyric lyric))
                 return false;
 
             Child = new PreviewLyricSpriteText(lyric)

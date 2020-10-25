@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
         public PracticeSettings(IBeatmap beatmap)
             : base("Practice")
         {
-            var lyrics = beatmap.HitObjects.OfType<LyricLine>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
 
             Children = new Drawable[]
             {
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
         private void load(KaraokeRulesetConfigManager config, KaraokeSessionStatics session)
         {
             preemptTimeSliderBar.Current = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime);
-            session.BindWith(KaraokeRulesetSession.NowLyric, lyricPreview.SelectedLyricLine);
+            session.BindWith(KaraokeRulesetSession.NowLyric, lyricPreview.SelectedLyric);
         }
     }
 }

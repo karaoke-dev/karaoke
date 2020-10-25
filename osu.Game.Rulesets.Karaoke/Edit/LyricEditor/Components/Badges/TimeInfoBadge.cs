@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges
         [Resolved]
         private IAdjustableClock adjustableClock { get; set; }
 
-        public TimeInfoBadge(LyricLine lyric)
+        public TimeInfoBadge(Lyric lyric)
             : base(lyric)
         {
             lyric.StartTimeBindable.BindValueChanged(value => { changeTime(); }, true);

@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             Set(KaraokeRulesetSession.PlaybackSpeed, overridePlaybackSpeed ? playbackSpeedValue : 0, -10, 10);
 
             // Practice
-            Set<LyricLine>(KaraokeRulesetSession.NowLyric, null);
+            Set<Lyric>(KaraokeRulesetSession.NowLyric, null);
 
             // Saiten stsus
             Set(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.NotInitialized);

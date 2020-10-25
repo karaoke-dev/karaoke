@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges
 {
     public class StyleInfoBadge : Badge
     {
-        public StyleInfoBadge(LyricLine lyric)
+        public StyleInfoBadge(Lyric lyric)
             : base(lyric)
         {
             lyric.FontIndexBindable.BindValueChanged(value =>

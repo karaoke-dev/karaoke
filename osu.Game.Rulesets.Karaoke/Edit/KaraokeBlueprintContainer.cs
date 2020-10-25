@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 case DrawableNote note:
                     return new NoteSelectionBlueprint(note);
 
-                case DrawableLyricLine lyric:
+                case DrawableLyric lyric:
                     return new LyricSelectionBlueprint(lyric);
             }
 

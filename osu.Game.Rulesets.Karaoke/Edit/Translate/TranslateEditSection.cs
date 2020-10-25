@@ -134,7 +134,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 },
             };
 
-            Dimension[] createRowDimension() => editorBeatmap.HitObjects.OfType<LyricLine>()
+            Dimension[] createRowDimension() => editorBeatmap.HitObjects.OfType<Lyric>()
                 .Select(x => new Dimension(GridSizeMode.Absolute, row_height))
                 .ToArray();
         }
@@ -150,7 +150,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
         private Drawable[][] createContent(EditorBeatmap editorBeatmap, Bindable<BeatmapSetOnlineLanguage> bindable)
         {
-            var lyrics = editorBeatmap.HitObjects.OfType<LyricLine>().ToArray();
+            var lyrics = editorBeatmap.HitObjects.OfType<Lyric>().ToArray();
 
             return lyrics.Select(x =>
             {
@@ -165,7 +165,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             }).ToArray();
         }
 
-        private Drawable createTimeDrawable(LyricLine lyric)
+        private Drawable createTimeDrawable(Lyric lyric)
         {
             var startTime = TimeSpan.FromMilliseconds(lyric.StartTime).ToString(@"mm\:ss\:fff");
             var endTime = TimeSpan.FromMilliseconds(lyric.EndTime).ToString(@"mm\:ss\:fff");
@@ -180,7 +180,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             };
         }
 
-        private Drawable createPreviewSpriteText(LyricLine lyric)
+        private Drawable createPreviewSpriteText(Lyric lyric)
         {
             return new PreviewLyricSpriteText(lyric)
             {
@@ -193,7 +193,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             };
         }
 
-        private Drawable createTranslateTextbox(LyricLine lyric, Bindable<BeatmapSetOnlineLanguage> bindable)
+        private Drawable createTranslateTextbox(Lyric lyric, Bindable<BeatmapSetOnlineLanguage> bindable)
         {
             var textBox = new OsuTextBox
             {

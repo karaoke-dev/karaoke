@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     ChangeHandler.BeginChange();
 
                     if (state == TernaryState.True)
-                        EditorBeatmap.SelectedHitObjects.Cast<LyricLine>().ForEach(l => l.LayoutIndex = x.Key);
+                        EditorBeatmap.SelectedHitObjects.Cast<Lyric>().ForEach(l => l.LayoutIndex = x.Key);
 
                     ChangeHandler.EndChange();
                 })).ToArray()
@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     ChangeHandler.BeginChange();
 
                     if (state == TernaryState.True)
-                        EditorBeatmap.SelectedHitObjects.Cast<LyricLine>().ForEach(l => l.FontIndex = x.Key);
+                        EditorBeatmap.SelectedHitObjects.Cast<Lyric>().ForEach(l => l.FontIndex = x.Key);
 
                     ChangeHandler.EndChange();
                 })).ToArray()

@@ -28,12 +28,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
             };
         }
 
-        private PreviewLyricSpriteText previewLyricLine;
+        private PreviewLyricSpriteText previewLyric;
 
-        public LyricLine LyricLine
+        public Lyric Lyric
         {
-            get => previewLyricLine?.HitObject;
-            set => container.Child = previewLyricLine = new PreviewLyricSpriteText(value)
+            get => previewLyric?.HitObject;
+            set => container.Child = previewLyric = new PreviewLyricSpriteText(value)
             {
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,

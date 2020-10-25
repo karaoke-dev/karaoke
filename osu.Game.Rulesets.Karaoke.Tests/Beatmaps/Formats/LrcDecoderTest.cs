@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             var beatmap = decodeLrcLine(lyric_text);
 
             // Get first beatmap
-            var lyric = beatmap.HitObjects.OfType<LyricLine>().FirstOrDefault();
+            var lyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
 
             // Check lyric
             Assert.AreEqual(lyric?.Text, "からおけ");

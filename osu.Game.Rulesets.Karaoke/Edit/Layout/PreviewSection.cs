@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
             previewSampleDropdown.Current.BindValueChanged(e =>
             {
-                manager.PreviewLyricLine.Value = getLyricLineSampleBySelection(e.NewValue);
+                manager.PreviewLyric.Value = getLyricSampleBySelection(e.NewValue);
             }, true);
 
             previewStyleDropdown.Current.BindValueChanged(e =>
@@ -85,12 +85,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             }, true);
         }
 
-        private LyricLine getLyricLineSampleBySelection(PreviewSample previewSample)
+        private Lyric getLyricSampleBySelection(PreviewSample previewSample)
         {
             switch (previewSample)
             {
                 case PreviewSample.SampeSmall:
-                    return createDefaultLyricLine("@カラオケ",
+                    return createDefaultLyric("@カラオケ",
                     new[]
                     {
                         "@Ruby1=カ,か",
@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     , "karaoke");
 
                 case PreviewSample.SampleMedium:
-                    return createDefaultLyricLine("@[00:18:58]た[00:18:81]だ[00:19:36]風[00:20:09]に[00:20:29]揺[00:20:49]ら[00:20:68]れ[00:20:89]て[00:20:93]",
+                    return createDefaultLyric("@[00:18:58]た[00:18:81]だ[00:19:36]風[00:20:09]に[00:20:29]揺[00:20:49]ら[00:20:68]れ[00:20:89]て[00:20:93]",
                     new[]
                     {
                         "@Ruby1=風,かぜ",
@@ -127,14 +127,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     }
                     , "karaoke");
                 case PreviewSample.SampleLarge:
-                    return createDefaultLyricLine("@灰色(いろ)(いろ)の景色(いろ)(いろ)さえ色づき始める",
+                    return createDefaultLyric("@灰色(いろ)(いろ)の景色(いろ)(いろ)さえ色づき始める",
                     Array.Empty<string>(), Array.Empty<string>(), "karaoke");
                 default:
                     return null;
             }
         }
 
-        private LyricLine createDefaultLyricLine(string text, string[] ruby, string[] romaji, string translate)
+        private Lyric createDefaultLyric(string text, string[] ruby, string[] romaji, string translate)
         {
             var startTime = Time.Current;
             const double duration = 1000000;
@@ -154,7 +154,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 writer.Flush();
                 stream.Position = 0;
 
-                var lyric = new KaraokeLegacyBeatmapDecoder().Decode(reader).HitObjects.OfType<LyricLine>().FirstOrDefault();
+                var lyric = new KaraokeLegacyBeatmapDecoder().Decode(reader).HitObjects.OfType<Lyric>().FirstOrDefault();
 
                 // Check is not null
                 if (lyric == null)
