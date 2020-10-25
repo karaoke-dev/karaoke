@@ -34,12 +34,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
             };
         }
 
-        private LyricLine createDefaultLyricLine()
+        private Lyric createDefaultLyricLine()
         {
             var startTime = Time.Current;
             const double duration = 1000000;
 
-            return new LyricLine
+            return new Lyric
             {
                 StartTime = startTime,
                 Duration = duration,
@@ -85,12 +85,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
             };
         }
 
-        public class PreviewDrawableLyricLine : DrawableLyricLine
+        public class PreviewDrawableLyricLine : DrawableLyric
         {
             private KaraokeFont style;
 
-            public PreviewDrawableLyricLine(LyricLine hitObject)
-            : base(hitObject)
+            public PreviewDrawableLyricLine(Lyric hitObject)
+                : base(hitObject)
             {
             }
 
