@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.IO;
+using NUnit.Framework;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Track;
 using osu.Framework.IO.Stores;
@@ -19,6 +20,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Resources
         public static Stream OpenSkinResource(string name) => OpenResource($"Testing/Skin/{name}.skin");
 
         public static Stream OpenLrcResource(string name) => OpenResource($"Testing/Lrc/{name}.lrc");
+
+        public static string GetTestLrcForImport(string name)
+        {
+            var tempPath = Path.GetTempFileName() + ".lrc";
+
+            using (var stream = OpenLrcResource(name))
+            using (var newFile = File.Create(tempPath))
+                stream.CopyTo(newFile);
+
+            Assert.IsTrue(File.Exists(tempPath));
+            return tempPath;
+        }
 
         public static Stream OpenNicoKaraResource(string name) => OpenResource($"Testing/NicoKara/{name}.nkmproj");
 

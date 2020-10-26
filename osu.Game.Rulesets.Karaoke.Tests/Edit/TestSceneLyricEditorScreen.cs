@@ -8,13 +8,14 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Edit.LyricEditor;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
+using System.IO;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
     [TestFixture]
-    [Ignore("Will fail if run multiple tests. No idea how to fix that.")]
     public class TestSceneLyricEditorScreen : EditorClockTestScene
     {
         public TestSceneLyricEditorScreen()
@@ -41,6 +42,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             Dependencies.CacheAs<IBeatSnapProvider>(editorBeatmap);
 
             Child = new LyricEditorScreen();
+        }
+
+        [Test]
+        public void TestImportLyricFile()
+        {
+            AddAssert($"Import lrc file.", () =>
+            {
+                var temp = TestResources.GetTestLrcForImport("default");
+                return (Child as LyricEditorScreen).ImportLyricFile(new FileInfo(temp));
+            });
         }
     }
 }

@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
+using osu.Game.Database;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Timelines;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -12,14 +13,22 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 using osuTK;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
-    public class LyricEditorScreen : EditorScreenWithTimeline
+    public class LyricEditorScreen : EditorScreenWithTimeline, ICanAcceptFiles
     {
         private KaraokeLyricEditorSkin skin;
         private FillFlowContainer<Button> controls;
         private LyricRearrangeableListContainer container;
+
+        public IEnumerable<string> HandledExtensions => LyricFotmatExtensions;
+
+        public static string[] LyricFotmatExtensions { get; } = { ".lrc", ".kar" };
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
@@ -27,6 +36,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
         public LyricEditorScreen()
             : base(EditorScreenMode.Compose)
         {
+        }
+
+        Task ICanAcceptFiles.Import(params string[] paths)
+        {
+            Schedule(() =>
+            {
+                var firstFile = new FileInfo(paths.First());
+
+                if (LyricFotmatExtensions.Contains(firstFile.Extension))
+                {
+                    // Import lyric file
+                    ImportLyricFile(firstFile.FullName);
+                }
+            });
+            return Task.CompletedTask;
+        }
+
+        public bool ImportLyricFile(string path)
+        {
+            return false;
         }
 
         protected override Drawable CreateTimelineContent() => new KaraokeTimelineBlueprintContainer();
