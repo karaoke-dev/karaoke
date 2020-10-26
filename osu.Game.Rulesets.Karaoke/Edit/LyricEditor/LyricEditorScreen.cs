@@ -5,8 +5,10 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
+using osu.Game.Beatmaps;
 using osu.Game.Database;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Edit.Timelines;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
@@ -22,6 +24,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
     public class LyricEditorScreen : EditorScreenWithTimeline, ICanAcceptFiles
     {
+        private const string backup_lrc_name = "backup.lrc";
+
         private KaraokeLyricEditorSkin skin;
         private FillFlowContainer<Button> controls;
         private LyricRearrangeableListContainer container;
@@ -32,6 +36,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
+
+        [Resolved]
+        private BeatmapManager beatmaps { get; set; }
 
         public LyricEditorScreen()
             : base(EditorScreenMode.Compose)
@@ -47,15 +54,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                 if (LyricFotmatExtensions.Contains(firstFile.Extension))
                 {
                     // Import lyric file
-                    ImportLyricFile(firstFile.FullName);
+                    ImportLyricFile(firstFile);
                 }
             });
             return Task.CompletedTask;
         }
 
-        public bool ImportLyricFile(string path)
+        public bool ImportLyricFile(FileInfo info)
         {
-            return false;
+            if (!info.Exists)
+                return false;
+
+            var set = Beatmap.Value.BeatmapSetInfo;
+            var oldFile = set.Files?.FirstOrDefault(f => f.Filename == backup_lrc_name);
+            using (var stream = info.OpenRead())
+            {
+                // todo : make a backup if has new lyric file.
+                /*
+                if (oldFile != null)
+                    beatmaps.ReplaceFile(set, oldFile, stream, backup_lrc_name);
+                else
+                    beatmaps.AddFile(set, stream, backup_lrc_name);
+                */
+
+                // Import and replace all the file.
+                using (var reader = new IO.LineBufferedReader(stream))
+                {
+                    var decoder = new LrcDecoder();
+                    var lrcBeatmap = decoder.Decode(reader);
+
+                    // todo : replace all the lyric object.
+                }
+            }
+
+            return true;
         }
 
         protected override Drawable CreateTimelineContent() => new KaraokeTimelineBlueprintContainer();
