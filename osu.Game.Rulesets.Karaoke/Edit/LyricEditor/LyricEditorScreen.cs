@@ -5,28 +5,96 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
+using osu.Game.Beatmaps;
+using osu.Game.Database;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
+using osu.Game.Overlays.Dialog;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Edit.Timelines;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 using osuTK;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
-    public class LyricEditorScreen : EditorScreenWithTimeline
+    public class LyricEditorScreen : EditorScreenWithTimeline, ICanAcceptFiles
     {
+        private const string backup_lrc_name = "backup.lrc";
+
         private KaraokeLyricEditorSkin skin;
         private FillFlowContainer<Button> controls;
         private LyricRearrangeableListContainer container;
 
+        public IEnumerable<string> HandledExtensions => LyricFotmatExtensions;
+
+        public static string[] LyricFotmatExtensions { get; } = { ".lrc", ".kar" };
+
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
+
+        [Resolved]
+        private BeatmapManager beatmaps { get; set; }
+
+        [Resolved(CanBeNull = true)]
+        private DialogOverlay dialogOverlay { get; set; }
 
         public LyricEditorScreen()
             : base(EditorScreenMode.Compose)
         {
+        }
+
+        Task ICanAcceptFiles.Import(params string[] paths)
+        {
+            Schedule(() =>
+            {
+                var firstFile = new FileInfo(paths.First());
+
+                if (LyricFotmatExtensions.Contains(firstFile.Extension))
+                {
+                    // Import lyric file
+                    ImportLyricFile(firstFile);
+                }
+            });
+            return Task.CompletedTask;
+        }
+
+        public bool ImportLyricFile(FileInfo info)
+        {
+            if (!info.Exists)
+                return false;
+
+            var set = Beatmap.Value.BeatmapSetInfo;
+            var oldFile = set.Files?.FirstOrDefault(f => f.Filename == backup_lrc_name);
+            using (var stream = info.OpenRead())
+            {
+                // todo : make a backup if has new lyric file.
+                /*
+                if (oldFile != null)
+                    beatmaps.ReplaceFile(set, oldFile, stream, backup_lrc_name);
+                else
+                    beatmaps.AddFile(set, stream, backup_lrc_name);
+                */
+
+                // Import and replace all the file.
+                using (var reader = new IO.LineBufferedReader(stream))
+                {
+                    var decoder = new LrcDecoder();
+                    var lrcBeatmap = decoder.Decode(reader);
+
+                    dialogOverlay?.Push(new ImportLyricDialog(()=> {
+                        // todo : replace all the lyric object.
+                    }));
+                }
+            }
+
+            return true;
         }
 
         protected override Drawable CreateTimelineContent() => new KaraokeTimelineBlueprintContainer();

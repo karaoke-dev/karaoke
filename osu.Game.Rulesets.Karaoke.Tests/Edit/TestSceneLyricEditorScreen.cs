@@ -3,20 +3,31 @@
 
 using NUnit.Framework;
 using osu.Framework.Allocation;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Timing;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Edit.LyricEditor;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
+using System.IO;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
     [TestFixture]
-    [Ignore("Will fail if run multiple tests. No idea how to fix that.")]
+    [Ignore("This test case run failed in appveyor : (")]
     public class TestSceneLyricEditorScreen : EditorClockTestScene
     {
+        protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
+
+        private DialogOverlay dialogOverlay;
+
+        private LyricEditorScreen screen;
+
         public TestSceneLyricEditorScreen()
         {
             // It's a tricky to let osu! to read karaoke testing beatmap
@@ -40,7 +51,29 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             Dependencies.CacheAs(editorBeatmap);
             Dependencies.CacheAs<IBeatSnapProvider>(editorBeatmap);
 
-            Child = new LyricEditorScreen();
+            base.Content.AddRange(new Drawable[]
+            {
+                Content,
+                dialogOverlay = new DialogOverlay()
+            });
+
+            Dependencies.Cache(dialogOverlay);
+        }
+
+        [SetUp]
+        public void SetUp() => Schedule(() =>
+        {
+            Child = screen = new LyricEditorScreen();
+        });
+
+        [Test]
+        public void TestImportLyricFile()
+        {
+            AddAssert($"Import lrc file.", () =>
+            {
+                var temp = TestResources.GetTestLrcForImport("default");
+                return screen.ImportLyricFile(new FileInfo(temp));
+            });
         }
     }
 }

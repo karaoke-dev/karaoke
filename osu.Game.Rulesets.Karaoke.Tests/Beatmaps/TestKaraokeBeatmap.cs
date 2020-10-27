@@ -34,6 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
                     List = "https://assets.ppy.sh/beatmaps/163112/covers/list.jpg"
                 }
             };
+            BeatmapInfo.BeatmapSet.Files = new List<BeatmapSetFileInfo>();
         }
 
         private static Beatmap createTestBeatmap()
