@@ -8,6 +8,8 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Beatmaps;
 using osu.Game.Database;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
+using osu.Game.Overlays.Dialog;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Edit.Timelines;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -39,6 +41,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 
         [Resolved]
         private BeatmapManager beatmaps { get; set; }
+
+        [Resolved(CanBeNull = true)]
+        private DialogOverlay dialogOverlay { get; set; }
 
         public LyricEditorScreen()
             : base(EditorScreenMode.Compose)
@@ -83,7 +88,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                     var decoder = new LrcDecoder();
                     var lrcBeatmap = decoder.Decode(reader);
 
-                    // todo : replace all the lyric object.
+                    dialogOverlay?.Push(new ImportLyricDialog(()=> {
+                        // todo : replace all the lyric object.
+                    }));
                 }
             }
 
