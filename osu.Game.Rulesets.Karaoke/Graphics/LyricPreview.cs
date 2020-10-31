@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
                 RelativeSizeAxes = Axes.X;
                 Masking = true;
                 CornerRadius = 5;
-                Children = new Drawable[]
+                Children = new[]
                 {
                     background = new Box
                     {

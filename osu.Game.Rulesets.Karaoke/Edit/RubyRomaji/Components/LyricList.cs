@@ -109,10 +109,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
             private TableColumn[] createHeaders()
             {
                 var columns = new List<TableColumn>
-                    {
-                        new TableColumn("Number", Anchor.Centre, new Dimension(GridSizeMode.Absolute, 50)),
-                        new TableColumn("Lyric", Anchor.Centre),
-                    };
+                {
+                    new TableColumn("Number", Anchor.Centre, new Dimension(GridSizeMode.Absolute, 50)),
+                    new TableColumn("Lyric", Anchor.Centre),
+                };
 
                 return columns.ToArray();
             }

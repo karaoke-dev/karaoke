@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
         {
             protected FillFlowContainer TextContainer { get; }
 
-            public MetadataSection(string title)
+            protected MetadataSection(string title)
             {
                 RelativeSizeAxes = Axes.X;
                 AutoSizeAxes = Axes.Y;

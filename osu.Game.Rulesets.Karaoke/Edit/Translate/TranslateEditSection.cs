@@ -36,13 +36,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         {
             Padding = new MarginPadding(10);
 
-            var columnDimensions = new Dimension[]
+            var columnDimensions = new[]
             {
                 new Dimension(GridSizeMode.Absolute, 200),
                 new Dimension(GridSizeMode.Absolute, column_spacing),
                 new Dimension(GridSizeMode.Absolute, 400),
                 new Dimension(GridSizeMode.Absolute, column_spacing),
-                new Dimension(GridSizeMode.Distributed)
+                new Dimension()
             };
 
             Child = new FillFlowContainer
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                     new GridContainer
                     {
                         Name = "LanguageSelection",
-                        RowDimensions = new []
+                        RowDimensions = new[]
                         {
                             new Dimension(GridSizeMode.AutoSize)
                         },
@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                         AutoSizeAxes = Axes.Y,
                         Content = new Drawable[][]
                         {
-                            new []
+                            new[]
                             {
                                 null,
                                 null,
@@ -80,20 +80,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                     {
                         RelativeSizeAxes = Axes.X,
                         AutoSizeAxes = Axes.Y,
-                        Children = new []
+                        Children = new[]
                         {
                             new GridContainer
                             {
                                 Name = "Background",
-                                RowDimensions = new []
+                                RowDimensions = new[]
                                 {
                                     new Dimension(GridSizeMode.AutoSize)
                                 },
                                 ColumnDimensions = columnDimensions,
                                 RelativeSizeAxes = Axes.Both,
-                                Content = new []
+                                Content = new[]
                                 {
-                                    new []
+                                    new[]
                                     {
                                         new CornerBackground
                                         {
@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                         null,
                                         null,
                                     },
-                                    new []
+                                    new[]
                                     {
                                         timeSectionBackground = new CornerBackground
                                         {
@@ -135,8 +135,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             };
 
             Dimension[] createRowDimension() => editorBeatmap.HitObjects.OfType<Lyric>()
-                .Select(x => new Dimension(GridSizeMode.Absolute, row_height))
-                .ToArray();
+                                                             .Select(x => new Dimension(GridSizeMode.Absolute, row_height))
+                                                             .ToArray();
         }
 
         [BackgroundDependencyLoader]
@@ -154,7 +154,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
             return lyrics.Select(x =>
             {
-                return new Drawable[]
+                return new[]
                 {
                     createTimeDrawable(x),
                     null,

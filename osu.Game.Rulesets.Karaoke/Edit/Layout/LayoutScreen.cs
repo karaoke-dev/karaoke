@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         protected readonly LayoutManager LayoutManager;
 
         public LayoutScreen()
-           : base(EditorScreenMode.SongSetup)
+            : base(EditorScreenMode.SongSetup)
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
             Content.Add(LayoutManager = new LayoutManager());

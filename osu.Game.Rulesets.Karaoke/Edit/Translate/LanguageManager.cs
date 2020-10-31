@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using System.Linq;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
     /// <summary>
     /// Handle create or delete language.

@@ -255,7 +255,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 value = translate.Split('=').LastOrDefault()
             }).GroupBy(x => x.key, y => y.value).ToList();
 
-            for (int i = 0; i < translates.Count(); i++)
+            for (int i = 0; i < translates.Count; i++)
             {
                 var id = i + 1;
                 var singleLanguage = translates[i];
@@ -263,7 +263,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 var key = singleLanguage.Key;
                 var values = singleLanguage.ToList();
 
-                var size = Math.Min(lyrics.Count(), singleLanguage.Count());
+                var size = Math.Min(lyrics.Count, singleLanguage.Count());
 
                 for (int j = 0; j < size; j++)
                 {

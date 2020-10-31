@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
         protected override Container<Drawable> Content => content;
 
-        public BackgroundToolTip()
+        protected BackgroundToolTip()
         {
             AutoSizeAxes = Axes.Both;
             Masking = true;
