@@ -11,7 +11,7 @@ using System;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
-    internal class FontSection : StyleSection
+    internal class LyricFontSection : StyleSection
     {
         private LabelledDropdown<Font> fontDropdown;
         private LabelledSwitchButton boldSwitchButton;
@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                 },
                 borderSliderBar = new LabelledRealTimeSliderBar<int>
                 {
-                    Label = "Bold",
+                    Label = "Border size",
                     Description = "Adjust border size.",
                     Current = new BindableInt
                     {
