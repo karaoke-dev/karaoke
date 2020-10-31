@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
-    internal class StylePreview : Container
+    internal class LyricStylePreview : Container
     {
         [BackgroundDependencyLoader]
         private void load(OverlayColourProvider colourProvider, StyleManager manager)

@@ -10,7 +10,7 @@ using System;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
-    internal class ColorSection : StyleSection
+    internal class LyricColorSection : StyleSection
     {
         private LabelledDropdown<ColorArea> colorAreaDropdown;
         private LabelledDropdown<BrushType> brushTypeDropdown;

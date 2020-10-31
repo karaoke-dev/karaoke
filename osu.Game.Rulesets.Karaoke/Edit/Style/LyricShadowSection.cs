@@ -10,7 +10,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
-    internal class ShadowSection : StyleSection
+    internal class LyricShadowSection : StyleSection
     {
         private LabelledSwitchButton displayShaderSwitchButton;
         private LabelledRealTimeSliderBar<float> shadowXSliderBar;

@@ -66,14 +66,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                                     Size = new Vector2(1 / section_scale),
                                     Children = new StyleSection[]
                                     {
-                                        new ColorSection(),
-                                        new FontSection(),
-                                        new ShadowSection(),
+                                        new LyricColorSection(),
+                                        new LyricFontSection(),
+                                        new LyricShadowSection(),
                                     }
                                 }
                             }
                         },
-                        new StylePreview
+                        new LyricStylePreview
                         {
                             Name = "Layout preview area",
                             Anchor = Anchor.Centre,
