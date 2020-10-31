@@ -2,10 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Screens.Edit;
 using osuTK;
@@ -14,8 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
     public class StyleScreen : EditorScreen
     {
-        private const float section_scale = 0.75f;
-
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
 
@@ -58,18 +58,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                                     Colour = ColourProvider.Background2,
                                     RelativeSizeAxes = Axes.Both,
                                 },
-                                new SectionsContainer<StyleSection>
+                                new StyleSectionsContainer
                                 {
-                                    FixedHeader = new StyleScreenHeader(),
                                     RelativeSizeAxes = Axes.Both,
-                                    Scale = new Vector2(section_scale),
-                                    Size = new Vector2(1 / section_scale),
-                                    Children = new StyleSection[]
-                                    {
-                                        new LyricColorSection(),
-                                        new LyricFontSection(),
-                                        new LyricShadowSection(),
-                                    }
                                 }
                             }
                         },
@@ -86,19 +77,85 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
             };
         }
 
-        internal class StyleScreenHeader : OverlayHeader
+        internal class StyleSectionsContainer : SectionsContainer<StyleSection>
         {
-            protected override OverlayTitle CreateTitle() => new LayoutScreenTitle();
+            private const float section_scale = 0.75f;
 
-            private class LayoutScreenTitle : OverlayTitle
+            public StyleSectionsContainer()
             {
-                public LayoutScreenTitle()
+                FixedHeader = new StyleScreenHeader();
+
+                Scale = new Vector2(section_scale);
+                Size = new Vector2(1 / section_scale);
+
+                if (FixedHeader is StyleScreenHeader screenHeader)
                 {
-                    Title = "style";
-                    Description = "create style of your beatmap";
-                    IconTexture = "Icons/Hexacons/social";
+                    screenHeader.BindableStyle.BindValueChanged(e =>
+                    {
+                        switch (e.NewValue)
+                        {
+                            case Style.Lyric:
+                                Children = new StyleSection[]
+                                {
+                                    new LyricColorSection(),
+                                    new LyricFontSection(),
+                                    new LyricShadowSection(),
+                                };
+                                break;
+                            case Style.Note:
+                                Children = new StyleSection[]
+                                {
+                                    new NoteColorSection(),
+                                    new NoteFontSection(),
+                                };
+                                break;
+                        }
+                    }, true);
+                }
+            }
+
+            internal class StyleScreenHeader : OverlayHeader
+            {
+                public Bindable<Style> BindableStyle = new Bindable<Style>();
+
+                protected override OverlayTitle CreateTitle() => new LayoutScreenTitle();
+
+                protected override Drawable CreateTitleContent()
+                {
+                    return new Container
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        Padding = new MarginPadding { Left = 100 },
+                        Height = 40,
+                        Child = new OsuEnumDropdown<Style>
+                        {
+                            Anchor = Anchor.TopRight,
+                            Origin = Anchor.TopRight,
+                            RelativeSizeAxes = Axes.X,
+                            Current = BindableStyle,
+                        }
+                    };
+                }
+
+                private class LayoutScreenTitle : OverlayTitle
+                {
+                    public LayoutScreenTitle()
+                    {
+                        Title = "style";
+                        Description = "create style of your beatmap";
+                        IconTexture = "Icons/Hexacons/social";
+                    }
                 }
             }
         }
+    }
+
+    public enum Style
+    {
+        [System.ComponentModel.Description("Lyric")]
+        Lyric,
+
+        [System.ComponentModel.Description("Note")]
+        Note
     }
 }
