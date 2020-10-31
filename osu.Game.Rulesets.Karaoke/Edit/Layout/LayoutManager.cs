@@ -37,6 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         private void load()
         {
             var layoutLookups = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
+
             foreach (var layoutLookup in layoutLookups)
             {
                 var lookup = new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, layoutLookup.Key);
@@ -49,6 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             EditLayout.Value = Layouts.FirstOrDefault();
 
             var skinLookups = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Style)?.Value;
+
             foreach (var skinLookup in skinLookups)
             {
                 PreviewFontSelections.Add(skinLookup.Key, skinLookup.Value);

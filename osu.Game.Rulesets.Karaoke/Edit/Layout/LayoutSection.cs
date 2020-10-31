@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
         protected abstract string Title { get; }
 
-        public LayoutSection()
+        protected LayoutSection()
         {
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;

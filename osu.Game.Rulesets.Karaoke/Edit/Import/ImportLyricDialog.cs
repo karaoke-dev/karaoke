@@ -30,9 +30,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Import
                 new PopupDialogOkButton
                 {
                     Text = @"Yes. Go for it.",
-                    Action = () => {
+                    Action = () =>
+                    {
                         var success = processImport(info);
-                        resetAction?.Invoke(true);
+                        resetAction?.Invoke(success);
                     }
                 },
                 new PopupDialogCancelButton
@@ -67,6 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Import
                             BodyText = fileNotFoundException.Message,
                         });
                         break;
+
                     case FileLoadException loadException:
                         dialogOverlay.Push(new OkPopupDialog
                         {
@@ -76,6 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Import
                         });
                         break;
                 }
+
                 return false;
             }
         }

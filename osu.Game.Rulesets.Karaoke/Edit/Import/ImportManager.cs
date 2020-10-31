@@ -36,6 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Import
 
             var set = beatmap.Value.BeatmapSetInfo;
             var oldFile = set.Files?.FirstOrDefault(f => f.Filename == backup_lrc_name);
+
             using (var stream = info.OpenRead())
             {
                 // todo : make a backup if has new lyric file.

@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
     {
         protected override Ruleset CreatePlayerRuleset() => new KaraokeRuleset();
 
-        public KaraokeModPerfectTestScene(ModPerfect mod)
+        protected KaraokeModPerfectTestScene(ModPerfect mod)
             : base(mod)
         {
         }

@@ -107,7 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             Assert.IsTrue(translates != null);
 
             // Check translate count
-            Assert.AreEqual(translates.Count(), 2);
+            Assert.AreEqual(translates.Length, 2);
 
             // All lyric should have two translates
             Assert.AreEqual(lyrics[0].Translates.Count, 2);

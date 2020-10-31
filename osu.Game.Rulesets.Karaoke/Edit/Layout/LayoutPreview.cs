@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             {
                 manager.PreviewLyric.BindValueChanged(e =>
                 {
-                    if(e.NewValue != null)
+                    if (e.NewValue != null)
                         Child = new PreviewDrawableLyric(e.NewValue);
                 }, true);
 
@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 private KaraokeLayout layout;
 
                 public PreviewDrawableLyric(Lyric hitObject)
-                : base(hitObject)
+                    : base(hitObject)
                 {
                 }
 

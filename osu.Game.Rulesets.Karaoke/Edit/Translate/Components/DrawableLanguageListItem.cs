@@ -109,11 +109,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 base.LoadComplete();
 
                 textBox.Current.Value = language.Name;
-                textBox.Current.BindValueChanged(x => {
+                textBox.Current.BindValueChanged(x =>
+                {
                     // Update name
                     languageManager.UpdateLanguagename(language, x.NewValue);
 
-                    // Create new 
+                    // Create new
                     createNewLanguage();
                 }, true);
                 IsCreated.BindValueChanged(created => textBoxPaddingContainer.Padding = new MarginPadding { Right = created.NewValue ? button_width : 0 }, true);

@@ -9,7 +9,6 @@ using osu.Game.Beatmaps;
 using osu.Game.Database;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Edit.Import;
 using osu.Game.Rulesets.Karaoke.Edit.Timelines;
 using osu.Game.Rulesets.Karaoke.Objects;

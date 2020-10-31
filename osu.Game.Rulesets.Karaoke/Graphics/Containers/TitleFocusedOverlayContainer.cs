@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
                                         {
                                             Anchor = Anchor.CentreRight,
                                             Origin = Anchor.CentreRight,
-                                            Icon = FontAwesome.Solid.Times, 
+                                            Icon = FontAwesome.Solid.Times,
                                             Scale = new Vector2(0.8f),
                                             X = -10,
                                             Action = () => State.Value = Visibility.Hidden

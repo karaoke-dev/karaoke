@@ -5,8 +5,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.UserInterface;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.IO;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
@@ -64,6 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                             Height = 9
                         };
                         break;
+
                     case PreviewRatio.LegacyScreen:
                         manager.PreviewScreenRatio.Value = new DisplayRatio
                         {
@@ -91,44 +90,46 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             {
                 case PreviewSample.SampeSmall:
                     return createDefaultLyric("@カラオケ",
-                    new[]
-                    {
-                        "@Ruby1=カ,か",
-                        "@Ruby2=ラ,ら",
-                        "@Ruby3=オ,お",
-                        "@Ruby4=ケ,け"
-                    },
-                    new[]
-                    {
-                        "@Romaji1=カ,ka",
-                        "@Romaji2=ラ,ra",
-                        "@Romaji3=オ,o",
-                        "@Romaji4=ケ,ke"
-                    }
-                    , "karaoke");
+                        new[]
+                        {
+                            "@Ruby1=カ,か",
+                            "@Ruby2=ラ,ら",
+                            "@Ruby3=オ,お",
+                            "@Ruby4=ケ,け"
+                        },
+                        new[]
+                        {
+                            "@Romaji1=カ,ka",
+                            "@Romaji2=ラ,ra",
+                            "@Romaji3=オ,o",
+                            "@Romaji4=ケ,ke"
+                        }
+                        , "karaoke");
 
                 case PreviewSample.SampleMedium:
                     return createDefaultLyric("@[00:18:58]た[00:18:81]だ[00:19:36]風[00:20:09]に[00:20:29]揺[00:20:49]ら[00:20:68]れ[00:20:89]て[00:20:93]",
-                    new[]
-                    {
-                        "@Ruby1=風,かぜ",
-                        "@Ruby2=揺,ゆ"
-                    },
-                    new[]
-                    {
-                        "@Romaji1=た,ta",
-                        "@Romaji2=だ,da",
-                        "@Romaji3=風,kaze",
-                        "@Romaji4=に,ni",
-                        "@Romaji5=揺,yu",
-                        "@Romaji6=ら,ra",
-                        "@Romaji7=れ,re",
-                        "@Romaji8=て,te"
-                    }
-                    , "karaoke");
+                        new[]
+                        {
+                            "@Ruby1=風,かぜ",
+                            "@Ruby2=揺,ゆ"
+                        },
+                        new[]
+                        {
+                            "@Romaji1=た,ta",
+                            "@Romaji2=だ,da",
+                            "@Romaji3=風,kaze",
+                            "@Romaji4=に,ni",
+                            "@Romaji5=揺,yu",
+                            "@Romaji6=ら,ra",
+                            "@Romaji7=れ,re",
+                            "@Romaji8=て,te"
+                        }
+                        , "karaoke");
+
                 case PreviewSample.SampleLarge:
                     return createDefaultLyric("@灰色(いろ)(いろ)の景色(いろ)(いろ)さえ色づき始める",
-                    Array.Empty<string>(), Array.Empty<string>(), "karaoke");
+                        Array.Empty<string>(), Array.Empty<string>(), "karaoke");
+
                 default:
                     return null;
             }
@@ -209,7 +210,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 private class StyleDropdownControl : DropdownControl
                 {
                     protected override string GenerateItemText(KeyValuePair<int, string> item)
-                    => item.Value ?? $"Style{item.Key}";
+                        => item.Value ?? $"Style{item.Key}";
                 }
             }
         }

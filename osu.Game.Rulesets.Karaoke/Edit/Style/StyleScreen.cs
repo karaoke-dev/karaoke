@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         protected readonly StyleManager StyleManager;
 
         public StyleScreen()
-          : base(EditorScreenMode.SongSetup)
+            : base(EditorScreenMode.SongSetup)
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Pink);
             Content.Add(StyleManager = new StyleManager());
