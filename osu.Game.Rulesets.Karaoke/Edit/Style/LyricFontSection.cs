@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                 },
                 borderSliderBar = new LabelledRealTimeSliderBar<int>
                 {
-                    Label = "Bold",
+                    Label = "Border size",
                     Description = "Adjust border size.",
                     Current = new BindableInt
                     {

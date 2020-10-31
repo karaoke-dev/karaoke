@@ -22,6 +22,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         [Cached]
         protected readonly StyleManager StyleManager;
 
+        private StyleSectionsContainer styleSections;
+        private Container previewContainer;
+
         public StyleScreen()
             : base(EditorScreenMode.SongSetup)
         {
@@ -58,60 +61,85 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                                     Colour = ColourProvider.Background2,
                                     RelativeSizeAxes = Axes.Both,
                                 },
-                                new StyleSectionsContainer
+                                styleSections = new StyleSectionsContainer
                                 {
                                     RelativeSizeAxes = Axes.Both,
                                 }
                             }
                         },
-                        new LyricStylePreview
+                        previewContainer = new Container
                         {
-                            Name = "Layout preview area",
+                            RelativeSizeAxes = Axes.Both,
+                        }
+                    }
+                },
+            };
+
+            styleSections.BindableStyle.BindValueChanged(e =>
+            {
+                switch (e.NewValue)
+                {
+                    case Style.Lyric:
+                        previewContainer.Child = new LyricStylePreview
+                        {
+                            Name = "Lyric style preview area",
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                             Size = new Vector2(0.95f),
                             RelativeSizeAxes = Axes.Both
-                        },
-                    }
-                },
-            };
+                        };
+                        break;
+
+                    case Style.Note:
+                        previewContainer.Child = new NoteStylePreview
+                        {
+                            Name = "Note style preview area",
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Size = new Vector2(0.95f),
+                            RelativeSizeAxes = Axes.Both
+                        };
+                        break;
+                };
+            }, true);
         }
 
         internal class StyleSectionsContainer : SectionsContainer<StyleSection>
         {
+            private readonly StyleScreenHeader header;
+
             private const float section_scale = 0.75f;
+
+            public IBindable<Style> BindableStyle => header.BindableStyle;
 
             public StyleSectionsContainer()
             {
-                FixedHeader = new StyleScreenHeader();
+                FixedHeader = header = new StyleScreenHeader();
 
                 Scale = new Vector2(section_scale);
                 Size = new Vector2(1 / section_scale);
 
-                if (FixedHeader is StyleScreenHeader screenHeader)
+                header.BindableStyle.BindValueChanged(e =>
                 {
-                    screenHeader.BindableStyle.BindValueChanged(e =>
+                    switch (e.NewValue)
                     {
-                        switch (e.NewValue)
-                        {
-                            case Style.Lyric:
-                                Children = new StyleSection[]
-                                {
+                        case Style.Lyric:
+                            Children = new StyleSection[]
+                            {
                                     new LyricColorSection(),
                                     new LyricFontSection(),
                                     new LyricShadowSection(),
-                                };
-                                break;
-                            case Style.Note:
-                                Children = new StyleSection[]
-                                {
+                            };
+                            break;
+                        case Style.Note:
+                            Children = new StyleSection[]
+                            {
                                     new NoteColorSection(),
                                     new NoteFontSection(),
-                                };
-                                break;
-                        }
-                    }, true);
-                }
+                            };
+                            break;
+                    }
+                }, true);
             }
 
             internal class StyleScreenHeader : OverlayHeader
