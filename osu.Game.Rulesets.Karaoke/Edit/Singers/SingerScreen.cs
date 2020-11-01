@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                         {
                             FixedHeader = new SingerScreenHeader(),
                             RelativeSizeAxes = Axes.Both,
-                            Children = new []
+                            Children = new[]
                             {
                                 new SingerEditSection
                                 {

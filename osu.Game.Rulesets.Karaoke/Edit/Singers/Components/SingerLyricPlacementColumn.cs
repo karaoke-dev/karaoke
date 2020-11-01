@@ -31,24 +31,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
 
         internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip
         {
-            private Singer singer;
+            private readonly Singer singer;
+
             public DrawableSingerInfo(Singer singer)
             {
                 this.singer = singer;
                 InternalChildren = new Drawable[]
                 {
-                            new Box
-                            {
-                                Name = "Background",
-                                RelativeSizeAxes = Axes.Both,
-                                Colour = singer.Color ?? new Color4(),
-                                Alpha = singer.Color != null ? 1 : 0
-                            },
-                            new FillFlowContainer
-                            {
-                                Name = "Infos",
-                                RelativeSizeAxes = Axes.Both,
-                            }
+                    new Box
+                    {
+                        Name = "Background",
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = singer.Color ?? new Color4(),
+                        Alpha = singer.Color != null ? 1 : 0
+                    },
+                    new FillFlowContainer
+                    {
+                        Name = "Infos",
+                        RelativeSizeAxes = Axes.Both,
+                    }
                 };
             }
 

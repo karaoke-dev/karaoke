@@ -17,9 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
     public abstract class LyricPlacementColumn : CompositeDrawable
     {
         private Box background;
-        private Singer singer;
+        private readonly Singer singer;
 
-        public LyricPlacementColumn(Singer singer)
+        protected LyricPlacementColumn(Singer singer)
         {
             this.singer = singer;
         }
@@ -44,11 +44,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                         new Dimension(GridSizeMode.Absolute, 5),
                         new Dimension(),
                     },
-                    Content = new []
+                    Content = new[]
                     {
-                        new Drawable[]
+                        new[]
                         {
-                            CreateSingerInfo(singer).With(x => {
+                            CreateSingerInfo(singer).With(x =>
+                            {
                                 x.RelativeSizeAxes = Axes.Both;
                             }),
                             new Box
@@ -88,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
             protected class SingerLyricPart<T> : TimelinePart<T> where T : Drawable
             {
                 public SingerLyricPart(Container<T> content = null)
-                    :base(content)
+                    : base(content)
                 {
                 }
             }
