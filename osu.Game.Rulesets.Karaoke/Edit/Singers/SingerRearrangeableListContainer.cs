@@ -5,9 +5,10 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input.Events;
+using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Overlays;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
@@ -18,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 
         public class SingerRearrangeableListItem : OsuRearrangeableListItem<Singer>
         {
-            private Box background;
+            private Box dragAlert;
 
             public SingerRearrangeableListItem(Singer item)
                 : base(item)
@@ -31,23 +32,49 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                 {
                     Masking = true,
                     CornerRadius = 5,
-                    AutoSizeAxes = Axes.Y,
                     RelativeSizeAxes = Axes.X,
+                    Height = 120,
+                    Margin = new MarginPadding { Top = 5 },
                     Children = new Drawable[]
                     {
-                        background = new Box
+                        dragAlert = new Box
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Alpha = 0.3f
+                            Alpha = 0
                         },
+                        new RealSingerContent
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                        }
                     }
                 };
             }
 
             [BackgroundDependencyLoader]
-            private void load(OverlayColourProvider privider)
+            private void load(OsuColour colours)
             {
-                background.Colour = privider.Content1;
+                dragAlert.Colour = colours.YellowDarker;
+            }
+
+            protected override bool OnDragStart(DragStartEvent e)
+            {
+                if (!base.OnDragStart(e))
+                    return false;
+
+                dragAlert.Show();
+                return true;
+            }
+
+            protected override void OnDragEnd(DragEndEvent e)
+            {
+                dragAlert.Hide();
+                base.OnDragEnd(e);
+            }
+
+            public class RealSingerContent : SingerContent
+            {
+                // todo : implement singer info here
+                protected override float SingerInfoSize => base.SingerInfoSize - 22;
             }
         }
     }

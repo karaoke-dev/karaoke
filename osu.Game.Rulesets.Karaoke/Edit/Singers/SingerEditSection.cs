@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                 {
                     new Drawable[]
                     {
-                        new Container
+                        new SingerContent
                         {
                             Name = "Default",
                             RelativeSizeAxes = Axes.Both,
