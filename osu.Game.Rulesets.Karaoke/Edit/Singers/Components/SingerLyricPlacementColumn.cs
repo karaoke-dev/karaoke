@@ -5,8 +5,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
+using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
+using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
+using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
@@ -36,6 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
             public DrawableSingerInfo(Singer singer)
             {
                 this.singer = singer;
+
                 InternalChildren = new Drawable[]
                 {
                     new Box
@@ -45,11 +50,57 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                         Colour = singer.Color ?? new Color4(),
                         Alpha = singer.Color != null ? 1 : 0
                     },
-                    new FillFlowContainer
+                    new GridContainer
                     {
                         Name = "Infos",
                         RelativeSizeAxes = Axes.Both,
-                    }
+                        Margin = new MarginPadding(10),
+                        ColumnDimensions = new[]
+                        {
+                            new Dimension(GridSizeMode.AutoSize, 48),
+                            new Dimension(),
+                        },
+                        Content = new[]
+                        {
+                            new Drawable[]
+                            {
+                                new DrawableSingerAvatar
+                                {
+                                    Name = "Avatar",
+                                    Size = new Vector2(48)
+                                },
+                                new FillFlowContainer
+                                {
+                                    Name = "Singer name",
+                                    RelativeSizeAxes = Axes.X,
+                                    Direction = FillDirection.Vertical,
+                                    Spacing = new Vector2(1),
+                                    Padding = new MarginPadding{ Left = 5 },
+                                    Children = new[]
+                                    {
+                                        new OsuSpriteText
+                                        {
+                                            Name = "Singer name",
+                                            Text = singer.Name,
+                                            Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 20),
+                                        },
+                                        new OsuSpriteText
+                                        {
+                                            Name = "Romaji name",
+                                            Text = singer.RomajiName,
+                                            Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 9),
+                                        },
+                                        new OsuSpriteText
+                                        {
+                                            Name = "English name",
+                                            Text = singer.EnglishName != null ? $"({singer.EnglishName})" : "",
+                                            Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 12),
+                                        }
+                                    }
+                                },
+                            }
+                        }
+                    },
                 };
             }
 
