@@ -12,18 +12,17 @@ using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osu.Game.Screens.Edit.Compose.Components;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
 {
-    public class SingerContent : CompositeDrawable
+    public abstract class LyricPlacementColumn : CompositeDrawable
     {
         private Box background;
         private Singer singer;
 
-        public SingerContent(Singer singer)
+        public LyricPlacementColumn(Singer singer)
         {
             this.singer = singer;
         }
-
 
         [BackgroundDependencyLoader]
         private void load(OverlayColourProvider colourProvider)

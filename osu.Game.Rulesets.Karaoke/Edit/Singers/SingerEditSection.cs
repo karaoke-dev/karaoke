@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Components;
 using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
@@ -28,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                 {
                     new Drawable[]
                     {
-                        new SingerContent(new Singer(-1){ Name = "Default" })
+                        new DefaultLyricPlacementColumn()
                         {
                             Name = "Default",
                             RelativeSizeAxes = Axes.Both,
