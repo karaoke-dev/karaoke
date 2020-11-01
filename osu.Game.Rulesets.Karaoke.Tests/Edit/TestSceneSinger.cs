@@ -11,11 +11,12 @@ using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
     [TestFixture]
-    public class TestSceneSinger : OsuTestScene
+    public class TestSceneSinger : OsuManualInputManagerTestScene
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
@@ -73,5 +74,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         {
             Child = new SingerScreen();
         });
+
+        [Test]
+        public void HoverToSingerArea()
+        {
+            // todo : add this step because description is not showing.
+            AddStep("Move mouse to singer area", () => InputManager.MoveMouseTo(Child, new Vector2(-400,-100)));
+        }
     }
 }
