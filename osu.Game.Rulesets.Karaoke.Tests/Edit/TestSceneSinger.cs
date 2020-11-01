@@ -28,6 +28,27 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             var beatmap = new TestKaraokeBeatmap(null);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
             // todo : insert singers
+            karaokeBeatmap.SingerMetadata.CreateSinger(singer =>
+            {
+                singer.Name = "初音ミク";
+                singer.RomajiName = "Hatsune Miku";
+                singer.EnglishName = "Miku";
+                singer.Description = "International superstar vocaloid Hatsune Miku.";
+            });
+            karaokeBeatmap.SingerMetadata.CreateSinger(singer =>
+            {
+                singer.Name = "ハク";
+                singer.RomajiName = "haku";
+                singer.EnglishName = "andy840119";
+                singer.Description = "Creator of this ruleset.";
+            });
+            karaokeBeatmap.SingerMetadata.CreateSinger(singer =>
+            {
+                singer.Name = "ゴミパソコン";
+                singer.RomajiName = "gomi-pasokonn";
+                singer.EnglishName = "garbage desktop";
+                singer.Description = "My fucking slow desktop.";
+            });
 
             editorBeatmap = new EditorBeatmap(karaokeBeatmap);
         }

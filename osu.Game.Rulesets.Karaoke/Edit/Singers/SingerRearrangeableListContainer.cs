@@ -4,11 +4,14 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
@@ -42,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                             RelativeSizeAxes = Axes.Both,
                             Alpha = 0
                         },
-                        new RealSingerContent
+                        new RealSingerContent(Model)
                         {
                             RelativeSizeAxes = Axes.Both,
                         }
@@ -73,8 +76,49 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 
             public class RealSingerContent : SingerContent
             {
+                public RealSingerContent(Singer singer)
+                    : base(singer)
+                {
+                }
+
                 // todo : implement singer info here
                 protected override float SingerInfoSize => base.SingerInfoSize - 22;
+
+                protected override Drawable CreateSingerInfo(Singer singer)
+                {
+                    return new DrawableSingerInfo(singer)
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                    };
+                }
+
+                internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip
+                {
+                    private Singer singer;
+                    public DrawableSingerInfo(Singer singer)
+                    {
+                        this.singer = singer;
+                        InternalChildren = new Drawable[]
+                        {
+                            new Box
+                            {
+                                Name = "Background",
+                                RelativeSizeAxes = Axes.Both,
+                                Colour = singer.Color ?? new Color4(),
+                                Alpha = singer.Color != null ? 1 : 0
+                            },
+                            new FillFlowContainer
+                            {
+                                Name = "Infos",
+                                RelativeSizeAxes = Axes.Both,
+                            }
+                        };
+                    }
+
+                    public object TooltipContent => singer;
+
+                    public ITooltip GetCustomTooltip() => new SingerToolTip();
+                }
             }
         }
     }

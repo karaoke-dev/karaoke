@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         private SingerRearrangeableListContainer singerContainers;
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(SingerManager singerManager)
         {
             InternalChild = new GridContainer
             {
@@ -27,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                 {
                     new Drawable[]
                     {
-                        new SingerContent
+                        new SingerContent(new Singer(-1){ Name = "Default" })
                         {
                             Name = "Default",
                             RelativeSizeAxes = Axes.Both,
@@ -44,9 +45,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                 }
             };
 
-            singerContainers.Items.Add(new Singer(0));
-            singerContainers.Items.Add(new Singer(1));
-            singerContainers.Items.Add(new Singer(2));
+            singerManager.Singers.BindCollectionChanged((a, b) =>
+            {
+                var newSingers = singerManager.Singers.ToList();
+                singerContainers.Items.Clear();
+                singerContainers.Items.AddRange(newSingers);
+            }, true);
         }
     }
 }

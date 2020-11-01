@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osu.Game.Screens.Edit.Compose.Components;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
@@ -16,6 +17,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
     public class SingerContent : CompositeDrawable
     {
         private Box background;
+        private Singer singer;
+
+        public SingerContent(Singer singer)
+        {
+            this.singer = singer;
+        }
+
 
         [BackgroundDependencyLoader]
         private void load(OverlayColourProvider colourProvider)
@@ -41,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                     {
                         new Drawable[]
                         {
-                            CreateSingerInfo().With(x => {
+                            CreateSingerInfo(singer).With(x => {
                                 x.RelativeSizeAxes = Axes.Both;
                             }),
                             new Box
@@ -61,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 
         protected virtual float SingerInfoSize => 200;
 
-        protected virtual Drawable CreateSingerInfo() => new Container();
+        protected virtual Drawable CreateSingerInfo(Singer singer) => new Container();
 
         protected class SingerLyricBlueprintContainer : BlueprintContainer
         {
