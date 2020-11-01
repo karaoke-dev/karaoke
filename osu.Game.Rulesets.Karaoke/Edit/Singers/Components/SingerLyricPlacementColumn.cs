@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
         }
 
         // todo : implement singer info here
-        protected override float SingerInfoSize => base.SingerInfoSize - 22;
+        protected override float SingerInfoSize => 178;
 
         protected override Drawable CreateSingerInfo(Singer singer)
         {

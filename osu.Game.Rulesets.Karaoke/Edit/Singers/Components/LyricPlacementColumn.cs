@@ -67,9 +67,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
             };
         }
 
-        protected virtual float SingerInfoSize => 200;
+        protected abstract float SingerInfoSize { get; }
 
-        protected virtual Drawable CreateSingerInfo(Singer singer) => new Container();
+        protected abstract Drawable CreateSingerInfo(Singer singer) ;
 
         protected class SingerLyricBlueprintContainer : BlueprintContainer
         {
