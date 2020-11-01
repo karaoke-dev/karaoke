@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                     Masking = true,
                     CornerRadius = 5,
                     RelativeSizeAxes = Axes.X,
-                    Height = 120,
+                    Height = 90,
                     Margin = new MarginPadding { Top = 5 },
                     Children = new Drawable[]
                     {

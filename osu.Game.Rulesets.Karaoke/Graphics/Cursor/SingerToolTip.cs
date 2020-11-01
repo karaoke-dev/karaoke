@@ -87,7 +87,5 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
             return true;
         }
-
-        
     }
 }

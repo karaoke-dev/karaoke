@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                         Name = "Background",
                         RelativeSizeAxes = Axes.Both,
                         Colour = singer.Color ?? new Color4(),
-                        Alpha = singer.Color != null ? 1 : 0
+                        Alpha = singer.Color != null ? 0.3f : 0
                     },
                     new GridContainer
                     {

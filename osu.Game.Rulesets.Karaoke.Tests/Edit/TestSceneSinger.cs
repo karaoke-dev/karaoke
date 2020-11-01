@@ -35,6 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 singer.RomajiName = "Hatsune Miku";
                 singer.EnglishName = "Miku";
                 singer.Description = "International superstar vocaloid Hatsune Miku.";
+                singer.Color = Colour4.AliceBlue;
             });
             karaokeBeatmap.SingerMetadata.CreateSinger(singer =>
             {
@@ -42,6 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 singer.RomajiName = "haku";
                 singer.EnglishName = "andy840119";
                 singer.Description = "Creator of this ruleset.";
+                singer.Color = Colour4.Yellow;
             });
             karaokeBeatmap.SingerMetadata.CreateSinger(singer =>
             {
@@ -49,6 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 singer.RomajiName = "gomi-pasokonn";
                 singer.EnglishName = "garbage desktop";
                 singer.Description = "My fucking slow desktop.";
+                singer.Color = Colour4.Brown;
             });
 
             editorBeatmap = new EditorBeatmap(karaokeBeatmap);
