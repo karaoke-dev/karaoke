@@ -33,18 +33,19 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
         }
 
         [BackgroundDependencyLoader(true)]
-        private void load([CanBeNull] IBindable<WorkingBeatmap> workingBeatmap)
+        private void load([CanBeNull] IBindable<WorkingBeatmap> workingBeatmap, [CanBeNull] BeatmapDifficultyManager difficultyManager)
         {
+            var beatmapDifficulty = difficultyManager.GetDifficulty(beatmap.BeatmapInfo);
             if (workingBeatmap != null)
             {
-                LoadComponentAsync(new BeatmapInfoWedge(workingBeatmap.Value), Add);
+                LoadComponentAsync(new BeatmapInfoWedge(workingBeatmap.Value, beatmapDifficulty), Add);
             }
         }
 
         public class BeatmapInfoWedge : BufferedWedgeInfo
         {
-            public BeatmapInfoWedge(WorkingBeatmap beatmap)
-                : base(beatmap, new KaraokeRuleset().RulesetInfo)
+            public BeatmapInfoWedge(WorkingBeatmap beatmap, StarDifficulty difficulty)
+                : base(beatmap, new KaraokeRuleset().RulesetInfo, difficulty)
             {
             }
 
