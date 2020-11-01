@@ -10,7 +10,7 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singer
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
     public class SingerScreen : EditorScreen
     {
@@ -46,22 +46,38 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singer
                             Colour = colours.GreySeafoamDark,
                             RelativeSizeAxes = Axes.Both,
                         },
-                        new SectionsContainer<Container>
+                        new FixedSectionsContainer<Drawable>
                         {
                             FixedHeader = new SingerScreenHeader(),
                             RelativeSizeAxes = Axes.Both,
-                            Children = new Container[]
+                            Children = new []
                             {
-                                new SingerEditSection()
+                                new SingerEditSection
                                 {
-                                    RelativeSizeAxes = Axes.X,
-                                    AutoSizeAxes = Axes.Y,
+                                    RelativeSizeAxes = Axes.Both,
                                 },
                             }
                         },
                     }
                 }
             };
+        }
+
+        internal class FixedSectionsContainer<T> : SectionsContainer<T> where T : Drawable
+        {
+            private readonly Container<T> content;
+
+            protected override Container<T> Content => content;
+
+            public FixedSectionsContainer()
+            {
+                AddInternal(content = new Container<T>
+                {
+                    Masking = true,
+                    RelativeSizeAxes = Axes.Both,
+                    Padding = new MarginPadding { Top = 55 }
+                });
+            }
         }
 
         internal class SingerScreenHeader : OverlayHeader

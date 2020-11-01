@@ -5,7 +5,7 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.Singer;
+using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;

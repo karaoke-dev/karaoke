@@ -5,7 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singer
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
     public class SingerManager : Component
     {
