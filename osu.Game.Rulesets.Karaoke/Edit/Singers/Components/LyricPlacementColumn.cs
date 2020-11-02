@@ -8,6 +8,9 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Objects;
+using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osu.Game.Screens.Edit.Compose.Components;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
@@ -57,9 +60,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                                 RelativeSizeAxes = Axes.Both,
                                 Colour = colourProvider.Dark1,
                             },
-                            new SingerLyricBlueprintContainer
+                            new SingerTimeline
                             {
                                 RelativeSizeAxes = Axes.Both,
+                                Child = new LyricBlueprintContainer
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                }
                             }
                         }
                     }
@@ -69,30 +76,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
 
         protected abstract float SingerInfoSize { get; }
 
-        protected abstract Drawable CreateSingerInfo(Singer singer);
-
-        protected class SingerLyricBlueprintContainer : BlueprintContainer
-        {
-            [Resolved(CanBeNull = true)]
-            private Timeline timeline { get; set; }
-
-            protected class TimelineSelectionBlueprintContainer : Container<SelectionBlueprint>
-            {
-                protected override Container<SelectionBlueprint> Content { get; }
-
-                public TimelineSelectionBlueprintContainer()
-                {
-                    AddInternal(new SingerLyricPart<SelectionBlueprint>(Content = new Container<SelectionBlueprint> { RelativeSizeAxes = Axes.Both }) { RelativeSizeAxes = Axes.Both });
-                }
-            }
-
-            protected class SingerLyricPart<T> : TimelinePart<T> where T : Drawable
-            {
-                public SingerLyricPart(Container<T> content = null)
-                    : base(content)
-                {
-                }
-            }
-        }
+        protected abstract Drawable CreateSingerInfo(Singer singer); 
     }
 }

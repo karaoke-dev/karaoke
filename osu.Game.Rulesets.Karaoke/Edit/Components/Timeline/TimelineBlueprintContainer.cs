@@ -18,12 +18,15 @@ using osu.Game.Screens.Edit.Compose.Components.Timeline;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Timelines
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.Timeline
 {
-    public class KaraokeTimelineBlueprintContainer : BlueprintContainer
+    /// <summary>
+    /// This is the copy version of official's TimelineBlueprintContainer because it's mark as internal
+    /// </summary>
+    public class TimelineBlueprintContainer : BlueprintContainer
     {
         [Resolved(CanBeNull = true)]
-        private Timeline timeline { get; set; }
+        private Screens.Edit.Compose.Components.Timeline.Timeline timeline { get; set; }
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
@@ -34,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Timelines
 
         private SelectionBlueprint placementBlueprint;
 
-        public KaraokeTimelineBlueprintContainer()
+        public TimelineBlueprintContainer()
         {
             RelativeSizeAxes = Axes.Both;
             Anchor = Anchor.Centre;
@@ -134,7 +137,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Timelines
 
         internal class TimelineSelectionHandler : SelectionHandler
         {
-            // for now we always allow movement. snapping is provided by the time line's "distance" snap implementation
+            // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
             public override bool HandleMovement(MoveSelectionEvent moveEvent) => true;
         }
 
