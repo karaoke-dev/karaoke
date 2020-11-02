@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Timeline;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
 {
     public class LyricBlueprintContainer : TimelineBlueprintContainer
     {

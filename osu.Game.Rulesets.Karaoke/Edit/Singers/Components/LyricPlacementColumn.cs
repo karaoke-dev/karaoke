@@ -6,14 +6,8 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Objects;
-using osu.Game.Screens.Edit;
-using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
-using osu.Game.Screens.Edit.Compose.Components;
-using osu.Game.Screens.Edit.Compose.Components.Timeline;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
 {
