@@ -169,11 +169,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 lyric.Duration = duration;
                 lyric.Translates.Add(0, translate);
                 lyric.ApplyDisplayTranslate(0);
-                lyric.TimeTags = new Dictionary<TimeTagIndex, double>
+                lyric.TimeTags = TimeTagsUtils.ToTimeTagList(new Dictionary<TimeTagIndex, double>
                 {
                     { new TimeTagIndex(0), startTime },
                     { new TimeTagIndex(4), startTime + duration },
-                };
+                });
 
                 return lyric;
             }

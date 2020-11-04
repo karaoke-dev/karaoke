@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
@@ -31,14 +32,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                         StartTime = start_time,
                         Duration = duration,
                         Text = "カラオケ！",
-                        TimeTags = new Dictionary<TimeTagIndex, double>
+                        TimeTags = TimeTagsUtils.ToTimeTagList(new Dictionary<TimeTagIndex, double>
                         {
                             { new TimeTagIndex(0), start_time + 500 },
                             { new TimeTagIndex(1), start_time + 600 },
                             { new TimeTagIndex(2), start_time + 1000 },
                             { new TimeTagIndex(3), start_time + 1500 },
                             { new TimeTagIndex(4), start_time + 2000 },
-                        },
+                        }),
                         RubyTags = new[]
                         {
                             new RubyTag
