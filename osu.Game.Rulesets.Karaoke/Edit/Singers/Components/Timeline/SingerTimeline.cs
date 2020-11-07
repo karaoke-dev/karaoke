@@ -16,9 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
         [BackgroundDependencyLoader]
         private void load()
         {
-            MaxZoom = 50;
-            Zoom = 20;
-            MinZoom = 10;
+            MaxZoom = 30;
+            Zoom = 15;
+            MinZoom = 5;
 
             var centerRemarks = InternalChildren.OfType<CentreMarker>().ToList();
             foreach(var centerRemark in centerRemarks)
