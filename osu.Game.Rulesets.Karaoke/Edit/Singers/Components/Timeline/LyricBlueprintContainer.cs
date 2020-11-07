@@ -26,11 +26,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
 
         protected override SelectionBlueprint CreateBlueprintFor(HitObject hitObject)
             => new LyricTimelineHitObjectBlueprint(hitObject);
-
-        internal class LyricTimelineSelectionHandler : TimelineSelectionHandler
-        {
-            // does not allow movement
-            public override bool HandleMovement(MoveSelectionEvent moveEvent) => false;
-        }
     }
 }
