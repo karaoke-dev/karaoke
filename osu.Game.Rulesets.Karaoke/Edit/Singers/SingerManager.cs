@@ -12,6 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
     public class SingerManager : Component
     {
+        public readonly BindableFloat BindableZoom = new BindableFloat();
+
         public readonly BindableList<Singer> Singers = new BindableList<Singer>();
 
         [Resolved]
