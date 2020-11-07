@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
@@ -17,12 +18,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
 {
     public class LyricTimelineHitObjectBlueprint : TimelineHitObjectBlueprint, IHasCustomTooltip
     {
-        public LyricTimelineHitObjectBlueprint(HitObject hitObject)
+        private readonly Singer singer;
+
+        public LyricTimelineHitObjectBlueprint(HitObject hitObject, Singer singer)
             : base(hitObject)
         {
             // Use tricty way to hide the timeline's component.
             InternalChildren.ForEach(x => x.Alpha = 0);
 
+            // todo : wait for better solution until some of child component is overridable.
             AddInternal(new Container
             {
                 Anchor = Anchor.CentreLeft,
@@ -47,6 +51,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
                     }
                 }
             });
+
+            if (hitObject is Lyric lyric)
+            {
+                lyric.FontIndexBindable.BindValueChanged(e =>
+                {
+                    // todo : should use better way to check is singer sing this lyric
+                    var isSingerMatch = e.NewValue == singer.ID;
+                    if (isSingerMatch)
+                    {
+                        Show();
+                    }
+                    else
+                    {
+                        Hide();
+                    }
+                }, true);
+            }
         }
 
         public object TooltipContent => HitObject;

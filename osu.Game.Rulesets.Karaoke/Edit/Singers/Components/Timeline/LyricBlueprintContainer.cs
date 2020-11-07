@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Timeline;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
@@ -11,6 +12,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
 {
     public class LyricBlueprintContainer : TimelineBlueprintContainer
     {
+        private readonly Singer singer;
+
+        public LyricBlueprintContainer(Singer singer)
+        {
+            this.singer = singer;
+        }
+
         protected override void AddBlueprintFor(HitObject hitObject)
         {
             if (!(hitObject is Lyric))
@@ -25,6 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
             => new LyricTimelineSelectionHandler();
 
         protected override SelectionBlueprint CreateBlueprintFor(HitObject hitObject)
-            => new LyricTimelineHitObjectBlueprint(hitObject);
+            => new LyricTimelineHitObjectBlueprint(hitObject, singer);
     }
 }
