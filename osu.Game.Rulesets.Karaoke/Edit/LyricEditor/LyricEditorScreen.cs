@@ -10,7 +10,7 @@ using osu.Game.Database;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Import;
-using osu.Game.Rulesets.Karaoke.Edit.Timelines;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Timeline;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             return true;
         }
 
-        protected override Drawable CreateTimelineContent() => new KaraokeTimelineBlueprintContainer();
+        protected override Drawable CreateTimelineContent() => new TimelineBlueprintContainer();
 
         protected override Drawable CreateMainContent()
         {
