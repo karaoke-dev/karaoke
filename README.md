@@ -5,6 +5,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/karaoke-dev/karaoke)](https://github.com/karaoke-dev/karaoke/releases)
 [![Tagged Release](https://github.com/karaoke-dev/karaoke/workflows/Tagged%20Release/badge.svg)](https://github.com/karaoke-dev/karaoke/releases)
 [![dev chat](https://discordapp.com/api/guilds/299006062323826688/widget.png?style=shield)](https://discord.gg/ga2xZXk)
+[![](https://tokei.rs/b1/github/karaoke-dev/karaoke)](https://github.com/karaoke-dev/karaoke)
 
 
 The source code of the `karaoke!` ruleset, running on [osu!lazer](https://github.com/ppy/osu).
