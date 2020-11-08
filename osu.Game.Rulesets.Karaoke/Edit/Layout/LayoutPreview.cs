@@ -76,10 +76,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                         Child = new PreviewDrawableLyric(e.NewValue);
                 }, true);
 
-                manager.PreviewSkinIndex.BindValueChanged(v =>
+                manager.PreviewSingers.BindValueChanged(v =>
                 {
                     if (Child is PreviewDrawableLyric lyric)
-                        lyric.HitObject.FontIndex = v.NewValue;
+                        lyric.HitObject.Singers = v.NewValue;
                 }, true);
 
                 manager.EditLayout.BindValueChanged(v =>

@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
         private readonly LayoutValue subtractionCache = new LayoutValue(Invalidation.DrawSize);
         private readonly IBindable<bool> isHitting = new Bindable<bool>();
         private readonly IBindable<bool> display = new Bindable<bool>();
-        private readonly IBindable<int> styleIndex = new Bindable<int>();
+        private readonly IBindable<int[]> singer = new Bindable<int[]>();
 
         protected Drawable Background { get; private set; }
         protected Drawable Foreground { get; private set; }
@@ -61,19 +61,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
 
                 isHitting.BindTo(holdNote.IsHitting);
                 display.BindTo(holdNote.Display);
-                styleIndex.BindTo(holdNote.StyleIndex);
+                singer.BindTo(holdNote.Singers);
             }
 
             AccentColour.BindValueChanged(onAccentChanged);
             HitColour.BindValueChanged(onAccentChanged);
             isHitting.BindValueChanged(_ => onAccentChanged(), true);
             display.BindValueChanged(_ => onAccentChanged(), true);
-            styleIndex.BindValueChanged(value => applySkin(skin, value.NewValue), true);
+            singer.BindValueChanged(value => applySingerStyle(skin, value.NewValue), true);
         }
 
-        private void applySkin(ISkinSource skin, int styleIndex)
+        private void applySingerStyle(ISkinSource skin, int[] singers)
         {
-            var noteSkin = skin?.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, styleIndex))?.Value;
+            var noteSkin = skin?.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, singers))?.Value;
             if (noteSkin == null)
                 return;
 

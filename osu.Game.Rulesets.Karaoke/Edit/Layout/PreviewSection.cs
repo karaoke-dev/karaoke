@@ -10,6 +10,7 @@ using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -80,7 +81,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
             previewStyleDropdown.Current.BindValueChanged(e =>
             {
-                manager.ChangePrviewStyle(e.NewValue.Key);
+                // todo : might use dropdown to assign singer, not style.
+                var singer = SingerUtils.GetSingersIndex(e.NewValue.Key);
+                manager.ChangePrviewSinger(singer);
             }, true);
         }
 

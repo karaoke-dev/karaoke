@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         private readonly LayoutValue subtractionCache = new LayoutValue(Invalidation.DrawSize);
         private readonly IBindable<bool> isHitting = new Bindable<bool>();
         private readonly IBindable<bool> display = new Bindable<bool>();
-        private readonly IBindable<int> styleIndex = new Bindable<int>();
+        private readonly IBindable<int[]> singer = new Bindable<int[]>();
 
         public LegacyNotePiece()
         {
@@ -66,14 +66,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                 isHitting.BindTo(holdNote.IsHitting);
                 display.BindTo(holdNote.Display);
-                styleIndex.BindTo(holdNote.StyleIndex);
+                singer.BindTo(holdNote.Singers);
             }
 
             AccentColour.BindValueChanged(onAccentChanged);
             HitColour.BindValueChanged(onAccentChanged);
             isHitting.BindValueChanged(onIsHittingChanged, true);
             display.BindValueChanged(_ => onAccentChanged(), true);
-            styleIndex.BindValueChanged(value => applySkin(skin, value.NewValue), true);
+            singer.BindValueChanged(value => applySingerStyle(skin, value.NewValue), true);
         }
 
         private void onIsHittingChanged(ValueChangedEvent<bool> isHitting)
@@ -102,9 +102,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
         }
 
-        private void applySkin(ISkinSource skin, int styleIndex)
+        private void applySingerStyle(ISkinSource skin, int[] singers)
         {
-            var noteSkin = skin?.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, styleIndex))?.Value;
+            var noteSkin = skin?.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, singers))?.Value;
             if (noteSkin == null)
                 return;
 

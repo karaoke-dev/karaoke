@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
         public readonly Bindable<DisplayRatio> PreviewScreenRatio = new Bindable<DisplayRatio>();
 
-        public readonly Bindable<int> PreviewSkinIndex = new Bindable<int>();
+        public readonly Bindable<int[]> PreviewSingers = new Bindable<int[]>();
 
         [Resolved]
         private ISkinSource source { get; set; }
@@ -69,10 +69,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             EditLayout.Value = layout;
         }
 
-        public void ChangePrviewStyle(int styleIndex)
+        public void ChangePrviewSinger(int[] singers)
         {
-            if (styleIndex > 0)
-                PreviewSkinIndex.Value = styleIndex;
+            if (singers != null)
+                PreviewSingers.Value = singers;
         }
     }
 

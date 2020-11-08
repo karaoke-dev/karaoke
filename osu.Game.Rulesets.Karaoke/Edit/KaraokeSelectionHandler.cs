@@ -15,6 +15,7 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit.Compose;
 using osu.Game.Screens.Edit.Compose.Components;
 using osu.Game.Skinning;
@@ -124,8 +125,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 {
                     ChangeHandler.BeginChange();
 
+                    // todo : SingerUtils not using in here, and this logic should be combined into siger manager.
                     if (state == TernaryState.True)
-                        EditorBeatmap.SelectedHitObjects.Cast<Lyric>().ForEach(l => l.FontIndex = x.Key);
+                        EditorBeatmap.SelectedHitObjects.Cast<Lyric>().ForEach(l => l.Singers = SingerUtils.GetSingersIndex(x.Key));
 
                     ChangeHandler.EndChange();
                 })).ToArray()

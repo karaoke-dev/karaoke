@@ -392,7 +392,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             protected override void ApplySkin(ISkinSource skin, bool allowFallback)
             {
                 // Get layout
-                Font = skin?.GetConfig<KaraokeSkinLookup, KaraokeFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.FontIndex))?.Value;
+                Font = skin?.GetConfig<KaraokeSkinLookup, KaraokeFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.Value;
                 base.ApplySkin(skin, allowFallback);
             }
 
