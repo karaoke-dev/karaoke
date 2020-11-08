@@ -24,8 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
             if (!(hitObject is Lyric))
                 return;
 
-            // todo : check lyric is at the same singer.
-
             base.AddBlueprintFor(hitObject);
         }
 
