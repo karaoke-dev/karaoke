@@ -57,8 +57,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
             {
                 lyric.SingersBindable.BindValueChanged(e =>
                 {
-                    // Check is lyric contains this singer.
-                    var isSingerMatch = e.NewValue.Contains(singer.ID);
+                    // Check is lyric contains this singer, or default singer
+                    var isSingerMatch = e.NewValue?.Contains(singer.ID) ?? singer.ID == 0;
                     if (isSingerMatch)
                     {
                         Show();

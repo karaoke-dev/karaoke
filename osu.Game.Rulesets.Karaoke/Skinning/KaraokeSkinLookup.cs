@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         public KaraokeSkinLookup(KaraokeSkinConfiguration config, int[] singers)
             : this(config, SingerUtils.GetShiftingStyleIndex(singers))
         {
-            if (config != KaraokeSkinConfiguration.LyricStyle || config != KaraokeSkinConfiguration.NoteStyle)
+            if (config != KaraokeSkinConfiguration.LyricStyle && config != KaraokeSkinConfiguration.NoteStyle)
                 throw new InvalidDataException($"Only {KaraokeSkinConfiguration.LyricStyle} and {KaraokeSkinConfiguration.NoteStyle} can call this ctor.");
         }
 
