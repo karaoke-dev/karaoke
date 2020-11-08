@@ -5,6 +5,7 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Graphics.Cursor;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Singers;
@@ -70,7 +71,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             Dependencies.CacheAs(editorClock);
             Dependencies.Cache(beatDivisor);
 
-            base.Content.Add(Content);
+            base.Content.Add(new OsuContextMenuContainer
+            {
+                RelativeSizeAxes = Axes.Both,
+                Child = Content
+            });
         }
 
         [SetUp]
