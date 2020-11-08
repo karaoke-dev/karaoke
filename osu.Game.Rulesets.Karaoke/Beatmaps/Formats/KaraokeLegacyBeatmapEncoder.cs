@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -66,7 +67,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             for (var i = 0; i < lyrics.Count; i++)
             {
                 var lyric = lyrics[i];
-                yield return $"@style{i}={lyric.LayoutIndex},{lyric.FontIndex}";
+                var layoutIndex = lyric.LayoutIndex;
+                var styleIndex = SingerUtils.GetShiftingStyleIndex(lyric.Singers);
+                yield return $"@style{i}={layoutIndex},{styleIndex}";
             }
         }
 

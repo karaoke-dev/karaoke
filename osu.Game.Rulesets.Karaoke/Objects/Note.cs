@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Note : KaraokeHitObject, IHasDuration, IHasText
+    public class Note : KaraokeHitObject, IHasDuration, IHasText, IHasSingers
     {
         public readonly Bindable<string> TextBindable = new Bindable<string>();
 
@@ -36,12 +36,16 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => AlternativeTextBindable.Value = value;
         }
 
-        public readonly Bindable<int> StyleIndexBindable = new Bindable<int>();
+        [JsonIgnore]
+        public readonly Bindable<int[]> SingersBindable = new Bindable<int[]>();
 
-        public int StyleIndex
+        /// <summary>
+        /// Singers
+        /// </summary>
+        public int[] Singers
         {
-            get => StyleIndexBindable.Value;
-            set => StyleIndexBindable.Value = value;
+            get => SingersBindable.Value;
+            set => SingersBindable.Value = value;
         }
 
         public readonly Bindable<bool> DisplayBindable = new Bindable<bool>();
@@ -107,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 StartIndex = StartIndex,
                 EndIndex = EndIndex,
                 Text = Text,
-                StyleIndex = StyleIndex,
+                Singers = Singers,
                 Display = Display,
                 Tone = Tone,
                 ParentLyric = ParentLyric

@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
             // Check layout and font index
             Assert.AreEqual(lyric.LayoutIndex, 2);
-            Assert.AreEqual(lyric.FontIndex, 3);
+            Assert.AreEqual(lyric.Singers, new[] { 1, 2 });
         }
 
         [Test]

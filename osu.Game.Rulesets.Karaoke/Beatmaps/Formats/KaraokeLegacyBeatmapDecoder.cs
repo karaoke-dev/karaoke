@@ -9,6 +9,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -234,13 +235,13 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     return;
 
                 var layoutIndexStr = line.Split(',').FirstOrDefault();
-                var fontIndexStr = line.Split(',').ElementAtOrDefault(1);
+                var styleIndexStr = line.Split(',').ElementAtOrDefault(1);
 
                 if (int.TryParse(layoutIndexStr, out int layoutIndex))
                     lyric.LayoutIndex = layoutIndex;
 
-                if (int.TryParse(fontIndexStr, out int fontIndex))
-                    lyric.FontIndex = fontIndex;
+                if (int.TryParse(styleIndexStr, out int styleIndex))
+                    lyric.Singers = SingerUtils.GetSingersIndex(styleIndex);
             }
         }
 
