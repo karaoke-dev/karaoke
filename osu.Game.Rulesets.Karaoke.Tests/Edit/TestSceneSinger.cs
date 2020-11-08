@@ -5,6 +5,7 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Graphics.Cursor;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Singers;
@@ -70,7 +71,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             Dependencies.CacheAs(editorClock);
             Dependencies.Cache(beatDivisor);
 
-            base.Content.Add(Content);
+            base.Content.Add(new OsuContextMenuContainer
+            {
+                RelativeSizeAxes = Axes.Both,
+                Child = Content
+            });
         }
 
         [SetUp]
@@ -83,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         public void HoverToSingerArea()
         {
             // todo : add this step because description is not showing.
-            AddStep("Move mouse to singer area", () => InputManager.MoveMouseTo(Child, new Vector2(-400,-100)));
+            AddStep("Move mouse to singer area", () => InputManager.MoveMouseTo(Child, new Vector2(-450,-90)));
         }
     }
 }

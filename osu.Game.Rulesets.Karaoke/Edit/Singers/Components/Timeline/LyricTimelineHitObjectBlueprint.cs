@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -24,6 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
         public LyricTimelineHitObjectBlueprint(HitObject hitObject, Singer singer)
             : base(hitObject)
         {
+            this.singer = singer;
+
             // Use tricty way to hide the timeline's component.
             InternalChildren.ForEach(x => x.Alpha = 0);
 
@@ -52,13 +55,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
                     }
                 }
             });
+        }
 
-            if (hitObject is Lyric lyric)
+        [BackgroundDependencyLoader]
+        private void load(SingerManager singerManager)
+        {
+            if (HitObject is Lyric lyric)
             {
                 lyric.SingersBindable.BindValueChanged(e =>
                 {
                     // Check is lyric contains this singer, or default singer
-                    var isSingerMatch = e.NewValue?.Contains(singer.ID) ?? singer.ID == 0;
+                    var isSingerMatch = singerManager.SingerInLyric(singer, lyric);
                     if (isSingerMatch)
                     {
                         Show();
