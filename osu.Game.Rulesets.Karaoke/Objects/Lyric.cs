@@ -12,11 +12,12 @@ using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Judgements;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Lyric : KaraokeHitObject, IHasDuration
+    public class Lyric : KaraokeHitObject, IHasDuration, IHasSingers
     {
         public readonly Bindable<string> TextBindable = new Bindable<string>();
 
@@ -91,15 +92,15 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public double EndTime => StartTime + Duration;
 
         [JsonIgnore]
-        public readonly Bindable<int> FontIndexBindable = new Bindable<int>();
+        public readonly Bindable<int[]> SingersBindable = new Bindable<int[]>();
 
         /// <summary>
-        /// Font index
+        /// Singers
         /// </summary>
-        public int FontIndex
+        public int[] Singers
         {
-            get => FontIndexBindable.Value;
-            set => FontIndexBindable.Value = value;
+            get => SingersBindable.Value;
+            set => SingersBindable.Value = value;
         }
 
         [JsonIgnore]

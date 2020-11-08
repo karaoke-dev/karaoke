@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             hitObject.RomajiTagsBindable.BindValueChanged(romajiTags => { ApplyRomaji(); }, true);
 
-            hitObject.FontIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
+            hitObject.SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
 
             hitObject.LayoutIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
 
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (CurrentSkin == null)
                 return;
 
-            skin.GetConfig<KaraokeSkinLookup, KaraokeFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.FontIndex))?.BindValueChanged(karaokeFont =>
+            skin.GetConfig<KaraokeSkinLookup, KaraokeFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(karaokeFont =>
             {
                 if (karaokeFont.NewValue != null)
                     ApplyFont(karaokeFont.NewValue);

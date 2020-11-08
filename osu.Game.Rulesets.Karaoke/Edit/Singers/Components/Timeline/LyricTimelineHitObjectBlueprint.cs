@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 using osuTK.Graphics;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
 {
@@ -54,10 +55,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
 
             if (hitObject is Lyric lyric)
             {
-                lyric.FontIndexBindable.BindValueChanged(e =>
+                lyric.SingersBindable.BindValueChanged(e =>
                 {
-                    // todo : should use better way to check is singer sing this lyric
-                    var isSingerMatch = e.NewValue == singer.ID;
+                    // Check is lyric contains this singer.
+                    var isSingerMatch = e.NewValue.Contains(singer.ID);
                     if (isSingerMatch)
                     {
                         Show();

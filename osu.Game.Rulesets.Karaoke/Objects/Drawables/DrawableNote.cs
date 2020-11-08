@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         public IBindable<bool> Display => HitObject.DisplayBindable;
 
-        public IBindable<int> StyleIndex => HitObject.StyleIndexBindable;
+        public IBindable<int[]> Singers => HitObject.SingersBindable;
 
         public DrawableNote(Note note)
             : base(note)
@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             note.AlternativeTextBindable.BindValueChanged(_ => { changeText(note); }, true);
 
-            note.StyleIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
+            note.SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (CurrentSkin == null)
                 return;
 
-            var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, HitObject.StyleIndex))?.Value;
+            var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, HitObject.Singers))?.Value;
             if (noteSkin == null)
                 return;
 
