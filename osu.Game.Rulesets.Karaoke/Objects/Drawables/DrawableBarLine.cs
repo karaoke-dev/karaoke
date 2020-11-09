@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
         }
 
-        protected override void UpdateStateTransforms(ArmedState state)
+        protected override void UpdateStartTimeStateTransforms()
         {
         }
     }

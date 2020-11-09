@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             base.ApplyToDrawableHitObjects(drawables);
         }
 
-        protected override void ApplyHiddenState(DrawableHitObject hitObject, ArmedState state)
+        protected override void ApplyNormalVisibilityState(DrawableHitObject hitObject, ArmedState state)
         {
             if (!(hitObject is DrawableNote note))
                 return;
