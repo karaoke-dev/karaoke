@@ -33,9 +33,9 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
         }
 
         [BackgroundDependencyLoader(true)]
-        private void load([CanBeNull] IBindable<WorkingBeatmap> workingBeatmap, [CanBeNull] BeatmapDifficultyManager difficultyManager)
+        private void load([CanBeNull] IBindable<WorkingBeatmap> workingBeatmap, [CanBeNull] BeatmapDifficultyCache difficultyCache)
         {
-            var beatmapDifficulty = difficultyManager.GetDifficulty(beatmap.BeatmapInfo);
+            var beatmapDifficulty = difficultyCache.GetBindableDifficulty(beatmap.BeatmapInfo).Value;
             if (workingBeatmap != null)
             {
                 LoadComponentAsync(new BeatmapInfoWedge(workingBeatmap.Value, beatmapDifficulty), Add);

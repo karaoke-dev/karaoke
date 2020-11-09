@@ -178,9 +178,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             }
         }
 
-        protected override void UpdateStateTransforms(ArmedState state)
+        protected override void UpdateStartTimeStateTransforms()
         {
-            base.UpdateStateTransforms(state);
+            base.UpdateStartTimeStateTransforms();
 
             using (BeginDelayedSequence(HitObject.Duration, true))
             {

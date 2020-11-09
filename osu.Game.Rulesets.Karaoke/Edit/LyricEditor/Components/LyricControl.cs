@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components
                 Padding = new MarginPadding(0);
             }
 
-            protected override void UpdateStateTransforms(ArmedState state)
+            protected override void UpdateStartTimeStateTransforms()
             {
                 // Do not fade-in / fade-out while changing armed state.
             }
