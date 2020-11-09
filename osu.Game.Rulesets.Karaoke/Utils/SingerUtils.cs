@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             string binary = Convert.ToString(styleIndex, 2);
 
             return binary.Select((v, i) => new { value = v, singer = binary.Length - i })
-                .Where(x => x.value == '1').Select(x => x.singer).OrderBy(x => x).ToArray();
+                         .Where(x => x.value == '1').Select(x => x.singer).OrderBy(x => x).ToArray();
         }
     }
 }

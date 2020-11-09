@@ -35,11 +35,11 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
         [BackgroundDependencyLoader(true)]
         private void load([CanBeNull] IBindable<WorkingBeatmap> workingBeatmap, [CanBeNull] BeatmapDifficultyCache difficultyCache)
         {
+            if (workingBeatmap == null || difficultyCache == null)
+                return;
+
             var beatmapDifficulty = difficultyCache.GetBindableDifficulty(beatmap.BeatmapInfo).Value;
-            if (workingBeatmap != null)
-            {
-                LoadComponentAsync(new BeatmapInfoWedge(workingBeatmap.Value, beatmapDifficulty), Add);
-            }
+            LoadComponentAsync(new BeatmapInfoWedge(workingBeatmap.Value, beatmapDifficulty), Add);
         }
 
         public class BeatmapInfoWedge : BufferedWedgeInfo

@@ -70,6 +70,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
 
         protected abstract float SingerInfoSize { get; }
 
-        protected abstract Drawable CreateSingerInfo(Singer singer); 
+        protected abstract Drawable CreateSingerInfo(Singer singer);
     }
 }

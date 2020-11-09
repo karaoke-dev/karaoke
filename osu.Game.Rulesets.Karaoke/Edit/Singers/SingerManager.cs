@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using Microsoft.EntityFrameworkCore.Internal;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -59,6 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         }
 
         public void AddSingerToLyric(Singer singer, Lyric lyric) => AddSingersToLyrics(new List<Singer> { singer }, new List<Lyric> { lyric });
+
         public void AddSingersToLyrics(List<Singer> singers, List<Lyric> lyrics)
         {
             if (!(singers?.Any() ?? false))
@@ -91,6 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         }
 
         public void RemoveSingerToLyric(Singer singer, Lyric lyric) => RemoveSingersToLyrics(new List<Singer> { singer }, new List<Lyric> { lyric });
+
         public void RemoveSingersToLyrics(List<Singer> singers, List<Lyric> lyrics)
         {
             if (!(singers?.Any() ?? false))

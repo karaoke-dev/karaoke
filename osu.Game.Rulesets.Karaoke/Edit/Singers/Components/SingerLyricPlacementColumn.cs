@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                                     RelativeSizeAxes = Axes.X,
                                     Direction = FillDirection.Vertical,
                                     Spacing = new Vector2(1),
-                                    Padding = new MarginPadding{ Left = 5 },
+                                    Padding = new MarginPadding { Left = 5 },
                                     Children = new[]
                                     {
                                         new OsuSpriteText
