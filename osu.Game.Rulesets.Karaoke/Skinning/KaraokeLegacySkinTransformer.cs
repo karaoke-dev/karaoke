@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             {
                 var skin = new KaraokeSkinDecoder().Decode(reader);
 
-                // Create bindables
+                // Create bindable
                 for (int i = 0; i < skin.Fonts.Count; i++)
                     bindableFonts.Add(i, new Bindable<KaraokeFont>(skin.Fonts[i]));
                 for (int i = 0; i < skin.Layouts.Count; i++)
