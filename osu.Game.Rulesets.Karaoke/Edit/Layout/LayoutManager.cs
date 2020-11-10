@@ -57,19 +57,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             }
         }
 
-        public void ApplyCurrenyLayoutChange(Action<KaraokeLayout> action)
+        public void ApplyCurrentLayoutChange(Action<KaraokeLayout> action)
         {
             action?.Invoke(EditLayout.Value);
             EditLayout.TriggerChange();
         }
 
-        public void ChangeCurrenyLayout(KaraokeLayout layout)
+        public void ChangeCurrentLayout(KaraokeLayout layout)
         {
             LoadedLayout.Value = layout;
             EditLayout.Value = layout;
         }
 
-        public void ChangePrviewSinger(int[] singers)
+        public void ChangePreviewSinger(int[] singers)
         {
             if (singers != null)
                 PreviewSingers.Value = singers;

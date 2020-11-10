@@ -14,8 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Import
 {
     public class ImportManager : Component
     {
-        public static string[] LyricFotmatExtensions { get; } = { ".lrc", ".kar" };
-        public static string[] NicokaraSkinFotmatExtensions { get; } = { ".nkmproj" };
+        public static string[] LyricFormatExtensions { get; } = { ".lrc", ".kar" };
+        public static string[] NicokaraSkinFormatExtensions { get; } = { ".nkmproj" };
 
         private const string backup_lrc_name = "backup.lrc";
 
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Import
             if (!info.Exists)
                 throw new FileNotFoundException("Lyric file does not found!");
 
-            var isFormatMatch = LyricFotmatExtensions.Contains(info.Extension);
+            var isFormatMatch = LyricFormatExtensions.Contains(info.Extension);
             if (!isFormatMatch)
                 throw new FileLoadException("Only .lrc or .kar karaoke file is supported now");
 
@@ -66,9 +66,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Import
             if (!info.Exists)
                 throw new FileNotFoundException("Nicokara file does not found!");
 
-            var isFormatMatch = NicokaraSkinFotmatExtensions.Contains(info.Extension);
+            var isFormatMatch = NicokaraSkinFormatExtensions.Contains(info.Extension);
             if (isFormatMatch)
-                throw new FileLoadException("Nicokara's skin extension should be .nkmproj");
+                throw new FileLoadException("Nicokara skin extension should be .nkmproj");
         }
     }
 }

@@ -112,7 +112,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 textBox.Current.BindValueChanged(x =>
                 {
                     // Update name
-                    languageManager.UpdateLanguagename(language, x.NewValue);
+                    languageManager.UpdateLanguageName(language, x.NewValue);
 
                     // Create new
                     createNewLanguage();
@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 languageManager?.AddLanguage(language);
                 textBox.PlaceholderText = string.Empty;
 
-                // When this item changes from placeholder to non-placeholder (via changing containers), its textbox will lose focus, so it needs to be re-focused.
+                // When this item changes from placeholder to non-placeholder (via changing containers), its text box will lose focus, so it needs to be re-focused.
                 Schedule(() => GetContainingInputManager().ChangeFocus(textBox));
 
                 IsCreated.Value = true;
@@ -224,7 +224,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 {
                     background.FlashColour(Color4.White, 150);
 
-                    if (!languageManager?.IsLanguageContaineTranslate(language) ?? false)
+                    if (!languageManager?.IsLanguageContainsTranslate(language) ?? false)
                         deleteLanguage();
                     else
                         dialogOverlay?.Push(new DeleteLanguageDialog(language, deleteLanguage));

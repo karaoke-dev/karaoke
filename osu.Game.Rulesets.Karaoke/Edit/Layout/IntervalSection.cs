@@ -69,9 +69,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     => bindable.Value = bindable.Default = value;
             }, true);
 
-            lyricIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.LyricsInterval = x.NewValue));
-            rubyIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.RubyInterval = x.NewValue));
-            romajiIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.RomajiInterval = x.NewValue));
+            lyricIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.LyricsInterval = x.NewValue));
+            rubyIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.RubyInterval = x.NewValue));
+            romajiIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.RomajiInterval = x.NewValue));
         }
     }
 }

@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Metadatas
 
             try
             {
-                // Create sub-ssinger
+                // Create sub-singer
                 var targetSinger = metadata.Singers.FirstOrDefault(x => x.ID == targetIndex);
 
                 for (int i = 0; i < amount; i++)
@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Metadatas
                 x.RomajiName = $"Singer {x}";
             });
 
-            // Create subsinger
+            // Create sub-singer
             var targetSinger = metadata.Singers.FirstOrDefault();
             metadata.CreateSubSinger(targetSinger, x =>
             {
@@ -133,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Metadatas
         [TestCase(1, 0, new[] { 1 }, 1)]
         [TestCase(10, 0, new[] { 1, 2, 3 }, 7)]
         [TestCase(3, 3, new[] { 1, 4, 5 }, 25)]
-        public void TestGetLayoutIndex(int singerAmount, int subSingerAmount, int[] indexs, int targetLayoutIndex)
+        public void TestGetLayoutIndex(int singerAmount, int subSingerAmount, int[] indexes, int targetLayoutIndex)
         {
             var querySingers = new List<ISinger>();
 
@@ -145,12 +145,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Metadatas
                     x.Name = $"Parent singer {x}";
                     x.RomajiName = $"Singer {x}";
 
-                    if (indexs.Contains(x.ID))
+                    if (indexes.Contains(x.ID))
                         querySingers.Add(x);
                 });
             }
 
-            // Create sub-ssinger
+            // Create sub-singer
             var targetSinger = metadata.Singers.LastOrDefault();
 
             for (int i = 0; i < subSingerAmount; i++)
@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Metadatas
                     if (targetSinger != null)
                         x.Description = $"Add sub singer into singer {targetSinger.Name}";
 
-                    if (indexs.Contains(x.ID))
+                    if (indexes.Contains(x.ID))
                         querySingers.Add(x);
                 });
             }

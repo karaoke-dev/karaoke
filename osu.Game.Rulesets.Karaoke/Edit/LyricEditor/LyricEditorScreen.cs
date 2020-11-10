@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
         private FillFlowContainer<Button> controls;
         private LyricRearrangeableListContainer container;
 
-        public IEnumerable<string> HandledExtensions => ImportManager.LyricFotmatExtensions;
+        public IEnumerable<string> HandledExtensions => ImportManager.LyricFormatExtensions;
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }

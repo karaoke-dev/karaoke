@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             {
                 // todo : might use dropdown to assign singer, not style.
                 var singer = SingerUtils.GetSingersIndex(e.NewValue.Key);
-                manager.ChangePrviewSinger(singer);
+                manager.ChangePreviewSinger(singer);
             }, true);
         }
 

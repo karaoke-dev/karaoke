@@ -70,18 +70,18 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         /// </summary>
         public class ChangeLogMarkdownParagraph : MarkdownParagraph
         {
-            private readonly bool displaydot;
+            private readonly bool displayDot;
 
             public ChangeLogMarkdownParagraph(ParagraphBlock paragraphBlock)
                 : base(paragraphBlock)
             {
-                displaydot = paragraphBlock == paragraphBlock.Parent[0];
+                displayDot = paragraphBlock == paragraphBlock.Parent[0];
             }
 
             [BackgroundDependencyLoader]
             private void load()
             {
-                if (displaydot)
+                if (displayDot)
                 {
                     AddInternal(new SpriteIcon
                     {
@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         }
 
         /// <summary>
-        /// Re-calculate image size by changelog's width.
+        /// Re-calculate image size by changelog width.
         /// </summary>
         public class ChangeLogMarkdownTextFlowContainer : MarkdownTextFlowContainer
         {

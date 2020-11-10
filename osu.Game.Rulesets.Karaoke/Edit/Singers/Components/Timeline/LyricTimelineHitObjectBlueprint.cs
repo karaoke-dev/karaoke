@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
         {
             this.singer = singer;
 
-            // Use tricty way to hide the timeline's component.
+            // Use tricky way to hide the timeline component.
             InternalChildren.ForEach(x => x.Alpha = 0);
 
             // todo : wait for better solution until some of child component is overridable.

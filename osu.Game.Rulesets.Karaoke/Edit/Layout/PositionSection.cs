@@ -74,10 +74,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                     => bindable.Value = bindable.Default = value;
             }, true);
 
-            alignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.Alignment = x.NewValue));
-            horizontalMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.HorizontalMargin = x.NewValue));
-            verticalMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.VerticalMargin = x.NewValue));
-            smartHorizonDropdown.Current.BindValueChanged(x => manager.ApplyCurrenyLayoutChange(l => l.SmartHorizon = x.NewValue));
+            alignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.Alignment = x.NewValue));
+            horizontalMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.HorizontalMargin = x.NewValue));
+            verticalMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.VerticalMargin = x.NewValue));
+            smartHorizonDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.SmartHorizon = x.NewValue));
         }
     }
 }

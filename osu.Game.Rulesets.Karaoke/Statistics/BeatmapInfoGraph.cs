@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             [BackgroundDependencyLoader]
             private void load()
             {
-                // Adjust metadata's size
+                // Adjust metadata size
                 var centerMetadata = Children.FirstOrDefault(x => x.Name == "Centre-aligned metadata");
                 if (centerMetadata != null)
                     centerMetadata.Y = -20;

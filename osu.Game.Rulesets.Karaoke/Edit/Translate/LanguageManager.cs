@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             Languages.Add(language);
         }
 
-        public void UpdateLanguagename(BeatmapSetOnlineLanguage language, string name)
+        public void UpdateLanguageName(BeatmapSetOnlineLanguage language, string name)
         {
             language.Name = name;
         }
@@ -50,10 +50,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             Languages.Remove(language);
         }
 
-        public bool IsLanguageContaineTranslate(BeatmapSetOnlineLanguage language)
-            => LanguageContaineTranslateAmount(language) > 0;
+        public bool IsLanguageContainsTranslate(BeatmapSetOnlineLanguage language)
+            => LanguageContainsTranslateAmount(language) > 0;
 
-        public int LanguageContaineTranslateAmount(BeatmapSetOnlineLanguage language)
+        public int LanguageContainsTranslateAmount(BeatmapSetOnlineLanguage language)
         {
             if (language == null)
                 return 0;
