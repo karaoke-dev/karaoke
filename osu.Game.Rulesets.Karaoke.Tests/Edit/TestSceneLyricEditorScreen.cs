@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [Test]
         public void TestImportLyricFile()
         {
-            AddAssert($"Import lrc file.", () =>
+            AddAssert("Import lrc file.", () =>
             {
                 var temp = TestResources.GetTestLrcForImport("default");
                 return screen.ImportLyricFile(new FileInfo(temp));

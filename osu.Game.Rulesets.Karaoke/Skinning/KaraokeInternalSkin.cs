@@ -18,7 +18,7 @@ using osu.Game.Skinning;
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
     /// <summary>
-    /// Use as internal skin and prevent user to asjust
+    /// Use as internal skin and prevent user to adjust
     /// </summary>
     public abstract class KaraokeInternalSkin : ISkin
     {

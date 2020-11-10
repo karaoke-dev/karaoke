@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
             MinZoom = 5;
 
             var centerRemarks = InternalChildren.OfType<CentreMarker>().ToList();
-            foreach(var centerRemark in centerRemarks)
+            foreach (var centerRemark in centerRemarks)
                 RemoveInternal(centerRemark);
 
             singerManager?.BindableZoom.BindValueChanged(e =>
@@ -35,15 +35,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
 
         protected override bool OnScroll(ScrollEvent e)
         {
-            var zoneChanged =  base.OnScroll(e);
+            var zoneChanged = base.OnScroll(e);
             if (!zoneChanged)
                 return false;
 
             // Update bindable to trigger zone changed.
-            if(singerManager != null)
+            if (singerManager != null)
                 singerManager.BindableZoom.Value = Zoom;
 
-            return zoneChanged;
+            return true;
         }
     }
 }

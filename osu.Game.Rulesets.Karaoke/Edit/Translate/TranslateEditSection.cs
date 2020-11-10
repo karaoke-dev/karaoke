@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                     null,
                     createPreviewSpriteText(x),
                     null,
-                    createTranslateTextbox(x, bindable),
+                    createTranslateTextBox(x, bindable),
                 };
             }).ToArray();
         }
@@ -193,7 +193,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             };
         }
 
-        private Drawable createTranslateTextbox(Lyric lyric, Bindable<BeatmapSetOnlineLanguage> bindable)
+        private Drawable createTranslateTextBox(Lyric lyric, Bindable<BeatmapSetOnlineLanguage> bindable)
         {
             var textBox = new OsuTextBox
             {

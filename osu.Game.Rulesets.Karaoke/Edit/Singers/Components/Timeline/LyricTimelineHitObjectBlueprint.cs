@@ -14,7 +14,6 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 using osuTK.Graphics;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
 {
@@ -27,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
         {
             this.singer = singer;
 
-            // Use tricty way to hide the timeline's component.
+            // Use tricky way to hide the timeline component.
             InternalChildren.ForEach(x => x.Alpha = 0);
 
             // todo : wait for better solution until some of child component is overridable.
@@ -66,6 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
                 {
                     // Check is lyric contains this singer, or default singer
                     var isSingerMatch = singerManager.SingerInLyric(singer, lyric);
+
                     if (isSingerMatch)
                     {
                         Show();

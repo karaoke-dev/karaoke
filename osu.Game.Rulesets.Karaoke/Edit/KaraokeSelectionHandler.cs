@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 {
                     ChangeHandler.BeginChange();
 
-                    // todo : SingerUtils not using in here, and this logic should be combined into siger manager.
+                    // todo : SingerUtils not using in here, and this logic should be combined into singer manager.
                     if (state == TernaryState.True)
                         EditorBeatmap.SelectedHitObjects.Cast<Lyric>().ForEach(l => l.Singers = SingerUtils.GetSingersIndex(x.Key));
 

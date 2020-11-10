@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                             RelativeSizeAxes = Axes.Both
                         };
                         break;
-                };
+                }
             }, true);
         }
 
@@ -126,16 +126,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                         case Style.Lyric:
                             Children = new StyleSection[]
                             {
-                                    new LyricColorSection(),
-                                    new LyricFontSection(),
-                                    new LyricShadowSection(),
+                                new LyricColorSection(),
+                                new LyricFontSection(),
+                                new LyricShadowSection(),
                             };
                             break;
+
                         case Style.Note:
                             Children = new StyleSection[]
                             {
-                                    new NoteColorSection(),
-                                    new NoteFontSection(),
+                                new NoteColorSection(),
+                                new NoteFontSection(),
                             };
                             break;
                     }

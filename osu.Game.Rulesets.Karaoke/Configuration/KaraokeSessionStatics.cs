@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             // Practice
             Set<Lyric>(KaraokeRulesetSession.NowLyric, null);
 
-            // Saiten stsus
+            // Saiten status
             Set(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.NotInitialized);
         }
 

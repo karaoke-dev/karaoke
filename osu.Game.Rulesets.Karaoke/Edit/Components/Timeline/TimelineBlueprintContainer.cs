@@ -21,7 +21,7 @@ using osuTK.Graphics;
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Timeline
 {
     /// <summary>
-    /// This is the copy version of official's TimelineBlueprintContainer because it's mark as internal
+    /// This is the copy version of official <see cref="TimelineBlueprintContainer"/> because it's mark as internal
     /// </summary>
     public class TimelineBlueprintContainer : BlueprintContainer
     {
@@ -137,7 +137,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Timeline
 
         internal class TimelineSelectionHandler : SelectionHandler
         {
-            // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
+            // for now we always allow movement. snapping is provided by the timeline "distance" snap implementation
             public override bool HandleMovement(MoveSelectionEvent moveEvent) => true;
         }
 
