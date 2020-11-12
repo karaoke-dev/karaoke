@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <summary>
         /// Time tags
         /// </summary>
-        public IReadOnlyDictionary<TimeTagIndex, double> TimeTags
+        public IReadOnlyDictionary<TimeTagIndex, double?> TimeTags
         {
             get => TimeTagsBindable.Value;
             set => TimeTagsBindable.Value = value;

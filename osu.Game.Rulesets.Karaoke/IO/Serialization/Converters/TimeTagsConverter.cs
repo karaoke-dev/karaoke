@@ -10,9 +10,9 @@ using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public class TimeTagsConverter : JsonConverter<List<Tuple<TimeTagIndex, double>>>
+    public class TimeTagsConverter : JsonConverter<List<Tuple<TimeTagIndex, double?>>>
     {
-        public override List<Tuple<TimeTagIndex, double>> ReadJson(JsonReader reader, Type objectType, List<Tuple<TimeTagIndex, double>> existingValues, bool hasExistingValue, JsonSerializer serializer)
+        public override List<Tuple<TimeTagIndex, double?>> ReadJson(JsonReader reader, Type objectType, List<Tuple<TimeTagIndex, double?>> existingValues, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JArray.Load(reader);
 
@@ -22,18 +22,18 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
                 return deserializeTuple(value);
             }).ToList();
 
-            Tuple<TimeTagIndex, double> deserializeTuple(string str)
+            Tuple<TimeTagIndex, double?> deserializeTuple(string str)
             {
                 var strArray = str.Split(',');
 
                 var state = strArray[1] == "0" ? TimeTagIndex.IndexState.Start : TimeTagIndex.IndexState.End;
                 var timeTag = new TimeTagIndex(int.Parse(strArray[0]), state);
-                var time = int.Parse(strArray[2]);
-                return new Tuple<TimeTagIndex, double>(timeTag, time);
+                var time = strArray[2] != "" ? int.Parse(strArray[2]) : default(double?);
+                return new Tuple<TimeTagIndex, double?>(timeTag, time);
             }
         }
 
-        public override void WriteJson(JsonWriter writer, List<Tuple<TimeTagIndex, double>> values, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, List<Tuple<TimeTagIndex, double?>> values, JsonSerializer serializer)
         {
             writer.WriteStartArray();
 
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             writer.WriteEndArray();
 
-            string serializeTuple(Tuple<TimeTagIndex, double> timeTagTuple)
+            string serializeTuple(Tuple<TimeTagIndex, double?> timeTagTuple)
             {
                 var tag = timeTagTuple.Item1;
                 var state = tag.State == TimeTagIndex.IndexState.Start ? "0" : "1";
