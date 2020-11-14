@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => TimeTagsBindable.Value = value;
         }
 
-        public List<Tuple<TimeTagIndex, double?>> RowTimeTags { get; set; }
+        public IReadOnlyList<Tuple<TimeTagIndex, double?>> RowTimeTags { get; set; }
 
         public double LyricStartTime => TimeTags?.FirstOrDefault().Value ?? StartTime;
 
