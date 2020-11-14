@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Import
                 */
 
                 // Import and replace all the file.
-                using (var reader = new IO.LineBufferedReader(stream))
+                using (var reader = new Game.IO.LineBufferedReader(stream))
                 {
                     var decoder = new LrcDecoder();
                     var lrcBeatmap = decoder.Decode(reader);
