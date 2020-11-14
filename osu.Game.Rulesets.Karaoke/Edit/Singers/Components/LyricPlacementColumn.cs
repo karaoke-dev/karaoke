@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                             new SingerTimeline
                             {
                                 RelativeSizeAxes = Axes.Both,
-                                Child = new LyricBlueprintContainer(singer)
+                                Child = new LyricBlueprintContainer(null, singer)
                                 {
                                     RelativeSizeAxes = Axes.Both,
                                 }

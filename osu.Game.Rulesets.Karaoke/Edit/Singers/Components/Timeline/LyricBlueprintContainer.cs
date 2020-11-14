@@ -14,23 +14,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
     {
         private readonly Singer singer;
 
-        public LyricBlueprintContainer(Singer singer)
+        public LyricBlueprintContainer(HitObjectComposer composer, Singer singer)
+            : base(composer)
         {
             this.singer = singer;
-        }
-
-        protected override void AddBlueprintFor(HitObject hitObject)
-        {
-            if (!(hitObject is Lyric))
-                return;
-
-            base.AddBlueprintFor(hitObject);
         }
 
         protected override SelectionHandler CreateSelectionHandler()
             => new LyricTimelineSelectionHandler();
 
         protected override SelectionBlueprint CreateBlueprintFor(HitObject hitObject)
-            => new LyricTimelineHitObjectBlueprint(hitObject, singer);
+        {
+             if (!(hitObject is Lyric))
+                return null;
+
+             return new LyricTimelineHitObjectBlueprint(hitObject, singer);
+        }
     }
 }

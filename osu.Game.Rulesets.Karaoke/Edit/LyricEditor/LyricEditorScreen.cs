@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             return true;
         }
 
-        protected override Drawable CreateTimelineContent() => new TimelineBlueprintContainer();
+        protected override Drawable CreateTimelineContent() => new TimelineBlueprintContainer(null);
 
         protected override Drawable CreateMainContent()
         {
