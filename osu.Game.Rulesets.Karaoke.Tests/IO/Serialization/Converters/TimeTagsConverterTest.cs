@@ -6,8 +6,8 @@ using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+using osu.Game.Rulesets.Karaoke.Utils;
 using System;
-using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
@@ -19,9 +19,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         {
             var rowTimeTag = new Tuple<TimeTagIndex, double?>[]
             {
-                Tuple.Create<TimeTagIndex, double?>(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1000d),
-                Tuple.Create<TimeTagIndex, double?>(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1100d),
-                Tuple.Create<TimeTagIndex, double?>(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1200d),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1000d),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1100d),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1200d),
             };
 
             var result = JsonConvert.SerializeObject(rowTimeTag, createSettings());

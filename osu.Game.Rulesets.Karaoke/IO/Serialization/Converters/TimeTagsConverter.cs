@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using osu.Framework.Graphics.Sprites;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
