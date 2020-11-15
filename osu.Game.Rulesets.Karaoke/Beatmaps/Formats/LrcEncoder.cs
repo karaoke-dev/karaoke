@@ -9,6 +9,7 @@ using LyricMaker.Model.Tags;
 using LyricMaker.Parser;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -28,7 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             new LyricLine
             {
                 Text = lyric.Text,
-                TimeTags = convertTimeTag(lyric.Text, lyric.TimeTags).ToArray(),
+                // Note : save to lyric will lost some tags with no value.
+                TimeTags = convertTimeTag(lyric.Text, TimeTagsUtils.ToDictionary(lyric.TimeTags)).ToArray(),
             };
 
         private IEnumerable<TimeTag> convertTimeTag(string text, IReadOnlyDictionary<TimeTagIndex, double> tags)

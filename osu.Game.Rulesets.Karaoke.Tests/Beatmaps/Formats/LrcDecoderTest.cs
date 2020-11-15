@@ -9,6 +9,7 @@ using osu.Game.Beatmaps;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 {
@@ -30,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             Assert.AreEqual(lyric?.EndTime, 5000);
 
             // Check time tag
-            var tags = lyric?.TimeTags;
+            var tags = TimeTagsUtils.ToDictionary(lyric?.TimeTags);
             var checkedTags = tags.ToArray();
             Assert.AreEqual(tags.Count, 5);
             Assert.AreEqual(checkedTags.Length, 5);
