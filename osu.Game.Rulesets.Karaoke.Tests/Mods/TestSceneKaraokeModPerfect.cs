@@ -24,7 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
             StartTime = 1000,
             Duration = 1000,
             Text = "カラオケ!",
-            TimeTags = new List<Tuple<TimeTagIndex, double?>>()
         }), shouldMiss);
     }
 }

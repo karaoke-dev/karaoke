@@ -10,9 +10,9 @@ using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public class TimeTagsConverter : JsonConverter<IReadOnlyList<Tuple<TimeTagIndex, double?>>>
+    public class TimeTagsConverter : JsonConverter<Tuple<TimeTagIndex, double?>[]>
     {
-        public override IReadOnlyList<Tuple<TimeTagIndex, double?>> ReadJson(JsonReader reader, Type objectType, IReadOnlyList<Tuple<TimeTagIndex, double?>> existingValues, bool hasExistingValue, JsonSerializer serializer)
+        public override Tuple<TimeTagIndex, double?>[] ReadJson(JsonReader reader, Type objectType, Tuple<TimeTagIndex, double?>[] existingValues, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JArray.Load(reader);
 
@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             {
                 var value = line.ToString();
                 return deserializeTuple(value);
-            }).ToList();
+            }).ToArray();
 
             Tuple<TimeTagIndex, double?> deserializeTuple(string str)
             {
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             }
         }
 
-        public override void WriteJson(JsonWriter writer, IReadOnlyList<Tuple<TimeTagIndex, double?>> values, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, Tuple<TimeTagIndex, double?>[] values, JsonSerializer serializer)
         {
             writer.WriteStartArray();
 

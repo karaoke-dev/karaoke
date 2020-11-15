@@ -33,12 +33,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<IReadOnlyList<Tuple<TimeTagIndex, double?>>> TimeTagsBindable = new Bindable<IReadOnlyList<Tuple<TimeTagIndex, double?>>>();
+        public readonly Bindable<Tuple<TimeTagIndex, double?>[]> TimeTagsBindable = new Bindable<Tuple<TimeTagIndex, double?>[]>();
 
         /// <summary>
         /// Time tags
         /// </summary>
-        public IReadOnlyList<Tuple<TimeTagIndex, double?>> TimeTags
+        public Tuple<TimeTagIndex, double?>[] TimeTags
         {
             get => TimeTagsBindable.Value;
             set => TimeTagsBindable.Value = value;

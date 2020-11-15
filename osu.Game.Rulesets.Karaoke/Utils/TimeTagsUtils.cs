@@ -74,9 +74,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="dictionary">Dictionary.</param>
         /// <returns>Time tagd</returns>
-        public static IReadOnlyList<Tuple<TimeTagIndex, double?>> ToTimeTagList(IReadOnlyDictionary<TimeTagIndex, double> dictionary)
+        public static Tuple<TimeTagIndex, double?>[] ToTimeTagList(IReadOnlyDictionary<TimeTagIndex, double> dictionary)
         {
-            throw new NotImplementedExceptio();
+            throw new NotImplementedException();
         }
 
         /// <summary>
