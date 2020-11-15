@@ -27,17 +27,75 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="timeTags">Time tags</param>
         /// <returns>List of invalid time tags</returns>
-        public static Tuple<TimeTagIndex, double?>[] FindInvalid(Tuple<TimeTagIndex, double?>[] timeTags, FindWay other = FindWay.BasedOnStart, FindWay self = FindWay.BasedOnStart)
+        public static Tuple<TimeTagIndex, double?>[] FindInvalid(Tuple<TimeTagIndex, double?>[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
             var sortedTimeTags = Sort(timeTags);
             var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Item1.Index);
 
+            var invalidList = new List<Tuple<TimeTagIndex, double?>>();
             foreach (var groupedTimeTag in groupedTimeTags)
             {
-                // todo : find the time larger then normal time tag.
+                var startTimeGroup = groupedTimeTag.Where(x => x.Item1.State == TimeTagIndex.IndexState.Start && x.Item2 != null);
+                var endTimeGroup = groupedTimeTag.Where(x => x.Item1.State == TimeTagIndex.IndexState.End && x.Item2 != null);
+
+                // add invalid group into list.
+                var groupInvalid = findGroupInvalid();
+                if (groupInvalid != null)
+                    invalidList.AddRange(groupInvalid);
+
+                // add invalid self into list.
+                var selfInvalid = findSelfInvalid();
+                if (selfInvalid != null)
+                    invalidList.AddRange(selfInvalid);
+
+                List<Tuple<TimeTagIndex, double?>> findGroupInvalid()
+                {
+                    switch (other)
+                    {
+                        case GroupCheck.Asc:
+                            // mark next is invalid if smaller then self
+                            var groupMaxTime = groupedTimeTag.Max(x => x.Item2);
+                            if (groupMaxTime == null)
+                                return null;
+
+                            return sortedTimeTags.Where(x => x.Item1.Index > groupedTimeTag.Key && x.Item2 < groupMaxTime).ToList();
+
+                        case GroupCheck.Desc:
+                            // mark pervious is invalid if larger then self
+                            var groupMinTime = groupedTimeTag.Min(x => x.Item2);
+                            if (groupMinTime == null)
+                                return null;
+
+                            return sortedTimeTags.Where(x => x.Item1.Index < groupedTimeTag.Key && x.Item2 > groupMinTime).ToList();
+
+                        default:
+                            return null;
+                    }
+                }
+
+                List<Tuple<TimeTagIndex, double?>> findSelfInvalid()
+                {
+                    switch (self)
+                    {
+                        case SelfCheck.BasedOnStart:
+                            var maxStartTime = startTimeGroup.Max(x => x.Item2);
+                            if (maxStartTime == null)
+                                return null;
+                            return endTimeGroup.Where(x => x.Item2.Value < maxStartTime.Value).ToList();
+
+                        case SelfCheck.BasedOnEnd:
+                            var minEndTime = endTimeGroup.Min(x => x.Item2);
+                            if (minEndTime == null)
+                                return null;
+                            return startTimeGroup.Where(x => x.Item2.Value > minEndTime.Value).ToList();
+
+                        default:
+                            return null;
+                    }
+                }
             }
 
-            return new Tuple<TimeTagIndex, double?>[] { };
+            return Sort(invalidList.Distinct().ToArray());
         }
 
         /// <summary>
@@ -113,10 +171,29 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static Tuple<TimeTagIndex, double?> Create(TimeTagIndex index, double? time) => Tuple.Create(index, time);
     }
 
-    public enum FindWay
+    public enum GroupCheck
     {
+        /// <summary>
+        /// Mark next time tag is error if conflict.
+        /// </summary>
+        Asc,
+
+        /// <summary>
+        /// Mark pervious tag is error if conflict.
+        /// </summary>
+        Desc
+    }
+
+    public enum SelfCheck
+    {
+        /// <summary>
+        /// Mark end time tag is error if conflict.
+        /// </summary>
         BasedOnStart,
 
+        /// <summary>
+        /// Mark start time tag is error if conflict.
+        /// </summary>
         BasedOnEnd,
     }
 

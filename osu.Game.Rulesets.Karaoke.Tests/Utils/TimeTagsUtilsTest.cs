@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using Microsoft.EntityFrameworkCore.Internal;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -27,27 +28,33 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(getSortedTime(sortedTimeTag), results);
         }
 
-        [TestCase(nameof(InvalidTimeTagWithOneStartLargerThenAllEnd), 0)]
-        [TestCase(nameof(InvalidTimeTagWithMultiStartLargerThenAllEnd), 0)]
-        [TestCase(nameof(InvalidTimeTagWithOneEndLargerThenAllStart), 0)]
-        [TestCase(nameof(InvalidTimeTagWithMultiEndLargerThenAllStart), 0)]
-        [TestCase(nameof(InvalidTimeTagWithSomeStartLargerThenSomeEnd), 0)]
-        [TestCase(nameof(InvalidTimeTagWithSomeEndLargerThenSomeStart), 0)]
-        public void TestFindInvalid(string testCase, double errorAmount)
+        [TestCase(nameof(InvalidTimeTagWithStartLargerThenEnd), GroupCheck.Asc, SelfCheck.BasedOnStart, new int[] { 1 })]
+        [TestCase(nameof(InvalidTimeTagWithStartLargerThenEnd), GroupCheck.Asc, SelfCheck.BasedOnEnd, new int[] { 0 })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextStart), GroupCheck.Asc, SelfCheck.BasedOnStart, new int[] { 2 })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextStart), GroupCheck.Desc, SelfCheck.BasedOnStart, new int[] { 1 })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextEnd), GroupCheck.Asc, SelfCheck.BasedOnStart, new int[] { 2, 3 })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextEnd), GroupCheck.Desc, SelfCheck.BasedOnStart, new int[] { 1 })]
+        [TestCase(nameof(InvalidTimeTagWithStartSmallerThenPerviousStart), GroupCheck.Asc, SelfCheck.BasedOnStart, new int[] { 2 })]
+        [TestCase(nameof(InvalidTimeTagWithStartSmallerThenPerviousStart), GroupCheck.Desc, SelfCheck.BasedOnStart, new int[] { 0, 1 })]
+        [TestCase(nameof(InvalidTimeTagWithAllInverse), GroupCheck.Asc, SelfCheck.BasedOnStart, new int[] { 1, 2, 3 })]
+        [TestCase(nameof(InvalidTimeTagWithAllInverse), GroupCheck.Asc, SelfCheck.BasedOnEnd, new int[] { 0, 2, 3 })]
+        [TestCase(nameof(InvalidTimeTagWithAllInverse), GroupCheck.Desc, SelfCheck.BasedOnStart, new int[] { 0, 1, 3 })]
+        [TestCase(nameof(InvalidTimeTagWithAllInverse), GroupCheck.Desc, SelfCheck.BasedOnEnd, new int[] { 0, 1, 2 })]
+        public void TestFindInvalid(string testCase, GroupCheck other, SelfCheck self, int[] errorIndex)
         {
             var timeTags = getvalueByMethodName(testCase);
 
-            // run all and find error amount and index.
-            var invalidTimeTag = TimeTagsUtils.FindInvalid(timeTags);
-            Assert.AreEqual(invalidTimeTag.Length, 0);
+            // run all and find invalid indexes.
+            var invalidTimeTag = TimeTagsUtils.FindInvalid(timeTags, other, self);
+            var invalidIndexes = invalidTimeTag.Select(v => timeTags.IndexOf(v)).ToArray();
+            Assert.AreEqual(invalidIndexes, errorIndex);
         }
 
-        [TestCase(nameof(InvalidTimeTagWithOneStartLargerThenAllEnd), FixWay.Merge, new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithMultiStartLargerThenAllEnd), FixWay.Merge, new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithOneEndLargerThenAllStart), FixWay.Merge, new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithMultiEndLargerThenAllStart), FixWay.Merge, new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithSomeStartLargerThenSomeEnd), FixWay.Merge, new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithSomeEndLargerThenSomeStart), FixWay.Merge, new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithStartLargerThenEnd), FixWay.Merge, new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextStart), FixWay.Merge, new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextEnd), FixWay.Merge, new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithStartSmallerThenPerviousStart), FixWay.Merge, new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithAllInverse), FixWay.Merge, new double[] { })]
         public void TestFixInvalid(string testCase, FixWay fixWay, double[] results)
         {
             var timeTags = getvalueByMethodName(testCase);
@@ -57,13 +64,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(getSortedTime(fixedTimeTag), results);
         }
 
-        [TestCase(nameof(InvalidTimeTagWithOneStartLargerThenAllEnd), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithMultiStartLargerThenAllEnd), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithOneEndLargerThenAllStart), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithMultiEndLargerThenAllStart), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithSomeStartLargerThenSomeEnd), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithSomeEndLargerThenSomeStart), new double[] { })]
+        [TestCase(nameof(ValidTimeTagWithSorted), new double[] { 1100, 2000, 2100, 3000 })]
+        [TestCase(nameof(ValidTimeTagWithUnsorted), new double[] { 1100, 2000, 2100, 3000 })]
+        [TestCase(nameof(ValidTimeTagWithUnsortedAndDuplicatedWithNoValue), new double[] { 1100, 2000 })]
+        [TestCase(nameof(ValidTimeTagWithUnsortedAndDuplicatedWithValue), new double[] { 1000, 1100, 1100, 2000 })]
         [TestCase(nameof(ValidTimeTagWithUnsortedAndAllEmpty), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithStartLargerThenEnd), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextStart), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextEnd), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithStartSmallerThenPerviousStart), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithAllInverse), new double[] { })]
         public void TestToDictionary(string testCase, double[] results)
         {
             var timeTags = getvalueByMethodName(testCase);
@@ -134,41 +144,48 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         #region invalid source
 
-        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithOneStartLargerThenAllEnd()
-             => new Tuple<TimeTagIndex, double?>[]
-             {
-                 // 1. one start larger then all end.
-             };
+        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithStartLargerThenEnd()
+            => new Tuple<TimeTagIndex, double?>[]
+            {
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 2000), // Start is larger then end.
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1000),
+            };
 
-        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithMultiStartLargerThenAllEnd()
-             => new Tuple<TimeTagIndex, double?>[]
-             {
-                 // 2. multi start larger then all end.
-             };
+        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithEndLargerThenNextStart()
+            => new Tuple<TimeTagIndex, double?>[]
+            {
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1100),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2100), // End is larger than second start.
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.Start), 2000),
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
+            };
 
-        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithOneEndLargerThenAllStart()
-             => new Tuple<TimeTagIndex, double?>[]
-             {
-                 // 3. one end larger then all start.
-             };
+        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithEndLargerThenNextEnd()
+            => new Tuple<TimeTagIndex, double?>[]
+            {
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1000),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 5000), // End is larger than second end.
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.Start), 2000),
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
+            };
 
-        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithMultiEndLargerThenAllStart()
-             => new Tuple<TimeTagIndex, double?>[]
-             {
-                 // 4. multi start larger then all end.
-             };
+        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithStartSmallerThenPerviousStart()
+            => new Tuple<TimeTagIndex, double?>[]
+            {
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1000),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000), 
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.Start), 0),// Start is smaller than pervious start.
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
+            };
 
-        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithSomeStartLargerThenSomeEnd()
-             => new Tuple<TimeTagIndex, double?>[]
-             {
-                 // 5. some start larger then some end.
-             };
-
-        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithSomeEndLargerThenSomeStart()
-             => new Tuple<TimeTagIndex, double?>[]
-             {
-                 // 6. some end larger then some start.
-             };
+        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithAllInverse()
+            => new Tuple<TimeTagIndex, double?>[]
+            {
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 4000),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 3000),
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.Start), 2000),
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 1000),
+            };
 
         #endregion
     }
