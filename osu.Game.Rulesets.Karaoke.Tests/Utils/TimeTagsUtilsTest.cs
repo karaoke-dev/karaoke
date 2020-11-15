@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         private double[] getSortedTime(Tuple<TimeTagIndex, double?>[] timeTags)
             => timeTags.Where(x => x.Item2 != null).Select(x => x.Item2 ?? 0)
-            .OrderBy(x => x).ToArray();
+                       .OrderBy(x => x).ToArray();
 
         private double[] getSortedTime(IReadOnlyDictionary<TimeTagIndex, double> dictionary)
             => dictionary.Select(x => x.Value).ToArray();
@@ -101,6 +101,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         {
             Type thisType = GetType();
             var theMethod = thisType.GetMethod(methodName);
+            if (theMethod == null)
+                throw new MissingMethodException("Test method is not exist.");
+
             return theMethod.Invoke(this, null) as Tuple<TimeTagIndex, double?>[];
         }
 
@@ -152,14 +155,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         #region invalid source
 
         public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithStartLargerThenEnd()
-            => new Tuple<TimeTagIndex, double?>[]
+            => new[]
             {
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 2000), // Start is larger then end.
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1000),
             };
 
         public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithEndLargerThenNextStart()
-            => new Tuple<TimeTagIndex, double?>[]
+            => new[]
             {
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1100),
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2100), // End is larger than second start.
@@ -168,7 +171,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             };
 
         public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithEndLargerThenNextEnd()
-            => new Tuple<TimeTagIndex, double?>[]
+            => new[]
             {
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1000),
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 5000), // End is larger than second end.
@@ -177,16 +180,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             };
 
         public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithStartSmallerThenPerviousStart()
-            => new Tuple<TimeTagIndex, double?>[]
+            => new[]
             {
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1000),
-                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000), 
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000),
                 TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.Start), 0),// Start is smaller than pervious start.
                 TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
             };
 
         public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithAllInverse()
-            => new Tuple<TimeTagIndex, double?>[]
+            => new[]
             {
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 4000),
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 3000),

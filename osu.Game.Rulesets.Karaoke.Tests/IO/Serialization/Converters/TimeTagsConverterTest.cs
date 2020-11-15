@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [Test]
         public void TestSerialize()
         {
-            var rowTimeTag = new Tuple<TimeTagIndex, double?>[]
+            var rowTimeTag = new[]
             {
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1000d),
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1100d),
@@ -32,8 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [Test]
         public void TestDeserialize()
         {
-            var jsonString = "[\r\n  \"0,0,1000\",\r\n  \"0,1,1100\",\r\n  \"0,1,1200\"\r\n]";
-            var result = JsonConvert.DeserializeObject<Tuple<TimeTagIndex, double?>[]>(jsonString, createSettings());
+            const string json_string = "[\r\n  \"0,0,1000\",\r\n  \"0,1,1100\",\r\n  \"0,1,1200\"\r\n]";
+            var result = JsonConvert.DeserializeObject<Tuple<TimeTagIndex, double?>[]>(json_string, createSettings());
 
             Assert.AreEqual(result.Length, 3);
             Assert.AreEqual(result[0].Item1.Index, 0);
