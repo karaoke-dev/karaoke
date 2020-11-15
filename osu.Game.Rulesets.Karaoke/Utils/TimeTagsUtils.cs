@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using Microsoft.EntityFrameworkCore.Internal;
 using osu.Framework.Graphics.Sprites;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns>Sorted time tags</returns>
         public static Tuple<TimeTagIndex, double?>[] Sort(Tuple<TimeTagIndex, double?>[] timeTags)
         {
-            return timeTags?.OrderBy(x => x.Item1.Index)
-                           .ThenByDescending(x => x.Item1.State)
+            return timeTags?.OrderBy(x => x.Item1)
                            .ThenBy(x => x.Item2).ToArray();
         }
 
@@ -104,14 +104,33 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="timeTags">Time tags</param>
         /// <param name="fixWay">Fix way</param>
         /// <returns>Fixed time tags.</returns>
-        public static Tuple<TimeTagIndex, double?>[] FixInvalid(Tuple<TimeTagIndex, double?>[] timeTags, FixWay fixWay)
+        public static Tuple<TimeTagIndex, double?>[] FixInvalid(Tuple<TimeTagIndex, double?>[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
             var sortedTimeTags = Sort(timeTags);
-            var invalidTimeTags = FindInvalid(timeTags);
+            var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Item1.Index);
 
-            foreach (var timetag in invalidTimeTags)
+            var invalidTimeTags = FindInvalid(timeTags, other, self);
+            var validTimeTags = sortedTimeTags.Except(invalidTimeTags);
+
+            foreach (var invalidTimeTag in invalidTimeTags)
             {
-                // todo : delete or delete with merge?
+                var index = sortedTimeTags.IndexOf(invalidTimeTag);
+
+                // 1. attach pervious or next value to apply
+                switch (other)
+                {
+                    case GroupCheck.Asc:
+                        // find perviouls valiue to apply.
+                        var perviousValidValue = sortedTimeTags.Reverse().FirstOrDefault(x => x.Item1 < invalidTimeTag.Item1 && x.Item2 != null)?.Item2;
+                        sortedTimeTags[index] = new Tuple<TimeTagIndex, double?>(invalidTimeTag.Item1, perviousValidValue);
+                        break;
+
+                    case GroupCheck.Desc:
+                        // find next value to apply.
+                        var nextValidValue = sortedTimeTags.FirstOrDefault(x => x.Item1 > invalidTimeTag.Item1 && x.Item2 != null)?.Item2;
+                        sortedTimeTags[index] = new Tuple<TimeTagIndex, double?>(invalidTimeTag.Item1, nextValidValue);
+                        break;
+                }
             }
 
             return sortedTimeTags;
@@ -123,10 +142,10 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="timeTags">Time tags</param>
         /// <param name="applyFix">Should auto-fix or not</param>
         /// <returns>Time tags with dictionary format.</returns>
-        public static IReadOnlyDictionary<TimeTagIndex, double> ToDictionary(Tuple<TimeTagIndex, double?>[] timeTags, bool applyFix = true)
+        public static IReadOnlyDictionary<TimeTagIndex, double> ToDictionary(Tuple<TimeTagIndex, double?>[] timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
             // sorted value
-            var sortedTimeTags = applyFix ? FixInvalid(timeTags, FixWay.Merge) : Sort(timeTags);
+            var sortedTimeTags = applyFix ? FixInvalid(timeTags, other, self) : Sort(timeTags);
 
             // convert to dictionary, will get start's smallest time and end's largest time.
             return sortedTimeTags.Where(x => x.Item2 != null).GroupBy(x => x.Item1).Select(x =>
@@ -195,14 +214,5 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// Mark start time tag is error if conflict.
         /// </summary>
         BasedOnEnd,
-    }
-
-    public enum FixWay
-    {
-        BasedOnStart,
-
-        BasedOnEnd,
-
-        Merge,
     }
 }

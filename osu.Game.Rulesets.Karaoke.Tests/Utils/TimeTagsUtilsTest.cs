@@ -50,30 +50,37 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(invalidIndexes, errorIndex);
         }
 
-        [TestCase(nameof(InvalidTimeTagWithStartLargerThenEnd), FixWay.Merge, new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextStart), FixWay.Merge, new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextEnd), FixWay.Merge, new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithStartSmallerThenPerviousStart), FixWay.Merge, new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithAllInverse), FixWay.Merge, new double[] { })]
-        public void TestFixInvalid(string testCase, FixWay fixWay, double[] results)
+        [TestCase(nameof(InvalidTimeTagWithStartLargerThenEnd), GroupCheck.Asc, SelfCheck.BasedOnStart, new double[] { 2000, 2000 })]
+        [TestCase(nameof(InvalidTimeTagWithStartLargerThenEnd), GroupCheck.Asc, SelfCheck.BasedOnEnd, new double[] { 1000, 1000 })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextStart), GroupCheck.Asc, SelfCheck.BasedOnStart, new double[] { 1100, 2100, 2100, 3000 })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextStart), GroupCheck.Desc, SelfCheck.BasedOnStart, new double[] { 1100, 2000, 2000, 3000 })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextEnd), GroupCheck.Asc, SelfCheck.BasedOnStart, new double[] { 1000, 5000, 5000, 5000 })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextEnd), GroupCheck.Desc, SelfCheck.BasedOnStart, new double[] { 1000, 2000, 2000, 3000 })]
+        [TestCase(nameof(InvalidTimeTagWithStartSmallerThenPerviousStart), GroupCheck.Asc, SelfCheck.BasedOnStart, new double[] { 1000, 2000, 2000, 3000 })]
+        [TestCase(nameof(InvalidTimeTagWithStartSmallerThenPerviousStart), GroupCheck.Desc, SelfCheck.BasedOnStart, new double[] { 0, 0, 0, 3000 })]
+        [TestCase(nameof(InvalidTimeTagWithAllInverse), GroupCheck.Asc, SelfCheck.BasedOnStart, new double[] { 4000, 4000, 4000, 4000 })]
+        [TestCase(nameof(InvalidTimeTagWithAllInverse), GroupCheck.Asc, SelfCheck.BasedOnEnd, new double[] { 3000, 3000, 3000, 3000 })]
+        [TestCase(nameof(InvalidTimeTagWithAllInverse), GroupCheck.Desc, SelfCheck.BasedOnStart, new double[] { 2000, 2000, 2000, 2000 })]
+        [TestCase(nameof(InvalidTimeTagWithAllInverse), GroupCheck.Desc, SelfCheck.BasedOnEnd, new double[] { 1000, 1000, 1000, 1000 })]
+        public void TestFixInvalid(string testCase, GroupCheck other, SelfCheck self, double[] results)
         {
             var timeTags = getvalueByMethodName(testCase);
 
             // check which part is fixed, using list of time to check result.
-            var fixedTimeTag = TimeTagsUtils.FixInvalid(timeTags, fixWay);
+            var fixedTimeTag = TimeTagsUtils.FixInvalid(timeTags, other, self);
             Assert.AreEqual(getSortedTime(fixedTimeTag), results);
         }
 
         [TestCase(nameof(ValidTimeTagWithSorted), new double[] { 1100, 2000, 2100, 3000 })]
         [TestCase(nameof(ValidTimeTagWithUnsorted), new double[] { 1100, 2000, 2100, 3000 })]
         [TestCase(nameof(ValidTimeTagWithUnsortedAndDuplicatedWithNoValue), new double[] { 1100, 2000 })]
-        [TestCase(nameof(ValidTimeTagWithUnsortedAndDuplicatedWithValue), new double[] { 1000, 1100, 1100, 2000 })]
+        [TestCase(nameof(ValidTimeTagWithUnsortedAndDuplicatedWithValue), new double[] { 1000, 2000 })]
         [TestCase(nameof(ValidTimeTagWithUnsortedAndAllEmpty), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithStartLargerThenEnd), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextStart), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextEnd), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithStartSmallerThenPerviousStart), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithAllInverse), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithStartLargerThenEnd), new double[] { 2000, 2000 })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextStart), new double[] { 1100, 2100, 2100, 3000 })]
+        [TestCase(nameof(InvalidTimeTagWithEndLargerThenNextEnd), new double[] { 1000, 5000, 5000, 5000 })]
+        [TestCase(nameof(InvalidTimeTagWithStartSmallerThenPerviousStart), new double[] { 1000, 2000, 2000, 3000 })]
+        [TestCase(nameof(InvalidTimeTagWithAllInverse), new double[] { 4000, 4000, 4000, 4000 })]
         public void TestToDictionary(string testCase, double[] results)
         {
             var timeTags = getvalueByMethodName(testCase);
