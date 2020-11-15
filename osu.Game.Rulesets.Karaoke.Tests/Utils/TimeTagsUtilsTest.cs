@@ -3,108 +3,157 @@
 
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 {
     [TestFixture]
     public class TimeTagsUtilsTest
     {
-        [TestCaseSource("ValidTimeTagWithSorted")]
-        [TestCaseSource("ValidTimeTagWithUnsorted")]
-        public void TestSort(IReadOnlyList<Tuple<TimeTagIndex, double>> timetags)
+        [TestCase(nameof(ValidTimeTagWithSorted), new double[] { 1100, 2000, 2100, 3000 })]
+        [TestCase(nameof(ValidTimeTagWithUnsorted), new double[] { 1100, 2000, 2100, 3000 })]
+        [TestCase(nameof(ValidTimeTagWithUnsortedAndDuplicatedWithNoValue), new double[] { 1100, 2000 })]
+        [TestCase(nameof(ValidTimeTagWithUnsortedAndDuplicatedWithValue), new double[] { 1000, 1100, 1100, 2000 })]
+        [TestCase(nameof(ValidTimeTagWithUnsortedAndAllEmpty), new double[] { })]
+        public void TestSort(string testCase, double[] results)
         {
+            var timeTags = getvalueByMethodName(testCase);
+
             // run all then using time(nullable double) to check.
+            var sortedTimeTag = TimeTagsUtils.Sort(timeTags);
+            Assert.AreEqual(getSortedTime(sortedTimeTag), results);
         }
 
-        public void TestFindInvalid()
+        [TestCase(nameof(InvalidTimeTagWithOneStartLargerThenAllEnd), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithMultiStartLargerThenAllEnd), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithOneEndLargerThenAllStart), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithMultiEndLargerThenAllStart), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithSomeStartLargerThenSomeEnd), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithSomeEndLargerThenSomeStart), new double[] { })]
+        public void TestFindInvalid(string testCase, double[] results)
         {
-            // run all and find error amount and index.
+            // todo : run all and find error amount and index.
         }
 
         public void TestFixInvalid()
         {
-            // run all valid and check do not fixing
+            // todo : run all valid and check do not fixing
 
-            // run all invalid then check which part is fixed, using list of time to check result.
+            // todo : run all invalid then check which part is fixed, using list of time to check result.
         }
 
-        public void TestToDictionary()
+        [TestCase(nameof(InvalidTimeTagWithOneStartLargerThenAllEnd), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithMultiStartLargerThenAllEnd), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithOneEndLargerThenAllStart), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithMultiEndLargerThenAllStart), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithSomeStartLargerThenSomeEnd), new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithSomeEndLargerThenSomeStart), new double[] { })]
+        [TestCase(nameof(ValidTimeTagWithUnsortedAndAllEmpty), new double[] { })]
+        public void TestToDictionary(string testCase, double[] results)
         {
-            // try all empty dictionary included.
+            var timeTags = getvalueByMethodName(testCase);
 
-            // using list of time to check result.
+            // todo : using list of time to check result.
+            var dictionary = TimeTagsUtils.ToDictionary(timeTags);
+            Assert.AreEqual(getSortedTime(dictionary), results);
+        }
+
+        private double[] getSortedTime(Tuple<TimeTagIndex, double?>[] timeTags)
+            => timeTags.Where(x => x.Item2 != null).Select(x => x.Item2 ?? 0)
+            .OrderBy(x => x).ToArray();
+
+        private double[] getSortedTime(IReadOnlyDictionary<TimeTagIndex, double> dictionary)
+            => dictionary.Select(x => x.Value).ToArray();
+
+        private Tuple<TimeTagIndex, double?>[] getvalueByMethodName(string methodName)
+        {
+            Type thisType = GetType();
+            var theMethod = thisType.GetMethod(methodName);
+            return theMethod.Invoke(this, null) as Tuple<TimeTagIndex, double?>[];
         }
 
         #region valid source
 
-        public static IReadOnlyList<Tuple<TimeTagIndex, double>> ValidTimeTagWithSorted()
-            => new List<Tuple<TimeTagIndex, double>>
+        public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithSorted()
+            => new[]
             {
-                // todo : sorted list
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1100),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000),
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.Start), 2100),
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
             };
 
-        public static IReadOnlyList<Tuple<TimeTagIndex, double>> ValidTimeTagWithUnsorted()
-             => new List<Tuple<TimeTagIndex, double>>
-             {
-                 // todo : just not sorted.
-             };
+        public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithUnsorted()
+            => ValidTimeTagWithSorted().Reverse().ToArray();
 
-        public static IReadOnlyList<Tuple<TimeTagIndex, double>> ValidTimeTagWithUnsortedAndDuplicatedWithNoValue()
-             => new List<Tuple<TimeTagIndex, double>>
-             {
-                 // not sorted + duliicated time tag(with no value)
-             };
+        public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithUnsortedAndDuplicatedWithNoValue()
+            => new Tuple<TimeTagIndex, double?>[]
+            {
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), null),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), null),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000), // this time tag is not in order.
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1100),
+            };
 
-        public static IReadOnlyList<Tuple<TimeTagIndex, double>> ValidTimeTagWithUnsortedAndDuplicatedWithValue()
-             => new List<Tuple<TimeTagIndex, double>>
-             {
-                 // not sorted + duliicated time tag(with value)
-             };
+        public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithUnsortedAndDuplicatedWithValue()
+            => new Tuple<TimeTagIndex, double?>[]
+            {
+                // not sorted + duliicated time tag(with value)
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1000),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1100),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000), // this time tag is not in order.
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1100),
+            };
 
-        public static IReadOnlyList<Tuple<TimeTagIndex, double>> ValidTimeTagWithUnsortedAndAllEmpty()
-             => new List<Tuple<TimeTagIndex, double>>
-             {
-                 // all empty
-             };
+        public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithUnsortedAndAllEmpty()
+            => new Tuple<TimeTagIndex, double?>[]
+            {
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), null),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), null),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), null), // this time tag is not sorted.
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.Start), null),
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), null),
+            };
 
         #endregion
 
         #region invalid source
 
-        public static IReadOnlyList<Tuple<TimeTagIndex, double>> InvalidTimeTagWithOneStartLargerThenAllEnd()
-             => new List<Tuple<TimeTagIndex, double>>
+        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithOneStartLargerThenAllEnd()
+             => new Tuple<TimeTagIndex, double?>[]
              {
                  // 1. one start larger then all end.
              };
 
-        public static IReadOnlyList<Tuple<TimeTagIndex, double>> InvalidTimeTagWithMultiStartLargerThenAllEnd()
-             => new List<Tuple<TimeTagIndex, double>>
+        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithMultiStartLargerThenAllEnd()
+             => new Tuple<TimeTagIndex, double?>[]
              {
                  // 2. multi start larger then all end.
              };
 
-        public static IReadOnlyList<Tuple<TimeTagIndex, double>> InvalidTimeTagWithOneEndLargerThenAllStart()
-             => new List<Tuple<TimeTagIndex, double>>
+        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithOneEndLargerThenAllStart()
+             => new Tuple<TimeTagIndex, double?>[]
              {
                  // 3. one end larger then all start.
              };
 
-        public static IReadOnlyList<Tuple<TimeTagIndex, double>> InvalidTimeTagWithMultiEndLargerThenAllStart()
-             => new List<Tuple<TimeTagIndex, double>>
+        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithMultiEndLargerThenAllStart()
+             => new Tuple<TimeTagIndex, double?>[]
              {
                  // 4. multi start larger then all end.
              };
 
-        public static IReadOnlyList<Tuple<TimeTagIndex, double>> InvalidTimeTagWithSomeStartLargerThenSomeEnd()
-             => new List<Tuple<TimeTagIndex, double>>
+        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithSomeStartLargerThenSomeEnd()
+             => new Tuple<TimeTagIndex, double?>[]
              {
                  // 5. some start larger then some end.
              };
 
-        public static IReadOnlyList<Tuple<TimeTagIndex, double>> InvalidTimeTagWithSomeEndLargerThenSomeStart()
-             => new List<Tuple<TimeTagIndex, double>>
+        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithSomeEndLargerThenSomeStart()
+             => new Tuple<TimeTagIndex, double?>[]
              {
                  // 6. some end larger then some start.
              };
