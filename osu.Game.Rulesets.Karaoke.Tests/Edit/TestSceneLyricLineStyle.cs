@@ -17,6 +17,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
 using osuTK;
@@ -335,14 +336,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 StartTime = startTime,
                 Duration = duration,
                 Text = "カラオケ！",
-                TimeTags = new Dictionary<TimeTagIndex, double>
+                TimeTags = TimeTagsUtils.ToTimeTagList(new Dictionary<TimeTagIndex, double>
                 {
                     { new TimeTagIndex(0), startTime + 500 },
                     { new TimeTagIndex(1), startTime + 600 },
                     { new TimeTagIndex(2), startTime + 1000 },
                     { new TimeTagIndex(3), startTime + 1500 },
                     { new TimeTagIndex(4), startTime + 2000 },
-                },
+                }),
                 RubyTags = new[]
                 {
                     new RubyTag

@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
@@ -32,22 +33,20 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<IReadOnlyDictionary<TimeTagIndex, double>> TimeTagsBindable = new Bindable<IReadOnlyDictionary<TimeTagIndex, double>>();
+        public readonly Bindable<Tuple<TimeTagIndex, double?>[]> TimeTagsBindable = new Bindable<Tuple<TimeTagIndex, double?>[]>();
 
         /// <summary>
         /// Time tags
         /// </summary>
-        public IReadOnlyDictionary<TimeTagIndex, double> TimeTags
+        public Tuple<TimeTagIndex, double?>[] TimeTags
         {
             get => TimeTagsBindable.Value;
             set => TimeTagsBindable.Value = value;
         }
 
-        public IReadOnlyList<Tuple<TimeTagIndex, double?>> RowTimeTags { get; set; }
+        public double LyricStartTime => TimeTagsUtils.GetStartTime(TimeTags) ?? StartTime;
 
-        public double LyricStartTime => TimeTags?.FirstOrDefault().Value ?? StartTime;
-
-        public double LyricEndTime => TimeTags?.LastOrDefault().Value ?? EndTime;
+        public double LyricEndTime => TimeTagsUtils.GetEndTime(TimeTags) ?? EndTime;
 
         public double LyricDuration => LyricEndTime - LyricStartTime;
 
@@ -144,9 +143,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public IEnumerable<Note> CreateDefaultNotes()
         {
-            foreach (var timeTag in TimeTags)
+            var timeTags = TimeTagsUtils.ToDictionary(TimeTags);
+
+            foreach (var timeTag in timeTags)
             {
-                var (key, endTime) = TimeTags.GetNext(timeTag);
+                var (key, endTime) = timeTags.GetNext(timeTag);
 
                 if (key.Index <= 0)
                     continue;

@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
@@ -47,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             hitObject.TextBindable.BindValueChanged(text => { karaokeText.Text = text.NewValue; }, true);
 
-            hitObject.TimeTagsBindable.BindValueChanged(timeTags => { karaokeText.TimeTags = timeTags.NewValue; }, true);
+            hitObject.TimeTagsBindable.BindValueChanged(timeTags => { karaokeText.TimeTags = TimeTagsUtils.ToDictionary(timeTags.NewValue); }, true);
 
             hitObject.RubyTagsBindable.BindValueChanged(rubyTags => { ApplyRuby(); }, true);
 

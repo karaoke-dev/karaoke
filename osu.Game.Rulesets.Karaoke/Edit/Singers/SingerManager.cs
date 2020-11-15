@@ -127,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
             if (lyric.Singers == null || !lyric.Singers.Any())
                 return singer.ID == 0;
 
-            return lyric.Singers?.Contains(singer.ID) ?? false;
+            return (bool)lyric.Singers?.Contains(singer.ID);
         }
     }
 }

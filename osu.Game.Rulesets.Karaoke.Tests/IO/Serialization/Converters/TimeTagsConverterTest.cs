@@ -6,8 +6,8 @@ using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+using osu.Game.Rulesets.Karaoke.Utils;
 using System;
-using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
@@ -17,11 +17,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [Test]
         public void TestSerialize()
         {
-            var rowTimeTag = new List<Tuple<TimeTagIndex, double?>>
+            var rowTimeTag = new[]
             {
-                Tuple.Create<TimeTagIndex, double?>(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1000d),
-                Tuple.Create<TimeTagIndex, double?>(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1100d),
-                Tuple.Create<TimeTagIndex, double?>(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1200d),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1000d),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1100d),
+                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1200d),
             };
 
             var result = JsonConvert.SerializeObject(rowTimeTag, createSettings());
@@ -32,10 +32,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [Test]
         public void TestDeserialize()
         {
-            var jsonString = "[\r\n  \"0,0,1000\",\r\n  \"0,1,1100\",\r\n  \"0,1,1200\"\r\n]";
-            var result = JsonConvert.DeserializeObject<List<Tuple<TimeTagIndex, double?>>>(jsonString, createSettings());
+            const string json_string = "[\r\n  \"0,0,1000\",\r\n  \"0,1,1100\",\r\n  \"0,1,1200\"\r\n]";
+            var result = JsonConvert.DeserializeObject<Tuple<TimeTagIndex, double?>[]>(json_string, createSettings());
 
-            Assert.AreEqual(result.Count, 3);
+            Assert.AreEqual(result.Length, 3);
             Assert.AreEqual(result[0].Item1.Index, 0);
             Assert.AreEqual(result[0].Item1.State, TimeTagIndex.IndexState.Start);
             Assert.AreEqual(result[0].Item2, 1000);
