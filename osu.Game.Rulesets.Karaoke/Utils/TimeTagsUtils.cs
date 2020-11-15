@@ -114,21 +114,48 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             foreach (var invalidTimeTag in invalidTimeTags)
             {
-                var index = sortedTimeTags.IndexOf(invalidTimeTag);
+                var listIndex = sortedTimeTags.IndexOf(invalidTimeTag);
+                var timeTag = invalidTimeTag.Item1;
 
-                // 1. attach pervious or next value to apply
+                // fix self-invalid
+                var groupedTimeTag = groupedTimeTags.FirstOrDefault(x => x.Key == timeTag.Index).ToList();
+                var startTimeGroup = groupedTimeTag.Where(x => x.Item1.State == TimeTagIndex.IndexState.Start && x.Item2 != null);
+                var endTimeGroup = groupedTimeTag.Where(x => x.Item1.State == TimeTagIndex.IndexState.End && x.Item2 != null);
+                switch (timeTag.State)
+                {
+                    case TimeTagIndex.IndexState.Start:
+                        var minEndTime = endTimeGroup.Min(x => x.Item2);
+                        if (minEndTime != null && minEndTime < invalidTimeTag.Item2)
+                        {
+                            sortedTimeTags[listIndex] = new Tuple<TimeTagIndex, double?>(timeTag, minEndTime);
+                            continue;
+                        }
+                            
+                        break;
+
+                    case TimeTagIndex.IndexState.End:
+                        var maxStartTime = startTimeGroup.Max(x => x.Item2);
+                        if (maxStartTime != null && maxStartTime > invalidTimeTag.Item2)
+                        {
+                            sortedTimeTags[listIndex] = new Tuple<TimeTagIndex, double?>(timeTag, maxStartTime);
+                            continue;
+                        }
+                        break;
+                }
+
+                // fix pervious or next value to apply
                 switch (other)
                 {
                     case GroupCheck.Asc:
                         // find perviouls valiue to apply.
-                        var perviousValidValue = sortedTimeTags.Reverse().FirstOrDefault(x => x.Item1 < invalidTimeTag.Item1 && x.Item2 != null)?.Item2;
-                        sortedTimeTags[index] = new Tuple<TimeTagIndex, double?>(invalidTimeTag.Item1, perviousValidValue);
+                        var perviousValidValue = sortedTimeTags.Reverse().FirstOrDefault(x => x.Item1.Index < timeTag.Index && x.Item2 != null)?.Item2;
+                        sortedTimeTags[listIndex] = new Tuple<TimeTagIndex, double?>(timeTag, perviousValidValue);
                         break;
 
                     case GroupCheck.Desc:
                         // find next value to apply.
-                        var nextValidValue = sortedTimeTags.FirstOrDefault(x => x.Item1 > invalidTimeTag.Item1 && x.Item2 != null)?.Item2;
-                        sortedTimeTags[index] = new Tuple<TimeTagIndex, double?>(invalidTimeTag.Item1, nextValidValue);
+                        var nextValidValue = sortedTimeTags.FirstOrDefault(x => x.Item1.Index > timeTag.Index && x.Item2 != null)?.Item2;
+                        sortedTimeTags[listIndex] = new Tuple<TimeTagIndex, double?>(timeTag, nextValidValue);
                         break;
                 }
             }
