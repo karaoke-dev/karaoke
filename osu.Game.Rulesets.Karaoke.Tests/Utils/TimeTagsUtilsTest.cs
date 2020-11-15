@@ -27,22 +27,34 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(getSortedTime(sortedTimeTag), results);
         }
 
-        [TestCase(nameof(InvalidTimeTagWithOneStartLargerThenAllEnd), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithMultiStartLargerThenAllEnd), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithOneEndLargerThenAllStart), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithMultiEndLargerThenAllStart), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithSomeStartLargerThenSomeEnd), new double[] { })]
-        [TestCase(nameof(InvalidTimeTagWithSomeEndLargerThenSomeStart), new double[] { })]
-        public void TestFindInvalid(string testCase, double[] results)
+        [TestCase(nameof(InvalidTimeTagWithOneStartLargerThenAllEnd), 0)]
+        [TestCase(nameof(InvalidTimeTagWithMultiStartLargerThenAllEnd), 0)]
+        [TestCase(nameof(InvalidTimeTagWithOneEndLargerThenAllStart), 0)]
+        [TestCase(nameof(InvalidTimeTagWithMultiEndLargerThenAllStart), 0)]
+        [TestCase(nameof(InvalidTimeTagWithSomeStartLargerThenSomeEnd), 0)]
+        [TestCase(nameof(InvalidTimeTagWithSomeEndLargerThenSomeStart), 0)]
+        public void TestFindInvalid(string testCase, double errorAmount)
         {
-            // todo : run all and find error amount and index.
+            var timeTags = getvalueByMethodName(testCase);
+
+            // run all and find error amount and index.
+            var invalidTimeTag = TimeTagsUtils.FindInvalid(timeTags);
+            Assert.AreEqual(invalidTimeTag.Length, 0);
         }
 
-        public void TestFixInvalid()
+        [TestCase(nameof(InvalidTimeTagWithOneStartLargerThenAllEnd), FixWay.Merge, new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithMultiStartLargerThenAllEnd), FixWay.Merge, new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithOneEndLargerThenAllStart), FixWay.Merge, new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithMultiEndLargerThenAllStart), FixWay.Merge, new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithSomeStartLargerThenSomeEnd), FixWay.Merge, new double[] { })]
+        [TestCase(nameof(InvalidTimeTagWithSomeEndLargerThenSomeStart), FixWay.Merge, new double[] { })]
+        public void TestFixInvalid(string testCase, FixWay fixWay, double[] results)
         {
-            // todo : run all valid and check do not fixing
+            var timeTags = getvalueByMethodName(testCase);
 
-            // todo : run all invalid then check which part is fixed, using list of time to check result.
+            // check which part is fixed, using list of time to check result.
+            var fixedTimeTag = TimeTagsUtils.FixInvalid(timeTags, fixWay);
+            Assert.AreEqual(getSortedTime(fixedTimeTag), results);
         }
 
         [TestCase(nameof(InvalidTimeTagWithOneStartLargerThenAllEnd), new double[] { })]
