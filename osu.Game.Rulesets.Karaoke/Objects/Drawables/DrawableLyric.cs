@@ -106,6 +106,14 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             TranslateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
         }
 
+        protected override void UpdateInitialTransforms()
+        {
+            base.UpdateInitialTransforms();
+
+            // Manually set to reduce the number of future alive objects to a bare minimum.
+            LifetimeStart = HitObject.StartTime - HitObject.TimePreempt;
+        }
+
         protected override void ClearInternal(bool disposeChildren = true)
         {
         }
