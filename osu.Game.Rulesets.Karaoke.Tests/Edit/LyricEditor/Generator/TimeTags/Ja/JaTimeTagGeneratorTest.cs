@@ -13,20 +13,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.LyricEditor.Generator.TimeTags.Ja
     [TestFixture]
     public class JaTimeTagGeneratorTest
     {
-        protected JaTimeTagGenerator Generator; 
-
-        [SetUp]
-        public void SetUp()
-        {
-            Generator = new JaTimeTagGenerator();
-        }
-
         [Test]
         public void TestJapaneseLyric(string testCase, int[] index)
         {
+            var generator = new JaTimeTagGenerator(new JaTimeTagGeneratorConfig());
+
             // test japanese with some common case.
             var lyric = getvalueByMethodName(testCase);
-            var timneTags = Generator.CreateTimeTagFromJapaneseLyric(lyric);
+            var timneTags = generator.CreateTimeTag(lyric);
 
             // todo : check time tag is metch to result
             Assert.AreEqual(getTimeTagIndex(timneTags), index);
