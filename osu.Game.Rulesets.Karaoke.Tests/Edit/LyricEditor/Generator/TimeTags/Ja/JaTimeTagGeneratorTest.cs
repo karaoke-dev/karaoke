@@ -3,22 +3,22 @@
 
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Edit.LyricEditor;
+using osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Objects;
 using System;
 using System.Linq;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Edit.LyricEditor
+namespace osu.Game.Rulesets.Karaoke.Tests.Edit.LyricEditor.Generator.TimeTags.Ja
 {
     [TestFixture]
-    public class TimeTagGeneratorTest
+    public class JaTimeTagGeneratorTest
     {
-        protected TimeTagGenerator Generator; 
+        protected JaTimeTagGenerator Generator; 
 
         [SetUp]
         public void SetUp()
         {
-            Generator = new TimeTagGenerator();
+            Generator = new JaTimeTagGenerator();
         }
 
         [Test]
@@ -30,18 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.LyricEditor
 
             // todo : check time tag is metch to result
             Assert.AreEqual(getTimeTagIndex(timneTags), index);
-        }
-
-        [Test]
-        public void TestEnglishLyric()
-        {
-
-        }
-
-        [Test]
-        public void TestUnsupooprtedLyric()
-        {
-
         }
 
         private int[] getTimeTagIndex(Tuple<TimeTagIndex, double?>[] timeTags)
