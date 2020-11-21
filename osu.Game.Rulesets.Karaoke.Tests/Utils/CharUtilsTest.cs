@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase('A', false)]
         public void TestIsASCIISymbol(char c, bool match)
         {
-            var isAsciiSymbol = CharUtils.IsASCIISymbol(c);
+            var isAsciiSymbol = CharUtils.IsAsciiSymbol(c);
             Assert.AreEqual(isAsciiSymbol, match);
         }
     }

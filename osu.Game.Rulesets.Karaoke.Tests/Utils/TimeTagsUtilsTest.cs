@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             => ValidTimeTagWithSorted().Reverse().ToArray();
 
         public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithUnsortedAndDuplicatedWithNoValue()
-            => new Tuple<TimeTagIndex, double?>[]
+            => new[]
             {
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), null),
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), null),
@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             };
 
         public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithUnsortedAndDuplicatedWithValue()
-            => new Tuple<TimeTagIndex, double?>[]
+            => new[]
             {
                 // not sorted + duliicated time tag(with value)
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1000),
@@ -141,7 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             };
 
         public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithUnsortedAndAllEmpty()
-            => new Tuple<TimeTagIndex, double?>[]
+            => new[]
             {
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), null),
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), null),
@@ -184,7 +184,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             {
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), 1000),
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000),
-                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.Start), 0),// Start is smaller than pervious start.
+                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.Start), 0), // Start is smaller than pervious start.
                 TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
             };
 

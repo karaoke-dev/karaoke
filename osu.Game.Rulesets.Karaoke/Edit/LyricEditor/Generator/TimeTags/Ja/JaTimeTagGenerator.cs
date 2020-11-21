@@ -23,12 +23,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags.Ja
         protected override void TimeTagLogic(Lyric lyric, List<Tuple<TimeTagIndex, double?>> timeTags)
         {
             var text = lyric.Text;
+
             for (var i = 1; i < text.Length; i++)
             {
                 var timeTag = TimeTagsUtils.Create(new TimeTagIndex(i, TimeTagIndex.IndexState.Start), null);
 
                 var c = text[i];
                 var pc = text[i - 1];
+
                 if (char.IsWhiteSpace(c) && Config.CheckWhiteSpace)
                 {
                     // 空白文字の連続は無条件で無視
@@ -45,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags.Ja
                         if (Config.CheckWhiteSpaceDigit)
                             timeTags.Add(timeTag);
                     }
-                    else if (CharUtils.IsASCIISymbol(pc))
+                    else if (CharUtils.IsAsciiSymbol(pc))
                     {
                         if (Config.CheckWhiteSpaceAsciiSymbol)
                             timeTags.Add(timeTag);
@@ -55,9 +57,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags.Ja
                         timeTags.Add(timeTag);
                     }
                 }
-                else if (CharUtils.IsLatin(c) || char.IsNumber(c) || CharUtils.IsASCIISymbol(c))
+                else if (CharUtils.IsLatin(c) || char.IsNumber(c) || CharUtils.IsAsciiSymbol(c))
                 {
-                    if (char.IsWhiteSpace(pc) || !CharUtils.IsLatin(pc) && !char.IsNumber(pc) && !CharUtils.IsASCIISymbol(pc))
+                    if (char.IsWhiteSpace(pc) || !CharUtils.IsLatin(pc) && !char.IsNumber(pc) && !CharUtils.IsAsciiSymbol(pc))
                     {
                         timeTags.Add(timeTag);
                     }
@@ -95,6 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags.Ja
                             {
                                 timeTags.Add(timeTag);
                             }
+
                             break;
 
                         case 'っ':
@@ -102,6 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags.Ja
                             {
                                 timeTags.Add(timeTag);
                             }
+
                             break;
 
                         default:

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -13,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags
 {
     public abstract class TimeTagGenerator<T> where T : TimeTagGeneratorConfig
     {
-        protected T Config { get; private set; }
+        protected T Config { get; }
 
         protected TimeTagGenerator(T config)
         {
@@ -31,9 +30,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags
             // create tag at start of lyric
             timeTags.Add(TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), null));
 
-            if(Config.CheckLineEndKeyUp)
+            if (Config.CheckLineEndKeyUp)
                 timeTags.Add(TimeTagsUtils.Create(new TimeTagIndex(text.Length - 1, TimeTagIndex.IndexState.End), null));
-
 
             TimeTagLogic(lyric, timeTags);
 

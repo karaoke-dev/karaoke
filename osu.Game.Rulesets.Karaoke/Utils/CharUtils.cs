@@ -12,9 +12,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static bool IsKana(char c)
         {
-            return (c >= '\u3041' && c <= '\u309F') |  // ひらがなwith゛゜
-                   (c >= '\u30A0' && c <= '\u30FF') |  // カタカナwith゠・ー
-                   (c >= '\u31F0' && c <= '\u31FF') |  // Katakana Phonetic Extensions
+            return (c >= '\u3041' && c <= '\u309F') | // ひらがなwith゛゜
+                   (c >= '\u30A0' && c <= '\u30FF') | // カタカナwith゠・ー
+                   (c >= '\u31F0' && c <= '\u31FF') | // Katakana Phonetic Extensions
                    (c >= '\uFF65' && c <= '\uFF9F');
         }
 
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        public static bool IsASCIISymbol(char c)
+        public static bool IsAsciiSymbol(char c)
         {
             return c >= ' ' && c <= '/' ||
                    c >= ':' && c <= '@' ||

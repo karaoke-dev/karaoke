@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.LyricEditor.Generator.TimeTags.Ja
             RunTimeTagCheckText(lyric, index, config);
         }
 
-        [TestCase("     ", new double[] { 0, 1, 2 ,3, 4 }, false)]
+        [TestCase("     ", new double[] { 0, 1, 2, 3, 4 }, false)]
         [TestCase("     ", new double[] { 0 }, true)]
         public void TestLyricWithCheckWhiteSpace(string lyric, double[] index, bool applyConfig)
         {
