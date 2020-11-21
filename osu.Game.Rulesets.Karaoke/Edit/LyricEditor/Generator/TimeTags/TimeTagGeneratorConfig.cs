@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags
 {
-    public class TimeTagGeneratorConfig
+    public abstract class TimeTagGeneratorConfig
     {
         public bool CheckLineEnd { get; set; }
 
