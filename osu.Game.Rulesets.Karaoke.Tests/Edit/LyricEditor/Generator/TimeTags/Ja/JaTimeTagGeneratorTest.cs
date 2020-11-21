@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.LyricEditor.Generator.TimeTags.Ja
             var lyric = generateLyric(lyricText);
 
             // create time tag and aceually time tag.
-            var timeTags = getTimeTagIndex(generator.CreateTimeTag(lyric));
+            var timeTags = getTimeTagIndex(generator.CreateTimeTags(lyric));
             var actualIndexed = getTimeTagIndexByArray(index);
 
             // chekc should be equal
