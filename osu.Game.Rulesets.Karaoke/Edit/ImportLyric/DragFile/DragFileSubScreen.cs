@@ -5,5 +5,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
 {
     public class DragFileSubScreen : ImportLyricSubScreen
     {
+        public override string Title => "Import";
+
+        public override string ShortTitle => "Import";
     }
 }

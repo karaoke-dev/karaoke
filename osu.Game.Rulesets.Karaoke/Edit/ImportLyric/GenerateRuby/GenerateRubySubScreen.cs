@@ -5,5 +5,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
 {
     public class GenerateRubySubScreen : ImportLyricSubScreen
     {
+        public override string Title => "Generate ruby";
+
+        public override string ShortTitle => "Generate ruby";
     }
 }

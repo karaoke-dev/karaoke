@@ -7,9 +7,11 @@ using osu.Game.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    public class ImportLyricSubScreen : OsuScreen
+    public abstract class ImportLyricSubScreen : OsuScreen, IImportLyricSubScreen
     {
         [Cached]
         private readonly Bindable<ImportLyricStep> Step = new Bindable<ImportLyricStep>();
+
+        public abstract string ShortTitle { get; }
     }
 }

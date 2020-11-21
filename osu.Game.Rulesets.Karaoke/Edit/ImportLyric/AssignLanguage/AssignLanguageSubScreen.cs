@@ -5,5 +5,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 {
     public class AssignLanguageSubScreen : ImportLyricSubScreen
     {
+        public override string Title => "Language";
+
+        public override string ShortTitle => "Language";
     }
 }

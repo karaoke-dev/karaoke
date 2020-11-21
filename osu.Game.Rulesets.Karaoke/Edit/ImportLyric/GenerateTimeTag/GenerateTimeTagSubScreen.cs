@@ -5,5 +5,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 {
     public class GenerateTimeTagSubScreen : ImportLyricSubScreen
     {
+        public override string Title => "Generate time tag";
+
+        public override string ShortTitle => "Generate time tag";
     }
 }

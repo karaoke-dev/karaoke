@@ -5,5 +5,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.Success
 {
     public class SuccessSubScreen : ImportLyricSubScreen
     {
+        public override string Title => "Success";
+
+        public override string ShortTitle => "Success";
     }
 }
