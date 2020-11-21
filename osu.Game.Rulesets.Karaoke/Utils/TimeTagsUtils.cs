@@ -1,11 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using Microsoft.EntityFrameworkCore.Internal;
-using osu.Framework.Graphics.Sprites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Internal;
+using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
@@ -181,7 +181,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="other">Fix way</param>
         /// <param name="self">Fix way</param>
         /// <returns>Time tags with dictionary format.</returns>
-        public static IReadOnlyDictionary<TimeTagIndex, double> ToDictionary(Tuple<TimeTagIndex, double?>[] timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
+        public static IReadOnlyDictionary<TimeTagIndex, double> ToDictionary(Tuple<TimeTagIndex, double?>[] timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
+                                                                             SelfCheck self = SelfCheck.BasedOnStart)
         {
             // sorted value
             var sortedTimeTags = applyFix ? FixInvalid(timeTags, other, self) : Sort(timeTags);

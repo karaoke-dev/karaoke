@@ -1,23 +1,23 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics;
-using osu.Game.Screens.Edit;
-using System.Linq;
-using osu.Game.Rulesets.Karaoke.Edit.Translate.Components;
-using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
-using osu.Game.Rulesets.Karaoke.Objects;
 using System;
-using osu.Game.Graphics.Sprites;
-using osu.Game.Graphics;
-using osu.Game.Rulesets.Karaoke.Graphics;
-using osu.Framework.Graphics.Sprites;
-using osu.Game.Graphics.UserInterface;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
+using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
+using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Edit.Translate.Components;
+using osu.Game.Rulesets.Karaoke.Graphics;
+using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
@@ -201,10 +201,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 Origin = Anchor.CentreLeft,
                 RelativeSizeAxes = Axes.X,
             };
-            languageDropdown.Current.BindValueChanged(v =>
-            {
-                textBox.Text = lyric.Translates.TryGetValue(v.NewValue.Id, out string translate) ? translate : null;
-            });
+            languageDropdown.Current.BindValueChanged(v => { textBox.Text = lyric.Translates.TryGetValue(v.NewValue.Id, out string translate) ? translate : null; });
             textBox.Current.BindValueChanged(textBoxValue =>
             {
                 var translateText = textBoxValue.NewValue;

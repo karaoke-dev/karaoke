@@ -1,15 +1,15 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
+using System.IO;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Ja;
 using Lucene.Net.Analysis.TokenAttributes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
-using System.Collections.Generic;
-using System.IO;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.RubyTags.Ja
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja
 {
     public class JaRubyTagGenerator : RubyTagGenerator<JaRubyTagGeneratorConfig>
     {
@@ -39,6 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.RubyTags.Ja
 
             // Reset the stream and convert all result
             tokenStream.Reset();
+
             while (true)
             {
                 // Read next token
@@ -51,7 +52,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.RubyTags.Ja
                     break;
 
                 // Convert to Hiragana as default.
-                if (!Config.RubyAsKatakana) {
+                if (!Config.RubyAsKatakana)
+                {
                     parsedResult = JpStringUtils.ToHiragana(parsedResult);
                 }
 
