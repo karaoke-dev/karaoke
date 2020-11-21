@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.LyricEditor.Generator.TimeTags.Ja
         }
 
         [TestCase("か", new double[] { 0 }, false)]
-        [TestCase("か", new double[] { 0, 0.5 }, true)]
+        [TestCase("か", new[] { 0, 0.5 }, true)]
         public void TestLyricWithCheckLineEndKeyUp(string lyric, double[] index, bool applyConfig)
         {
             var config = generatorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckLineEndKeyUp) : null);
@@ -104,11 +104,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.LyricEditor.Generator.TimeTags.Ja
             var generator = new JaTimeTagGenerator(config);
             var lyric = generateLyric(lyricText);
 
-            // create time tag and aceually time tag.
-            var timeTags = getTimeTagIndex(generator.CreateTimeTag(lyric));
+            // create time tag and actually time tag.
+            var timeTags = getTimeTagIndex(generator.CreateTimeTags(lyric));
             var actualIndexed = getTimeTagIndexByArray(index);
 
-            // chekc should be equal
+            // check should be equal
             Assert.AreEqual(timeTags, actualIndexed);
         }
 

@@ -26,6 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// Find invalid time tags.
         /// </summary>
         /// <param name="timeTags">Time tags</param>
+        /// <param name="other">Check way</param>
+        /// <param name="self">Check way</param>
         /// <returns>List of invalid time tags</returns>
         public static Tuple<TimeTagIndex, double?>[] FindInvalid(Tuple<TimeTagIndex, double?>[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
@@ -62,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                             return sortedTimeTags.Where(x => x.Item1.Index > groupedTimeTag.Key && x.Item2 < groupMaxTime).ToList();
 
                         case GroupCheck.Desc:
-                            // mark pervious is invalid if larger then self
+                            // mark previous is invalid if larger then self
                             var groupMinTime = groupedTimeTag.Min(x => x.Item2);
                             if (groupMinTime == null)
                                 return null;
@@ -151,13 +153,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                         break;
                 }
 
-                // fix pervious or next value to apply
+                // fix previous or next value to apply
                 switch (other)
                 {
                     case GroupCheck.Asc:
-                        // find perviouls valiue to apply.
-                        var perviousValidValue = sortedTimeTags.Reverse().FirstOrDefault(x => x.Item1.Index < timeTag.Index && x.Item2 != null)?.Item2;
-                        sortedTimeTags[listIndex] = new Tuple<TimeTagIndex, double?>(timeTag, perviousValidValue);
+                        // find previous value to apply.
+                        var previousValidValue = sortedTimeTags.Reverse().FirstOrDefault(x => x.Item1.Index < timeTag.Index && x.Item2 != null)?.Item2;
+                        sortedTimeTags[listIndex] = new Tuple<TimeTagIndex, double?>(timeTag, previousValidValue);
                         break;
 
                     case GroupCheck.Desc:

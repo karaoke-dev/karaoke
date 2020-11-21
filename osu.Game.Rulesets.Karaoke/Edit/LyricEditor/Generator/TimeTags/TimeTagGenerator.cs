@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags
             Config = config;
         }
 
-        public virtual Tuple<TimeTagIndex, double?>[] CreateTimeTag(Lyric lyric)
+        public virtual Tuple<TimeTagIndex, double?>[] CreateTimeTags(Lyric lyric)
         {
             var timeTags = new List<Tuple<TimeTagIndex, double?>>();
             var text = lyric.Text;
