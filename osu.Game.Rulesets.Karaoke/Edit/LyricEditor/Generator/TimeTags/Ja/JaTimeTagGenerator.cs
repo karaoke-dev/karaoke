@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags.Ja
             var text = lyric.Text;
             for (var i = 1; i < text.Length; i++)
             {
-                var timeTag = TimeTagsUtils.Create(new TimeTagIndex(i, TimeTagIndex.IndexState.End), null);
+                var timeTag = TimeTagsUtils.Create(new TimeTagIndex(i, TimeTagIndex.IndexState.Start), null);
 
                 var c = text[i];
                 var pc = text[i - 1];
