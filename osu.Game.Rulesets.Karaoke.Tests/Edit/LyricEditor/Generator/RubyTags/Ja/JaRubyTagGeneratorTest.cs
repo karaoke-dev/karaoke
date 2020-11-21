@@ -12,8 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.LyricEditor.Generator.RubyTags.Ja
     [TestFixture]
     public class JaRubyTagGeneratorTest
     {
-        [TestCase("花火大会", new string[] { "はなび", "たいかい" }, false)]
-        [TestCase("花火大会", new string[] { "ハナビ", "タイカイ" }, true)]
+        [TestCase("花火大会", new[] { "はなび", "たいかい" }, false)]
+        [TestCase("花火大会", new[] { "ハナビ", "タイカイ" }, true)]
         public void TestLyricWithCheckLineEndKeyUpWithRubyAsKatakana(string text, string[] ruby, bool applyConfig)
         {
             var config = generatorConfig(applyConfig ? nameof(JaRubyTagGeneratorConfig.RubyAsKatakana) : null);

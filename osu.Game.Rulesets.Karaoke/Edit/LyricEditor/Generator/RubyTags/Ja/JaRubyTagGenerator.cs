@@ -50,6 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.RubyTags.Ja
                 if (string.IsNullOrEmpty(parsedResult))
                     break;
 
+                // Convert to Hiragana as default.
                 if (!Config.RubyAsKatakana) {
                     parsedResult = JpStringUtils.ToHiragana(parsedResult);
                 }
