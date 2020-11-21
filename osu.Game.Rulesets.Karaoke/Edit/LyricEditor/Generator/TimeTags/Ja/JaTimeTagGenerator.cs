@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags.Ja
                     if (char.IsWhiteSpace(pc))
                         continue;
 
-                    if (IsLatin(pc))
+                    if (CharUtils.IsLatin(pc))
                     {
                         if (Config.CheckWhiteSpaceAlphabet)
                             timeTags.Add(timeTag);
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags.Ja
                         if (Config.CheckWhiteSpaceDigit)
                             timeTags.Add(timeTag);
                     }
-                    else if (IsASCIISymbol(pc))
+                    else if (CharUtils.IsASCIISymbol(pc))
                     {
                         if (Config.CheckWhiteSpaceAsciiSymbol)
                             timeTags.Add(timeTag);
@@ -55,9 +55,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags.Ja
                         timeTags.Add(timeTag);
                     }
                 }
-                else if (IsLatin(c) || char.IsNumber(c) || IsASCIISymbol(c))
+                else if (CharUtils.IsLatin(c) || char.IsNumber(c) || CharUtils.IsASCIISymbol(c))
                 {
-                    if (char.IsWhiteSpace(pc) || !IsLatin(pc) && !char.IsNumber(pc) && !IsASCIISymbol(pc))
+                    if (char.IsWhiteSpace(pc) || !CharUtils.IsLatin(pc) && !char.IsNumber(pc) && !CharUtils.IsASCIISymbol(pc))
                     {
                         timeTags.Add(timeTag);
                     }
@@ -110,19 +110,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.TimeTags.Ja
                     }
                 }
             }
-        }
-
-        /// <summary>
-        /// Check this char is kana
-        /// </summary>
-        /// <param name="c"></param>
-        /// <returns></returns>
-        private bool IsKana(char c)
-        {
-            return (c >= '\u3041' && c <= '\u309F') |  // ひらがなwith゛゜
-                   (c >= '\u30A0' && c <= '\u30FF') |  // カタカナwith゠・ー
-                   (c >= '\u31F0' && c <= '\u31FF') |  // Katakana Phonetic Extensions
-                   (c >= '\uFF65' && c <= '\uFF9F');
         }
     }
 }
