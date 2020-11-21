@@ -45,10 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                     {
                         new[]
                         {
-                            CreateSingerInfo(singer).With(x =>
-                            {
-                                x.RelativeSizeAxes = Axes.Both;
-                            }),
+                            CreateSingerInfo(singer).With(x => { x.RelativeSizeAxes = Axes.Both; }),
                             new Box
                             {
                                 RelativeSizeAxes = Axes.Both,

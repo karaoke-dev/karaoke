@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -8,7 +9,6 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
@@ -28,10 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             if (beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap)
             {
                 Languages.AddRange(karaokeBeatmap.AvailableTranslates);
-                Languages.BindCollectionChanged((a, b) =>
-                {
-                    karaokeBeatmap.AvailableTranslates = Languages.ToArray();
-                });
+                Languages.BindCollectionChanged((a, b) => { karaokeBeatmap.AvailableTranslates = Languages.ToArray(); });
             }
         }
 

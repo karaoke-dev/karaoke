@@ -1,6 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
@@ -11,11 +16,6 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
@@ -74,10 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 }
             }, true);
 
-            previewSampleDropdown.Current.BindValueChanged(e =>
-            {
-                manager.PreviewLyric.Value = getLyricSampleBySelection(e.NewValue);
-            }, true);
+            previewSampleDropdown.Current.BindValueChanged(e => { manager.PreviewLyric.Value = getLyricSampleBySelection(e.NewValue); }, true);
 
             previewStyleDropdown.Current.BindValueChanged(e =>
             {
