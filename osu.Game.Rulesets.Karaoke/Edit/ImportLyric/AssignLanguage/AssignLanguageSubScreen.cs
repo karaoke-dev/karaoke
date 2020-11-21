@@ -8,5 +8,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         public override string Title => "Language";
 
         public override string ShortTitle => "Language";
+
+        public override ImportLyricStep Step => ImportLyricStep.AssignLanguage;
+
+        public override void Complete()
+        {
+            ScreenStack.Push(ImportLyricStep.GenerateRuby);
+        }
     }
 }

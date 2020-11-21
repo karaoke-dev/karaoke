@@ -8,5 +8,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
         public override string Title => "Generate time tag";
 
         public override string ShortTitle => "Generate time tag";
+
+        public override ImportLyricStep Step => ImportLyricStep.GenerateTimeTag;
+
+        public override void Complete()
+        {
+            ScreenStack.Push(ImportLyricStep.Success);
+        }
     }
 }

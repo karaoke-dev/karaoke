@@ -8,5 +8,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.Success
         public override string Title => "Success";
 
         public override string ShortTitle => "Success";
+
+        public override ImportLyricStep Step => ImportLyricStep.GenerateTimeTag;
+
+        public override void Complete()
+        {
+            // todo : close pop-up
+        }
     }
 }

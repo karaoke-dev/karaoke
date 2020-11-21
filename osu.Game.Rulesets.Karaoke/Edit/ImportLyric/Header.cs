@@ -15,8 +15,6 @@ using osu.Game.Overlays;
 using osu.Game.Screens;
 using osuTK;
 using osuTK.Graphics;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {

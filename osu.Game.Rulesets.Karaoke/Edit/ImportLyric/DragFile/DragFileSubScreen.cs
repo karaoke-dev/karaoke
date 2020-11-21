@@ -8,5 +8,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
         public override string Title => "Import";
 
         public override string ShortTitle => "Import";
+
+        public override ImportLyricStep Step => ImportLyricStep.ImportLyric;
+
+        public override void Complete()
+        {
+            ScreenStack.Push(ImportLyricStep.AssignLanguage);
+        }
     }
 }
