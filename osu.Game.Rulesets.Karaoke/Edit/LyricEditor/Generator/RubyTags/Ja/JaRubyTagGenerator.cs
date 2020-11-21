@@ -5,16 +5,18 @@ using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Ja;
 using Lucene.Net.Analysis.TokenAttributes;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using System.Collections.Generic;
 using System.IO;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.RubyTags.Ja
 {
-    public class JaRubyTagGenerator : RubyTagGenerator
+    public class JaRubyTagGenerator : RubyTagGenerator<JaRubyTagGeneratorConfig>
     {
         private readonly Analyzer analyzer;
 
-        public JaRubyTagGenerator()
+        public JaRubyTagGenerator(JaRubyTagGeneratorConfig config)
+            : base(config)
         {
             analyzer = Analyzer.NewAnonymous((fieldName, reader) =>
             {
@@ -43,10 +45,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.RubyTags.Ja
                 tokenStream.ClearAttributes();
                 tokenStream.IncrementToken();
 
-                // Get parsed result
+                // Get parsed result, result is Katakana.
                 var parsedResult = result.ToString();
                 if (string.IsNullOrEmpty(parsedResult))
                     break;
+
+                if (!Config.RubyAsKatakana) {
+                    parsedResult = JpStringUtils.ToHiragana(parsedResult);
+                }
 
                 // Make tag
                 tags.Add(new RubyTag

@@ -6,8 +6,15 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Generator.RubyTags
 {
-    public abstract class RubyTagGenerator
+    public abstract class RubyTagGenerator<T> where T : RubyTagGeneratorConfig
     {
+        protected T Config { get; }
+
+        protected RubyTagGenerator(T config)
+        {
+            Config = config;
+        }
+
         public abstract RubyTag[] CreateRubyTags(Lyric lyric);
     }
 }
