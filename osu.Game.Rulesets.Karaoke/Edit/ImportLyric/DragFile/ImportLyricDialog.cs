@@ -9,12 +9,12 @@ using osu.Game.Overlays;
 using osu.Game.Overlays.Dialog;
 using osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Import
+namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
 {
     public class ImportLyricDialog : PopupDialog
     {
         [Resolved]
-        private ImportManager importManager { get; set; }
+        private ImportLyricManager importManager { get; set; }
 
         [Resolved]
         private DialogOverlay dialogOverlay { get; set; }
