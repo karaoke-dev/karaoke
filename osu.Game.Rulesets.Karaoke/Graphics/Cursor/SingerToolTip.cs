@@ -16,6 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
     public class SingerToolTip : BackgroundToolTip
     {
+        private readonly DrawableSingerAvatar avatar;
         private readonly OsuSpriteText singerName;
         private readonly OsuSpriteText singerEnglishName;
         private readonly OsuSpriteText singerRomajiName;
@@ -31,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                 Spacing = new Vector2(15),
                 Children = new Drawable[]
                 {
-                    new DrawableSingerAvatar
+                    avatar = new DrawableSingerAvatar
                     {
                         Name = "Avatar",
                         Size = new Vector2(64)
@@ -80,6 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             if (!(content is Singer singer))
                 return false;
 
+            avatar.Singer = singer;
             singerName.Text = singer.Name;
             singerEnglishName.Text = singer.EnglishName != null ? $"({singer.EnglishName})" : "";
             singerRomajiName.Text = singer.RomajiName;

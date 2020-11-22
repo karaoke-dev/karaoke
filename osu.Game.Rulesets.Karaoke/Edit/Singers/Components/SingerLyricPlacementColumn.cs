@@ -67,7 +67,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                                 new DrawableSingerAvatar
                                 {
                                     Name = "Avatar",
-                                    Size = new Vector2(48)
+                                    Size = new Vector2(48),
+                                    Singer = singer
                                 },
                                 new FillFlowContainer
                                 {

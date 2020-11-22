@@ -7,6 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
@@ -29,6 +30,18 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre
             });
+        }
+
+        private Singer singer;
+
+        public virtual Singer Singer
+        {
+            get => singer;
+            set
+            {
+                singer = value;
+                // todo : update texture.
+            }
         }
     }
 }
