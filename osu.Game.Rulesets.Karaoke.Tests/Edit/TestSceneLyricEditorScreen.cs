@@ -9,7 +9,7 @@ using osu.Framework.Timing;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
-using osu.Game.Rulesets.Karaoke.Edit.Import;
+using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 using osu.Game.Rulesets.Karaoke.Edit.LyricEditor;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
         private LyricEditorScreen screen;
 
-        private ImportManager importManager;
+        private ImportLyricManager importManager;
 
         public TestSceneLyricEditorScreen()
         {
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             {
                 Content,
                 dialogOverlay = new DialogOverlay(),
-                importManager = new ImportManager()
+                importManager = new ImportLyricManager()
             });
 
             Dependencies.Cache(dialogOverlay);

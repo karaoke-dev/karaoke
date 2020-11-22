@@ -34,9 +34,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
 
         public Task Import(params string[] paths)
         {
+            var fileInfo = new FileInfo(paths.First());
+            ImportLyricFile(fileInfo);
+            return Task.CompletedTask;
+        }
+
+        public void ImportLyricFile(FileInfo fileInfo)
+        {
             Schedule(() =>
             {
-                var fileInfo = new FileInfo(paths.First());
                 DialogOverlay.Push(new ImportLyricDialog(fileInfo, success =>
                 {
                     if (success)
@@ -45,7 +51,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
                     }
                 }));
             });
-            return Task.CompletedTask;
         }
 
         public override void Complete()

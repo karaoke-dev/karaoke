@@ -10,8 +10,10 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
+using System.IO;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
@@ -24,9 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
-        private ImportLyricScreen screen;
-
         private DialogOverlay dialogOverlay;
+        private ImportLyricScreen screen;
+        private ImportLyricManager importManager;
 
         public TestSceneImportLyric()
         {
@@ -44,15 +46,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             {
                 Content,
                 dialogOverlay = new DialogOverlay(),
+                importManager = new ImportLyricManager()
             });
 
             Dependencies.Cache(dialogOverlay);
+            Dependencies.Cache(importManager);
         }
 
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            Child = screen = new ImportLyricScreen();
+            var temp = TestResources.GetTestLrcForImport("default");
+            Child = screen = new ImportLyricScreen(new FileInfo(temp));
         });
     }
 }
