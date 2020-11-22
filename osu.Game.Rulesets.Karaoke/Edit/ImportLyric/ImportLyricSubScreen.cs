@@ -31,6 +31,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         public abstract ImportLyricStep Step { get; }
 
+        public abstract IconUsage Icon { get; }
+
         public ImportLyricSubScreen()
         {
             Anchor = Anchor.Centre;
@@ -83,9 +85,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         {
             DialogOverlay?.Push(new OkPopupDialog(callBack)
             {
-                Icon = FontAwesome.Regular.ArrowAltCircleLeft,
-                HeaderText = @"Roll-back",
-                BodyText = $"Will roll-back to screen named {rollBackScreen.ShortTitle}",
+                Icon = rollBackScreen.Icon,
+                HeaderText = rollBackScreen.ShortTitle,
+                BodyText = $"Will roll-back to step '{rollBackScreen.Title}'",
             });
         }
 
