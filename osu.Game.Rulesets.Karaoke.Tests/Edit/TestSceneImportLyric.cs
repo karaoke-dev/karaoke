@@ -3,6 +3,9 @@
 
 using NUnit.Framework;
 using osu.Framework.Allocation;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
@@ -19,6 +22,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [Cached(typeof(IBeatSnapProvider))]
         private readonly EditorBeatmap editorBeatmap;
 
+        protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
+
+        private ImportLyricScreen screen;
+
+        private DialogOverlay dialogOverlay;
+
         public TestSceneImportLyric()
         {
             var beatmap = new TestKaraokeBeatmap(null);
@@ -30,7 +39,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private void load()
         {
             Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
-            Child = new ImportLyricScreen();
+
+            base.Content.AddRange(new Drawable[]
+            {
+                Content,
+                dialogOverlay = new DialogOverlay(),
+            });
+
+            Dependencies.Cache(dialogOverlay);
         }
+
+        [SetUp]
+        public void SetUp() => Schedule(() =>
+        {
+            Child = screen = new ImportLyricScreen();
+        });
     }
 }

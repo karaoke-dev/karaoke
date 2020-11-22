@@ -3,9 +3,13 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Screens;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog;
 using osu.Game.Screens;
+using System;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
@@ -19,6 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         [Resolved]
         protected ImportLyricSubScreenStack ScreenStack { get; private set; }
+
+        [Resolved(CanBeNull = true)]
+        protected DialogOverlay DialogOverlay { get; private set; }
 
         public abstract string ShortTitle { get; }
 
@@ -71,6 +78,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         }
 
         public abstract void Complete();
+
+        public virtual void CanRollBack(IImportLyricSubScreen rollBackScreen, Action<bool> callBack)
+        {
+            DialogOverlay?.Push(new OkPopupDialog(callBack)
+            {
+                Icon = FontAwesome.Regular.ArrowAltCircleLeft,
+                HeaderText = @"Roll-back",
+                BodyText = $"Will roll-back to screen named {rollBackScreen.ShortTitle}",
+            });
+        }
 
         public override string ToString() => Title;
     }
