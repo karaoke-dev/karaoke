@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         [Resolved]
         protected ImportLyricSubScreenStack ScreenStack { get; private set; }
 
-        [Resolved(CanBeNull = true)]
+        [Resolved]
         protected DialogOverlay DialogOverlay { get; private set; }
 
         public abstract string ShortTitle { get; }
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         public virtual void CanRollBack(IImportLyricSubScreen rollBackScreen, Action<bool> callBack)
         {
-            DialogOverlay?.Push(new OkPopupDialog(callBack)
+            DialogOverlay.Push(new OkPopupDialog(callBack)
             {
                 Icon = rollBackScreen.Icon,
                 HeaderText = rollBackScreen.ShortTitle,

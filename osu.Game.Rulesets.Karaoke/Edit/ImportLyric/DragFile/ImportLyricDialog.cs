@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays;
@@ -21,10 +22,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
 
         public ImportLyricDialog(FileInfo info, Action<bool> resetAction = null)
         {
-            BodyText = "Import lyric file will clean-up all exist lyric.";
-
             Icon = FontAwesome.Regular.TrashAlt;
             HeaderText = @"Confirm import lyric file?";
+            BodyText = "Import lyric file will clean-up all exist lyric.";
+
             Buttons = new PopupDialogButton[]
             {
                 new PopupDialogOkButton
@@ -47,6 +48,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
         {
             try
             {
+                // Check file is exist
+                if (!info.Exists)
+                {
+                    dialogOverlay.Push(createFileNotFoundDialog());
+                    return false;
+                }
+
+                // Check format is match
+                if (!ImportLyricManager.LyricFormatExtensions.Contains(info.Extension))
+                {
+                    dialogOverlay.Push(createFormatNotMatchDialog());
+                    return false;
+                }
+
                 importManager.ImportLrcFile(info);
                 dialogOverlay.Push(new OkPopupDialog
                 {
@@ -60,27 +75,52 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
             {
                 switch (ex)
                 {
-                    case FileNotFoundException fileNotFoundException:
-                        dialogOverlay.Push(new OkPopupDialog
-                        {
-                            Icon = FontAwesome.Regular.QuestionCircle,
-                            HeaderText = @"File not found",
-                            BodyText = fileNotFoundException.Message,
-                        });
+                    case FileNotFoundException _:
+                        dialogOverlay.Push(createFileNotFoundDialog());
                         break;
 
                     case FileLoadException loadException:
-                        dialogOverlay.Push(new OkPopupDialog
-                        {
-                            Icon = FontAwesome.Regular.QuestionCircle,
-                            HeaderText = @"File not found",
-                            BodyText = loadException.Message,
-                        });
+                        dialogOverlay.Push(createLoadExceptionDialog(loadException));
+                        break;
+                    default:
+                        dialogOverlay.Push(createUnknownExceptionDialog());
                         break;
                 }
 
                 return false;
             }
         }
+
+        private PopupDialog createFileNotFoundDialog()
+            => new OkPopupDialog
+            {
+                Icon = FontAwesome.Regular.QuestionCircle,
+                HeaderText = "Seems file is not exist",
+                BodyText = $"Drag the file then drop again.",
+            };
+
+        private PopupDialog createFormatNotMatchDialog()
+            => new OkPopupDialog
+            {
+                Icon = FontAwesome.Solid.ExclamationTriangle,
+                HeaderText = "This type of file is not supported",
+                BodyText = $"May sure this type of file is supported.",
+            };
+
+        private PopupDialog createLoadExceptionDialog(FileLoadException loadException)
+            => new OkPopupDialog
+            {
+                Icon = FontAwesome.Solid.Bug,
+                HeaderText = @"File loading error",
+                BodyText = loadException.Message,
+            };
+
+        private PopupDialog createUnknownExceptionDialog()
+            => new OkPopupDialog
+            {
+                Icon = FontAwesome.Solid.Bug,
+                HeaderText = @"Unknown error",
+                BodyText = @"Unknown error QAQa."
+            };
     }
 }
