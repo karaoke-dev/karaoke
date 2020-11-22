@@ -28,42 +28,36 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             Child = new GridContainer
             {
                 AutoSizeAxes = Axes.Both,
-                RowDimensions = new Dimension[]
+                RowDimensions = new[]
                 {
                     new Dimension(GridSizeMode.Absolute, time_display_height),
                     new Dimension(GridSizeMode.Absolute, BORDER),
                     new Dimension(GridSizeMode.AutoSize)
                 },
-                ColumnDimensions = new Dimension[]
+                ColumnDimensions = new[]
                 {
                     new Dimension(GridSizeMode.AutoSize)
                 },
-                Content = new Drawable[][]
+                Content = new[]
                 {
-                    new []
+                    new Drawable[]
                     {
                         trackTimer = new OsuSpriteText
                         {
-                            Font = OsuFont.GetFont(size: 25, fixedWidth: true),
+                            Font = OsuFont.GetFont(size: 25, fixedWidth: true)
                         }
                     },
                     null,
-                    new []
+                    new Drawable[]
                     {
                         new FillFlowContainer
                         {
                             AutoSizeAxes = Axes.Both,
                             Spacing = new Vector2(10),
-                            Children = new []
+                            Children = new[]
                             {
-                                index = new OsuSpriteText
-                                {
-
-                                },
-                                indexState = new OsuSpriteText
-                                {
-
-                                },
+                                index = new OsuSpriteText(),
+                                indexState = new OsuSpriteText()
                             }
                         }
                     }
@@ -76,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             return background = new Box
             {
                 RelativeSizeAxes = Axes.X,
-                Height = time_display_height + BORDER * 2,
+                Height = time_display_height + BORDER * 2
             };
         }
 
