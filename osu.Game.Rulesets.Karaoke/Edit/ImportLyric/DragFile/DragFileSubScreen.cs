@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
                     return;
                 }
 
-                DialogOverlay.Push(new ImportLyricDialog(fileInfo, execute =>
+                DialogOverlay.Push(new ImportLyricDialog(execute =>
                 {
                     if (!execute)
                         return;

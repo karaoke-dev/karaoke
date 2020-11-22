@@ -2,22 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.IO;
-using System.Linq;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Overlays;
 using osu.Game.Overlays.Dialog;
-using osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
 {
     public class ImportLyricDialog : PopupDialog
     {
-        [Resolved]
-        private DialogOverlay dialogOverlay { get; set; }
-
-        public ImportLyricDialog(FileInfo info, Action<bool> resetAction = null)
+        public ImportLyricDialog(Action<bool> resetAction = null)
         {
             Icon = FontAwesome.Regular.TrashAlt;
             HeaderText = @"Confirm import lyric file?";

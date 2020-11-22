@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                 return false;
 
             // todo : should open import screen instead.
-            dialogOverlay?.Push(new ImportLyricDialog(info));
+            //dialogOverlay?.Push(new ImportLyricDialog(info));
 
             return true;
         }
