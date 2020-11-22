@@ -13,6 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
     public abstract class BackgroundToolTip : VisibilityContainer, ITooltip
     {
+        public static int BORDER = 5;
+
         private readonly Box background;
         private readonly Container content;
 
@@ -22,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
         {
             AutoSizeAxes = Axes.Both;
             Masking = true;
-            CornerRadius = 5;
+            CornerRadius = BORDER;
 
             InternalChildren = new Drawable[]
             {
@@ -30,6 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                 {
                     RelativeSizeAxes = Axes.Both
                 },
+                SetBackground(),
                 content = new Container
                 {
                     AutoSizeAxes = Axes.Both,
@@ -47,6 +50,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
         }
 
         public abstract bool SetContent(object content);
+
+        protected virtual Drawable SetBackground() => null;
 
         public void Move(Vector2 pos) => Position = pos;
 
