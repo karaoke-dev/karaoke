@@ -6,8 +6,11 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Screens;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
 using osu.Game.Screens.Edit;
+using System.IO;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
@@ -17,6 +20,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         [Cached]
         private readonly ImportLyricSubScreenStack screenStack;
+
+        public ImportLyricScreen(FileInfo fileInfo)
+            : this()
+        {
+            if (!(screenStack.CurrentScreen is DragFileSubScreen dragFileSubScreen))
+                throw new ScreenStack.ScreenNotInStackException($"{nameof(DragFileSubScreen)} does not in the screen.");
+
+            dragFileSubScreen.ImportLyricFile(fileInfo);
+        }
 
         public ImportLyricScreen()
             : base(EditorScreenMode.SongSetup)

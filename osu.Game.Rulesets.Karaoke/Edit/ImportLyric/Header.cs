@@ -7,6 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Input.Events;
 using osu.Framework.Screens;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
@@ -138,6 +139,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             {
                 base.LoadComplete();
                 AccentColour = Color4Extensions.FromHex("#e35c99");
+            }
+
+            protected override void SelectTab(TabItem<IScreen> tab)
+            {
+                if (tab.Value == Current.Value)
+                    return;
+
+                if (!(Current.Value is IImportLyricSubScreen currentScreen))
+                    return;
+
+                if (!(tab.Value is IImportLyricSubScreen targetScreen))
+                    return;
+
+                currentScreen.CanRollBack(targetScreen, enabled =>
+                {
+                    if (enabled)
+                        base.SelectTab(tab);
+                });   
             }
 
             protected override TabItem<IScreen> CreateTabItem(IScreen value) => new HeaderBreadcrumbTabItem(value)

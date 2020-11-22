@@ -14,7 +14,8 @@ using osu.Game.Database;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Timeline;
-using osu.Game.Rulesets.Karaoke.Edit.Import;
+using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
+using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
@@ -29,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
         private FillFlowContainer<Button> controls;
         private LyricRearrangeableListContainer container;
 
-        public IEnumerable<string> HandledExtensions => ImportManager.LyricFormatExtensions;
+        public IEnumerable<string> HandledExtensions => ImportLyricManager.LyricFormatExtensions;
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
@@ -65,7 +66,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             if (!info.Exists)
                 return false;
 
-            dialogOverlay?.Push(new ImportLyricDialog(info));
+            // todo : should open import screen instead.
+            //dialogOverlay?.Push(new ImportLyricDialog(info));
 
             return true;
         }
