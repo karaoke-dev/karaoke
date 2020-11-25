@@ -2,7 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
+using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Sprites;
@@ -11,6 +15,7 @@ using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
@@ -21,8 +26,16 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
     public class DrawableLyric : DrawableKaraokeHitObject
     {
-        private readonly KarakeSpriteText karaokeText;
-        private readonly OsuSpriteText translateText;
+        private KarakeSpriteText karaokeText;
+        private OsuSpriteText translateText;
+
+        public readonly IBindable<string> TextBindable = new Bindable<string>();
+        public readonly IBindable<Tuple<TimeTagIndex, double?>[]> TimeTagsBindable = new Bindable<Tuple<TimeTagIndex, double?>[]>();
+        public readonly IBindable<RubyTag[]> RubyTagsBindable = new Bindable<RubyTag[]>();
+        public readonly IBindable<RomajiTag[]> RomajiTagsBindable = new Bindable<RomajiTag[]>();
+        public readonly IBindable<int[]> SingersBindable = new Bindable<int[]>();
+        public readonly IBindable<int> LayoutIndexBindable = new Bindable<int>();
+        public readonly IBindable<string> TranslateTextBindable = new Bindable<string>();
 
         /// <summary>
         /// Invoked when a <see cref="JudgementResult"/> has been applied by this <see cref="DrawableHitObject"/> or a nested <see cref="DrawableHitObject"/>.
@@ -31,9 +44,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         public new Lyric HitObject => (Lyric)base.HitObject;
 
-        public DrawableLyric(Lyric hitObject)
+        public DrawableLyric()
+            : this(null)
+        {
+        }
+
+        public DrawableLyric([CanBeNull] Lyric hitObject)
             : base(hitObject)
         {
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        { 
             Scale = new Vector2(2f);
             AutoSizeAxes = Axes.Both;
             InternalChildren = new Drawable[]
@@ -46,21 +69,49 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 }
             };
 
-            hitObject.TextBindable.BindValueChanged(text => { karaokeText.Text = text.NewValue; }, true);
+            LifetimeEnd = HitObject.EndTime + 1000;
 
-            hitObject.TimeTagsBindable.BindValueChanged(timeTags => { karaokeText.TimeTags = TimeTagsUtils.ToDictionary(timeTags.NewValue); }, true);
+            TextBindable.BindValueChanged(text => { karaokeText.Text = text.NewValue; });
+            TimeTagsBindable.BindValueChanged(timeTags => { karaokeText.TimeTags = TimeTagsUtils.ToDictionary(timeTags.NewValue); });
+            RubyTagsBindable.BindValueChanged(rubyTags => { ApplyRuby(); });
+            RomajiTagsBindable.BindValueChanged(romajiTags => { ApplyRomaji(); });
+            SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
+            LayoutIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
+            TranslateTextBindable.BindValueChanged(text => { translateText.Text = text.NewValue ?? ""; });
+        }
 
-            hitObject.RubyTagsBindable.BindValueChanged(rubyTags => { ApplyRuby(); }, true);
+        protected override void OnApply(HitObject hitObject)
+        {
+            base.OnApply(hitObject);
 
-            hitObject.RomajiTagsBindable.BindValueChanged(romajiTags => { ApplyRomaji(); }, true);
+            TextBindable.BindTo(HitObject.TextBindable);
+            TimeTagsBindable.BindTo(HitObject.TimeTagsBindable);
+            RubyTagsBindable.BindTo(HitObject.RubyTagsBindable);
+            RomajiTagsBindable.BindTo(HitObject.RomajiTagsBindable);
+            SingersBindable.BindTo(HitObject.SingersBindable);
+            LayoutIndexBindable.BindTo(HitObject.LayoutIndexBindable);
+            TranslateTextBindable.BindTo(HitObject.TranslateTextBindable);
+        }
 
-            hitObject.SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
+        protected override void OnFree(HitObject hitObject)
+        {
+            base.OnFree(hitObject);
 
-            hitObject.LayoutIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
+            TextBindable.UnbindFrom(HitObject.TextBindable);
+            TimeTagsBindable.UnbindFrom(HitObject.TimeTagsBindable);
+            RubyTagsBindable.UnbindFrom(HitObject.RubyTagsBindable);
+            RomajiTagsBindable.UnbindFrom(HitObject.RomajiTagsBindable);
+            SingersBindable.UnbindFrom(HitObject.SingersBindable);
+            LayoutIndexBindable.UnbindFrom(HitObject.LayoutIndexBindable);
+            TranslateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
+        }
 
-            hitObject.TranslateTextBindable.BindValueChanged(text => { translateText.Text = text.NewValue ?? ""; }, true);
+        protected override void UpdateInitialTransforms()
+        {
+            base.UpdateInitialTransforms();
 
-            LifetimeEnd = hitObject.EndTime + 1000;
+            // Manually set to reduce the number of future alive objects to a bare minimum.
+            LifetimeStart = HitObject.StartTime - HitObject.TimePreempt;
         }
 
         protected override void ClearInternal(bool disposeChildren = true)
@@ -223,7 +274,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                     return;
 
                 displayRuby = value;
-                ApplyRuby();
+                Schedule(() => ApplyRuby());
             }
         }
 
@@ -238,7 +289,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                     return;
 
                 displayRomaji = value;
-                ApplyRomaji();
+                Schedule(() => ApplyRomaji());
             }
         }
     }

@@ -13,8 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeBlueprintContainer : ComposeBlueprintContainer
     {
-        public KaraokeBlueprintContainer(IEnumerable<DrawableHitObject> drawableHitObjects)
-            : base(drawableHitObjects)
+        public KaraokeBlueprintContainer(HitObjectComposer composer)
+            : base(composer)
         {
         }
 
