@@ -80,9 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             set => skin.FontSize = value;
         }
 
-
         public Mode Mode { get; set; }
-
 
         public LyricFastEditMode LyricFastEditMode { get; set; }
     }
