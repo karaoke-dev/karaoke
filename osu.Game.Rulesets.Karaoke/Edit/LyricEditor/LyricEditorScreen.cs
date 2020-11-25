@@ -9,34 +9,22 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
-using osu.Game.Beatmaps;
 using osu.Game.Database;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Timeline;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
-using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
-using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
-using osu.Game.Skinning;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
 {
     public class LyricEditorScreen : EditorScreenWithTimeline, ICanAcceptFiles
     {
-        private KaraokeLyricEditorSkin skin;
         private FillFlowContainer<Button> controls;
-        private LyricRearrangeableListContainer container;
+        private LyricEditor lyricEditor;
 
         public IEnumerable<string> HandledExtensions => ImportLyricManager.LyricFormatExtensions;
-
-        [Resolved]
-        private EditorBeatmap beatmap { get; set; }
-
-        [Resolved]
-        private BeatmapManager beatmaps { get; set; }
 
         [Resolved(CanBeNull = true)]
         private DialogOverlay dialogOverlay { get; set; }
@@ -99,74 +87,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
                                     Width = 30,
                                     Height = 25,
                                     Text = "+",
-                                    Action = () => skin.FontSize += 3,
+                                    Action = () => lyricEditor.FontSize += 3,
                                 },
                                 new OsuButton
                                 {
                                     Width = 30,
                                     Height = 25,
                                     Text = "-",
-                                    Action = () => skin.FontSize -= 3,
+                                    Action = () => lyricEditor.FontSize -= 3,
                                 },
                             }
                         }
                     },
                     new Drawable[]
                     {
-                        new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin())
+                        lyricEditor = new LyricEditor
                         {
-                            RelativeSizeAxes = Axes.Both,
-                            Child = container = new LyricRearrangeableListContainer
-                            {
-                                RelativeSizeAxes = Axes.Both,
-                            }
-                        }
+                            RelativeSizeAxes = Axes.Both
+                        },
                     }
                 }
             };
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            foreach (var obj in beatmap.HitObjects)
-                Schedule(() => addHitObject(obj));
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            beatmap.HitObjectAdded += addHitObject;
-            beatmap.HitObjectRemoved += removeHitObject;
-        }
-
-        private void addHitObject(HitObject hitObject)
-        {
-            // see how `DrawableEditRulesetWrapper` do
-            if (hitObject is Lyric lyric)
-            {
-                container.Items.Add(lyric);
-            }
-        }
-
-        private void removeHitObject(HitObject hitObject)
-        {
-            if (!(hitObject is Lyric lyric))
-                return;
-
-            container.Items.Remove(lyric);
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            base.Dispose(isDisposing);
-
-            if (beatmap == null)
-                return;
-
-            beatmap.HitObjectAdded -= addHitObject;
-            beatmap.HitObjectRemoved -= removeHitObject;
         }
     }
 }
