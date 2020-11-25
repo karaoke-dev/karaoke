@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
@@ -120,6 +121,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         [JsonIgnore]
         public readonly Bindable<string> TranslateTextBindable = new Bindable<string>();
+
+        public CultureInfo Language { get; set; }
 
         /// <summary>
         /// Translates
