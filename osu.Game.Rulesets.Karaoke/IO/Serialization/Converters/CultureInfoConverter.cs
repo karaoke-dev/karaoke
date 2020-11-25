@@ -12,12 +12,13 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
     {
         public override CultureInfo ReadJson(JsonReader reader, Type objectType, CultureInfo existingValues, bool hasExistingValue, JsonSerializer serializer)
         {
-            var obj = JObject.Load(reader).Value<int?>();
+            var obj = JToken.Load(reader);
+            var value = obj.Value<int?>();
 
-            if (obj == null)
+            if (value == null)
                 return null;
 
-            return new CultureInfo(obj.Value);
+            return new CultureInfo(value.Value);
         }
 
         public override void WriteJson(JsonWriter writer, CultureInfo values, JsonSerializer serializer)

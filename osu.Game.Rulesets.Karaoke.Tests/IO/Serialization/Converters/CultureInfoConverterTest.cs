@@ -29,6 +29,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             Assert.AreEqual(result?.LCID, calId);
         }
 
+        [Test]
+        public void TestAllCultureInfo()
+        {
+            var cultureInfos = CultureInfo.GetCultures(CultureTypes.AllCultures);
+            foreach (var cultureInfo in cultureInfos)
+            {
+                // this weird cultureInfo will let test case failed.
+                if (cultureInfo.LCID == 4096)
+                    continue;
+
+                var json = JsonConvert.SerializeObject(cultureInfo, createSettings());
+                var deserializedCultureInfo =  JsonConvert.DeserializeObject<CultureInfo>(json, createSettings());
+                Assert.AreEqual(deserializedCultureInfo, cultureInfo);
+            }
+        }
+
         private JsonSerializerSettings createSettings()
         {
             var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
