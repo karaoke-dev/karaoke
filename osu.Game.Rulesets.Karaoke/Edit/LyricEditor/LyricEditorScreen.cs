@@ -40,6 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
         [Resolved(CanBeNull = true)]
         private DialogOverlay dialogOverlay { get; set; }
 
+        [Resolved(CanBeNull = true)]
+        private KaraokeHitObjectComposer composer { get; set; }
+
         public LyricEditorScreen()
             : base(EditorScreenMode.Compose)
         {
@@ -70,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
             return true;
         }
 
-        protected override Drawable CreateTimelineContent() => new TimelineBlueprintContainer(null);
+        protected override Drawable CreateTimelineContent() => new TimelineBlueprintContainer(composer);
 
         protected override Drawable CreateMainContent()
         {

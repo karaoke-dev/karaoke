@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -21,8 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
             this.singer = singer;
         }
 
-        [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider)
+        [BackgroundDependencyLoader(true)]
+        private void load(OverlayColourProvider colourProvider, [CanBeNull]KaraokeHitObjectComposer composer)
         {
             InternalChildren = new Drawable[]
             {
@@ -57,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                             new SingerTimeline
                             {
                                 RelativeSizeAxes = Axes.Both,
-                                Child = new LyricBlueprintContainer(null, singer)
+                                Child = new LyricBlueprintContainer(composer, singer)
                                 {
                                     RelativeSizeAxes = Axes.Both,
                                 }
