@@ -6,16 +6,15 @@ using osu.Framework.Allocation;
 using osu.Framework.Input.Events;
 using osu.Framework.Timing;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyric.Components.Badges
 {
     public class TimeInfoBadge : Badge
     {
         [Resolved]
         private IAdjustableClock adjustableClock { get; set; }
 
-        public TimeInfoBadge(Lyric lyric)
+        public TimeInfoBadge(Objects.Lyric lyric)
             : base(lyric)
         {
             lyric.StartTimeBindable.BindValueChanged(value => { changeTime(); }, true);

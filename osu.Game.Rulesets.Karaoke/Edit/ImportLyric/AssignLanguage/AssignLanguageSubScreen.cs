@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Timing;
+using osu.Game.Rulesets.Karaoke.Edit.Lyric;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 {
@@ -30,11 +31,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 
         public AssignLanguageSubScreen()
         {
-            InternalChild = new LyricEditor.LyricEditor
+            InternalChild = new LyricEditor
             {
                 RelativeSizeAxes = Axes.Both,
-                Mode = LyricEditor.Mode.EditMode,
-                LyricFastEditMode = LyricEditor.LyricFastEditMode.Language,
+                Mode = Mode.EditMode,
+                LyricFastEditMode = LyricFastEditMode.Language,
             };
         }
 

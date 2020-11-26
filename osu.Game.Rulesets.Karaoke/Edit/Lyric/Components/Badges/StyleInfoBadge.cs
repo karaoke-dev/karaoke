@@ -3,26 +3,25 @@
 
 using osu.Framework.Allocation;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor.Components.Badges
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyric.Components.Badges
 {
-    public class LayoutInfoBadge : Badge
+    public class StyleInfoBadge : Badge
     {
-        public LayoutInfoBadge(Lyric lyric)
+        public StyleInfoBadge(Objects.Lyric lyric)
             : base(lyric)
         {
-            lyric.LayoutIndexBindable.BindValueChanged(value =>
+            lyric.SingersBindable.BindValueChanged(value =>
             {
-                var newLayoutIndex = value.NewValue;
-                BadgeText = $"Layout : {newLayoutIndex}";
+                var newStyleIndex = value.NewValue;
+                BadgeText = $"Singer : {newStyleIndex}";
             }, true);
         }
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            BadgeColour = colours.Pink;
+            BadgeColour = colours.Green;
         }
     }
 }
