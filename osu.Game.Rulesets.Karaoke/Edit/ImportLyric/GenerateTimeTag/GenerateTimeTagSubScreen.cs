@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 {
-    public class GenerateTimeTagSubScreen : ImportLyricSubScreen
+    public class GenerateTimeTagSubScreen : ImportLyricSubScreenWithTopNavigation
     {
         public override string Title => "Generate time tag";
 

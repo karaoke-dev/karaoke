@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
 {
-    public class GenerateRubySubScreen : ImportLyricSubScreen
+    public class GenerateRubySubScreen : ImportLyricSubScreenWithTopNavigation
     {
         public override string Title => "Generate ruby";
 

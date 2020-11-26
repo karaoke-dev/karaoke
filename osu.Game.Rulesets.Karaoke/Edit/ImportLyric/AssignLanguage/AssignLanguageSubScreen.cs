@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 {
-    public class AssignLanguageSubScreen : ImportLyricSubScreen
+    public class AssignLanguageSubScreen : ImportLyricSubScreenWithTopNavigation
     {
         public override string Title => "Language";
 
@@ -36,6 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
                 RelativeSizeAxes = Axes.Both,
                 Mode = Mode.EditMode,
                 LyricFastEditMode = LyricFastEditMode.Language,
+                FontSize = 26
             };
         }
 
