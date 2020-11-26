@@ -3,12 +3,13 @@
 
 using osu.Framework.Allocation;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges
 {
     public class StyleInfoBadge : Badge
     {
-        public StyleInfoBadge(Objects.Lyric lyric)
+        public StyleInfoBadge(Lyric lyric)
             : base(lyric)
         {
             lyric.SingersBindable.BindValueChanged(value =>

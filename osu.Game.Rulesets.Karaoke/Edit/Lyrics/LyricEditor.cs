@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
@@ -48,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private void addHitObject(HitObject hitObject)
         {
             // see how `DrawableEditRulesetWrapper` do
-            if (hitObject is Objects.Lyric lyric)
+            if (hitObject is Lyric lyric)
             {
                 container.Items.Add(lyric);
             }
@@ -56,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private void removeHitObject(HitObject hitObject)
         {
-            if (!(hitObject is Objects.Lyric lyric))
+            if (!(hitObject is Lyric lyric))
                 return;
 
             container.Items.Remove(lyric);

@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Timing;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 
@@ -14,9 +15,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
     {
         private readonly DrawableLyric drawableLyric;
 
-        public Objects.Lyric Lyric { get; }
+        public Lyric Lyric { get; }
 
-        public LyricControl(Objects.Lyric lyric)
+        public LyricControl(Lyric lyric)
         {
             Lyric = lyric;
             CornerRadius = 5;
@@ -35,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 
         public class DrawableEditorLyric : DrawableLyric
         {
-            public DrawableEditorLyric(Objects.Lyric lyric)
+            public DrawableEditorLyric(Lyric lyric)
                 : base(lyric)
             {
                 DisplayRuby = true;

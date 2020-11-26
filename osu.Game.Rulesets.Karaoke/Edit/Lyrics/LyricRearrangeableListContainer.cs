@@ -10,22 +10,23 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public class LyricRearrangeableListContainer : OsuRearrangeableListContainer<Objects.Lyric>
+    public class LyricRearrangeableListContainer : OsuRearrangeableListContainer<Lyric>
     {
-        protected override OsuRearrangeableListItem<Objects.Lyric> CreateOsuDrawable(Objects.Lyric item)
+        protected override OsuRearrangeableListItem<Lyric> CreateOsuDrawable(Lyric item)
             => new LyricRearrangeableListItem(item);
 
-        public class LyricRearrangeableListItem : OsuRearrangeableListItem<Objects.Lyric>
+        public class LyricRearrangeableListItem : OsuRearrangeableListItem<Lyric>
         {
             private Box background;
             private Box dragAlert;
             private Box headerBackground;
 
-            public LyricRearrangeableListItem(Objects.Lyric item)
+            public LyricRearrangeableListItem(Lyric item)
                 : base(item)
             {
             }
