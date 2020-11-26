@@ -8,11 +8,11 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.Lyric.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyric.Components.Badges;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyric
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class LyricRearrangeableListContainer : OsuRearrangeableListContainer<Objects.Lyric>
     {

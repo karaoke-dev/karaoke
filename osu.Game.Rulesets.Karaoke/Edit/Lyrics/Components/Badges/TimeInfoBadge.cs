@@ -7,7 +7,7 @@ using osu.Framework.Input.Events;
 using osu.Framework.Timing;
 using osu.Game.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyric.Components.Badges
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges
 {
     public class TimeInfoBadge : Badge
     {

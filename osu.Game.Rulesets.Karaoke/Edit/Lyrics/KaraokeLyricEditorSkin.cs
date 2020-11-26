@@ -4,7 +4,7 @@
 using System;
 using osu.Game.Rulesets.Karaoke.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyric
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     /// <summary>
     /// This karaoke skin is using in lyric editor only.

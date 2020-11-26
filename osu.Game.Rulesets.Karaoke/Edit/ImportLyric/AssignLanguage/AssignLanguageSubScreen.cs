@@ -5,7 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Timing;
-using osu.Game.Rulesets.Karaoke.Edit.Lyric;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 {

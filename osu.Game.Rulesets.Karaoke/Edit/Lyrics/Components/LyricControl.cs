@@ -8,7 +8,7 @@ using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyric.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 {
     public class LyricControl : Container
     {

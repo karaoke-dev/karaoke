@@ -4,7 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Game.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyric.Components.Badges
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges
 {
     public class StyleInfoBadge : Badge
     {

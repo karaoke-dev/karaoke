@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
 using System.IO;
-using osu.Game.Rulesets.Karaoke.Edit.Lyric;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
