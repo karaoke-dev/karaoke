@@ -19,12 +19,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         private readonly ImportLyricWaveContainer waves;
 
         [Cached]
-        private readonly ImportLyricSubScreenStack screenStack;
+        protected ImportLyricSubScreenStack ScreenStack { get; private set; }
 
         public ImportLyricScreen(FileInfo fileInfo)
             : this()
         {
-            if (!(screenStack.CurrentScreen is DragFileSubScreen dragFileSubScreen))
+            if (!(ScreenStack.CurrentScreen is DragFileSubScreen dragFileSubScreen))
                 throw new ScreenStack.ScreenNotInStackException($"{nameof(DragFileSubScreen)} does not in the screen.");
 
             dragFileSubScreen.ImportLyricFile(fileInfo);
@@ -49,13 +49,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     {
                         RelativeSizeAxes = Axes.Both,
                         Padding = new MarginPadding { Top = Header.HEIGHT },
-                        Child = screenStack = new ImportLyricSubScreenStack { RelativeSizeAxes = Axes.Both }
+                        Child = ScreenStack = new ImportLyricSubScreenStack { RelativeSizeAxes = Axes.Both }
                     },
-                    new Header(screenStack),
+                    new Header(ScreenStack),
                 }
             };
 
-            screenStack.Push(ImportLyricStep.ImportLyric);
+            ScreenStack.Push(ImportLyricStep.ImportLyric);
         }
 
         protected override void LoadComplete()

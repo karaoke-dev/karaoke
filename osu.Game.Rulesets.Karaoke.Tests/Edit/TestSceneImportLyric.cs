@@ -13,7 +13,9 @@ using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
+using System;
 using System.IO;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
@@ -27,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
         private DialogOverlay dialogOverlay;
-        private ImportLyricScreen screen;
+        private TestImportLyricScreen screen;
         private ImportLyricManager importManager;
 
         public TestSceneImportLyric()
@@ -53,11 +55,43 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             Dependencies.Cache(importManager);
         }
 
-        [SetUp]
-        public void SetUp() => Schedule(() =>
+        [Test]
+        public void TestGoToStep()
         {
             var temp = TestResources.GetTestLrcForImport("default");
-            Child = screen = new ImportLyricScreen(new FileInfo(temp));
-        });
+            Child = screen = new TestImportLyricScreen(new FileInfo(temp));
+
+            var steps = (ImportLyricStep[])Enum.GetValues(typeof(ImportLyricStep));
+            foreach (var step in steps)
+            {
+                AddStep($"go to step {Enum.GetName(typeof(ImportLyricStep), step)}", () => { screen.GoToStep(step); });
+            }
+        }
+
+        private class TestImportLyricScreen : ImportLyricScreen
+        {
+            public TestImportLyricScreen(FileInfo fileInfo)
+                : base(fileInfo)
+            {
+            }
+
+            public void GoToStep(ImportLyricStep step)
+            {
+                if (ScreenStack.CurrentScreen is IImportLyricSubScreen lyricSubScreen)
+                {
+                    if (step == lyricSubScreen.Step)
+                        return;
+
+                    if (step <= lyricSubScreen.Step)
+                        return;
+
+                    var totalSteps = ((ImportLyricStep[])Enum.GetValues(typeof(ImportLyricStep))).Where(x => x > lyricSubScreen.Step && x <= step);
+                    foreach (var gotoStep in totalSteps)
+                    {
+                        ScreenStack.Push(gotoStep);
+                    }
+                }     
+            }
+        }
     }
 }
