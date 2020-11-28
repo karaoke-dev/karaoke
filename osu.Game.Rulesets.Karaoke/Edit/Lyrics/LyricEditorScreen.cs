@@ -17,7 +17,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 using osu.Game.Screens.Edit;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class LyricEditorScreen : EditorScreenWithTimeline, ICanAcceptFiles
     {

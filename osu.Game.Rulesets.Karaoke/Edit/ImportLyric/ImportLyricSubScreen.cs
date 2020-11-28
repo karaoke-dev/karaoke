@@ -7,7 +7,6 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Screens;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog;
 using osu.Game.Screens;
 using System;
 
@@ -83,12 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         public virtual void CanRollBack(IImportLyricSubScreen rollBackScreen, Action<bool> callBack)
         {
-            DialogOverlay.Push(new OkPopupDialog(callBack)
-            {
-                Icon = rollBackScreen.Icon,
-                HeaderText = rollBackScreen.ShortTitle,
-                BodyText = $"Will roll-back to step '{rollBackScreen.Title}'",
-            });
+            DialogOverlay.Push(new RollBackPopupDialog(rollBackScreen, callBack));
         }
 
         public override string ToString() => Title;

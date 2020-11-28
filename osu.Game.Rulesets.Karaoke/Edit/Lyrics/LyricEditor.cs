@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.LyricEditor
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class LyricEditor : Container
     {
