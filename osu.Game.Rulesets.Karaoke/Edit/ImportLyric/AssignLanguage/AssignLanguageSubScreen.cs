@@ -29,9 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             return dependencies;
         }
 
-        public AssignLanguageSubScreen()
+        protected override Drawable CreateContent()
         {
-            InternalChild = new LyricEditor
+            return new LyricEditor
             {
                 RelativeSizeAxes = Axes.Both,
                 Mode = Mode.EditMode,
