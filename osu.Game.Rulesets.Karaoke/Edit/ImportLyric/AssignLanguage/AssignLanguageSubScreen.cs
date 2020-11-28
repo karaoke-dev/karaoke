@@ -29,6 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             return dependencies;
         }
 
+        protected override TopNavigation CreateNavigation()
+            => new AssignLanguageNavigation(this);
+
         protected override Drawable CreateContent()
         {
             return new LyricEditor
@@ -43,6 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         protected override void LoadComplete()
         {
             base.LoadComplete();
+            Navigation.State = NavigationState.Initial;
             AskForAutoAssignLanguage();
         }
 
@@ -57,6 +61,35 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             {
                 // todo : call manager to do that.
             }));
+        }
+
+        public class AssignLanguageNavigation : TopNavigation
+        {
+            public AssignLanguageNavigation(ImportLyricSubScreen screen)
+                : base(screen)
+            {
+            }
+
+            protected override void UpdateState(NavigationState value)
+            {
+                base.UpdateState(value);
+
+                switch (value)
+                {
+                    case NavigationState.Initial:
+                        NavigationText = "Try to select left side to mark lyric's language.";
+                        break;
+                    case NavigationState.Working:
+                        NavigationText = "Almost there/";
+                        break;
+                    case NavigationState.Done:
+                        NavigationText = "Cool! Seems all lyric has it's own language. Go to next step to generate ruby.";
+                        break;
+                    case NavigationState.Error:
+                        NavigationText = "Oops, seems cause some error in here.";
+                        break;
+                }
+            }
         }
     }
 }

@@ -7,7 +7,6 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Screens;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog;
 using osu.Game.Screens;
 using System;
 

@@ -4,13 +4,19 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using System;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     public abstract class ImportLyricSubScreenWithTopNavigation : ImportLyricSubScreen
     {
+        protected TopNavigation Navigation { get; private set; }
+
         public ImportLyricSubScreenWithTopNavigation()
         {
             Padding = new MarginPadding(10);
@@ -27,10 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 {
                     new Drawable[]
                     {
-                        new TopNavigation
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                        },
+                        Navigation = CreateNavigation(),
                     },
                     new Drawable[] { },
                     new Drawable[]
@@ -41,25 +44,115 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             };
         }
 
-        protected virtual Drawable CreateContent() => new Container();
+        protected abstract TopNavigation CreateNavigation();
 
-        public class TopNavigation : Container
+        protected abstract Drawable CreateContent();
+
+        public abstract class TopNavigation : Container
         {
+            [Resolved]
+            protected OsuColour Colours { get; private set; }
+
+            protected ImportLyricSubScreen Screen { get; private set; }
+
             private readonly CornerBackground background;
+            private readonly OsuSpriteText text;
+            private readonly IconButton button;
 
-            public TopNavigation()
+            public TopNavigation(ImportLyricSubScreen screen)
             {
-                AddInternal(background = new CornerBackground
+                Screen = screen;
+
+                RelativeSizeAxes = Axes.Both;
+                InternalChildren = new Drawable[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                });
+                    background = new CornerBackground
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                    },
+                    text = new OsuSpriteText
+                    {
+                        Anchor = Anchor.CentreLeft,
+                        Origin = Anchor.CentreLeft,
+                        Margin = new MarginPadding{ Left = 15 }
+                    },
+                    button = new IconButton
+                    {
+                        Anchor = Anchor.CentreRight,
+                        Origin = Anchor.CentreRight,
+                        Margin = new MarginPadding{ Right = 5 },
+                        Action = () =>
+                        {
+                            if (AbleToNextStep(State))
+                            {
+                                CompleteClicked();
+                            }
+                        }
+                    }
+                };
             }
 
-            [BackgroundDependencyLoader]
-            private void load(OsuColour colours)
-            {
-                background.Colour = colours.Gray2;
+            protected string NavigationText { get => text.Text; set => text.Text = value; }
+
+            protected string TooltipText { get => button.TooltipText; set => button.TooltipText = value; }
+
+            private NavigationState state;
+            public NavigationState State {
+                get => state;
+                set
+                {
+                    state = value;
+                    UpdateState(State);
+                }
             }
+
+            protected virtual void UpdateState(NavigationState value)
+            {
+                switch (value)
+                {
+                    case NavigationState.Initial:
+                        background.Colour = Colours.Gray2;
+                        text.Colour = Colours.GrayF;
+                        button.Colour = Colours.Gray6;
+                        button.Icon = FontAwesome.Regular.QuestionCircle;
+                        break;
+                    case NavigationState.Working:
+                        background.Colour = Colours.Gray2;
+                        text.Colour = Colours.GrayF;
+                        button.Colour = Colours.Gray6;
+                        button.Icon = FontAwesome.Solid.InfoCircle;
+                        break;
+                    case NavigationState.Done:
+                        background.Colour = Colours.Gray6;
+                        text.Colour = Colours.GrayF;
+                        button.Colour = Colours.Yellow;
+                        button.Icon = FontAwesome.Regular.ArrowAltCircleRight;
+                        break;
+                    case NavigationState.Error:
+                        background.Colour = Colours.Gray2;
+                        text.Colour = Colours.GrayF;
+                        button.Colour = Colours.Yellow;
+                        button.Icon = FontAwesome.Solid.ExclamationTriangle;
+                        break;
+                    default:
+                        throw new IndexOutOfRangeException("Should not goes to here");
+                }
+            }
+
+            protected virtual bool AbleToNextStep(NavigationState value) => value == NavigationState.Done;
+
+            protected virtual void CompleteClicked() => Screen.Complete();
+        }
+
+        public enum NavigationState
+        {
+            Initial,
+
+            Working,
+
+            Done,
+
+            Error
         }
     }
 }
