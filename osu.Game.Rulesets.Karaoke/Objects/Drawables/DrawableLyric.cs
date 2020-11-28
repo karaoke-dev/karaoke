@@ -80,9 +80,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             TranslateTextBindable.BindValueChanged(text => { translateText.Text = text.NewValue ?? ""; });
         }
 
-        protected override void OnApply(HitObject hitObject)
+        protected override void OnApply()
         {
-            base.OnApply(hitObject);
+            base.OnApply();
 
             TextBindable.BindTo(HitObject.TextBindable);
             TimeTagsBindable.BindTo(HitObject.TimeTagsBindable);
@@ -93,9 +93,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             TranslateTextBindable.BindTo(HitObject.TranslateTextBindable);
         }
 
-        protected override void OnFree(HitObject hitObject)
+        protected override void OnFree()
         {
-            base.OnFree(hitObject);
+            base.OnFree();
 
             TextBindable.UnbindFrom(HitObject.TextBindable);
             TimeTagsBindable.UnbindFrom(HitObject.TimeTagsBindable);

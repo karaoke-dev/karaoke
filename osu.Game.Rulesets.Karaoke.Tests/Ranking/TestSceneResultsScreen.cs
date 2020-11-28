@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
         private class TestResultsScreen : ResultsScreen
         {
             public TestResultsScreen(ScoreInfo score)
-                : base(score)
+                : base(score, true)
             {
             }
 
