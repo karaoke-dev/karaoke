@@ -40,9 +40,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             };
         }
 
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+            AskForAutoAssignLanguage();
+        }
+
         public override void Complete()
         {
             ScreenStack.Push(ImportLyricStep.GenerateRuby);
+        }
+
+        protected void AskForAutoAssignLanguage()
+        {
+            DialogOverlay.Push(new UseLanguageDetectorPopupDialog(ok =>
+            {
+                // todo : call manager to do that.
+            }));
         }
     }
 }
