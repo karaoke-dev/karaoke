@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         }
 
         [Test]
-        public void TestGoToStep()
+        public void TestGoToStep() => Schedule(() =>
         {
             var temp = TestResources.GetTestLrcForImport("default");
             Child = screen = new TestImportLyricScreen(new FileInfo(temp));
@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             {
                 AddStep($"go to step {Enum.GetName(typeof(ImportLyricStep), step)}", () => { screen.GoToStep(step); });
             }
-        }
+        });
 
         private class TestImportLyricScreen : ImportLyricScreen
         {
