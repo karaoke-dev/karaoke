@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Karaoke.Objects;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -9,21 +10,37 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
 {
     public class LanguageDetector
     {
+        private readonly LanguageDetection.LanguageDetector detector = new LanguageDetection.LanguageDetector();
+
+        public LanguageDetector(LanguageDetectorConfig config)
+        {
+            var targetLanguages = config?.AcceptLanguage?.Where(x => x != null).ToList() ?? new List<CultureInfo>();
+            if (targetLanguages.Any())
+            {
+                detector.AddLanguages(targetLanguages.Select(x => x.Name).ToArray());
+            }
+            else
+            {
+                detector.AddAllLanguages();
+            }
+        }
+
         public CultureInfo DetectLanguage(Lyric lyric)
         {
-            var detector = new LanguageDetection.LanguageDetector();
-            detector.AddAllLanguages();
             var result = detector.DetectAll(lyric.Text);
             var languageCode = result.FirstOrDefault()?.Language;
 
+            if (languageCode == null)
+                return null;
+
+            // make some language conversion here
             switch (languageCode)
             {
-                case "zho":
-                    return new CultureInfo("zh-CN");
-                case "eng":
+                // todo : need to think about is this needed?
+                case "en":
                     return new CultureInfo("en-US");
                 default:
-                    return null;
+                    return new CultureInfo(languageCode);
             }
         }
     }
