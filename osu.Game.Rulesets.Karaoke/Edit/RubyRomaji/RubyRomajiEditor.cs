@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components;
@@ -10,7 +11,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
 {
-    public class RubyRomajiEditSection : Container
+    public class RubyRomajiEditor : Container
     {
         private const int area_margin = 10;
 
@@ -19,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
         private readonly RubyListPreview rubyListPreview;
         private readonly RomajiListPreview romajiListPreview;
 
-        public RubyRomajiEditSection(EditorBeatmap editorBeatmap)
+        public RubyRomajiEditor()
         {
             Padding = new MarginPadding(10);
 
@@ -80,7 +81,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
                     }
                 }
             };
+        }
 
+        [BackgroundDependencyLoader]
+        private void load(EditorBeatmap editorBeatmap)
+        {
             lyricList.Lyrics = getLyrics(editorBeatmap);
             lyricList.BindableLyric.BindValueChanged(value =>
             {
