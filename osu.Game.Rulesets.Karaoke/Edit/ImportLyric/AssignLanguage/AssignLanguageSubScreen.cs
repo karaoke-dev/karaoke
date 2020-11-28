@@ -33,15 +33,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             => new AssignLanguageNavigation(this);
 
         protected override Drawable CreateContent()
-        {
-            return new LyricEditor
+            => new LyricEditor
             {
                 RelativeSizeAxes = Axes.Both,
                 Mode = Mode.EditMode,
                 LyricFastEditMode = LyricFastEditMode.Language,
                 FontSize = 26
             };
-        }
 
         protected override void LoadComplete()
         {

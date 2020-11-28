@@ -4,6 +4,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.RubyRomaji;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
 {
@@ -21,11 +22,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
            => new GenerateRubyNavigation(this);
 
         protected override Drawable CreateContent()
-            => new Container();
+            => new RubyRomajiEditor
+            {
+                RelativeSizeAxes = Axes.Both,
+            };
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+            Navigation.State = NavigationState.Initial;
+            AskForAutoGenerateRuby();
+        }
 
         public override void Complete()
         {
             ScreenStack.Push(ImportLyricStep.GenerateTimeTag);
+        }
+
+        protected void AskForAutoGenerateRuby()
+        {
+            DialogOverlay.Push(new UseAutoGenerateRubyPopupDialog(ok =>
+            {
+                // todo : call manager to do that.
+            }));
         }
 
         public class GenerateRubyNavigation : TopNavigation
@@ -39,8 +58,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
             {
                 base.UpdateState(value);
 
-                // todo : update text
+                switch (value)
+                {
+                    case NavigationState.Initial:
+                        NavigationText = "Press button to auto-generate ruby and romaji. It's very easy.";
+                        break;
+                    case NavigationState.Working:
+                    case NavigationState.Done:
+                        NavigationText = "Go to next step to generate time-tag. Don't worry, it's auto also.";
+                        break;
+                    case NavigationState.Error:
+                        NavigationText = "Oops, seems cause some error in here.";
+                        break;
+                }
             }
+
+            protected override bool AbleToNextStep(NavigationState value)
+                => value == NavigationState.Initial || value == NavigationState.Working || value == NavigationState.Done;
         }
     }
 }
