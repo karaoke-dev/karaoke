@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.Languages
         [TestCase("はなび", "ja-jp")]
         public void TestJapaneseLanguage(string text, string language)
         {
-            // todo : should fix this dictionay to add all Hiragana and Katakana
+            // todo : should fix this dictionary to add all Hiragana and Katakana
             // https://github.com/pdonald/language-detection/blob/master/LanguageDetection/Profiles/ja
             TestDetectLanguage(text, language);
         }
