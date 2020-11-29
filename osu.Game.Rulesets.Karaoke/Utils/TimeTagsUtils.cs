@@ -201,7 +201,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// Convert dictionary to list of time tags.
         /// </summary>
         /// <param name="dictionary">Dictionary.</param>
-        /// <returns>Time tagd</returns>
+        /// <returns>Time tags</returns>
         public static Tuple<TimeTagIndex, double?>[] ToTimeTagList(IReadOnlyDictionary<TimeTagIndex, double> dictionary)
         {
             return dictionary.Select(d => Create(d.Key, d.Value)).ToArray();
@@ -238,7 +238,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         Asc,
 
         /// <summary>
-        /// Mark pervious tag is error if conflict.
+        /// Mark previous tag is error if conflict.
         /// </summary>
         Desc
     }

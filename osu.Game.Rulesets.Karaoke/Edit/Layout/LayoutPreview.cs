@@ -116,8 +116,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
         internal class LayoutPreviewArea : Container
         {
-            private OsuSpriteText widthRatioText;
-            private OsuSpriteText heightRatioText;
+            private readonly OsuSpriteText widthRatioText;
+            private readonly OsuSpriteText heightRatioText;
 
             private readonly Box background;
             private readonly Container content;

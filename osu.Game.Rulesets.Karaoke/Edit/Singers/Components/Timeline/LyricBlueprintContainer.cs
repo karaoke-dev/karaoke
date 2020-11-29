@@ -25,10 +25,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
 
         protected override SelectionBlueprint CreateBlueprintFor(HitObject hitObject)
         {
-             if (!(hitObject is Lyric))
+            if (!(hitObject is Lyric))
                 return null;
 
-             return new LyricTimelineHitObjectBlueprint(hitObject, singer);
+            return new LyricTimelineHitObjectBlueprint(hitObject, singer);
         }
     }
 }

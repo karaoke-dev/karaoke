@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
                 throw new NullReferenceException("Singer cannot be null.");
 
             if (!Singers.Contains(singer))
-                throw new ArgumentOutOfRangeException("Singer is not in the list.");
+                throw new ArgumentOutOfRangeException(nameof(singer));
 
             // Remove sub singers.
             var subSingers = GetSubSingers(singer);
@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
                 throw new NullReferenceException("Sub singer cannot be null.");
 
             if (!singers.Contains(subSinger))
-                throw new ArgumentOutOfRangeException("Sub singer is not in the list");
+                throw new ArgumentOutOfRangeException(nameof(subSinger));
 
             singers.Remove(subSinger);
         }

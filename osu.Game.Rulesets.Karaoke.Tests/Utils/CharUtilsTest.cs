@@ -21,8 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase('1', false)]
         public void TestIsKana(char c, bool match)
         {
-            var isKaka = CharUtils.IsKana(c);
-            Assert.AreEqual(isKaka, match);
+            var isKana = CharUtils.IsKana(c);
+            Assert.AreEqual(isKana, match);
         }
 
         [TestCase('A', true)]
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase('#', true)]
         [TestCase('@', true)]
         [TestCase('A', false)]
-        public void TestIsASCIISymbol(char c, bool match)
+        public void TestIsAsciiSymbol(char c, bool match)
         {
             var isAsciiSymbol = CharUtils.IsAsciiSymbol(c);
             Assert.AreEqual(isAsciiSymbol, match);

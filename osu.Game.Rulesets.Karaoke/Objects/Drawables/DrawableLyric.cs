@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
@@ -15,7 +14,6 @@ using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
@@ -56,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         [BackgroundDependencyLoader]
         private void load()
-        { 
+        {
             Scale = new Vector2(2f);
             AutoSizeAxes = Axes.Both;
             InternalChildren = new Drawable[]

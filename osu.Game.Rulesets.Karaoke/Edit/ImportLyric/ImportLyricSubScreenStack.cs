@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     throw new ScreenNotCurrentException("Cannot push same screen.");
 
                 if (step <= lyricSubScreen.Step)
-                    throw new ScreenNotCurrentException("Cannot push pervious then current screen.");
+                    throw new ScreenNotCurrentException("Cannot push previous then current screen.");
 
                 if (step != ImportLyricStep.GenerateRuby && step - lyricSubScreen.Step > 1)
                     throw new ScreenNotCurrentException("Only generate ruby step can be skipped.");

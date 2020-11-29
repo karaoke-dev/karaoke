@@ -28,8 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags.Ja
             RunRubyCheckTest(text, ruby, config);
         }
 
-        [TestCase("はなび", new string[] { "はな", "び" })]
-        [TestCase("ハナビ", new string[] { "はなび" })]
+        [TestCase("はなび", new[] { "はな", "び" })]
+        [TestCase("ハナビ", new[] { "はなび" })]
         public void TestCreateRubyTagsWithEnableDuplicatedRuby(string text, string[] ruby)
         {
             var config = generatorConfig(nameof(JaRubyTagGeneratorConfig.EnableDuplicatedRuby));
@@ -46,6 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags.Ja
             var rubyTags = generator.CreateRubyTags(lyric);
 
             Assert.AreEqual(rubyTags.Length, ruby.Length);
+
             foreach (var rubyTag in rubyTags)
             {
                 Assert.IsTrue(ruby.Contains(rubyTag.Text));

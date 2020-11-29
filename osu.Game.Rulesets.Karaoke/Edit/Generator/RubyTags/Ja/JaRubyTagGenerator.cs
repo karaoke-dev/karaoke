@@ -53,9 +53,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja
 
                 // Convert to Hiragana as default.
                 var hiragana = JpStringUtils.ToHiragana(katakana);
+
                 if (!Config.EnableDuplicatedRuby)
                 {
-                    // Not add deplicated ruby if same as parent.
+                    // Not add duplicated ruby if same as parent.
                     var parentText = text.Substring(offsetAtt.StartOffset, offsetAtt.EndOffset - offsetAtt.StartOffset);
                     if (parentText == katakana || parentText == hiragana)
                         continue;

@@ -62,6 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             Child = screen = new TestImportLyricScreen(new FileInfo(temp));
 
             var steps = (ImportLyricStep[])Enum.GetValues(typeof(ImportLyricStep));
+
             foreach (var step in steps)
             {
                 AddStep($"go to step {Enum.GetName(typeof(ImportLyricStep), step)}", () => { screen.GoToStep(step); });
@@ -77,20 +78,21 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
             public void GoToStep(ImportLyricStep step)
             {
-                if (ScreenStack.CurrentScreen is IImportLyricSubScreen lyricSubScreen)
+                if (!(ScreenStack.CurrentScreen is IImportLyricSubScreen lyricSubScreen))
+                    return;
+
+                if (step == lyricSubScreen.Step)
+                    return;
+
+                if (step <= lyricSubScreen.Step)
+                    return;
+
+                var totalSteps = ((ImportLyricStep[])Enum.GetValues(typeof(ImportLyricStep))).Where(x => x > lyricSubScreen.Step && x <= step);
+
+                foreach (var gotoStep in totalSteps)
                 {
-                    if (step == lyricSubScreen.Step)
-                        return;
-
-                    if (step <= lyricSubScreen.Step)
-                        return;
-
-                    var totalSteps = ((ImportLyricStep[])Enum.GetValues(typeof(ImportLyricStep))).Where(x => x > lyricSubScreen.Step && x <= step);
-                    foreach (var gotoStep in totalSteps)
-                    {
-                        ScreenStack.Push(gotoStep);
-                    }
-                }     
+                    ScreenStack.Push(gotoStep);
+                }
             }
         }
     }
