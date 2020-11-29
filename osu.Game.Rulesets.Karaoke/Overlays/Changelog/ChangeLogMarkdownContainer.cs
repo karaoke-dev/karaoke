@@ -134,6 +134,11 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         {
             protected override void AddImage(LinkInline linkInline) => AddDrawable(new ChangeLogMarkdownImage(linkInline.Url));
 
+            public ChangeLogMarkdownTextFlowContainer()
+            {
+                TextAnchor = Anchor.BottomLeft;
+            }
+
             public class ChangeLogMarkdownImage : MarkdownImage
             {
                 private readonly LayoutValue widthSizeCache = new LayoutValue(Invalidation.DrawSize);
@@ -184,6 +189,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 { "github.io", "https://github.com/karaoke-dev/karaoke-dev.github.io" },
                 { "launcher", "https://github.com/karaoke-dev/launcher" },
                 { "sample", "https://github.com/karaoke-dev/sample-beatmap" },
+                { "karaoke-microphone", "https://github.com/karaoke-dev/osu-framework-microphone" },
             };
 
             protected override void AddLinkText(string text, LinkInline linkInline)
@@ -220,8 +226,12 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                     if (!string.IsNullOrEmpty(user))
                     {
                         var textScale = new Vector2(0.7f);
-                        AddText(" by:", text => { text.Scale = textScale; });
-                        AddDrawable(new MarkdownLinkText(user, new LinkInline
+                        AddText(" by:", text =>
+                        {
+                            text.Scale = textScale;
+                            text.Padding = new MarginPadding { Bottom = 2 };
+                        });
+                        AddDrawable(new UserLinkText(user, new LinkInline
                         {
                             Url = $"https://github.com/{user}"
                         })
@@ -242,5 +252,14 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                                             .UseYamlFrontMatter()
                                             .UseEmojiAndSmiley()
                                             .UseAdvancedExtensions().Build();
+
+        protected class UserLinkText : MarkdownLinkText
+        {
+            public UserLinkText(string text, LinkInline linkInline)
+                : base(text, linkInline)
+            {
+                Padding = new MarginPadding { Bottom = 2 };
+            }
+        }
     }
 }
