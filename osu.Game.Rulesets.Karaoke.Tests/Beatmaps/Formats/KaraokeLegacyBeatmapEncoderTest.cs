@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         [Test]
         public void TestEncodeBeatmapLyric()
         {
-            // Because encoder is not fully implemented, so just test not crash during encoding.
+            // Because encoder is not fully implemented, this is just test and not crash during encoding.
             const int start_time = 1000;
             const int duration = 2500;
 

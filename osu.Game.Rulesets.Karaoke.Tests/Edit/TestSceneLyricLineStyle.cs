@@ -406,7 +406,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
                 defaultValueAssigned = true;
 
-                // Assign default value here
+                // Assign default values here
                 testScene.colorAreaDropdown.Current.TriggerChange();
                 testScene.fontAreaDropdown.Current.TriggerChange();
                 testScene.displayShaderCheckbox.Current.Value = Font.UseShadow;

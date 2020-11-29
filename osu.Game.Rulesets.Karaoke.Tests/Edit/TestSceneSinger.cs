@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [Test]
         public void HoverToSingerArea()
         {
-            // todo : add this step because description is not showing.
+            // todo : add this step because the description is not showing.
             AddStep("Move mouse to singer area", () => InputManager.MoveMouseTo(Child, new Vector2(-450, -90)));
         }
     }

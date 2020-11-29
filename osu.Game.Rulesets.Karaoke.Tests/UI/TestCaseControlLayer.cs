@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
             var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(Ruleset.Value.CreateInstance());
             Dependencies.Cache(new KaraokeSessionStatics(config, null));
 
-            // Cannot work now because it need extra BDL in child
+            // Cannot work now because it needs an extra BDL in child
             Add(new Container
             {
                 RelativeSizeAxes = Axes.Both,

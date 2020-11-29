@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
                 var settingHUDOverlay = overlays.OfType<SettingHUDOverlay>().FirstOrDefault();
                 var actionContainer = settingHUDOverlay.OfType<KaraokeActionContainer>().FirstOrDefault();
 
-                // todo : test overlays is exist.
+                // todo : test overlays if exist.
                 return actionContainer?.Child is ControlLayer;
             }
         });

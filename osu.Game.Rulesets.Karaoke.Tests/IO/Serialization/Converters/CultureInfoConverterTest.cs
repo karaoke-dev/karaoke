@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             var cultureInfos = CultureInfo.GetCultures(CultureTypes.AllCultures);
             foreach (var cultureInfo in cultureInfos)
             {
-                // this weird cultureInfo will let test case failed.
+                // this weird cultureInfo will let test case fail.
                 if (cultureInfo.LCID == 4096)
                     continue;
 

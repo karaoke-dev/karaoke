@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         {
             var decoded = decode(fileName, out var encoded);
 
-            // Note : this test case does not cover ruby and romaji property
+            // Note : this test case does not cover ruby and romaji properties
             Assert.That(decoded.HitObjects.Count, Is.EqualTo(encoded.HitObjects.Count));
             Assert.That(encoded.Serialize(), Is.EqualTo(decoded.Serialize()));
         }
