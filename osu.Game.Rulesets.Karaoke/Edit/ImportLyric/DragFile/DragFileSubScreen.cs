@@ -1,6 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
@@ -9,11 +14,6 @@ using osu.Game.Overlays.Dialog;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog;
 using osuTK;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
 {
@@ -133,10 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
             };
 
         private PopupDialog createCompleteDialog()
-            => new OkPopupDialog(ok =>
-            {
-                Complete();
-            })
+            => new OkPopupDialog(ok => { Complete(); })
             {
                 Icon = FontAwesome.Regular.CheckCircle,
                 HeaderText = @"Import success",
