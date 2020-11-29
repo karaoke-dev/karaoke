@@ -45,7 +45,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags.Ja
             var lyric = new Lyric { Text = text };
             var rubyTags = generator.CreateRubyTags(lyric);
 
-
             Assert.AreEqual(rubyTags.Length, ruby.Length);
             foreach (var rubyTag in rubyTags)
             {
