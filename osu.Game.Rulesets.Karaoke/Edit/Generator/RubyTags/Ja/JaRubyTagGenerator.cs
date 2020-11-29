@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja
             var result = tokenStream.GetAttribute<ICharTermAttribute>();
             var offsetAtt = tokenStream.GetAttribute<IOffsetAttribute>();
 
-            // Reset the stream and convert all result
+            // Reset the stream and convert all results
             tokenStream.Reset();
 
             while (true)

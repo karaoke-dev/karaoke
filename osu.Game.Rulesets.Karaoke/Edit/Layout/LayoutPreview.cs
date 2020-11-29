@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 }
 
                 /// <summary>
-                /// It's an tricky to force add layout into here.
+                /// It's tricky to force adding a layout into here.
                 /// Should be removed eventually.
                 /// </summary>
                 public KaraokeLayout PreviewLayout

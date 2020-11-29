@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 
         private void splitNote()
         {
-            // TODO : percentage should be enter by dialog
+            // TODO : percentage should be entered by dialog
             var splittedNote = HitObject.CopyByPercentage(0.5);
             EditorBeatmap?.Add(splittedNote);
             // Change object's duration
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 
             HitObject.Display = display;
 
-            // Move to center if note is not display
+            // Move to center if note is not displayed
             if (!HitObject.Display)
                 HitObject.Tone = new Tone();
 

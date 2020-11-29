@@ -123,7 +123,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 
         public bool SingerInLyric(Singer singer, Lyric lyric)
         {
-            // lyric belongs to default singer if no any singer in lyric.
+            // lyric belongs to default singer if no singer specified by lyric.
             if (lyric.Singers == null || !lyric.Singers.Any())
                 return singer.ID == 0;
 

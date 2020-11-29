@@ -96,8 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
             }
 
             /// <summary>
-            /// It's an tricky to force add style into here.
-            /// Should be removed eventually.
+            /// A trick to add style, should eventually be removed
             /// </summary>
             public KaraokeFont PreviewStyle
             {

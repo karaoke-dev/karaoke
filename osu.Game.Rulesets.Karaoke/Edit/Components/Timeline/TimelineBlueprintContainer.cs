@@ -21,7 +21,7 @@ using osuTK.Graphics;
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Timeline
 {
     /// <summary>
-    /// This is the copy version of official <see cref="TimelineBlueprintContainer"/> because it's mark as internal
+    /// This is the copy version of official <see cref="TimelineBlueprintContainer"/> because it's marked as internal
     /// </summary>
     public class TimelineBlueprintContainer : BlueprintContainer
     {
@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Timeline
 
             public override bool HandleDrag(MouseButtonEvent e)
             {
-                // store the original position of the mouse down, as we may be scrolled during selection.
+                // store the original position of the mouse down, as it may be scrolled during selection.
                 if (lastMouseDown != e.ScreenSpaceMouseDownPosition)
                 {
                     lastMouseDown = e.ScreenSpaceMouseDownPosition;

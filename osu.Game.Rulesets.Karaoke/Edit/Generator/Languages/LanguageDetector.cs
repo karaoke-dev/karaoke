@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
             // make some language conversion here
             switch (languageCode)
             {
-                // todo : need to think about is this needed?
+                // todo : need to think about if this is needed?
                 case "en":
                     return new CultureInfo("en-US");
                 default:

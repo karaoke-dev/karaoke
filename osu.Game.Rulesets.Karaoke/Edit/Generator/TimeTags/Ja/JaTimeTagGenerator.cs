@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
         }
 
         /// <summary>
-        /// Thanks for RhythmKaTTE's author writing this logic into C#
+        /// Thanks to RhythmKaTTE's author writing this logic into C#
         /// http://juna-idler.blogspot.com/2016/05/rhythmkatte-version-01.html
         /// </summary>
         protected override void TimeTagLogic(Lyric lyric, List<Tuple<TimeTagIndex, double?>> timeTags)
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
 
                 if (char.IsWhiteSpace(c) && Config.CheckWhiteSpace)
                 {
-                    // 空白文字の連続は無条件で無視
+                    // 空白文字の連続は無条件で無視 (Unconditionally ignore a series of whitespace characters)
                     if (char.IsWhiteSpace(pc))
                         continue;
 

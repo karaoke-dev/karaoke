@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
             using (var stream = info.OpenRead())
             {
-                // todo : make a backup if has new lyric file.
+                // todo : make a backup in case of new lyric file.
                 /*
                 if (oldFile != null)
                     beatmaps.ReplaceFile(set, oldFile, stream, backup_lrc_name);
@@ -46,14 +46,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     beatmaps.AddFile(set, stream, backup_lrc_name);
                 */
 
-                // Import and replace all the file.
+                // Import and replace all the files.
                 using (var reader = new Game.IO.LineBufferedReader(stream))
                 {
                     var decoder = new LrcDecoder();
                     var lrcBeatmap = decoder.Decode(reader);
 
-                    // todo : remove all notes and lyric
-                    // or just clear all beatmap because not really sure is singer should be removed also?
+                    // todo : remove all notes and lyrics
+                    // or just clear all beatmaps, not really sure if singer should be removed also?
 
                     // then re-add the lyric.
                 }

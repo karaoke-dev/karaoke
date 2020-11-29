@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         public KaraokeHitObjectComposer(Ruleset ruleset)
             : base(ruleset)
         {
-            // Duplicated registration because selection handler need to use it.
+            // Duplicated registration because selection handler needs to use it.
             positionCalculator = new PositionCalculator(9);
         }
 
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         protected override Playfield PlayfieldAtScreenSpacePosition(Vector2 screenSpacePosition)
         {
-            // Only note and lyric playfield can interact with mouse input.
+            // Only note and lyric playfields can interact with mouse input.
             if (Playfield.NotePlayfield.ReceivePositionalInputAt(screenSpacePosition))
                 return Playfield.NotePlayfield;
             if (Playfield.LyricPlayfield.ReceivePositionalInputAt(screenSpacePosition))

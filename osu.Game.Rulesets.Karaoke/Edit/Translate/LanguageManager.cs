@@ -13,7 +13,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
     /// <summary>
-    /// Handle create or delete language.
+    /// Handle creating or deleting languages.
     /// </summary>
     public class LanguageManager : Component
     {

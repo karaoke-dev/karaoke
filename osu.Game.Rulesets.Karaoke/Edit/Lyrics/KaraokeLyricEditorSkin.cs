@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     /// <summary>
-    /// This karaoke skin is using in lyric editor only.
+    /// This karaoke skin is used in the lyric editor only.
     /// </summary>
     public class KaraokeLyricEditorSkin : KaraokeInternalSkin
     {

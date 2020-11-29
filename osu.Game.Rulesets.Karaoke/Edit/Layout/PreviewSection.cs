@@ -157,7 +157,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
                 var lyric = new KaraokeLegacyBeatmapDecoder().Decode(reader).HitObjects.OfType<Lyric>().FirstOrDefault();
 
-                // Check is not null
+                // Check if not null
                 if (lyric == null)
                     throw new ArgumentNullException();
 

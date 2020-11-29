@@ -50,14 +50,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
         {
             Schedule(() =>
             {
-                // Check file is exist
+                // Check if file exists
                 if (!fileInfo.Exists)
                 {
                     DialogOverlay.Push(createFileNotFoundDialog());
                     return;
                 }
 
-                // Check format is match
+                // Check if format matches
                 if (!ImportLyricManager.LyricFormatExtensions.Contains(fileInfo.Extension))
                 {
                     DialogOverlay.Push(createFormatNotMatchDialog());

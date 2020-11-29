@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private void addHitObject(HitObject hitObject)
         {
-            // see how `DrawableEditRulesetWrapper` do
+            // see `DrawableEditRulesetWrapper`
             if (hitObject is Lyric lyric)
             {
                 container.Items.Add(lyric);
@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         ViewMode,
 
         /// <summary>
-        /// Can create/delete/mode/split/combine lyric.
+        /// Can create/delete/mode/split/combine lyrics.
         /// </summary>
         EditMode,
 

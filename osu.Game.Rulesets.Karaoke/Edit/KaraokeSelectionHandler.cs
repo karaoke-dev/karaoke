@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 // Set multi note display property
                 menu.Add(createMultiNoteDisplayPropertyMenuItem(selectedObject));
 
-                // Combine multi note if they has same start and end index.
+                // Combine multi note if they have the same start and end index.
                 var firstObject = selectedObject.FirstOrDefault();
                 if (firstObject != null && selectedObject.All(x => x.StartIndex == firstObject.StartIndex && x.EndIndex == firstObject.EndIndex))
                     menu.Add(createCombineNoteMenuItem(selectedObject));
@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             return new OsuMenuItem("Combine", MenuItemType.Standard, () =>
             {
-                // Select at least two object.
+                // Select at least two objects.
                 if (selectedObject.Count() < 2)
                     return;
 
@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 {
                     ChangeHandler.BeginChange();
 
-                    // todo : SingerUtils not using in here, and this logic should be combined into singer manager.
+                    // todo : SingerUtils not used in here, and this logic should be combined into singer manager.
                     if (state == TernaryState.True)
                         EditorBeatmap.SelectedHitObjects.Cast<Lyric>().ForEach(l => l.Singers = SingerUtils.GetSingersIndex(x.Key));
 
@@ -185,7 +185,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
                 note.Tone += deltaTone;
 
-                //Change all note to visible
+                //Change all notes to visible
                 note.Display = true;
             }
         }
