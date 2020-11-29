@@ -15,9 +15,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     public abstract class ImportLyricSubScreenWithTopNavigation : ImportLyricSubScreen
     {
-        protected TopNavigation Navigation { get; private set; }
+        protected TopNavigation Navigation { get; }
 
-        public ImportLyricSubScreenWithTopNavigation()
+        protected ImportLyricSubScreenWithTopNavigation()
         {
             Padding = new MarginPadding(10);
             InternalChild = new GridContainer
@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 {
                     new Dimension(GridSizeMode.Absolute, 40),
                     new Dimension(GridSizeMode.Absolute, 10),
-                    new Dimension(GridSizeMode.Distributed)
+                    new Dimension()
                 },
                 Content = new[]
                 {
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                         Navigation = CreateNavigation(),
                     },
                     new Drawable[] { },
-                    new Drawable[]
+                    new[]
                     {
                         CreateContent(),
                     }
@@ -53,13 +53,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             [Resolved]
             protected OsuColour Colours { get; private set; }
 
-            protected ImportLyricSubScreen Screen { get; private set; }
+            protected ImportLyricSubScreen Screen { get; }
 
             private readonly CornerBackground background;
             private readonly OsuSpriteText text;
             private readonly IconButton button;
 
-            public TopNavigation(ImportLyricSubScreen screen)
+            protected TopNavigation(ImportLyricSubScreen screen)
             {
                 Screen = screen;
 
@@ -74,13 +74,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     {
                         Anchor = Anchor.CentreLeft,
                         Origin = Anchor.CentreLeft,
-                        Margin = new MarginPadding{ Left = 15 }
+                        Margin = new MarginPadding { Left = 15 }
                     },
                     button = new IconButton
                     {
                         Anchor = Anchor.CentreRight,
                         Origin = Anchor.CentreRight,
-                        Margin = new MarginPadding{ Right = 5 },
+                        Margin = new MarginPadding { Right = 5 },
                         Action = () =>
                         {
                             if (AbleToNextStep(State))
@@ -92,12 +92,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 };
             }
 
-            protected string NavigationText { get => text.Text; set => text.Text = value; }
+            protected string NavigationText
+            {
+                set => text.Text = value;
+            }
 
-            protected string TooltipText { get => button.TooltipText; set => button.TooltipText = value; }
+            protected string TooltipText
+            {
+                get => button.TooltipText;
+                set => button.TooltipText = value;
+            }
 
             private NavigationState state;
-            public NavigationState State {
+
+            public NavigationState State
+            {
                 get => state;
                 set
                 {
@@ -116,24 +125,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                         button.Colour = Colours.Gray6;
                         button.Icon = FontAwesome.Regular.QuestionCircle;
                         break;
+
                     case NavigationState.Working:
                         background.Colour = Colours.Gray2;
                         text.Colour = Colours.GrayF;
                         button.Colour = Colours.Gray6;
                         button.Icon = FontAwesome.Solid.InfoCircle;
                         break;
+
                     case NavigationState.Done:
                         background.Colour = Colours.Gray6;
                         text.Colour = Colours.GrayF;
                         button.Colour = Colours.Yellow;
                         button.Icon = FontAwesome.Regular.ArrowAltCircleRight;
                         break;
+
                     case NavigationState.Error:
                         background.Colour = Colours.Gray2;
                         text.Colour = Colours.GrayF;
                         button.Colour = Colours.Yellow;
                         button.Icon = FontAwesome.Solid.ExclamationTriangle;
                         break;
+
                     default:
                         throw new IndexOutOfRangeException("Should not goes to here");
                 }

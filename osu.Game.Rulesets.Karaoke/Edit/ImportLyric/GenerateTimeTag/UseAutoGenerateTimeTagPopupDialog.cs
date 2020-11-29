@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
         {
             Icon = FontAwesome.Solid.Globe;
             HeaderText = "Auto generate time tag";
-            BodyText = $"Would you like to use time-tag to auto generate each lyric's time tag?";
+            BodyText = "Would you like to use time-tag to auto generate each lyric's time tag?";
             Buttons = new PopupDialogButton[]
             {
                 new PopupDialogOkButton

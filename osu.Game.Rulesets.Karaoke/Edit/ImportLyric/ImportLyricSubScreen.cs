@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         public abstract IconUsage Icon { get; }
 
-        public ImportLyricSubScreen()
+        protected ImportLyricSubScreen()
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
@@ -82,8 +82,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         public virtual void CanRollBack(IImportLyricSubScreen rollBackScreen, Action<bool> callBack)
         {
-            
-
             DialogOverlay.Push(new RollBackPopupDialog(rollBackScreen, ok =>
             {
                 if (ok && rollBackScreen.Step == ImportLyricStep.ImportLyric)

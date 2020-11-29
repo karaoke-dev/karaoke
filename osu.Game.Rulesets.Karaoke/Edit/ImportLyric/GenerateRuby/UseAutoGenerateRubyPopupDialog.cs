@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
         {
             Icon = FontAwesome.Solid.Globe;
             HeaderText = "Auto generate ruby";
-            BodyText = $"Would you like to use ruby generator to auto generate each lyric's ruby?";
+            BodyText = "Would you like to use ruby generator to auto generate each lyric's ruby?";
             Buttons = new PopupDialogButton[]
             {
                 new PopupDialogOkButton

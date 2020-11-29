@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
         public class GenerateTimeTagNavigation : TopNavigation
         {
             public GenerateTimeTagNavigation(ImportLyricSubScreen screen)
-                            : base(screen)
+                : base(screen)
             {
             }
 
@@ -77,10 +77,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
                     case NavigationState.Initial:
                         NavigationText = "Press button to auto-generate time tag. It's very easy.";
                         break;
+
                     case NavigationState.Working:
                     case NavigationState.Done:
                         NavigationText = "Cool";
                         break;
+
                     case NavigationState.Error:
                         NavigationText = "Oops, seems cause some error in here.";
                         break;

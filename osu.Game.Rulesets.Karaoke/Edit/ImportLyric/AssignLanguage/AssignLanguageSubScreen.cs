@@ -77,12 +77,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
                     case NavigationState.Initial:
                         NavigationText = "Try to select left side to mark lyric's language.";
                         break;
+
                     case NavigationState.Working:
                         NavigationText = "Almost there/";
                         break;
+
                     case NavigationState.Done:
                         NavigationText = "Cool! Seems all lyric has it's own language. Go to next step to generate ruby.";
                         break;
+
                     case NavigationState.Error:
                         NavigationText = "Oops, seems cause some error in here.";
                         break;

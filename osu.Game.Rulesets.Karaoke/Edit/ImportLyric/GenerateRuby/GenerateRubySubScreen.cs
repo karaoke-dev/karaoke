@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
         public override IconUsage Icon => FontAwesome.Solid.Gem;
 
         protected override TopNavigation CreateNavigation()
-           => new GenerateRubyNavigation(this);
+            => new GenerateRubyNavigation(this);
 
         protected override Drawable CreateContent()
             => new RubyRomajiEditor
@@ -62,10 +62,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
                     case NavigationState.Initial:
                         NavigationText = "Press button to auto-generate ruby and romaji. It's very easy.";
                         break;
+
                     case NavigationState.Working:
                     case NavigationState.Done:
                         NavigationText = "Go to next step to generate time-tag. Don't worry, it's auto also.";
                         break;
+
                     case NavigationState.Error:
                         NavigationText = "Oops, seems cause some error in here.";
                         break;
