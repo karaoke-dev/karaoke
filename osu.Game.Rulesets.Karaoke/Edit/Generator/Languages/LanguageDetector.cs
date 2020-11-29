@@ -15,6 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
         public LanguageDetector(LanguageDetectorConfig config)
         {
             var targetLanguages = config?.AcceptLanguage?.Where(x => x != null).ToList() ?? new List<CultureInfo>();
+
             if (targetLanguages.Any())
             {
                 detector.AddLanguages(targetLanguages.Select(x => x.Name).ToArray());

@@ -151,7 +151,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                         throw new IndexOutOfRangeException("Should not goes to here");
                 }
 
-                // Force change stype if this step is able to hext step.
+                // Force change style if this step is able to go to next step.
                 if (AbleToNextStep(value))
                 {
                     button.Icon = FontAwesome.Regular.ArrowAltCircleRight;

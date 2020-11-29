@@ -16,8 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
-        private KaraokeLyricEditorSkin skin;
-        private LyricRearrangeableListContainer container;
+        private readonly KaraokeLyricEditorSkin skin;
+        private readonly LyricRearrangeableListContainer container;
 
         public LyricEditor()
         {

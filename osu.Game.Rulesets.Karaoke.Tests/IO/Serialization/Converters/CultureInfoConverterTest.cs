@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase(null, "null")]
         public void TestSerialize(int? calId, string json)
         {
-            var language = calId != null ? new CultureInfo(calId.Value) : default(CultureInfo);
+            var language = calId != null ? new CultureInfo(calId.Value) : default;
             var result = JsonConvert.SerializeObject(language, createSettings());
             Assert.AreEqual(result, json);
         }
@@ -33,6 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         public void TestAllCultureInfo()
         {
             var cultureInfos = CultureInfo.GetCultures(CultureTypes.AllCultures);
+
             foreach (var cultureInfo in cultureInfos)
             {
                 // this weird cultureInfo will let test case failed.
@@ -40,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                     continue;
 
                 var json = JsonConvert.SerializeObject(cultureInfo, createSettings());
-                var deserializedCultureInfo =  JsonConvert.DeserializeObject<CultureInfo>(json, createSettings());
+                var deserializedCultureInfo = JsonConvert.DeserializeObject<CultureInfo>(json, createSettings());
                 Assert.AreEqual(deserializedCultureInfo, cultureInfo);
             }
         }

@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
                             RelativeSizeAxes = Axes.Both,
                             Children = new Container[]
                             {
-                                new RubyRomajiEditor()
+                                new RubyRomajiEditor
                                 {
                                     RelativeSizeAxes = Axes.Both,
                                 },

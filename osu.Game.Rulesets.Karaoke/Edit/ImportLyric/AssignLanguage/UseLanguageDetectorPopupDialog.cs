@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         {
             Icon = FontAwesome.Solid.Globe;
             HeaderText = "Language detector";
-            BodyText = $"Would you like to use language detector to auto assign each lyric's language?";
+            BodyText = "Would you like to use language detector to auto assign each lyric's language?";
             Buttons = new PopupDialogButton[]
             {
                 new PopupDialogOkButton
