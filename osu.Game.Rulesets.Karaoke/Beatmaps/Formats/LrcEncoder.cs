@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             new LyricLine
             {
                 Text = lyric.Text,
-                // Note : save to lyric will lost some tags with no value.
+                // Note : saving to lyrics will lose some tags with no value.
                 TimeTags = convertTimeTag(lyric.Text, TimeTagsUtils.ToDictionary(lyric.TimeTags)).ToArray(),
             };
 

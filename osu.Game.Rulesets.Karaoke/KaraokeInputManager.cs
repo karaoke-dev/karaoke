@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke
                         KeyBindingContainer.TriggerReleased(action);
                 }
 
-                // If any key pressed, the continuous send press event
+                // If any key pressed, then continuously send press event
                 if (replayState.PressedActions.Any())
                 {
                     foreach (var action in replayState.PressedActions)
@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke
                 // Convert beatmap's pitch to scale setting.
                 var scale = beatmap.PitchToScale(state.HasSound ? state.Pitch : lastState.Pitch);
 
-                // TODO : adjust scale by
+                // TODO : adjust scale
                 scale += 5;
 
                 var action = new KaraokeSaitenAction
@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke
             }
             else
             {
-                // Basically should not goes to here
+                // should never reach this
                 base.HandleInputStateChange(inputStateChange);
             }
         }

@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
 
         protected override DifficultyAttributes CreateDifficultyAttributes(IBeatmap beatmap, Mod[] mods, Skill[] skills, double clockRate)
         {
-            // Only karaoke note can be apply in difficulty calculation
+            // Only karaoke notes can be applied in difficulty calculation
             var notes = beatmap.HitObjects.OfType<Note>().ToList();
 
             if (!notes.Any())
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
             {
                 StarRating = difficultyValue(skills) * star_scaling_factor,
                 Mods = mods,
-                // Todo: This int cast is temporary to achieve 1:1 results with osu!stable, and should be removed in the future
+                // Todo: This int cast is temporary to achieve a 1:1 result with osu!stable, and should be removed in the future
                 GreatHitWindow = (int)hitWindows.WindowFor(HitResult.Great) / clockRate,
                 Skills = skills
             };
@@ -81,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
 
         protected override IEnumerable<DifficultyHitObject> CreateDifficultyHitObjects(IBeatmap beatmap, double clockRate)
         {
-            // Only karaoke note can be apply in difficulty calculation
+            // Only karaoke notes can be applied in difficulty calculation
             var notes = beatmap.HitObjects.OfType<Note>().ToList();
 
             for (int i = 1; i < notes.Count; i++)
@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
 
         protected override Skill[] CreateSkills(IBeatmap beatmap)
         {
-            // Only karaoke note can be apply in difficulty calculation
+            // Only karaoke notes can be applied in difficulty calculation
             var notes = beatmap.HitObjects.OfType<Note>().ToList();
             if (!notes.Any())
                 return new Skill[] { };

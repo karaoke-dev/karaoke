@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             // Convert line
             for (int i = 0; i < result.Lines.Length; i++)
             {
-                // Empty line should not be imported
+                // Empty lines should not be imported
                 var line = result.Lines[i];
                 if (string.IsNullOrEmpty(line.Text))
                     continue;

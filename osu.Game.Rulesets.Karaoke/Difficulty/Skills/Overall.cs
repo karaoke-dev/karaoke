@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
             var endTime = karaokeCurrent.BaseObject.EndTime;
 
             double holdFactor = 1.0; // Factor in case something else is held
-            double holdAddition = 0; // Addition to the current note in case it's a hold and has to be released awkwardly
+            double holdAddition = 0; // in addition to the current note in case it's a hold and has to be released awkwardly
 
             for (int i = 0; i < columnCount; i++)
             {

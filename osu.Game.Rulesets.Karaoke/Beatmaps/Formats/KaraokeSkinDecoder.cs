@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             var skinText = stream.ReadToEnd();
             var result = skinText.Deserialize<KaraokeSkin>();
 
-            // Copy property
+            // Copy properties
             output.Fonts = result.Fonts;
             output.Layouts = result.Layouts;
             output.NoteSkins = result.NoteSkins;

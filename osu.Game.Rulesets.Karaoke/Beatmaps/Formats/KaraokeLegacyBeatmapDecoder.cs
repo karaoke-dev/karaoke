@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         {
             AddDecoder<Beatmap>(@"karaoke file format v", m => new KaraokeLegacyBeatmapDecoder(Parsing.ParseInt(m.Split('v').Last())));
 
-            // use this weird way to let all the fall-back beatmap(include karaoke beatmap) become karaoke beatmap.
+            // a weird way to let all the fall-back beatmaps (including karaoke beatmaps) become karaoke beatmaps.
             SetFallbackDecoder<Beatmap>(() => new KaraokeLegacyBeatmapDecoder());
         }
 
@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     var note = notes[i];
                     var defaultNote = defaultNotes[i];
 
-                    // Support multi note in one time tag, format like ([1;0.5;か]|1#|...)
+                    // Support multiple notes in one time tag, format like ([1;0.5;か]|1#|...)
                     if (!note.StartsWith("(") || !note.EndsWith(")"))
                     {
                         // Process and add note
@@ -166,7 +166,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                                 tone = rubyNote;
                             }
 
-                            // Split note and apply them
+                            // Split note and apply it
                             var splitDefaultNote = defaultNote.CopyByPercentage(startPercentage, percentage);
                             startPercentage += percentage;
                             if (!string.IsNullOrEmpty(ruby))

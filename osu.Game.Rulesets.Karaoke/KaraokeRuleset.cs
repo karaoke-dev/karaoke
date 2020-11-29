@@ -257,10 +257,10 @@ namespace osu.Game.Rulesets.Karaoke
 
         public KaraokeRuleset()
         {
-            // It's a tricky way to let lazer to read karaoke testing beatmap
+            // a trick to get osu! to register karaoke beatmaps
             KaraokeLegacyBeatmapDecoder.Register();
 
-            // It's a tricky way to let lazer get ruleset config manager in test case
+            // a trick to get osu! to get ruleset config manager in test case
             // See RulesetConfigCache.GetConfigFor(Ruleset)
             RulesetInfo.ID = 111;
         }

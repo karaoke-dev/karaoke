@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 if (!note.Display)
                     return "-";
 
-                // TODO : Fill if customize ruby and percentage
+                // TODO : Fill and customize ruby and percentage
                 return convertTone(note.Tone);
 
                 // Convert tone to string
