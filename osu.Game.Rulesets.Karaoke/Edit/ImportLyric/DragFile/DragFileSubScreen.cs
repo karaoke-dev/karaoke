@@ -85,6 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
                             case FileLoadException loadException:
                                 DialogOverlay.Push(createLoadExceptionDialog(loadException));
                                 break;
+
                             default:
                                 DialogOverlay.Push(createUnknownExceptionDialog());
                                 break;
@@ -104,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
             {
                 Icon = FontAwesome.Regular.QuestionCircle,
                 HeaderText = "Seems file is not exist",
-                BodyText = $"Drag the file then drop again.",
+                BodyText = "Drag the file then drop again.",
             };
 
         private PopupDialog createFormatNotMatchDialog()
@@ -112,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
             {
                 Icon = FontAwesome.Solid.ExclamationTriangle,
                 HeaderText = "This type of file is not supported",
-                BodyText = $"May sure this type of file is supported.",
+                BodyText = "May sure this type of file is supported.",
             };
 
         private PopupDialog createLoadExceptionDialog(FileLoadException loadException)

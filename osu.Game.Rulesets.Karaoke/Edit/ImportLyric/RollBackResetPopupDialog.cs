@@ -1,29 +1,28 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 using System;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
+namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    public class UseLanguageDetectorPopupDialog : PopupDialog
+    public class RollBackResetPopupDialog : PopupDialog
     {
-        public UseLanguageDetectorPopupDialog(Action<bool> okAction = null)
+        public RollBackResetPopupDialog(IImportLyricSubScreen screen, Action<bool> okAction = null)
         {
-            Icon = FontAwesome.Solid.Globe;
-            HeaderText = "Language detector";
-            BodyText = $"Would you like to use language detector to auto assign each lyric's language?";
+            Icon = screen.Icon;
+            HeaderText = "Really sure?";
+            BodyText = $"Are you really sure you wants to roll-back to step '{screen.Title}'? you might lost every change you made.";
             Buttons = new PopupDialogButton[]
             {
                 new PopupDialogOkButton
                 {
-                    Text = @"OK",
+                    Text = @"Sure",
                     Action = () => okAction?.Invoke(true),
                 },
                 new PopupDialogCancelButton
                 {
-                    Text = @"Cancel",
+                    Text = @"Let me think about it",
                     Action = () => okAction?.Invoke(false),
                 },
             };

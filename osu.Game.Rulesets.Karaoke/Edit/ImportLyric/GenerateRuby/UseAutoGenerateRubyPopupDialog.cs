@@ -5,15 +5,15 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 using System;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
+namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
 {
-    public class UseLanguageDetectorPopupDialog : PopupDialog
+    public class UseAutoGenerateRubyPopupDialog : PopupDialog
     {
-        public UseLanguageDetectorPopupDialog(Action<bool> okAction = null)
+        public UseAutoGenerateRubyPopupDialog(Action<bool> okAction = null)
         {
             Icon = FontAwesome.Solid.Globe;
-            HeaderText = "Language detector";
-            BodyText = $"Would you like to use language detector to auto assign each lyric's language?";
+            HeaderText = "Auto generate ruby";
+            BodyText = "Would you like to use ruby generator to auto generate each lyric's ruby?";
             Buttons = new PopupDialogButton[]
             {
                 new PopupDialogOkButton
