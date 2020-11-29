@@ -137,6 +137,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     default:
                         throw new IndexOutOfRangeException("Should not goes to here");
                 }
+
+                // Force change stype if this step is able to hext step.
+                if (AbleToNextStep(value))
+                {
+                    button.Icon = FontAwesome.Regular.ArrowAltCircleRight;
+                }
             }
 
             protected virtual bool AbleToNextStep(NavigationState value) => value == NavigationState.Done;

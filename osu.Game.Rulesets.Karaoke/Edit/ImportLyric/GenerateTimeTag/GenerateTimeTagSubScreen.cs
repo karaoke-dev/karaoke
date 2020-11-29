@@ -1,9 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Timing;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 {
@@ -17,15 +19,46 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
         public override IconUsage Icon => FontAwesome.Solid.Tag;
 
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        {
+            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            var clock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };
+            dependencies.CacheAs<IAdjustableClock>(clock);
+            dependencies.CacheAs<IFrameBasedClock>(clock);
+
+            return dependencies;
+        }
+
         protected override TopNavigation CreateNavigation()
             => new GenerateTimeTagNavigation(this);
 
         protected override Drawable CreateContent()
-            => new Container();
+            => new LyricEditor
+            {
+                RelativeSizeAxes = Axes.Both,
+                Mode = Mode.TimeTagEditMode,
+                LyricFastEditMode = LyricFastEditMode.Language,
+                FontSize = 26
+            };
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+            Navigation.State = NavigationState.Initial;
+            AskForAutoGenerateTimeTag();
+        }
 
         public override void Complete()
         {
             ScreenStack.Push(ImportLyricStep.Success);
+        }
+
+        protected void AskForAutoGenerateTimeTag()
+        {
+            DialogOverlay.Push(new UseAutoGenerateTimeTagPopupDialog(ok =>
+            {
+                // todo : call manager to do that.
+            }));
         }
 
         public class GenerateTimeTagNavigation : TopNavigation
@@ -39,8 +72,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
             {
                 base.UpdateState(value);
 
-                // todo : update text
+                switch (value)
+                {
+                    case NavigationState.Initial:
+                        NavigationText = "Press button to auto-generate time tag. It's very easy.";
+                        break;
+                    case NavigationState.Working:
+                    case NavigationState.Done:
+                        NavigationText = "Cool";
+                        break;
+                    case NavigationState.Error:
+                        NavigationText = "Oops, seems cause some error in here.";
+                        break;
+                }
             }
+
+            protected override bool AbleToNextStep(NavigationState value)
+                => value == NavigationState.Working || value == NavigationState.Done;
         }
     }
 }

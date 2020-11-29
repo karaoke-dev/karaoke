@@ -5,15 +5,15 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 using System;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
+namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 {
-    public class UseAutoGenerateRubyPopupDialog : PopupDialog
+    public class UseAutoGenerateTimeTagPopupDialog : PopupDialog
     {
-        public UseAutoGenerateRubyPopupDialog(Action<bool> okAction = null)
+        public UseAutoGenerateTimeTagPopupDialog(Action<bool> okAction = null)
         {
             Icon = FontAwesome.Solid.Globe;
-            HeaderText = "Auto generate ruby";
-            BodyText = $"Would you like to use ruby generator to auto generate each lyric's ruby?";
+            HeaderText = "Auto generate time tag";
+            BodyText = $"Would you like to use time-tag to auto generate each lyric's time tag?";
             Buttons = new PopupDialogButton[]
             {
                 new PopupDialogOkButton
