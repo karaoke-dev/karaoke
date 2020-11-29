@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags.Ja
         public void TestLyricWithCheckLineEnd(string lyric, double[] index, bool applyConfig)
         {
             var config = generatorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckLineEnd) : null);
-            RunTimeTagCheckText(lyric, index, config);
+            RunTimeTagCheckTest(lyric, index, config);
         }
 
         [TestCase("か", new double[] { 0 }, false)]
@@ -25,14 +25,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags.Ja
         public void TestLyricWithCheckLineEndKeyUp(string lyric, double[] index, bool applyConfig)
         {
             var config = generatorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckLineEndKeyUp) : null);
-            RunTimeTagCheckText(lyric, index, config);
+            RunTimeTagCheckTest(lyric, index, config);
         }
 
         [Ignore("This feature has not been implemented")]
         public void TestLyricWithCheckBlankLine(string lyric, double[] index, bool applyConfig)
         {
             var config = generatorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckBlankLine) : null);
-            RunTimeTagCheckText(lyric, index, config);
+            RunTimeTagCheckTest(lyric, index, config);
         }
 
         [TestCase("     ", new double[] { 0, 1, 2, 3, 4 }, false)]
@@ -40,14 +40,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags.Ja
         public void TestLyricWithCheckWhiteSpace(string lyric, double[] index, bool applyConfig)
         {
             var config = generatorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpace) : null);
-            RunTimeTagCheckText(lyric, index, config);
+            RunTimeTagCheckTest(lyric, index, config);
         }
 
         [Ignore("This feature has not been implemented")]
         public void TestLyricWithCheckWhiteSpaceKeyUp(string lyric, double[] index, bool applyConfig)
         {
             var config = generatorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceKeyUp) : null);
-            RunTimeTagCheckText(lyric, index, config);
+            RunTimeTagCheckTest(lyric, index, config);
         }
 
         [TestCase("a　b　c　d　e", new double[] { 0, 2, 4, 6, 8 }, false)]
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags.Ja
         {
             var config = generatorConfig(nameof(JaTimeTagGeneratorConfig.CheckWhiteSpace),
                 applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceAlphabet) : null);
-            RunTimeTagCheckText(lyric, index, config);
+            RunTimeTagCheckTest(lyric, index, config);
         }
 
         [TestCase("0　1　2　3　4", new double[] { 0, 2, 4, 6, 8 }, false)]
@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags.Ja
         {
             var config = generatorConfig(nameof(JaTimeTagGeneratorConfig.CheckWhiteSpace),
                 applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceDigit) : null);
-            RunTimeTagCheckText(lyric, index, config);
+            RunTimeTagCheckTest(lyric, index, config);
         }
 
         [TestCase("!　!　!　!　！", new double[] { 0, 2, 4, 6, 8 }, false)]
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags.Ja
         {
             var config = generatorConfig(nameof(JaTimeTagGeneratorConfig.CheckWhiteSpace),
                 applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceAsciiSymbol) : null);
-            RunTimeTagCheckText(lyric, index, config);
+            RunTimeTagCheckTest(lyric, index, config);
         }
 
         [TestCase("がんばって", new double[] { 0, 2, 4 }, false)]
@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags.Ja
         public void TestLyricWithCheckWhiteCheckん(string lyric, double[] index, bool applyConfig)
         {
             var config = generatorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.Checkん) : null);
-            RunTimeTagCheckText(lyric, index, config);
+            RunTimeTagCheckTest(lyric, index, config);
         }
 
         [TestCase("買って", new double[] { 0, 2 }, false)]
@@ -94,12 +94,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags.Ja
         public void TestLyricWithCheckっ(string lyric, double[] index, bool applyConfig)
         {
             var config = generatorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.Checkっ) : null);
-            RunTimeTagCheckText(lyric, index, config);
+            RunTimeTagCheckTest(lyric, index, config);
         }
 
         #region test helper
 
-        protected void RunTimeTagCheckText(string lyricText, double[] index, JaTimeTagGeneratorConfig config)
+        protected void RunTimeTagCheckTest(string lyricText, double[] index, JaTimeTagGeneratorConfig config)
         {
             var generator = new JaTimeTagGenerator(config);
             var lyric = generateLyric(lyricText);

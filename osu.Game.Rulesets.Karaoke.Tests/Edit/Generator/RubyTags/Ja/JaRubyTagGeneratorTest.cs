@@ -12,30 +12,51 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags.Ja
     [TestFixture]
     public class JaRubyTagGeneratorTest
     {
-        [TestCase("花火大会", new[] { "はなび", "たいかい" }, false)]
-        [TestCase("花火大会", new[] { "ハナビ", "タイカイ" }, true)]
-        public void TestLyricWithCheckLineEndKeyUpWithRubyAsKatakana(string text, string[] ruby, bool applyConfig)
+        [TestCase("花火大会", new[] { "はなび", "たいかい" })]
+        [TestCase("はなび", new string[] { })]
+        public void TestCreateRubyTags(string text, string[] ruby)
         {
-            var config = generatorConfig(applyConfig ? nameof(JaRubyTagGeneratorConfig.RubyAsKatakana) : null);
+            var config = generatorConfig(null);
+            RunRubyCheckTest(text, ruby, config);
+        }
+
+        [TestCase("花火大会", new[] { "ハナビ", "タイカイ" })]
+        [TestCase("ハナビ", new string[] { })]
+        public void TestCreateRubyTagsWithRubyAsKatakana(string text, string[] ruby)
+        {
+            var config = generatorConfig(nameof(JaRubyTagGeneratorConfig.RubyAsKatakana));
+            RunRubyCheckTest(text, ruby, config);
+        }
+
+        [TestCase("はなび", new string[] { "はな", "び" })]
+        [TestCase("ハナビ", new string[] { "はなび" })]
+        public void TestCreateRubyTagsWithEnableDuplicatedRuby(string text, string[] ruby)
+        {
+            var config = generatorConfig(nameof(JaRubyTagGeneratorConfig.EnableDuplicatedRuby));
+            RunRubyCheckTest(text, ruby, config);
+        }
+
+        #region test helper
+
+        protected void RunRubyCheckTest(string text, string[] ruby, JaRubyTagGeneratorConfig config)
+        {
             var generator = new JaRubyTagGenerator(config);
 
             var lyric = new Lyric { Text = text };
             var rubyTags = generator.CreateRubyTags(lyric);
 
+            Assert.AreEqual(rubyTags.Length, ruby.Length);
             foreach (var rubyTag in rubyTags)
             {
                 Assert.IsTrue(ruby.Contains(rubyTag.Text));
             }
         }
 
-        #region test helper
-
-        private Lyric generateLyric(string text)
-            => new Lyric { Text = text };
-
         private JaRubyTagGeneratorConfig generatorConfig(params string[] properties)
         {
             var config = new JaRubyTagGeneratorConfig();
+            if (properties == null)
+                return config;
 
             foreach (var propertyName in properties)
             {

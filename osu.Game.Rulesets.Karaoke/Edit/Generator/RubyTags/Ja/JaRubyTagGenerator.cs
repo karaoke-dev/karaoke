@@ -47,20 +47,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja
                 tokenStream.IncrementToken();
 
                 // Get parsed result, result is Katakana.
-                var parsedResult = result.ToString();
-                if (string.IsNullOrEmpty(parsedResult))
+                var katakana = result.ToString();
+                if (string.IsNullOrEmpty(katakana))
                     break;
 
                 // Convert to Hiragana as default.
-                if (!Config.RubyAsKatakana)
+                var hiragana = JpStringUtils.ToHiragana(katakana);
+                if (!Config.EnableDuplicatedRuby)
                 {
-                    parsedResult = JpStringUtils.ToHiragana(parsedResult);
+                    // Not add deplicated ruby if same as parent.
+                    var parentText = text.Substring(offsetAtt.StartOffset, offsetAtt.EndOffset - offsetAtt.StartOffset);
+                    if (parentText == katakana || parentText == hiragana)
+                        continue;
                 }
 
                 // Make tag
                 tags.Add(new RubyTag
                 {
-                    Text = parsedResult,
+                    Text = Config.RubyAsKatakana ? katakana : hiragana,
                     StartIndex = offsetAtt.StartOffset,
                     EndIndex = offsetAtt.EndOffset
                 });
