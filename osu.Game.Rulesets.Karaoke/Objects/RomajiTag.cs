@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public struct RomajiTag : ITag
+    public struct RomajiTag : ITextTag
     {
         /// <summary>
         /// If kanji Matched, then apply romaji

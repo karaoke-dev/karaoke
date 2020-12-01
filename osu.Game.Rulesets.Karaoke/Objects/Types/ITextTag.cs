@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Objects.Types
 {
-    public interface ITag
+    public interface ITextTag : IHasText
     {
         string Text { get; set; }
 

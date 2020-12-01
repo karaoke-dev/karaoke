@@ -17,7 +17,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
 {
-    public class TagListPreview<T> : Container where T : ITag
+    public class TagListPreview<T> : Container where T : ITextTag
     {
         private readonly CornerBackground background;
         private readonly PreviewTagTable previewTagTable;
@@ -148,7 +148,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji.Components
             private Drawable[] createContent(int index, T tag)
             {
                 // IDK why but it only works with Bindable<ITag>, Bindable<T> doesn't work
-                var bindableTag = new Bindable<ITag>(tag);
+                var bindableTag = new Bindable<ITextTag>(tag);
 
                 OsuDropdown<int> startPositionDropdown;
                 OsuDropdown<int> endPositionDropdown;
