@@ -3,12 +3,25 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 {
     [TestFixture]
-    public class TextTagUtilsTest
+    public class TextTagsUtilsTest
     {
+        [TestCase(nameof(ValidTextTagWithSorted), new int[] { })]
+        public void TestSort(string testCase, int[] results)
+        {
+            // result : start, end, start, end...
+        }
+
+        [TestCase(nameof(ValidTextTagWithSorted), GroupCheck.Asc, SelfCheck.BasedOnStart, new int[] { })]
+        public void TestFindInvalid(string testCase, GroupCheck other, SelfCheck self, int[] errorIndex)
+        {
+
+        }
+
         #region valid source
 
         public static RubyTag[] ValidTextTagWithSorted()

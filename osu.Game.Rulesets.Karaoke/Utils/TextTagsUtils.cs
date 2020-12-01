@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
-    public static class TextTagUtils
+    public static class TextTagsUtils
     {
         public static T[] Sort<T>(T[] textTags) where T : ITextTag
         {
