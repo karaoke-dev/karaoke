@@ -41,7 +41,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(nameof(InvalidTextTagWithEndLargerThenNextStart), TextTagsUtils.Sorting.Desc, new int[] { 0 })]
         [TestCase(nameof(InvalidTextTagWithWrapNextTextTag), TextTagsUtils.Sorting.Asc, new int[] { 1 })]
         [TestCase(nameof(InvalidTextTagWithWrapNextTextTag), TextTagsUtils.Sorting.Desc, new int[] { 0 })]
-
         public void TestFindInvalid(string testCase, TextTagsUtils.Sorting sorting, int[] errorIndex)
         {
             var textTags = getValueByMethodName(testCase);
@@ -102,11 +101,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 new RubyTag { StartIndex = 0, EndIndex = 0 }, // Same number.
             };
 
+        public static RubyTag[] InvalidTextTagWithStartTimeExceedLyricSize()
+            => new[]
+            {
+                new RubyTag { StartIndex = 0, EndIndex = lyric.Length + 1 }, // Same number.
+            };
+
+        public static RubyTag[] InvalidTextTagWithEndTimeExceedLyricSize()
+            => new[]
+            {
+                new RubyTag { StartIndex = lyric.Length + 1, EndIndex = lyric.Length + 2 }, // Same number.
+            };
+
         public static RubyTag[] InvalidTextTagWithEndLargerThenNextStart()
             => new[]
             {
                 new RubyTag { StartIndex = 0, EndIndex = 2 }, // End is larger than second start.
-                new RubyTag { StartIndex = 1, EndIndex = 2 }
+                new RubyTag { StartIndex = 1, EndIndex = 3 }
             };
 
         public static RubyTag[] InvalidTextTagWithWrapNextTextTag()

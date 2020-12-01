@@ -42,14 +42,21 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             // find other is smaller or bigger
             foreach (var textTag in sortedTextTags)
             {
+
+                if (invalidList.Contains(textTag))
+                    continue;
+
+                var checkTags = sortedTextTags.Except(new[] { textTag });
                 switch (sorting)
                 {
                     case Sorting.Asc:
-
+                        // start index within tne target
+                        invalidList.AddRange(checkTags.Where(x => x.StartIndex >= textTag.StartIndex && x.StartIndex < textTag.EndIndex));
                         break;
 
                     case Sorting.Desc:
-
+                        // end index within tne target
+                        invalidList.AddRange(checkTags.Where(x => x.EndIndex >= textTag.StartIndex && x.StartIndex < textTag.EndIndex));
                         break;
                 }
             }
