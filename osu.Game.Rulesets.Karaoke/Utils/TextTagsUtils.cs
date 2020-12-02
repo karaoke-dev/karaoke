@@ -29,6 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (textTags == null || textTags.Length == 0)
                 return new T[] { };
 
+            // todo : need to make suure is need to sort in here?
             var sortedTextTags = Sort(textTags, sorting);
 
             var invalidList = new List<T>();
@@ -42,7 +43,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             // find other is smaller or bigger
             foreach (var textTag in sortedTextTags)
             {
-
                 if (invalidList.Contains(textTag))
                     continue;
 
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
                     case Sorting.Desc:
                         // end index within tne target
-                        invalidList.AddRange(checkTags.Where(x => x.EndIndex >= textTag.StartIndex && x.StartIndex < textTag.EndIndex));
+                        invalidList.AddRange(checkTags.Where(x => x.EndIndex > textTag.StartIndex && x.EndIndex <= textTag.EndIndex));
                         break;
                 }
             }

@@ -40,7 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(nameof(InvalidTextTagWithEndLargerThenNextStart), TextTagsUtils.Sorting.Asc, new int[] { 1 })]
         [TestCase(nameof(InvalidTextTagWithEndLargerThenNextStart), TextTagsUtils.Sorting.Desc, new int[] { 0 })]
         [TestCase(nameof(InvalidTextTagWithWrapNextTextTag), TextTagsUtils.Sorting.Asc, new int[] { 1 })]
-        [TestCase(nameof(InvalidTextTagWithWrapNextTextTag), TextTagsUtils.Sorting.Desc, new int[] { 0 })]
+        [TestCase(nameof(InvalidTextTagWithWrapNextTextTag), TextTagsUtils.Sorting.Desc, new int[] { 1 })]
+        [TestCase(nameof(InvalidTextTagWithSandwichTextTag), TextTagsUtils.Sorting.Asc, new int[] { 1 })]
+        [TestCase(nameof(InvalidTextTagWithSandwichTextTag), TextTagsUtils.Sorting.Desc, new int[] { 1 })]
         public void TestFindInvalid(string testCase, TextTagsUtils.Sorting sorting, int[] errorIndex)
         {
             var textTags = getValueByMethodName(testCase);
@@ -126,6 +128,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 new RubyTag { StartIndex = 0, EndIndex = 3 }, // Wrap second text tag.
                 new RubyTag { StartIndex = 1, EndIndex = 2 }
             };
+
+        public static RubyTag[] InvalidTextTagWithSandwichTextTag()
+           => new[]
+           {
+                new RubyTag { StartIndex = 0, EndIndex = 2 },
+                new RubyTag { StartIndex = 1, EndIndex = 3 },
+                new RubyTag { StartIndex = 2, EndIndex = 4 }
+           };
 
         #endregion
     }
