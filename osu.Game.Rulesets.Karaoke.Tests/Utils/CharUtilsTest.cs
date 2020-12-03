@@ -48,5 +48,24 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var isAsciiSymbol = CharUtils.IsAsciiSymbol(c);
             Assert.AreEqual(isAsciiSymbol, match);
         }
+
+        [TestCase('你', true)]
+        [TestCase('好', true)]
+        [TestCase('世', true)]
+        [TestCase('界', true)]
+        [TestCase('A', false)]
+        [TestCase('a', false)]
+        [TestCase('Ａ', false)]
+        [TestCase('ａ', false)]
+        [TestCase('~', false)]
+        [TestCase('～', false)]
+        [TestCase('ハ', false)]
+        [TestCase('は', false)]
+        [TestCase('ハ', false)]
+        public void TestIsChinese(char c, bool result)
+        {
+            var isChinses = CharUtils.IsChinese(c);
+            Assert.AreEqual(isChinses, result);
+        }
     }
 }
