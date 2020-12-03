@@ -16,8 +16,10 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             {
                 case Sorting.Asc:
                     return textTags?.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray();
+
                 case Sorting.Desc:
                     return textTags?.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray();
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(sorting));
             }
@@ -47,6 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     continue;
 
                 var checkTags = sortedTextTags.Except(new[] { textTag });
+
                 switch (sorting)
                 {
                     case Sorting.Asc:
