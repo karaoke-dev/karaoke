@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Difficulty
     {
         public KaraokeDifficultyCalculatorTest()
         {
-            // a trick to get osu! to register karaoke beatmaps
+            // a tricky way to get osu! to register karaoke beatmaps
             KaraokeLegacyBeatmapDecoder.Register();
         }
 
