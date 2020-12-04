@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags.Ja
 {
@@ -91,6 +92,34 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags.Ja
         {
             var config = GeneratorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.Checkっ) : null);
             RunTimeTagCheckTest(lyric, index, config);
+        }
+
+        [Test]
+        public void TestTagWithRubyLyric()
+        {
+            var config = GeneratorConfig(null);
+            var lyric = new Lyric
+            {
+                Text = "明日いっしょに遊びましょう！",
+                RubyTags = new []
+                {
+                    new RubyTag
+                    {
+                        StartIndex = 0,
+                        EndIndex = 2,
+                        Text = "あした"
+                    },
+                    new RubyTag
+                    {
+                        StartIndex = 7,
+                        EndIndex = 8,
+                        Text = "あそ"
+                    }
+                }
+            };
+
+            var result = new double[] { 0, 0, 0, 2, 4, 6, 7, 7, 8, 9, 10, 12, 13 };
+            RunTimeTagCheckTest(lyric, result, config);
         }
     }
 }

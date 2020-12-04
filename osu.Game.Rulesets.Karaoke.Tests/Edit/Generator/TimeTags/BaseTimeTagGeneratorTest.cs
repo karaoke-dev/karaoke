@@ -15,8 +15,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags
     {
         protected void RunTimeTagCheckTest(string lyricText, double[] index, TConfig config)
         {
-            var generator = Activator.CreateInstance(typeof(TTimeTagGenerator), config) as TTimeTagGenerator;
             var lyric = generateLyric(lyricText);
+            RunTimeTagCheckTest(lyric, index, config);
+        }
+
+        protected void RunTimeTagCheckTest(Lyric lyric, double[] index, TConfig config)
+        {
+            var generator = Activator.CreateInstance(typeof(TTimeTagGenerator), config) as TTimeTagGenerator;
 
             // create time tag and actually time tag.
             var timeTags = getTimeTagIndex(generator.CreateTimeTags(lyric));
@@ -29,6 +34,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags
         protected TConfig GeneratorConfig(params string[] properties)
         {
             var config = new TConfig();
+            if (properties == null)
+                return config;
 
             foreach (var propertyName in properties)
             {
