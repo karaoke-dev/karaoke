@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
     {
         public NicoKaraDecoderTest()
         {
-            // a trick to get osu! to register karaoke beatmaps
+            // a tricky way to get osu! to register karaoke beatmaps
             NicoKaraDecoder.Register();
         }
 
