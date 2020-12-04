@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
 
                 if (char.IsWhiteSpace(c) && Config.CheckWhiteSpace)
                 {
-                    // 空白文字の連続は無条件で無視 (Unconditionally ignore a series of whitespace characters)
+                    // Unconditionally ignore a series of whitespace characters
                     if (char.IsWhiteSpace(pc))
                         continue;
 
