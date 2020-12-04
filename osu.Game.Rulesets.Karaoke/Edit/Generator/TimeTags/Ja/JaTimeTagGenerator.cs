@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -22,7 +23,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
         /// </summary>
         protected override void TimeTagLogic(Lyric lyric, List<Tuple<TimeTagIndex, double?>> timeTags)
         {
-            var text = lyric.Text;
+            timeTags.AddRange(generateTimeTagByText(lyric.Text));
+
+            if (lyric.RubyTags == null)
+                return;
+
+            foreach (var ruby in lyric.RubyTags)
+            {
+                // remove exist time tag
+                timeTags.RemoveAll(x => x.Item1.Index > ruby.StartIndex && x.Item1.Index < ruby.EndIndex);
+
+                // add new time tags created from ruby
+                var rubyTags = generateTimeTagByText(ruby.Text);
+                var shiftingTimeTags = rubyTags.Select((x, v) =>
+                {
+                    return TimeTagsUtils.Create(new TimeTagIndex(ruby.StartIndex, x.Item1.State), x.Item2);
+                });
+                timeTags.AddRange(shiftingTimeTags);
+            }
+        }
+
+        private List<Tuple<TimeTagIndex, double?>> generateTimeTagByText(string text)
+        {
+            var timeTags = new List<Tuple<TimeTagIndex, double?>>();
+            if (text == null || text == "")
+                return timeTags;
 
             for (var i = 1; i < text.Length; i++)
             {
@@ -114,6 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
                     }
                 }
             }
+            return timeTags;
         }
     }
 }

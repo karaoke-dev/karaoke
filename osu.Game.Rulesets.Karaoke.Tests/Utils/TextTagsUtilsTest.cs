@@ -15,15 +15,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
     {
         private const string lyric = "Test lyric";
 
-        [TestCase(nameof(ValidTextTagWithSorted), TextTagsUtils.Sorting.Asc, new int[] { 0, 1, 1, 2, 2, 3 })]
-        [TestCase(nameof(ValidTextTagWithSorted), TextTagsUtils.Sorting.Desc, new int[] { 2, 3, 1, 2, 0, 1 })]
-        [TestCase(nameof(ValidTextTagWithUnsorted), TextTagsUtils.Sorting.Asc, new int[] { 0, 1, 1, 2, 2, 3 })]
-        [TestCase(nameof(ValidTextTagWithUnsorted), TextTagsUtils.Sorting.Desc, new int[] { 2, 3, 1, 2, 0, 1 })]
+        [TestCase(nameof(ValidTextTagWithSorted), TextTagsUtils.Sorting.Asc, new[] { 0, 1, 1, 2, 2, 3 })]
+        [TestCase(nameof(ValidTextTagWithSorted), TextTagsUtils.Sorting.Desc, new[] { 2, 3, 1, 2, 0, 1 })]
+        [TestCase(nameof(ValidTextTagWithUnsorted), TextTagsUtils.Sorting.Asc, new[] { 0, 1, 1, 2, 2, 3 })]
+        [TestCase(nameof(ValidTextTagWithUnsorted), TextTagsUtils.Sorting.Desc, new[] { 2, 3, 1, 2, 0, 1 })]
         public void TestSort(string testCase, TextTagsUtils.Sorting sorting, int[] results)
         {
             var textTags = getValueByMethodName(testCase);
 
             var sortedTextTags = TextTagsUtils.Sort(textTags, sorting);
+
             for (int i = 0; i < sortedTextTags.Length; i++)
             {
                 // result would be start, end, start, end...
@@ -34,15 +35,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         [TestCase(nameof(ValidTextTagWithSorted), TextTagsUtils.Sorting.Asc, new int[] { })]
         [TestCase(nameof(ValidTextTagWithUnsorted), TextTagsUtils.Sorting.Asc, new int[] { })]
-        [TestCase(nameof(InvalidTextTagWithSameStartAndEndIndex), TextTagsUtils.Sorting.Asc, new int[] {0 })]
-        [TestCase(nameof(InvalidTextTagWithWrongIndex), TextTagsUtils.Sorting.Asc, new int[] { 0 })]
-        [TestCase(nameof(InvalidTextTagWithNegativeIndex), TextTagsUtils.Sorting.Asc, new int[] { 0 })]
-        [TestCase(nameof(InvalidTextTagWithEndLargerThenNextStart), TextTagsUtils.Sorting.Asc, new int[] { 1 })]
-        [TestCase(nameof(InvalidTextTagWithEndLargerThenNextStart), TextTagsUtils.Sorting.Desc, new int[] { 0 })]
-        [TestCase(nameof(InvalidTextTagWithWrapNextTextTag), TextTagsUtils.Sorting.Asc, new int[] { 1 })]
-        [TestCase(nameof(InvalidTextTagWithWrapNextTextTag), TextTagsUtils.Sorting.Desc, new int[] { 1 })]
-        [TestCase(nameof(InvalidTextTagWithSandwichTextTag), TextTagsUtils.Sorting.Asc, new int[] { 1 })]
-        [TestCase(nameof(InvalidTextTagWithSandwichTextTag), TextTagsUtils.Sorting.Desc, new int[] { 1 })]
+        [TestCase(nameof(InvalidTextTagWithSameStartAndEndIndex), TextTagsUtils.Sorting.Asc, new[] { 0 })]
+        [TestCase(nameof(InvalidTextTagWithWrongIndex), TextTagsUtils.Sorting.Asc, new[] { 0 })]
+        [TestCase(nameof(InvalidTextTagWithNegativeIndex), TextTagsUtils.Sorting.Asc, new[] { 0 })]
+        [TestCase(nameof(InvalidTextTagWithEndLargerThenNextStart), TextTagsUtils.Sorting.Asc, new[] { 1 })]
+        [TestCase(nameof(InvalidTextTagWithEndLargerThenNextStart), TextTagsUtils.Sorting.Desc, new[] { 0 })]
+        [TestCase(nameof(InvalidTextTagWithWrapNextTextTag), TextTagsUtils.Sorting.Asc, new[] { 1 })]
+        [TestCase(nameof(InvalidTextTagWithWrapNextTextTag), TextTagsUtils.Sorting.Desc, new[] { 1 })]
+        [TestCase(nameof(InvalidTextTagWithSandwichTextTag), TextTagsUtils.Sorting.Asc, new[] { 1 })]
+        [TestCase(nameof(InvalidTextTagWithSandwichTextTag), TextTagsUtils.Sorting.Desc, new[] { 1 })]
         public void TestFindInvalid(string testCase, TextTagsUtils.Sorting sorting, int[] errorIndex)
         {
             var textTags = getValueByMethodName(testCase);
@@ -130,12 +131,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             };
 
         public static RubyTag[] InvalidTextTagWithSandwichTextTag()
-           => new[]
-           {
+            => new[]
+            {
                 new RubyTag { StartIndex = 0, EndIndex = 2 },
                 new RubyTag { StartIndex = 1, EndIndex = 3 },
                 new RubyTag { StartIndex = 2, EndIndex = 4 }
-           };
+            };
 
         #endregion
     }
