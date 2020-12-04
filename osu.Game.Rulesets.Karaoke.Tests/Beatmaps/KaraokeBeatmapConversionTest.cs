@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
 
         public KaraokeBeatmapConversionTest()
         {
-            // a trick to get osu! to register karaoke beatmaps
+            // a tricky way to get osu! to register karaoke beatmaps
             KaraokeLegacyBeatmapDecoder.Register();
         }
 
