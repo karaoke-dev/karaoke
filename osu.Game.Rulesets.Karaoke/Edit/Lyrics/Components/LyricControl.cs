@@ -25,6 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
             Lyric = lyric;
             CornerRadius = 5;
             AutoSizeAxes = Axes.Y;
+            Padding = new MarginPadding { Bottom = 10 };
             InternalChildren = new Drawable[]
             {
                 drawableLyric = new DrawableEditorLyric(lyric)
