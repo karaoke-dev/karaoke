@@ -28,7 +28,6 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             var endIndex = int.Parse(result.Groups[2].Value);
             var text = result.Groups[3].Value;
 
-
             return new RomajiTag
             {
                 StartIndex = startIndex,
