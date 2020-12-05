@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
                     return;
 
                 // todo : need to delay until karaoke text has been calculated.
-                UpdateTimeTags();
+                ScheduleAfterChildren(() => UpdateTimeTags());
             }
 
             protected override void ApplyLayout(KaraokeLayout layout)
