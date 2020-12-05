@@ -5,14 +5,13 @@ using System;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
     [TestFixture]
-    public class TimeTagsConverterTest
+    public class TimeTagsConverterTest : BaseSingleConverterTest<TimeTagsConverter>
     {
         [Test]
         public void TestSerialize()
@@ -24,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1200d),
             };
 
-            var result = JsonConvert.SerializeObject(rowTimeTag, createSettings());
+            var result = JsonConvert.SerializeObject(rowTimeTag, CreateSettings());
 
             Assert.AreEqual(result, "[\r\n  \"0,0,1000\",\r\n  \"0,1,1100\",\r\n  \"0,1,1200\"\r\n]");
         }
@@ -33,20 +32,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         public void TestDeserialize()
         {
             const string json_string = "[\r\n  \"0,0,1000\",\r\n  \"0,1,1100\",\r\n  \"0,1,1200\"\r\n]";
-            var result = JsonConvert.DeserializeObject<Tuple<TimeTagIndex, double?>[]>(json_string, createSettings());
+            var result = JsonConvert.DeserializeObject<Tuple<TimeTagIndex, double?>[]>(json_string, CreateSettings());
 
             Assert.IsNotNull(result);
             Assert.AreEqual(result.Length, 3);
             Assert.AreEqual(result[0].Item1.Index, 0);
             Assert.AreEqual(result[0].Item1.State, TimeTagIndex.IndexState.Start);
             Assert.AreEqual(result[0].Item2, 1000);
-        }
-
-        private JsonSerializerSettings createSettings()
-        {
-            var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
-            globalSetting.Converters = new JsonConverter[] { new TimeTagsConverter() };
-            return globalSetting;
         }
     }
 }
