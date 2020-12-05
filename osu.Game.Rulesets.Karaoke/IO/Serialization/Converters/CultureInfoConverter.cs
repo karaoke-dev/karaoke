@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
     public class CultureInfoConverter : JsonConverter<CultureInfo>
     {
-        public override CultureInfo ReadJson(JsonReader reader, Type objectType, CultureInfo existingValues, bool hasExistingValue, JsonSerializer serializer)
+        public override CultureInfo ReadJson(JsonReader reader, Type objectType, CultureInfo existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JToken.Load(reader);
             var value = obj.Value<int?>();
@@ -21,9 +21,9 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             return new CultureInfo(value.Value);
         }
 
-        public override void WriteJson(JsonWriter writer, CultureInfo values, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, CultureInfo value, JsonSerializer serializer)
         {
-            writer.WriteValue(values?.LCID ?? null);
+            writer.WriteValue(value?.LCID ?? null);
         }
     }
 }
