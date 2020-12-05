@@ -271,6 +271,7 @@
     {
       "name": "Lyric editor's layout",
       "alignment": 9,
+      "lyrics_interval": 5,
     }
   ]
  }
