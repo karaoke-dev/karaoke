@@ -16,6 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         protected override string ResourceName => @"osu.Game.Rulesets.Karaoke.Resources.Skin.editor.skin";
 
+        public KaraokeLyricEditorSkin()
+        {
+            FontSize = 26;
+        }
+
         public float FontSize
         {
             get => BindableFont.Value.LyricTextFontInfo.LyricTextFontInfo.CharSize;
