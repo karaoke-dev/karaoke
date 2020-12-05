@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 {
     public class LyricControl : Container
     {
-        private readonly DrawableLyric drawableLyric;
+        private readonly DrawableEditorLyric drawableLyric;
 
         public Lyric Lyric { get; }
 
