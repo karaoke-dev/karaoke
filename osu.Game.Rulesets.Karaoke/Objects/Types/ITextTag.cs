@@ -5,8 +5,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Types
 {
     public interface ITextTag : IHasText
     {
-        string Text { get; set; }
-
         int StartIndex { get; set; }
 
         int EndIndex { get; set; }
