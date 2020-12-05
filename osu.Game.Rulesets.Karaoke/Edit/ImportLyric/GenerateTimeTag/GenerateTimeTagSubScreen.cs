@@ -38,7 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
                 RelativeSizeAxes = Axes.Both,
                 Mode = Mode.TimeTagEditMode,
                 LyricFastEditMode = LyricFastEditMode.Language,
-                FontSize = 26
             };
 
         protected override void LoadComplete()

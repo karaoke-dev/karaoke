@@ -5,6 +5,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Types
 {
     public interface IHasText
     {
-        string Text { get; }
+        string Text { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
     public class DrawableLyric : DrawableKaraokeHitObject
     {
-        private KarakeSpriteText karaokeText;
+        protected KarakeSpriteText karaokeText;
         private OsuSpriteText translateText;
 
         public readonly IBindable<string> TextBindable = new Bindable<string>();

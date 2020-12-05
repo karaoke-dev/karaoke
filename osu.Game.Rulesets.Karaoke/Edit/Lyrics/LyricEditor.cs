@@ -17,14 +17,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private EditorBeatmap beatmap { get; set; }
 
         private readonly KaraokeLyricEditorSkin skin;
-        private readonly LyricRearrangeableListContainer container;
+        private readonly DrawableLyricEditList container;
 
         public LyricEditor()
         {
             Child = new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin())
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = container = new LyricRearrangeableListContainer
+                Child = container = new DrawableLyricEditList
                 {
                     RelativeSizeAxes = Axes.Both,
                 }

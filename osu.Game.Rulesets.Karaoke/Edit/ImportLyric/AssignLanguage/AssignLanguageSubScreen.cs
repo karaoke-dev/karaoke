@@ -38,7 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
                 RelativeSizeAxes = Axes.Both,
                 Mode = Mode.EditMode,
                 LyricFastEditMode = LyricFastEditMode.Language,
-                FontSize = 26
             };
 
         protected override void LoadComplete()
