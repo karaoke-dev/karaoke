@@ -37,10 +37,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             var dictionary = new Dictionary<int, string>
             {
                 { 0 , "ok"},
-                { 0 , "nope"},
-                { 0 , "random"},
-                { 0 , null },
-                { 0 , ""}
+                { 1 , "nope"},
+                { 2 , "random"},
+                { 3 , null },
+                { 4 , ""}
             };
 
             var bindableDictionary = new BindableDictionary<int, string>(dictionary);
@@ -193,9 +193,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [TestCase(null)]
         public void TestAddWithStringAddsStringToEnumerator(string str)
         {
-            bindableStringDictionary.Add(0, str);
+            var item = new KeyValuePair<int, string>(0, str);
+            bindableStringDictionary.Add(item);
 
-            Assert.Contains(str, bindableStringDictionary);
+            Assert.Contains(item, bindableStringDictionary);
         }
 
         [TestCase("a random string")]
@@ -206,10 +207,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             NotifyCollectionChangedEventArgs triggeredArgs = null;
             bindableStringDictionary.CollectionChanged += (_, args) => triggeredArgs = args;
 
-            bindableStringDictionary.Add(0, str);
+            var item = new KeyValuePair<int, string>(0, str);
+            bindableStringDictionary.Add(item);
 
             Assert.That(triggeredArgs.Action, Is.EqualTo(NotifyCollectionChangedAction.Add));
-            Assert.That(triggeredArgs.NewItems, Is.EquivalentTo(str.Yield()));
+            Assert.That(triggeredArgs.NewItems, Is.EquivalentTo(item.Yield()));
             Assert.That(triggeredArgs.NewStartingIndex, Is.Zero);
         }
 
@@ -272,9 +274,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             var list = new BindableDictionary<int, string>();
             list.BindTo(bindableStringDictionary);
 
-            bindableStringDictionary.Add(0, str);
+            var item = new KeyValuePair<int, string>(0, str);
+            bindableStringDictionary.Add(item);
 
-            Assert.Contains(str, list);
+            Assert.Contains(item, list);
         }
 
         [TestCase("a random string")]
@@ -289,11 +292,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             listB.BindTo(bindableStringDictionary);
             listC.BindTo(bindableStringDictionary);
 
-            bindableStringDictionary.Add(0, str);
+            var item = new KeyValuePair<int, string>(0, str);
+            bindableStringDictionary.Add(item);
 
-            Assert.Contains(str, listA);
-            Assert.Contains(str, listB);
-            Assert.Contains(str, listC);
+            Assert.Contains(item, listA);
+            Assert.Contains(item, listB);
+            Assert.Contains(item, listC);
         }
 
         [TestCase("a random string")]
@@ -311,10 +315,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [TestCase(null)]
         public void TestAddWithListContainingItemsDoesNotOverrideItems(string str)
         {
-            const string item = "existing string";
-            bindableStringDictionary.Add(0, item);
+            var item = new KeyValuePair<int, string>(0, "existing string");
+            bindableStringDictionary.Add(item);
 
-            bindableStringDictionary.Add(0, str);
+            bindableStringDictionary.Add(1, str);
 
             Assert.Contains(item, bindableStringDictionary);
         }
@@ -396,16 +400,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [Test]
         public void TestRemoveDoesntNotifySubscribersOnNoOp()
         {
+            const int key = 0;
             const string item = "item";
-            bindableStringDictionary.Add(0, item);
+            bindableStringDictionary.Add(key, item);
 
             NotifyCollectionChangedEventArgs triggeredArgs = null;
 
-            bindableStringDictionary.Remove(item);
+            bindableStringDictionary.Remove(key);
 
             bindableStringDictionary.CollectionChanged += (_, args) => triggeredArgs = args;
 
-            bindableStringDictionary.Remove(item);
+            bindableStringDictionary.Remove(key);
 
             Assert.That(triggeredArgs, Is.Null);
         }
@@ -413,6 +418,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [Test]
         public void TestRemoveNotifiesSubscribers()
         {
+            const int key = 0;
             const string item = "item";
             bindableStringDictionary.Add(0, item);
 
@@ -423,7 +429,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             bindableStringDictionary.CollectionChanged += (_, args) => triggeredArgsB = args;
             bindableStringDictionary.CollectionChanged += (_, args) => triggeredArgsC = args;
 
-            bindableStringDictionary.Remove(item);
+            bindableStringDictionary.Remove(key);
 
             Assert.That(triggeredArgsA, Is.Not.Null);
             Assert.That(triggeredArgsB, Is.Not.Null);
@@ -433,12 +439,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [Test]
         public void TestRemoveNotifiesBoundList()
         {
+            const int key = 0;
             const string item = "item";
-            bindableStringDictionary.Add(0, item);
+            bindableStringDictionary.Add(key, item);
             var list = new BindableDictionary<int, string>();
             list.BindTo(bindableStringDictionary);
 
-            bindableStringDictionary.Remove(item);
+            bindableStringDictionary.Remove(key);
 
             Assert.IsEmpty(list);
         }
@@ -446,8 +453,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [Test]
         public void TestRemoveNotifiesBoundLists()
         {
+            const int key = 0;
             const string item = "item";
-            bindableStringDictionary.Add(0, item);
+            bindableStringDictionary.Add(key, item);
             var listA = new BindableDictionary<int, string>();
             listA.BindTo(bindableStringDictionary);
             var listB = new BindableDictionary<int, string>();
@@ -455,21 +463,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             var listC = new BindableDictionary<int, string>();
             listC.BindTo(bindableStringDictionary);
 
-            bindableStringDictionary.Remove(item);
+            bindableStringDictionary.Remove(key);
 
             Assert.Multiple(() =>
             {
-                Assert.False(listA.Contains(item));
-                Assert.False(listB.Contains(item));
-                Assert.False(listC.Contains(item));
+                Assert.False(listA.Contains(key));
+                Assert.False(listB.Contains(key));
+                Assert.False(listC.Contains(key));
             });
         }
 
         [Test]
         public void TestRemoveNotifiesBoundListSubscription()
         {
+            const int key = 0;
             const string item = "item";
-            bindableStringDictionary.Add(0, item);
+            bindableStringDictionary.Add(key, item);
             var list = new BindableDictionary<int, string>();
             list.BindTo(bindableStringDictionary);
 
@@ -486,8 +495,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [Test]
         public void TestRemoveNotifiesBoundListSubscriptions()
         {
+            const int key = 0;
             const string item = "item";
-            bindableStringDictionary.Add(0, item);
+            bindableStringDictionary.Add(key, item);
             var listA = new BindableDictionary<int, string>();
             listA.BindTo(bindableStringDictionary);
 
@@ -504,7 +514,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             listB.CollectionChanged += (_, args) => triggeredArgsB1 = args;
             listB.CollectionChanged += (_, args) => triggeredArgsB2 = args;
 
-            bindableStringDictionary.Remove(item);
+            bindableStringDictionary.Remove(key);
 
             Assert.That(triggeredArgsA1, Is.Not.Null);
             Assert.That(triggeredArgsA2, Is.Not.Null);
@@ -580,7 +590,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             bindableStringDictionary.Clear();
 
             Assert.That(triggeredArgs.Action, Is.EqualTo(NotifyCollectionChangedAction.Remove));
-            Assert.That(triggeredArgs.OldItems, Is.EquivalentTo(new[] { "testA", "testA", "testA", "testA", "testA" }));
+            Assert.That(triggeredArgs.OldItems, Is.EquivalentTo(new Dictionary<int, string>
+            {
+                { 0 ,"testA" },
+                { 1 ,"testA" },
+                { 2 ,"testA" },
+                { 3 ,"testA" },
+                { 4 ,"testA" },
+            }));
             Assert.That(triggeredArgs.OldStartingIndex, Is.EqualTo(0));
         }
 
@@ -626,7 +643,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             for (int i = 0; i < 5; i++)
                 bindableStringDictionary.Add(i, "testA");
             for (int i = 0; i < 5; i++)
-                bindableList.Add(i, "testA");
+                bindableList.Add(i + 5, "testA");
 
             bindableStringDictionary.Clear();
 
@@ -645,11 +662,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             for (int i = 0; i < 5; i++)
                 bindableStringDictionary.Add(i, "testA");
             for (int i = 0; i < 5; i++)
-                bindableListA.Add(i, "testA");
+                bindableListA.Add(i + 5, "testA");
             for (int i = 0; i < 5; i++)
-                bindableListB.Add(i, "testA");
+                bindableListB.Add(i + 10, "testA");
             for (int i = 0; i < 5; i++)
-                bindableListC.Add(i, "testA");
+                bindableListC.Add(i + 15, "testA");
 
             bindableStringDictionary.Clear();
 
@@ -673,11 +690,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             for (int i = 0; i < 5; i++)
                 bindableStringDictionary.Add(i, "testA");
             for (int i = 0; i < 5; i++)
-                bindableListA.Add(i, "testA");
+                bindableListA.Add(i + 5, "testA");
             for (int i = 0; i < 5; i++)
-                bindableListB.Add(i, "testA");
+                bindableListB.Add(i + 10, "testA");
             for (int i = 0; i < 5; i++)
-                bindableListC.Add(i, "testA");
+                bindableListC.Add(i + 15, "testA");
 
             Assert.Multiple(() =>
             {
@@ -698,11 +715,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         {
             for (int i = 0; i < 5; i++)
                 bindableStringDictionary.Add(i, $"test{i}");
-            string[] array = new string[5];
+            var dictionary = new Dictionary<int, string>[5];
 
-            bindableStringDictionary.CopyTo(array, 0);
+            bindableStringDictionary.CopyTo(dictionary, 0);
 
-            CollectionAssert.AreEquivalent(bindableStringDictionary, array);
+            CollectionAssert.AreEquivalent(bindableStringDictionary, dictionary);
         }
 
         #endregion
@@ -828,11 +845,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [Test]
         public void TestParseWithArray()
         {
-            IEnumerable<string> strings = new[] { "testA", "testB" };
+            var dictionary = new Dictionary<int, string> { { 0, "testA" }, { 1, "testB" } };
 
-            bindableStringDictionary.Parse(strings);
+            bindableStringDictionary.Parse(dictionary);
 
-            CollectionAssert.AreEquivalent(strings, bindableStringDictionary);
+            CollectionAssert.AreEquivalent(dictionary, bindableStringDictionary);
         }
 
         [Test]
@@ -869,19 +886,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         public void TestParseWithItemsNotifiesAddRangeAndClearSubscribers()
         {
             bindableStringDictionary.Add(0, "test123");
-            IEnumerable<string> strings = new[] { "testA", "testB" };
+            var dictionary = new Dictionary<int, string> { { 0, "testA" }, { 1, "testB" } };
 
             var triggeredArgs = new List<NotifyCollectionChangedEventArgs>();
             bindableStringDictionary.CollectionChanged += (_, args) => triggeredArgs.Add(args);
 
-            bindableStringDictionary.Parse(strings);
+            bindableStringDictionary.Parse(dictionary);
 
             Assert.That(triggeredArgs, Has.Count.EqualTo(2));
             Assert.That(triggeredArgs.First().Action, Is.EqualTo(NotifyCollectionChangedAction.Remove));
             Assert.That(triggeredArgs.First().OldItems, Is.EquivalentTo("test123".Yield()));
             Assert.That(triggeredArgs.First().OldStartingIndex, Is.EqualTo(0));
             Assert.That(triggeredArgs.ElementAt(1).Action, Is.EqualTo(NotifyCollectionChangedAction.Add));
-            Assert.That(triggeredArgs.ElementAt(1).NewItems, Is.EquivalentTo(strings));
+            Assert.That(triggeredArgs.ElementAt(1).NewItems, Is.EquivalentTo(dictionary));
             Assert.That(triggeredArgs.ElementAt(1).NewStartingIndex, Is.EqualTo(0));
         }
 

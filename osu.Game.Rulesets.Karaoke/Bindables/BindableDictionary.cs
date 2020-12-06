@@ -247,9 +247,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             => Remove((TKey)key);
 
         public void CopyTo(Array array, int index)
-        {
-            throw new NotImplementedException();
-        }
+            => ((IDictionary)collection).CopyTo(array, index);
 
         public bool IsFixedSize => false;
 
@@ -447,11 +445,6 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
 
         private void removeWeakReference(WeakReference<BindableDictionary<TKey, TValue>> weakReference) => bindings?.Remove(weakReference);
 
-        public IBindableDictionary<TKey, TValue> GetBoundCopy()
-        {
-            throw new NotImplementedException();
-        }
-
         public void BindTo(IBindable them)
         {
             if (!(them is BindableDictionary<TKey, TValue> tThem))
@@ -461,7 +454,21 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         }
 
         IBindable IBindable.GetBoundCopy()
-            => GetBoundCopy(); 
+            => GetBoundCopy();
+
+        IBindableDictionary<TKey, TValue> IBindableDictionary<TKey, TValue>.GetBoundCopy()
+            => GetBoundCopy();
+
+        /// <summary>
+        /// Create a new instance of <see cref="BindableList{T}"/> and binds it to this instance.
+        /// </summary>
+        /// <returns>The created instance.</returns>
+        public BindableDictionary<TKey, TValue> GetBoundCopy()
+        {
+            var copy = new BindableDictionary<TKey, TValue>();
+            copy.BindTo(this);
+            return copy;
+        }
 
         #endregion IBindableDictionary
 
