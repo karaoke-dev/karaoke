@@ -127,10 +127,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// </summary>
         public IDictionary<int, string> Translates { get; set; } = new Dictionary<int, string>();
 
-
         [JsonIgnore]
         public readonly Bindable<CultureInfo> LanguageBindable = new Bindable<CultureInfo>();
 
+        /// <summary>
+        /// Language
+        /// </summary>
         public CultureInfo Language
         {
             get => LanguageBindable.Value;
