@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
                 }
             }
 
-            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, item, lastItem, index));
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, item, lastItem));
         }
 
         /// <summary>
@@ -184,9 +184,9 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         {
             ensureMutationAllowed();
 
-            int index = collection.IndexOf(key);
+            var containKey = collection.ContainsKey(key);
 
-            if (index < 0)
+            if (!containKey)
                 return false;
 
             // Removal may have come from an equality comparison.
@@ -202,11 +202,11 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
                     // prevent re-adding the item back to the callee.
                     // That would result in a <see cref="StackOverflowException"/>.
                     if (b != caller)
-                        b.remove(listItem, this);
+                        b.remove(key, this);
                 }
             }
 
-            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, listItem, index));
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, listItem));
 
             return true;
         }
@@ -215,7 +215,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             => collection.TryGetValue(key, out value);
 
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-            => collection.CopyTo(array, arrayIndex);
+            => ((IDictionary)collection).CopyTo(array, arrayIndex);
 
         public int Count
             => collection.Count;
@@ -231,7 +231,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
 
         ICollection IDictionary.Values => throw new NotImplementedException();
 
-        object IDictionary.this[TKey key]
+        public object this[object key]
         {
             get => this[key];
             set => this[key] = (TValue)value;
@@ -263,10 +263,10 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
 
         /// <summary>
         /// Parse an object into this instance.
-        /// A collection holding items of type <typeparamref name="T"/> can be parsed. Null results in an empty <see cref="BindableList{T}"/>.
+        /// A collection holding items of type <typeparamref name="T"/> can be parsed. Null results in an empty <see cref="BindableDictionary{TKey, TValue}"/>.
         /// </summary>
         /// <param name="input">The input which is to be parsed.</param>
-        /// <exception cref="InvalidOperationException">Thrown if this <see cref="BindableList{T}"/> is <see cref="Disabled"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if this <see cref="BindableDictionary{TKey, TValue}"/> is <see cref="Disabled"/>.</exception>
         public void Parse(object input)
         {
             ensureMutationAllowed();
@@ -297,7 +297,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         private bool disabled;
 
         /// <summary>
-        /// Whether this <see cref="BindableList{T}"/> has been disabled. When disabled, attempting to change the contents of this <see cref="BindableList{T}"/> will result in an <see cref="InvalidOperationException"/>.
+        /// Whether this <see cref="BindableDictionary{TKey, TValue}"/> has been disabled. When disabled, attempting to change the contents of this <see cref=BindableDictionary{TKey, TValue}"/> will result in an <see cref="InvalidOperationException"/>.
         /// </summary>
         public bool Disabled
         {
@@ -395,6 +395,57 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
 
             BindTo(tThem);
         }
+
+        /// <summary>
+        /// An alias of <see cref="BindTo"/> provided for use in object initializer scenarios.
+        /// Passes the provided value as the foreign (more permanent) bindable.
+        /// </summary>
+        public IBindableDictionary<TKey, TValue> BindTarget
+        {
+            set => ((IBindableDictionary<TKey, TValue>)this).BindTo(value);
+        }
+
+        /// <summary>
+        /// Binds this <see cref="BindableDictionary{TKey, TValue}"/> to another.
+        /// </summary>
+        /// <param name="them">The <see cref="BindableDictionary{TKey, TValue}"/> to be bound to.</param>
+        public void BindTo(BindableDictionary<TKey, TValue> them)
+        {
+            if (them == null)
+                throw new ArgumentNullException(nameof(them));
+            if (bindings?.Contains(weakReference) ?? false)
+                throw new ArgumentException("An already bound collection can not be bound again.");
+            if (them == this)
+                throw new ArgumentException("A collection can not be bound to itself");
+
+            // copy state and content over
+            Parse(them);
+            Disabled = them.Disabled;
+
+            addWeakReference(them.weakReference);
+            them.addWeakReference(weakReference);
+        }
+
+        /// <summary>
+        /// Bind an action to <see cref="CollectionChanged"/> with the option of running the bound action once immediately
+        /// with an <see cref="NotifyCollectionChangedAction.Add"/> event for the entire contents of this <see cref="BindableDictionary{TKey, TValue}"/>.
+        /// </summary>
+        /// <param name="onChange">The action to perform when this <see cref="BindableDictionary{TKey, TValue}"/> changes.</param>
+        /// <param name="runOnceImmediately">Whether the action provided in <paramref name="onChange"/> should be run once immediately.</param>
+        public void BindCollectionChanged(NotifyCollectionChangedEventHandler onChange, bool runOnceImmediately = false)
+        {
+            CollectionChanged += onChange;
+            if (runOnceImmediately)
+                onChange(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, collection));
+        }
+
+        private void addWeakReference(WeakReference<BindableDictionary<TKey, TValue>> weakReference)
+        {
+            bindings ??= new LockedWeakList<BindableDictionary<TKey, TValue>>();
+            bindings.Add(weakReference);
+        }
+
+        private void removeWeakReference(WeakReference<BindableDictionary<TKey, TValue>> weakReference) => bindings?.Remove(weakReference);
 
         public IBindableDictionary<TKey, TValue> GetBoundCopy()
         {
