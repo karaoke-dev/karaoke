@@ -9,7 +9,6 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
@@ -20,6 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         private const int continuous_spacing = 20;
         private const int info_part_spacing = 200;
+        private const int min_height = 75;
+        private const int max_height = 120;
 
         private Box background;
         private Box dragAlert;
@@ -68,19 +69,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                             new Dimension(GridSizeMode.Absolute, info_part_spacing - continuousSpacing),
                             new Dimension(GridSizeMode.Distributed)
                         },
-                        RowDimensions = new[] { new Dimension(GridSizeMode.AutoSize) },
+                        RowDimensions = new[] { new Dimension(GridSizeMode.AutoSize, minSize: min_height, maxSize: max_height) },
                         Content = new[]
                         {
                             new[]
                             {
                                 new Container
                                 {
-                                    RelativeSizeAxes = Axes.Both,
+                                    RelativeSizeAxes = Axes.X,
                                     Children = new Drawable[]
                                     {
                                         headerBackground = new Box
                                         {
-                                            RelativeSizeAxes = Axes.Both,
+                                            RelativeSizeAxes = Axes.X,
+                                            Height = max_height,
                                             Alpha = 0.7f
                                         },
                                         new BadgeFillFlowContainer
