@@ -19,6 +19,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
         public override IconUsage Icon => FontAwesome.Solid.Tag;
 
+        [Cached]
+        protected readonly TimeTagManager TimeTagManager;
+
+        public GenerateTimeTagSubScreen()
+        {
+            AddInternal(TimeTagManager = new TimeTagManager());
+        }
+
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
             var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
@@ -56,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
         {
             DialogOverlay.Push(new UseAutoGenerateTimeTagPopupDialog(ok =>
             {
-                // todo : call manager to do that.
+                TimeTagManager.AutoGenerateTimeTag();
             }));
         }
 

@@ -101,7 +101,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
             protected void UpdateTimeTags()
             {
                 timeTagContainer.Clear();
-                foreach (var timeTag in TimeTagsBindable.Value)
+                var timeTags = TimeTagsBindable.Value;
+                if (timeTags == null)
+                    return;
+
+                foreach (var timeTag in timeTags)
                 {
                     var index = Math.Min(timeTag.Item1.Index, HitObject.Text.Length - 1);
                     var percentage = timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 0 : 1;

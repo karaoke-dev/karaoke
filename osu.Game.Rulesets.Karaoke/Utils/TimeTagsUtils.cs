@@ -112,6 +112,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns>Fixed time tags.</returns>
         public static Tuple<TimeTagIndex, double?>[] FixInvalid(Tuple<TimeTagIndex, double?>[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
+            if (timeTags == null || timeTags.Length == 0)
+                return timeTags;
+
             var sortedTimeTags = Sort(timeTags);
             var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Item1.Index);
 
@@ -184,6 +187,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static IReadOnlyDictionary<TimeTagIndex, double> ToDictionary(Tuple<TimeTagIndex, double?>[] timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
                                                                              SelfCheck self = SelfCheck.BasedOnStart)
         {
+            if (timeTags == null)
+                return new Dictionary<TimeTagIndex, double>();
+
             // sorted value
             var sortedTimeTags = applyFix ? FixInvalid(timeTags, other, self) : Sort(timeTags);
 
