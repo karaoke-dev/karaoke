@@ -107,7 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
 
         #endregion
 
-        #region list[index]
+        #region dictionary[index]
 
         [Test]
         public void TestGetRetrievesObjectAtIndex()
@@ -368,7 +368,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         public void TestAddRangeEnumeratesOnlyOnce()
         {
             BindableDictionary<int, string> list1 = new BindableDictionary<int, string>();
-            BindableDictionary<int, string> list2 = BindableDictionary<int, string>();
+            BindableDictionary<int, string> list2 = new BindableDictionary<int, string>();
             list2.BindTo(list1);
 
             int counter = 0;
@@ -1003,11 +1003,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             bindableStringDictionary.Add(0, "0");
             bindableStringDictionary.Add(1, "0");
 
-            var list = new BindableDictionary<int, string>();
-            list.BindTo(bindableStringDictionary);
+            var dictionary = new BindableDictionary<int, string>();
+            dictionary.BindTo(bindableStringDictionary);
 
             NotifyCollectionChangedEventArgs triggeredArgs = null;
-            list.CollectionChanged += (_, args) => triggeredArgs = args;
+            dictionary.CollectionChanged += (_, args) => triggeredArgs = args;
 
             bindableStringDictionary.RemoveAll(m => m == "0");
 
