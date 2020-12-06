@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [Test]
         public void TestGoToStep() => Schedule(() =>
         {
-            var temp = TestResources.GetTestLrcForImport("default");
+            var temp = TestResources.GetTestLrcForImport("light");
             Child = screen = new TestImportLyricScreen(new FileInfo(temp));
 
             var steps = (ImportLyricStep[])Enum.GetValues(typeof(ImportLyricStep));

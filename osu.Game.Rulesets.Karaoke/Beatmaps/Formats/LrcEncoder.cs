@@ -35,9 +35,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private IEnumerable<TimeTag> convertTimeTag(string text, IReadOnlyDictionary<TimeTagIndex, double> tags)
         {
-            if (tags == null || !tags.Any())
-                throw new ArgumentNullException($"{nameof(tags)} cannot be null.");
-
             var totalTags = text.Length * 2 + 2;
 
             for (int i = 0; i < totalTags; i++)

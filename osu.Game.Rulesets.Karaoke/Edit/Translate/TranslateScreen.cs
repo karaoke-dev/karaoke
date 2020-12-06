@@ -18,13 +18,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         protected readonly OverlayColourProvider ColourProvider;
 
         [Cached]
-        protected readonly LanguageManager LanguageManager;
+        protected readonly TranslateManager TranslateManager;
 
         public TranslateScreen()
             : base(EditorScreenMode.SongSetup)
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
-            Content.Add(LanguageManager = new LanguageManager());
+            Content.Add(TranslateManager = new TranslateManager());
         }
 
         [BackgroundDependencyLoader]

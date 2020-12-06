@@ -16,10 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges
             {
                 var language = value.NewValue;
 
-                if (language == null)
-                    BadgeText = "None";
-                else
-                    BadgeText = language.DisplayName;
+                BadgeText = language == null ? "None" : language.DisplayName;
             }, true);
         }
 

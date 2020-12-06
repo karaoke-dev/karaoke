@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
         private DialogOverlay dialogOverlay;
-        private LanguageManager manager;
+        private TranslateManager manager;
 
         private ManageLanguagesDialog dialog;
 
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
             base.Content.AddRange(new Drawable[]
             {
-                manager = new LanguageManager(),
+                manager = new TranslateManager(),
                 Content,
                 dialogOverlay = new DialogOverlay()
             });

@@ -139,6 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
                     }
                 }
             }
+
             return timeTags;
         }
     }
