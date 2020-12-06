@@ -10,6 +10,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
@@ -85,16 +86,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                         new BadgeFillFlowContainer
                                         {
                                             Direction = FillDirection.Vertical,
-                                            AutoSizeAxes = Axes.Both,
+                                            RelativeSizeAxes = Axes.X,
+                                            AutoSizeAxes = Axes.Y,
                                             Anchor = Anchor.TopRight,
                                             Origin = Anchor.TopRight,
                                             Spacing = new Vector2(5),
-                                            Padding = new MarginPadding(10),
-                                            Children = new Badge[]
+                                            Children = new []
                                             {
-                                                new TimeInfoBadge(Model),
-                                                new StyleInfoBadge(Model),
-                                                new LayoutInfoBadge(Model),
+                                                new TimeInfoContainer(Model)
+                                                {
+                                                    RelativeSizeAxes = Axes.X,
+                                                    Height = 36,
+                                                }
                                             }
                                         },
                                     }
@@ -134,9 +137,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             base.OnDragEnd(e);
         }
 
-        public class BadgeFillFlowContainer : FillFlowContainer<Badge>
+        public class BadgeFillFlowContainer : FillFlowContainer
         {
-            public override void Add(Badge drawable)
+            public override void Add(Drawable drawable)
             {
                 drawable.Anchor = Anchor.TopRight;
                 drawable.Origin = Anchor.TopRight;

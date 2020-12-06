@@ -10,6 +10,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
+using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
@@ -167,8 +168,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
         private Drawable createTimeDrawable(Lyric lyric)
         {
-            var startTime = TimeSpan.FromMilliseconds(lyric.StartTime).ToString(@"mm\:ss\:fff");
-            var endTime = TimeSpan.FromMilliseconds(lyric.EndTime).ToString(@"mm\:ss\:fff");
+            var startTime = lyric.StartTime.ToEditorFormattedString();
+            var endTime = lyric.EndTime.ToEditorFormattedString();
             return new OsuSpriteText
             {
                 Text = startTime + " - " + endTime,

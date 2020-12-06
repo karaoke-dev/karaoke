@@ -5,6 +5,7 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Input.Events;
 using osu.Framework.Timing;
+using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -37,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges
         {
             BadgeText = $"{getTime(Lyric.StartTime)} - {getTime(Lyric.EndTime)}";
 
-            static string getTime(double time) => TimeSpan.FromMilliseconds(time).ToString(@"mm\:ss\:fff");
+            static string getTime(double time) => time.ToEditorFormattedString();
         }
     }
 }
