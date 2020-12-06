@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using System;
+using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 {
@@ -40,6 +41,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 
         public class DrawableEditorLyric : DrawableLyric
         {
+            private const int time_tag_spacing = 4;
+
             private readonly Container timeTagContainer;
 
             public DrawableEditorLyric(Lyric lyric)
@@ -111,11 +114,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
                     var percentage = timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 0 : 1;
                     var position = karaokeText.GetPercentageWidth(index, index + 1, percentage);
 
+                    var duplicatedTagAmount = timeTags.SkipWhile(t => t!= timeTag).Count(x => x.Item1 == timeTag.Item1) - 1;
+                    var spacing = duplicatedTagAmount * time_tag_spacing * (timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 1 : -1);
+
                     timeTagContainer.Add(new DrawableTimeTag(timeTag)
                     {
                         Anchor = Anchor.BottomLeft,
                         Origin = Anchor.BottomLeft,
-                        X = position
+                        X = position + spacing
                     });
                 }
             }
