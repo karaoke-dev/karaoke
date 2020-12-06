@@ -8,6 +8,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
@@ -52,10 +53,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     var decoder = new LrcDecoder();
                     var lrcBeatmap = decoder.Decode(reader);
 
-                    // todo : remove all notes and lyric
-                    // or just clear all beatmap because not really sure is singer should be removed also?
+                    // remove all hit objects (note and lyric) from beatmap
+                    editorBeatmap.Clear();
 
                     // then re-add the lyric.
+                    var lyrics = lrcBeatmap.HitObjects.OfType<Lyric>();
+                    editorBeatmap.AddRange(lyrics);
                 }
             }
         }
