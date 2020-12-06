@@ -43,7 +43,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             changeHandler?.EndChange();
         }
 
-        
         public class TimeTagGeneratorSelector
         {
             private readonly Lazy<JaTimeTagGenerator> jaTimeTagGenerator;
@@ -73,8 +72,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case 17:
                     case 1041:
                         return jaTimeTagGenerator.Value.CreateTimeTags(lyric);
+
                     case 1028:
                         return zhTimeTagGenerator.Value.CreateTimeTags(lyric);
+
                     default:
                         return null;
                 }

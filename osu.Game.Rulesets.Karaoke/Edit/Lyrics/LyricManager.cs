@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (!lyrics.Any())
                 return;
 
-            // todo : should get the config fron setting.
+            // todo : should get the config from setting.
             var config = new LanguageDetectorConfig();
             var detector = new LanguageDetector(config);
 

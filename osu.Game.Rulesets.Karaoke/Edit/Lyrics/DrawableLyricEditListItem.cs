@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                                 // in larger size should use real icon.
                                                 new LanguageInfoBadge(Model)
                                                 {
-                                                    Margin = new MarginPadding{ Right = 5 }
+                                                    Margin = new MarginPadding { Right = 5 }
                                                 }
                                             }
                                         },

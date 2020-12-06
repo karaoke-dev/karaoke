@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 
             public IBindable<double> TimeRange { get; } = new BindableDouble();
 
-            public IScrollAlgorithm Algorithm { get; set; } = new ZeroScrollAlgorithm();
+            public IScrollAlgorithm Algorithm { get; } = new ZeroScrollAlgorithm();
 
             private class ZeroScrollAlgorithm : IScrollAlgorithm
             {

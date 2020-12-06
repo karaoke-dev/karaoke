@@ -63,6 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
                     case 17:
                     case 1041:
                         return jaRubyTagGenerator.Value.CreateRubyTags(lyric);
+
                     default:
                         return null;
                 }
