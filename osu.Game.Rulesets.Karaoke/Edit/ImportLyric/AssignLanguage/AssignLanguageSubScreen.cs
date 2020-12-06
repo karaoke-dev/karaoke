@@ -64,7 +64,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         {
             DialogOverlay.Push(new UseLanguageDetectorPopupDialog(ok =>
             {
-                LyricManager.AutoDetectLyrcLanguage();
+                if (ok)
+                    LyricManager.AutoDetectLyricLanguage();
             }));
         }
 

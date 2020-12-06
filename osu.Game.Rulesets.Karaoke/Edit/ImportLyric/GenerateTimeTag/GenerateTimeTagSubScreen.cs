@@ -64,7 +64,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
         {
             DialogOverlay.Push(new UseAutoGenerateTimeTagPopupDialog(ok =>
             {
-                TimeTagManager.AutoGenerateTimeTag();
+                if (ok)
+                    TimeTagManager.AutoGenerateTimeTags();
             }));
         }
 

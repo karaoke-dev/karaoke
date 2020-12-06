@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// <summary>
         /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.Language"/> and apply on them.
         /// </summary>
-        public void AutoDetectLyrcLanguage()
+        public void AutoDetectLyricLanguage()
         {
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
             if (!lyrics.Any())

@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// <summary>
         /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.TimeTags"/> and apply on them.
         /// </summary>
-        public void AutoGenerateTimeTag()
+        public void AutoGenerateTimeTags()
         {
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
             if (!lyrics.Any())
@@ -36,8 +36,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             foreach (var lyric in lyrics)
             {
-                var detectedLanguage = selector.GenerateTimeTag(lyric);
-                lyric.TimeTags = detectedLanguage;
+                var timeTags = selector.GenerateTimeTags(lyric);
+                lyric.TimeTags = timeTags;
             }
 
             changeHandler?.EndChange();
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 });
             }
 
-            public Tuple<TimeTagIndex, double?>[] GenerateTimeTag(Lyric lyric)
+            public Tuple<TimeTagIndex, double?>[] GenerateTimeTags(Lyric lyric)
             {
                 // lazy to generate language detector and apply it's setting
                 switch (lyric.Language.LCID)
