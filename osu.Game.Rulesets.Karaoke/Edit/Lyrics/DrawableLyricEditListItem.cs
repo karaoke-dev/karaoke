@@ -9,6 +9,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
@@ -76,7 +77,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                             {
                                 new Container
                                 {
+                                    // todo : cannot use relative size to both because it will cause size cannot roll-back if make lyric smaller.
                                     RelativeSizeAxes = Axes.X,
+                                    Height = min_height,
                                     Children = new Drawable[]
                                     {
                                         headerBackground = new Box
@@ -93,12 +96,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                             Anchor = Anchor.TopRight,
                                             Origin = Anchor.TopRight,
                                             Spacing = new Vector2(5),
-                                            Children = new []
+                                            Children = new Drawable[]
                                             {
                                                 new TimeInfoContainer(Model)
                                                 {
                                                     RelativeSizeAxes = Axes.X,
                                                     Height = 36,
+                                                },
+
+                                                // todo : in small display size use badge.
+                                                // in larger size should use real icon.
+                                                new LanguageInfoBadge(Model)
+                                                {
+                                                    Margin = new MarginPadding{ Right = 5 }
                                                 }
                                             }
                                         },
