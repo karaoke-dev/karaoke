@@ -17,6 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class DrawableLyricEditListItem : OsuRearrangeableListItem<Lyric>
     {
+        private const int continuous_spacing = 20;
+        private const int info_part_spacing = 200;
+
         private Box background;
         private Box dragAlert;
         private Box headerBackground;
@@ -28,12 +31,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         protected override Drawable CreateContent()
         {
+            // todo : need to refactor this part.
+            var isContinuous = Model.LayoutIndex == -1;
+            var continuousSpacing = isContinuous ? continuous_spacing : 0;
+
             return new Container
             {
                 Masking = true,
                 CornerRadius = 5,
                 AutoSizeAxes = Axes.Y,
                 RelativeSizeAxes = Axes.X,
+                Margin = new MarginPadding
+                {
+                    Left = continuousSpacing,
+                    Top = DrawableLyricEditList.SPACING,
+                },
                 Children = new Drawable[]
                 {
                     background = new Box
@@ -50,6 +62,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     {
                         RelativeSizeAxes = Axes.X,
                         AutoSizeAxes = Axes.Y,
+                        ColumnDimensions = new[]
+                        {
+                            new Dimension(GridSizeMode.Absolute, info_part_spacing - continuousSpacing),
+                            new Dimension(GridSizeMode.Distributed)
+                        },
+                        RowDimensions = new[] { new Dimension(GridSizeMode.AutoSize) },
                         Content = new[]
                         {
                             new[]
@@ -87,9 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                     RelativeSizeAxes = Axes.X,
                                 }
                             }
-                        },
-                        ColumnDimensions = new[] { new Dimension(GridSizeMode.Absolute, 200) },
-                        RowDimensions = new[] { new Dimension(GridSizeMode.AutoSize) }
+                        }
                     }
                 }
             };
