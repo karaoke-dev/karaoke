@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
         private const float button_width = item_height * 0.75f;
 
         /// <summary>
-        /// Whether the <see cref="BeatmapSetOnlineLanguage"/> currently exists inside the <see cref="LanguageManager"/>.
+        /// Whether the <see cref="BeatmapSetOnlineLanguage"/> currently exists inside the <see cref="TranslateManager"/>.
         /// </summary>
         public IBindable<bool> IsCreated => isCreated;
 
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
         /// Creates a new <see cref="DrawableLanguageListItem"/>.
         /// </summary>
         /// <param name="item">The <see cref="BeatmapSetOnlineLanguage"/>.</param>
-        /// <param name="isCreated">Whether <paramref name="item"/> currently exists inside the <see cref="LanguageManager"/>.</param>
+        /// <param name="isCreated">Whether <paramref name="item"/> currently exists inside the <see cref="TranslateManager"/>.</param>
         public DrawableLanguageListItem(BeatmapSetOnlineLanguage item, bool isCreated)
             : base(item)
         {
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             private readonly BeatmapSetOnlineLanguage language;
 
             [Resolved(CanBeNull = true)]
-            private LanguageManager languageManager { get; set; }
+            private TranslateManager languageManager { get; set; }
 
             private Container textBoxPaddingContainer;
             private ItemTextBox textBox;
@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 private DialogOverlay dialogOverlay { get; set; }
 
                 [Resolved(CanBeNull = true)]
-                private LanguageManager languageManager { get; set; }
+                private TranslateManager translateManager { get; set; }
 
                 private readonly BeatmapSetOnlineLanguage language;
 
@@ -224,7 +224,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 {
                     background.FlashColour(Color4.White, 150);
 
-                    if (!languageManager?.IsLanguageContainsTranslate(language) ?? false)
+                    if (!translateManager?.IsLanguageContainsTranslate(language) ?? false)
                         deleteLanguage();
                     else
                         dialogOverlay?.Push(new DeleteLanguageDialog(language, deleteLanguage));
@@ -232,7 +232,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                     return true;
                 }
 
-                private void deleteLanguage() => languageManager?.RemoveLanguage(language);
+                private void deleteLanguage() => translateManager?.RemoveLanguage(language);
             }
         }
     }

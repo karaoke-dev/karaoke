@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
     /// <summary>
     /// Handle create or delete language.
     /// </summary>
-    public class LanguageManager : Component
+    public class TranslateManager : Component
     {
         public readonly BindableList<BeatmapSetOnlineLanguage> Languages = new BindableList<BeatmapSetOnlineLanguage>();
 

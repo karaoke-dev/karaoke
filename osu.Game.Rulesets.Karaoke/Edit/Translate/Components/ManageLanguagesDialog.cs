@@ -21,14 +21,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(LanguageManager languageManager)
+        private void load(TranslateManager translateManager)
         {
             Children = new Drawable[]
             {
                 new DrawableLanguageList
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Items = { BindTarget = languageManager?.Languages ?? new BindableList<BeatmapSetOnlineLanguage>() }
+                    Items = { BindTarget = translateManager?.Languages ?? new BindableList<BeatmapSetOnlineLanguage>() }
                 }
             };
         }

@@ -141,9 +141,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         }
 
         [BackgroundDependencyLoader]
-        private void load(LanguageManager languageManager, OsuColour colours)
+        private void load(TranslateManager translateManager, OsuColour colours)
         {
-            languageDropdown.ItemSource = languageManager?.Languages ?? new BindableList<BeatmapSetOnlineLanguage>();
+            languageDropdown.ItemSource = translateManager?.Languages ?? new BindableList<BeatmapSetOnlineLanguage>();
 
             timeSectionBackground.Colour = colours.ContextMenuGray;
             lyricSectionBackground.Colour = colours.Gray9;
