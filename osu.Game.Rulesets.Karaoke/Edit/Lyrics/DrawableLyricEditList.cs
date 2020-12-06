@@ -8,6 +8,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class DrawableLyricEditList : OsuRearrangeableListContainer<Lyric>
     {
+        public const int SPACING = 2;
+
         protected override OsuRearrangeableListItem<Lyric> CreateOsuDrawable(Lyric item)
             => new DrawableLyricEditListItem(item);
     }
