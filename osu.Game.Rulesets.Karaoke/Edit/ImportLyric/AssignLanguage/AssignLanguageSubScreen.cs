@@ -19,6 +19,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 
         public override IconUsage Icon => FontAwesome.Solid.Globe;
 
+        [Cached]
+        protected readonly LyricManager LyricManager;
+
+        public AssignLanguageSubScreen()
+        {
+            AddInternal(LyricManager = new LyricManager());
+        }
+
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
             var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
@@ -56,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         {
             DialogOverlay.Push(new UseLanguageDetectorPopupDialog(ok =>
             {
-                // todo : call manager to do that.
+                LyricManager.AutoDetectLyrcLanguage();
             }));
         }
 
