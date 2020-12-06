@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <summary>
         /// Translates
         /// </summary>
-        public IDictionary<int, string> Translates { get; set; } = new Dictionary<int, string>();
+        public IDictionary<CultureInfo, string> Translates { get; set; } = new Dictionary<CultureInfo, string>();
 
         [JsonIgnore]
         public readonly Bindable<CultureInfo> LanguageBindable = new Bindable<CultureInfo>();
@@ -143,9 +143,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// Display target translate
         /// </summary>
         /// <param name="id"></param>
-        public bool ApplyDisplayTranslate(int id)
+        public bool ApplyDisplayTranslate(CultureInfo cultureInfo)
         {
-            if (Translates.TryGetValue(id, out string translate))
+            if (Translates.TryGetValue(0, out string translate))
             {
                 TranslateTextBindable.Value = translate;
                 return true;
