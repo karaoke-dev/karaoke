@@ -1,0 +1,442 @@
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// See the LICENCE file in the repository root for full licence text.
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+using osu.Framework.Bindables;
+using osu.Framework.Caching;
+using osu.Framework.Lists;
+
+namespace osu.Game.Rulesets.Karaoke.Bindables
+{
+    public class BindableDictionary<TKey, TValue> : IBindableDictionary<TKey, TValue>, IDictionary<TKey, TValue>, IDictionary
+    {
+        /// <summary>
+        /// An event which is raised when this <see cref="BindableDictionary{TKey, TValue}"/> changes.
+        /// </summary>
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+
+        /// <summary>
+        /// An event which is raised when <see cref="Disabled"/>'s state has changed (or manually via <see cref="triggerDisabledChange(bool)"/>).
+        /// </summary>
+        public event Action<bool> DisabledChanged;
+
+        private readonly Dictionary<TKey, TValue> collection = new Dictionary<TKey, TValue>();
+
+        private readonly Cached<WeakReference<BindableDictionary<TKey, TValue>>> weakReferenceCache = new Cached<WeakReference<BindableDictionary<TKey, TValue>>>();
+
+        private WeakReference<BindableDictionary<TKey, TValue>> weakReference => weakReferenceCache.IsValid ? weakReferenceCache.Value : weakReferenceCache.Value = new WeakReference<BindableDictionary<TKey, TValue>>(this);  
+
+        private LockedWeakList<BindableDictionary<TKey, TValue>> bindings;
+
+        /// <summary>
+        /// Creates a new <see cref="BindableDictionary{TKey, TValue}"/>, optionally adding the items of the given collection.
+        /// </summary>
+        /// <param name="items">The items that are going to be contained in the newly created <see cref="BindableDictionary{TKey, TValue}"/>.</param>
+        public BindableDictionary(IDictionary<TKey, TValue> items = null)
+        {
+            if (items != null)
+            {
+                foreach (var item in items)
+                {
+                    collection.Add(item.Key, item.Value);
+                }
+            }
+        }
+
+        #region IDictionary<TKey, TValue>
+
+        public ICollection<TKey> Keys
+            => collection.Keys;
+
+        public ICollection<TValue> Values
+            => collection.Values;
+
+        /// <summary>
+        /// Gets or sets the item at an index in this <see cref="BindableDictionary{TKey, TValue}"/>.
+        /// </summary>
+        /// <param name="index">The index of the item.</param>
+        /// <exception cref="InvalidOperationException">Thrown when setting a value while this <see cref="BindableDictionary{TKey, TValue}"/> is <see cref="Disabled"/>.</exception>
+        public TValue this[TKey key]
+        {
+            get => collection[key];
+            set => setIndex(key, value, null);
+        }
+
+        private void setIndex(TKey index, TValue item, BindableDictionary<TKey, TValue> caller)
+        {
+            ensureMutationAllowed();
+
+            TValue lastItem = collection[index];
+
+            collection[index] = item;
+
+            if (bindings != null)
+            {
+                foreach (var b in bindings)
+                {
+                    // prevent re-adding the item back to the callee.
+                    // That would result in a <see cref="StackOverflowException"/>.
+                    if (b != caller)
+                        b.setIndex(index, item, this);
+                }
+            }
+
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, item, lastItem, index));
+        }
+
+        /// <summary>
+        /// Adds a single item to this <see cref="BindableDictionary{TKey, TValue}"/>.
+        /// </summary>
+        /// <param name="item">The item to be added.</param>
+        /// <exception cref="InvalidOperationException">Thrown when this <see cref="BindableDictionary{TKey, TValue}"/> is <see cref="Disabled"/>.</exception>
+        public void Add(TKey key, TValue value)
+            => Add(new KeyValuePair<TKey, TValue>(key, value));
+
+        /// <summary>
+        /// Adds a single item to this <see cref="BindableDictionary{TKey, TValue}"/>.
+        /// </summary>
+        /// <param name="item">The item to be added.</param>
+        /// <exception cref="InvalidOperationException">Thrown when this <see cref="BindableDictionary{TKey, TValue}"/> is <see cref="Disabled"/>.</exception>
+        public void Add(KeyValuePair<TKey, TValue> item)
+             => add(item, null);
+
+        private void add(KeyValuePair<TKey, TValue> item, BindableDictionary<TKey, TValue> caller)
+        {
+            ensureMutationAllowed();
+
+            collection.Add(item.Key, item.Value);
+
+            if (bindings != null)
+            {
+                foreach (var b in bindings)
+                {
+                    // prevent re-adding the item back to the callee.
+                    // That would result in a <see cref="StackOverflowException"/>.
+                    if (b != caller)
+                        b.add(item, this);
+                }
+            }
+
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, collection.Count - 1));
+        }
+
+        /// <summary>
+        /// Clears the contents of this <see cref="BindableDictionary{TKey, TValue}"/>.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Thrown when this <see cref="BindableDictionary{TKey, TValue}"/> is <see cref="Disabled"/>.</exception>
+        public void Clear()
+            => clear(null);
+
+        private void clear(BindableDictionary<TKey, TValue> caller)
+        {
+            ensureMutationAllowed();
+
+            if (collection.Count <= 0)
+                return;
+
+            // Preserve items for subscribers
+            var clearedItems = collection.ToList();
+
+            collection.Clear();
+
+            if (bindings != null)
+            {
+                foreach (var b in bindings)
+                {
+                    // prevent re-adding the item back to the callee.
+                    // That would result in a <see cref="StackOverflowException"/>.
+                    if (b != caller)
+                        b.clear(this);
+                }
+            }
+
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, clearedItems, 0));
+        }
+
+        /// <summary>
+        /// Determines if an item is in this <see cref="BindableDictionary{TKey, TValue}"/>.
+        /// </summary>
+        /// <param name="item">The item to locate in this <see cref="BindableDictionary{TKey, TValue}"/>.</param>
+        /// <returns><code>true</code> if this <see cref="BindableDictionary{TKey, TValue}"/> contains the given item.</returns>
+        public bool ContainsKey(TKey key)
+            => collection.ContainsKey(key);
+
+        public bool Contains(KeyValuePair<TKey, TValue> item)
+            => collection.Contains(item);
+
+        /// <summary>
+        /// Removes an item from this <see cref="BindableDictionary{TKey, TValue}"/>.
+        /// </summary>
+        /// <param name="item">The item to remove from this <see cref="BindableDictionary{TKey, TValue}"/>.</param>
+        /// <returns><code>true</code> if the removal was successful.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if this <see cref="BindableDictionary{TKey, TValue}"/> is <see cref="Disabled"/>.</exception>
+        public bool Remove(TKey key)
+            => remove(key, null);
+
+        public bool Remove(KeyValuePair<TKey, TValue> item)
+            => remove(item.Key, null);
+
+        private bool remove(TKey key, BindableDictionary<TKey, TValue> caller)
+        {
+            ensureMutationAllowed();
+
+            int index = collection.IndexOf(key);
+
+            if (index < 0)
+                return false;
+
+            // Removal may have come from an equality comparison.
+            // Always return the original reference from the list to other bindings and events.
+            var listItem = collection[key];
+
+            collection.Remove(key);
+
+            if (bindings != null)
+            {
+                foreach (var b in bindings)
+                {
+                    // prevent re-adding the item back to the callee.
+                    // That would result in a <see cref="StackOverflowException"/>.
+                    if (b != caller)
+                        b.remove(listItem, this);
+                }
+            }
+
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, listItem, index));
+
+            return true;
+        }
+
+        public bool TryGetValue(TKey key, out TValue value)
+            => collection.TryGetValue(key, out value);
+
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+            => collection.CopyTo(array, arrayIndex);
+
+        public int Count
+            => collection.Count;
+
+        public bool IsReadOnly
+            => Disabled;
+
+        #endregion
+
+        #region IDictionary
+
+        ICollection IDictionary.Keys => throw new NotImplementedException();
+
+        ICollection IDictionary.Values => throw new NotImplementedException();
+
+        object IDictionary.this[TKey key]
+        {
+            get => this[key];
+            set => this[key] = (TValue)value;
+        }
+
+        public void Add(object key, object value)
+            => Add((TKey) key, (TValue) value);
+
+        public bool Contains(object key)
+            => Contains((TKey) key);
+
+        public void Remove(object key)
+            => Remove((TKey)key);
+
+        public void CopyTo(Array array, int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsFixedSize => false;
+
+        public bool IsSynchronized => ((ICollection)collection).IsSynchronized;
+
+        public object SyncRoot => ((ICollection)collection).SyncRoot;
+
+        #endregion
+
+        #region IParseable
+
+        /// <summary>
+        /// Parse an object into this instance.
+        /// A collection holding items of type <typeparamref name="T"/> can be parsed. Null results in an empty <see cref="BindableList{T}"/>.
+        /// </summary>
+        /// <param name="input">The input which is to be parsed.</param>
+        /// <exception cref="InvalidOperationException">Thrown if this <see cref="BindableList{T}"/> is <see cref="Disabled"/>.</exception>
+        public void Parse(object input)
+        {
+            ensureMutationAllowed();
+
+            switch (input)
+            {
+                case null:
+                    Clear();
+                    break;
+
+                case IDictionary<TKey, TValue> enumerable:
+                    Clear();
+                    foreach (var key in enumerable)
+                    {
+                        Add(key);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentException($@"Could not parse provided {input.GetType()} ({input}) to key {typeof(TKey)} and value {typeof(TValue)}.");
+            }
+        }
+
+        #endregion
+
+        #region ICanBeDisabled
+
+        private bool disabled;
+
+        /// <summary>
+        /// Whether this <see cref="BindableList{T}"/> has been disabled. When disabled, attempting to change the contents of this <see cref="BindableList{T}"/> will result in an <see cref="InvalidOperationException"/>.
+        /// </summary>
+        public bool Disabled
+        {
+            get => disabled;
+            set
+            {
+                if (value == disabled)
+                    return;
+
+                disabled = value;
+
+                triggerDisabledChange();
+            }
+        }
+
+        public void BindDisabledChanged(Action<bool> onChange, bool runOnceImmediately = false)
+        {
+            DisabledChanged += onChange;
+            if (runOnceImmediately)
+                onChange(Disabled);
+        }
+
+        private void triggerDisabledChange(bool propagateToBindings = true)
+        {
+            // check a bound bindable hasn't changed the value again (it will fire its own event)
+            bool beforePropagation = disabled;
+
+            if (propagateToBindings && bindings != null)
+            {
+                foreach (var b in bindings)
+                    b.Disabled = disabled;
+            }
+
+            if (beforePropagation == disabled)
+                DisabledChanged?.Invoke(disabled);
+        }
+
+        #endregion ICanBeDisabled
+
+        #region IUnbindable
+
+        public void UnbindEvents()
+        {
+            CollectionChanged = null;
+            DisabledChanged = null;
+        }
+
+        public void UnbindBindings()
+        {
+            if (bindings == null)
+                return;
+
+            foreach (var b in bindings)
+                b.unbind(this);
+
+            bindings?.Clear();
+        }
+
+        public void UnbindAll()
+        {
+            UnbindEvents();
+            UnbindBindings();
+        }
+
+        public void UnbindFrom(IUnbindable them)
+        {
+            if (!(them is BindableDictionary<TKey, TValue> tThem))
+                throw new InvalidCastException($"Can't unbind a bindable of type {them.GetType()} from a bindable of type {GetType()}.");
+
+            removeWeakReference(tThem.weakReference);
+            tThem.removeWeakReference(weakReference);
+        }
+
+        private void unbind(BindableDictionary<TKey, TValue> binding)
+            => bindings.Remove(binding.weakReference);
+
+        #endregion IUnbindable
+
+        #region IHasDescription
+
+        public string Description { get; set; }
+
+        #endregion IHasDescription
+
+        #region IBindableDictionary
+
+        IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => throw new NotImplementedException();
+
+        IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => throw new NotImplementedException();
+
+        public void BindTo(IBindableDictionary<TKey, TValue> them)
+        {
+            if (!(them is BindableDictionary<TKey, TValue> tThem))
+                throw new InvalidCastException($"Can't bind to a bindable of type {them.GetType()} from a bindable of type {GetType()}.");
+
+            BindTo(tThem);
+        }
+
+        public IBindableDictionary<TKey, TValue> GetBoundCopy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BindTo(IBindable them)
+        {
+            if (!(them is BindableDictionary<TKey, TValue> tThem))
+                throw new InvalidCastException($"Can't bind to a bindable of type {them.GetType()} from a bindable of type {GetType()}.");
+
+            BindTo(tThem);
+        }
+
+        IBindable IBindable.GetBoundCopy()
+            => GetBoundCopy(); 
+
+        #endregion IBindableDictionary
+
+        #region IEnumerable
+
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+            => collection.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator()
+            => GetEnumerator();
+
+        IDictionaryEnumerator IDictionary.GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion IEnumerable
+
+        private void notifyCollectionChanged(NotifyCollectionChangedEventArgs args) => CollectionChanged?.Invoke(this, args);
+
+        private void ensureMutationAllowed()
+        {
+            if (Disabled)
+                throw new InvalidOperationException($"Cannot mutate the {nameof(BindableDictionary<TKey, TValue>)} while it is disabled.");
+        }
+
+        public bool IsDefault => Count == 0;
+    }
+}
