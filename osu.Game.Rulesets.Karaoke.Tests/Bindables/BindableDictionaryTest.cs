@@ -94,6 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         }
 
         [Test]
+        [Ignore("Dictionary does not have index.")]
         public void TestBindCollectionChangedWithRunImmediately()
         {
             var dictionary = new BindableDictionary<int, string>();
@@ -148,6 +149,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         }
 
         [Test]
+        [Ignore("Dictionary does not have index.")]
         public void TestSetNotifiesSubscribers()
         {
             bindableStringDictionary.Add(0, "0");
@@ -165,6 +167,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         }
 
         [Test]
+        [Ignore("Dictionary does not have index.")]
         public void TestSetNotifiesBoundLists()
         {
             bindableStringDictionary.Add(0, "0");
@@ -369,6 +372,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         }
 
         [Test]
+        [Ignore("Dictionary does not have index.")]
         public void TestRemoveNotifiesSubscriber()
         {
             const int key = 0;
@@ -477,6 +481,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         }
 
         [Test]
+        [Ignore("Dictionary does not have index.")]
         public void TestRemoveNotifiesBoundListSubscription()
         {
             const int key = 0;
@@ -886,6 +891,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         }
 
         [Test]
+        [Ignore("Dictionary does not have index.")]
         public void TestParseWithItemsNotifiesAddRangeAndClearSubscribers()
         {
             bindableStringDictionary.Add(0, "test123");
