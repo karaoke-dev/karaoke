@@ -241,7 +241,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             => Add((TKey) key, (TValue) value);
 
         public bool Contains(object key)
-            => Contains((TKey) key);
+            => ContainsKey((TKey) key);
 
         public void Remove(object key)
             => Remove((TKey)key);

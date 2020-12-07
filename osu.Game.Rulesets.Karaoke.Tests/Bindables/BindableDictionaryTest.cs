@@ -330,11 +330,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [Test]
         public void TestRemoveWithDisabledListThrowsInvalidOperationException()
         {
+            const int key = 0;
             const string item = "hi";
-            bindableStringDictionary.Add(0, item);
+            bindableStringDictionary.Add(key, item);
             bindableStringDictionary.Disabled = true;
 
-            Assert.Throws(typeof(InvalidOperationException), () => bindableStringDictionary.Remove(item));
+            Assert.Throws(typeof(InvalidOperationException), () => bindableStringDictionary.Remove(key));
         }
 
         [Test]
@@ -348,11 +349,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [Test]
         public void TestRemoveWhenListIsDisabledThrowsInvalidOperationException()
         {
+            const int key = 0;
             const string item = "item";
-            bindableStringDictionary.Add(0, item);
+            bindableStringDictionary.Add(key, item);
             bindableStringDictionary.Disabled = true;
 
-            Assert.Throws<InvalidOperationException>(() => { bindableStringDictionary.Remove(item); });
+            Assert.Throws<InvalidOperationException>(() => { bindableStringDictionary.Remove(key); });
         }
 
         [Test]
@@ -369,13 +371,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [Test]
         public void TestRemoveNotifiesSubscriber()
         {
+            const int key = 0;
             const string item = "item";
-            bindableStringDictionary.Add(0, item);
+            bindableStringDictionary.Add(key, item);
 
             NotifyCollectionChangedEventArgs triggeredArgs = null;
             bindableStringDictionary.CollectionChanged += (_, args) => triggeredArgs = args;
 
-            bindableStringDictionary.Remove(item);
+            bindableStringDictionary.Remove(key);
 
             Assert.That(triggeredArgs.Action, Is.EqualTo(NotifyCollectionChangedAction.Remove));
             Assert.That(triggeredArgs.OldItems, Has.One.Items.EqualTo(item));
@@ -485,7 +488,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             NotifyCollectionChangedEventArgs triggeredArgs = null;
             list.CollectionChanged += (_, args) => triggeredArgs = args;
 
-            bindableStringDictionary.Remove(item);
+            bindableStringDictionary.Remove(key);
 
             Assert.That(triggeredArgs.Action, Is.EqualTo(NotifyCollectionChangedAction.Remove));
             Assert.That(triggeredArgs.OldItems, Has.One.Items.EqualTo(item));
@@ -914,10 +917,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             NotifyCollectionChangedEventArgs triggeredArgs = null;
             boundCopy.CollectionChanged += (_, args) => triggeredArgs = args;
 
-            bindableStringDictionary.Add(0, "test");
+            var item = new KeyValuePair<int, string>(0, "test");
+            bindableStringDictionary.Add(item);
 
             Assert.That(triggeredArgs.Action, Is.EqualTo(NotifyCollectionChangedAction.Add));
-            Assert.That(triggeredArgs.NewItems, Is.EquivalentTo("test".Yield()));
+            Assert.That(triggeredArgs.NewItems, Is.EquivalentTo(item.Yield()));
             Assert.That(triggeredArgs.NewStartingIndex, Is.EqualTo(0));
         }
 
