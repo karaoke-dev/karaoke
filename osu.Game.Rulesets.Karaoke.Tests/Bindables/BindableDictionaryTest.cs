@@ -718,7 +718,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         {
             for (int i = 0; i < 5; i++)
                 bindableStringDictionary.Add(i, $"test{i}");
-            var dictionary = new Dictionary<int, string>[5];
+            var dictionary = new KeyValuePair<int, string>[5];
 
             bindableStringDictionary.CopyTo(dictionary, 0);
 
