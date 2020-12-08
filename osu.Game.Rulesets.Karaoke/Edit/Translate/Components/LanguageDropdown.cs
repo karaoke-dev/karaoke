@@ -3,12 +3,13 @@
 
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
+using System.Globalization;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
 {
-    public class LanguageDropdown : OsuDropdown<BeatmapSetOnlineLanguage>
+    public class LanguageDropdown : OsuDropdown<CultureInfo>
     {
-        protected override string GenerateItemText(BeatmapSetOnlineLanguage item)
-            => item.Name;
+        protected override string GenerateItemText(CultureInfo item)
+            => item.DisplayName;
     }
 }

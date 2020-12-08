@@ -114,12 +114,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             Assert.AreEqual(lyrics[1].Translates.Count, 2);
 
             // Check chinese translate
-            var chineseLanguageId = translates[0].Id;
+            var chineseLanguageId = translates[0];
             Assert.AreEqual(lyrics[0].Translates[chineseLanguageId], "卡拉OK");
             Assert.AreEqual(lyrics[1].Translates[chineseLanguageId], "喜歡");
 
             // Check english translate
-            var englishLanguageId = translates[1].Id;
+            var englishLanguageId = translates[1];
             Assert.AreEqual(lyrics[0].Translates[englishLanguageId], "karaoke");
             Assert.AreEqual(lyrics[1].Translates[englishLanguageId], "like it");
         }

@@ -17,6 +17,7 @@ using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Bindables;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
@@ -120,12 +121,16 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<string> TranslateTextBindable = new Bindable<string>();
+        public readonly BindableDictionary<CultureInfo, string> TranslateTextBindable = new BindableDictionary<CultureInfo, string>();
 
         /// <summary>
         /// Translates
         /// </summary>
-        public IDictionary<CultureInfo, string> Translates { get; set; } = new Dictionary<CultureInfo, string>();
+        public IDictionary<CultureInfo, string> Translates
+        {
+            get => TranslateTextBindable;
+            // todo : how to set value to here from json?
+        }
 
         [JsonIgnore]
         public readonly Bindable<CultureInfo> LanguageBindable = new Bindable<CultureInfo>();
@@ -137,21 +142,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         {
             get => LanguageBindable.Value;
             set => LanguageBindable.Value = value;
-        }
-
-        /// <summary>
-        /// Display target translate
-        /// </summary>
-        /// <param name="id"></param>
-        public bool ApplyDisplayTranslate(CultureInfo cultureInfo)
-        {
-            if (Translates.TryGetValue(0, out string translate))
-            {
-                TranslateTextBindable.Value = translate;
-                return true;
-            }
-
-            return false;
         }
 
         public IEnumerable<Note> CreateDefaultNotes()

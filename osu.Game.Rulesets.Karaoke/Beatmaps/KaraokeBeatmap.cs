@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
@@ -12,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
     public class KaraokeBeatmap : Beatmap<KaraokeHitObject>
     {
-        public BeatmapSetOnlineLanguage[] AvailableTranslates { get; set; } = { };
+        public CultureInfo[] AvailableTranslates { get; set; } = { };
 
         public SingerMetadata SingerMetadata { get; set; } = new SingerMetadata();
 
