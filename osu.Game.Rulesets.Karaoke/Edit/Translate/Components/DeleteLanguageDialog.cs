@@ -9,6 +9,8 @@ using osu.Game.Overlays.Dialog;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
 {
+    // todo : move to other place
+    /*
     public class DeleteLanguageDialog : PopupDialog
     {
         public DeleteLanguageDialog(BeatmapSetOnlineLanguage language, Action deleteAction)
@@ -35,4 +37,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             };
         }
     }
+    */
 }

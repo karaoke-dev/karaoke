@@ -11,6 +11,8 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
 {
+    // todo : move to other place
+    /*
     public class DrawableLanguageList : OsuRearrangeableListContainer<BeatmapSetOnlineLanguage>
     {
         private Scroll scroll;
@@ -117,4 +119,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             }
         }
     }
+    */
 }

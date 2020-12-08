@@ -20,6 +20,8 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
 {
+    // todo : move to other place
+    /*
     public class DrawableLanguageListItem : OsuRearrangeableListItem<BeatmapSetOnlineLanguage>
     {
         private const float item_height = 35;
@@ -236,4 +238,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             }
         }
     }
+    */
 }

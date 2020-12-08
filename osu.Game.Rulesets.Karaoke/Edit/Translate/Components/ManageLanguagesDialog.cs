@@ -10,6 +10,8 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
 {
+    // todo : move to other place
+    /*
     public class ManageLanguagesDialog : TitleFocusedOverlayContainer
     {
         protected override string Title => "Manage translates";
@@ -33,4 +35,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             };
         }
     }
+    */
 }
