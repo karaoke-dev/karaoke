@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Testing;
@@ -13,6 +14,8 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
+using System.Globalization;
+
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 {
     public class TestSceneLanguageSelectionDialog : OsuManualInputManagerTestScene
@@ -44,7 +47,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            Child = dialog = new LanguageSelectionDialog();
+            var language = new Bindable<CultureInfo>(new CultureInfo("ja"));
+            Child = dialog = new LanguageSelectionDialog
+            {
+                Current = language,
+            };
         });
 
         [SetUpSteps]

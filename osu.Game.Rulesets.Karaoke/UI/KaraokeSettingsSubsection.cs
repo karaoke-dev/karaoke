@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                             if (languageSelectionDialog == null && !DisplayContainer.Children.OfType<LanguageSelectionDialog>().Any())
                                 DisplayContainer.Add(languageSelectionDialog = new LanguageSelectionDialog
                                 {
-                                    // Current = config.GetBindable<string>(KaraokeRulesetSetting.PreferLanguage)
+                                    Current = config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferLanguage)
                                 });
 
                             languageSelectionDialog?.Show();
