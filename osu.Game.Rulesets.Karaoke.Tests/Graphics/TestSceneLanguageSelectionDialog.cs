@@ -9,7 +9,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Testing;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.Translate;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
@@ -23,7 +22,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
         private DialogOverlay dialogOverlay;
-        private TranslateManager manager;
 
         private LanguageSelectionDialog dialog;
 
