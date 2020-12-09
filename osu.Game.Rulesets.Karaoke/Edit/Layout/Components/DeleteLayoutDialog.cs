@@ -2,24 +2,18 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using Humanizer;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Beatmaps;
 using osu.Game.Overlays.Dialog;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
 {
-    // todo : move to other place
-    /*
-    public class DeleteLanguageDialog : PopupDialog
+    public class DeleteLayoutDialog : PopupDialog
     {
-        public DeleteLanguageDialog(BeatmapSetOnlineLanguage language, Action deleteAction)
+        public DeleteLayoutDialog(KaraokeLayout layout, Action deleteAction)
         {
-            // todo : got real number
-            var languageTranslateCount = 10;
-
             HeaderText = "Confirm deletion of";
-            BodyText = $"{language.Name} ({"language".ToQuantity(languageTranslateCount)})";
+            BodyText = $"Are you sure you wany to delete layout {layout.Name}?";
 
             Icon = FontAwesome.Regular.TrashAlt;
 
@@ -37,5 +31,4 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             };
         }
     }
-    */
 }

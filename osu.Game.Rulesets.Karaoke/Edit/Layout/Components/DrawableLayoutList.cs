@@ -5,36 +5,34 @@ using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Beatmaps;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
 {
-    // todo : move to other place
-    /*
-    public class DrawableLanguageList : OsuRearrangeableListContainer<BeatmapSetOnlineLanguage>
+    public class DrawableLayoutList : OsuRearrangeableListContainer<KaraokeLayout>
     {
         private Scroll scroll;
 
         protected override ScrollContainer<Drawable> CreateScrollContainer() => scroll = new Scroll();
 
-        protected override FillFlowContainer<RearrangeableListItem<BeatmapSetOnlineLanguage>> CreateListFillFlowContainer() => new Flow
+        protected override FillFlowContainer<RearrangeableListItem<KaraokeLayout>> CreateListFillFlowContainer() => new Flow
         {
             DragActive = { BindTarget = DragActive }
         };
 
-        protected override OsuRearrangeableListItem<BeatmapSetOnlineLanguage> CreateOsuDrawable(BeatmapSetOnlineLanguage item)
+        protected override OsuRearrangeableListItem<KaraokeLayout> CreateOsuDrawable(KaraokeLayout item)
         {
             if (item == scroll.PlaceholderItem.Model)
                 return scroll.ReplacePlaceholder();
 
-            return new DrawableLanguageListItem(item, true);
+            return new DrawableLayoutListItem(item, true);
         }
 
         /// <summary>
-        /// The scroll container for this <see cref="DrawableLanguageList"/>.
-        /// Contains the main flow of <see cref="DrawableLanguageListItem"/> and attaches a placeholder item to the end of the list.
+        /// The scroll container for this <see cref="DrawableLayoutList"/>.
+        /// Contains the main flow of <see cref="DrawableLayoutListItem"/> and attaches a placeholder item to the end of the list.
         /// </summary>
         /// <remarks>
         /// Use <see cref="ReplacePlaceholder"/> to transfer the placeholder into the main list.
@@ -44,12 +42,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             /// <summary>
             /// The currently-displayed placeholder item.
             /// </summary>
-            public DrawableLanguageListItem PlaceholderItem { get; private set; }
+            public DrawableLayoutListItem PlaceholderItem { get; private set; }
 
             protected override Container<Drawable> Content => content;
             private readonly Container content;
 
-            private readonly Container<DrawableLanguageListItem> placeholderContainer;
+            private readonly Container<DrawableLayoutListItem> placeholderContainer;
 
             public Scroll()
             {
@@ -65,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                     Children = new Drawable[]
                     {
                         content = new Container { RelativeSizeAxes = Axes.X },
-                        placeholderContainer = new Container<DrawableLanguageListItem>
+                        placeholderContainer = new Container<DrawableLayoutListItem>
                         {
                             RelativeSizeAxes = Axes.X,
                             AutoSizeAxes = Axes.Y
@@ -88,21 +86,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             /// Replaces the current <see cref="PlaceholderItem"/> with a new one, and returns the previous.
             /// </summary>
             /// <returns>The current <see cref="PlaceholderItem"/>.</returns>
-            public DrawableLanguageListItem ReplacePlaceholder()
+            public DrawableLayoutListItem ReplacePlaceholder()
             {
                 var previous = PlaceholderItem;
 
                 placeholderContainer.Clear(false);
-                placeholderContainer.Add(PlaceholderItem = new DrawableLanguageListItem(new BeatmapSetOnlineLanguage(), false));
+                placeholderContainer.Add(PlaceholderItem = new DrawableLayoutListItem(new KaraokeLayout(), false));
 
                 return previous;
             }
         }
 
         /// <summary>
-        /// The flow of <see cref="DrawableLanguageListItem"/>. Disables layout easing unless a drag is in progress.
+        /// The flow of <see cref="DrawableLayoutListItem"/>. Disables layout easing unless a drag is in progress.
         /// </summary>
-        private class Flow : FillFlowContainer<RearrangeableListItem<BeatmapSetOnlineLanguage>>
+        private class Flow : FillFlowContainer<RearrangeableListItem<KaraokeLayout>>
         {
             public readonly IBindable<bool> DragActive = new Bindable<bool>();
 
@@ -119,5 +117,4 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             }
         }
     }
-    */
 }
