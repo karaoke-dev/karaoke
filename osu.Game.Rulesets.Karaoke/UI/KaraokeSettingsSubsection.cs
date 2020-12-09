@@ -9,6 +9,7 @@ using osu.Framework.Input;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Overlays;
 
 namespace osu.Game.Rulesets.Karaoke.UI
@@ -22,10 +23,14 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
         }
 
+        [Resolved]
+        protected OsuGame Geme { get; private set; }
+
         private KaraokeChangelogOverlay changelogOverlay;
+        private LanguageSelectionDialog languageSelectionDialog;
 
         [BackgroundDependencyLoader]
-        private void load(OsuGame game)
+        private void load()
         {
             var config = (KaraokeRulesetConfigManager)Config;
             var microphoneManager = new MicrophoneManager();
@@ -59,10 +64,31 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     LabelText = "Translate",
                     Current = config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate)
                 },
-                new SettingsTextBox
+                new SettingsButton
                 {
-                    LabelText = "Prefer language",
-                    Current = config.GetBindable<string>(KaraokeRulesetSetting.PreferLanguage)
+                    Text = "Prefer language",
+                    TooltipText = "Select perfer translate language.",
+                    Action = () =>
+                    {
+                        try
+                        {
+                            if (DisplayContainer == null)
+                                return;
+
+                            if (languageSelectionDialog == null && !DisplayContainer.Children.OfType<LanguageSelectionDialog>().Any())
+                                DisplayContainer.Add(languageSelectionDialog = new LanguageSelectionDialog
+                                {
+                                    // Current = config.GetBindable<string>(KaraokeRulesetSetting.PreferLanguage)
+                                });
+
+                            languageSelectionDialog?.Show();
+                        }
+                        catch
+                        {
+                            // maybe this overlay has been moved into internal.
+                        }
+                    }
+                    
                 },
                 // Pitch
                 new SettingsCheckbox
@@ -113,19 +139,26 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     TooltipText = "Let's see what karaoke! changed.",
                     Action = () =>
                     {
-                        var overlayContent = game.Children[3] as Container;
+                        try
+                        {
+                            if (DisplayContainer == null)
+                                return;
 
-                        if (overlayContent == null)
-                            return;
+                            if (changelogOverlay == null && !DisplayContainer.Children.OfType<KaraokeChangelogOverlay>().Any())
+                                DisplayContainer.Add(changelogOverlay = new KaraokeChangelogOverlay("karaoke-dev"));
 
-                        if (changelogOverlay == null && !overlayContent.Children.OfType<KaraokeChangelogOverlay>().Any())
-                            overlayContent.Add(changelogOverlay = new KaraokeChangelogOverlay("karaoke-dev"));
-
-                        changelogOverlay?.Show();
+                            changelogOverlay?.Show();
+                        }
+                        catch
+                        {
+                            // maybe this overlay has been moved into internal.
+                        }
                     }
                 }
             };
         }
+
+        protected Container DisplayContainer => Geme?.Children[3] as Container;
 
         private class PitchSlider : OsuSliderBar<int>
         {
