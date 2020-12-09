@@ -32,6 +32,6 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             }
         }
 
-        public override string ToString() => Value.ToString();
+        public override string ToString() => Value.Name;
     }
 }
