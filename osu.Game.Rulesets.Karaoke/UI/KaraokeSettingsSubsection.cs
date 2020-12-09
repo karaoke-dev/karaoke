@@ -88,8 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                         {
                             // maybe this overlay has been moved into internal.
                         }
-                    }
-                    
+                    } 
                 },
                 // Pitch
                 new SettingsCheckbox
