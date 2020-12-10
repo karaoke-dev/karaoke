@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags.Ja
             var lyric = new Lyric
             {
                 Text = "明日いっしょに遊びましょう！",
-                RubyTags = new []
+                RubyTags = new[]
                 {
                     new RubyTag
                     {

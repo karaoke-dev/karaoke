@@ -64,8 +64,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase('ハ', false)]
         public void TestIsChinese(char c, bool result)
         {
-            var isChinses = CharUtils.IsChinese(c);
-            Assert.AreEqual(isChinses, result);
+            var isChinese = CharUtils.IsChinese(c);
+            Assert.AreEqual(isChinese, result);
         }
     }
 }

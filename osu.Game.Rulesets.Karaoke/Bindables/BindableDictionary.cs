@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
 
         private readonly Cached<WeakReference<BindableDictionary<TKey, TValue>>> weakReferenceCache = new Cached<WeakReference<BindableDictionary<TKey, TValue>>>();
 
-        private WeakReference<BindableDictionary<TKey, TValue>> weakReference => weakReferenceCache.IsValid ? weakReferenceCache.Value : weakReferenceCache.Value = new WeakReference<BindableDictionary<TKey, TValue>>(this);  
+        private WeakReference<BindableDictionary<TKey, TValue>> weakReference => weakReferenceCache.IsValid ? weakReferenceCache.Value : weakReferenceCache.Value = new WeakReference<BindableDictionary<TKey, TValue>>(this);
 
         private LockedWeakList<BindableDictionary<TKey, TValue>> bindings;
 
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         /// <summary>
         /// Gets or sets the item at an index in this <see cref="BindableDictionary{TKey, TValue}"/>.
         /// </summary>
-        /// <param name="index">The index of the item.</param>
+        /// <param name="key">The key of the item.</param>
         /// <exception cref="InvalidOperationException">Thrown when setting a value while this <see cref="BindableDictionary{TKey, TValue}"/> is <see cref="Disabled"/>.</exception>
         public TValue this[TKey key]
         {
@@ -91,7 +91,8 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         /// <summary>
         /// Adds a single item to this <see cref="BindableDictionary{TKey, TValue}"/>.
         /// </summary>
-        /// <param name="item">The item to be added.</param>
+        /// <param name="key">The key to be added.</param>
+        /// <param name="value">The item to be added.</param>
         /// <exception cref="InvalidOperationException">Thrown when this <see cref="BindableDictionary{TKey, TValue}"/> is <see cref="Disabled"/>.</exception>
         public void Add(TKey key, TValue value)
             => Add(new KeyValuePair<TKey, TValue>(key, value));
@@ -102,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         /// <param name="item">The item to be added.</param>
         /// <exception cref="InvalidOperationException">Thrown when this <see cref="BindableDictionary{TKey, TValue}"/> is <see cref="Disabled"/>.</exception>
         public void Add(KeyValuePair<TKey, TValue> item)
-             => add(item, null);
+            => add(item, null);
 
         private void add(KeyValuePair<TKey, TValue> item, BindableDictionary<TKey, TValue> caller)
         {
@@ -160,7 +161,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         /// <summary>
         /// Determines if an item is in this <see cref="BindableDictionary{TKey, TValue}"/>.
         /// </summary>
-        /// <param name="item">The item to locate in this <see cref="BindableDictionary{TKey, TValue}"/>.</param>
+        /// <param name="key">The key to locate in this <see cref="BindableDictionary{TKey, TValue}"/>.</param>
         /// <returns><code>true</code> if this <see cref="BindableDictionary{TKey, TValue}"/> contains the given item.</returns>
         public bool ContainsKey(TKey key)
             => collection.ContainsKey(key);
@@ -171,7 +172,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         /// <summary>
         /// Removes an item from this <see cref="BindableDictionary{TKey, TValue}"/>.
         /// </summary>
-        /// <param name="item">The item to remove from this <see cref="BindableDictionary{TKey, TValue}"/>.</param>
+        /// <param name="key">The key to remove from this <see cref="BindableDictionary{TKey, TValue}"/>.</param>
         /// <returns><code>true</code> if the removal was successful.</returns>
         /// <exception cref="InvalidOperationException">Thrown if this <see cref="BindableDictionary{TKey, TValue}"/> is <see cref="Disabled"/>.</exception>
         public bool Remove(TKey key)
@@ -238,10 +239,10 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         }
 
         public void Add(object key, object value)
-            => Add((TKey) key, (TValue) value);
+            => Add((TKey)key, (TValue)value);
 
         public bool Contains(object key)
-            => ContainsKey((TKey) key);
+            => ContainsKey((TKey)key);
 
         public void Remove(object key)
             => Remove((TKey)key);
@@ -261,7 +262,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
 
         /// <summary>
         /// Parse an object into this instance.
-        /// A collection holding items of type <typeparamref name="T"/> can be parsed. Null results in an empty <see cref="BindableDictionary{TKey, TValue}"/>.
+        /// A collection holding items of type <typeparamref name="TValue"/> can be parsed. Null results in an empty <see cref="BindableDictionary{TKey, TValue}"/>.
         /// </summary>
         /// <param name="input">The input which is to be parsed.</param>
         /// <exception cref="InvalidOperationException">Thrown if this <see cref="BindableDictionary{TKey, TValue}"/> is <see cref="Disabled"/>.</exception>
@@ -277,10 +278,12 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
 
                 case IDictionary<TKey, TValue> enumerable:
                     Clear();
+
                     foreach (var key in enumerable)
                     {
                         Add(key);
                     }
+
                     break;
 
                 default:
@@ -295,7 +298,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         private bool disabled;
 
         /// <summary>
-        /// Whether this <see cref="BindableDictionary{TKey, TValue}"/> has been disabled. When disabled, attempting to change the contents of this <see cref=BindableDictionary{TKey, TValue}"/> will result in an <see cref="InvalidOperationException"/>.
+        /// Whether this <see cref="BindableDictionary{TKey, TValue}"/> has been disabled. When disabled, attempting to change the contents of this <see cref="BindableDictionary{TKey, TValue}"/> will result in an <see cref="InvalidOperationException"/>.
         /// </summary>
         public bool Disabled
         {

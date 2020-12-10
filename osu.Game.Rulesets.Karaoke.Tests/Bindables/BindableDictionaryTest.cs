@@ -36,11 +36,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         {
             var dictionary = new Dictionary<int, string>
             {
-                { 0 , "ok"},
-                { 1 , "nope"},
-                { 2 , "random"},
-                { 3 , null },
-                { 4 , ""}
+                { 0, "ok" },
+                { 1, "nope" },
+                { 2, "random" },
+                { 3, null },
+                { 4, "" }
             };
 
             var bindableDictionary = new BindableDictionary<int, string>(dictionary);
@@ -600,11 +600,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             Assert.That(triggeredArgs.Action, Is.EqualTo(NotifyCollectionChangedAction.Remove));
             Assert.That(triggeredArgs.OldItems, Is.EquivalentTo(new Dictionary<int, string>
             {
-                { 0 ,"testA" },
-                { 1 ,"testA" },
-                { 2 ,"testA" },
-                { 3 ,"testA" },
-                { 4 ,"testA" },
+                { 0, "testA" },
+                { 1, "testA" },
+                { 2, "testA" },
+                { 3, "testA" },
+                { 4, "testA" },
             }));
             Assert.That(triggeredArgs.OldStartingIndex, Is.EqualTo(0));
         }

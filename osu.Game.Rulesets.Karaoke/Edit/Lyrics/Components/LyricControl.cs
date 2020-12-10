@@ -114,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
                     var percentage = timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 0 : 1;
                     var position = karaokeText.GetPercentageWidth(index, index + 1, percentage);
 
-                    var duplicatedTagAmount = timeTags.SkipWhile(t => t!= timeTag).Count(x => x.Item1 == timeTag.Item1) - 1;
+                    var duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Item1 == timeTag.Item1) - 1;
                     var spacing = duplicatedTagAmount * time_tag_spacing * (timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 1 : -1);
 
                     timeTagContainer.Add(new DrawableTimeTag(timeTag)

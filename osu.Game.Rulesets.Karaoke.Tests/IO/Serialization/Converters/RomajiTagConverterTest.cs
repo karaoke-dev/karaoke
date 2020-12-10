@@ -27,12 +27,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             };
 
             var result = JsonConvert.SerializeObject(romajiTag, CreateSettings());
-            Assert.AreEqual(result, $"\"{ json }\"");
+            Assert.AreEqual(result, $"\"{json}\"");
         }
 
         [TestCase("[1,2]:romaji", 1, 2, "romaji")]
         [TestCase("[1,1]:romaji", 1, 1, "romaji")]
-        [TestCase("[-1,-2]:romaji", - 1, -2, "romaji")] // Should not check romaji is out of range in here.
+        [TestCase("[-1,-2]:romaji", -1, -2, "romaji")] // Should not check romaji is out of range in here.
         [TestCase("[1,2]:::[][]", 1, 2, "::[][]")]
         [TestCase("[1,2]:", 1, 2, "")]
         [TestCase("[1,2]:null", 1, 2, "null")]
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase("[]", 0, 0, null)]
         public void TestDeserialize(string json, int startIndex, int endIndex, string text)
         {
-            var result = JsonConvert.DeserializeObject<RomajiTag>($"\"{ json }\"", CreateSettings());
+            var result = JsonConvert.DeserializeObject<RomajiTag>($"\"{json}\"", CreateSettings());
             var actual = new RomajiTag
             {
                 StartIndex = startIndex,

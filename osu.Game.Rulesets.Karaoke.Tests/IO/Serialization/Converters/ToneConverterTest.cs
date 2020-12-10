@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             };
 
             var result = JsonConvert.SerializeObject(tone, CreateSettings());
-            Assert.AreEqual(result, $"{ json }");
+            Assert.AreEqual(result, $"{json}");
         }
 
         [TestCase("1.5", 1, true)]
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase("-1.0", -1, false)]
         public void TestDeserialize(string json, int scale, bool half)
         {
-            var result = JsonConvert.DeserializeObject<Tone>($"{ json }", CreateSettings());
+            var result = JsonConvert.DeserializeObject<Tone>($"{json}", CreateSettings());
             var actual = new Tone
             {
                 Scale = scale,

@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             };
 
             var result = JsonConvert.SerializeObject(rubyTag, CreateSettings());
-            Assert.AreEqual(result, $"\"{ json }\"");
+            Assert.AreEqual(result, $"\"{json}\"");
         }
 
         [TestCase("[1,2]:ルビ", 1, 2, "ルビ")]
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase("[]", 0, 0, null)]
         public void TestDeserialize(string json, int startIndex, int endIndex, string text)
         {
-            var result = JsonConvert.DeserializeObject<RubyTag>($"\"{ json }\"", CreateSettings());
+            var result = JsonConvert.DeserializeObject<RubyTag>($"\"{json}\"", CreateSettings());
             var actual = new RubyTag
             {
                 StartIndex = startIndex,

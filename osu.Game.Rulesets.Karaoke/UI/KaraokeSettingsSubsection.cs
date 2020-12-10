@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 new SettingsButton
                 {
                     Text = "Prefer language",
-                    TooltipText = "Select perfer translate language.",
+                    TooltipText = "Select prefer translate language.",
                     Action = () =>
                     {
                         try
@@ -77,10 +77,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                 return;
 
                             if (languageSelectionDialog == null && !DisplayContainer.Children.OfType<LanguageSelectionDialog>().Any())
+                            {
                                 DisplayContainer.Add(languageSelectionDialog = new LanguageSelectionDialog
                                 {
                                     Current = config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferLanguage)
                                 });
+                            }
 
                             languageSelectionDialog?.Show();
                         }
@@ -88,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                         {
                             // maybe this overlay has been moved into internal.
                         }
-                    } 
+                    }
                 },
                 // Pitch
                 new SettingsCheckbox
