@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (textTags == null || textTags.Length == 0)
                 return new T[] { };
 
-            // todo : need to make suure is need to sort in here?
+            // todo : need to make sure is need to sort in here?
             var sortedTextTags = Sort(textTags, sorting);
 
             var invalidList = new List<T>();
