@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
 
             TimeTagLogic(lyric, timeTags);
 
-            return timeTags.OrderBy(x => x.Item1).ToArray();
+            return timeTags.OrderBy(x => x.Index).ToArray();
         }
 
         protected abstract void TimeTagLogic(Lyric lyric, List<TimeTag> timeTags);

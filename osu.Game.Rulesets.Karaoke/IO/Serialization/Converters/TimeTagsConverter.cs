@@ -46,9 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             string serializeTuple(TimeTag timeTagTuple)
             {
-                var tag = timeTagTuple.Item1;
+                var tag = timeTagTuple.Index;
                 var state = tag.State == TimeTagIndex.IndexState.Start ? "0" : "1";
-                var time = timeTagTuple.Item2;
+                var time = timeTagTuple.Time;
                 return $"{tag.Index},{state},{time}";
             }
         }

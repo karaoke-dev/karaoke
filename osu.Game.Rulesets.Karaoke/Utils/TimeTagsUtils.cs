@@ -19,8 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns>Sorted time tags</returns>
         public static TimeTag[] Sort(TimeTag[] timeTags)
         {
-            return timeTags?.OrderBy(x => x.Item1)
-                           .ThenBy(x => x.Item2).ToArray();
+            return timeTags?.OrderBy(x => x.Index)
+                           .ThenBy(x => x.Time).ToArray();
         }
 
         /// <summary>
@@ -33,14 +33,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static TimeTag[] FindInvalid(TimeTag[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
             var sortedTimeTags = Sort(timeTags);
-            var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Item1.Index);
+            var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Index.Index);
 
             var invalidList = new List<TimeTag>();
 
             foreach (var groupedTimeTag in groupedTimeTags)
             {
-                var startTimeGroup = groupedTimeTag.Where(x => x.Item1.State == TimeTagIndex.IndexState.Start && x.Item2 != null);
-                var endTimeGroup = groupedTimeTag.Where(x => x.Item1.State == TimeTagIndex.IndexState.End && x.Item2 != null);
+                var startTimeGroup = groupedTimeTag.Where(x => x.Index.State == TimeTagIndex.IndexState.Start && x.Time != null);
+                var endTimeGroup = groupedTimeTag.Where(x => x.Index.State == TimeTagIndex.IndexState.End && x.Time != null);
 
                 // add invalid group into list.
                 var groupInvalid = findGroupInvalid();
@@ -58,19 +58,19 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     {
                         case GroupCheck.Asc:
                             // mark next is invalid if smaller then self
-                            var groupMaxTime = groupedTimeTag.Max(x => x.Item2);
+                            var groupMaxTime = groupedTimeTag.Max(x => x.Time);
                             if (groupMaxTime == null)
                                 return null;
 
-                            return sortedTimeTags.Where(x => x.Item1.Index > groupedTimeTag.Key && x.Item2 < groupMaxTime).ToList();
+                            return sortedTimeTags.Where(x => x.Index.Index > groupedTimeTag.Key && x.Time < groupMaxTime).ToList();
 
                         case GroupCheck.Desc:
                             // mark previous is invalid if larger then self
-                            var groupMinTime = groupedTimeTag.Min(x => x.Item2);
+                            var groupMinTime = groupedTimeTag.Min(x => x.Time);
                             if (groupMinTime == null)
                                 return null;
 
-                            return sortedTimeTags.Where(x => x.Item1.Index < groupedTimeTag.Key && x.Item2 > groupMinTime).ToList();
+                            return sortedTimeTags.Where(x => x.Index.Index < groupedTimeTag.Key && x.Time > groupMinTime).ToList();
 
                         default:
                             return null;
@@ -82,18 +82,18 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     switch (self)
                     {
                         case SelfCheck.BasedOnStart:
-                            var maxStartTime = startTimeGroup.Max(x => x.Item2);
+                            var maxStartTime = startTimeGroup.Max(x => x.Time);
                             if (maxStartTime == null)
                                 return null;
 
-                            return endTimeGroup.Where(x => x.Item2.Value < maxStartTime.Value).ToList();
+                            return endTimeGroup.Where(x => x.Time.Value < maxStartTime.Value).ToList();
 
                         case SelfCheck.BasedOnEnd:
-                            var minEndTime = endTimeGroup.Min(x => x.Item2);
+                            var minEndTime = endTimeGroup.Min(x => x.Time);
                             if (minEndTime == null)
                                 return null;
 
-                            return startTimeGroup.Where(x => x.Item2.Value > minEndTime.Value).ToList();
+                            return startTimeGroup.Where(x => x.Time.Value > minEndTime.Value).ToList();
 
                         default:
                             return null;
@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 return timeTags;
 
             var sortedTimeTags = Sort(timeTags);
-            var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Item1.Index);
+            var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Index.Index);
 
             var invalidTimeTags = FindInvalid(timeTags, other, self);
             var validTimeTags = sortedTimeTags.Except(invalidTimeTags);
@@ -125,19 +125,19 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             foreach (var invalidTimeTag in invalidTimeTags)
             {
                 var listIndex = sortedTimeTags.IndexOf(invalidTimeTag);
-                var timeTag = invalidTimeTag.Item1;
+                var timeTag = invalidTimeTag.Index;
 
                 // fix self-invalid
                 var groupedTimeTag = groupedTimeTags.FirstOrDefault(x => x.Key == timeTag.Index).ToList();
-                var startTimeGroup = groupedTimeTag.Where(x => x.Item1.State == TimeTagIndex.IndexState.Start && x.Item2 != null);
-                var endTimeGroup = groupedTimeTag.Where(x => x.Item1.State == TimeTagIndex.IndexState.End && x.Item2 != null);
+                var startTimeGroup = groupedTimeTag.Where(x => x.Index.State == TimeTagIndex.IndexState.Start && x.Time != null);
+                var endTimeGroup = groupedTimeTag.Where(x => x.Index.State == TimeTagIndex.IndexState.End && x.Time != null);
 
                 switch (timeTag.State)
                 {
                     case TimeTagIndex.IndexState.Start:
-                        var minEndTime = endTimeGroup.Min(x => x.Item2);
+                        var minEndTime = endTimeGroup.Min(x => x.Time);
 
-                        if (minEndTime != null && minEndTime < invalidTimeTag.Item2)
+                        if (minEndTime != null && minEndTime < invalidTimeTag.Time)
                         {
                             sortedTimeTags[listIndex] = new TimeTag(timeTag, minEndTime);
                             continue;
@@ -146,9 +146,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                         break;
 
                     case TimeTagIndex.IndexState.End:
-                        var maxStartTime = startTimeGroup.Max(x => x.Item2);
+                        var maxStartTime = startTimeGroup.Max(x => x.Time);
 
-                        if (maxStartTime != null && maxStartTime > invalidTimeTag.Item2)
+                        if (maxStartTime != null && maxStartTime > invalidTimeTag.Time)
                         {
                             sortedTimeTags[listIndex] = new TimeTag(timeTag, maxStartTime);
                             continue;
@@ -162,13 +162,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 {
                     case GroupCheck.Asc:
                         // find previous value to apply.
-                        var previousValidValue = sortedTimeTags.Reverse().FirstOrDefault(x => x.Item1.Index < timeTag.Index && x.Item2 != null)?.Item2;
+                        var previousValidValue = sortedTimeTags.Reverse().FirstOrDefault(x => x.Index.Index < timeTag.Index && x.Time != null)?.Time;
                         sortedTimeTags[listIndex] = new TimeTag(timeTag, previousValidValue);
                         break;
 
                     case GroupCheck.Desc:
                         // find next value to apply.
-                        var nextValidValue = sortedTimeTags.FirstOrDefault(x => x.Item1.Index > timeTag.Index && x.Item2 != null)?.Item2;
+                        var nextValidValue = sortedTimeTags.FirstOrDefault(x => x.Index.Index > timeTag.Index && x.Time != null)?.Time;
                         sortedTimeTags[listIndex] = new TimeTag(timeTag, nextValidValue);
                         break;
                 }
@@ -195,13 +195,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var sortedTimeTags = applyFix ? FixInvalid(timeTags, other, self) : Sort(timeTags);
 
             // convert to dictionary, will get start's smallest time and end's largest time.
-            return sortedTimeTags.Where(x => x.Item2 != null).GroupBy(x => x.Item1).Select(x =>
+            return sortedTimeTags.Where(x => x.Time != null).GroupBy(x => x.Index).Select(x =>
             {
                 if (x.Key.State == TimeTagIndex.IndexState.Start)
                     return x.FirstOrDefault();
                 else
                     return x.LastOrDefault();
-            }).ToDictionary(k => k.Item1, v => v.Item2 ?? throw new ArgumentNullException("Dictionaty should not have null value"));
+            }).ToDictionary(k => k.Index, v => v.Time ?? throw new ArgumentNullException("Dictionaty should not have null value"));
         }
 
         /// <summary>

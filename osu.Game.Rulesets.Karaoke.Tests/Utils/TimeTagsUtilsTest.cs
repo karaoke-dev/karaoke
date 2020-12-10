@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         }
 
         private double[] getSortedTime(TimeTag[] timeTags)
-            => timeTags.Where(x => x.Item2 != null).Select(x => x.Item2 ?? 0)
+            => timeTags.Where(x => x.Time != null).Select(x => x.Time ?? 0)
                        .OrderBy(x => x).ToArray();
 
         private double[] getSortedTime(IReadOnlyDictionary<TimeTagIndex, double> dictionary)

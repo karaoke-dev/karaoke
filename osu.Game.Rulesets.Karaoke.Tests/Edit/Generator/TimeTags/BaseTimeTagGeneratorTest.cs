@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags
         #region test helper
 
         private TimeTagIndex[] getTimeTagIndex(TimeTag[] timeTags)
-            => timeTags.Select((v, i) => v.Item1).ToArray();
+            => timeTags.Select((v, i) => v.Index).ToArray();
 
         private TimeTagIndex[] getTimeTagIndexByArray(double[] timeTags)
             => timeTags.Select(timeTag =>

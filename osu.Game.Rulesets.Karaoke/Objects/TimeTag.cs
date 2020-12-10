@@ -8,12 +8,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
     {
         public TimeTag(TimeTagIndex index, double? time = null)
         {
-            Item1 = index;
-            Item2 = time;
+            Index = index;
+            Time = time;
         }
 
-        public TimeTagIndex Item1 { get; }
+        public TimeTagIndex Index { get; }
 
-        public double? Item2 { get; set; }
+        public double? Time { get; set; }
     }
 }

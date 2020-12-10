@@ -37,9 +37,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 
             Assert.IsNotNull(result);
             Assert.AreEqual(result.Length, 3);
-            Assert.AreEqual(result[0].Item1.Index, 0);
-            Assert.AreEqual(result[0].Item1.State, TimeTagIndex.IndexState.Start);
-            Assert.AreEqual(result[0].Item2, 1000);
+            Assert.AreEqual(result[0].Index.Index, 0);
+            Assert.AreEqual(result[0].Index.State, TimeTagIndex.IndexState.Start);
+            Assert.AreEqual(result[0].Time, 1000);
         }
     }
 }

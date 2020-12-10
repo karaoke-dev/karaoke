@@ -32,14 +32,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(triangle_width),
-                Scale = new Vector2(timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 1 : -1, 1)
+                Scale = new Vector2(timeTag.Index.State == TimeTagIndex.IndexState.Start ? 1 : -1, 1)
             };
         }
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            InternalChild.Colour = timeTag.Item2.HasValue ? colours.Yellow : colours.Gray7;
+            InternalChild.Colour = timeTag.Time.HasValue ? colours.Yellow : colours.Gray7;
         }
     }
 }

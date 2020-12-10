@@ -31,13 +31,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
             foreach (var ruby in lyric.RubyTags)
             {
                 // remove exist time tag
-                timeTags.RemoveAll(x => x.Item1.Index > ruby.StartIndex && x.Item1.Index < ruby.EndIndex);
+                timeTags.RemoveAll(x => x.Index.Index > ruby.StartIndex && x.Index.Index < ruby.EndIndex);
 
                 // add new time tags created from ruby
                 var rubyTags = generateTimeTagByText(ruby.Text);
                 var shiftingTimeTags = rubyTags.Select((x, v) =>
                 {
-                    return new TimeTag(new TimeTagIndex(ruby.StartIndex, x.Item1.State), x.Item2);
+                    return new TimeTag(new TimeTagIndex(ruby.StartIndex, x.Index.State), x.Time);
                 });
                 timeTags.AddRange(shiftingTimeTags);
             }
