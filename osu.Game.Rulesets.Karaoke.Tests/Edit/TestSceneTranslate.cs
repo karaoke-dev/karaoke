@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Translate;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
+using System.Globalization;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
@@ -26,21 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
             karaokeBeatmap.AvailableTranslates = new[]
             {
-                new BeatmapSetOnlineLanguage
-                {
-                    Id = 1,
-                    Name = "zh-TW"
-                },
-                new BeatmapSetOnlineLanguage
-                {
-                    Id = 2,
-                    Name = "en-US"
-                },
-                new BeatmapSetOnlineLanguage
-                {
-                    Id = 3,
-                    Name = "ja-JP"
-                }
+                new CultureInfo("zh-TW"),
+                new CultureInfo("en-US"),
+                new CultureInfo("ja-JP")
             };
 
             editorBeatmap = new EditorBeatmap(karaokeBeatmap);

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using osu.Game.Beatmaps;
@@ -247,7 +248,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private void processTranslate(Beatmap beatmap, IEnumerable<string> translateLines)
         {
-            var availableTranslates = new List<BeatmapSetOnlineLanguage>();
+            var availableTranslates = new List<CultureInfo>();
 
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
             var translates = translateLines.Select(translate => new
@@ -258,24 +259,21 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
             for (int i = 0; i < translates.Count; i++)
             {
-                var id = i + 1;
                 var singleLanguage = translates[i];
 
-                var key = singleLanguage.Key;
+                // get calture and translate
+                var languageCode = singleLanguage.Key;
+                var cultureInfo = new CultureInfo(languageCode);
                 var values = singleLanguage.ToList();
 
                 var size = Math.Min(lyrics.Count, singleLanguage.Count());
 
                 for (int j = 0; j < size; j++)
                 {
-                    lyrics[j].Translates.Add(id, values[j]);
+                    lyrics[j].Translates.Add(cultureInfo, values[j]);
                 }
 
-                availableTranslates.Add(new BeatmapSetOnlineLanguage
-                {
-                    Id = id,
-                    Name = key
-                });
+                availableTranslates.Add(cultureInfo);
             }
 
             var dictionary = new LegacyPropertyDictionary

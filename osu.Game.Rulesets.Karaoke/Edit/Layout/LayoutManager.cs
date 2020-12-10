@@ -74,6 +74,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             if (singers != null)
                 PreviewSingers.Value = singers;
         }
+
+        public void UpdateLayoutName(KaraokeLayout layout, string newValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddLayout(KaraokeLayout layout)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsLayoutModified(KaraokeLayout layout)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveLayout(KaraokeLayout layout)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public struct DisplayRatio

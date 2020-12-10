@@ -73,8 +73,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 },
             };
 
-            lyric.Translates.Add(0, "karaoke");
-            lyric.ApplyDisplayTranslate(0);
+            // todo : might add translate
+            //lyric.Translates.Add(0, "karaoke");
+            //lyric.ApplyDisplayTranslate(0);
 
             lyric.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 

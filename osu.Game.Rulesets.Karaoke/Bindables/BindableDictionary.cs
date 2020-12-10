@@ -481,9 +481,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             => GetEnumerator();
 
         IDictionaryEnumerator IDictionary.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+            => GetEnumerator() as IDictionaryEnumerator;
 
         #endregion IEnumerable
 
