@@ -15,6 +15,10 @@ using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
+    /// <summary>
+    /// Handle view or edit time-tag in lyrics.
+    /// Notice that <see cref="TimeTagManager"/> is not strictly needed, <see cref="LyricEditor"/> just not showing time-tag if not regist this manager.
+    /// </summary>
     public class TimeTagManager : Component
     {
         [Resolved]

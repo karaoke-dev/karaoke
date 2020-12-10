@@ -33,13 +33,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
             };
         }
 
-        [BackgroundDependencyLoader]
+        [BackgroundDependencyLoader(true)]
         private void load(IFrameBasedClock framedClock, TimeTagManager timeTagManager)
         {
             drawableLyric.Clock = framedClock;
-            timeTagManager.BindableCursorPosition.BindValueChanged(e =>
+            timeTagManager?.BindableCursorPosition.BindValueChanged(e =>
             {
-                drawableLyric.UpdateTimeTagCursoe(e.NewValue);
+                drawableLyric?.UpdateTimeTagCursoe(e.NewValue);
             }, true);
         }
 
