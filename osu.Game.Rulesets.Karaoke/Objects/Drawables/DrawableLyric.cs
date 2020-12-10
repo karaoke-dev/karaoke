@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public readonly IBindable<RomajiTag[]> RomajiTagsBindable = new Bindable<RomajiTag[]>();
         public readonly IBindable<int[]> SingersBindable = new Bindable<int[]>();
         public readonly IBindable<int> LayoutIndexBindable = new Bindable<int>();
-        public readonly IBindable<string> TranslateTextBindable = new Bindable<string>();
+        //public readonly IBindable<string> TranslateTextBindable = new Bindable<string>();
 
         /// <summary>
         /// Invoked when a <see cref="JudgementResult"/> has been applied by this <see cref="DrawableHitObject"/> or a nested <see cref="DrawableHitObject"/>.
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             RomajiTagsBindable.BindValueChanged(romajiTags => { ApplyRomaji(); });
             SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
             LayoutIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
-            TranslateTextBindable.BindValueChanged(text => { translateText.Text = text.NewValue ?? ""; });
+            //TranslateTextBindable.BindValueChanged(text => { translateText.Text = text.NewValue ?? ""; });
         }
 
         protected override void OnApply()
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             RomajiTagsBindable.BindTo(HitObject.RomajiTagsBindable);
             SingersBindable.BindTo(HitObject.SingersBindable);
             LayoutIndexBindable.BindTo(HitObject.LayoutIndexBindable);
-            TranslateTextBindable.BindTo(HitObject.TranslateTextBindable);
+            //TranslateTextBindable.BindTo(HitObject.TranslateTextBindable);
         }
 
         protected override void OnFree()
@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             RomajiTagsBindable.UnbindFrom(HitObject.RomajiTagsBindable);
             SingersBindable.UnbindFrom(HitObject.SingersBindable);
             LayoutIndexBindable.UnbindFrom(HitObject.LayoutIndexBindable);
-            TranslateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
+            //TranslateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
         }
 
         protected override void UpdateInitialTransforms()

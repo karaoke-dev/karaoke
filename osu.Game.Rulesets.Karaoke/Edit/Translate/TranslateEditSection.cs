@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -142,13 +143,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         [BackgroundDependencyLoader]
         private void load(TranslateManager translateManager, OsuColour colours)
         {
-            languageDropdown.ItemSource = translateManager?.Languages ?? new BindableList<BeatmapSetOnlineLanguage>();
+            languageDropdown.ItemSource = translateManager?.Languages ?? new BindableList<CultureInfo>();
 
             timeSectionBackground.Colour = colours.ContextMenuGray;
             lyricSectionBackground.Colour = colours.Gray9;
         }
 
-        private Drawable[][] createContent(EditorBeatmap editorBeatmap, Bindable<BeatmapSetOnlineLanguage> bindable)
+        private Drawable[][] createContent(EditorBeatmap editorBeatmap, Bindable<CultureInfo> bindable)
         {
             var lyrics = editorBeatmap.HitObjects.OfType<Lyric>().ToArray();
 
@@ -193,7 +194,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             };
         }
 
-        private Drawable createTranslateTextBox(Lyric lyric, Bindable<BeatmapSetOnlineLanguage> bindable)
+        private Drawable createTranslateTextBox(Lyric lyric, Bindable<CultureInfo> bindable)
         {
             var textBox = new OsuTextBox
             {
@@ -201,14 +202,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 Origin = Anchor.CentreLeft,
                 RelativeSizeAxes = Axes.X,
             };
-            languageDropdown.Current.BindValueChanged(v => { textBox.Text = lyric.Translates.TryGetValue(v.NewValue.Id, out string translate) ? translate : null; });
+            languageDropdown.Current.BindValueChanged(v => { textBox.Text = lyric.Translates.TryGetValue(v.NewValue, out string translate) ? translate : null; });
             textBox.Current.BindValueChanged(textBoxValue =>
             {
                 var translateText = textBoxValue.NewValue;
-                var languageId = languageDropdown.Current.Value.Id;
+                var cultureInfo = languageDropdown.Current.Value;
 
-                if (!lyric.Translates.TryAdd(languageId, translateText))
-                    lyric.Translates[languageId] = translateText;
+                if (!lyric.Translates.TryAdd(cultureInfo, translateText))
+                    lyric.Translates[cultureInfo] = translateText;
             });
             return textBox;
         }

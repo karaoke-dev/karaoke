@@ -1,10 +1,10 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Game.Beatmaps;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
         private readonly OsuSpriteText translateText;
         private readonly OsuDropdown<string> translateDropDown;
 
-        public TranslateSettings(BeatmapSetOnlineLanguage[] translates)
+        public TranslateSettings(CultureInfo[] translates)
             : base("Translate")
         {
             Children = new Drawable[]
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
                 translateDropDown = new OsuDropdown<string>
                 {
                     RelativeSizeAxes = Axes.X,
-                    Items = translates.Select(x => x.Name)
+                    Items = translates.Select(x => x.DisplayName)
                 },
             };
         }

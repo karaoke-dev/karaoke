@@ -10,34 +10,34 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
-using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osuTK;
 using osuTK.Graphics;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
 {
-    public class DrawableLanguageListItem : OsuRearrangeableListItem<BeatmapSetOnlineLanguage>
+    public class DrawableLayoutListItem : OsuRearrangeableListItem<KaraokeLayout>
     {
         private const float item_height = 35;
         private const float button_width = item_height * 0.75f;
 
         /// <summary>
-        /// Whether the <see cref="BeatmapSetOnlineLanguage"/> currently exists inside the <see cref="TranslateManager"/>.
+        /// Whether the <see cref="KaraokeLayout"/> currently exists inside the <see cref="LayoutManager"/>.
         /// </summary>
         public IBindable<bool> IsCreated => isCreated;
 
         private readonly Bindable<bool> isCreated = new Bindable<bool>();
 
         /// <summary>
-        /// Creates a new <see cref="DrawableLanguageListItem"/>.
+        /// Creates a new <see cref="KaraokeLayout"/>.
         /// </summary>
-        /// <param name="item">The <see cref="BeatmapSetOnlineLanguage"/>.</param>
-        /// <param name="isCreated">Whether <paramref name="item"/> currently exists inside the <see cref="TranslateManager"/>.</param>
-        public DrawableLanguageListItem(BeatmapSetOnlineLanguage item, bool isCreated)
+        /// <param name="item">The <see cref="KaraokeLayout"/>.</param>
+        /// <param name="isCreated">Whether <paramref name="item"/> currently exists inside the <see cref="LayoutManager"/>.</param>
+        public DrawableLayoutListItem(KaraokeLayout item, bool isCreated)
             : base(item)
         {
             this.isCreated.Value = isCreated;
@@ -51,23 +51,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
         };
 
         /// <summary>
-        /// The main content of the <see cref="DrawableLanguageListItem"/>.
+        /// The main content of the <see cref="DrawableLayoutListItem"/>.
         /// </summary>
         private class ItemContent : CircularContainer
         {
             public readonly Bindable<bool> IsCreated = new Bindable<bool>();
 
-            private readonly BeatmapSetOnlineLanguage language;
+            private readonly KaraokeLayout layout;
 
             [Resolved(CanBeNull = true)]
-            private TranslateManager languageManager { get; set; }
+            private LayoutManager layoutManager { get; set; }
 
             private Container textBoxPaddingContainer;
             private ItemTextBox textBox;
 
-            public ItemContent(BeatmapSetOnlineLanguage language)
+            public ItemContent(KaraokeLayout layout)
             {
-                this.language = language;
+                this.layout = layout;
 
                 RelativeSizeAxes = Axes.X;
                 Height = item_height;
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             {
                 Children = new Drawable[]
                 {
-                    new DeleteButton(language)
+                    new DeleteButton(layout)
                     {
                         Anchor = Anchor.CentreRight,
                         Origin = Anchor.CentreRight,
@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                                 RelativeSizeAxes = Axes.Both,
                                 Size = Vector2.One,
                                 CornerRadius = item_height / 2,
-                                PlaceholderText = IsCreated.Value ? string.Empty : "Create a new language"
+                                PlaceholderText = IsCreated.Value ? string.Empty : "Create a new layout"
                             },
                         }
                     },
@@ -108,19 +108,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
             {
                 base.LoadComplete();
 
-                textBox.Current.Value = language.Name;
+                textBox.Current.Value = layout.Name;
                 textBox.Current.BindValueChanged(x =>
                 {
                     // Update name
-                    languageManager.UpdateLanguageName(language, x.NewValue);
+                    layoutManager.UpdateLayoutName(layout, x.NewValue);
 
-                    // Create new
-                    createNewLanguage();
+                    // Create new layout
+                    createNewLayout();
                 }, true);
                 IsCreated.BindValueChanged(created => textBoxPaddingContainer.Padding = new MarginPadding { Right = created.NewValue ? button_width : 0 }, true);
             }
 
-            private void createNewLanguage()
+            private void createNewLayout()
             {
                 if (IsCreated.Value)
                     return;
@@ -128,8 +128,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 if (string.IsNullOrEmpty(textBox.Current.Value))
                     return;
 
-                // Add the new language and disable our placeholder. If all text is removed, the placeholder should not show back again.
-                languageManager?.AddLanguage(language);
+                // Add the new layout and disable our placeholder. If all text is removed, the placeholder should not show back again.
+                layoutManager?.AddLayout(layout);
                 textBox.PlaceholderText = string.Empty;
 
                 // When this item changes from placeholder to non-placeholder (via changing containers), its text box will lose focus, so it needs to be re-focused.
@@ -160,16 +160,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 private DialogOverlay dialogOverlay { get; set; }
 
                 [Resolved(CanBeNull = true)]
-                private TranslateManager translateManager { get; set; }
+                private LayoutManager layoutManager { get; set; }
 
-                private readonly BeatmapSetOnlineLanguage language;
+                private readonly KaraokeLayout layout;
 
                 private Drawable fadeContainer;
                 private Drawable background;
 
-                public DeleteButton(BeatmapSetOnlineLanguage language)
+                public DeleteButton(KaraokeLayout layout)
                 {
-                    this.language = language;
+                    this.layout = layout;
                     RelativeSizeAxes = Axes.Y;
 
                     Width = button_width + item_height / 2; // add corner radius to cover with fill
@@ -224,15 +224,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 {
                     background.FlashColour(Color4.White, 150);
 
-                    if (!translateManager?.IsLanguageContainsTranslate(language) ?? false)
-                        deleteLanguage();
+                    if (!layoutManager?.IsLayoutModified(layout) ?? false)
+                        deleteLayout();
                     else
-                        dialogOverlay?.Push(new DeleteLanguageDialog(language, deleteLanguage));
+                        dialogOverlay?.Push(new DeleteLayoutDialog(layout, deleteLayout));
 
                     return true;
                 }
 
-                private void deleteLanguage() => translateManager?.RemoveLanguage(language);
+                private void deleteLayout() => layoutManager?.RemoveLayout(layout);
             }
         }
     }

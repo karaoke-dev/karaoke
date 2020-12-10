@@ -77,7 +77,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             if (isTranslate && targetTranslateLanguage != null)
             {
-                lyrics.ForEach(x => x.ApplyDisplayTranslate(targetTranslateLanguage.Id));
+                // todo : apply language
+                // lyrics.ForEach(x => x.ApplyDisplayTranslate(targetTranslateLanguage.Id));
             }
         }
 

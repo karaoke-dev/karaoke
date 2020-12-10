@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -17,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
     /// </summary>
     public class TranslateManager : Component
     {
-        public readonly BindableList<BeatmapSetOnlineLanguage> Languages = new BindableList<BeatmapSetOnlineLanguage>();
+        public readonly BindableList<CultureInfo> Languages = new BindableList<CultureInfo>();
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
@@ -32,31 +33,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             }
         }
 
-        public void AddLanguage(BeatmapSetOnlineLanguage language)
+        public void AddLanguage(CultureInfo language)
         {
             Languages.Add(language);
         }
 
-        public void UpdateLanguageName(BeatmapSetOnlineLanguage language, string name)
+        public void RemoveLanguage(CultureInfo cultureInfo)
         {
-            language.Name = name;
+            Languages.Remove(cultureInfo);
         }
 
-        public void RemoveLanguage(BeatmapSetOnlineLanguage language)
-        {
-            Languages.Remove(language);
-        }
+        public bool IsLanguageContainsTranslate(CultureInfo cultureInfo)
+            => LanguageContainsTranslateAmount(cultureInfo) > 0;
 
-        public bool IsLanguageContainsTranslate(BeatmapSetOnlineLanguage language)
-            => LanguageContainsTranslateAmount(language) > 0;
-
-        public int LanguageContainsTranslateAmount(BeatmapSetOnlineLanguage language)
+        public int LanguageContainsTranslateAmount(CultureInfo cultureInfo)
         {
-            if (language == null)
+            if (cultureInfo == null)
                 return 0;
 
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-            return lyrics.Count(x => x.Translates.ContainsKey(language.Id));
+            return lyrics.Count(x => x.Translates.ContainsKey(cultureInfo));
         }
     }
 }

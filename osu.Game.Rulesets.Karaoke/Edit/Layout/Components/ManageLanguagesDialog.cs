@@ -6,13 +6,14 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
 {
     public class ManageLanguagesDialog : TitleFocusedOverlayContainer
     {
-        protected override string Title => "Manage translates";
+        protected override string Title => "Manage layouts";
 
         public ManageLanguagesDialog()
         {
@@ -21,14 +22,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(TranslateManager translateManager)
+        private void load(LayoutManager layoutManager)
         {
             Children = new Drawable[]
             {
-                new DrawableLanguageList
+                new DrawableLayoutList
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Items = { BindTarget = translateManager?.Languages ?? new BindableList<BeatmapSetOnlineLanguage>() }
+                    Items = { BindTarget = layoutManager?.Layouts ?? new BindableList<KaraokeLayout>() }
                 }
             };
         }
