@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -9,7 +10,6 @@ using osu.Framework.Caching;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         protected WorkingBeatmap WorkingBeatmap => beatmap.Value;
 
         private readonly BindableBool translate = new BindableBool();
-        private readonly Bindable<string> translateLanguage = new Bindable<string>();
+        private readonly Bindable<CultureInfo> translateLanguage = new Bindable<CultureInfo>();
 
         private readonly BindableBool displayRuby = new BindableBool();
         private readonly BindableBool displayRomaji = new BindableBool();
@@ -67,19 +67,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private void updateLyricTranslate()
         {
             var isTranslate = translate.Value;
-            var targetLanguage = translateLanguage.Value;
+            var targetLanguage = isTranslate ? translateLanguage.Value : null;
 
-            var lyrics = Beatmap.HitObjects.OfType<Lyric>().ToList();
-            var availableTranslates = Beatmap.AvailableTranslates();
-
-            // If contain target language
-            var targetTranslateLanguage = availableTranslates.FirstOrDefault(x => x.Name == targetLanguage);
-
-            if (isTranslate && targetTranslateLanguage != null)
-            {
-                // todo : apply language
-                // lyrics.ForEach(x => x.ApplyDisplayTranslate(targetTranslateLanguage.Id));
-            }
+            // apply target translate language
+            AllHitObjects.ForEach(x => x.DisplayTranslateLanguage = targetLanguage);
         }
 
         public override void Add(DrawableHitObject h)

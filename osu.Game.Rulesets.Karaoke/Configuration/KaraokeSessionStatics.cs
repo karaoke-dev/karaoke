@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             var availableTranslate = beatmap?.AvailableTranslates();
             var selectedLanguage = availableTranslate?.FirstOrDefault(t => t == preferLanguage) ?? availableTranslate?.FirstOrDefault();
             Set(KaraokeRulesetSession.UseTranslate, useTranslate);
-            Set(KaraokeRulesetSession.PreferLanguage, selectedLanguage?.Name ?? "");
+            Set(KaraokeRulesetSession.PreferLanguage, selectedLanguage);
 
             var displayRuby = getValue<bool>(KaraokeRulesetSetting.DisplayRuby);
             var displayRomaji = getValue<bool>(KaraokeRulesetSetting.DisplayRomaji);
@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             Set(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.NotInitialized);
         }
 
-        private T getValue<T>(KaraokeRulesetSetting setting) => rulesetConfigManager.GetBindable<T>(setting).Value;
+        private T getValue<T>(KaraokeRulesetSetting setting) => rulesetConfigManager.Get<T>(setting);
     }
 
     public enum KaraokeRulesetSession
