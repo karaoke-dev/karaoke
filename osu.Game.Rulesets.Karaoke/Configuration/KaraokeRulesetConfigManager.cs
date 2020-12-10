@@ -59,7 +59,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             switch (lookup)
             {
                 case KaraokeRulesetSetting.PreferLanguage:
-                    base.AddBindable(lookup, new BindableCultureInfo());
+                    // todo : need to hve a default value here because it will cause error if object is null.
+                    base.AddBindable(lookup, new BindableCultureInfo(new CultureInfo("en-US")));
                     break;
                 default:
                     base.AddBindable(lookup, bindable);
