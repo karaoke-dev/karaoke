@@ -16,6 +16,7 @@ using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
+    [Ignore("Will fix after need this dialog.")]
     public class TestSceneManageLanguagesDialog : OsuManualInputManagerTestScene
     {
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
