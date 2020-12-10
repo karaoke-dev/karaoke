@@ -34,9 +34,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(IFrameBasedClock framedClock)
+        private void load(IFrameBasedClock framedClock, TimeTagManager timeTagManager)
         {
             drawableLyric.Clock = framedClock;
+            timeTagManager.BindableCursorPosition.BindValueChanged(e =>
+            {
+                drawableLyric.UpdateTimeTagCursoe(e.NewValue);
+            }, true);
         }
 
         public class DrawableEditorLyric : DrawableLyric
@@ -44,17 +48,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
             private const int time_tag_spacing = 4;
 
             private readonly Container timeTagContainer;
+            private readonly Container timeTagCursorContainer;
 
             public DrawableEditorLyric(Lyric lyric)
                 : base(lyric)
             {
-                AddInternal(timeTagContainer = new Container
+                AddRangeInternal(new[]
                 {
-                    RelativeSizeAxes = Axes.Both
+                    timeTagContainer = new Container
+                    {
+                        RelativeSizeAxes = Axes.Both
+                    },
+                    timeTagCursorContainer = new Container
+                    {
+                        RelativeSizeAxes = Axes.Both
+                    }
                 });
 
                 DisplayRuby = true;
                 DisplayRomaji = true;
+            }
+
+            public void UpdateTimeTagCursoe(Tuple<TimeTagIndex, double?> cursor)
+            {
+                timeTagCursorContainer.Clear();
+                if (TimeTagsBindable.Value.Contains(cursor))
+                {
+                    var spacing = timeTagPosition(cursor);
+                    timeTagCursorContainer.Add(new DrawableTimeTagCursor(cursor)
+                    {
+                        Anchor = Anchor.BottomLeft,
+                        Origin = Anchor.BottomLeft,
+                        X = spacing
+                    });
+                }
             }
 
             protected override void LoadComplete()
@@ -110,20 +137,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 
                 foreach (var timeTag in timeTags)
                 {
-                    var index = Math.Min(timeTag.Item1.Index, HitObject.Text.Length - 1);
-                    var percentage = timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 0 : 1;
-                    var position = karaokeText.GetPercentageWidth(index, index + 1, percentage);
-
-                    var duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Item1 == timeTag.Item1) - 1;
-                    var spacing = duplicatedTagAmount * time_tag_spacing * (timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 1 : -1);
-
+                    var spacing = timeTagPosition(timeTag);
                     timeTagContainer.Add(new DrawableTimeTag(timeTag)
                     {
                         Anchor = Anchor.BottomLeft,
                         Origin = Anchor.BottomLeft,
-                        X = position + spacing
+                        X = spacing
                     });
                 }
+            }
+
+            private float timeTagPosition(Tuple<TimeTagIndex, double?> timeTag)
+            {
+                var index = Math.Min(timeTag.Item1.Index, HitObject.Text.Length - 1);
+                var percentage = timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 0 : 1;
+                var position = karaokeText.GetPercentageWidth(index, index + 1, percentage);
+
+                var timeTags = TimeTagsBindable.Value;
+                var duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Item1 == timeTag.Item1) - 1;
+                var spacing = duplicatedTagAmount * time_tag_spacing * (timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 1 : -1);
+                return position + spacing;
             }
         }
     }

@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
@@ -20,6 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Resolved(CanBeNull = true)]
         private IEditorChangeHandler changeHandler { get; set; }
+
+        public Bindable<Tuple<TimeTagIndex, double?>> BindableCursorPosition { get; set; } = new Bindable<Tuple<TimeTagIndex, double?>>();
 
         /// <summary>
         /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.TimeTags"/> and apply on them.
@@ -41,6 +45,101 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
 
             changeHandler?.EndChange();
+        }
+
+        public bool MoveCursor(CursorAction action)
+        {
+            var currentTimeTag = BindableCursorPosition.Value;
+
+            Tuple<TimeTagIndex, double?> nextTimeTag = null;
+            switch (action)
+            {
+                case CursorAction.MoveUp:
+                    nextTimeTag = getPreviousLyricTimeTag(currentTimeTag);
+                    break;
+                case CursorAction.MoveDown:
+                    nextTimeTag = getNextLyricTimeTag(currentTimeTag);
+                    break;
+                case CursorAction.MoveLeft:
+                    nextTimeTag = getPreviousTimeTag(currentTimeTag);
+                    break;
+                case CursorAction.MoveRight:
+                    nextTimeTag = getNextTimeTag(currentTimeTag);
+                    break;
+                case CursorAction.First:
+                    nextTimeTag = getFirstTimeTag(currentTimeTag);
+                    break;
+                case CursorAction.Last:
+                    nextTimeTag = getLastTimeTag(currentTimeTag);
+                    break;
+            }
+
+            if (nextTimeTag == null)
+                return false;
+
+            moveCursorTo(nextTimeTag);
+            return true;
+        }
+
+        public bool MoveCursorToTargetPosition(Tuple<TimeTagIndex, double?> timeTag)
+        {
+            if (timeTagInLyric(timeTag) == null)
+                return false;
+
+            moveCursorTo(timeTag);
+            return true;
+        }
+
+        private Lyric timeTagInLyric(Tuple<TimeTagIndex, double?> timeTag)
+        {
+            if (timeTag == null)
+                return null;
+
+            return beatmap.HitObjects.OfType<Lyric>().FirstOrDefault(x => x.TimeTags?.Contains(timeTag) ?? false);
+        }
+
+        private Tuple<TimeTagIndex, double?> getPreviousLyricTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        {
+            // todo : need to implement
+            return null;
+        }
+
+        public Tuple<TimeTagIndex, double?> getNextLyricTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        {
+            // todo : need to implement
+            return null;
+        }
+
+        private Tuple<TimeTagIndex, double?> getPreviousTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        {
+            var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
+            return timeTags.GetPrevious(timeTag);
+        }
+
+        public Tuple<TimeTagIndex, double?> getNextTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        {
+            var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
+            return timeTags.GetNext(timeTag);
+        }
+
+        private Tuple<TimeTagIndex, double?> getFirstTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        {
+            var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
+            return timeTags.FirstOrDefault();
+        }
+
+        public Tuple<TimeTagIndex, double?> getLastTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        {
+            var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
+            return timeTags.LastOrDefault();
+        }
+
+        private void moveCursorTo(Tuple<TimeTagIndex, double?> timeTag)
+        {
+            if (timeTag == null)
+                return;
+
+            BindableCursorPosition.Value = timeTag;
         }
 
         public class TimeTagGeneratorSelector
@@ -81,5 +180,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             }
         }
+    }
+
+    public enum CursorAction
+    {
+        MoveUp,
+
+        MoveDown,
+
+        MoveLeft,
+
+        MoveRight,
+
+        First,
+
+        Last,
     }
 }

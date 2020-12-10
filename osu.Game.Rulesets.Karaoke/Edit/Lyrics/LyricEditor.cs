@@ -4,10 +4,12 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
+using osuTK.Input;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -15,6 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
+
+        [Resolved(canBeNull: true)]
+        private TimeTagManager timeTagManager { get; set; }
 
         private readonly KaraokeLyricEditorSkin skin;
         private readonly DrawableLyricEditList container;
@@ -44,6 +49,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             beatmap.HitObjectAdded += addHitObject;
             beatmap.HitObjectRemoved += removeHitObject;
+
+            timeTagManager?.MoveCursor(CursorAction.First);
+        }
+
+        protected override bool OnKeyDown(KeyDownEvent e)
+        {
+            if (timeTagManager == null)
+                return false;
+
+            switch (e.Key)
+            {
+                case Key.Up:
+                    return timeTagManager.MoveCursor(CursorAction.MoveUp);
+                case Key.Down:
+                    return timeTagManager.MoveCursor(CursorAction.MoveDown);
+                case Key.Left:
+                    return timeTagManager.MoveCursor(CursorAction.MoveLeft);
+                case Key.Right:
+                    return timeTagManager.MoveCursor(CursorAction.MoveRight);
+                case Key.PageUp:
+                    return timeTagManager.MoveCursor(CursorAction.First);
+                case Key.PageDown:
+                    return timeTagManager.MoveCursor(CursorAction.Last);
+                default:
+                    return base.OnKeyDown(e);
+            }
         }
 
         private void addHitObject(HitObject hitObject)
