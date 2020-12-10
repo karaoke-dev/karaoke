@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
@@ -16,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="timeTags">Time tags</param>
         /// <returns>Sorted time tags</returns>
-        public static Tuple<TimeTagIndex, double?>[] Sort(Tuple<TimeTagIndex, double?>[] timeTags)
+        public static TimeTag[] Sort(TimeTag[] timeTags)
         {
             return timeTags?.OrderBy(x => x.Item1)
                            .ThenBy(x => x.Item2).ToArray();
@@ -29,12 +30,12 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="other">Check way</param>
         /// <param name="self">Check way</param>
         /// <returns>List of invalid time tags</returns>
-        public static Tuple<TimeTagIndex, double?>[] FindInvalid(Tuple<TimeTagIndex, double?>[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
+        public static TimeTag[] FindInvalid(TimeTag[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
             var sortedTimeTags = Sort(timeTags);
             var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Item1.Index);
 
-            var invalidList = new List<Tuple<TimeTagIndex, double?>>();
+            var invalidList = new List<TimeTag>();
 
             foreach (var groupedTimeTag in groupedTimeTags)
             {
@@ -51,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 if (selfInvalid != null)
                     invalidList.AddRange(selfInvalid);
 
-                List<Tuple<TimeTagIndex, double?>> findGroupInvalid()
+                List<TimeTag> findGroupInvalid()
                 {
                     switch (other)
                     {
@@ -76,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     }
                 }
 
-                List<Tuple<TimeTagIndex, double?>> findSelfInvalid()
+                List<TimeTag> findSelfInvalid()
                 {
                     switch (self)
                     {
@@ -110,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="other">Fix way</param>
         /// <param name="self">Fix way</param>
         /// <returns>Fixed time tags.</returns>
-        public static Tuple<TimeTagIndex, double?>[] FixInvalid(Tuple<TimeTagIndex, double?>[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
+        public static TimeTag[] FixInvalid(TimeTag[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
             if (timeTags == null || timeTags.Length == 0)
                 return timeTags;
@@ -138,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
                         if (minEndTime != null && minEndTime < invalidTimeTag.Item2)
                         {
-                            sortedTimeTags[listIndex] = new Tuple<TimeTagIndex, double?>(timeTag, minEndTime);
+                            sortedTimeTags[listIndex] = new TimeTag(timeTag, minEndTime);
                             continue;
                         }
 
@@ -149,7 +150,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
                         if (maxStartTime != null && maxStartTime > invalidTimeTag.Item2)
                         {
-                            sortedTimeTags[listIndex] = new Tuple<TimeTagIndex, double?>(timeTag, maxStartTime);
+                            sortedTimeTags[listIndex] = new TimeTag(timeTag, maxStartTime);
                             continue;
                         }
 
@@ -162,13 +163,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     case GroupCheck.Asc:
                         // find previous value to apply.
                         var previousValidValue = sortedTimeTags.Reverse().FirstOrDefault(x => x.Item1.Index < timeTag.Index && x.Item2 != null)?.Item2;
-                        sortedTimeTags[listIndex] = new Tuple<TimeTagIndex, double?>(timeTag, previousValidValue);
+                        sortedTimeTags[listIndex] = new TimeTag(timeTag, previousValidValue);
                         break;
 
                     case GroupCheck.Desc:
                         // find next value to apply.
                         var nextValidValue = sortedTimeTags.FirstOrDefault(x => x.Item1.Index > timeTag.Index && x.Item2 != null)?.Item2;
-                        sortedTimeTags[listIndex] = new Tuple<TimeTagIndex, double?>(timeTag, nextValidValue);
+                        sortedTimeTags[listIndex] = new TimeTag(timeTag, nextValidValue);
                         break;
                 }
             }
@@ -184,7 +185,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="other">Fix way</param>
         /// <param name="self">Fix way</param>
         /// <returns>Time tags with dictionary format.</returns>
-        public static IReadOnlyDictionary<TimeTagIndex, double> ToDictionary(Tuple<TimeTagIndex, double?>[] timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
+        public static IReadOnlyDictionary<TimeTagIndex, double> ToDictionary(TimeTag[] timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
                                                                              SelfCheck self = SelfCheck.BasedOnStart)
         {
             if (timeTags == null)
@@ -208,9 +209,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="dictionary">Dictionary.</param>
         /// <returns>Time tags</returns>
-        public static Tuple<TimeTagIndex, double?>[] ToTimeTagList(IReadOnlyDictionary<TimeTagIndex, double> dictionary)
+        public static TimeTag[] ToTimeTagList(IReadOnlyDictionary<TimeTagIndex, double> dictionary)
         {
-            return dictionary.Select(d => Create(d.Key, d.Value)).ToArray();
+            return dictionary.Select(d => new TimeTag(d.Key, d.Value)).ToArray();
         }
 
         /// <summary>
@@ -218,7 +219,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="timeTags">Time tags</param>
         /// <returns>Start time</returns>
-        public static double? GetStartTime(Tuple<TimeTagIndex, double?>[] timeTags)
+        public static double? GetStartTime(TimeTag[] timeTags)
         {
             return ToDictionary(timeTags).FirstOrDefault().Value;
         }
@@ -228,12 +229,10 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="timeTags">Time tags</param>
         /// <returns>End time</returns>
-        public static double? GetEndTime(Tuple<TimeTagIndex, double?>[] timeTags)
+        public static double? GetEndTime(TimeTag[] timeTags)
         {
             return ToDictionary(timeTags).LastOrDefault().Value;
         }
-
-        public static Tuple<TimeTagIndex, double?> Create(TimeTagIndex index, double? time) => Tuple.Create(index, time);
     }
 
     public enum GroupCheck

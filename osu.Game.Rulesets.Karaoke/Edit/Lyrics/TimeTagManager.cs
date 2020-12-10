@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 });
             }
 
-            public Tuple<TimeTagIndex, double?>[] GenerateTimeTags(Lyric lyric)
+            public TimeTag[] GenerateTimeTags(Lyric lyric)
             {
                 // lazy to generate language detector and apply it's setting
                 switch (lyric.Language?.LCID)

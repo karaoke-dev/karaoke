@@ -7,6 +7,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
@@ -90,111 +91,111 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(getSortedTime(dictionary), results);
         }
 
-        private double[] getSortedTime(Tuple<TimeTagIndex, double?>[] timeTags)
+        private double[] getSortedTime(TimeTag[] timeTags)
             => timeTags.Where(x => x.Item2 != null).Select(x => x.Item2 ?? 0)
                        .OrderBy(x => x).ToArray();
 
         private double[] getSortedTime(IReadOnlyDictionary<TimeTagIndex, double> dictionary)
             => dictionary.Select(x => x.Value).ToArray();
 
-        private Tuple<TimeTagIndex, double?>[] getValueByMethodName(string methodName)
+        private TimeTag[] getValueByMethodName(string methodName)
         {
             Type thisType = GetType();
             var theMethod = thisType.GetMethod(methodName);
             if (theMethod == null)
                 throw new MissingMethodException("Test method is not exist.");
 
-            return theMethod.Invoke(this, null) as Tuple<TimeTagIndex, double?>[];
+            return theMethod.Invoke(this, null) as TimeTag[];
         }
 
         #region valid source
 
-        public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithSorted()
+        public static TimeTag[] ValidTimeTagWithSorted()
             => new[]
             {
-                TimeTagsUtils.Create(new TimeTagIndex(0), 1100),
-                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000),
-                TimeTagsUtils.Create(new TimeTagIndex(1), 2100),
-                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
+                new TimeTag(new TimeTagIndex(0), 1100),
+                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000),
+                new TimeTag(new TimeTagIndex(1), 2100),
+                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
             };
 
-        public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithUnsorted()
+        public static TimeTag[] ValidTimeTagWithUnsorted()
             => ValidTimeTagWithSorted().Reverse().ToArray();
 
-        public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithUnsortedAndDuplicatedWithNoValue()
+        public static TimeTag[] ValidTimeTagWithUnsortedAndDuplicatedWithNoValue()
             => new[]
             {
-                TimeTagsUtils.Create(new TimeTagIndex(0), null),
-                TimeTagsUtils.Create(new TimeTagIndex(0), null),
-                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000), // this time tag is not in order.
-                TimeTagsUtils.Create(new TimeTagIndex(0), 1100),
+                new TimeTag(new TimeTagIndex(0), null),
+                new TimeTag(new TimeTagIndex(0), null),
+                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000), // this time tag is not in order.
+                new TimeTag(new TimeTagIndex(0), 1100),
             };
 
-        public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithUnsortedAndDuplicatedWithValue()
+        public static TimeTag[] ValidTimeTagWithUnsortedAndDuplicatedWithValue()
             => new[]
             {
                 // not sorted + duplicated time tag(with value)
-                TimeTagsUtils.Create(new TimeTagIndex(0), 1000),
-                TimeTagsUtils.Create(new TimeTagIndex(0), 1100),
-                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000), // this time tag is not in order.
-                TimeTagsUtils.Create(new TimeTagIndex(0), 1100),
+                new TimeTag(new TimeTagIndex(0), 1000),
+                new TimeTag(new TimeTagIndex(0), 1100),
+                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000), // this time tag is not in order.
+                new TimeTag(new TimeTagIndex(0), 1100),
             };
 
-        public static Tuple<TimeTagIndex, double?>[] ValidTimeTagWithUnsortedAndAllEmpty()
+        public static TimeTag[] ValidTimeTagWithUnsortedAndAllEmpty()
             => new[]
             {
-                TimeTagsUtils.Create(new TimeTagIndex(0), null),
-                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), null),
-                TimeTagsUtils.Create(new TimeTagIndex(0), null), // this time tag is not sorted.
-                TimeTagsUtils.Create(new TimeTagIndex(1), null),
-                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), null),
+                new TimeTag(new TimeTagIndex(0), null),
+                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), null),
+                new TimeTag(new TimeTagIndex(0), null), // this time tag is not sorted.
+                new TimeTag(new TimeTagIndex(1), null),
+                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), null),
             };
 
         #endregion
 
         #region invalid source
 
-        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithStartLargerThenEnd()
+        public static TimeTag[] InvalidTimeTagWithStartLargerThenEnd()
             => new[]
             {
-                TimeTagsUtils.Create(new TimeTagIndex(0), 2000), // Start is larger then end.
-                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1000),
+                new TimeTag(new TimeTagIndex(0), 2000), // Start is larger then end.
+                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1000),
             };
 
-        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithEndLargerThenNextStart()
+        public static TimeTag[] InvalidTimeTagWithEndLargerThenNextStart()
             => new[]
             {
-                TimeTagsUtils.Create(new TimeTagIndex(0), 1100),
-                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2100), // End is larger than second start.
-                TimeTagsUtils.Create(new TimeTagIndex(1), 2000),
-                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
+                new TimeTag(new TimeTagIndex(0), 1100),
+                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2100), // End is larger than second start.
+                new TimeTag(new TimeTagIndex(1), 2000),
+                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
             };
 
-        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithEndLargerThenNextEnd()
+        public static TimeTag[] InvalidTimeTagWithEndLargerThenNextEnd()
             => new[]
             {
-                TimeTagsUtils.Create(new TimeTagIndex(0), 1000),
-                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 5000), // End is larger than second end.
-                TimeTagsUtils.Create(new TimeTagIndex(1), 2000),
-                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
+                new TimeTag(new TimeTagIndex(0), 1000),
+                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 5000), // End is larger than second end.
+                new TimeTag(new TimeTagIndex(1), 2000),
+                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
             };
 
-        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithStartSmallerThenPreviousStart()
+        public static TimeTag[] InvalidTimeTagWithStartSmallerThenPreviousStart()
             => new[]
             {
-                TimeTagsUtils.Create(new TimeTagIndex(0), 1000),
-                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000),
-                TimeTagsUtils.Create(new TimeTagIndex(1), 0), // Start is smaller than previous start.
-                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
+                new TimeTag(new TimeTagIndex(0), 1000),
+                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000),
+                new TimeTag(new TimeTagIndex(1), 0), // Start is smaller than previous start.
+                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
             };
 
-        public static Tuple<TimeTagIndex, double?>[] InvalidTimeTagWithAllInverse()
+        public static TimeTag[] InvalidTimeTagWithAllInverse()
             => new[]
             {
-                TimeTagsUtils.Create(new TimeTagIndex(0), 4000),
-                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 3000),
-                TimeTagsUtils.Create(new TimeTagIndex(1), 2000),
-                TimeTagsUtils.Create(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 1000),
+                new TimeTag(new TimeTagIndex(0), 4000),
+                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 3000),
+                new TimeTag(new TimeTagIndex(1), 2000),
+                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 1000),
             };
 
         #endregion

@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 using System;
 
@@ -19,9 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags
         /// </summary>
         private const float triangle_width = 3;
 
-        private readonly Tuple<TimeTagIndex, double?> timeTag;
+        private readonly TimeTag timeTag;
 
-        public DrawableTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        public DrawableTimeTag(TimeTag timeTag)
         {
             this.timeTag = timeTag;
 
