@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
@@ -18,9 +19,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         {
             var rowTimeTag = new[]
             {
-                TimeTagsUtils.Create(new TimeTagIndex(0), 1000d),
-                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1100d),
-                TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1200d),
+                new TimeTag(new TimeTagIndex(0), 1000d),
+                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1100d),
+                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1200d),
             };
 
             var result = JsonConvert.SerializeObject(rowTimeTag, CreateSettings());
@@ -32,13 +33,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         public void TestDeserialize()
         {
             const string json_string = "[\r\n  \"0,0,1000\",\r\n  \"0,1,1100\",\r\n  \"0,1,1200\"\r\n]";
-            var result = JsonConvert.DeserializeObject<Tuple<TimeTagIndex, double?>[]>(json_string, CreateSettings());
+            var result = JsonConvert.DeserializeObject<TimeTag[]>(json_string, CreateSettings());
 
             Assert.IsNotNull(result);
             Assert.AreEqual(result.Length, 3);
-            Assert.AreEqual(result[0].Item1.Index, 0);
-            Assert.AreEqual(result[0].Item1.State, TimeTagIndex.IndexState.Start);
-            Assert.AreEqual(result[0].Item2, 1000);
+            Assert.AreEqual(result[0].Index.Index, 0);
+            Assert.AreEqual(result[0].Index.State, TimeTagIndex.IndexState.Start);
+            Assert.AreEqual(result[0].Time, 1000);
         }
     }
 }

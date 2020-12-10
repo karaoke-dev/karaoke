@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
         /// Thanks for RhythmKaTTE's author writing this logic into C#
         /// http://juna-idler.blogspot.com/2016/05/rhythmkatte-version-01.html
         /// </summary>
-        protected override void TimeTagLogic(Lyric lyric, List<Tuple<TimeTagIndex, double?>> timeTags)
+        protected override void TimeTagLogic(Lyric lyric, List<TimeTag> timeTags)
         {
             timeTags.AddRange(generateTimeTagByText(lyric.Text));
 
@@ -31,27 +31,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
             foreach (var ruby in lyric.RubyTags)
             {
                 // remove exist time tag
-                timeTags.RemoveAll(x => x.Item1.Index > ruby.StartIndex && x.Item1.Index < ruby.EndIndex);
+                timeTags.RemoveAll(x => x.Index.Index > ruby.StartIndex && x.Index.Index < ruby.EndIndex);
 
                 // add new time tags created from ruby
                 var rubyTags = generateTimeTagByText(ruby.Text);
                 var shiftingTimeTags = rubyTags.Select((x, v) =>
                 {
-                    return TimeTagsUtils.Create(new TimeTagIndex(ruby.StartIndex, x.Item1.State), x.Item2);
+                    return new TimeTag(new TimeTagIndex(ruby.StartIndex, x.Index.State), x.Time);
                 });
                 timeTags.AddRange(shiftingTimeTags);
             }
         }
 
-        private List<Tuple<TimeTagIndex, double?>> generateTimeTagByText(string text)
+        private List<TimeTag> generateTimeTagByText(string text)
         {
-            var timeTags = new List<Tuple<TimeTagIndex, double?>>();
+            var timeTags = new List<TimeTag>();
             if (text == null || text == "")
                 return timeTags;
 
             for (var i = 1; i < text.Length; i++)
             {
-                var timeTag = TimeTagsUtils.Create(new TimeTagIndex(i, TimeTagIndex.IndexState.Start), null);
+                var timeTag = new TimeTag(new TimeTagIndex(i, TimeTagIndex.IndexState.Start), null);
 
                 var c = text[i];
                 var pc = text[i - 1];

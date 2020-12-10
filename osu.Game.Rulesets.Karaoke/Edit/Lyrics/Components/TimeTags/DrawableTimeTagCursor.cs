@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 using System;
 
@@ -19,9 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags
         /// </summary>
         private const float triangle_width = 4;
 
-        private readonly Tuple<TimeTagIndex, double?> timeTag;
+        private readonly TimeTag timeTag;
 
-        public DrawableTimeTagCursor(Tuple<TimeTagIndex, double?> timeTag)
+        public DrawableTimeTagCursor(TimeTag timeTag)
         {
             this.timeTag = timeTag;
 
@@ -31,14 +32,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(triangle_width),
-                Scale = new Vector2(timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 1 : -1, 1)
+                Scale = new Vector2(timeTag.Index.State == TimeTagIndex.IndexState.Start ? 1 : -1, 1)
             };
         }
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            InternalChild.Colour = timeTag.Item2.HasValue ? colours.YellowDarker : colours.Gray9;
+            InternalChild.Colour = timeTag.Time.HasValue ? colours.YellowDarker : colours.Gray9;
         }
     }
 }

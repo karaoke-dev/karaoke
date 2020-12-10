@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(CanBeNull = true)]
         private IEditorChangeHandler changeHandler { get; set; }
 
-        public Bindable<Tuple<TimeTagIndex, double?>> BindableCursorPosition { get; set; } = new Bindable<Tuple<TimeTagIndex, double?>>();
+        public Bindable<TimeTag> BindableCursorPosition { get; set; } = new Bindable<TimeTag>();
 
         /// <summary>
         /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.TimeTags"/> and apply on them.
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             var currentTimeTag = BindableCursorPosition.Value;
 
-            Tuple<TimeTagIndex, double?> nextTimeTag = null;
+            TimeTag nextTimeTag = null;
             switch (action)
             {
                 case CursorAction.MoveUp:
@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return true;
         }
 
-        public bool MoveCursorToTargetPosition(Tuple<TimeTagIndex, double?> timeTag)
+        public bool MoveCursorToTargetPosition(TimeTag timeTag)
         {
             if (timeTagInLyric(timeTag) == null)
                 return false;
@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return true;
         }
 
-        private Lyric timeTagInLyric(Tuple<TimeTagIndex, double?> timeTag)
+        private Lyric timeTagInLyric(TimeTag timeTag)
         {
             if (timeTag == null)
                 return null;
@@ -102,43 +102,43 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return beatmap.HitObjects.OfType<Lyric>().FirstOrDefault(x => x.TimeTags?.Contains(timeTag) ?? false);
         }
 
-        private Tuple<TimeTagIndex, double?> getPreviousLyricTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        private TimeTag getPreviousLyricTimeTag(TimeTag timeTag)
         {
             // todo : need to implement
             return null;
         }
 
-        public Tuple<TimeTagIndex, double?> getNextLyricTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        public TimeTag getNextLyricTimeTag(TimeTag timeTag)
         {
             // todo : need to implement
             return null;
         }
 
-        private Tuple<TimeTagIndex, double?> getPreviousTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        private TimeTag getPreviousTimeTag(TimeTag timeTag)
         {
             var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
             return timeTags.GetPrevious(timeTag);
         }
 
-        public Tuple<TimeTagIndex, double?> getNextTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        public TimeTag getNextTimeTag(TimeTag timeTag)
         {
             var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
             return timeTags.GetNext(timeTag);
         }
 
-        private Tuple<TimeTagIndex, double?> getFirstTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        private TimeTag getFirstTimeTag(TimeTag timeTag)
         {
             var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
             return timeTags.FirstOrDefault();
         }
 
-        public Tuple<TimeTagIndex, double?> getLastTimeTag(Tuple<TimeTagIndex, double?> timeTag)
+        public TimeTag getLastTimeTag(TimeTag timeTag)
         {
             var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
             return timeTags.LastOrDefault();
         }
 
-        private void moveCursorTo(Tuple<TimeTagIndex, double?> timeTag)
+        private void moveCursorTo(TimeTag timeTag)
         {
             if (timeTag == null)
                 return;
@@ -167,7 +167,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 });
             }
 
-            public Tuple<TimeTagIndex, double?>[] GenerateTimeTags(Lyric lyric)
+            public TimeTag[] GenerateTimeTags(Lyric lyric)
             {
                 // lazy to generate language detector and apply it's setting
                 switch (lyric.Language?.LCID)
