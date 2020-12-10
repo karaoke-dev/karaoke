@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke
 
             try
             {
-                var selectedDevice = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice).Value;
+                var selectedDevice = config.Get<string>(KaraokeRulesetSetting.MicrophoneDevice);
                 var microphoneList = new MicrophoneManager().MicrophoneDeviceNames.ToList();
 
                 // Find index by selection id

@@ -1,10 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Bindables;
 using osu.Framework.Configuration.Tracking;
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Configuration;
+using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.UI;
+using System.Globalization;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
 {
@@ -49,6 +52,20 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Device
             Set(KaraokeRulesetSetting.MicrophoneDevice, "");
+        }
+
+        protected override void AddBindable<TBindable>(KaraokeRulesetSetting lookup, Bindable<TBindable> bindable)
+        {
+            switch (lookup)
+            {
+                case KaraokeRulesetSetting.PreferLanguage:
+                    // todo : need to hve a default value here because it will cause error if object is null.
+                    base.AddBindable(lookup, new BindableCultureInfo(new CultureInfo("en-US")));
+                    break;
+                default:
+                    base.AddBindable(lookup, bindable);
+                    break;
+            }
         }
 
         public override TrackedSettings CreateTrackedSettings() => new TrackedSettings
