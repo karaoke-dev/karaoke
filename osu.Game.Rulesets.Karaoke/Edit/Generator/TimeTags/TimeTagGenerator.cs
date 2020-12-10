@@ -19,25 +19,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
             Config = config;
         }
 
-        public virtual Tuple<TimeTagIndex, double?>[] CreateTimeTags(Lyric lyric)
+        public virtual TimeTag[] CreateTimeTags(Lyric lyric)
         {
-            var timeTags = new List<Tuple<TimeTagIndex, double?>>();
+            var timeTags = new List<TimeTag>();
             var text = lyric.Text;
 
             if (text.Length == 0)
                 return timeTags.ToArray();
 
             // create tag at start of lyric
-            timeTags.Add(TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), null));
+            timeTags.Add(new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), null));
 
             if (Config.CheckLineEndKeyUp)
-                timeTags.Add(TimeTagsUtils.Create(new TimeTagIndex(text.Length - 1, TimeTagIndex.IndexState.End), null));
+                timeTags.Add(new TimeTag(new TimeTagIndex(text.Length - 1, TimeTagIndex.IndexState.End), null));
 
             TimeTagLogic(lyric, timeTags);
 
-            return timeTags.OrderBy(x => x.Item1).ToArray();
+            return timeTags.OrderBy(x => x.Index).ToArray();
         }
 
-        protected abstract void TimeTagLogic(Lyric lyric, List<Tuple<TimeTagIndex, double?>> timeTags);
+        protected abstract void TimeTagLogic(Lyric lyric, List<TimeTag> timeTags);
     }
 }

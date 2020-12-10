@@ -10,6 +10,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
@@ -76,12 +77,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
         public override bool SetContent(object content)
         {
-            if (!(content is Tuple<TimeTagIndex, double?> timeTag))
+            if (!(content is TimeTag timeTag))
                 return false;
 
-            trackTimer.Text = timeTag.Item2?.ToEditorFormattedString() ?? "--:--:---";
-            index.Text = $"At index {timeTag.Item1.Index}";
-            indexState.Text = timeTag.Item1.State == TimeTagIndex.IndexState.Start ? "Start" : "End";
+            trackTimer.Text = timeTag.Time?.ToEditorFormattedString() ?? "--:--:---";
+            index.Text = $"At index {timeTag.Index.Index}";
+            indexState.Text = timeTag.Index.State == TimeTagIndex.IndexState.Start ? "Start" : "End";
 
             return true;
         }

@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh
         {
         }
 
-        protected override void TimeTagLogic(Lyric lyric, List<Tuple<TimeTagIndex, double?>> timeTags)
+        protected override void TimeTagLogic(Lyric lyric, List<TimeTag> timeTags)
         {
             var text = lyric.Text;
 
@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh
             {
                 if (CharUtils.IsChinese(text[i]))
                 {
-                    timeTags.Add(TimeTagsUtils.Create(new TimeTagIndex(i, TimeTagIndex.IndexState.Start), null));
+                    timeTags.Add(new TimeTag(new TimeTagIndex(i, TimeTagIndex.IndexState.Start), null));
                 }
             }
         }

@@ -6,6 +6,7 @@ using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Tests.Visual;
 
@@ -30,12 +31,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         [Test]
         public void TestDisplayToolTip()
         {
-            setTooltip("Start time tag.", TimeTagsUtils.Create(new TimeTagIndex(0), 1280));
-            setTooltip("End time tag.", TimeTagsUtils.Create(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1280));
-            setTooltip("Null time", TimeTagsUtils.Create(new TimeTagIndex(0), null));
+            setTooltip("Start time tag.", new TimeTag(new TimeTagIndex(0), 1280));
+            setTooltip("End time tag.", new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1280));
+            setTooltip("Null time", new TimeTag(new TimeTagIndex(0), null));
         }
 
-        private void setTooltip(string testName, Tuple<TimeTagIndex, double?> timeTag)
+        private void setTooltip(string testName, TimeTag timeTag)
         {
             AddStep(testName, () =>
             {

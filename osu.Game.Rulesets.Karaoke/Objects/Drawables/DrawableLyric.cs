@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         private OsuSpriteText translateText;
 
         public readonly IBindable<string> TextBindable = new Bindable<string>();
-        public readonly IBindable<Tuple<TimeTagIndex, double?>[]> TimeTagsBindable = new Bindable<Tuple<TimeTagIndex, double?>[]>();
+        public readonly IBindable<TimeTag[]> TimeTagsBindable = new Bindable<TimeTag[]>();
         public readonly IBindable<RubyTag[]> RubyTagsBindable = new Bindable<RubyTag[]>();
         public readonly IBindable<RomajiTag[]> RomajiTagsBindable = new Bindable<RomajiTag[]>();
         public readonly IBindable<int[]> SingersBindable = new Bindable<int[]>();

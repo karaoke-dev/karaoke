@@ -110,12 +110,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 
                 foreach (var timeTag in timeTags)
                 {
-                    var index = Math.Min(timeTag.Item1.Index, HitObject.Text.Length - 1);
-                    var percentage = timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 0 : 1;
+                    var index = Math.Min(timeTag.Index.Index, HitObject.Text.Length - 1);
+                    var percentage = timeTag.Index.State == TimeTagIndex.IndexState.Start ? 0 : 1;
                     var position = karaokeText.GetPercentageWidth(index, index + 1, percentage);
 
-                    var duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Item1 == timeTag.Item1) - 1;
-                    var spacing = duplicatedTagAmount * time_tag_spacing * (timeTag.Item1.State == TimeTagIndex.IndexState.Start ? 1 : -1);
+                    var duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == timeTag.Index) - 1;
+                    var spacing = duplicatedTagAmount * time_tag_spacing * (timeTag.Index.State == TimeTagIndex.IndexState.Start ? 1 : -1);
 
                     timeTagContainer.Add(new DrawableTimeTag(timeTag)
                     {
