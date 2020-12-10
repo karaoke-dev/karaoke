@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            InternalChild.Colour = timeTag.Time.HasValue ? colours.YellowDarker : colours.Gray9;
+            InternalChild.Colour = timeTag.Time.HasValue ? colours.YellowDarker : colours.Gray3;
         }
     }
 }
