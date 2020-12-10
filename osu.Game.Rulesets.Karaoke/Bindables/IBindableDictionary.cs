@@ -10,7 +10,8 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
     /// <summary>
     /// An readonly interface which can be bound to other <see cref="IBindableDictionary{TKey, TValue}"/>s in order to watch for state and content changes.
     /// </summary>
-    /// <typeparam name="T">The type of value encapsulated by this <see cref="IBindableDictionary{TKey, TValue}"/>.</typeparam>
+    /// <typeparam name="TKey">The type of key encapsulated by this <see cref="IBindableDictionary{TKey, TValue}"/>.</typeparam>
+    /// <typeparam name="TValue">The type of value encapsulated by this <see cref="IBindableDictionary{TKey, TValue}"/>.</typeparam>
     public interface IBindableDictionary<TKey, TValue> : IReadOnlyDictionary<TKey, TValue>, IBindable, INotifyCollectionChanged
     {
         /// <summary>

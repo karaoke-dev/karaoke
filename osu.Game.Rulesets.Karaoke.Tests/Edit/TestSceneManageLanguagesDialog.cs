@@ -8,23 +8,22 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Testing;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.Translate;
-using osu.Game.Rulesets.Karaoke.Edit.Translate.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Layout;
+using osu.Game.Rulesets.Karaoke.Edit.Layout.Components;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
-    /*
     public class TestSceneManageLanguagesDialog : OsuManualInputManagerTestScene
     {
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
         private DialogOverlay dialogOverlay;
-        private TranslateManager manager;
+        private LayoutManager manager;
 
-        private ManageLanguagesDialog dialog;
+        private ManageLayoutsDialog dialog;
 
         [BackgroundDependencyLoader]
         private void load()
@@ -36,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
             base.Content.AddRange(new Drawable[]
             {
-                manager = new TranslateManager(),
+                manager = new LayoutManager(),
                 Content,
                 dialogOverlay = new DialogOverlay()
             });
@@ -48,8 +47,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            manager.Languages.Clear();
-            Child = dialog = new ManageLanguagesDialog();
+            manager.Layouts.Clear();
+            Child = dialog = new ManageLayoutsDialog();
         });
 
         [SetUpSteps]
@@ -58,5 +57,4 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             AddStep("show dialog", () => dialog.Show());
         }
     }
-    */
 }

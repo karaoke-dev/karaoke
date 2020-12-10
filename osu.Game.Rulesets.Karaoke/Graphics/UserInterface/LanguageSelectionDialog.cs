@@ -22,8 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
     {
         protected override string Title => "Select language";
 
-        private LanguageSelectionSearchTextBox filter;
-        private DrawableLanguageList languageList;
+        private readonly LanguageSelectionSearchTextBox filter;
+        private readonly DrawableLanguageList languageList;
 
         private readonly BindableWithCurrent<CultureInfo> current = new BindableWithCurrent<CultureInfo>();
 
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 RowDimensions = new[]
                 {
                     new Dimension(GridSizeMode.Absolute, 40),
-                    new Dimension(GridSizeMode.Distributed)
+                    new Dimension()
                 },
                 Content = new[]
                 {
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                         languageList = new DrawableLanguageList
                         {
                             RelativeSizeAxes = Axes.Both,
-                            RequestSelection = (item) =>
+                            RequestSelection = item =>
                             {
                                 Current.Value = item;
                                 Hide();
@@ -116,7 +116,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             public class DrawableLanguageListItem : OsuRearrangeableListItem<CultureInfo>, IFilterable
             {
                 public readonly Bindable<CultureInfo> SelectedSet = new Bindable<CultureInfo>();
-                
+
                 public Action<CultureInfo> RequestSelection;
 
                 private TextFlowContainer text;
@@ -162,6 +162,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     AutoSizeAxes = Axes.Y,
                     Text = Model.EnglishName,
                 };
+
                 protected override bool OnClick(ClickEvent e)
                 {
                     RequestSelection?.Invoke(Model);

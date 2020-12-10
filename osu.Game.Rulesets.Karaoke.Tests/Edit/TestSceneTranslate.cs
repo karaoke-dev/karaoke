@@ -3,7 +3,6 @@
 
 using NUnit.Framework;
 using osu.Framework.Allocation;
-using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Translate;
