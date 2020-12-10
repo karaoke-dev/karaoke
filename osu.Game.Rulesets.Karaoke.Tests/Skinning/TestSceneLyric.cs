@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Graphics;
@@ -73,13 +74,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 },
             };
 
-            // todo : might add translate
-            //lyric.Translates.Add(0, "karaoke");
-            //lyric.ApplyDisplayTranslate(0);
+            var defaultLanguage = new CultureInfo("en-US");
+            lyric.Translates.Add(defaultLanguage, "karaoke");
 
             lyric.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 
             var drawable = CreateDrawableLyric(lyric, auto);
+            drawable.DisplayTranslateLanguage = defaultLanguage;
 
             foreach (var mod in SelectedMods.Value.OfType<IApplicableToDrawableHitObjects>())
                 mod.ApplyToDrawableHitObjects(new[] { drawable });

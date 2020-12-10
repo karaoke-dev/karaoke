@@ -12,6 +12,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osuTK;
+using System.Globalization;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
@@ -96,6 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 public PreviewDrawableLyric(Lyric hitObject)
                     : base(hitObject)
                 {
+                    DisplayTranslateLanguage = new CultureInfo("en-US");
                 }
 
                 /// <summary>

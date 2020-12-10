@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -166,8 +167,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 lyric.Duration = duration;
 
                 // todo : implementation
-                //lyric.Translates.Add(0, translate);
-                //lyric.ApplyDisplayTranslate(0);
+                var defaultLanguage = new CultureInfo("en-US");
+                lyric.Translates.Add(defaultLanguage, translate);
 
                 lyric.TimeTags = TimeTagsUtils.ToTimeTagList(new Dictionary<TimeTagIndex, double>
                 {
