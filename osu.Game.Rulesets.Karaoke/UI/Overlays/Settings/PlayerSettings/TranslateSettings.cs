@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
     {
         private readonly PlayerCheckbox translateCheckBox;
         private readonly OsuSpriteText translateText;
-        private readonly OsuDropdown<string> translateDropDown;
+        private readonly OsuDropdown<CultureInfo> translateDropDown;
 
         public TranslateSettings(CultureInfo[] translates)
             : base("Translate")
@@ -31,10 +31,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
                 {
                     Text = "Translate language"
                 },
-                translateDropDown = new OsuDropdown<string>
+                translateDropDown = new OsuDropdown<CultureInfo>
                 {
                     RelativeSizeAxes = Axes.X,
-                    Items = translates.Select(x => x.DisplayName)
+                    Items = translates
                 },
             };
         }
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
         {
             // Translate
             translateCheckBox.Current = session.GetBindable<bool>(KaraokeRulesetSession.UseTranslate);
-            translateDropDown.Current = session.GetBindable<string>(KaraokeRulesetSession.PreferLanguage);
+            translateDropDown.Current = session.GetBindable<CultureInfo>(KaraokeRulesetSession.PreferLanguage);
 
             // hidden dropdown if not translate
             translateCheckBox.Current.BindValueChanged(value =>

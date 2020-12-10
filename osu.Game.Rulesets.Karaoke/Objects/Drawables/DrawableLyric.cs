@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Globalization;
 using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
@@ -10,6 +11,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Judgements;
+using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
@@ -33,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public readonly IBindable<RomajiTag[]> RomajiTagsBindable = new Bindable<RomajiTag[]>();
         public readonly IBindable<int[]> SingersBindable = new Bindable<int[]>();
         public readonly IBindable<int> LayoutIndexBindable = new Bindable<int>();
-        //public readonly IBindable<string> TranslateTextBindable = new Bindable<string>();
+        public readonly BindableDictionary<CultureInfo, string> TranslateTextBindable = new BindableDictionary<CultureInfo, string>();
 
         /// <summary>
         /// Invoked when a <see cref="JudgementResult"/> has been applied by this <see cref="DrawableHitObject"/> or a nested <see cref="DrawableHitObject"/>.
@@ -75,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             RomajiTagsBindable.BindValueChanged(romajiTags => { ApplyRomaji(); });
             SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
             LayoutIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
-            //TranslateTextBindable.BindValueChanged(text => { translateText.Text = text.NewValue ?? ""; });
+            TranslateTextBindable.BindCollectionChanged((_, args) => { ApplyTranslate(); });
         }
 
         protected override void OnApply()
@@ -88,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             RomajiTagsBindable.BindTo(HitObject.RomajiTagsBindable);
             SingersBindable.BindTo(HitObject.SingersBindable);
             LayoutIndexBindable.BindTo(HitObject.LayoutIndexBindable);
-            //TranslateTextBindable.BindTo(HitObject.TranslateTextBindable);
+            TranslateTextBindable.BindTo(HitObject.TranslateTextBindable);
         }
 
         protected override void OnFree()
@@ -101,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             RomajiTagsBindable.UnbindFrom(HitObject.RomajiTagsBindable);
             SingersBindable.UnbindFrom(HitObject.SingersBindable);
             LayoutIndexBindable.UnbindFrom(HitObject.LayoutIndexBindable);
-            //TranslateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
+            TranslateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
         }
 
         protected override void UpdateInitialTransforms()
@@ -124,6 +126,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         protected virtual void ApplyRomaji()
         {
             karaokeText.Romajies = DisplayRomaji ? HitObject.RomajiTags?.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray() : null;
+        }
+
+        protected virtual void ApplyTranslate()
+        {
+            if (DisplayTranslateLanguage == null)
+            {
+                translateText.Text = null;
+            }
+            else
+            {
+                TranslateTextBindable.TryGetValue(DisplayTranslateLanguage, out string translate);
+                translateText.Text = translate;
+            }
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)
@@ -288,6 +303,21 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
                 displayRomaji = value;
                 Schedule(() => ApplyRomaji());
+            }
+        }
+
+        private CultureInfo displayTranslateLanguage;
+
+        public CultureInfo DisplayTranslateLanguage
+        {
+            get => displayTranslateLanguage;
+            set
+            {
+                if (displayTranslateLanguage == value)
+                    return;
+
+                displayTranslateLanguage = value;
+                Schedule(() => ApplyTranslate());
             }
         }
     }
