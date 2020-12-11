@@ -10,7 +10,6 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
-using System;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags
 {
@@ -29,6 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags
         public DrawableTimeTag(TimeTag timeTag)
         {
             this.timeTag = timeTag;
+            AutoSizeAxes = Axes.Both;
 
             InternalChild = new RightTriangle
             {
