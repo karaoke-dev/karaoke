@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -22,6 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags
 
         private readonly TimeTag timeTag;
 
+        [Resolved(canBeNull: true)]
+        private TimeTagManager timeTagManager { get; set; }
+
         public DrawableTimeTag(TimeTag timeTag)
         {
             this.timeTag = timeTag;
@@ -34,6 +38,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags
                 Size = new Vector2(triangle_width),
                 Scale = new Vector2(timeTag.Index.State == TimeTagIndex.IndexState.Start ? 1 : -1, 1)
             };
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            return timeTagManager?.MoveCursorToTargetPosition(timeTag) ?? false;
         }
 
         [BackgroundDependencyLoader]
