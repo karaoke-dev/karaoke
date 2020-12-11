@@ -25,6 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags
         public DrawableTimeTagCursor(TimeTag timeTag)
         {
             this.timeTag = timeTag;
+            AutoSizeAxes = Axes.Both;
 
             InternalChild = new RightTriangle
             {
