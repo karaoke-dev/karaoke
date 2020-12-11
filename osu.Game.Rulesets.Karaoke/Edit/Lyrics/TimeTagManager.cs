@@ -104,14 +104,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private TimeTag getPreviousLyricTimeTag(TimeTag timeTag)
         {
-            // todo : need to implement
-            return null;
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            var currentLyric = timeTagInLyric(timeTag);
+            return lyrics.GetPrevious(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index);
         }
 
         public TimeTag getNextLyricTimeTag(TimeTag timeTag)
         {
-            // todo : need to implement
-            return null;
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            var currentLyric = timeTagInLyric(timeTag);
+            return lyrics.GetNext(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index);
         }
 
         private TimeTag getPreviousTimeTag(TimeTag timeTag)
