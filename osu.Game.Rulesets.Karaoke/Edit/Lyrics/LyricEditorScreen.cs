@@ -32,9 +32,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(CanBeNull = true)]
         private KaraokeHitObjectComposer composer { get; set; }
 
+        [Cached]
+        protected readonly TimeTagManager TranslateManager;
+
         public LyricEditorScreen()
             : base(EditorScreenMode.Compose)
         {
+            Content.Add(TranslateManager = new TimeTagManager());
         }
 
         Task ICanAcceptFiles.Import(params string[] paths)
