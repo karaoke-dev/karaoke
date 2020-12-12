@@ -19,14 +19,14 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             if (value == null || value == "")
                 return new RubyTag();
 
-            var regux = new Regex("([-0-9]+),([-0-9]+)]:(.*$)");
+            var regux = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<ruby>.*$)");
             var result = regux.Match(value);
             if (!result.Success)
                 return new RubyTag();
 
-            var startIndex = int.Parse(result.Groups[1].Value);
-            var endIndex = int.Parse(result.Groups[2].Value);
-            var text = result.Groups[3].Value;
+            var startIndex = int.Parse(result.Groups["start"]?.Value);
+            var endIndex = int.Parse(result.Groups["end"]?.Value);
+            var text = result.Groups["ruby"]?.Value;
 
             return new RubyTag
             {

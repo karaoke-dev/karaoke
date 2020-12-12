@@ -19,14 +19,14 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             if (value == null || value == "")
                 return new RomajiTag();
 
-            var regux = new Regex("([-0-9]+),([-0-9]+)]:(.*$)");
+            var regux = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<romaji>.*$)");
             var result = regux.Match(value);
             if (!result.Success)
                 return new RomajiTag();
 
-            var startIndex = int.Parse(result.Groups[1].Value);
-            var endIndex = int.Parse(result.Groups[2].Value);
-            var text = result.Groups[3].Value;
+            var startIndex = int.Parse(result.Groups["start"]?.Value);
+            var endIndex = int.Parse(result.Groups["end"]?.Value);
+            var text = result.Groups["romaji"]?.Value;
 
             return new RomajiTag
             {
