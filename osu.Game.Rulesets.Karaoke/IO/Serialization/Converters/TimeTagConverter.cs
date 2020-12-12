@@ -17,11 +17,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             var obj = JToken.Load(reader);
             var value = obj.Value<string>();
 
-            if (value == null || value == "")
+            if (string.IsNullOrEmpty(value))
                 return new TimeTag(new TimeTagIndex());
 
-            var regux = new Regex("(?<index>[-0-9]+),(?<state>start|end)]:(?<time>[-0-9]+|s*|)");
-            var result = regux.Match(value);
+            var regex = new Regex("(?<index>[-0-9]+),(?<state>start|end)]:(?<time>[-0-9]+|s*|)");
+            var result = regex.Match(value);
             if (!result.Success)
                 return new TimeTag(new TimeTagIndex());
 

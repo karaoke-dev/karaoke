@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
@@ -870,7 +870,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
                 Assert.Throws(typeof(InvalidOperationException), () => bindableStringDictionary.Parse(null));
                 Assert.Throws(typeof(InvalidOperationException), () => bindableStringDictionary.Parse(new object[]
                 {
-                    "test", "testabc", "asdasdasdasd"
+                    "test", "test abc", "123"
                 }));
             });
         }

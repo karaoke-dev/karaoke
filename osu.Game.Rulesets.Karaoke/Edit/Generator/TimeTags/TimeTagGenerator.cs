@@ -1,12 +1,10 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
 {
@@ -28,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
                 return timeTags.ToArray();
 
             // create tag at start of lyric
-            timeTags.Add(new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.Start), null));
+            timeTags.Add(new TimeTag(new TimeTagIndex(0)));
 
             if (Config.CheckLineEndKeyUp)
                 timeTags.Add(new TimeTag(new TimeTagIndex(text.Length - 1, TimeTagIndex.IndexState.End), null));

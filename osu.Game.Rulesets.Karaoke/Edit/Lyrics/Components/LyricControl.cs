@@ -1,6 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -10,8 +12,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
-using System;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 {
@@ -72,6 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
             public void UpdateTimeTagCursoe(TimeTag cursor)
             {
                 timeTagCursorContainer.Clear();
+
                 if (TimeTagsBindable.Value.Contains(cursor))
                 {
                     var spacing = timeTagPosition(cursor);

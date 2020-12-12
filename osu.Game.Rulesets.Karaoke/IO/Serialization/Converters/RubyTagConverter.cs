@@ -1,11 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using osu.Game.Rulesets.Karaoke.Objects;
-using System;
-using System.Text.RegularExpressions;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
@@ -16,11 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             var obj = JToken.Load(reader);
             var value = obj.Value<string>();
 
-            if (value == null || value == "")
+            if (string.IsNullOrEmpty(value))
                 return new RubyTag();
 
-            var regux = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<ruby>.*$)");
-            var result = regux.Match(value);
+            var regex = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<ruby>.*$)");
+            var result = regex.Match(value);
             if (!result.Success)
                 return new RubyTag();
 

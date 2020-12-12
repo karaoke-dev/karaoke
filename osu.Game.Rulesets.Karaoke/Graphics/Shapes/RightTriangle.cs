@@ -2,13 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.OpenGL;
 using osu.Framework.Graphics.OpenGL.Vertices;
-using osu.Framework.Graphics.Textures;
-using osuTK;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.OpenGL;
-using osu.Framework.Graphics;
+using osu.Framework.Graphics.Textures;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Shapes
 {

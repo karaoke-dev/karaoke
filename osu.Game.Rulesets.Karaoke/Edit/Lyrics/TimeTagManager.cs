@@ -1,6 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -11,8 +13,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
-using System;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(canBeNull: true)]
         private IFrameBasedClock framedClock { get; set; }
 
-        public Bindable<TimeTag> BindableCursorPosition { get; set; } = new Bindable<TimeTag>();
+        public Bindable<TimeTag> BindableCursorPosition { get; } = new Bindable<TimeTag>();
 
         #region Edit Time Tag
 
@@ -151,23 +151,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var currentTimeTag = BindableCursorPosition.Value;
 
             TimeTag nextTimeTag = null;
+
             switch (action)
             {
                 case CursorAction.MoveUp:
                     nextTimeTag = getPreviousLyricTimeTag(currentTimeTag);
                     break;
+
                 case CursorAction.MoveDown:
                     nextTimeTag = getNextLyricTimeTag(currentTimeTag);
                     break;
+
                 case CursorAction.MoveLeft:
                     nextTimeTag = getPreviousTimeTag(currentTimeTag);
                     break;
+
                 case CursorAction.MoveRight:
                     nextTimeTag = getNextTimeTag(currentTimeTag);
                     break;
+
                 case CursorAction.First:
                     nextTimeTag = getFirstTimeTag(currentTimeTag);
                     break;
+
                 case CursorAction.Last:
                     nextTimeTag = getLastTimeTag(currentTimeTag);
                     break;
@@ -204,7 +210,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return lyrics.GetPrevious(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index);
         }
 
-        public TimeTag getNextLyricTimeTag(TimeTag timeTag)
+        private TimeTag getNextLyricTimeTag(TimeTag timeTag)
         {
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
             var currentLyric = timeTagInLyric(timeTag);
@@ -217,7 +223,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return timeTags.GetPrevious(timeTag);
         }
 
-        public TimeTag getNextTimeTag(TimeTag timeTag)
+        private TimeTag getNextTimeTag(TimeTag timeTag)
         {
             var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
             return timeTags.GetNext(timeTag);
@@ -229,7 +235,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return timeTags.FirstOrDefault();
         }
 
-        public TimeTag getLastTimeTag(TimeTag timeTag)
+        private TimeTag getLastTimeTag(TimeTag timeTag)
         {
             var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
             return timeTags.LastOrDefault();
