@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
+using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -23,8 +24,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
-        [Resolved(CanBeNull = true)]
+        [Resolved(canBeNull: true)]
         private IEditorChangeHandler changeHandler { get; set; }
+
+        [Resolved(canBeNull: true)]
+        private IFrameBasedClock framedClock { get; set; }
 
         public Bindable<TimeTag> BindableCursorPosition { get; set; } = new Bindable<TimeTag>();
 
@@ -48,6 +52,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
 
             changeHandler?.EndChange();
+        }
+
+        public bool SetTimeTagTime(TimeTag timeTag)
+        {
+            if (framedClock == null)
+                return false;
+
+            var currentLyric = timeTagInLyric(timeTag);
+            if (currentLyric == null)
+                return false;
+
+            changeHandler?.BeginChange();
+            timeTag.Time = framedClock.CurrentTime;
+            changeHandler?.EndChange();
+
+            currentLyric.TimeTagsBindable.TriggerChange();
+            return true;
+        }
+
+        public bool ClearTimeTagTime(TimeTag timeTag)
+        {
+            if (framedClock == null)
+                return false;
+
+            var currentLyric = timeTagInLyric(timeTag);
+            if (currentLyric == null)
+                return false;
+
+            changeHandler?.BeginChange();
+            timeTag.Time = null;
+            changeHandler?.EndChange();
+
+            currentLyric.TimeTagsBindable.TriggerChange();
+            return true;
         }
 
         public bool MoveCursor(CursorAction action)

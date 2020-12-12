@@ -72,6 +72,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return timeTagManager.MoveCursor(CursorAction.First);
                 case Key.PageDown:
                     return timeTagManager.MoveCursor(CursorAction.Last);
+                case Key.BackSpace:
+                case Key.Delete:
+                    var currentTimeTag = timeTagManager?.BindableCursorPosition?.Value;
+                    return timeTagManager?.ClearTimeTagTime(currentTimeTag) ?? false;
+                case Key.Space:
+                    var timeTag = timeTagManager?.BindableCursorPosition?.Value;
+                    var setTimeSuccess = timeTagManager?.SetTimeTagTime(timeTag) ?? false;
+                    if(setTimeSuccess)
+                        timeTagManager.MoveCursor(CursorAction.MoveRight);
+                    return setTimeSuccess;
                 default:
                     return base.OnKeyDown(e);
             }
