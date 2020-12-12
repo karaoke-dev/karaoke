@@ -3,10 +3,8 @@
 
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Judgements;
@@ -140,41 +138,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         {
             get => LanguageBindable.Value;
             set => LanguageBindable.Value = value;
-        }
-
-        public IEnumerable<Note> CreateDefaultNotes()
-        {
-            var timeTags = TimeTagsUtils.ToDictionary(TimeTags);
-
-            foreach (var timeTag in timeTags)
-            {
-                var (key, endTime) = timeTags.GetNext(timeTag);
-
-                if (key.Index <= 0)
-                    continue;
-
-                var startTime = timeTag.Value;
-
-                int startIndex = timeTag.Key.Index;
-                int endIndex = key.Index;
-
-                var text = Text.Substring(startIndex, endIndex - startIndex);
-                var ruby = RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault().Text;
-
-                if (!string.IsNullOrEmpty(text))
-                {
-                    yield return new Note
-                    {
-                        StartTime = startTime,
-                        Duration = endTime - startTime,
-                        StartIndex = startIndex,
-                        EndIndex = endIndex,
-                        Text = text,
-                        AlternativeText = ruby,
-                        ParentLyric = this
-                    };
-                }
-            }
         }
 
         public override Judgement CreateJudgement() => new KaraokeLyricJudgement();
