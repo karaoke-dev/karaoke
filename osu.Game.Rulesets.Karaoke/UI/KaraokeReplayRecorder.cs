@@ -22,8 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             if (actions.Any())
                 return new KaraokeReplayFrame(Time.Current, actions.FirstOrDefault().Scale);
-            else
-                return new KaraokeReplayFrame(Time.Current);
+
+            return new KaraokeReplayFrame(Time.Current);
         }
     }
 }

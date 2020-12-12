@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         }
 
         [Resolved]
-        protected OsuGame Geme { get; private set; }
+        protected OsuGame Game { get; private set; }
 
         private KaraokeChangelogOverlay changelogOverlay;
         private LanguageSelectionDialog languageSelectionDialog;
@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             };
         }
 
-        protected Container DisplayContainer => Geme?.Children[3] as Container;
+        protected Container DisplayContainer => Game?.Children[3] as Container;
 
         private class PitchSlider : OsuSliderBar<int>
         {

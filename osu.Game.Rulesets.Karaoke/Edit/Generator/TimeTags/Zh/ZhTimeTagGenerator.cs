@@ -4,7 +4,6 @@
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
-using System;
 using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh
@@ -24,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh
             {
                 if (CharUtils.IsChinese(text[i]))
                 {
-                    timeTags.Add(new TimeTag(new TimeTagIndex(i, TimeTagIndex.IndexState.Start), null));
+                    timeTags.Add(new TimeTag(new TimeTagIndex(i)));
                 }
             }
         }

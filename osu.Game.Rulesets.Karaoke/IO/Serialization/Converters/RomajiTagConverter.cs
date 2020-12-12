@@ -16,11 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             var obj = JToken.Load(reader);
             var value = obj.Value<string>();
 
-            if (value == null || value == "")
+            if (string.IsNullOrEmpty(value))
                 return new RomajiTag();
 
-            var regux = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<romaji>.*$)");
-            var result = regux.Match(value);
+            var regex = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<romaji>.*$)");
+            var result = regex.Match(value);
             if (!result.Success)
                 return new RomajiTag();
 

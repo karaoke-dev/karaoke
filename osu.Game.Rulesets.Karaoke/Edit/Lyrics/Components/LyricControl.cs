@@ -72,6 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
             public void UpdateTimeTagCursoe(TimeTag cursor)
             {
                 timeTagCursorContainer.Clear();
+
                 if (TimeTagsBindable.Value.Contains(cursor))
                 {
                     var spacing = timeTagPosition(cursor);

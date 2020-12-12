@@ -870,7 +870,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
                 Assert.Throws(typeof(InvalidOperationException), () => bindableStringDictionary.Parse(null));
                 Assert.Throws(typeof(InvalidOperationException), () => bindableStringDictionary.Parse(new object[]
                 {
-                    "test", "testabc", "asdasdasdasd"
+                    "test", "test abc", "123"
                 }));
             });
         }

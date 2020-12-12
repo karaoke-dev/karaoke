@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags
             var generator = Activator.CreateInstance(typeof(TTimeTagGenerator), config) as TTimeTagGenerator;
 
             // create time tag and actually time tag.
-            var timeTags = getTimeTagIndex(generator.CreateTimeTags(lyric));
+            var timeTags = getTimeTagIndex(generator?.CreateTimeTags(lyric));
             var actualIndexed = getTimeTagIndexByArray(index);
 
             // check should be equal

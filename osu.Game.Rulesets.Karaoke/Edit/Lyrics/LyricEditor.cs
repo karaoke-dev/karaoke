@@ -63,37 +63,47 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 case Key.Up:
                     return timeTagManager.MoveCursor(CursorAction.MoveUp);
+
                 case Key.Down:
                     return timeTagManager.MoveCursor(CursorAction.MoveDown);
+
                 case Key.Left:
                     return timeTagManager.MoveCursor(CursorAction.MoveLeft);
+
                 case Key.Right:
                     return timeTagManager.MoveCursor(CursorAction.MoveRight);
+
                 case Key.PageUp:
                     return timeTagManager.MoveCursor(CursorAction.First);
+
                 case Key.PageDown:
                     return timeTagManager.MoveCursor(CursorAction.Last);
             }
 
             // edit time tag action
             var currentTimeTag = timeTagManager?.BindableCursorPosition?.Value;
+
             switch (e.Key)
             {
                 case Key.BackSpace:
-                    return timeTagManager?.ClearTimeTagTime(currentTimeTag) ?? false;
+                    return (bool)timeTagManager?.ClearTimeTagTime(currentTimeTag);
+
                 case Key.Space:
-                    var setTimeSuccess = timeTagManager?.SetTimeTagTime(currentTimeTag) ?? false;
+                    var setTimeSuccess = (bool)timeTagManager?.SetTimeTagTime(currentTimeTag);
                     if (setTimeSuccess)
                         timeTagManager.MoveCursor(CursorAction.MoveRight);
                     return setTimeSuccess;
+
                 case Key.N:
                     var createdTimeTag = timeTagManager?.AddTimeTag(currentTimeTag);
                     if (createdTimeTag != null)
                         timeTagManager.MoveCursorToTargetPosition(createdTimeTag);
                     return createdTimeTag != null;
+
                 case Key.Delete:
                     timeTagManager?.MoveCursor(CursorAction.MoveRight);
-                    return timeTagManager?.RemoveTimeTag(currentTimeTag) ?? false;
+                    return (bool)timeTagManager?.RemoveTimeTag(currentTimeTag);
+
                 default:
                     return base.OnKeyDown(e);
             }
