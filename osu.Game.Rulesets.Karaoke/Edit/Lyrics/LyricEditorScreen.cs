@@ -41,6 +41,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             Content.Add(TranslateManager = new TimeTagManager());
         }
 
+        public Task Import(Stream stream, string filename)
+        {
+            // todo : wail until really implement needed.
+            throw new System.NotImplementedException("Report to https://github.com/karaoke-dev/karaoke and i will implement it.");
+        }
+
         Task ICanAcceptFiles.Import(params string[] paths)
         {
             Schedule(() =>
