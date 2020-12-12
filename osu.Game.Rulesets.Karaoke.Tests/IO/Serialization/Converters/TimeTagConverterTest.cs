@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase("[-1,start]:1000", -1, TimeTagIndex.IndexState.Start, 1000)] // Should not check index is out of range in here.
         [TestCase("[1,start]:-1000", 1, TimeTagIndex.IndexState.Start, -1000)] // Should not check if time is negative.
         [TestCase("[1,start]:", 1, TimeTagIndex.IndexState.Start, null)]
-        [TestCase("", TimeTagIndex.IndexState.Start, 0, null)] // Test deal with format is not right below.
+        [TestCase("", 0, TimeTagIndex.IndexState.Start, null)] // Test deal with format is not right below.
         [TestCase("[1,???]:", 0, TimeTagIndex.IndexState.Start, null)]
         [TestCase("[1,]", 0, TimeTagIndex.IndexState.Start, null)]
         [TestCase("[,start]", 0, TimeTagIndex.IndexState.Start, null)]
