@@ -58,6 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (timeTagManager == null)
                 return false;
 
+            // moving cursor action
             switch (e.Key)
             {
                 case Key.Up:
@@ -72,16 +73,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return timeTagManager.MoveCursor(CursorAction.First);
                 case Key.PageDown:
                     return timeTagManager.MoveCursor(CursorAction.Last);
+            }
+
+            // edit time tag action
+            var currentTimeTag = timeTagManager?.BindableCursorPosition?.Value;
+            switch (e.Key)
+            {
                 case Key.BackSpace:
-                case Key.Delete:
-                    var currentTimeTag = timeTagManager?.BindableCursorPosition?.Value;
                     return timeTagManager?.ClearTimeTagTime(currentTimeTag) ?? false;
                 case Key.Space:
-                    var timeTag = timeTagManager?.BindableCursorPosition?.Value;
-                    var setTimeSuccess = timeTagManager?.SetTimeTagTime(timeTag) ?? false;
-                    if(setTimeSuccess)
+                    var setTimeSuccess = timeTagManager?.SetTimeTagTime(currentTimeTag) ?? false;
+                    if (setTimeSuccess)
                         timeTagManager.MoveCursor(CursorAction.MoveRight);
                     return setTimeSuccess;
+                case Key.N:
+                    var createdTimeTag = timeTagManager?.AddTimeTag(currentTimeTag);
+                    if (createdTimeTag != null)
+                        timeTagManager.MoveCursorToTargetPosition(createdTimeTag);
+                    return createdTimeTag != null;
+                case Key.Delete:
+                    timeTagManager?.MoveCursor(CursorAction.MoveRight);
+                    return timeTagManager?.RemoveTimeTag(currentTimeTag) ?? false;
                 default:
                     return base.OnKeyDown(e);
             }

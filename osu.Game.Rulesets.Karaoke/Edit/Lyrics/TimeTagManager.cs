@@ -9,6 +9,7 @@ using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using System;
 using System.Linq;
@@ -31,6 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private IFrameBasedClock framedClock { get; set; }
 
         public Bindable<TimeTag> BindableCursorPosition { get; set; } = new Bindable<TimeTag>();
+
+        #region Edit Time Tag
 
         /// <summary>
         /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.TimeTags"/> and apply on them.
@@ -64,7 +67,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             changeHandler?.BeginChange();
+
             timeTag.Time = framedClock.CurrentTime;
+            refreshTimeTag(currentLyric);
+
             changeHandler?.EndChange();
 
             currentLyric.TimeTagsBindable.TriggerChange();
@@ -81,12 +87,64 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             changeHandler?.BeginChange();
+
             timeTag.Time = null;
+            refreshTimeTag(currentLyric);
+
             changeHandler?.EndChange();
 
-            currentLyric.TimeTagsBindable.TriggerChange();
             return true;
         }
+
+        public TimeTag AddTimeTag(TimeTag timeTag)
+        {
+            var currentLyric = timeTagInLyric(timeTag);
+            if (currentLyric == null)
+                return null;
+
+            var timeTags = currentLyric.TimeTags.ToList();
+            var targetIndex = timeTags.IndexOf(timeTag);
+            if (targetIndex < 0)
+                return null;
+
+            var newTimeTag = new TimeTag(timeTag.Index);
+            timeTags.Insert(targetIndex, newTimeTag);
+
+            changeHandler?.BeginChange();
+
+            currentLyric.TimeTags = timeTags.ToArray();
+            sortingTimeTag(currentLyric);
+
+            changeHandler?.EndChange();
+
+            return newTimeTag;
+        }
+
+        public bool RemoveTimeTag(TimeTag timeTag)
+        {
+            var currentLyric = timeTagInLyric(timeTag);
+            if (currentLyric == null)
+                return false;
+
+            changeHandler?.BeginChange();
+
+            // delete time tag from list
+            currentLyric.TimeTags = currentLyric.TimeTags.Where(x => x != timeTag).ToArray();
+
+            changeHandler?.EndChange();
+
+            return true;
+        }
+
+        private void refreshTimeTag(Lyric lyric)
+            => lyric.TimeTags = lyric.TimeTags.ToArray();
+
+        private void sortingTimeTag(Lyric lyric)
+            => lyric.TimeTags = TimeTagsUtils.Sort(lyric.TimeTags);
+
+        #endregion
+
+        #region Time Tag cursor
 
         public bool MoveCursor(CursorAction action)
         {
@@ -223,6 +281,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             }
         }
+
+        #endregion
     }
 
     public enum CursorAction
