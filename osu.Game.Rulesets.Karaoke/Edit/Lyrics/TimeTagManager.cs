@@ -1,6 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -11,8 +13,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
-using System;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
