@@ -18,13 +18,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(null, "oke", "oke")]
         [TestCase("Kara", "", "Kara")]
         [TestCase("Kara", null, "Kara")]
-        public void TestCombineLyricText(string text1, string text2, string expectText)
+        public void TestCombineLyricText(string firstText, string secondText, string actualText)
         {
-            var lyric1 = new Lyric { Text = text1 };
-            var lyric2 = new Lyric { Text = text2 };
+            var lyric1 = new Lyric { Text = firstText };
+            var lyric2 = new Lyric { Text = secondText };
 
             var combineLyric = LyricUtils.CombineLyric(lyric1, lyric2);
-            Assert.AreEqual(combineLyric.Text, expectText);
+            Assert.AreEqual(combineLyric.Text, actualText);
         }
 
         [TestCase(new[] { "[0,start]:" }, new[] { "[0,start]:" }, new[] { "[0,start]:", "[7,start]:" })]
@@ -32,24 +32,24 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[0,start]:1000" }, new[] { "[0,start]:1000" }, new[] { "[0,start]:1000", "[7,start]:1000" })] // deal with the case with time.
         [TestCase(new[] { "[0,start]:1000" }, new[] { "[0,start]:-1000" }, new[] { "[0,start]:1000", "[7,start]:-1000" })] // deal with the case with not invalid time tag time.
         [TestCase(new[] { "[-1,start]:" }, new[] { "[-1,start]:" }, new[] { "[-1,start]:", "[6,start]:" })] // deal with the case with not invalid time tag position.
-        public void TestCombineLyricTimeTag(string[] timeTags1, string[] timeTags2, string[] expectTimeTags)
+        public void TestCombineLyricTimeTag(string[] firstTimeTags, string[] secondTimeTags, string[] actualTimeTags)
         {
             var lyric1 = new Lyric
             {
                 Text = "karaoke",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags1)
+                TimeTags = TestCaseTagHelper.ParseTimeTags(firstTimeTags)
             };
             var lyric2 = new Lyric
             {
                 Text = "karaoke",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags2)
+                TimeTags = TestCaseTagHelper.ParseTimeTags(secondTimeTags)
             };
 
             var combineLyric = LyricUtils.CombineLyric(lyric1, lyric2);
             var timeTags = combineLyric.TimeTags;
             for (int i = 0; i < timeTags.Length; i++)
             {
-                var actualTimeTag = TestCaseTagHelper.ParseTimeTag(expectTimeTags[i]);
+                var actualTimeTag = TestCaseTagHelper.ParseTimeTag(actualTimeTags[i]);
                 Assert.AreEqual(timeTags[i].Index, actualTimeTag.Index);
                 Assert.AreEqual(timeTags[i].Time, actualTimeTag.Time);
             }
@@ -60,23 +60,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[0,3]:" }, new[] { "[0,3]:" }, new[] { "[0,3]:", "[7,10]:" })]
         [TestCase(new[] { "[0,10]:" }, new[] { "[0,10]:" }, new[] { "[0,10]:", "[7,17]:" })] // deal with the case out of range.
         [TestCase(new[] { "[-10,0]:" }, new[] { "[-10,0]:" }, new[] { "[-10,0]:", "[-3,7]:" })] // deal with the case out of range.
-        public void TestCombineLyricRubyTag(string[] rubyTags1, string[] rubyTags2, string[] expectRubyTags)
+        public void TestCombineLyricRubyTag(string[] firstRubyTags, string[] secondRubyTags, string[] actualRubyTags)
         {
             var lyric1 = new Lyric
             {
                 Text = "karaoke",
-                RubyTags = TestCaseTagHelper.ParseRubyTags(rubyTags1)
+                RubyTags = TestCaseTagHelper.ParseRubyTags(firstRubyTags)
             };
             var lyric2 = new Lyric
             {
                 Text = "karaoke",
-                RubyTags = TestCaseTagHelper.ParseRubyTags(rubyTags2)
+                RubyTags = TestCaseTagHelper.ParseRubyTags(secondRubyTags)
             };
 
             var combineLyric = LyricUtils.CombineLyric(lyric1, lyric2);
             var rubyTags = combineLyric.RubyTags;
-            var actualRubyTags = TestCaseTagHelper.ParseRubyTags(expectRubyTags);
-            Assert.AreEqual(rubyTags, actualRubyTags);
+            Assert.AreEqual(rubyTags, TestCaseTagHelper.ParseRubyTags(actualRubyTags));
         }
 
         [TestCase(new[] { "[0,0]:romaji" }, new[] { "[0,0]:ローマ字" }, new[] { "[0,0]:romaji", "[7,7]:ローマ字" })]
@@ -84,23 +83,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[0,3]:" }, new[] { "[0,3]:" }, new[] { "[0,3]:", "[7,10]:" })]
         [TestCase(new[] { "[0,10]:" }, new[] { "[0,10]:" }, new[] { "[0,10]:", "[7,17]:" })] // deal with the case out of range.
         [TestCase(new[] { "[-10,0]:" }, new[] { "[-10,0]:" }, new[] { "[-10,0]:", "[-3,7]:" })] // deal with the case out of range.
-        public void TestCombineLyricRomajiTag(string[] romajiTags1, string[] romajiTags2, string[] expectRomajiTags)
+        public void TestCombineLyricRomajiTag(string[] firstRomajiTags, string[] secondRomajiTags, string[] actualRomajiTags)
         {
             var lyric1 = new Lyric
             {
                 Text = "karaoke",
-                RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajiTags1)
+                RomajiTags = TestCaseTagHelper.ParseRomajiTags(firstRomajiTags)
             };
             var lyric2 = new Lyric
             {
                 Text = "karaoke",
-                RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajiTags2)
+                RomajiTags = TestCaseTagHelper.ParseRomajiTags(secondRomajiTags)
             };
 
             var combineLyric = LyricUtils.CombineLyric(lyric1, lyric2);
             var romajiTags = combineLyric.RomajiTags;
-            var actualRomajiTags = TestCaseTagHelper.ParseRomajiTags(expectRomajiTags);
-            Assert.AreEqual(romajiTags, actualRomajiTags);
+            Assert.AreEqual(romajiTags, TestCaseTagHelper.ParseRomajiTags(actualRomajiTags));
         }
 
         [TestCase(new double[] { 1000, 0 }, new double[] { 1000, 0 }, new double[] { 1000, 0 })]
@@ -110,17 +108,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new double[] { 1000, 5000 }, new double[] { 2000, 0 }, new double[] { 1000, 5000 })]
         [TestCase(new double[] { 2000, 5000 }, new double[] { 1000, 0 }, new double[] { 1000, 6000 })]
         [TestCase(new double[] { 2000, 5000 }, new double[] { 1000, 10000 }, new double[] { 1000, 10000 })]
-        public void TestCombineLyricTime(double[] lyric1Time, double[] lyric2Time, double[] actuallyTime)
+        public void TestCombineLyricTime(double[] firstLyricTime, double[] secondLyricTime, double[] actuallyTime)
         {
             var lyric1 = new Lyric
             {
-                StartTime = lyric1Time[0],
-                Duration = lyric1Time[1],
+                StartTime = firstLyricTime[0],
+                Duration = firstLyricTime[1],
             };
             var lyric2 = new Lyric
             {
-                StartTime = lyric2Time[0],
-                Duration = lyric2Time[1],
+                StartTime = secondLyricTime[0],
+                Duration = secondLyricTime[1],
             };
 
             // use min time as start time, and use max end time - min star time as duration
@@ -135,10 +133,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(null, new[] { 2 }, new[] { 2 })] // deal with null case.
         [TestCase(new[] { 1 }, null, new[] { 1 })] // deal with null case.
         [TestCase(null, null, new int[] { })] // deal with null case.
-        public void TestCombineLyricSinger(int[] singerIndexes1, int[] singerIndexes2, int[] actualSingerIndexes)
+        public void TestCombineLyricSinger(int[] fisrtSingerIndexes, int[] secondSingerIndexes, int[] actualSingerIndexes)
         {
-            var lyric1 = new Lyric { Singers = singerIndexes1 };
-            var lyric2 = new Lyric { Singers = singerIndexes2 };
+            var lyric1 = new Lyric { Singers = fisrtSingerIndexes };
+            var lyric2 = new Lyric { Singers = secondSingerIndexes };
 
             var combineLyric = LyricUtils.CombineLyric(lyric1, lyric2);
             Assert.AreEqual(combineLyric.Singers, actualSingerIndexes);
@@ -149,10 +147,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(1, -1, 1)]
         [TestCase(-1, 1, -1)]
         [TestCase(-5, 1, -5)] // Wrong layout index
-        public void TestCombineLayoutIndex(int layout1, int layout2, int actualLayout)
+        public void TestCombineLayoutIndex(int firstLayout, int secondLayout, int actualLayout)
         {
-            var lyric1 = new Lyric { LayoutIndex = layout1 };
-            var lyric2 = new Lyric { LayoutIndex = layout2 };
+            var lyric1 = new Lyric { LayoutIndex = firstLayout };
+            var lyric2 = new Lyric { LayoutIndex = secondLayout };
 
             // just use first lyric's layout id.
             var combineLyric = LyricUtils.CombineLyric(lyric1, lyric2);
@@ -164,11 +162,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(null, 1, null)]
         [TestCase(1, null, null)]
         [TestCase(null, null, null)]
-        public void TestLanguage(int? lcid1, int? lcid2, int? actuallyLcid)
+        public void TestLanguage(int? firstLcid, int? secondlcid, int? actualLcid)
         {
-            var caltureInfo1 = lcid1 != null ? new CultureInfo(lcid1.Value) : null;
-            var caltureInfo2 = lcid2 != null ? new CultureInfo(lcid2.Value) : null;
-            var actualCaltureInfo = actuallyLcid != null ? new CultureInfo(actuallyLcid.Value) : null;
+            var caltureInfo1 = firstLcid != null ? new CultureInfo(firstLcid.Value) : null;
+            var caltureInfo2 = secondlcid != null ? new CultureInfo(secondlcid.Value) : null;
+            var actualCaltureInfo = actualLcid != null ? new CultureInfo(actualLcid.Value) : null;
 
             var lyric1 = new Lyric { Language = caltureInfo1 };
             var lyric2 = new Lyric { Language = caltureInfo2 };

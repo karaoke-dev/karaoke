@@ -21,42 +21,45 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return new Tuple<Lyric, Lyric>(new Lyric(), new Lyric());
         }
 
-        public static Lyric CombineLyric(Lyric lyric1, Lyric lyric2)
+        public static Lyric CombineLyric(Lyric fisrtLyric, Lyric secondLyric)
         {
-            var shiftingIndex = lyric1.Text?.Length ?? 0;
+            if (fisrtLyric == null || secondLyric == null)
+                throw new ArgumentNullException($"{nameof(fisrtLyric)} or {nameof(secondLyric)} cannot be null.");
+
+            var shiftingIndex = fisrtLyric.Text?.Length ?? 0;
 
             var timeTags = new List<TimeTag>();
-            timeTags.AddRangeWithNullCheck(lyric1.TimeTags);
-            timeTags.AddRangeWithNullCheck(shiftingTimeTag(lyric2.TimeTags, shiftingIndex));
+            timeTags.AddRangeWithNullCheck(fisrtLyric.TimeTags);
+            timeTags.AddRangeWithNullCheck(shiftingTimeTag(secondLyric.TimeTags, shiftingIndex));
 
             var rubyTags = new List<RubyTag>();
-            rubyTags.AddRangeWithNullCheck(lyric1.RubyTags);
-            rubyTags.AddRangeWithNullCheck(shiftingRubyTag(lyric2.RubyTags, shiftingIndex));
+            rubyTags.AddRangeWithNullCheck(fisrtLyric.RubyTags);
+            rubyTags.AddRangeWithNullCheck(shiftingRubyTag(secondLyric.RubyTags, shiftingIndex));
 
             var romajiTags = new List<RomajiTag>();
-            romajiTags.AddRangeWithNullCheck(lyric1.RomajiTags);
-            romajiTags.AddRangeWithNullCheck(shiftingRomajiTag(lyric2.RomajiTags, shiftingIndex));
+            romajiTags.AddRangeWithNullCheck(fisrtLyric.RomajiTags);
+            romajiTags.AddRangeWithNullCheck(shiftingRomajiTag(secondLyric.RomajiTags, shiftingIndex));
 
-            var startTime = Math.Min(lyric1.StartTime, lyric2.StartTime);
-            var endTime = Math.Max(lyric1.EndTime, lyric2.EndTime);
+            var startTime = Math.Min(fisrtLyric.StartTime, secondLyric.StartTime);
+            var endTime = Math.Max(fisrtLyric.EndTime, secondLyric.EndTime);
 
             var singers = new List<int>();
-            singers.AddRangeWithNullCheck(lyric1.Singers);
-            singers.AddRangeWithNullCheck(lyric2.Singers);
+            singers.AddRangeWithNullCheck(fisrtLyric.Singers);
+            singers.AddRangeWithNullCheck(secondLyric.Singers);
 
-            var sameLanguage = lyric1.Language?.Equals(lyric2.Language) ?? false;
-            var language = sameLanguage ? lyric1.Language : null;
+            var sameLanguage = fisrtLyric.Language?.Equals(secondLyric.Language) ?? false;
+            var language = sameLanguage ? fisrtLyric.Language : null;
 
             return new Lyric
             {
-                Text = lyric1.Text + lyric2.Text,
+                Text = fisrtLyric.Text + secondLyric.Text,
                 TimeTags = timeTags.ToArray(),
                 RubyTags = rubyTags.ToArray(),
                 RomajiTags = romajiTags.ToArray(),
                 StartTime = startTime,
                 Duration = endTime - startTime,
                 Singers = singers.Distinct().ToArray(),
-                LayoutIndex = lyric1.LayoutIndex,
+                LayoutIndex = fisrtLyric.LayoutIndex,
                 Language = language,
             };
         }

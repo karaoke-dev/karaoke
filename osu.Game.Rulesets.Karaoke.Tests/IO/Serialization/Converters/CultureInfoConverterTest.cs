@@ -13,19 +13,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
     {
         [TestCase(1, "1")]
         [TestCase(null, "null")]
-        public void TestSerialize(int? calId, string json)
+        public void TestSerialize(int? lcid, string json)
         {
-            var language = calId != null ? new CultureInfo(calId.Value) : default;
+            var language = lcid != null ? new CultureInfo(lcid.Value) : default;
             var result = JsonConvert.SerializeObject(language, CreateSettings());
             Assert.AreEqual(result, json);
         }
 
         [TestCase("1", 1)]
         [TestCase("null", null)]
-        public void TestDeserialize(string json, int? calId)
+        public void TestDeserialize(string json, int? lcid)
         {
             var result = JsonConvert.DeserializeObject<CultureInfo>(json, CreateSettings());
-            Assert.AreEqual(result?.LCID, calId);
+            Assert.AreEqual(result?.LCID, lcid);
         }
 
         [Test]
