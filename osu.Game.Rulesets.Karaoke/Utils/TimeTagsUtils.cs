@@ -17,6 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="startTimeTag"></param>
         /// <param name="endTimeTag"></param>
+        /// <param name="index"></param>
         /// <returns></returns>
         public static TimeTag GenerateCenterTimeTag(TimeTag startTimeTag, TimeTag endTimeTag, TimeTagIndex index)
         {
@@ -24,28 +25,27 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 throw new ArgumentNullException($"{nameof(startTimeTag)} or {nameof(endTimeTag)} cannot be null.");
 
             if (startTimeTag.Index > endTimeTag.Index)
-                throw new InvalidOperationException($"{nameof(endTimeTag.Index)} caanot larger than {startTimeTag.Index}");
+                throw new InvalidOperationException($"{nameof(endTimeTag.Index)} cannot larger than {startTimeTag.Index}");
 
-            if(index < startTimeTag.Index || index > endTimeTag.Index)
-                throw new InvalidOperationException($"{nameof(endTimeTag.Index)} caanot larger than {startTimeTag.Index}");
+            if (index < startTimeTag.Index || index > endTimeTag.Index)
+                throw new InvalidOperationException($"{nameof(endTimeTag.Index)} cannot larger than {startTimeTag.Index}");
 
-            if(startTimeTag.Time == null || endTimeTag.Time == null)
+            if (startTimeTag.Time == null || endTimeTag.Time == null)
                 return new TimeTag(index, null);
 
-
-            var diffFromStartToEnd = getTimeCalcultaionIndex(endTimeTag.Index) - getTimeCalcultaionIndex(startTimeTag.Index);
-            var diffFromStartToNow = getTimeCalcultaionIndex(index) - getTimeCalcultaionIndex(startTimeTag.Index);
-            if(diffFromStartToEnd == 0 || diffFromStartToNow == 0)
+            var diffFromStartToEnd = getTimeCalculationIndex(endTimeTag.Index) - getTimeCalculationIndex(startTimeTag.Index);
+            var diffFromStartToNow = getTimeCalculationIndex(index) - getTimeCalculationIndex(startTimeTag.Index);
+            if (diffFromStartToEnd == 0 || diffFromStartToNow == 0)
                 return new TimeTag(index, startTimeTag.Time);
 
             var time = startTimeTag.Time +
-                (endTimeTag.Time - startTimeTag.Time)
-                / diffFromStartToEnd
-                * diffFromStartToNow;
+                       (endTimeTag.Time - startTimeTag.Time)
+                       / diffFromStartToEnd
+                       * diffFromStartToNow;
 
             return new TimeTag(index, time);
 
-            int getTimeCalcultaionIndex(TimeTagIndex calculationIndex)
+            int getTimeCalculationIndex(TimeTagIndex calculationIndex)
                 => calculationIndex.Index + (calculationIndex.State == TimeTagIndex.IndexState.End ? 1 : 0);
         }
 

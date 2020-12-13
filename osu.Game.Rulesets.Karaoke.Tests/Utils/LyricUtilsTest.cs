@@ -1,11 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
-using System;
 using System.Globalization;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
@@ -27,9 +28,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             try
             {
-                var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
-                Assert.AreEqual(separatedLyric.Item1.Text, firstText);
-                Assert.AreEqual(separatedLyric.Item2.Text, secondText);
+                var (firstLyric, secondLyric) = LyricUtils.SplitLyric(lyric, splitIndex);
+                Assert.AreEqual(firstLyric.Text, firstText);
+                Assert.AreEqual(secondLyric.Text, secondText);
             }
             catch
             {
@@ -49,15 +50,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
             };
 
-            var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+            var (firstLyric, secondLyric) = LyricUtils.SplitLyric(lyric, splitIndex);
 
-            testTimeTags(separatedLyric.Item1.TimeTags, TestCaseTagHelper.ParseTimeTags(firstTimeTags));
-            testTimeTags(separatedLyric.Item2.TimeTags, TestCaseTagHelper.ParseTimeTags(secondTimeTags));
+            testTimeTags(firstLyric.TimeTags, TestCaseTagHelper.ParseTimeTags(firstTimeTags));
+            testTimeTags(secondLyric.TimeTags, TestCaseTagHelper.ParseTimeTags(secondTimeTags));
 
-            void testTimeTags(TimeTag[] expect, TimeTag[] actually)
+            static void testTimeTags(IReadOnlyList<TimeTag> expect, IReadOnlyList<TimeTag> actually)
             {
-                var length = Math.Max(expect?.Length ?? 0, actually?.Length ?? 0);
-                for (int i = 0; i < length; i++)
+                Assert.AreEqual(expect?.Count, actually?.Count);
+                if (expect == null || actually == null)
+                    return;
+
+                for (int i = 0; i < expect.Count; i++)
                 {
                     Assert.AreEqual(expect[i].Index, actually[i].Index);
                     Assert.AreEqual(expect[i].Time, actually[i].Time);
@@ -72,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("カラオケ", new[] { "[2,2]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
         [TestCase("カラオケ", new[] { "[0,4]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
         [TestCase("カラオケ", new string[] { }, 2, new string[] { }, new string[] { })]
-        [TestCase("カラオケ", null, 2, null,null)]
+        [TestCase("カラオケ", null, 2, null, null)]
         public void TestSeparateLyricRubyTag(string text, string[] rubyTags, int splitIndex, string[] firstRubyTags, string[] secondRubyTags)
         {
             var lyric = new Lyric
@@ -81,10 +85,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RubyTags = TestCaseTagHelper.ParseRubyTags(rubyTags)
             };
 
-            var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+            var (firstLyric, secondLyric) = LyricUtils.SplitLyric(lyric, splitIndex);
 
-            Assert.AreEqual(separatedLyric.Item1.RubyTags, TestCaseTagHelper.ParseRubyTags(firstRubyTags));
-            Assert.AreEqual(separatedLyric.Item2.RubyTags, TestCaseTagHelper.ParseRubyTags(secondRubyTags));
+            Assert.AreEqual(firstLyric.RubyTags, TestCaseTagHelper.ParseRubyTags(firstRubyTags));
+            Assert.AreEqual(secondLyric.RubyTags, TestCaseTagHelper.ParseRubyTags(secondRubyTags));
         }
 
         [TestCase("カラオケ", new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, 2,
@@ -103,10 +107,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajiTags)
             };
 
-            var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+            var (firstLyric, secondLyric) = LyricUtils.SplitLyric(lyric, splitIndex);
 
-            Assert.AreEqual(separatedLyric.Item1.RomajiTags, TestCaseTagHelper.ParseRomajiTags(firstRomajiTags));
-            Assert.AreEqual(separatedLyric.Item2.RomajiTags, TestCaseTagHelper.ParseRomajiTags(secondRomajiTags));
+            Assert.AreEqual(firstLyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(firstRomajiTags));
+            Assert.AreEqual(secondLyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(secondRomajiTags));
         }
 
         [Ignore("Not really sure second lyric is based on lyric time or time-tag time.")]
@@ -126,26 +130,26 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { -1 }, new[] { -1 }, new[] { -1 })] // copy singer index even it's invalid.
         [TestCase(new int[] { }, new int[] { }, new int[] { })]
         [TestCase(null, null, null)]
-        public void TestSeparateLyricSinger(int[] singerIndexes, int[] fisrtSingerIndexes, int[] secondSingerIndexes)
+        public void TestSeparateLyricSinger(int[] singerIndexes, int[] firstSingerIndexes, int[] secondSingerIndexes)
         {
-            var splitIndex = 2;
+            const int split_index = 2;
             var lyric = new Lyric
             {
                 Text = "karaoke!",
                 Singers = singerIndexes
             };
 
-            var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+            var (firstLyric, secondLyric) = LyricUtils.SplitLyric(lyric, split_index);
 
-            Assert.AreEqual(separatedLyric.Item1.Singers, fisrtSingerIndexes);
-            Assert.AreEqual(separatedLyric.Item2.Singers, secondSingerIndexes);
+            Assert.AreEqual(firstLyric.Singers, firstSingerIndexes);
+            Assert.AreEqual(secondLyric.Singers, secondSingerIndexes);
 
             if (lyric.Singers == null)
                 return;
 
-            // also should check is not same object as origin lyric for safty purpose.
-            Assert.AreNotSame(separatedLyric.Item1.Singers, lyric.Singers);
-            Assert.AreNotSame(separatedLyric.Item2.Singers, lyric.Singers);
+            // also should check is not same object as origin lyric for safety purpose.
+            Assert.AreNotSame(firstLyric.Singers, lyric.Singers);
+            Assert.AreNotSame(secondLyric.Singers, lyric.Singers);
         }
 
         [TestCase(1, 1, 1)]
@@ -153,39 +157,39 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(-5, -5, -5)] // copy layout index even it's wrong.
         public void TestSeparateLyricLayoutIndex(int actualLayout, int firstLayout, int secondLayout)
         {
-            var splitIndex = 2;
+            const int split_index = 2;
             var lyric = new Lyric
             {
                 Text = "karaoke!",
                 LayoutIndex = actualLayout
             };
 
-            var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+            var (firstLyric, secondLyric) = LyricUtils.SplitLyric(lyric, split_index);
 
-            Assert.AreEqual(separatedLyric.Item1.LayoutIndex, firstLayout);
-            Assert.AreEqual(separatedLyric.Item2.LayoutIndex, secondLayout);
+            Assert.AreEqual(firstLyric.LayoutIndex, firstLayout);
+            Assert.AreEqual(secondLyric.LayoutIndex, secondLayout);
         }
 
         [TestCase(1, 1, 1)]
         [TestCase(54, 54, 54)]
         [TestCase(null, null, null)]
-        public void TestSeparateLyricLanguage(int? lcid, int? firstLcid, int? secondlcid)
+        public void TestSeparateLyricLanguage(int? lcid, int? firstLcid, int? secondLcid)
         {
-            var caltureInfo = lcid != null ? new CultureInfo(lcid.Value) : null;
-            var firstCaltureInfo = firstLcid != null ? new CultureInfo(firstLcid.Value) : null;
-            var secondCaltureInfo = secondlcid != null ? new CultureInfo(secondlcid.Value) : null;
+            var cultureInfo = lcid != null ? new CultureInfo(lcid.Value) : null;
+            var firstCultureInfo = firstLcid != null ? new CultureInfo(firstLcid.Value) : null;
+            var secondCultureInfo = secondLcid != null ? new CultureInfo(secondLcid.Value) : null;
 
-            var splitIndex = 2;
+            const int split_index = 2;
             var lyric = new Lyric
             {
                 Text = "karaoke!",
-                Language = caltureInfo
+                Language = cultureInfo
             };
 
-            var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+            var (firstLyric, secondLyric) = LyricUtils.SplitLyric(lyric, split_index);
 
-            Assert.AreEqual(separatedLyric.Item1.Language, firstCaltureInfo);
-            Assert.AreEqual(separatedLyric.Item2.Language, secondCaltureInfo);
+            Assert.AreEqual(firstLyric.Language, firstCultureInfo);
+            Assert.AreEqual(secondLyric.Language, secondCultureInfo);
         }
 
         #endregion
@@ -226,6 +230,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             var combineLyric = LyricUtils.CombineLyric(lyric1, lyric2);
             var timeTags = combineLyric.TimeTags;
+
             for (int i = 0; i < timeTags.Length; i++)
             {
                 var actualTimeTag = TestCaseTagHelper.ParseTimeTag(actualTimeTags[i]);
@@ -307,14 +312,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         }
 
         [TestCase(new[] { 1 }, new[] { 2 }, new[] { 1, 2 })]
-        [TestCase(new[] { 1 }, new[] { 1 }, new[] { 1 })] // deal with dulicated case.
+        [TestCase(new[] { 1 }, new[] { 1 }, new[] { 1 })] // deal with duplicated case.
         [TestCase(new[] { 1 }, new[] { -2 }, new[] { 1, -2 })] // deal with id not right case.
         [TestCase(null, new[] { 2 }, new[] { 2 })] // deal with null case.
         [TestCase(new[] { 1 }, null, new[] { 1 })] // deal with null case.
         [TestCase(null, null, new int[] { })] // deal with null case.
-        public void TestCombineLyricSinger(int[] fisrtSingerIndexes, int[] secondSingerIndexes, int[] actualSingerIndexes)
+        public void TestCombineLyricSinger(int[] firstSingerIndexes, int[] secondSingerIndexes, int[] actualSingerIndexes)
         {
-            var lyric1 = new Lyric { Singers = fisrtSingerIndexes };
+            var lyric1 = new Lyric { Singers = firstSingerIndexes };
             var lyric2 = new Lyric { Singers = secondSingerIndexes };
 
             var combineLyric = LyricUtils.CombineLyric(lyric1, lyric2);
@@ -341,17 +346,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(null, 1, null)]
         [TestCase(1, null, null)]
         [TestCase(null, null, null)]
-        public void TestCombineLayoutLanguage(int? firstLcid, int? secondlcid, int? actualLcid)
+        public void TestCombineLayoutLanguage(int? firstLcid, int? secondLcid, int? actualLcid)
         {
-            var caltureInfo1 = firstLcid != null ? new CultureInfo(firstLcid.Value) : null;
-            var caltureInfo2 = secondlcid != null ? new CultureInfo(secondlcid.Value) : null;
-            var actualCaltureInfo = actualLcid != null ? new CultureInfo(actualLcid.Value) : null;
+            var cultureInfo1 = firstLcid != null ? new CultureInfo(firstLcid.Value) : null;
+            var cultureInfo2 = secondLcid != null ? new CultureInfo(secondLcid.Value) : null;
+            var actualCultureInfo = actualLcid != null ? new CultureInfo(actualLcid.Value) : null;
 
-            var lyric1 = new Lyric { Language = caltureInfo1 };
-            var lyric2 = new Lyric { Language = caltureInfo2 };
+            var lyric1 = new Lyric { Language = cultureInfo1 };
+            var lyric2 = new Lyric { Language = cultureInfo2 };
 
             var combineLyric = LyricUtils.CombineLyric(lyric1, lyric2);
-            Assert.AreEqual(combineLyric.Language, actualCaltureInfo);
+            Assert.AreEqual(combineLyric.Language, actualCultureInfo);
         }
 
         #endregion

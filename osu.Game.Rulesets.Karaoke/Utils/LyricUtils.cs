@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (lyric == null)
                 throw new ArgumentNullException($"{nameof(lyric)} cannot be null.");
 
-            if(string.IsNullOrEmpty(lyric.Text))
+            if (string.IsNullOrEmpty(lyric.Text))
                 throw new ArgumentNullException($"{nameof(lyric.Text)} cannot be null.");
 
             if (splitIndex < 0 || splitIndex > lyric.Text.Length)
@@ -33,16 +33,16 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var secondTimeTag = lyric.TimeTags?.Where(x => x.Index.Index >= splitIndex).ToList();
 
             // add delta time-tag if does not have end time-tag.
-            if (firstTimeTag?.Count > 0 && secondTimeTag?.Count > 0)
+            if (firstTimeTag?.Count > 0 && secondTimeTag.Count > 0)
             {
-                var fisrtTag = firstTimeTag.LastOrDefault();
+                var firstTag = firstTimeTag.LastOrDefault();
                 var secondTag = secondTimeTag.FirstOrDefault();
 
                 // add end tag at end of first lyric if does not have tag in there.
                 if (!firstTimeTag.Any(x => x.Index.Index == splitIndex - 1 && x.Index.State == TimeTagIndex.IndexState.End))
                 {
                     var endTagIndex = new TimeTagIndex(splitIndex - 1, TimeTagIndex.IndexState.End);
-                    var endTag = TimeTagsUtils.GenerateCenterTimeTag(fisrtTag, secondTag, endTagIndex);
+                    var endTag = TimeTagsUtils.GenerateCenterTimeTag(firstTag, secondTag, endTagIndex);
                     firstTimeTag.Add(endTag);
                 }
 
@@ -50,12 +50,12 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 if (!secondTimeTag.Any(x => x.Index.Index == splitIndex && x.Index.State == TimeTagIndex.IndexState.Start))
                 {
                     var endTagIndex = new TimeTagIndex(splitIndex, TimeTagIndex.IndexState.Start);
-                    var startTag = TimeTagsUtils.GenerateCenterTimeTag(fisrtTag, secondTag, endTagIndex);
+                    var startTag = TimeTagsUtils.GenerateCenterTimeTag(firstTag, secondTag, endTagIndex);
                     secondTimeTag.Add(startTag);
                 }
             }
 
-            var fisrtLyric = new Lyric
+            var firstLyric = new Lyric
             {
                 Text = lyric.Text?.Substring(0, splitIndex),
                 TimeTags = firstTimeTag?.ToArray(),
@@ -79,48 +79,48 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 Language = lyric.Language,
             };
 
-            return new Tuple<Lyric, Lyric>(fisrtLyric, secondLyric);
+            return new Tuple<Lyric, Lyric>(firstLyric, secondLyric);
         }
 
-        public static Lyric CombineLyric(Lyric fisrtLyric, Lyric secondLyric)
+        public static Lyric CombineLyric(Lyric firstLyric, Lyric secondLyric)
         {
-            if (fisrtLyric == null || secondLyric == null)
-                throw new ArgumentNullException($"{nameof(fisrtLyric)} or {nameof(secondLyric)} cannot be null.");
+            if (firstLyric == null || secondLyric == null)
+                throw new ArgumentNullException($"{nameof(firstLyric)} or {nameof(secondLyric)} cannot be null.");
 
-            var shiftingIndex = fisrtLyric.Text?.Length ?? 0;
+            var shiftingIndex = firstLyric.Text?.Length ?? 0;
 
             var timeTags = new List<TimeTag>();
-            timeTags.AddRangeWithNullCheck(fisrtLyric.TimeTags);
+            timeTags.AddRangeWithNullCheck(firstLyric.TimeTags);
             timeTags.AddRangeWithNullCheck(shiftingTimeTag(secondLyric.TimeTags, shiftingIndex));
 
             var rubyTags = new List<RubyTag>();
-            rubyTags.AddRangeWithNullCheck(fisrtLyric.RubyTags);
+            rubyTags.AddRangeWithNullCheck(firstLyric.RubyTags);
             rubyTags.AddRangeWithNullCheck(shiftingRubyTag(secondLyric.RubyTags, shiftingIndex));
 
             var romajiTags = new List<RomajiTag>();
-            romajiTags.AddRangeWithNullCheck(fisrtLyric.RomajiTags);
+            romajiTags.AddRangeWithNullCheck(firstLyric.RomajiTags);
             romajiTags.AddRangeWithNullCheck(shiftingRomajiTag(secondLyric.RomajiTags, shiftingIndex));
 
-            var startTime = Math.Min(fisrtLyric.StartTime, secondLyric.StartTime);
-            var endTime = Math.Max(fisrtLyric.EndTime, secondLyric.EndTime);
+            var startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
+            var endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
 
             var singers = new List<int>();
-            singers.AddRangeWithNullCheck(fisrtLyric.Singers);
+            singers.AddRangeWithNullCheck(firstLyric.Singers);
             singers.AddRangeWithNullCheck(secondLyric.Singers);
 
-            var sameLanguage = fisrtLyric.Language?.Equals(secondLyric.Language) ?? false;
-            var language = sameLanguage ? fisrtLyric.Language : null;
+            var sameLanguage = firstLyric.Language?.Equals(secondLyric.Language) ?? false;
+            var language = sameLanguage ? firstLyric.Language : null;
 
             return new Lyric
             {
-                Text = fisrtLyric.Text + secondLyric.Text,
+                Text = firstLyric.Text + secondLyric.Text,
                 TimeTags = timeTags.ToArray(),
                 RubyTags = rubyTags.ToArray(),
                 RomajiTags = romajiTags.ToArray(),
                 StartTime = startTime,
                 Duration = endTime - startTime,
                 Singers = singers.Distinct().ToArray(),
-                LayoutIndex = fisrtLyric.LayoutIndex,
+                LayoutIndex = firstLyric.LayoutIndex,
                 Language = language,
             };
         }
