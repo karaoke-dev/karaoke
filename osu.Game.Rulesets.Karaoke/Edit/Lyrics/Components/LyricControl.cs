@@ -10,8 +10,6 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
@@ -20,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
     {
         private const int time_tag_spacing = 4;
 
-        private readonly DrawableEditorLyric drawableLyric;
+        private readonly DrawableEditLyric drawableLyric;
         private readonly Container timeTagContainer;
         private readonly Container timeTagCursorContainer;
 
@@ -34,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
             Padding = new MarginPadding { Bottom = 10 };
             Children = new Drawable[]
             {
-                drawableLyric = new DrawableEditorLyric(lyric)
+                drawableLyric = new DrawableEditLyric(lyric)
                 {
                     ApplyFontAction = () =>
                     {
@@ -119,54 +117,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
             var duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == timeTag.Index) - 1;
             var spacing = duplicatedTagAmount * time_tag_spacing * (isStart ? 1 : -1);
             return position + spacing;
-        }
-
-        public class DrawableEditorLyric : DrawableLyric
-        {
-            public Action ApplyFontAction;
-
-            public DrawableEditorLyric(Lyric lyric)
-                : base(lyric)
-            {
-                DisplayRuby = true;
-                DisplayRomaji = true;
-            }
-
-            protected override void ApplyFont(KaraokeFont font)
-            {
-                base.ApplyFont(font);
-
-                if (TimeTagsBindable.Value == null)
-                    return;
-
-                ApplyFontAction?.Invoke();
-            }
-
-            protected override void ApplyLayout(KaraokeLayout layout)
-            {
-                base.ApplyLayout(layout);
-                Padding = new MarginPadding(0);
-            }
-
-            protected override void UpdateStartTimeStateTransforms()
-            {
-                // Do not fade-in / fade-out while changing armed state.
-            }
-
-            public override double LifetimeStart
-            {
-                get => double.MinValue;
-                set => base.LifetimeStart = double.MinValue;
-            }
-
-            public override double LifetimeEnd
-            {
-                get => double.MaxValue;
-                set => base.LifetimeEnd = double.MaxValue;
-            }
-
-            public float GetPercentageWidth(int startIndex, int endIndex, float percentage = 0)
-                => karaokeText.GetPercentageWidth(startIndex, endIndex, percentage);
         }
     }
 }
