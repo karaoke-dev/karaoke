@@ -11,7 +11,6 @@ using osu.Framework.Input.Events;
 using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 {
@@ -72,11 +71,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             });
         }
 
-        protected override bool OnHover(HoverEvent e)
+        protected override bool OnMouseMove(MouseMoveEvent e)
         {
+            if (lyricManager == null)
+                return false;
+
             // todo : get real index.
-            lyricManager?.UpdateSplitCursorPosition(Lyric, 2);
-            return base.OnHover(e);
+            var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
+            var index = drawableLyric.GetHoverIndex(position);
+            lyricManager?.UpdateSplitCursorPosition(Lyric, index);
+            return base.OnMouseMove(e);
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
@@ -156,7 +160,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             if (lyric != Lyric || index == null)
                 return;
 
-            
             var spacing = textIndexPosition(index.Value);
             splitCursorContainer.Add(new DrawableLyricSplitterCursor
             {
