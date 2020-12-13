@@ -41,10 +41,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                 {
                     ApplyFontAction = font =>
                     {
-                        // todo : need to delay until karaoke text has been calculated.
-                        if (Lyric.TimeTagsBindable.Value != null)
-                            ScheduleAfterChildren(UpdateTimeTags);
-
+                        // need to delay until karaoke text has been calculated.
+                        ScheduleAfterChildren(UpdateTimeTags);
                         splitCursorContainer.Height = font.LyricTextFontInfo.LyricTextFontInfo.CharSize * 1.7f;
                     }
                 },
@@ -89,8 +87,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
         protected override bool OnClick(ClickEvent e)
         {
-            // todo : get real index.
-            lyricManager?.SplitLyric(Lyric, 2);
+            var index = lyricManager?.BindableSplitPosition.Value;
+            if (index == null)
+                return false;
+
+            // get index then cut.
+            lyricManager?.SplitLyric(Lyric, index.Value);
             return base.OnClick(e);
         }
 

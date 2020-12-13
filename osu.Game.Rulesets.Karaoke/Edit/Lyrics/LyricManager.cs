@@ -1,12 +1,14 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
@@ -59,7 +61,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void SplitLyric(Lyric lyric, int index)
         {
+            // todo: need to got reason why cause null object issue.
+            return;
+
             // todo : implement split.
+            var (firstLyric, secondLyric) = LyricUtils.SplitLyric(lyric, index);
+
+            changeHandler?.BeginChange();
+
+            beatmap.Add(firstLyric);
+            beatmap.Add(secondLyric);
+            beatmap.Remove(lyric);
+
+            changeHandler?.EndChange();
         }
     }
 }
