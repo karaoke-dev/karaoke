@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
         /// <summary>
         /// Height of major bar line triangles.
         /// </summary>
-        private const float triangle_width = 4;
+        private const float triangle_width = 8;
 
         private readonly TimeTag timeTag;
 

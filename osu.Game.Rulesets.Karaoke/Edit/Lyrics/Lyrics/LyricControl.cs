@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Input.Events;
 using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -16,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 {
     public class LyricControl : Container
     {
-        private const int time_tag_spacing = 4;
+        private const int time_tag_spacing = 8;
 
         private readonly DrawableEditLyric drawableLyric;
         private readonly Container timeTagContainer;
@@ -49,21 +50,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
                     RelativeSizeAxes = Axes.Both,
-                    Scale = new Vector2(2)
                 },
                 timeTagCursorContainer = new Container
                 {
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
                     RelativeSizeAxes = Axes.Both,
-                    Scale = new Vector2(2)
                 },
                 splitCursorContainer = new Container
                 {
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
                     RelativeSizeAxes = Axes.Both,
-                    Scale = new Vector2(2)
                 }
             };
 
@@ -71,6 +69,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             {
                 ScheduleAfterChildren(UpdateTimeTags);
             });
+        }
+
+        protected override bool OnHover(HoverEvent e)
+        {
+            // todo : get real index.
+            lyricManager?.UpdateSplitCursorPosition(Lyric, 2);
+            return base.OnHover(e);
+        }
+
+        protected override void OnHoverLost(HoverLostEvent e)
+        {
+            lyricManager?.ClearSplitCursorPosition();
+            base.OnHoverLost(e);
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            // todo : get real index.
+            lyricManager?.SplitLyric(Lyric, 2);
+            return base.OnClick(e);
         }
 
         [BackgroundDependencyLoader(true)]
@@ -84,11 +102,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             lyricManager?.BindableSplitLyric.BindValueChanged(e =>
             {
                 UpdateSplitter();
-            }, true);
+            });
             lyricManager?.BindableSplitPosition.BindValueChanged(e =>
             {
                 UpdateSplitter();
-            }, true);
+            });
         }
 
         protected void UpdateTimeTagCursoe(TimeTag cursor)
@@ -135,7 +153,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
             
             var spacing = textIndexPosition(index.Value);
-            splitCursorContainer.Add(new DrawableLyricSplitter
+            splitCursorContainer.Add(new DrawableLyricSplitterCursor
             {
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,
@@ -144,14 +162,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         }
 
         private float textIndexPosition(int index)
-            => timeTagIndexPosition(new TimeTagIndex(index));
+            => timeTagIndexPosition(new TimeTagIndex(index)) - 10;
 
         private float timeTagIndexPosition(TimeTagIndex timeTagIndex)
         {
             var index = Math.Min(timeTagIndex.Index, Lyric.Text.Length - 1);
             var isStart = timeTagIndex.State == TimeTagIndex.IndexState.Start;
             var percentage = isStart ? 0 : 1;
-            return drawableLyric.GetPercentageWidth(index, index + 1, percentage);
+            return drawableLyric.GetPercentageWidth(index, index + 1, percentage) * 2;
         }
 
         private float extraSpacing(TimeTag timeTag)

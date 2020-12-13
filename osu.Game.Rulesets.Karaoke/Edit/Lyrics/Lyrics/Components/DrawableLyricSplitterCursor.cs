@@ -10,13 +10,10 @@ using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 {
-    public class DrawableLyricSplitter : CompositeDrawable
+    public class DrawableLyricSplitterCursor : CompositeDrawable
     {
-        public DrawableLyricSplitter()
+        public DrawableLyricSplitterCursor()
         {
-            Anchor = Anchor.CentreLeft;
-            Origin = Anchor.Centre;
-            RelativePositionAxes = Axes.X;
             RelativeSizeAxes = Axes.Y;
             AutoSizeAxes = Axes.X;
             InternalChildren = new Drawable[]

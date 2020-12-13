@@ -34,11 +34,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Cached]
         protected readonly TimeTagManager TranslateManager;
+        [Cached]
+        protected readonly LyricManager LyricManager;
 
         public LyricEditorScreen()
             : base(EditorScreenMode.Compose)
         {
             Content.Add(TranslateManager = new TimeTagManager());
+            Content.Add(LyricManager = new LyricManager());
         }
 
         public Task Import(Stream stream, string filename)

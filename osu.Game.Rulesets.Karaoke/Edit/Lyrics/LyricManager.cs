@@ -46,20 +46,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             changeHandler?.EndChange();
         }
 
-        public void UpdateSplitPosition(Lyric lyric, int index)
+        public void UpdateSplitCursorPosition(Lyric lyric, int index)
         {
             BindableSplitLyric.Value = lyric;
             BindableSplitPosition.Value = index;
         }
 
-        public void ClearSplitPosition()
+        public void ClearSplitCursorPosition()
         {
             BindableSplitLyric.Value = null;
         }
 
-        public void SplitLyric()
+        public void SplitLyric(Lyric lyric, int index)
         {
-
+            // todo : implement split.
         }
     }
 }
