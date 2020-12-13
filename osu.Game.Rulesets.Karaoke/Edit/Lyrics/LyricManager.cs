@@ -1,11 +1,14 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
@@ -17,6 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Resolved(CanBeNull = true)]
         private IEditorChangeHandler changeHandler { get; set; }
+
+        public Bindable<Lyric> BindableSplitLyric { get; } = new Bindable<Lyric>();
+        public Bindable<int> BindableSplitPosition { get; } = new Bindable<int>();
 
         /// <summary>
         /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.Language"/> and apply on them.
@@ -38,6 +44,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 var detectedLanguage = detector.DetectLanguage(lyric);
                 lyric.Language = detectedLanguage;
             }
+
+            changeHandler?.EndChange();
+        }
+
+        public void UpdateSplitCursorPosition(Lyric lyric, int index)
+        {
+            BindableSplitLyric.Value = lyric;
+            BindableSplitPosition.Value = index;
+        }
+
+        public void ClearSplitCursorPosition()
+        {
+            BindableSplitLyric.Value = null;
+        }
+
+        public void SplitLyric(Lyric lyric, int index)
+        {
+            // todo: need to got reason why cause null object issue.
+            return;
+
+            // todo : implement split.
+            var (firstLyric, secondLyric) = LyricUtils.SplitLyric(lyric, index);
+
+            changeHandler?.BeginChange();
+
+            beatmap.Add(firstLyric);
+            beatmap.Add(secondLyric);
+            beatmap.Remove(lyric);
 
             changeHandler?.EndChange();
         }

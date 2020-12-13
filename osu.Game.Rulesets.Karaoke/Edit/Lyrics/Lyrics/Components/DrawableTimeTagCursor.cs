@@ -5,27 +5,23 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 {
-    public class DrawableTimeTag : CompositeDrawable
+    public class DrawableTimeTagCursor : CompositeDrawable
     {
         /// <summary>
         /// Height of major bar line triangles.
         /// </summary>
-        private const float triangle_width = 3;
+        private const float triangle_width = 8;
 
         private readonly TimeTag timeTag;
 
-        [Resolved(canBeNull: true)]
-        private TimeTagManager timeTagManager { get; set; }
-
-        public DrawableTimeTag(TimeTag timeTag)
+        public DrawableTimeTagCursor(TimeTag timeTag)
         {
             this.timeTag = timeTag;
             AutoSizeAxes = Axes.Both;
@@ -40,15 +36,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags
             };
         }
 
-        protected override bool OnClick(ClickEvent e)
-        {
-            return timeTagManager?.MoveCursorToTargetPosition(timeTag) ?? false;
-        }
-
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            InternalChild.Colour = timeTag.Time.HasValue ? colours.Yellow : colours.Gray7;
+            InternalChild.Colour = timeTag.Time.HasValue ? colours.YellowDarker : colours.Gray3;
         }
     }
 }

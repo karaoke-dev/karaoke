@@ -8,11 +8,9 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -25,7 +23,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private Box background;
         private Box dragAlert;
-        private Box headerBackground;
 
         public DrawableLyricEditListItem(Lyric item)
             : base(item)
@@ -73,46 +70,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         RowDimensions = new[] { new Dimension(GridSizeMode.AutoSize, minSize: min_height, maxSize: max_height) },
                         Content = new[]
                         {
-                            new[]
+                            new Drawable[]
                             {
-                                new Container
+                                new InfoControl(Model)
                                 {
                                     // todo : cannot use relative size to both because it will cause size cannot roll-back if make lyric smaller.
                                     RelativeSizeAxes = Axes.X,
                                     Height = min_height,
-                                    Children = new Drawable[]
-                                    {
-                                        headerBackground = new Box
-                                        {
-                                            RelativeSizeAxes = Axes.X,
-                                            Height = max_height,
-                                            Alpha = 0.7f
-                                        },
-                                        new BadgeFillFlowContainer
-                                        {
-                                            Direction = FillDirection.Vertical,
-                                            RelativeSizeAxes = Axes.X,
-                                            AutoSizeAxes = Axes.Y,
-                                            Anchor = Anchor.TopRight,
-                                            Origin = Anchor.TopRight,
-                                            Spacing = new Vector2(5),
-                                            Children = new Drawable[]
-                                            {
-                                                new TimeInfoContainer(Model)
-                                                {
-                                                    RelativeSizeAxes = Axes.X,
-                                                    Height = 36,
-                                                },
-
-                                                // todo : in small display size use badge.
-                                                // in larger size should use real icon.
-                                                new LanguageInfoBadge(Model)
-                                                {
-                                                    Margin = new MarginPadding { Right = 5 }
-                                                }
-                                            }
-                                        },
-                                    }
                                 },
                                 new LyricControl(Model)
                                 {
@@ -131,7 +95,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             background.Colour = colours.Gray7;
             dragAlert.Colour = colours.YellowDarker;
-            headerBackground.Colour = colours.Gray2;
         }
 
         protected override bool OnDragStart(DragStartEvent e)
@@ -147,16 +110,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             dragAlert.Hide();
             base.OnDragEnd(e);
-        }
-
-        public class BadgeFillFlowContainer : FillFlowContainer
-        {
-            public override void Add(Drawable drawable)
-            {
-                drawable.Anchor = Anchor.TopRight;
-                drawable.Origin = Anchor.TopRight;
-                base.Add(drawable);
-            }
         }
     }
 }

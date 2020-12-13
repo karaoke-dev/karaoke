@@ -5,24 +5,25 @@ using osu.Framework.Allocation;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.Badges
 {
-    public class LayoutInfoBadge : Badge
+    public class LanguageInfoBadge : Badge
     {
-        public LayoutInfoBadge(Lyric lyric)
+        public LanguageInfoBadge(Lyric lyric)
             : base(lyric)
         {
-            lyric.LayoutIndexBindable.BindValueChanged(value =>
+            lyric.LanguageBindable.BindValueChanged(value =>
             {
-                var newLayoutIndex = value.NewValue;
-                BadgeText = $"Layout : {newLayoutIndex}";
+                var language = value.NewValue;
+
+                BadgeText = language == null ? "None" : language.DisplayName;
             }, true);
         }
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            BadgeColour = colours.Pink;
+            BadgeColour = colours.BlueDarker;
         }
     }
 }
