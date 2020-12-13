@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.Badges
 {
     public abstract class Badge : Container
     {

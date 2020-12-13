@@ -8,11 +8,11 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Timing;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.TimeTags;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 {
     public class LyricControl : Container
     {

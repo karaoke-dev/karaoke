@@ -6,12 +6,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Badges;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.Badges;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.TimeInfo;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
 {
     public class InfoControl : Container
     {
