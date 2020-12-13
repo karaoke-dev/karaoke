@@ -168,7 +168,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                             }
 
                             // Split note and apply them
-                            var splitDefaultNote = NoteUtils.SplitNote(defaultNote, startPercentage, percentage);
+                            var splitDefaultNote = NoteUtils.SliceNote(defaultNote, startPercentage, percentage);
                             startPercentage += percentage;
                             if (!string.IsNullOrEmpty(ruby))
                                 splitDefaultNote.Text = ruby;
