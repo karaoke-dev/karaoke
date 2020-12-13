@@ -59,12 +59,24 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             {
                 Text = lyric.Text?.Substring(0, splitIndex),
                 TimeTags = firstTimeTag?.ToArray(),
+                RubyTags = lyric.RubyTags?.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray(),
+                RomajiTags = lyric.RomajiTags?.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray(),
+                // todo : should implement time and duration
+                Singers = lyric.Singers?.Clone() as int[],
+                LayoutIndex = lyric.LayoutIndex,
+                Language = lyric.Language,
             };
 
             var secondLyric = new Lyric
             {
                 Text = lyric.Text?.Substring(splitIndex),
                 TimeTags = shiftingTimeTag(secondTimeTag?.ToArray(), -splitIndex),
+                RubyTags = shiftingRubyTag(lyric.RubyTags?.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), -splitIndex),
+                RomajiTags = shiftingRomajiTag(lyric.RomajiTags?.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), -splitIndex),
+                // todo : should implement time and duration
+                Singers = lyric.Singers?.Clone() as int[],
+                LayoutIndex = lyric.LayoutIndex,
+                Language = lyric.Language,
             };
 
             return new Tuple<Lyric, Lyric>(fisrtLyric, secondLyric);
@@ -124,8 +136,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 Text = t.Text
             }).ToArray();
 
-        private static RomajiTag[] shiftingRomajiTag(RomajiTag[] rubyTags, int shiftingIndex)
-            => rubyTags?.Select(t => new RomajiTag
+        private static RomajiTag[] shiftingRomajiTag(RomajiTag[] romajiTags, int shiftingIndex)
+            => romajiTags?.Select(t => new RomajiTag
             {
                 StartIndex = t.StartIndex + shiftingIndex,
                 EndIndex = t.EndIndex + shiftingIndex,

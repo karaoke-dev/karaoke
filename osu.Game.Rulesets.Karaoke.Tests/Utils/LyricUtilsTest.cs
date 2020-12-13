@@ -65,6 +65,129 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             }
         }
 
+        [TestCase("カラオケ", new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 2,
+            new[] { "[0,1]:か", "[1,2]:ら" }, new[] { "[0,1]:お", "[1,2]:け" })]
+        [TestCase("カラオケ", new[] { "[0,3]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
+        [TestCase("カラオケ", new[] { "[1,4]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
+        [TestCase("カラオケ", new[] { "[2,2]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
+        [TestCase("カラオケ", new[] { "[0,4]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
+        [TestCase("カラオケ", new string[] { }, 2, new string[] { }, new string[] { })]
+        [TestCase("カラオケ", null, 2, null,null)]
+        public void TestSeparateLyricRubyTag(string text, string[] rubyTags, int splitIndex, string[] firstRubyTags, string[] secondRubyTags)
+        {
+            var lyric = new Lyric
+            {
+                Text = text,
+                RubyTags = TestCaseTagHelper.ParseRubyTags(rubyTags)
+            };
+
+            var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+
+            Assert.AreEqual(separatedLyric.Item1.RubyTags, TestCaseTagHelper.ParseRubyTags(firstRubyTags));
+            Assert.AreEqual(separatedLyric.Item2.RubyTags, TestCaseTagHelper.ParseRubyTags(secondRubyTags));
+        }
+
+        [TestCase("カラオケ", new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, 2,
+            new[] { "[0,1]:ka", "[1,2]:ra" }, new[] { "[0,1]:o", "[1,2]:ke" })]
+        [TestCase("カラオケ", new[] { "[0,3]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
+        [TestCase("カラオケ", new[] { "[1,4]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
+        [TestCase("カラオケ", new[] { "[2,2]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
+        [TestCase("カラオケ", new[] { "[0,4]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
+        [TestCase("カラオケ", new string[] { }, 2, new string[] { }, new string[] { })]
+        [TestCase("カラオケ", null, 2, null, null)]
+        public void TestSeparateLyricRomajiTag(string text, string[] romajiTags, int splitIndex, string[] firstRomajiTags, string[] secondRomajiTags)
+        {
+            var lyric = new Lyric
+            {
+                Text = text,
+                RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajiTags)
+            };
+
+            var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+
+            Assert.AreEqual(separatedLyric.Item1.RomajiTags, TestCaseTagHelper.ParseRomajiTags(firstRomajiTags));
+            Assert.AreEqual(separatedLyric.Item2.RomajiTags, TestCaseTagHelper.ParseRomajiTags(secondRomajiTags));
+        }
+
+        [Ignore("Not really sure second lyric is based on lyric time or time-tag time.")]
+        public void TestSeparateLyricStartTime()
+        {
+            // todo : implement
+        }
+
+        [Ignore("Not really sure second lyric is based on lyric time or time-tag time.")]
+        public void TestSeparateLyricDuration()
+        {
+            // todo : implement
+        }
+
+        [TestCase(new[] { 1, 2 }, new[] { 1, 2 }, new[] { 1, 2 })]
+        [TestCase(new[] { 1 }, new[] { 1 }, new[] { 1 })]
+        [TestCase(new[] { -1 }, new[] { -1 }, new[] { -1 })] // copy singer index even it's invalid.
+        [TestCase(new int[] { }, new int[] { }, new int[] { })]
+        [TestCase(null, null, null)]
+        public void TestSeparateLyricSinger(int[] singerIndexes, int[] fisrtSingerIndexes, int[] secondSingerIndexes)
+        {
+            var splitIndex = 2;
+            var lyric = new Lyric
+            {
+                Text = "karaoke!",
+                Singers = singerIndexes
+            };
+
+            var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+
+            Assert.AreEqual(separatedLyric.Item1.Singers, fisrtSingerIndexes);
+            Assert.AreEqual(separatedLyric.Item2.Singers, secondSingerIndexes);
+
+            if (lyric.Singers == null)
+                return;
+
+            // also should check is not same object as origin lyric for safty purpose.
+            Assert.AreNotSame(separatedLyric.Item1.Singers, lyric.Singers);
+            Assert.AreNotSame(separatedLyric.Item2.Singers, lyric.Singers);
+        }
+
+        [TestCase(1, 1, 1)]
+        [TestCase(2, 2, 2)]
+        [TestCase(-5, -5, -5)] // copy layout index even it's wrong.
+        public void TestSeparateLyricLayoutIndex(int actualLayout, int firstLayout, int secondLayout)
+        {
+            var splitIndex = 2;
+            var lyric = new Lyric
+            {
+                Text = "karaoke!",
+                LayoutIndex = actualLayout
+            };
+
+            var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+
+            Assert.AreEqual(separatedLyric.Item1.LayoutIndex, firstLayout);
+            Assert.AreEqual(separatedLyric.Item2.LayoutIndex, secondLayout);
+        }
+
+        [TestCase(1, 1, 1)]
+        [TestCase(54, 54, 54)]
+        [TestCase(null, null, null)]
+        public void TestSeparateLyricLanguage(int? lcid, int? firstLcid, int? secondlcid)
+        {
+            var caltureInfo = lcid != null ? new CultureInfo(lcid.Value) : null;
+            var firstCaltureInfo = firstLcid != null ? new CultureInfo(firstLcid.Value) : null;
+            var secondCaltureInfo = secondlcid != null ? new CultureInfo(secondlcid.Value) : null;
+
+            var splitIndex = 2;
+            var lyric = new Lyric
+            {
+                Text = "karaoke!",
+                Language = caltureInfo
+            };
+
+            var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+
+            Assert.AreEqual(separatedLyric.Item1.Language, firstCaltureInfo);
+            Assert.AreEqual(separatedLyric.Item2.Language, secondCaltureInfo);
+        }
+
         #endregion
 
         #region combine
