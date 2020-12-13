@@ -5,12 +5,68 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
+using System;
 using System.Globalization;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 {
     public class LyricUtilsTest
     {
+        #region separate
+
+        [TestCase("karaoke", 4, "kara", "oke")]
+        [TestCase("カラオケ", 2, "カラ", "オケ")]
+        [TestCase("", 0, null, null)] // Test error
+        [TestCase(null, 0, null, null)]
+        [TestCase("karaoke", 100, null, null)]
+        [TestCase("", 100, null, null)]
+        [TestCase(null, 100, null, null)]
+        public void TestSeparateLyricText(string text, int splitIndex, string firstText, string secondText)
+        {
+            var lyric = new Lyric { Text = text };
+
+            try
+            {
+                var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+                Assert.AreEqual(separatedLyric.Item1.Text, firstText);
+                Assert.AreEqual(separatedLyric.Item2.Text, secondText);
+            }
+            catch
+            {
+                Assert.IsNull(firstText);
+                Assert.IsNull(secondText);
+            }
+        }
+
+        [TestCase("カラオケ", new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, 2,
+            new[] { "[0,start]:1000", "[1,start]:2000", "[1,end]:3000" },
+            new[] { "[0,start]:3000", "[1,start]:4000", "[1,end]:5000" })]
+        public void TestSeparateLyricTimeTag(string text, string[] timeTags, int splitIndex, string[] firstTimeTags, string[] secondTimeTags)
+        {
+            var lyric = new Lyric
+            {
+                Text = text,
+                TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            };
+
+            var separatedLyric = LyricUtils.SplitLyric(lyric, splitIndex);
+
+            testTimeTags(separatedLyric.Item1.TimeTags, TestCaseTagHelper.ParseTimeTags(firstTimeTags));
+            testTimeTags(separatedLyric.Item2.TimeTags, TestCaseTagHelper.ParseTimeTags(secondTimeTags));
+
+            void testTimeTags(TimeTag[] expect, TimeTag[] actually)
+            {
+                var length = Math.Max(expect?.Length ?? 0, actually?.Length ?? 0);
+                for (int i = 0; i < length; i++)
+                {
+                    Assert.AreEqual(expect[i].Index, actually[i].Index);
+                    Assert.AreEqual(expect[i].Time, actually[i].Time);
+                }
+            }
+        }
+
+        #endregion
+
         #region combine
 
         [TestCase("Kara", "oke", "Karaoke")]
@@ -162,7 +218,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(null, 1, null)]
         [TestCase(1, null, null)]
         [TestCase(null, null, null)]
-        public void TestLanguage(int? firstLcid, int? secondlcid, int? actualLcid)
+        public void TestCombineLayoutLanguage(int? firstLcid, int? secondlcid, int? actualLcid)
         {
             var caltureInfo1 = firstLcid != null ? new CultureInfo(firstLcid.Value) : null;
             var caltureInfo2 = secondlcid != null ? new CultureInfo(secondlcid.Value) : null;

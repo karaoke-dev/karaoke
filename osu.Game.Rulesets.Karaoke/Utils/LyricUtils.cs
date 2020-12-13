@@ -17,8 +17,57 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static Tuple<Lyric, Lyric> SplitLyric(Lyric lyric, int splitIndex)
         {
-            // todo : should create two lyric.
-            return new Tuple<Lyric, Lyric>(new Lyric(), new Lyric());
+            if (lyric == null)
+                throw new ArgumentNullException($"{nameof(lyric)} cannot be null.");
+
+            if(string.IsNullOrEmpty(lyric.Text))
+                throw new ArgumentNullException($"{nameof(lyric.Text)} cannot be null.");
+
+            if (splitIndex < 0 || splitIndex > lyric.Text.Length)
+                throw new ArgumentOutOfRangeException(nameof(splitIndex));
+
+            if (splitIndex == 0 || splitIndex == lyric.Text.Length)
+                throw new InvalidOperationException($"{nameof(splitIndex)} cannot cut at first or last index.");
+
+            var firstTimeTag = lyric.TimeTags?.Where(x => x.Index.Index < splitIndex).ToList();
+            var secondTimeTag = lyric.TimeTags?.Where(x => x.Index.Index >= splitIndex).ToList();
+
+            // add delta time-tag if does not have end time-tag.
+            if (firstTimeTag?.Count > 0 && secondTimeTag?.Count > 0)
+            {
+                var fisrtTag = firstTimeTag.LastOrDefault();
+                var secondTag = secondTimeTag.FirstOrDefault();
+
+                // add end tag at end of first lyric if does not have tag in there.
+                if (!firstTimeTag.Any(x => x.Index.Index == splitIndex - 1 && x.Index.State == TimeTagIndex.IndexState.End))
+                {
+                    var endTagIndex = new TimeTagIndex(splitIndex - 1, TimeTagIndex.IndexState.End);
+                    var endTag = TimeTagsUtils.GenerateCenterTimeTag(fisrtTag, secondTag, endTagIndex);
+                    firstTimeTag.Add(endTag);
+                }
+
+                // add start tag at start of second lyric if does not have tag in there.
+                if (!secondTimeTag.Any(x => x.Index.Index == splitIndex && x.Index.State == TimeTagIndex.IndexState.Start))
+                {
+                    var endTagIndex = new TimeTagIndex(splitIndex, TimeTagIndex.IndexState.Start);
+                    var startTag = TimeTagsUtils.GenerateCenterTimeTag(fisrtTag, secondTag, endTagIndex);
+                    secondTimeTag.Add(startTag);
+                }
+            }
+
+            var fisrtLyric = new Lyric
+            {
+                Text = lyric.Text?.Substring(0, splitIndex),
+                TimeTags = firstTimeTag?.ToArray(),
+            };
+
+            var secondLyric = new Lyric
+            {
+                Text = lyric.Text?.Substring(splitIndex),
+                TimeTags = shiftingTimeTag(secondTimeTag?.ToArray(), -splitIndex),
+            };
+
+            return new Tuple<Lyric, Lyric>(fisrtLyric, secondLyric);
         }
 
         public static Lyric CombineLyric(Lyric fisrtLyric, Lyric secondLyric)
