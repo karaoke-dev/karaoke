@@ -88,36 +88,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public Lyric ParentLyric { get; set; }
 
-        public Note CopyByPercentage(double startPercentage = 0, double durationPercentage = 0.5)
-        {
-            if (startPercentage < 0 || startPercentage + durationPercentage > 1)
-                throw new ArgumentOutOfRangeException($"{nameof(Note)} cannot assign split range of start from {startPercentage} and duration {durationPercentage}");
-
-            var startTime = StartTime + Duration * startPercentage;
-            var duration = Duration * durationPercentage;
-
-            return CopyByTime(startTime, duration);
-        }
-
-        public Note CopyByTime(double startTime, double duration)
-        {
-            if (startTime < StartTime || startTime + duration > EndTime)
-                throw new ArgumentOutOfRangeException($"{nameof(Note)} cannot assign split range of start from {startTime} and duration {duration}");
-
-            return new Note
-            {
-                StartTime = startTime,
-                Duration = duration,
-                StartIndex = StartIndex,
-                EndIndex = EndIndex,
-                Text = Text,
-                Singers = Singers,
-                Display = Display,
-                Tone = Tone,
-                ParentLyric = ParentLyric
-            };
-        }
-
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();
     }
 }
