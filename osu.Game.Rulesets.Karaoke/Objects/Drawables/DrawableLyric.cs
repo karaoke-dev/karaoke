@@ -287,7 +287,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                     return;
 
                 displayRuby = value;
-                Schedule(() => ApplyRuby());
+                Schedule(ApplyRuby);
             }
         }
 
@@ -302,7 +302,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                     return;
 
                 displayRomaji = value;
-                Schedule(() => ApplyRomaji());
+                Schedule(ApplyRomaji);
             }
         }
 
@@ -317,7 +317,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                     return;
 
                 displayTranslateLanguage = value;
-                Schedule(() => ApplyTranslate());
+                Schedule(ApplyTranslate);
             }
         }
     }

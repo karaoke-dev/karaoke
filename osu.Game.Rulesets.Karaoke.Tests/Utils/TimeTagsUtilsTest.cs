@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
@@ -15,6 +16,37 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
     [TestFixture]
     public class TimeTagsUtilsTest
     {
+        [TestCase("[1,start]:1000", "[3,start]:3000", 2, "[2,start]:2000")]
+        [TestCase("[1,start]:1000", "[3,end]:4000", 2, "[2,start]:2000")]
+        [TestCase("[1,end]:2000", "[3,start]:3000", 2, "[2,start]:2000")]
+        [TestCase("[1,start]:", "[3,start]:3000", 2, "[2,start]:")]
+        [TestCase("[1,start]:1000", "[3,start]:", 2, "[2,start]:")]
+        [TestCase("[1,start]:", "[3,start]:", 2, "[2,start]:")]
+        [TestCase("[0,start]:", "[0,start]:", 0, "[0,start]:")] // edge case, but it's valid.
+        [TestCase("[1,start]:", "[3,start]:", 10, null)] // new index should be in the range.
+        [TestCase("[10,start]:", "[3,start]:", 10, null)] // start index should be smaller then end index.
+        [TestCase(null, "[3,start]:", 10, null)] // should not be null.
+        [TestCase("[1,start]:", null, 2, null)] // should not be null.
+        [TestCase(null, null, 2, null)] // should not be null.
+        public void GenerateTimeTag(string startTag, string endTag, int index, string result)
+        {
+            try
+            {
+                var generatedTimeTag = TimeTagsUtils.GenerateCenterTimeTag(
+                    TestCaseTagHelper.ParseTimeTag(startTag),
+                    TestCaseTagHelper.ParseTimeTag(endTag),
+                    index);
+
+                var actualTimeTag = TestCaseTagHelper.ParseTimeTag(result);
+                Assert.AreEqual(generatedTimeTag.Index, actualTimeTag.Index);
+                Assert.AreEqual(generatedTimeTag.Time, actualTimeTag.Time);
+            }
+            catch
+            {
+                Assert.IsNull(result);
+            }
+        }
+
         [TestCase(nameof(ValidTimeTagWithSorted), new double[] { 1100, 2000, 2100, 3000 })]
         [TestCase(nameof(ValidTimeTagWithUnsorted), new double[] { 1100, 2000, 2100, 3000 })]
         [TestCase(nameof(ValidTimeTagWithUnsortedAndDuplicatedWithNoValue), new double[] { 1100, 2000 })]

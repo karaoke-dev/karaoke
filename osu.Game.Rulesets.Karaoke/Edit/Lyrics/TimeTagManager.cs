@@ -1,16 +1,18 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
+using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
-using System;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -23,10 +25,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
-        [Resolved(CanBeNull = true)]
+        [Resolved(canBeNull: true)]
         private IEditorChangeHandler changeHandler { get; set; }
 
-        public Bindable<TimeTag> BindableCursorPosition { get; set; } = new Bindable<TimeTag>();
+        [Resolved(canBeNull: true)]
+        private IFrameBasedClock framedClock { get; set; }
+
+        public Bindable<TimeTag> BindableCursorPosition { get; } = new Bindable<TimeTag>();
+
+        #region Edit Time Tag
 
         /// <summary>
         /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.TimeTags"/> and apply on them.
@@ -50,28 +57,123 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             changeHandler?.EndChange();
         }
 
+        public bool SetTimeTagTime(TimeTag timeTag)
+        {
+            if (framedClock == null)
+                return false;
+
+            var currentLyric = timeTagInLyric(timeTag);
+            if (currentLyric == null)
+                return false;
+
+            changeHandler?.BeginChange();
+
+            timeTag.Time = framedClock.CurrentTime;
+            refreshTimeTag(currentLyric);
+
+            changeHandler?.EndChange();
+
+            currentLyric.TimeTagsBindable.TriggerChange();
+            return true;
+        }
+
+        public bool ClearTimeTagTime(TimeTag timeTag)
+        {
+            if (framedClock == null)
+                return false;
+
+            var currentLyric = timeTagInLyric(timeTag);
+            if (currentLyric == null)
+                return false;
+
+            changeHandler?.BeginChange();
+
+            timeTag.Time = null;
+            refreshTimeTag(currentLyric);
+
+            changeHandler?.EndChange();
+
+            return true;
+        }
+
+        public TimeTag AddTimeTag(TimeTag timeTag)
+        {
+            var currentLyric = timeTagInLyric(timeTag);
+            if (currentLyric == null)
+                return null;
+
+            var timeTags = currentLyric.TimeTags.ToList();
+            var targetIndex = timeTags.IndexOf(timeTag);
+            if (targetIndex < 0)
+                return null;
+
+            var newTimeTag = new TimeTag(timeTag.Index);
+            timeTags.Insert(targetIndex, newTimeTag);
+
+            changeHandler?.BeginChange();
+
+            currentLyric.TimeTags = timeTags.ToArray();
+            sortingTimeTag(currentLyric);
+
+            changeHandler?.EndChange();
+
+            return newTimeTag;
+        }
+
+        public bool RemoveTimeTag(TimeTag timeTag)
+        {
+            var currentLyric = timeTagInLyric(timeTag);
+            if (currentLyric == null)
+                return false;
+
+            changeHandler?.BeginChange();
+
+            // delete time tag from list
+            currentLyric.TimeTags = currentLyric.TimeTags.Where(x => x != timeTag).ToArray();
+
+            changeHandler?.EndChange();
+
+            return true;
+        }
+
+        private void refreshTimeTag(Lyric lyric)
+            => lyric.TimeTags = lyric.TimeTags.ToArray();
+
+        private void sortingTimeTag(Lyric lyric)
+            => lyric.TimeTags = TimeTagsUtils.Sort(lyric.TimeTags);
+
+        #endregion
+
+        #region Time Tag cursor
+
         public bool MoveCursor(CursorAction action)
         {
             var currentTimeTag = BindableCursorPosition.Value;
 
             TimeTag nextTimeTag = null;
+
             switch (action)
             {
                 case CursorAction.MoveUp:
                     nextTimeTag = getPreviousLyricTimeTag(currentTimeTag);
                     break;
+
                 case CursorAction.MoveDown:
                     nextTimeTag = getNextLyricTimeTag(currentTimeTag);
                     break;
+
                 case CursorAction.MoveLeft:
                     nextTimeTag = getPreviousTimeTag(currentTimeTag);
                     break;
+
                 case CursorAction.MoveRight:
                     nextTimeTag = getNextTimeTag(currentTimeTag);
                     break;
+
                 case CursorAction.First:
                     nextTimeTag = getFirstTimeTag(currentTimeTag);
                     break;
+
                 case CursorAction.Last:
                     nextTimeTag = getLastTimeTag(currentTimeTag);
                     break;
@@ -108,7 +210,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return lyrics.GetPrevious(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index);
         }
 
-        public TimeTag getNextLyricTimeTag(TimeTag timeTag)
+        private TimeTag getNextLyricTimeTag(TimeTag timeTag)
         {
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
             var currentLyric = timeTagInLyric(timeTag);
@@ -121,7 +223,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return timeTags.GetPrevious(timeTag);
         }
 
-        public TimeTag getNextTimeTag(TimeTag timeTag)
+        private TimeTag getNextTimeTag(TimeTag timeTag)
         {
             var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
             return timeTags.GetNext(timeTag);
@@ -133,7 +235,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return timeTags.FirstOrDefault();
         }
 
-        public TimeTag getLastTimeTag(TimeTag timeTag)
+        private TimeTag getLastTimeTag(TimeTag timeTag)
         {
             var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
             return timeTags.LastOrDefault();
@@ -185,6 +287,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             }
         }
+
+        #endregion
     }
 
     public enum CursorAction

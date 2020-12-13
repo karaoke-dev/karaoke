@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
@@ -35,10 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
 
                 // add new time tags created from ruby
                 var rubyTags = generateTimeTagByText(ruby.Text);
-                var shiftingTimeTags = rubyTags.Select((x, v) =>
-                {
-                    return new TimeTag(new TimeTagIndex(ruby.StartIndex, x.Index.State), x.Time);
-                });
+                var shiftingTimeTags = rubyTags.Select((x, v) => new TimeTag(new TimeTagIndex(ruby.StartIndex, x.Index.State), x.Time));
                 timeTags.AddRange(shiftingTimeTags);
             }
         }
@@ -46,12 +42,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
         private List<TimeTag> generateTimeTagByText(string text)
         {
             var timeTags = new List<TimeTag>();
-            if (text == null || text == "")
+            if (string.IsNullOrEmpty(text))
                 return timeTags;
 
             for (var i = 1; i < text.Length; i++)
             {
-                var timeTag = new TimeTag(new TimeTagIndex(i, TimeTagIndex.IndexState.Start), null);
+                var timeTag = new TimeTag(new TimeTagIndex(i));
 
                 var c = text[i];
                 var pc = text[i - 1];

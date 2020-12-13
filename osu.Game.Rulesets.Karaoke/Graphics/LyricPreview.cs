@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
 {
     public class LyricPreview : CompositeDrawable
     {
-        public Bindable<Lyric> SelectedLyric { get; private set; } = new Bindable<Lyric>();
+        public Bindable<Lyric> SelectedLyric { get; } = new Bindable<Lyric>();
 
         private readonly FillFlowContainer<ClickableLyric> lyricTable;
 

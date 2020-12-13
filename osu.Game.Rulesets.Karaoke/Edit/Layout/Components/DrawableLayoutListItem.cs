@@ -14,9 +14,9 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Skinning.Components;
 using osuTK;
 using osuTK.Graphics;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
 {

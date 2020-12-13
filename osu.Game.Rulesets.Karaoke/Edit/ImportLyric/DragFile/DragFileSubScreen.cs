@@ -46,6 +46,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
             return Task.CompletedTask;
         }
 
+        public Task Import(Stream stream, string filename)
+        {
+            // todo : wail until really implement needed.
+            throw new NotImplementedException("Report to https://github.com/karaoke-dev/karaoke and i will implement it.");
+        }
+
         public void ImportLyricFile(FileInfo fileInfo)
         {
             Schedule(() =>
