@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.UserInterface;
@@ -8,6 +9,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osuTK;
 
@@ -32,10 +34,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
         private void splitNote()
         {
             // TODO : percentage should be enter by dialog
-            var splittedNote = HitObject.CopyByPercentage(0.5);
-            EditorBeatmap?.Add(splittedNote);
-            // Change object's duration
-            HitObject.Duration = HitObject.Duration - splittedNote.Duration;
+            var (firstNote, secondNote) = NoteUtils.SplitNote(HitObject, 0.5);
+            EditorBeatmap?.Add(firstNote);
+            EditorBeatmap?.Add(secondNote);
+            EditorBeatmap?.Remove(HitObject);
         }
 
         public void ChangeDisplay(bool display)
