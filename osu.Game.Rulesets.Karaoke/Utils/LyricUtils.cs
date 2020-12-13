@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class LyricUtils
     {
-        public static Tuple<Lyric, Lyric> SplitLyric(Lyric lyric)
+        #region progessing
+
+        public static Tuple<Lyric, Lyric> SplitLyric(Lyric lyric, int splitIndex)
         {
             // todo : should create two lyric.
             return new Tuple<Lyric, Lyric>(new Lyric(), new Lyric());
@@ -19,12 +23,66 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static Lyric CombineLyric(Lyric lyric1, Lyric lyric2)
         {
-            // todo : should create lyric and copy those property.
+            var shiftingIndex = lyric1.Text?.Length ?? 0;
+
+            var timeTags = new List<TimeTag>();
+            timeTags.AddRangeWithNullCheck(lyric1.TimeTags);
+            timeTags.AddRangeWithNullCheck(shiftingTimeTag(lyric2.TimeTags, shiftingIndex));
+
+            var rubyTags = new List<RubyTag>();
+            rubyTags.AddRangeWithNullCheck(lyric1.RubyTags);
+            rubyTags.AddRangeWithNullCheck(shiftingRubyTag(lyric2.RubyTags, shiftingIndex));
+
+            var romajiTags = new List<RomajiTag>();
+            romajiTags.AddRangeWithNullCheck(lyric1.RomajiTags);
+            romajiTags.AddRangeWithNullCheck(shiftingRomajiTag(lyric2.RomajiTags, shiftingIndex));
+
+            var startTime = Math.Min(lyric1.StartTime, lyric2.StartTime);
+            var endTime = Math.Max(lyric1.EndTime, lyric2.EndTime);
+
+            var singers = new List<int>();
+            singers.AddRangeWithNullCheck(lyric1.Singers);
+            singers.AddRangeWithNullCheck(lyric2.Singers);
+
+            var sameLanguage = lyric1.Language?.Equals(lyric2.Language) ?? false;
+            var language = sameLanguage ? lyric1.Language : null;
+
             return new Lyric
             {
                 Text = lyric1.Text + lyric2.Text,
+                TimeTags = timeTags.ToArray(),
+                RubyTags = rubyTags.ToArray(),
+                RomajiTags = romajiTags.ToArray(),
+                StartTime = startTime,
+                Duration = endTime - startTime,
+                Singers = singers.Distinct().ToArray(),
+                LayoutIndex = lyric1.LayoutIndex,
+                Language = language,
             };
         }
+
+        private static TimeTag[] shiftingTimeTag(TimeTag[] timeTags, int shiftingIndex)
+            => timeTags?.Select(t => new TimeTag(new TimeTagIndex(t.Index.Index + shiftingIndex, t.Index.State), t.Time)).ToArray();
+
+        private static RubyTag[] shiftingRubyTag(RubyTag[] rubyTags, int shiftingIndex)
+            => rubyTags?.Select(t => new RubyTag
+            {
+                StartIndex = t.StartIndex + shiftingIndex,
+                EndIndex = t.EndIndex + shiftingIndex,
+                Text = t.Text
+            }).ToArray();
+
+        private static RomajiTag[] shiftingRomajiTag(RomajiTag[] rubyTags, int shiftingIndex)
+            => rubyTags?.Select(t => new RomajiTag
+            {
+                StartIndex = t.StartIndex + shiftingIndex,
+                EndIndex = t.EndIndex + shiftingIndex,
+                Text = t.Text
+            }).ToArray();
+
+        #endregion
+
+        #region create default
 
         public static IEnumerable<Note> CreateDefaultNotes(Lyric lyric)
         {
@@ -60,5 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 }
             }
         }
+
+        #endregion
     }
 }

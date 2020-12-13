@@ -3,12 +3,21 @@
 
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Helper
 {
     public static class TestCaseTagHelper
     {
+        /// <summary>
+        /// Process test case ruby string format into <see cref="RubyTag"/>
+        /// </summary>
+        /// <example>
+        /// [0,3]:ruby
+        /// </example>
+        /// <param name="str"></param>
+        /// <returns><see cref="RubyTag"/></returns>
         public static RubyTag ParseRubyTag(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -31,6 +40,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             };
         }
 
+        /// <summary>
+        /// Process test case romaji string format into <see cref="RomajiTag"/>
+        /// </summary>
+        /// <example>
+        /// [0,3]:romaji
+        /// </example>
+        /// <param name="str"></param>
+        /// <returns><see cref="RomajiTag"/></returns>
         public static RomajiTag ParseRomajiTag(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -53,6 +70,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             };
         }
 
+        /// <summary>
+        /// Process test case time tag string format into <see cref="TimeTag"/>
+        /// </summary>
+        /// <example>
+        /// [0,start]:1000
+        /// </example>
+        /// <param name="str"></param>
+        /// <returns><see cref="TimeTag"/></returns>
         public static TimeTag ParseTimeTag(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -70,5 +95,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
 
             return new TimeTag(new TimeTagIndex(index, state), time);
         }
+
+        public static RubyTag[] ParseRubyTags(string[] strs)
+            => strs?.Select(s => ParseRubyTag(s)).ToArray();
+
+        public static RomajiTag[] ParseRomajiTags(string[] strs)
+           => strs?.Select(s => ParseRomajiTag(s)).ToArray();
+
+        public static TimeTag[] ParseTimeTags(string[] strs)
+           => strs?.Select(s => ParseTimeTag(s)).ToArray();
     }
 }
