@@ -68,11 +68,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         }
 
         [Test]
-        public void TestSeparateLyricOtherPtoperty()
+        public void TestSeparateNoteOtherProperty()
         {
+            const double percentage = 0.3;
             var lyric = new Lyric();
 
-            const double percentage = 0.3;
             var note = new Note
             {
                 StartTime = 1000,
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 StartIndex = 1,
                 EndIndex = 2,
                 Text = "ka",
-                Singers = new int[] { 0 },
+                Singers = new[] { 0 },
                 Display = false,
                 Tone = new Tone(-1, true),
                 ParentLyric = lyric
@@ -111,6 +111,39 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 Assert.AreEqual(expect.Tone, actual.Tone);
                 Assert.AreEqual(expect.ParentLyric, actual.ParentLyric);
             }
+        }
+
+        [TestCase(new double[] { 1000, 1000 }, new double[] { 2000, 4000 }, new double[] { 1000, 5000 })]
+        [TestCase(new double[] { 1000, 2500 }, new double[] { 3500, 2500 }, new double[] { 1000, 5000 })]
+        [TestCase(new double[] { 1000, 0 }, new double[] { 1000, 0 }, new double[] { 1000, 0 })] // it's ok to combine if duration is 0.
+        public void TestCombineNoteTime(double[] firstTime, double[] secondTime, double[] actualTime)
+        {
+            const int start_index = 3;
+            const int end_index = 5;
+
+            var lyric = new Lyric();
+
+            var firstNote = new Note
+            {
+                StartIndex = start_index,
+                EndIndex = end_index,
+                ParentLyric = lyric,
+                StartTime = firstTime[0],
+                Duration = firstTime[1],
+            };
+
+            var secondNote = new Note
+            {
+                StartIndex = start_index,
+                EndIndex = end_index,
+                ParentLyric = lyric,
+                StartTime = secondTime[0],
+                Duration = secondTime[1],
+            };
+
+            var combineNote = NoteUtils.CombineNote(firstNote, secondNote);
+            Assert.AreEqual(combineNote.StartTime, actualTime[0]);
+            Assert.AreEqual(combineNote.Duration, actualTime[1]);
         }
     }
 }

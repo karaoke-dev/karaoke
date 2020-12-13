@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class NoteUtils
     {
-        public static Note SliceNote(Note note, double startPercentage,  double durationPercentage)
+        public static Note SliceNote(Note note, double startPercentage, double durationPercentage)
         {
             if (startPercentage < 0 || startPercentage + durationPercentage > 1)
                 throw new ArgumentOutOfRangeException($"{nameof(Note)} cannot assign split range of start from {startPercentage} and duration {durationPercentage}");
@@ -18,6 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             return copyByTime(note, startTime, duration);
         }
+
         public static Tuple<Note, Note> SplitNote(Note note, double percentage = 0.5)
         {
             if (percentage < 0 || percentage > 1)
@@ -38,25 +39,37 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return new Tuple<Note, Note>(firstNote, secondNote);
         }
 
-        private static Note copyByTime(Note oritinNote, double startTime, double duration)
+        public static Note CombineNote(Note firstLyric, Note secondLyric)
+        {
+            if (firstLyric.ParentLyric != secondLyric.ParentLyric)
+                throw new InvalidOperationException($"{nameof(firstLyric.ParentLyric)} and {nameof(secondLyric.ParentLyric)} should be same.");
+
+            if (firstLyric.StartIndex != secondLyric.StartIndex)
+                throw new InvalidOperationException($"{nameof(firstLyric.StartIndex)} and {nameof(secondLyric.StartIndex)} should be same.");
+
+            if (firstLyric.EndIndex != secondLyric.EndIndex)
+                throw new InvalidOperationException($"{nameof(firstLyric.EndIndex)} and {nameof(secondLyric.EndIndex)} should be same.");
+
+            var startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
+            var endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
+
+            return copyByTime(firstLyric, startTime, endTime - startTime);
+        }
+
+        private static Note copyByTime(Note originNote, double startTime, double duration)
         {
             return new Note
             {
                 StartTime = startTime,
                 Duration = duration,
-                StartIndex = oritinNote.StartIndex,
-                EndIndex = oritinNote.EndIndex,
-                Text = oritinNote.Text,
-                Singers = oritinNote.Singers?.Clone() as int[],
-                Display = oritinNote.Display,
-                Tone = oritinNote.Tone,
-                ParentLyric = oritinNote.ParentLyric
+                StartIndex = originNote.StartIndex,
+                EndIndex = originNote.EndIndex,
+                Text = originNote.Text,
+                Singers = originNote.Singers?.Clone() as int[],
+                Display = originNote.Display,
+                Tone = originNote.Tone,
+                ParentLyric = originNote.ParentLyric
             };
-        }
-
-        public static Note CombineNote(Note firstLyric, Note secondLyric)
-        {
-            return null;
         }
     }
 }
