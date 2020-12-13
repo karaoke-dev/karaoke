@@ -13,6 +13,46 @@ namespace osu.Game.Rulesets.Karaoke.Utils
     public static class TimeTagsUtils
     {
         /// <summary>
+        /// Generate center time-tag with time.
+        /// </summary>
+        /// <param name="startTimeTag"></param>
+        /// <param name="endTimeTag"></param>
+        /// <returns></returns>
+        public static TimeTag GenerateCenterTimeTag(TimeTag startTimeTag, TimeTag endTimeTag, TimeTagIndex index)
+        {
+            if (startTimeTag == null || endTimeTag == null)
+                throw new ArgumentNullException($"{nameof(startTimeTag)} or {nameof(endTimeTag)} cannot be null.");
+
+            if (startTimeTag.Index > endTimeTag.Index)
+                throw new InvalidOperationException($"{nameof(endTimeTag.Index)} caanot larger than {startTimeTag.Index}");
+
+            if(index < startTimeTag.Index || index > endTimeTag.Index)
+                throw new InvalidOperationException($"{nameof(endTimeTag.Index)} caanot larger than {startTimeTag.Index}");
+
+            if(startTimeTag.Time == null || endTimeTag.Time == null)
+                return new TimeTag(index, null);
+
+
+            var diffFromStartToEnd = getTimeCalcultaionIndex(endTimeTag.Index) - getTimeCalcultaionIndex(startTimeTag.Index);
+            var diffFromStartToNow = getTimeCalcultaionIndex(index) - getTimeCalcultaionIndex(startTimeTag.Index);
+            if(diffFromStartToEnd == 0 || diffFromStartToNow == 0)
+                return new TimeTag(index, startTimeTag.Time);
+
+            var time = startTimeTag.Time +
+                (endTimeTag.Time - startTimeTag.Time)
+                / diffFromStartToEnd
+                * diffFromStartToNow;
+
+            return new TimeTag(index, time);
+
+            int getTimeCalcultaionIndex(TimeTagIndex calculationIndex)
+                => calculationIndex.Index + (calculationIndex.State == TimeTagIndex.IndexState.End ? 1 : 0);
+        }
+
+        public static TimeTag GenerateCenterTimeTag(TimeTag startTimeTag, TimeTag endTimeTag, int index)
+            => GenerateCenterTimeTag(startTimeTag, endTimeTag, new TimeTagIndex(index));
+
+        /// <summary>
         /// Sort list of time tags by index and time.
         /// </summary>
         /// <param name="timeTags">Time tags</param>
