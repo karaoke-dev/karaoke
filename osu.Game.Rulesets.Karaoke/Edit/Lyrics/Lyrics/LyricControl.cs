@@ -106,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             drawableLyric.Clock = framedClock;
             timeTagManager?.BindableCursorPosition.BindValueChanged(e =>
             {
-                UpdateTimeTagCursoe(e.NewValue);
+                UpdateTimeTagCursor(e.NewValue);
             }, true);
             lyricManager?.BindableSplitLyric.BindValueChanged(e =>
             {
@@ -118,19 +118,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             });
         }
 
-        protected void UpdateTimeTagCursoe(TimeTag cursor)
+        protected void UpdateTimeTagCursor(TimeTag cursor)
         {
             timeTagCursorContainer.Clear();
-            if (drawableLyric.TimeTagsBindable.Value.Contains(cursor))
+
+            if (!drawableLyric.TimeTagsBindable.Value.Contains(cursor))
+                return;
+
+            var spacing = timeTagIndexPosition(cursor.Index) + extraSpacing(cursor);
+            timeTagCursorContainer.Add(new DrawableTimeTagCursor(cursor)
             {
-                var spacing = timeTagIndexPosition(cursor.Index) + extraSpacing(cursor);
-                timeTagCursorContainer.Add(new DrawableTimeTagCursor(cursor)
-                {
-                    Anchor = Anchor.BottomLeft,
-                    Origin = Anchor.BottomLeft,
-                    X = spacing
-                });
-            }
+                Anchor = Anchor.BottomLeft,
+                Origin = Anchor.BottomLeft,
+                X = spacing
+            });
         }
 
         protected void UpdateTimeTags()

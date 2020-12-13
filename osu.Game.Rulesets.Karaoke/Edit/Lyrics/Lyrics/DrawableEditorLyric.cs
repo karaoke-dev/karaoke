@@ -63,6 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                 if (GetPercentageWidth(i, i + 1, 0.5f) > position)
                     return i;
             }
+
             return text.Length;
         }
     }

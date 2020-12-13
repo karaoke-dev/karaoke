@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
     {
         private const int max_height = 120;
 
-        private Box headerBackground;
+        private readonly Box headerBackground;
 
         public Lyric Lyric { get; }
 

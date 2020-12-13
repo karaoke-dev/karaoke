@@ -23,7 +23,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private Box background;
         private Box dragAlert;
-        
 
         public DrawableLyricEditListItem(Lyric item)
             : base(item)

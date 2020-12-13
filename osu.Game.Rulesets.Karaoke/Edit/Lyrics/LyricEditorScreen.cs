@@ -34,6 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Cached]
         protected readonly TimeTagManager TranslateManager;
+
         [Cached]
         protected readonly LyricManager LyricManager;
 
