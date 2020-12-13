@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 {
     public class DrawableEditLyric : DrawableLyric
     {
-        public Action ApplyFontAction;
+        public Action<KaraokeFont> ApplyFontAction;
 
         public DrawableEditLyric(Lyric lyric)
             : base(lyric)
@@ -22,12 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
         protected override void ApplyFont(KaraokeFont font)
         {
+            ApplyFontAction?.Invoke(font);
             base.ApplyFont(font);
-
-            if (TimeTagsBindable.Value == null)
-                return;
-
-            ApplyFontAction?.Invoke();
         }
 
         protected override void ApplyLayout(KaraokeLayout layout)

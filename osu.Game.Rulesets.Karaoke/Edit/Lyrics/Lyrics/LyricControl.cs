@@ -39,10 +39,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             {
                 drawableLyric = new DrawableEditLyric(lyric)
                 {
-                    ApplyFontAction = () =>
+                    ApplyFontAction = font =>
                     {
                         // todo : need to delay until karaoke text has been calculated.
-                        ScheduleAfterChildren(UpdateTimeTags);
+                        if (Lyric.TimeTagsBindable.Value != null)
+                            ScheduleAfterChildren(UpdateTimeTags);
+
+                        splitCursorContainer.Height = font.LyricTextFontInfo.LyricTextFontInfo.CharSize * 1.7f;
                     }
                 },
                 timeTagContainer = new Container
@@ -61,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                 {
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
-                    RelativeSizeAxes = Axes.Both,
+                    RelativeSizeAxes = Axes.X,
                 }
             };
 
