@@ -21,6 +21,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         private readonly DrawableEditLyric drawableLyric;
         private readonly Container timeTagContainer;
         private readonly Container timeTagCursorContainer;
+        private readonly Container splitCursorContainer;
+
+        [Resolved(canBeNull: true)]
+        private LyricManager lyricManager { get; set; }
 
         public Lyric Lyric { get; }
 
@@ -53,6 +57,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                     Origin = Anchor.BottomLeft,
                     RelativeSizeAxes = Axes.Both,
                     Scale = new Vector2(2)
+                },
+                splitCursorContainer = new Container
+                {
+                    Anchor = Anchor.BottomLeft,
+                    Origin = Anchor.BottomLeft,
+                    RelativeSizeAxes = Axes.Both,
+                    Scale = new Vector2(2)
                 }
             };
 
@@ -70,14 +81,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             {
                 UpdateTimeTagCursoe(e.NewValue);
             }, true);
+            lyricManager?.BindableSplitLyric.BindValueChanged(e =>
+            {
+                UpdateSplitter();
+            }, true);
+            lyricManager?.BindableSplitPosition.BindValueChanged(e =>
+            {
+                UpdateSplitter();
+            }, true);
         }
 
-        public void UpdateTimeTagCursoe(TimeTag cursor)
+        protected void UpdateTimeTagCursoe(TimeTag cursor)
         {
             timeTagCursorContainer.Clear();
             if (drawableLyric.TimeTagsBindable.Value.Contains(cursor))
             {
-                var spacing = timeTagPosition(cursor);
+                var spacing = timeTagIndexPosition(cursor.Index) + extraSpacing(cursor);
                 timeTagCursorContainer.Add(new DrawableTimeTagCursor(cursor)
                 {
                     Anchor = Anchor.BottomLeft,
@@ -96,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
             foreach (var timeTag in timeTags)
             {
-                var spacing = timeTagPosition(timeTag);
+                var spacing = timeTagIndexPosition(timeTag.Index) + extraSpacing(timeTag);
                 timeTagContainer.Add(new DrawableTimeTag(timeTag)
                 {
                     Anchor = Anchor.BottomLeft,
@@ -106,17 +125,42 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             }
         }
 
-        private float timeTagPosition(TimeTag timeTag)
+        protected void UpdateSplitter()
         {
-            var index = Math.Min(timeTag.Index.Index, Lyric.Text.Length - 1);
-            var isStart = timeTag.Index.State == TimeTagIndex.IndexState.Start;
-            var percentage = isStart ? 0 : 1;
-            var position = drawableLyric.GetPercentageWidth(index, index + 1, percentage);
+            splitCursorContainer.Clear();
+            var lyric = lyricManager?.BindableSplitLyric.Value;
+            var index = lyricManager?.BindableSplitPosition.Value;
+            if (lyric != Lyric || index == null)
+                return;
 
+            
+            var spacing = textIndexPosition(index.Value);
+            splitCursorContainer.Add(new DrawableLyricSplitter
+            {
+                Anchor = Anchor.CentreLeft,
+                Origin = Anchor.CentreLeft,
+                X = spacing,
+            });
+        }
+
+        private float textIndexPosition(int index)
+            => timeTagIndexPosition(new TimeTagIndex(index));
+
+        private float timeTagIndexPosition(TimeTagIndex timeTagIndex)
+        {
+            var index = Math.Min(timeTagIndex.Index, Lyric.Text.Length - 1);
+            var isStart = timeTagIndex.State == TimeTagIndex.IndexState.Start;
+            var percentage = isStart ? 0 : 1;
+            return drawableLyric.GetPercentageWidth(index, index + 1, percentage);
+        }
+
+        private float extraSpacing(TimeTag timeTag)
+        {
+            var isStart = timeTag.Index.State == TimeTagIndex.IndexState.Start;
             var timeTags = isStart ? drawableLyric.TimeTagsBindable.Value.Reverse() : drawableLyric.TimeTagsBindable.Value;
             var duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == timeTag.Index) - 1;
             var spacing = duplicatedTagAmount * time_tag_spacing * (isStart ? 1 : -1);
-            return position + spacing;
+            return spacing;
         }
     }
 }

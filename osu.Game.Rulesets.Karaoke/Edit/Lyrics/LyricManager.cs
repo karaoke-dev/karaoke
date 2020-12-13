@@ -3,6 +3,7 @@
 
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -17,6 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Resolved(CanBeNull = true)]
         private IEditorChangeHandler changeHandler { get; set; }
+
+        public Bindable<Lyric> BindableSplitLyric { get; } = new Bindable<Lyric>();
+        public Bindable<int> BindableSplitPosition { get; } = new Bindable<int>();
 
         /// <summary>
         /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.Language"/> and apply on them.
@@ -40,6 +44,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
 
             changeHandler?.EndChange();
+        }
+
+        public void UpdateSplitPosition(Lyric lyric, int index)
+        {
+            BindableSplitLyric.Value = lyric;
+            BindableSplitPosition.Value = index;
+        }
+
+        public void ClearSplitPosition()
+        {
+            BindableSplitLyric.Value = null;
+        }
+
+        public void SplitLyric()
+        {
+
         }
     }
 }
