@@ -177,10 +177,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             => new[]
             {
                 new TimeTag(new TimeTagIndex(0)),
-                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), null),
+                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End)),
                 new TimeTag(new TimeTagIndex(0)), // this time tag is not sorted.
                 new TimeTag(new TimeTagIndex(1)),
-                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), null),
+                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End)),
             };
 
         #endregion

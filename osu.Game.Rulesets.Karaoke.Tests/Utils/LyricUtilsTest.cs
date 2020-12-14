@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
-using System.Globalization;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 {

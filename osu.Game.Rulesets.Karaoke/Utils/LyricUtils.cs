@@ -1,13 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
