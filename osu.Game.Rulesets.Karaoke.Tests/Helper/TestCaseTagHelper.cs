@@ -96,13 +96,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             return new TimeTag(new TimeTagIndex(index, state), time);
         }
 
-        public static RubyTag[] ParseRubyTags(string[] strs)
-            => strs?.Select(s => ParseRubyTag(s)).ToArray();
+        public static RubyTag[] ParseRubyTags(string[] strings)
+            => strings?.Select(ParseRubyTag).ToArray();
 
-        public static RomajiTag[] ParseRomajiTags(string[] strs)
-           => strs?.Select(s => ParseRomajiTag(s)).ToArray();
+        public static RomajiTag[] ParseRomajiTags(string[] strings)
+            => strings?.Select(ParseRomajiTag).ToArray();
 
-        public static TimeTag[] ParseTimeTags(string[] strs)
-           => strs?.Select(s => ParseTimeTag(s)).ToArray();
+        public static TimeTag[] ParseTimeTags(string[] strings)
+            => strings?.Select(ParseTimeTag).ToArray();
     }
 }

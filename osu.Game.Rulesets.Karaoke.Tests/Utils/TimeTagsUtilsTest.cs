@@ -157,8 +157,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public static TimeTag[] ValidTimeTagWithUnsortedAndDuplicatedWithNoValue()
             => new[]
             {
-                new TimeTag(new TimeTagIndex(0), null),
-                new TimeTag(new TimeTagIndex(0), null),
+                new TimeTag(new TimeTagIndex(0)),
+                new TimeTag(new TimeTagIndex(0)),
                 new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000), // this time tag is not in order.
                 new TimeTag(new TimeTagIndex(0), 1100),
             };
@@ -176,10 +176,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public static TimeTag[] ValidTimeTagWithUnsortedAndAllEmpty()
             => new[]
             {
-                new TimeTag(new TimeTagIndex(0), null),
+                new TimeTag(new TimeTagIndex(0)),
                 new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), null),
-                new TimeTag(new TimeTagIndex(0), null), // this time tag is not sorted.
-                new TimeTag(new TimeTagIndex(1), null),
+                new TimeTag(new TimeTagIndex(0)), // this time tag is not sorted.
+                new TimeTag(new TimeTagIndex(1)),
                 new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), null),
             };
 
