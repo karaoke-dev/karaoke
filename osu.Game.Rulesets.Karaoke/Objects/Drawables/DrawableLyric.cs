@@ -313,7 +313,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             get => displayTranslateLanguage;
             set
             {
-                if (displayTranslateLanguage.Equals(value))
+                if (Equals(displayTranslateLanguage, value))
                     return;
 
                 displayTranslateLanguage = value;
