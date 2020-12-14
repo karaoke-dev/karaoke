@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -48,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public Task Import(Stream stream, string filename)
         {
             // todo : wail until really implement needed.
-            throw new System.NotImplementedException("Report to https://github.com/karaoke-dev/karaoke and i will implement it.");
+            throw new NotImplementedException("Report to https://github.com/karaoke-dev/karaoke and i will implement it.");
         }
 
         Task ICanAcceptFiles.Import(params string[] paths)

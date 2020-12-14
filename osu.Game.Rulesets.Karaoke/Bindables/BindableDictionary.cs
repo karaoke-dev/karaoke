@@ -28,7 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
 
         private readonly Cached<WeakReference<BindableDictionary<TKey, TValue>>> weakReferenceCache = new Cached<WeakReference<BindableDictionary<TKey, TValue>>>();
 
-        private WeakReference<BindableDictionary<TKey, TValue>> weakReference => weakReferenceCache.IsValid ? weakReferenceCache.Value : weakReferenceCache.Value = new WeakReference<BindableDictionary<TKey, TValue>>(this);
+        private WeakReference<BindableDictionary<TKey, TValue>> weakReference =>
+            weakReferenceCache.IsValid ? weakReferenceCache.Value : weakReferenceCache.Value = new WeakReference<BindableDictionary<TKey, TValue>>(this);
 
         private LockedWeakList<BindableDictionary<TKey, TValue>> bindings;
 
