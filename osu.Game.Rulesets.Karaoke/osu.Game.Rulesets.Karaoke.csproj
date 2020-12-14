@@ -41,12 +41,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <InputAssemblies Include="LanguageDetection.dll" />
+      <InputAssemblies Include="Octokit.dll" />
+      <InputAssemblies Include="osu.Framework.KaraokeFont.dll" />
+      <InputAssemblies Include="osu.Framework.Microphone.dll" />
+      <InputAssemblies Include="NWaves.dll" />
       <InputAssemblies Include="LyricMaker.dll" />
       <InputAssemblies Include="NicoKaraParser.dll" />
-      <InputAssemblies Include="NWaves.dll" />
-      <InputAssemblies Include="Octokit.dll" />
-      <InputAssemblies Include="osu.Framework.Microphone.dll" />
-      <InputAssemblies Include="osu.Framework.KaraokeFont.dll" />
+      <InputAssemblies Include="Zipangu.dll" />
     </ItemGroup>
 
     <ItemGroup>
