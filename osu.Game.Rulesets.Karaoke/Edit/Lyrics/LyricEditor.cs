@@ -21,8 +21,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(canBeNull: true)]
         private TimeTagManager timeTagManager { get; set; }
 
+        [Cached]
+        private readonly LyricEditorStateManager lyricEditorStateManager = new LyricEditorStateManager();
+
         private readonly KaraokeLyricEditorSkin skin;
         private readonly DrawableLyricEditList container;
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        {
+            return base.CreateChildDependencies(parent);
+        }
 
         public LyricEditor()
         {
@@ -143,8 +151,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             set => skin.FontSize = value;
         }
 
-        public Mode Mode { get; set; }
+        public Mode Mode
+        {
+            get => lyricEditorStateManager.Mode;
+            set => lyricEditorStateManager.SetMode(value);
+        }
 
-        public LyricFastEditMode LyricFastEditMode { get; set; }
+        public LyricFastEditMode LyricFastEditMode
+        {
+            get => lyricEditorStateManager.FastEditMode;
+            set => lyricEditorStateManager.SetFastEditMode(value);
+        }
     }
 }

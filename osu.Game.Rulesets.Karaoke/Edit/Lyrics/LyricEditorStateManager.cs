@@ -11,6 +11,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public Bindable<Lyric> BindableSplitLyric { get; } = new Bindable<Lyric>();
         public Bindable<int> BindableSplitPosition { get; } = new Bindable<int>();
 
+        public Bindable<Mode> BindableMode { get; } = new Bindable<Mode>();
+
+        public Bindable<LyricFastEditMode> BindableFastEditMode { get; } = new Bindable<LyricFastEditMode>();
+
+        public Mode Mode => BindableMode.Value;
+
+        public LyricFastEditMode FastEditMode => BindableFastEditMode.Value;
+
         public void UpdateSplitCursorPosition(Lyric lyric, int index)
         {
             BindableSplitLyric.Value = lyric;
@@ -20,6 +28,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public void ClearSplitCursorPosition()
         {
             BindableSplitLyric.Value = null;
+        }
+
+        public void SetMode(Mode mode)
+        {
+            BindableMode.Value = mode;
+        }
+
+        public void SetFastEditMode(LyricFastEditMode fastEditMode)
+        {
+            BindableFastEditMode.Value = fastEditMode;
         }
     }
 
