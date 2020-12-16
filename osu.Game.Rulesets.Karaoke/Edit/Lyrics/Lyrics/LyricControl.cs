@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         private void load(IFrameBasedClock framedClock, TimeTagManager timeTagManager)
         {
             drawableLyric.Clock = framedClock;
-            timeTagManager?.BindableCursorPosition.BindValueChanged(e =>
+            stateManager.BindableCursorPosition.BindValueChanged(e =>
             {
                 UpdateTimeTagCursor(e.NewValue);
             }, true);

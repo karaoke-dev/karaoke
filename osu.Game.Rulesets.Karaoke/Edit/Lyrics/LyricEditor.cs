@@ -21,16 +21,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(canBeNull: true)]
         private TimeTagManager timeTagManager { get; set; }
 
-        [Cached]
-        private readonly LyricEditorStateManager lyricEditorStateManager = new LyricEditorStateManager();
+        private LyricEditorStateManager lyricEditorStateManager;
 
         private readonly KaraokeLyricEditorSkin skin;
         private readonly DrawableLyricEditList container;
-
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            return base.CreateChildDependencies(parent);
-        }
 
         public LyricEditor()
         {
@@ -44,9 +38,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             };
         }
 
+        private DependencyContainer dependencies;
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        {
+            dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            return dependencies;
+        }
+
         [BackgroundDependencyLoader]
         private void load()
         {
+            // todo : might not place into here.
+            dependencies.Cache(lyricEditorStateManager = new LyricEditorStateManager(beatmap));
+
             foreach (var obj in beatmap.HitObjects)
                 Schedule(() => addHitObject(obj));
         }
@@ -58,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             beatmap.HitObjectAdded += addHitObject;
             beatmap.HitObjectRemoved += removeHitObject;
 
-            timeTagManager?.MoveCursor(CursorAction.First);
+            lyricEditorStateManager.MoveCursor(CursorAction.First);
         }
 
         protected override bool OnKeyDown(KeyDownEvent e)
@@ -70,26 +75,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             switch (e.Key)
             {
                 case Key.Up:
-                    return timeTagManager.MoveCursor(CursorAction.MoveUp);
+                    return lyricEditorStateManager.MoveCursor(CursorAction.MoveUp);
 
                 case Key.Down:
-                    return timeTagManager.MoveCursor(CursorAction.MoveDown);
+                    return lyricEditorStateManager.MoveCursor(CursorAction.MoveDown);
 
                 case Key.Left:
-                    return timeTagManager.MoveCursor(CursorAction.MoveLeft);
+                    return lyricEditorStateManager.MoveCursor(CursorAction.MoveLeft);
 
                 case Key.Right:
-                    return timeTagManager.MoveCursor(CursorAction.MoveRight);
+                    return lyricEditorStateManager.MoveCursor(CursorAction.MoveRight);
 
                 case Key.PageUp:
-                    return timeTagManager.MoveCursor(CursorAction.First);
+                    return lyricEditorStateManager.MoveCursor(CursorAction.First);
 
                 case Key.PageDown:
-                    return timeTagManager.MoveCursor(CursorAction.Last);
+                    return lyricEditorStateManager.MoveCursor(CursorAction.Last);
             }
 
             // edit time tag action
-            var currentTimeTag = timeTagManager?.BindableCursorPosition?.Value;
+            var currentTimeTag = lyricEditorStateManager.BindableCursorPosition.Value;
 
             switch (e.Key)
             {
@@ -99,17 +104,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case Key.Space:
                     var setTimeSuccess = (bool)timeTagManager?.SetTimeTagTime(currentTimeTag);
                     if (setTimeSuccess)
-                        timeTagManager.MoveCursor(CursorAction.MoveRight);
+                        lyricEditorStateManager.MoveCursor(CursorAction.MoveRight);
                     return setTimeSuccess;
 
                 case Key.N:
                     var createdTimeTag = timeTagManager?.AddTimeTag(currentTimeTag);
                     if (createdTimeTag != null)
-                        timeTagManager.MoveCursorToTargetPosition(createdTimeTag);
+                        lyricEditorStateManager.MoveCursorToTargetPosition(createdTimeTag);
                     return createdTimeTag != null;
 
                 case Key.Delete:
-                    timeTagManager?.MoveCursor(CursorAction.MoveRight);
+                    lyricEditorStateManager.MoveCursor(CursorAction.MoveRight);
                     return (bool)timeTagManager?.RemoveTimeTag(currentTimeTag);
 
                 default:

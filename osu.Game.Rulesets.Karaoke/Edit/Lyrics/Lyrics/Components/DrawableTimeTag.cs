@@ -25,6 +25,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
         [Resolved(canBeNull: true)]
         private TimeTagManager timeTagManager { get; set; }
 
+
+        [Resolved]
+        private LyricEditorStateManager stateManager { get; set; }
+
         public DrawableTimeTag(TimeTag timeTag)
         {
             this.timeTag = timeTag;
@@ -42,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 
         protected override bool OnClick(ClickEvent e)
         {
-            return timeTagManager?.MoveCursorToTargetPosition(timeTag) ?? false;
+            return stateManager?.MoveCursorToTargetPosition(timeTag) ?? false;
         }
 
         [BackgroundDependencyLoader]
