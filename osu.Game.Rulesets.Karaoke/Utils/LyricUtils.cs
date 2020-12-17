@@ -8,6 +8,7 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
@@ -123,6 +124,56 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 LayoutIndex = firstLyric.LayoutIndex,
                 Language = language,
             };
+        }
+
+        public static void RemoveText(Lyric lyric, int position, int count = 1)
+        {
+            if (lyric == null)
+                throw new ArgumentNullException($"{nameof(lyric)} cannot be null.");
+
+            var textLength = lyric.Text.Length;
+            if (textLength == 0)
+                return;
+
+            if (position < 0 || position > textLength)
+                throw new ArgumentOutOfRangeException(nameof(position));
+
+            if (count < 0)
+                throw new ArgumentOutOfRangeException(nameof(position));
+
+            if (position + count >= textLength)
+                count = textLength - position;
+
+            // deal with ruby and romaji, might remove and shifting.
+            lyric.RubyTags = processTags(lyric.RubyTags, position, count);
+            lyric.RomajiTags = processTags(lyric.RomajiTags, position, count);
+
+            // deal with text
+            var newLyric = lyric.Text.Substring(0, position) + lyric.Text[(position + count)..];
+            lyric.Text = newLyric;
+
+            static T[] processTags<T>(T[] tags, int position, int count = 1) where T : ITextTag
+            {
+                var endPosition = position + count;
+                return tags?.SkipWhile(x => x.StartIndex >= position && x.EndIndex <= endPosition)
+                .Select(x =>
+                {
+                    if (x.StartIndex < position)
+                        x.EndIndex = Math.Min(x.EndIndex, position);
+                    if (x.EndIndex > position)
+                    {
+                        x.StartIndex = Math.Max(x.StartIndex, endPosition) - count;
+                        x.EndIndex -= count;
+                    }
+                    return x;
+                })
+                .ToArray();
+            }
+        }
+
+        public static void AddText(Lyric lyric, int position, string text)
+        {
+
         }
 
         private static TimeTag[] shiftingTimeTag(TimeTag[] timeTags, int shiftingIndex)

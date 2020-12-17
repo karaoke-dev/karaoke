@@ -192,6 +192,54 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(secondLyric.Language, secondCultureInfo);
         }
 
+        [TestCase("karaoke", 2, 2, "kaoke")]
+        [TestCase("カラオケ", 2, 2, "カラ")]
+        [TestCase("カラオケ", -1, 2, null)] // test start position not in the range
+        [TestCase("カラオケ", 4, 2, "カラオケ")] // test start position not in the range, but it's valid
+        [TestCase("カラオケ", 0, -1, null)] // test end position not in the range
+        [TestCase("カラオケ", 0, 100, "")] // test end position not in the range
+        [TestCase("", 0, 0, "")]
+        [TestCase(null, 0, 0, null)]
+        public void TestRemoveTextText(string text, int position, int count, string actualText)
+        {
+            try
+            {
+                var lyric = new Lyric { Text = text };
+                LyricUtils.RemoveText(lyric, position, count);
+                Assert.AreEqual(lyric.Text, actualText);
+            }
+            catch
+            {
+                Assert.Null(actualText);
+            }
+        }
+
+        [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 0 , 2, new[] { "[0,1]:お", "[1,2]:け" })]
+        [TestCase(new[] { "[0,2]:から", "[2,4]:おけ" }, 1, 2, new[] { "[0,1]:から", "[1,2]:おけ" })]
+        public void TestRemoveTextRuby(string[] rubies, int position, int count, string[] targetRubies)
+        {
+            var lyric = new Lyric
+            {
+                Text = "カラオケ",
+                RubyTags = TestCaseTagHelper.ParseRubyTags(rubies),
+            };
+            LyricUtils.RemoveText(lyric, position, count);
+            Assert.AreEqual(lyric.RubyTags, TestCaseTagHelper.ParseRubyTags(targetRubies));
+        }
+
+        [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, 0, 2, new[] { "[0,1]:o", "[1,2]:ke" })]
+        [TestCase(new[] { "[0,2]:kara", "[2,4]:oke" }, 1, 2, new[] { "[0,1]:kara", "[1,2]:oke" })]
+        public void TestRemoveTextRomaji(string[] romajies, int position, int count, string[] targetRomajies)
+        {
+            var lyric = new Lyric
+            {
+                Text = "カラオケ",
+                RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
+            };
+            LyricUtils.RemoveText(lyric, position, count);
+            Assert.AreEqual(lyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(targetRomajies));
+        }
+
         #endregion
 
         #region combine
