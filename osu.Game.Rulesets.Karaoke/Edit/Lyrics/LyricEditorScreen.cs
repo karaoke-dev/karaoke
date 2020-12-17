@@ -22,6 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class LyricEditorScreen : EditorScreenWithTimeline, ICanAcceptFiles
     {
+        public LyricEditor LyricEditor => lyricEditor;
+
         private FillFlowContainer<Button> controls;
         private LyricEditor lyricEditor;
 
