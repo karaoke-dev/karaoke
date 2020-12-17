@@ -4,8 +4,6 @@
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
@@ -30,10 +28,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Resolved(canBeNull: true)]
         private IFrameBasedClock framedClock { get; set; }
-
-        public Bindable<TimeTag> BindableCursorPosition { get; } = new Bindable<TimeTag>();
-
-        #region Edit Time Tag
 
         /// <summary>
         /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.TimeTags"/> and apply on them.
@@ -142,111 +136,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private void sortingTimeTag(Lyric lyric)
             => lyric.TimeTags = TimeTagsUtils.Sort(lyric.TimeTags);
 
-        #endregion
-
-        #region Time Tag cursor
-
-        public bool MoveCursor(CursorAction action)
-        {
-            var currentTimeTag = BindableCursorPosition.Value;
-
-            TimeTag nextTimeTag = null;
-
-            switch (action)
-            {
-                case CursorAction.MoveUp:
-                    nextTimeTag = getPreviousLyricTimeTag(currentTimeTag);
-                    break;
-
-                case CursorAction.MoveDown:
-                    nextTimeTag = getNextLyricTimeTag(currentTimeTag);
-                    break;
-
-                case CursorAction.MoveLeft:
-                    nextTimeTag = getPreviousTimeTag(currentTimeTag);
-                    break;
-
-                case CursorAction.MoveRight:
-                    nextTimeTag = getNextTimeTag(currentTimeTag);
-                    break;
-
-                case CursorAction.First:
-                    nextTimeTag = getFirstTimeTag(currentTimeTag);
-                    break;
-
-                case CursorAction.Last:
-                    nextTimeTag = getLastTimeTag(currentTimeTag);
-                    break;
-            }
-
-            if (nextTimeTag == null)
-                return false;
-
-            moveCursorTo(nextTimeTag);
-            return true;
-        }
-
-        public bool MoveCursorToTargetPosition(TimeTag timeTag)
-        {
-            if (timeTagInLyric(timeTag) == null)
-                return false;
-
-            moveCursorTo(timeTag);
-            return true;
-        }
-
         private Lyric timeTagInLyric(TimeTag timeTag)
         {
             if (timeTag == null)
                 return null;
 
             return beatmap.HitObjects.OfType<Lyric>().FirstOrDefault(x => x.TimeTags?.Contains(timeTag) ?? false);
-        }
-
-        private TimeTag getPreviousLyricTimeTag(TimeTag timeTag)
-        {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-            var currentLyric = timeTagInLyric(timeTag);
-            return lyrics.GetPrevious(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index);
-        }
-
-        private TimeTag getNextLyricTimeTag(TimeTag timeTag)
-        {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-            var currentLyric = timeTagInLyric(timeTag);
-            return lyrics.GetNext(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index);
-        }
-
-        private TimeTag getPreviousTimeTag(TimeTag timeTag)
-        {
-            var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
-            return timeTags.GetPrevious(timeTag);
-        }
-
-        private TimeTag getNextTimeTag(TimeTag timeTag)
-        {
-            var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
-            return timeTags.GetNext(timeTag);
-        }
-
-        private TimeTag getFirstTimeTag(TimeTag timeTag)
-        {
-            var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
-            return timeTags.FirstOrDefault();
-        }
-
-        private TimeTag getLastTimeTag(TimeTag timeTag)
-        {
-            var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
-            return timeTags.LastOrDefault();
-        }
-
-        private void moveCursorTo(TimeTag timeTag)
-        {
-            if (timeTag == null)
-                return;
-
-            BindableCursorPosition.Value = timeTag;
         }
 
         public class TimeTagGeneratorSelector
@@ -287,8 +182,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             }
         }
-
-        #endregion
     }
 
     public enum CursorAction

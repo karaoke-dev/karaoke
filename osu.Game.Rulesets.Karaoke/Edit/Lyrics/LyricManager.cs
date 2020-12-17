@@ -21,9 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(CanBeNull = true)]
         private IEditorChangeHandler changeHandler { get; set; }
 
-        public Bindable<Lyric> BindableSplitLyric { get; } = new Bindable<Lyric>();
-        public Bindable<int> BindableSplitPosition { get; } = new Bindable<int>();
-
         /// <summary>
         /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.Language"/> and apply on them.
         /// </summary>
@@ -46,17 +43,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
 
             changeHandler?.EndChange();
-        }
-
-        public void UpdateSplitCursorPosition(Lyric lyric, int index)
-        {
-            BindableSplitLyric.Value = lyric;
-            BindableSplitPosition.Value = index;
-        }
-
-        public void ClearSplitCursorPosition()
-        {
-            BindableSplitLyric.Value = null;
         }
 
         public void SplitLyric(Lyric lyric, int index)

@@ -26,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         [Resolved(canBeNull: true)]
         private LyricManager lyricManager { get; set; }
 
+        [Resolved]
+        private LyricEditorStateManager stateManager { get; set; }
+
         public Lyric Lyric { get; }
 
         public LyricControl(Lyric lyric)
@@ -79,24 +82,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             // todo : get real index.
             var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
             var index = drawableLyric.GetHoverIndex(position);
-            lyricManager?.UpdateSplitCursorPosition(Lyric, index);
+            stateManager.UpdateSplitCursorPosition(Lyric, index);
             return base.OnMouseMove(e);
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
         {
-            lyricManager?.ClearSplitCursorPosition();
+            stateManager.ClearSplitCursorPosition();
             base.OnHoverLost(e);
         }
 
         protected override bool OnClick(ClickEvent e)
         {
-            var index = lyricManager?.BindableSplitPosition.Value;
-            if (index == null)
-                return false;
+            var index = stateManager.BindableSplitPosition.Value;
 
             // get index then cut.
-            lyricManager?.SplitLyric(Lyric, index.Value);
+            lyricManager?.SplitLyric(Lyric, index);
             return base.OnClick(e);
         }
 
@@ -104,15 +105,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         private void load(IFrameBasedClock framedClock, TimeTagManager timeTagManager)
         {
             drawableLyric.Clock = framedClock;
-            timeTagManager?.BindableCursorPosition.BindValueChanged(e =>
+            stateManager.BindableCursorPosition.BindValueChanged(e =>
             {
                 UpdateTimeTagCursor(e.NewValue);
             }, true);
-            lyricManager?.BindableSplitLyric.BindValueChanged(e =>
+            stateManager.BindableSplitLyric.BindValueChanged(e =>
             {
                 UpdateSplitter();
             });
-            lyricManager?.BindableSplitPosition.BindValueChanged(e =>
+            stateManager.BindableSplitPosition.BindValueChanged(e =>
             {
                 UpdateSplitter();
             });
@@ -156,12 +157,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         protected void UpdateSplitter()
         {
             splitCursorContainer.Clear();
-            var lyric = lyricManager?.BindableSplitLyric.Value;
-            var index = lyricManager?.BindableSplitPosition.Value;
-            if (lyric != Lyric || index == null)
+            var lyric = stateManager.BindableSplitLyric.Value;
+            var index = stateManager.BindableSplitPosition.Value;
+            if (lyric != Lyric)
                 return;
 
-            var spacing = textIndexPosition(index.Value);
+            var spacing = textIndexPosition(index);
             splitCursorContainer.Add(new DrawableLyricSplitterCursor
             {
                 Anchor = Anchor.CentreLeft,
