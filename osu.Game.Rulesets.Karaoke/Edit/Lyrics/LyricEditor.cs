@@ -159,13 +159,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public Mode Mode
         {
             get => lyricEditorStateManager.Mode;
-            set => lyricEditorStateManager.SetMode(value);
+            set => ScheduleAfterChildren(() => lyricEditorStateManager.SetMode(value));
         }
 
         public LyricFastEditMode LyricFastEditMode
         {
             get => lyricEditorStateManager.FastEditMode;
-            set => lyricEditorStateManager.SetFastEditMode(value);
+            set => ScheduleAfterChildren(() => lyricEditorStateManager.SetFastEditMode(value));
         }
     }
 }
