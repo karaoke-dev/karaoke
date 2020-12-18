@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditorStateManager
     {
-        public Bindable<CursorPosition> BindableCursorHoverPosition { get; } = new Bindable<CursorPosition>();
+        public Bindable<CursorPosition> BindableHoverCursorPosition { get; } = new Bindable<CursorPosition>();
 
         public Bindable<CursorPosition> BindableCursorPosition { get; } = new Bindable<CursorPosition>();
 
@@ -21,9 +21,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             movePositionTo(new CursorPosition(lyric, index));
         }
 
-        public void ClearSplitCursorPosition()
+        public void MoveHoverCursorToTargetPosition(Lyric lyric, TimeTagIndex index)
         {
-            BindableCursorPosition.Value = new CursorPosition();
+            moveHoverPositionTo(new CursorPosition(lyric, index));
+        }
+
+        public void ClearHoverCursorPosition()
+        {
+            BindableHoverCursorPosition.Value = new CursorPosition();
         }
 
         private bool moveCursor(CursorAction action)
@@ -169,7 +174,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (position.Lyric == null)
                 return;
 
+            BindableHoverCursorPosition.Value = new CursorPosition();
             BindableCursorPosition.Value = position;
+        }
+
+        private void moveHoverPositionTo(CursorPosition position)
+        {
+            if (position.Lyric == null)
+                return;
+
+            BindableHoverCursorPosition.Value = position;
         }
     }
 }

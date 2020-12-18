@@ -45,13 +45,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 
         protected override bool OnClick(ClickEvent e)
         {
-            return stateManager?.MoveCursorToTargetPosition(timeTag) ?? false;
+            return stateManager?.MoveRecordCursorToTargetPosition(timeTag) ?? false;
         }
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
             InternalChild.Colour = timeTag.Time.HasValue ? colours.Yellow : colours.Gray7;
+        }
+
+        protected override bool OnHover(HoverEvent e)
+        {
+            return stateManager?.MoveHoverRecordCursorToTargetPosition(timeTag) ?? false;
+        }
+
+        protected override void OnHoverLost(HoverLostEvent e)
+        {
+            stateManager?.ClearHoverRecordCursorPosition();
+            base.OnHoverLost(e);
         }
     }
 }

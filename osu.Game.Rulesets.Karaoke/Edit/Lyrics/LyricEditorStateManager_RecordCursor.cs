@@ -10,17 +10,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditorStateManager
     {
-        public Bindable<TimeTag> BindableRecordCursorHoverPosition { get; } = new Bindable<TimeTag>();
+        public Bindable<TimeTag> BindableHoverRecordCursorPosition { get; } = new Bindable<TimeTag>();
 
         public Bindable<TimeTag> BindableRecordCursorPosition { get; } = new Bindable<TimeTag>();
 
-        public bool MoveCursorToTargetPosition(TimeTag timeTag)
+        public bool MoveRecordCursorToTargetPosition(TimeTag timeTag)
         {
             if (timeTagInLyric(timeTag) == null)
                 return false;
 
             moveCursorTo(timeTag);
             return true;
+        }
+
+        public bool MoveHoverRecordCursorToTargetPosition(TimeTag timeTag)
+        {
+            if (timeTagInLyric(timeTag) == null)
+                return false;
+
+            moveHoverCursorTo(timeTag);
+            return true;
+        }
+
+        public void ClearHoverRecordCursorPosition()
+        {
+            BindableHoverRecordCursorPosition.Value = null;
         }
 
         private bool moveRecordCursor(CursorAction action)
@@ -114,7 +128,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (timeTag == null)
                 return;
 
+            BindableHoverRecordCursorPosition.Value = null;
             BindableRecordCursorPosition.Value = timeTag;
+        }
+
+        private void moveHoverCursorTo(TimeTag timeTag)
+        {
+            if (timeTag == null)
+                return;
+
+            BindableHoverRecordCursorPosition.Value = timeTag;
         }
     }
 }

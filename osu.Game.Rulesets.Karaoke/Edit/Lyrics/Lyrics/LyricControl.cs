@@ -82,13 +82,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             // todo : get real index.
             var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
             var index = drawableLyric.GetHoverIndex(position);
-            stateManager.MoveCursorToTargetPosition(Lyric, index);
+            stateManager.MoveHoverCursorToTargetPosition(Lyric, index);
             return base.OnMouseMove(e);
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
         {
-            stateManager.ClearSplitCursorPosition();
+            // lost hover cursor and time-tag cursor
+            stateManager.ClearHoverCursorPosition();
             base.OnHoverLost(e);
         }
 
