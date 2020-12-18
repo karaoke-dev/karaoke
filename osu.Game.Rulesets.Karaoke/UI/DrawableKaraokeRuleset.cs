@@ -110,7 +110,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new KaraokeFramedReplayInputHandler(replay);
 
-
         protected override ReplayRecorder CreateReplayRecorder(Score score) => new KaraokeReplayRecorder(score);
     }
 }
