@@ -10,7 +10,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 {
-    public class DrawableLyricSplitterCursor : CompositeDrawable
+    public class DrawableLyricSplitterCursor : CompositeDrawable, IDrawableCursor
     {
         public DrawableLyricSplitterCursor()
         {
@@ -44,5 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours) => Colour = colours.Red;
+
+        public bool Preview { get; set; }
     }
 }

@@ -20,8 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
         private readonly DrawableEditLyric drawableLyric;
         private readonly Container timeTagContainer;
-        private readonly Container timeTagCursorContainer;
-        private readonly Container splitCursorContainer;
+        private readonly Container cursorContainer;
 
         [Resolved(canBeNull: true)]
         private LyricManager lyricManager { get; set; }
@@ -45,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                     {
                         // need to delay until karaoke text has been calculated.
                         ScheduleAfterChildren(UpdateTimeTags);
-                        splitCursorContainer.Height = font.LyricTextFontInfo.LyricTextFontInfo.CharSize * 1.7f;
+                        cursorContainer.Height = font.LyricTextFontInfo.LyricTextFontInfo.CharSize * 1.7f;
                     }
                 },
                 timeTagContainer = new Container
@@ -54,13 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                     Origin = Anchor.BottomLeft,
                     RelativeSizeAxes = Axes.Both,
                 },
-                timeTagCursorContainer = new Container
-                {
-                    Anchor = Anchor.BottomLeft,
-                    Origin = Anchor.BottomLeft,
-                    RelativeSizeAxes = Axes.Both,
-                },
-                splitCursorContainer = new Container
+                cursorContainer = new Container
                 {
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
@@ -107,30 +100,63 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         private void load(IFrameBasedClock framedClock, TimeTagManager timeTagManager)
         {
             drawableLyric.Clock = framedClock;
-            stateManager.BindableRecordCursorPosition.BindValueChanged(e =>
+            stateManager.BindableMode.BindValueChanged(e =>
             {
-                UpdateTimeTagCursor(e.NewValue);
+                // initial default cursor here
+                CreateCursor(e.NewValue);
             }, true);
+
+            // update change if cursor changed.
+            stateManager.BindableHoverCursorPosition.BindValueChanged(e =>
+            {
+                UpdateCursor(e.NewValue, true);
+            });
             stateManager.BindableCursorPosition.BindValueChanged(e =>
             {
-                UpdateSplitter();
+                UpdateCursor(e.NewValue, false);
             });
+
+            // update change if record cursor changed.
+            stateManager.BindableHoverRecordCursorPosition.BindValueChanged(e =>
+            {
+                UpdateTimeTagCursor(e.NewValue, true);
+            }, true);
+            stateManager.BindableRecordCursorPosition.BindValueChanged(e =>
+            {
+                UpdateTimeTagCursor(e.NewValue, false);
+            }, true);
         }
 
-        protected void UpdateTimeTagCursor(TimeTag cursor)
+        protected void CreateCursor(Mode mode)
         {
-            timeTagCursorContainer.Clear();
+            cursorContainer.Clear();
 
-            if (!drawableLyric.TimeTagsBindable.Value.Contains(cursor))
-                return;
-
-            var spacing = timeTagIndexPosition(cursor.Index) + extraSpacing(cursor);
-            timeTagCursorContainer.Add(new DrawableTimeTagCursor(cursor)
+            // create preview and real cursor
+            cursorContainer.Add(createCursor(mode, false).With(e =>
             {
-                Anchor = Anchor.BottomLeft,
-                Origin = Anchor.BottomLeft,
-                X = spacing
-            });
+                e.Hide();
+            }));
+            cursorContainer.Add(createCursor(mode, true).With(e =>
+            {
+                e.Hide();
+            }));
+
+            static Drawable createCursor(Mode mode, bool isPreview)
+            {
+                switch (mode)
+                {
+                    case Mode.ViewMode:
+                        return null;
+                    case Mode.EditMode:
+                        return new DrawableLyricSplitterCursor();
+                    case Mode.RecordMode:
+                        return new DrawableTimeTagCursor();
+                    case Mode.TimeTagEditMode:
+                        return new DrawableTimeTagRecordCursor();
+                    default:
+                        throw new IndexOutOfRangeException(nameof(mode));
+                }
+            }
         }
 
         protected void UpdateTimeTags()
@@ -152,20 +178,38 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             }
         }
 
-        protected void UpdateSplitter()
+        protected void UpdateTimeTagCursor(TimeTag timeTag, bool preview)
         {
-            splitCursorContainer.Clear();
-            var position = stateManager.BindableCursorPosition.Value;
+            if (!drawableLyric.TimeTagsBindable.Value.Contains(timeTag))
+                return;
+
+            var cursor = cursorContainer.OfType<DrawableTimeTagRecordCursor>().FirstOrDefault(x => x.Preview == preview);
+            if (cursor == null)
+                return;
+
+            var spacing = timeTagIndexPosition(timeTag.Index) + extraSpacing(timeTag);
+            cursor.X = spacing;
+            cursor.TimeTag = timeTag;
+        }
+
+        protected void UpdateCursor(CursorPosition position, bool preview)
+        {
             if (position.Lyric != Lyric)
                 return;
 
+            var cursor = cursorContainer.OfType<IDrawableCursor>().FirstOrDefault(x => x.Preview == preview);
+            if (cursor == null)
+                return;
+
             var spacing = timeTagIndexPosition(position.Index) - 10;
-            splitCursorContainer.Add(new DrawableLyricSplitterCursor
+            if (cursor is Drawable drawableCursor)
             {
-                Anchor = Anchor.CentreLeft,
-                Origin = Anchor.CentreLeft,
-                X = spacing,
-            });
+                drawableCursor.X = spacing;
+            }
+            if (cursor is IHasCursorPosition cursorPosition)
+            {
+                cursorPosition.CursorPosition = position;
+            }
         }
 
         private float timeTagIndexPosition(TimeTagIndex timeTagIndex)

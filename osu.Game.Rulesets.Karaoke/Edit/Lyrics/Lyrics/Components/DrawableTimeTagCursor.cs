@@ -7,39 +7,47 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 {
-    public class DrawableTimeTagCursor : CompositeDrawable
+    public class DrawableTimeTagCursor : CompositeDrawable, IDrawableCursor, IHasCursorPosition
     {
-        /// <summary>
-        /// Height of major bar line triangles.
-        /// </summary>
         private const float triangle_width = 8;
 
-        private readonly TimeTag timeTag;
+        [Resolved]
+        private OsuColour colours { get; set; }
 
-        public DrawableTimeTagCursor(TimeTag timeTag)
+        private readonly RightTriangle drawableTimeTag;
+
+        public DrawableTimeTagCursor()
         {
-            this.timeTag = timeTag;
             AutoSizeAxes = Axes.Both;
 
-            InternalChild = new RightTriangle
+            InternalChild = drawableTimeTag = new RightTriangle
             {
                 Name = "Time tag triangle",
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(triangle_width),
-                Scale = new Vector2(timeTag.Index.State == TimeTagIndex.IndexState.Start ? 1 : -1, 1)
             };
         }
 
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private CursorPosition position;
+
+        public CursorPosition CursorPosition
         {
-            InternalChild.Colour = timeTag.Time.HasValue ? colours.YellowDarker : colours.Gray3;
+            get => position;
+            set
+            {
+                position = value;
+                drawableTimeTag.Scale = new Vector2(position.Index.State == TimeTagIndex.IndexState.Start ? 1 : -1, 1);
+
+                // todo : color is by has time-tag here?
+                // drawableTimeTag.Colour = position.Time.HasValue ? colours.YellowDarker : colours.Gray3;
+            }
         }
+
+        public bool Preview { get; set; }
     }
 }
