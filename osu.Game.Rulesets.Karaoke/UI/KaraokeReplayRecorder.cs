@@ -3,18 +3,18 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using osu.Game.Replays;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Replays;
 using osu.Game.Rulesets.UI;
+using osu.Game.Scoring;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class KaraokeReplayRecorder : ReplayRecorder<KaraokeSaitenAction>
     {
-        public KaraokeReplayRecorder(Replay replay)
-            : base(replay)
+        public KaraokeReplayRecorder(Score score)
+            : base(score)
         {
         }
 

@@ -24,6 +24,7 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
+using osu.Game.Scoring;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
@@ -109,6 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new KaraokeFramedReplayInputHandler(replay);
 
-        protected override ReplayRecorder CreateReplayRecorder(Replay replay) => new KaraokeReplayRecorder(replay);
+
+        protected override ReplayRecorder CreateReplayRecorder(Score score) => new KaraokeReplayRecorder(score);
     }
 }
