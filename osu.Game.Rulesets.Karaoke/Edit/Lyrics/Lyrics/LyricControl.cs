@@ -72,6 +72,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             if (lyricManager == null)
                 return false;
 
+            if (!isTrigger(stateManager.Mode))
+                return false;
+
             // todo : get real index.
             var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
             var index = drawableLyric.GetHoverIndex(position);
@@ -81,6 +84,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
         protected override void OnHoverLost(HoverLostEvent e)
         {
+            if (!isTrigger(stateManager.Mode))
+                return;
+
             // lost hover cursor and time-tag cursor
             stateManager.ClearHoverCursorPosition();
             base.OnHoverLost(e);
@@ -88,6 +94,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
         protected override bool OnClick(ClickEvent e)
         {
+            if (!isTrigger(stateManager.Mode))
+                return false;
+
             var timeTagIndex = stateManager.BindableCursorPosition.Value.Index;
             var splitPosition = timeTagIndex.Index + timeTagIndex.State == TimeTagIndex.IndexState.End ? 1 : 0;
 
@@ -132,14 +141,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             cursorContainer.Clear();
 
             // create preview and real cursor
-            cursorContainer.Add(createCursor(mode, false).With(e =>
+            addCursor(mode, false);
+            addCursor(mode, true);
+
+            void addCursor(Mode mode, bool isPreview)
             {
-                e.Hide();
-            }));
-            cursorContainer.Add(createCursor(mode, true).With(e =>
-            {
-                e.Hide();
-            }));
+                var cursor = createCursor(mode, false);
+                if (cursor == null)
+                    return;
+
+                if (cursor is IDrawableCursor drawableCursor)
+                    drawableCursor.Preview = isPreview;
+
+                cursor.Hide();
+                cursorContainer.Add(cursor);
+            };
 
             static Drawable createCursor(Mode mode, bool isPreview)
             {
@@ -180,12 +196,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
         protected void UpdateTimeTagCursor(TimeTag timeTag, bool preview)
         {
-            if (!drawableLyric.TimeTagsBindable.Value.Contains(timeTag))
-                return;
-
             var cursor = cursorContainer.OfType<DrawableTimeTagRecordCursor>().FirstOrDefault(x => x.Preview == preview);
             if (cursor == null)
                 return;
+
+            if (!drawableLyric.TimeTagsBindable.Value.Contains(timeTag))
+            {
+                cursor.Hide();
+                return;
+            }
+
+            cursor.Show();
 
             var spacing = timeTagIndexPosition(timeTag.Index) + extraSpacing(timeTag);
             cursor.X = spacing;
@@ -194,16 +215,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
         protected void UpdateCursor(CursorPosition position, bool preview)
         {
-            if (position.Lyric != Lyric)
-                return;
-
             var cursor = cursorContainer.OfType<IDrawableCursor>().FirstOrDefault(x => x.Preview == preview);
             if (cursor == null)
                 return;
 
-            var spacing = timeTagIndexPosition(position.Index) - 10;
+            if (position.Lyric != Lyric)
+            {
+                cursor.Hide();
+                return;
+            }
+
+            cursor.Show();
+
             if (cursor is Drawable drawableCursor)
             {
+                var spacing = timeTagIndexPosition(position.Index) - 10;
                 drawableCursor.X = spacing;
             }
             if (cursor is IHasCursorPosition cursorPosition)
@@ -228,5 +254,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             var spacing = duplicatedTagAmount * time_tag_spacing * (isStart ? 1 : -1);
             return spacing;
         }
+
+        private bool isTrigger(Mode mode)
+            => mode == Mode.EditMode || mode == Mode.TimeTagEditMode;
     }
 }

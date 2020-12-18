@@ -26,6 +26,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public void SetMode(Mode mode)
         {
             BindableMode.Value = mode;
+            switch (mode)
+            {
+                case Mode.RecordMode:
+                    MoveCursor(CursorAction.First);
+                    return;
+            }
         }
 
         public void SetFastEditMode(LyricFastEditMode fastEditMode)

@@ -43,11 +43,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
             };
         }
 
-        protected override bool OnClick(ClickEvent e)
-        {
-            return stateManager?.MoveRecordCursorToTargetPosition(timeTag) ?? false;
-        }
-
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
@@ -56,13 +51,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 
         protected override bool OnHover(HoverEvent e)
         {
+            if (!isTrigger(stateManager.Mode))
+                return false;
+
             return stateManager?.MoveHoverRecordCursorToTargetPosition(timeTag) ?? false;
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
         {
+            if (!isTrigger(stateManager.Mode))
+                return;
+
             stateManager?.ClearHoverRecordCursorPosition();
             base.OnHoverLost(e);
         }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            if (!isTrigger(stateManager.Mode))
+                return false;
+
+            return stateManager.MoveRecordCursorToTargetPosition(timeTag);
+        }
+
+        private bool isTrigger(Mode mode)
+            => mode == Mode.RecordMode;
     }
 }
