@@ -14,7 +14,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Bindable<TimeTag> BindableRecordCursorPosition { get; } = new Bindable<TimeTag>();
 
-        public bool MoveCursor(CursorAction action)
+        public bool MoveCursorToTargetPosition(TimeTag timeTag)
+        {
+            if (timeTagInLyric(timeTag) == null)
+                return false;
+
+            moveCursorTo(timeTag);
+            return true;
+        }
+
+        private bool moveRecordCursor(CursorAction action)
         {
             var currentTimeTag = BindableRecordCursorPosition.Value;
 
@@ -39,11 +48,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     break;
 
                 case CursorAction.First:
-                    nextTimeTag = getFirstTimeTag(currentTimeTag);
+                    nextTimeTag = getFirstTimeTag();
                     break;
 
                 case CursorAction.Last:
-                    nextTimeTag = getLastTimeTag(currentTimeTag);
+                    nextTimeTag = getLastTimeTag();
                     break;
             }
 
@@ -51,15 +60,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             moveCursorTo(nextTimeTag);
-            return true;
-        }
-
-        public bool MoveCursorToTargetPosition(TimeTag timeTag)
-        {
-            if (timeTagInLyric(timeTag) == null)
-                return false;
-
-            moveCursorTo(timeTag);
             return true;
         }
 
@@ -97,13 +97,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return timeTags.GetNext(timeTag);
         }
 
-        private TimeTag getFirstTimeTag(TimeTag timeTag)
+        private TimeTag getFirstTimeTag()
         {
             var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
             return timeTags.FirstOrDefault();
         }
 
-        private TimeTag getLastTimeTag(TimeTag timeTag)
+        private TimeTag getLastTimeTag()
         {
             var timeTags = beatmap.HitObjects.OfType<Lyric>().SelectMany(x => x.TimeTags).ToArray();
             return timeTags.LastOrDefault();

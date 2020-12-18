@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             // todo : get real index.
             var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
             var index = drawableLyric.GetHoverIndex(position);
-            stateManager.UpdateSplitCursorPosition(Lyric, index);
+            stateManager.MoveCursorToTargetPosition(Lyric, index);
             return base.OnMouseMove(e);
         }
 

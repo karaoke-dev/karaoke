@@ -32,6 +32,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             BindableFastEditMode.Value = fastEditMode;
         }
+
+        public bool MoveCursor(CursorAction action)
+        {
+            switch (Mode)
+            {
+                case Mode.RecordMode:
+                    return moveRecordCursor(action);
+                case Mode.EditMode:
+                case Mode.TimeTagEditMode:
+                    return moveCursor(action);
+                default:
+                    return false;
+            }
+        }
     }
 
     public enum Mode
