@@ -4,6 +4,7 @@
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -14,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private EditorBeatmap beatmap { get; set; }
 
         public Bindable<Lyric> BindableSplitLyric { get; } = new Bindable<Lyric>();
-        public Bindable<int> BindableSplitPosition { get; } = new Bindable<int>();
+        public Bindable<TimeTagIndex> BindableSplitPosition { get; } = new Bindable<TimeTagIndex>();
 
         public Bindable<Mode> BindableMode { get; } = new Bindable<Mode>();
 
@@ -33,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         #region Cursor position by time-tag
 
-        public void UpdateSplitCursorPosition(Lyric lyric, int index)
+        public void UpdateSplitCursorPosition(Lyric lyric, TimeTagIndex index)
         {
             BindableSplitLyric.Value = lyric;
             BindableSplitPosition.Value = index;

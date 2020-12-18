@@ -94,10 +94,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
         protected override bool OnClick(ClickEvent e)
         {
-            var index = stateManager.BindableSplitPosition.Value;
+            var timeTagIndex = stateManager.BindableSplitPosition.Value;
+            var splitPosition = timeTagIndex.Index + timeTagIndex.State == TimeTagIndex.IndexState.End ? 1 : 0;
 
             // get index then cut.
-            lyricManager?.SplitLyric(Lyric, index);
+            lyricManager?.SplitLyric(Lyric, splitPosition);
             return base.OnClick(e);
         }
 
@@ -162,7 +163,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             if (lyric != Lyric)
                 return;
 
-            var spacing = textIndexPosition(index);
+            var spacing = timeTagIndexPosition(index) - 10;
             splitCursorContainer.Add(new DrawableLyricSplitterCursor
             {
                 Anchor = Anchor.CentreLeft,
@@ -170,9 +171,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                 X = spacing,
             });
         }
-
-        private float textIndexPosition(int index)
-            => timeTagIndexPosition(new TimeTagIndex(index)) - 10;
 
         private float timeTagIndexPosition(TimeTagIndex timeTagIndex)
         {

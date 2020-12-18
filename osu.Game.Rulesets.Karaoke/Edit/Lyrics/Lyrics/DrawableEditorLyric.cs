@@ -3,6 +3,7 @@
 
 using System;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Components;
@@ -52,19 +53,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         public float GetPercentageWidth(int startIndex, int endIndex, float percentage = 0)
             => KaraokeText.GetPercentageWidth(startIndex, endIndex, percentage);
 
-        public int GetHoverIndex(float position)
+        public TimeTagIndex GetHoverIndex(float position)
         {
             var text = KaraokeText.Text;
             if (string.IsNullOrEmpty(text))
-                return 0;
+                return new TimeTagIndex();
 
             for (int i = 0; i < text.Length; i++)
             {
                 if (GetPercentageWidth(i, i + 1, 0.5f) > position)
-                    return i;
+                    return new TimeTagIndex(i, TimeTagIndex.IndexState.Start);
+
+                if (GetPercentageWidth(i, i + 1, 1f) > position)
+                    return new TimeTagIndex(i, TimeTagIndex.IndexState.End);
             }
 
-            return text.Length;
+            return new TimeTagIndex(text.Length - 1, TimeTagIndex.IndexState.End);
         }
     }
 }
