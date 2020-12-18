@@ -240,6 +240,47 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(lyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(targetRomajies));
         }
 
+        [TestCase("kake", 2, "rao", "karaoke")]
+        [TestCase("オケ", 0, "カラ", "カラオケ")]
+        [TestCase("オケ", -1, "カラ", "カラオケ")] // test start position not in the range, but it's valid.
+        [TestCase("カラ", 4, "オケ", "カラオケ")] // test start position not in the range, but it's valid.
+        [TestCase("", 0, "カラオケ", "カラオケ")]
+        [TestCase(null, 0, "カラオケ", "カラオケ")]
+        public void TestAddTextText(string text, int position, string addedText, string actualText)
+        {
+            var lyric = new Lyric { Text = text };
+            LyricUtils.AddText(lyric, position, addedText);
+            Assert.AreEqual(lyric.Text, actualText);
+        }
+
+        [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 0, "karaoke", new[] { "[7,8]:か", "[8,9]:ら", "[9,10]:お", "[10,11]:け" })]
+        [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 2, "karaoke", new[] { "[0,1]:か", "[1,2]:ら", "[9,10]:お", "[10,11]:け" })]
+        [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 4, "karaoke", new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" })]
+        public void TextAddTextRuby(string[] rubies, int position, string addedText, string[] targetRubies)
+        {
+            var lyric = new Lyric
+            {
+                Text = "カラオケ",
+                RubyTags = TestCaseTagHelper.ParseRubyTags(rubies),
+            };
+            LyricUtils.AddText(lyric, position, addedText);
+            Assert.AreEqual(lyric.RubyTags, TestCaseTagHelper.ParseRubyTags(targetRubies));
+        }
+
+        [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 0, "karaoke", new[] { "[7,8]:か", "[8,9]:ら", "[9,10]:お", "[10,11]:け" })]
+        [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 2, "karaoke", new[] { "[0,1]:か", "[1,2]:ら", "[9,10]:お", "[10,11]:け" })]
+        [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 4, "karaoke", new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" })]
+        public void TextAddTextRomaji(string[] romajies, int position, string addedText, string[] targetRomajies)
+        {
+            var lyric = new Lyric
+            {
+                Text = "カラオケ",
+                RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
+            };
+            LyricUtils.AddText(lyric, position, addedText);
+            Assert.AreEqual(lyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(targetRomajies));
+        }
+
         #endregion
 
         #region combine

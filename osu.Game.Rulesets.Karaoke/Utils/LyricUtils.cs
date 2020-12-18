@@ -173,7 +173,36 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static void AddText(Lyric lyric, int position, string text)
         {
+            if (lyric == null)
+                throw new ArgumentNullException($"{nameof(lyric)} cannot be null.");
 
+            // make position is at the range.
+            position = Math.Min(Math.Max(0, position), text.Length);
+
+            var shiftingLength = text?.Length ?? 0;
+            if (shiftingLength == 0)
+                return;
+
+            // deal with ruby and romaji with shifting.
+            lyric.RubyTags = processTags(lyric.RubyTags, position, shiftingLength);
+            lyric.RomajiTags = processTags(lyric.RomajiTags, position, shiftingLength);
+
+            // deal with text
+            var newLyric = lyric.Text?.Substring(0, position) + text +  lyric.Text?[position..];
+            lyric.Text = newLyric;
+
+            static T[] processTags<T>(T[] tags, int position, int shiftingLength) where T : ITextTag
+            {
+                return tags?.Select(x =>
+                {
+                    if (x.StartIndex >= position)
+                        x.StartIndex += shiftingLength;
+                    if (x.EndIndex > position)
+                        x.EndIndex += shiftingLength;
+                    return x;
+                })
+                .ToArray();
+            }
         }
 
         private static TimeTag[] shiftingTimeTag(TimeTag[] timeTags, int shiftingIndex)
