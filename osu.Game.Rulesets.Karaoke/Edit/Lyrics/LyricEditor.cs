@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
 
             // edit time tag action
-            var currentTimeTag = lyricEditorStateManager.BindableCursorPosition.Value;
+            var currentTimeTag = lyricEditorStateManager.BindableRecordCursorPosition.Value;
 
             switch (e.Key)
             {

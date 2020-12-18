@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
         protected override bool OnClick(ClickEvent e)
         {
-            var timeTagIndex = stateManager.BindableSplitPosition.Value;
+            var timeTagIndex = stateManager.BindableCursorPosition.Value.Index;
             var splitPosition = timeTagIndex.Index + timeTagIndex.State == TimeTagIndex.IndexState.End ? 1 : 0;
 
             // get index then cut.
@@ -106,15 +106,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         private void load(IFrameBasedClock framedClock, TimeTagManager timeTagManager)
         {
             drawableLyric.Clock = framedClock;
-            stateManager.BindableCursorPosition.BindValueChanged(e =>
+            stateManager.BindableRecordCursorPosition.BindValueChanged(e =>
             {
                 UpdateTimeTagCursor(e.NewValue);
             }, true);
-            stateManager.BindableSplitLyric.BindValueChanged(e =>
-            {
-                UpdateSplitter();
-            });
-            stateManager.BindableSplitPosition.BindValueChanged(e =>
+            stateManager.BindableCursorPosition.BindValueChanged(e =>
             {
                 UpdateSplitter();
             });
@@ -158,12 +154,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         protected void UpdateSplitter()
         {
             splitCursorContainer.Clear();
-            var lyric = stateManager.BindableSplitLyric.Value;
-            var index = stateManager.BindableSplitPosition.Value;
-            if (lyric != Lyric)
+            var position = stateManager.BindableCursorPosition.Value;
+            if (position.Lyric != Lyric)
                 return;
 
-            var spacing = timeTagIndexPosition(index) - 10;
+            var spacing = timeTagIndexPosition(position.Index) - 10;
             splitCursorContainer.Add(new DrawableLyricSplitterCursor
             {
                 Anchor = Anchor.CentreLeft,
