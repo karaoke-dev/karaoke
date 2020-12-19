@@ -7,11 +7,12 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 {
-    public class DrawableTimeTagCursor : CompositeDrawable, IDrawableCursor, IHasCursorPosition
+    public class DrawableTimeTagRecordCursor : CompositeDrawable, IDrawableCursor, IHasTimeTag
     {
         private const float triangle_width = 8;
 
@@ -20,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 
         private readonly RightTriangle drawableTimeTag;
 
-        public DrawableTimeTagCursor()
+        public DrawableTimeTagRecordCursor()
         {
             AutoSizeAxes = Axes.Both;
 
@@ -33,21 +34,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
             };
         }
 
-        private CursorPosition position;
+        private TimeTag timeTag;
 
-        public CursorPosition CursorPosition
+        public TimeTag TimeTag
         {
-            get => position;
+            get => timeTag;
             set
             {
-                position = value;
-                drawableTimeTag.Scale = new Vector2(position.Index.State == TimeTagIndex.IndexState.Start ? 1 : -1, 1);
-
-                // todo : color is by has time-tag here?
-                // drawableTimeTag.Colour = position.Time.HasValue ? colours.YellowDarker : colours.Gray3;
+                timeTag = value;
+                drawableTimeTag.Scale = new Vector2(timeTag.Index.State == TimeTagIndex.IndexState.Start ? 1 : -1, 1);
+                drawableTimeTag.Colour = timeTag.Time.HasValue ? colours.YellowDarker : colours.Gray3;
             }
         }
 
-        public bool Preview { get; set; }
+        private bool preview;
+
+        public bool Preview
+        {
+            get => preview;
+            set
+            {
+                preview = value;
+                drawableTimeTag.Alpha = preview ? 0.5f : 1;
+            }
+        }
     }
 }
