@@ -51,11 +51,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
         {
             DialogOverlay.Push(new UseAutoGenerateRubyPopupDialog(ok =>
             {
-                if (ok)
-                {
-                    RubyRomajiManager.AutoGenerateRubyTags();
-                    Navigation.State = NavigationState.Done;
-                }
+                if (!ok)
+                    return;
+
+                RubyRomajiManager.AutoGenerateRubyTags();
+                Navigation.State = NavigationState.Done;
             }));
         }
 
@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
             {
                 public GenerateRubyTextFlowContainer(GenerateRubySubScreen screen)
                 {
-                    AddLinkFactory(auto_generate_ruby, "auto generate ruby", () => screen.AskForAutoGenerateRuby());
+                    AddLinkFactory(auto_generate_ruby, "auto generate ruby", screen.AskForAutoGenerateRuby);
                 }
             }
         }

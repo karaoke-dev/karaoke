@@ -3,7 +3,6 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
@@ -80,6 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                     case NavigationState.Working:
                     case NavigationState.Done:
                         var mode = Screen.LyricEditor.Mode;
+
                         switch (mode)
                         {
                             case Mode.EditMode:
@@ -87,6 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                                 break;
                             // todo : edit mode.
                         }
+
                         break;
 
                     case NavigationState.Error:

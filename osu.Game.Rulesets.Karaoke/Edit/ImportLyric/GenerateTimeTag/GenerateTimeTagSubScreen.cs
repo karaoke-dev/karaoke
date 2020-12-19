@@ -52,11 +52,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
         {
             DialogOverlay.Push(new UseAutoGenerateTimeTagPopupDialog(ok =>
             {
-                if (ok)
-                {
-                    timeTagManager.AutoGenerateTimeTags();
-                    Navigation.State = NavigationState.Done;
-                }
+                if (!ok)
+                    return;
+
+                timeTagManager.AutoGenerateTimeTags();
+                Navigation.State = NavigationState.Done;
             }));
         }
 
@@ -79,12 +79,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
                 switch (value)
                 {
                     case NavigationState.Initial:
-                        NavigationText = $"Press [{auto_generate_time_tag}] to autu-generate time tag. It's very easy.";
+                        NavigationText = $"Press [{auto_generate_time_tag}] to auto-generate time tag. It's very easy.";
                         break;
 
                     case NavigationState.Working:
                     case NavigationState.Done:
-                        NavigationText = $"Cool, you can reset yout time-tag by pressing [{auto_generate_time_tag}]";
+                        NavigationText = $"Cool, you can reset your time-tag by pressing [{auto_generate_time_tag}]";
                         break;
 
                     case NavigationState.Error:
@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
             {
                 public GenerateTimeTagTextFlowContainer(GenerateTimeTagSubScreen screen)
                 {
-                    AddLinkFactory(auto_generate_time_tag, "auto generate time tag", () => screen.AskForAutoGenerateTimeTag());
+                    AddLinkFactory(auto_generate_time_tag, "auto generate time tag", screen.AskForAutoGenerateTimeTag);
                 }
             }
         }

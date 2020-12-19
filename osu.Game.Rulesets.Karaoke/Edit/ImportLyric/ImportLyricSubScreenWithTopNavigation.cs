@@ -81,7 +81,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
-                    text = CreateTextContainer().With(t => {
+                    text = CreateTextContainer().With(t =>
+                    {
                         t.Anchor = Anchor.CentreLeft;
                         t.Origin = Anchor.CentreLeft;
                         t.RelativeSizeAxes = Axes.X;

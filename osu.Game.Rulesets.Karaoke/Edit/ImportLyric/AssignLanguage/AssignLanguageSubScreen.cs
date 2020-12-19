@@ -3,7 +3,6 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
@@ -53,11 +52,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         {
             DialogOverlay.Push(new UseLanguageDetectorPopupDialog(ok =>
             {
-                if (ok)
-                {
-                    LyricManager.AutoDetectLyricLanguage();
-                    Navigation.State = NavigationState.Done;
-                }
+                if (!ok)
+                    return;
+
+                LyricManager.AutoDetectLyricLanguage();
+                Navigation.State = NavigationState.Done;
             }));
         }
 
@@ -101,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             {
                 public AssignLanguageTextFlowContainer(AssignLanguageSubScreen screen)
                 {
-                    AddLinkFactory(auto_assign_language, "language detector", () => screen.AskForAutoAssignLanguage());
+                    AddLinkFactory(auto_assign_language, "language detector", screen.AskForAutoAssignLanguage);
                 }
             }
         }
