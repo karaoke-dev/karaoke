@@ -12,7 +12,6 @@ using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osuTK.Input;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 {

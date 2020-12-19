@@ -4,12 +4,11 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 {
-    public class AssignLanguageSubScreen : ImportLyricSubScreenWithTopNavigation
+    public class AssignLanguageSubScreen : ImportLyricSubScreenWithLyricEditor
     {
         public override string Title => "Language";
 
@@ -27,26 +26,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             AddInternal(LyricManager = new LyricManager());
         }
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-            var clock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };
-            dependencies.CacheAs<IAdjustableClock>(clock);
-            dependencies.CacheAs<IFrameBasedClock>(clock);
-
-            return dependencies;
-        }
-
         protected override TopNavigation CreateNavigation()
             => new AssignLanguageNavigation(this);
 
         protected override Drawable CreateContent()
-            => new LyricEditor
+            => base.CreateContent().With(x =>
             {
-                RelativeSizeAxes = Axes.Both,
-                Mode = Mode.ViewMode,
-                LyricFastEditMode = LyricFastEditMode.Language,
-            };
+                LyricEditor.Mode = Mode.ViewMode;
+                LyricEditor.LyricFastEditMode = LyricFastEditMode.Language;
+            });
 
         protected override void LoadComplete()
         {
@@ -60,21 +48,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             ScreenStack.Push(ImportLyricStep.GenerateRuby);
         }
 
-        protected void AskForAutoAssignLanguage()
+        internal void AskForAutoAssignLanguage()
         {
             DialogOverlay.Push(new UseLanguageDetectorPopupDialog(ok =>
             {
-                if (ok)
-                    LyricManager.AutoDetectLyricLanguage();
+                if (!ok)
+                    return;
+
+                LyricManager.AutoDetectLyricLanguage();
+                Navigation.State = NavigationState.Done;
             }));
         }
 
-        public class AssignLanguageNavigation : TopNavigation
+        public class AssignLanguageNavigation : TopNavigation<AssignLanguageSubScreen>
         {
-            public AssignLanguageNavigation(ImportLyricSubScreen screen)
+            private const string auto_assign_language = "AUTO_ASSIGN_LANGUAGE";
+
+            public AssignLanguageNavigation(AssignLanguageSubScreen screen)
                 : base(screen)
             {
             }
+
+            protected override NavigationTextContainer CreateTextContainer()
+                => new AssignLanguageTextFlowContainer(Screen);
 
             protected override void UpdateState(NavigationState value)
             {
@@ -83,11 +79,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
                 switch (value)
                 {
                     case NavigationState.Initial:
-                        NavigationText = "Try to select left side to mark lyric's language.";
+                        NavigationText = $"Try to select left side to mark lyric's language, or click [{auto_assign_language}] to let system auto detect lyric language.";
                         break;
 
                     case NavigationState.Working:
-                        NavigationText = "Almost there/";
+                        NavigationText = $"Almost there, you can still click [{auto_assign_language}] to re-detect each lyric's language.";
                         break;
 
                     case NavigationState.Done:
@@ -97,6 +93,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
                     case NavigationState.Error:
                         NavigationText = "Oops, seems cause some error in here.";
                         break;
+                }
+            }
+
+            private class AssignLanguageTextFlowContainer : NavigationTextContainer
+            {
+                public AssignLanguageTextFlowContainer(AssignLanguageSubScreen screen)
+                {
+                    AddLinkFactory(auto_assign_language, "language detector", screen.AskForAutoAssignLanguage);
                 }
             }
         }

@@ -6,6 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
@@ -48,6 +49,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         protected abstract Drawable CreateContent();
 
+        public abstract class TopNavigation<T> : TopNavigation where T : ImportLyricSubScreenWithTopNavigation
+        {
+            protected new T Screen => base.Screen as T;
+
+            protected TopNavigation(T screen)
+                : base(screen)
+            {
+            }
+        }
+
         public abstract class TopNavigation : Container
         {
             [Resolved]
@@ -56,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             protected ImportLyricSubScreen Screen { get; }
 
             private readonly CornerBackground background;
-            private readonly OsuSpriteText text;
+            private readonly NavigationTextContainer text;
             private readonly IconButton button;
 
             protected TopNavigation(ImportLyricSubScreen screen)
@@ -70,12 +81,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
-                    text = new OsuSpriteText
+                    text = CreateTextContainer().With(t =>
                     {
-                        Anchor = Anchor.CentreLeft,
-                        Origin = Anchor.CentreLeft,
-                        Margin = new MarginPadding { Left = 15 }
-                    },
+                        t.Anchor = Anchor.CentreLeft;
+                        t.Origin = Anchor.CentreLeft;
+                        t.RelativeSizeAxes = Axes.X;
+                        t.AutoSizeAxes = Axes.Y;
+                        t.Margin = new MarginPadding { Left = 15 };
+                    }),
                     button = new IconButton
                     {
                         Anchor = Anchor.CentreRight,
@@ -91,6 +104,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     }
                 };
             }
+
+            protected abstract NavigationTextContainer CreateTextContainer();
 
             protected string NavigationText
             {
@@ -161,6 +176,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             protected virtual bool AbleToNextStep(NavigationState value) => value == NavigationState.Done;
 
             protected virtual void CompleteClicked() => Screen.Complete();
+
+            public class NavigationTextContainer : CustomizableTextContainer
+            {
+                protected void AddLinkFactory(string name, string text, Action action)
+                {
+                    AddIconFactory(name, () => new ClickableSpriteText
+                    {
+                        Font = new FontUsage(size: 20),
+                        Text = text,
+                        Action = action
+                    });
+                }
+
+                internal class ClickableSpriteText : OsuSpriteText
+                {
+                    public Action Action { get; set; }
+
+                    protected override bool OnClick(ClickEvent e)
+                    {
+                        Action?.Invoke();
+                        return base.OnClick(e);
+                    }
+
+                    [BackgroundDependencyLoader]
+                    private void load(OsuColour colours)
+                    {
+                        Colour = colours.Yellow;
+                    }
+                }
+            }
         }
 
         public enum NavigationState

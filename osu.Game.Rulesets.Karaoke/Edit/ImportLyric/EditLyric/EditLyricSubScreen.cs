@@ -4,12 +4,11 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 {
-    public class EditLyricSubScreen : ImportLyricSubScreenWithTopNavigation
+    public class EditLyricSubScreen : ImportLyricSubScreenWithLyricEditor
     {
         public override string Title => "Edit lyric";
 
@@ -27,26 +26,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
             AddInternal(LyricManager = new LyricManager());
         }
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-            var clock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };
-            dependencies.CacheAs<IAdjustableClock>(clock);
-            dependencies.CacheAs<IFrameBasedClock>(clock);
-
-            return dependencies;
-        }
-
         protected override TopNavigation CreateNavigation()
             => new EditLyricNavigation(this);
 
         protected override Drawable CreateContent()
-            => new LyricEditor
+            => base.CreateContent().With(x =>
             {
-                RelativeSizeAxes = Axes.Both,
-                Mode = Mode.EditMode,
-                LyricFastEditMode = LyricFastEditMode.None,
-            };
+                LyricEditor.Mode = Mode.EditMode;
+                LyricEditor.LyricFastEditMode = LyricFastEditMode.None;
+            });
 
         protected override void LoadComplete()
         {
@@ -59,12 +47,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
             ScreenStack.Push(ImportLyricStep.AssignLanguage);
         }
 
-        public class EditLyricNavigation : TopNavigation
+        internal void SwitchLyricEditorMode(Mode mode)
         {
+            LyricEditor.Mode = mode;
+            Navigation.State = NavigationState.Working;
+        }
+
+        public class EditLyricNavigation : TopNavigation<EditLyricSubScreen>
+        {
+            private const string cutting_mode = "CUTTING_MODE";
+            private const string edit_mode = "EDIT_MODE";
+
             public EditLyricNavigation(EditLyricSubScreen screen)
                 : base(screen)
             {
             }
+
+            protected override NavigationTextContainer CreateTextContainer()
+                => new EditLyricTextFlowContainer(Screen);
 
             protected override void UpdateState(NavigationState value)
             {
@@ -73,17 +73,38 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                 switch (value)
                 {
                     case NavigationState.Initial:
-                        NavigationText = "Check and edit lyric if needed.";
+                        NavigationText = $"Does something looks weird? Try switching [{cutting_mode}] or [{edit_mode}] to edit your lyric.";
                         break;
 
                     case NavigationState.Working:
                     case NavigationState.Done:
-                        NavigationText = "Cool!";
+                        var mode = Screen.LyricEditor.Mode;
+
+                        switch (mode)
+                        {
+                            case Mode.EditMode:
+                                NavigationText = $"Cool! Try switching to [{cutting_mode}] if you wants to cut or combine lyric.";
+                                break;
+                            // todo : edit mode.
+                        }
+
                         break;
 
                     case NavigationState.Error:
                         NavigationText = "Oops, seems cause some error in here.";
                         break;
+                }
+            }
+
+            protected override bool AbleToNextStep(NavigationState value)
+                => true;
+
+            private class EditLyricTextFlowContainer : NavigationTextContainer
+            {
+                public EditLyricTextFlowContainer(EditLyricSubScreen screen)
+                {
+                    AddLinkFactory(cutting_mode, "cutting mode", () => screen.SwitchLyricEditorMode(Mode.EditMode));
+                    AddLinkFactory(edit_mode, "edit mode", () => screen.SwitchLyricEditorMode(Mode.EditMode));
                 }
             }
         }
