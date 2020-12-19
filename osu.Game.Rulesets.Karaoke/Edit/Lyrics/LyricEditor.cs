@@ -93,8 +93,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return lyricEditorStateManager.MoveCursor(CursorAction.Last);
             }
 
+            if (lyricEditorStateManager.Mode != Mode.TimeTagEditMode)
+                return false;
+
             // edit time tag action
-            var currentTimeTag = lyricEditorStateManager.BindableCursorPosition.Value;
+            var currentTimeTag = lyricEditorStateManager.BindableRecordCursorPosition.Value;
 
             switch (e.Key)
             {
@@ -110,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case Key.N:
                     var createdTimeTag = timeTagManager?.AddTimeTag(currentTimeTag);
                     if (createdTimeTag != null)
-                        lyricEditorStateManager.MoveCursorToTargetPosition(createdTimeTag);
+                        lyricEditorStateManager.MoveRecordCursorToTargetPosition(createdTimeTag);
                     return createdTimeTag != null;
 
                 case Key.Delete:
