@@ -7,6 +7,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
     {
         ImportLyric,
 
+        EditLyric,
+
         AssignLanguage,
 
         GenerateRuby,

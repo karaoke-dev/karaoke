@@ -7,22 +7,22 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
+namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 {
-    public class AssignLanguageSubScreen : ImportLyricSubScreenWithTopNavigation
+    public class EditLyricSubScreen : ImportLyricSubScreenWithTopNavigation
     {
-        public override string Title => "Language";
+        public override string Title => "Edit lyric";
 
-        public override string ShortTitle => "Language";
+        public override string ShortTitle => "Edit";
 
-        public override ImportLyricStep Step => ImportLyricStep.AssignLanguage;
+        public override ImportLyricStep Step => ImportLyricStep.EditLyric;
 
         public override IconUsage Icon => FontAwesome.Solid.Globe;
 
         [Cached]
         protected readonly LyricManager LyricManager;
 
-        public AssignLanguageSubScreen()
+        public EditLyricSubScreen()
         {
             AddInternal(LyricManager = new LyricManager());
         }
@@ -38,40 +38,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         }
 
         protected override TopNavigation CreateNavigation()
-            => new AssignLanguageNavigation(this);
+            => new EditLyricNavigation(this);
 
         protected override Drawable CreateContent()
             => new LyricEditor
             {
                 RelativeSizeAxes = Axes.Both,
-                Mode = Mode.ViewMode,
-                LyricFastEditMode = LyricFastEditMode.Language,
+                Mode = Mode.EditMode,
+                LyricFastEditMode = LyricFastEditMode.None,
             };
 
         protected override void LoadComplete()
         {
             base.LoadComplete();
             Navigation.State = NavigationState.Initial;
-            AskForAutoAssignLanguage();
         }
 
         public override void Complete()
         {
-            ScreenStack.Push(ImportLyricStep.GenerateRuby);
+            ScreenStack.Push(ImportLyricStep.AssignLanguage);
         }
 
-        protected void AskForAutoAssignLanguage()
+        public class EditLyricNavigation : TopNavigation
         {
-            DialogOverlay.Push(new UseLanguageDetectorPopupDialog(ok =>
-            {
-                if (ok)
-                    LyricManager.AutoDetectLyricLanguage();
-            }));
-        }
-
-        public class AssignLanguageNavigation : TopNavigation
-        {
-            public AssignLanguageNavigation(ImportLyricSubScreen screen)
+            public EditLyricNavigation(EditLyricSubScreen screen)
                 : base(screen)
             {
             }
@@ -83,15 +73,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
                 switch (value)
                 {
                     case NavigationState.Initial:
-                        NavigationText = "Try to select left side to mark lyric's language.";
+                        NavigationText = "Check and edit lyric if needed.";
                         break;
 
                     case NavigationState.Working:
-                        NavigationText = "Almost there/";
-                        break;
-
                     case NavigationState.Done:
-                        NavigationText = "Cool! Seems all lyric has it's own language. Go to next step to generate ruby.";
+                        NavigationText = "Cool!";
                         break;
 
                     case NavigationState.Error:

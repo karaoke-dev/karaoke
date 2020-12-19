@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
 
         public override void Complete()
         {
-            ScreenStack.Push(ImportLyricStep.AssignLanguage);
+            ScreenStack.Push(ImportLyricStep.EditLyric);
         }
 
         private PopupDialog createFileNotFoundDialog()
