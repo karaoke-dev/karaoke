@@ -56,9 +56,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
             }));
         }
 
-        public class GenerateRubyNavigation : TopNavigation
+        public class GenerateRubyNavigation : TopNavigation<GenerateRubySubScreen>
         {
-            public GenerateRubyNavigation(ImportLyricSubScreen screen)
+            public GenerateRubyNavigation(GenerateRubySubScreen screen)
                 : base(screen)
             {
             }

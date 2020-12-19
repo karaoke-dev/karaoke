@@ -61,9 +61,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
             }));
         }
 
-        public class GenerateTimeTagNavigation : TopNavigation
+        public class GenerateTimeTagNavigation : TopNavigation<GenerateTimeTagSubScreen>
         {
-            public GenerateTimeTagNavigation(ImportLyricSubScreen screen)
+            public GenerateTimeTagNavigation(GenerateTimeTagSubScreen screen)
                 : base(screen)
             {
             }
