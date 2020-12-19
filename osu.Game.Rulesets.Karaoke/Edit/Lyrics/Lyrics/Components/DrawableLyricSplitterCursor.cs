@@ -13,6 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
     public class DrawableLyricSplitterCursor : CompositeDrawable, IDrawableCursor
     {
         private readonly Container splitter;
+
         public DrawableLyricSplitterCursor()
         {
             RelativeSizeAxes = Axes.Y;

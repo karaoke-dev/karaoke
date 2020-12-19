@@ -104,6 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             // get previous cursor and make a check is need to change line.
             var previousTimeTag = getPreviousTag(Mode, position.Index);
+
             if (previousTimeTag.Index < 0)
             {
                 getNextLyricCursorPosition(new CursorPosition(position.Lyric, new TimeTagIndex(int.MaxValue)));
@@ -117,10 +118,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 {
                     case Mode.EditMode:
                         return new TimeTagIndex(currentTimeTag.Index - 1, currentTimeTag.State);
+
                     case Mode.TimeTagEditMode:
                         var nextIndex = TimeTagIndexUtils.ToLyricIndex(currentTimeTag) - 1;
                         var nextState = TimeTagIndexUtils.ReverseState(currentTimeTag.State);
                         return new TimeTagIndex(nextIndex, nextState);
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(mode));
                 }
@@ -133,7 +136,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             // get next cursor and make a check is need to change line.
             var nextTimeTag = getNextTag(Mode, position.Index);
-            if (nextTimeTag.Index >= textLength) {
+
+            if (nextTimeTag.Index >= textLength)
+            {
                 getNextLyricCursorPosition(new CursorPosition(position.Lyric, new TimeTagIndex(int.MinValue)));
             }
 
@@ -145,13 +150,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 {
                     case Mode.EditMode:
                         return new TimeTagIndex(currentTimeTag.Index + 1, currentTimeTag.State);
+
                     case Mode.TimeTagEditMode:
                         var nextIndex = TimeTagIndexUtils.ToLyricIndex(currentTimeTag);
                         var nextState = TimeTagIndexUtils.ReverseState(currentTimeTag.State);
                         return new TimeTagIndex(nextIndex, nextState);
+
                     default:
-                            throw new ArgumentOutOfRangeException(nameof(mode));
-                    }
+                        throw new ArgumentOutOfRangeException(nameof(mode));
+                }
             }
         }
 

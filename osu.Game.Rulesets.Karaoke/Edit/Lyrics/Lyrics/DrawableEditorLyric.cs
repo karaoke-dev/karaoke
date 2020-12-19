@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             for (int i = 0; i < text.Length; i++)
             {
                 if (GetPercentageWidth(i, i + 1, 0.5f) > position)
-                    return new TimeTagIndex(i, TimeTagIndex.IndexState.Start);
+                    return new TimeTagIndex(i);
 
                 if (GetPercentageWidth(i, i + 1, 1f) > position)
                     return new TimeTagIndex(i, TimeTagIndex.IndexState.End);

@@ -112,15 +112,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
             // split or set time-tag by double click
             var timeTagIndex = stateManager.BindableHoverCursorPosition.Value.Index;
+
             switch (stateManager.Mode)
             {
                 case Mode.EditMode:
                     var splitPosition = TimeTagIndexUtils.ToLyricIndex(timeTagIndex);
                     lyricManager?.SplitLyric(Lyric, splitPosition);
                     return true;
+
                 case Mode.TimeTagEditMode:
                     // todo : might add or remove time-tag in here.
                     return false;
+
                 default:
                     return base.OnDoubleClick(e);
             }
@@ -179,7 +182,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                     drawableCursor.Preview = isPreview;
 
                 cursorContainer.Add(cursor);
-            };
+            }
 
             static Drawable createCursor(Mode mode)
             {
@@ -187,12 +190,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                 {
                     case Mode.ViewMode:
                         return null;
+
                     case Mode.EditMode:
                         return new DrawableLyricSplitterCursor();
+
                     case Mode.RecordMode:
                         return new DrawableTimeTagRecordCursor();
+
                     case Mode.TimeTagEditMode:
                         return new DrawableTimeTagEditCursor();
+
                     default:
                         throw new IndexOutOfRangeException(nameof(mode));
                 }
@@ -263,6 +270,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
                 drawableCursor.X = timeTagIndexPosition(index) + offset;
             }
+
             if (cursor is IHasCursorPosition cursorPosition)
             {
                 cursorPosition.CursorPosition = position;

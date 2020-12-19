@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public struct CursorPosition
+    public readonly struct CursorPosition
     {
         public CursorPosition(Lyric lyric, TimeTagIndex timeTagIndex)
         {

@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditorStateManager
     {
-        private EditorBeatmap beatmap { get; set; }
+        private EditorBeatmap beatmap { get; }
 
         public Bindable<Mode> BindableMode { get; } = new Bindable<Mode>();
 
@@ -26,6 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public void SetMode(Mode mode)
         {
             BindableMode.Value = mode;
+
             switch (mode)
             {
                 case Mode.RecordMode:
@@ -45,9 +46,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 case Mode.RecordMode:
                     return moveRecordCursor(action);
+
                 case Mode.EditMode:
                 case Mode.TimeTagEditMode:
                     return moveCursor(action);
+
                 default:
                     return false;
             }
