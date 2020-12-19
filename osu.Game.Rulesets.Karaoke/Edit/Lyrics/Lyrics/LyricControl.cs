@@ -125,19 +125,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                     lyricManager?.SplitLyric(Lyric, splitPosition);
                     return true;
 
-                case Mode.TimeTagEditMode:
-                    switch (e.Button)
-                    {
-                        case MouseButton.Left:
-                            return timeTagManager?.AddTimeTagByPosition(position) ?? false;
-
-                        case MouseButton.Right:
-                            return timeTagManager?.RemoveTimeTagByPosition(position) ?? false;
-
-                        default:
-                            return false;
-                    }
-
                 default:
                     return base.OnDoubleClick(e);
             }
