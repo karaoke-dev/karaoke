@@ -48,25 +48,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
             ScreenStack.Push(ImportLyricStep.Success);
         }
 
-        protected void AskForAutoGenerateTimeTag()
+        internal void AskForAutoGenerateTimeTag()
         {
             DialogOverlay.Push(new UseAutoGenerateTimeTagPopupDialog(ok =>
             {
                 if (ok)
                 {
                     timeTagManager.AutoGenerateTimeTags();
-                    // todo : should moving cursor to first
-                    // timeTagManager.MoveCursor(CursorAction.First);
+                    Navigation.State = NavigationState.Done;
                 }
             }));
         }
 
         public class GenerateTimeTagNavigation : TopNavigation<GenerateTimeTagSubScreen>
         {
+            private const string auto_generate_time_tag = "AUTO_GENERATE_TIME_TAG";
+
             public GenerateTimeTagNavigation(GenerateTimeTagSubScreen screen)
                 : base(screen)
             {
             }
+
+            protected override NavigationTextContainer CreateTextContainer()
+                => new GenerateTimeTagTextFlowContainer(Screen);
 
             protected override void UpdateState(NavigationState value)
             {
@@ -75,12 +79,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
                 switch (value)
                 {
                     case NavigationState.Initial:
-                        NavigationText = "Press button to auto-generate time tag. It's very easy.";
+                        NavigationText = $"Press [{auto_generate_time_tag}] to autu-generate time tag. It's very easy.";
                         break;
 
                     case NavigationState.Working:
                     case NavigationState.Done:
-                        NavigationText = "Cool";
+                        NavigationText = $"Cool, you can reset yout time-tag by pressing [{auto_generate_time_tag}]";
                         break;
 
                     case NavigationState.Error:
@@ -91,6 +95,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
             protected override bool AbleToNextStep(NavigationState value)
                 => value == NavigationState.Working || value == NavigationState.Done;
+
+            private class GenerateTimeTagTextFlowContainer : NavigationTextContainer
+            {
+                public GenerateTimeTagTextFlowContainer(GenerateTimeTagSubScreen screen)
+                {
+                    AddLinkFactory(auto_generate_time_tag, "auto generate time tag", () => screen.AskForAutoGenerateTimeTag());
+                }
+            }
         }
     }
 }

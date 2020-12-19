@@ -48,14 +48,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
             ScreenStack.Push(ImportLyricStep.AssignLanguage);
         }
 
+        internal void SwitchLyricEditorMode(Mode mode)
+        {
+            LyricEditor.Mode = mode;
+            Navigation.State = NavigationState.Working;
+        }
+
         public class EditLyricNavigation : TopNavigation<EditLyricSubScreen>
         {
+            private const string cutting_mode = "CUTTING_MODE";
+            private const string edit_mode = "EDIT_MODE";
+
             public EditLyricNavigation(EditLyricSubScreen screen)
                 : base(screen)
             {
             }
 
-            protected override TextFlowContainer CreateTextContainer()
+            protected override NavigationTextContainer CreateTextContainer()
                 => new EditLyricTextFlowContainer(Screen);
 
             protected override void UpdateState(NavigationState value)
@@ -65,12 +74,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                 switch (value)
                 {
                     case NavigationState.Initial:
-                        NavigationText = "Check and edit lyric if needed.";
+                        NavigationText = $"Does something looks weird? Try switching [{cutting_mode}] or [{edit_mode}] to edit your lyric.";
                         break;
 
                     case NavigationState.Working:
                     case NavigationState.Done:
-                        NavigationText = "Cool!";
+                        var mode = Screen.LyricEditor.Mode;
+                        switch (mode)
+                        {
+                            case Mode.EditMode:
+                                NavigationText = $"Cool! Try switching to [{cutting_mode}] if you wants to cut or combine lyric.";
+                                break;
+                            // todo : edit mode.
+                        }
                         break;
 
                     case NavigationState.Error:
@@ -79,11 +95,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                 }
             }
 
-            private class EditLyricTextFlowContainer : CustomizableTextContainer
+            protected override bool AbleToNextStep(NavigationState value)
+                => true;
+
+            private class EditLyricTextFlowContainer : NavigationTextContainer
             {
                 public EditLyricTextFlowContainer(EditLyricSubScreen screen)
                 {
-                    AddIconFactory("Hello", () => null);
+                    AddLinkFactory(cutting_mode, "cutting mode", () => screen.SwitchLyricEditorMode(Mode.EditMode));
+                    AddLinkFactory(edit_mode, "edit mode", () => screen.SwitchLyricEditorMode(Mode.EditMode));
                 }
             }
         }

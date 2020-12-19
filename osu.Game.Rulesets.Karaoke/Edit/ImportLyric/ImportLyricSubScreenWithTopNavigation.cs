@@ -6,7 +6,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 
@@ -65,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             protected ImportLyricSubScreen Screen { get; }
 
             private readonly CornerBackground background;
-            private readonly TextFlowContainer text;
+            private readonly NavigationTextContainer text;
             private readonly IconButton button;
 
             protected TopNavigation(ImportLyricSubScreen screen)
@@ -102,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 };
             }
 
-            protected virtual TextFlowContainer CreateTextContainer() => new TextFlowContainer();
+            protected abstract NavigationTextContainer CreateTextContainer();
 
             protected string NavigationText
             {
@@ -173,6 +175,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             protected virtual bool AbleToNextStep(NavigationState value) => value == NavigationState.Done;
 
             protected virtual void CompleteClicked() => Screen.Complete();
+
+            public class NavigationTextContainer : CustomizableTextContainer
+            {
+                protected void AddLinkFactory(string name, string text, Action action)
+                {
+                    AddIconFactory(name, () => new ClickableSpriteText
+                    {
+                        Font = new FontUsage(size: 20),
+                        Text = text,
+                        Action = action
+                    });
+                }
+
+                internal class ClickableSpriteText : OsuSpriteText
+                {
+                    public Action Action { get; set; }
+
+                    protected override bool OnClick(ClickEvent e)
+                    {
+                        Action?.Invoke();
+                        return base.OnClick(e);
+                    }
+
+                    [BackgroundDependencyLoader]
+                    private void load(OsuColour colours)
+                    {
+                        Colour = colours.Yellow;
+                    }
+                }
+            }
         }
 
         public enum NavigationState
