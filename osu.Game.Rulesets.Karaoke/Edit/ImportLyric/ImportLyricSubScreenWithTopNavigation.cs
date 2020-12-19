@@ -7,7 +7,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
-using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 
@@ -56,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             protected ImportLyricSubScreen Screen { get; }
 
             private readonly CornerBackground background;
-            private readonly OsuSpriteText text;
+            private readonly TextFlowContainer text;
             private readonly IconButton button;
 
             protected TopNavigation(ImportLyricSubScreen screen)
@@ -70,12 +69,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
-                    text = new OsuSpriteText
-                    {
-                        Anchor = Anchor.CentreLeft,
-                        Origin = Anchor.CentreLeft,
-                        Margin = new MarginPadding { Left = 15 }
-                    },
+                    text = CreateTextContainer(screen).With(t => {
+                        t.Anchor = Anchor.CentreLeft;
+                        t.Origin = Anchor.CentreLeft;
+                        t.RelativeSizeAxes = Axes.X;
+                        t.AutoSizeAxes = Axes.Y;
+                        t.Margin = new MarginPadding { Left = 15 };
+                    }),
                     button = new IconButton
                     {
                         Anchor = Anchor.CentreRight,
@@ -91,6 +91,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     }
                 };
             }
+
+            protected virtual TextFlowContainer CreateTextContainer(ImportLyricSubScreen screen) => new TextFlowContainer();
 
             protected string NavigationText
             {

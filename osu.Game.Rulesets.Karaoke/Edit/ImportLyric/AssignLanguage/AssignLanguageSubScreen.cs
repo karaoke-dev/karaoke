@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
@@ -76,6 +77,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             {
             }
 
+            protected override TextFlowContainer CreateTextContainer(ImportLyricSubScreen screen)
+                => new AssignLanguageTextFlowContainer(screen);
+
             protected override void UpdateState(NavigationState value)
             {
                 base.UpdateState(value);
@@ -97,6 +101,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
                     case NavigationState.Error:
                         NavigationText = "Oops, seems cause some error in here.";
                         break;
+                }
+            }
+
+            private class AssignLanguageTextFlowContainer : CustomizableTextContainer
+            {
+                public AssignLanguageTextFlowContainer(ImportLyricSubScreen screen)
+                {
+                    AddIconFactory("Hello", () => null);
                 }
             }
         }
