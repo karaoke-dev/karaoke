@@ -7,6 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -117,8 +118,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case Mode.EditMode:
                         return new TimeTagIndex(currentTimeTag.Index - 1, currentTimeTag.State);
                     case Mode.TimeTagEditMode:
-                        var nextIndex = currentTimeTag.Index + (currentTimeTag.State == TimeTagIndex.IndexState.End ? 1 : 0);
-                        var nextState = currentTimeTag.State == TimeTagIndex.IndexState.End ? TimeTagIndex.IndexState.Start : TimeTagIndex.IndexState.End;
+                        var nextIndex = TimeTagIndexUtils.ToLyricIndex(currentTimeTag) - 1;
+                        var nextState = TimeTagIndexUtils.ReverseState(currentTimeTag.State);
                         return new TimeTagIndex(nextIndex, nextState);
                     default:
                         throw new ArgumentOutOfRangeException(nameof(mode));
@@ -145,8 +146,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case Mode.EditMode:
                         return new TimeTagIndex(currentTimeTag.Index + 1, currentTimeTag.State);
                     case Mode.TimeTagEditMode:
-                        var nextIndex = currentTimeTag.Index + (currentTimeTag.State == TimeTagIndex.IndexState.End ? 1 : 0);
-                        var nextState = currentTimeTag.State == TimeTagIndex.IndexState.End ? TimeTagIndex.IndexState.Start : TimeTagIndex.IndexState.End;
+                        var nextIndex = TimeTagIndexUtils.ToLyricIndex(currentTimeTag);
+                        var nextState = TimeTagIndexUtils.ReverseState(currentTimeTag.State);
                         return new TimeTagIndex(nextIndex, nextState);
                     default:
                             throw new ArgumentOutOfRangeException(nameof(mode));

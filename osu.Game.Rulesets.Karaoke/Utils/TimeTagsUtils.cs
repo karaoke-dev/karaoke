@@ -45,8 +45,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             return new TimeTag(index, time);
 
-            int getTimeCalculationIndex(TimeTagIndex calculationIndex)
-                => calculationIndex.Index + (calculationIndex.State == TimeTagIndex.IndexState.End ? 1 : 0);
+            static int getTimeCalculationIndex(TimeTagIndex calculationIndex)
+                => TimeTagIndexUtils.ToLyricIndex(calculationIndex);
         }
 
         public static TimeTag GenerateCenterTimeTag(TimeTag startTimeTag, TimeTag endTimeTag, int index)

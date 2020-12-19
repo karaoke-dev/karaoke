@@ -11,6 +11,7 @@ using osu.Framework.Input.Events;
 using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 {
@@ -114,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             switch (stateManager.Mode)
             {
                 case Mode.EditMode:
-                    var splitPosition = timeTagIndex.Index + timeTagIndex.State == TimeTagIndex.IndexState.End ? 1 : 0;
+                    var splitPosition = TimeTagIndexUtils.ToLyricIndex(timeTagIndex);
                     lyricManager?.SplitLyric(Lyric, splitPosition);
                     return true;
                 case Mode.TimeTagEditMode:
@@ -252,8 +253,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
             if (cursor is Drawable drawableCursor)
             {
-                var spacing = timeTagIndexPosition(position.Index) - 10;
-                drawableCursor.X = spacing;
+                var index = position.Index;
+                if (stateManager.Mode == Mode.EditMode)
+                    index = new TimeTagIndex(TimeTagIndexUtils.ToLyricIndex(index));
+
+                var offset = 0;
+                if (stateManager.Mode == Mode.EditMode)
+                    offset = -10;
+
+                drawableCursor.X = timeTagIndexPosition(index) + offset;
             }
             if (cursor is IHasCursorPosition cursorPosition)
             {
