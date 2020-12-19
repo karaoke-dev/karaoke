@@ -47,6 +47,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         protected abstract Drawable CreateContent();
 
+        public abstract class TopNavigation<T> : TopNavigation where T : ImportLyricSubScreenWithTopNavigation
+        {
+            protected new T Screen => base.Screen as T;
+
+            protected TopNavigation(T screen)
+                : base(screen)
+            {
+            }
+        }
+
         public abstract class TopNavigation : Container
         {
             [Resolved]
@@ -69,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
-                    text = CreateTextContainer(screen).With(t => {
+                    text = CreateTextContainer().With(t => {
                         t.Anchor = Anchor.CentreLeft;
                         t.Origin = Anchor.CentreLeft;
                         t.RelativeSizeAxes = Axes.X;
@@ -92,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 };
             }
 
-            protected virtual TextFlowContainer CreateTextContainer(ImportLyricSubScreen screen) => new TextFlowContainer();
+            protected virtual TextFlowContainer CreateTextContainer() => new TextFlowContainer();
 
             protected string NavigationText
             {

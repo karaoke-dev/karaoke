@@ -5,12 +5,11 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 {
-    public class AssignLanguageSubScreen : ImportLyricSubScreenWithTopNavigation
+    public class AssignLanguageSubScreen : ImportLyricSubScreenWithLyricEditor
     {
         public override string Title => "Language";
 
@@ -28,26 +27,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             AddInternal(LyricManager = new LyricManager());
         }
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-            var clock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };
-            dependencies.CacheAs<IAdjustableClock>(clock);
-            dependencies.CacheAs<IFrameBasedClock>(clock);
-
-            return dependencies;
-        }
-
         protected override TopNavigation CreateNavigation()
             => new AssignLanguageNavigation(this);
 
         protected override Drawable CreateContent()
-            => new LyricEditor
+            => base.CreateContent().With(x =>
             {
-                RelativeSizeAxes = Axes.Both,
-                Mode = Mode.ViewMode,
-                LyricFastEditMode = LyricFastEditMode.Language,
-            };
+                LyricEditor.Mode = Mode.ViewMode;
+                LyricEditor.LyricFastEditMode = LyricFastEditMode.Language;
+            });
 
         protected override void LoadComplete()
         {
@@ -70,15 +58,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             }));
         }
 
-        public class AssignLanguageNavigation : TopNavigation
+        public class AssignLanguageNavigation : TopNavigation<AssignLanguageSubScreen>
         {
-            public AssignLanguageNavigation(ImportLyricSubScreen screen)
+            public AssignLanguageNavigation(AssignLanguageSubScreen screen)
                 : base(screen)
             {
             }
 
-            protected override TextFlowContainer CreateTextContainer(ImportLyricSubScreen screen)
-                => new AssignLanguageTextFlowContainer(screen);
+            protected override TextFlowContainer CreateTextContainer()
+                => new AssignLanguageTextFlowContainer(Screen);
 
             protected override void UpdateState(NavigationState value)
             {
@@ -106,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 
             private class AssignLanguageTextFlowContainer : CustomizableTextContainer
             {
-                public AssignLanguageTextFlowContainer(ImportLyricSubScreen screen)
+                public AssignLanguageTextFlowContainer(AssignLanguageSubScreen screen)
                 {
                     AddIconFactory("Hello", () => null);
                 }

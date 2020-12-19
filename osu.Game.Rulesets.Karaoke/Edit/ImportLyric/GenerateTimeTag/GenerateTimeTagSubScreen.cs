@@ -4,12 +4,11 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 {
-    public class GenerateTimeTagSubScreen : ImportLyricSubScreenWithTopNavigation
+    public class GenerateTimeTagSubScreen : ImportLyricSubScreenWithLyricEditor
     {
         public override string Title => "Generate time tag";
 
@@ -27,26 +26,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
             AddInternal(timeTagManager = new TimeTagManager());
         }
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-            var clock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };
-            dependencies.CacheAs<IAdjustableClock>(clock);
-            dependencies.CacheAs<IFrameBasedClock>(clock);
-
-            return dependencies;
-        }
-
         protected override TopNavigation CreateNavigation()
             => new GenerateTimeTagNavigation(this);
 
         protected override Drawable CreateContent()
-            => new LyricEditor
+            => base.CreateContent().With(x =>
             {
-                RelativeSizeAxes = Axes.Both,
-                Mode = Mode.TimeTagEditMode,
-                LyricFastEditMode = LyricFastEditMode.Language,
-            };
+                LyricEditor.Mode = Mode.TimeTagEditMode;
+                LyricEditor.LyricFastEditMode = LyricFastEditMode.Language;
+            });
 
         protected override void LoadComplete()
         {

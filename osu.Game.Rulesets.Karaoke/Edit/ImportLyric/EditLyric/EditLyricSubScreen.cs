@@ -5,12 +5,11 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 {
-    public class EditLyricSubScreen : ImportLyricSubScreenWithTopNavigation
+    public class EditLyricSubScreen : ImportLyricSubScreenWithLyricEditor
     {
         public override string Title => "Edit lyric";
 
@@ -28,26 +27,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
             AddInternal(LyricManager = new LyricManager());
         }
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-            var clock = new DecoupleableInterpolatingFramedClock { IsCoupled = false };
-            dependencies.CacheAs<IAdjustableClock>(clock);
-            dependencies.CacheAs<IFrameBasedClock>(clock);
-
-            return dependencies;
-        }
-
         protected override TopNavigation CreateNavigation()
             => new EditLyricNavigation(this);
 
         protected override Drawable CreateContent()
-            => new LyricEditor
+            => base.CreateContent().With(x =>
             {
-                RelativeSizeAxes = Axes.Both,
-                Mode = Mode.EditMode,
-                LyricFastEditMode = LyricFastEditMode.None,
-            };
+                LyricEditor.Mode = Mode.EditMode;
+                LyricEditor.LyricFastEditMode = LyricFastEditMode.None;
+            });
 
         protected override void LoadComplete()
         {
@@ -60,15 +48,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
             ScreenStack.Push(ImportLyricStep.AssignLanguage);
         }
 
-        public class EditLyricNavigation : TopNavigation
+        public class EditLyricNavigation : TopNavigation<EditLyricSubScreen>
         {
             public EditLyricNavigation(EditLyricSubScreen screen)
                 : base(screen)
             {
             }
 
-            protected override TextFlowContainer CreateTextContainer(ImportLyricSubScreen screen)
-                => new EditLyricTextFlowContainer(screen);
+            protected override TextFlowContainer CreateTextContainer()
+                => new EditLyricTextFlowContainer(Screen);
 
             protected override void UpdateState(NavigationState value)
             {
@@ -93,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 
             private class EditLyricTextFlowContainer : CustomizableTextContainer
             {
-                public EditLyricTextFlowContainer(ImportLyricSubScreen screen)
+                public EditLyricTextFlowContainer(EditLyricSubScreen screen)
                 {
                     AddIconFactory("Hello", () => null);
                 }
