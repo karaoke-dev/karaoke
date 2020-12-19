@@ -130,6 +130,51 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return true;
         }
 
+        public bool AddTimeTagByPosition(CursorPosition position)
+        {
+            var lyric = position.Lyric;
+            var timeTagIndex = position.Index;
+            if (!beatmap.HitObjects.Contains(lyric))
+                return false;
+
+            var timeTags = lyric.TimeTags.ToList();
+            var targetTimeTag = timeTags.FirstOrDefault(x => x.Index >= timeTagIndex);
+            if (targetTimeTag == null)
+                return false;
+
+            changeHandler?.BeginChange();
+
+            var insertIndex = timeTags.IndexOf(targetTimeTag);
+            timeTags.Insert(insertIndex, new TimeTag(timeTagIndex));
+            lyric.TimeTags = timeTags.ToArray();
+
+            changeHandler?.EndChange();
+
+            return false;
+        }
+
+        public bool RemoveTimeTagByPosition(CursorPosition position)
+        {
+            var lyric = position.Lyric;
+            var timeTagIndex = position.Index;
+            if (!beatmap.HitObjects.Contains(lyric))
+                return false;
+
+            var timeTags = lyric.TimeTags.ToList();
+            var targetTimeTag = timeTags.FirstOrDefault(x => x.Index == timeTagIndex);
+            if (targetTimeTag == null)
+                return false;
+
+            changeHandler?.BeginChange();
+
+            timeTags.Remove(targetTimeTag);
+            lyric.TimeTags = timeTags.ToArray();
+
+            changeHandler?.EndChange();
+
+            return false;
+        }
+
         private void refreshTimeTag(Lyric lyric)
             => lyric.TimeTags = lyric.TimeTags.ToArray();
 

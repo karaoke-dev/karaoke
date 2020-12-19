@@ -12,6 +12,7 @@ using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osuTK.Input;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 {
@@ -25,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
         [Resolved(canBeNull: true)]
         private LyricManager lyricManager { get; set; }
+
+        [Resolved(canBeNull: true)]
+        private TimeTagManager timeTagManager { get; set; }
 
         [Resolved]
         private LyricEditorStateManager stateManager { get; set; }
@@ -102,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             var timeTagIndex = stateManager.BindableHoverCursorPosition.Value.Index;
             stateManager.MoveCursorToTargetPosition(Lyric, timeTagIndex);
 
-            return base.OnClick(e);
+            return true;
         }
 
         protected override bool OnDoubleClick(DoubleClickEvent e)
@@ -110,19 +114,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             if (!isTrigger(stateManager.Mode))
                 return false;
 
-            // split or set time-tag by double click
-            var timeTagIndex = stateManager.BindableHoverCursorPosition.Value.Index;
+            // todo : not really sure is ok to split time-tag by double cliek?
+            // need to make an ux research.
+            var position = stateManager.BindableHoverCursorPosition.Value;
 
             switch (stateManager.Mode)
             {
                 case Mode.EditMode:
-                    var splitPosition = TimeTagIndexUtils.ToLyricIndex(timeTagIndex);
+                    var splitPosition = TimeTagIndexUtils.ToLyricIndex(position.Index);
                     lyricManager?.SplitLyric(Lyric, splitPosition);
                     return true;
 
                 case Mode.TimeTagEditMode:
-                    // todo : might add or remove time-tag in here.
-                    return false;
+                    switch (e.Button)
+                    {
+                        case MouseButton.Left:
+                            return timeTagManager?.AddTimeTagByPosition(position) ?? false;
+
+                        case MouseButton.Right:
+                            return timeTagManager?.RemoveTimeTagByPosition(position) ?? false;
+
+                        default:
+                            return false;
+                    }
 
                 default:
                     return base.OnDoubleClick(e);

@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(canBeNull: true)]
         private TimeTagManager timeTagManager { get; set; }
 
-        private LyricEditorStateManager lyricEditorStateManager;
+        private LyricEditorStateManager stateManager;
 
         private readonly KaraokeLyricEditorSkin skin;
         private readonly DrawableLyricEditList container;
@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private void load()
         {
             // todo : might not place into here.
-            dependencies.Cache(lyricEditorStateManager = new LyricEditorStateManager(beatmap));
+            dependencies.Cache(stateManager = new LyricEditorStateManager(beatmap));
 
             foreach (var obj in beatmap.HitObjects)
                 Schedule(() => addHitObject(obj));
@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             beatmap.HitObjectAdded += addHitObject;
             beatmap.HitObjectRemoved += removeHitObject;
 
-            lyricEditorStateManager.MoveCursor(CursorAction.First);
+            stateManager.MoveCursor(CursorAction.First);
         }
 
         protected override bool OnKeyDown(KeyDownEvent e)
@@ -71,57 +71,97 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (timeTagManager == null)
                 return false;
 
-            // moving cursor action
-            switch (e.Key)
+            var isMoving = HandleMovingEvent(e.Key);
+            if (isMoving)
+                return true;
+
+            switch (stateManager.Mode)
             {
-                case Key.Up:
-                    return lyricEditorStateManager.MoveCursor(CursorAction.MoveUp);
+                case Mode.ViewMode:
+                    return false;
 
-                case Key.Down:
-                    return lyricEditorStateManager.MoveCursor(CursorAction.MoveDown);
+                case Mode.EditMode:
+                    return false;
 
-                case Key.Left:
-                    return lyricEditorStateManager.MoveCursor(CursorAction.MoveLeft);
+                case Mode.RecordMode:
+                    return HandleSetTimeEvent(e.Key);
 
-                case Key.Right:
-                    return lyricEditorStateManager.MoveCursor(CursorAction.MoveRight);
-
-                case Key.PageUp:
-                    return lyricEditorStateManager.MoveCursor(CursorAction.First);
-
-                case Key.PageDown:
-                    return lyricEditorStateManager.MoveCursor(CursorAction.Last);
-            }
-
-            if (lyricEditorStateManager.Mode != Mode.TimeTagEditMode)
-                return false;
-
-            // edit time tag action
-            var currentTimeTag = lyricEditorStateManager.BindableRecordCursorPosition.Value;
-
-            switch (e.Key)
-            {
-                case Key.BackSpace:
-                    return (bool)timeTagManager?.ClearTimeTagTime(currentTimeTag);
-
-                case Key.Space:
-                    var setTimeSuccess = (bool)timeTagManager?.SetTimeTagTime(currentTimeTag);
-                    if (setTimeSuccess)
-                        lyricEditorStateManager.MoveCursor(CursorAction.MoveRight);
-                    return setTimeSuccess;
-
-                case Key.N:
-                    var createdTimeTag = timeTagManager?.AddTimeTag(currentTimeTag);
-                    if (createdTimeTag != null)
-                        lyricEditorStateManager.MoveRecordCursorToTargetPosition(createdTimeTag);
-                    return createdTimeTag != null;
-
-                case Key.Delete:
-                    lyricEditorStateManager.MoveCursor(CursorAction.MoveRight);
-                    return (bool)timeTagManager?.RemoveTimeTag(currentTimeTag);
+                case Mode.TimeTagEditMode:
+                    return HandleCreateOrDeleterTimeTagEvent(e.Key);
 
                 default:
-                    return base.OnKeyDown(e);
+                    return false;
+            }
+        }
+
+        protected bool HandleMovingEvent(Key key)
+        {
+            // moving cursor action
+            switch (key)
+            {
+                case Key.Up:
+                    return stateManager.MoveCursor(CursorAction.MoveUp);
+
+                case Key.Down:
+                    return stateManager.MoveCursor(CursorAction.MoveDown);
+
+                case Key.Left:
+                    return stateManager.MoveCursor(CursorAction.MoveLeft);
+
+                case Key.Right:
+                    return stateManager.MoveCursor(CursorAction.MoveRight);
+
+                case Key.PageUp:
+                    return stateManager.MoveCursor(CursorAction.First);
+
+                case Key.PageDown:
+                    return stateManager.MoveCursor(CursorAction.Last);
+
+                default:
+                    return false;
+            }
+        }
+
+        protected bool HandleSetTimeEvent(Key key)
+        {
+            var currentTimeTag = stateManager.BindableRecordCursorPosition.Value;
+
+            if (timeTagManager == null)
+                return false;
+
+            switch (key)
+            {
+                case Key.BackSpace:
+                    return timeTagManager.ClearTimeTagTime(currentTimeTag);
+
+                case Key.Space:
+                    var setTimeSuccess = timeTagManager.SetTimeTagTime(currentTimeTag);
+                    if (setTimeSuccess)
+                        stateManager.MoveCursor(CursorAction.MoveRight);
+                    return setTimeSuccess;
+
+                default:
+                    return false;
+            }
+        }
+
+        protected bool HandleCreateOrDeleterTimeTagEvent(Key key)
+        {
+            var position = stateManager.BindableCursorPosition.Value;
+
+            if (timeTagManager == null)
+                return false;
+
+            switch (key)
+            {
+                case Key.N:
+                    return timeTagManager.AddTimeTagByPosition(position);
+
+                case Key.Delete:
+                    return timeTagManager.RemoveTimeTagByPosition(position);
+
+                default:
+                    return false;
             }
         }
 
@@ -161,14 +201,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Mode Mode
         {
-            get => lyricEditorStateManager.Mode;
-            set => ScheduleAfterChildren(() => lyricEditorStateManager.SetMode(value));
+            get => stateManager.Mode;
+            set => ScheduleAfterChildren(() => stateManager.SetMode(value));
         }
 
         public LyricFastEditMode LyricFastEditMode
         {
-            get => lyricEditorStateManager.FastEditMode;
-            set => ScheduleAfterChildren(() => lyricEditorStateManager.SetFastEditMode(value));
+            get => stateManager.FastEditMode;
+            set => ScheduleAfterChildren(() => stateManager.SetFastEditMode(value));
         }
     }
 }
