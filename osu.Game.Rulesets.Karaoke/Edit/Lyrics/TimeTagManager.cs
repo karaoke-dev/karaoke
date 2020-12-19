@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             var timeTags = lyric.TimeTags.ToList();
-            var targetTimeTag = timeTags.FirstOrDefault(x => x.Index >= timeTagIndex);
+            var targetTimeTag = timeTags.FirstOrDefault(x => x.Index >= timeTagIndex) ?? timeTags.LastOrDefault();
             if (targetTimeTag == null)
                 return false;
 
