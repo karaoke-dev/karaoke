@@ -32,6 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 case Mode.ViewMode:
                 case Mode.EditMode:
+                case Mode.TypingMode:
                     return;
 
                 case Mode.RecordMode:
@@ -58,10 +59,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case Mode.ViewMode:
                     return false;
 
+                case Mode.EditMode:
+                case Mode.TypingMode:
+                    return moveCursor(action);
+
                 case Mode.RecordMode:
                     return moveRecordCursor(action);
-
-                case Mode.EditMode:
+                
                 case Mode.TimeTagEditMode:
                     return moveCursor(action);
 
@@ -82,6 +86,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// Can create/delete/mode/split/combine lyric.
         /// </summary>
         EditMode,
+
+        /// <summary>
+        /// Able to typing lyric.
+        /// </summary>
+        TypingMode,
 
         /// <summary>
         /// Click white-space to set current time into time-tag.

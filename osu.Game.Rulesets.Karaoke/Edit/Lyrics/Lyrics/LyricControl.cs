@@ -12,6 +12,7 @@ using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 {
@@ -194,6 +195,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                     case Mode.EditMode:
                         return new DrawableLyricSplitterCursor();
 
+                    case Mode.TypingMode:
+                        return new DrawableLyricInputCursor();
+
                     case Mode.RecordMode:
                         return new DrawableTimeTagRecordCursor();
 
@@ -265,10 +269,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                     index = new TimeTagIndex(TimeTagIndexUtils.ToLyricIndex(index));
 
                 var offset = 0;
-                if (stateManager.Mode == Mode.EditMode)
+                if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)
                     offset = -10;
 
-                drawableCursor.X = timeTagIndexPosition(index) + offset;
+                var pos = new Vector2(timeTagIndexPosition(index) + offset, 0);
+                if (cursor is DrawableLyricInputCursor inputCursor)
+                {
+                    inputCursor.DisplayAt(pos, 0);
+                }
+                else
+                {
+                    drawableCursor.Position = pos;
+                }
             }
 
             if (cursor is IHasCursorPosition cursorPosition)
@@ -295,6 +307,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         }
 
         private bool isTrigger(Mode mode)
-            => mode == Mode.EditMode || mode == Mode.TimeTagEditMode;
+            => mode == Mode.EditMode || mode == Mode.TypingMode || mode == Mode.TimeTagEditMode;
     }
 }
