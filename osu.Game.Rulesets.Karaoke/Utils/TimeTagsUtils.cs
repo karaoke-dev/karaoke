@@ -126,14 +126,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                             if (maxStartTime == null)
                                 return null;
 
-                            return endTimeGroup.Where(x => x.Time.Value < maxStartTime.Value).ToList();
+                            return endTimeGroup.Where(x => x.Time != null && x.Time.Value < maxStartTime.Value).ToList();
 
                         case SelfCheck.BasedOnEnd:
                             var minEndTime = endTimeGroup.Min(x => x.Time);
                             if (minEndTime == null)
                                 return null;
 
-                            return startTimeGroup.Where(x => x.Time.Value > minEndTime.Value).ToList();
+                            return startTimeGroup.Where(x => x.Time != null && x.Time.Value > minEndTime.Value).ToList();
 
                         default:
                             return null;
@@ -241,7 +241,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     return x.FirstOrDefault();
                 else
                     return x.LastOrDefault();
-            }).ToDictionary(k => k.Index, v => v.Time ?? throw new ArgumentNullException("Dictionaty should not have null value"));
+            }).ToDictionary(k => k?.Index ?? throw new ArgumentNullException(nameof(k)), v => v?.Time ?? throw new ArgumentNullException(nameof(v)));
         }
 
         /// <summary>

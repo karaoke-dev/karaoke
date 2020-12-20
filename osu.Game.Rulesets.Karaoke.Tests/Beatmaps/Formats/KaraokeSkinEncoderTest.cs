@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
     public class KaraokeSkinEncoderTest
     {
         private static IEnumerable<string> allSkins => TestResources.GetStore().GetAvailableResources()
-                                                                    .Where(res => res.EndsWith(".skin")).Select(Path.GetFileNameWithoutExtension);
+                                                                    .Where(res => res.EndsWith(".skin", StringComparison.Ordinal)).Select(Path.GetFileNameWithoutExtension);
 
         [TestCaseSource(nameof(allSkins))]
         public void TestDecodeEncodedSkin(string name)

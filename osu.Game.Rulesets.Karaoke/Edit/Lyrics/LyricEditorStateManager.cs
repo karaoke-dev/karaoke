@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 case Mode.RecordMode:
                     return moveRecordCursor(action);
-                
+
                 case Mode.TimeTagEditMode:
                     return moveCursor(action);
 

@@ -157,26 +157,28 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             {
                 var endPosition = position + count;
                 return tags?.SkipWhile(x => x.StartIndex >= position && x.EndIndex <= endPosition)
-                .Select(x =>
-                {
-                    if (x.StartIndex < position)
-                        x.EndIndex = Math.Min(x.EndIndex, position);
-                    if (x.EndIndex > position)
-                    {
-                        x.StartIndex = Math.Max(x.StartIndex, endPosition) - count;
-                        x.EndIndex -= count;
-                    }
-                    return x;
-                })
-                .ToArray();
+                           .Select(x =>
+                           {
+                               if (x.StartIndex < position)
+                                   x.EndIndex = Math.Min(x.EndIndex, position);
+
+                               if (x.EndIndex > position)
+                               {
+                                   x.StartIndex = Math.Max(x.StartIndex, endPosition) - count;
+                                   x.EndIndex -= count;
+                               }
+
+                               return x;
+                           })
+                           .ToArray();
             }
 
             static TimeTag[] processTimeTags(TimeTag[] timeTags, int position, int count)
             {
                 var endPosition = position + count;
                 return timeTags?.Where(x => !(x.Index.Index >= position && x.Index.Index < endPosition))
-                    .Select(t => t.Index.Index > position ? TimeTagsUtils.ShiftingTimeTag(t, -count) : t)
-                    .ToArray();
+                               .Select(t => t.Index.Index > position ? TimeTagsUtils.ShiftingTimeTag(t, -count) : t)
+                               .ToArray();
             }
         }
 
@@ -198,20 +200,20 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             lyric.TimeTags = processTimeTags(lyric.TimeTags, position, shiftingLength);
 
             // deal with text
-            var newLyric = lyric.Text?.Substring(0, position) + text +  lyric.Text?[position..];
+            var newLyric = lyric.Text?.Substring(0, position) + text + lyric.Text?[position..];
             lyric.Text = newLyric;
 
             static T[] processTags<T>(T[] tags, int position, int shiftingLength) where T : ITextTag
             {
                 return tags?.Select(x =>
-                {
-                    if (x.StartIndex >= position)
-                        x.StartIndex += shiftingLength;
-                    if (x.EndIndex > position)
-                        x.EndIndex += shiftingLength;
-                    return x;
-                })
-                .ToArray();
+                           {
+                               if (x.StartIndex >= position)
+                                   x.StartIndex += shiftingLength;
+                               if (x.EndIndex > position)
+                                   x.EndIndex += shiftingLength;
+                               return x;
+                           })
+                           .ToArray();
             }
 
             static TimeTag[] processTimeTags(TimeTag[] timeTags, int startPosition, int shifting)

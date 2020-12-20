@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             var useTranslate = getValue<bool>(KaraokeRulesetSetting.UseTranslate);
             var preferLanguage = getValue<CultureInfo>(KaraokeRulesetSetting.PreferLanguage);
             var availableTranslate = beatmap?.AvailableTranslates();
-            var selectedLanguage = availableTranslate?.FirstOrDefault(t => t == preferLanguage) ?? availableTranslate?.FirstOrDefault();
+            var selectedLanguage = availableTranslate?.FirstOrDefault(t => Equals(t, preferLanguage)) ?? availableTranslate?.FirstOrDefault();
             Set(KaraokeRulesetSession.UseTranslate, useTranslate);
             Set(KaraokeRulesetSession.PreferLanguage, selectedLanguage);
 
