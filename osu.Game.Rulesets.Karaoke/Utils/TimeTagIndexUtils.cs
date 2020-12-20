@@ -22,5 +22,10 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             return TimeTagIndex.IndexState.Start;
         }
+
+        public static TimeTagIndex ShiftingTimeTagIndex(TimeTagIndex originTimeTagIndex, int shifting)
+        {
+            return new TimeTagIndex(originTimeTagIndex.Index + shifting, originTimeTagIndex.State);
+        }
     }
 }
