@@ -265,7 +265,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             if (cursor is Drawable drawableCursor)
             {
                 var index = position.Index;
-                if (stateManager.Mode == Mode.EditMode)
+                if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)
                     index = new TimeTagIndex(TimeTagIndexUtils.ToLyricIndex(index));
 
                 var offset = 0;
