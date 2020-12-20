@@ -138,8 +138,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var position = stateManager.BindableCursorPosition.Value;
             switch (key)
             {
-                // todo : delete single word
                 case Key.BackSpace:
+                    // delete single character.
                     var deletedSuccess = lyricManager.DeleteLyricText(position);
                     if (deletedSuccess)
                         stateManager.MoveCursor(CursorAction.MoveLeft);
