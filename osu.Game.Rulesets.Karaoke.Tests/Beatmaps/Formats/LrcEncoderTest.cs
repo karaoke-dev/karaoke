@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
     public class LrcEncoderTest
     {
         private static IEnumerable<string> allLrcFileNames => TestResources.GetStore().GetAvailableResources()
-                                                                           .Where(res => res.EndsWith(".lrc")).Select(Path.GetFileNameWithoutExtension);
+                                                                           .Where(res => res.EndsWith(".lrc", StringComparison.Ordinal)).Select(Path.GetFileNameWithoutExtension);
 
         [TestCaseSource(nameof(allLrcFileNames))]
         public void TestDecodeEncodedBeatmap(string fileName)

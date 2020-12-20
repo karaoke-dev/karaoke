@@ -44,27 +44,27 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 return;
             }
 
-            if (line.ToLower().StartsWith("@ruby") || line.ToLower().StartsWith("@romaji"))
+            if (line.ToLower().StartsWith("@ruby", StringComparison.Ordinal) || line.ToLower().StartsWith("@romaji", StringComparison.Ordinal))
             {
                 // lrc queue
                 lrcLines.Add(line);
             }
-            else if (line.ToLower().StartsWith("@note"))
+            else if (line.ToLower().StartsWith("@note", StringComparison.Ordinal))
             {
                 // add tone line queue
                 noteLines.Add(line);
             }
-            else if (line.ToLower().StartsWith("@style"))
+            else if (line.ToLower().StartsWith("@style", StringComparison.Ordinal))
             {
                 // add style queue
                 lyricStyles.Add(line);
             }
-            else if (line.ToLower().StartsWith("@tr"))
+            else if (line.ToLower().StartsWith("@tr", StringComparison.Ordinal))
             {
                 // add translate queue
                 translates.Add(line);
             }
-            else if (line.StartsWith("@"))
+            else if (line.StartsWith("@", StringComparison.Ordinal))
             {
                 // Remove @ in time tag and add into lrc queue
                 lrcLines.Add(line.Substring(1));
@@ -127,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     var defaultNote = defaultNotes[i];
 
                     // Support multi note in one time tag, format like ([1;0.5;か]|1#|...)
-                    if (!note.StartsWith("(") || !note.EndsWith(")"))
+                    if (!note.StartsWith("(", StringComparison.Ordinal) || !note.EndsWith(")", StringComparison.Ordinal))
                     {
                         // Process and add note
                         applyNote(defaultNote, note);
@@ -147,7 +147,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                             string ruby = defaultNote.AlternativeText?.ElementAtOrDefault(j).ToString();
 
                             // Format like [1;0.5;か]
-                            if (note.StartsWith("[") && note.EndsWith("]"))
+                            if (note.StartsWith("[", StringComparison.Ordinal) && note.EndsWith("]", StringComparison.Ordinal))
                             {
                                 var rubyNoteProperty = note.Replace("[", "").Replace("]", "").Split(';');
 
