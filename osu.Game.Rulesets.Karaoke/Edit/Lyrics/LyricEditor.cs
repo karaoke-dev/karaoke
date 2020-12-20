@@ -1,11 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
@@ -20,6 +22,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Resolved(canBeNull: true)]
         private TimeTagManager timeTagManager { get; set; }
+
+        [Resolved(canBeNull: true)]
+        private LyricManager lyricManager { get; set; }
 
         private LyricEditorStateManager stateManager;
 
@@ -83,6 +88,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case Mode.EditMode:
                     return false;
 
+                case Mode.TypingMode:
+                    return HandleTypingEvent(e.Key);
+
                 case Mode.RecordMode:
                     return HandleSetTimeEvent(e.Key);
 
@@ -90,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return HandleCreateOrDeleterTimeTagEvent(e.Key);
 
                 default:
-                    return false;
+                    throw new IndexOutOfRangeException(nameof(stateManager.Mode));
             }
         }
 
@@ -122,13 +130,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        protected bool HandleSetTimeEvent(Key key)
+        protected bool HandleTypingEvent(Key key)
         {
-            var currentTimeTag = stateManager.BindableRecordCursorPosition.Value;
-
             if (timeTagManager == null)
                 return false;
 
+            var position = stateManager.BindableCursorPosition.Value;
+            switch (key)
+            {
+                case Key.BackSpace:
+                    // delete single character.
+                    var deletedSuccess = lyricManager.DeleteLyricText(position);
+                    if (deletedSuccess)
+                        stateManager.MoveCursor(CursorAction.MoveLeft);
+                    return deletedSuccess;
+
+                default:
+                    return false;
+            }
+        }
+
+        protected bool HandleSetTimeEvent(Key key)
+        {
+            if (timeTagManager == null)
+                return false;
+
+            var currentTimeTag = stateManager.BindableRecordCursorPosition.Value;
             switch (key)
             {
                 case Key.BackSpace:
@@ -147,11 +174,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         protected bool HandleCreateOrDeleterTimeTagEvent(Key key)
         {
-            var position = stateManager.BindableCursorPosition.Value;
-
             if (timeTagManager == null)
                 return false;
 
+            var position = stateManager.BindableCursorPosition.Value;
             switch (key)
             {
                 case Key.N:

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Bindables;
 using osu.Game.Screens.Edit;
 
@@ -29,9 +30,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             switch (mode)
             {
+                case Mode.ViewMode:
+                case Mode.EditMode:
+                case Mode.TypingMode:
+                    return;
+
                 case Mode.RecordMode:
                     MoveCursor(CursorAction.First);
                     return;
+
+                case Mode.TimeTagEditMode:
+                    return;
+
+                default:
+                    throw new IndexOutOfRangeException(nameof(Mode));
             }
         }
 
@@ -44,15 +56,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             switch (Mode)
             {
-                case Mode.RecordMode:
-                    return moveRecordCursor(action);
+                case Mode.ViewMode:
+                    return false;
 
                 case Mode.EditMode:
+                case Mode.TypingMode:
+                    return moveCursor(action);
+
+                case Mode.RecordMode:
+                    return moveRecordCursor(action);
+                
                 case Mode.TimeTagEditMode:
                     return moveCursor(action);
 
                 default:
-                    return false;
+                    throw new IndexOutOfRangeException(nameof(Mode));
             }
         }
     }
@@ -68,6 +86,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// Can create/delete/mode/split/combine lyric.
         /// </summary>
         EditMode,
+
+        /// <summary>
+        /// Able to typing lyric.
+        /// </summary>
+        TypingMode,
 
         /// <summary>
         /// Click white-space to set current time into time-tag.

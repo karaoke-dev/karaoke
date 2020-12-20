@@ -60,5 +60,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             changeHandler?.EndChange();
         }
+
+        public bool DeleteLyricText(CursorPosition position)
+        {
+            var lyric = position.Lyric;
+            var index = TimeTagIndexUtils.ToLyricIndex(position.Index);
+            if (index <= 0)
+                return false;
+
+            changeHandler?.BeginChange();
+
+            LyricUtils.RemoveText(lyric, index - 1);
+
+            changeHandler?.EndChange();
+
+            return true;
+        }
     }
 }

@@ -117,6 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 switch (mode)
                 {
                     case Mode.EditMode:
+                    case Mode.TypingMode:
                         return new TimeTagIndex(currentTimeTag.Index - 1, currentTimeTag.State);
 
                     case Mode.TimeTagEditMode:
@@ -149,6 +150,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 switch (mode)
                 {
                     case Mode.EditMode:
+                    case Mode.TypingMode:
                         return new TimeTagIndex(currentTimeTag.Index + 1, currentTimeTag.State);
 
                     case Mode.TimeTagEditMode:
