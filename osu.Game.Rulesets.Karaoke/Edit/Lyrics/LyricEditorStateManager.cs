@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Bindables;
 using osu.Game.Screens.Edit;
 
@@ -29,9 +30,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             switch (mode)
             {
+                case Mode.ViewMode:
+                case Mode.EditMode:
+                    return;
+
                 case Mode.RecordMode:
                     MoveCursor(CursorAction.First);
                     return;
+
+                case Mode.TimeTagEditMode:
+                    return;
+
+                default:
+                    throw new IndexOutOfRangeException(nameof(Mode));
             }
         }
 
@@ -44,6 +55,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             switch (Mode)
             {
+                case Mode.ViewMode:
+                    return false;
+
                 case Mode.RecordMode:
                     return moveRecordCursor(action);
 
@@ -52,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return moveCursor(action);
 
                 default:
-                    return false;
+                    throw new IndexOutOfRangeException(nameof(Mode));
             }
         }
     }
