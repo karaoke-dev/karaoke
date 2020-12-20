@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
     public class DrawableLyricInputCursor : Caret, IDrawableCursor
     {
         private const float caret_move_time = 60;
-        private const float caret_width = 5;
+        private const float caret_width = 3;
 
         [Resolved]
         private OsuColour colours { get; set; }
@@ -40,11 +40,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 
         public override void DisplayAt(Vector2 position, float? selectionWidth)
         {
+            var displayAnimation = Alpha > 0;
+            var time = displayAnimation ? 60 : 0;
+
             if (selectionWidth != null)
             {
                 var selectionColour = colours.Yellow;
 
-                this.MoveTo(new Vector2(position.X, position.Y), 60, Easing.Out);
+                this.MoveTo(new Vector2(position.X, position.Y), time, Easing.Out);
                 this.ResizeWidthTo(selectionWidth.Value + caret_width / 2, caret_move_time, Easing.Out);
                 this
                     .FadeTo(0.5f, 200, Easing.Out)
@@ -52,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
             }
             else
             {
-                this.MoveTo(new Vector2(position.X - caret_width / 2, position.Y), 60, Easing.Out);
+                this.MoveTo(new Vector2(position.X - caret_width / 2, position.Y), time, Easing.Out);
                 this.ResizeWidthTo(caret_width, caret_move_time, Easing.Out);
                 this
                     .FadeColour(Color4.White, 200, Easing.Out)

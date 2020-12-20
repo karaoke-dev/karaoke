@@ -260,33 +260,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                 return;
             }
 
-            cursor.Show();
+            if (!(cursor is Drawable drawableCursor))
+                return;
 
-            if (cursor is Drawable drawableCursor)
+            var index = position.Index;
+            if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)
+                index = new TimeTagIndex(TimeTagIndexUtils.ToLyricIndex(index));
+
+            var offset = 0;
+            if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)
+                offset = -10;
+
+            var pos = new Vector2(timeTagIndexPosition(index) + offset, 0);
+            if (cursor is DrawableLyricInputCursor inputCursor)
             {
-                var index = position.Index;
-                if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)
-                    index = new TimeTagIndex(TimeTagIndexUtils.ToLyricIndex(index));
-
-                var offset = 0;
-                if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)
-                    offset = -10;
-
-                var pos = new Vector2(timeTagIndexPosition(index) + offset, 0);
-                if (cursor is DrawableLyricInputCursor inputCursor)
-                {
-                    inputCursor.DisplayAt(pos, 0);
-                }
-                else
-                {
-                    drawableCursor.Position = pos;
-                }
+                inputCursor.DisplayAt(pos, null);
+            }
+            else
+            {
+                drawableCursor.Position = pos;
             }
 
             if (cursor is IHasCursorPosition cursorPosition)
             {
                 cursorPosition.CursorPosition = position;
             }
+
+            // show after cursor position has been ready.
+            cursor.Show();
         }
 
         private float timeTagIndexPosition(TimeTagIndex timeTagIndex)
