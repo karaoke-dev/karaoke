@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             {
                 // todo : adjust container's ratio
                 var ratio = e.NewValue;
-                if (ratio.isValid())
+                if (ratio.IsValid())
                     previewContainer.FillAspectRatio = ratio.Width / ratio.Height;
             }, true);
         }
@@ -168,11 +168,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 manager.PreviewScreenRatio.BindValueChanged(v =>
                 {
                     var newRation = v.NewValue;
-                    if (!newRation.isValid())
+                    if (!newRation.IsValid())
                         return;
 
-                    widthRatioText.Text = newRation.Width.ToString();
-                    heightRatioText.Text = newRation.Height.ToString();
+                    widthRatioText.Text = newRation.Width.ToString(CultureInfo.InvariantCulture);
+                    heightRatioText.Text = newRation.Height.ToString(CultureInfo.InvariantCulture);
                 }, true);
             }
         }

@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
         public float Height { get; set; }
 
-        public bool isValid()
+        public bool IsValid()
             => Width > 0 && Height > 0;
     }
 }

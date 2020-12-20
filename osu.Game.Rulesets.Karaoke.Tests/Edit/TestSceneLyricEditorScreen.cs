@@ -96,18 +96,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                 {
                                     Width = 150,
                                     Items = (Mode[])Enum.GetValues(typeof(Mode)),
-                                }.With(x => {
-                                    x.Current.BindValueChanged(x => {
-                                        screen.LyricEditor.Mode = x.NewValue;
+                                }.With(x =>
+                                {
+                                    x.Current.BindValueChanged(mode =>
+                                    {
+                                        screen.LyricEditor.Mode = mode.NewValue;
                                     });
                                 }),
                                 new OsuDropdown<LyricFastEditMode>
                                 {
-                                     Width = 150,
-                                     Items = (LyricFastEditMode[])Enum.GetValues(typeof(LyricFastEditMode))
-                                }.With(x => {
-                                    x.Current.BindValueChanged(x => {
-                                        screen.LyricEditor.LyricFastEditMode = x.NewValue;
+                                    Width = 150,
+                                    Items = (LyricFastEditMode[])Enum.GetValues(typeof(LyricFastEditMode))
+                                }.With(x =>
+                                {
+                                    x.Current.BindValueChanged(fastEditMode =>
+                                    {
+                                        screen.LyricEditor.LyricFastEditMode = fastEditMode.NewValue;
                                     });
                                 })
                             }

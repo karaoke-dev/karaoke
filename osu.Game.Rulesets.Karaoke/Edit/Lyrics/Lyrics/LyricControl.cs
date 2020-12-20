@@ -166,10 +166,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             cursorContainer.Clear();
 
             // create preview and real cursor
-            addCursor(mode, false);
-            addCursor(mode, true);
+            addCursor(false);
+            addCursor(true);
 
-            void addCursor(Mode mode, bool isPreview)
+            void addCursor(bool isPreview)
             {
                 var cursor = createCursor(mode);
                 if (cursor == null)
@@ -272,6 +272,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                 offset = -10;
 
             var pos = new Vector2(timeTagIndexPosition(index) + offset, 0);
+
             if (cursor is DrawableLyricInputCursor inputCursor)
             {
                 inputCursor.DisplayAt(pos, null);

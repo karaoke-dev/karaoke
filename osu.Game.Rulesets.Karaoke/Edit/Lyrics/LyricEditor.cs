@@ -7,7 +7,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
@@ -136,6 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             var position = stateManager.BindableCursorPosition.Value;
+
             switch (key)
             {
                 case Key.BackSpace:
@@ -156,6 +156,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             var currentTimeTag = stateManager.BindableRecordCursorPosition.Value;
+
             switch (key)
             {
                 case Key.BackSpace:
@@ -178,6 +179,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             var position = stateManager.BindableCursorPosition.Value;
+
             switch (key)
             {
                 case Key.N:

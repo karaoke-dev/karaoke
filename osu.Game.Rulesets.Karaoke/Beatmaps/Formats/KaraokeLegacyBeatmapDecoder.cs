@@ -261,7 +261,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             {
                 var singleLanguage = translates[i];
 
-                // get calture and translate
+                // get culture and translate
                 var languageCode = singleLanguage.Key;
                 var cultureInfo = new CultureInfo(languageCode);
                 var values = singleLanguage.ToList();

@@ -20,19 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
     {
         private const float size = 22;
 
-        private Drawable CreateIcon(bool saitenable) => new SpriteIcon
-        {
-            Size = new Vector2(size),
-            Icon = saitenable ? FontAwesome.Regular.DotCircle : FontAwesome.Regular.PauseCircle,
-            Colour = saitenable ? Color4.Red : Color4.LightGray
-        };
-
-        private Drawable CreateStatusSpriteText(string markdownText) => new StatusSpriteText(markdownText)
-        {
-            RelativeSizeAxes = Axes.None,
-            AutoSizeAxes = Axes.Both
-        };
-
         public SpriteText CreateSpriteText() => new SpriteText();
 
         public SaitenStatus(SaitenStatusMode statusMode)
@@ -53,8 +40,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
                 statusMode = value;
                 Children = new[]
                 {
-                    CreateIcon(statusMode == SaitenStatusMode.Saitening),
-                    CreateStatusSpriteText(GetSaitenStatusText(statusMode))
+                    createIcon(statusMode == SaitenStatusMode.Saitening),
+                    createStatusSpriteText(GetSaitenStatusText(statusMode))
                 };
             }
         }
@@ -103,6 +90,19 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
                     return "Weird... Should not goes to here either :oops:";
             }
         }
+
+        private Drawable createIcon(bool saitenable) => new SpriteIcon
+        {
+            Size = new Vector2(size),
+            Icon = saitenable ? FontAwesome.Regular.DotCircle : FontAwesome.Regular.PauseCircle,
+            Colour = saitenable ? Color4.Red : Color4.LightGray
+        };
+
+        private Drawable createStatusSpriteText(string markdownText) => new StatusSpriteText(markdownText)
+        {
+            RelativeSizeAxes = Axes.None,
+            AutoSizeAxes = Axes.Both
+        };
 
         internal class StatusSpriteText : MarkdownTextFlowContainer
         {
