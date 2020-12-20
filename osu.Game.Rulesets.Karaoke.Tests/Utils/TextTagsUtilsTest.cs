@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
@@ -52,6 +53,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var invalidTextTag = TextTagsUtils.FindInvalid(textTags, lyric, sorting);
             var invalidIndexes = invalidTextTag.Select(v => textTags.IndexOf(v)).ToArray();
             Assert.AreEqual(invalidIndexes, errorIndex);
+        }
+
+        [TestCase("[0,1]:ka", 1, "[1,2]:ka")]
+        [TestCase("[0,1]:", 1, "[1,2]:")]
+        [TestCase("[0,1]:ka", -1, "[-1,0]:ka")] // do not check out of range in here.
+        [TestCase("[1,0]:ka", 1, "[2,1]:ka")] // do not check order in here.
+        public void TestShifting(string textTag, int shifting, string actualTag)
+        {
+            // test ruby tag.
+            var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
+            var actualRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
+            Assert.AreEqual(TextTagsUtils.Shifting(rubyTag, shifting), actualRubyTag);
+
+            // test romaji tag.
+            var romajiTag = TestCaseTagHelper.ParseRubyTag(textTag);
+            var actualRomaji = TestCaseTagHelper.ParseRubyTag(actualTag);
+            Assert.AreEqual(TextTagsUtils.Shifting(romajiTag, shifting), actualRomaji);
         }
 
         private RubyTag[] getValueByMethodName(string methodName)
