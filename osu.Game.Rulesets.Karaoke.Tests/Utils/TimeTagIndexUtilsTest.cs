@@ -26,5 +26,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         {
             Assert.AreEqual(TimeTagIndexUtils.ReverseState(state), actualState);
         }
+
+        [TestCase(0, TimeTagIndex.IndexState.Start, 1, 1, TimeTagIndex.IndexState.Start)]
+        [TestCase(0, TimeTagIndex.IndexState.End, 1, 1, TimeTagIndex.IndexState.End)]
+        [TestCase(0, TimeTagIndex.IndexState.Start, -1, -1, TimeTagIndex.IndexState.Start)]
+        [TestCase(0, TimeTagIndex.IndexState.End, -1, -1, TimeTagIndex.IndexState.End)]
+        public void TestShiftingTimeTagIndex(int index, TimeTagIndex.IndexState state, int shifting, int actualIndex, TimeTagIndex.IndexState actualState)
+        {
+            var timeTagIndex = new TimeTagIndex(index, state);
+            var actualTimeTagIndex = new TimeTagIndex(actualIndex, actualState);
+            Assert.AreEqual(TimeTagIndexUtils.ShiftingTimeTagIndex(timeTagIndex, shifting), actualTimeTagIndex);
+        }
     }
 }

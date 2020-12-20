@@ -67,6 +67,16 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return Sort(invalidList.Distinct().ToArray());
         }
 
+        public static T Shifting<T>(T textTag, int shifting) where T : ITextTag, new()
+        {
+            return new T
+            {
+                StartIndex = textTag.StartIndex + shifting,
+                EndIndex = textTag.EndIndex + shifting,
+                Text = textTag.Text
+            };
+        }
+
         public enum Sorting
         {
             /// <summary>

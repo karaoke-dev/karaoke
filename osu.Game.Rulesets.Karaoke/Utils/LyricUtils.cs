@@ -147,12 +147,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             // deal with ruby and romaji, might remove and shifting.
             lyric.RubyTags = processTags(lyric.RubyTags, position, count);
             lyric.RomajiTags = processTags(lyric.RomajiTags, position, count);
+            lyric.TimeTags = processTimeTags(lyric.TimeTags, position, count);
 
             // deal with text
             var newLyric = lyric.Text.Substring(0, position) + lyric.Text[(position + count)..];
             lyric.Text = newLyric;
 
-            static T[] processTags<T>(T[] tags, int position, int count = 1) where T : ITextTag
+            static T[] processTags<T>(T[] tags, int position, int count) where T : ITextTag
             {
                 var endPosition = position + count;
                 return tags?.SkipWhile(x => x.StartIndex >= position && x.EndIndex <= endPosition)
@@ -168,6 +169,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     return x;
                 })
                 .ToArray();
+            }
+
+            static TimeTag[] processTimeTags(TimeTag[] timeTags, int position, int count)
+            {
+                var endPosition = position + count;
+                return timeTags?.Where(x => !(x.Index.Index >= position && x.Index.Index < endPosition))
+                    .Select(t => t.Index.Index > position ? TimeTagsUtils.ShiftingTimeTag(t, -count) : t)
+                    .ToArray();
             }
         }
 
@@ -186,6 +195,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             // deal with ruby and romaji with shifting.
             lyric.RubyTags = processTags(lyric.RubyTags, position, shiftingLength);
             lyric.RomajiTags = processTags(lyric.RomajiTags, position, shiftingLength);
+            lyric.TimeTags = processTimeTags(lyric.TimeTags, position, shiftingLength);
 
             // deal with text
             var newLyric = lyric.Text?.Substring(0, position) + text +  lyric.Text?[position..];
@@ -203,26 +213,19 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 })
                 .ToArray();
             }
+
+            static TimeTag[] processTimeTags(TimeTag[] timeTags, int startPosition, int shifting)
+                => timeTags?.Select(t => t.Index.Index >= startPosition ? TimeTagsUtils.ShiftingTimeTag(t, shifting) : t).ToArray();
         }
 
-        private static TimeTag[] shiftingTimeTag(TimeTag[] timeTags, int shiftingIndex)
-            => timeTags?.Select(t => new TimeTag(new TimeTagIndex(t.Index.Index + shiftingIndex, t.Index.State), t.Time)).ToArray();
+        private static TimeTag[] shiftingTimeTag(TimeTag[] timeTags, int shifting)
+            => timeTags?.Select(t => TimeTagsUtils.ShiftingTimeTag(t, shifting)).ToArray();
 
-        private static RubyTag[] shiftingRubyTag(RubyTag[] rubyTags, int shiftingIndex)
-            => rubyTags?.Select(t => new RubyTag
-            {
-                StartIndex = t.StartIndex + shiftingIndex,
-                EndIndex = t.EndIndex + shiftingIndex,
-                Text = t.Text
-            }).ToArray();
+        private static RubyTag[] shiftingRubyTag(RubyTag[] rubyTags, int shifting)
+            => rubyTags?.Select(t => TextTagsUtils.Shifting(t, shifting)).ToArray();
 
-        private static RomajiTag[] shiftingRomajiTag(RomajiTag[] romajiTags, int shiftingIndex)
-            => romajiTags?.Select(t => new RomajiTag
-            {
-                StartIndex = t.StartIndex + shiftingIndex,
-                EndIndex = t.EndIndex + shiftingIndex,
-                Text = t.Text
-            }).ToArray();
+        private static RomajiTag[] shiftingRomajiTag(RomajiTag[] romajiTags, int shifting)
+            => romajiTags?.Select(t => TextTagsUtils.Shifting(t, shifting)).ToArray();
 
         #endregion
 
