@@ -123,6 +123,45 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(getSortedTime(dictionary), results);
         }
 
+        [TestCase(nameof(ValidTimeTagWithSorted), 1100)]
+        [TestCase(nameof(ValidTimeTagWithUnsorted), 1100)]
+        [TestCase(nameof(ValidTimeTagWithUnsortedAndDuplicatedWithNoValue), 1100)]
+        public void TestGetStartTime(string testCase, double? actualStartTime)
+        {
+            var timeTags = getValueByMethodName(testCase);
+
+            var startTime = TimeTagsUtils.GetStartTime(timeTags);
+            Assert.AreEqual(startTime, actualStartTime);
+        }
+
+        [TestCase(nameof(ValidTimeTagWithSorted), 3000)]
+        [TestCase(nameof(ValidTimeTagWithUnsorted), 3000)]
+        [TestCase(nameof(ValidTimeTagWithUnsortedAndDuplicatedWithNoValue), 2000)]
+        public void TestGetEndTime(string testCase, double? actualEndTime)
+        {
+            var timeTags = getValueByMethodName(testCase);
+
+            var endTime = TimeTagsUtils.GetEndTime(timeTags);
+            Assert.AreEqual(endTime, actualEndTime);
+        }
+
+        [TestCase("[1,start]:1000", 2, "[3,start]:1000")]
+        [TestCase("[1,end]:1000", 2, "[3,end]:1000")]
+        [TestCase("[1,start]:", 2, "[3,start]:")]
+        [TestCase("[1,end]:", 2, "[3,end]:")]
+        [TestCase("[1,start]:1000", -2, "[-1,start]:1000")]
+        [TestCase("[1,end]:1000", -2, "[-1,end]:1000")]
+        public void TestShiftingTimeTag(string shiftingTag, int shifting, string actualTag)
+        {
+            var timeTag = TestCaseTagHelper.ParseTimeTag(shiftingTag);
+
+            var shiftingTimeTag = TimeTagsUtils.ShiftingTimeTag(timeTag, shifting);
+            var actualTimeTag = TestCaseTagHelper.ParseTimeTag(actualTag);
+
+            Assert.AreEqual(shiftingTimeTag.Index, actualTimeTag.Index);
+            Assert.AreEqual(shiftingTimeTag.Time, actualTimeTag.Time);
+        }
+
         private double[] getSortedTime(TimeTag[] timeTags)
             => timeTags.Where(x => x.Time != null).Select(x => x.Time ?? 0)
                        .OrderBy(x => x).ToArray();

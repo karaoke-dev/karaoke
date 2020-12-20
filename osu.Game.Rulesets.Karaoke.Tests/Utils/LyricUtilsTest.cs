@@ -54,19 +54,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             testTimeTags(firstLyric.TimeTags, TestCaseTagHelper.ParseTimeTags(firstTimeTags));
             testTimeTags(secondLyric.TimeTags, TestCaseTagHelper.ParseTimeTags(secondTimeTags));
-
-            static void testTimeTags(IReadOnlyList<TimeTag> expect, IReadOnlyList<TimeTag> actually)
-            {
-                Assert.AreEqual(expect?.Count, actually?.Count);
-                if (expect == null || actually == null)
-                    return;
-
-                for (int i = 0; i < expect.Count; i++)
-                {
-                    Assert.AreEqual(expect[i].Index, actually[i].Index);
-                    Assert.AreEqual(expect[i].Time, actually[i].Time);
-                }
-            }
         }
 
         [TestCase("カラオケ", new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 2,
@@ -240,6 +227,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(lyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(targetRomajies));
         }
 
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 0, 2, new[] { "[0,start]:3000", "[1,start]:4000" })]
+        [TestCase(new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" }, 0, 2, new[] { "[0,start]:", "[1,start]:" })]
+        [TestCase(new[] { "[0,start]:1000", "[2,start]:3000" }, 1, 2, new[] { "[0,start]:1000" })]
+        public void TestRemoveTextTimeTag(string[] timeTags, int position, int count, string[] actualTimeTags)
+        {
+            var lyric = new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
+            };
+            LyricUtils.RemoveText(lyric, position, count);
+            testTimeTags(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
+        }
+
         [TestCase("kake", 2, "rao", "karaoke")]
         [TestCase("オケ", 0, "カラ", "カラオケ")]
         [TestCase("オケ", -1, "カラ", "カラオケ")] // test start position not in the range, but it's valid.
@@ -279,6 +280,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             };
             LyricUtils.AddText(lyric, position, addedText);
             Assert.AreEqual(lyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(targetRomajies));
+        }
+
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 0, "karoake", new[] { "[7,start]:1000", "[8,start]:2000", "[9,start]:3000", "[10,start]:4000" })]
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 2, "karoake", new[] { "[0,start]:1000", "[1,start]:2000", "[9,start]:3000", "[10,start]:4000" })]
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 4, "karoake", new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" })]
+        [TestCase(new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" }, 0, "karoake", new[] { "[7,start]:", "[8,start]:", "[9,start]:", "[10,start]:" })]
+        [TestCase(new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" }, 2, "karoake", new[] { "[0,start]:", "[1,start]:", "[9,start]:", "[10,start]:" })]
+        [TestCase(new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" }, 4, "karoake", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:" })]
+        public void TestAddTextTimeTag(string[] timeTags, int position, string addedText, string[] actualTimeTags)
+        {
+            var lyric = new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
+            };
+            LyricUtils.AddText(lyric, position, addedText);
+            testTimeTags(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
         }
 
         #endregion
@@ -446,6 +464,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             var combineLyric = LyricUtils.CombineLyric(lyric1, lyric2);
             Assert.AreEqual(combineLyric.Language, actualCultureInfo);
+        }
+
+        #endregion
+
+        #region helper
+
+        private void testTimeTags(IReadOnlyList<TimeTag> expect, IReadOnlyList<TimeTag> actually)
+        {
+            Assert.AreEqual(expect?.Count, actually?.Count);
+            if (expect == null || actually == null)
+                return;
+
+            for (int i = 0; i < expect.Count; i++)
+            {
+                Assert.AreEqual(expect[i].Index, actually[i].Index);
+                Assert.AreEqual(expect[i].Time, actually[i].Time);
+            }
         }
 
         #endregion
