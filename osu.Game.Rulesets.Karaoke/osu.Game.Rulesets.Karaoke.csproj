@@ -18,6 +18,7 @@
     <PackageReference Include="ppy.osu.Game" Version="2020.1218.0" />
     <PackageReference Include="LyricMaker" Version="1.1.1" />
     <PackageReference Include="NicoKaraParser" Version="1.1.0" />
+    <PackageReference Include="WanaKanaSharp" Version="0.1.1" />
     <PackageReference Include="Zipangu" Version="1.1.8" />
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +49,7 @@
       <InputAssemblies Include="NWaves.dll" />
       <InputAssemblies Include="LyricMaker.dll" />
       <InputAssemblies Include="NicoKaraParser.dll" />
+      <InputAssemblies Include="WanaKanaSharp.dll" />
       <InputAssemblies Include="Zipangu.dll" />
     </ItemGroup>
 
