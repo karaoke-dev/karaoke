@@ -3,9 +3,11 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Ja;
 using Lucene.Net.Analysis.TokenAttributes;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -28,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
         public override RomajiTag[] CreateRomajiTags(Lyric lyric)
         {
             var text = lyric.Text;
-            var tags = new List<RomajiTag>();
+            var processingTags = new List<RomajiTagGeneratorPatameter>();
 
             // Tokenize the text
             var tokenStream = analyzer.GetTokenStream("dummy", new StringReader(text));
@@ -51,17 +53,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
                 if (string.IsNullOrEmpty(katakana))
                     break;
 
+                var parentText = text[offsetAtt.StartOffset..offsetAtt.EndOffset];
+                var fromKanji = JpStringUtils.ToKatakana(katakana) != JpStringUtils.ToKatakana(parentText);
+
                 // Convert to romaji.
                 var romaji = JpStringUtils.ToRomaji(katakana);
                 if (Config.Uppercase)
                     romaji = romaji.ToUpper();
 
                 // Make tag
-                tags.Add(new RomajiTag
+                processingTags.Add(new RomajiTagGeneratorPatameter
                 {
-                    Text = romaji,
-                    StartIndex = offsetAtt.StartOffset,
-                    EndIndex = offsetAtt.EndOffset
+                    FromKanji = fromKanji,
+                    RomajiTag = new RomajiTag
+                    {
+                        Text = romaji,
+                        StartIndex = offsetAtt.StartOffset,
+                        EndIndex = offsetAtt.EndOffset
+                    }
                 });
             }
 
@@ -69,7 +78,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
             tokenStream.End();
             tokenStream.Dispose();
 
-            return tags.ToArray();
+            var romajiTags = new List<RomajiTag>();
+
+            foreach (var processingTag in processingTags)
+            {
+                // conbine romajies of they are not from kanji.
+                var previousProcessingTag = processingTags.GetPrevious(processingTag);
+                var fromKanji = processingTag.FromKanji;
+                var previousFromKanji = previousProcessingTag?.FromKanji ?? true;
+                if (!fromKanji && !previousFromKanji)
+                {
+                    var combinedRomajiTag = TextTagsUtils.Combine(previousProcessingTag.RomajiTag, processingTag.RomajiTag);
+                    romajiTags.Remove(previousProcessingTag.RomajiTag);
+                    romajiTags.Add(combinedRomajiTag);
+                }
+                else
+                {
+                    romajiTags.Add(processingTag.RomajiTag);
+                }
+            }
+
+            return romajiTags.ToArray();
+        }
+
+        internal class RomajiTagGeneratorPatameter
+        {
+            public bool FromKanji { get; set; }
+
+            public RomajiTag RomajiTag { get; set; }
         }
     }
 }

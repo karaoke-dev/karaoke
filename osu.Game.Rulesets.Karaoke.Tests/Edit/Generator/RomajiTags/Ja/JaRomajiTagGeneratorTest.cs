@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RomajiTags.Ja
         }
 
         [TestCase("花火大会", new[] { "[0,2]:HANABI", "[2,4]:TAIKAI" })]
-        [TestCase("はなび", new string[] { "[0,3]:hanabi" })]
+        [TestCase("はなび", new string[] { "[0,3]:HANABI" })]
         public void TestCreateRomajiTagsWithUppercase(string text, string[] actualRomaji)
         {
             var config = generatorConfig(nameof(JaRomajiTagGeneratorConfig.Uppercase));
