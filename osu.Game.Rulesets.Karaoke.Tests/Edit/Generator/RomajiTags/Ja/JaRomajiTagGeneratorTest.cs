@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -14,6 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RomajiTags.Ja
     {
         [TestCase("花火大会", new[] { "[0,2]:hanabi", "[2,4]:taikai" })]
         [TestCase("はなび", new string[] { "[0,3]:hanabi" })]
+        [TestCase("枯れた世界に輝く", new[] { "[0,3]:kareta", "[3,6]:sekaini", "[6,8]:kagayaku" })]
         public void TestCreateRomajiTags(string text, string[] actualRomaji)
         {
             var config = generatorConfig(null);

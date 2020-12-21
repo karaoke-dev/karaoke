@@ -85,8 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
                 // conbine romajies of they are not from kanji.
                 var previousProcessingTag = processingTags.GetPrevious(processingTag);
                 var fromKanji = processingTag.FromKanji;
-                var previousFromKanji = previousProcessingTag?.FromKanji ?? true;
-                if (!fromKanji && !previousFromKanji)
+                if (previousProcessingTag != null && !fromKanji)
                 {
                     var combinedRomajiTag = TextTagsUtils.Combine(previousProcessingTag.RomajiTag, processingTag.RomajiTag);
                     romajiTags.Remove(previousProcessingTag.RomajiTag);
