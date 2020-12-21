@@ -2,33 +2,32 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Linq;
-using NUnit.Framework;
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags
 {
     public abstract class BaseTimeTagGeneratorTest<TTimeTagGenerator, TConfig>
         where TTimeTagGenerator : TimeTagGenerator<TConfig> where TConfig : TimeTagGeneratorConfig, new()
     {
-        protected void RunTimeTagCheckTest(string lyricText, double[] index, TConfig config)
+        protected void RunTimeTagCheckTest(string text, string[] actualTimeTags, TConfig config)
         {
-            var lyric = generateLyric(lyricText);
-            RunTimeTagCheckTest(lyric, index, config);
+            var lyric = new Lyric { Text = text };
+            RunTimeTagCheckTest(lyric, actualTimeTags, config);
         }
 
-        protected void RunTimeTagCheckTest(Lyric lyric, double[] index, TConfig config)
+        protected void RunTimeTagCheckTest(Lyric lyric, string[] actualTimeTags, TConfig config)
         {
             var generator = Activator.CreateInstance(typeof(TTimeTagGenerator), config) as TTimeTagGenerator;
 
             // create time tag and actually time tag.
-            var timeTags = getTimeTagIndex(generator?.CreateTimeTags(lyric));
-            var actualIndexed = getTimeTagIndexByArray(index);
+            var timeTags = generator?.CreateTimeTags(lyric);
+            var actualIndexed = TestCaseTagHelper.ParseTimeTags(actualTimeTags);
 
             // check should be equal
-            Assert.AreEqual(timeTags, actualIndexed);
+            TimeTagAssert.AreEqual(timeTags, actualIndexed);
         }
 
         protected TConfig GeneratorConfig(params string[] properties)
@@ -51,23 +50,5 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags
 
             return config;
         }
-
-        #region test helper
-
-        private TimeTagIndex[] getTimeTagIndex(TimeTag[] timeTags)
-            => timeTags.Select((v, i) => v.Index).ToArray();
-
-        private TimeTagIndex[] getTimeTagIndexByArray(double[] timeTags)
-            => timeTags.Select(timeTag =>
-            {
-                var state = Math.Abs(timeTag) % 1 == 0.5 ? TimeTagIndex.IndexState.End : TimeTagIndex.IndexState.Start;
-                var index = (int)timeTag;
-                return new TimeTagIndex(index, state);
-            }).ToArray();
-
-        private Lyric generateLyric(string text)
-            => new Lyric { Text = text };
-
-        #endregion
     }
 }

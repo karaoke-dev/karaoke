@@ -2,55 +2,51 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags.Ja
 {
     [TestFixture]
     public class JaRubyTagGeneratorTest
     {
-        [TestCase("花火大会", new[] { "はなび", "たいかい" })]
+        [TestCase("花火大会", new[] { "[0,2]:はなび", "[2,4]:たいかい" })]
         [TestCase("はなび", new string[] { })]
-        public void TestCreateRubyTags(string text, string[] ruby)
+        public void TestCreateRubyTags(string text, string[] actualRuby)
         {
             var config = generatorConfig(null);
-            RunRubyCheckTest(text, ruby, config);
+            RunRubyCheckTest(text, actualRuby, config);
         }
 
-        [TestCase("花火大会", new[] { "ハナビ", "タイカイ" })]
+        [TestCase("花火大会", new[] { "[0,2]:ハナビ", "[2,4]:タイカイ" })]
         [TestCase("ハナビ", new string[] { })]
-        public void TestCreateRubyTagsWithRubyAsKatakana(string text, string[] ruby)
+        public void TestCreateRubyTagsWithRubyAsKatakana(string text, string[] actualRuby)
         {
             var config = generatorConfig(nameof(JaRubyTagGeneratorConfig.RubyAsKatakana));
-            RunRubyCheckTest(text, ruby, config);
+            RunRubyCheckTest(text, actualRuby, config);
         }
 
-        [TestCase("はなび", new[] { "はな", "び" })]
-        [TestCase("ハナビ", new[] { "はなび" })]
-        public void TestCreateRubyTagsWithEnableDuplicatedRuby(string text, string[] ruby)
+        [TestCase("はなび", new[] { "[0,2]:はな", "[2,3]:び" })]
+        [TestCase("ハナビ", new[] { "[0,3]:はなび" })]
+        public void TestCreateRubyTagsWithEnableDuplicatedRuby(string text, string[] actualRuby)
         {
             var config = generatorConfig(nameof(JaRubyTagGeneratorConfig.EnableDuplicatedRuby));
-            RunRubyCheckTest(text, ruby, config);
+            RunRubyCheckTest(text, actualRuby, config);
         }
 
         #region test helper
 
-        protected void RunRubyCheckTest(string text, string[] ruby, JaRubyTagGeneratorConfig config)
+        protected void RunRubyCheckTest(string text, string[] actualRuby, JaRubyTagGeneratorConfig config)
         {
             var generator = new JaRubyTagGenerator(config);
 
             var lyric = new Lyric { Text = text };
             var rubyTags = generator.CreateRubyTags(lyric);
+            var actualRubyTags = TestCaseTagHelper.ParseRubyTags(actualRuby);
 
-            Assert.AreEqual(rubyTags.Length, ruby.Length);
-
-            foreach (var rubyTag in rubyTags)
-            {
-                Assert.IsTrue(ruby.Contains(rubyTag.Text));
-            }
+            Assert.AreEqual(rubyTags, actualRubyTags);
         }
 
         private JaRubyTagGeneratorConfig generatorConfig(params string[] properties)

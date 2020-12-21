@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -52,8 +53,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             var (firstLyric, secondLyric) = LyricUtils.SplitLyric(lyric, splitIndex);
 
-            testTimeTags(firstLyric.TimeTags, TestCaseTagHelper.ParseTimeTags(firstTimeTags));
-            testTimeTags(secondLyric.TimeTags, TestCaseTagHelper.ParseTimeTags(secondTimeTags));
+            TimeTagAssert.AreEqual(firstLyric.TimeTags, TestCaseTagHelper.ParseTimeTags(firstTimeTags));
+            TimeTagAssert.AreEqual(secondLyric.TimeTags, TestCaseTagHelper.ParseTimeTags(secondTimeTags));
         }
 
         [TestCase("カラオケ", new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 2,
@@ -238,7 +239,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             };
             LyricUtils.RemoveText(lyric, position, count);
-            testTimeTags(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
+            TimeTagAssert.AreEqual(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
         }
 
         [TestCase("kake", 2, "rao", "karaoke")]
@@ -296,7 +297,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             };
             LyricUtils.AddText(lyric, position, addedText);
-            testTimeTags(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
+            TimeTagAssert.AreEqual(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
         }
 
         #endregion
@@ -464,23 +465,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             var combineLyric = LyricUtils.CombineLyric(lyric1, lyric2);
             Assert.AreEqual(combineLyric.Language, actualCultureInfo);
-        }
-
-        #endregion
-
-        #region helper
-
-        private void testTimeTags(IReadOnlyList<TimeTag> expect, IReadOnlyList<TimeTag> actually)
-        {
-            Assert.AreEqual(expect?.Count, actually?.Count);
-            if (expect == null || actually == null)
-                return;
-
-            for (int i = 0; i < expect.Count; i++)
-            {
-                Assert.AreEqual(expect[i].Index, actually[i].Index);
-                Assert.AreEqual(expect[i].Time, actually[i].Time);
-            }
         }
 
         #endregion
