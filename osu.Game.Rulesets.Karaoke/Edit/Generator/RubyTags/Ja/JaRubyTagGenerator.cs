@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja
                 if (!Config.EnableDuplicatedRuby)
                 {
                     // Not add duplicated ruby if same as parent.
-                    var parentText = text.Substring(offsetAtt.StartOffset, offsetAtt.EndOffset - offsetAtt.StartOffset);
+                    var parentText = text[offsetAtt.StartOffset..offsetAtt.EndOffset];
                     if (parentText == katakana || parentText == hiragana)
                         continue;
                 }
