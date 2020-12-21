@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using Zipangu;
+using WanaKanaSharp;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
@@ -15,6 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static string ToKatakana(string text)
         {
             return text.HiraganaToKatakana();
+        }
+
+        public static string ToRomaji(string text)
+        {
+            return RomajiConverter.ToRomaji(text, false, null);
         }
     }
 }
