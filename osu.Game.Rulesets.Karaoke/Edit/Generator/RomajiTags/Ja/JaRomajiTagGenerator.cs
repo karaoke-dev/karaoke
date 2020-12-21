@@ -56,7 +56,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
                 if (Config.Uppercase)
                     romaji = romaji.ToUpper();
 
-
                 // Make tag
                 tags.Add(new RomajiTag
                 {
