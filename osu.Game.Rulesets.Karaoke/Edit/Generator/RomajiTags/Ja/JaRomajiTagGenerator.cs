@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
             });
         }
 
-        public override RomajiTag[] CreateRubyTags(Lyric lyric)
+        public override RomajiTag[] CreateRomajiTags(Lyric lyric)
         {
             var text = lyric.Text;
             var tags = new List<RomajiTag>();
