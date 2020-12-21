@@ -9,10 +9,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags.Zh
     [TestFixture]
     public class ZhTimeTagGeneratorTest : BaseTimeTagGeneratorTest<ZhTimeTagGenerator, ZhTimeTagGeneratorConfig>
     {
-        [TestCase("測試一些歌詞", new[] { 0, 1, 2, 3, 4, 5, 5.5 })]
-        [TestCase("拉拉拉~~~", new[] { 0, 1, 2, 5.5 })]
-        [TestCase("拉~拉~拉~", new[] { 0, 2, 4, 5.5 })]
-        public void TestLyricWithCheckLineEndKeyUp(string lyric, double[] index)
+        [TestCase("測試一些歌詞", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:", "[5,start]:", "[5,end]:" })]
+        [TestCase("拉拉拉~~~", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[5,end]:" })]
+        [TestCase("拉~拉~拉~", new[] { "[0,start]:", "[2,start]:", "[4,start]:", "[5,end]:" })]
+        public void TestLyricWithCheckLineEndKeyUp(string lyric, string[] index)
         {
             var config = GeneratorConfig(nameof(ZhTimeTagGeneratorConfig.CheckLineEndKeyUp));
             RunTimeTagCheckTest(lyric, index, config);
