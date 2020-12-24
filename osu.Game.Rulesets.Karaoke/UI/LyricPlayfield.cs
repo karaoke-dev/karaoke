@@ -121,6 +121,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
             // Practice
             rulesetConfig.BindWith(KaraokeRulesetSetting.PracticePreemptTime, preemptTime);
             session.BindWith(KaraokeRulesetSession.NowLyric, nowLyric);
+
+            RegisterPool<Lyric, DrawableLyric>(50);
         }
     }
 }

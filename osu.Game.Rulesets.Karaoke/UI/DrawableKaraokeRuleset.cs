@@ -93,20 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 Playfield.NotePlayfield.Hide();
         }
 
-        public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h)
-        {
-            switch (h)
-            {
-                case Lyric lyric:
-                    return new DrawableLyric(lyric);
-
-                case Note note:
-                    return new DrawableNote(note);
-
-                default:
-                    throw new NotSupportedException();
-            }
-        }
+        public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h) => null;
 
         protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new KaraokeFramedReplayInputHandler(replay);
 

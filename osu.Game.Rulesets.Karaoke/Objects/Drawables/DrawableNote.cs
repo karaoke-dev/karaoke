@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Diagnostics;
+using JetBrains.Annotations;
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
@@ -22,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
     /// </summary>
     public class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKeyBindingHandler<KaraokeSaitenAction>
     {
-        private readonly OsuSpriteText textPiece;
+        private OsuSpriteText textPiece;
 
         /// <summary>
         /// Time at which the user started holding this hold note. Null if the user is not holding this hold note.
@@ -37,8 +39,18 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         public IBindable<int[]> Singers => HitObject.SingersBindable;
 
-        public DrawableNote(Note note)
-            : base(note)
+        public DrawableNote()
+           : this(null)
+        {
+        }
+
+        public DrawableNote([CanBeNull] Note hitObject)
+            : base(hitObject)
+        {
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
         {
             Height = DefaultColumnBackground.COLUMN_HEIGHT;
 
@@ -58,11 +70,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             Display.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue; });
 
-            note.TextBindable.BindValueChanged(_ => { changeText(note); }, true);
+            HitObject.TextBindable.BindValueChanged(_ => { changeText(HitObject); }, true);
 
-            note.AlternativeTextBindable.BindValueChanged(_ => { changeText(note); }, true);
+            HitObject.AlternativeTextBindable.BindValueChanged(_ => { changeText(HitObject); }, true);
 
-            note.SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
+            HitObject.SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)
