@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         /// <summary>
         /// The visual line tracker.
         /// </summary>
-        private Container line;
+        private Box line;
 
         /// <summary>
         /// Container with triangles. Only visible for major lines.
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             AddRangeInternal(new Drawable[]
             {
-                new Box
+                line = new Box
                 {
                     Name = "Bar line",
                     Anchor = Anchor.CentreLeft,
@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         protected override void LoadComplete()
         {
             base.LoadComplete();
-            major.BindValueChanged(updateMajor);
+            major.BindValueChanged(updateMajor, true);
         }
 
         private void updateMajor(ValueChangedEvent<bool> major)
