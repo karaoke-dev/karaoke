@@ -123,7 +123,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         }
 
         private static TimeTag[] shiftingTimeTag(TimeTag[] timeTags, int shifting)
-            => timeTags?.Select(t => TimeTagsUtils.ShiftingTimeTag(t, shifting)).ToArray();
+            => timeTags?.Select(t => TimeTagUtils.ShiftingTimeTag(t, shifting)).ToArray();
 
         private static RubyTag[] shiftingRubyTag(RubyTag[] rubyTags, int shifting)
             => rubyTags?.Select(t => TextTagsUtils.Shifting(t, shifting)).ToArray();

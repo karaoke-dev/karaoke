@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             {
                 var endPosition = position + count;
                 return timeTags?.Where(x => !(x.Index.Index >= position && x.Index.Index < endPosition))
-                               .Select(t => t.Index.Index > position ? TimeTagsUtils.ShiftingTimeTag(t, -count) : t)
+                               .Select(t => t.Index.Index > position ? TimeTagUtils.ShiftingTimeTag(t, -count) : t)
                                .ToArray();
             }
         }
@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             }
 
             static TimeTag[] processTimeTags(TimeTag[] timeTags, int startPosition, int shifting)
-                => timeTags?.Select(t => t.Index.Index >= startPosition ? TimeTagsUtils.ShiftingTimeTag(t, shifting) : t).ToArray();
+                => timeTags?.Select(t => t.Index.Index >= startPosition ? TimeTagUtils.ShiftingTimeTag(t, shifting) : t).ToArray();
         }
 
         #endregion
