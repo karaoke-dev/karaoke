@@ -59,15 +59,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
             Scale = new Vector2(2f);
             AutoSizeAxes = Axes.Both;
-            InternalChildren = new Drawable[]
+
+            AddInternal(KaraokeText = new KarakeSpriteText());
+            AddInternal(translateText = new OsuSpriteText
             {
-                KaraokeText = new KarakeSpriteText(),
-                translateText = new OsuSpriteText
-                {
-                    Anchor = Anchor.BottomLeft,
-                    Origin = Anchor.TopLeft,
-                }
-            };
+                Anchor = Anchor.BottomLeft,
+                Origin = Anchor.TopLeft,
+            });
             
             TextBindable.BindValueChanged(text => { KaraokeText.Text = text.NewValue; });
             TimeTagsBindable.BindValueChanged(timeTags => { KaraokeText.TimeTags = TimeTagsUtils.ToDictionary(timeTags.NewValue); });
@@ -102,19 +100,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             SingersBindable.UnbindFrom(HitObject.SingersBindable);
             LayoutIndexBindable.UnbindFrom(HitObject.LayoutIndexBindable);
             TranslateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
-        }
-
-        protected override void UpdateInitialTransforms()
-        {
-            base.UpdateInitialTransforms();
-
-            // Manually set to reduce the number of future alive objects to a bare minimum.
-            LifetimeEnd = HitObject.EndTime + 1000;
-            LifetimeStart = HitObject.StartTime - HitObject.TimePreempt;
-        }
-
-        protected override void ClearInternal(bool disposeChildren = true)
-        {
         }
 
         protected virtual void ApplyRuby()
@@ -253,28 +238,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             {
                 const float fade_out_time = 500;
                 this.FadeOut(fade_out_time);
-            }
-        }
-
-        public override double LifetimeStart
-        {
-            get => base.LifetimeStart;
-            set
-            {
-                base.LifetimeStart = value;
-                KaraokeText.LifetimeStart = value;
-                translateText.LifetimeStart = value;
-            }
-        }
-
-        public override double LifetimeEnd
-        {
-            get => base.LifetimeEnd;
-            set
-            {
-                base.LifetimeEnd = value;
-                KaraokeText.LifetimeEnd = value;
-                translateText.LifetimeEnd = value;
             }
         }
 

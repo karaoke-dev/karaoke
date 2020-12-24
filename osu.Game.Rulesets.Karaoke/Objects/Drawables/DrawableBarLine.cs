@@ -48,7 +48,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public DrawableBarLine([CanBeNull] BarLine barLine)
             : base(barLine)
         {
-
         }
 
         [BackgroundDependencyLoader]
