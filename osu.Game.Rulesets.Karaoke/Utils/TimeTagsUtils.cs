@@ -273,19 +273,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         {
             return ToDictionary(timeTags).LastOrDefault().Value;
         }
-
-        /// <summary>
-        /// Shifting time-tag.
-        /// </summary>
-        /// <param name="timeTag"></param>
-        /// <param name="shifting"></param>
-        /// <returns></returns>
-        public static TimeTag ShiftingTimeTag(TimeTag timeTag, int shifting)
-        {
-            var timeTagIndex = TimeTagIndexUtils.ShiftingTimeTagIndex(timeTag.Index, shifting);
-            var time = timeTag.Time;
-            return new TimeTag(timeTagIndex, time);
-        }
     }
 
     public enum GroupCheck
