@@ -251,17 +251,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
             base.Add(h);
         }
 
-        public override bool Remove(DrawableHitObject h)
-        {
-            if (!base.Remove(h))
-                return false;
-
-            h.OnNewResult -= OnNewResult;
-            return true;
-        }
-
-        public void Add(BarLine barLine) => base.Add(new DrawableBarLine(barLine));
-
         public void AddReplay(KaraokeReplayFrame frame)
         {
             replaySaitenVisualization.Add(frame);
@@ -313,6 +302,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             session.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
 
             RegisterPool<Note, DrawableNote>(50);
+            RegisterPool<BarLine, DrawableBarLine>(15);
         }
 
         public bool OnPressed(KaraokeSaitenAction action)

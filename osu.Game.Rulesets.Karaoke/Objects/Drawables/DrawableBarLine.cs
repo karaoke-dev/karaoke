@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using JetBrains.Annotations;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osuTK;
@@ -24,7 +25,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         /// </summary>
         private const float triangle_offset = 9;
 
-        public DrawableBarLine(BarLine barLine)
+        public DrawableBarLine()
+           : this(null)
+        {
+        }
+
+        public DrawableBarLine([CanBeNull] BarLine barLine)
             : base(barLine)
         {
             RelativeSizeAxes = Axes.Y;
