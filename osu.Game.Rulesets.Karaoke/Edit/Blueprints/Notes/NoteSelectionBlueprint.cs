@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
         private void splitNote()
         {
             // TODO : percentage should be enter by dialog
-            var (firstNote, secondNote) = NoteUtils.SplitNote(HitObject, 0.5);
+            var (firstNote, secondNote) = NotesUtils.SplitNote(HitObject, 0.5);
             EditorBeatmap?.Add(firstNote);
             EditorBeatmap?.Add(secondNote);
             EditorBeatmap?.Remove(HitObject);

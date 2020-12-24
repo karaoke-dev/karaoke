@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return;
 
             // todo : implement split.
-            var (firstLyric, secondLyric) = LyricUtils.SplitLyric(lyric, index);
+            var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, index);
 
             changeHandler?.BeginChange();
 
