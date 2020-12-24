@@ -68,9 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                     Origin = Anchor.TopLeft,
                 }
             };
-
-            LifetimeEnd = HitObject.EndTime + 1000;
-
+            
             TextBindable.BindValueChanged(text => { KaraokeText.Text = text.NewValue; });
             TimeTagsBindable.BindValueChanged(timeTags => { KaraokeText.TimeTags = TimeTagsUtils.ToDictionary(timeTags.NewValue); });
             RubyTagsBindable.BindValueChanged(rubyTags => { ApplyRuby(); });
@@ -111,6 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             base.UpdateInitialTransforms();
 
             // Manually set to reduce the number of future alive objects to a bare minimum.
+            LifetimeEnd = HitObject.EndTime + 1000;
             LifetimeStart = HitObject.StartTime - HitObject.TimePreempt;
         }
 
@@ -146,6 +145,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             base.ApplySkin(skin, allowFallback);
 
             if (CurrentSkin == null)
+                return;
+
+            if (HitObject == null)
                 return;
 
             skin.GetConfig<KaraokeSkinLookup, KaraokeFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(karaokeFont =>

@@ -30,19 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
         }
 
-        public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h)
-        {
-            switch (h)
-            {
-                case Lyric lyric:
-                    return new DrawableLyric(lyric);
-
-                case Note note:
-                    return new DrawableNote(note);
-            }
-
-            return null;
-        }
+        public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h) => null;
 
         protected override bool OnKeyDown(KeyDownEvent e)
         {

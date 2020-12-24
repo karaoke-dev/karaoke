@@ -220,6 +220,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             base.LoadComplete();
 
+            NewResult += OnNewResult;
+
             saitenPitch.BindValueChanged(value =>
             {
                 var newValue = value.NewValue;
@@ -241,11 +243,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public override void Add(DrawableHitObject h)
         {
-            var note = (Note)h.HitObject;
-
-            note.ToneBindable.BindValueChanged(tone => { h.Y = calculator.YPositionAt(tone.NewValue); }, true);
-
-            h.OnNewResult += OnNewResult;
+            if (h is DrawableNote drawableNote)
+            {
+                drawableNote.ToneBindable.BindValueChanged(tone => { h.Y = calculator.YPositionAt(tone.NewValue); }, true);
+            }
 
             base.Add(h);
         }

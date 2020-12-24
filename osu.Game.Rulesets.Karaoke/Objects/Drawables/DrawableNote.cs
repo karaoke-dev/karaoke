@@ -35,9 +35,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         private readonly Bindable<bool> isHitting = new Bindable<bool>();
 
-        public IBindable<bool> Display => HitObject.DisplayBindable;
-
-        public IBindable<int[]> Singers => HitObject.SingersBindable;
+        public readonly IBindable<string> TextBindable = new Bindable<string>();
+        public readonly IBindable<string> AlternativeTextBindable = new Bindable<string>();
+        public readonly IBindable<int[]> SingersBindable = new Bindable<int[]>();
+        public readonly IBindable<bool> DisplayBindable = new Bindable<bool>();
+        public readonly IBindable<Tone> ToneBindable = new Bindable<Tone>();
 
         public DrawableNote()
            : this(null)
@@ -46,11 +48,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         public DrawableNote([CanBeNull] Note hitObject)
             : base(hitObject)
-        {
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
         {
             Height = DefaultColumnBackground.COLUMN_HEIGHT;
 
@@ -67,14 +64,37 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 bodyPiece.AccentColour = colour.NewValue;
             }, true);
             */
+        }
 
-            Display.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue; });
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            TextBindable.BindValueChanged(_ => { changeText(HitObject); });
+            AlternativeTextBindable.BindValueChanged(_ => { changeText(HitObject); });
+            SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
+            DisplayBindable.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue; });
+        }
 
-            HitObject.TextBindable.BindValueChanged(_ => { changeText(HitObject); }, true);
+        protected override void OnApply()
+        {
+            base.OnApply();
 
-            HitObject.AlternativeTextBindable.BindValueChanged(_ => { changeText(HitObject); }, true);
+            TextBindable.BindTo(HitObject.TextBindable);
+            AlternativeTextBindable.BindTo(HitObject.AlternativeTextBindable);
+            SingersBindable.BindTo(HitObject.SingersBindable);
+            DisplayBindable.BindTo(HitObject.DisplayBindable);
+            ToneBindable.BindTo(HitObject.ToneBindable);
+        }
 
-            HitObject.SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
+        protected override void OnFree()
+        {
+            base.OnFree();
+
+            TextBindable.UnbindFrom(HitObject.TextBindable);
+            AlternativeTextBindable.UnbindFrom(HitObject.AlternativeTextBindable);
+            SingersBindable.UnbindFrom(HitObject.SingersBindable);
+            DisplayBindable.UnbindFrom(HitObject.DisplayBindable);
+            ToneBindable.UnbindFrom(HitObject.ToneBindable);
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)
@@ -82,6 +102,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             base.ApplySkin(skin, allowFallback);
 
             if (CurrentSkin == null)
+                return;
+
+            if (HitObject == null)
                 return;
 
             var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, HitObject.Singers))?.Value;
