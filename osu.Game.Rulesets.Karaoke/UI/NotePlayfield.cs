@@ -220,6 +220,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             base.LoadComplete();
 
+            NewResult += OnNewResult;
+
             saitenPitch.BindValueChanged(value =>
             {
                 var newValue = value.NewValue;
@@ -241,25 +243,13 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public override void Add(DrawableHitObject h)
         {
-            var note = (Note)h.HitObject;
-
-            note.ToneBindable.BindValueChanged(tone => { h.Y = calculator.YPositionAt(tone.NewValue); }, true);
-
-            h.OnNewResult += OnNewResult;
+            if (h is DrawableNote drawableNote)
+            {
+                drawableNote.ToneBindable.BindValueChanged(tone => { h.Y = calculator.YPositionAt(tone.NewValue); }, true);
+            }
 
             base.Add(h);
         }
-
-        public override bool Remove(DrawableHitObject h)
-        {
-            if (!base.Remove(h))
-                return false;
-
-            h.OnNewResult -= OnNewResult;
-            return true;
-        }
-
-        public void Add(BarLine barLine) => base.Add(new DrawableBarLine(barLine));
 
         public void AddReplay(KaraokeReplayFrame frame)
         {
@@ -310,6 +300,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
             session.BindWith(KaraokeRulesetSession.SaitenPitch, saitenPitch);
 
             session.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
+
+            RegisterPool<Note, DrawableNote>(50);
+            RegisterPool<BarLine, DrawableBarLine>(15);
         }
 
         public bool OnPressed(KaraokeSaitenAction action)

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -9,6 +10,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI.Scrolling;
 using osuTK;
@@ -74,6 +76,48 @@ namespace osu.Game.Rulesets.Karaoke.UI
             });
         }
 
+        #region Pooling support
+
+        public override void Add(HitObject h)
+        {
+            switch (h)
+            {
+                case Lyric _:
+                    LyricPlayfield.Add(h);
+                    break;
+
+                case Note _:
+                case BarLine _:
+                    // hidden the note playfield until receive any note.
+                    NotePlayfield.Alpha = 1;
+                    NotePlayfield.Add(h);
+                    break;
+
+                default:
+                    throw new ArgumentException($"Unsupported {nameof(HitObject)} type: {h.GetType()}");
+            }
+        }
+
+        public override bool Remove(HitObject h)
+        {
+            switch (h)
+            {
+                case Lyric _:
+                    return LyricPlayfield.Remove(h);
+
+                case Note _:
+                case BarLine _:
+                    return NotePlayfield.Remove(h);
+
+                default:
+                    throw new ArgumentException($"Unsupported {nameof(HitObject)} type: {h.GetType()}");
+            }
+        }
+
+        #endregion
+
+        #region Non-pooling support
+
         public override void Add(DrawableHitObject h)
         {
             switch (h)
@@ -109,10 +153,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             }
         }
 
-        public void Add(BarLine barLine)
-        {
-            NotePlayfield.Add(barLine);
-        }
+        #endregion
 
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetConfigManager rulesetConfig, KaraokeSessionStatics session)

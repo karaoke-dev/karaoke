@@ -65,8 +65,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 var holdNote = (DrawableNote)drawableObject;
 
                 isHitting.BindTo(holdNote.IsHitting);
-                display.BindTo(holdNote.Display);
-                singer.BindTo(holdNote.Singers);
+                display.BindTo(holdNote.DisplayBindable);
+                singer.BindTo(holdNote.SingersBindable);
             }
 
             AccentColour.BindValueChanged(onAccentChanged);

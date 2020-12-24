@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 
@@ -64,6 +65,13 @@ namespace osu.Game.Rulesets.Karaoke.UI
             seekCache.Validate();
         }
 
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            NewResult += OnNewResult;
+        }
+
         private void updateLyricTranslate()
         {
             var isTranslate = translate.Value;
@@ -77,12 +85,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             if (h is DrawableLyric drawableLyric)
             {
+                // todo : not really sure should cancel binding action in here?
                 drawableLyric.OnLyricStart += OnNewResult;
                 drawableLyric.DisplayRuby = displayRuby.Value;
                 drawableLyric.DisplayRomaji = displayRomaji.Value;
             }
 
-            h.OnNewResult += OnNewResult;
             base.Add(h);
         }
 
@@ -91,7 +99,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
             if (h is DrawableLyric drawableLyric)
                 drawableLyric.OnLyricStart -= OnNewResult;
 
-            h.OnNewResult -= OnNewResult;
             return base.Remove(h);
         }
 
@@ -121,6 +128,25 @@ namespace osu.Game.Rulesets.Karaoke.UI
             // Practice
             rulesetConfig.BindWith(KaraokeRulesetSetting.PracticePreemptTime, preemptTime);
             session.BindWith(KaraokeRulesetSession.NowLyric, nowLyric);
+
+            RegisterPool<Lyric, DrawableLyric>(50);
+        }
+
+        protected override HitObjectLifetimeEntry CreateLifetimeEntry(HitObject hitObject) => new LyricHitObjectLifetimeEntry(hitObject);
+
+        private class LyricHitObjectLifetimeEntry : HitObjectLifetimeEntry
+        {
+            public LyricHitObjectLifetimeEntry(HitObject hitObject)
+                : base(hitObject)
+            {
+                // Manually set to reduce the number of future alive objects to a bare minimum.
+                LifetimeEnd = Lyric.EndTime;
+                LifetimeStart = HitObject.StartTime - Lyric.TimePreempt;
+            }
+
+            protected Lyric Lyric => (Lyric)HitObject;
+
+            protected override double InitialLifetimeOffset => Lyric.TimePreempt;
         }
     }
 }

@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Diagnostics;
+using JetBrains.Annotations;
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
@@ -22,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
     /// </summary>
     public class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKeyBindingHandler<KaraokeSaitenAction>
     {
-        private readonly OsuSpriteText textPiece;
+        private OsuSpriteText textPiece;
 
         /// <summary>
         /// Time at which the user started holding this hold note. Null if the user is not holding this hold note.
@@ -33,12 +35,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         private readonly Bindable<bool> isHitting = new Bindable<bool>();
 
-        public IBindable<bool> Display => HitObject.DisplayBindable;
+        public readonly IBindable<string> TextBindable = new Bindable<string>();
+        public readonly IBindable<string> AlternativeTextBindable = new Bindable<string>();
+        public readonly IBindable<int[]> SingersBindable = new Bindable<int[]>();
+        public readonly IBindable<bool> DisplayBindable = new Bindable<bool>();
+        public readonly IBindable<Tone> ToneBindable = new Bindable<Tone>();
 
-        public IBindable<int[]> Singers => HitObject.SingersBindable;
+        public DrawableNote()
+           : this(null)
+        {
+        }
 
-        public DrawableNote(Note note)
-            : base(note)
+        public DrawableNote([CanBeNull] Note hitObject)
+            : base(hitObject)
         {
             Height = DefaultColumnBackground.COLUMN_HEIGHT;
 
@@ -55,14 +64,37 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 bodyPiece.AccentColour = colour.NewValue;
             }, true);
             */
+        }
 
-            Display.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue; });
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            TextBindable.BindValueChanged(_ => { changeText(HitObject); });
+            AlternativeTextBindable.BindValueChanged(_ => { changeText(HitObject); });
+            SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
+            DisplayBindable.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue; });
+        }
 
-            note.TextBindable.BindValueChanged(_ => { changeText(note); }, true);
+        protected override void OnApply()
+        {
+            base.OnApply();
 
-            note.AlternativeTextBindable.BindValueChanged(_ => { changeText(note); }, true);
+            TextBindable.BindTo(HitObject.TextBindable);
+            AlternativeTextBindable.BindTo(HitObject.AlternativeTextBindable);
+            SingersBindable.BindTo(HitObject.SingersBindable);
+            DisplayBindable.BindTo(HitObject.DisplayBindable);
+            ToneBindable.BindTo(HitObject.ToneBindable);
+        }
 
-            note.SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); }, true);
+        protected override void OnFree()
+        {
+            base.OnFree();
+
+            TextBindable.UnbindFrom(HitObject.TextBindable);
+            AlternativeTextBindable.UnbindFrom(HitObject.AlternativeTextBindable);
+            SingersBindable.UnbindFrom(HitObject.SingersBindable);
+            DisplayBindable.UnbindFrom(HitObject.DisplayBindable);
+            ToneBindable.UnbindFrom(HitObject.ToneBindable);
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)
@@ -70,6 +102,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             base.ApplySkin(skin, allowFallback);
 
             if (CurrentSkin == null)
+                return;
+
+            if (HitObject == null)
                 return;
 
             var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, HitObject.Singers))?.Value;
