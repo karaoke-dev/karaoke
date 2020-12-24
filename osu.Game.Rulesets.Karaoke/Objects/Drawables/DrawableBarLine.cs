@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         protected override void LoadComplete()
         {
             base.LoadComplete();
-            major.BindValueChanged(updateMajor, true);
+            major.BindValueChanged(updateMajor);
         }
 
         private void updateMajor(ValueChangedEvent<bool> major)
