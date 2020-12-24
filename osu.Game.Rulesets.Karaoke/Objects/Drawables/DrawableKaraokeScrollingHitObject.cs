@@ -59,12 +59,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
     public abstract class DrawableKaraokeScrollingHitObject<TObject> : DrawableKaraokeScrollingHitObject
         where TObject : KaraokeHitObject
     {
-        public new readonly TObject HitObject;
+        public new TObject HitObject => base.HitObject as TObject;
 
         protected DrawableKaraokeScrollingHitObject(TObject hitObject)
             : base(hitObject)
         {
-            HitObject = hitObject;
         }
     }
 }
