@@ -236,19 +236,22 @@ namespace osu.Game.Rulesets.Karaoke.UI
             }, true);
         }
 
-        public void AddColumn(DefaultColumnBackground c)
+        protected void AddColumn(DefaultColumnBackground c)
         {
             columnFlow.Add(c);
         }
 
-        public override void Add(DrawableHitObject h)
+        protected override void OnNewDrawableHitObject(DrawableHitObject drawableHitObject)
         {
-            if (h is DrawableNote drawableNote)
+            if (drawableHitObject is DrawableNote drawableNote)
             {
-                drawableNote.ToneBindable.BindValueChanged(tone => { h.Y = calculator.YPositionAt(tone.NewValue); }, true);
+                drawableNote.ToneBindable.BindValueChanged(tone =>
+                {
+                    drawableHitObject.Y = calculator.YPositionAt(tone.NewValue);
+                });
             }
 
-            base.Add(h);
+            base.OnNewDrawableHitObject(drawableHitObject);
         }
 
         public void AddReplay(KaraokeReplayFrame frame)
