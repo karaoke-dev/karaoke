@@ -1,12 +1,10 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Input;
 using osu.Game.Beatmaps;
 using osu.Game.Input.Handlers;
@@ -15,7 +13,6 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.UI.Overlays;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -33,8 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public KaraokeSessionStatics Session { get; private set; }
         public new KaraokePlayfield Playfield => (KaraokePlayfield)base.Playfield;
 
-        public IEnumerable<BarLine> BarLines;
-
         public new KaraokeRulesetConfigManager Config => (KaraokeRulesetConfigManager)base.Config;
 
         private readonly Bindable<KaraokeScrollingDirection> configDirection = new Bindable<KaraokeScrollingDirection>();
@@ -50,9 +45,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
             : base(ruleset, beatmap, mods)
         {
             positionCalculator = new PositionCalculator(9);
-
-            // TODO : it should be moved into NotePlayfield
-            BarLines = new BarLineGenerator<BarLine>(Beatmap).BarLines;
 
             // Editor should not generate hud overlay
             if (mods == null)
@@ -81,7 +73,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [BackgroundDependencyLoader]
         private void load()
         {
-            BarLines.ForEach(Playfield.Add);
+            // TODO : it should be moved into NotePlayfield
+            new BarLineGenerator<BarLine>(Beatmap).BarLines.ForEach(bar => base.Playfield.Add(bar));
 
             Config.BindWith(KaraokeRulesetSetting.ScrollDirection, configDirection);
             configDirection.BindValueChanged(direction => Direction.Value = (ScrollingDirection)direction.NewValue, true);
