@@ -59,6 +59,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
             }));
         }
 
+        internal void AskForAutoGenerateRomaji()
+        {
+            DialogOverlay.Push(new UseAutoGenerateRubyPopupDialog(ok =>
+            {
+                if (!ok)
+                    return;
+
+                RubyRomajiManager.AutoGenerateRomaji();
+                Navigation.State = NavigationState.Done;
+            }));
+        }
+
         public class GenerateRubyNavigation : TopNavigation<GenerateRubySubScreen>
         {
             private const string auto_generate_ruby = "AUTO_GENERATE_RUBY";
