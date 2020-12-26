@@ -59,5 +59,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
 
             changeHandler?.EndChange();
         }
+
+        public bool CanAutoGenerateRuby()
+        {
+            var selector = new RubyTagGeneratorSelector();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            return lyrics.Any(lyric => selector.Generatable(lyric));
+        }
+
+        public bool CanAutoGenerateRomaji()
+        {
+            var selector = new RomajiTagGeneratorSelector();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            return lyrics.Any(lyric => selector.Generatable(lyric));
+        }
     }
 }

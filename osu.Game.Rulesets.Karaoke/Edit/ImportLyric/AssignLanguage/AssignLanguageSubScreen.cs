@@ -5,6 +5,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.RubyRomaji;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 {
@@ -21,9 +23,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         [Cached]
         protected readonly LyricManager LyricManager;
 
+        [Cached]
+        protected readonly RubyRomajiManager RubyRomajiManager;
+
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
+
         public AssignLanguageSubScreen()
         {
             AddInternal(LyricManager = new LyricManager());
+            AddInternal(RubyRomajiManager = new RubyRomajiManager());
         }
 
         protected override TopNavigation CreateNavigation()
@@ -45,7 +54,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 
         public override void Complete()
         {
-            ScreenStack.Push(ImportLyricStep.GenerateRuby);
+            // Check is need to go to generate ruby/romaji step or just skip.
+            if (RubyRomajiManager.CanAutoGenerateRuby() || RubyRomajiManager.CanAutoGenerateRomaji())
+            {
+                ScreenStack.Push(ImportLyricStep.GenerateRuby);
+            }
+            else
+            {
+                ScreenStack.Push(ImportLyricStep.GenerateTimeTag);
+            }
         }
 
         internal void AskForAutoAssignLanguage()
