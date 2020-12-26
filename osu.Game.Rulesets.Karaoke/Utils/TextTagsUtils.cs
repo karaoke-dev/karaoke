@@ -69,12 +69,17 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static T Combine<T>(T textTagA, T textTagB) where T : ITextTag, new()
         {
-            var sortinValue = Sort(new[] { textTagA, textTagB });
+            return Combine(new[] { textTagA, textTagB });
+        }
+
+        public static T Combine<T>(T[] textTags) where T : ITextTag, new()
+        {
+            var sortinValue = Sort(textTags);
             return new T
             {
-                StartIndex = sortinValue[0].StartIndex,
-                EndIndex = sortinValue[1].EndIndex,
-                Text = sortinValue[0].Text + sortinValue[1].Text
+                StartIndex = sortinValue.FirstOrDefault().StartIndex,
+                EndIndex = sortinValue.LastOrDefault().EndIndex,
+                Text = string.Join("", sortinValue.Select(x => x.Text))
             };
         }
 

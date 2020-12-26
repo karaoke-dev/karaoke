@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
@@ -52,6 +53,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var invalidTextTag = TextTagsUtils.FindInvalid(textTags, lyric, sorting);
             var invalidIndexes = invalidTextTag.Select(v => textTags.IndexOf(v)).ToArray();
             Assert.AreEqual(invalidIndexes, errorIndex);
+        }
+
+
+        [TestCase(new[] { "[0,1]:ka" }, "[0,1]:ka")]
+        [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, "[0,4]:karaoke")]
+        public void TestCombine(string[] textTags, string actualTextTag)
+        {
+            var rubyTags = TestCaseTagHelper.ParseRubyTags(textTags);
+            var actualRubyTag = TestCaseTagHelper.ParseRubyTag(actualTextTag);
+            Assert.AreEqual(TextTagsUtils.Combine(rubyTags), actualRubyTag);
         }
 
         private RubyTag[] getValueByMethodName(string methodName)
