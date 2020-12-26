@@ -5,7 +5,7 @@ using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
+namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 {
     public class UseAutoGenerateRomajiPopupDialog : PopupDialog
     {
