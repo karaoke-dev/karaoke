@@ -114,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             if (!isTrigger(stateManager.Mode))
                 return false;
 
-            // todo : not really sure is ok to split time-tag by double cliek?
+            // todo : not really sure is ok to split time-tag by double click?
             // need to make an ux research.
             var position = stateManager.BindableHoverCursorPosition.Value;
 

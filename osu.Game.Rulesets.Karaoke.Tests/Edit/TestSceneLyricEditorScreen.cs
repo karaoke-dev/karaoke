@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 RowDimensions = new[]
                 {
                     new Dimension(GridSizeMode.AutoSize),
-                    new Dimension(GridSizeMode.Distributed)
+                    new Dimension()
                 },
                 Content = new[]
                 {

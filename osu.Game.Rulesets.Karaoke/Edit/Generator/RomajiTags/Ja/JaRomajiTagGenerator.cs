@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Ja;
 using Lucene.Net.Analysis.TokenAttributes;
@@ -82,9 +81,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
 
             foreach (var processingTag in processingTags)
             {
-                // conbine romajies of they are not from kanji.
+                // combine romajies of they are not from kanji.
                 var previousProcessingTag = processingTags.GetPrevious(processingTag);
                 var fromKanji = processingTag.FromKanji;
+
                 if (previousProcessingTag != null && !fromKanji)
                 {
                     var combinedRomajiTag = TextTagsUtils.Combine(previousProcessingTag.RomajiTag, processingTag.RomajiTag);

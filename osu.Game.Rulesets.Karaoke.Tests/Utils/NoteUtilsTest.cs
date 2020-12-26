@@ -32,6 +32,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             {
                 Assert.IsNull(actualTime);
             }
-        } 
+        }
     }
 }
