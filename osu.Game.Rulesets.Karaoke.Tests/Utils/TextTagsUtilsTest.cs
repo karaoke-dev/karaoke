@@ -55,7 +55,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(invalidIndexes, errorIndex);
         }
 
-
         [TestCase(new[] { "[0,1]:ka" }, "[0,1]:ka")]
         [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, "[0,4]:karaoke")]
         public void TestCombine(string[] textTags, string actualTextTag)
