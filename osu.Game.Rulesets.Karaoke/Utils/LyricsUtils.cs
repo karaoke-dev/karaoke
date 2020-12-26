@@ -126,9 +126,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             => timeTags?.Select(t => TimeTagUtils.ShiftingTimeTag(t, shifting)).ToArray();
 
         private static RubyTag[] shiftingRubyTag(RubyTag[] rubyTags, int shifting)
-            => rubyTags?.Select(t => TextTagsUtils.Shifting(t, shifting)).ToArray();
+            => rubyTags?.Select(t => TextTagUtils.Shifting(t, shifting)).ToArray();
 
         private static RomajiTag[] shiftingRomajiTag(RomajiTag[] romajiTags, int shifting)
-            => romajiTags?.Select(t => TextTagsUtils.Shifting(t, shifting)).ToArray();
+            => romajiTags?.Select(t => TextTagUtils.Shifting(t, shifting)).ToArray();
     }
 }
