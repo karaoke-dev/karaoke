@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
@@ -41,6 +42,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
             changeHandler?.EndChange();
         }
 
+        public void AutoGenerateRomaji()
+        {
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            if (!lyrics.Any())
+                return;
+
+            changeHandler?.BeginChange();
+
+            var selector = new RomajiTagGeneratorSelector();
+
+            foreach (var lyric in lyrics)
+            {
+                var romajiTags = selector.GenerateRomajiTags(lyric);
+                lyric.RomajiTags = romajiTags;
+            }
+
+            changeHandler?.EndChange();
+        }
+
         public class RubyTagGeneratorSelector
         {
             private readonly Lazy<JaRubyTagGenerator> jaRubyTagGenerator;
@@ -63,6 +83,35 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
                     case 17:
                     case 1041:
                         return jaRubyTagGenerator.Value.CreateRubyTags(lyric);
+
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        public class RomajiTagGeneratorSelector
+        {
+            private readonly Lazy<JaRomajiTagGenerator> jaRomajiTagGenerator;
+
+            public RomajiTagGeneratorSelector()
+            {
+                jaRomajiTagGenerator = new Lazy<JaRomajiTagGenerator>(() =>
+                {
+                    // todo : get config from setting.
+                    var config = new JaRomajiTagGeneratorConfig();
+                    return new JaRomajiTagGenerator(config);
+                });
+            }
+
+            public RomajiTag[] GenerateRomajiTags(Lyric lyric)
+            {
+                // lazy to generate language detector and apply it's setting
+                switch (lyric.Language.LCID)
+                {
+                    case 17:
+                    case 1041:
+                        return jaRomajiTagGenerator.Value.CreateRomajiTags(lyric);
 
                     default:
                         return null;
