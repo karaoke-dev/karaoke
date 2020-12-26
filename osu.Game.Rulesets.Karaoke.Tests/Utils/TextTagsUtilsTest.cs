@@ -55,21 +55,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(invalidIndexes, errorIndex);
         }
 
-        [TestCase("[0,1]:ka", 1, "[1,2]:ka")]
-        [TestCase("[0,1]:", 1, "[1,2]:")]
-        [TestCase("[0,1]:ka", -1, "[-1,0]:ka")] // do not check out of range in here.
-        [TestCase("[1,0]:ka", 1, "[2,1]:ka")] // do not check order in here.
-        public void TestShifting(string textTag, int shifting, string actualTag)
+        [TestCase(new[] { "[0,1]:ka" }, "[0,1]:ka")]
+        [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, "[0,4]:karaoke")]
+        public void TestCombine(string[] textTags, string actualTextTag)
         {
-            // test ruby tag.
-            var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
-            var actualRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
-            Assert.AreEqual(TextTagsUtils.Shifting(rubyTag, shifting), actualRubyTag);
-
-            // test romaji tag.
-            var romajiTag = TestCaseTagHelper.ParseRubyTag(textTag);
-            var actualRomaji = TestCaseTagHelper.ParseRubyTag(actualTag);
-            Assert.AreEqual(TextTagsUtils.Shifting(romajiTag, shifting), actualRomaji);
+            var rubyTags = TestCaseTagHelper.ParseRubyTags(textTags);
+            var actualRubyTag = TestCaseTagHelper.ParseRubyTag(actualTextTag);
+            Assert.AreEqual(TextTagsUtils.Combine(rubyTags), actualRubyTag);
         }
 
         private RubyTag[] getValueByMethodName(string methodName)
