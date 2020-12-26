@@ -6,8 +6,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Timing;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
@@ -187,45 +186,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return null;
 
             return beatmap.HitObjects.OfType<Lyric>().FirstOrDefault(x => x.TimeTags?.Contains(timeTag) ?? false);
-        }
-
-        public class TimeTagGeneratorSelector
-        {
-            private readonly Lazy<JaTimeTagGenerator> jaTimeTagGenerator;
-            private readonly Lazy<ZhTimeTagGenerator> zhTimeTagGenerator;
-
-            public TimeTagGeneratorSelector()
-            {
-                jaTimeTagGenerator = new Lazy<JaTimeTagGenerator>(() =>
-                {
-                    // todo : get config from setting.
-                    var config = new JaTimeTagGeneratorConfig();
-                    return new JaTimeTagGenerator(config);
-                });
-                zhTimeTagGenerator = new Lazy<ZhTimeTagGenerator>(() =>
-                {
-                    // todo : get config from setting.
-                    var config = new ZhTimeTagGeneratorConfig();
-                    return new ZhTimeTagGenerator(config);
-                });
-            }
-
-            public TimeTag[] GenerateTimeTags(Lyric lyric)
-            {
-                // lazy to generate language detector and apply it's setting
-                switch (lyric.Language?.LCID)
-                {
-                    case 17:
-                    case 1041:
-                        return jaTimeTagGenerator.Value.CreateTimeTags(lyric);
-
-                    case 1028:
-                        return zhTimeTagGenerator.Value.CreateTimeTags(lyric);
-
-                    default:
-                        return null;
-                }
-            }
         }
     }
 

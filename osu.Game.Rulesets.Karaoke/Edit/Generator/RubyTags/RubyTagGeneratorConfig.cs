@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags
 {
-    public class RubyTagGeneratorConfig
+    public abstract class RubyTagGeneratorConfig
     {
     }
 }

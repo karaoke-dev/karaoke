@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator
         {
             Generator.Add(info, new Lazy<TGenerator>(() =>
             {
-                // todo : get config from setting, and mark basic config class as abstract.
+                // todo : get config from setting.
                 var config = new TC();
                 var generator = Activator.CreateInstance(typeof(T), config) as TGenerator;
                 return generator;
