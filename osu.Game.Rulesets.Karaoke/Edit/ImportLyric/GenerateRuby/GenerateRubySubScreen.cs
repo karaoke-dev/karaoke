@@ -39,7 +39,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
         {
             base.LoadComplete();
             Navigation.State = NavigationState.Initial;
-            AskForAutoGenerateRuby();
+
+            // Asking auto-generate ruby or romaji.
+            if (RubyRomajiManager.CanAutoGenerateRuby())
+                AskForAutoGenerateRuby();
+            else
+                AskForAutoGenerateRomaji();
         }
 
         public override void Complete()
@@ -61,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
 
         internal void AskForAutoGenerateRomaji()
         {
-            DialogOverlay.Push(new UseAutoGenerateRubyPopupDialog(ok =>
+            DialogOverlay.Push(new UseAutoGenerateRomajiPopupDialog(ok =>
             {
                 if (!ok)
                     return;
@@ -74,6 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
         public class GenerateRubyNavigation : TopNavigation<GenerateRubySubScreen>
         {
             private const string auto_generate_ruby = "AUTO_GENERATE_RUBY";
+            private const string auto_generate_romaji = "AUTO_GENERATE_ROMAJI";
 
             public GenerateRubyNavigation(GenerateRubySubScreen screen)
                 : base(screen)
@@ -90,12 +96,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
                 switch (value)
                 {
                     case NavigationState.Initial:
-                        NavigationText = $"Lazy to typing ruby? Press [{auto_generate_ruby}] to auto-generate ruby and romaji. It's very easy.";
+                        NavigationText = $"Lazy to typing ruby? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] to auto-generate ruby and romaji. It's very easy.";
                         break;
 
                     case NavigationState.Working:
                     case NavigationState.Done:
-                        NavigationText = $"Go to next step to generate time-tag. Messing around? Press [{auto_generate_ruby}] again.";
+                        NavigationText = $"Go to next step to generate time-tag. Messing around? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] again.";
                         break;
 
                     case NavigationState.Error:
@@ -112,6 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby
                 public GenerateRubyTextFlowContainer(GenerateRubySubScreen screen)
                 {
                     AddLinkFactory(auto_generate_ruby, "auto generate ruby", screen.AskForAutoGenerateRuby);
+                    AddLinkFactory(auto_generate_romaji, "auto generate romaji", screen.AskForAutoGenerateRomaji);
                 }
             }
         }
