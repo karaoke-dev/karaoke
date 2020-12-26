@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags
 {
-    public abstract class RomajiTagGenerator<T> where T : RomajiTagGeneratorConfig
+    public abstract class RomajiTagGenerator<T> : RomajiTagGenerator where T : RomajiTagGeneratorConfig
     {
         protected T Config { get; }
 
@@ -13,7 +13,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags
         {
             Config = config;
         }
+    }
 
-        public abstract RomajiTag[] CreateRomajiTags(Lyric lyric); 
+    public abstract class RomajiTagGenerator
+    {
+        public abstract RomajiTag[] CreateRomajiTags(Lyric lyric);
     }
 }
