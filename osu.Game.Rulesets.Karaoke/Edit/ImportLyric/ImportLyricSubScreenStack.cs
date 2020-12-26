@@ -4,7 +4,7 @@
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric;
-using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRuby;
+using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.Success;
 using osu.Game.Screens;
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     return;
 
                 case ImportLyricStep.GenerateRuby:
-                    Push(new GenerateRubySubScreen());
+                    Push(new GenerateRubyRomajiSubScreen());
                     return;
 
                 case ImportLyricStep.GenerateTimeTag:
