@@ -66,6 +66,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                 }
             };
 
+            drawableLyric.RomajiTagsBindable.BindValueChanged(e =>
+            {
+                var displayRomaji = e?.NewValue?.Any() ?? false;
+                var marginWidth = displayRomaji ? 30 : 15;
+                timeTagContainer.Margin = new MarginPadding { Bottom = marginWidth };
+                cursorContainer.Margin = new MarginPadding { Bottom = marginWidth };
+            }, true);
+
             drawableLyric.TimeTagsBindable.BindValueChanged(e =>
             {
                 ScheduleAfterChildren(UpdateTimeTags);
