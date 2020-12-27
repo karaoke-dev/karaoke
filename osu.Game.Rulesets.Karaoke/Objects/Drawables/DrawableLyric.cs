@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
     public class DrawableLyric : DrawableKaraokeHitObject
     {
-        protected KarakeSpriteText KaraokeText { get; private set; }
+        protected KaraokeSpriteText KaraokeText { get; private set; }
         private OsuSpriteText translateText;
 
         public readonly IBindable<string> TextBindable = new Bindable<string>();
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             Scale = new Vector2(2f);
             AutoSizeAxes = Axes.Both;
 
-            AddInternal(KaraokeText = new KarakeSpriteText());
+            AddInternal(KaraokeText = new KaraokeSpriteText());
             AddInternal(translateText = new OsuSpriteText
             {
                 Anchor = Anchor.BottomLeft,
