@@ -3,12 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
-    public class SingerHitObjectComposer : KaraokeHitObjectComposer
+    public class SingerHitObjectComposer : HitObjectComposer<KaraokeHitObject>
     {
         public SingerHitObjectComposer(Ruleset ruleset)
             : base(ruleset)

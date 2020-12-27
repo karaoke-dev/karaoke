@@ -22,8 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
             this.singer = singer;
         }
 
-        [BackgroundDependencyLoader(true)]
-        private void load(OverlayColourProvider colourProvider, [CanBeNull] KaraokeHitObjectComposer composer)
+        [BackgroundDependencyLoader]
+        private void load(OverlayColourProvider colourProvider, SingerHitObjectComposer composer)
         {
             InternalChildren = new Drawable[]
             {

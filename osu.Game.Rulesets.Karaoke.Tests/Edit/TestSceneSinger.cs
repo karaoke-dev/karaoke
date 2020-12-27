@@ -75,13 +75,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private void load()
         {
             Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
+            var composer = new SingerHitObjectComposer(Ruleset.Value.CreateInstance());
 
             base.Content.AddRange(new Drawable[]
             {
                 new OsuContextMenuContainer
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Child = Content
+                    Children = new Drawable[]
+                    {
+                        composer,
+                        Content
+                    }
                 },
                 dialogOverlay = new DialogOverlay()
             });
@@ -94,6 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             Dependencies.CacheAs(editorClock);
             Dependencies.Cache(beatDivisor);
             Dependencies.Cache(dialogOverlay);
+            Dependencies.Cache(composer);
         }
 
         [SetUp]
