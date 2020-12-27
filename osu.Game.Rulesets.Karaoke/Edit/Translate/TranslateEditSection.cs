@@ -106,13 +106,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                                 Icon = FontAwesome.Solid.Plus,
                                                 Action = () =>
                                                 {
-
                                                 }
                                             },
                                             null,
                                             new IconButton
                                             {
-                                                 Y = 5,
+                                                Y = 5,
                                                 Icon = FontAwesome.Solid.Trash,
                                                 Action = () =>
                                                 {
@@ -133,7 +132,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                             },
                                         }
                                     }
-                                    
                                 }
                             },
                         }
