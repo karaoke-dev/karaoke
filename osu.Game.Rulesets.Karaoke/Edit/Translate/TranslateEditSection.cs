@@ -13,9 +13,11 @@ using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Translate.Components;
 using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -29,10 +31,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
         private readonly CornerBackground timeSectionBackground;
         private readonly CornerBackground lyricSectionBackground;
-
         private readonly LanguageDropdown languageDropdown;
+        private readonly GridContainer translateGrid;
 
-        public TranslateEditSection(EditorBeatmap editorBeatmap)
+        public readonly Bindable<CultureInfo> NewLanguage = new Bindable<CultureInfo>();
+
+        [Resolved]
+        private TranslateManager translateManager { get; set; }
+
+        [Resolved]
+        protected DialogOverlay DialogOverlay { get; private set; }
+
+        [Resolved]
+        protected LanguageSelectionDialog LanguageSelectionDialog { get; private set; }
+
+        public TranslateEditSection()
         {
             Padding = new MarginPadding(10);
 
@@ -69,10 +82,65 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                 null,
                                 null,
                                 null,
-                                languageDropdown = new LanguageDropdown
+                                new GridContainer
                                 {
                                     RelativeSizeAxes = Axes.X,
-                                },
+                                    AutoSizeAxes = Axes.Y,
+                                    ColumnDimensions = new[]
+                                    {
+                                        new Dimension(GridSizeMode.Distributed),
+                                        new Dimension(GridSizeMode.Absolute, column_spacing),
+                                        new Dimension(GridSizeMode.Absolute, 50),
+                                        new Dimension(GridSizeMode.Absolute, column_spacing),
+                                        new Dimension(GridSizeMode.Absolute, 50),
+                                    },
+                                    RowDimensions = new[]
+                                    {
+                                        new Dimension(GridSizeMode.AutoSize),
+                                    },
+                                    Content = new[]
+                                    {
+                                        new Drawable[]
+                                        {
+                                            languageDropdown = new LanguageDropdown
+                                            {
+                                                RelativeSizeAxes = Axes.X,
+                                            },
+                                            null,
+                                            new IconButton
+                                            {
+                                                Y = 5,
+                                                Icon = FontAwesome.Solid.Plus,
+                                                Action = () =>
+                                                {
+                                                    LanguageSelectionDialog.Show();
+                                                }
+                                            },
+                                            null,
+                                            new IconButton
+                                            {
+                                                Y = 5,
+                                                Icon = FontAwesome.Solid.Trash,
+                                                Action = () =>
+                                                {
+                                                    var currentLanguage = languageDropdown.Current.Value;
+                                                    if(translateManager.LanguageContainsTranslateAmount(currentLanguage) > 0)
+                                                    {
+                                                        DialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage, isOK =>
+                                                        {
+                                                            if(isOK)
+                                                                translateManager.RemoveLanguage(currentLanguage);
+                                                        }));
+                                                    }
+                                                    else
+                                                    {
+                                                        translateManager.RemoveLanguage(currentLanguage);
+                                                    }
+                                                }
+                                            },
+                                        }
+                                    }
+                                }
                             },
                         }
                     },
@@ -120,38 +188,47 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                     },
                                 }
                             },
-                            new GridContainer
+                            translateGrid = new GridContainer
                             {
                                 Name = "Translates",
-                                RowDimensions = createRowDimension(),
                                 ColumnDimensions = columnDimensions,
                                 RelativeSizeAxes = Axes.X,
                                 AutoSizeAxes = Axes.Y,
-                                Content = createContent(editorBeatmap, languageDropdown.Current)
                             }
                         }
                     }
                 },
             };
 
-            Dimension[] createRowDimension() => editorBeatmap.HitObjects.OfType<Lyric>()
-                                                             .Select(x => new Dimension(GridSizeMode.Absolute, row_height))
-                                                             .ToArray();
+            NewLanguage.BindValueChanged(e =>
+            {
+                translateManager.AddLanguage(e.NewValue);
+            });
         }
 
         [BackgroundDependencyLoader]
         private void load(TranslateManager translateManager, OsuColour colours)
         {
-            languageDropdown.ItemSource = translateManager?.Languages ?? new BindableList<CultureInfo>();
+            NewLanguage.BindTo(LanguageSelectionDialog.Current);
+
+            languageDropdown.ItemSource = translateManager.Languages;
 
             timeSectionBackground.Colour = colours.ContextMenuGray;
             lyricSectionBackground.Colour = colours.Gray9;
+
+            translateGrid.RowDimensions = translateManager.Lyrics.Select(x => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
+            translateGrid.Content = createContent(languageDropdown.Current);
         }
 
-        private Drawable[][] createContent(EditorBeatmap editorBeatmap, Bindable<CultureInfo> bindable)
+        protected override void Dispose(bool isDisposing)
         {
-            var lyrics = editorBeatmap.HitObjects.OfType<Lyric>().ToArray();
+            NewLanguage.UnbindAll();
+            base.Dispose(isDisposing);
+        }
 
+        private Drawable[][] createContent(Bindable<CultureInfo> bindable)
+        {
+            var lyrics = translateManager.Lyrics;
             return lyrics.Select(x =>
             {
                 return new[]
@@ -201,14 +278,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 Origin = Anchor.CentreLeft,
                 RelativeSizeAxes = Axes.X,
             };
-            languageDropdown.Current.BindValueChanged(v => { textBox.Text = lyric.Translates.TryGetValue(v.NewValue, out string translate) ? translate : null; });
+            languageDropdown.Current.BindValueChanged(v =>
+            {
+                textBox.Text = translateManager.GetTranslate(lyric, v.NewValue);
+            });
             textBox.Current.BindValueChanged(textBoxValue =>
             {
                 var translateText = textBoxValue.NewValue;
                 var cultureInfo = languageDropdown.Current.Value;
-
-                if (!lyric.Translates.TryAdd(cultureInfo, translateText))
-                    lyric.Translates[cultureInfo] = translateText;
+                translateManager.SaveTranslate(lyric, cultureInfo, translateText);
             });
             return textBox;
         }

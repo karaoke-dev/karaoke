@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                             RelativeSizeAxes = Axes.Both,
                             Children = new Container[]
                             {
-                                new TranslateEditSection(EditorBeatmap)
+                                new TranslateEditSection()
                                 {
                                     RelativeSizeAxes = Axes.X,
                                     AutoSizeAxes = Axes.Y,
