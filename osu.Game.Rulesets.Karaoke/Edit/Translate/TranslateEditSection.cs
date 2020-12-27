@@ -34,6 +34,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         private readonly LanguageDropdown languageDropdown;
         private readonly GridContainer translateGrid;
 
+        public readonly Bindable<CultureInfo> NewLanguage = new Bindable<CultureInfo>();
+
         [Resolved]
         private TranslateManager translateManager { get; set; }
 
@@ -197,18 +199,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                     }
                 },
             };
+
+            NewLanguage.BindValueChanged(e =>
+            {
+                translateManager.AddLanguage(e.NewValue);
+            });
         }
 
         [BackgroundDependencyLoader]
         private void load(TranslateManager translateManager, OsuColour colours)
         {
+            NewLanguage.BindTo(LanguageSelectionDialog.Current);
+
             languageDropdown.ItemSource = translateManager.Languages;
 
             timeSectionBackground.Colour = colours.ContextMenuGray;
             lyricSectionBackground.Colour = colours.Gray9;
 
             translateGrid.RowDimensions = translateManager.Lyrics.Select(x => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
-            translateGrid.Content = createContent(languageDropdown.Current);                                              
+            translateGrid.Content = createContent(languageDropdown.Current);
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            NewLanguage.UnbindAll();
+            base.Dispose(isDisposing);
         }
 
         private Drawable[][] createContent(Bindable<CultureInfo> bindable)

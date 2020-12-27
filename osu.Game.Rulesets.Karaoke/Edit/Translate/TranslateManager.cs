@@ -38,15 +38,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             }
         }
 
-        public void AddLanguage(CultureInfo language)
+        public void AddLanguage(CultureInfo cultureInfo)
         {
+            if (Languages.Contains(cultureInfo))
+                return;
+
             changeHandler?.BeginChange();
-            Languages.Add(language);
+            Languages.Add(cultureInfo);
             changeHandler?.EndChange();
         }
 
         public void RemoveLanguage(CultureInfo cultureInfo)
         {
+            if (!Languages.Contains(cultureInfo))
+                return;
+
             changeHandler?.BeginChange();
 
             // Delete from list.
