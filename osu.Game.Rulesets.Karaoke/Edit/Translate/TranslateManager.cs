@@ -20,6 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
     {
         public readonly BindableList<CultureInfo> Languages = new BindableList<CultureInfo>();
 
+        public readonly Bindable<CultureInfo> CurrentLanguage = new Bindable<CultureInfo>();
+
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
@@ -99,5 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
             return lyrics.Count(x => x.Translates.ContainsKey(cultureInfo));
         }
+
+        public List<Lyric> Lyrics => beatmap?.HitObjects.OfType<Lyric>().ToList();
     }
 }

@@ -17,6 +17,7 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Translate.Components;
 using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -31,6 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         private readonly CornerBackground timeSectionBackground;
         private readonly CornerBackground lyricSectionBackground;
         private readonly LanguageDropdown languageDropdown;
+        private readonly GridContainer translateGrid;
 
         [Resolved]
         private TranslateManager translateManager { get; set; }
@@ -38,7 +40,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         [Resolved]
         protected DialogOverlay DialogOverlay { get; private set; }
 
-        public TranslateEditSection(EditorBeatmap editorBeatmap)
+        [Resolved]
+        protected LanguageSelectionDialog LanguageSelectionDialog { get; private set; }
+
+        public TranslateEditSection()
         {
             Padding = new MarginPadding(10);
 
@@ -106,6 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                                 Icon = FontAwesome.Solid.Plus,
                                                 Action = () =>
                                                 {
+                                                    LanguageSelectionDialog.Show();
                                                 }
                                             },
                                             null,
@@ -180,38 +186,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                     },
                                 }
                             },
-                            new GridContainer
+                            translateGrid = new GridContainer
                             {
                                 Name = "Translates",
-                                RowDimensions = createRowDimension(),
                                 ColumnDimensions = columnDimensions,
                                 RelativeSizeAxes = Axes.X,
                                 AutoSizeAxes = Axes.Y,
-                                Content = createContent(editorBeatmap, languageDropdown.Current)
                             }
                         }
                     }
                 },
             };
-
-            Dimension[] createRowDimension() => editorBeatmap.HitObjects.OfType<Lyric>()
-                                                             .Select(x => new Dimension(GridSizeMode.Absolute, row_height))
-                                                             .ToArray();
         }
 
         [BackgroundDependencyLoader]
         private void load(TranslateManager translateManager, OsuColour colours)
         {
-            languageDropdown.ItemSource = translateManager?.Languages ?? new BindableList<CultureInfo>();
+            languageDropdown.ItemSource = translateManager.Languages;
 
             timeSectionBackground.Colour = colours.ContextMenuGray;
             lyricSectionBackground.Colour = colours.Gray9;
+
+            translateGrid.RowDimensions = translateManager.Lyrics.Select(x => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
+            translateGrid.Content = createContent(languageDropdown.Current);                                              
         }
 
-        private Drawable[][] createContent(EditorBeatmap editorBeatmap, Bindable<CultureInfo> bindable)
+        private Drawable[][] createContent(Bindable<CultureInfo> bindable)
         {
-            var lyrics = editorBeatmap.HitObjects.OfType<Lyric>().ToArray();
-
+            var lyrics = translateManager.Lyrics;
             return lyrics.Select(x =>
             {
                 return new[]

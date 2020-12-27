@@ -10,6 +10,7 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Translate;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
@@ -26,6 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
         private DialogOverlay dialogOverlay;
+        private LanguageSelectionDialog languageSelectionDialog;
 
         public TestSceneTranslate()
         {
@@ -50,9 +52,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             {
                 Content,
                 dialogOverlay = new DialogOverlay(),
+                languageSelectionDialog = new LanguageSelectionDialog()
             });
 
             Dependencies.Cache(dialogOverlay);
+            Dependencies.Cache(languageSelectionDialog);
 
             Child = new TranslateScreen();
         }
