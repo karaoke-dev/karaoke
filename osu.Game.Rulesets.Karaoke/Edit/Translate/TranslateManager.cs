@@ -46,7 +46,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         public void RemoveLanguage(CultureInfo cultureInfo)
         {
             changeHandler?.BeginChange();
+
+            // Delete from list.
             Languages.Remove(cultureInfo);
+
+            // Delete from lyric also.
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            foreach (var lyric in lyrics)
+            {
+                if (lyric.Translates.ContainsKey(cultureInfo))
+                    lyric.Translates.Remove(cultureInfo);
+            }
+
             changeHandler?.EndChange();
         }
 

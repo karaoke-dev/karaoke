@@ -13,6 +13,7 @@ using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Translate.Components;
 using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
@@ -33,6 +34,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
         [Resolved]
         private TranslateManager translateManager { get; set; }
+
+        [Resolved]
+        protected DialogOverlay DialogOverlay { get; private set; }
 
         public TranslateEditSection(EditorBeatmap editorBeatmap)
         {
@@ -71,10 +75,66 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                 null,
                                 null,
                                 null,
-                                languageDropdown = new LanguageDropdown
+                                new GridContainer
                                 {
                                     RelativeSizeAxes = Axes.X,
-                                },
+                                    AutoSizeAxes = Axes.Y,
+                                    ColumnDimensions = new[]
+                                    {
+                                        new Dimension(GridSizeMode.Distributed),
+                                        new Dimension(GridSizeMode.Absolute, column_spacing),
+                                        new Dimension(GridSizeMode.Absolute, 50),
+                                        new Dimension(GridSizeMode.Absolute, column_spacing),
+                                        new Dimension(GridSizeMode.Absolute, 50),
+                                    },
+                                    RowDimensions = new[]
+                                    {
+                                        new Dimension(GridSizeMode.AutoSize),
+                                    },
+                                    Content = new[]
+                                    {
+                                        new Drawable[]
+                                        {
+                                            languageDropdown = new LanguageDropdown
+                                            {
+                                                RelativeSizeAxes = Axes.X,
+                                            },
+                                            null,
+                                            new IconButton
+                                            {
+                                                Y = 5,
+                                                Icon = FontAwesome.Solid.Plus,
+                                                Action = () =>
+                                                {
+
+                                                }
+                                            },
+                                            null,
+                                            new IconButton
+                                            {
+                                                 Y = 5,
+                                                Icon = FontAwesome.Solid.Trash,
+                                                Action = () =>
+                                                {
+                                                    var currentLanguage = languageDropdown.Current.Value;
+                                                    if(translateManager.LanguageContainsTranslateAmount(currentLanguage) > 0)
+                                                    {
+                                                        DialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage, isOK =>
+                                                        {
+                                                            if(isOK)
+                                                                translateManager.RemoveLanguage(currentLanguage);
+                                                        }));
+                                                    }
+                                                    else
+                                                    {
+                                                        translateManager.RemoveLanguage(currentLanguage);
+                                                    }
+                                                }
+                                            },
+                                        }
+                                    }
+                                    
+                                }
                             },
                         }
                     },
