@@ -51,6 +51,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         }
 
         public float GetPercentageWidth(int startIndex, int endIndex, float percentage = 0)
+            => GetPercentageWidth(new TimeTagIndex(startIndex), new TimeTagIndex(endIndex), percentage);
+
+        public float GetPercentageWidth(TimeTagIndex startIndex, TimeTagIndex endIndex, float percentage = 0)
             => KaraokeText.GetPercentageWidth(startIndex, endIndex, percentage);
 
         public TimeTagIndex GetHoverIndex(float position)

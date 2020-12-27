@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 int startIndex = timeTag.Key.Index;
                 int endIndex = key.Index;
 
-                var text = lyric.Text.Substring(startIndex, endIndex - startIndex);
+                var text = lyric.Text[startIndex..endIndex];
                 var ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault().Text;
 
                 if (!string.IsNullOrEmpty(text))
