@@ -29,8 +29,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
         private readonly CornerBackground timeSectionBackground;
         private readonly CornerBackground lyricSectionBackground;
-
         private readonly LanguageDropdown languageDropdown;
+
+        [Resolved]
+        private TranslateManager translateManager { get; set; }
 
         public TranslateEditSection(EditorBeatmap editorBeatmap)
         {
@@ -201,14 +203,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 Origin = Anchor.CentreLeft,
                 RelativeSizeAxes = Axes.X,
             };
-            languageDropdown.Current.BindValueChanged(v => { textBox.Text = lyric.Translates.TryGetValue(v.NewValue, out string translate) ? translate : null; });
+            languageDropdown.Current.BindValueChanged(v =>
+            {
+                textBox.Text = translateManager.GetTranslate(lyric, v.NewValue);
+            });
             textBox.Current.BindValueChanged(textBoxValue =>
             {
                 var translateText = textBoxValue.NewValue;
                 var cultureInfo = languageDropdown.Current.Value;
-
-                if (!lyric.Translates.TryAdd(cultureInfo, translateText))
-                    lyric.Translates[cultureInfo] = translateText;
+                translateManager.SaveTranslate(lyric, cultureInfo, translateText);
             });
             return textBox;
         }
