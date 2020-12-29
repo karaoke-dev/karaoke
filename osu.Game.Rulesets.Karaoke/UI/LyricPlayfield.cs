@@ -81,9 +81,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
             AllHitObjects.ForEach(x => x.DisplayTranslateLanguage = targetLanguage);
         }
 
-        public override void Add(DrawableHitObject h)
+        protected override void OnNewDrawableHitObject(DrawableHitObject drawableHitObject)
         {
-            if (h is DrawableLyric drawableLyric)
+            if (drawableHitObject is DrawableLyric drawableLyric)
             {
                 // todo : not really sure should cancel binding action in here?
                 drawableLyric.OnLyricStart += OnNewResult;
@@ -91,15 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 drawableLyric.DisplayRomaji = displayRomaji.Value;
             }
 
-            base.Add(h);
-        }
-
-        public override bool Remove(DrawableHitObject h)
-        {
-            if (h is DrawableLyric drawableLyric)
-                drawableLyric.OnLyricStart -= OnNewResult;
-
-            return base.Remove(h);
+            base.OnNewDrawableHitObject(drawableHitObject);
         }
 
         internal void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)
