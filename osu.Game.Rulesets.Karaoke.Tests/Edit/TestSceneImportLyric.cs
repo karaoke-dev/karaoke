@@ -12,6 +12,7 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Screens.Edit;
@@ -29,6 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
         private DialogOverlay dialogOverlay;
+        private LanguageSelectionDialog languageSelectionDialog;
         private TestImportLyricScreen screen;
         private ImportLyricManager importManager;
 
@@ -48,10 +50,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             {
                 Content,
                 dialogOverlay = new DialogOverlay(),
+                languageSelectionDialog = new LanguageSelectionDialog(),
                 importManager = new ImportLyricManager()
             });
 
             Dependencies.Cache(dialogOverlay);
+            Dependencies.Cache(languageSelectionDialog);
             Dependencies.Cache(importManager);
         }
 
