@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -71,6 +72,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             changeHandler?.BeginChange();
 
             LyricUtils.RemoveText(lyric, index - 1);
+
+            changeHandler?.EndChange();
+
+            return true;
+        }
+
+        public bool SetLanguage(Lyric lyric, CultureInfo language)
+        {
+            if (lyric.Language.Equals(language))
+                return false;
+
+            changeHandler?.BeginChange();
+
+            lyric.Language = language;
 
             changeHandler?.EndChange();
 
