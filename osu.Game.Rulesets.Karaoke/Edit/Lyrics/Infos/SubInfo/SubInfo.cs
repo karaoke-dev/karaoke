@@ -8,16 +8,16 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.Badges
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo
 {
-    public abstract class Badge : Container
+    public abstract class SubInfo : Container
     {
         private readonly Box box;
         private readonly OsuSpriteText badgeText;
 
         protected Lyric Lyric { get; }
 
-        protected Badge(Lyric lyric)
+        protected SubInfo(Lyric lyric)
         {
             Lyric = lyric;
 

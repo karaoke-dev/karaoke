@@ -5,11 +5,11 @@ using osu.Framework.Allocation;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.Badges
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo
 {
-    public class StyleInfoBadge : Badge
+    public class StyleInfo : SubInfo
     {
-        public StyleInfoBadge(Lyric lyric)
+        public StyleInfo(Lyric lyric)
             : base(lyric)
         {
             lyric.SingersBindable.BindValueChanged(value =>

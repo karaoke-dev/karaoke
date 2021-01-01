@@ -7,7 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.Badges;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.TimeInfo;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
                     Height = max_height,
                     Alpha = 0.7f
                 },
-                new InfoFillFlowContainer
+                new FillFlowContainer
                 {
                     Direction = FillDirection.Vertical,
                     RelativeSizeAxes = Axes.X,
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
             headerBackground.Colour = colours.Gray2;
             stateManager.BindableFastEditMode.BindValueChanged(e =>
             {
-
+                CreateBadge(e.NewValue);
             }, true);
         }
 
@@ -77,28 +77,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
                 return;
 
             subInfo.Margin = new MarginPadding { Right = 5 };
+            subInfo.Anchor = Anchor.TopRight;
+            subInfo.Origin = Anchor.TopRight;
             subInfoContainer.Add(subInfo);
 
             Drawable createSubInfo()
             {
                 switch (mode)
                 {
+                    case LyricFastEditMode.None:
+                        return null;
+                    case LyricFastEditMode.Layout:
+                        return new LayoutInfo(Lyric);
+                    case LyricFastEditMode.Singer:
+                        return new SingerInfo(Lyric);
                     case LyricFastEditMode.Language:
-                        return new LanguageInfoBadge(Lyric);
+                        return new LanguageInfo(Lyric);
+                    case LyricFastEditMode.TimeTag:
+                        return new TimeTagInfo(Lyric);
                     default:
                         throw new IndexOutOfRangeException(nameof(mode));
                 }
-            }
-        }
-
-
-        public class InfoFillFlowContainer : FillFlowContainer
-        {
-            public override void Add(Drawable drawable)
-            {
-                drawable.Anchor = Anchor.TopRight;
-                drawable.Origin = Anchor.TopRight;
-                base.Add(drawable);
             }
         }
     }
