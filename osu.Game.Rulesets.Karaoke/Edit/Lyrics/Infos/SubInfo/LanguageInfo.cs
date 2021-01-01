@@ -9,9 +9,9 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.Badges
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo
 {
-    public class LanguageInfoBadge : Badge
+    public class LanguageInfo : SubInfo
     {
         [Resolved]
         private LanguageSelectionDialog languageSelectionDialog { get; set; }
@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.Badges
 
         private readonly Bindable<CultureInfo> languageBindable = new Bindable<CultureInfo>();
 
-        public LanguageInfoBadge(Lyric lyric)
+        public LanguageInfo(Lyric lyric)
             : base(lyric)
         {
             languageBindable.BindValueChanged(value =>

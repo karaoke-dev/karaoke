@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -9,7 +8,6 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
@@ -19,7 +17,7 @@ using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Screens.Edit;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
@@ -124,11 +122,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                                 Action = () =>
                                                 {
                                                     var currentLanguage = languageDropdown.Current.Value;
-                                                    if(translateManager.LanguageContainsTranslateAmount(currentLanguage) > 0)
+
+                                                    if (translateManager.LanguageContainsTranslateAmount(currentLanguage) > 0)
                                                     {
-                                                        DialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage, isOK =>
+                                                        DialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage, isOk =>
                                                         {
-                                                            if(isOK)
+                                                            if (isOk)
                                                                 translateManager.RemoveLanguage(currentLanguage);
                                                         }));
                                                     }
@@ -244,11 +243,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
         private Drawable createTimeDrawable(Lyric lyric)
         {
-            var startTime = lyric.StartTime.ToEditorFormattedString();
-            var endTime = lyric.EndTime.ToEditorFormattedString();
             return new OsuSpriteText
             {
-                Text = startTime + " - " + endTime,
+                Text = LyricUtils.LyricTimeFormattedString(lyric),
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,
                 Margin = new MarginPadding { Left = row_inner_spacing },

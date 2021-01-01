@@ -1,13 +1,14 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.Badges;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.TimeInfo;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.MainInfo;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
@@ -18,6 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
         private const int max_height = 120;
 
         private readonly Box headerBackground;
+        private readonly Container subInfoContainer;
 
         public Lyric Lyric { get; }
 
@@ -33,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
                     Height = max_height,
                     Alpha = 0.7f
                 },
-                new BadgeFillFlowContainer
+                new FillFlowContainer
                 {
                     Direction = FillDirection.Vertical,
                     RelativeSizeAxes = Axes.X,
@@ -48,31 +50,59 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
                             RelativeSizeAxes = Axes.X,
                             Height = 36,
                         },
-
-                        // todo : in small display size use badge.
-                        // in larger size should use real icon.
-                        new LanguageInfoBadge(Lyric)
+                        subInfoContainer = new Container
                         {
-                            Margin = new MarginPadding { Right = 5 }
-                        }
+                            RelativeSizeAxes = Axes.X
+                        },
                     }
                 },
             };
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(OsuColour colours, LyricEditorStateManager stateManager)
         {
             headerBackground.Colour = colours.Gray2;
+            stateManager.BindableFastEditMode.BindValueChanged(e =>
+            {
+                CreateBadge(e.NewValue);
+            }, true);
         }
 
-        public class BadgeFillFlowContainer : FillFlowContainer
+        protected void CreateBadge(LyricFastEditMode mode)
         {
-            public override void Add(Drawable drawable)
+            subInfoContainer.Clear();
+            var subInfo = createSubInfo();
+            if (subInfo == null)
+                return;
+
+            subInfo.Margin = new MarginPadding { Right = 5 };
+            subInfo.Anchor = Anchor.TopRight;
+            subInfo.Origin = Anchor.TopRight;
+            subInfoContainer.Add(subInfo);
+
+            Drawable createSubInfo()
             {
-                drawable.Anchor = Anchor.TopRight;
-                drawable.Origin = Anchor.TopRight;
-                base.Add(drawable);
+                switch (mode)
+                {
+                    case LyricFastEditMode.None:
+                        return null;
+
+                    case LyricFastEditMode.Layout:
+                        return new LayoutInfo(Lyric);
+
+                    case LyricFastEditMode.Singer:
+                        return new SingerInfo(Lyric);
+
+                    case LyricFastEditMode.Language:
+                        return new LanguageInfo(Lyric);
+
+                    case LyricFastEditMode.TimeTag:
+                        return new TimeTagInfo(Lyric);
+
+                    default:
+                        throw new IndexOutOfRangeException(nameof(mode));
+                }
             }
         }
     }

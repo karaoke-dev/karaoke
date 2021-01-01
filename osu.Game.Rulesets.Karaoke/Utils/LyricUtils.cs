@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
@@ -145,6 +146,34 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     };
                 }
             }
+        }
+
+        #endregion
+
+        #region Time display
+
+        public static string LyricTimeFormattedString(Lyric lyric)
+        {
+            if (lyric == null)
+                throw new ArgumentNullException(nameof(lyric));
+
+            var startTime = lyric.StartTime.ToEditorFormattedString();
+            var endTime = lyric.EndTime.ToEditorFormattedString();
+            return $"{startTime} - {endTime}";
+        }
+
+        public static string TimeTagTimeFormattedString(Lyric lyric)
+        {
+            if (lyric == null)
+                throw new ArgumentNullException(nameof(lyric));
+
+            var availableTimeTags = lyric.TimeTags?.Where(x => x.Time != null);
+            var minTimeTag = availableTimeTags?.OrderBy(x => x.Time).FirstOrDefault();
+            var maxTimeTag = availableTimeTags?.OrderByDescending(x => x.Time).FirstOrDefault();
+
+            var startTime = TimeTagUtils.FormattedString(minTimeTag);
+            var endTime = TimeTagUtils.FormattedString(maxTimeTag);
+            return $"{startTime} - {endTime}";
         }
 
         #endregion

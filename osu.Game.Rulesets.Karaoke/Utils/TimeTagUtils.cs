@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Extensions;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
@@ -18,6 +19,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var index = TextIndexUtils.ShiftingIndex(timeTag.Index, shifting);
             var time = timeTag.Time;
             return new TimeTag(index, time);
+        }
+
+        public static string FormattedString(TimeTag timeTag)
+        {
+            return timeTag?.Time?.ToEditorFormattedString() ?? "--:--:---";
         }
     }
 }

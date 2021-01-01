@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         {
             switch (previewSample)
             {
-                case PreviewSample.SampeSmall:
+                case PreviewSample.SampleSmall:
                     return createDefaultLyric("@カラオケ",
                         new[]
                         {
@@ -192,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         internal enum PreviewSample
         {
             [Description("Small lyric")]
-            SampeSmall,
+            SampleSmall,
 
             [Description("Medium lyric")]
             SampleMedium,

@@ -124,5 +124,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// Can edit each lyric's language.
         /// </summary>
         Language,
+
+        /// <summary>
+        /// Display lyric time-tag's first and last time.
+        /// </summary>
+        TimeTag,
     }
 }

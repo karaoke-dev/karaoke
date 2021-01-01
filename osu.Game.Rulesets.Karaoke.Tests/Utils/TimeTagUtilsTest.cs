@@ -25,5 +25,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(shiftingTimeTag.Index, actualTimeTag.Index);
             Assert.AreEqual(shiftingTimeTag.Time, actualTimeTag.Time);
         }
+
+        [TestCase("[1,start]:1000", "00:01:000")]
+        [TestCase("[1,end]:1000", "00:01:000")]
+        [TestCase("[-1,start]:1000", "00:01:000")]
+        [TestCase("[-1,start]:-1000", "-00:01:000")]
+        [TestCase("[-1,start]:", "--:--:---")]
+        public void TestFormattedString(string tag, string format)
+        {
+            var timeTag = TestCaseTagHelper.ParseTimeTag(tag);
+            Assert.AreEqual(TimeTagUtils.FormattedString(timeTag), format);
+        }
     }
 }

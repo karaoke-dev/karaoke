@@ -60,6 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
             // Delete from lyric also.
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+
             foreach (var lyric in lyrics)
             {
                 if (lyric.Translates.ContainsKey(cultureInfo))
