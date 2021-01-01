@@ -87,14 +87,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
                 {
                     case LyricFastEditMode.None:
                         return null;
+
                     case LyricFastEditMode.Layout:
                         return new LayoutInfo(Lyric);
+
                     case LyricFastEditMode.Singer:
                         return new SingerInfo(Lyric);
+
                     case LyricFastEditMode.Language:
                         return new LanguageInfo(Lyric);
+
                     case LyricFastEditMode.TimeTag:
                         return new TimeTagInfo(Lyric);
+
                     default:
                         throw new IndexOutOfRangeException(nameof(mode));
                 }

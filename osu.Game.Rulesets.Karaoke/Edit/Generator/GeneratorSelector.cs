@@ -9,16 +9,16 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator
 {
-    public abstract class GeneratorSelector<TGenerator, TConfig> where TGenerator: class
+    public abstract class GeneratorSelector<TGenerator, TConfig> where TGenerator : class
     {
-        protected Dictionary<CultureInfo, Lazy<TGenerator>> Generator { get; private set; } = new Dictionary<CultureInfo, Lazy<TGenerator>>();
+        protected Dictionary<CultureInfo, Lazy<TGenerator>> Generator { get; } = new Dictionary<CultureInfo, Lazy<TGenerator>>();
 
-        protected void RegistGenerator<T, TC>(CultureInfo info) where T : TGenerator where TC : TConfig, new()
+        protected void RegistGenerator<T, Tc>(CultureInfo info) where T : TGenerator where Tc : TConfig, new()
         {
             Generator.Add(info, new Lazy<TGenerator>(() =>
             {
                 // todo : get config from setting.
-                var config = new TC();
+                var config = new Tc();
                 var generator = Activator.CreateInstance(typeof(T), config) as TGenerator;
                 return generator;
             }));

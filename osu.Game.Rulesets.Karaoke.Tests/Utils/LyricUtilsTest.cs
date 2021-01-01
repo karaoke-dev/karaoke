@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, "00:01:000 - 00:04:000")]
         [TestCase(new[] { "[0,start]:4000", "[1,start]:3000", "[2,start]:2000", "[3,start]:1000" }, "00:01:000 - 00:04:000")] // should display right-time even it's not being ordered.
         [TestCase(new[] { "[3,start]:4000", "[2,start]:3000", "[1,start]:2000", "[0,start]:1000" }, "00:01:000 - 00:04:000")] // should display right-time even it's not being ordered.
-        [TestCase(new[] { "[0,start]:1000"  }, "00:01:000 - 00:01:000")]
+        [TestCase(new[] { "[0,start]:1000" }, "00:01:000 - 00:01:000")]
         [TestCase(new string[] { }, "--:--:--- - --:--:---")]
         [TestCase(null, "--:--:--- - --:--:---")]
         public void TestTimeTagTimeFormattedString(string[] timeTags, string format)
