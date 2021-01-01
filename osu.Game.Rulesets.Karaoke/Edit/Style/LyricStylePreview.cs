@@ -10,7 +10,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 
         public class PreviewDrawableLyricLine : DrawableLyric
         {
-            private KaraokeFont style;
+            private LyricFont style;
 
             public PreviewDrawableLyricLine(Lyric hitObject)
                 : base(hitObject)
@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
             /// It's an tricky to force add style into here.
             /// Should be removed eventually.
             /// </summary>
-            public KaraokeFont PreviewStyle
+            public LyricFont PreviewStyle
             {
                 get => style;
                 set

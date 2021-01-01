@@ -7,7 +7,7 @@ using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Sprites;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Components
+namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts
 {
     public class BrushInfo
     {

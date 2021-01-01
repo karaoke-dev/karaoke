@@ -6,13 +6,14 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 {
     public class DrawableEditLyric : DrawableLyric
     {
-        public Action<KaraokeFont> ApplyFontAction;
+        public Action<LyricFont> ApplyFontAction;
 
         public DrawableEditLyric(Lyric lyric)
             : base(lyric)
@@ -21,13 +22,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             DisplayRomaji = true;
         }
 
-        protected override void ApplyFont(KaraokeFont font)
+        protected override void ApplyFont(LyricFont font)
         {
             ApplyFontAction?.Invoke(font);
             base.ApplyFont(font);
         }
 
-        protected override void ApplyLayout(KaraokeLayout layout)
+        protected override void ApplyLayout(LyricLayout layout)
         {
             base.ApplyLayout(layout);
             Padding = new MarginPadding(0);

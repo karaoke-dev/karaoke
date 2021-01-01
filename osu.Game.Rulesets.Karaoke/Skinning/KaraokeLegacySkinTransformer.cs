@@ -10,7 +10,9 @@ using osu.Framework.Graphics;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
@@ -19,8 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     {
         private readonly ISkin source;
 
-        private readonly IDictionary<int, Bindable<KaraokeFont>> bindableFonts = new Dictionary<int, Bindable<KaraokeFont>>();
-        private readonly IDictionary<int, Bindable<KaraokeLayout>> bindableLayouts = new Dictionary<int, Bindable<KaraokeLayout>>();
+        private readonly IDictionary<int, Bindable<LyricFont>> bindableFonts = new Dictionary<int, Bindable<LyricFont>>();
+        private readonly IDictionary<int, Bindable<LyricLayout>> bindableLayouts = new Dictionary<int, Bindable<LyricLayout>>();
         private readonly IDictionary<int, Bindable<NoteSkin>> bindableNotes = new Dictionary<int, Bindable<NoteSkin>>();
         private readonly IDictionary<int, Bindable<Singer>> bindableSingers = new Dictionary<int, Bindable<Singer>>();
 
@@ -51,9 +53,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                 // Create bindable
                 for (int i = 0; i < skin.Fonts.Count; i++)
-                    bindableFonts.Add(i, new Bindable<KaraokeFont>(skin.Fonts[i]));
+                    bindableFonts.Add(i, new Bindable<LyricFont>(skin.Fonts[i]));
                 for (int i = 0; i < skin.Layouts.Count; i++)
-                    bindableLayouts.Add(i, new Bindable<KaraokeLayout>(skin.Layouts[i]));
+                    bindableLayouts.Add(i, new Bindable<LyricLayout>(skin.Layouts[i]));
                 for (int i = 0; i < skin.NoteSkins.Count; i++)
                     bindableNotes.Add(i, new Bindable<NoteSkin>(skin.NoteSkins[i]));
 

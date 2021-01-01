@@ -12,7 +12,8 @@ using osu.Framework.Graphics.Textures;
 using osu.Game.Audio;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
@@ -22,8 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     /// </summary>
     public abstract class KaraokeInternalSkin : ISkin
     {
-        protected readonly Bindable<KaraokeFont> BindableFont;
-        protected readonly Bindable<KaraokeLayout> BindableLayout;
+        protected readonly Bindable<LyricFont> BindableFont;
+        protected readonly Bindable<LyricLayout> BindableLayout;
 
         protected abstract string ResourceName { get; }
 
@@ -37,8 +38,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             {
                 var skin = new KaraokeSkinDecoder().Decode(reader);
 
-                BindableFont = new Bindable<KaraokeFont>(skin.Fonts.FirstOrDefault());
-                BindableLayout = new Bindable<KaraokeLayout>(skin.Layouts.FirstOrDefault());
+                BindableFont = new Bindable<LyricFont>(skin.Fonts.FirstOrDefault());
+                BindableLayout = new Bindable<LyricLayout>(skin.Layouts.FirstOrDefault());
             }
         }
 

@@ -16,7 +16,8 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
@@ -381,7 +382,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         {
             private readonly TestSceneLyricLineStyle testScene;
 
-            public KaraokeFont Font { get; private set; }
+            public LyricFont Font { get; private set; }
             private bool defaultValueAssigned;
 
             public TestDrawableLyricLine(TestSceneLyricLineStyle testCase, Lyric hitObject)
@@ -393,11 +394,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             protected override void ApplySkin(ISkinSource skin, bool allowFallback)
             {
                 // Get layout
-                Font = skin?.GetConfig<KaraokeSkinLookup, KaraokeFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.Value;
+                Font = skin?.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.Value;
                 base.ApplySkin(skin, allowFallback);
             }
 
-            protected override void ApplyFont(KaraokeFont font)
+            protected override void ApplyFont(LyricFont font)
             {
                 base.ApplyFont(font);
 
@@ -412,10 +413,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 testScene.displayShaderCheckbox.Current.Value = Font.UseShadow;
             }
 
-            protected override void ApplyLayout(KaraokeLayout layout)
+            protected override void ApplyLayout(LyricLayout layout)
             {
                 // use my own layout
-                base.ApplyLayout(new KaraokeLayout
+                base.ApplyLayout(new LyricLayout
                 {
                     Name = "Skin layout",
                     Alignment = Anchor.Centre
@@ -465,7 +466,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 return null;
             }
 
-            public void ApplyProperty(Action<KaraokeFont> action)
+            public void ApplyProperty(Action<LyricFont> action)
             {
                 action.Invoke(Font);
                 ApplyFont(Font);

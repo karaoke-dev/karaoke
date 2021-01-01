@@ -4,13 +4,13 @@
 using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
 {
     public class DeleteLayoutDialog : PopupDialog
     {
-        public DeleteLayoutDialog(KaraokeLayout layout, Action deleteAction)
+        public DeleteLayoutDialog(LyricLayout layout, Action deleteAction)
         {
             HeaderText = "Confirm deletion of";
             BodyText = $"Are you sure you wany to delete layout {layout.Name}?";

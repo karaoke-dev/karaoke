@@ -11,7 +11,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
             public class PreviewDrawableLyric : DrawableLyric
             {
-                private KaraokeLayout layout;
+                private LyricLayout layout;
 
                 public PreviewDrawableLyric(Lyric hitObject)
                     : base(hitObject)
@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 /// It's an tricky to force add layout into here.
                 /// Should be removed eventually.
                 /// </summary>
-                public KaraokeLayout PreviewLayout
+                public LyricLayout PreviewLayout
                 {
                     get => layout;
                     set

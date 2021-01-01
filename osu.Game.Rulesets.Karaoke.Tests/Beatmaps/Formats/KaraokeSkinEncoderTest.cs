@@ -9,7 +9,7 @@ using NUnit.Framework;
 using osu.Game.IO;
 using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats

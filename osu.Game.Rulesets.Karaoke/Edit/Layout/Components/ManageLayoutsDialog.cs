@@ -5,7 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
                 new DrawableLayoutList
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Items = { BindTarget = layoutManager?.Layouts ?? new BindableList<KaraokeLayout>() }
+                    Items = { BindTarget = layoutManager?.Layouts ?? new BindableList<LyricLayout>() }
                 }
             };
         }

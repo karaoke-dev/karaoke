@@ -14,7 +14,8 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
@@ -135,20 +136,20 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (HitObject == null)
                 return;
 
-            skin.GetConfig<KaraokeSkinLookup, KaraokeFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(karaokeFont =>
+            skin.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(karaokeFont =>
             {
                 if (karaokeFont.NewValue != null)
                     ApplyFont(karaokeFont.NewValue);
             }, true);
 
-            skin.GetConfig<KaraokeSkinLookup, KaraokeLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, HitObject.LayoutIndex))?.BindValueChanged(karaokeLayout =>
+            skin.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, HitObject.LayoutIndex))?.BindValueChanged(karaokeLayout =>
             {
                 if (karaokeLayout.NewValue != null)
                     ApplyLayout(karaokeLayout.NewValue);
             }, true);
         }
 
-        protected virtual void ApplyFont(KaraokeFont font)
+        protected virtual void ApplyFont(LyricFont font)
         {
             // From text sample
             KaraokeText.FrontTextTexture = new SolidTexture { SolidColor = Color4.Blue }; // font.FrontTextBrushInfo.TextBrush.ConvertToTextureSample();
@@ -177,7 +178,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             KaraokeText.ShadowOffset = font.ShadowOffset;
         }
 
-        protected virtual void ApplyLayout(KaraokeLayout layout)
+        protected virtual void ApplyLayout(LyricLayout layout)
         {
             // Layout relative to parent
             Anchor = layout.Alignment;

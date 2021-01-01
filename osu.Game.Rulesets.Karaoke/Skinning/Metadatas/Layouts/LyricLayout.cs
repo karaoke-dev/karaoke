@@ -4,14 +4,29 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Components
+namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts
 {
-    public class KaraokeLayout
+    public class LyricLayout
     {
+        /// <summary>
+        /// ID
+        /// </summary>
+        public int ID { get; set; }
+
         /// <summary>
         /// Name
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Group
+        /// </summary>
+        public int Group { get; set; }
+
+        /// <summary>
+        /// Order
+        /// </summary>
+        public int Order { get; set; }
 
         /// <summary>
         /// Lyric alignment

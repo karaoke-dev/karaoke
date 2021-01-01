@@ -5,14 +5,15 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
     public class StyleManager : Component
     {
-        public readonly Bindable<KaraokeFont> EditStyle = new Bindable<KaraokeFont>();
+        public readonly Bindable<LyricFont> EditStyle = new Bindable<LyricFont>();
 
         public readonly Bindable<NoteSkin> EditNoteStyle = new Bindable<NoteSkin>();
 
@@ -24,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         {
         }
 
-        public void ApplyCurrentStyleChange(Action<KaraokeFont> action)
+        public void ApplyCurrentStyleChange(Action<LyricFont> action)
         {
             action?.Invoke(EditStyle.Value);
             EditStyle.TriggerChange();

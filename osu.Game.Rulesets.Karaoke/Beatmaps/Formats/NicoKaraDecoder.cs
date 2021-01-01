@@ -15,11 +15,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osuTK;
 using osuTK.Graphics;
-using FontInfo = osu.Game.Rulesets.Karaoke.Skinning.Components.FontInfo;
-using KaraokeLayout = osu.Game.Rulesets.Karaoke.Skinning.Components.KaraokeLayout;
+using FontInfo = osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts.FontInfo;
+using LyricLayout = osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts.LyricLayout;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -40,14 +41,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             }
 
             // Clean-up layout
-            output.Layouts = new List<KaraokeLayout>();
+            output.Layouts = new List<LyricLayout>();
 
             foreach (var karaokeLayout in nicoKaraProject.KaraokeLayouts)
             {
                 Enum.TryParse(karaokeLayout.SmartHorizon.ToString(), out KaraokeTextSmartHorizon smartHorizon);
                 Enum.TryParse(karaokeLayout.RubyAlignment.ToString(), out LyricTextAlignment rubyAlignment);
 
-                output.Layouts.Add(new KaraokeLayout
+                output.Layouts.Add(new LyricLayout
                 {
                     Name = karaokeLayout.Name,
                     Alignment = convertAnchor(karaokeLayout.HorizontalAlignment, karaokeLayout.VerticalAlignment),
@@ -63,40 +64,40 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             }
 
             // Clean-up style
-            output.Fonts = new List<KaraokeFont>();
+            output.Fonts = new List<LyricFont>();
 
             foreach (var nicoKaraFont in nicoKaraProject.KaraokeFonts)
             {
-                output.Fonts.Add(new KaraokeFont
+                output.Fonts.Add(new LyricFont
                 {
                     Name = nicoKaraFont.Name,
                     UseShadow = nicoKaraFont.UseShadow,
                     ShadowOffset = convertShadowSlide(nicoKaraFont.ShadowSlide),
-                    FrontTextBrushInfo = new KaraokeFont.TextBrushInfo
+                    FrontTextBrushInfo = new LyricFont.TextBrushInfo
                     {
                         TextBrush = convertBrushInfo(nicoKaraFont.BrushInfos[0]),
                         BorderBrush = convertBrushInfo(nicoKaraFont.BrushInfos[1]),
                         ShadowBrush = convertBrushInfo(nicoKaraFont.BrushInfos[2]),
                     },
-                    BackTextBrushInfo = new KaraokeFont.TextBrushInfo
+                    BackTextBrushInfo = new LyricFont.TextBrushInfo
                     {
                         TextBrush = convertBrushInfo(nicoKaraFont.BrushInfos[3]),
                         BorderBrush = convertBrushInfo(nicoKaraFont.BrushInfos[4]),
                         ShadowBrush = convertBrushInfo(nicoKaraFont.BrushInfos[5]),
                     },
-                    LyricTextFontInfo = new KaraokeFont.TextFontInfo
+                    LyricTextFontInfo = new LyricFont.TextFontInfo
                     {
                         LyricTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[0]),
                         NakaTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[1]),
                         EnTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[2]),
                     },
-                    RubyTextFontInfo = new KaraokeFont.TextFontInfo
+                    RubyTextFontInfo = new LyricFont.TextFontInfo
                     {
                         LyricTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[3]),
                         NakaTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[4]),
                         EnTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[5]),
                     },
-                    RomajiTextFontInfo = new KaraokeFont.TextFontInfo
+                    RomajiTextFontInfo = new LyricFont.TextFontInfo
                     {
                         // Just copied from ruby setting
                         LyricTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[3]),

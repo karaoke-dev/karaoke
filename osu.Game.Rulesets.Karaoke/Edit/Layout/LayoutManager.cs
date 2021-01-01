@@ -9,18 +9,18 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
     public class LayoutManager : Component
     {
-        public readonly BindableList<KaraokeLayout> Layouts = new BindableList<KaraokeLayout>();
+        public readonly BindableList<LyricLayout> Layouts = new BindableList<LyricLayout>();
 
-        public readonly Bindable<KaraokeLayout> LoadedLayout = new Bindable<KaraokeLayout>();
+        public readonly Bindable<LyricLayout> LoadedLayout = new Bindable<LyricLayout>();
 
-        public readonly Bindable<KaraokeLayout> EditLayout = new Bindable<KaraokeLayout>();
+        public readonly Bindable<LyricLayout> EditLayout = new Bindable<LyricLayout>();
 
         public readonly IDictionary<int, string> PreviewFontSelections = new Dictionary<int, string>();
 
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             foreach (var layoutLookup in layoutLookups)
             {
                 var lookup = new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, layoutLookup.Key);
-                var layout = source.GetConfig<KaraokeSkinLookup, KaraokeLayout>(lookup)?.Value;
+                var layout = source.GetConfig<KaraokeSkinLookup, LyricLayout>(lookup)?.Value;
                 if (layout != null)
                     Layouts.Add(layout);
             }
@@ -57,13 +57,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             }
         }
 
-        public void ApplyCurrentLayoutChange(Action<KaraokeLayout> action)
+        public void ApplyCurrentLayoutChange(Action<LyricLayout> action)
         {
             action?.Invoke(EditLayout.Value);
             EditLayout.TriggerChange();
         }
 
-        public void ChangeCurrentLayout(KaraokeLayout layout)
+        public void ChangeCurrentLayout(LyricLayout layout)
         {
             LoadedLayout.Value = layout;
             EditLayout.Value = layout;
@@ -75,22 +75,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 PreviewSingers.Value = singers;
         }
 
-        public void UpdateLayoutName(KaraokeLayout layout, string newValue)
+        public void UpdateLayoutName(LyricLayout layout, string newValue)
         {
             throw new NotImplementedException();
         }
 
-        public void AddLayout(KaraokeLayout layout)
+        public void AddLayout(LyricLayout layout)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsLayoutModified(KaraokeLayout layout)
+        public bool IsLayoutModified(LyricLayout layout)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveLayout(KaraokeLayout layout)
+        public void RemoveLayout(LyricLayout layout)
         {
             throw new NotImplementedException();
         }

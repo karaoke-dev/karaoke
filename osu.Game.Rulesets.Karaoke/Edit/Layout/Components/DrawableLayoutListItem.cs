@@ -14,30 +14,30 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
 {
-    public class DrawableLayoutListItem : OsuRearrangeableListItem<KaraokeLayout>
+    public class DrawableLayoutListItem : OsuRearrangeableListItem<LyricLayout>
     {
         private const float item_height = 35;
         private const float button_width = item_height * 0.75f;
 
         /// <summary>
-        /// Whether the <see cref="KaraokeLayout"/> currently exists inside the <see cref="LayoutManager"/>.
+        /// Whether the <see cref="LyricLayout"/> currently exists inside the <see cref="LayoutManager"/>.
         /// </summary>
         public IBindable<bool> IsCreated => isCreated;
 
         private readonly Bindable<bool> isCreated = new Bindable<bool>();
 
         /// <summary>
-        /// Creates a new <see cref="KaraokeLayout"/>.
+        /// Creates a new <see cref="LyricLayout"/>.
         /// </summary>
-        /// <param name="item">The <see cref="KaraokeLayout"/>.</param>
+        /// <param name="item">The <see cref="LyricLayout"/>.</param>
         /// <param name="isCreated">Whether <paramref name="item"/> currently exists inside the <see cref="LayoutManager"/>.</param>
-        public DrawableLayoutListItem(KaraokeLayout item, bool isCreated)
+        public DrawableLayoutListItem(LyricLayout item, bool isCreated)
             : base(item)
         {
             this.isCreated.Value = isCreated;
@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
         {
             public readonly Bindable<bool> IsCreated = new Bindable<bool>();
 
-            private readonly KaraokeLayout layout;
+            private readonly LyricLayout layout;
 
             [Resolved(CanBeNull = true)]
             private LayoutManager layoutManager { get; set; }
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
             private Container textBoxPaddingContainer;
             private ItemTextBox textBox;
 
-            public ItemContent(KaraokeLayout layout)
+            public ItemContent(LyricLayout layout)
             {
                 this.layout = layout;
 
@@ -162,12 +162,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
                 [Resolved(CanBeNull = true)]
                 private LayoutManager layoutManager { get; set; }
 
-                private readonly KaraokeLayout layout;
+                private readonly LyricLayout layout;
 
                 private Drawable fadeContainer;
                 private Drawable background;
 
-                public DeleteButton(KaraokeLayout layout)
+                public DeleteButton(LyricLayout layout)
                 {
                     this.layout = layout;
                     RelativeSizeAxes = Axes.Y;
