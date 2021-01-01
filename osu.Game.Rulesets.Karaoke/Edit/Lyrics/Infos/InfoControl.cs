@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -18,6 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
         private const int max_height = 120;
 
         private readonly Box headerBackground;
+        private readonly Container subInfoContainer;
 
         public Lyric Lyric { get; }
 
@@ -33,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
                     Height = max_height,
                     Alpha = 0.7f
                 },
-                new BadgeFillFlowContainer
+                new InfoFillFlowContainer
                 {
                     Direction = FillDirection.Vertical,
                     RelativeSizeAxes = Axes.X,
@@ -48,25 +50,49 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
                             RelativeSizeAxes = Axes.X,
                             Height = 36,
                         },
-
-                        // todo : in small display size use badge.
-                        // in larger size should use real icon.
-                        new LanguageInfoBadge(Lyric)
+                        subInfoContainer = new Container
                         {
-                            Margin = new MarginPadding { Right = 5 }
-                        }
+                            RelativeSizeAxes = Axes.X
+                        },
                     }
                 },
             };
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(OsuColour colours, LyricEditorStateManager stateManager)
         {
             headerBackground.Colour = colours.Gray2;
+            stateManager.BindableFastEditMode.BindValueChanged(e =>
+            {
+
+            }, true);
         }
 
-        public class BadgeFillFlowContainer : FillFlowContainer
+        protected void CreateBadge(LyricFastEditMode mode)
+        {
+            subInfoContainer.Clear();
+            var subInfo = createSubInfo();
+            if (subInfo == null)
+                return;
+
+            subInfo.Margin = new MarginPadding { Right = 5 };
+            subInfoContainer.Add(subInfo);
+
+            Drawable createSubInfo()
+            {
+                switch (mode)
+                {
+                    case LyricFastEditMode.Language:
+                        return new LanguageInfoBadge(Lyric);
+                    default:
+                        throw new IndexOutOfRangeException(nameof(mode));
+                }
+            }
+        }
+
+
+        public class InfoFillFlowContainer : FillFlowContainer
         {
             public override void Add(Drawable drawable)
             {
