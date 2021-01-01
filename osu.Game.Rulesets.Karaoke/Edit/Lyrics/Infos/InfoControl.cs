@@ -7,8 +7,8 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.MainInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.TimeInfo;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 

@@ -10,7 +10,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.TimeInfo
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.MainInfo
 {
     public class TimeInfoContainer : Container
     {
