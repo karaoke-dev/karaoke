@@ -11,6 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 {
     public class LyricUtilsTest
     {
+        #region progessing
+
         [TestCase("karaoke", 2, 2, "kaoke")]
         [TestCase("カラオケ", 2, 2, "カラ")]
         [TestCase("カラオケ", -1, 2, null)] // test start position not in the range
@@ -130,5 +132,47 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             LyricUtils.AddText(lyric, position, addedText);
             TimeTagAssert.AreEqual(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
         }
+
+        #endregion
+
+        #region create default
+
+        #endregion
+
+        #region Time display
+
+        [TestCase(0, 0, "00:00:000 - 00:00:000")]
+        [TestCase(0, 1000, "00:00:000 - 00:01:000")]
+        [TestCase(1000, 0, "00:01:000 - 00:00:000")] // do not check time order in here
+        [TestCase(-1000, 0, "-00:01:000 - 00:00:000")]
+        [TestCase(0, -1000, "00:00:000 - -00:01:000")]
+        public void TestLyricTimeFormattedString(double startTime, double endTime, string format)
+        {
+            var lyric = new Lyric
+            {
+                StartTime = startTime,
+                Duration = endTime - startTime
+            };
+
+            Assert.AreEqual(LyricUtils.LyricTimeFormattedString(lyric), format);
+        }
+
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, "00:01:000 - 00:04:000")]
+        [TestCase(new[] { "[0,start]:4000", "[1,start]:3000", "[2,start]:2000", "[3,start]:1000" }, "00:01:000 - 00:04:000")] // should display right-time even it's not being ordered.
+        [TestCase(new[] { "[3,start]:4000", "[2,start]:3000", "[1,start]:2000", "[0,start]:1000" }, "00:01:000 - 00:04:000")] // should display right-time even it's not being ordered.
+        [TestCase(new[] { "[0,start]:1000"  }, "00:01:000 - 00:01:000")]
+        [TestCase(new string[] { }, "--:--:--- - --:--:---")]
+        [TestCase(null, "--:--:--- - --:--:---")]
+        public void TestTimeTagTimeFormattedString(string[] timeTags, string format)
+        {
+            var lyric = new Lyric
+            {
+                TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
+            };
+
+            Assert.AreEqual(LyricUtils.TimeTagTimeFormattedString(lyric), format);
+        }
+
+        #endregion
     }
 }
