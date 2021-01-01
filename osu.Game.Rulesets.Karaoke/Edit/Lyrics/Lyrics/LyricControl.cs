@@ -111,8 +111,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
                 return false;
 
             // place hover cursor to target position.
-            var timeTagIndex = stateManager.BindableHoverCursorPosition.Value.Index;
-            stateManager.MoveCursorToTargetPosition(Lyric, timeTagIndex);
+            var index = stateManager.BindableHoverCursorPosition.Value.Index;
+            stateManager.MoveCursorToTargetPosition(Lyric, index);
 
             return true;
         }
@@ -227,7 +227,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
             foreach (var timeTag in timeTags)
             {
-                var spacing = timeTagIndexPosition(timeTag.Index) + extraSpacing(timeTag);
+                var spacing = textIndexPosition(timeTag.Index) + extraSpacing(timeTag);
                 timeTagContainer.Add(new DrawableTimeTag(timeTag)
                 {
                     Anchor = Anchor.BottomLeft,
@@ -251,7 +251,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
             cursor.Show();
 
-            var spacing = timeTagIndexPosition(timeTag.Index) + extraSpacing(timeTag);
+            var spacing = textIndexPosition(timeTag.Index) + extraSpacing(timeTag);
             cursor.X = spacing;
             cursor.TimeTag = timeTag;
         }
@@ -279,7 +279,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)
                 offset = -10;
 
-            var pos = new Vector2(timeTagIndexPosition(index) + offset, 0);
+            var pos = new Vector2(textIndexPosition(index) + offset, 0);
 
             if (cursor is DrawableLyricInputCursor inputCursor)
             {
@@ -299,10 +299,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             cursor.Show();
         }
 
-        private float timeTagIndexPosition(TextIndex timeTagIndex)
+        private float textIndexPosition(TextIndex textIndex)
         {
-            var index = Math.Min(timeTagIndex.Index, Lyric.Text.Length - 1);
-            var isStart = timeTagIndex.State == TextIndex.IndexState.Start;
+            var index = Math.Min(textIndex.Index, Lyric.Text.Length - 1);
+            var isStart = textIndex.State == TextIndex.IndexState.Start;
             var percentage = isStart ? 0 : 1;
             return drawableLyric.GetPercentageWidth(index, index + 1, percentage) * 2;
         }

@@ -23,9 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return TextIndex.IndexState.Start;
         }
 
-        public static TextIndex ShiftingTimeTagIndex(TextIndex originTimeTagIndex, int shifting)
+        public static TextIndex ShiftingIndex(TextIndex originIndex, int shifting)
         {
-            return new TextIndex(originTimeTagIndex.Index + shifting, originTimeTagIndex.State);
+            return new TextIndex(originIndex.Index + shifting, originIndex.State);
         }
     }
 }
