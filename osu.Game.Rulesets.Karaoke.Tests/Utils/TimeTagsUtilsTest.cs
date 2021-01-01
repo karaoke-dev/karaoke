@@ -149,7 +149,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             => timeTags.Where(x => x.Time != null).Select(x => x.Time ?? 0)
                        .OrderBy(x => x).ToArray();
 
-        private double[] getSortedTime(IReadOnlyDictionary<TimeTagIndex, double> dictionary)
+        private double[] getSortedTime(IReadOnlyDictionary<TextIndex, double> dictionary)
             => dictionary.Select(x => x.Value).ToArray();
 
         private TimeTag[] getValueByMethodName(string methodName)
@@ -167,10 +167,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public static TimeTag[] ValidTimeTagWithSorted()
             => new[]
             {
-                new TimeTag(new TimeTagIndex(0), 1100),
-                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000),
-                new TimeTag(new TimeTagIndex(1), 2100),
-                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
+                new TimeTag(new TextIndex(0), 1100),
+                new TimeTag(new TextIndex(0, TextIndex.IndexState.End), 2000),
+                new TimeTag(new TextIndex(1), 2100),
+                new TimeTag(new TextIndex(1, TextIndex.IndexState.End), 3000),
             };
 
         public static TimeTag[] ValidTimeTagWithUnsorted()
@@ -179,30 +179,30 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public static TimeTag[] ValidTimeTagWithUnsortedAndDuplicatedWithNoValue()
             => new[]
             {
-                new TimeTag(new TimeTagIndex(0)),
-                new TimeTag(new TimeTagIndex(0)),
-                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000), // this time tag is not in order.
-                new TimeTag(new TimeTagIndex(0), 1100),
+                new TimeTag(new TextIndex(0)),
+                new TimeTag(new TextIndex(0)),
+                new TimeTag(new TextIndex(0, TextIndex.IndexState.End), 2000), // this time tag is not in order.
+                new TimeTag(new TextIndex(0), 1100),
             };
 
         public static TimeTag[] ValidTimeTagWithUnsortedAndDuplicatedWithValue()
             => new[]
             {
                 // not sorted + duplicated time tag(with value)
-                new TimeTag(new TimeTagIndex(0), 1000),
-                new TimeTag(new TimeTagIndex(0), 1100),
-                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000), // this time tag is not in order.
-                new TimeTag(new TimeTagIndex(0), 1100),
+                new TimeTag(new TextIndex(0), 1000),
+                new TimeTag(new TextIndex(0), 1100),
+                new TimeTag(new TextIndex(0, TextIndex.IndexState.End), 2000), // this time tag is not in order.
+                new TimeTag(new TextIndex(0), 1100),
             };
 
         public static TimeTag[] ValidTimeTagWithUnsortedAndAllEmpty()
             => new[]
             {
-                new TimeTag(new TimeTagIndex(0)),
-                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End)),
-                new TimeTag(new TimeTagIndex(0)), // this time tag is not sorted.
-                new TimeTag(new TimeTagIndex(1)),
-                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End)),
+                new TimeTag(new TextIndex(0)),
+                new TimeTag(new TextIndex(0, TextIndex.IndexState.End)),
+                new TimeTag(new TextIndex(0)), // this time tag is not sorted.
+                new TimeTag(new TextIndex(1)),
+                new TimeTag(new TextIndex(1, TextIndex.IndexState.End)),
             };
 
         #endregion
@@ -212,44 +212,44 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public static TimeTag[] InvalidTimeTagWithStartLargerThenEnd()
             => new[]
             {
-                new TimeTag(new TimeTagIndex(0), 2000), // Start is larger then end.
-                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 1000),
+                new TimeTag(new TextIndex(0), 2000), // Start is larger then end.
+                new TimeTag(new TextIndex(0, TextIndex.IndexState.End), 1000),
             };
 
         public static TimeTag[] InvalidTimeTagWithEndLargerThenNextStart()
             => new[]
             {
-                new TimeTag(new TimeTagIndex(0), 1100),
-                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2100), // End is larger than second start.
-                new TimeTag(new TimeTagIndex(1), 2000),
-                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
+                new TimeTag(new TextIndex(0), 1100),
+                new TimeTag(new TextIndex(0, TextIndex.IndexState.End), 2100), // End is larger than second start.
+                new TimeTag(new TextIndex(1), 2000),
+                new TimeTag(new TextIndex(1, TextIndex.IndexState.End), 3000),
             };
 
         public static TimeTag[] InvalidTimeTagWithEndLargerThenNextEnd()
             => new[]
             {
-                new TimeTag(new TimeTagIndex(0), 1000),
-                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 5000), // End is larger than second end.
-                new TimeTag(new TimeTagIndex(1), 2000),
-                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
+                new TimeTag(new TextIndex(0), 1000),
+                new TimeTag(new TextIndex(0, TextIndex.IndexState.End), 5000), // End is larger than second end.
+                new TimeTag(new TextIndex(1), 2000),
+                new TimeTag(new TextIndex(1, TextIndex.IndexState.End), 3000),
             };
 
         public static TimeTag[] InvalidTimeTagWithStartSmallerThenPreviousStart()
             => new[]
             {
-                new TimeTag(new TimeTagIndex(0), 1000),
-                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 2000),
-                new TimeTag(new TimeTagIndex(1), 0), // Start is smaller than previous start.
-                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 3000),
+                new TimeTag(new TextIndex(0), 1000),
+                new TimeTag(new TextIndex(0, TextIndex.IndexState.End), 2000),
+                new TimeTag(new TextIndex(1), 0), // Start is smaller than previous start.
+                new TimeTag(new TextIndex(1, TextIndex.IndexState.End), 3000),
             };
 
         public static TimeTag[] InvalidTimeTagWithAllInverse()
             => new[]
             {
-                new TimeTag(new TimeTagIndex(0), 4000),
-                new TimeTag(new TimeTagIndex(0, TimeTagIndex.IndexState.End), 3000),
-                new TimeTag(new TimeTagIndex(1), 2000),
-                new TimeTag(new TimeTagIndex(1, TimeTagIndex.IndexState.End), 1000),
+                new TimeTag(new TextIndex(0), 4000),
+                new TimeTag(new TextIndex(0, TextIndex.IndexState.End), 3000),
+                new TimeTag(new TextIndex(1), 2000),
+                new TimeTag(new TextIndex(1, TextIndex.IndexState.End), 1000),
             };
 
         #endregion

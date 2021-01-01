@@ -7,13 +7,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 {
     public class TimeTag
     {
-        public TimeTag(TimeTagIndex index, double? time = null)
+        public TimeTag(TextIndex index, double? time = null)
         {
             Index = index;
             Time = time;
         }
 
-        public TimeTagIndex Index { get; }
+        public TextIndex Index { get; }
 
         public double? Time { get; set; }
     }

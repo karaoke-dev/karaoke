@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
 
                 // add new time tags created from ruby
                 var rubyTags = generateTimeTagByText(ruby.Text);
-                var shiftingTimeTags = rubyTags.Select((x, v) => new TimeTag(new TimeTagIndex(ruby.StartIndex, x.Index.State), x.Time));
+                var shiftingTimeTags = rubyTags.Select((x, v) => new TimeTag(new TextIndex(ruby.StartIndex, x.Index.State), x.Time));
                 timeTags.AddRange(shiftingTimeTags);
             }
         }
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
 
             for (var i = 1; i < text.Length; i++)
             {
-                var timeTag = new TimeTag(new TimeTagIndex(i));
+                var timeTag = new TimeTag(new TextIndex(i));
 
                 var c = text[i];
                 var pc = text[i - 1];

@@ -129,7 +129,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             switch (stateManager.Mode)
             {
                 case Mode.EditMode:
-                    var splitPosition = TimeTagIndexUtils.ToLyricIndex(position.Index);
+                    var splitPosition = TextIndexUtils.ToLyricIndex(position.Index);
                     lyricManager?.SplitLyric(Lyric, splitPosition);
                     return true;
 
@@ -273,7 +273,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
 
             var index = position.Index;
             if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)
-                index = new TimeTagIndex(TimeTagIndexUtils.ToLyricIndex(index));
+                index = new TextIndex(TextIndexUtils.ToLyricIndex(index));
 
             var offset = 0;
             if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)
@@ -299,17 +299,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             cursor.Show();
         }
 
-        private float timeTagIndexPosition(TimeTagIndex timeTagIndex)
+        private float timeTagIndexPosition(TextIndex timeTagIndex)
         {
             var index = Math.Min(timeTagIndex.Index, Lyric.Text.Length - 1);
-            var isStart = timeTagIndex.State == TimeTagIndex.IndexState.Start;
+            var isStart = timeTagIndex.State == TextIndex.IndexState.Start;
             var percentage = isStart ? 0 : 1;
             return drawableLyric.GetPercentageWidth(index, index + 1, percentage) * 2;
         }
 
         private float extraSpacing(TimeTag timeTag)
         {
-            var isStart = timeTag.Index.State == TimeTagIndex.IndexState.Start;
+            var isStart = timeTag.Index.State == TextIndex.IndexState.Start;
             var timeTags = isStart ? drawableLyric.TimeTagsBindable.Value.Reverse() : drawableLyric.TimeTagsBindable.Value;
             var duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == timeTag.Index) - 1;
             var spacing = duplicatedTagAmount * time_tag_spacing * (isStart ? 1 : -1);

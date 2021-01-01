@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
         public static TimeTag ParseTimeTag(string str)
         {
             if (string.IsNullOrEmpty(str))
-                return new TimeTag(new TimeTagIndex());
+                return new TimeTag(new TextIndex());
 
             var regex = new Regex("(?<index>[-0-9]+),(?<state>start|end)]:(?<time>[-0-9]+|s*|)");
             var result = regex.Match(str);
@@ -90,11 +90,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
                 throw new ArgumentException(nameof(str));
 
             var index = int.Parse(result.Groups["index"]?.Value);
-            var state = result.Groups["state"]?.Value == "start" ? TimeTagIndex.IndexState.Start : TimeTagIndex.IndexState.End;
+            var state = result.Groups["state"]?.Value == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
             var timeStr = result.Groups["time"]?.Value;
             var time = timeStr == "" ? default(int?) : int.Parse(timeStr);
 
-            return new TimeTag(new TimeTagIndex(index, state), time);
+            return new TimeTag(new TextIndex(index, state), time);
         }
 
         public static RubyTag[] ParseRubyTags(string[] strings)

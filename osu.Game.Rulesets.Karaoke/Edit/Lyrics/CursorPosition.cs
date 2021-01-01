@@ -8,14 +8,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public readonly struct CursorPosition
     {
-        public CursorPosition(Lyric lyric, TimeTagIndex timeTagIndex)
+        public CursorPosition(Lyric lyric, TextIndex index)
         {
             Lyric = lyric;
-            Index = timeTagIndex;
+            Index = index;
         }
 
         public Lyric Lyric { get; }
 
-        public TimeTagIndex Index { get; }
+        public TextIndex Index { get; }
     }
 }

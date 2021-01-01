@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
             set
             {
                 timeTag = value;
-                drawableTimeTag.Scale = new Vector2(timeTag.Index.State == TimeTagIndex.IndexState.Start ? 1 : -1, 1);
+                drawableTimeTag.Scale = new Vector2(timeTag.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1);
                 drawableTimeTag.Colour = timeTag.Time.HasValue ? colours.YellowDarker : colours.Gray3;
             }
         }

@@ -36,17 +36,17 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 var secondTag = secondTimeTag.FirstOrDefault();
 
                 // add end tag at end of first lyric if does not have tag in there.
-                if (!firstTimeTag.Any(x => x.Index.Index == splitIndex - 1 && x.Index.State == TimeTagIndex.IndexState.End))
+                if (!firstTimeTag.Any(x => x.Index.Index == splitIndex - 1 && x.Index.State == TextIndex.IndexState.End))
                 {
-                    var endTagIndex = new TimeTagIndex(splitIndex - 1, TimeTagIndex.IndexState.End);
+                    var endTagIndex = new TextIndex(splitIndex - 1, TextIndex.IndexState.End);
                     var endTag = TimeTagsUtils.GenerateCenterTimeTag(firstTag, secondTag, endTagIndex);
                     firstTimeTag.Add(endTag);
                 }
 
                 // add start tag at start of second lyric if does not have tag in there.
-                if (!secondTimeTag.Any(x => x.Index.Index == splitIndex && x.Index.State == TimeTagIndex.IndexState.Start))
+                if (!secondTimeTag.Any(x => x.Index.Index == splitIndex && x.Index.State == TextIndex.IndexState.Start))
                 {
-                    var endTagIndex = new TimeTagIndex(splitIndex, TimeTagIndex.IndexState.Start);
+                    var endTagIndex = new TextIndex(splitIndex, TextIndex.IndexState.Start);
                     var startTag = TimeTagsUtils.GenerateCenterTimeTag(firstTag, secondTag, endTagIndex);
                     secondTimeTag.Add(startTag);
                 }

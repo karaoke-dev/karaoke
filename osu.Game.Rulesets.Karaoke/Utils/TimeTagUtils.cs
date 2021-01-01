@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static TimeTag ShiftingTimeTag(TimeTag timeTag, int shifting)
         {
-            var timeTagIndex = TimeTagIndexUtils.ShiftingTimeTagIndex(timeTag.Index, shifting);
+            var timeTagIndex = TextIndexUtils.ShiftingTimeTagIndex(timeTag.Index, shifting);
             var time = timeTag.Time;
             return new TimeTag(timeTagIndex, time);
         }

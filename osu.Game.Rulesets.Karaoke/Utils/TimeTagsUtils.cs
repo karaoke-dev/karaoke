@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="endTimeTag"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        public static TimeTag GenerateCenterTimeTag(TimeTag startTimeTag, TimeTag endTimeTag, TimeTagIndex index)
+        public static TimeTag GenerateCenterTimeTag(TimeTag startTimeTag, TimeTag endTimeTag, TextIndex index)
         {
             if (startTimeTag == null || endTimeTag == null)
                 throw new ArgumentNullException($"{nameof(startTimeTag)} or {nameof(endTimeTag)} cannot be null.");
@@ -45,12 +45,12 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             return new TimeTag(index, time);
 
-            static int getTimeCalculationIndex(TimeTagIndex calculationIndex)
-                => TimeTagIndexUtils.ToLyricIndex(calculationIndex);
+            static int getTimeCalculationIndex(TextIndex calculationIndex)
+                => TextIndexUtils.ToLyricIndex(calculationIndex);
         }
 
         public static TimeTag GenerateCenterTimeTag(TimeTag startTimeTag, TimeTag endTimeTag, int index)
-            => GenerateCenterTimeTag(startTimeTag, endTimeTag, new TimeTagIndex(index));
+            => GenerateCenterTimeTag(startTimeTag, endTimeTag, new TextIndex(index));
 
         /// <summary>
         /// Sort list of time tags by index and time.
@@ -79,8 +79,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             foreach (var groupedTimeTag in groupedTimeTags)
             {
-                var startTimeGroup = groupedTimeTag.Where(x => x.Index.State == TimeTagIndex.IndexState.Start && x.Time != null);
-                var endTimeGroup = groupedTimeTag.Where(x => x.Index.State == TimeTagIndex.IndexState.End && x.Time != null);
+                var startTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.Start && x.Time != null);
+                var endTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.End && x.Time != null);
 
                 // add invalid group into list.
                 var groupInvalid = findGroupInvalid();
@@ -169,12 +169,12 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
                 // fix self-invalid
                 var groupedTimeTag = groupedTimeTags.FirstOrDefault(x => x.Key == timeTag.Index).ToList();
-                var startTimeGroup = groupedTimeTag.Where(x => x.Index.State == TimeTagIndex.IndexState.Start && x.Time != null);
-                var endTimeGroup = groupedTimeTag.Where(x => x.Index.State == TimeTagIndex.IndexState.End && x.Time != null);
+                var startTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.Start && x.Time != null);
+                var endTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.End && x.Time != null);
 
                 switch (timeTag.State)
                 {
-                    case TimeTagIndex.IndexState.Start:
+                    case TextIndex.IndexState.Start:
                         var minEndTime = endTimeGroup.Min(x => x.Time);
 
                         if (minEndTime != null && minEndTime < invalidTimeTag.Time)
@@ -185,7 +185,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
                         break;
 
-                    case TimeTagIndex.IndexState.End:
+                    case TextIndex.IndexState.End:
                         var maxStartTime = startTimeGroup.Max(x => x.Time);
 
                         if (maxStartTime != null && maxStartTime > invalidTimeTag.Time)
@@ -225,11 +225,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="other">Fix way</param>
         /// <param name="self">Fix way</param>
         /// <returns>Time tags with dictionary format.</returns>
-        public static IReadOnlyDictionary<TimeTagIndex, double> ToDictionary(TimeTag[] timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
+        public static IReadOnlyDictionary<TextIndex, double> ToDictionary(TimeTag[] timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
                                                                              SelfCheck self = SelfCheck.BasedOnStart)
         {
             if (timeTags == null)
-                return new Dictionary<TimeTagIndex, double>();
+                return new Dictionary<TextIndex, double>();
 
             // sorted value
             var sortedTimeTags = applyFix ? FixInvalid(timeTags, other, self) : Sort(timeTags);
@@ -237,7 +237,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             // convert to dictionary, will get start's smallest time and end's largest time.
             return sortedTimeTags.Where(x => x.Time != null).GroupBy(x => x.Index).Select(x =>
             {
-                if (x.Key.State == TimeTagIndex.IndexState.Start)
+                if (x.Key.State == TextIndex.IndexState.Start)
                     return x.FirstOrDefault();
                 else
                     return x.LastOrDefault();
@@ -249,7 +249,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="dictionary">Dictionary.</param>
         /// <returns>Time tags</returns>
-        public static TimeTag[] ToTimeTagList(IReadOnlyDictionary<TimeTagIndex, double> dictionary)
+        public static TimeTag[] ToTimeTagList(IReadOnlyDictionary<TextIndex, double> dictionary)
         {
             return dictionary.Select(d => new TimeTag(d.Key, d.Value)).ToArray();
         }

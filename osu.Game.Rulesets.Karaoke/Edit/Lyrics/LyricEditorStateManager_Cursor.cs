@@ -17,12 +17,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Bindable<CursorPosition> BindableCursorPosition { get; } = new Bindable<CursorPosition>();
 
-        public void MoveCursorToTargetPosition(Lyric lyric, TimeTagIndex index)
+        public void MoveCursorToTargetPosition(Lyric lyric, TextIndex index)
         {
             movePositionTo(new CursorPosition(lyric, index));
         }
 
-        public void MoveHoverCursorToTargetPosition(Lyric lyric, TimeTagIndex index)
+        public void MoveHoverCursorToTargetPosition(Lyric lyric, TextIndex index)
         {
             moveHoverPositionTo(new CursorPosition(lyric, index));
         }
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var index = Math.Min(position.Index.Index, lyricTextLength - 1);
             var state = position.Index.State;
 
-            return new CursorPosition(lyric, new TimeTagIndex(index, state));
+            return new CursorPosition(lyric, new TextIndex(index, state));
         }
 
         private CursorPosition getNextLyricCursorPosition(CursorPosition position)
@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var index = Math.Min(position.Index.Index, lyricTextLength - 1);
             var state = position.Index.State;
 
-            return new CursorPosition(lyric, new TimeTagIndex(index, state));
+            return new CursorPosition(lyric, new TextIndex(index, state));
         }
 
         private CursorPosition getPreviousCursorPosition(CursorPosition position)
@@ -107,23 +107,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             if (previousTimeTag.Index < 0)
             {
-                getNextLyricCursorPosition(new CursorPosition(position.Lyric, new TimeTagIndex(int.MaxValue)));
+                getNextLyricCursorPosition(new CursorPosition(position.Lyric, new TextIndex(int.MaxValue)));
             }
 
             return new CursorPosition(position.Lyric, previousTimeTag);
 
-            static TimeTagIndex getPreviousTag(Mode mode, TimeTagIndex currentTimeTag)
+            static TextIndex getPreviousTag(Mode mode, TextIndex currentTimeTag)
             {
                 switch (mode)
                 {
                     case Mode.EditMode:
                     case Mode.TypingMode:
-                        return new TimeTagIndex(currentTimeTag.Index - 1, currentTimeTag.State);
+                        return new TextIndex(currentTimeTag.Index - 1, currentTimeTag.State);
 
                     case Mode.TimeTagEditMode:
-                        var nextIndex = TimeTagIndexUtils.ToLyricIndex(currentTimeTag) - 1;
-                        var nextState = TimeTagIndexUtils.ReverseState(currentTimeTag.State);
-                        return new TimeTagIndex(nextIndex, nextState);
+                        var nextIndex = TextIndexUtils.ToLyricIndex(currentTimeTag) - 1;
+                        var nextState = TextIndexUtils.ReverseState(currentTimeTag.State);
+                        return new TextIndex(nextIndex, nextState);
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(mode));
@@ -140,23 +140,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             if (nextTimeTag.Index >= textLength)
             {
-                getNextLyricCursorPosition(new CursorPosition(position.Lyric, new TimeTagIndex(int.MinValue)));
+                getNextLyricCursorPosition(new CursorPosition(position.Lyric, new TextIndex(int.MinValue)));
             }
 
             return new CursorPosition(position.Lyric, nextTimeTag);
 
-            static TimeTagIndex getNextTag(Mode mode, TimeTagIndex currentTimeTag)
+            static TextIndex getNextTag(Mode mode, TextIndex currentTimeTag)
             {
                 switch (mode)
                 {
                     case Mode.EditMode:
                     case Mode.TypingMode:
-                        return new TimeTagIndex(currentTimeTag.Index + 1, currentTimeTag.State);
+                        return new TextIndex(currentTimeTag.Index + 1, currentTimeTag.State);
 
                     case Mode.TimeTagEditMode:
-                        var nextIndex = TimeTagIndexUtils.ToLyricIndex(currentTimeTag);
-                        var nextState = TimeTagIndexUtils.ReverseState(currentTimeTag.State);
-                        return new TimeTagIndex(nextIndex, nextState);
+                        var nextIndex = TextIndexUtils.ToLyricIndex(currentTimeTag);
+                        var nextState = TextIndexUtils.ReverseState(currentTimeTag.State);
+                        return new TextIndex(nextIndex, nextState);
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(mode));
@@ -167,7 +167,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private CursorPosition getFirstCursorPosition()
         {
             var lyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
-            var index = new TimeTagIndex();
+            var index = new TextIndex();
             return new CursorPosition(lyric, index);
         }
 
@@ -175,7 +175,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             var lyric = beatmap.HitObjects.OfType<Lyric>().LastOrDefault();
             var textLength = lyric?.Text.Length ?? 0;
-            var index = new TimeTagIndex(textLength - 1, TimeTagIndex.IndexState.End);
+            var index = new TextIndex(textLength - 1, TextIndex.IndexState.End);
             return new CursorPosition(lyric, index);
         }
 

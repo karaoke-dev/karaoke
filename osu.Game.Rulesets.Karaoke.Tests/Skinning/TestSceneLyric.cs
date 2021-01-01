@@ -34,13 +34,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 StartTime = startTime,
                 Duration = duration,
                 Text = "カラオケ！",
-                TimeTags = TimeTagsUtils.ToTimeTagList(new Dictionary<TimeTagIndex, double>
+                TimeTags = TimeTagsUtils.ToTimeTagList(new Dictionary<TextIndex, double>
                 {
-                    { new TimeTagIndex(0), startTime + 500 },
-                    { new TimeTagIndex(1), startTime + 600 },
-                    { new TimeTagIndex(2), startTime + 1000 },
-                    { new TimeTagIndex(3), startTime + 1500 },
-                    { new TimeTagIndex(4), startTime + 2000 },
+                    { new TextIndex(0), startTime + 500 },
+                    { new TextIndex(1), startTime + 600 },
+                    { new TextIndex(2), startTime + 1000 },
+                    { new TextIndex(3), startTime + 1500 },
+                    { new TextIndex(4), startTime + 2000 },
                 }),
                 RubyTags = new[]
                 {
