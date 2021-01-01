@@ -11,9 +11,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
 {
     public class KaraokeSkin : IJsonSerializable
     {
-        public List<LyricFont> Fonts { get; set; }
+        public List<LayoutGroup> LayoutGroups { get; set; }
 
         public List<LyricLayout> Layouts { get; set; }
+
+        public List<LyricFont> Fonts { get; set; }
 
         public List<NoteSkin> NoteSkins { get; set; }
     }
