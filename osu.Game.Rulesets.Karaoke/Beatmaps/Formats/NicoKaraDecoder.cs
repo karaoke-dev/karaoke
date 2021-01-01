@@ -20,7 +20,7 @@ using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osuTK;
 using osuTK.Graphics;
 using FontInfo = osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts.FontInfo;
-using KaraokeLayout = osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts.KaraokeLayout;
+using LyricLayout = osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts.LyricLayout;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -41,14 +41,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             }
 
             // Clean-up layout
-            output.Layouts = new List<KaraokeLayout>();
+            output.Layouts = new List<LyricLayout>();
 
             foreach (var karaokeLayout in nicoKaraProject.KaraokeLayouts)
             {
                 Enum.TryParse(karaokeLayout.SmartHorizon.ToString(), out KaraokeTextSmartHorizon smartHorizon);
                 Enum.TryParse(karaokeLayout.RubyAlignment.ToString(), out LyricTextAlignment rubyAlignment);
 
-                output.Layouts.Add(new KaraokeLayout
+                output.Layouts.Add(new LyricLayout
                 {
                     Name = karaokeLayout.Name,
                     Alignment = convertAnchor(karaokeLayout.HorizontalAlignment, karaokeLayout.VerticalAlignment),

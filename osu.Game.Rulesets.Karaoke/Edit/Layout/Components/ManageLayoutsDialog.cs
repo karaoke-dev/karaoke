@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
                 new DrawableLayoutList
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Items = { BindTarget = layoutManager?.Layouts ?? new BindableList<KaraokeLayout>() }
+                    Items = { BindTarget = layoutManager?.Layouts ?? new BindableList<LyricLayout>() }
                 }
             };
         }

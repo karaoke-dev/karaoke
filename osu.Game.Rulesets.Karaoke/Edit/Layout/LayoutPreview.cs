@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
             public class PreviewDrawableLyric : DrawableLyric
             {
-                private KaraokeLayout layout;
+                private LyricLayout layout;
 
                 public PreviewDrawableLyric(Lyric hitObject)
                     : base(hitObject)
@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 /// It's an tricky to force add layout into here.
                 /// Should be removed eventually.
                 /// </summary>
-                public KaraokeLayout PreviewLayout
+                public LyricLayout PreviewLayout
                 {
                     get => layout;
                     set

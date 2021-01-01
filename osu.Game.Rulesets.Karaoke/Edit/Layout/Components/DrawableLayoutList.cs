@@ -11,18 +11,18 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
 {
-    public class DrawableLayoutList : OsuRearrangeableListContainer<KaraokeLayout>
+    public class DrawableLayoutList : OsuRearrangeableListContainer<LyricLayout>
     {
         private Scroll scroll;
 
         protected override ScrollContainer<Drawable> CreateScrollContainer() => scroll = new Scroll();
 
-        protected override FillFlowContainer<RearrangeableListItem<KaraokeLayout>> CreateListFillFlowContainer() => new Flow
+        protected override FillFlowContainer<RearrangeableListItem<LyricLayout>> CreateListFillFlowContainer() => new Flow
         {
             DragActive = { BindTarget = DragActive }
         };
 
-        protected override OsuRearrangeableListItem<KaraokeLayout> CreateOsuDrawable(KaraokeLayout item)
+        protected override OsuRearrangeableListItem<LyricLayout> CreateOsuDrawable(LyricLayout item)
         {
             if (item == scroll.PlaceholderItem.Model)
                 return scroll.ReplacePlaceholder();
@@ -91,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
                 var previous = PlaceholderItem;
 
                 placeholderContainer.Clear(false);
-                placeholderContainer.Add(PlaceholderItem = new DrawableLayoutListItem(new KaraokeLayout(), false));
+                placeholderContainer.Add(PlaceholderItem = new DrawableLayoutListItem(new LyricLayout(), false));
 
                 return previous;
             }
@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
         /// <summary>
         /// The flow of <see cref="DrawableLayoutListItem"/>. Disables layout easing unless a drag is in progress.
         /// </summary>
-        private class Flow : FillFlowContainer<RearrangeableListItem<KaraokeLayout>>
+        private class Flow : FillFlowContainer<RearrangeableListItem<LyricLayout>>
         {
             public readonly IBindable<bool> DragActive = new Bindable<bool>();
 

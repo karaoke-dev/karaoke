@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     public abstract class KaraokeInternalSkin : ISkin
     {
         protected readonly Bindable<LyricFont> BindableFont;
-        protected readonly Bindable<KaraokeLayout> BindableLayout;
+        protected readonly Bindable<LyricLayout> BindableLayout;
 
         protected abstract string ResourceName { get; }
 
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 var skin = new KaraokeSkinDecoder().Decode(reader);
 
                 BindableFont = new Bindable<LyricFont>(skin.Fonts.FirstOrDefault());
-                BindableLayout = new Bindable<KaraokeLayout>(skin.Layouts.FirstOrDefault());
+                BindableLayout = new Bindable<LyricLayout>(skin.Layouts.FirstOrDefault());
             }
         }
 

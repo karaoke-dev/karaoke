@@ -413,10 +413,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 testScene.displayShaderCheckbox.Current.Value = Font.UseShadow;
             }
 
-            protected override void ApplyLayout(KaraokeLayout layout)
+            protected override void ApplyLayout(LyricLayout layout)
             {
                 // use my own layout
-                base.ApplyLayout(new KaraokeLayout
+                base.ApplyLayout(new LyricLayout
                 {
                     Name = "Skin layout",
                     Alignment = Anchor.Centre

@@ -142,7 +142,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                     ApplyFont(karaokeFont.NewValue);
             }, true);
 
-            skin.GetConfig<KaraokeSkinLookup, KaraokeLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, HitObject.LayoutIndex))?.BindValueChanged(karaokeLayout =>
+            skin.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, HitObject.LayoutIndex))?.BindValueChanged(karaokeLayout =>
             {
                 if (karaokeLayout.NewValue != null)
                     ApplyLayout(karaokeLayout.NewValue);
@@ -178,7 +178,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             KaraokeText.ShadowOffset = font.ShadowOffset;
         }
 
-        protected virtual void ApplyLayout(KaraokeLayout layout)
+        protected virtual void ApplyLayout(LyricLayout layout)
         {
             // Layout relative to parent
             Anchor = layout.Alignment;

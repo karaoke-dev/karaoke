@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
             base.ApplyFont(font);
         }
 
-        protected override void ApplyLayout(KaraokeLayout layout)
+        protected override void ApplyLayout(LyricLayout layout)
         {
             base.ApplyLayout(layout);
             Padding = new MarginPadding(0);

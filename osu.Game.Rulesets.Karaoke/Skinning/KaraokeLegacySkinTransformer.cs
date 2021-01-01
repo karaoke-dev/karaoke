@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         private readonly ISkin source;
 
         private readonly IDictionary<int, Bindable<LyricFont>> bindableFonts = new Dictionary<int, Bindable<LyricFont>>();
-        private readonly IDictionary<int, Bindable<KaraokeLayout>> bindableLayouts = new Dictionary<int, Bindable<KaraokeLayout>>();
+        private readonly IDictionary<int, Bindable<LyricLayout>> bindableLayouts = new Dictionary<int, Bindable<LyricLayout>>();
         private readonly IDictionary<int, Bindable<NoteSkin>> bindableNotes = new Dictionary<int, Bindable<NoteSkin>>();
         private readonly IDictionary<int, Bindable<Singer>> bindableSingers = new Dictionary<int, Bindable<Singer>>();
 
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 for (int i = 0; i < skin.Fonts.Count; i++)
                     bindableFonts.Add(i, new Bindable<LyricFont>(skin.Fonts[i]));
                 for (int i = 0; i < skin.Layouts.Count; i++)
-                    bindableLayouts.Add(i, new Bindable<KaraokeLayout>(skin.Layouts[i]));
+                    bindableLayouts.Add(i, new Bindable<LyricLayout>(skin.Layouts[i]));
                 for (int i = 0; i < skin.NoteSkins.Count; i++)
                     bindableNotes.Add(i, new Bindable<NoteSkin>(skin.NoteSkins[i]));
 

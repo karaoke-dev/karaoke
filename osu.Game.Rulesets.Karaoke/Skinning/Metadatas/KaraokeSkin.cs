@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
     {
         public List<LyricFont> Fonts { get; set; }
 
-        public List<KaraokeLayout> Layouts { get; set; }
+        public List<LyricLayout> Layouts { get; set; }
 
         public List<NoteSkin> NoteSkins { get; set; }
     }
