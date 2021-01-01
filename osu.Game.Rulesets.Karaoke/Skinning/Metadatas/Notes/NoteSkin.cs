@@ -3,7 +3,7 @@
 
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Components
+namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes
 {
     public class NoteSkin
     {

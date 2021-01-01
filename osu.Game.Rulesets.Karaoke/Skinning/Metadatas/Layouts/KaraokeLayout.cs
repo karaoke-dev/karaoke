@@ -4,7 +4,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Components
+namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts
 {
     public class KaraokeLayout
     {

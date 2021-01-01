@@ -3,7 +3,7 @@
 
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Components
+namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts
 {
     public class KaraokeFont
     {

@@ -15,11 +15,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
-using osu.Game.Rulesets.Karaoke.Skinning.Components;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osuTK;
 using osuTK.Graphics;
-using FontInfo = osu.Game.Rulesets.Karaoke.Skinning.Components.FontInfo;
-using KaraokeLayout = osu.Game.Rulesets.Karaoke.Skinning.Components.KaraokeLayout;
+using FontInfo = osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts.FontInfo;
+using KaraokeLayout = osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts.KaraokeLayout;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {

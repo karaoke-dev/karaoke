@@ -3,8 +3,11 @@
 
 using System.Collections.Generic;
 using osu.Game.IO.Serialization;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Components
+namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
 {
     public class KaraokeSkin : IJsonSerializable
     {
