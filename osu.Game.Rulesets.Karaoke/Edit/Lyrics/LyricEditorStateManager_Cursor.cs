@@ -103,26 +103,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private CursorPosition getPreviousCursorPosition(CursorPosition position)
         {
             // get previous cursor and make a check is need to change line.
-            var previousTimeTag = getPreviousTag(Mode, position.Index);
+            var previousIndex = getPreviousIndex(Mode, position.Index);
 
-            if (previousTimeTag.Index < 0)
+            if (previousIndex.Index < 0)
             {
                 getNextLyricCursorPosition(new CursorPosition(position.Lyric, new TextIndex(int.MaxValue)));
             }
 
-            return new CursorPosition(position.Lyric, previousTimeTag);
+            return new CursorPosition(position.Lyric, previousIndex);
 
-            static TextIndex getPreviousTag(Mode mode, TextIndex currentTimeTag)
+            static TextIndex getPreviousIndex(Mode mode, TextIndex currentIndex)
             {
                 switch (mode)
                 {
                     case Mode.EditMode:
                     case Mode.TypingMode:
-                        return new TextIndex(currentTimeTag.Index - 1, currentTimeTag.State);
+                        return new TextIndex(currentIndex.Index - 1, currentIndex.State);
 
                     case Mode.TimeTagEditMode:
-                        var nextIndex = TextIndexUtils.ToLyricIndex(currentTimeTag) - 1;
-                        var nextState = TextIndexUtils.ReverseState(currentTimeTag.State);
+                        var nextIndex = TextIndexUtils.ToLyricIndex(currentIndex) - 1;
+                        var nextState = TextIndexUtils.ReverseState(currentIndex.State);
                         return new TextIndex(nextIndex, nextState);
 
                     default:
@@ -136,26 +136,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var textLength = position.Lyric?.Text?.Length ?? 0;
 
             // get next cursor and make a check is need to change line.
-            var nextTimeTag = getNextTag(Mode, position.Index);
+            var nextIndex = getNextIndex(Mode, position.Index);
 
-            if (nextTimeTag.Index >= textLength)
+            if (nextIndex.Index >= textLength)
             {
                 getNextLyricCursorPosition(new CursorPosition(position.Lyric, new TextIndex(int.MinValue)));
             }
 
-            return new CursorPosition(position.Lyric, nextTimeTag);
+            return new CursorPosition(position.Lyric, nextIndex);
 
-            static TextIndex getNextTag(Mode mode, TextIndex currentTimeTag)
+            static TextIndex getNextIndex(Mode mode, TextIndex currentIndex)
             {
                 switch (mode)
                 {
                     case Mode.EditMode:
                     case Mode.TypingMode:
-                        return new TextIndex(currentTimeTag.Index + 1, currentTimeTag.State);
+                        return new TextIndex(currentIndex.Index + 1, currentIndex.State);
 
                     case Mode.TimeTagEditMode:
-                        var nextIndex = TextIndexUtils.ToLyricIndex(currentTimeTag);
-                        var nextState = TextIndexUtils.ReverseState(currentTimeTag.State);
+                        var nextIndex = TextIndexUtils.ToLyricIndex(currentIndex);
+                        var nextState = TextIndexUtils.ReverseState(currentIndex.State);
                         return new TextIndex(nextIndex, nextState);
 
                     default:
