@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
     public class StyleManager : Component
     {
-        public readonly Bindable<KaraokeFont> EditStyle = new Bindable<KaraokeFont>();
+        public readonly Bindable<LyricFont> EditStyle = new Bindable<LyricFont>();
 
         public readonly Bindable<NoteSkin> EditNoteStyle = new Bindable<NoteSkin>();
 
@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         {
         }
 
-        public void ApplyCurrentStyleChange(Action<KaraokeFont> action)
+        public void ApplyCurrentStyleChange(Action<LyricFont> action)
         {
             action?.Invoke(EditStyle.Value);
             EditStyle.TriggerChange();

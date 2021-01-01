@@ -382,7 +382,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         {
             private readonly TestSceneLyricLineStyle testScene;
 
-            public KaraokeFont Font { get; private set; }
+            public LyricFont Font { get; private set; }
             private bool defaultValueAssigned;
 
             public TestDrawableLyricLine(TestSceneLyricLineStyle testCase, Lyric hitObject)
@@ -394,11 +394,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             protected override void ApplySkin(ISkinSource skin, bool allowFallback)
             {
                 // Get layout
-                Font = skin?.GetConfig<KaraokeSkinLookup, KaraokeFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.Value;
+                Font = skin?.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.Value;
                 base.ApplySkin(skin, allowFallback);
             }
 
-            protected override void ApplyFont(KaraokeFont font)
+            protected override void ApplyFont(LyricFont font)
             {
                 base.ApplyFont(font);
 
@@ -466,7 +466,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 return null;
             }
 
-            public void ApplyProperty(Action<KaraokeFont> action)
+            public void ApplyProperty(Action<LyricFont> action)
             {
                 action.Invoke(Font);
                 ApplyFont(Font);

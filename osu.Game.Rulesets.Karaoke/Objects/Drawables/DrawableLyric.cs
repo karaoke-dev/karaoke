@@ -136,7 +136,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (HitObject == null)
                 return;
 
-            skin.GetConfig<KaraokeSkinLookup, KaraokeFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(karaokeFont =>
+            skin.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(karaokeFont =>
             {
                 if (karaokeFont.NewValue != null)
                     ApplyFont(karaokeFont.NewValue);
@@ -149,7 +149,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             }, true);
         }
 
-        protected virtual void ApplyFont(KaraokeFont font)
+        protected virtual void ApplyFont(LyricFont font)
         {
             // From text sample
             KaraokeText.FrontTextTexture = new SolidTexture { SolidColor = Color4.Blue }; // font.FrontTextBrushInfo.TextBrush.ConvertToTextureSample();
