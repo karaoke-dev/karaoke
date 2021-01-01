@@ -9,6 +9,7 @@ using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.MainInfo
 {
@@ -34,10 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.MainInfo
                 }
             };
 
-            // todo : might move to another function for updating time.
-            var startTime = lyric.StartTime.ToEditorFormattedString();
-            var endTime = lyric.EndTime.ToEditorFormattedString();
-            timeRange.Text = startTime + " - " + endTime;
+            timeRange.Text = LyricUtils.LyricTimeFormattedString(lyric);
         }
 
         [BackgroundDependencyLoader]

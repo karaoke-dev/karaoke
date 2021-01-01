@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo
 {
@@ -14,8 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo
         {
             lyric.TimeTagsBindable.BindValueChanged(value =>
             {
-                var newStyleIndex = value.NewValue;
-                BadgeText = $"Time : {newStyleIndex}";
+                BadgeText = LyricUtils.TimeTagTimeFormattedString(Lyric);
             }, true);
         }
 

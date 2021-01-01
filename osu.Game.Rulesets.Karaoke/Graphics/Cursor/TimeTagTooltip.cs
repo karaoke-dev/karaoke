@@ -6,10 +6,10 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             if (!(content is TimeTag timeTag))
                 return false;
 
-            trackTimer.Text = timeTag.Time?.ToEditorFormattedString() ?? "--:--:---";
+            trackTimer.Text = TimeTagUtils.FormattedString(timeTag);
             index.Text = $"At index {timeTag.Index.Index}";
             indexState.Text = timeTag.Index.State == TextIndex.IndexState.Start ? "Start" : "End";
 
