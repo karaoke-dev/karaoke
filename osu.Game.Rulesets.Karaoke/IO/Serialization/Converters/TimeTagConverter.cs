@@ -18,25 +18,25 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             var value = obj.Value<string>();
 
             if (string.IsNullOrEmpty(value))
-                return new TimeTag(new TimeTagIndex());
+                return new TimeTag(new TextIndex());
 
             var regex = new Regex("(?<index>[-0-9]+),(?<state>start|end)]:(?<time>[-0-9]+|s*|)");
             var result = regex.Match(value);
             if (!result.Success)
-                return new TimeTag(new TimeTagIndex());
+                return new TimeTag(new TextIndex());
 
             var index = int.Parse(result.Groups["index"]?.Value);
-            var state = result.Groups["state"]?.Value == "start" ? TimeTagIndex.IndexState.Start : TimeTagIndex.IndexState.End;
+            var state = result.Groups["state"]?.Value == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
             var timeStr = result.Groups["time"]?.Value;
             var time = timeStr == "" ? default(int?) : int.Parse(timeStr);
 
-            return new TimeTag(new TimeTagIndex(index, state), time);
+            return new TimeTag(new TextIndex(index, state), time);
         }
 
         public override void WriteJson(JsonWriter writer, TimeTag value, JsonSerializer serializer)
         {
             var tag = value.Index;
-            var state = tag.State == TimeTagIndex.IndexState.Start ? "start" : "end";
+            var state = tag.State == TextIndex.IndexState.Start ? "start" : "end";
             var time = value.Time;
 
             var str = $"[{tag.Index},{state}]:{time}";

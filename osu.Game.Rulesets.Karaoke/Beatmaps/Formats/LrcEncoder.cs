@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 TimeTags = convertTimeTag(lyric.Text, TimeTagsUtils.ToDictionary(lyric.TimeTags)).ToArray(),
             };
 
-        private IEnumerable<TimeTag> convertTimeTag(string text, IReadOnlyDictionary<TimeTagIndex, double> tags)
+        private IEnumerable<TimeTag> convertTimeTag(string text, IReadOnlyDictionary<TextIndex, double> tags)
         {
             var totalTags = text.Length * 2 + 2;
 

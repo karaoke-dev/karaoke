@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
             set
             {
                 position = value;
-                drawableTimeTag.Scale = new Vector2(position.Index.State == TimeTagIndex.IndexState.Start ? 1 : -1, 1);
+                drawableTimeTag.Scale = new Vector2(position.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1);
 
                 // todo : color is by has time-tag here?
                 // drawableTimeTag.Colour = position.Time.HasValue ? colours.YellowDarker : colours.Gray3;

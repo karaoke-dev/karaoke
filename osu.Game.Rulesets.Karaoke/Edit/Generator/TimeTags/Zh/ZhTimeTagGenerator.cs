@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh
             {
                 if (CharUtils.IsChinese(text[i]))
                 {
-                    timeTags.Add(new TimeTag(new TimeTagIndex(i)));
+                    timeTags.Add(new TimeTag(new TextIndex(i)));
                 }
             }
         }

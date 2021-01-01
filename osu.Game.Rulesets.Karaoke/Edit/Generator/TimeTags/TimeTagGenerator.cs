@@ -31,10 +31,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
                 return timeTags.ToArray();
 
             // create tag at start of lyric
-            timeTags.Add(new TimeTag(new TimeTagIndex(0)));
+            timeTags.Add(new TimeTag(new TextIndex(0)));
 
             if (Config.CheckLineEndKeyUp)
-                timeTags.Add(new TimeTag(new TimeTagIndex(text.Length - 1, TimeTagIndex.IndexState.End), null));
+                timeTags.Add(new TimeTag(new TextIndex(text.Length - 1, TextIndex.IndexState.End), null));
 
             TimeTagLogic(lyric, timeTags);
 

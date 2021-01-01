@@ -81,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
             trackTimer.Text = timeTag.Time?.ToEditorFormattedString() ?? "--:--:---";
             index.Text = $"At index {timeTag.Index.Index}";
-            indexState.Text = timeTag.Index.State == TimeTagIndex.IndexState.Start ? "Start" : "End";
+            indexState.Text = timeTag.Index.State == TextIndex.IndexState.Start ? "Start" : "End";
 
             return true;
         }

@@ -17,12 +17,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Bindable<CursorPosition> BindableCursorPosition { get; } = new Bindable<CursorPosition>();
 
-        public void MoveCursorToTargetPosition(Lyric lyric, TimeTagIndex index)
+        public void MoveCursorToTargetPosition(Lyric lyric, TextIndex index)
         {
             movePositionTo(new CursorPosition(lyric, index));
         }
 
-        public void MoveHoverCursorToTargetPosition(Lyric lyric, TimeTagIndex index)
+        public void MoveHoverCursorToTargetPosition(Lyric lyric, TextIndex index)
         {
             moveHoverPositionTo(new CursorPosition(lyric, index));
         }
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var index = Math.Min(position.Index.Index, lyricTextLength - 1);
             var state = position.Index.State;
 
-            return new CursorPosition(lyric, new TimeTagIndex(index, state));
+            return new CursorPosition(lyric, new TextIndex(index, state));
         }
 
         private CursorPosition getNextLyricCursorPosition(CursorPosition position)
@@ -97,33 +97,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var index = Math.Min(position.Index.Index, lyricTextLength - 1);
             var state = position.Index.State;
 
-            return new CursorPosition(lyric, new TimeTagIndex(index, state));
+            return new CursorPosition(lyric, new TextIndex(index, state));
         }
 
         private CursorPosition getPreviousCursorPosition(CursorPosition position)
         {
             // get previous cursor and make a check is need to change line.
-            var previousTimeTag = getPreviousTag(Mode, position.Index);
+            var previousIndex = getPreviousIndex(Mode, position.Index);
 
-            if (previousTimeTag.Index < 0)
+            if (previousIndex.Index < 0)
             {
-                getNextLyricCursorPosition(new CursorPosition(position.Lyric, new TimeTagIndex(int.MaxValue)));
+                getNextLyricCursorPosition(new CursorPosition(position.Lyric, new TextIndex(int.MaxValue)));
             }
 
-            return new CursorPosition(position.Lyric, previousTimeTag);
+            return new CursorPosition(position.Lyric, previousIndex);
 
-            static TimeTagIndex getPreviousTag(Mode mode, TimeTagIndex currentTimeTag)
+            static TextIndex getPreviousIndex(Mode mode, TextIndex currentIndex)
             {
                 switch (mode)
                 {
                     case Mode.EditMode:
                     case Mode.TypingMode:
-                        return new TimeTagIndex(currentTimeTag.Index - 1, currentTimeTag.State);
+                        return new TextIndex(currentIndex.Index - 1, currentIndex.State);
 
                     case Mode.TimeTagEditMode:
-                        var nextIndex = TimeTagIndexUtils.ToLyricIndex(currentTimeTag) - 1;
-                        var nextState = TimeTagIndexUtils.ReverseState(currentTimeTag.State);
-                        return new TimeTagIndex(nextIndex, nextState);
+                        var nextIndex = TextIndexUtils.ToLyricIndex(currentIndex) - 1;
+                        var nextState = TextIndexUtils.ReverseState(currentIndex.State);
+                        return new TextIndex(nextIndex, nextState);
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(mode));
@@ -136,27 +136,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var textLength = position.Lyric?.Text?.Length ?? 0;
 
             // get next cursor and make a check is need to change line.
-            var nextTimeTag = getNextTag(Mode, position.Index);
+            var nextIndex = getNextIndex(Mode, position.Index);
 
-            if (nextTimeTag.Index >= textLength)
+            if (nextIndex.Index >= textLength)
             {
-                getNextLyricCursorPosition(new CursorPosition(position.Lyric, new TimeTagIndex(int.MinValue)));
+                getNextLyricCursorPosition(new CursorPosition(position.Lyric, new TextIndex(int.MinValue)));
             }
 
-            return new CursorPosition(position.Lyric, nextTimeTag);
+            return new CursorPosition(position.Lyric, nextIndex);
 
-            static TimeTagIndex getNextTag(Mode mode, TimeTagIndex currentTimeTag)
+            static TextIndex getNextIndex(Mode mode, TextIndex currentIndex)
             {
                 switch (mode)
                 {
                     case Mode.EditMode:
                     case Mode.TypingMode:
-                        return new TimeTagIndex(currentTimeTag.Index + 1, currentTimeTag.State);
+                        return new TextIndex(currentIndex.Index + 1, currentIndex.State);
 
                     case Mode.TimeTagEditMode:
-                        var nextIndex = TimeTagIndexUtils.ToLyricIndex(currentTimeTag);
-                        var nextState = TimeTagIndexUtils.ReverseState(currentTimeTag.State);
-                        return new TimeTagIndex(nextIndex, nextState);
+                        var nextIndex = TextIndexUtils.ToLyricIndex(currentIndex);
+                        var nextState = TextIndexUtils.ReverseState(currentIndex.State);
+                        return new TextIndex(nextIndex, nextState);
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(mode));
@@ -167,7 +167,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private CursorPosition getFirstCursorPosition()
         {
             var lyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
-            var index = new TimeTagIndex();
+            var index = new TextIndex();
             return new CursorPosition(lyric, index);
         }
 
@@ -175,7 +175,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             var lyric = beatmap.HitObjects.OfType<Lyric>().LastOrDefault();
             var textLength = lyric?.Text.Length ?? 0;
-            var index = new TimeTagIndex(textLength - 1, TimeTagIndex.IndexState.End);
+            var index = new TextIndex(textLength - 1, TextIndex.IndexState.End);
             return new CursorPosition(lyric, index);
         }
 

@@ -170,10 +170,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 var defaultLanguage = new CultureInfo("en-US");
                 lyric.Translates.Add(defaultLanguage, translate);
 
-                lyric.TimeTags = TimeTagsUtils.ToTimeTagList(new Dictionary<TimeTagIndex, double>
+                lyric.TimeTags = TimeTagsUtils.ToTimeTagList(new Dictionary<TextIndex, double>
                 {
-                    { new TimeTagIndex(0), startTime },
-                    { new TimeTagIndex(4), startTime + duration },
+                    { new TextIndex(0), startTime },
+                    { new TextIndex(4), startTime + duration },
                 });
 
                 return lyric;

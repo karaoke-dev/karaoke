@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(triangle_width),
-                Scale = new Vector2(timeTag.Index.State == TimeTagIndex.IndexState.Start ? 1 : -1, 1)
+                Scale = new Vector2(timeTag.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1)
             };
         }
 

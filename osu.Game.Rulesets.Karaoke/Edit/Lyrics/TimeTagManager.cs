@@ -132,19 +132,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public bool AddTimeTagByPosition(CursorPosition position)
         {
             var lyric = position.Lyric;
-            var timeTagIndex = position.Index;
+            var index = position.Index;
             if (!beatmap.HitObjects.Contains(lyric))
                 return false;
 
             var timeTags = lyric.TimeTags.ToList();
-            var targetTimeTag = timeTags.FirstOrDefault(x => x.Index >= timeTagIndex) ?? timeTags.LastOrDefault();
+            var targetTimeTag = timeTags.FirstOrDefault(x => x.Index >= index) ?? timeTags.LastOrDefault();
             if (targetTimeTag == null)
                 return false;
 
             changeHandler?.BeginChange();
 
             var insertIndex = timeTags.IndexOf(targetTimeTag);
-            timeTags.Insert(insertIndex, new TimeTag(timeTagIndex));
+            timeTags.Insert(insertIndex, new TimeTag(index));
             lyric.TimeTags = timeTags.ToArray();
 
             changeHandler?.EndChange();
@@ -155,12 +155,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public bool RemoveTimeTagByPosition(CursorPosition position)
         {
             var lyric = position.Lyric;
-            var timeTagIndex = position.Index;
+            var index = position.Index;
             if (!beatmap.HitObjects.Contains(lyric))
                 return false;
 
             var timeTags = lyric.TimeTags.ToList();
-            var targetTimeTag = timeTags.FirstOrDefault(x => x.Index == timeTagIndex);
+            var targetTimeTag = timeTags.FirstOrDefault(x => x.Index == index);
             if (targetTimeTag == null)
                 return false;
 
