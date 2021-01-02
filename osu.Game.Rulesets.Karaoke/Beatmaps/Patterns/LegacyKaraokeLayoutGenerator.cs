@@ -5,9 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
 {
+    /// <summary>
+    /// Note: this class will be replaced by <see cref="LayoutGenerator"/>
+    /// </summary>
     public class LegacyKaraokeLayoutGenerator : IPatternGenerator<Lyric>
     {
         private const int number_of_line = 2;

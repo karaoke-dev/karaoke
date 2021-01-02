@@ -19,6 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             output.Fonts = result.Fonts;
             output.Layouts = result.Layouts;
             output.NoteSkins = result.NoteSkins;
+            output.LayoutGroups = result.LayoutGroups;
         }
     }
 }

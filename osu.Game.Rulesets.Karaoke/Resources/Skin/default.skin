@@ -2680,9 +2680,25 @@
       }
     }
   ],
+  "layout_groups": [
+    {
+      "id": 1,
+      "name": "group1",
+    },
+    {
+      "id": 2,
+      "name": "group2",
+    },
+    {
+      "id": 3,
+      "name": "group3",
+    }
+  ],
   "layouts": [
     {
+      "id": 1,
       "name": "下-1",
+      "group": 1,
       "alignment": 36,
       "horizontal_margin": 30,
       "vertical_margin": 45,
@@ -2692,7 +2708,9 @@
       "ruby_margin": 4
     },
     {
+      "id": 2,
       "name": "下-2",
+      "group": 1,
       "alignment": 12,
       "horizontal_margin": 30,
       "vertical_margin": 130,
@@ -2702,6 +2720,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 3,
       "name": "下-3",
       "alignment": 12,
       "horizontal_margin": 30,
@@ -2712,6 +2731,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 4,
       "name": "下-4",
       "alignment": 12,
       "horizontal_margin": 30,
@@ -2722,6 +2742,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 5,
       "name": "上-1",
       "alignment": 9,
       "horizontal_margin": 30,
@@ -2732,6 +2753,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 6,
       "name": "上-2",
       "alignment": 33,
       "horizontal_margin": 30,
@@ -2742,6 +2764,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 7,
       "name": "上-3",
       "alignment": 33,
       "horizontal_margin": 30,
@@ -2752,6 +2775,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 8,
       "name": "上-4",
       "alignment": 33,
       "horizontal_margin": 30,
@@ -2762,6 +2786,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 9,
       "name": "中",
       "alignment": 18,
       "lyrics_interval": 4,
@@ -2769,6 +2794,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 10,
       "name": "前行追随",
       "alignment": 12,
       "horizontal_margin": 30,
@@ -2780,6 +2806,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 11,
       "name": "情報-左上",
       "alignment": 9,
       "horizontal_margin": 30,
@@ -2788,6 +2815,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 12,
       "name": "情報-右上",
       "alignment": 33,
       "horizontal_margin": 30,
@@ -2796,6 +2824,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 13,
       "name": "情報-左下",
       "alignment": 12,
       "horizontal_margin": 30,
@@ -2804,6 +2833,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 14,
       "name": "情報-右下",
       "alignment": 36,
       "horizontal_margin": 30,
@@ -2812,6 +2842,7 @@
       "ruby_margin": 4
     },
     {
+      "id": 15,
       "name": "情報-中央",
       "alignment": 18,
       "horizontal_margin": 30,

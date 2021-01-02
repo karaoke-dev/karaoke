@@ -97,6 +97,41 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             return new TimeTag(new TextIndex(index, state), time);
         }
 
+        /// <summary>
+        /// Process test case lyric string format into <see cref="Lyric"/>
+        /// </summary>
+        /// <example>
+        /// [1000,3000]:karaoke
+        /// </example>
+        /// <param name="str"></param>
+        /// <returns><see cref="TimeTag"/></returns>
+        public static Lyric ParseLyric(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return new Lyric();
+
+            var regex = new Regex("(?<startTime>[-0-9]+),(?<endTime>[-0-9]+)]:(?<lyric>.*$)");
+            var result = regex.Match(str);
+            if (!result.Success)
+                throw new ArgumentException(nameof(str));
+
+            var startTime = double.Parse(result.Groups["startTime"]?.Value);
+            var endTime = double.Parse(result.Groups["endTime"]?.Value);
+            var text = result.Groups["lyric"]?.Value;
+
+            return new Lyric
+            {
+                StartTime = startTime,
+                Duration = endTime - startTime,
+                Text = text,
+                TimeTags = new TimeTag[]
+                {
+                    new TimeTag(new TextIndex(0, TextIndex.IndexState.Start), startTime),
+                    new TimeTag(new TextIndex(text.Length - 1, TextIndex.IndexState.End), endTime)
+                }
+            };
+        }
+        
         public static RubyTag[] ParseRubyTags(string[] strings)
             => strings?.Select(ParseRubyTag).ToArray();
 
@@ -105,5 +140,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
 
         public static TimeTag[] ParseTimeTags(string[] strings)
             => strings?.Select(ParseTimeTag).ToArray();
+
+        public static Lyric[] ParseLyrics(string[] strings)
+            => strings?.Select(ParseLyric).ToArray();
     }
 }

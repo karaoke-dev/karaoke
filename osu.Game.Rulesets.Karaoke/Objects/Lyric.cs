@@ -39,7 +39,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public TimeTag[] TimeTags
         {
             get => TimeTagsBindable.Value;
-            set => TimeTagsBindable.Value = value;
+            set
+            {
+                TimeTagsBindable.Value = value;
+                LyricStartTime = TimeTagsUtils.GetStartTime(TimeTags) ?? StartTime;
+                LyricEndTime = TimeTagsUtils.GetEndTime(TimeTags) ?? EndTime;
+            } 
         }
 
         [JsonIgnore]
@@ -60,12 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public RubyTag[] RubyTags
         {
             get => RubyTagsBindable.Value;
-            set
-            {
-                RubyTagsBindable.Value = value;
-                LyricStartTime = TimeTagsUtils.GetStartTime(TimeTags) ?? StartTime;
-                LyricEndTime = TimeTagsUtils.GetEndTime(TimeTags) ?? EndTime;
-            }
+            set => RubyTagsBindable.Value = value;
         }
 
         [JsonIgnore]
