@@ -199,32 +199,42 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                     var baseUri = new Uri(githubUrls[text]);
 
                     // Get hash tag with number
-                    const string pattern = @"(\#[0-9]+\b)(?!;)";
-                    var issueOrRequests = Regex.Matches(linkInline.Url, pattern, RegexOptions.IgnoreCase);
+                    const string issue_regex = @"#(?<issue>[0-9]+)|@(?<username>[0-9A-z]+)";
+                    var result = Regex.Matches(linkInline.Url, issue_regex, RegexOptions.IgnoreCase);
 
-                    if (!issueOrRequests.Any())
+                    if (!result.Any())
                         return;
 
-                    AddText("(");
-
-                    foreach (var issue in issueOrRequests.Select(x => x.Value))
+                    // add issue if has user
+                    var issues = result.Select(x => x.Groups["issue"]?.Value).Where(x => !string.IsNullOrEmpty(x));
+                    if (issues.Any())
                     {
-                        AddDrawable(new MarkdownLinkText($"{text}{issue}", new LinkInline
-                        {
-                            Url = new Uri(baseUri, $"pull/{issue.Replace("#", "")}").AbsoluteUri
-                        }));
+                        AddText("(");
 
-                        if (issue != issueOrRequests.LastOrDefault()?.Value)
-                            AddText(", ");
+                        foreach (var issue in issues)
+                        {
+                            if (string.IsNullOrEmpty(issue))
+                                continue;
+
+                            AddDrawable(new MarkdownLinkText($"{text}{issue}", new LinkInline
+                            {
+                                Url = new Uri(baseUri, $"pull/{issue}").AbsoluteUri
+                            }));
+
+                            if (issue != issues.LastOrDefault())
+                                AddText(", ");
+                        }
+
+                        AddText(")");
                     }
 
-                    AddText(")");
-
                     // add use name if has user
-                    var user = linkInline.Url.Split('@').LastOrDefault();
-
-                    if (!string.IsNullOrEmpty(user))
+                    var usernames = result.Select(x => x.Groups["username"]?.Value).Where(x => !string.IsNullOrEmpty(x));
+                    foreach (var user in usernames)
                     {
+                        if (string.IsNullOrEmpty(user))
+                            return;
+
                         var textScale = new Vector2(0.7f);
                         AddText(" by:", text =>
                         {
