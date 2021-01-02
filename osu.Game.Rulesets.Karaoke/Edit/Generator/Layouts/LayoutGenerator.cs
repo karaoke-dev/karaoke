@@ -11,17 +11,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts
     {
         protected LayoutGeneratorConfig Config { get; }
 
-        protected LayoutGenerator(LayoutGeneratorConfig config)
+        public LayoutGenerator(LayoutGeneratorConfig config)
         {
             Config = config;
         }
 
-        protected void ApplyLayout(List<Lyric> lyrics, LocalLayout layout = LocalLayout.CycleTwo)
+        public void ApplyLayout(List<Lyric> lyrics, LocalLayout layout = LocalLayout.CycleTwo)
         {
             // todo : generate layout
+            // todo : apply time
         }
 
-        protected void ApplyLayout(List<Lyric> lyrics, LyricLayout layouts)
+        public void ApplyLayout(List<Lyric> lyrics, LyricLayout layouts)
         {
             // todo :
             // 1. create layout file to record group name.
