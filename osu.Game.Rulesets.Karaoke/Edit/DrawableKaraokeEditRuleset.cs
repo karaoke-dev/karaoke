@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Framework.Timing;
@@ -44,9 +45,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         }
 
         [BackgroundDependencyLoader]
-        private void load(IFrameBasedClock clock)
+        private void load(IBindable<EditMode> editMode, IFrameBasedClock clock)
         {
             lyricEditor.Clock = clock;
+            editMode.BindValueChanged(e =>
+            {
+                if (e.NewValue == EditMode.LyricEditor)
+                {
+                    Playfield.Hide();
+                    lyricEditor.Show();
+                }
+                else
+                {
+                    Playfield.Show();
+                    lyricEditor.Hide();
+                }
+            }, true);
         }
 
         public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h) => null;

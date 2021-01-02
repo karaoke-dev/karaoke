@@ -30,11 +30,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
 
+        [Cached(Type = typeof(IBindable<EditMode>))]
+        private readonly IBindable<EditMode> editMode;
+
         public KaraokeHitObjectComposer(Ruleset ruleset)
             : base(ruleset)
         {
             // Duplicated registration because selection handler need to use it.
             positionCalculator = new PositionCalculator(9);
+            editMode = new Bindable<EditMode>(EditMode.LyricEditor);
         }
 
         public new KaraokePlayfield Playfield => drawableRuleset.Playfield;
