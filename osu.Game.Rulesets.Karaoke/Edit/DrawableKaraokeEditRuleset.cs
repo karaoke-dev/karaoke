@@ -29,8 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         public override bool DisplayNotePlayfield => true;
 
-        private LyricEditor lyricEditor;
-
         public DrawableKaraokeEditRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)
         {
@@ -38,29 +36,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         protected override void InitialOverlay()
         {
-            Overlays.Add(lyricEditor = new LyricEditor
-            {
-                RelativeSizeAxes = Axes.Both
-            });
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(IBindable<EditMode> editMode, IFrameBasedClock clock)
-        {
-            lyricEditor.Clock = clock;
-            editMode.BindValueChanged(e =>
-            {
-                if (e.NewValue == EditMode.LyricEditor)
-                {
-                    Playfield.Hide();
-                    lyricEditor.Show();
-                }
-                else
-                {
-                    Playfield.Show();
-                    lyricEditor.Hide();
-                }
-            }, true);
         }
 
         public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h) => null;
@@ -87,5 +62,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         }
 
         protected override Playfield CreatePlayfield() => new KaraokeEditPlayfield();
+
+        [BackgroundDependencyLoader]
+        private void load(IBindable<EditMode> editMode)
+        {
+            editMode.BindValueChanged(e =>
+            {
+                if (e.NewValue == EditMode.LyricEditor)
+                    Playfield.Hide();
+                else
+                    Playfield.Show();
+            }, true);
+        }
     }
 }

@@ -140,9 +140,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(GameplayClock clock)
+        private void load()
         {
-            drawableLyric.Clock = clock;
+            //drawableLyric.Clock = clock;
             stateManager.BindableMode.BindValueChanged(e =>
             {
                 // initial default cursor here
