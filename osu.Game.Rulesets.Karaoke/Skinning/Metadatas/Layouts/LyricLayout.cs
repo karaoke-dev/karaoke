@@ -24,11 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts
         public int Group { get; set; }
 
         /// <summary>
-        /// Order
-        /// </summary>
-        public int Order { get; set; }
-
-        /// <summary>
         /// Lyric alignment
         /// </summary>
         public Anchor Alignment { get; set; } = Anchor.Centre;

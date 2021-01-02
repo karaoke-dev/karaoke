@@ -5,6 +5,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts
 {
     public class LayoutGroup
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }
