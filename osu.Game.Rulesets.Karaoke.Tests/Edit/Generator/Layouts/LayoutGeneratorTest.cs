@@ -5,6 +5,7 @@ using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.Layouts
 {
@@ -17,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.Layouts
         [TestCase(null, null)] // should not crash in null.
         public void TestApplyLayoutIndex(string[] texts, int[] layoutIds)
         {
-            var lyrics = texts.Select(x => new Lyric { Text = x }).ToList();
+            var lyrics = texts.Select(x => new Lyric { Text = x }).ToArray();
 
             var generator = new LayoutGenerator(generatorConfig());
             generator.ApplyLayout(lyrics, LocalLayout.CycleTwo);
@@ -25,9 +26,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.Layouts
             Assert.AreEqual(lyrics.Select(x => x.LayoutIndex).ToArray(), layoutIds);
         }
 
-        public void TestApplyLayoutTime(string lyrics, string times)
+        [TestCase(new[] { "[1000, 3000]枯れた世界に...", "[6000, 8000]枯れた世界に...", "[8000, 12000]あぁ、..." }, new[] { "[1000, 3000]", "[6000, 8000]", "[8000, 12000]" })]
+        public void TestApplyLayoutTime(string[] lyricTexts, string[] times)
         {
-            // todo : should make helper to fast generate list of lyric.
+            var lyrics = TestCaseTagHelper.ParseLyrics(lyricTexts);
+
+            var generator = new LayoutGenerator(generatorConfig());
+            generator.ApplyLayout(lyrics, LocalLayout.CycleTwo);
+
+            Assert.AreEqual(lyrics.Select(x => $"[{x.StartTime}, {x.EndTime}]").ToArray(), times);
         }
 
         private LayoutGeneratorConfig generatorConfig()
