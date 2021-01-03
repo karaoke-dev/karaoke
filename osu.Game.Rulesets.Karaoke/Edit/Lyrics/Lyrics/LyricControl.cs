@@ -12,6 +12,7 @@ using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Screens.Edit;
 using osu.Game.Screens.Play;
 using osuTK;
 
@@ -140,9 +141,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(EditorClock clock)
         {
-            //drawableLyric.Clock = clock;
+            drawableLyric.Clock = clock;
             stateManager.BindableMode.BindValueChanged(e =>
             {
                 // initial default cursor here
