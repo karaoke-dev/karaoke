@@ -15,12 +15,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeBlueprintContainer : ComposeBlueprintContainer
     {
-        [Resolved]
-        private IBindable<EditMode> editMode { get; set; }
+        private EditMode mode;
 
         public override bool ReceivePositionalInputAt(Vector2 screenSpacePos)
         {
-            if (editMode?.Value == EditMode.LyricEditor)
+            if (mode == EditMode.LyricEditor)
                 return false;
 
             return base.ReceivePositionalInputAt(screenSpacePos);
@@ -46,5 +45,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         }
 
         protected override SelectionHandler CreateSelectionHandler() => new KaraokeSelectionHandler();
+
+        [BackgroundDependencyLoader]
+        private void load(IBindable<EditMode> editMode)
+        {
+            editMode.BindValueChanged(e =>
+            {
+                mode = e.NewValue;
+                if (mode == EditMode.LyricEditor)
+                {
+                    Hide();
+                }
+                else
+                {
+                    Show();
+                }
+            });
+        }
     }
 }
