@@ -4,9 +4,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using osu.Framework.Allocation;
+using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
+using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
@@ -26,6 +31,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         public DrawableKaraokeEditRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)
+        {
+        }
+
+        protected override void InitialOverlay()
         {
         }
 
@@ -53,5 +62,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         }
 
         protected override Playfield CreatePlayfield() => new KaraokeEditPlayfield();
+
+        [BackgroundDependencyLoader]
+        private void load(IBindable<EditMode> editMode)
+        {
+            editMode.BindValueChanged(e =>
+            {
+                if (e.NewValue == EditMode.LyricEditor)
+                    Playfield.Hide();
+                else
+                    Playfield.Show();
+            }, true);
+        }
     }
 }

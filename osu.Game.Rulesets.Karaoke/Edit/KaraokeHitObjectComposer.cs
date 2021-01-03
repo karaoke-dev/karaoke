@@ -5,12 +5,15 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -27,14 +30,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     {
         private DrawableKaraokeEditRuleset drawableRuleset;
 
+        private LyricEditor lyricEditor;
+
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
+
+        [Cached(Type = typeof(IBindable<EditMode>))]
+        private readonly Bindable<EditMode> editMode;
 
         public KaraokeHitObjectComposer(Ruleset ruleset)
             : base(ruleset)
         {
             // Duplicated registration because selection handler need to use it.
             positionCalculator = new PositionCalculator(9);
+            editMode = new Bindable<EditMode>();
+
+            LayerBelowRuleset.Add(lyricEditor = new LyricEditor
+            {
+                RelativeSizeAxes = Axes.Both
+            });
+
+            editMode.BindValueChanged(e =>
+            {
+                if (e.NewValue == EditMode.LyricEditor)
+                    lyricEditor.Show();
+                else
+                    lyricEditor.Hide();
+            }, true);
         }
 
         public new KaraokePlayfield Playfield => drawableRuleset.Playfield;
@@ -78,6 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly Bindable<TernaryState> displayRubyToggle = new Bindable<TernaryState>();
         private readonly Bindable<TernaryState> displayRomajiToggle = new Bindable<TernaryState>();
         private readonly Bindable<TernaryState> displayTranslateToggle = new Bindable<TernaryState>();
+        private readonly Bindable<TernaryState> displayLyricEditor = new Bindable<TernaryState>(); // make a temp button to switch to lyric edit mode.
 
         protected override IEnumerable<TernaryButton> CreateTernaryButtons()
             => new[]
@@ -85,6 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 new TernaryButton(displayRubyToggle, "Ruby", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
                 new TernaryButton(displayRomajiToggle, "Romaji", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
                 new TernaryButton(displayTranslateToggle, "Translate", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
+                new TernaryButton(displayLyricEditor, "Lyric editor", () => new SpriteIcon { Icon = FontAwesome.Solid.Font }),
             };
 
         [BackgroundDependencyLoader]
@@ -97,6 +121,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             displayRubyToggle.BindValueChanged(x => { karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.DisplayRuby).Value = x.NewValue == TernaryState.True; });
             displayRomajiToggle.BindValueChanged(x => { karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.DisplayRomaji).Value = x.NewValue == TernaryState.True; });
             displayTranslateToggle.BindValueChanged(x => { karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.UseTranslate).Value = x.NewValue == TernaryState.True; });
+
+            // temp bution and will be replaced eventually
+            displayLyricEditor.BindValueChanged(x =>
+            {
+                if (x.NewValue == TernaryState.True)
+                    editMode.Value = EditMode.LyricEditor;
+                else
+                    editMode.Value = EditMode.Note;
+            }, true);
+
+            // todo : should load from setting
+            // editMode.Value = EditMode.LyricEditor;
+
+            // todo : should pass clock in here
+            //lyricEditor.Clock = Playfield.Clock;
         }
     }
 }

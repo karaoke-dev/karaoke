@@ -46,13 +46,18 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             positionCalculator = new PositionCalculator(9);
 
+            InitialOverlay();
+        }
+
+        protected virtual void InitialOverlay()
+        {
             // Editor should not generate hud overlay
-            if (mods == null)
+            if (Mods == null)
                 return;
 
             // create overlay
             var overlay = new SettingHUDOverlay(this);
-            foreach (var mod in mods.OfType<IApplicableToSettingHUDOverlay>())
+            foreach (var mod in Mods.OfType<IApplicableToSettingHUDOverlay>())
                 mod.ApplyToOverlay(overlay);
 
             Overlays.Add(overlay);
