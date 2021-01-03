@@ -100,6 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly Bindable<TernaryState> displayRubyToggle = new Bindable<TernaryState>();
         private readonly Bindable<TernaryState> displayRomajiToggle = new Bindable<TernaryState>();
         private readonly Bindable<TernaryState> displayTranslateToggle = new Bindable<TernaryState>();
+        private readonly Bindable<TernaryState> displayLyricEditor = new Bindable<TernaryState>(); // make a temp button to switch to lyric edit mode.
 
         protected override IEnumerable<TernaryButton> CreateTernaryButtons()
             => new[]
@@ -107,6 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 new TernaryButton(displayRubyToggle, "Ruby", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
                 new TernaryButton(displayRomajiToggle, "Romaji", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
                 new TernaryButton(displayTranslateToggle, "Translate", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
+                new TernaryButton(displayLyricEditor, "Lyric editor", () => new SpriteIcon { Icon = FontAwesome.Solid.Font }),
             };
 
         [BackgroundDependencyLoader]
@@ -120,8 +122,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             displayRomajiToggle.BindValueChanged(x => { karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.DisplayRomaji).Value = x.NewValue == TernaryState.True; });
             displayTranslateToggle.BindValueChanged(x => { karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.UseTranslate).Value = x.NewValue == TernaryState.True; });
 
+            // temp bution and will be replaced eventually
+            displayLyricEditor.BindValueChanged(x =>
+            {
+                if (x.NewValue == TernaryState.True)
+                    editMode.Value = EditMode.LyricEditor;
+                else
+                    editMode.Value = EditMode.Note;
+            }, true);
+
             // todo : should load from setting
-            editMode.Value = EditMode.LyricEditor;
+            // editMode.Value = EditMode.LyricEditor;
 
             // todo : should pass clock in here
             //lyricEditor.Clock = Playfield.Clock;
