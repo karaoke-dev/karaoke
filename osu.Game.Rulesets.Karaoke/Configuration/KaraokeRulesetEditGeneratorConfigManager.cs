@@ -13,7 +13,6 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 {
     public class KaraokeRulesetEditGeneratorConfigManager : InMemoryConfigManager<KaraokeRulesetEditGeneratorSetting>
     {
-
         protected override void InitialiseDefaults()
         {
             base.InitialiseDefaults();
