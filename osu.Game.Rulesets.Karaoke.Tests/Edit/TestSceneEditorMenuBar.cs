@@ -6,6 +6,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
 using osu.Game.Screens.Edit.Components.Menus;
 using osu.Game.Tests.Visual;
 
@@ -32,61 +33,42 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                         {
                             Items = new[]
                             {
-                                new EditorMenuItem("Clear All Notes"),
-                                new EditorMenuItem("Open Difficulty..."),
-                                new EditorMenuItem("Save"),
-                                new EditorMenuItem("Create a new Difficulty..."),
+                                new EditorMenuItem("Import from text"),
+                                new EditorMenuItem("Import from .lrc file"),
                                 new EditorMenuItemSpacer(),
-                                new EditorMenuItem("Revert to Saved"),
-                                new EditorMenuItem("Revert to Saved (Full)"),
-                                new EditorMenuItemSpacer(),
-                                new EditorMenuItem("Test Beatmap"),
-                                new EditorMenuItem("Open AiMod"),
-                                new EditorMenuItemSpacer(),
-                                new EditorMenuItem("Upload Beatmap..."),
-                                new EditorMenuItem("Export Package"),
-                                new EditorMenuItem("Export Map Package"),
-                                new EditorMenuItem("Import from..."),
-                                new EditorMenuItemSpacer(),
-                                new EditorMenuItem("Open Song Folder"),
-                                new EditorMenuItem("Open .osu in Notepad"),
-                                new EditorMenuItem("Open .osb in Notepad"),
-                                new EditorMenuItemSpacer(),
-                                new EditorMenuItem("Exit"),
+                                new EditorMenuItem("Export to .lrc"),
+                                new EditorMenuItem("Export to text"),
                             }
                         },
-                        new MenuItem("Timing")
+                        new MenuItem("View")
                         {
-                            Items = new[]
+                            Items = new MenuItem[]
                             {
-                                new EditorMenuItem("Time Signature"),
-                                new EditorMenuItem("Metronome Clicks"),
+                                new EditModeMenu(),
                                 new EditorMenuItemSpacer(),
-                                new EditorMenuItem("Add Timing Section"),
-                                new EditorMenuItem("Add Inheriting Section"),
-                                new EditorMenuItem("Reset Current Section"),
-                                new EditorMenuItem("Delete Timing Section"),
-                                new EditorMenuItem("Resnap Current Section"),
-                                new EditorMenuItemSpacer(),
-                                new EditorMenuItem("Timing Setup"),
-                                new EditorMenuItemSpacer(),
-                                new EditorMenuItem("Resnap All Notes", MenuItemType.Destructive),
-                                new EditorMenuItem("Move all notes in time...", MenuItemType.Destructive),
-                                new EditorMenuItem("Recalculate Slider Lengths", MenuItemType.Destructive),
-                                new EditorMenuItem("Delete All Timing Sections", MenuItemType.Destructive),
-                                new EditorMenuItemSpacer(),
-                                new EditorMenuItem("Set Current Position as Preview Point"),
+                                new LyricEditorEditModeMenu(),
+                                new LyricEditorLeftSideModeMenu(),
+                                new LyricEditorTextSizeMenu(),
                             }
                         },
-                        new MenuItem("Lyric")
+                        new MenuItem("Tools")
                         {
-                            Items = new[]
+                            Items = new MenuItem[]
                             {
-                                new EditorMenuItem("Item 1"),
-                                new EditorMenuItem("Item 2"),
-                                new EditorMenuItem("Item 3"),
+                                new EditorMenuItem("Singer manager"),
+                                new EditorMenuItem("Translate manager"),
+                                new EditorMenuItem("Layout manager"),
+                                new EditorMenuItem("Style manager"),
                             }
                         },
+                        new MenuItem("Options")
+                        {
+                            Items = new MenuItem[]
+                            {
+                                new EditorMenuItem("Lyric editor"),
+                                new GeneratorConfigMenu(),
+                            }
+                        }
                     }
                 }
             });
