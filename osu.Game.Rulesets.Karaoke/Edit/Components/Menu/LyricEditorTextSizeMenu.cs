@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
+using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -10,10 +12,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
     public class LyricEditorTextSizeMenu : MenuItem
     {
+        private readonly Bindable<int> bindableFontSize = new Bindable<int>();
+
         public LyricEditorTextSizeMenu(KaraokeRulesetEditConfigManager config, string text)
            : base(text)
         {
             Items = createMenuItems();
+
+            bindableFontSize.BindTo(config.GetBindable<int>(KaraokeRulesetEditSetting.LyricEditorFontSize));
+            bindableFontSize.BindValueChanged(e =>
+            {
+                var newSelection = e.NewValue;
+                Items.OfType<ToggleMenuItem>().ForEach(x => {
+                    var match = x.Text.Value == getName(newSelection);
+                    x.State.Value = match;
+                });
+            }, true);
         }
 
         private ToggleMenuItem[] createMenuItems()
@@ -31,9 +45,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             return $"{size} px";
         }
 
-        private void updateMode(float size)
+        private void updateMode(int size)
         {
-            // todo : implementation
+            bindableFontSize.Value = size;
         }
     }
 }

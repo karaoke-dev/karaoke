@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                             Items = new MenuItem[]
                             {
                                 new EditorMenuItem("Lyric editor"),
-                                new GeneratorConfigMenu(config, "Generator"),
+                                new GeneratorConfigMenu("Generator"),
                             }
                         }
                     }

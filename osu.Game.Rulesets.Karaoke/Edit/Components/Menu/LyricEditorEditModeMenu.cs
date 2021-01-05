@@ -3,7 +3,8 @@
 
 using System;
 using System.Linq;
-using osu.Framework.Allocation;
+using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -13,10 +14,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
     public class LyricEditorEditModeMenu : MenuItem
     {
+        private readonly Bindable<Mode> bindableLyricEditorMode = new Bindable<Mode>();
+
         public LyricEditorEditModeMenu(KaraokeRulesetEditConfigManager config, string text)
            : base(text)
         {
             Items = createMenuItems();
+
+            bindableLyricEditorMode.BindTo(config.GetBindable<Mode>(KaraokeRulesetEditSetting.LyricEditorMode));
+            bindableLyricEditorMode.BindValueChanged(e =>
+            {
+                var newSelection = e.NewValue;
+                Items.OfType<ToggleMenuItem>().ForEach(x => {
+                    var match = x.Text.Value == getName(newSelection);
+                    x.State.Value = match;
+                });
+            }, true);
         }
 
         private ToggleMenuItem[] createMenuItems()
@@ -50,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private void updateMode(Mode mode)
         {
-            // todo : implementation
+            bindableLyricEditorMode.Value = mode;
         }
     }
 }
