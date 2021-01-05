@@ -4,13 +4,14 @@
 using System.Linq;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
     public class LyricEditorTextSizeMenu : MenuItem
     {
-        public LyricEditorTextSizeMenu()
-           : base("Text size")
+        public LyricEditorTextSizeMenu(KaraokeRulesetEditConfigManager config, string text)
+           : base(text)
         {
             Items = createMenuItems();
         }

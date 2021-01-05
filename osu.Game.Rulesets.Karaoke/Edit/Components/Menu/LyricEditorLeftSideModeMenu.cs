@@ -5,14 +5,15 @@ using System;
 using System.Linq;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
     public class LyricEditorLeftSideModeMenu : MenuItem
     {
-        public LyricEditorLeftSideModeMenu()
-           : base("Lyric editor mode")
+        public LyricEditorLeftSideModeMenu(KaraokeRulesetEditConfigManager config, string text)
+           : base(text)
         {
             Items = createMenuItems();
         }

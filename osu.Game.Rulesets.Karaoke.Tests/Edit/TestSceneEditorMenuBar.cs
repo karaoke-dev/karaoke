@@ -2,10 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
-using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
 using osu.Game.Screens.Edit.Components.Menus;
 using osu.Game.Tests.Visual;
@@ -15,8 +16,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
     [TestFixture]
     public class TestSceneEditorMenuBar : OsuTestScene
     {
-        public TestSceneEditorMenuBar()
+        [BackgroundDependencyLoader]
+        private void load()
         {
+            var config = new KaraokeRulesetEditConfigManager();
             Add(new Container
             {
                 Anchor = Anchor.TopCentre,
@@ -46,9 +49,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                             {
                                 new EditModeMenu(),
                                 new EditorMenuItemSpacer(),
-                                new LyricEditorEditModeMenu(),
-                                new LyricEditorLeftSideModeMenu(),
-                                new LyricEditorTextSizeMenu(),
+                                new LyricEditorEditModeMenu(config, "Lyric editor mode"),
+                                new LyricEditorLeftSideModeMenu(config, "Lyric editor mode"),
+                                new LyricEditorTextSizeMenu(config, "Text size"),
                             }
                         },
                         new MenuItem("Tools")
@@ -66,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                             Items = new MenuItem[]
                             {
                                 new EditorMenuItem("Lyric editor"),
-                                new GeneratorConfigMenu(),
+                                new GeneratorConfigMenu(config, "Generator"),
                             }
                         }
                     }

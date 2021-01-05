@@ -3,16 +3,18 @@
 
 using System;
 using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
     public class LyricEditorEditModeMenu : MenuItem
     {
-        public LyricEditorEditModeMenu()
-           : base("Lyric editor mode")
+        public LyricEditorEditModeMenu(KaraokeRulesetEditConfigManager config, string text)
+           : base(text)
         {
             Items = createMenuItems();
         }
