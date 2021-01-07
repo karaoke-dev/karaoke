@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
@@ -49,6 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 
         internal void SwitchLyricEditorMode(Mode mode)
         {
+            // todo : will cause text update because has ScheduleAfterChildren in lyric editor.
             LyricEditor.Mode = mode;
             Navigation.State = NavigationState.Working;
         }
@@ -56,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         public class EditLyricNavigation : TopNavigation<EditLyricSubScreen>
         {
             private const string cutting_mode = "CUTTING_MODE";
-            private const string edit_mode = "EDIT_MODE";
+            private const string typing_mode = "TYPING_MODE";
 
             public EditLyricNavigation(EditLyricSubScreen screen)
                 : base(screen)
@@ -73,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                 switch (value)
                 {
                     case NavigationState.Initial:
-                        NavigationText = $"Does something looks weird? Try switching [{cutting_mode}] or [{edit_mode}] to edit your lyric.";
+                        NavigationText = $"Does something looks weird? Try switching [{cutting_mode}] or [{typing_mode}] to edit your lyric.";
                         break;
 
                     case NavigationState.Working:
@@ -83,9 +85,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                         switch (mode)
                         {
                             case Mode.EditMode:
+                                NavigationText = $"Cool! Try switching to [{typing_mode}] if you wants to edit lyric.";
+                                break;
+                            case Mode.TypingMode:
                                 NavigationText = $"Cool! Try switching to [{cutting_mode}] if you wants to cut or combine lyric.";
                                 break;
-                            // todo : edit mode.
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(mode));
                         }
 
                         break;
@@ -104,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                 public EditLyricTextFlowContainer(EditLyricSubScreen screen)
                 {
                     AddLinkFactory(cutting_mode, "cutting mode", () => screen.SwitchLyricEditorMode(Mode.EditMode));
-                    AddLinkFactory(edit_mode, "edit mode", () => screen.SwitchLyricEditorMode(Mode.EditMode));
+                    AddLinkFactory(typing_mode, "typing mode", () => screen.SwitchLyricEditorMode(Mode.TypingMode));
                 }
             }
         }
