@@ -8,6 +8,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
 {
@@ -18,21 +19,24 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             base.InitialiseDefaults();
 
             // Language detection
-            Set(KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig, new LanguageDetectorConfig());
+            Set(KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig, CreateDefultConfig<LanguageDetectorConfig>());
 
             // Layout generator
-            Set(KaraokeRulesetEditGeneratorSetting.LayoutGeneratorConfig, new LayoutGeneratorConfig());
+            Set(KaraokeRulesetEditGeneratorSetting.LayoutGeneratorConfig, CreateDefultConfig<LayoutGeneratorConfig>());
 
             // Romaji generator
-            Set(KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig, new JaRomajiTagGeneratorConfig());
+            Set(KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig, CreateDefultConfig<JaRomajiTagGeneratorConfig>());
 
             // Ruby generator
-            Set(KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig, new JaRubyTagGeneratorConfig());
+            Set(KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig, CreateDefultConfig<JaRubyTagGeneratorConfig>());
 
             // Time tag generator
-            Set(KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig, new JaTimeTagGeneratorConfig());
-            Set(KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig, new ZhTimeTagGeneratorConfig());
+            Set(KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig, CreateDefultConfig<JaTimeTagGeneratorConfig>());
+            Set(KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig, CreateDefultConfig<ZhTimeTagGeneratorConfig>());
         }
+
+        protected T CreateDefultConfig<T>() where T : IHasConfig<T>, new()
+            => new T().CreateDefaultConfig();
     }
 
     public enum KaraokeRulesetEditGeneratorSetting
