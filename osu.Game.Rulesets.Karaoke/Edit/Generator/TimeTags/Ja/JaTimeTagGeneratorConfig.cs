@@ -13,7 +13,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
 
         public JaTimeTagGeneratorConfig CreateDefaultConfig()
         {
-            return new JaTimeTagGeneratorConfig();
+            return new JaTimeTagGeneratorConfig
+            {
+                Checkん = true,
+                CheckLineEnd = true,
+                CheckLineEndKeyUp = true,
+                CheckWhiteSpace = true,
+                CheckWhiteSpaceKeyUp = true,
+            };
         }
     }
 }
