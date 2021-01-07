@@ -2,14 +2,20 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public partial class LyricEditorStateManager
+    public partial class LyricEditorStateManager : Component
     {
-        private EditorBeatmap beatmap { get; }
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
 
         public Bindable<Mode> BindableMode { get; } = new Bindable<Mode>();
 
@@ -19,9 +25,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public LyricFastEditMode FastEditMode => BindableFastEditMode.Value;
 
-        public LyricEditorStateManager(EditorBeatmap beatmap)
+        protected IEnumerable<Lyric> Lyrics => beatmap.HitObjects.OfType<Lyric>();
+
+        public LyricEditorStateManager()
         {
-            this.beatmap = beatmap;
         }
 
         public void SetMode(Mode mode)
