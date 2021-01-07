@@ -74,8 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private CursorPosition getPreviousLyricCursorPosition(CursorPosition position)
         {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-            var lyric = lyrics.GetPrevious(position.Lyric);
+            var lyric = Lyrics.GetPrevious(position.Lyric);
             if (lyric == null)
                 return new CursorPosition();
 
@@ -88,8 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private CursorPosition getNextLyricCursorPosition(CursorPosition position)
         {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-            var lyric = lyrics.GetNext(position.Lyric);
+            var lyric = Lyrics.GetNext(position.Lyric);
             if (lyric == null)
                 return new CursorPosition();
 
@@ -166,14 +164,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private CursorPosition getFirstCursorPosition()
         {
-            var lyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
+            var lyric = Lyrics.FirstOrDefault();
             var index = new TextIndex();
             return new CursorPosition(lyric, index);
         }
 
         private CursorPosition getLastCursorPosition()
         {
-            var lyric = beatmap.HitObjects.OfType<Lyric>().LastOrDefault();
+            var lyric = Lyrics.LastOrDefault();
             var textLength = lyric?.Text.Length ?? 0;
             var index = new TextIndex(textLength - 1, TextIndex.IndexState.End);
             return new CursorPosition(lyric, index);

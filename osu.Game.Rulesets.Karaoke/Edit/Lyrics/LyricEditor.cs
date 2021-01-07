@@ -25,6 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(canBeNull: true)]
         private LyricManager lyricManager { get; set; }
 
+        [Cached]
         private LyricEditorStateManager stateManager;
 
         private readonly KaraokeLyricEditorSkin skin;
@@ -40,6 +41,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     RelativeSizeAxes = Axes.Both,
                 }
             };
+
+            Add(stateManager = new LyricEditorStateManager());
         }
 
         private DependencyContainer dependencies;
@@ -53,9 +56,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [BackgroundDependencyLoader]
         private void load()
         {
-            // todo : might not place into here.
-            dependencies.Cache(stateManager = new LyricEditorStateManager(beatmap));
-
             foreach (var obj in beatmap.HitObjects)
                 Schedule(() => addHitObject(obj));
         }
@@ -230,13 +230,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public Mode Mode
         {
             get => stateManager.Mode;
-            set => ScheduleAfterChildren(() => stateManager.SetMode(value));
+            set => stateManager.SetMode(value);
         }
 
         public LyricFastEditMode LyricFastEditMode
         {
             get => stateManager.FastEditMode;
-            set => ScheduleAfterChildren(() => stateManager.SetFastEditMode(value));
+            set => stateManager.SetFastEditMode(value);
         }
     }
 }
