@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 Anchor = Anchor.BottomLeft,
                 Origin = Anchor.TopLeft,
             });
-            
+
             TextBindable.BindValueChanged(text => { KaraokeText.Text = text.NewValue; });
             TimeTagsBindable.BindValueChanged(timeTags => { KaraokeText.TimeTags = TimeTagsUtils.ToDictionary(timeTags.NewValue); });
             RubyTagsBindable.BindValueChanged(rubyTags => { ApplyRuby(); });

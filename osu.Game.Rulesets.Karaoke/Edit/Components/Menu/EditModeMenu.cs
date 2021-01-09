@@ -32,8 +32,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             {
                 case EditMode.LyricEditor:
                     return "Lyric editor";
+
                 case EditMode.Note:
                     return "Note editor";
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mode));
             }

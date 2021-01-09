@@ -87,9 +87,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                             case Mode.EditMode:
                                 NavigationText = $"Cool! Try switching to [{typing_mode}] if you wants to edit lyric.";
                                 break;
+
                             case Mode.TypingMode:
                                 NavigationText = $"Cool! Try switching to [{cutting_mode}] if you wants to cut or combine lyric.";
                                 break;
+
                             default:
                                 throw new ArgumentOutOfRangeException(nameof(mode));
                         }

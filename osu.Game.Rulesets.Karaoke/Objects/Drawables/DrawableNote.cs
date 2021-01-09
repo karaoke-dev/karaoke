@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public readonly IBindable<Tone> ToneBindable = new Bindable<Tone>();
 
         public DrawableNote()
-           : this(null)
+            : this(null)
         {
         }
 

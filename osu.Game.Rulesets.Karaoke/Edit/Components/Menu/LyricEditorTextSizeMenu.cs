@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
         private readonly Bindable<int> bindableFontSize = new Bindable<int>();
 
         public LyricEditorTextSizeMenu(KaraokeRulesetEditConfigManager config, string text)
-           : base(text)
+            : base(text)
         {
             Items = createMenuItems();
 

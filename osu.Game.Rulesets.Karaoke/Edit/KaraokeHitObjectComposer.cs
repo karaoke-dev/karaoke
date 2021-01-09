@@ -7,7 +7,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
@@ -30,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     {
         private DrawableKaraokeEditRuleset drawableRuleset;
 
-        private LyricEditor lyricEditor;
+        private readonly LyricEditor lyricEditor;
 
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;

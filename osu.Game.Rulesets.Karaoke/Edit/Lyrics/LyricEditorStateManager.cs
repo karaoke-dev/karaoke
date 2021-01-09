@@ -27,10 +27,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         protected IEnumerable<Lyric> Lyrics => beatmap.HitObjects.OfType<Lyric>();
 
-        public LyricEditorStateManager()
-        {
-        }
-
         public void SetMode(Mode mode)
         {
             BindableMode.Value = mode;

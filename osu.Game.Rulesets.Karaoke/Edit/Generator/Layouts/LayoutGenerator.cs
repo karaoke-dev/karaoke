@@ -26,12 +26,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts
             // todo : need better way to load resource
             var assembly = Assembly.GetExecutingAssembly();
             const string resource_name = @"osu.Game.Rulesets.Karaoke.Resources.Skin.default.skin";
+
             using (var stream = assembly.GetManifestResourceStream(resource_name))
             using (var reader = new LineBufferedReader(stream))
             {
                 var skin = new KaraokeSkinDecoder().Decode(reader);
 
                 var groups = skin.LayoutGroups;
+
                 foreach (var group in groups)
                 {
                     var matchLayouts = skin.Layouts.Where(x => x.Group == group.Id).ToArray();
@@ -47,12 +49,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts
                 case LocalLayout.CycleTwo:
                     ApplyLayout(lyrics, layouts[1]);
                     return;
+
                 case LocalLayout.CycleThree:
                     ApplyLayout(lyrics, layouts[2]);
                     return;
+
                 case LocalLayout.CycleFour:
                     ApplyLayout(lyrics, layouts[3]);
                     return;
+
                 default:
                     throw new IndexOutOfRangeException(nameof(layout));
             }
@@ -98,6 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts
 
             // Apply start time
             var numberOfLine = layouts.Length;
+
             for (int i = 0; i < lyrics.Count; i++)
             {
                 var lastLyric = i >= numberOfLine ? lyrics[i - numberOfLine] : null;

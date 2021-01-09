@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
         private readonly Bindable<LyricFastEditMode> bindableLyricEditorFastEditMode = new Bindable<LyricFastEditMode>();
 
         public LyricEditorLeftSideModeMenu(KaraokeRulesetEditConfigManager config, string text)
-           : base(text)
+            : base(text)
         {
             Items = createMenuItems();
 
@@ -48,14 +48,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             {
                 case LyricFastEditMode.None:
                     return "None";
+
                 case LyricFastEditMode.Layout:
                     return "Layout selection";
+
                 case LyricFastEditMode.Singer:
                     return "Singer selection";
+
                 case LyricFastEditMode.Language:
                     return "Language selection";
+
                 case LyricFastEditMode.TimeTag:
                     return "Time tag display";
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mode));
             }

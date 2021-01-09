@@ -226,7 +226,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="self">Fix way</param>
         /// <returns>Time tags with dictionary format.</returns>
         public static IReadOnlyDictionary<TextIndex, double> ToDictionary(TimeTag[] timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
-                                                                             SelfCheck self = SelfCheck.BasedOnStart)
+                                                                          SelfCheck self = SelfCheck.BasedOnStart)
         {
             if (timeTags == null)
                 return new Dictionary<TextIndex, double>();

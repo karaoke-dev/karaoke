@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         private readonly Bindable<bool> major = new Bindable<bool>();
 
         public DrawableBarLine()
-           : this(null)
+            : this(null)
         {
         }
 
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                     RelativeSizeAxes = Axes.Both,
-                    Children = new []
+                    Children = new[]
                     {
                         new EquilateralTriangle
                         {

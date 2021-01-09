@@ -124,14 +124,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
                 StartTime = startTime,
                 Duration = endTime - startTime,
                 Text = text,
-                TimeTags = new TimeTag[]
+                TimeTags = new[]
                 {
-                    new TimeTag(new TextIndex(0, TextIndex.IndexState.Start), startTime),
-                    new TimeTag(new TextIndex(text.Length - 1, TextIndex.IndexState.End), endTime)
+                    new TimeTag(new TextIndex(0), startTime),
+                    new TimeTag(new TextIndex((text?.Length ?? 0) - 1, TextIndex.IndexState.End), endTime)
                 }
             };
         }
-        
+
         public static RubyTag[] ParseRubyTags(string[] strings)
             => strings?.Select(ParseRubyTag).ToArray();
 
