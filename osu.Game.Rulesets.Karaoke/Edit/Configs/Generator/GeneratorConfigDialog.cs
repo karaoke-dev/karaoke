@@ -25,7 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
 
         protected GeneratorConfigDialog()
         {
-            var defaultConfig = new T().CreateDefaultConfig();
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
 
             // todo : also has apply, cancel and reset button.
@@ -63,6 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
 
         protected abstract GeneratorConfigSection[] CreateConfigSection(Bindable<T> current);
 
+        [BackgroundDependencyLoader]
         private void load(KaraokeRulesetEditGeneratorConfigManager config)
         {
             bindableConfig.BindTo(config.GetBindable<T>(Config));

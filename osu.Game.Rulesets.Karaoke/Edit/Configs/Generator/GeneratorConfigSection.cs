@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.UserInterface;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
@@ -36,6 +37,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
             current.BindValueChanged(e =>
             {
                 var currentValue = getConfigValue<TValue>(e.NewValue, propertyName);
+                if (bindable.Value.Equals(currentValue))
+                    return;
+
                 bindable.Value = currentValue;
             });
 
@@ -47,18 +51,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
             });
         }
 
+        protected void RegistDisableTrigger(Bindable<bool> bindable, Drawable[] triggeredControl)
+        {
+            Schedule(() =>
+            {
+                bindable.BindValueChanged(e =>
+                {
+                    var enabled = e.NewValue;
+                    foreach (var control in triggeredControl)
+                    {
+                        // todo : Use this because input interface v2 disable property not working.
+                        control.Alpha = enabled ? 1 : 0.5f;
+
+                        // todo : should user better way to handle IHasCurrentValue
+                        if (control is IHasCurrentValue<bool> current)
+                            current.Current.Disabled = !enabled;
+                    }
+                }, true);
+            });
+        }
+
         private TValue getConfigValue<TValue>(TConfig config, string propertyName)
             => (TValue)config.GetType().GetProperty(propertyName).GetValue(config);
 
         private void setConfigValue(string propertyName, object value)
             => current.Value.GetType().GetProperty(propertyName).SetValue(current.Value, value);
-
-        internal enum ApplyConfigFrom
-        {
-            Default,
-
-            Current,
-        }
     }
 
     public abstract class GeneratorConfigSection : Container
