@@ -11,9 +11,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Zh
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig;
 
-        protected override GeneratorConfigSection[] CreateConfigSection(Bindable<ZhTimeTagGeneratorConfig> current, ZhTimeTagGeneratorConfig defaultConfig)
+        protected override GeneratorConfigSection[] CreateConfigSection(Bindable<ZhTimeTagGeneratorConfig> current)
         {
-            throw new System.NotImplementedException();
+            return null;
         }
     }
 }

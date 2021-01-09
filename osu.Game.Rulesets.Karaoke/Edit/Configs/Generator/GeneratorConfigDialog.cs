@@ -10,12 +10,11 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
-using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
 {
-    public abstract class GeneratorConfigDialog<T> : TitleFocusedOverlayContainer where T : IHasConfig<T>, new()
+    public abstract class GeneratorConfigDialog<T> : OsuFocusedOverlayContainer where T : IHasConfig<T>, new()
     {
         private const float section_scale = 0.75f;
 
@@ -24,68 +23,45 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
 
-        public GeneratorConfigDialog()
+        protected GeneratorConfigDialog()
         {
+            var defaultConfig = new T().CreateDefaultConfig();
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
 
-            var defaultConfig = new T().CreateDefaultConfig();
-            var selections = CreateConfigSection(bindableConfig, defaultConfig);
-
-            // enable to assign layou by property.
-
-            // todo : add selection into drawable
-            // todo : sldo has scroll-bar in here.
-
-            // also has apply, cancel and reset button.
-
-            Child = new GridContainer
+            // todo : also has apply, cancel and reset button.
+            RelativeSizeAxes = Axes.Both;
+            Child = new Container
             {
-                RelativeSizeAxes = Axes.Both,
-                RowDimensions = new[]
+                Name = "Layout adjustment area",
+                Width = 400,
+                Height = 600,
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Masking = true,
+                CornerRadius = 10,
+                Children = new Drawable[]
                 {
-                    new Dimension(GridSizeMode.Relative, 0.3f),
-                    new Dimension(GridSizeMode.Distributed)
-                },
-                Content = new[]
-                {
-                    new Drawable[]
+                    new Box
                     {
-                        new SectionsContainer<GeneratorConfigSection>
-                        {
-                            FixedHeader = new GeneratorConfigScreenHeader(),
-                            RelativeSizeAxes = Axes.Both,
-                            Scale = new Vector2(section_scale),
-                            Size = new Vector2(1 / section_scale),
-                            Children = new GeneratorConfigSection[]
-                            {
-                            }
-                        }
+                        Colour = ColourProvider.Background2,
+                        RelativeSizeAxes = Axes.Both,
                     },
-                    new Drawable[]
+                    new SectionsContainer<GeneratorConfigSection>
                     {
-                        new Container
-                        {
-                            Name = "Layout adjustment area",
-                            RelativeSizeAxes = Axes.Both,
-                            Masking = true,
-                            CornerRadius = 10,
-                            Children = new Drawable[]
-                            {
-                                new Box
-                                {
-                                    Colour = ColourProvider.Background2,
-                                    RelativeSizeAxes = Axes.Both,
-                                },
-                            }
-                        },
+                        FixedHeader = new GeneratorConfigScreenHeader(),
+                        Footer = new GeneratorConfigScreenFooter(),
+                        RelativeSizeAxes = Axes.Both,
+                        Scale = new Vector2(section_scale),
+                        Size = new Vector2(1 / section_scale),
+                        Children = CreateConfigSection(bindableConfig) ?? new GeneratorConfigSection[] { }
                     }
-                },
+                }
             };
         }
 
         protected abstract KaraokeRulesetEditGeneratorSetting Config { get; }
 
-        protected abstract GeneratorConfigSection[] CreateConfigSection(Bindable<T> current, T defaultConfig);
+        protected abstract GeneratorConfigSection[] CreateConfigSection(Bindable<T> current);
 
         private void load(KaraokeRulesetEditGeneratorConfigManager config)
         {
@@ -104,6 +80,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
                     Description = "config aaa";
                     IconTexture = "Icons/Hexacons/social";
                 }
+            }
+        }
+
+        internal class GeneratorConfigScreenFooter : Container
+        {
+            public GeneratorConfigScreenFooter()
+            {
+                Height = 45;
+                RelativeSizeAxes = Axes.X;
             }
         }
     }

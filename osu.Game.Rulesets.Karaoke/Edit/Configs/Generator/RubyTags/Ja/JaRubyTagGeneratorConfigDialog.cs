@@ -11,9 +11,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.RubyTags.Ja
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig;
 
-        protected override GeneratorConfigSection[] CreateConfigSection(Bindable<JaRubyTagGeneratorConfig> current, JaRubyTagGeneratorConfig defaultConfig)
+        protected override GeneratorConfigSection[] CreateConfigSection(Bindable<JaRubyTagGeneratorConfig> current)
         {
-            throw new System.NotImplementedException();
+            return null;
         }
     }
 }

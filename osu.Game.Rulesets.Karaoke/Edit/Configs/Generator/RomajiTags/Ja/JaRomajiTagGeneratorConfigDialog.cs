@@ -11,9 +11,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.RomajiTags.Ja
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig;
 
-        protected override GeneratorConfigSection[] CreateConfigSection(Bindable<JaRomajiTagGeneratorConfig> current, JaRomajiTagGeneratorConfig defaultConfig)
+        protected override GeneratorConfigSection[] CreateConfigSection(Bindable<JaRomajiTagGeneratorConfig> current)
         {
-            throw new System.NotImplementedException();
+            return null;
         }
     }
 }

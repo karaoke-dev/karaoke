@@ -11,9 +11,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig;
 
-        protected override GeneratorConfigSection[] CreateConfigSection(Bindable<JaTimeTagGeneratorConfig> current, JaTimeTagGeneratorConfig defaultConfig)
+        protected override GeneratorConfigSection[] CreateConfigSection(Bindable<JaTimeTagGeneratorConfig> current)
         {
-            throw new System.NotImplementedException();
+            return new[]
+            {
+                new CheckSection(current)
+            };
         }
     }
 }

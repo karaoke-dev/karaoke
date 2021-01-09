@@ -26,15 +26,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             Dependencies.Cache(config);
         }
 
-        [TestCase(typeof(LanguageDetectorConfigDialog))]
-        [TestCase(typeof(LayoutGeneratorConfigDialog))]
-        [TestCase(typeof(JaRomajiTagGeneratorConfigDialog))]
-        [TestCase(typeof(JaRubyTagGeneratorConfigDialog))]
-        [TestCase(typeof(JaTimeTagGeneratorConfigDialog))]
-        [TestCase(typeof(ZhTimeTagGeneratorConfigDialog))]
+        [TestCase(typeof(LanguageDetectorConfigDialog), TestName = nameof(LanguageDetectorConfigDialog))]
+        [TestCase(typeof(LayoutGeneratorConfigDialog), TestName = nameof(LayoutGeneratorConfigDialog))]
+        [TestCase(typeof(JaRomajiTagGeneratorConfigDialog), TestName = nameof(JaRomajiTagGeneratorConfigDialog))]
+        [TestCase(typeof(JaRubyTagGeneratorConfigDialog), TestName = nameof(JaRubyTagGeneratorConfigDialog))]
+        [TestCase(typeof(JaTimeTagGeneratorConfigDialog), TestName = nameof(JaTimeTagGeneratorConfigDialog))]
+        [TestCase(typeof(ZhTimeTagGeneratorConfigDialog), TestName = nameof(ZhTimeTagGeneratorConfigDialog))]
         public void TestGenerate(Type configType)
         {
-            Child = Activator.CreateInstance(configType) as Drawable;
+            AddStep("Show dialog", () =>
+            {
+                Schedule(() =>
+                {
+                    Child = Activator.CreateInstance(configType) as Drawable;
+                    Child.Show();
+                });
+            });
         }
     }
 }

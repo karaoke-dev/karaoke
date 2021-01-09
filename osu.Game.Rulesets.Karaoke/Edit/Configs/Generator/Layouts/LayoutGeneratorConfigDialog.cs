@@ -11,9 +11,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Layouts
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.LayoutGeneratorConfig;
 
-        protected override GeneratorConfigSection[] CreateConfigSection(Bindable<LayoutGeneratorConfig> current, LayoutGeneratorConfig defaultConfig)
+        protected override GeneratorConfigSection[] CreateConfigSection(Bindable<LayoutGeneratorConfig> current)
         {
-            throw new System.NotImplementedException();
+            return null;
         }
     }
 }

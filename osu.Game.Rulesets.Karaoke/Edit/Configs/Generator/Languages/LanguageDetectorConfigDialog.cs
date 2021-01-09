@@ -11,9 +11,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig;
 
-        protected override GeneratorConfigSection[] CreateConfigSection(Bindable<LanguageDetectorConfig> current, LanguageDetectorConfig defaultConfig)
+        protected override GeneratorConfigSection[] CreateConfigSection(Bindable<LanguageDetectorConfig> current)
         {
-            throw new System.NotImplementedException();
+            return null;
         }
     }
 }
