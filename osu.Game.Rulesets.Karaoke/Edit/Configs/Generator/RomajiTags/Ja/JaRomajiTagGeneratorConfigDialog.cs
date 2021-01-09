@@ -7,13 +7,16 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.RomajiTags.Ja
 {
-    public class JaRomajiTagGeneratorConfigDialog : GeneratorConfigDialog<JaRomajiTagGeneratorConfig>
+    public class JaRomajiTagGeneratorConfigDialog : RomajiTagGeneratorConfigDialog<JaRomajiTagGeneratorConfig>
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig;
 
         protected override GeneratorConfigSection[] CreateConfigSection(Bindable<JaRomajiTagGeneratorConfig> current)
         {
-            return null;
+            return new[]
+            {
+                new GenericSection(current)
+            };
         }
     }
 }

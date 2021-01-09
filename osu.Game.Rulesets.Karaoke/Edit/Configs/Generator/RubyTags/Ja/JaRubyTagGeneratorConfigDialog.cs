@@ -7,13 +7,16 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.RubyTags.Ja
 {
-    public class JaRubyTagGeneratorConfigDialog : GeneratorConfigDialog<JaRubyTagGeneratorConfig>
+    public class JaRubyTagGeneratorConfigDialog : RubyTagGeneratorConfigDialog<JaRubyTagGeneratorConfig>
     {
         protected override KaraokeRulesetEditGeneratorSetting Config => KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig;
 
         protected override GeneratorConfigSection[] CreateConfigSection(Bindable<JaRubyTagGeneratorConfig> current)
         {
-            return null;
+            return new[]
+            {
+                new GenericSection(current)
+            };
         }
     }
 }
