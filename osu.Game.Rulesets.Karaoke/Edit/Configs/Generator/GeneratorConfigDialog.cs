@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
 
         protected GeneratorConfigDialog()
         {
-            ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
+            ColourProvider = new OverlayColourProvider(OverlayColourScheme);
 
             // todo : also has apply, cancel and reset button.
             RelativeSizeAxes = Axes.Both;
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
                     },
                     new SectionsContainer<GeneratorConfigSection>
                     {
-                        FixedHeader = new GeneratorConfigScreenHeader(),
+                        FixedHeader = new GeneratorConfigScreenHeader(this),
                         Footer = new GeneratorConfigScreenFooter(),
                         RelativeSizeAxes = Axes.Both,
                         Scale = new Vector2(section_scale),
@@ -59,6 +59,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
         }
 
         protected abstract KaraokeRulesetEditGeneratorSetting Config { get; }
+
+        protected abstract OverlayColourScheme OverlayColourScheme { get; }
+
+        protected abstract string Title { get; }
+
+        protected abstract string Description { get; }
 
         protected abstract GeneratorConfigSection[] CreateConfigSection(Bindable<T> current);
 
@@ -72,12 +78,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
         {
             protected override OverlayTitle CreateTitle() => new GeneratorConfigScreenTitle();
 
+            public GeneratorConfigScreenHeader(GeneratorConfigDialog<T> dialog)
+            {
+                // todo : need to think about is there any better way to place title and description in here
+                if (Title is GeneratorConfigScreenTitle generatorConfigScreenTitle)
+                    generatorConfigScreenTitle.SetTitleFromDialog(dialog);
+            }
+
             private class GeneratorConfigScreenTitle : OverlayTitle
             {
-                public GeneratorConfigScreenTitle()
+                public void SetTitleFromDialog(GeneratorConfigDialog<T> dialog)
                 {
-                    Title = "Config";
-                    Description = "config aaa";
+                    Title = dialog.Title;
+                    Description = dialog.Description;
                     IconTexture = "Icons/Hexacons/social";
                 }
             }
