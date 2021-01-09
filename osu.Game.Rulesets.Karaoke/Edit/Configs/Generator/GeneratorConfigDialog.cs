@@ -96,6 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
             }
         }
 
+        // not really sure should user this toi apply save button because should wait and follow lazer design.
         internal class GeneratorConfigScreenFooter : Container
         {
             public GeneratorConfigScreenFooter()
