@@ -5,11 +5,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
 {
     public abstract class TimeTagGeneratorConfig
     {
+        public bool CheckBlankLine { get; set; }
+
         public bool CheckLineEnd { get; set; }
 
         public bool CheckLineEndKeyUp { get; set; }
-
-        public bool CheckBlankLine { get; set; }
 
         public bool CheckWhiteSpace { get; set; }
 

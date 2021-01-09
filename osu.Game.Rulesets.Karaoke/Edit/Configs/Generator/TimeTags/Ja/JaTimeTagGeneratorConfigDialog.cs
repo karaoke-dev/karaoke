@@ -13,9 +13,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
 
         protected override GeneratorConfigSection[] CreateConfigSection(Bindable<JaTimeTagGeneratorConfig> current)
         {
-            return new[]
+            return new GeneratorConfigSection[]
             {
-                new CheckSection(current)
+                new CheckCharacterSection(current),
+                new CheckLineEndSection(current),
+                new CheckWhiteSpaceSection(current)
             };
         }
     }
