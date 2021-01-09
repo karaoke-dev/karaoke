@@ -10,9 +10,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
 {
     internal class CheckCharacterSection : GeneratorConfigSection<JaTimeTagGeneratorConfig>
     {
-        private LabelledSwitchButton checkんSwitchButton;
-        private LabelledSwitchButton checkっSwitchButton;
-        private LabelledSwitchButton sheckBlankLineSwitchButton;
+        private readonly LabelledSwitchButton checkんSwitchButton;
+        private readonly LabelledSwitchButton checkっSwitchButton;
+        private readonly LabelledSwitchButton checkBlankLineSwitchButton;
 
         protected override string Title => "Character checking";
 
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
                     Label = "Check っ",
                     Description = "Check っ or not.",
                 },
-                sheckBlankLineSwitchButton = new LabelledSwitchButton
+                checkBlankLineSwitchButton = new LabelledSwitchButton
                 {
                     Label = "Check blank line",
                     Description = "Check blank line or not.",
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
 
             RegistConfig(checkんSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.Checkん));
             RegistConfig(checkっSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.Checkっ));
-            RegistConfig(sheckBlankLineSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckBlankLine));
+            RegistConfig(checkBlankLineSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckBlankLine));
         }
     }
 }

@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 TimeTagsBindable.Value = value;
                 LyricStartTime = TimeTagsUtils.GetStartTime(TimeTags) ?? StartTime;
                 LyricEndTime = TimeTagsUtils.GetEndTime(TimeTags) ?? EndTime;
-            } 
+            }
         }
 
         [JsonIgnore]

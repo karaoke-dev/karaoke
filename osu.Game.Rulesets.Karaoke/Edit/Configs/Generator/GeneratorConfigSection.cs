@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
-using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -18,8 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
 {
     public abstract class GeneratorConfigSection<TConfig> : GeneratorConfigSection where TConfig : IHasConfig<TConfig>, new()
     {
-        private TConfig defaultConfig;
-        private Bindable<TConfig> current;
+        private readonly TConfig defaultConfig;
+        private readonly Bindable<TConfig> current;
 
         protected GeneratorConfigSection(Bindable<TConfig> current)
         {
@@ -58,24 +56,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
                 bindable.BindValueChanged(e =>
                 {
                     var enabled = e.NewValue;
+
                     foreach (var control in triggeredControl)
                     {
                         // todo : Use this because input interface v2 disable property not working.
                         control.Alpha = enabled ? 1 : 0.5f;
 
                         // todo : should user better way to handle IHasCurrentValue
-                        if (control is IHasCurrentValue<bool> current)
-                            current.Current.Disabled = !enabled;
+                        if (control is IHasCurrentValue<bool> iHasCurrentValue)
+                            iHasCurrentValue.Current.Disabled = !enabled;
                     }
                 }, true);
             });
         }
 
         private TValue getConfigValue<TValue>(TConfig config, string propertyName)
-            => (TValue)config.GetType().GetProperty(propertyName).GetValue(config);
+            => (TValue)config.GetType().GetProperty(propertyName)?.GetValue(config);
 
         private void setConfigValue(string propertyName, object value)
-            => current.Value.GetType().GetProperty(propertyName).SetValue(current.Value, value);
+            => current.Value.GetType().GetProperty(propertyName)?.SetValue(current.Value, value);
     }
 
     public abstract class GeneratorConfigSection : Container

@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
         private readonly Bindable<Mode> bindableLyricEditorMode = new Bindable<Mode>();
 
         public LyricEditorEditModeMenu(KaraokeRulesetEditConfigManager config, string text)
-           : base(text)
+            : base(text)
         {
             Items = createMenuItems();
 
@@ -25,7 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             bindableLyricEditorMode.BindValueChanged(e =>
             {
                 var newSelection = e.NewValue;
-                Items.OfType<ToggleMenuItem>().ForEach(x => {
+                Items.OfType<ToggleMenuItem>().ForEach(x =>
+                {
                     var match = x.Text.Value == getName(newSelection);
                     x.State.Value = match;
                 });
@@ -48,14 +49,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             {
                 case Mode.ViewMode:
                     return "View";
+
                 case Mode.EditMode:
                     return "Edit";
+
                 case Mode.TypingMode:
                     return "Typing";
+
                 case Mode.RecordMode:
                     return "Record";
+
                 case Mode.TimeTagEditMode:
                     return "Edit time tag";
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mode));
             }

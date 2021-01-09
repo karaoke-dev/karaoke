@@ -10,11 +10,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
 {
     internal class CheckWhiteSpaceSection : GeneratorConfigSection<JaTimeTagGeneratorConfig>
     {
-        private LabelledSwitchButton checkWhiteSpaceSwitchButton;
-        private LabelledSwitchButton checkWhiteSpaceKeyUpSwitchButton;
-        private LabelledSwitchButton checkWhiteSpaceAlphabetSwitchButton;
-        private LabelledSwitchButton checkWhiteSpaceDigitSwitchButton;
-        private LabelledSwitchButton checkWhiteSpaceAsciiSymbolSwitchButton;
+        private readonly LabelledSwitchButton checkWhiteSpaceSwitchButton;
+        private readonly LabelledSwitchButton checkWhiteSpaceKeyUpSwitchButton;
+        private readonly LabelledSwitchButton checkWhiteSpaceAlphabetSwitchButton;
+        private readonly LabelledSwitchButton checkWhiteSpaceDigitSwitchButton;
+        private readonly LabelledSwitchButton checkWhiteSpaceAsciiSymbolSwitchButton;
 
         protected override string Title => "White space checking";
 
@@ -45,8 +45,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
                 },
                 checkWhiteSpaceAsciiSymbolSwitchButton = new LabelledSwitchButton
                 {
-                    Label = "Check white space ascii symble",
-                    Description = "Check white space ascii symble.",
+                    Label = "Check white space ascii symbol",
+                    Description = "Check white space ascii symbol.",
                 },
             };
 
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
             RegistConfig(checkWhiteSpaceDigitSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceDigit));
             RegistConfig(checkWhiteSpaceAsciiSymbolSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceAsciiSymbol));
 
-            RegistDisableTrigger(checkWhiteSpaceSwitchButton.Current, new[]
+            RegistDisableTrigger(checkWhiteSpaceSwitchButton.Current, new Drawable[]
             {
                 checkWhiteSpaceKeyUpSwitchButton,
                 checkWhiteSpaceAlphabetSwitchButton,

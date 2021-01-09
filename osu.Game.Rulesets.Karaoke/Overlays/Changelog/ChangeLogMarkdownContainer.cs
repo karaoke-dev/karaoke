@@ -207,6 +207,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
                     // add issue if has user
                     var issues = result.Select(x => x.Groups["issue"]?.Value).Where(x => !string.IsNullOrEmpty(x));
+
                     if (issues.Any())
                     {
                         AddText("(");
@@ -230,6 +231,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
                     // add use name if has user
                     var usernames = result.Select(x => x.Groups["username"]?.Value).Where(x => !string.IsNullOrEmpty(x));
+
                     foreach (var user in usernames)
                     {
                         if (string.IsNullOrEmpty(user))

@@ -10,8 +10,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
 {
     internal class CheckLineEndSection : GeneratorConfigSection<JaTimeTagGeneratorConfig>
     {
-        private LabelledSwitchButton checkLineEndSwitchButton;
-        private LabelledSwitchButton checkLineEndKeyUpSwitchButton;
+        private readonly LabelledSwitchButton checkLineEndSwitchButton;
+        private readonly LabelledSwitchButton checkLineEndKeyUpSwitchButton;
 
         protected override string Title => "Line end checking";
 
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
             RegistConfig(checkLineEndSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckLineEnd));
             RegistConfig(checkLineEndKeyUpSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckLineEndKeyUp));
 
-            RegistDisableTrigger(checkLineEndSwitchButton.Current, new[]
+            RegistDisableTrigger(checkLineEndSwitchButton.Current, new Drawable[]
             {
                 checkLineEndKeyUpSwitchButton
             });

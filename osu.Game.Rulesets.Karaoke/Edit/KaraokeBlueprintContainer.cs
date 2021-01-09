@@ -52,6 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             editMode.BindValueChanged(e =>
             {
                 mode = e.NewValue;
+
                 if (mode == EditMode.LyricEditor)
                 {
                     Hide();
