@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                         {
                             Items = new MenuItem[]
                             {
-                                new EditModeMenu(),
+                                new EditModeMenu(config, "Edit mode"),
                                 new EditorMenuItemSpacer(),
                                 new LyricEditorEditModeMenu(config, "Lyric editor mode"),
                                 new LyricEditorLeftSideModeMenu(config, "Lyric editor mode"),

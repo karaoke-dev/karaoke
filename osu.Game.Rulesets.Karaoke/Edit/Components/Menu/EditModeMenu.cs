@@ -3,17 +3,32 @@
 
 using System;
 using System.Linq;
+using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
     public class EditModeMenu : MenuItem
     {
-        public EditModeMenu()
-            : base("Edit mode")
+        private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
+
+        public EditModeMenu(KaraokeRulesetEditConfigManager config, string text)
+            : base(text)
         {
             Items = createMenuItems();
+
+            bindableEditMode.BindTo(config.GetBindable<EditMode>(KaraokeRulesetEditSetting.EditMode));
+            bindableEditMode.BindValueChanged(e =>
+            {
+                var newSelection = e.NewValue;
+                Items.OfType<ToggleMenuItem>().ForEach(x => {
+                    var match = x.Text.Value == getName(newSelection);
+                    x.State.Value = match;
+                });
+            }, true);
         }
 
         private ToggleMenuItem[] createMenuItems()
@@ -43,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private void updateMode(EditMode mode)
         {
-            // todo : implementation
+            bindableEditMode.Value = mode;
         }
     }
 }
