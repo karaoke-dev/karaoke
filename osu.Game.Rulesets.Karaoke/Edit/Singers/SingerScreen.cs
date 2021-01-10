@@ -8,11 +8,11 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
-using osu.Game.Screens.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
-    public class SingerScreen : EditorScreen
+    public class SingerScreen : EditorSubScreen
     {
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         protected readonly SingerManager SingerManager;
 
         public SingerScreen()
-            : base(EditorScreenMode.SongSetup)
+            : base()
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Purple);
             Content.Add(SingerManager = new SingerManager());

@@ -7,12 +7,12 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
-using osu.Game.Screens.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Components;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
-    public class LayoutScreen : EditorScreen
+    public class LayoutScreen : EditorSubScreen
     {
         private const float section_scale = 0.75f;
 
@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         protected readonly LayoutManager LayoutManager;
 
         public LayoutScreen()
-            : base(EditorScreenMode.SongSetup)
+            : base()
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
             Content.Add(LayoutManager = new LayoutManager());

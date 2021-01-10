@@ -9,12 +9,12 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
-using osu.Game.Screens.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Components;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
-    public class StyleScreen : EditorScreen
+    public class StyleScreen : EditorSubScreen
     {
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         private Container previewContainer;
 
         public StyleScreen()
-            : base(EditorScreenMode.SongSetup)
+            : base()
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Pink);
             Content.Add(StyleManager = new StyleManager());
