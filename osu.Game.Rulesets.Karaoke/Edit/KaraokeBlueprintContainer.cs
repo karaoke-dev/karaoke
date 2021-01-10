@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 {
                     Show();
                 }
-            });
+            }, true);
         }
 
         public override OverlaySelectionBlueprint CreateBlueprintFor(DrawableHitObject hitObject)

@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     Playfield.Hide();
                 else
                     Playfield.Show();
-            });
+            }, true);
         }
 
         protected override void InitialOverlay()
