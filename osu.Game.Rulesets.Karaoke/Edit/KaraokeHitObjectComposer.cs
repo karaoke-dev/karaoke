@@ -19,6 +19,7 @@ using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
+using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.TernaryButtons;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
@@ -28,28 +29,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     public class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
     {
         private DrawableKaraokeEditRuleset drawableRuleset;
-
         private readonly LyricEditor lyricEditor;
+        private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
 
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
 
-        [Cached(Type = typeof(IBindable<EditMode>))]
-        private readonly Bindable<EditMode> editMode;
+        [Cached]
+        private readonly KaraokeRulesetEditConfigManager editConfigManager;
+
+        [Cached]
+        private readonly KaraokeRulesetEditGeneratorConfigManager generatorConfigManager;
+
+        [Resolved]
+        private Editor editor { get; set; }
 
         public KaraokeHitObjectComposer(Ruleset ruleset)
             : base(ruleset)
         {
             // Duplicated registration because selection handler need to use it.
             positionCalculator = new PositionCalculator(9);
-            editMode = new Bindable<EditMode>();
+            editConfigManager = new KaraokeRulesetEditConfigManager();
+            generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
 
             LayerBelowRuleset.Add(lyricEditor = new LyricEditor
             {
                 RelativeSizeAxes = Axes.Both
             });
 
-            editMode.BindValueChanged(e =>
+            editConfigManager.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
+            bindableEditMode.BindValueChanged(e =>
             {
                 if (e.NewValue == EditMode.LyricEditor)
                     lyricEditor.Show();
@@ -125,9 +134,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             displayLyricEditor.BindValueChanged(x =>
             {
                 if (x.NewValue == TernaryState.True)
-                    editMode.Value = EditMode.LyricEditor;
+                    editConfigManager.Set(KaraokeRulesetEditSetting.EditMode, EditMode.LyricEditor);
                 else
-                    editMode.Value = EditMode.Note;
+                    editConfigManager.Set(KaraokeRulesetEditSetting.EditMode, EditMode.Note);
             }, true);
 
             // todo : should load from setting
