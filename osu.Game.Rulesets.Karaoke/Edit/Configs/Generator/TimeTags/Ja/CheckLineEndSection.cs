@@ -32,8 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
                 },
             };
 
-            RegistConfig(checkLineEndSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckLineEnd));
-            RegistConfig(checkLineEndKeyUpSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckLineEndKeyUp));
+            RegisterConfig(checkLineEndSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckLineEnd));
+            RegisterConfig(checkLineEndKeyUpSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckLineEndKeyUp));
 
             RegistDisableTrigger(checkLineEndSwitchButton.Current, new Drawable[]
             {

@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator
     {
         protected Dictionary<CultureInfo, Lazy<TGenerator>> Generator { get; } = new Dictionary<CultureInfo, Lazy<TGenerator>>();
 
-        protected void RegistGenerator<T, Tc>(CultureInfo info) where T : TGenerator where Tc : TConfig, new()
+        protected void RegisterGenerator<T, Tc>(CultureInfo info) where T : TGenerator where Tc : TConfig, new()
         {
             Generator.Add(info, new Lazy<TGenerator>(() =>
             {

@@ -32,8 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.RubyTags.Ja
                 },
             };
 
-            RegistConfig(rubyAsKatakanaSwitchButton.Current, nameof(JaRubyTagGeneratorConfig.RubyAsKatakana));
-            RegistConfig(enableDuplicatedRubySwitchButton.Current, nameof(JaRubyTagGeneratorConfig.EnableDuplicatedRuby));
+            RegisterConfig(rubyAsKatakanaSwitchButton.Current, nameof(JaRubyTagGeneratorConfig.RubyAsKatakana));
+            RegisterConfig(enableDuplicatedRubySwitchButton.Current, nameof(JaRubyTagGeneratorConfig.EnableDuplicatedRuby));
         }
     }
 }

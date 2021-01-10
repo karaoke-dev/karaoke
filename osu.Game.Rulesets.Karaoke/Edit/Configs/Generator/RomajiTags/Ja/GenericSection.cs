@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.RomajiTags.Ja
                 },
             };
 
-            RegistConfig(uppercaseSwitchButton.Current, nameof(JaRomajiTagGeneratorConfig.Uppercase));
+            RegisterConfig(uppercaseSwitchButton.Current, nameof(JaRomajiTagGeneratorConfig.Uppercase));
         }
     }
 }

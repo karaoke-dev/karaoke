@@ -11,8 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags
     {
         public RomajiTagGeneratorSelector()
         {
-            RegistGenerator<JaRomajiTagGenerator, JaRomajiTagGeneratorConfig>(new CultureInfo(17));
-            RegistGenerator<JaRomajiTagGenerator, JaRomajiTagGeneratorConfig>(new CultureInfo(1041));
+            RegisterGenerator<JaRomajiTagGenerator, JaRomajiTagGeneratorConfig>(new CultureInfo(17));
+            RegisterGenerator<JaRomajiTagGenerator, JaRomajiTagGeneratorConfig>(new CultureInfo(1041));
         }
 
         public RomajiTag[] GenerateRomajiTags(Lyric lyric)
