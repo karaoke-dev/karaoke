@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
             RegisterConfig(checkWhiteSpaceDigitSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceDigit));
             RegisterConfig(checkWhiteSpaceAsciiSymbolSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceAsciiSymbol));
 
-            RegistDisableTrigger(checkWhiteSpaceSwitchButton.Current, new Drawable[]
+            RegisterDisableTrigger(checkWhiteSpaceSwitchButton.Current, new Drawable[]
             {
                 checkWhiteSpaceKeyUpSwitchButton,
                 checkWhiteSpaceAlphabetSwitchButton,

@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         protected void CreateMenuBar()
         {
-            // It's a teicky way to place menu bar in here, will be removed eventually.
+            // It's a tricky way to place menu bar in here, will be removed eventually.
             var prop = typeof(Editor).GetField("menuBar", BindingFlags.Instance | BindingFlags.NonPublic);
             if (prop == null)
                 return;
