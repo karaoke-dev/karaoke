@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.RubyTags.Ja
 
         protected override GeneratorConfigSection[] CreateConfigSection(Bindable<JaRubyTagGeneratorConfig> current)
         {
-            return new[]
+            return new GeneratorConfigSection[]
             {
                 new GenericSection(current)
             };

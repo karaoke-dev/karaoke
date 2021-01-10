@@ -12,7 +12,6 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -95,10 +94,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         protected void CreateMenuBar()
         {
-            // It's a reicky way to place menu bar in here, will be removed eventually.
+            // It's a teicky way to place menu bar in here, will be removed eventually.
             var prop = typeof(Editor).GetField("menuBar", BindingFlags.Instance | BindingFlags.NonPublic);
             if (prop == null)
                 return;
+
             var menuBar = (EditorMenuBar)prop.GetValue(editor);
 
             Schedule(() =>
