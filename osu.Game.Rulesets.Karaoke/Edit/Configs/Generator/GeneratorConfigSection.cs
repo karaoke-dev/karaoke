@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
             defaultConfig = new TConfig().CreateDefaultConfig();
         }
 
-        protected void RegistConfig<TValue>(Bindable<TValue> bindable, string propertyName)
+        protected void RegisterConfig<TValue>(Bindable<TValue> bindable, string propertyName)
         {
             // set default value
             var defaultValue = getConfigValue<TValue>(defaultConfig, propertyName);
@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
             });
         }
 
-        protected void RegistDisableTrigger(Bindable<bool> bindable, Drawable[] triggeredControl)
+        protected void RegisterDisableTrigger(Bindable<bool> bindable, Drawable[] triggeredControl)
         {
             Schedule(() =>
             {

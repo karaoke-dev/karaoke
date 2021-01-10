@@ -38,9 +38,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
                 },
             };
 
-            RegistConfig(checkんSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.Checkん));
-            RegistConfig(checkっSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.Checkっ));
-            RegistConfig(checkBlankLineSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckBlankLine));
+            RegisterConfig(checkんSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.Checkん));
+            RegisterConfig(checkっSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.Checkっ));
+            RegisterConfig(checkBlankLineSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckBlankLine));
         }
     }
 }

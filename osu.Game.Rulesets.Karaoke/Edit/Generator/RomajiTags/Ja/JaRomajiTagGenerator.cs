@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
         public override RomajiTag[] CreateRomajiTags(Lyric lyric)
         {
             var text = lyric.Text;
-            var processingTags = new List<RomajiTagGeneratorPatameter>();
+            var processingTags = new List<RomajiTagGeneratorParameter>();
 
             // Tokenize the text
             var tokenStream = analyzer.GetTokenStream("dummy", new StringReader(text));
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
                     romaji = romaji.ToUpper();
 
                 // Make tag
-                processingTags.Add(new RomajiTagGeneratorPatameter
+                processingTags.Add(new RomajiTagGeneratorParameter
                 {
                     FromKanji = fromKanji,
                     RomajiTag = new RomajiTag
@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
             return romajiTags.ToArray();
         }
 
-        internal class RomajiTagGeneratorPatameter
+        internal class RomajiTagGeneratorParameter
         {
             public bool FromKanji { get; set; }
 

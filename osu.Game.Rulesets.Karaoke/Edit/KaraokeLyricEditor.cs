@@ -11,6 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     public class KaraokeLyricEditor : LyricEditor
     {
         private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
+
+        private readonly Bindable<int> bindableLyricEditorFontSize = new Bindable<int>();
         private readonly Bindable<Mode> bindableLyricEditorMode = new Bindable<Mode>();
         private readonly Bindable<LyricFastEditMode> bindableLyricEditorFastEditMode = new Bindable<LyricFastEditMode>();
 
@@ -31,12 +33,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             {
                 LyricFastEditMode = e.NewValue;
             });
+            bindableLyricEditorFontSize.BindValueChanged(e =>
+            {
+                FontSize = e.NewValue;
+            });
         }
 
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetEditConfigManager editConfigManager)
         {
             editConfigManager.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
+
+            editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorFontSize, bindableLyricEditorFontSize);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorMode, bindableLyricEditorMode);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorFastEditMode, bindableLyricEditorFastEditMode);
         }

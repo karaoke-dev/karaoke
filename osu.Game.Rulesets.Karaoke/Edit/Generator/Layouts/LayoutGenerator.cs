@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts
 
         private void assignLayoutArrangement(IList<Lyric> lyrics, LyricLayout[] layouts)
         {
-            // todo : use layour setting
+            // todo : use layout setting
             // Apply layout index
             for (int i = 0; i < lyrics.Count; i++)
             {

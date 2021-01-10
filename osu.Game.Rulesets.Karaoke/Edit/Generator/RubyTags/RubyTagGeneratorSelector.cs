@@ -11,8 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags
     {
         public RubyTagGeneratorSelector()
         {
-            RegistGenerator<JaRubyTagGenerator, JaRubyTagGeneratorConfig>(new CultureInfo(17));
-            RegistGenerator<JaRubyTagGenerator, JaRubyTagGeneratorConfig>(new CultureInfo(1041));
+            RegisterGenerator<JaRubyTagGenerator, JaRubyTagGeneratorConfig>(new CultureInfo(17));
+            RegisterGenerator<JaRubyTagGenerator, JaRubyTagGeneratorConfig>(new CultureInfo(1041));
         }
 
         public RubyTag[] GenerateRubyTags(Lyric lyric)

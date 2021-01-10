@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.RomajiTags.Ja
 
         protected override GeneratorConfigSection[] CreateConfigSection(Bindable<JaRomajiTagGeneratorConfig> current)
         {
-            return new[]
+            return new GeneratorConfigSection[]
             {
                 new GenericSection(current)
             };

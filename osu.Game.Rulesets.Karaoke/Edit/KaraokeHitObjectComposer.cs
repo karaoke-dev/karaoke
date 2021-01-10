@@ -5,17 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Beatmaps;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -33,7 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     public class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
     {
         private DrawableKaraokeEditRuleset drawableRuleset;
-        private readonly LyricEditor lyricEditor;
 
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
@@ -55,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             editConfigManager = new KaraokeRulesetEditConfigManager();
             generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
 
-            LayerBelowRuleset.Add(lyricEditor = new KaraokeLyricEditor
+            LayerBelowRuleset.Add(new KaraokeLyricEditor
             {
                 RelativeSizeAxes = Axes.Both
             });
@@ -99,10 +94,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         protected void CreateMenuBar()
         {
-            // It's a reicky way to place menu bar in here, will be removed eventually.
+            // It's a tricky way to place menu bar in here, will be removed eventually.
             var prop = typeof(Editor).GetField("menuBar", BindingFlags.Instance | BindingFlags.NonPublic);
             if (prop == null)
                 return;
+
             var menuBar = (EditorMenuBar)prop.GetValue(editor);
 
             Schedule(() =>
@@ -155,6 +151,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         }
 
         protected override IReadOnlyList<HitObjectCompositionTool> CompositionTools => Array.Empty<HitObjectCompositionTool>();
+
+        protected override IEnumerable<TernaryButton> CreateTernaryButtons() => Array.Empty<TernaryButton>();
 
         [BackgroundDependencyLoader]
         private void load()

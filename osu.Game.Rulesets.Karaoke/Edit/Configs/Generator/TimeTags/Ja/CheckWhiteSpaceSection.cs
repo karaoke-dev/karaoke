@@ -50,13 +50,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja
                 },
             };
 
-            RegistConfig(checkWhiteSpaceSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpace));
-            RegistConfig(checkWhiteSpaceKeyUpSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceKeyUp));
-            RegistConfig(checkWhiteSpaceAlphabetSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceAlphabet));
-            RegistConfig(checkWhiteSpaceDigitSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceDigit));
-            RegistConfig(checkWhiteSpaceAsciiSymbolSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceAsciiSymbol));
+            RegisterConfig(checkWhiteSpaceSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpace));
+            RegisterConfig(checkWhiteSpaceKeyUpSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceKeyUp));
+            RegisterConfig(checkWhiteSpaceAlphabetSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceAlphabet));
+            RegisterConfig(checkWhiteSpaceDigitSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceDigit));
+            RegisterConfig(checkWhiteSpaceAsciiSymbolSwitchButton.Current, nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceAsciiSymbol));
 
-            RegistDisableTrigger(checkWhiteSpaceSwitchButton.Current, new Drawable[]
+            RegisterDisableTrigger(checkWhiteSpaceSwitchButton.Current, new Drawable[]
             {
                 checkWhiteSpaceKeyUpSwitchButton,
                 checkWhiteSpaceAlphabetSwitchButton,
