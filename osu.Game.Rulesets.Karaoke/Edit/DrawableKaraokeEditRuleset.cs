@@ -9,6 +9,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Input.Events;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
@@ -22,6 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class DrawableKaraokeEditRuleset : DrawableKaraokeRuleset
     {
+        private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
+
         public new IScrollingInfo ScrollingInfo => base.ScrollingInfo;
 
         public override bool DisplayNotePlayfield => true;
@@ -29,6 +32,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         public DrawableKaraokeEditRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)
         {
+            bindableEditMode.BindValueChanged(e =>
+            {
+                if (e.NewValue == EditMode.LyricEditor)
+                    Playfield.Hide();
+                else
+                    Playfield.Show();
+            }, true);
         }
 
         protected override void InitialOverlay()
@@ -61,15 +71,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         protected override Playfield CreatePlayfield() => new KaraokeEditPlayfield();
 
         [BackgroundDependencyLoader]
-        private void load(IBindable<EditMode> editMode)
+        private void load(KaraokeRulesetEditConfigManager editConfigManager)
         {
-            editMode.BindValueChanged(e =>
-            {
-                if (e.NewValue == EditMode.LyricEditor)
-                    Playfield.Hide();
-                else
-                    Playfield.Show();
-            }, true);
+            editConfigManager.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
         }
     }
 }

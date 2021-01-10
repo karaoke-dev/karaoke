@@ -3,15 +3,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.UserInterface;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
@@ -19,6 +22,8 @@ using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
+using osu.Game.Screens.Edit;
+using osu.Game.Screens.Edit.Components.Menus;
 using osu.Game.Screens.Edit.Components.TernaryButtons;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
@@ -28,34 +33,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     public class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
     {
         private DrawableKaraokeEditRuleset drawableRuleset;
-
         private readonly LyricEditor lyricEditor;
 
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
 
-        [Cached(Type = typeof(IBindable<EditMode>))]
-        private readonly Bindable<EditMode> editMode;
+        [Cached]
+        private readonly KaraokeRulesetEditConfigManager editConfigManager;
+
+        [Cached]
+        private readonly KaraokeRulesetEditGeneratorConfigManager generatorConfigManager;
+
+        [Resolved]
+        private Editor editor { get; set; }
 
         public KaraokeHitObjectComposer(Ruleset ruleset)
             : base(ruleset)
         {
             // Duplicated registration because selection handler need to use it.
             positionCalculator = new PositionCalculator(9);
-            editMode = new Bindable<EditMode>();
+            editConfigManager = new KaraokeRulesetEditConfigManager();
+            generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
 
-            LayerBelowRuleset.Add(lyricEditor = new LyricEditor
+            LayerBelowRuleset.Add(lyricEditor = new KaraokeLyricEditor
             {
                 RelativeSizeAxes = Axes.Both
             });
-
-            editMode.BindValueChanged(e =>
-            {
-                if (e.NewValue == EditMode.LyricEditor)
-                    lyricEditor.Show();
-                else
-                    lyricEditor.Hide();
-            }, true);
         }
 
         public new KaraokePlayfield Playfield => drawableRuleset.Playfield;
@@ -94,12 +97,67 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         protected override ComposeBlueprintContainer CreateBlueprintContainer()
             => new KaraokeBlueprintContainer(this);
 
+        protected void CreateMenuBar()
+        {
+            // It's a reicky way to place menu bar in here, will be removed eventually.
+            var prop = typeof(Editor).GetField("menuBar", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (prop == null)
+                return;
+            var menuBar = (EditorMenuBar)prop.GetValue(editor);
+
+            Schedule(() =>
+            {
+                menuBar.Items = new[]
+                {
+                    new MenuItem("File")
+                    {
+                        Items = new[]
+                        {
+                            new EditorMenuItem("Import from text"),
+                            new EditorMenuItem("Import from .lrc file"),
+                            new EditorMenuItemSpacer(),
+                            new EditorMenuItem("Export to .lrc"),
+                            new EditorMenuItem("Export to text"),
+                        }
+                    },
+                    new MenuItem("View")
+                    {
+                        Items = new MenuItem[]
+                        {
+                            new EditModeMenu(editConfigManager, "Edit mode"),
+                            new EditorMenuItemSpacer(),
+                            new LyricEditorEditModeMenu(editConfigManager, "Lyric editor mode"),
+                            new LyricEditorLeftSideModeMenu(editConfigManager, "Lyric editor left side mode"),
+                            new LyricEditorTextSizeMenu(editConfigManager, "Text size"),
+                        }
+                    },
+                    new MenuItem("Tools")
+                    {
+                        Items = new MenuItem[]
+                        {
+                            new EditorMenuItem("Singer manager"),
+                            new EditorMenuItem("Translate manager"),
+                            new EditorMenuItem("Layout manager"),
+                            new EditorMenuItem("Style manager"),
+                        }
+                    },
+                    new MenuItem("Options")
+                    {
+                        Items = new MenuItem[]
+                        {
+                            new EditorMenuItem("Lyric editor"),
+                            new GeneratorConfigMenu("Generator"),
+                        }
+                    }
+                };
+            });
+        }
+
         protected override IReadOnlyList<HitObjectCompositionTool> CompositionTools => Array.Empty<HitObjectCompositionTool>();
 
         private readonly Bindable<TernaryState> displayRubyToggle = new Bindable<TernaryState>();
         private readonly Bindable<TernaryState> displayRomajiToggle = new Bindable<TernaryState>();
         private readonly Bindable<TernaryState> displayTranslateToggle = new Bindable<TernaryState>();
-        private readonly Bindable<TernaryState> displayLyricEditor = new Bindable<TernaryState>(); // make a temp button to switch to lyric edit mode.
 
         protected override IEnumerable<TernaryButton> CreateTernaryButtons()
             => new[]
@@ -107,7 +165,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 new TernaryButton(displayRubyToggle, "Ruby", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
                 new TernaryButton(displayRomajiToggle, "Romaji", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
                 new TernaryButton(displayTranslateToggle, "Translate", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
-                new TernaryButton(displayLyricEditor, "Lyric editor", () => new SpriteIcon { Icon = FontAwesome.Solid.Font }),
             };
 
         [BackgroundDependencyLoader]
@@ -121,20 +178,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             displayRomajiToggle.BindValueChanged(x => { karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.DisplayRomaji).Value = x.NewValue == TernaryState.True; });
             displayTranslateToggle.BindValueChanged(x => { karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.UseTranslate).Value = x.NewValue == TernaryState.True; });
 
-            // temp bution and will be replaced eventually
-            displayLyricEditor.BindValueChanged(x =>
-            {
-                if (x.NewValue == TernaryState.True)
-                    editMode.Value = EditMode.LyricEditor;
-                else
-                    editMode.Value = EditMode.Note;
-            }, true);
-
-            // todo : should load from setting
-            // editMode.Value = EditMode.LyricEditor;
-
-            // todo : should pass clock in here
-            //lyricEditor.Clock = Playfield.Clock;
+            CreateMenuBar();
         }
     }
 }

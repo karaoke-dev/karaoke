@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
@@ -15,11 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeBlueprintContainer : ComposeBlueprintContainer
     {
-        private EditMode mode;
+        private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
 
         public override bool ReceivePositionalInputAt(Vector2 screenSpacePos)
         {
-            if (mode == EditMode.LyricEditor)
+            if (bindableEditMode.Value == EditMode.LyricEditor)
                 return false;
 
             return base.ReceivePositionalInputAt(screenSpacePos);
@@ -28,6 +29,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         public KaraokeBlueprintContainer(HitObjectComposer composer)
             : base(composer)
         {
+            bindableEditMode.BindValueChanged(e =>
+            {
+                if (e.NewValue == EditMode.LyricEditor)
+                {
+                    Hide();
+                }
+                else
+                {
+                    Show();
+                }
+            }, true);
         }
 
         public override OverlaySelectionBlueprint CreateBlueprintFor(DrawableHitObject hitObject)
@@ -47,21 +59,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         protected override SelectionHandler CreateSelectionHandler() => new KaraokeSelectionHandler();
 
         [BackgroundDependencyLoader]
-        private void load(IBindable<EditMode> editMode)
+        private void load(KaraokeRulesetEditConfigManager editConfigManager)
         {
-            editMode.BindValueChanged(e =>
-            {
-                mode = e.NewValue;
-
-                if (mode == EditMode.LyricEditor)
-                {
-                    Hide();
-                }
-                else
-                {
-                    Show();
-                }
-            });
+            editConfigManager.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
         }
     }
 }
