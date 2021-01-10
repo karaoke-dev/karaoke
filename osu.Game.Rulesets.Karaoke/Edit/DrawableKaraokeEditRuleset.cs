@@ -24,6 +24,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     public class DrawableKaraokeEditRuleset : DrawableKaraokeRuleset
     {
         private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
+        private readonly Bindable<bool> bindableDisplayRubyToggle = new Bindable<bool>();
+        private readonly Bindable<bool> bindableDisplayRomajiToggle = new Bindable<bool>();
+        private readonly Bindable<bool> bindableDisplayTranslateToggle = new Bindable<bool>();
 
         public new IScrollingInfo ScrollingInfo => base.ScrollingInfo;
 
@@ -39,6 +42,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 else
                     Playfield.Show();
             }, true);
+            bindableDisplayRubyToggle.BindValueChanged(x => { Session.Set(KaraokeRulesetSession.DisplayRuby, x.NewValue); });
+            bindableDisplayRomajiToggle.BindValueChanged(x => { Session.Set(KaraokeRulesetSession.DisplayRomaji, x.NewValue); });
+            bindableDisplayTranslateToggle.BindValueChanged(x => { Session.Set(KaraokeRulesetSession.UseTranslate, x.NewValue); });
         }
 
         protected override void InitialOverlay()
@@ -74,6 +80,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private void load(KaraokeRulesetEditConfigManager editConfigManager)
         {
             editConfigManager.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
+            editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayRuby, bindableDisplayRubyToggle);
+            editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayRomaji, bindableDisplayRomajiToggle);
+            editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayTranslate, bindableDisplayTranslateToggle);
         }
     }
 }

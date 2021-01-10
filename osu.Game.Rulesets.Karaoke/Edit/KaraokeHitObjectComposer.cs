@@ -129,6 +129,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                             new LyricEditorEditModeMenu(editConfigManager, "Lyric editor mode"),
                             new LyricEditorLeftSideModeMenu(editConfigManager, "Lyric editor left side mode"),
                             new LyricEditorTextSizeMenu(editConfigManager, "Text size"),
+                            new NoteEditorPreviewMenu(editConfigManager, "Note editor"),
                         }
                     },
                     new MenuItem("Tools")
@@ -155,29 +156,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         protected override IReadOnlyList<HitObjectCompositionTool> CompositionTools => Array.Empty<HitObjectCompositionTool>();
 
-        private readonly Bindable<TernaryState> displayRubyToggle = new Bindable<TernaryState>();
-        private readonly Bindable<TernaryState> displayRomajiToggle = new Bindable<TernaryState>();
-        private readonly Bindable<TernaryState> displayTranslateToggle = new Bindable<TernaryState>();
-
-        protected override IEnumerable<TernaryButton> CreateTernaryButtons()
-            => new[]
-            {
-                new TernaryButton(displayRubyToggle, "Ruby", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
-                new TernaryButton(displayRomajiToggle, "Romaji", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
-                new TernaryButton(displayTranslateToggle, "Translate", () => new SpriteIcon { Icon = FontAwesome.Solid.Ruler }),
-            };
-
         [BackgroundDependencyLoader]
         private void load()
         {
-            var karaokeSessionStatics = drawableRuleset.Session;
-            displayRubyToggle.Value = karaokeSessionStatics.Get<bool>(KaraokeRulesetSession.DisplayRuby) ? TernaryState.True : TernaryState.False;
-            displayRomajiToggle.Value = karaokeSessionStatics.Get<bool>(KaraokeRulesetSession.DisplayRomaji) ? TernaryState.True : TernaryState.False;
-            displayTranslateToggle.Value = karaokeSessionStatics.Get<bool>(KaraokeRulesetSession.UseTranslate) ? TernaryState.True : TernaryState.False;
-            displayRubyToggle.BindValueChanged(x => { karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.DisplayRuby).Value = x.NewValue == TernaryState.True; });
-            displayRomajiToggle.BindValueChanged(x => { karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.DisplayRomaji).Value = x.NewValue == TernaryState.True; });
-            displayTranslateToggle.BindValueChanged(x => { karaokeSessionStatics.GetBindable<bool>(KaraokeRulesetSession.UseTranslate).Value = x.NewValue == TernaryState.True; });
-
             CreateMenuBar();
         }
     }
