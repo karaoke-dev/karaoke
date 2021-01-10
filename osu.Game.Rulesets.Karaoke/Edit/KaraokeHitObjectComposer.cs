@@ -30,7 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     public class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
     {
         private DrawableKaraokeEditRuleset drawableRuleset;
-        private readonly LyricEditor lyricEditor;
 
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
@@ -52,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             editConfigManager = new KaraokeRulesetEditConfigManager();
             generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
 
-            LayerBelowRuleset.Add(lyricEditor = new KaraokeLyricEditor
+            LayerBelowRuleset.Add(new KaraokeLyricEditor
             {
                 RelativeSizeAxes = Axes.Both
             });
