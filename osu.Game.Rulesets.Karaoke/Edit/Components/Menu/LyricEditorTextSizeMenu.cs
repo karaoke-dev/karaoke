@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
         {
             Items = createMenuItems();
 
-            bindableFontSize.BindTo(config.GetBindable<int>(KaraokeRulesetEditSetting.LyricEditorFontSize));
+            config.BindWith(KaraokeRulesetEditSetting.LyricEditorFontSize, bindableFontSize);
             bindableFontSize.BindValueChanged(e =>
             {
                 var newSelection = e.NewValue;

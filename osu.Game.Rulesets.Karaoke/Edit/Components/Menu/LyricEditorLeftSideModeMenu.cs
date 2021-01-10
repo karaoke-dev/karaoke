@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
         {
             Items = createMenuItems();
 
-            bindableLyricEditorFastEditMode.BindTo(config.GetBindable<LyricFastEditMode>(KaraokeRulesetEditSetting.LyricEditorFastEditMode));
+            config.BindWith(KaraokeRulesetEditSetting.LyricEditorFastEditMode, bindableLyricEditorFastEditMode);
             bindableLyricEditorFastEditMode.BindValueChanged(e =>
             {
                 var newSelection = e.NewValue;
