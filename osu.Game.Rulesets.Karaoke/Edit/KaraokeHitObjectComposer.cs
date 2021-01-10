@@ -34,9 +34,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     {
         private DrawableKaraokeEditRuleset drawableRuleset;
         private readonly LyricEditor lyricEditor;
-        private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
-        private readonly Bindable<Mode> bindableLyricEditorMode = new Bindable<Mode>();
-        private readonly Bindable<LyricFastEditMode> bindableLyricEditorFastEditMode = new Bindable<LyricFastEditMode>();
 
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
@@ -58,31 +55,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             editConfigManager = new KaraokeRulesetEditConfigManager();
             generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
 
-            LayerBelowRuleset.Add(lyricEditor = new LyricEditor
+            LayerBelowRuleset.Add(lyricEditor = new KaraokeLyricEditor
             {
                 RelativeSizeAxes = Axes.Both
             });
-
-            bindableEditMode.BindValueChanged(e =>
-            {
-                if (e.NewValue == EditMode.LyricEditor)
-                    lyricEditor.Show();
-                else
-                    lyricEditor.Hide();
-            });
-            bindableLyricEditorMode.BindValueChanged(e =>
-            {
-                lyricEditor.Mode = e.NewValue;
-            });
-            bindableLyricEditorFastEditMode.BindValueChanged(e =>
-            {
-                lyricEditor.LyricFastEditMode = e.NewValue;
-            });
-
-            editConfigManager.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
-            editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorMode, bindableLyricEditorMode);
-            editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorFastEditMode, bindableLyricEditorFastEditMode);
-            
         }
 
         public new KaraokePlayfield Playfield => drawableRuleset.Playfield;
@@ -151,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                             new EditModeMenu(editConfigManager, "Edit mode"),
                             new EditorMenuItemSpacer(),
                             new LyricEditorEditModeMenu(editConfigManager, "Lyric editor mode"),
-                            new LyricEditorLeftSideModeMenu(editConfigManager, "Lyric editor mode"),
+                            new LyricEditorLeftSideModeMenu(editConfigManager, "Lyric editor left side mode"),
                             new LyricEditorTextSizeMenu(editConfigManager, "Text size"),
                         }
                     },
