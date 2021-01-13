@@ -27,8 +27,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
             using (var outputStream = exportStorage.GetStream($"{beatmap.Name}.lrc", FileAccess.Write, FileMode.Create))
             using (var sw = new StreamWriter(outputStream))
             {
-                // todo : maybe uee use LrcEncoder to get pure lyric file.
                 var encoder = new LrcEncoder();
+                sw.WriteLine(encoder.Encode(new Beatmap
+                {
+                    HitObjects = beatmap.HitObjects.OfType<HitObject>().ToList()
+                }));
+            }
+            exportStorage.OpenInNativeExplorer();
+        }
+
+        public void ExportToText()
+        {
+            var exportStorage = storage.GetStorageForDirectory("text");
+            using (var outputStream = exportStorage.GetStream($"{beatmap.Name}.txt", FileAccess.Write, FileMode.Create))
+            using (var sw = new StreamWriter(outputStream))
+            {
+                var encoder = new LyricTextEncoder();
                 sw.WriteLine(encoder.Encode(new Beatmap
                 {
                     HitObjects = beatmap.HitObjects.OfType<HitObject>().ToList()
