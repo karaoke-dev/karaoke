@@ -53,27 +53,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h) => null;
 
-        protected override bool OnKeyDown(KeyDownEvent e)
-        {
-            if (e.Key != Key.S)
-                return base.OnKeyDown(e);
-
-            string directory = Path.Combine(Path.GetTempPath(), @"osu!");
-            Directory.CreateDirectory(directory);
-            var path = Path.Combine(directory, "karaoke.txt");
-
-            using (var sw = new StreamWriter(path))
-            {
-                var encoder = new KaraokeLegacyBeatmapEncoder();
-                sw.WriteLine(encoder.Encode(new Beatmap
-                {
-                    HitObjects = Beatmap.HitObjects.OfType<HitObject>().ToList()
-                }));
-            }
-
-            return true;
-        }
-
         protected override Playfield CreatePlayfield() => new KaraokeEditPlayfield();
 
         [BackgroundDependencyLoader]

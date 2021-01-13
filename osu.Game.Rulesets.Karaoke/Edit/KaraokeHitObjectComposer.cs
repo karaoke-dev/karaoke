@@ -8,10 +8,12 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Beatmaps;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
+using osu.Game.Rulesets.Karaoke.Edit.Export;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -39,6 +41,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly KaraokeRulesetEditGeneratorConfigManager generatorConfigManager;
 
+        [Cached]
+        private readonly ExportLyricManager exportLyricManager;
+
         [Resolved]
         private Editor editor { get; set; }
 
@@ -49,7 +54,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             positionCalculator = new PositionCalculator(9);
             editConfigManager = new KaraokeRulesetEditConfigManager();
             generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
+            exportLyricManager = new ExportLyricManager();
 
+            AddInternal(exportLyricManager);
             LayerBelowRuleset.Add(new KaraokeLyricEditor
             {
                 RelativeSizeAxes = Axes.Both
@@ -112,7 +119,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                             new EditorMenuItem("Import from text"),
                             new EditorMenuItem("Import from .lrc file"),
                             new EditorMenuItemSpacer(),
-                            new EditorMenuItem("Export to .lrc"),
+                            new EditorMenuItem("Export to .lrc", MenuItemType.Standard, action: () => exportLyricManager.ExportToLrc()),
                             new EditorMenuItem("Export to text"),
                         }
                     },
