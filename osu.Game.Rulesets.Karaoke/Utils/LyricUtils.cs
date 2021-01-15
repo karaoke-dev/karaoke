@@ -150,6 +150,15 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         #endregion
 
+        #region Text tags
+
+        public static bool HasTimedTimeTags(Lyric lyric)
+        {
+            return lyric?.TimeTags?.Any(x => x.Time.HasValue) ?? false;
+        }
+
+        #endregion
+
         #region Time display
 
         public static string LyricTimeFormattedString(Lyric lyric)

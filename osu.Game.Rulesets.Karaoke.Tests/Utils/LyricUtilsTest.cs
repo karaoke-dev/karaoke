@@ -139,6 +139,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         #endregion
 
+        #region Text tags
+
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, true)]
+        [TestCase(new string[] { }, false)]
+        [TestCase(null, false)]
+        public void TestHasTimedTimeTags(string[] timeTags, bool hasTimedTimeTag)
+        {
+            var lyric = new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
+            };
+            Assert.AreEqual(LyricUtils.HasTimedTimeTags(lyric), hasTimedTimeTag);
+        }
+
+        #endregion
+
         #region Time display
 
         [TestCase(0, 0, "00:00:000 - 00:00:000")]
