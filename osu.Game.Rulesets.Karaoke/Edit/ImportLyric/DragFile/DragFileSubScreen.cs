@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Screens;
 using osu.Game.Database;
 using osu.Game.Overlays.Dialog;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile.Components;
@@ -28,6 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
 
         [Resolved]
         private ImportLyricManager importManager { get; set; }
+
+        [Resolved(canBeNull: true)]
+        private OsuGame game { get; set; }
 
         public DragFileSubScreen()
         {
@@ -104,6 +108,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
         public override void Complete()
         {
             ScreenStack.Push(ImportLyricStep.EditLyric);
+        }
+
+        public override void OnEntering(IScreen last)
+        {
+            game?.RegisterImportHandler(this);
+            base.OnEntering(last);
+        }
+
+        public override void OnResuming(IScreen last)
+        {
+            game?.RegisterImportHandler(this);
+            base.OnResuming(last);
+        }
+
+        public override void OnSuspending(IScreen next)
+        {
+            game?.UnregisterImportHandler(this);
+            base.OnSuspending(next);
+        }
+
+        public override bool OnExiting(IScreen next)
+        {
+            game?.UnregisterImportHandler(this);
+            return base.OnExiting(next);
         }
 
         private PopupDialog createFileNotFoundDialog()
