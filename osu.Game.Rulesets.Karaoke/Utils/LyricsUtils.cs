@@ -12,6 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class LyricsUtils
     {
+        #region processing
+
         public static Tuple<Lyric, Lyric> SplitLyric(Lyric lyric, int splitIndex)
         {
             if (lyric == null)
@@ -130,5 +132,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         private static RomajiTag[] shiftingRomajiTag(RomajiTag[] romajiTags, int shifting)
             => romajiTags?.Select(t => TextTagUtils.Shifting(t, shifting)).ToArray();
+
+        #endregion
+
+        #region Text tags
+
+        public static bool HasTimedTimeTags(List<Lyric> lyrics)
+            => lyrics?.Any(l => LyricUtils.HasTimedTimeTags(l)) ?? false;
+
+        #endregion
     }
 }

@@ -54,9 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             positionCalculator = new PositionCalculator(9);
             editConfigManager = new KaraokeRulesetEditConfigManager();
             generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
-            exportLyricManager = new ExportLyricManager();
 
-            AddInternal(exportLyricManager);
+            AddInternal(exportLyricManager = new ExportLyricManager());
             LayerBelowRuleset.Add(new KaraokeLyricEditor
             {
                 RelativeSizeAxes = Axes.Both
@@ -114,10 +113,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 {
                     new MenuItem("File")
                     {
-                        Items = new[]
+                        Items = new MenuItem[]
                         {
-                            new EditorMenuItem("Import from text"),
-                            new EditorMenuItem("Import from .lrc file"),
+                            new ImportLyricMenu(editor, "Import from text"),
+                            new ImportLyricMenu(editor, "Import from .lrc file"),
                             new EditorMenuItemSpacer(),
                             new EditorMenuItem("Export to .lrc", MenuItemType.Standard, action: () => exportLyricManager.ExportToLrc()),
                             new EditorMenuItem("Export to text", MenuItemType.Standard, action: () => exportLyricManager.ExportToText()),

@@ -173,6 +173,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return false;
         }
 
+        public bool HasTimedTimeTags()
+        {
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            return LyricsUtils.HasTimedTimeTags(lyrics);
+        }
+
         private void refreshTimeTag(Lyric lyric)
             => lyric.TimeTags = lyric.TimeTags.ToArray();
 

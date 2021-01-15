@@ -8,10 +8,12 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Screens;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
+using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
@@ -76,8 +78,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private class TestImportLyricScreen : ImportLyricScreen
         {
             public TestImportLyricScreen(FileInfo fileInfo)
-                : base(fileInfo)
             {
+                if (!(ScreenStack.CurrentScreen is DragFileSubScreen dragFileSubScreen))
+                    throw new ScreenStack.ScreenNotInStackException($"{nameof(DragFileSubScreen)} does not in the screen.");
+
+                dragFileSubScreen.ImportLyricFile(fileInfo);
             }
 
             public void GoToStep(ImportLyricStep step)
