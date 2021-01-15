@@ -14,7 +14,6 @@ using osu.Game.Database;
 using osu.Game.Overlays.Dialog;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
 {
@@ -30,8 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
         [Resolved]
         private ImportLyricManager importManager { get; set; }
 
-        [Resolved(canBeNull: true)]
-        private OsuGame game { get; set; }
+        [Resolved]
+        private OsuGameBase game { get; set; }
 
         public DragFileSubScreen()
         {
@@ -39,7 +38,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Size = new Vector2(300, 120)
+                RelativeSizeAxes = Axes.Both,
+                Padding = new MarginPadding(64),
+                Import = (path) =>
+                {
+                    Task.Factory.StartNew(async () =>
+                    {
+                        await Import(path);
+                    }, TaskCreationOptions.LongRunning);
+                }
             };
         }
 
@@ -112,25 +119,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
 
         public override void OnEntering(IScreen last)
         {
-            game?.RegisterImportHandler(this);
+            game.RegisterImportHandler(this);
             base.OnEntering(last);
         }
 
         public override void OnResuming(IScreen last)
         {
-            game?.RegisterImportHandler(this);
+            game.RegisterImportHandler(this);
             base.OnResuming(last);
         }
 
         public override void OnSuspending(IScreen next)
         {
-            game?.UnregisterImportHandler(this);
+            game.UnregisterImportHandler(this);
             base.OnSuspending(next);
         }
 
         public override bool OnExiting(IScreen next)
         {
-            game?.UnregisterImportHandler(this);
+            game.UnregisterImportHandler(this);
             return base.OnExiting(next);
         }
 

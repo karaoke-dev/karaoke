@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     public class ImportLyricManager : Component
     {
-        public static string[] LyricFormatExtensions { get; } = { ".lrc", ".kar" };
+        public static string[] LyricFormatExtensions { get; } = { ".lrc", ".kar", ".txt" };
 
         private const string backup_lrc_name = "backup.lrc";
 
