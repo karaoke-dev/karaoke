@@ -54,9 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             positionCalculator = new PositionCalculator(9);
             editConfigManager = new KaraokeRulesetEditConfigManager();
             generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
-            exportLyricManager = new ExportLyricManager();
 
-            AddInternal(exportLyricManager);
+            AddInternal(exportLyricManager = new ExportLyricManager());
             LayerBelowRuleset.Add(new KaraokeLyricEditor
             {
                 RelativeSizeAxes = Axes.Both
