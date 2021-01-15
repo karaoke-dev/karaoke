@@ -50,14 +50,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
         internal void AskForAutoGenerateTimeTag()
         {
-            DialogOverlay.Push(new UseAutoGenerateTimeTagPopupDialog(ok =>
+            if (timeTagManager.HasTimedTimeTags())
             {
-                if (!ok)
-                    return;
+                // do not touch user's lyric if already contains valid time-tag with time.
+                DialogOverlay.Push(new AlreadyContainTimeTagPopupDialog(ok =>
+                {
+                    Navigation.State = NavigationState.Done;
+                }));
+            }
+            else
+            {
+                DialogOverlay.Push(new UseAutoGenerateTimeTagPopupDialog(ok =>
+                {
+                    if (!ok)
+                        return;
 
-                timeTagManager.AutoGenerateTimeTags();
-                Navigation.State = NavigationState.Done;
-            }));
+                    timeTagManager.AutoGenerateTimeTags();
+                    Navigation.State = NavigationState.Done;
+                }));
+            }
         }
 
         public class GenerateTimeTagNavigation : TopNavigation<GenerateTimeTagSubScreen>
