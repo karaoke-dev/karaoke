@@ -1,37 +1,24 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.IO;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Screens;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
-using osu.Game.Screens.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    public class ImportLyricScreen : EditorScreen
+    public class ImportLyricScreen : EditorSubScreen
     {
         private readonly ImportLyricWaveContainer waves;
 
         [Cached]
         protected ImportLyricSubScreenStack ScreenStack { get; private set; }
 
-        public ImportLyricScreen(FileInfo fileInfo)
-            : this()
-        {
-            if (!(ScreenStack.CurrentScreen is DragFileSubScreen dragFileSubScreen))
-                throw new ScreenStack.ScreenNotInStackException($"{nameof(DragFileSubScreen)} does not in the screen.");
-
-            dragFileSubScreen.ImportLyricFile(fileInfo);
-        }
-
         public ImportLyricScreen()
-            : base(EditorScreenMode.SongSetup)
         {
             var backgroundColour = Color4Extensions.FromHex(@"3e3a44");
 
