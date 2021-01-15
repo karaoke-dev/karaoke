@@ -41,12 +41,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile.Components
                 fileSelector = new FileSelector(validFileExtensions: ImportLyricManager.LyricFormatExtensions)
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Width = 0.65f
+                    Width = 0.6f
                 },
                 new Container
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Width = 0.35f,
+                    Width = 0.4f,
                     Anchor = Anchor.TopRight,
                     Origin = Anchor.TopRight,
                     Children = new Drawable[]
@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile.Components
         private void fileChanged(ValueChangedEvent<FileInfo> selectedFile)
         {
             importButton.Enabled.Value = selectedFile.NewValue != null;
-            currentFileText.Text = selectedFile.NewValue?.Name ?? "Select a file";
+            currentFileText.Text = selectedFile.NewValue?.Name ?? "Select a file or drag to import.";
         }
 
         private void directoryChanged(ValueChangedEvent<DirectoryInfo> _)
