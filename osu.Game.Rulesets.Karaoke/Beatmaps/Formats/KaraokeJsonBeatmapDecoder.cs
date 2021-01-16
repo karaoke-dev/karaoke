@@ -28,6 +28,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             convertor.AddRange(globalSetting.Converters);
             globalSetting.Converters = convertor.ToArray();
 
+            // create id if object is by reference.
+            globalSetting.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+
             // replace string stream.ReadToEnd().DeserializeInto(output);
             JsonConvert.PopulateObject(stream.ReadToEnd(), output, globalSetting);
 

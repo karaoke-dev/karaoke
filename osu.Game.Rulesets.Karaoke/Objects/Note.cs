@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public int EndIndex { get; set; }
 
-        [JsonIgnore]
+        [JsonProperty(IsReference = true)]
         public Lyric ParentLyric { get; set; }
 
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();
