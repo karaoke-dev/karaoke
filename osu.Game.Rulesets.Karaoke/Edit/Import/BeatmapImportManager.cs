@@ -10,7 +10,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Import
     {
         public void ImportJsonKaraokeBeatmap(FileInfo info)
         {
-            
         }
     }
 }
