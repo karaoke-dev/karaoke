@@ -79,7 +79,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (stateManager.Mode != Mode.TypingMode)
                 return false;
 
-
             var position = stateManager.BindableCursorPosition.Value;
 
             switch (e.Key)
