@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
     public class ToolsMenu : MenuItem
     {
-        private IScreen screen;
+        private readonly IScreen screen;
 
         public ToolsMenu(IScreen screen, string text)
             : base(text)

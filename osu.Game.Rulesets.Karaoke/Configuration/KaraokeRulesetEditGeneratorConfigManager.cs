@@ -19,23 +19,23 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             base.InitialiseDefaults();
 
             // Language detection
-            Set(KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig, CreateDefultConfig<LanguageDetectorConfig>());
+            Set(KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig, CreateDefaultConfig<LanguageDetectorConfig>());
 
             // Layout generator
-            Set(KaraokeRulesetEditGeneratorSetting.LayoutGeneratorConfig, CreateDefultConfig<LayoutGeneratorConfig>());
+            Set(KaraokeRulesetEditGeneratorSetting.LayoutGeneratorConfig, CreateDefaultConfig<LayoutGeneratorConfig>());
 
             // Romaji generator
-            Set(KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig, CreateDefultConfig<JaRomajiTagGeneratorConfig>());
+            Set(KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig, CreateDefaultConfig<JaRomajiTagGeneratorConfig>());
 
             // Ruby generator
-            Set(KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig, CreateDefultConfig<JaRubyTagGeneratorConfig>());
+            Set(KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig, CreateDefaultConfig<JaRubyTagGeneratorConfig>());
 
             // Time tag generator
-            Set(KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig, CreateDefultConfig<JaTimeTagGeneratorConfig>());
-            Set(KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig, CreateDefultConfig<ZhTimeTagGeneratorConfig>());
+            Set(KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig, CreateDefaultConfig<JaTimeTagGeneratorConfig>());
+            Set(KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig, CreateDefaultConfig<ZhTimeTagGeneratorConfig>());
         }
 
-        protected T CreateDefultConfig<T>() where T : IHasConfig<T>, new()
+        protected static T CreateDefaultConfig<T>() where T : IHasConfig<T>, new()
             => new T().CreateDefaultConfig();
     }
 
