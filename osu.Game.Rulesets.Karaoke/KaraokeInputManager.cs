@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -28,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke
     public class KaraokeInputManager : RulesetInputManager<KaraokeSaitenAction>
     {
         public KaraokeInputManager(RulesetInfo ruleset)
-            : base(ruleset, 1, SimultaneousBindingMode.All)
+            : base(ruleset, 0, SimultaneousBindingMode.All)
         {
             UseParentInput = false;
         }
@@ -153,59 +152,5 @@ namespace osu.Game.Rulesets.Karaoke
     public struct KaraokeSaitenAction
     {
         public float Scale { get; set; }
-    }
-
-    public enum KaraokeAction
-    {
-        [Description("First Lyric")]
-        FirstLyric,
-
-        [Description("Previous BaseLyric")]
-        PreviousLyric,
-
-        [Description("Next BaseLyric")]
-        NextLyric,
-
-        [Description("Play and pause")]
-        PlayAndPause,
-
-        [Description("Open/Close adjustment")]
-        OpenPanel,
-
-        [Description("Increase Speed")]
-        IncreaseTempo,
-
-        [Description("Decrease Speed")]
-        DecreaseTempo,
-
-        [Description("Reset Speed")]
-        ResetTempo,
-
-        [Description("Increase pitch")]
-        IncreasePitch,
-
-        [Description("Decrease pitch")]
-        DecreasePitch,
-
-        [Description("Reset pitch")]
-        ResetPitch,
-
-        [Description("Increase vocal pitch")]
-        IncreaseVocalPitch,
-
-        [Description("Decrease vocal pitch")]
-        DecreaseVocalPitch,
-
-        [Description("Reset vocal pitch")]
-        ResetVocalPitch,
-
-        [Description("Increase saiten pitch")]
-        IncreaseSaitenPitch,
-
-        [Description("Decrease saiten pitch")]
-        DecreaseSaitenPitch,
-
-        [Description("Reset saiten pitch")]
-        ResetSaitenPitch,
     }
 }

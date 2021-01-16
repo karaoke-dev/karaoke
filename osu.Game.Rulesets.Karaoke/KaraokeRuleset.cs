@@ -47,11 +47,17 @@ namespace osu.Game.Rulesets.Karaoke
 
         public const string SHORT_NAME = "karaoke";
 
+        public override IEnumerable<int> AvailableVariants => new[] { 1 };
+
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0)
         {
             switch (variant)
             {
                 case 0:
+                    // Vocal
+                    return Array.Empty<KeyBinding>();
+
+                case 1:
                     return new[]
                     {
                         // Basic control
@@ -77,10 +83,6 @@ namespace osu.Game.Rulesets.Karaoke
                         new KeyBinding(InputKey.F, KaraokeAction.DecreaseSaitenPitch),
                         new KeyBinding(InputKey.V, KaraokeAction.ResetSaitenPitch),
                     };
-
-                case 1:
-                    //Vocal
-                    return Array.Empty<KeyBinding>();
 
                 default:
                     return Array.Empty<KeyBinding>();
