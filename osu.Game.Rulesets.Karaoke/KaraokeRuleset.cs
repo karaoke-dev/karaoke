@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke
 
         public const string SHORT_NAME = "karaoke";
 
-        public override IEnumerable<int> AvailableVariants => new[] { 1 };
+        public override IEnumerable<int> AvailableVariants => new[] { 1, 2 };
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0)
         {
@@ -82,6 +82,24 @@ namespace osu.Game.Rulesets.Karaoke
                         new KeyBinding(InputKey.R, KaraokeAction.IncreaseSaitenPitch),
                         new KeyBinding(InputKey.F, KaraokeAction.DecreaseSaitenPitch),
                         new KeyBinding(InputKey.V, KaraokeAction.ResetSaitenPitch),
+                    };
+
+                case 2:
+                    return new[]
+                    {
+                        // moving
+                        new KeyBinding(InputKey.Up, KaraokeEditAction.Up),
+                        new KeyBinding(InputKey.Down, KaraokeEditAction.Down),
+                        new KeyBinding(InputKey.Left, KaraokeEditAction.Left),
+                        new KeyBinding(InputKey.Right, KaraokeEditAction.Right),
+                        new KeyBinding(InputKey.PageUp, KaraokeEditAction.First),
+                        new KeyBinding(InputKey.PageDown, KaraokeEditAction.Last),
+
+                        // edit
+                        new KeyBinding(InputKey.N, KaraokeEditAction.Create),
+                        new KeyBinding(InputKey.Delete, KaraokeEditAction.Remove),
+                        new KeyBinding(InputKey.Space, KaraokeEditAction.SetTime),
+                        new KeyBinding(InputKey.BackSpace, KaraokeEditAction.ClearTime),
                     };
 
                 default:
