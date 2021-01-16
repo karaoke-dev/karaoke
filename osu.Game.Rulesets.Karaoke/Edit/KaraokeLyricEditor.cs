@@ -3,12 +3,14 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    public class KaraokeLyricEditor : LyricEditor
+    public class KaraokeLyricEditor : CompositeDrawable
     {
         private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
 
@@ -16,8 +18,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly Bindable<Mode> bindableLyricEditorMode = new Bindable<Mode>();
         private readonly Bindable<LyricFastEditMode> bindableLyricEditorFastEditMode = new Bindable<LyricFastEditMode>();
 
-        public KaraokeLyricEditor()
+        private readonly LyricEditor lyricEditor;
+
+        [Cached]
+        private readonly TimeTagManager timeTagManager;
+
+        [Cached]
+        private readonly LyricManager lyricManager;
+
+        public KaraokeLyricEditor(Ruleset ruleset)
         {
+            AddInternal(timeTagManager = new TimeTagManager());
+            AddInternal(lyricManager = new LyricManager());
+
+            AddInternal(new KaraokeEditInputManager(ruleset.RulesetInfo)
+            {
+                RelativeSizeAxes = Axes.Both,
+                Child = lyricEditor = new LyricEditor
+                {
+                    RelativeSizeAxes = Axes.Both,
+                }
+            });
+
             bindableEditMode.BindValueChanged(e =>
             {
                 if (e.NewValue == EditMode.LyricEditor)
@@ -27,15 +49,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             });
             bindableLyricEditorMode.BindValueChanged(e =>
             {
-                Mode = e.NewValue;
+                lyricEditor.Mode = e.NewValue;
             });
             bindableLyricEditorFastEditMode.BindValueChanged(e =>
             {
-                LyricFastEditMode = e.NewValue;
+                lyricEditor.LyricFastEditMode = e.NewValue;
             });
             bindableLyricEditorFontSize.BindValueChanged(e =>
             {
-                FontSize = e.NewValue;
+                lyricEditor.FontSize = e.NewValue;
             });
         }
 

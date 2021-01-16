@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
 
             AddInternal(exportLyricManager = new ExportLyricManager());
-            LayerBelowRuleset.Add(new KaraokeLyricEditor
+            LayerBelowRuleset.Add(new KaraokeLyricEditor(ruleset)
             {
                 RelativeSizeAxes = Axes.Both
             });

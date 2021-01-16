@@ -5,6 +5,7 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
@@ -14,7 +15,7 @@ using osuTK.Input;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public class LyricEditor : Container
+    public class LyricEditor : Container, IKeyBindingHandler<KaraokeEditAction>
     {
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
@@ -75,68 +76,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (timeTagManager == null)
                 return false;
 
-            var isMoving = HandleMovingEvent(e.Key);
-            if (isMoving)
-                return true;
-
-            switch (stateManager.Mode)
-            {
-                case Mode.ViewMode:
-                    return false;
-
-                case Mode.EditMode:
-                    return false;
-
-                case Mode.TypingMode:
-                    return HandleTypingEvent(e.Key);
-
-                case Mode.RecordMode:
-                    return HandleSetTimeEvent(e.Key);
-
-                case Mode.TimeTagEditMode:
-                    return HandleCreateOrDeleterTimeTagEvent(e.Key);
-
-                default:
-                    throw new IndexOutOfRangeException(nameof(stateManager.Mode));
-            }
-        }
-
-        protected bool HandleMovingEvent(Key key)
-        {
-            // moving cursor action
-            switch (key)
-            {
-                case Key.Up:
-                    return stateManager.MoveCursor(CursorAction.MoveUp);
-
-                case Key.Down:
-                    return stateManager.MoveCursor(CursorAction.MoveDown);
-
-                case Key.Left:
-                    return stateManager.MoveCursor(CursorAction.MoveLeft);
-
-                case Key.Right:
-                    return stateManager.MoveCursor(CursorAction.MoveRight);
-
-                case Key.PageUp:
-                    return stateManager.MoveCursor(CursorAction.First);
-
-                case Key.PageDown:
-                    return stateManager.MoveCursor(CursorAction.Last);
-
-                default:
-                    return false;
-            }
-        }
-
-        protected bool HandleTypingEvent(Key key)
-        {
-            if (timeTagManager == null)
+            if (stateManager.Mode != Mode.TypingMode)
                 return false;
 
             var position = stateManager.BindableCursorPosition.Value;
 
-            switch (key)
+            switch (e.Key)
             {
                 case Key.BackSpace:
                     // delete single character.
@@ -150,19 +95,83 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        protected bool HandleSetTimeEvent(Key key)
+        public bool OnPressed(KaraokeEditAction action)
+        {
+            if (timeTagManager == null)
+                return false;
+
+            var isMoving = HandleMovingEvent(action);
+            if (isMoving)
+                return true;
+
+            switch (stateManager.Mode)
+            {
+                case Mode.ViewMode:
+                    return false;
+
+                case Mode.EditMode:
+                    return false;
+
+                case Mode.TypingMode:
+                    // will handle in OnKeyDown
+                    return false;
+
+                case Mode.RecordMode:
+                    return HandleSetTimeEvent(action);
+
+                case Mode.TimeTagEditMode:
+                    return HandleCreateOrDeleterTimeTagEvent(action);
+
+                default:
+                    throw new IndexOutOfRangeException(nameof(stateManager.Mode));
+            }
+        }
+
+        public void OnReleased(KaraokeEditAction action)
+        {
+        }
+
+        protected bool HandleMovingEvent(KaraokeEditAction action)
+        {
+            // moving cursor action
+            switch (action)
+            {
+                case KaraokeEditAction.Up:
+                    return stateManager.MoveCursor(CursorAction.MoveUp);
+
+                case KaraokeEditAction.Down:
+                    return stateManager.MoveCursor(CursorAction.MoveDown);
+
+                case KaraokeEditAction.Left:
+                    return stateManager.MoveCursor(CursorAction.MoveLeft);
+
+                case KaraokeEditAction.Right:
+                    return stateManager.MoveCursor(CursorAction.MoveRight);
+
+                case KaraokeEditAction.First:
+                    return stateManager.MoveCursor(CursorAction.First);
+
+                case KaraokeEditAction.Last:
+                    return stateManager.MoveCursor(CursorAction.Last);
+
+                default:
+                    return false;
+            }
+        }
+
+        protected bool HandleSetTimeEvent(KaraokeEditAction action)
         {
             if (timeTagManager == null)
                 return false;
 
             var currentTimeTag = stateManager.BindableRecordCursorPosition.Value;
 
-            switch (key)
+            switch (action)
             {
-                case Key.BackSpace:
+                case KaraokeEditAction.ClearTime:
                     return timeTagManager.ClearTimeTagTime(currentTimeTag);
 
-                case Key.Space:
+                case KaraokeEditAction.SetTime:
                     var setTimeSuccess = timeTagManager.SetTimeTagTime(currentTimeTag);
                     if (setTimeSuccess)
                         stateManager.MoveCursor(CursorAction.MoveRight);
@@ -173,19 +182,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        protected bool HandleCreateOrDeleterTimeTagEvent(Key key)
+        protected bool HandleCreateOrDeleterTimeTagEvent(KaraokeEditAction action)
         {
             if (timeTagManager == null)
                 return false;
 
             var position = stateManager.BindableCursorPosition.Value;
 
-            switch (key)
+            switch (action)
             {
-                case Key.N:
+                case KaraokeEditAction.Create:
                     return timeTagManager.AddTimeTagByPosition(position);
 
-                case Key.Delete:
+                case KaraokeEditAction.Remove:
                     return timeTagManager.RemoveTimeTagByPosition(position);
 
                 default:
