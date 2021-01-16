@@ -50,5 +50,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
             }
             exportStorage.OpenInNativeExplorer();
         }
+
+        public void ExportToJson()
+        {
+            // note : this is for develop testing purpose.
+            // will be removed eventually
+            var exportStorage = storage.GetStorageForDirectory("json");
+            using (var outputStream = exportStorage.GetStream($"{beatmap.Name}.json", FileAccess.Write, FileMode.Create))
+            using (var sw = new StreamWriter(outputStream))
+            {
+                var encoder = new KaraokeJsonBeatmapEncoder();
+                sw.WriteLine(encoder.Encode(new Beatmap
+                {
+                    HitObjects = beatmap.HitObjects.OfType<HitObject>().ToList()
+                }));
+            }
+            exportStorage.OpenInNativeExplorer();
+        }
     }
 }

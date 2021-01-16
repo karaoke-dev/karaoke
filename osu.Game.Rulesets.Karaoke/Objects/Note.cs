@@ -13,6 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 {
     public class Note : KaraokeHitObject, IHasDuration, IHasText, IHasSingers
     {
+        [JsonIgnore]
         public readonly Bindable<string> TextBindable = new Bindable<string>();
 
         /// <summary>
@@ -24,6 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => TextBindable.Value = value;
         }
 
+        [JsonIgnore]
         public readonly Bindable<string> AlternativeTextBindable = new Bindable<string>();
 
         /// <summary>
@@ -47,6 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => SingersBindable.Value = value;
         }
 
+        [JsonIgnore]
         public readonly Bindable<bool> DisplayBindable = new Bindable<bool>();
 
         /// <summary>
@@ -58,6 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => DisplayBindable.Value = value;
         }
 
+        [JsonIgnore]
         public readonly Bindable<Tone> ToneBindable = new Bindable<Tone>();
 
         /// <summary>
@@ -85,6 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public int EndIndex { get; set; }
 
+        [JsonIgnore]
         public Lyric ParentLyric { get; set; }
 
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();

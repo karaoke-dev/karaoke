@@ -19,6 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 {
     public class Lyric : KaraokeHitObject, IHasDuration, IHasSingers
     {
+        [JsonIgnore]
         public readonly Bindable<string> TextBindable = new Bindable<string>();
 
         /// <summary>
