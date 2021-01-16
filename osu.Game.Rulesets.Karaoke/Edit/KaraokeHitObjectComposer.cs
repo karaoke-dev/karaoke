@@ -120,6 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                             new EditorMenuItemSpacer(),
                             new EditorMenuItem("Export to .lrc", MenuItemType.Standard, action: () => exportLyricManager.ExportToLrc()),
                             new EditorMenuItem("Export to text", MenuItemType.Standard, action: () => exportLyricManager.ExportToText()),
+                            new EditorMenuItem("Export to json", MenuItemType.Destructive, action: () => exportLyricManager.ExportToJson()),
                         }
                     },
                     new MenuItem("View")
