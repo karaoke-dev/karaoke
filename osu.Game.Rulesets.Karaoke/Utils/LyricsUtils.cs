@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 // add start tag at start of second lyric if does not have tag in there.
                 if (!secondTimeTag.Any(x => x.Index.Index == splitIndex && x.Index.State == TextIndex.IndexState.Start))
                 {
-                    var endTagIndex = new TextIndex(splitIndex, TextIndex.IndexState.Start);
+                    var endTagIndex = new TextIndex(splitIndex);
                     var startTag = TimeTagsUtils.GenerateCenterTimeTag(firstTag, secondTag, endTagIndex);
                     secondTimeTag.Add(startTag);
                 }
@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         #region Text tags
 
         public static bool HasTimedTimeTags(List<Lyric> lyrics)
-            => lyrics?.Any(l => LyricUtils.HasTimedTimeTags(l)) ?? false;
+            => lyrics?.Any(LyricUtils.HasTimedTimeTags) ?? false;
 
         #endregion
     }

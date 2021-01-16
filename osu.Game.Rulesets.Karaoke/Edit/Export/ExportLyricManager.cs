@@ -24,6 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
         public void ExportToLrc()
         {
             var exportStorage = storage.GetStorageForDirectory("lrc");
+
             using (var outputStream = exportStorage.GetStream($"{beatmap.Name}.lrc", FileAccess.Write, FileMode.Create))
             using (var sw = new StreamWriter(outputStream))
             {
@@ -33,12 +34,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
                     HitObjects = beatmap.HitObjects.OfType<HitObject>().ToList()
                 }));
             }
+
             exportStorage.OpenInNativeExplorer();
         }
 
         public void ExportToText()
         {
             var exportStorage = storage.GetStorageForDirectory("text");
+
             using (var outputStream = exportStorage.GetStream($"{beatmap.Name}.txt", FileAccess.Write, FileMode.Create))
             using (var sw = new StreamWriter(outputStream))
             {
@@ -48,6 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
                     HitObjects = beatmap.HitObjects.OfType<HitObject>().ToList()
                 }));
             }
+
             exportStorage.OpenInNativeExplorer();
         }
 
@@ -56,6 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
             // note : this is for develop testing purpose.
             // will be removed eventually
             var exportStorage = storage.GetStorageForDirectory("json");
+
             using (var outputStream = exportStorage.GetStream($"{beatmap.Name}.json", FileAccess.Write, FileMode.Create))
             using (var sw = new StreamWriter(outputStream))
             {
@@ -65,6 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
                     HitObjects = beatmap.HitObjects.OfType<HitObject>().ToList()
                 }));
             }
+
             exportStorage.OpenInNativeExplorer();
         }
     }

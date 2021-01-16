@@ -26,7 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.Layouts
             Assert.AreEqual(lyrics?.Select(x => x.LayoutIndex).ToArray(), actualLayoutIds);
         }
 
-        [TestCase(new[] { "[1000,3000]:枯れた世界に...", "[6000,8000]:枯れた世界に...", "[8000,12000]:あぁ、..." }, new[] { "[1000,3000]", "[6000,8000]", "[4000,12000]" })] // todo : second lyric start time should be 6000 but can be ignored now.
+        [TestCase(new[] { "[1000,3000]:枯れた世界に...", "[6000,8000]:枯れた世界に...", "[8000,12000]:あぁ、..." },
+            new[] { "[1000,3000]", "[6000,8000]", "[4000,12000]" })] // todo : second lyric start time should be 6000 but can be ignored now.
         public void TestApplyLayoutTime(string[] lyricTexts, string[] actualTimes)
         {
             var lyrics = TestCaseTagHelper.ParseLyrics(lyricTexts);

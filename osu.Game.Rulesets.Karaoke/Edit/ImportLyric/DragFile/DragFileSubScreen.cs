@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
                 Origin = Anchor.Centre,
                 RelativeSizeAxes = Axes.Both,
                 Padding = new MarginPadding(64),
-                Import = (path) =>
+                Import = path =>
                 {
                     Task.Factory.StartNew(async () =>
                     {
