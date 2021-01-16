@@ -29,6 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private DialogOverlay dialogOverlay;
         private LanguageSelectionDialog languageSelectionDialog;
         private ImportLyricManager importManager;
+        private LyricManager lyricManager;
+        private TimeTagManager timeTagManager;
 
         private LyricEditor editor;
 
@@ -53,15 +55,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
             base.Content.AddRange(new Drawable[]
             {
-                Content,
+                new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Child = Content,
+                },
                 dialogOverlay = new DialogOverlay(),
                 languageSelectionDialog = new LanguageSelectionDialog(),
                 importManager = new ImportLyricManager(),
+                lyricManager = new LyricManager(),
+                timeTagManager = new TimeTagManager()
             });
 
             Dependencies.Cache(dialogOverlay);
             Dependencies.Cache(languageSelectionDialog);
             Dependencies.Cache(importManager);
+            Dependencies.Cache(lyricManager);
+            Dependencies.Cache(timeTagManager);
         }
 
         [SetUp]
@@ -137,16 +147,5 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 }
             };
         });
-
-        [Test]
-        public void TestImportLyricFile()
-        {
-            AddAssert("Import lrc file.", () =>
-            {
-                //var temp = TestResources.GetTestLrcForImport("default");
-                //return editor.ImportLyricFile(new FileInfo(temp));
-                return true;
-            });
-        }
     }
 }
