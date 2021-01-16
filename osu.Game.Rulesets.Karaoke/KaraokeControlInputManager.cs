@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke
     public class KaraokeControlInputManager : DatabasedKeyBindingContainer<KaraokeAction>
     {
         public KaraokeControlInputManager(RulesetInfo ruleset)
-            : base(ruleset, 0, SimultaneousBindingMode.Unique)
+            : base(ruleset, 1, SimultaneousBindingMode.Unique)
         {
         }
     }

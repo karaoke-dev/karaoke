@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke
     public class KaraokeInputManager : RulesetInputManager<KaraokeSaitenAction>
     {
         public KaraokeInputManager(RulesetInfo ruleset)
-            : base(ruleset, 1, SimultaneousBindingMode.All)
+            : base(ruleset, 0, SimultaneousBindingMode.All)
         {
             UseParentInput = false;
         }
