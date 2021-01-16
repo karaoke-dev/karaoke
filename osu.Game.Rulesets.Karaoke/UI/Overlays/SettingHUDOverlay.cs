@@ -10,8 +10,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
-using osu.Game.Input.Bindings;
-using osu.Game.Rulesets.Configuration;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings;
@@ -31,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
 
             Children = new Drawable[]
             {
-                new KaraokeActionContainer(drawableRuleset)
+                new KaraokeControlInputManager(drawableRuleset.Ruleset.RulesetInfo)
                 {
                     RelativeSizeAxes = Axes.Both,
                     Child = controlLayer = new ControlLayer(drawableRuleset.Beatmap)
@@ -49,27 +47,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
         public void AddSettingsGroup(PlayerSettingsGroup group) => controlLayer.AddSettingsGroup(group);
 
         public void AddExtraOverlay(RightSideOverlay overlay) => controlLayer.AddExtraOverlay(overlay);
-
-        public class KaraokeActionContainer : DatabasedKeyBindingContainer<KaraokeAction>
-        {
-            private readonly DrawableKaraokeRuleset drawableRuleset;
-
-            protected IRulesetConfigManager Config;
-
-            public KaraokeActionContainer(DrawableKaraokeRuleset drawableRuleset)
-                : base(drawableRuleset.Ruleset.RulesetInfo, 0, SimultaneousBindingMode.Unique)
-            {
-                this.drawableRuleset = drawableRuleset;
-            }
-
-            protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-            {
-                var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-                dependencies.Cache(drawableRuleset.Config);
-                dependencies.Cache(drawableRuleset.Session);
-                return dependencies;
-            }
-        }
 
         public class ControlLayer : CompositeDrawable, IKeyBindingHandler<KaraokeAction>
         {

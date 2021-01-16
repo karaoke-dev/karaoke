@@ -2,9 +2,19 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.ComponentModel;
+using osu.Framework.Input.Bindings;
+using osu.Game.Input.Bindings;
 
 namespace osu.Game.Rulesets.Karaoke
 {
+    public class KaraokeControlInputManager : DatabasedKeyBindingContainer<KaraokeAction>
+    {
+        public KaraokeControlInputManager(RulesetInfo ruleset)
+            : base(ruleset, 0, SimultaneousBindingMode.Unique)
+        {
+        }
+    }
+
     public enum KaraokeAction
     {
         [Description("First Lyric")]
