@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                         RelativeSizeAxes = Axes.Both,
                         Colour = backgroundColour,
                     },
-                    new Container
+                    new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
                     {
                         RelativeSizeAxes = Axes.Both,
                         Padding = new MarginPadding { Top = Header.HEIGHT },
