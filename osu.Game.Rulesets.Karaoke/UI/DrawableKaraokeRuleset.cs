@@ -51,16 +51,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         protected virtual void InitialOverlay()
         {
-            // Editor should not generate hud overlay
-            if (Mods == null)
-                return;
-
-            // create overlay
-            var overlay = new SettingHUDOverlay(this);
-            foreach (var mod in Mods.OfType<IApplicableToSettingHUDOverlay>())
-                mod.ApplyToOverlay(overlay);
-
-            Overlays.Add(overlay);
+            // create setting overlay
+            Overlays.Add(new SettingHUDOverlay(this, Mods));
         }
 
         protected override Playfield CreatePlayfield() => new KaraokePlayfield();

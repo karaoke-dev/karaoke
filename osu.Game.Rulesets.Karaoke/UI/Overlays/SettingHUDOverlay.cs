@@ -1,6 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -11,7 +13,9 @@ using osu.Game.Beatmaps;
 using osu.Game.Input.Bindings;
 using osu.Game.Rulesets.Configuration;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Screens.Play.PlayerSettings;
 using osuTK;
 
@@ -21,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
     {
         private readonly ControlLayer controlLayer;
 
-        public SettingHUDOverlay(DrawableKaraokeRuleset drawableRuleset)
+        public SettingHUDOverlay(DrawableKaraokeRuleset drawableRuleset, IReadOnlyList<Mod> mods)
         {
             RelativeSizeAxes = Axes.Both;
 
@@ -37,6 +41,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
                     }
                 }
             };
+
+            foreach (var mod in mods.OfType<IApplicableToSettingHUDOverlay>())
+                mod.ApplyToOverlay(this);
         }
 
         public void AddSettingsGroup(PlayerSettingsGroup group) => controlLayer.AddSettingsGroup(group);
