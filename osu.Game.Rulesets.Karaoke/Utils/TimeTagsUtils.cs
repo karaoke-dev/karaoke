@@ -195,6 +195,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                         }
 
                         break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
 
                 // fix previous or next value to apply

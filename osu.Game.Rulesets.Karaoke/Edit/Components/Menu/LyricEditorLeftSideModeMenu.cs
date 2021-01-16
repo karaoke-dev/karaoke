@@ -25,7 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             bindableLyricEditorFastEditMode.BindValueChanged(e =>
             {
                 var newSelection = e.NewValue;
-                Items.OfType<ToggleMenuItem>().ForEach(x => {
+                Items.OfType<ToggleMenuItem>().ForEach(x =>
+                {
                     var match = x.Text.Value == getName(newSelection);
                     x.State.Value = match;
                 });

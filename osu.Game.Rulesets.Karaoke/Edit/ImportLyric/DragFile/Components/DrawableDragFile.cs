@@ -12,7 +12,6 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile.Components
 {
