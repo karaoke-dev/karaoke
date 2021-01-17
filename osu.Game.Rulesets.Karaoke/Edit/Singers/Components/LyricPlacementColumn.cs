@@ -49,17 +49,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                             CreateSingerInfo(singer).With(x => { x.RelativeSizeAxes = Axes.Both; }),
                             new Box
                             {
+                                Name = "Separator",
                                 RelativeSizeAxes = Axes.Both,
                                 Colour = colourProvider.Dark1,
                             },
-                            new SingerTimeline
-                            {
-                                RelativeSizeAxes = Axes.Both,
-                                Child = new LyricBlueprintContainer(composer, singer)
-                                {
-                                    RelativeSizeAxes = Axes.Both,
-                                }
-                            }
+                            CreateTimeLinePart(composer)
                         }
                     }
                 }
@@ -69,5 +63,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
         protected abstract float SingerInfoSize { get; }
 
         protected abstract Drawable CreateSingerInfo(Singer singer);
+
+        protected virtual Drawable CreateTimeLinePart(KaraokeHitObjectComposer composer)
+        {
+            return new SingerTimeline
+            {
+                RelativeSizeAxes = Axes.Both,
+                Child = new LyricBlueprintContainer(composer, singer)
+                {
+                    RelativeSizeAxes = Axes.Both,
+                }
+            };
+        }
     }
 }
