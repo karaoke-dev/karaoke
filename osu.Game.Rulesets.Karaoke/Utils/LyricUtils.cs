@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Extensions;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
@@ -183,6 +184,64 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var startTime = TimeTagUtils.FormattedString(minTimeTag);
             var endTime = TimeTagUtils.FormattedString(maxTimeTag);
             return $"{startTime} - {endTime}";
+        }
+
+        #endregion
+
+        #region Singer
+
+        public static bool AddSinger(Lyric lyric, Singer singer)
+        {
+            if (lyric == null)
+                throw new ArgumentNullException(nameof(lyric));
+
+            if (singer == null)
+                throw new ArgumentNullException(nameof(singer));
+
+            if (singer.ID <= 0)
+                throw new ArgumentOutOfRangeException(nameof(singer.ID));
+
+            // do nothing if already contains singer index.
+            if (ContainsSinger(lyric, singer))
+                return false;
+
+            var newSingerList = lyric.Singers?.ToList() ?? new List<int>();
+            newSingerList.Add(singer.ID);
+            lyric.Singers = newSingerList.ToArray();
+
+            return true;
+        }
+
+        public static bool RemoveSinger(Lyric lyric, Singer singer)
+        {
+            if (lyric == null)
+                throw new ArgumentNullException(nameof(lyric));
+
+            if (singer == null)
+                throw new ArgumentNullException(nameof(singer));
+
+            if (singer.ID <= 0)
+                throw new ArgumentOutOfRangeException(nameof(singer.ID));
+
+            // do nothing if not contains singer index.
+            if (!ContainsSinger(lyric, singer))
+                return false;
+
+            var newSingerIds = lyric.Singers.Where(x => x != singer.ID).ToArray();
+            lyric.Singers = newSingerIds;
+
+            return true;
+        }
+
+        public static bool ContainsSinger(Lyric lyric, Singer singer)
+        {
+            if (lyric == null)
+                throw new ArgumentNullException(nameof(lyric));
+
+            if (singer == null)
+                throw new ArgumentNullException(nameof(singer));
+
+            return lyric.Singers?.Contains(singer.ID) ?? false;
         }
 
         #endregion

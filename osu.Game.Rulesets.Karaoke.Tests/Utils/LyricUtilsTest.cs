@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
@@ -188,6 +189,73 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             };
 
             Assert.AreEqual(LyricUtils.TimeTagTimeFormattedString(lyric), format);
+        }
+
+        #endregion
+
+        #region Singer
+
+        [TestCase(null, "[1]name:Singer1", true, new[] { 1 })]
+        [TestCase(new[] { "[1]name:Singer1" }, "[1]name:Singer1", false, new[] { 1 })]
+        [TestCase(new[] { "[1]name:Singer1" }, "[2]name:Singer2", true, new[] { 1, 2 })]
+        [TestCase(null, "[0]name:Singer0", false, null)] // should not add invalid singer.
+        [TestCase(new[] { "[1]name:Singer1" }, "[0]name:Singer0", false, null)] // should not add invalid singer.
+        public void TestAddSinger(string[] existSingers, string addSinger, bool isAdded, int[] actualSingers)
+        {
+            var singer = TestCaseTagHelper.ParseSinger(addSinger);
+            var lyric = new Lyric
+            {
+                Singers = TestCaseTagHelper.ParseSingers(existSingers)?.Select(x => x.ID).ToArray()
+            };
+
+            try
+            {
+                Assert.AreEqual(LyricUtils.AddSinger(lyric, singer), isAdded);
+                Assert.AreEqual(lyric.Singers, actualSingers);
+            }
+            catch
+            {
+                Assert.IsNull(actualSingers);
+            }
+        }
+
+        [TestCase(new[] { "[1]name:Singer1" }, "[1]name:Singer1", true, new int[] { })]
+        [TestCase(new[] { "[1]name:Singer1" }, "[2]name:Singer2", false, new[] { 1 })]
+        [TestCase(new string[] { }, "[1]name:Singer1", false, new int[] { })]
+        [TestCase(null, "[1]name:Singer1", false, null)] // null singer index will not be initialize if remove singer.
+        [TestCase(null, "[0]name:Singer0", false, null)] // should not remove invalid singer.
+        [TestCase(new[] { "[1]name:Singer1" }, "[0]name:Singer0", false, null)] // should not remove invalid singer.
+        public void TestRemoveSinger(string[] existSingers, string removeSinger, bool isAdded, int[] actualSingers)
+        {
+            var singer = TestCaseTagHelper.ParseSinger(removeSinger);
+            var lyric = new Lyric
+            {
+                Singers = TestCaseTagHelper.ParseSingers(existSingers)?.Select(x => x.ID).ToArray()
+            };
+
+            try
+            {
+                Assert.AreEqual(LyricUtils.RemoveSinger(lyric, singer), isAdded);
+                Assert.AreEqual(lyric.Singers, actualSingers);
+            }
+            catch
+            {
+                Assert.IsNull(actualSingers);
+            }
+        }
+
+        [TestCase(new[] { "[1]name:Singer1" }, "[1]name:Singer1", true)]
+        [TestCase(new[] { "[1]name:Singer1" }, "[2]name:Singer2", false)]
+        [TestCase(new string[] { }, "[1]name:Singer1", false)]
+        [TestCase(null, "[1]name:Singer1", false)]
+        public void TestContainsSinger(string[] existSingers, string compareSinger, bool isContain)
+        {
+            var singer = TestCaseTagHelper.ParseSinger(compareSinger);
+            var lyric = new Lyric
+            {
+                Singers = TestCaseTagHelper.ParseSingers(existSingers)?.Select(x => x.ID).ToArray()
+            };
+            Assert.AreEqual(LyricUtils.ContainsSinger(lyric, singer), isContain);
         }
 
         #endregion
