@@ -28,6 +28,6 @@
   <PropertyGroup Label="Project">
     <OutputType>WinExe</OutputType>
     <RootNamespace>osu.Game.Rulesets.Karaoke.Tests</RootNamespace>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 </Project>
