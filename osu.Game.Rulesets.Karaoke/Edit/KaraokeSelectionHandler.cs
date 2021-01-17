@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
@@ -12,13 +11,12 @@ using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
-using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Screens.Edit.Compose;
 using osu.Game.Screens.Edit.Compose.Components;
 using osu.Game.Skinning;
 
@@ -30,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private IPositionCalculator calculator { get; set; }
 
         [Resolved]
-        private IPlacementHandler placementHandler { get; set; }
+        private ISkinSource source { get; set; }
 
         [Resolved]
         private HitObjectComposer composer { get; set; }
@@ -41,14 +39,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Resolved]
         private LyricManager lyricManager { get; set; }
 
+        [Resolved]
+        private SingerManager singerManager { get; set; }
+
         protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint> selection)
         {
             if (selection.All(x => x is LyricSelectionBlueprint))
             {
+                var selectedObject = EditorBeatmap.SelectedHitObjects.Cast<Lyric>().OrderBy(x => x.StartTime);
                 return new[]
                 {
-                    createLayoutMenuItem(),
-                    createFontMenuItem()
+                    createLayoutMenuItem(selectedObject),
+                    createSingerMenuItem(selectedObject)
                 };
             }
 
@@ -92,12 +94,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             });
         }
 
-        private MenuItem createLayoutMenuItem()
+        private MenuItem createLayoutMenuItem(IEnumerable<Lyric> lyrics)
         {
             var layoutDictionary = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
+            var selectedLayoutIndexes = lyrics.Select(x => x.LayoutIndex).Distinct().ToList();
+            var selectedLayoutIndex = selectedLayoutIndexes.Count() == 1 ? selectedLayoutIndexes.FirstOrDefault() : -1;
+
             return new OsuMenuItem("Layout")
             {
-                Items = layoutDictionary.Select(x => new TernaryStateMenuItem(x.Value, MenuItemType.Standard, state =>
+                Items = layoutDictionary.Select(x => new TernaryStateMenuItem(x.Value, selectedLayoutIndex == x.Key ? MenuItemType.Highlighted : MenuItemType.Standard, state =>
                 {
                     if (state != TernaryState.True)
                         return;
@@ -108,36 +113,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             };
         }
 
-        private MenuItem createFontMenuItem()
+        private MenuItem createSingerMenuItem(IEnumerable<Lyric> lyrics)
         {
-            var fontDictionary = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Style)?.Value;
-            return new OsuMenuItem("Font")
+            return new OsuMenuItem("Singer")
             {
-                Items = fontDictionary.Select(x => new TernaryStateMenuItem(x.Value, MenuItemType.Standard, state =>
-                {
-                    // todo : SingerUtils not using in here, and this logic should be combined into singer manager.
-                    ChangeHandler.BeginChange();
-                    
-                    if (state == TernaryState.True)
-                        EditorBeatmap.SelectedHitObjects.Cast<Lyric>().ForEach(l => l.Singers = SingerUtils.GetSingersIndex(x.Key));
-
-                    ChangeHandler.EndChange();
-                })).ToArray()
+                Items = singerManager.CreateSingerContextMenu(lyrics.ToList()).ToList()
             };
-        }
-
-        private ISkinSource source;
-
-        [BackgroundDependencyLoader]
-        private void load(ISkinSource source)
-        {
-            this.source = source;
         }
 
         public override bool HandleMovement(MoveSelectionEvent moveEvent)
         {
+            // Only note can be moved.
             if (!(moveEvent.Blueprint is NoteSelectionBlueprint noteSelectionBlueprint))
-                return true;
+                return false;
 
             var lastTone = noteSelectionBlueprint.DrawableObject.HitObject.Tone;
             performColumnMovement(lastTone, moveEvent);
