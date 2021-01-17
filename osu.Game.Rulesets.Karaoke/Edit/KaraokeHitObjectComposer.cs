@@ -14,6 +14,9 @@ using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
 using osu.Game.Rulesets.Karaoke.Edit.Export;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -44,6 +47,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly ExportLyricManager exportLyricManager;
 
+        [Cached]
+        private readonly NoteManager noteManager;
+
+        [Cached]
+        private readonly LyricManager lyricManager;
+
+        [Cached]
+        private readonly SingerManager singerManager;
+
         [Resolved]
         private Editor editor { get; set; }
 
@@ -56,6 +68,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
 
             AddInternal(exportLyricManager = new ExportLyricManager());
+            AddInternal(noteManager = new NoteManager());
+            AddInternal(lyricManager = new LyricManager());
+            AddInternal(singerManager = new SingerManager());
             LayerBelowRuleset.Add(new KaraokeLyricEditor(ruleset)
             {
                 RelativeSizeAxes = Axes.Both

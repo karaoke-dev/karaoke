@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -90,6 +91,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             changeHandler?.EndChange();
 
             return true;
+        }
+
+        public void ChangeLayout(List<Lyric> lyrics, int layout)
+        {
+            changeHandler?.BeginChange();
+
+            lyrics.ForEach(l => l.LayoutIndex = layout);
+
+            changeHandler?.EndChange();
         }
     }
 }
