@@ -22,6 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 
         public SingerRearrangeableListContainer()
         {
+            ScrollContainer.Padding = new MarginPadding { Bottom = 64 + spacing };
             ScrollContainer.Add(new Container
             {
                 Masking = true,
@@ -33,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                 Padding = new MarginPadding { Top = spacing, Left = 22 },
                 Children = new Drawable[]
                 {
-                    new CreateNewLyricPlacementColumn()
+                    new CreateNewLyricPlacementColumn
                     {
                         RelativeSizeAxes = Axes.Both,
                     }

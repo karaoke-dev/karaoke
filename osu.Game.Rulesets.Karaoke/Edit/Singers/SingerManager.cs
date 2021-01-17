@@ -28,6 +28,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
+        public SingerManager()
+        {
+            Singers.BindCollectionChanged((a, b) =>
+            {
+                // todo : might update id in here?
+            });
+        }
+
         [BackgroundDependencyLoader]
         private void load()
         {
@@ -132,12 +140,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 
         public void CreateSinger(Singer singer)
         {
-            // todo : implemented
+            // todo : should add id.
+            Singers.Add(singer);
         }
 
         public void DeleteSinger(Singer singer)
         {
-            // todo : implemented
+            // todo : should remove lyric with target singer id also.
+            Singers.Remove(singer);
         }
     }
 }
