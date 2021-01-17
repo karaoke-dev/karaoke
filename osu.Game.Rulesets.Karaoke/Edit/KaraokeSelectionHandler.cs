@@ -10,6 +10,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
@@ -36,6 +37,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         [Resolved]
         private NoteManager noteManager { get; set; }
+
+        [Resolved]
+        private LyricManager lyricManager { get; set; }
 
         protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint> selection)
         {
@@ -84,26 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             return new OsuMenuItem("Combine", MenuItemType.Standard, () =>
             {
-                // Select at least two object.
-                if (selectedObject.Count() < 2)
-                    return;
-
-                ChangeHandler.BeginChange();
-
-                // Recover end time
-                var firstObject = selectedObject.FirstOrDefault();
-                if (firstObject != null)
-                    firstObject.Duration = selectedObject.Sum(x => x.Duration);
-
-                ChangeHandler.EndChange();
-
-                // Delete objects
-                var deleteObjects = selectedObject.Skip(1).ToList();
-
-                foreach (var deleteObject in deleteObjects)
-                {
-                    placementHandler.Delete(deleteObject);
-                }
+                noteManager.CombineNote(selectedObject.ToList());
             });
         }
 
@@ -114,12 +99,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             {
                 Items = layoutDictionary.Select(x => new TernaryStateMenuItem(x.Value, MenuItemType.Standard, state =>
                 {
-                    ChangeHandler.BeginChange();
+                    if (state != TernaryState.True)
+                        return;
 
-                    if (state == TernaryState.True)
-                        EditorBeatmap.SelectedHitObjects.Cast<Lyric>().ForEach(l => l.LayoutIndex = x.Key);
-
-                    ChangeHandler.EndChange();
+                    var lyrics = EditorBeatmap.SelectedHitObjects.OfType<Lyric>().ToList();
+                    lyricManager.ChangeLayout(lyrics, x.Key);
                 })).ToArray()
             };
         }
@@ -131,9 +115,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             {
                 Items = fontDictionary.Select(x => new TernaryStateMenuItem(x.Value, MenuItemType.Standard, state =>
                 {
-                    ChangeHandler.BeginChange();
-
                     // todo : SingerUtils not using in here, and this logic should be combined into singer manager.
+                    ChangeHandler.BeginChange();
+                    
                     if (state == TernaryState.True)
                         EditorBeatmap.SelectedHitObjects.Cast<Lyric>().ForEach(l => l.Singers = SingerUtils.GetSingersIndex(x.Key));
 

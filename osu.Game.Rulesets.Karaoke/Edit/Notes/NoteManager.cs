@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
+using osu.Game.Screens.Edit.Compose;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Notes
 {
@@ -16,8 +18,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Notes
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
-        [Resolved(CanBeNull = true)]
+        [Resolved]
         private IEditorChangeHandler changeHandler { get; set; }
+
+        [Resolved]
+        private IPlacementHandler placementHandler { get; set; }
 
         public void ChangeDisplay(Note note, bool display)
         {
@@ -55,6 +60,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Notes
             beatmap?.Add(firstNote);
             beatmap?.Add(secondNote);
             beatmap?.Remove(note);
+        }
+
+        public void CombineNote(List<Note> notes)
+        {
+            // todo : might use NotesUtils.CombineNote(notes);
+
+            // Select at least two object.
+            if (notes.Count() < 2)
+                return;
+
+            changeHandler.BeginChange();
+
+            // Recover end time
+            var firstObject = notes.FirstOrDefault();
+            if (firstObject != null)
+                firstObject.Duration = notes.Sum(x => x.Duration);
+
+            changeHandler.EndChange();
+
+            // Delete objects
+            var deleteObjects = notes.Skip(1).ToList();
+
+            foreach (var deleteObject in deleteObjects)
+            {
+                placementHandler.Delete(deleteObject);
+            }
         }
     }
 }
