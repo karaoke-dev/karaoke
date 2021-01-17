@@ -6,6 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Cursor;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Singers;
@@ -24,6 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private readonly EditorBeatmap editorBeatmap;
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
+
+        private DialogOverlay dialogOverlay;
 
         public TestSceneSinger()
         {
@@ -63,6 +66,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         {
             Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
 
+            base.Content.AddRange(new Drawable[]
+            {
+                new OsuContextMenuContainer
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Child = Content
+                },
+                dialogOverlay = new DialogOverlay()
+            });
+
             var beatDivisor = new BindableBeatDivisor
             {
                 Value = Beatmap.Value.BeatmapInfo.BeatDivisor
@@ -70,12 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             var editorClock = new EditorClock(Beatmap.Value, beatDivisor) { IsCoupled = false };
             Dependencies.CacheAs(editorClock);
             Dependencies.Cache(beatDivisor);
-
-            base.Content.Add(new OsuContextMenuContainer
-            {
-                RelativeSizeAxes = Axes.Both,
-                Child = Content
-            });
+            Dependencies.Cache(dialogOverlay);
         }
 
         [SetUp]

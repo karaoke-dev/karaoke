@@ -129,5 +129,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 
             return (bool)lyric.Singers?.Contains(singer.ID);
         }
+
+        public void CreateSinger(Singer singer)
+        {
+            // todo : implemented
+        }
+
+        public void DeleteSinger(Singer singer)
+        {
+            // todo : implemented
+        }
     }
 }
