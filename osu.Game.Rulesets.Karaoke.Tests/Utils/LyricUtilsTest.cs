@@ -258,6 +258,21 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(LyricUtils.ContainsSinger(lyric, singer), isContain);
         }
 
+        [TestCase(new[] { "[1]name:Singer1" }, new[] { "[1]name:Singer1", "[1]name:Singer1" }, true)]
+        [TestCase(new[] { "[1]name:Singer1" }, new[] { "[1]name:Singer1" }, true)]
+        [TestCase(new[] { "[1]name:Singer1" }, new[] { "[2]name:Singer2" }, false)]
+        [TestCase(new string[] { }, new[] { "[1]name:Singer1" }, true)]
+        [TestCase(null, new[] { "[1]name:Singer1" }, true)]
+        public void TestOnlyContainsSingers(string[] existSingers, string[] compareSingers, bool isContain)
+        {
+            var singers = TestCaseTagHelper.ParseSingers(compareSingers).ToList();
+            var lyric = new Lyric
+            {
+                Singers = TestCaseTagHelper.ParseSingers(existSingers)?.Select(x => x.ID).ToArray()
+            };
+            Assert.AreEqual(LyricUtils.OnlyContainsSingers(lyric, singers), isContain);
+        }
+
         #endregion
     }
 }

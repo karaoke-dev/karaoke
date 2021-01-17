@@ -244,6 +244,15 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return lyric.Singers?.Contains(singer.ID) ?? false;
         }
 
+        public static bool OnlyContainsSingers(Lyric lyric, List<Singer> singers)
+        {
+            if (singers == null)
+                throw new ArgumentNullException(nameof(singers));
+
+            var singerIds = singers.Select(x => x.ID);
+            return lyric.Singers?.All(x => singerIds.Contains(x)) ?? true;
+        }
+
         #endregion
     }
 }
