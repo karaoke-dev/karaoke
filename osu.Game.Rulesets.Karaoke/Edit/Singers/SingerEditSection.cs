@@ -45,12 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                 }
             };
 
-            singerManager.Singers.BindCollectionChanged((a, b) =>
-            {
-                var newSingers = singerManager.Singers.ToList();
-                singerContainers.Items.Clear();
-                singerContainers.Items.AddRange(newSingers);
-            }, true);
+            singerContainers.Items.BindTo(singerManager.Singers);
         }
     }
 }

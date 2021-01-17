@@ -1,12 +1,16 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
@@ -22,7 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
         {
         }
 
-        // todo : implement singer info here
         protected override float SingerInfoSize => 178;
 
         protected override Drawable CreateSingerInfo(Singer singer)
@@ -33,8 +36,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
             };
         }
 
-        internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip
+        internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip, IHasContextMenu
         {
+            [Resolved]
+            private SingerManager singerManager { get; set; }
+
+            [Resolved]
+            private DialogOverlay dialogOverlay { get; set; }
+
             private readonly Singer singer;
 
             public DrawableSingerInfo(Singer singer)
@@ -108,6 +117,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
             public object TooltipContent => singer;
 
             public ITooltip GetCustomTooltip() => new SingerToolTip();
+
+            public MenuItem[] ContextMenuItems => new[]
+            {
+                 new OsuMenuItem("Edit singer info", MenuItemType.Standard, () => { }),
+                 new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
+                 {
+                     dialogOverlay.Push(new DeleteSingerDialog(isOK => {
+                         if (isOK)
+                             singerManager.DeleteSinger(singer);
+                     }));
+                 }),
+            };
         }
     }
 }
