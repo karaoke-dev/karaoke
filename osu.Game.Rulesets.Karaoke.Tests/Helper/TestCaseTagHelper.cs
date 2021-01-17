@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Helper
@@ -17,8 +18,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
         /// <example>
         /// [0,3]:ruby
         /// </example>
-        /// <param name="str"></param>
-        /// <returns><see cref="RubyTag"/></returns>
+        /// <param name="str">Ruby tag string format</param>
+        /// <returns><see cref="RubyTag"/>Ruby tag object</returns>
         public static RubyTag ParseRubyTag(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -47,8 +48,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
         /// <example>
         /// [0,3]:romaji
         /// </example>
-        /// <param name="str"></param>
-        /// <returns><see cref="RomajiTag"/></returns>
+        /// <param name="str">Romaji tag string format</param>
+        /// <returns><see cref="RomajiTag"/>Romaji tag object</returns>
         public static RomajiTag ParseRomajiTag(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -77,8 +78,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
         /// <example>
         /// [0,start]:1000
         /// </example>
-        /// <param name="str"></param>
-        /// <returns><see cref="TimeTag"/></returns>
+        /// <param name="str">Time tag string format</param>
+        /// <returns><see cref="TimeTag"/>Time tag object</returns>
         public static TimeTag ParseTimeTag(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -103,8 +104,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
         /// <example>
         /// [1000,3000]:karaoke
         /// </example>
-        /// <param name="str"></param>
-        /// <returns><see cref="TimeTag"/></returns>
+        /// <param name="str">Lyric string format</param>
+        /// <returns><see cref="Lyric"/>Lyric object</returns>
         public static Lyric ParseLyric(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -132,6 +133,32 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             };
         }
 
+        /// <summary>
+        /// Process test case singer string format into <see cref="Singer"/>
+        /// </summary>
+        /// <example>
+        /// [0]name:singer001
+        /// [0]romaji:singer001
+        /// [0]eg:singer001
+        /// </example>
+        /// <param name="str">Singer string format</param>
+        /// <returns><see cref="Singer"/>sSinger object</returns>
+        public static Singer ParseSinger(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return new Singer(0);
+
+            var regex = new Regex("(?<id>[-0-9]+)]");
+            var result = regex.Match(str);
+            if (!result.Success)
+                throw new ArgumentException(nameof(str));
+
+            // todo : implementation
+            var id = int.Parse(result.Groups["id"]?.Value);
+
+            return new Singer(id);
+        }
+
         public static RubyTag[] ParseRubyTags(string[] strings)
             => strings?.Select(ParseRubyTag).ToArray();
 
@@ -143,5 +170,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
 
         public static Lyric[] ParseLyrics(string[] strings)
             => strings?.Select(ParseLyric).ToArray();
+
+        public static Singer[] ParseSingers(string[] strings)
+            => strings?.Select(ParseSinger).ToArray();
     }
 }
