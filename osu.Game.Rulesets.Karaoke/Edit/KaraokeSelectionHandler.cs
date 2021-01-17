@@ -10,6 +10,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI;
@@ -32,6 +33,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         [Resolved]
         private HitObjectComposer composer { get; set; }
+
+        [Resolved]
+        private NoteManager noteManager { get; set; }
 
         protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint> selection)
         {
@@ -69,7 +73,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             var display = selectedObject.Count(x => x.Display) >= selectedObject.Count(x => !x.Display);
             var displayText = display ? "Hide" : "Show";
             return new OsuMenuItem($"{displayText} {selectedObject.Count()} notes.", display ? MenuItemType.Destructive : MenuItemType.Standard,
-                () => { SelectedBlueprints.OfType<NoteSelectionBlueprint>().ForEach(x => x.ChangeDisplay(!display)); });
+                () =>
+                {
+                    var selectedNotes = SelectedBlueprints.Select(x => x.HitObject).OfType<Note>().ToList();
+                    noteManager.ChangeDisplay(selectedNotes, !display);
+                });
         }
 
         private MenuItem createCombineNoteMenuItem(IEnumerable<Note> selectedObject)
