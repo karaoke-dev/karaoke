@@ -15,8 +15,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
     public class SingerRearrangeableListContainer : OsuRearrangeableListContainer<Singer>
     {
+        private const float spacing = 5;
+
         protected override OsuRearrangeableListItem<Singer> CreateOsuDrawable(Singer item)
             => new SingerRearrangeableListItem(item);
+
+        public SingerRearrangeableListContainer()
+        {
+            ScrollContainer.Add(new Container
+            {
+                Masking = true,
+                CornerRadius = 5,
+                RelativeSizeAxes = Axes.X,
+                Height = 64,
+                Anchor = Anchor.y2,
+                Origin = Anchor.y0,
+                Padding = new MarginPadding { Top = spacing, Left = 22 },
+                Children = new Drawable[]
+                {
+                    new CreateNewLyricPlacementColumn()
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                    }
+                }
+            });
+        }
 
         public class SingerRearrangeableListItem : OsuRearrangeableListItem<Singer>
         {
@@ -35,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                     CornerRadius = 5,
                     RelativeSizeAxes = Axes.X,
                     Height = 90,
-                    Margin = new MarginPadding { Top = 5 },
+                    Margin = new MarginPadding { Top = spacing },
                     Children = new Drawable[]
                     {
                         dragAlert = new Box
