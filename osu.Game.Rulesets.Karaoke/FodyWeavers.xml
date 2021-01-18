@@ -1,0 +1,6 @@
+<Weavers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="FodyWeavers.xsd">
+  <ILMerge>
+    <FullImport>true</FullImport>
+    <IncludeAssemblies>LanguageDetection|Octokit|osu.Framework.KaraokeFont|osu.Framework.Microphone|NWaves|LyricMaker|NicoKaraParser|WanaKanaSharp|Zipangu</IncludeAssemblies>
+  </ILMerge>
+</Weavers>
