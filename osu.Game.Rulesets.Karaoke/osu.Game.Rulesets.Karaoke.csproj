@@ -30,8 +30,12 @@
       <_Parameter1>$(AssemblyName).Tests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+  <!--We need to copy framework assembly to the output, else ILRepack will fail to resolve framework assembly.-->
+  <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="Fody" Version="6.3.0" PrivateAssets="All"/>
-    <PackageReference Include="ILMerge.Fody" Version="1.15.0" PrivateAssets="All"/>
+    <PackageReference Include="Fody" Version="6.3.0" PrivateAssets="All" />
+    <PackageReference Include="ILMerge.Fody" Version="1.16.0" PrivateAssets="All" />
   </ItemGroup>
 </Project>
