@@ -40,7 +40,7 @@
     <!-- the ILMergePath property points to the location of ILMerge.exe console application -->
     <Exec 
       WorkingDirectory="$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)"
-      Command="$(ILMergeConsolePath) /out:osu.Game.Rulesets.Karaoke.Packed.dll osu.Game.Rulesets.Karaoke.dll LanguageDetection.dll Octokit.dll osu.Framework.KaraokeFont.dll osu.Framework.Microphone.dll NWaves.dll LyricMaker.dll NicoKaraParser.dll WanaKanaSharp.dll Zipangu.dll"
+      Command="$(ILMergeConsolePath) /log /out:osu.Game.Rulesets.Karaoke.Packed.dll osu.Game.Rulesets.Karaoke.dll LanguageDetection.dll Octokit.dll osu.Framework.KaraokeFont.dll osu.Framework.Microphone.dll NWaves.dll LyricMaker.dll NicoKaraParser.dll WanaKanaSharp.dll Zipangu.dll"
       ></Exec>
   </Target>
 </Project>
