@@ -59,6 +59,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             foreach (var obj in beatmap.HitObjects)
                 Schedule(() => addHitObject(obj));
+
+            if (lyricManager != null)
+                container.OnOrderChanged += lyricManager.ChangeLyricOrder;
         }
 
         protected override void LoadComplete()

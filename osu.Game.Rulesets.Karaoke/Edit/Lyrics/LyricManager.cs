@@ -22,6 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(CanBeNull = true)]
         private IEditorChangeHandler changeHandler { get; set; }
 
+        protected IEnumerable<Lyric> Lyrics => beatmap.HitObjects.OfType<Lyric>();
+
         /// <summary>
         /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.Language"/> and apply on them.
         /// </summary>
@@ -100,6 +102,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             lyrics.ForEach(l => l.LayoutIndex = layout);
 
             changeHandler?.EndChange();
+        }
+
+        public void ChangeLyricOrder(Lyric lyric, int newIndex)
+        {
+            var oldOrder = lyric.Order;
+            var newOrder = newIndex + 1; // order is start from 1
+            IHasOrdersUtils.ChangeOrder(Lyrics.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
+            {
+                // todo : not really sure should call update?
+            });
         }
     }
 }

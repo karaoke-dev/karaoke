@@ -62,6 +62,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                 case LyricFastEditMode.TimeTag:
                     return "Time tag display";
 
+                case LyricFastEditMode.Order:
+                    return "Lyric order";
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mode));
             }
