@@ -22,6 +22,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             return pitch / 20 - 7;
         }
 
-        public static SingerMetadata GetSingers(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.SingerMetadata;
+        public static Singer[] GetSingers(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.Singers;
     }
 }

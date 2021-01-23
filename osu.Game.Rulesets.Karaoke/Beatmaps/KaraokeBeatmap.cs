@@ -15,11 +15,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
     {
         public CultureInfo[] AvailableTranslates { get; set; } = { };
 
-        public SingerMetadata SingerMetadata { get; set; } = new SingerMetadata();
+        public Singer[] Singers { get; set; } = { };
 
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {
-            int singers = SingerMetadata.Singers.Count;
+            int singers = Singers.Length;
             int lyrics = HitObjects.Count(s => s is Lyric);
 
             var defaultStatistic = new List<BeatmapStatistic>
