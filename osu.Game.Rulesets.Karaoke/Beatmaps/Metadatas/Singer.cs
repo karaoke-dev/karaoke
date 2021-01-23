@@ -19,6 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 
         public int ID { get; private set; }
 
+        public int Order { get; set; }
+
         public string Name { get; set; }
 
         public string RomajiName { get; set; }
