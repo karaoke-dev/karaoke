@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -12,6 +13,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
@@ -28,14 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
-        public SingerManager()
-        {
-            Singers.BindCollectionChanged((a, b) =>
-            {
-                // todo : might update id in here?
-            });
-        }
-
         [BackgroundDependencyLoader]
         private void load()
         {
@@ -43,6 +37,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
             {
                 Singers.AddRange(karaokeBeatmap.Singers);
             }
+        }
+
+        public void ChangeOrder(Singer singer, int newIndex)
+        {
+            var oldOrder = singer.Order;
+            var newOrder = newIndex + 1; // order is start from 1
+            IHasOrdersUtils.ChangeOrder(Singers.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
+            {
+                // todo : not really sure should call update?
+            });
         }
 
         public IEnumerable<MenuItem> CreateSingerContextMenu(List<Lyric> lyrics)
@@ -140,14 +144,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 
         public void CreateSinger(Singer singer)
         {
-            // todo : should add id.
+            singer.Order = IHasOrdersUtils.GetMaxOrderNumber(Singers.ToArray()) + 1;
             Singers.Add(singer);
         }
 
         public void DeleteSinger(Singer singer)
         {
-            // todo : should remove lyric with target singer id also.
             Singers.Remove(singer);
+
+            // should re-sort order
+            IHasOrdersUtils.ResortOrder(Singers.ToArray());
         }
     }
 }

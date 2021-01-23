@@ -38,6 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             {
                 new Singer(1)
                 {
+                    Order = 1,
                     Name = "初音ミク",
                     RomajiName = "Hatsune Miku",
                     EnglishName = "Miku",
@@ -46,6 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 },
                 new Singer(2)
                 {
+                    Order = 2,
                     Name = "ハク",
                     RomajiName = "haku",
                     EnglishName = "andy840119",
@@ -54,6 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 },
                 new Singer(3)
                 {
+                    Order = 3,
                     Name = "ゴミパソコン",
                     RomajiName = "gomi-pasokonn",
                     EnglishName = "garbage desktop",

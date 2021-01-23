@@ -13,6 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
 
         protected OrderRearrangeableListContainer()
         {
+            // this collection change event cannot directly regist in parent bindable.
+            // So regist in here.
             Items.CollectionChanged += collectionChanged;
         }
 

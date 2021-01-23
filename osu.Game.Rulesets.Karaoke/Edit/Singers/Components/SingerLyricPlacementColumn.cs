@@ -44,6 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
             [Resolved]
             private DialogOverlay dialogOverlay { get; set; }
 
+            private readonly OsuSpriteText singerName;
+
             private readonly Singer singer;
 
             public DrawableSingerInfo(Singer singer)
@@ -88,10 +90,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                                     Padding = new MarginPadding { Left = 5 },
                                     Children = new[]
                                     {
-                                        new OsuSpriteText
+                                        singerName = new OsuSpriteText
                                         {
                                             Name = "Singer name",
-                                            Text = singer.Name,
                                             Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 20),
                                         },
                                         new OsuSpriteText
@@ -112,6 +113,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                         }
                     },
                 };
+
+                singer.OrderBindable.BindValueChanged(x =>
+                {
+                    singerName.Text = $"#{singer.Order} {singer.Name}";
+                }, true);
             }
 
             public object TooltipContent => singer;

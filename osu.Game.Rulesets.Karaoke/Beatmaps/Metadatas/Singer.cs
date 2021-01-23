@@ -1,6 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using Newtonsoft.Json;
+using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osuTK.Graphics;
 
@@ -19,7 +21,17 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 
         public int ID { get; private set; }
 
-        public int Order { get; set; }
+        [JsonIgnore]
+        public readonly Bindable<int> OrderBindable = new Bindable<int>();
+
+        /// <summary>
+        /// Order
+        /// </summary>
+        public int Order
+        {
+            get => OrderBindable.Value;
+            set => OrderBindable.Value = value;
+        }
 
         public string Name { get; set; }
 
