@@ -2,11 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public class DrawableLyricEditList : OsuRearrangeableListContainer<Lyric>
+    public class DrawableLyricEditList : OrderRearrangeableListContainer<Lyric>
     {
         public const int SPACING = 2;
 

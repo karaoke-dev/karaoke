@@ -46,6 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
             };
 
             singerContainers.Items.BindTo(singerManager.Singers);
+            singerContainers.OnOrderChanged += singerManager.ChangeOrder;
         }
     }
 }

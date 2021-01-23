@@ -10,10 +10,11 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Components;
+using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
-    public class SingerRearrangeableListContainer : OsuRearrangeableListContainer<Singer>
+    public class SingerRearrangeableListContainer : OrderRearrangeableListContainer<Singer>
     {
         private const float spacing = 5;
 
