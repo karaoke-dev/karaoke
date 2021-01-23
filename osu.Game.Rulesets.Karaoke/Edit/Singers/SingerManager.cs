@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         {
             if (beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap)
             {
-                Singers.AddRange(karaokeBeatmap.SingerMetadata.Singers);
+                Singers.AddRange(karaokeBeatmap.Singers);
             }
         }
 

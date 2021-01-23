@@ -9,6 +9,7 @@ using osu.Game.Graphics.Cursor;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
@@ -33,30 +34,33 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             var beatmap = new TestKaraokeBeatmap(null);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
             // todo : insert singers
-            karaokeBeatmap.SingerMetadata.CreateSinger(singer =>
+            karaokeBeatmap.Singers = new[]
             {
-                singer.Name = "初音ミク";
-                singer.RomajiName = "Hatsune Miku";
-                singer.EnglishName = "Miku";
-                singer.Description = "International superstar vocaloid Hatsune Miku.";
-                singer.Color = Colour4.AliceBlue;
-            });
-            karaokeBeatmap.SingerMetadata.CreateSinger(singer =>
-            {
-                singer.Name = "ハク";
-                singer.RomajiName = "haku";
-                singer.EnglishName = "andy840119";
-                singer.Description = "Creator of this ruleset.";
-                singer.Color = Colour4.Yellow;
-            });
-            karaokeBeatmap.SingerMetadata.CreateSinger(singer =>
-            {
-                singer.Name = "ゴミパソコン";
-                singer.RomajiName = "gomi-pasokonn";
-                singer.EnglishName = "garbage desktop";
-                singer.Description = "My fucking slow desktop.";
-                singer.Color = Colour4.Brown;
-            });
+                new Singer(1)
+                {
+                    Name = "初音ミク",
+                    RomajiName = "Hatsune Miku",
+                    EnglishName = "Miku",
+                    Description = "International superstar vocaloid Hatsune Miku.",
+                    Color = Colour4.AliceBlue
+                },
+                new Singer(2)
+                {
+                    Name = "ハク",
+                    RomajiName = "haku",
+                    EnglishName = "andy840119",
+                    Description = "Creator of this ruleset.",
+                    Color = Colour4.Yellow
+                },
+                new Singer(3)
+                {
+                    Name = "ゴミパソコン",
+                    RomajiName = "gomi-pasokonn",
+                    EnglishName = "garbage desktop",
+                    Description = "My fucking slow desktop.",
+                    Color = Colour4.Brown
+                }
+            };
 
             editorBeatmap = new EditorBeatmap(karaokeBeatmap);
         }

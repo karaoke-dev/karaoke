@@ -8,6 +8,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 {
     public class Singer : ISinger
     {
+        public Singer()
+        {
+        }
+
         public Singer(int id)
         {
             ID = id;
