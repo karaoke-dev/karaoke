@@ -71,7 +71,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
                     iconsContainer.Add(new DrawableCircleSingerAvatar
                     {
                         Singer = singer,
-                        Scale = new Vector2(0.6f)
+                        Name = "Avatar",
+                        Size = new Vector2(32)
                     });
                 }
 
