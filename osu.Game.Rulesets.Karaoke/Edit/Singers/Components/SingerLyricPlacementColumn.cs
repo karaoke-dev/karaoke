@@ -119,11 +119,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
 
                 bindableSinger.BindValueChanged(e =>
                 {
-                    var singer = e.NewValue;
-                    updateSingerInfo(singer);
+                    updateSingerInfo(e.NewValue);
                 }, true);
 
-                singer.OrderBindable.BindValueChanged(x => {
+                singer.OrderBindable.BindValueChanged(x =>
+                {
                     updateSingerName(singer);
                 });
             }
@@ -155,20 +155,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
 
             public ITooltip GetCustomTooltip() => new SingerToolTip();
 
-            public MenuItem[] ContextMenuItems => new[]
+            public MenuItem[] ContextMenuItems => new MenuItem[]
             {
-                 new OsuMenuItem("Edit singer info", MenuItemType.Standard, () =>
-                 {
-                     editSingerDialog.Current = bindableSinger;
-                     editSingerDialog.Show();
-                 }),
-                 new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
-                 {
-                     dialogOverlay.Push(new DeleteSingerDialog(isOK => {
-                         if (isOK)
-                             singerManager.DeleteSinger(bindableSinger.Value);
-                     }));
-                 }),
+                new OsuMenuItem("Edit singer info", MenuItemType.Standard, () =>
+                {
+                    editSingerDialog.Current = bindableSinger;
+                    editSingerDialog.Show();
+                }),
+                new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
+                {
+                    dialogOverlay.Push(new DeleteSingerDialog(isOk =>
+                    {
+                        if (isOk)
+                            singerManager.DeleteSinger(bindableSinger.Value);
+                    }));
+                }),
             };
         }
     }

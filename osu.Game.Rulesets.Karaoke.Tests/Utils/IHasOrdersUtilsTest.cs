@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 1, 2, 3, 3 }, true)]
         [TestCase(new[] { 1, 1, 1, 1 }, true)]
         [TestCase(new[] { -1, -2, -3, -4 }, false)] // should not include those ids but not check for now.
-        [TestCase(new int[] { }, false)] 
+        [TestCase(new int[] { }, false)]
         public void TestContainDuplicatedId(int[] orders, bool containDuplicated)
         {
             var objects = orders.Select(x => new TestOrderObject { Order = x }).ToArray();
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 1, 2, 3, 4 }, new[] { 1, 2, 3, 4 })]
         [TestCase(new[] { 4, 3, 2, 1 }, new[] { 1, 2, 3, 4 })]
         [TestCase(new[] { 4, 4, 2, 2 }, new[] { 2, 2, 4, 4 })] // should not happen but still make a order.
-        [TestCase(new int[] {}, new int[] { })]
+        [TestCase(new int[] { }, new int[] { })]
         [TestCase(null, null)]
         public void TestSorted(int[] orders, int[] actualOrders)
         {
@@ -58,17 +58,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         }
 
         [TestCase(new[] { 1, 2, 3, 4 }, 1, new int[] { }, new[] { 1, 2, 3, 4 })]
-        [TestCase(new[] { 1, 2, 3, 4 }, -1, new int[] { 1, 2, 3, 4 }, new[] { -1, 0, 1, 2 })]
-        [TestCase(new[] { 1, 2, 3, 4 }, 3, new int[] { 4, 3, 2, 1 }, new[] { 3, 4, 5, 6 })] // change id should consider will affect exist mapping.
-        [TestCase(new[] { 4, 3, 2, 1 }, 3, new int[] { 4, 3, 2, 1 }, new[] { 6, 5, 4, 3 })] // change id should consider will affect exist mapping.
-        [TestCase(new[] { 1, 3, 5, 7 }, 1, new int[] { 3, 5, 7 }, new[] { 1, 2, 3, 4 })]
-        [TestCase(new[] { 1, 1, 1, 1 }, 1, new int[] { 1, 1, 1 }, new[] { 1, 2, 3, 4 })] // invalid input might cause some of id mapping will be lost.
+        [TestCase(new[] { 1, 2, 3, 4 }, -1, new[] { 1, 2, 3, 4 }, new[] { -1, 0, 1, 2 })]
+        [TestCase(new[] { 1, 2, 3, 4 }, 3, new[] { 4, 3, 2, 1 }, new[] { 3, 4, 5, 6 })] // change id should consider will affect exist mapping.
+        [TestCase(new[] { 4, 3, 2, 1 }, 3, new[] { 4, 3, 2, 1 }, new[] { 6, 5, 4, 3 })] // change id should consider will affect exist mapping.
+        [TestCase(new[] { 1, 3, 5, 7 }, 1, new[] { 3, 5, 7 }, new[] { 1, 2, 3, 4 })]
+        [TestCase(new[] { 1, 1, 1, 1 }, 1, new[] { 1, 1, 1 }, new[] { 1, 2, 3, 4 })] // invalid input might cause some of id mapping will be lost.
         public void TestResortOrder(int[] orders, int startFrom, int[] movingOrders, int[] newOrder)
         {
             var objects = orders?.Select(x => new TestOrderObject { Order = x }).ToArray();
 
             var movingStepResult = new List<int>();
-            IHasOrdersUtils.ResortOrder(objects, startFrom, (obj, oldOrder, newOrder) => {
+            IHasOrdersUtils.ResortOrder(objects, startFrom, (obj, oldOrder, newOrder) =>
+            {
                 movingStepResult.Add(oldOrder);
             });
 
@@ -76,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var result = objects?.Select(x => x.Order).ToArray();
             Assert.AreEqual(result, newOrder);
 
-            // should check movonig order step also.
+            // should check moving order step also.
             Assert.AreEqual(movingStepResult.ToArray(), movingOrders);
         }
 
@@ -94,7 +95,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 var movingStepResult = new List<int>();
 
                 // This utils only change order property.
-                IHasOrdersUtils.ChangeOrder(objects, oldOrder, nowOrder, (obj, oldOrder, newOrder) => {
+                IHasOrdersUtils.ChangeOrder(objects, oldOrder, nowOrder, (obj, oldOrder, newOrder) =>
+                {
                     movingStepResult.Add(oldOrder);
                 });
 
@@ -102,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 var result = objects?.Select(x => x.Order).ToArray();
                 Assert.AreEqual(result, newOrder);
 
-                // should check movonig order step also.
+                // should check moving order step also.
                 Assert.AreEqual(movingStepResult.ToArray(), movingOrders);
             }
             catch

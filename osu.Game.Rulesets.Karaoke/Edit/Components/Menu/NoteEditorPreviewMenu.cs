@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
     public class NoteEditorPreviewMenu : MenuItem
     {
-        private KaraokeRulesetEditConfigManager config;
+        private readonly KaraokeRulesetEditConfigManager config;
 
         public NoteEditorPreviewMenu(KaraokeRulesetEditConfigManager config, string text)
             : base(text)

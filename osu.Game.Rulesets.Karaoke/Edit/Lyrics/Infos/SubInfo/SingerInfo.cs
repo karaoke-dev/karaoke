@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo
         {
             this.lyric = lyric;
             AutoSizeAxes = Axes.Both;
-            
+
             Child = singerDisplay = new SingerDisplay
             {
                 Anchor = Anchor.TopRight,
@@ -40,6 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo
                 if (beatmap.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap)
                 {
                     var singers = karaokeBeatmap.Singers?.Where(x => value.NewValue?.Contains(x.ID) ?? false).ToList();
+
                     if (singers?.Any() ?? false)
                     {
                         singerDisplay.Current.Value = singers;

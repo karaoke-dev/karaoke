@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Notes
             // todo : might use NotesUtils.CombineNote(notes);
 
             // Select at least two object.
-            if (notes.Count() < 2)
+            if (notes.Count < 2)
                 return;
 
             changeHandler.BeginChange();

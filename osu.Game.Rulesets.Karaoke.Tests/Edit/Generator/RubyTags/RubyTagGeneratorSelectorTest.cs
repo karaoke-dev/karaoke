@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags
     {
         [TestCase(17, "花火大会", new[] { "[0,2]:はなび", "[2,4]:たいかい" })] // Japanese
         [TestCase(1041, "はなび", new string[] { })] // Japanese
-        [TestCase(1028, "はなび", null)] // Chinses(should not supported)
+        [TestCase(1028, "はなび", null)] // Chinese(should not supported)
         public void TestCreateRubyTag(int lcid, string text, string[] actualRuby)
         {
             var lyric = new Lyric

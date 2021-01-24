@@ -8,7 +8,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Export
@@ -31,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
                 var encoder = new LrcEncoder();
                 sw.WriteLine(encoder.Encode(new Beatmap
                 {
-                    HitObjects = beatmap.HitObjects.OfType<HitObject>().ToList()
+                    HitObjects = beatmap.HitObjects.ToList()
                 }));
             }
 
@@ -48,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
                 var encoder = new LyricTextEncoder();
                 sw.WriteLine(encoder.Encode(new Beatmap
                 {
-                    HitObjects = beatmap.HitObjects.OfType<HitObject>().ToList()
+                    HitObjects = beatmap.HitObjects.ToList()
                 }));
             }
 
@@ -67,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
                 var encoder = new KaraokeJsonBeatmapEncoder();
                 sw.WriteLine(encoder.Encode(new Beatmap
                 {
-                    HitObjects = beatmap.HitObjects.OfType<HitObject>().ToList()
+                    HitObjects = beatmap.HitObjects.ToList()
                 }));
             }
 
