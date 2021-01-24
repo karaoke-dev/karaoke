@@ -238,10 +238,10 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                             return;
 
                         var textScale = new Vector2(0.7f);
-                        AddText(" by:", text =>
+                        AddText(" by:", t =>
                         {
-                            text.Scale = textScale;
-                            text.Padding = new MarginPadding { Bottom = 2 };
+                            t.Scale = textScale;
+                            t.Padding = new MarginPadding { Bottom = 2 };
                         });
                         AddDrawable(new UserLinkText(user, new LinkInline
                         {

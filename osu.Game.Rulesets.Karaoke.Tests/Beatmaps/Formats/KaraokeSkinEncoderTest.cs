@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             Assert.That(encoded.Serialize(), Is.EqualTo(decoded.Serialize()));
         }
 
-        private KaraokeSkin decode(string filename, out KaraokeSkin encoded)
+        private static KaraokeSkin decode(string filename, out KaraokeSkin encoded)
         {
             using (var stream = TestResources.OpenSkinResource(filename))
             using (var sr = new LineBufferedReader(stream))

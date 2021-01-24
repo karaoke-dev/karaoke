@@ -68,9 +68,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var objects = orders?.Select(x => new TestOrderObject { Order = x }).ToArray();
 
             var movingStepResult = new List<int>();
-            IHasOrdersUtils.ResortOrder(objects, startFrom, (obj, oldOrder, newOrder) =>
+            IHasOrdersUtils.ResortOrder(objects, startFrom, (obj, o, _) =>
             {
-                movingStepResult.Add(oldOrder);
+                movingStepResult.Add(o);
             });
 
             // change order result.
@@ -95,9 +95,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 var movingStepResult = new List<int>();
 
                 // This utils only change order property.
-                IHasOrdersUtils.ChangeOrder(objects, oldOrder, nowOrder, (obj, oldOrder, newOrder) =>
+                IHasOrdersUtils.ChangeOrder(objects, oldOrder, nowOrder, (obj, o, _) =>
                 {
-                    movingStepResult.Add(oldOrder);
+                    movingStepResult.Add(o);
                 });
 
                 // change order result.

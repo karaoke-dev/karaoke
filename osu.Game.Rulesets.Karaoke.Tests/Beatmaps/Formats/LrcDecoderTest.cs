@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             Assert.Throws<FormatException>(() => decodeLrcLine(wrong_lyric_text));
         }
 
-        private Beatmap decodeLrcLine(string line)
+        private static Beatmap decodeLrcLine(string line)
         {
             using (var stream = new MemoryStream())
             using (var writer = new StreamWriter(stream))

@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
     /// </summary>
     public class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKeyBindingHandler<KaraokeSaitenAction>
     {
-        private OsuSpriteText textPiece;
+        private readonly OsuSpriteText textPiece;
 
         /// <summary>
         /// Time at which the user started holding this hold note. Null if the user is not holding this hold note.

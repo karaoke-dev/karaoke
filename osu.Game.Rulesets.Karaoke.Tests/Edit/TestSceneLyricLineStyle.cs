@@ -497,7 +497,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
         public class ColorPicker : Box
         {
-            public Bindable<Color4> CurrentColor { get; set; } = new Bindable<Color4>();
+            public Bindable<Color4> CurrentColor { get; set; } = new();
 
             public ColorPicker()
             {
