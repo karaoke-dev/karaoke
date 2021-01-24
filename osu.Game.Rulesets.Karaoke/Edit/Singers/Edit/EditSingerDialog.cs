@@ -10,6 +10,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osuTK;
 
@@ -20,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Edit
         private const float section_scale = 0.75f;
 
         [Cached]
-        private readonly BindableWithCurrent<Singer> current = new BindableWithCurrent<Singer>();
+        private readonly BindableClassWithCurrent<Singer> current = new BindableClassWithCurrent<Singer>();
 
         public Bindable<Singer> Current
         {
@@ -64,17 +65,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Edit
                     }
                 }
             };
-        }
-
-        protected override void PopOut()
-        {
-            // trigger update change to let parent update info.
-            // todo : not working because trigger change only trigger rerlated bindable when object is not called by reference.
-            // means it only works in struct.
-            if (Current.Value != null)
-                Current.TriggerChange();
-
-            base.PopOut();
         }
 
         internal class EditSingerScreenHeader : OverlayHeader

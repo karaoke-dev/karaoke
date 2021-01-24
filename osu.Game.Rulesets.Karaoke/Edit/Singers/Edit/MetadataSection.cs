@@ -9,6 +9,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Bindables;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Edit
 {
@@ -22,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Edit
         private LabelledTextBox descriptionTextBox;
 
         [BackgroundDependencyLoader]
-        private void load(BindableWithCurrent<Singer> currentSinger)
+        private void load(BindableClassWithCurrent<Singer> currentSinger)
         {
             Children = new Drawable[]
             {
@@ -76,6 +77,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Edit
                 singer.RomajiName = romajiNameTextBox.Current.Value;
                 singer.EnglishName = englishNameTextBox.Current.Value;
                 singer.Description = descriptionTextBox.Current.Value;
+
+                // trigger update change to let parent update info.
+                currentSinger.TriggerOtherChange();
             }
         }
     }
