@@ -132,6 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
             {
                  new OsuMenuItem("Edit singer info", MenuItemType.Standard, () =>
                  {
+                     editSingerDialog.Current.Value = singer;
                      editSingerDialog.Show();
                  }),
                  new OsuMenuItem("Delete", MenuItemType.Destructive, () =>

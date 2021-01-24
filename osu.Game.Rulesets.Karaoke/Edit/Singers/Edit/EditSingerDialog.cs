@@ -2,19 +2,31 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Edit
 {
-    public class EditSingerDialog : PopupFocusedOverlayContainer
+    public class EditSingerDialog : PopupFocusedOverlayContainer, IHasCurrentValue<Singer>
     {
         private const float section_scale = 0.75f;
+
+        [Cached]
+        private readonly BindableWithCurrent<Singer> current = new BindableWithCurrent<Singer>();
+
+        public Bindable<Singer> Current
+        {
+            get => current.Current;
+            set => current.Current = value;
+        }
 
         [BackgroundDependencyLoader]
         private void load(OverlayColourProvider colourProvider)
