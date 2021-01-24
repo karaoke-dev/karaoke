@@ -66,6 +66,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Edit
             };
         }
 
+        protected override void PopOut()
+        {
+            // trigger update change to let parent update info.
+            // todo : not working because trigger change only trigger rerlated bindable when object is not called by reference.
+            // means it only works in struct.
+            if (Current.Value != null)
+                Current.TriggerChange();
+
+            base.PopOut();
+        }
+
         internal class EditSingerScreenHeader : OverlayHeader
         {
             protected override OverlayTitle CreateTitle() => new LayoutScreenTitle();
