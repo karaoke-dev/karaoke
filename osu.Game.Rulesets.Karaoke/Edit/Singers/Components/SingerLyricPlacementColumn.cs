@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
@@ -12,6 +13,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Edit;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
@@ -44,22 +46,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
             [Resolved]
             private DialogOverlay dialogOverlay { get; set; }
 
-            private readonly OsuSpriteText singerName;
+            [Resolved]
+            private EditSingerDialog editSingerDialog { get; set; }
 
-            private readonly Singer singer;
+            private readonly Box background;
+            private readonly DrawableSingerAvatar avatar;
+            private readonly OsuSpriteText singerName;
+            private readonly OsuSpriteText romajiName;
+            private readonly OsuSpriteText englishName;
+
+            private readonly Bindable<Singer> bindableSinger = new Bindable<Singer>();
 
             public DrawableSingerInfo(Singer singer)
             {
-                this.singer = singer;
-
+                bindableSinger.Value = singer;
                 InternalChildren = new Drawable[]
                 {
-                    new Box
+                    background = new Box
                     {
                         Name = "Background",
                         RelativeSizeAxes = Axes.Both,
-                        Colour = singer.Color ?? new Color4(),
-                        Alpha = singer.Color != null ? 0.3f : 0
                     },
                     new GridContainer
                     {
@@ -75,11 +81,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                         {
                             new Drawable[]
                             {
-                                new DrawableSingerAvatar
+                                avatar = new DrawableSingerAvatar
                                 {
                                     Name = "Avatar",
                                     Size = new Vector2(48),
-                                    Singer = singer
                                 },
                                 new FillFlowContainer
                                 {
@@ -95,16 +100,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                                             Name = "Singer name",
                                             Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 20),
                                         },
-                                        new OsuSpriteText
+                                        romajiName = new OsuSpriteText
                                         {
                                             Name = "Romaji name",
-                                            Text = singer.RomajiName,
                                             Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 9),
                                         },
-                                        new OsuSpriteText
+                                        englishName = new OsuSpriteText
                                         {
                                             Name = "English name",
-                                            Text = singer.EnglishName != null ? $"({singer.EnglishName})" : "",
                                             Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 12),
                                         }
                                     }
@@ -114,24 +117,56 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
                     },
                 };
 
-                singer.OrderBindable.BindValueChanged(x =>
+                bindableSinger.BindValueChanged(e =>
                 {
-                    singerName.Text = $"#{singer.Order} {singer.Name}";
+                    var singer = e.NewValue;
+                    updateSingerInfo(singer);
                 }, true);
+
+                singer.OrderBindable.BindValueChanged(x => {
+                    updateSingerName(singer);
+                });
             }
 
-            public object TooltipContent => singer;
+            private void updateSingerInfo(Singer singer)
+            {
+                if (singer == null)
+                    return;
+
+                // background
+                background.Colour = singer.Color ?? new Color4();
+                background.Alpha = singer.Color != null ? 0.3f : 0;
+
+                // avatar
+                avatar.Singer = singer;
+
+                // metadata
+                updateSingerName(singer);
+                romajiName.Text = singer.RomajiName;
+                englishName.Text = singer.EnglishName != null ? $"({singer.EnglishName})" : "";
+            }
+
+            private void updateSingerName(Singer singer)
+            {
+                singerName.Text = $"#{singer.Order} {singer.Name}";
+            }
+
+            public object TooltipContent => bindableSinger.Value;
 
             public ITooltip GetCustomTooltip() => new SingerToolTip();
 
             public MenuItem[] ContextMenuItems => new[]
             {
-                 new OsuMenuItem("Edit singer info", MenuItemType.Standard, () => { }),
+                 new OsuMenuItem("Edit singer info", MenuItemType.Standard, () =>
+                 {
+                     editSingerDialog.Current = bindableSinger;
+                     editSingerDialog.Show();
+                 }),
                  new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
                  {
                      dialogOverlay.Push(new DeleteSingerDialog(isOK => {
                          if (isOK)
-                             singerManager.DeleteSinger(singer);
+                             singerManager.DeleteSinger(bindableSinger.Value);
                      }));
                  }),
             };

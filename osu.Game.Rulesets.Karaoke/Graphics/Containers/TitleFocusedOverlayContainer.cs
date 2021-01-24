@@ -7,18 +7,14 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
-using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
 {
-    public class TitleFocusedOverlayContainer : OsuFocusedOverlayContainer
+    public abstract class TitleFocusedOverlayContainer : PopupFocusedOverlayContainer
     {
-        private const double enter_duration = 500;
-        private const double exit_duration = 200;
-
         private readonly Box background;
         private readonly IconButton closeButton;
         private readonly Box contentBackground;
@@ -28,11 +24,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
 
         protected virtual string Title => "Title";
 
-        public TitleFocusedOverlayContainer()
+        protected TitleFocusedOverlayContainer()
         {
-            Anchor = Anchor.Centre;
-            Origin = Anchor.Centre;
-
             Masking = true;
             CornerRadius = 10;
 
@@ -112,25 +105,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
             background.Colour = colours.GreySeafoamDark;
             closeButton.Colour = colours.GreySeafoamDarker;
             contentBackground.Colour = colours.GreySeafoamDarker;
-        }
-
-        protected override void PopIn()
-        {
-            base.PopIn();
-
-            this.FadeIn(enter_duration, Easing.OutQuint);
-            this.ScaleTo(0.9f).Then().ScaleTo(1f, enter_duration, Easing.OutQuint);
-        }
-
-        protected override void PopOut()
-        {
-            base.PopOut();
-
-            this.FadeOut(exit_duration, Easing.OutQuint);
-            this.ScaleTo(0.9f, exit_duration);
-
-            // Ensure that textboxes commit
-            GetContainingInputManager()?.TriggerFocusContention(this);
         }
     }
 }

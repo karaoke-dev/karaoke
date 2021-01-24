@@ -8,6 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
@@ -18,7 +19,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 {
-    public class LanguageSelectionDialog : TitleFocusedOverlayContainer
+    public class LanguageSelectionDialog : TitleFocusedOverlayContainer, IHasCurrentValue<CultureInfo>
     {
         protected override string Title => "Select language";
 
