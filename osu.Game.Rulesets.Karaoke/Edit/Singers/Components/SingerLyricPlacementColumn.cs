@@ -12,6 +12,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Edit;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
@@ -43,6 +44,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
 
             [Resolved]
             private DialogOverlay dialogOverlay { get; set; }
+
+            [Resolved]
+            private EditSingerDialog editSingerDialog { get; set; }
 
             private readonly OsuSpriteText singerName;
 
@@ -126,7 +130,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
 
             public MenuItem[] ContextMenuItems => new[]
             {
-                 new OsuMenuItem("Edit singer info", MenuItemType.Standard, () => { }),
+                 new OsuMenuItem("Edit singer info", MenuItemType.Standard, () =>
+                 {
+                     editSingerDialog.Show();
+                 }),
                  new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
                  {
                      dialogOverlay.Push(new DeleteSingerDialog(isOK => {

@@ -9,6 +9,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
@@ -20,17 +21,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         [Cached]
         protected readonly SingerManager SingerManager;
 
+        [Cached]
+        private readonly EditSingerDialog editSingerDialog;
+
         public SingerScreen()
             : base()
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Purple);
             Content.Add(SingerManager = new SingerManager());
+            Content.Add(editSingerDialog = new EditSingerDialog
+            {
+                Depth = -1,
+            });
         }
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            Child = new Container
+            Add(new Container
             {
                 RelativeSizeAxes = Axes.Both,
                 Padding = new MarginPadding(50),
@@ -60,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                         },
                     }
                 }
-            };
+            });
         }
 
         internal class FixedSectionsContainer<T> : SectionsContainer<T> where T : Drawable
