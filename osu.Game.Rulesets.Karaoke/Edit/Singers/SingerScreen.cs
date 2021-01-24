@@ -25,7 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         private readonly EditSingerDialog editSingerDialog;
 
         public SingerScreen()
-            : base()
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Purple);
             Content.Add(SingerManager = new SingerManager());

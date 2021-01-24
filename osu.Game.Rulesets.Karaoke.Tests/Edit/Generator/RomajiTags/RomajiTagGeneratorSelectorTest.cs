@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RomajiTags
     {
         [TestCase(17, "花火大会", new[] { "[0,2]:hanabi", "[2,4]:taikai" })] // Japanese
         [TestCase(1041, "はなび", new[] { "[0,3]:hanabi" })] // Japanese
-        [TestCase(1028, "はなび", null)] // Chinses(should not supported)
+        [TestCase(1028, "はなび", null)] // Chinese(should not supported)
         public void TestCreateRomajiTag(int lcid, string text, string[] actualRomaji)
         {
             var lyric = new Lyric

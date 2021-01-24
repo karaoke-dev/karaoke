@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             Assert.That(encoded.Serialize(), Is.EqualTo(decoded.Serialize()));
         }
 
-        private Beatmap decode(string filename, out Beatmap encoded)
+        private static Beatmap decode(string filename, out Beatmap encoded)
         {
             using (var stream = TestResources.OpenLrcResource(filename))
             using (var sr = new LineBufferedReader(stream))

@@ -68,22 +68,23 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <example>
         /// Valid: 1, 2, 3, 4
-        /// Should be geneated: 1, 3, 4, 5, 7
+        /// Should be generated: 1, 3, 4, 5, 7
         /// </example>
         /// <typeparam name="T">IHasOrder</typeparam>
         /// <param name="objects">objects</param>
-        /// <param name="startOrder">start order should from</param>
+        /// <param name="startFrom">start order should from</param>
         /// <param name="changeOrderAction">has call-back if order has been changed.</param>
         public static void ResortOrder<T>(T[] objects, int startFrom = 1, Action<T, int, int> changeOrderAction = null) where T : IHasOrder
         {
             var minOrderNumber = GetMinOrderNumber(objects.ToArray());
             var maxOrderNumber = GetMaxOrderNumber(objects.ToArray());
 
-            // todo : should deal with the case if new start order is between min and max rder number
+            // todo : should deal with the case if new start order is between min and max order number
             var orderByAsc = startFrom <= minOrderNumber;
             var processObjects = orderByAsc ? objects.OrderBy(x => x.Order) : objects.OrderByDescending(x => x.Order);
 
             var targetOrder = orderByAsc ? startFrom : (startFrom - minOrderNumber + objects.Length);
+
             foreach (var processObject in processObjects)
             {
                 if (processObject.Order != targetOrder)
@@ -117,11 +118,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             // check old order number should be in the exist list
             if (!objects.Select(x => x.Order).Contains(oldOrder))
-                throw new ArgumentOutOfRangeException(nameof(oldOrder), $"new order number { oldOrder } is not in the range of {nameof(objects)}.");
+                throw new ArgumentOutOfRangeException(nameof(oldOrder), $"new order number {oldOrder} is not in the range of {nameof(objects)}.");
 
             // check new order number should be in the exist list
             if (!objects.Select(x => x.Order).Contains(newOrder))
-                throw new ArgumentOutOfRangeException(nameof(newOrder), $"new order number { newOrder } is not in the range of {nameof(objects)}.");
+                throw new ArgumentOutOfRangeException(nameof(newOrder), $"new order number {newOrder} is not in the range of {nameof(objects)}.");
 
             // get objects that will need to change order
             var minAffectOrder = Math.Min(oldOrder, newOrder);
@@ -132,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var shiftingOrder = newOrder > oldOrder ? -1 : 1;
 
             // get order order object info
-            var oldOrderTempId = -1;
+            const int oldOrderTempId = -1;
             var oldOrderObject = objects.FirstOrDefault(x => x.Order == oldOrder);
 
             // set old order to -1 for order duplicated issue
@@ -140,6 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             // switching order
             affectObjects = shiftingOrder > 0 ? affectObjects.OrderByDescending(x => x.Order) : affectObjects.OrderBy(x => x.Order);
+
             foreach (var affectObject in affectObjects)
             {
                 if (affectObject.Order != oldOrderTempId)

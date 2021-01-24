@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags
     {
         [TestCase(17, "か", new[] { "[0,start]:" })] // Japanese
         [TestCase(1041, "か", new[] { "[0,start]:" })] // Japanese
-        [TestCase(1028, "喵", new[] { "[0,start]:" })] // Chinses
+        [TestCase(1028, "喵", new[] { "[0,start]:" })] // Chinese
         [TestCase(3081, "hello", null)] // English
         public void TestCreateTimeTag(int lcid, string text, string[] actualTimeTag)
         {

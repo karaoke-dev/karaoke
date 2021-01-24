@@ -13,8 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
 
         protected OrderRearrangeableListContainer()
         {
-            // this collection change event cannot directly regist in parent bindable.
-            // So regist in here.
+            // this collection change event cannot directly register in parent bindable.
+            // So register in here.
             Items.CollectionChanged += collectionChanged;
         }
 
@@ -25,8 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
                 // should get the event if user change the position.
                 case NotifyCollectionChangedAction.Move:
                     var item = (TModel)e.NewItems[0];
-                    var newInex = e.NewStartingIndex;
-                    OnOrderChanged?.Invoke(item, newInex);
+                    var newIndex = e.NewStartingIndex;
+                    OnOrderChanged?.Invoke(item, newIndex);
                     break;
             }
         }

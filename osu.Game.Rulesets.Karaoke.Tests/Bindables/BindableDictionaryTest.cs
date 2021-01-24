@@ -401,7 +401,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
 
             bindableObjectList.Remove(new TestAlwaysEqualModel());
 
-            Assert.That(triggeredArgs.OldItems[0] == item, Is.True);
+            Assert.That(triggeredArgs.OldItems?[0] == item, Is.True);
         }
 
         [Test]
