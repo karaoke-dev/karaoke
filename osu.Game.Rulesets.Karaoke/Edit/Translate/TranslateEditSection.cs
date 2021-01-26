@@ -208,7 +208,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         [BackgroundDependencyLoader]
         private void load(TranslateManager translateManager, OsuColour colours)
         {
-            NewLanguage.BindTo(LanguageSelectionDialog.Current);
+            LanguageSelectionDialog.Current = NewLanguage;
 
             languageDropdown.ItemSource = translateManager.Languages;
 

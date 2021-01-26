@@ -42,8 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo
 
         protected override bool OnClick(ClickEvent e)
         {
-            languageSelectionDialog.Current.UnbindAll();
-            languageSelectionDialog.Current.BindTo(Lyric.LanguageBindable);
+            languageSelectionDialog.Current = Lyric.LanguageBindable;
             languageSelectionDialog.Show();
 
             return base.OnClick(e);
