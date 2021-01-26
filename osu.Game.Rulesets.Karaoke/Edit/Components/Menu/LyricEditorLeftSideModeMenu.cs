@@ -12,40 +12,18 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public class LyricEditorLeftSideModeMenu : MenuItem
+    public class LyricEditorLeftSideModeMenu : EnumMenuItem<LyricFastEditMode>
     {
-        private readonly Bindable<LyricFastEditMode> bindableLyricEditorFastEditMode = new Bindable<LyricFastEditMode>();
+        protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.LyricEditorFastEditMode;
 
         public LyricEditorLeftSideModeMenu(KaraokeRulesetEditConfigManager config, string text)
-            : base(text)
+            : base(config, text)
         {
-            Items = createMenuItems();
-
-            config.BindWith(KaraokeRulesetEditSetting.LyricEditorFastEditMode, bindableLyricEditorFastEditMode);
-            bindableLyricEditorFastEditMode.BindValueChanged(e =>
-            {
-                var newSelection = e.NewValue;
-                Items.OfType<ToggleMenuItem>().ForEach(x =>
-                {
-                    var match = x.Text.Value == getName(newSelection);
-                    x.State.Value = match;
-                });
-            }, true);
         }
 
-        private ToggleMenuItem[] createMenuItems()
+        protected override string GetName(LyricFastEditMode selection)
         {
-            var enums = (LyricFastEditMode[])Enum.GetValues(typeof(LyricFastEditMode));
-            return enums.Select(e =>
-            {
-                var item = new ToggleMenuItem(getName(e), MenuItemType.Standard, _ => updateMode(e));
-                return item;
-            }).ToArray();
-        }
-
-        private string getName(LyricFastEditMode mode)
-        {
-            switch (mode)
+            switch (selection)
             {
                 case LyricFastEditMode.None:
                     return "None";
@@ -66,13 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                     return "Lyric order";
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(mode));
+                    throw new ArgumentOutOfRangeException(nameof(selection));
             }
-        }
-
-        private void updateMode(LyricFastEditMode mode)
-        {
-            bindableLyricEditorFastEditMode.Value = mode;
         }
     }
 }

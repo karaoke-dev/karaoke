@@ -2,49 +2,22 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Linq;
-using osu.Framework.Bindables;
-using osu.Framework.Extensions.IEnumerableExtensions;
-using osu.Framework.Graphics.UserInterface;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public class EditModeMenu : MenuItem
+    public class EditModeMenu : EnumMenuItem<EditMode>
     {
-        private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
+        protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.EditMode;
 
         public EditModeMenu(KaraokeRulesetEditConfigManager config, string text)
-            : base(text)
+            : base(config, text)
         {
-            Items = createMenuItems();
-
-            config.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
-            bindableEditMode.BindValueChanged(e =>
-            {
-                var newSelection = e.NewValue;
-                Items.OfType<ToggleMenuItem>().ForEach(x =>
-                {
-                    var match = x.Text.Value == getName(newSelection);
-                    x.State.Value = match;
-                });
-            }, true);
         }
 
-        private ToggleMenuItem[] createMenuItems()
+        protected override string GetName(EditMode selection)
         {
-            var enums = (EditMode[])Enum.GetValues(typeof(EditMode));
-            return enums.Select(e =>
-            {
-                var item = new ToggleMenuItem(getName(e), MenuItemType.Standard, _ => updateMode(e));
-                return item;
-            }).ToArray();
-        }
-
-        private string getName(EditMode mode)
-        {
-            switch (mode)
+            switch (selection)
             {
                 case EditMode.LyricEditor:
                     return "Lyric editor";
@@ -53,13 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                     return "Note editor";
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(mode));
+                    throw new ArgumentOutOfRangeException(nameof(selection));
             }
-        }
-
-        private void updateMode(EditMode mode)
-        {
-            bindableEditMode.Value = mode;
         }
     }
 }

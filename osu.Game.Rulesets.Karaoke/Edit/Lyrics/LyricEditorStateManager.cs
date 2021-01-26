@@ -139,4 +139,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// </summary>
         Order,
     }
+
+    public enum RecordingMovingCursorMode
+    {
+        /// <summary>
+        /// Move to any tag
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// Only move to next start tag.
+        /// </summary>
+        SkipStartTag,
+
+        /// <summary>
+        /// Only move to next end tag.
+        /// </summary>
+        SkipEndTag,
+    }
 }
