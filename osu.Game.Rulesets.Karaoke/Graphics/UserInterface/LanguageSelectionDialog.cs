@@ -153,7 +153,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                         if (set.OldValue?.Equals(Model) != true && set.NewValue?.Equals(Model) != true)
                             return;
 
-                        text.FadeColour(set.NewValue.Equals(Model) ? selectedColour : Color4.White, FADE_DURATION);
+                        var equal = Equals(set.NewValue, Model);
+                        text.FadeColour(equal ? selectedColour : Color4.White, FADE_DURATION);
                     }, true);
                 }
 
