@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -48,37 +49,39 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             BindableHoverRecordCursorPosition.Value = null;
         }
 
-        private bool moveRecordCursor(CursorAction action)
+        private bool moveRecordCursor(MovingCursorAction action)
         {
             var currentTimeTag = BindableRecordCursorPosition.Value;
 
-            TimeTag nextTimeTag = null;
-
+            TimeTag nextTimeTag;
             switch (action)
             {
-                case CursorAction.MoveUp:
+                case MovingCursorAction.Up:
                     nextTimeTag = getPreviousLyricTimeTag(currentTimeTag);
                     break;
 
-                case CursorAction.MoveDown:
+                case MovingCursorAction.Down:
                     nextTimeTag = getNextLyricTimeTag(currentTimeTag);
                     break;
 
-                case CursorAction.MoveLeft:
+                case MovingCursorAction.Left:
                     nextTimeTag = getPreviousTimeTag(currentTimeTag);
                     break;
 
-                case CursorAction.MoveRight:
+                case MovingCursorAction.Right:
                     nextTimeTag = getNextTimeTag(currentTimeTag);
                     break;
 
-                case CursorAction.First:
+                case MovingCursorAction.First:
                     nextTimeTag = getFirstTimeTag();
                     break;
 
-                case CursorAction.Last:
+                case MovingCursorAction.Last:
                     nextTimeTag = getLastTimeTag();
                     break;
+
+                default:
+                    throw new InvalidOperationException(nameof(action));
             }
 
             if (nextTimeTag == null)

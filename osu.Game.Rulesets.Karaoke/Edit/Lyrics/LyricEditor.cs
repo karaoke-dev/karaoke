@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             beatmap.HitObjectAdded += addHitObject;
             beatmap.HitObjectRemoved += removeHitObject;
 
-            stateManager.MoveCursor(CursorAction.First);
+            stateManager.MoveCursor(MovingCursorAction.First);
         }
 
         protected override bool OnKeyDown(KeyDownEvent e)
@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     // delete single character.
                     var deletedSuccess = lyricManager.DeleteLyricText(position);
                     if (deletedSuccess)
-                        stateManager.MoveCursor(CursorAction.MoveLeft);
+                        stateManager.MoveCursor(MovingCursorAction.Left);
                     return deletedSuccess;
 
                 default:
@@ -140,22 +140,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             switch (action)
             {
                 case KaraokeEditAction.Up:
-                    return stateManager.MoveCursor(CursorAction.MoveUp);
+                    return stateManager.MoveCursor(MovingCursorAction.Up);
 
                 case KaraokeEditAction.Down:
-                    return stateManager.MoveCursor(CursorAction.MoveDown);
+                    return stateManager.MoveCursor(MovingCursorAction.Down);
 
                 case KaraokeEditAction.Left:
-                    return stateManager.MoveCursor(CursorAction.MoveLeft);
+                    return stateManager.MoveCursor(MovingCursorAction.Left);
 
                 case KaraokeEditAction.Right:
-                    return stateManager.MoveCursor(CursorAction.MoveRight);
+                    return stateManager.MoveCursor(MovingCursorAction.Right);
 
                 case KaraokeEditAction.First:
-                    return stateManager.MoveCursor(CursorAction.First);
+                    return stateManager.MoveCursor(MovingCursorAction.First);
 
                 case KaraokeEditAction.Last:
-                    return stateManager.MoveCursor(CursorAction.Last);
+                    return stateManager.MoveCursor(MovingCursorAction.Last);
 
                 default:
                     return false;
@@ -177,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case KaraokeEditAction.SetTime:
                     var setTimeSuccess = timeTagManager.SetTimeTagTime(currentTimeTag);
                     if (setTimeSuccess)
-                        stateManager.MoveCursor(CursorAction.MoveRight);
+                        stateManager.MoveCursor(MovingCursorAction.Next);
                     return setTimeSuccess;
 
                 default:
