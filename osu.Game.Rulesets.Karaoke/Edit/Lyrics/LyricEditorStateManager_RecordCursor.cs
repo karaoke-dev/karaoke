@@ -10,9 +10,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditorStateManager
     {
+        public Bindable<RecordingMovingCursorMode> BindableRecordingMovingCursorMode { get; } = new Bindable<RecordingMovingCursorMode>();
+
+        public RecordingMovingCursorMode RecordingMovingCursorMode => BindableRecordingMovingCursorMode.Value;
+
         public Bindable<TimeTag> BindableHoverRecordCursorPosition { get; } = new Bindable<TimeTag>();
 
         public Bindable<TimeTag> BindableRecordCursorPosition { get; } = new Bindable<TimeTag>();
+
+        public void SetRecordingMovingCursorMode(RecordingMovingCursorMode mode)
+        {
+            BindableRecordingMovingCursorMode.Value = mode;
+
+            // todo : might move cursor to valid position.
+        }
 
         public bool MoveRecordCursorToTargetPosition(TimeTag timeTag)
         {

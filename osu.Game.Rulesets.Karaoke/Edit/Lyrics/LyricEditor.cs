@@ -250,5 +250,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             get => stateManager.FastEditMode;
             set => stateManager.SetFastEditMode(value);
         }
+
+        public RecordingMovingCursorMode RecordingMovingCursorMode
+        {
+            get => stateManager.RecordingMovingCursorMode;
+            set => stateManager.SetRecordingMovingCursorMode(value);
+        }
     }
 }
