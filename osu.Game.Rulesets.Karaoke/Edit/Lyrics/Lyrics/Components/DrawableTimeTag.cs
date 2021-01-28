@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -20,18 +21,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
         /// </summary>
         private const float triangle_width = 6;
 
-        private readonly TimeTag timeTag;
-
-        [Resolved(canBeNull: true)]
-        private TimeTagManager timeTagManager { get; set; }
-
         [Resolved]
         private LyricEditorStateManager stateManager { get; set; }
+
+        private Bindable<Mode> bindableMode = new Bindable<Mode>();
+        private Bindable<RecordingMovingCursorMode> bindableRecordingMovingCursorMode = new Bindable<RecordingMovingCursorMode>();
+
+        private readonly TimeTag timeTag;
 
         public DrawableTimeTag(TimeTag timeTag)
         {
             this.timeTag = timeTag;
             AutoSizeAxes = Axes.Both;
+
+            bindableMode.BindValueChanged(x =>
+            {
+                updateStyle();
+            });
+
+            bindableRecordingMovingCursorMode.BindValueChanged(x =>
+            {
+                updateStyle();
+            });
 
             InternalChild = new RightTriangle
             {
@@ -43,15 +54,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
             };
         }
 
+        private void updateStyle()
+        {
+            if (isTrigger(bindableMode.Value) && !stateManager.RecordingCursorMovable(timeTag))
+            {
+                InternalChild.Alpha = 0.3f;
+            }
+            else
+            {
+                InternalChild.Show();
+            }
+        }
+
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
             InternalChild.Colour = timeTag.Time.HasValue ? colours.Yellow : colours.Gray7;
+
+            bindableMode.BindTo(stateManager.BindableMode);
+            bindableRecordingMovingCursorMode.BindTo(stateManager.BindableRecordingMovingCursorMode);
         }
 
         protected override bool OnHover(HoverEvent e)
         {
-            if (!isTrigger(stateManager.Mode))
+            if (!isTrigger(bindableMode.Value))
                 return false;
 
             return stateManager?.MoveHoverRecordCursorToTargetPosition(timeTag) ?? false;
@@ -59,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 
         protected override void OnHoverLost(HoverLostEvent e)
         {
-            if (!isTrigger(stateManager.Mode))
+            if (!isTrigger(bindableMode.Value))
                 return;
 
             stateManager?.ClearHoverRecordCursorPosition();
@@ -68,10 +94,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
 
         protected override bool OnClick(ClickEvent e)
         {
-            if (!isTrigger(stateManager.Mode))
+            if (!isTrigger(bindableMode.Value))
                 return false;
 
             return stateManager.MoveRecordCursorToTargetPosition(timeTag);
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            bindableMode.UnbindAll();
+            bindableRecordingMovingCursorMode.UnbindAll();
+
+            base.Dispose(isDisposing);
         }
 
         private bool isTrigger(Mode mode)

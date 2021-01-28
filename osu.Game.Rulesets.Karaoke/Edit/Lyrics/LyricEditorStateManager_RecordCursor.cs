@@ -50,6 +50,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             BindableHoverRecordCursorPosition.Value = null;
         }
 
+        public bool RecordingCursorMovable(TimeTag timeTag)
+        {
+            switch (RecordingMovingCursorMode)
+            {
+                case RecordingMovingCursorMode.None:
+                    return true;
+                case RecordingMovingCursorMode.OnlyStartTag:
+                    return timeTag.Index.State == Framework.Graphics.Sprites.TextIndex.IndexState.Start;
+                case RecordingMovingCursorMode.OnlyEndTag:
+                    return timeTag.Index.State == Framework.Graphics.Sprites.TextIndex.IndexState.End;
+                default:
+                    throw new InvalidOperationException(nameof(RecordingMovingCursorMode));
+            }
+        }
+
         private bool moveRecordCursor(MovingCursorAction action)
         {
             var currentTimeTag = BindableRecordCursorPosition.Value;
@@ -103,40 +118,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private TimeTag getPreviousLyricTimeTag(TimeTag timeTag)
         {
             var currentLyric = timeTagInLyric(timeTag);
-            return Lyrics.GetPrevious(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index && match(x));
+            return Lyrics.GetPrevious(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index && RecordingCursorMovable(x));
         }
 
         private TimeTag getNextLyricTimeTag(TimeTag timeTag)
         {
             var currentLyric = timeTagInLyric(timeTag);
-            return Lyrics.GetNext(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index && match(x));
+            return Lyrics.GetNext(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index && RecordingCursorMovable(x));
         }
 
         private TimeTag getPreviousTimeTag(TimeTag timeTag)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
-            return timeTags.GetPreviousMatch(timeTag, match);
+            return timeTags.GetPreviousMatch(timeTag, RecordingCursorMovable);
         }
 
         private TimeTag getNextTimeTag(TimeTag timeTag)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
-            return timeTags.GetNextMatch(timeTag, match);
-        }
-
-        private bool match(TimeTag timeTag)
-        {
-            switch (RecordingMovingCursorMode)
-            {
-                case RecordingMovingCursorMode.None:
-                    return true;
-                case RecordingMovingCursorMode.OnlyStartTag:
-                    return timeTag.Index.State == Framework.Graphics.Sprites.TextIndex.IndexState.Start;
-                case RecordingMovingCursorMode.OnlyEndTag:
-                    return timeTag.Index.State == Framework.Graphics.Sprites.TextIndex.IndexState.End;
-                default:
-                    throw new InvalidOperationException(nameof(RecordingMovingCursorMode));
-            }
+            return timeTags.GetNextMatch(timeTag, RecordingCursorMovable);
         }
 
         private TimeTag getFirstTimeTag()
