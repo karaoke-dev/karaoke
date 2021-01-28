@@ -204,9 +204,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         Right,
 
-        // notice that this action only available in recording cursor mode.
-        Next,
-
         First,
 
         Last,

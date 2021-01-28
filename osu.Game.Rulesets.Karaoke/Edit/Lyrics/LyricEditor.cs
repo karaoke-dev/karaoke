@@ -177,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case KaraokeEditAction.SetTime:
                     var setTimeSuccess = timeTagManager.SetTimeTagTime(currentTimeTag);
                     if (setTimeSuccess)
-                        stateManager.MoveCursor(MovingCursorAction.Next);
+                        stateManager.MoveCursor(MovingCursorAction.Right);
                     return setTimeSuccess;
 
                 default:

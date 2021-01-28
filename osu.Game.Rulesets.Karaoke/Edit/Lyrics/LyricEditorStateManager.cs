@@ -150,11 +150,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// <summary>
         /// Only move to next start tag.
         /// </summary>
-        SkipStartTag,
+        OnlyStartTag,
 
         /// <summary>
         /// Only move to next end tag.
         /// </summary>
-        SkipEndTag,
+        OnlyEndTag,
     }
 }

@@ -23,10 +23,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                 case RecordingMovingCursorMode.None:
                     return "None";
 
-                case RecordingMovingCursorMode.SkipStartTag:
+                case RecordingMovingCursorMode.OnlyStartTag:
                     return "Skip start tag";
 
-                case RecordingMovingCursorMode.SkipEndTag:
+                case RecordingMovingCursorMode.OnlyEndTag:
                     return "Skip end tag";
 
                 default:

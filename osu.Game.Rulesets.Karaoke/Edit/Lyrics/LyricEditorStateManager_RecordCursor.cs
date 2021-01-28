@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
@@ -102,25 +103,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private TimeTag getPreviousLyricTimeTag(TimeTag timeTag)
         {
             var currentLyric = timeTagInLyric(timeTag);
-            return Lyrics.GetPrevious(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index);
+            return Lyrics.GetPrevious(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index && match(x));
         }
 
         private TimeTag getNextLyricTimeTag(TimeTag timeTag)
         {
             var currentLyric = timeTagInLyric(timeTag);
-            return Lyrics.GetNext(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index);
+            return Lyrics.GetNext(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= timeTag.Index && match(x));
         }
 
         private TimeTag getPreviousTimeTag(TimeTag timeTag)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
-            return timeTags.GetPrevious(timeTag);
+            return timeTags.GetPreviousMatch(timeTag, match);
         }
 
         private TimeTag getNextTimeTag(TimeTag timeTag)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
-            return timeTags.GetNext(timeTag);
+            return timeTags.GetNextMatch(timeTag, match);
+        }
+
+        private bool match(TimeTag timeTag)
+        {
+            switch (RecordingMovingCursorMode)
+            {
+                case RecordingMovingCursorMode.None:
+                    return true;
+                case RecordingMovingCursorMode.OnlyStartTag:
+                    return timeTag.Index.State == Framework.Graphics.Sprites.TextIndex.IndexState.Start;
+                case RecordingMovingCursorMode.OnlyEndTag:
+                    return timeTag.Index.State == Framework.Graphics.Sprites.TextIndex.IndexState.End;
+                default:
+                    throw new InvalidOperationException(nameof(RecordingMovingCursorMode));
+            }
         }
 
         private TimeTag getFirstTimeTag()
