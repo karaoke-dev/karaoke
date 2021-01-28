@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return;
 
                 case Mode.RecordMode:
-                    MoveCursor(CursorAction.First);
+                    MoveCursor(MovingCursorAction.First);
                     return;
 
                 case Mode.TimeTagEditMode:
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             BindableFastEditMode.Value = fastEditMode;
         }
 
-        public bool MoveCursor(CursorAction action)
+        public bool MoveCursor(MovingCursorAction action)
         {
             switch (Mode)
             {
@@ -138,5 +138,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// Use in develop purpose only.
         /// </summary>
         Order,
+    }
+
+    public enum RecordingMovingCursorMode
+    {
+        /// <summary>
+        /// Move to any tag
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// Only move to next start tag.
+        /// </summary>
+        OnlyStartTag,
+
+        /// <summary>
+        /// Only move to next end tag.
+        /// </summary>
+        OnlyEndTag,
     }
 }

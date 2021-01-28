@@ -194,15 +194,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
     }
 
-    public enum CursorAction
+    public enum MovingCursorAction
     {
-        MoveUp,
+        Up,
 
-        MoveDown,
+        Down,
 
-        MoveLeft,
+        Left,
 
-        MoveRight,
+        Right,
 
         First,
 

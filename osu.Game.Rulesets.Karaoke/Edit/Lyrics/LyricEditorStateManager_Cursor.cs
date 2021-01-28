@@ -32,37 +32,38 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             BindableHoverCursorPosition.Value = new CursorPosition();
         }
 
-        private bool moveCursor(CursorAction action)
+        private bool moveCursor(MovingCursorAction action)
         {
             var currentPosition = BindableCursorPosition.Value;
-
-            CursorPosition position = new CursorPosition();
-
+            CursorPosition position;
             switch (action)
             {
-                case CursorAction.MoveUp:
+                case MovingCursorAction.Up:
                     position = getPreviousLyricCursorPosition(currentPosition);
                     break;
 
-                case CursorAction.MoveDown:
+                case MovingCursorAction.Down:
                     position = getNextLyricCursorPosition(currentPosition);
                     break;
 
-                case CursorAction.MoveLeft:
+                case MovingCursorAction.Left:
                     position = getPreviousCursorPosition(currentPosition);
                     break;
 
-                case CursorAction.MoveRight:
+                case MovingCursorAction.Right:
                     position = getNextCursorPosition(currentPosition);
                     break;
 
-                case CursorAction.First:
+                case MovingCursorAction.First:
                     position = getFirstCursorPosition();
                     break;
 
-                case CursorAction.Last:
+                case MovingCursorAction.Last:
                     position = getLastCursorPosition();
                     break;
+
+                default:
+                    throw new InvalidOperationException(nameof(action));
             }
 
             if (position.Lyric == null)

@@ -20,6 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             Set(KaraokeRulesetEditSetting.LyricEditorFontSize, 28);
             Set(KaraokeRulesetEditSetting.LyricEditorMode, Mode.ViewMode);
             Set(KaraokeRulesetEditSetting.LyricEditorFastEditMode, LyricFastEditMode.None);
+            Set(KaraokeRulesetEditSetting.RecordingMovingCursorMode, RecordingMovingCursorMode.None);
 
             Set(KaraokeRulesetEditSetting.DisplayRuby, true);
             Set(KaraokeRulesetEditSetting.DisplayRomaji, true);
@@ -36,6 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         LyricEditorFontSize,
         LyricEditorMode,
         LyricEditorFastEditMode,
+        RecordingMovingCursorMode,
 
         // Note editor
         DisplayRuby,

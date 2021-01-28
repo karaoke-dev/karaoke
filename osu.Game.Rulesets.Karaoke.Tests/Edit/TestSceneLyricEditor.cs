@@ -77,6 +77,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
+            OsuDropdown<RecordingMovingCursorMode> recordingModeDropdown = null;
+
             Child = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
@@ -107,6 +109,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                     x.Current.BindValueChanged(mode =>
                                     {
                                         editor.Mode = mode.NewValue;
+
+                                        if(editor.Mode == Mode.RecordMode)
+                                        {
+                                            recordingModeDropdown.Show();
+                                        }
+                                        else
+                                        {
+                                            recordingModeDropdown.Hide();
+                                        }
                                     });
                                 }),
                                 new OsuDropdown<LyricFastEditMode>
@@ -118,6 +129,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                     x.Current.BindValueChanged(fastEditMode =>
                                     {
                                         editor.LyricFastEditMode = fastEditMode.NewValue;
+                                    });
+                                }),
+                                recordingModeDropdown = new OsuDropdown<RecordingMovingCursorMode>
+                                {
+                                    Width = 150,
+                                    Items = (RecordingMovingCursorMode[])Enum.GetValues(typeof(RecordingMovingCursorMode))
+                                }.With(x =>
+                                {
+                                    x.Current.BindValueChanged(recordingMovingCursorMode =>
+                                    {
+                                        editor.RecordingMovingCursorMode = recordingMovingCursorMode.NewValue;
                                     });
                                 }),
                                 new OsuButton
@@ -146,6 +168,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                     }
                 }
             };
+
+            recordingModeDropdown.Hide();
         });
     }
 }

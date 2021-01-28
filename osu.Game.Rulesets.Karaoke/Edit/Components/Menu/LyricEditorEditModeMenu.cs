@@ -5,47 +5,24 @@ using System;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
-using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public class LyricEditorEditModeMenu : MenuItem
+    public class LyricEditorEditModeMenu : EnumMenuItem<Mode>
     {
-        private readonly Bindable<Mode> bindableLyricEditorMode = new Bindable<Mode>();
+        protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.LyricEditorMode;
 
         public LyricEditorEditModeMenu(KaraokeRulesetEditConfigManager config, string text)
-            : base(text)
+            : base(config, text)
         {
-            Items = createMenuItems();
-
-            config.BindWith(KaraokeRulesetEditSetting.LyricEditorMode, bindableLyricEditorMode);
-            bindableLyricEditorMode.BindValueChanged(e =>
-            {
-                var newSelection = e.NewValue;
-                Items.OfType<ToggleMenuItem>().ForEach(x =>
-                {
-                    var match = x.Text.Value == getName(newSelection);
-                    x.State.Value = match;
-                });
-            }, true);
         }
 
-        private ToggleMenuItem[] createMenuItems()
+        protected override string GetName(Mode selection)
         {
-            var enums = (Mode[])Enum.GetValues(typeof(Mode));
-            return enums.Select(e =>
-            {
-                var item = new ToggleMenuItem(getName(e), MenuItemType.Standard, _ => updateMode(e));
-                return item;
-            }).ToArray();
-        }
-
-        private string getName(Mode mode)
-        {
-            switch (mode)
+            switch (selection)
             {
                 case Mode.ViewMode:
                     return "View";
@@ -63,13 +40,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                     return "Edit time tag";
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(mode));
+                    throw new ArgumentOutOfRangeException(nameof(selection));
             }
-        }
-
-        private void updateMode(Mode mode)
-        {
-            bindableLyricEditorMode.Value = mode;
         }
     }
 }
