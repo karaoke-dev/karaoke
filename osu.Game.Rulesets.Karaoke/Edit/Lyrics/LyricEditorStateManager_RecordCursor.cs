@@ -56,10 +56,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 case RecordingMovingCursorMode.None:
                     return true;
+
                 case RecordingMovingCursorMode.OnlyStartTag:
                     return timeTag.Index.State == Framework.Graphics.Sprites.TextIndex.IndexState.Start;
+
                 case RecordingMovingCursorMode.OnlyEndTag:
                     return timeTag.Index.State == Framework.Graphics.Sprites.TextIndex.IndexState.End;
+
                 default:
                     throw new InvalidOperationException(nameof(RecordingMovingCursorMode));
             }
@@ -70,6 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var currentTimeTag = BindableRecordCursorPosition.Value;
 
             TimeTag nextTimeTag;
+
             switch (action)
             {
                 case MovingCursorAction.Up:

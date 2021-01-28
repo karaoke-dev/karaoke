@@ -12,7 +12,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
-using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI;
@@ -44,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             if (selection.All(x => x is LyricSelectionBlueprint))
             {
-                var selectedObject = EditorBeatmap.SelectedHitObjects.Cast<Lyric>().OrderBy(x => x.StartTime);
+                var selectedObject = EditorBeatmap.SelectedHitObjects.Cast<Lyric>().OrderBy(x => x.StartTime).ToList();
                 return new[]
                 {
                     createLayoutMenuItem(selectedObject),
@@ -92,11 +91,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             });
         }
 
-        private MenuItem createLayoutMenuItem(IEnumerable<Lyric> lyrics)
+        private MenuItem createLayoutMenuItem(List<Lyric> lyrics)
         {
             var layoutDictionary = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
             var selectedLayoutIndexes = lyrics.Select(x => x.LayoutIndex).Distinct().ToList();
-            var selectedLayoutIndex = selectedLayoutIndexes.Count() == 1 ? selectedLayoutIndexes.FirstOrDefault() : -1;
+            var selectedLayoutIndex = selectedLayoutIndexes.Count == 1 ? selectedLayoutIndexes.FirstOrDefault() : -1;
 
             return new OsuMenuItem("Layout")
             {
@@ -105,15 +104,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     if (state != TernaryState.True)
                         return;
 
-                    var lyrics = EditorBeatmap.SelectedHitObjects.OfType<Lyric>().ToList();
                     lyricManager.ChangeLayout(lyrics, x.Key);
                 })).ToArray()
             };
         }
 
-        private MenuItem createSingerMenuItem(IEnumerable<Lyric> lyrics)
+        private MenuItem createSingerMenuItem(List<Lyric> lyrics)
         {
-            return new SingerContextMenu(lyricManager, lyrics.ToList(), "Singer");
+            return new SingerContextMenu(lyricManager, lyrics, "Singer");
         }
 
         public override bool HandleMovement(MoveSelectionEvent moveEvent)

@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         [Cached]
         protected readonly LyricManager LyricManager;
 
-        public ImportLyricSubScreenWithLyricEditor()
+        protected ImportLyricSubScreenWithLyricEditor()
         {
             AddInternal(LyricManager = new LyricManager());
         }
