@@ -18,14 +18,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
         public override IconUsage Icon => FontAwesome.Solid.Tag;
 
-        [Cached]
-        private readonly TimeTagManager timeTagManager;
-
-        public GenerateTimeTagSubScreen()
-        {
-            AddInternal(timeTagManager = new TimeTagManager());
-        }
-
         protected override TopNavigation CreateNavigation()
             => new GenerateTimeTagNavigation(this);
 
@@ -50,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
         internal void AskForAutoGenerateTimeTag()
         {
-            if (timeTagManager.HasTimedTimeTags())
+            if (LyricManager.HasTimedTimeTags())
             {
                 // do not touch user's lyric if already contains valid time-tag with time.
                 DialogOverlay.Push(new AlreadyContainTimeTagPopupDialog(ok =>
@@ -65,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
                     if (!ok)
                         return;
 
-                    timeTagManager.AutoGenerateTimeTags();
+                    LyricManager.AutoGenerateTimeTags();
                     Navigation.State = NavigationState.Done;
                 }));
             }

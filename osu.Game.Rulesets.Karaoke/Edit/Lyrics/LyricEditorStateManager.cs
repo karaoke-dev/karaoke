@@ -157,4 +157,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// </summary>
         OnlyEndTag,
     }
+
+    public enum MovingCursorAction
+    {
+        Up,
+
+        Down,
+
+        Left,
+
+        Right,
+
+        First,
+
+        Last,
+    }
 }

@@ -27,9 +27,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
         [Resolved(canBeNull: true)]
         private LyricManager lyricManager { get; set; }
 
-        [Resolved(canBeNull: true)]
-        private TimeTagManager timeTagManager { get; set; }
-
         [Resolved]
         private LyricEditorStateManager stateManager { get; set; }
 

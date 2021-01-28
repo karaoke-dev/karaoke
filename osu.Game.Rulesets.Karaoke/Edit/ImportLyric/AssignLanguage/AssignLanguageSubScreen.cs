@@ -21,9 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         public override IconUsage Icon => FontAwesome.Solid.Globe;
 
         [Cached]
-        protected readonly LyricManager LyricManager;
-
-        [Cached]
         protected readonly RubyRomajiManager RubyRomajiManager;
 
         [Resolved]
@@ -31,7 +28,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 
         public AssignLanguageSubScreen()
         {
-            AddInternal(LyricManager = new LyricManager());
             AddInternal(RubyRomajiManager = new RubyRomajiManager());
         }
 
