@@ -8,15 +8,13 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditorStateManager : Component
     {
-        [Resolved]
-        private EditorBeatmap beatmap { get; set; }
-
         public Bindable<Mode> BindableMode { get; } = new Bindable<Mode>();
 
         public Bindable<LyricFastEditMode> BindableFastEditMode { get; } = new Bindable<LyricFastEditMode>();
@@ -25,7 +23,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public LyricFastEditMode FastEditMode => BindableFastEditMode.Value;
 
-        protected IEnumerable<Lyric> Lyrics => beatmap.HitObjects.OfType<Lyric>();
+        public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
+
+        protected IEnumerable<Lyric> Lyrics => IHasOrdersUtils.Sorted(BindableLyrics);
+
+        [BackgroundDependencyLoader]
+        private void load(EditorBeatmap beatmap)
+        {
+            // load lyric in here
+            var lyrics = IHasOrdersUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
+            BindableLyrics.AddRange(lyrics);
+        }
 
         public void SetMode(Mode mode)
         {
