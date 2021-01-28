@@ -7,7 +7,8 @@ using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Timing;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -25,6 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private IEditorChangeHandler changeHandler { get; set; }
 
         protected IEnumerable<Lyric> Lyrics => beatmap.HitObjects.OfType<Lyric>();
+
+        public IEnumerable<Singer> Singers => (beatmap.PlayableBeatmap as KaraokeBeatmap)?.Singers;
 
         #region Language
 
@@ -65,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         #endregion
 
-        #region Lyout
+        #region Layout
 
         public void ChangeLayout(List<Lyric> lyrics, int layout)
         {
@@ -296,6 +299,83 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return null;
 
             return beatmap.HitObjects.OfType<Lyric>().FirstOrDefault(x => x.TimeTags?.Contains(timeTag) ?? false);
+        }
+
+        #endregion
+
+        #region Singer
+
+        public void AddSingerToLyric(Singer singer, Lyric lyric) => AddSingersToLyrics(new List<Singer> { singer }, new List<Lyric> { lyric });
+
+        public void AddSingersToLyrics(List<Singer> singers, List<Lyric> lyrics)
+        {
+            if (!(singers?.Any() ?? false))
+                throw new ArgumentNullException($"{nameof(singers)} cannot be numm or empty.");
+
+            if (!(lyrics?.Any() ?? false))
+                throw new ArgumentNullException($"{nameof(lyrics)} cannot be numm or empty.");
+
+            changeHandler?.BeginChange();
+
+            foreach (var lyric in lyrics)
+            {
+                foreach (var singer in singers)
+                {
+                    addSingerToLyric(singer, lyric);
+                }
+            }
+
+            changeHandler?.EndChange();
+
+            void addSingerToLyric(Singer singer, Lyric lyric)
+            {
+                if (SingerInLyric(singer, lyric))
+                    return;
+
+                var existSingerList = lyric.Singers?.ToList() ?? new List<int>();
+                existSingerList.Add(singer.ID);
+                lyric.Singers = existSingerList.ToArray();
+            }
+        }
+
+        public void RemoveSingerToLyric(Singer singer, Lyric lyric) => RemoveSingersToLyrics(new List<Singer> { singer }, new List<Lyric> { lyric });
+
+        public void RemoveSingersToLyrics(List<Singer> singers, List<Lyric> lyrics)
+        {
+            if (!(singers?.Any() ?? false))
+                throw new ArgumentNullException($"{nameof(singers)} cannot be numm or empty.");
+
+            if (!(lyrics?.Any() ?? false))
+                throw new ArgumentNullException($"{nameof(lyrics)} cannot be numm or empty.");
+
+            changeHandler?.BeginChange();
+
+            foreach (var lyric in lyrics)
+            {
+                foreach (var singer in singers)
+                {
+                    removeSingerToLyric(singer, lyric);
+                }
+            }
+
+            changeHandler?.EndChange();
+
+            void removeSingerToLyric(Singer singer, Lyric lyric)
+            {
+                if (!SingerInLyric(singer, lyric))
+                    return;
+
+                lyric.Singers = lyric.Singers?.Where(x => x != singer.ID).ToArray();
+            }
+        }
+
+        public bool SingerInLyric(Singer singer, Lyric lyric)
+        {
+            // lyric belongs to default singer if no any singer in lyric.
+            if (lyric.Singers == null || !lyric.Singers.Any())
+                return singer.ID == 0;
+
+            return (bool)lyric.Singers?.Contains(singer.ID);
         }
 
         #endregion

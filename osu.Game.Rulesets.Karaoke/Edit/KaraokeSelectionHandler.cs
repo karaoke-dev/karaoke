@@ -9,6 +9,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Singers;
@@ -38,9 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         [Resolved]
         private LyricManager lyricManager { get; set; }
-
-        [Resolved]
-        private SingerManager singerManager { get; set; }
 
         protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint> selection)
         {
@@ -115,10 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         private MenuItem createSingerMenuItem(IEnumerable<Lyric> lyrics)
         {
-            return new OsuMenuItem("Singer")
-            {
-                Items = singerManager.CreateSingerContextMenu(lyrics.ToList()).ToList()
-            };
+            return new SingerContextMenu(lyricManager, lyrics.ToList(), "Singer");
         }
 
         public override bool HandleMovement(MoveSelectionEvent moveEvent)
