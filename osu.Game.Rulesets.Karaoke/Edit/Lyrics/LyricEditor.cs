@@ -7,6 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
+using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
@@ -22,6 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Resolved(canBeNull: true)]
         private LyricManager lyricManager { get; set; }
+
+        [Resolved(canBeNull: true)]
+        private IFrameBasedClock framedClock { get; set; }
 
         [Cached]
         private LyricEditorStateManager stateManager;
@@ -172,7 +176,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return lyricManager.ClearTimeTagTime(currentTimeTag);
 
                 case KaraokeEditAction.SetTime:
-                    var setTimeSuccess = lyricManager.SetTimeTagTime(currentTimeTag);
+                    if (framedClock == null)
+                        return false;
+
+                    var currentTime = framedClock.CurrentTime;
+                    var setTimeSuccess = lyricManager.SetTimeTagTime(currentTimeTag, currentTime);
                     if (setTimeSuccess)
                         stateManager.MoveCursor(MovingCursorAction.Right);
                     return setTimeSuccess;

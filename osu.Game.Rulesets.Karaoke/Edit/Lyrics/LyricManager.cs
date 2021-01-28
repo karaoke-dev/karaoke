@@ -24,9 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(CanBeNull = true)]
         private IEditorChangeHandler changeHandler { get; set; }
 
-        [Resolved(canBeNull: true)]
-        private IFrameBasedClock framedClock { get; set; }
-
         protected IEnumerable<Lyric> Lyrics => beatmap.HitObjects.OfType<Lyric>();
 
         #region Language
@@ -160,18 +157,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             changeHandler?.EndChange();
         }
 
-        public bool SetTimeTagTime(TimeTag timeTag)
+        public bool SetTimeTagTime(TimeTag timeTag, double time)
         {
-            if (framedClock == null)
-                return false;
-
             var currentLyric = timeTagInLyric(timeTag);
             if (currentLyric == null)
                 return false;
 
             changeHandler?.BeginChange();
 
-            timeTag.Time = framedClock.CurrentTime;
+            timeTag.Time = time;
             refreshTimeTag(currentLyric);
 
             changeHandler?.EndChange();
@@ -182,7 +176,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public bool ClearTimeTagTime(TimeTag timeTag)
         {
-            if (framedClock == null)
+            if (timeTag.Time == null)
                 return false;
 
             var currentLyric = timeTagInLyric(timeTag);
