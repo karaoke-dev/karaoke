@@ -7,6 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
+using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
@@ -21,10 +22,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private EditorBeatmap beatmap { get; set; }
 
         [Resolved(canBeNull: true)]
-        private TimeTagManager timeTagManager { get; set; }
+        private LyricManager lyricManager { get; set; }
 
         [Resolved(canBeNull: true)]
-        private LyricManager lyricManager { get; set; }
+        private IFrameBasedClock framedClock { get; set; }
 
         [Cached]
         private LyricEditorStateManager stateManager;
@@ -76,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         protected override bool OnKeyDown(KeyDownEvent e)
         {
-            if (timeTagManager == null)
+            if (lyricManager == null)
                 return false;
 
             if (stateManager.Mode != Mode.TypingMode)
@@ -100,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public bool OnPressed(KaraokeEditAction action)
         {
-            if (timeTagManager == null)
+            if (lyricManager == null)
                 return false;
 
             var isMoving = HandleMovingEvent(action);
@@ -164,7 +165,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         protected bool HandleSetTimeEvent(KaraokeEditAction action)
         {
-            if (timeTagManager == null)
+            if (lyricManager == null)
                 return false;
 
             var currentTimeTag = stateManager.BindableRecordCursorPosition.Value;
@@ -172,10 +173,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             switch (action)
             {
                 case KaraokeEditAction.ClearTime:
-                    return timeTagManager.ClearTimeTagTime(currentTimeTag);
+                    return lyricManager.ClearTimeTagTime(currentTimeTag);
 
                 case KaraokeEditAction.SetTime:
-                    var setTimeSuccess = timeTagManager.SetTimeTagTime(currentTimeTag);
+                    if (framedClock == null)
+                        return false;
+
+                    var currentTime = framedClock.CurrentTime;
+                    var setTimeSuccess = lyricManager.SetTimeTagTime(currentTimeTag, currentTime);
                     if (setTimeSuccess)
                         stateManager.MoveCursor(MovingCursorAction.Right);
                     return setTimeSuccess;
@@ -187,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         protected bool HandleCreateOrDeleterTimeTagEvent(KaraokeEditAction action)
         {
-            if (timeTagManager == null)
+            if (lyricManager == null)
                 return false;
 
             var position = stateManager.BindableCursorPosition.Value;
@@ -195,10 +200,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             switch (action)
             {
                 case KaraokeEditAction.Create:
-                    return timeTagManager.AddTimeTagByPosition(position);
+                    return lyricManager.AddTimeTagByPosition(position);
 
                 case KaraokeEditAction.Remove:
-                    return timeTagManager.RemoveTimeTagByPosition(position);
+                    return lyricManager.RemoveTimeTagByPosition(position);
 
                 default:
                     return false;

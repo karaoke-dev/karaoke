@@ -30,7 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private LanguageSelectionDialog languageSelectionDialog;
         private ImportLyricManager importManager;
         private LyricManager lyricManager;
-        private TimeTagManager timeTagManager;
 
         private LyricEditor editor;
 
@@ -64,14 +63,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 languageSelectionDialog = new LanguageSelectionDialog(),
                 importManager = new ImportLyricManager(),
                 lyricManager = new LyricManager(),
-                timeTagManager = new TimeTagManager()
             });
 
             Dependencies.Cache(dialogOverlay);
             Dependencies.Cache(languageSelectionDialog);
             Dependencies.Cache(importManager);
             Dependencies.Cache(lyricManager);
-            Dependencies.Cache(timeTagManager);
         }
 
         [SetUp]

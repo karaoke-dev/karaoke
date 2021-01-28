@@ -21,13 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         private readonly LyricEditor lyricEditor;
 
-        [Cached]
-        private readonly TimeTagManager timeTagManager;
-
         public KaraokeLyricEditor(Ruleset ruleset)
         {
-            AddInternal(timeTagManager = new TimeTagManager());
-
             AddInternal(new KaraokeEditInputManager(ruleset.RulesetInfo)
             {
                 RelativeSizeAxes = Axes.Both,

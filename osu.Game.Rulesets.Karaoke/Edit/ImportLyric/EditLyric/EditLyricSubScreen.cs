@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
@@ -18,14 +17,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         public override ImportLyricStep Step => ImportLyricStep.EditLyric;
 
         public override IconUsage Icon => FontAwesome.Solid.Globe;
-
-        [Cached]
-        protected readonly LyricManager LyricManager;
-
-        public EditLyricSubScreen()
-        {
-            AddInternal(LyricManager = new LyricManager());
-        }
 
         protected override TopNavigation CreateNavigation()
             => new EditLyricNavigation(this);

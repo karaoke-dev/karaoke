@@ -36,6 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             var currentPosition = BindableCursorPosition.Value;
             CursorPosition position;
+
             switch (action)
             {
                 case MovingCursorAction.Up:

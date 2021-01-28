@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         protected abstract KaraokeRulesetEditSetting Setting { get; }
 
-        public EnumMenuItem(KaraokeRulesetEditConfigManager config, string text)
+        protected EnumMenuItem(KaraokeRulesetEditConfigManager config, string text)
             : base(text)
         {
             Items = createMenuItems();

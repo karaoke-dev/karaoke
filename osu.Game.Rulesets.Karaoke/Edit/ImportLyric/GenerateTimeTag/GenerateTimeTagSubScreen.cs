@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
@@ -17,14 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
         public override ImportLyricStep Step => ImportLyricStep.GenerateTimeTag;
 
         public override IconUsage Icon => FontAwesome.Solid.Tag;
-
-        [Cached]
-        private readonly TimeTagManager timeTagManager;
-
-        public GenerateTimeTagSubScreen()
-        {
-            AddInternal(timeTagManager = new TimeTagManager());
-        }
 
         protected override TopNavigation CreateNavigation()
             => new GenerateTimeTagNavigation(this);
@@ -50,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
         internal void AskForAutoGenerateTimeTag()
         {
-            if (timeTagManager.HasTimedTimeTags())
+            if (LyricManager.HasTimedTimeTags())
             {
                 // do not touch user's lyric if already contains valid time-tag with time.
                 DialogOverlay.Push(new AlreadyContainTimeTagPopupDialog(ok =>
@@ -65,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
                     if (!ok)
                         return;
 
-                    timeTagManager.AutoGenerateTimeTags();
+                    LyricManager.AutoGenerateTimeTags();
                     Navigation.State = NavigationState.Done;
                 }));
             }

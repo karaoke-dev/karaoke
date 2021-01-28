@@ -9,6 +9,7 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
@@ -57,14 +58,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
         }
 
         [BackgroundDependencyLoader]
-        private void load(SingerManager singerManager)
+        private void load(LyricManager lyricManager)
         {
             if (HitObject is Lyric lyric)
             {
                 lyric.SingersBindable.BindValueChanged(e =>
                 {
                     // Check is lyric contains this singer, or default singer
-                    var isSingerMatch = singerManager.SingerInLyric(singer, lyric);
+                    var isSingerMatch = lyricManager.SingerInLyric(singer, lyric);
 
                     if (isSingerMatch)
                     {
