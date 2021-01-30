@@ -51,6 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
                     return;
 
                 displayBottomDrawable = value;
+
                 if (displayBottomDrawable)
                 {
                     bottomDrawable = CreateBottomDrawable();

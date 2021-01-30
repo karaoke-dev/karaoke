@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void SplitLyric(Lyric lyric, int index)
         {
-            // todo : make sure split wotks with order and other property.
+            // todo : make sure split works with order and other property.
             var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, index);
 
             changeHandler?.BeginChange();
