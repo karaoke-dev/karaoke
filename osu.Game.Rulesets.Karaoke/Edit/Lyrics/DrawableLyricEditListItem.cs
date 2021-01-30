@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -17,9 +18,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         private Box dragAlert;
 
+        private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
+
         public DrawableLyricEditListItem(Lyric item)
             : base(item)
         {
+            bindableMode.BindValueChanged(e =>
+            {
+                // Only draggable in edit mode.
+                ShowDragHandle.Value = e.NewValue == Mode.EditMode;
+            }, true);
         }
 
         protected override Drawable CreateContent()
@@ -46,9 +54,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(OsuColour colours, LyricEditorStateManager stateManager)
         {
             dragAlert.Colour = colours.YellowDarker;
+            bindableMode.BindTo(stateManager.BindableMode);
         }
 
         protected override bool OnDragStart(DragStartEvent e)
