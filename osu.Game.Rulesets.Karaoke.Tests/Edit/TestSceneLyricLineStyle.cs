@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                                             colorAreaDropdown = new OsuDropdown<ColorArea>
                                                             {
                                                                 RelativeSizeAxes = Axes.X,
-                                                                Items = (ColorArea[])Enum.GetValues(typeof(ColorArea))
+                                                                Items = EnumUtils.GetValues<ColorArea>()
                                                             }
                                                         }
                                                     },
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                                             brushTypeDropdown = new OsuDropdown<BrushType>
                                                             {
                                                                 RelativeSizeAxes = Axes.X,
-                                                                Items = (BrushType[])Enum.GetValues(typeof(BrushType))
+                                                                Items = EnumUtils.GetValues<BrushType>()
                                                             }
                                                         }
                                                     },
@@ -162,7 +162,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                                             fontAreaDropdown = new OsuDropdown<FontArea>
                                                             {
                                                                 RelativeSizeAxes = Axes.X,
-                                                                Items = (FontArea[])Enum.GetValues(typeof(FontArea))
+                                                                Items = EnumUtils.GetValues<FontArea>()
                                                             }
                                                         }
                                                     },
@@ -177,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                                             fontDropdown = new OsuDropdown<Font>
                                                             {
                                                                 RelativeSizeAxes = Axes.X,
-                                                                Items = (Font[])Enum.GetValues(typeof(Font))
+                                                                Items = EnumUtils.GetValues<Font>()
                                                             }
                                                         }
                                                     },

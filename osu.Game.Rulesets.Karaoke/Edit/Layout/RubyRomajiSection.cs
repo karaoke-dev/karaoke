@@ -7,6 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
@@ -28,13 +29,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 {
                     Label = "Ruby alignment",
                     Description = "Ruby alignment section",
-                    Items = (LyricTextAlignment[])Enum.GetValues(typeof(LyricTextAlignment))
+                    Items = EnumUtils.GetValues<LyricTextAlignment>()
                 },
                 romajiAlignmentDropdown = new LabelledDropdown<LyricTextAlignment>
                 {
                     Label = "Romaji alignment",
                     Description = "Romaji alignment section",
-                    Items = (LyricTextAlignment[])Enum.GetValues(typeof(LyricTextAlignment))
+                    Items = EnumUtils.GetValues<LyricTextAlignment>()
                 },
                 rubyMarginSliderBar = new LabelledRealTimeSliderBar<int>
                 {

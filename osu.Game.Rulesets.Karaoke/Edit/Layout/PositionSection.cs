@@ -7,6 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
@@ -28,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 {
                     Label = "Anchor",
                     Description = "Anchor section",
-                    Items = (Anchor[])Enum.GetValues(typeof(Anchor))
+                    Items = EnumUtils.GetValues<Anchor>()
                 },
                 horizontalMarginSliderBar = new LabelledRealTimeSliderBar<int>
                 {
@@ -58,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 {
                     Label = "Smart horizon",
                     Description = "Smart horizon section",
-                    Items = (KaraokeTextSmartHorizon[])Enum.GetValues(typeof(KaraokeTextSmartHorizon))
+                    Items = EnumUtils.GetValues<KaraokeTextSmartHorizon>()
                 }
             };
 

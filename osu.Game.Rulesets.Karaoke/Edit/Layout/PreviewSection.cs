@@ -37,13 +37,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 {
                     Label = "Ratio",
                     Description = "Adjust to see different preview ratio.",
-                    Items = (PreviewRatio[])Enum.GetValues(typeof(PreviewRatio)),
+                    Items = EnumUtils.GetValues<PreviewRatio>(),
                 },
                 previewSampleDropdown = new LabelledDropdown<PreviewSample>
                 {
                     Label = "Lyric",
                     Description = "Select different lyric to check layout is valid.",
-                    Items = (PreviewSample[])Enum.GetValues(typeof(PreviewSample)),
+                    Items = EnumUtils.GetValues<PreviewSample>(),
                 },
                 previewStyleDropdown = new StyleLabelledDropdown
                 {
