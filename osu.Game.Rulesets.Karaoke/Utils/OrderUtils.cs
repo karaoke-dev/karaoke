@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
-    public static class IHasOrdersUtils
+    public static class OrderUtils
     {
         /// <summary>
         /// Check objects contains duplicated ids.
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var orderByAsc = startFrom <= minOrderNumber;
             var processObjects = orderByAsc ? objects.OrderBy(x => x.Order) : objects.OrderByDescending(x => x.Order);
 
-            var targetOrder = orderByAsc ? startFrom : (startFrom - minOrderNumber + objects.Length);
+            var targetOrder = orderByAsc ? startFrom : startFrom - minOrderNumber + objects.Length;
 
             foreach (var processObject in processObjects)
             {
@@ -133,18 +133,18 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var shiftingOrder = newOrder > oldOrder ? -1 : 1;
 
             // get order order object info
-            const int oldOrderTempId = -1;
+            const int old_order_temp_id = -1;
             var oldOrderObject = objects.FirstOrDefault(x => x.Order == oldOrder);
 
             // set old order to -1 for order duplicated issue
-            changeOrder(oldOrderObject, oldOrderTempId);
+            changeOrder(oldOrderObject, old_order_temp_id);
 
             // switching order
             affectObjects = shiftingOrder > 0 ? affectObjects.OrderByDescending(x => x.Order) : affectObjects.OrderBy(x => x.Order);
 
             foreach (var affectObject in affectObjects)
             {
-                if (affectObject.Order != oldOrderTempId)
+                if (affectObject.Order != old_order_temp_id)
                 {
                     var affectObjectNewOrder = affectObject.Order + shiftingOrder;
                     changeOrder(affectObject, affectObjectNewOrder);
@@ -157,13 +157,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             // post check should not have duplicated ids.
             ContainDuplicatedId(objects.ToArray());
 
-            void changeOrder(T obj, int newOrder)
+            void changeOrder(T obj, int n)
             {
-                var oldOrder = obj.Order;
-                obj.Order = newOrder;
+                var o = obj.Order;
+                obj.Order = n;
 
                 // call invoke for outside updating.
-                changeOrderAction?.Invoke(obj, oldOrder, newOrder);
+                changeOrderAction?.Invoke(obj, o, n);
             }
         }
     }

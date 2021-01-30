@@ -775,7 +775,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [Test]
         public void TestDisabledWhenSetToCurrentValueDoesNotNotifySubscriber()
         {
-            bindableStringDictionary.DisabledChanged += b => Assert.Fail();
+            bindableStringDictionary.DisabledChanged += _ => Assert.Fail();
 
             bindableStringDictionary.Disabled = bindableStringDictionary.Disabled;
         }
@@ -783,9 +783,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
         [Test]
         public void TestDisabledWhenSetToCurrentValueDoesNotNotifySubscribers()
         {
-            bindableStringDictionary.DisabledChanged += b => Assert.Fail();
-            bindableStringDictionary.DisabledChanged += b => Assert.Fail();
-            bindableStringDictionary.DisabledChanged += b => Assert.Fail();
+            bindableStringDictionary.DisabledChanged += _ => Assert.Fail();
+            bindableStringDictionary.DisabledChanged += _ => Assert.Fail();
+            bindableStringDictionary.DisabledChanged += _ => Assert.Fail();
 
             bindableStringDictionary.Disabled = bindableStringDictionary.Disabled;
         }

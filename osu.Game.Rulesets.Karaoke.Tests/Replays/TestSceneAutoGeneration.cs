@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
             Assert.IsTrue(checkMatching(generated.Frames[2], null), "Frame3 should release sing.");
         }
 
-        private bool checkMatching(ReplayFrame frame, Tone? tone)
+        private static bool checkMatching(ReplayFrame frame, Tone? tone)
         {
             if (!(frame is KaraokeReplayFrame karaokeReplayFrame))
                 throw new Exception($"{nameof(frame)} is not karaoke replay frame.");

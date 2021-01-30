@@ -113,9 +113,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                         return new LegacyHitExplosion();
 
                     return null;
-            }
 
-            return null;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(karaokeComponent.Component));
+            }
         }
 
         private bool textureExist(params string[] textureNames)
@@ -147,9 +148,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                         case KaraokeSkinConfiguration.Singer:
                             return SkinUtils.As<TValue>(bindableSingers[lookupNumber]);
-                    }
 
-                    break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(config));
+                    }
                 }
 
                 // Lookup list of name by type
@@ -164,9 +166,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                         case KaraokeIndexLookup.Note:
                             return SkinUtils.As<TValue>(bindableNotesLookup);
-                    }
 
-                    break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(indexLookup));
+                    }
             }
 
             return source.GetConfig<TLookup, TValue>(lookup);

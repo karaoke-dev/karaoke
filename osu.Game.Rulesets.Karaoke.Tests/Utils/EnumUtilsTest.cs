@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [Test]
         public void TestGetValues()
         {
-            var actual = new TestEnum[]
+            var actual = new[]
             {
                 TestEnum.Enum1,
                 TestEnum.Enum2,

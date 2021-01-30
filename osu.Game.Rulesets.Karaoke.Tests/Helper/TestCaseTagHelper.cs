@@ -28,11 +28,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             var regex = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<ruby>.*$)");
             var result = regex.Match(str);
             if (!result.Success)
-                throw new ArgumentException(nameof(str));
+                throw new ArgumentException(null, nameof(str));
 
-            var startIndex = int.Parse(result.Groups["start"]?.Value);
-            var endIndex = int.Parse(result.Groups["end"]?.Value);
-            var text = result.Groups["ruby"]?.Value;
+            var startIndex = int.Parse(result.Groups["start"].Value);
+            var endIndex = int.Parse(result.Groups["end"].Value);
+            var text = result.Groups["ruby"].Value;
 
             return new RubyTag
             {
@@ -58,11 +58,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             var regex = new Regex("(?<start>[-0-9]+),(?<end>[-0-9]+)]:(?<romaji>.*$)");
             var result = regex.Match(str);
             if (!result.Success)
-                throw new ArgumentException(nameof(str));
+                throw new ArgumentException(null, nameof(str));
 
-            var startIndex = int.Parse(result.Groups["start"]?.Value);
-            var endIndex = int.Parse(result.Groups["end"]?.Value);
-            var text = result.Groups["romaji"]?.Value;
+            var startIndex = int.Parse(result.Groups["start"].Value);
+            var endIndex = int.Parse(result.Groups["end"].Value);
+            var text = result.Groups["romaji"].Value;
 
             return new RomajiTag
             {
@@ -88,11 +88,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             var regex = new Regex("(?<index>[-0-9]+),(?<state>start|end)]:(?<time>[-0-9]+|s*|)");
             var result = regex.Match(str);
             if (!result.Success)
-                throw new ArgumentException(nameof(str));
+                throw new ArgumentException(null, nameof(str));
 
-            var index = int.Parse(result.Groups["index"]?.Value);
-            var state = result.Groups["state"]?.Value == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
-            var timeStr = result.Groups["time"]?.Value;
+            var index = int.Parse(result.Groups["index"].Value);
+            var state = result.Groups["state"].Value == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
+            var timeStr = result.Groups["time"].Value;
             var time = timeStr == "" ? default(int?) : int.Parse(timeStr);
 
             return new TimeTag(new TextIndex(index, state), time);
@@ -114,11 +114,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             var regex = new Regex("(?<startTime>[-0-9]+),(?<endTime>[-0-9]+)]:(?<lyric>.*$)");
             var result = regex.Match(str);
             if (!result.Success)
-                throw new ArgumentException(nameof(str));
+                throw new ArgumentException(null, nameof(str));
 
-            var startTime = double.Parse(result.Groups["startTime"]?.Value);
-            var endTime = double.Parse(result.Groups["endTime"]?.Value);
-            var text = result.Groups["lyric"]?.Value;
+            var startTime = double.Parse(result.Groups["startTime"].Value);
+            var endTime = double.Parse(result.Groups["endTime"].Value);
+            var text = result.Groups["lyric"].Value;
 
             return new Lyric
             {
@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
                 TimeTags = new[]
                 {
                     new TimeTag(new TextIndex(0), startTime),
-                    new TimeTag(new TextIndex((text?.Length ?? 0) - 1, TextIndex.IndexState.End), endTime)
+                    new TimeTag(new TextIndex((int)text?.Length - 1, TextIndex.IndexState.End), endTime)
                 }
             };
         }
@@ -151,10 +151,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             var regex = new Regex("(?<id>[-0-9]+)]");
             var result = regex.Match(str);
             if (!result.Success)
-                throw new ArgumentException(nameof(str));
+                throw new ArgumentException(null, nameof(str));
 
             // todo : implementation
-            var id = int.Parse(result.Groups["id"]?.Value);
+            var id = int.Parse(result.Groups["id"].Value);
 
             return new Singer(id);
         }

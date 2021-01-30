@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         {
             setTooltip("Start time tag.", new TimeTag(new TextIndex(0), 1280));
             setTooltip("End time tag.", new TimeTag(new TextIndex(0, TextIndex.IndexState.End), 1280));
-            setTooltip("Null time", new TimeTag(new TextIndex(0), null));
+            setTooltip("Null time", new TimeTag(new TextIndex(0)));
         }
 
         private void setTooltip(string testName, TimeTag timeTag)

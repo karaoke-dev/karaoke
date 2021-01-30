@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 {
-    public class IHasOrdersUtilsTest
+    public class OrderUtilsTest
     {
         [TestCase(new[] { 1, 2, 3, 4 }, false)]
         [TestCase(new[] { 1, 2, 3, 5 }, false)]
@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestContainDuplicatedId(int[] orders, bool containDuplicated)
         {
             var objects = orders.Select(x => new TestOrderObject { Order = x }).ToArray();
-            var result = IHasOrdersUtils.ContainDuplicatedId(objects);
+            var result = OrderUtils.ContainDuplicatedId(objects);
             Assert.AreEqual(result, containDuplicated);
         }
 
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestGetMinOrderNumber(int[] orders, int number)
         {
             var objects = orders.Select(x => new TestOrderObject { Order = x }).ToArray();
-            var result = IHasOrdersUtils.GetMinOrderNumber(objects);
+            var result = OrderUtils.GetMinOrderNumber(objects);
             Assert.AreEqual(result, number);
         }
 
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestGetMaxOrderNumber(int[] orders, int number)
         {
             var objects = orders.Select(x => new TestOrderObject { Order = x }).ToArray();
-            var result = IHasOrdersUtils.GetMaxOrderNumber(objects);
+            var result = OrderUtils.GetMaxOrderNumber(objects);
             Assert.AreEqual(result, number);
         }
 
@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestSorted(int[] orders, int[] actualOrders)
         {
             var objects = orders?.Select(x => new TestOrderObject { Order = x });
-            var orderedArray = IHasOrdersUtils.Sorted(objects);
+            var orderedArray = OrderUtils.Sorted(objects);
             var result = orderedArray?.Select(x => x.Order).ToArray();
             Assert.AreEqual(result, actualOrders);
         }
@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var objects = orders?.Select(x => new TestOrderObject { Order = x }).ToArray();
 
             var movingStepResult = new List<int>();
-            IHasOrdersUtils.ResortOrder(objects, startFrom, (obj, o, _) =>
+            OrderUtils.ResortOrder(objects, startFrom, (obj, o, _) =>
             {
                 movingStepResult.Add(o);
             });
@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 var movingStepResult = new List<int>();
 
                 // This utils only change order property.
-                IHasOrdersUtils.ChangeOrder(objects, oldOrder, nowOrder, (obj, o, _) =>
+                OrderUtils.ChangeOrder(objects, oldOrder, nowOrder, (obj, o, _) =>
                 {
                     movingStepResult.Add(o);
                 });

@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.Layouts
             var lyrics = texts?.Select(x => new Lyric { Text = x }).ToArray();
 
             var generator = new LayoutGenerator(generatorConfig());
-            generator.ApplyLayout(lyrics, LocalLayout.CycleTwo);
+            generator.ApplyLayout(lyrics);
 
             Assert.AreEqual(lyrics?.Select(x => x.LayoutIndex).ToArray(), actualLayoutIds);
         }
@@ -33,14 +33,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.Layouts
             var lyrics = TestCaseTagHelper.ParseLyrics(lyricTexts);
 
             var generator = new LayoutGenerator(generatorConfig());
-            generator.ApplyLayout(lyrics, LocalLayout.CycleTwo);
+            generator.ApplyLayout(lyrics);
 
             Assert.AreEqual(lyrics.Select(x => $"[{x.StartTime},{x.EndTime}]").ToArray(), actualTimes);
         }
 
         private LayoutGeneratorConfig generatorConfig()
         {
-            return new LayoutGeneratorConfig
+            return new()
             {
                 NewLyricLineTime = 15000,
             };

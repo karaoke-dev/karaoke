@@ -140,7 +140,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
                     {
                         if (dialogOverlay == null)
                         {
-                            // todo : remove lyric directly in test case because pop-up dialog is not registed.
+                            // todo : remove lyric directly in test case because pop-up dialog is not registered.
                             lyricManager.DeleteLyric(Lyric);
                         }
                         else

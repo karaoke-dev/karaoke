@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void SplitLyric(Lyric lyric, int index)
         {
-            // todo : make sure split wotks with order and other property.
+            // todo : make sure split works with order and other property.
             var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, index);
 
             changeHandler?.BeginChange();
@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             changeHandler?.BeginChange();
 
-            var mexOrder = IHasOrdersUtils.GetMaxOrderNumber(Lyrics.ToArray());
+            var mexOrder = OrderUtils.GetMaxOrderNumber(Lyrics.ToArray());
             var createLyric = new Lyric
             {
                 Text = "New lyric",
@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             beatmap.Remove(lyric);
 
             // need to re-sort lyric order in here.
-            IHasOrdersUtils.ResortOrder(Lyrics.ToArray());
+            OrderUtils.ResortOrder(Lyrics.ToArray());
 
             changeHandler?.EndChange();
         }
@@ -156,7 +156,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             var oldOrder = lyric.Order;
             var newOrder = newIndex + 1; // order is start from 1
-            IHasOrdersUtils.ChangeOrder(Lyrics.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
+            OrderUtils.ChangeOrder(Lyrics.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
             {
                 // todo : not really sure should call update?
             });

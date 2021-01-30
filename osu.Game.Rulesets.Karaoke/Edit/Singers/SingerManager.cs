@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         {
             var oldOrder = singer.Order;
             var newOrder = newIndex + 1; // order is start from 1
-            IHasOrdersUtils.ChangeOrder(Singers.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
+            OrderUtils.ChangeOrder(Singers.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
             {
                 // todo : not really sure should call update?
             });
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 
         public void CreateSinger(Singer singer)
         {
-            singer.Order = IHasOrdersUtils.GetMaxOrderNumber(Singers.ToArray()) + 1;
+            singer.Order = OrderUtils.GetMaxOrderNumber(Singers.ToArray()) + 1;
             Singers.Add(singer);
         }
 
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
             Singers.Remove(singer);
 
             // should re-sort order
-            IHasOrdersUtils.ResortOrder(Singers.ToArray());
+            OrderUtils.ResortOrder(Singers.ToArray());
         }
     }
 }

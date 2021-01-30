@@ -235,7 +235,7 @@ namespace osu.Game.Rulesets.Karaoke
                         {
                             RelativeSizeAxes = Axes.X,
                             Height = info_height
-                        }, new Dimension(GridSizeMode.Distributed))
+                        }, new Dimension())
                     }
                 },
             };

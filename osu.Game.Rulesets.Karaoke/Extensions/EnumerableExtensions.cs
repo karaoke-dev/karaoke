@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
         /// <typeparam name="T">The type of the items stored in the collection.</typeparam>
         /// <param name="collection">The collection to iterate on.</param>
         /// <param name="pivot">The pivot value.</param>
-        /// <param name="action">Metch action</param>
+        /// <param name="action">Match action</param>
         /// <returns>The item in <paramref name="collection"/> appearing after <paramref name="pivot"/>, or null if no such item exists.</returns>
         public static T GetNextMatch<T>(this IEnumerable<T> collection, T pivot, Func<T, bool> action)
         {
@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
         /// <typeparam name="T">The type of the items stored in the collection.</typeparam>
         /// <param name="collection">The collection to iterate on.</param>
         /// <param name="pivot">The pivot value.</param>
-        /// <param name="action">Metch action</param>
+        /// <param name="action">Match action</param>
         /// <returns>The item in <paramref name="collection"/> appearing before <paramref name="pivot"/>, or null if no such item exists.</returns>
         public static T GetPreviousMatch<T>(this IEnumerable<T> collection, T pivot, Func<T, bool> action)
         {

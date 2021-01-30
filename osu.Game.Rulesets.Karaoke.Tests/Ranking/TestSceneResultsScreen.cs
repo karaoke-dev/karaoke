@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
     {
         protected override IBeatmap CreateBeatmap(RulesetInfo ruleset) => new TestKaraokeBeatmap(ruleset);
 
-        private TestResultsScreen createResultsScreen() => new TestResultsScreen(new TestKaraokeScoreInfo
+        private TestResultsScreen createResultsScreen() => new(new TestKaraokeScoreInfo
         {
             HitEvents = TestSceneHitEventTimingDistributionGraph.CreateDistributedHitEvents()
         });

@@ -25,13 +25,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
 
-        protected IEnumerable<Lyric> Lyrics => IHasOrdersUtils.Sorted(BindableLyrics);
+        protected IEnumerable<Lyric> Lyrics => OrderUtils.Sorted(BindableLyrics);
 
         [BackgroundDependencyLoader]
         private void load(EditorBeatmap beatmap)
         {
             // load lyric in here
-            var lyrics = IHasOrdersUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
+            var lyrics = OrderUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
             BindableLyrics.AddRange(lyrics);
 
             // need to check is there any lyric added or removed.
