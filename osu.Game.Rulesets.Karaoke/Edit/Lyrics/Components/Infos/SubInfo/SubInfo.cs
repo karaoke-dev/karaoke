@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.SubInfo
 {
     public abstract class SubInfo : Container
     {

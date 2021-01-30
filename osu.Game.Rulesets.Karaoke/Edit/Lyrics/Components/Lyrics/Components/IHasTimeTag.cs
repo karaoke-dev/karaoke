@@ -3,7 +3,7 @@
 
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 {
     public interface IHasTimeTag
     {

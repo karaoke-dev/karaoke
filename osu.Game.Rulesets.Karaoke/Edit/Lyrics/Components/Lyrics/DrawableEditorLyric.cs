@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 {
     public class DrawableEditLyric : DrawableLyric
     {
