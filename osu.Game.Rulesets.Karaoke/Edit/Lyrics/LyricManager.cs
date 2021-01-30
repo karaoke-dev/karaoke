@@ -142,6 +142,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             beatmap.Remove(lyric);
 
+            // need to re-sort lyric order in here.
+            IHasOrdersUtils.ResortOrder(Lyrics.ToArray());
+
             changeHandler?.EndChange();
         }
 
