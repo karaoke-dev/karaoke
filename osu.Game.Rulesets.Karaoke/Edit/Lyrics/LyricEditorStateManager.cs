@@ -33,6 +33,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             // load lyric in here
             var lyrics = IHasOrdersUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
             BindableLyrics.AddRange(lyrics);
+
+            // need to check is there any lyric added or removed.
+            beatmap.HitObjectAdded += e =>
+            {
+                if (e is Lyric lyric)
+                    BindableLyrics.Add(lyric);
+            };
+            beatmap.HitObjectRemoved += e =>
+            {
+                if (e is Lyric lyric)
+                    BindableLyrics.Remove(lyric);
+            };
         }
 
         public void SetMode(Mode mode)

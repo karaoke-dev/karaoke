@@ -101,20 +101,45 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         #endregion
 
-        #region Split/combine
+        #region Split/combine lyric
 
         public void SplitLyric(Lyric lyric, int index)
         {
-            // todo: need to got reason why cause null object issue.
-            return;
-
-            // todo : implement split.
+            // todo : make sure split wotks with order and other property.
             var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, index);
 
             changeHandler?.BeginChange();
 
             beatmap.Add(firstLyric);
             beatmap.Add(secondLyric);
+            beatmap.Remove(lyric);
+
+            changeHandler?.EndChange();
+        }
+
+        #endregion
+
+        #region Create/delete lyric
+
+        public void CreateLyric()
+        {
+            changeHandler?.BeginChange();
+
+            var mexOrder = IHasOrdersUtils.GetMaxOrderNumber(Lyrics.ToArray());
+            var createLyric = new Lyric
+            {
+                Text = "New lyric",
+                Order = mexOrder + 1,
+            };
+            beatmap.Add(createLyric);
+
+            changeHandler?.EndChange();
+        }
+
+        public void DeleteLyric(Lyric lyric)
+        {
+            changeHandler?.BeginChange();
+
             beatmap.Remove(lyric);
 
             changeHandler?.EndChange();

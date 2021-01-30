@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -12,6 +13,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 {
     public class CreateNewLyricRow : LyricEditorRow
     {
+        [Resolved]
+        private LyricManager lyricManager { get; set; }
+
         public CreateNewLyricRow()
             : base(new Lyric { Text = "New lyric" })
         {
@@ -31,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
                     TooltipText = "Click to add new lyric",
                     Action = () =>
                     {
-                        // todo : create new lyric.
+                        lyricManager.CreateLyric();
                     }
                 }
             };
