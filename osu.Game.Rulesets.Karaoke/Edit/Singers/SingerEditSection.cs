@@ -39,6 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                         {
                             Name = "List of singer",
                             RelativeSizeAxes = Axes.Both,
+                            DisplayBottomDrawable = true,
                         }
                     }
                 }

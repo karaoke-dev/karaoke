@@ -10,12 +10,11 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Components;
+
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
     public class SingerRearrangeableListItem : OsuRearrangeableListItem<Singer>
     {
-        private const float spacing = 5;
-
         private Box dragAlert;
 
         public SingerRearrangeableListItem(Singer item)
@@ -31,18 +30,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                 CornerRadius = 5,
                 RelativeSizeAxes = Axes.X,
                 Height = 90,
-                Margin = new MarginPadding { Top = spacing },
                 Children = new Drawable[]
                 {
-                        dragAlert = new Box
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Alpha = 0
-                        },
-                        new SingerLyricPlacementColumn(Model)
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                        }
+                    dragAlert = new Box
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Alpha = 0
+                    },
+                    new SingerLyricPlacementColumn(Model)
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                    }
                 }
             };
         }

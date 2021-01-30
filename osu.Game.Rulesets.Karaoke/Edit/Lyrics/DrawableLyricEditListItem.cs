@@ -44,7 +44,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 Margin = new MarginPadding
                 {
                     Left = continuousSpacing,
-                    Top = DrawableLyricEditList.SPACING,
                 },
                 Children = new Drawable[]
                 {

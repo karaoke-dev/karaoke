@@ -7,36 +7,46 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
     public class SingerRearrangeableList : OrderRearrangeableListContainer<Singer>
     {
-        private const float spacing = 5;
+        protected override Vector2 Spacing => new Vector2(0 , 5);
+
+        public SingerRearrangeableList()
+        {
+            Padding = new MarginPadding
+            {
+                Top = Spacing.Y,
+                Bottom = Spacing.Y,
+            };
+        }
 
         protected override OsuRearrangeableListItem<Singer> CreateOsuDrawable(Singer item)
             => new SingerRearrangeableListItem(item);
 
-        public SingerRearrangeableList()
+        protected override Drawable CreateBottomDrawable()
         {
-            ScrollContainer.Padding = new MarginPadding { Bottom = 64 + spacing };
-            ScrollContainer.Add(new Container
+            return new Container
             {
-                Masking = true,
-                CornerRadius = 5,
                 RelativeSizeAxes = Axes.X,
                 Height = 64,
                 Anchor = Anchor.y2,
                 Origin = Anchor.y0,
-                Padding = new MarginPadding { Top = spacing, Left = 22 },
-                Children = new Drawable[]
+                Padding = new MarginPadding { Left = 22 },
+                Child = new Container
                 {
-                    new CreateNewLyricPlacementColumn
+                    Masking = true,
+                    CornerRadius = 5,
+                    RelativeSizeAxes = Axes.Both,
+                    Child = new CreateNewLyricPlacementColumn
                     {
                         RelativeSizeAxes = Axes.Both,
                     }
                 }
-            });
+            };
         }
     }
 }
