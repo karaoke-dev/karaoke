@@ -8,9 +8,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Framework.Timing;
-using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Objects;
-using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 using osuTK.Input;
 
@@ -18,9 +15,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class LyricEditor : Container, IKeyBindingHandler<KaraokeEditAction>
     {
-        [Resolved]
-        private EditorBeatmap beatmap { get; set; }
-
         [Resolved(canBeNull: true)]
         private LyricManager lyricManager { get; set; }
 
@@ -30,10 +24,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached]
         private LyricEditorStateManager stateManager;
 
-        private readonly KaraokeLyricEditorSkin skin;
-        private readonly DrawableLyricEditList container;
+        private KaraokeLyricEditorSkin skin;
+        private DrawableLyricEditList container;
 
         public LyricEditor()
+        {
+            Add(stateManager = new LyricEditorStateManager());
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
         {
             Child = new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin())
             {
@@ -44,35 +44,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             };
 
-            Add(stateManager = new LyricEditorStateManager());
-        }
-
-        private DependencyContainer dependencies;
-
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-            return dependencies;
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            foreach (var obj in beatmap.HitObjects)
-                Schedule(() => addHitObject(obj));
-
+            container.Items.BindTo(stateManager.BindableLyrics);
             if (lyricManager != null)
                 container.OnOrderChanged += lyricManager.ChangeLyricOrder;
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            beatmap.HitObjectAdded += addHitObject;
-            beatmap.HitObjectRemoved += removeHitObject;
 
             stateManager.MoveCursor(MovingCursorAction.First);
+
+            stateManager.BindableMode.BindValueChanged(e =>
+            {
+                // display add new lyric only with edit mode.
+                container.DisplayBottomDrawable = e.NewValue == Mode.EditMode;
+            }, true);
         }
 
         protected override bool OnKeyDown(KeyDownEvent e)
@@ -208,34 +190,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 default:
                     return false;
             }
-        }
-
-        private void addHitObject(HitObject hitObject)
-        {
-            // see how `DrawableEditRulesetWrapper` do
-            if (hitObject is Lyric lyric)
-            {
-                container.Items.Add(lyric);
-            }
-        }
-
-        private void removeHitObject(HitObject hitObject)
-        {
-            if (!(hitObject is Lyric lyric))
-                return;
-
-            container.Items.Remove(lyric);
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            base.Dispose(isDisposing);
-
-            if (beatmap == null)
-                return;
-
-            beatmap.HitObjectAdded -= addHitObject;
-            beatmap.HitObjectRemoved -= removeHitObject;
         }
 
         public float FontSize

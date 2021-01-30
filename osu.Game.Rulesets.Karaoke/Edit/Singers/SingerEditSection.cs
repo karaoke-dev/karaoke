@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
     public class SingerEditSection : CompositeDrawable
     {
-        private SingerRearrangeableListContainer singerContainers;
+        private SingerRearrangeableList singerContainers;
 
         [BackgroundDependencyLoader]
         private void load(SingerManager singerManager)
@@ -35,10 +35,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                     },
                     new Drawable[]
                     {
-                        singerContainers = new SingerRearrangeableListContainer
+                        singerContainers = new SingerRearrangeableList
                         {
                             Name = "List of singer",
                             RelativeSizeAxes = Axes.Both,
+                            DisplayBottomDrawable = true,
                         }
                     }
                 }

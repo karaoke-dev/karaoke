@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 {
     public class DrawableTimeTagRecordCursor : CompositeDrawable, IDrawableCursor, IHasTimeTag
     {

@@ -26,7 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         private Container previewContainer;
 
         public StyleScreen()
-            : base()
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Pink);
             Content.Add(StyleManager = new StyleManager());

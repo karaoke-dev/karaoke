@@ -4,33 +4,42 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
-    public class DrawableLyricEditList : OrderRearrangeableListContainer<Lyric>
+    public class SingerRearrangeableList : OrderRearrangeableListContainer<Singer>
     {
-        protected override Vector2 Spacing => new Vector2(0, 2);
+        protected override Vector2 Spacing => new Vector2(0 , 5);
 
-        protected override OsuRearrangeableListItem<Lyric> CreateOsuDrawable(Lyric item)
-            => new DrawableLyricEditListItem(item);
+        public SingerRearrangeableList()
+        {
+            Padding = new MarginPadding
+            {
+                Top = Spacing.Y,
+                Bottom = Spacing.Y,
+            };
+        }
+
+        protected override OsuRearrangeableListItem<Singer> CreateOsuDrawable(Singer item)
+            => new SingerRearrangeableListItem(item);
 
         protected override Drawable CreateBottomDrawable()
         {
             return new Container
             {
                 RelativeSizeAxes = Axes.X,
-                Height = 75,
+                Height = 64,
                 Padding = new MarginPadding { Left = 22 },
                 Child = new Container
                 {
                     Masking = true,
                     CornerRadius = 5,
                     RelativeSizeAxes = Axes.Both,
-                    Child = new CreateNewLyricRow
+                    Child = new CreateNewLyricPlacementColumn
                     {
                         RelativeSizeAxes = Axes.Both,
                     }

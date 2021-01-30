@@ -8,16 +8,16 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
-using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
-    public class DrawableLyricEditListItem : OsuRearrangeableListItem<Lyric>
+    public class SingerRearrangeableListItem : OsuRearrangeableListItem<Singer>
     {
         private Box dragAlert;
 
-        public DrawableLyricEditListItem(Lyric item)
+        public SingerRearrangeableListItem(Singer item)
             : base(item)
         {
         }
@@ -28,8 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 Masking = true,
                 CornerRadius = 5,
-                AutoSizeAxes = Axes.Y,
                 RelativeSizeAxes = Axes.X,
+                Height = 90,
                 Children = new Drawable[]
                 {
                     dragAlert = new Box
@@ -37,9 +37,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         RelativeSizeAxes = Axes.Both,
                         Alpha = 0
                     },
-                    new EditLyricRow(Model)
+                    new SingerLyricPlacementColumn(Model)
                     {
-                        RelativeSizeAxes = Axes.X
+                        RelativeSizeAxes = Axes.Both,
                     }
                 }
             };

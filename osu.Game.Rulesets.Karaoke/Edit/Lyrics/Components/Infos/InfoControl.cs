@@ -3,23 +3,37 @@
 
 using System;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.MainInfo;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos.SubInfo;
+using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.MainInfo;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.SubInfo;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
 {
-    public class InfoControl : Container
+    public class InfoControl : Container, IHasContextMenu
     {
         private const int max_height = 120;
 
         private readonly Box headerBackground;
         private readonly Container subInfoContainer;
+
+        private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
+        private readonly Bindable<LyricFastEditMode> bindableLyricFastEditMode = new Bindable<LyricFastEditMode>();
+
+        [Resolved(canBeNull: true)]
+        private DialogOverlay dialogOverlay { get; set; }
+
+        [Resolved]
+        private LyricManager lyricManager { get; set; }
 
         public Lyric Lyric { get; }
 
@@ -57,16 +71,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
                     }
                 },
             };
+
+            bindableLyricFastEditMode.BindValueChanged(e =>
+            {
+                CreateBadge(e.NewValue);
+            });
         }
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, LyricEditorStateManager stateManager)
         {
             headerBackground.Colour = colours.Gray2;
-            stateManager.BindableFastEditMode.BindValueChanged(e =>
-            {
-                CreateBadge(e.NewValue);
-            }, true);
+
+            bindableMode.BindTo(stateManager.BindableMode);
+            bindableLyricFastEditMode.BindTo(stateManager.BindableFastEditMode);
         }
 
         protected void CreateBadge(LyricFastEditMode mode)
@@ -106,6 +124,35 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Infos
                     default:
                         throw new IndexOutOfRangeException(nameof(mode));
                 }
+            }
+        }
+
+        public MenuItem[] ContextMenuItems
+        {
+            get
+            {
+                if (bindableMode.Value != Mode.EditMode)
+                    return null;
+
+                return new MenuItem[]
+                {
+                    new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
+                    {
+                        if (dialogOverlay == null)
+                        {
+                            // todo : remove lyric directly in test case because pop-up dialog is not registed.
+                            lyricManager.DeleteLyric(Lyric);
+                        }
+                        else
+                        {
+                            dialogOverlay.Push(new DeleteLyricDialog(isOk =>
+                            {
+                                if (isOk)
+                                    lyricManager.DeleteLyric(Lyric);
+                            }));
+                        }
+                    }),
+                };
             }
         }
     }

@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 {
     public class DrawableTimeTag : CompositeDrawable
     {
@@ -24,8 +24,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Lyrics.Components
         [Resolved]
         private LyricEditorStateManager stateManager { get; set; }
 
-        private Bindable<Mode> bindableMode = new Bindable<Mode>();
-        private Bindable<RecordingMovingCursorMode> bindableRecordingMovingCursorMode = new Bindable<RecordingMovingCursorMode>();
+        private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
+        private readonly Bindable<RecordingMovingCursorMode> bindableRecordingMovingCursorMode = new Bindable<RecordingMovingCursorMode>();
 
         private readonly TimeTag timeTag;
 
