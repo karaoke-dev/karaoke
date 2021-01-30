@@ -58,6 +58,10 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
                         return;
 
                     bottomDrawable.Y = Spacing.Y;
+                    bottomDrawable.Anchor = Anchor.y2;
+                    bottomDrawable.Origin = Anchor.y0;
+
+
                     ScrollContainer.Padding = new MarginPadding { Bottom = bottomDrawable.Height + Spacing.Y * 2 };
                     ScrollContainer.Add(bottomDrawable);
                 }

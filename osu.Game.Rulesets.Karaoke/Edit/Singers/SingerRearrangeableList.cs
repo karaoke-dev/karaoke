@@ -33,8 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
             {
                 RelativeSizeAxes = Axes.X,
                 Height = 64,
-                Anchor = Anchor.y2,
-                Origin = Anchor.y0,
                 Padding = new MarginPadding { Left = 22 },
                 Child = new Container
                 {

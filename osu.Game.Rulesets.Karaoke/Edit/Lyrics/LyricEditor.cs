@@ -49,6 +49,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 container.OnOrderChanged += lyricManager.ChangeLyricOrder;
 
             stateManager.MoveCursor(MovingCursorAction.First);
+
+            stateManager.BindableMode.BindValueChanged(e =>
+            {
+                // display add new lyric only with edit mode.
+                container.DisplayBottomDrawable = e.NewValue == Mode.EditMode;
+            }, true);
         }
 
         protected override bool OnKeyDown(KeyDownEvent e)
