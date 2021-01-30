@@ -17,10 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static TextIndex.IndexState ReverseState(TextIndex.IndexState state)
         {
-            if (state == TextIndex.IndexState.Start)
-                return TextIndex.IndexState.End;
-
-            return TextIndex.IndexState.Start;
+            return state == TextIndex.IndexState.Start ? TextIndex.IndexState.End : TextIndex.IndexState.Start;
         }
 
         public static TextIndex ShiftingIndex(TextIndex originIndex, int shifting)

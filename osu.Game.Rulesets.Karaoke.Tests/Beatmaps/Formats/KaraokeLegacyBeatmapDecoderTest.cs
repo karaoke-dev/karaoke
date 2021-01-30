@@ -124,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             Assert.AreEqual(lyrics[1].Translates[englishLanguageId], "like it");
         }
 
-        private KaraokeBeatmap decodeBeatmap(string fileName)
+        private static KaraokeBeatmap decodeBeatmap(string fileName)
         {
             using (var resStream = TestResources.OpenBeatmapResource(fileName))
             using (var stream = new LineBufferedReader(resStream))
@@ -140,7 +140,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             }
         }
 
-        private void testNote(string text, int tone, bool half = false, Note note = null)
+        private static void testNote(string text, int tone, bool half = false, Note note = null)
         {
             Assert.AreEqual(text, note?.Text);
             Assert.AreEqual(tone, note?.Tone.Scale);

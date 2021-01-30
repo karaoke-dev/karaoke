@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 throw new InvalidOperationException($"{nameof(endTimeTag.Index)} cannot larger than {startTimeTag.Index}");
 
             if (startTimeTag.Time == null || endTimeTag.Time == null)
-                return new TimeTag(index, null);
+                return new TimeTag(index);
 
             var diffFromStartToEnd = getTimeCalculationIndex(endTimeTag.Index) - getTimeCalculationIndex(startTimeTag.Index);
             var diffFromStartToNow = getTimeCalculationIndex(index) - getTimeCalculationIndex(startTimeTag.Index);
@@ -214,6 +214,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                         var nextValidValue = sortedTimeTags.FirstOrDefault(x => x.Index.Index > timeTag.Index && x.Time != null)?.Time;
                         sortedTimeTags[listIndex] = new TimeTag(timeTag, nextValidValue);
                         break;
+
+                    default:
+                        throw new InvalidOperationException(nameof(other));
                 }
             }
 

@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var orderByAsc = startFrom <= minOrderNumber;
             var processObjects = orderByAsc ? objects.OrderBy(x => x.Order) : objects.OrderByDescending(x => x.Order);
 
-            var targetOrder = orderByAsc ? startFrom : (startFrom - minOrderNumber + objects.Length);
+            var targetOrder = orderByAsc ? startFrom : startFrom - minOrderNumber + objects.Length;
 
             foreach (var processObject in processObjects)
             {

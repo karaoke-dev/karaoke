@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.Languages
 
         private LanguageDetectorConfig generateConfig()
         {
-            return new LanguageDetectorConfig();
+            return new();
         }
     }
 }

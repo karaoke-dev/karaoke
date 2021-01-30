@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     return textTags?.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray();
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(sorting));
+                    throw new InvalidOperationException(nameof(sorting));
             }
         }
 
@@ -61,6 +61,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                         // end index within tne target
                         invalidList.AddRange(checkTags.Where(x => x.EndIndex > textTag.StartIndex && x.EndIndex <= textTag.EndIndex));
                         break;
+
+                    default:
+                        throw new InvalidOperationException(nameof(sorting));
                 }
             }
 
