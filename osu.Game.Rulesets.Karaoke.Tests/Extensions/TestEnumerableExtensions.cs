@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Extensions
 {
     public class TestEnumerableExtensions
     {
-        [TestCase(new[] { 1, 2, 3, 4, 5, 6}, 1, 3, 3)]
+        [TestCase(new[] { 1, 2, 3, 4, 5, 6 }, 1, 3, 3)]
         [TestCase(new[] { 1, 3, 2, 4, 6, 5 }, 1, 6, 6)]
         [TestCase(new[] { 1, 2, 3, 4, 5, 6 }, 3, 1, 0)]
         [TestCase(new[] { 1, 2, 3, 4, 5, 6 }, 1, 7, 0)]
@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Extensions
             Assert.AreEqual(values.GetNextMatch(startFrom, x => x == matchCondition), actual);
         }
 
-        [TestCase(new[] { 1, 2, 3, 4, 5, 6}, 6, 3, 3)]
+        [TestCase(new[] { 1, 2, 3, 4, 5, 6 }, 6, 3, 3)]
         [TestCase(new[] { 1, 3, 2, 4, 6, 5 }, 5, 3, 3)]
         [TestCase(new[] { 1, 2, 3, 4, 5, 6 }, 3, 6, 0)]
         [TestCase(new[] { 2, 3, 4, 5, 6 }, 6, 1, 0)]

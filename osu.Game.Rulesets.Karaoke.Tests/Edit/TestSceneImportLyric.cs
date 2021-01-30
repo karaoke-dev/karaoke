@@ -20,7 +20,6 @@ using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
-using static osu.Game.Rulesets.Karaoke.Tests.Edit.TestSceneLyricLineStyle;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {

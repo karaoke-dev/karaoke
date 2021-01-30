@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
     [TestFixture]
     public class TestSceneStyle : EditorClockTestScene
     {
-        private readonly KaraokeLayoutTestSkin skin = new KaraokeLayoutTestSkin();
+        private readonly KaraokeLayoutTestSkin skin = new();
 
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -43,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
         private readonly EditorBeatmap editorBeatmap =
-            new EditorBeatmap(new TestKaraokeBeatmap(null));
+            new(new TestKaraokeBeatmap(null));
 
         [BackgroundDependencyLoader]
         private void load()
@@ -108,7 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                     {
                                         editor.Mode = mode.NewValue;
 
-                                        if(editor.Mode == Mode.RecordMode)
+                                        if (editor.Mode == Mode.RecordMode)
                                         {
                                             recordingModeDropdown.Show();
                                         }
