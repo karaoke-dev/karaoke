@@ -14,7 +14,6 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.MainInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.SubInfo;
-using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
@@ -27,8 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
         private readonly Box headerBackground;
         private readonly Container subInfoContainer;
 
-        private Bindable<Mode> bindableMode = new Bindable<Mode>();
-        private Bindable<LyricFastEditMode> bindableLyricFastEditMode = new Bindable<LyricFastEditMode>();
+        private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
+        private readonly Bindable<LyricFastEditMode> bindableLyricFastEditMode = new Bindable<LyricFastEditMode>();
 
         [Resolved(canBeNull: true)]
         private DialogOverlay dialogOverlay { get; set; }
@@ -139,14 +138,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
                 {
                     new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
                     {
-                        if(dialogOverlay == null)
+                        if (dialogOverlay == null)
                         {
                             // todo : remove lyric directly in test case because pop-up dialog is not registed.
                             lyricManager.DeleteLyric(Lyric);
                         }
                         else
                         {
-                             dialogOverlay.Push(new DeleteLyricDialog(isOk =>
+                            dialogOverlay.Push(new DeleteLyricDialog(isOk =>
                             {
                                 if (isOk)
                                     lyricManager.DeleteLyric(Lyric);

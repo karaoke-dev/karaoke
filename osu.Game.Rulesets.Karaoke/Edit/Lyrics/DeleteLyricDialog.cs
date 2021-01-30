@@ -5,7 +5,7 @@ using System;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class DeleteLyricDialog : PopupDialog
     {

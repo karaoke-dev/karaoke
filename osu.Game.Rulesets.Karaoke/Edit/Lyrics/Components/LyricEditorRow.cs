@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 
         private readonly Lyric lyric;
 
-        public LyricEditorRow(Lyric lyric)
+        protected LyricEditorRow(Lyric lyric)
         {
             this.lyric = lyric;
         }

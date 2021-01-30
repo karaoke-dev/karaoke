@@ -24,8 +24,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
         protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint> selection)
         {
             var lyrics = selection.Select(x => x.HitObject).OfType<Lyric>().ToList();
-            var contectMenu = new SingerContextMenu(lyricManager, lyrics, "");
-            return contectMenu.Items;
+            var contextMenu = new SingerContextMenu(lyricManager, lyrics, "");
+            return contextMenu.Items;
         }
     }
 }
