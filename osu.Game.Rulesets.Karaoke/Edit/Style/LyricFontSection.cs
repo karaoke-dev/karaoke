@@ -7,6 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
@@ -29,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                 {
                     Label = "Font",
                     Description = "Select display font.",
-                    Items = (Font[])Enum.GetValues(typeof(Font))
+                    Items = EnumUtils.GetValues<Font>()
                 },
                 boldSwitchButton = new LabelledSwitchButton
                 {

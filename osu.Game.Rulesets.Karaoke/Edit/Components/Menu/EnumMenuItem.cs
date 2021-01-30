@@ -8,6 +8,7 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
@@ -36,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private ToggleMenuItem[] createMenuItems()
         {
-            var enums = (T[])Enum.GetValues(typeof(T));
+            var enums = EnumUtils.GetValues<T>();
             return enums.Select(e =>
             {
                 var item = new ToggleMenuItem(GetName(e), MenuItemType.Standard, _ => UpdateSelection(e));

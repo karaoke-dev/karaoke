@@ -17,8 +17,10 @@ using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
+using static osu.Game.Rulesets.Karaoke.Tests.Edit.TestSceneLyricLineStyle;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
@@ -67,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             var temp = TestResources.GetTestLrcForImport("light");
             Child = screen = new TestImportLyricScreen(new FileInfo(temp));
 
-            var steps = (ImportLyricStep[])Enum.GetValues(typeof(ImportLyricStep));
+            var steps = EnumUtils.GetValues<ImportLyricStep>();
 
             foreach (var step in steps)
             {
@@ -96,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 if (step <= lyricSubScreen.Step)
                     return;
 
-                var totalSteps = ((ImportLyricStep[])Enum.GetValues(typeof(ImportLyricStep))).Where(x => x > lyricSubScreen.Step && x <= step);
+                var totalSteps = EnumUtils.GetValues<ImportLyricStep>().Where(x => x > lyricSubScreen.Step && x <= step);
 
                 foreach (var gotoStep in totalSteps)
                 {

@@ -7,6 +7,7 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
@@ -27,13 +28,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                 {
                     Label = "Color area",
                     Description = "Select which area wants to be adjust",
-                    Items = (ColorArea[])Enum.GetValues(typeof(ColorArea))
+                    Items = EnumUtils.GetValues<ColorArea>()
                 },
                 brushTypeDropdown = new LabelledDropdown<BrushType>
                 {
                     Label = "Brush type",
                     Description = "Select brush type",
-                    Items = (BrushType[])Enum.GetValues(typeof(BrushType))
+                    Items = EnumUtils.GetValues<BrushType>()
                 },
                 colorPicker = new ColorPicker
                 {

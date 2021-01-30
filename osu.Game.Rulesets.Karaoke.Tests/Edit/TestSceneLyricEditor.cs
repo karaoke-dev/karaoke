@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
 using osuTK;
@@ -100,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                 new OsuDropdown<Mode>
                                 {
                                     Width = 150,
-                                    Items = (Mode[])Enum.GetValues(typeof(Mode)),
+                                    Items = EnumUtils.GetValues<Mode>(),
                                 }.With(x =>
                                 {
                                     x.Current.BindValueChanged(mode =>
@@ -120,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                 new OsuDropdown<LyricFastEditMode>
                                 {
                                     Width = 150,
-                                    Items = (LyricFastEditMode[])Enum.GetValues(typeof(LyricFastEditMode))
+                                    Items = EnumUtils.GetValues<LyricFastEditMode>()
                                 }.With(x =>
                                 {
                                     x.Current.BindValueChanged(fastEditMode =>
@@ -131,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                 recordingModeDropdown = new OsuDropdown<RecordingMovingCursorMode>
                                 {
                                     Width = 150,
-                                    Items = (RecordingMovingCursorMode[])Enum.GetValues(typeof(RecordingMovingCursorMode))
+                                    Items = EnumUtils.GetValues<RecordingMovingCursorMode>()
                                 }.With(x =>
                                 {
                                     x.Current.BindValueChanged(recordingMovingCursorMode =>
