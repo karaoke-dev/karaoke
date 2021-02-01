@@ -6,6 +6,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Screens;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
 using osu.Game.Screens.Edit.Components.Menus;
@@ -20,6 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private void load()
         {
             var config = new KaraokeRulesetEditConfigManager();
+            IScreen editor = null;
             Add(new Container
             {
                 Anchor = Anchor.TopCentre,
@@ -34,13 +37,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                     {
                         new MenuItem("File")
                         {
-                            Items = new[]
+                            Items = new MenuItem[]
                             {
-                                new EditorMenuItem("Import from text"),
-                                new EditorMenuItem("Import from .lrc file"),
+                                new ImportLyricMenu(editor, "Import from text"),
+                                new ImportLyricMenu(editor, "Import from .lrc file"),
                                 new EditorMenuItemSpacer(),
-                                new EditorMenuItem("Export to .lrc"),
-                                new EditorMenuItem("Export to text"),
+                                new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => { }),
+                                new EditorMenuItem("Export to text", MenuItemType.Standard, () => { }),
+                                new EditorMenuItem("Export to json", MenuItemType.Destructive, () => { }),
                             }
                         },
                         new MenuItem("View")
@@ -50,21 +54,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                 new EditModeMenu(config, "Edit mode"),
                                 new EditorMenuItemSpacer(),
                                 new LyricEditorEditModeMenu(config, "Lyric editor mode"),
-                                new LyricEditorLeftSideModeMenu(config, "Lyric editor mode"),
+                                new LyricEditorLeftSideModeMenu(config, "Lyric editor left side mode"),
+                                new LyricEditorMovingCursorModeMenu(config, "Record cursor moving mode"),
                                 new LyricEditorTextSizeMenu(config, "Text size"),
+                                new EditorMenuItemSpacer(),
+                                new NoteEditorPreviewMenu(config, "Note editor"),
                             }
                         },
                         new MenuItem("Tools")
                         {
                             Items = new MenuItem[]
                             {
-                                new EditorMenuItem("Singer manager"),
-                                new EditorMenuItem("Translate manager"),
-                                new EditorMenuItem("Layout manager"),
-                                new EditorMenuItem("Style manager"),
+                                new ManagerMenu(editor, "Manage"),
+                                new GeneratorMenu("Generator"),
                             }
                         },
-                        new MenuItem("Options")
+                        new MenuItem("Config")
                         {
                             Items = new MenuItem[]
                             {

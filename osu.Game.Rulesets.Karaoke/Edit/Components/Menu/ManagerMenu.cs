@@ -12,26 +12,26 @@ using osu.Game.Screens.Edit.Components.Menus;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public class ToolsMenu : MenuItem
+    public class ManagerMenu : MenuItem
     {
         private readonly IScreen screen;
 
-        public ToolsMenu(IScreen screen, string text)
+        public ManagerMenu(IScreen screen, string text)
             : base(text)
         {
             this.screen = screen;
             Items = new MenuItem[]
             {
-                createMenuItem<SingerScreen>("Singer manager"),
-                createMenuItem<TranslateScreen>("Translate manager"),
-                createMenuItem<LayoutScreen>("Layout manager"),
-                createMenuItem<StyleScreen>("Style manager"),
+                createMenuItem<SingerScreen>("Singer"),
+                createMenuItem<TranslateScreen>("Translate"),
+                createMenuItem<LayoutScreen>("Layout"),
+                createMenuItem<StyleScreen>("Style"),
             };
         }
 
         private EditorMenuItem createMenuItem<T>(string name) where T : EditorSubScreen, new()
         {
-            return new EditorMenuItem("Singer manager", MenuItemType.Standard, () =>
+            return new EditorMenuItem(name, MenuItemType.Standard, () =>
             {
                 if (screen == null)
                     return;
