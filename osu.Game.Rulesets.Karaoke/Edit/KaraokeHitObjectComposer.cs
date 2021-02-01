@@ -17,6 +17,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Export;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Singers;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -56,6 +57,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly SingerManager singerManager;
 
+        [Cached]
+        private readonly LanguageSelectionDialog languageSelectionDialog;
+
         [Resolved]
         private Editor editor { get; set; }
 
@@ -75,6 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             {
                 RelativeSizeAxes = Axes.Both
             });
+            LayerBelowRuleset.Add(languageSelectionDialog = new LanguageSelectionDialog());
         }
 
         public new KaraokePlayfield Playfield => drawableRuleset.Playfield;
