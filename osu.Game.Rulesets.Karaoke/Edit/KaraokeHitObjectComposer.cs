@@ -157,8 +157,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                             new NoteEditorPreviewMenu(editConfigManager, "Note editor"),
                         }
                     },
-                    new ToolsMenu(editor, "Tools"),
-                    new MenuItem("Options")
+                    new MenuItem("Tools")
+                    {
+                        Items = new MenuItem[]
+                        {
+                            new ManagerMenu(editor, "Manage"),
+                            new GeneratorMenu("Generator"),
+                        }
+                    },
+                    new MenuItem("Config")
                     {
                         Items = new MenuItem[]
                         {

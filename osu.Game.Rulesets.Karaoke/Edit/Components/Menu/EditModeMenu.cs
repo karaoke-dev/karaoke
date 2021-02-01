@@ -20,10 +20,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             switch (selection)
             {
                 case EditMode.LyricEditor:
-                    return "Lyric editor";
+                    return "Lyric";
 
                 case EditMode.Note:
-                    return "Note editor";
+                    return "Note";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(selection));
