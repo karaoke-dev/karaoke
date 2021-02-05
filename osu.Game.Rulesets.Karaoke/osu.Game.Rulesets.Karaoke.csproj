@@ -15,7 +15,7 @@
     <PackageReference Include="Octokit" Version="0.48.0" />
     <PackageReference Include="osu.Framework.KaraokeFont" Version="1.6.1" />
     <PackageReference Include="osu.Framework.Microphone" Version="1.1.0" />
-    <PackageReference Include="ppy.osu.Game" Version="2021.129.0" />
+    <PackageReference Include="ppy.osu.Game" Version="2021.205.0" />
     <PackageReference Include="LyricMaker" Version="1.1.1" />
     <PackageReference Include="NicoKaraParser" Version="1.1.0" />
     <PackageReference Include="WanaKanaSharp" Version="0.1.1" />
