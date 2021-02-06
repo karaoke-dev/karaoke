@@ -146,7 +146,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         #region Lock
 
         public static Lyric[] FindUnlockLyrics(IEnumerable<Lyric> lyrics)
-            => lyrics?.Where(x => x.Lock == LockState.Partial).ToArray();
+            => lyrics?.Where(x => x.Lock == LockState.None).ToArray();
 
         #endregion
     }

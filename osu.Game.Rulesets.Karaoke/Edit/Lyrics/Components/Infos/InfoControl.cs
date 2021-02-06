@@ -12,6 +12,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.FixedInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.MainInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.SubInfo;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -64,10 +65,38 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
                             RelativeSizeAxes = Axes.X,
                             Height = 36,
                         },
-                        subInfoContainer = new Container
+                        new GridContainer
                         {
-                            RelativeSizeAxes = Axes.X
-                        },
+                            RelativeSizeAxes = Axes.X,
+                            AutoSizeAxes = Axes.Y,
+                            ColumnDimensions = new []
+                            {
+                                new Dimension(GridSizeMode.Distributed),
+                                new Dimension(GridSizeMode.Absolute, 28),
+                            },
+                            Content = new []
+                            {
+                                new Drawable[]
+                                {
+                                    subInfoContainer = new Container
+                                    {
+                                        RelativeSizeAxes = Axes.X
+                                    },
+                                    new FillFlowContainer
+                                    {
+                                        RelativeSizeAxes = Axes.X,
+                                        AutoSizeAxes = Axes.Y,
+                                        Direction = FillDirection.Vertical,
+                                        Spacing = new Vector2(5),
+                                        Children = new Drawable[]
+                                        {
+                                            new OrderInfo(lyric),
+                                            new LockInfo(lyric),
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
             };
@@ -117,9 +146,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
 
                     case LyricFastEditMode.TimeTag:
                         return new TimeTagInfo(Lyric);
-
-                    case LyricFastEditMode.Order:
-                        return new LyricOrderInfo(Lyric);
 
                     default:
                         throw new IndexOutOfRangeException(nameof(mode));

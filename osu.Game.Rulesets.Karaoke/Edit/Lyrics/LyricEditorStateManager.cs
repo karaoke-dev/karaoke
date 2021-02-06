@@ -153,12 +153,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// Display lyric time-tag's first and last time.
         /// </summary>
         TimeTag,
-
-        /// <summary>
-        /// Display lyric order.
-        /// Use in develop purpose only.
-        /// </summary>
-        Order,
     }
 
     public enum RecordingMovingCursorMode
