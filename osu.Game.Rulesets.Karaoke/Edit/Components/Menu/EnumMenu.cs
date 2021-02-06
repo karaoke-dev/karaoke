@@ -36,13 +36,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private ToggleMenuItem[] createMenuItems()
         {
-            var enums = EnumUtils.GetValues<T>();
-            return enums.Select(e =>
+            return ValidEnums.Select(e =>
             {
                 var item = new ToggleMenuItem(GetName(e), MenuItemType.Standard, _ => UpdateSelection(e));
                 return item;
             }).ToArray();
         }
+
+        protected virtual T[] ValidEnums => EnumUtils.GetValues<T>();
 
         protected abstract string GetName(T selection);
 

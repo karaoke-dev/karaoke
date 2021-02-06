@@ -4,6 +4,7 @@
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
 {
@@ -25,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             Set(KaraokeRulesetEditSetting.DisplayRuby, true);
             Set(KaraokeRulesetEditSetting.DisplayRomaji, true);
             Set(KaraokeRulesetEditSetting.DisplayTranslate, true);
+
+            // Lock
+            Set(KaraokeRulesetEditSetting.ClickToLockLyricState, LockState.Partial);
         }
     }
 
@@ -43,5 +47,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         DisplayRuby,
         DisplayRomaji,
         DisplayTranslate,
+
+        // Lock
+        ClickToLockLyricState,
     }
 }
