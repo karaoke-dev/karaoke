@@ -118,9 +118,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
                     case LyricFastEditMode.TimeTag:
                         return new TimeTagInfo(Lyric);
 
-                    case LyricFastEditMode.Order:
-                        return new LyricOrderInfo(Lyric);
-
                     default:
                         throw new IndexOutOfRangeException(nameof(mode));
                 }
