@@ -14,8 +14,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
     [TestFixture]
     public class TextTagsUtilsTest
     {
-        private const string lyric = "Test lyric";
-
         [TestCase(nameof(ValidTextTagWithSorted), TextTagsUtils.Sorting.Asc, new[] { 0, 1, 1, 2, 2, 3 })]
         [TestCase(nameof(ValidTextTagWithSorted), TextTagsUtils.Sorting.Desc, new[] { 2, 3, 1, 2, 0, 1 })]
         [TestCase(nameof(ValidTextTagWithUnsorted), TextTagsUtils.Sorting.Asc, new[] { 0, 1, 1, 2, 2, 3 })]
@@ -45,12 +43,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(nameof(InvalidTextTagWithWrapNextTextTag), TextTagsUtils.Sorting.Desc, new[] { 1 })]
         [TestCase(nameof(InvalidTextTagWithSandwichTextTag), TextTagsUtils.Sorting.Asc, new[] { 1 })]
         [TestCase(nameof(InvalidTextTagWithSandwichTextTag), TextTagsUtils.Sorting.Desc, new[] { 1 })]
-        public void TestFindInvalid(string testCase, TextTagsUtils.Sorting sorting, int[] errorIndex)
+        public void TestFindOverlapping(string testCase, TextTagsUtils.Sorting sorting, int[] errorIndex)
         {
             var textTags = getValueByMethodName(testCase);
 
             // run all and find invalid indexes.
-            var invalidTextTag = TextTagsUtils.FindInvalid(textTags, lyric, sorting);
+            var invalidTextTag = TextTagsUtils.FindOverlapping(textTags, sorting);
             var invalidIndexes = invalidTextTag.Select(v => textTags.IndexOf(v)).ToArray();
             Assert.AreEqual(invalidIndexes, errorIndex);
         }
