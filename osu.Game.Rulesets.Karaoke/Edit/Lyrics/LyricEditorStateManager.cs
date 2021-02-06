@@ -25,7 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
 
-        protected IEnumerable<Lyric> Lyrics => OrderUtils.Sorted(BindableLyrics);
+        // Lyrics is not lock and can be accessable.
+        protected IEnumerable<Lyric> Lyrics => LyricsUtils.FindUnlockLyrics(OrderUtils.Sorted(BindableLyrics));
 
         [BackgroundDependencyLoader]
         private void load(EditorBeatmap beatmap)
