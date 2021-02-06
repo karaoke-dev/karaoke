@@ -12,6 +12,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
@@ -405,6 +406,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             return (bool)lyric.Singers?.Contains(singer.ID);
         }
+
+        #endregion
+
+        #region Lock
+
+        public virtual void LockLyric(Lyric lyric, LockState lockState)
+            => LockLyrics(new List<Lyric> { lyric }, lockState);
+
+        public void LockLyrics(List<Lyric> lyrics, LockState lockState)
+        {
+            changeHandler?.BeginChange();
+
+            foreach (var lyric in lyrics)
+            {
+                lyric.Lock = lockState;
+            }
+
+            changeHandler?.EndChange();
+        }
+
+        public void UnlockLyric(Lyric lyric)
+            => UnlockLyrics(new List<Lyric> { lyric });
+
+        public void UnlockLyrics(List<Lyric> lyrics)
+            => LockLyrics(lyrics, LockState.None);
 
         #endregion
     }
