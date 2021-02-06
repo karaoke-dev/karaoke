@@ -17,7 +17,7 @@ using osu.Game.Rulesets.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Lyric : KaraokeHitObject, IHasDuration, IHasSingers, IHasOrder
+    public class Lyric : KaraokeHitObject, IHasDuration, IHasSingers, IHasOrder, IHasLock
     {
         [JsonIgnore]
         public readonly Bindable<string> TextBindable = new Bindable<string>();
@@ -159,6 +159,18 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         {
             get => OrderBindable.Value;
             set => OrderBindable.Value = value;
+        }
+
+        [JsonIgnore]
+        public readonly Bindable<LockState> LockBindable = new Bindable<LockState>();
+
+        /// <summary>
+        /// Lock
+        /// </summary>
+        public LockState Lock
+        {
+            get => LockBindable.Value;
+            set => LockBindable.Value = value;
         }
 
         public override Judgement CreateJudgement() => new KaraokeLyricJudgement();
