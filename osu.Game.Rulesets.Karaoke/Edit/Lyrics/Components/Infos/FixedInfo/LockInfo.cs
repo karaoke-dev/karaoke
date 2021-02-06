@@ -55,15 +55,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.FixedInfo
                         Colour = colours.Red;
                         return;
                 }
-
             }, true);
         }
 
         protected override bool OnClick(ClickEvent e)
         {
-            // todo : change the state by config.
             if (lyric.Lock == LockState.None)
             {
+                // change the state by config.
                 var newLockState = configManager.Get<LockState>(KaraokeRulesetEditSetting.ClickToLockLyricState);
                 lyricManager.LockLyric(lyric, newLockState);
             }
