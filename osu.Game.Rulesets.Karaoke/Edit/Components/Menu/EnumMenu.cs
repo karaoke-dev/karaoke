@@ -11,13 +11,13 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public abstract class EnumMenuItem<T> : MenuItem
+    public abstract class EnumMenu<T> : MenuItem
     {
         private readonly Bindable<T> bindableEnum = new Bindable<T>();
 
         protected abstract KaraokeRulesetEditSetting Setting { get; }
 
-        protected EnumMenuItem(KaraokeRulesetEditConfigManager config, string text)
+        protected EnumMenu(KaraokeRulesetEditConfigManager config, string text)
             : base(text)
         {
             Items = createMenuItems();
@@ -36,13 +36,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private ToggleMenuItem[] createMenuItems()
         {
-            var enums = EnumUtils.GetValues<T>();
-            return enums.Select(e =>
+            return ValidEnums.Select(e =>
             {
                 var item = new ToggleMenuItem(GetName(e), MenuItemType.Standard, _ => UpdateSelection(e));
                 return item;
             }).ToArray();
         }
+
+        protected virtual T[] ValidEnums => EnumUtils.GetValues<T>();
 
         protected abstract string GetName(T selection);
 

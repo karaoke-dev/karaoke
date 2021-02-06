@@ -19,11 +19,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void MoveCursorToTargetPosition(Lyric lyric, TextIndex index)
         {
+            if (!Lyrics.Contains(lyric))
+                return;
+
             movePositionTo(new CursorPosition(lyric, index));
         }
 
         public void MoveHoverCursorToTargetPosition(Lyric lyric, TextIndex index)
         {
+            if (!Lyrics.Contains(lyric))
+                return;
+
             moveHoverPositionTo(new CursorPosition(lyric, index));
         }
 

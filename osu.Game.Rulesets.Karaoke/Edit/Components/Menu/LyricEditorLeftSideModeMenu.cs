@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public class LyricEditorLeftSideModeMenu : EnumMenuItem<LyricFastEditMode>
+    public class LyricEditorLeftSideModeMenu : EnumMenu<LyricFastEditMode>
     {
         protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.LyricEditorFastEditMode;
 

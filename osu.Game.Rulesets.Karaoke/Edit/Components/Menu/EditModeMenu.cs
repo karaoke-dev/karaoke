@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public class EditModeMenu : EnumMenuItem<EditMode>
+    public class EditModeMenu : EnumMenu<EditMode>
     {
         protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.EditMode;
 

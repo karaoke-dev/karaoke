@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public class LyricEditorMovingCursorModeMenu : EnumMenuItem<RecordingMovingCursorMode>
+    public class LyricEditorMovingCursorModeMenu : EnumMenu<RecordingMovingCursorMode>
     {
         protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.RecordingMovingCursorMode;
 

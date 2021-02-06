@@ -171,6 +171,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                         {
                             new EditorMenuItem("Lyric editor"),
                             new GeneratorConfigMenu("Generator"),
+                            new LockStateMenu(editConfigManager, "Lock"),
                         }
                     }
                 };

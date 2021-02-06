@@ -3,8 +3,10 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -344,6 +346,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
             Assert.AreEqual(combineLyric.Language, actualCultureInfo);
+        }
+
+        #endregion
+
+        #region Lock
+
+        [TestCase(new[] { LockState.Full, LockState.Partial, LockState.None }, 1)]
+        [TestCase(new LockState[] { }, 0)]
+        [TestCase(null, null)]
+        public void TestFindUnlockLyrics(LockState[] lockStates, int? amount)
+        {
+            var lyrics = lockStates?.Select(x => new Lyric
+            {
+                Text = "karaoke",
+                Lock = x
+            });
+            Assert.AreEqual(LyricsUtils.FindUnlockLyrics(lyrics)?.Length, amount);
         }
 
         #endregion

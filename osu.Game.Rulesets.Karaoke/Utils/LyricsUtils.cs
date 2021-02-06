@@ -7,6 +7,7 @@ using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
@@ -139,6 +140,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static bool HasTimedTimeTags(List<Lyric> lyrics)
             => lyrics?.Any(LyricUtils.HasTimedTimeTags) ?? false;
+
+        #endregion
+
+        #region Lock
+
+        public static Lyric[] FindUnlockLyrics(IEnumerable<Lyric> lyrics)
+            => lyrics?.Where(x => x.Lock == LockState.Partial).ToArray();
 
         #endregion
     }
