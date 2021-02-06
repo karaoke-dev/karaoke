@@ -55,6 +55,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly LyricManager lyricManager;
 
         [Cached]
+        private readonly LyricInvalidChecker lyricInvalidChecker;
+
+        [Cached]
         private readonly SingerManager singerManager;
 
         [Cached]
@@ -74,6 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(exportLyricManager = new ExportLyricManager());
             AddInternal(noteManager = new NoteManager());
             AddInternal(lyricManager = new LyricManager());
+            AddInternal(lyricInvalidChecker = new LyricInvalidChecker());
             AddInternal(singerManager = new SingerManager());
             LayerBelowRuleset.Add(new KaraokeLyricEditor(ruleset)
             {
