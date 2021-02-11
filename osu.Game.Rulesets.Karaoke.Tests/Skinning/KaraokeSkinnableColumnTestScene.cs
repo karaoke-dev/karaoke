@@ -26,10 +26,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         public const int COLUMN_NUMBER = 9;
 
         [Cached(Type = typeof(IScrollingInfo))]
-        private readonly TestScrollingInfo scrollingInfo = new TestScrollingInfo();
+        private readonly TestScrollingInfo scrollingInfo = new();
 
         [Cached(Type = typeof(IPositionCalculator))]
-        private readonly PositionCalculator positionCalculator = new PositionCalculator(COLUMN_NUMBER);
+        private readonly PositionCalculator positionCalculator = new(COLUMN_NUMBER);
 
         protected override Ruleset CreateRulesetForSkinProvider() => new KaraokeRuleset();
 
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
         private class TestScrollingInfo : IScrollingInfo
         {
-            public readonly Bindable<ScrollingDirection> Direction = new Bindable<ScrollingDirection>();
+            public readonly Bindable<ScrollingDirection> Direction = new();
 
             IBindable<ScrollingDirection> IScrollingInfo.Direction => Direction;
             IBindable<double> IScrollingInfo.TimeRange { get; } = new Bindable<double>(1000);

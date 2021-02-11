@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -33,6 +34,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         {
             var beatmap = new TestKaraokeBeatmap(null);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
+            if (karaokeBeatmap == null)
+                throw new ArgumentNullException(nameof(karaokeBeatmap));
+
             // todo : insert singers
             karaokeBeatmap.Singers = new[]
             {

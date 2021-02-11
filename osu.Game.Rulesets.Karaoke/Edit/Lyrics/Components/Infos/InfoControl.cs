@@ -68,12 +68,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
                         {
                             RelativeSizeAxes = Axes.X,
                             AutoSizeAxes = Axes.Y,
-                            ColumnDimensions = new []
+                            ColumnDimensions = new[]
                             {
-                                new Dimension(GridSizeMode.Distributed),
+                                new Dimension(),
                                 new Dimension(GridSizeMode.Absolute, 28),
                             },
-                            Content = new []
+                            Content = new[]
                             {
                                 new Drawable[]
                                 {

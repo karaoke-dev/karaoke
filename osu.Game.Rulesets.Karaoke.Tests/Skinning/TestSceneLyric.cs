@@ -91,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         private int depthIndex;
 
         protected virtual TestDrawableLyric CreateDrawableLyric(Lyric lyric, bool auto)
-            => new TestDrawableLyric(lyric, auto)
+            => new(lyric, auto)
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,

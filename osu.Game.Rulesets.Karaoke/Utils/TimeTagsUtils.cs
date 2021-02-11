@@ -245,8 +245,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             {
                 if (x.Key.State == TextIndex.IndexState.Start)
                     return x.FirstOrDefault();
-                else
-                    return x.LastOrDefault();
+
+                return x.LastOrDefault();
             }).ToDictionary(k => k?.Index ?? throw new ArgumentNullException(nameof(k)), v => v?.Time ?? throw new ArgumentNullException(nameof(v)));
         }
 

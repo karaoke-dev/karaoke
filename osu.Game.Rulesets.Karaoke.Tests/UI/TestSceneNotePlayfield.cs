@@ -30,9 +30,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
         private IReadOnlyList<Mod> mods { get; set; } = Array.Empty<Mod>();
 
         [Cached(Type = typeof(IPositionCalculator))]
-        private readonly PositionCalculator positionCalculator = new PositionCalculator(COLUMNS);
+        private readonly PositionCalculator positionCalculator = new(COLUMNS);
 
-        private readonly List<NotePlayfield> notePlayfields = new List<NotePlayfield>();
+        private readonly List<NotePlayfield> notePlayfields = new();
 
         [BackgroundDependencyLoader]
         private void load(RulesetConfigCache configCache)

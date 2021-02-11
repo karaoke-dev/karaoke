@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
     [TestFixture]
     public class TestSceneLayoutToolTip : OsuTestScene
     {
-        private readonly KaraokeLayoutTestSkin skin = new KaraokeLayoutTestSkin();
+        private readonly KaraokeLayoutTestSkin skin = new();
         private LayoutToolTip toolTip;
 
         [SetUp]

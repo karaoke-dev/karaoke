@@ -444,9 +444,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
                     case ColorArea.Back_Shadow:
                         return Font.BackTextBrushInfo.ShadowBrush;
-                }
 
-                return null;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(area));
+                }
             }
 
             public FontInfo GetFontInfo(FontArea area)
@@ -461,9 +462,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
                     case FontArea.Romaji:
                         return Font.RomajiTextFontInfo.LyricTextFontInfo;
-                }
 
-                return null;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(area));
+                }
             }
 
             public void ApplyProperty(Action<LyricFont> action)

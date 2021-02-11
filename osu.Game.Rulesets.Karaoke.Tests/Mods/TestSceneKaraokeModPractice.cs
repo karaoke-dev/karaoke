@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
             {
                 var overlays = Player.DrawableRuleset.Overlays;
                 var settingHUDOverlay = overlays.OfType<SettingHUDOverlay>().FirstOrDefault();
-                var actionContainer = settingHUDOverlay.OfType<KaraokeControlInputManager>().FirstOrDefault();
+                var actionContainer = settingHUDOverlay?.OfType<KaraokeControlInputManager>().FirstOrDefault();
 
                 // todo : test overlays is exist.
                 return actionContainer?.Child is ControlLayer;

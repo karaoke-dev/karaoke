@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Extensions.Color4Extensions;
@@ -25,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
             var ruleset = new KaraokeRuleset().RulesetInfo;
             var originBeatmap = new TestKaraokeBeatmap(ruleset);
             var karaokeBeatmap = new KaraokeBeatmapConverter(originBeatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
+            if (karaokeBeatmap == null)
+                throw new ArgumentNullException(nameof(karaokeBeatmap));
+
             karaokeBeatmap.Singers = createDefaultSinger();
             createTest(new ScoreInfo(), karaokeBeatmap);
         }

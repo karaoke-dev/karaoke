@@ -46,10 +46,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.FixedInfo
                         Icon = FontAwesome.Solid.Unlock;
                         Colour = colours.Green;
                         break;
+
                     case LockState.Partial:
                         Icon = FontAwesome.Solid.Lock;
                         Colour = colours.Yellow;
                         break;
+
                     case LockState.Full:
                         Icon = FontAwesome.Solid.Lock;
                         Colour = colours.Red;
