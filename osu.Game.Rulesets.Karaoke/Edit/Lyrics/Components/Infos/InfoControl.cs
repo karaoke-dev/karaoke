@@ -48,7 +48,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
                 {
                     RelativeSizeAxes = Axes.X,
                     Height = max_height,
-                    Alpha = 0.7f
                 },
                 new FillFlowContainer
                 {

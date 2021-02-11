@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.MainInfo
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            background.Colour = colours.Gray4;
+            background.Colour = colours.Gray3;
         }
     }
 }

@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 {
@@ -31,8 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
                 new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.3f,
-                    Colour = colours.Gray7,
+                    Alpha = 0.5f,
+                    Colour = Color4.Black
                 },
                 new GridContainer
                 {
