@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
         protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.ClickToLockLyricState;
 
         public LockStateMenu(KaraokeRulesetEditConfigManager config, string text)
-           : base(config, text)
+            : base(config, text)
         {
         }
 

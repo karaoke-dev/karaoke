@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Resources
 {
     public static class TestResources
     {
-        public static DllResourceStore GetStore() => new DllResourceStore(typeof(TestResources).Assembly);
+        public static DllResourceStore GetStore() => new(typeof(TestResources).Assembly);
 
         public static Stream OpenResource(string name) => GetStore().GetStream($"Resources/{name}");
 

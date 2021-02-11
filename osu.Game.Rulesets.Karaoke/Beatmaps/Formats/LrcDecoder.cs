@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                     var lyric = new Lyric
                     {
-                        Order = output.HitObjects.Count() + 1, // should create default order.
+                        Order = output.HitObjects.Count + 1, // should create default order.
                         Text = line.Text,
                         // Start time and end time should be re-assigned
                         StartTime = startTime,
