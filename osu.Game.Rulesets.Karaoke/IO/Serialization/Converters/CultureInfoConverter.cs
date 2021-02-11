@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
         public override void WriteJson(JsonWriter writer, CultureInfo value, JsonSerializer serializer)
         {
-            writer.WriteValue(value?.LCID ?? null);
+            writer.WriteValue(value?.LCID);
         }
     }
 }

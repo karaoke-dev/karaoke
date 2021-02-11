@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
         {
         }
 
-        protected override LockState[] ValidEnums => new[] { LockState.Partial, LockState.Full};
+        protected override LockState[] ValidEnums => new[] { LockState.Partial, LockState.Full };
 
         protected override string GetName(LockState selection)
         {
