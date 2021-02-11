@@ -161,6 +161,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
 
                 return new MenuItem[]
                 {
+                    new OsuMenuItem("Create new lyric", MenuItemType.Standard, () =>
+                    {
+                        // add new lyric with below of current lyric.
+                        var targetOrder = Lyric.Order + 1;
+                        lyricManager.CreateLyric(targetOrder);
+                    }),
                     new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
                     {
                         if (dialogOverlay == null)
