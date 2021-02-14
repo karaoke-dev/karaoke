@@ -6,6 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
@@ -25,32 +26,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public bool InvalidLyricTime(Lyric lyric)
         {
+            // todo : apply utils with enum key.
             return false;
         }
 
-        public KeyValuePair<TimeTag, double>[] FindInvalidTimeTagTime(Lyric lyric)
+        public TimeTag[] FindInvalidTimeTagTime(Lyric lyric)
         {
-            return null;
+            // todo : apply config
+            var groupCheck = GroupCheck.Asc;
+            var selfCheck = SelfCheck.BasedOnStart;
+            return TimeTagsUtils.FindInvalid(lyric.TimeTags, groupCheck, selfCheck);
         }
 
         public RubyTag[] CheckInvalidRubyRange(Lyric lyric)
         {
-            return null;
+            return TextTagsUtils.FindOutOfRange(lyric.RubyTags, lyric.Text);
         }
 
-        public RubyTag[] CheckDuplicatedRubyPosition(Lyric lyric)
+        public RubyTag[] CheckOverlappingRubyPosition(Lyric lyric)
         {
-            return null;
+            // todo : apply config
+            var sorting = TextTagsUtils.Sorting.Asc;
+            return TextTagsUtils.FindOverlapping(lyric.RubyTags, sorting);
         }
 
         public RomajiTag[] CheckInvalidRomajiRange(Lyric lyric)
         {
-            return null;
+            return TextTagsUtils.FindOutOfRange(lyric.RomajiTags, lyric.Text);
         }
 
-        public RomajiTag[] CheckDuplicatedRomajiPosition(Lyric lyric)
+        public RomajiTag[] CheckOverlappingRomajiPosition(Lyric lyric)
         {
-            return null;
+            // todo : apply config
+            var sorting = TextTagsUtils.Sorting.Asc;
+            return TextTagsUtils.FindOverlapping(lyric.RomajiTags, sorting);
         }
     }
 }
