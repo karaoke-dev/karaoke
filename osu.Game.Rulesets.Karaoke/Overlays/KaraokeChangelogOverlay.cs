@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         private string projectName => $"{organizationName}.github.io";
 
         public KaraokeChangelogOverlay(string organization, string branch = "master")
-            : base(OverlayColourScheme.Purple, new ChangelogHeader())
+            : base(OverlayColourScheme.Purple)
         {
             organizationName = organization;
             branchName = branch;
@@ -112,6 +112,11 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
             Current.Value = build;
             Show();
         }
+
+        protected override ChangelogHeader CreateHeader() => new ChangelogHeader
+        {
+            ListingSelected = ShowListing,
+        };
 
         public override bool OnPressed(GlobalAction action)
         {
