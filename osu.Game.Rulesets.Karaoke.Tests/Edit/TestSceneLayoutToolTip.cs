@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
+namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
     [TestFixture]
     public class TestSceneLayoutToolTip : OsuTestScene
