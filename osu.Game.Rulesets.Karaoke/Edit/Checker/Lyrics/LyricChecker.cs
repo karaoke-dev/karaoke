@@ -1,61 +1,77 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Allocation;
-using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
 {
-    public class LyricChecker : Component
+    /// <summary>
+    /// This checker is focus on checking and give report, and should be testable.
+    /// </summary>
+    public class LyricChecker
     {
-        [Resolved]
-        private KaraokeRulesetEditConfigManager configManager { get; set; }
+        private readonly LyricCheckerConfig config;
 
-        [Resolved]
-        private EditorBeatmap beatmap { get; set; }
-
-        public Lyric[] InvalidTimeLyrics()
+        public LyricChecker(LyricCheckerConfig config)
         {
-            // todo : implement.
-            return null;
+            this.config = config;
         }
 
-        public bool InvalidLyricTime(Lyric lyric)
+        public LyricCheckReport CheckLyric(Lyric lyric, LyricCheckProperty checkProperty = LyricCheckProperty.All)
+        {
+            var report = new LyricCheckReport();
+
+            if (checkProperty.HasFlag(LyricCheckProperty.Time))
+                report.TimeInvalid = invalidLyricTime(lyric);
+
+            if (checkProperty.HasFlag(LyricCheckProperty.Time))
+                report.InvalidTimeTag = checkInvalidTimeTagTime(lyric);
+
+            if (checkProperty.HasFlag(LyricCheckProperty.Time))
+                report.InvalidRubyTag = checkInvalidRubyRange(lyric);
+
+            if (checkProperty.HasFlag(LyricCheckProperty.Time))
+                report.InvalidRomajiTag = checkInvalidRomajiRange(lyric);
+
+            return report;
+        }
+
+
+        private bool invalidLyricTime(Lyric lyric)
         {
             // todo : apply utils with enum key.
             return false;
         }
 
-        public TimeTag[] CheckInvalidTimeTagTime(Lyric lyric)
+        private TimeTag[] checkInvalidTimeTagTime(Lyric lyric)
         {
-            var groupCheck = configManager.Get<GroupCheck>(KaraokeRulesetEditSetting.CheckInvalidTimeTagTimeGroupCheck);
-            var selfCheck = configManager.Get<SelfCheck>(KaraokeRulesetEditSetting.CheckInvalidTimeTagTimeSelfCheck);
+            var groupCheck = config.TimeTagTimeGroupCheck;
+            var selfCheck = config.TimeTagTimeSelfCheck;
             return TimeTagsUtils.FindInvalid(lyric.TimeTags, groupCheck, selfCheck);
         }
 
-        public RubyTag[] CheckInvalidRubyRange(Lyric lyric)
+        private RubyTag[] checkInvalidRubyRange(Lyric lyric)
         {
             return TextTagsUtils.FindOutOfRange(lyric.RubyTags, lyric.Text);
         }
 
-        public RubyTag[] CheckOverlappingRubyPosition(Lyric lyric)
+        // todo : will use in future
+        private RubyTag[] checkOverlappingRubyPosition(Lyric lyric)
         {
-            var sorting = configManager.Get<TextTagsUtils.Sorting>(KaraokeRulesetEditSetting.CheckRubyPositionSorting);
+            var sorting = config.RubyPositionSorting;
             return TextTagsUtils.FindOverlapping(lyric.RubyTags, sorting);
         }
 
-        public RomajiTag[] CheckInvalidRomajiRange(Lyric lyric)
+        private RomajiTag[] checkInvalidRomajiRange(Lyric lyric)
         {
             return TextTagsUtils.FindOutOfRange(lyric.RomajiTags, lyric.Text);
         }
 
-        public RomajiTag[] CheckOverlappingRomajiPosition(Lyric lyric)
+        // todo : will use in future
+        private RomajiTag[] checkOverlappingRomajiPosition(Lyric lyric)
         {
-            var sorting = configManager.Get<TextTagsUtils.Sorting>(KaraokeRulesetEditSetting.CheckRomajiPositionSorting);
+            var sorting = config.RomajiPositionSorting;
             return TextTagsUtils.FindOverlapping(lyric.RomajiTags, sorting);
         }
     }

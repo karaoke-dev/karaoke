@@ -30,12 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Lock
             Set(KaraokeRulesetEditSetting.ClickToLockLyricState, LockState.Partial);
-
-            // Checker
-            Set(KaraokeRulesetEditSetting.CheckInvalidTimeTagTimeGroupCheck, GroupCheck.Asc);
-            Set(KaraokeRulesetEditSetting.CheckInvalidTimeTagTimeSelfCheck, SelfCheck.BasedOnStart);
-            Set(KaraokeRulesetEditSetting.CheckRubyPositionSorting, TextTagsUtils.Sorting.Asc);
-            Set(KaraokeRulesetEditSetting.CheckRomajiPositionSorting, TextTagsUtils.Sorting.Asc);
         }
     }
 
@@ -57,11 +51,5 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
         // Lock
         ClickToLockLyricState,
-
-        // Checker
-        CheckInvalidTimeTagTimeGroupCheck,
-        CheckInvalidTimeTagTimeSelfCheck,
-        CheckRubyPositionSorting,
-        CheckRomajiPositionSorting
     }
 }

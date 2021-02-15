@@ -47,6 +47,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly KaraokeRulesetEditGeneratorConfigManager generatorConfigManager;
 
         [Cached]
+        private readonly KaraokeRulesetEditCheckerConfigManager checkerConfigManager;
+
+        [Cached]
         private readonly ExportLyricManager exportLyricManager;
 
         [Cached]
@@ -56,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly LyricManager lyricManager;
 
         [Cached]
-        private readonly LyricChecker lyricChecker;
+        private readonly LyricCheckerManager lyricCheckerManager;
 
         [Cached]
         private readonly SingerManager singerManager;
@@ -74,11 +77,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             positionCalculator = new PositionCalculator(9);
             editConfigManager = new KaraokeRulesetEditConfigManager();
             generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
+            checkerConfigManager = new KaraokeRulesetEditCheckerConfigManager();
 
             AddInternal(exportLyricManager = new ExportLyricManager());
             AddInternal(noteManager = new NoteManager());
             AddInternal(lyricManager = new LyricManager());
-            AddInternal(lyricChecker = new LyricChecker());
+            AddInternal(lyricCheckerManager = new LyricCheckerManager());
             AddInternal(singerManager = new SingerManager());
             LayerBelowRuleset.Add(new KaraokeLyricEditor(ruleset)
             {
