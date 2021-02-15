@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -26,53 +27,73 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
                 report.TimeInvalid = invalidLyricTime(lyric);
 
             if (checkProperty.HasFlag(LyricCheckProperty.Time))
-                report.InvalidTimeTag = checkInvalidTimeTagTime(lyric);
+                report.InvalidTimeTags = checkInvalidTimeTags(lyric);
 
             if (checkProperty.HasFlag(LyricCheckProperty.Time))
-                report.InvalidRubyTag = checkInvalidRubyRange(lyric);
+                report.InvalidRubyTags = checkInvalidRubyTags(lyric);
 
             if (checkProperty.HasFlag(LyricCheckProperty.Time))
-                report.InvalidRomajiTag = checkInvalidRomajiRange(lyric);
+                report.InvalidRomajiTags = checkInvalidRomajiTags(lyric);
 
             return report;
         }
 
-
-        private bool invalidLyricTime(Lyric lyric)
+        private TimeInvalid invalidLyricTime(Lyric lyric)
         {
             // todo : apply utils with enum key.
-            return false;
+            return TimeInvalid.None;
         }
 
-        private TimeTag[] checkInvalidTimeTagTime(Lyric lyric)
+        private Dictionary<TimeTagInvalid, TimeTag[]> checkInvalidTimeTags(Lyric lyric)
         {
+            var result = new Dictionary<TimeTagInvalid, TimeTag[]>();
+
+            // todo : check out of range.
+
+            // Check overlapping.
             var groupCheck = config.TimeTagTimeGroupCheck;
             var selfCheck = config.TimeTagTimeSelfCheck;
-            return TimeTagsUtils.FindInvalid(lyric.TimeTags, groupCheck, selfCheck);
+            var invalidTimeTags = TimeTagsUtils.FindInvalid(lyric.TimeTags, groupCheck, selfCheck);
+            if (invalidTimeTags?.Length > 0)
+                result.Add(TimeTagInvalid.Overlapping, invalidTimeTags);
+
+            return result;
         }
 
-        private RubyTag[] checkInvalidRubyRange(Lyric lyric)
+        private Dictionary<RubyTagInvalid, RubyTag[]> checkInvalidRubyTags(Lyric lyric)
         {
-            return TextTagsUtils.FindOutOfRange(lyric.RubyTags, lyric.Text);
-        }
+            var result = new Dictionary<RubyTagInvalid, RubyTag[]>();
 
-        // todo : will use in future
-        private RubyTag[] checkOverlappingRubyPosition(Lyric lyric)
-        {
-            var sorting = config.RubyPositionSorting;
-            return TextTagsUtils.FindOverlapping(lyric.RubyTags, sorting);
-        }
+            // Checking out of range tags.
+            var outOfRangeTags = TextTagsUtils.FindOutOfRange(lyric.RubyTags, lyric.Text);
+            if (outOfRangeTags?.Length > 0)
+                result.Add(RubyTagInvalid.OutOfRange, outOfRangeTags);
 
-        private RomajiTag[] checkInvalidRomajiRange(Lyric lyric)
-        {
-            return TextTagsUtils.FindOutOfRange(lyric.RomajiTags, lyric.Text);
-        }
-
-        // todo : will use in future
-        private RomajiTag[] checkOverlappingRomajiPosition(Lyric lyric)
-        {
+            // Checking overlapping.
             var sorting = config.RomajiPositionSorting;
-            return TextTagsUtils.FindOverlapping(lyric.RomajiTags, sorting);
+            var overlappingTags = TextTagsUtils.FindOverlapping(lyric.RubyTags, sorting);
+            if (overlappingTags?.Length > 0)
+                result.Add(RubyTagInvalid.Overlapping, overlappingTags);
+
+            return result;
+        }
+
+        private Dictionary<RomajiTagInvalid, RomajiTag[]> checkInvalidRomajiTags(Lyric lyric)
+        {
+            var result = new Dictionary<RomajiTagInvalid, RomajiTag[]>();
+
+            // Checking out of range tags.
+            var outOfRangeTags = TextTagsUtils.FindOutOfRange(lyric.RomajiTags, lyric.Text);
+            if (outOfRangeTags?.Length > 0)
+                result.Add(RomajiTagInvalid.OutOfRange, outOfRangeTags);
+
+            // Checking overlapping.
+            var sorting = config.RomajiPositionSorting;
+            var overlappingTags = TextTagsUtils.FindOverlapping(lyric.RomajiTags, sorting);
+            if (overlappingTags?.Length > 0)
+                result.Add(RomajiTagInvalid.Overlapping, overlappingTags);
+
+            return result;
         }
     }
 }

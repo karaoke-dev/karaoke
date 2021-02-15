@@ -1,38 +1,71 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
 {
-    public struct LyricCheckReport
+    public class LyricCheckReport
     {
-        public bool TimeInvalid { get; set; }
+        public TimeInvalid TimeInvalid { get; set; }
 
-        public TimeTag[] InvalidTimeTag { get; set; }
+        public Dictionary<TimeTagInvalid, TimeTag[]> InvalidTimeTags { get; set; }
 
-        public RubyTag[] InvalidRubyTag { get; set; }
+        public Dictionary<RubyTagInvalid, RubyTag[]> InvalidRubyTags { get; set; }
 
-        public RomajiTag[] InvalidRomajiTag { get; set; }
+        public Dictionary<RomajiTagInvalid, RomajiTag[]> InvalidRomajiTags { get; set; }
 
         public bool IsValid
         {
             get
             {
-                if (TimeInvalid)
+                if (TimeInvalid != TimeInvalid.None)
                     return false;
 
-                if (InvalidTimeTag?.Length > 0)
+                if (InvalidTimeTags?.Count > 0)
                     return false;
 
-                if (InvalidRubyTag?.Length > 0)
+                if (InvalidRubyTags?.Count > 0)
                     return false;
 
-                if (InvalidRomajiTag?.Length > 0)
+                if (InvalidRomajiTags?.Count > 0)
                     return false;
 
                 return true;
             }
         }
+    }
+
+    public enum TimeInvalid
+    {
+        None,
+
+        Overlapping,
+
+        LargerThanTimeTag,
+
+        SmallerThanTimeTag
+    }
+
+    public enum TimeTagInvalid
+    {
+        OutOfRange,
+
+        Overlapping,
+    }
+
+    public enum RubyTagInvalid
+    {
+        OutOfRange,
+
+        Overlapping
+    }
+
+    public enum RomajiTagInvalid
+    {
+        OutOfRange,
+
+        Overlapping
     }
 }

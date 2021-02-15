@@ -14,7 +14,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
 {
     /// <summary>
-    /// This manager is for regist and able to get invalid change by bindable.
+    /// This manager is for register and able to get invalid change by bindable.
     /// </summary>
     public class LyricCheckerManager : Component
     {

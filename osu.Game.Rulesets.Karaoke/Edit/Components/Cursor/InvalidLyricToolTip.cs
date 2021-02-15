@@ -1,12 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Linq;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
@@ -37,27 +37,72 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             // clear exist warning.
             invalidMessage.Text = "";
 
-            // Check time
-            if (report.TimeInvalid)
-                invalidMessage.AddParagraph("Invalid lyric time");
+            // Print time invalid message
+            createTimeInvalidMessage(report.TimeInvalid);
 
-            // Check time-tag
-            if (report.InvalidTimeTag?.Any() ?? false)
-                invalidMessage.AddParagraph("Invalid time-tag");
+            // Print time-tag invalid message
+            foreach (var invalidTimeTags in report.InvalidTimeTags)
+            {
+                createTimeTagInvalidMessage(invalidTimeTags.Key, invalidTimeTags.Value);
+            }
 
-            // Check ruby
-            if (report.InvalidRubyTag?.Any() ?? false)
-                invalidMessage.AddParagraph("Invalid ruby position.");
+            // Print ruby invalid message
+            foreach (var invalidRubyTags in report.InvalidRubyTags)
+            {
+                createRubyInvalidMessage(invalidRubyTags.Key, invalidRubyTags.Value);
+            }
 
-            // romaji
-            if (report.InvalidRomajiTag?.Any() ?? false)
-                invalidMessage.AddParagraph("Invalid romaji position.");
+            // Print romaji invalid message
+            foreach (var invalidRomajiTags in report.InvalidRomajiTags)
+            {
+                createRomajiInvalidMessage(invalidRomajiTags.Key, invalidRomajiTags.Value);
+            }
 
             // show no problem message
-            if(!invalidMessage.FlowingChildren.Any())
+            if(report.IsValid)
                 invalidMessage.AddParagraph("Seems no issue in this lyric.");
 
             return true;
+
+            void createTimeInvalidMessage(TimeInvalid timeInvalid)
+            {
+                switch (timeInvalid)
+                {
+                    case TimeInvalid.Overlapping:
+                        invalidMessage.AddParagraph("Invalid lyric time");
+                        break;
+                }
+            }
+
+            void createTimeTagInvalidMessage(TimeTagInvalid invalid, TimeTag[] timeTags)
+            {
+                switch (invalid)
+                {
+                    case TimeTagInvalid.OutOfRange:
+                        invalidMessage.AddParagraph("Invalid time-tag");
+                        break;
+                }
+            }
+
+            void createRubyInvalidMessage(RubyTagInvalid invalid, RubyTag[] rubyTags)
+            {
+                switch (invalid)
+                {
+                    case RubyTagInvalid.OutOfRange:
+                        invalidMessage.AddParagraph("Invalid ruby-tag");
+                        break;
+                }
+            }
+
+            void createRomajiInvalidMessage(RomajiTagInvalid invalid, RomajiTag[] romajiTags)
+            {
+                switch (invalid)
+                {
+                    case RomajiTagInvalid.OutOfRange:
+                        invalidMessage.AddParagraph("Invalid tiromajime-tag");
+                        break;
+                }
+            }
         }
     }
 }
