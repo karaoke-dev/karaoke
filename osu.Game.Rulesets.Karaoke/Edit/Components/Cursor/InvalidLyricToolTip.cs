@@ -72,7 +72,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 switch (timeInvalid)
                 {
                     case TimeInvalid.Overlapping:
-                        invalidMessage.AddParagraph("Invalid lyric time");
+                        invalidMessage.AddParagraph("Check is start time larger then end time in lyric.");
+                        break;
+
+                    case TimeInvalid.StartTimeInvalid:
+                        invalidMessage.AddParagraph("Check start time is larger than minimux time tag's time.");
+                        break;
+
+                    case TimeInvalid.EndTimeInvalid:
+                        invalidMessage.AddParagraph("Check end time is smaller than maximum time tag's time.");
                         break;
                 }
             }
@@ -82,7 +90,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 switch (invalid)
                 {
                     case TimeTagInvalid.OutOfRange:
-                        invalidMessage.AddParagraph("Invalid time-tag");
+                        invalidMessage.AddParagraph("Seems some time tag is out of lyric text size.");
+                        break;
+
+                    case TimeTagInvalid.Overlapping:
+                        invalidMessage.AddParagraph("Seems some time tag is invalid.");
                         break;
                 }
             }
@@ -92,7 +104,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 switch (invalid)
                 {
                     case RubyTagInvalid.OutOfRange:
-                        invalidMessage.AddParagraph("Invalid ruby-tag");
+                        invalidMessage.AddParagraph("Seems some ruby tag is out of lyric text size.");
+                        break;
+
+                    case RubyTagInvalid.Overlapping:
+                        invalidMessage.AddParagraph("Seems some ruby tag is overlapping to others.");
                         break;
                 }
             }
@@ -102,7 +118,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 switch (invalid)
                 {
                     case RomajiTagInvalid.OutOfRange:
-                        invalidMessage.AddParagraph("Invalid tiromajime-tag");
+                        invalidMessage.AddParagraph("Seems some romaji tag is out of lyric text size.");
+                        break;
+
+                    case RomajiTagInvalid.Overlapping:
+                        invalidMessage.AddParagraph("Seems some romaji tag is overlapping to others.");
                         break;
                 }
             }
