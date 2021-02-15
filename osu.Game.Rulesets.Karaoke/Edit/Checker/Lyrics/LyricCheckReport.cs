@@ -39,8 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
 
     public enum TimeInvalid
     {
-        None,
-
         Overlapping,
 
         StartTimeInvalid,

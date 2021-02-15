@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
         Time = 1,
 
         /// <summary>
-        /// Check tim-tag is overlaggping or not.
+        /// Check tim-tag is overlapping or not.
         /// </summary>
         TimeTag = 2,
 
@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
         Ruby = 4,
 
         /// <summary>
-        /// Check ropmaji is out of range or overlapping.
+        /// Check romaji is out of range or overlapping.
         /// </summary>
         Romaji = 8,
 

@@ -56,10 +56,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.FixedInfo
                         Icon = FontAwesome.Solid.TimesCircle;
                         Colour = colours.Red;
                         break;
+
                     default:
                         throw new IndexOutOfRangeException(nameof(report.IsValid));
                 }
-
             }, true);
         }
 
