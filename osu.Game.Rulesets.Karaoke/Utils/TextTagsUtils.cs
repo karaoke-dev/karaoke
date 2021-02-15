@@ -25,7 +25,12 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             }
         }
 
-        public static T[] FindInvalid<T>(T[] textTags, string lyric, Sorting sorting = Sorting.Asc) where T : ITextTag
+        public static T[] FindOutOfRange<T>(T[] textTags, string lyric) where T : ITextTag
+        {
+            return textTags?.Where(x => x.StartIndex < 0 || x.EndIndex > lyric.Length).ToArray();
+        }
+
+        public static T[] FindOverlapping<T>(T[] textTags, Sorting sorting = Sorting.Asc) where T : ITextTag
         {
             // check is null or empty
             if (textTags == null || textTags.Length == 0)
@@ -35,9 +40,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var sortedTextTags = Sort(textTags, sorting);
 
             var invalidList = new List<T>();
-
-            // check invalid range
-            invalidList.AddRange(sortedTextTags.Where(x => x.StartIndex < 0 || x.EndIndex > lyric.Length));
 
             // check end is less or equal to start index
             invalidList.AddRange(sortedTextTags.Where(x => x.EndIndex <= x.StartIndex));

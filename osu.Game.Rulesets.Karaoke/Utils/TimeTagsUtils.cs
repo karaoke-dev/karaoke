@@ -64,6 +64,17 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         }
 
         /// <summary>
+        /// Find out of range time-tag.
+        /// </summary>
+        /// <param name="timeTags"></param>
+        /// <param name="lyric"></param>
+        /// <returns></returns>
+        public static TimeTag[] FindOutOfRange(TimeTag[] timeTags, string lyric)
+        {
+            return timeTags?.Where(x => x.Index.Index < 0 || x.Index.Index >= lyric.Length).ToArray();
+        }
+
+        /// <summary>
         /// Find invalid time tags.
         /// </summary>
         /// <param name="timeTags">Time tags</param>

@@ -254,5 +254,45 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         }
 
         #endregion
+
+        #region Check
+
+        /// <summary>
+        /// Check start time is larger than end time.
+        /// </summary>
+        /// <param name="lyric"></param>
+        /// <returns></returns>
+        public static bool CheckIsTimeOverlapping(Lyric lyric)
+        {
+            return lyric.StartTime > lyric.EndTime;
+        }
+
+        /// <summary>
+        /// Start time should be smaller than any time-tag.
+        /// </summary>
+        /// <param name="lyric"></param>
+        /// <returns></returns>
+        public static bool CheckIsStartTimeInvalid(Lyric lyric)
+        {
+            if (lyric.TimeTags == null || lyric.TimeTags.Length == 0)
+                return false;
+
+            return lyric.StartTime > lyric.TimeTags.Min(x => x.Time);
+        }
+
+        /// <summary>
+        /// End time should be larger than any time-tag.
+        /// </summary>
+        /// <param name="lyric"></param>
+        /// <returns></returns>
+        public static bool CheckIsEndTimeInvalid(Lyric lyric)
+        {
+            if (lyric.TimeTags == null || lyric.TimeTags.Length == 0)
+                return false;
+
+            return lyric.EndTime < lyric.TimeTags.Max(x => x.Time);
+        }
+
+        #endregion
     }
 }

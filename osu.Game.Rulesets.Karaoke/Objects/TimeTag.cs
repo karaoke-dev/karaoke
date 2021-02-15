@@ -13,8 +13,15 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             Time = time;
         }
 
+        /// <summary>
+        /// Time tag's index.
+        /// Notice that this index means index of characters.
+        /// </summary>
         public TextIndex Index { get; }
 
+        /// <summary>
+        /// Time
+        /// </summary>
         public double? Time { get; set; }
     }
 }

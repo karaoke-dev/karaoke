@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -59,6 +60,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             // run all then using time(nullable double) to check.
             var sortedTimeTag = TimeTagsUtils.Sort(timeTags);
             Assert.AreEqual(getSortedTime(sortedTimeTag), results);
+        }
+
+        [TestCase("カラオケ", new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new string[] { })]
+        [TestCase("カラオケ", new[] { "[0,start]:1000", "[3,end]:5000" }, new string[] { })]
+        [TestCase("カラオケ", new[] { "[-1,start]:1000" }, new[] { "[-1,start]:1000" })]
+        [TestCase("カラオケ", new[] { "[4,start]:4000" }, new[] { "[4,start]:4000" })]
+        public void TestFindOutOfRange(string text, string[] timeTags, string[] invalidTimeTags)
+        {
+            var outOfRangeTimeTags = TimeTagsUtils.FindOutOfRange(TestCaseTagHelper.ParseTimeTags(timeTags), text);
+            TimeTagAssert.AreEqual(outOfRangeTimeTags, TestCaseTagHelper.ParseTimeTags(invalidTimeTags));
         }
 
         [TestCase(nameof(InvalidTimeTagWithStartLargerThenEnd), GroupCheck.Asc, SelfCheck.BasedOnStart, new[] { 1 })]
