@@ -90,6 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
                                         Spacing = new Vector2(5),
                                         Children = new Drawable[]
                                         {
+                                            new InvalidInfo(lyric),
                                             new OrderInfo(lyric),
                                             new LockInfo(lyric),
                                         }

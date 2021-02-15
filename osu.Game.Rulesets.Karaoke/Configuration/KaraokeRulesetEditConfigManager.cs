@@ -5,6 +5,7 @@ using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
 {
@@ -29,6 +30,12 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Lock
             Set(KaraokeRulesetEditSetting.ClickToLockLyricState, LockState.Partial);
+
+            // Checker
+            Set(KaraokeRulesetEditSetting.CheckInvalidTimeTagTimeGroupCheck, GroupCheck.Asc);
+            Set(KaraokeRulesetEditSetting.CheckInvalidTimeTagTimeSelfCheck, SelfCheck.BasedOnStart);
+            Set(KaraokeRulesetEditSetting.CheckRubyPositionSorting, TextTagsUtils.Sorting.Asc);
+            Set(KaraokeRulesetEditSetting.CheckRomajiPositionSorting, TextTagsUtils.Sorting.Asc);
         }
     }
 
@@ -50,5 +57,11 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
         // Lock
         ClickToLockLyricState,
+
+        // Checker
+        CheckInvalidTimeTagTimeGroupCheck,
+        CheckInvalidTimeTagTimeSelfCheck,
+        CheckRubyPositionSorting,
+        CheckRomajiPositionSorting
     }
 }

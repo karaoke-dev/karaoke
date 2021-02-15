@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -21,6 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Lyric[] InvalidTimeLyrics()
         {
+            // todo : implement.
             return null;
         }
 
@@ -30,11 +30,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return false;
         }
 
-        public TimeTag[] FindInvalidTimeTagTime(Lyric lyric)
+        public TimeTag[] CheckInvalidTimeTagTime(Lyric lyric)
         {
-            // todo : apply config
-            var groupCheck = GroupCheck.Asc;
-            var selfCheck = SelfCheck.BasedOnStart;
+            var groupCheck = configManager.Get<GroupCheck>(KaraokeRulesetEditSetting.CheckInvalidTimeTagTimeGroupCheck);
+            var selfCheck = configManager.Get<SelfCheck>(KaraokeRulesetEditSetting.CheckInvalidTimeTagTimeSelfCheck);
             return TimeTagsUtils.FindInvalid(lyric.TimeTags, groupCheck, selfCheck);
         }
 
@@ -45,8 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public RubyTag[] CheckOverlappingRubyPosition(Lyric lyric)
         {
-            // todo : apply config
-            var sorting = TextTagsUtils.Sorting.Asc;
+            var sorting = configManager.Get<TextTagsUtils.Sorting>(KaraokeRulesetEditSetting.CheckRubyPositionSorting);
             return TextTagsUtils.FindOverlapping(lyric.RubyTags, sorting);
         }
 
@@ -57,8 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public RomajiTag[] CheckOverlappingRomajiPosition(Lyric lyric)
         {
-            // todo : apply config
-            var sorting = TextTagsUtils.Sorting.Asc;
+            var sorting = configManager.Get<TextTagsUtils.Sorting>(KaraokeRulesetEditSetting.CheckRomajiPositionSorting);
             return TextTagsUtils.FindOverlapping(lyric.RomajiTags, sorting);
         }
     }
