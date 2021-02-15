@@ -33,16 +33,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
             // re-calculate and add
             foreach (var lyric in lyrics)
             {
-                var report = lyricChecker.CheckLyric(lyric);
+                // create report record if not have.
+                if (!BindableReports.Contains(lyric))
+                    BindableReports.Add(lyric, new LyricCheckReport());
 
-                if (BindableReports.Contains(lyric))
-                {
-                    BindableReports[lyric] = report;
-                }
-                else
-                {
-                    BindableReports.Add(lyric, report);
-                }
+
+                var report = BindableReports[lyric];
+                if (checkProperty.HasFlag(LyricCheckProperty.Time))
+                    report.TimeInvalid = lyricChecker.CheckInvalidLyricTime(lyric);
+
+                if (checkProperty.HasFlag(LyricCheckProperty.TimeTag))
+                    report.InvalidTimeTags = lyricChecker.CheckInvalidTimeTags(lyric);
+
+                if (checkProperty.HasFlag(LyricCheckProperty.Ruby))
+                    report.InvalidRubyTags = lyricChecker.CheckInvalidRubyTags(lyric);
+
+                if (checkProperty.HasFlag(LyricCheckProperty.Romaji))
+                    report.InvalidRomajiTags = lyricChecker.CheckInvalidRomajiTags(lyric);
             }
         }
 

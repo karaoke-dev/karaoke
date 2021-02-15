@@ -38,7 +38,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             invalidMessage.Text = "";
 
             // Print time invalid message
-            createTimeInvalidMessage(report.TimeInvalid);
+            foreach (var invalid in report.TimeInvalid)
+            {
+                createTimeInvalidMessage(invalid);
+            }
 
             // Print time-tag invalid message
             foreach (var invalidTimeTags in report.InvalidTimeTags)

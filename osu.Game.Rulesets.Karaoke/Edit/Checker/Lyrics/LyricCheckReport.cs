@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
 {
     public class LyricCheckReport
     {
-        public TimeInvalid TimeInvalid { get; set; }
+        public TimeInvalid[] TimeInvalid { get; set; }
 
         public Dictionary<TimeTagInvalid, TimeTag[]> InvalidTimeTags { get; set; }
 
@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
         {
             get
             {
-                if (TimeInvalid != TimeInvalid.None)
+                if (TimeInvalid.Length > 0)
                     return false;
 
                 if (InvalidTimeTags?.Count > 0)
@@ -43,9 +43,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
 
         Overlapping,
 
-        LargerThanTimeTag,
+        StartTimeInvalid,
 
-        SmallerThanTimeTag
+        EndTimeInvalid
     }
 
     public enum TimeTagInvalid

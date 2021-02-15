@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.FixedInfo
 
                     case false:
                         Icon = FontAwesome.Solid.TimesCircle;
-                        Colour = colours.Green;
+                        Colour = colours.Red;
                         break;
                     default:
                         throw new IndexOutOfRangeException(nameof(report.IsValid));

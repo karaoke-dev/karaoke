@@ -19,36 +19,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
             this.config = config;
         }
 
-        public LyricCheckReport CheckLyric(Lyric lyric, LyricCheckProperty checkProperty = LyricCheckProperty.All)
+        public TimeInvalid[] CheckInvalidLyricTime(Lyric lyric)
         {
-            var report = new LyricCheckReport();
+            var result = new List<TimeInvalid>();
 
-            if (checkProperty.HasFlag(LyricCheckProperty.Time))
-                report.TimeInvalid = invalidLyricTime(lyric);
+            if (LyricUtils.CheckIsTimeOverlapping(lyric))
+                result.Add(TimeInvalid.Overlapping);
 
-            if (checkProperty.HasFlag(LyricCheckProperty.Time))
-                report.InvalidTimeTags = checkInvalidTimeTags(lyric);
+            if (LyricUtils.CheckIsStartTimeInvalid(lyric))
+                result.Add(TimeInvalid.StartTimeInvalid);
 
-            if (checkProperty.HasFlag(LyricCheckProperty.Time))
-                report.InvalidRubyTags = checkInvalidRubyTags(lyric);
+            if (LyricUtils.CheckIsEndTimeInvalid(lyric))
+                result.Add(TimeInvalid.EndTimeInvalid);
 
-            if (checkProperty.HasFlag(LyricCheckProperty.Time))
-                report.InvalidRomajiTags = checkInvalidRomajiTags(lyric);
-
-            return report;
+            return result.ToArray();
         }
 
-        private TimeInvalid invalidLyricTime(Lyric lyric)
-        {
-            // todo : apply utils with enum key.
-            return TimeInvalid.None;
-        }
-
-        private Dictionary<TimeTagInvalid, TimeTag[]> checkInvalidTimeTags(Lyric lyric)
+        public Dictionary<TimeTagInvalid, TimeTag[]> CheckInvalidTimeTags(Lyric lyric)
         {
             var result = new Dictionary<TimeTagInvalid, TimeTag[]>();
 
             // todo : check out of range.
+            var outOfRangeTags = TimeTagsUtils.FindOutOfRange(lyric.TimeTags, lyric.Text);
+            if (outOfRangeTags?.Length > 0)
+                result.Add(TimeTagInvalid.OutOfRange, outOfRangeTags);
 
             // Check overlapping.
             var groupCheck = config.TimeTagTimeGroupCheck;
@@ -60,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
             return result;
         }
 
-        private Dictionary<RubyTagInvalid, RubyTag[]> checkInvalidRubyTags(Lyric lyric)
+        public Dictionary<RubyTagInvalid, RubyTag[]> CheckInvalidRubyTags(Lyric lyric)
         {
             var result = new Dictionary<RubyTagInvalid, RubyTag[]>();
 
@@ -78,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
             return result;
         }
 
-        private Dictionary<RomajiTagInvalid, RomajiTag[]> checkInvalidRomajiTags(Lyric lyric)
+        public Dictionary<RomajiTagInvalid, RomajiTag[]> CheckInvalidRomajiTags(Lyric lyric)
         {
             var result = new Dictionary<RomajiTagInvalid, RomajiTag[]>();
 
