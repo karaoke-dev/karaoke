@@ -6,7 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
         private readonly OsuTextFlowContainer invalidMessage;
 
         [Resolved]
-        private LyricInvalidChecker lyricInvalidChecker { get; set; }
+        private LyricChecker lyricChecker { get; set; }
 
         public InvalidLyricToolTip()
         {
@@ -43,23 +43,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             invalidMessage.Text = "";
 
             // Check time
-            if (lyricInvalidChecker.InvalidLyricTime(lyric))
+            if (lyricChecker.InvalidLyricTime(lyric))
                 invalidMessage.AddParagraph("Invalid lyric time");
 
             // Check time-tag
-            if (lyricInvalidChecker.CheckInvalidTimeTagTime(lyric).Any())
+            if (lyricChecker.CheckInvalidTimeTagTime(lyric).Any())
                 invalidMessage.AddParagraph("Invalid time-tag");
 
             // Check ruby
-            if (lyricInvalidChecker.CheckInvalidRubyRange(lyric).Any())
+            if (lyricChecker.CheckInvalidRubyRange(lyric).Any())
                 invalidMessage.AddParagraph("Invalid ruby position.");
-            if (lyricInvalidChecker.CheckOverlappingRubyPosition(lyric).Any())
+            if (lyricChecker.CheckOverlappingRubyPosition(lyric).Any())
                 invalidMessage.AddParagraph("Invalid ruby overlapping.");
 
             // romaji
-            if (lyricInvalidChecker.CheckInvalidRomajiRange(lyric).Any())
+            if (lyricChecker.CheckInvalidRomajiRange(lyric).Any())
                 invalidMessage.AddParagraph("Invalid romaji position.");
-            if (lyricInvalidChecker.CheckOverlappingRomajiPosition(lyric).Any())
+            if (lyricChecker.CheckOverlappingRomajiPosition(lyric).Any())
                 invalidMessage.AddParagraph("Invalid romaji overlapping.");
 
             // show no problem message

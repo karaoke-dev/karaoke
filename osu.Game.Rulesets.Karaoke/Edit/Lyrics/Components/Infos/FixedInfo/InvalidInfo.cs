@@ -6,6 +6,7 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
@@ -15,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.FixedInfo
     public class InvalidInfo : SpriteIcon, IHasContextMenu, IHasCustomTooltip
     {
         [Resolved]
-        private LyricInvalidChecker lyricInvalidChecker { get; set; }
+        private LyricChecker lyricChecker { get; set; }
 
         // todo : might able to have auto-fix option by right-click
         public MenuItem[] ContextMenuItems => null;

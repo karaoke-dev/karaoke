@@ -8,9 +8,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
 {
-    public class LyricInvalidChecker : Component
+    public class LyricChecker : Component
     {
         [Resolved]
         private KaraokeRulesetEditConfigManager configManager { get; set; }
