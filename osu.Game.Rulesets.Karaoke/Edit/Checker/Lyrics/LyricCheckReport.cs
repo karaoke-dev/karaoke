@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
         {
             get
             {
-                if (TimeInvalid.Length > 0)
+                if (TimeInvalid?.Length > 0)
                     return false;
 
                 if (InvalidTimeTags?.Count > 0)

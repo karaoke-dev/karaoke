@@ -5,6 +5,7 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
@@ -17,12 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 
         public InvalidLyricToolTip()
         {
-            AutoSizeAxes = Axes.Y;
-            Width = 300;
-
             Child = invalidMessage = new OsuTextFlowContainer(s => s.Font = s.Font.With(size: 14))
             {
-                RelativeSizeAxes = Axes.X,
+                Width = 300,
                 AutoSizeAxes = Axes.Y,
                 Colour = Color4.White.Opacity(0.75f),
                 Name = "Invalid message",
@@ -38,25 +36,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             invalidMessage.Text = "";
 
             // Print time invalid message
-            foreach (var invalid in report.TimeInvalid)
+            foreach (var invalid in report.TimeInvalid.EmptyIfNull())
             {
                 createTimeInvalidMessage(invalid);
             }
 
             // Print time-tag invalid message
-            foreach (var invalidTimeTags in report.InvalidTimeTags)
+            foreach (var invalidTimeTags in report.InvalidTimeTags.EmptyIfNull())
             {
                 createTimeTagInvalidMessage(invalidTimeTags.Key, invalidTimeTags.Value);
             }
 
             // Print ruby invalid message
-            foreach (var invalidRubyTags in report.InvalidRubyTags)
+            foreach (var invalidRubyTags in report.InvalidRubyTags.EmptyIfNull())
             {
                 createRubyInvalidMessage(invalidRubyTags.Key, invalidRubyTags.Value);
             }
 
             // Print romaji invalid message
-            foreach (var invalidRomajiTags in report.InvalidRomajiTags)
+            foreach (var invalidRomajiTags in report.InvalidRomajiTags.EmptyIfNull())
             {
                 createRomajiInvalidMessage(invalidRomajiTags.Key, invalidRomajiTags.Value);
             }
