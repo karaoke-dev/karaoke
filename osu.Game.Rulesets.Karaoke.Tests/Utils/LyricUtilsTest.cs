@@ -300,7 +300,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[1000,5000]:karaoke", new[] { "[0,start]:1000", "[2,start]:2000", "[4,start]:3000", "[5,start]:4000", "[7,end]:5000" }, false)]
         [TestCase("[1000,5000]:karaoke", new[] { "[0,start]:1000", "[7,end]:5000" }, false)]
         [TestCase("[2000,5000]:karaoke", new[] { "[0,start]:1000", "[7,end]:5000" }, false)] // not check start time now.
-        [TestCase("[1000,2000]:karaoke", new[] { "[0,start]:1000", "[7,end]:5000" }, true)]  
+        [TestCase("[1000,2000]:karaoke", new[] { "[0,start]:1000", "[7,end]:5000" }, true)]
         public void TestCheckIsEndTimeInvalid(string lyricText, string[] timeTags, bool actual)
         {
             var lyric = TestCaseTagHelper.ParseLyric(lyricText);

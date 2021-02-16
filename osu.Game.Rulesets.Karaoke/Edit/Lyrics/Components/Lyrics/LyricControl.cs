@@ -149,14 +149,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             stateManager.BindableHoverCursorPosition.BindValueChanged(e =>
             {
                 var cursorPosition = e.NewValue;
+
                 switch (cursorPosition.Mode)
                 {
                     case CursorMode.Edit:
                         UpdateCursor(e.NewValue, true);
                         break;
+
                     case CursorMode.Recording:
                         UpdateTimeTagCursor(e.NewValue, true);
                         break;
+
                     default:
                         throw new InvalidOperationException(nameof(cursorPosition.Mode));
                 }
@@ -164,14 +167,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             stateManager.BindableCursorPosition.BindValueChanged(e =>
             {
                 var cursorPosition = e.NewValue;
+
                 switch (cursorPosition.Mode)
                 {
                     case CursorMode.Edit:
                         UpdateCursor(e.NewValue, false);
                         break;
+
                     case CursorMode.Recording:
                         UpdateTimeTagCursor(e.NewValue, false);
                         break;
+
                     default:
                         throw new InvalidOperationException(nameof(cursorPosition.Mode));
                 }
