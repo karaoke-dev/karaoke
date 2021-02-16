@@ -12,6 +12,7 @@ using osuTK.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Framework.Extensions.Color4Extensions;
+using osu.Game.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 {
@@ -30,70 +31,58 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
                 OverlayColourProvider.Purple,
                 OverlayColourProvider.Blue
             };
-            Child = new TableContainer
+            var colourName = new[]
+            {
+                "Colour1",
+                "Colour2",
+                "Colour3",
+                "Colour4",
+                "Highlight1",
+                "Content1",
+                "Content2",
+                "Light1",
+                "Light2",
+                "Light3",
+                "Light4",
+                "Dark1",
+                "Dark2",
+                "Dark3",
+                "Dark4",
+                "Dark5",
+                "Dark6",
+                "Foreground1",
+                "Background1",
+                "Background2",
+                "Background3",
+                "Background4",
+                "Background5",
+                "Background6",
+            };
+
+            Child = new OsuScrollContainer(Direction.Horizontal)
             {
                 RelativeSizeAxes = Axes.Both,
-                Columns = new TableColumn[]
+                Child = new TableContainer
                 {
-                    new TitleTableColumn("Colour1"),
-                    new TitleTableColumn("Colour2"),
-                    new TitleTableColumn("Colour3"),
-                    new TitleTableColumn("Colour4"),
-                    new TitleTableColumn("Highlight1"),
-                    new TitleTableColumn("Content1"),
-                    new TitleTableColumn("Content2"),
-                    new TitleTableColumn("Light1"),
-                    new TitleTableColumn("Light2"),
-                    new TitleTableColumn("Light3"),
-                    new TitleTableColumn("Light4"),
-                    new TitleTableColumn("Dark1"),
-                    new TitleTableColumn("Dark2"),
-                    new TitleTableColumn("Dark3"),
-                    new TitleTableColumn("Dark4"),
-                    new TitleTableColumn("Dark5"),
-                    new TitleTableColumn("Dark6"),
-                    new TitleTableColumn("Foreground1"),
-                    new TitleTableColumn("Background1"),
-                    new TitleTableColumn("Background2"),
-                    new TitleTableColumn("Background3"),
-                    new TitleTableColumn("Background4"),
-                    new TitleTableColumn("Background5"),
-                    new TitleTableColumn("Background6"),
-                },
-                Content = providers.Select(x => new []
-                {
-                    new PreviewColourDrawable(x.Colour1),
-                    new PreviewColourDrawable(x.Colour2),
-                    new PreviewColourDrawable(x.Colour3),
-                    new PreviewColourDrawable(x.Colour4),
-                    new PreviewColourDrawable(x.Highlight1),
-                    new PreviewColourDrawable(x.Content1),
-                    new PreviewColourDrawable(x.Content2),
-                    new PreviewColourDrawable(x.Light1),
-                    new PreviewColourDrawable(x.Light2),
-                    new PreviewColourDrawable(x.Light3),
-                    new PreviewColourDrawable(x.Light4),
-                    new PreviewColourDrawable(x.Dark1),
-                    new PreviewColourDrawable(x.Dark2),
-                    new PreviewColourDrawable(x.Dark3),
-                    new PreviewColourDrawable(x.Dark4),
-                    new PreviewColourDrawable(x.Dark5),
-                    new PreviewColourDrawable(x.Dark6),
-                    new PreviewColourDrawable(x.Foreground1),
-                    new PreviewColourDrawable(x.Background1),
-                    new PreviewColourDrawable(x.Background2),
-                    new PreviewColourDrawable(x.Background3),
-                    new PreviewColourDrawable(x.Background4),
-                    new PreviewColourDrawable(x.Background5),
-                    new PreviewColourDrawable(x.Background6),
-                }).To2DArray(),
+                    RelativeSizeAxes = Axes.Y,
+                    AutoSizeAxes = Axes.X,
+                    Columns = colourName.Select(c => new TitleTableColumn(c)).ToArray(),
+                    Content = providers.Select(p =>
+                    {
+                        return colourName.Select(c =>
+                        {
+                            var colour = (Color4)p.GetType().GetProperty(c).GetValue(p);
+                            return new PreviewColourDrawable(colour);
+                        });
+                    }).To2DArray(),
+                }
             };
         }
 
         private class TitleTableColumn : TableColumn
         {
             public TitleTableColumn(string title)
-                : base(title, Anchor.Centre)
+                : base(title, Anchor.Centre, new Dimension(GridSizeMode.Absolute, 120))
             {
             }
         }
