@@ -62,24 +62,27 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
                 "Background6",
             };
 
-            Child = new OsuScrollContainer(Direction.Horizontal)
+            Schedule(() =>
             {
-                RelativeSizeAxes = Axes.Both,
-                Child = new TableContainer
+                Child = new OsuScrollContainer(Direction.Horizontal)
                 {
-                    RelativeSizeAxes = Axes.Y,
-                    AutoSizeAxes = Axes.X,
-                    Columns = colourName.Select(c => new TitleTableColumn(c)).ToArray(),
-                    Content = providers.Select(p =>
+                    RelativeSizeAxes = Axes.Both,
+                    Child = new TableContainer
                     {
-                        return colourName.Select(c =>
+                        RelativeSizeAxes = Axes.Y,
+                        AutoSizeAxes = Axes.X,
+                        Columns = colourName.Select(c => new TitleTableColumn(c)).ToArray(),
+                        Content = providers.Select(p =>
                         {
-                            var colour = (Color4)p.GetType().GetProperty(c).GetValue(p);
-                            return new PreviewColourDrawable(colour);
-                        });
-                    }).To2DArray(),
-                }
-            };
+                            return colourName.Select(c =>
+                            {
+                                var colour = (Color4)p.GetType().GetProperty(c).GetValue(p);
+                                return new PreviewColourDrawable(colour);
+                            });
+                        }).To2DArray(),
+                    }
+                };
+            });
         }
 
         private class TitleTableColumn : TableColumn
