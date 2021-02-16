@@ -160,7 +160,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                     default:
                         throw new InvalidOperationException(nameof(cursorPosition.Mode));
                 }
-                
             });
             stateManager.BindableCursorPosition.BindValueChanged(e =>
             {
