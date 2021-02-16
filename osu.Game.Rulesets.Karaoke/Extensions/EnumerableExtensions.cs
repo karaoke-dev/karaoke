@@ -58,5 +58,14 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
 
             return res;
         }
+
+        /// <summary>
+        /// Return empty list if null.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source)
+            => source ?? Enumerable.Empty<T>();
     }
 }
