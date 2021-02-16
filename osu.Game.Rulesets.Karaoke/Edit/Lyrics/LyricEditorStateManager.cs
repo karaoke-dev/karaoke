@@ -19,14 +19,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Bindable<LyricFastEditMode> BindableFastEditMode { get; } = new Bindable<LyricFastEditMode>();
 
+        public Bindable<RecordingMovingCursorMode> BindableRecordingMovingCursorMode { get; } = new Bindable<RecordingMovingCursorMode>();
+
         public Mode Mode => BindableMode.Value;
 
         public LyricFastEditMode FastEditMode => BindableFastEditMode.Value;
+
+        public RecordingMovingCursorMode RecordingMovingCursorMode => BindableRecordingMovingCursorMode.Value;
 
         public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
 
         // Lyrics is not lock and can be accessible.
         protected IEnumerable<Lyric> Lyrics => LyricsUtils.FindUnlockLyrics(OrderUtils.Sorted(BindableLyrics));
+
+        public Bindable<CursorPosition> BindableHoverCursorPosition { get; } = new Bindable<CursorPosition>();
+
+        public Bindable<CursorPosition> BindableCursorPosition { get; } = new Bindable<CursorPosition>();
 
         [BackgroundDependencyLoader]
         private void load(EditorBeatmap beatmap)

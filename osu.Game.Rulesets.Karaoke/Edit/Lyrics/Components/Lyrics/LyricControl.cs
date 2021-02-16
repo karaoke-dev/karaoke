@@ -148,22 +148,35 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             // update change if cursor changed.
             stateManager.BindableHoverCursorPosition.BindValueChanged(e =>
             {
-                UpdateCursor(e.NewValue, true);
+                var cursorPosition = e.NewValue;
+                switch (cursorPosition.Mode)
+                {
+                    case CursorMode.Edit:
+                        UpdateCursor(e.NewValue, true);
+                        break;
+                    case CursorMode.Recording:
+                        UpdateTimeTagCursor(e.NewValue, true);
+                        break;
+                    default:
+                        throw new InvalidOperationException(nameof(cursorPosition.Mode));
+                }
+                
             });
             stateManager.BindableCursorPosition.BindValueChanged(e =>
             {
-                UpdateCursor(e.NewValue, false);
+                var cursorPosition = e.NewValue;
+                switch (cursorPosition.Mode)
+                {
+                    case CursorMode.Edit:
+                        UpdateCursor(e.NewValue, false);
+                        break;
+                    case CursorMode.Recording:
+                        UpdateTimeTagCursor(e.NewValue, false);
+                        break;
+                    default:
+                        throw new InvalidOperationException(nameof(cursorPosition.Mode));
+                }
             });
-
-            // update change if record cursor changed.
-            stateManager.BindableHoverRecordCursorPosition.BindValueChanged(e =>
-            {
-                UpdateTimeTagCursor(e.NewValue, true);
-            }, true);
-            stateManager.BindableRecordCursorPosition.BindValueChanged(e =>
-            {
-                UpdateTimeTagCursor(e.NewValue, false);
-            }, true);
         }
 
         protected void CreateCursor(Mode mode)
@@ -234,12 +247,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             }
         }
 
-        protected void UpdateTimeTagCursor(TimeTag timeTag, bool preview)
+        protected void UpdateTimeTagCursor(CursorPosition position, bool preview)
         {
             var cursor = cursorContainer.OfType<DrawableTimeTagRecordCursor>().FirstOrDefault(x => x.Preview == preview);
             if (cursor == null)
                 return;
 
+            var timeTag = position.TimeTag;
             if (!drawableLyric.TimeTagsBindable.Value.Contains(timeTag))
             {
                 cursor.Hide();

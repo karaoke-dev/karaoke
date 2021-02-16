@@ -12,14 +12,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditorStateManager
     {
-        public Bindable<RecordingMovingCursorMode> BindableRecordingMovingCursorMode { get; } = new Bindable<RecordingMovingCursorMode>();
-
-        public RecordingMovingCursorMode RecordingMovingCursorMode => BindableRecordingMovingCursorMode.Value;
-
-        public Bindable<TimeTag> BindableHoverRecordCursorPosition { get; } = new Bindable<TimeTag>();
-
-        public Bindable<TimeTag> BindableRecordCursorPosition { get; } = new Bindable<TimeTag>();
-
         public void SetRecordingMovingCursorMode(RecordingMovingCursorMode mode)
         {
             BindableRecordingMovingCursorMode.Value = mode;
@@ -47,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void ClearHoverRecordCursorPosition()
         {
-            BindableHoverRecordCursorPosition.Value = null;
+            BindableHoverCursorPosition.Value = new CursorPosition();
         }
 
         public bool RecordingCursorMovable(TimeTag timeTag)
@@ -70,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private bool moveRecordCursor(MovingCursorAction action)
         {
-            var currentTimeTag = BindableRecordCursorPosition.Value;
+            var currentTimeTag = BindableCursorPosition.Value.TimeTag;
 
             TimeTag nextTimeTag;
 
@@ -160,8 +152,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (timeTag == null)
                 return;
 
-            BindableHoverRecordCursorPosition.Value = null;
-            BindableRecordCursorPosition.Value = timeTag;
+            var currentLyric = timeTagInLyric(timeTag);
+            BindableHoverCursorPosition.Value = new CursorPosition();
+            BindableCursorPosition.Value = new CursorPosition(currentLyric, timeTag);
         }
 
         private void moveHoverCursorTo(TimeTag timeTag)
@@ -169,7 +162,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (timeTag == null)
                 return;
 
-            BindableHoverRecordCursorPosition.Value = timeTag;
+            var currentLyric = timeTagInLyric(timeTag);
+            BindableHoverCursorPosition.Value = new CursorPosition(currentLyric, timeTag);
         }
     }
 }
