@@ -13,6 +13,9 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Graphics.Containers;
+using osu.Framework.Input.Events;
+using osu.Framework.Allocation;
+using osu.Framework.Platform;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 {
@@ -89,8 +92,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 
         private class PreviewColourDrawable : CompositeDrawable
         {
+            [Resolved]
+            private GameHost host { get; set; }
+
+            private readonly Color4 color;
+
             public PreviewColourDrawable(Color4 color)
             {
+                this.color = color;
+
                 RelativeSizeAxes = Axes.Both;
                 InternalChildren = new Drawable[]
                 {
@@ -106,6 +116,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
                         Text = color.ToHex(),
                     }
                 };
+            }
+
+            protected override bool OnClick(ClickEvent e)
+            {
+                host.GetClipboard().SetText(color.ToHex());
+                return base.OnClick(e);
             }
         }
     }
