@@ -22,6 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             Set(KaraokeRulesetEditSetting.LyricEditorMode, Mode.ViewMode);
             Set(KaraokeRulesetEditSetting.LyricEditorFastEditMode, LyricFastEditMode.None);
             Set(KaraokeRulesetEditSetting.RecordingMovingCursorMode, RecordingMovingCursorMode.None);
+            Set(KaraokeRulesetEditSetting.AutoFocusToEditLyric, true);
+            Set(KaraokeRulesetEditSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);
 
             Set(KaraokeRulesetEditSetting.DisplayRuby, true);
             Set(KaraokeRulesetEditSetting.DisplayRomaji, true);
@@ -42,6 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         LyricEditorMode,
         LyricEditorFastEditMode,
         RecordingMovingCursorMode,
+        AutoFocusToEditLyric,
+        AutoFocusToEditLyricSkipRows,
 
         // Note editor
         DisplayRuby,

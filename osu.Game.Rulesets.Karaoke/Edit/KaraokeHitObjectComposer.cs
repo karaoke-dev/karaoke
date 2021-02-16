@@ -162,6 +162,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                             new LyricEditorLeftSideModeMenu(editConfigManager, "Lyric editor left side mode"),
                             new LyricEditorMovingCursorModeMenu(editConfigManager, "Record cursor moving mode"),
                             new LyricEditorTextSizeMenu(editConfigManager, "Text size"),
+                            new AutoFocusToEditLyricMenu(editConfigManager, "Auto focus to edit lyric"),
                             new EditorMenuItemSpacer(),
                             new NoteEditorPreviewMenu(editConfigManager, "Note editor"),
                         }
