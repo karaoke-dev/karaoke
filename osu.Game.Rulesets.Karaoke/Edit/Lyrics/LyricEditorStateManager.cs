@@ -21,6 +21,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Bindable<RecordingMovingCursorMode> BindableRecordingMovingCursorMode { get; } = new Bindable<RecordingMovingCursorMode>();
 
+        public BindableBool BindableAutoFocusEditLyric { get; } = new BindableBool();
+
+        public BindableInt BindableAutoFocusEditLyricSkipRows { get; } = new BindableInt();
+
         public Mode Mode => BindableMode.Value;
 
         public LyricFastEditMode FastEditMode => BindableFastEditMode.Value;
@@ -82,6 +86,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public void SetFastEditMode(LyricFastEditMode fastEditMode)
         {
             BindableFastEditMode.Value = fastEditMode;
+        }
+
+        public void SetRecordingMovingCursorMode(RecordingMovingCursorMode mode)
+        {
+            BindableRecordingMovingCursorMode.Value = mode;
+
+            // todo : might move cursor to valid position.
+        }
+
+        public void SetBindableAutoFocusEditLyric(bool focus)
+        {
+            BindableAutoFocusEditLyric.Value = focus;
+        }
+
+        public void SetBindableAutoFocusEditLyricSkipRows(int row)
+        {
+            BindableAutoFocusEditLyricSkipRows.Value = row;
         }
 
         public bool MoveCursor(MovingCursorAction action)

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -12,39 +13,66 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
     public class AutoFocusToEditLyricMenu : MenuItem
     {
-        private readonly BindableInt bindableFocusRows = new BindableInt();
+        private const int disable_selection_index = -1;
+
+        private readonly BindableBool bindableAutoFocusToEditLyric = new BindableBool();
+        private readonly BindableInt bindableAutoFocusToEditLyricSkipRows = new BindableInt();
 
         public AutoFocusToEditLyricMenu(KaraokeRulesetEditConfigManager config, string text)
             : base(text)
         {
-            Items = Enumerable.Range(0, 6).Select(x => new ToggleMenuItem(getName(x), MenuItemType.Standard, _ => UpdateSelection(x))).ToList();
-
-            config.BindWith(KaraokeRulesetEditSetting.AutoFocusToEditLyric, bindableFocusRows);
-            bindableFocusRows.BindValueChanged(e =>
+            var selections = new List<MenuItem>
             {
-                var newSelection = e.NewValue;
-                Items.OfType<ToggleMenuItem>().ForEach(x =>
-                {
-                    var match = x.Text.Value == getName(newSelection);
-                    x.State.Value = match;
-                });
+                new ToggleMenuItem(getName(disable_selection_index), MenuItemType.Standard, _ => updateAutoFocusToEditLyric())
+            };
+            selections.AddRange(Enumerable.Range(0, 4).Select(x => new ToggleMenuItem(getName(x), MenuItemType.Standard, _ => updateAutoFocusToEditLyricSkipRows(x))));
+            Items = selections;
+
+            config.BindWith(KaraokeRulesetEditSetting.AutoFocusToEditLyric, bindableAutoFocusToEditLyric);
+            config.BindWith(KaraokeRulesetEditSetting.AutoFocusToEditLyricSkipRows, bindableAutoFocusToEditLyricSkipRows);
+
+            // mark disable as selected option.
+            bindableAutoFocusToEditLyric.BindValueChanged(e =>
+            {
+                updateSelectionState();
+            }, true);
+
+            // mark line as selected option.
+            bindableAutoFocusToEditLyricSkipRows.BindValueChanged(e =>
+            {
+                updateSelectionState();
             }, true);
         }
 
         private string getName(int number)
         {
-            if (number == 0)
+            if (number == disable_selection_index)
                 return "Disable";
 
-            if (number == 1)
-                return $"Enable";
+            if (number == 0)
+                return "Enable";
 
-            return $"Enable (skip {number - 1} rows)";
+            return $"Enable (skip {number} rows)";
         }
 
-        protected virtual void UpdateSelection(int selection)
+        private void updateAutoFocusToEditLyric()
         {
-            bindableFocusRows.Value = selection;
+            bindableAutoFocusToEditLyric.Value = !bindableAutoFocusToEditLyric.Value;
+        }
+
+        private void updateAutoFocusToEditLyricSkipRows(int rows)
+        {
+            bindableAutoFocusToEditLyricSkipRows.Value = rows;
+        }
+
+        private void updateSelectionState()
+        {
+            var selection = bindableAutoFocusToEditLyric.Value ? disable_selection_index : bindableAutoFocusToEditLyricSkipRows.Value;
+            Items.OfType<ToggleMenuItem>().ForEach(x =>
+            {
+                var match = x.Text.Value == getName(selection);
+                x.State.Value = match;
+            });
         }
     }
 }

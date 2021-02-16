@@ -218,5 +218,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             get => stateManager.RecordingMovingCursorMode;
             set => stateManager.SetRecordingMovingCursorMode(value);
         }
+
+        public bool AutoFocusEditLyric
+        {
+            get => stateManager.BindableAutoFocusEditLyric.Value;
+            set => stateManager.SetBindableAutoFocusEditLyric(value);
+        }
+
+        public int AutoFocusEditLyricSkipRows
+        {
+            get => stateManager.BindableAutoFocusEditLyricSkipRows.Value;
+            set => stateManager.SetBindableAutoFocusEditLyricSkipRows(value);
+        }
     }
 }

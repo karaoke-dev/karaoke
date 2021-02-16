@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(LyricEditorStateManager stateManager, KaraokeRulesetEditConfigManager editConfigManager)
+        private void load(LyricEditorStateManager stateManager)
         {
             // update hover style to child
             stateManager.BindableHoverCursorPosition.BindValueChanged(e =>
@@ -56,10 +56,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 var listItem = getListItem(e.NewValue.Lyric);
 
                 // move to target position.
-                var focusRows = editConfigManager.Get<int>(KaraokeRulesetEditSetting.AutoFocusToEditLyric);
-                if (focusRows > 0)
-                { 
-                    var skippingRows = focusRows - 1;
+                if (stateManager.BindableAutoFocusEditLyric.Value)
+                {
+                    var skippingRows = stateManager.BindableAutoFocusEditLyricSkipRows.Value;
                     moveItemToTargetPosition(listItem, listItem.Height * skippingRows);
                 }
             });

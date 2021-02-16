@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -12,13 +11,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditorStateManager
     {
-        public void SetRecordingMovingCursorMode(RecordingMovingCursorMode mode)
-        {
-            BindableRecordingMovingCursorMode.Value = mode;
-
-            // todo : might move cursor to valid position.
-        }
-
         public bool MoveRecordCursorToTargetPosition(TimeTag timeTag)
         {
             if (timeTagInLyric(timeTag) == null)
