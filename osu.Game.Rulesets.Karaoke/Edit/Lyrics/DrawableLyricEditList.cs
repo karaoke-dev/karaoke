@@ -6,6 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -41,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(LyricEditorStateManager stateManager)
+        private void load(LyricEditorStateManager stateManager, KaraokeRulesetEditConfigManager editConfigManager)
         {
             // update hover style to child
             stateManager.BindableHoverCursorPosition.BindValueChanged(e =>
@@ -55,8 +56,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 var listItem = getListItem(e.NewValue.Lyric);
 
                 // move to target position.
-                var spacing = listItem.Height;
-                moveItemToTargetPosition(listItem, spacing);
+                var focusRows = editConfigManager.Get<int>(KaraokeRulesetEditSetting.AutoFocusToEditLyric);
+                if (focusRows > 0)
+                { 
+                    var skippingRows = focusRows - 1;
+                    moveItemToTargetPosition(listItem, listItem.Height * skippingRows);
+                }
             });
 
             DrawableLyricEditListItem getListItem(Lyric lyric)
