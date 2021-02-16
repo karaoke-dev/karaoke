@@ -12,10 +12,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             Lyric = lyric;
             Index = index;
+            TimeTag = null;
+            Mode = CursorMode.Edit;
+        }
+
+        public CursorPosition(Lyric lyric, TimeTag timeTag)
+        {
+            Lyric = lyric;
+            Index = default;
+            TimeTag = timeTag;
+            Mode = CursorMode.Recording;
         }
 
         public Lyric Lyric { get; }
 
         public TextIndex Index { get; }
+
+        public TimeTag TimeTag { get; }
+
+        public CursorMode Mode { get; }
+    }
+
+    public enum CursorMode
+    {
+        Edit,
+
+        Recording
     }
 }

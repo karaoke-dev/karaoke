@@ -150,8 +150,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager == null)
                 return false;
 
-            var currentTimeTag = stateManager.BindableRecordCursorPosition.Value;
+            var cursorPosition = stateManager.BindableCursorPosition.Value;
+            if (cursorPosition.Mode != CursorMode.Recording)
+                return false;
 
+            var currentTimeTag = cursorPosition.TimeTag;
             switch (action)
             {
                 case KaraokeEditAction.ClearTime:

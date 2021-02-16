@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -13,10 +12,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditorStateManager
     {
-        public Bindable<CursorPosition> BindableHoverCursorPosition { get; } = new Bindable<CursorPosition>();
-
-        public Bindable<CursorPosition> BindableCursorPosition { get; } = new Bindable<CursorPosition>();
-
         public void MoveCursorToTargetPosition(Lyric lyric, TextIndex index)
         {
             if (!Lyrics.Contains(lyric))
