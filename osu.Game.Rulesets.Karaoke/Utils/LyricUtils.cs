@@ -277,7 +277,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (lyric.TimeTags == null || lyric.TimeTags.Length == 0)
                 return false;
 
-            return lyric.StartTime > lyric.TimeTags.Min(x => x.Time);
+            return lyric.StartTime > TimeTagsUtils.GetStartTime(lyric.TimeTags);
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (lyric.TimeTags == null || lyric.TimeTags.Length == 0)
                 return false;
 
-            return lyric.EndTime < lyric.TimeTags.Max(x => x.Time);
+            return lyric.EndTime < TimeTagsUtils.GetEndTime(lyric.TimeTags);
         }
 
         #endregion
