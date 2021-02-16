@@ -34,5 +34,29 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
         {
             return collection.Reverse().SkipWhile(i => !EqualityComparer<T>.Default.Equals(i, pivot)).Skip(1).SkipWhile(x => !action(x)).FirstOrDefault();
         }
+
+        /// <summary>
+        /// Convert [][] to [,]
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static T[,] To2DArray<T>(this IEnumerable<IEnumerable<T>> source)
+        {
+            var data = source
+                .Select(x => x.ToArray())
+                .ToArray();
+
+            var res = new T[data.Length, data.Max(x => x.Length)];
+            for (var i = 0; i < data.Length; ++i)
+            {
+                for (var j = 0; j < data[i].Length; ++j)
+                {
+                    res[i, j] = data[i][j];
+                }
+            }
+
+            return res;
+        }
     }
 }
