@@ -6,6 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
 {
@@ -34,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
             AddIcon(FontAwesome.Solid.ExclamationTriangle, icon =>
             {
                 icon.Colour = colours.Yellow;
-                icon.Scale = new osuTK.Vector2(0.9f);
+                icon.Scale = new Vector2(0.9f);
             });
             AddText($" {message}");
             NewLine();
