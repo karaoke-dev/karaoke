@@ -3,26 +3,28 @@
 
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
-using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Extensions;
+using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 {
     public class InvalidLyricToolTip : BackgroundToolTip
     {
-        private readonly OsuTextFlowContainer invalidMessage;
+        private readonly MessageContainer invalidMessage;
 
         public InvalidLyricToolTip()
         {
-            Child = invalidMessage = new OsuTextFlowContainer(s => s.Font = s.Font.With(size: 14))
+            Child = invalidMessage = new MessageContainer(s => s.Font = s.Font.With(size: 14))
             {
                 Width = 300,
                 AutoSizeAxes = Axes.Y,
                 Colour = Color4.White.Opacity(0.75f),
+                Spacing = new Vector2(0, 5),
                 Name = "Invalid message",
             };
         }
@@ -33,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 return false;
 
             // clear exist warning.
-            invalidMessage.Text = "";
+            invalidMessage.Clear();
 
             // Print time invalid message
             foreach (var invalid in report.TimeInvalid.EmptyIfNull())
@@ -61,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 
             // show no problem message
             if(report.IsValid)
-                invalidMessage.AddParagraph("Seems no issue in this lyric.");
+                invalidMessage.AddSuccessParagraph("Seems no issue in this lyric.");
 
             return true;
 
@@ -70,15 +72,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 switch (timeInvalid)
                 {
                     case TimeInvalid.Overlapping:
-                        invalidMessage.AddParagraph("Check is start time larger then end time in lyric.");
+                        invalidMessage.AddAlertParagraph("Check is start time larger then end time in lyric.");
                         break;
 
                     case TimeInvalid.StartTimeInvalid:
-                        invalidMessage.AddParagraph("Check start time is larger than minimux time tag's time.");
+                        invalidMessage.AddAlertParagraph("Check start time is larger than minimux time tag's time.");
                         break;
 
                     case TimeInvalid.EndTimeInvalid:
-                        invalidMessage.AddParagraph("Check end time is smaller than maximum time tag's time.");
+                        invalidMessage.AddAlertParagraph("Check end time is smaller than maximum time tag's time.");
                         break;
                 }
             }
@@ -88,11 +90,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 switch (invalid)
                 {
                     case TimeTagInvalid.OutOfRange:
-                        invalidMessage.AddParagraph("Seems some time tag is out of lyric text size.");
+                        invalidMessage.AddAlertParagraph("Seems some time tag is out of lyric text size.");
                         break;
 
                     case TimeTagInvalid.Overlapping:
-                        invalidMessage.AddParagraph("Seems some time tag is invalid.");
+                        invalidMessage.AddAlertParagraph("Seems some time tag is invalid.");
                         break;
                 }
             }
@@ -102,11 +104,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 switch (invalid)
                 {
                     case RubyTagInvalid.OutOfRange:
-                        invalidMessage.AddParagraph("Seems some ruby tag is out of lyric text size.");
+                        invalidMessage.AddAlertParagraph("Seems some ruby tag is out of lyric text size.");
                         break;
 
                     case RubyTagInvalid.Overlapping:
-                        invalidMessage.AddParagraph("Seems some ruby tag is overlapping to others.");
+                        invalidMessage.AddAlertParagraph("Seems some ruby tag is overlapping to others.");
                         break;
                 }
             }
@@ -116,11 +118,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 switch (invalid)
                 {
                     case RomajiTagInvalid.OutOfRange:
-                        invalidMessage.AddParagraph("Seems some romaji tag is out of lyric text size.");
+                        invalidMessage.AddAlertParagraph("Seems some romaji tag is out of lyric text size.");
                         break;
 
                     case RomajiTagInvalid.Overlapping:
-                        invalidMessage.AddParagraph("Seems some romaji tag is overlapping to others.");
+                        invalidMessage.AddAlertParagraph("Seems some romaji tag is overlapping to others.");
                         break;
                 }
             }
