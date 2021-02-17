@@ -178,6 +178,59 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             });
         }
 
+        [Test]
+        public void TestMultiInvalidLyric()
+        {
+            setTooltip("multi property is invalid", new LyricCheckReport
+            {
+                TimeInvalid = new[]
+                {
+                    TimeInvalid.Overlapping,
+                    TimeInvalid.StartTimeInvalid,
+                },
+                InvalidTimeTags = new Dictionary<TimeTagInvalid, TimeTag[]>
+                {
+                    {
+                        TimeTagInvalid.OutOfRange,
+                        new []
+                        {
+                            new TimeTag(new TextIndex(2, TextIndex.IndexState.Start))
+                        }
+                    },
+                },
+                InvalidRubyTags = new Dictionary<RubyTagInvalid, RubyTag[]>
+                {
+                    {
+                        RubyTagInvalid.Overlapping,
+                        new []
+                        {
+                            new RubyTag
+                            {
+                                StartIndex = 2,
+                                EndIndex = 3,
+                                Text = "Invalid ruby"
+                            }
+                        }
+                    }
+                },
+                InvalidRomajiTags = new Dictionary<RomajiTagInvalid, RomajiTag[]>
+                {
+                    {
+                        RomajiTagInvalid.OutOfRange,
+                        new []
+                        {
+                            new RomajiTag
+                            {
+                                StartIndex = 2,
+                                EndIndex = 3,
+                                Text = "Invalid romaji"
+                            }
+                        }
+                    },
+                }
+            });
+        }
+
         private void setTooltip(string testName, LyricCheckReport timeTag)
         {
             AddStep(testName, () =>

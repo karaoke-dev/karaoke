@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 return false;
 
             // clear exist warning.
-            invalidMessage.Text = "";
+            invalidMessage.Clear();
 
             // Print time invalid message
             foreach (var invalid in report.TimeInvalid.EmptyIfNull())

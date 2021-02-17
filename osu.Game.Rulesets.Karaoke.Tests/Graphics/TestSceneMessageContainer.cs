@@ -42,5 +42,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
                 messageContainer.AddAlertParagraph("Alert message");
             });
         }
+
+        public void TestDisplayMultiPessage()
+        {
+            AddStep("Display multi message", () =>
+            {
+                messageContainer.AddSuccessParagraph("Success message");
+                messageContainer.AddWarningParagraph("Warning message");
+                messageContainer.AddAlertParagraph("Alert message");
+            });
+        }
     }
 }
