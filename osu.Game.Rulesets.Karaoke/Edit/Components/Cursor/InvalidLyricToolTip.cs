@@ -6,6 +6,7 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Extensions;
+using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
@@ -14,11 +15,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 {
     public class InvalidLyricToolTip : BackgroundToolTip
     {
-        private readonly OsuTextFlowContainer invalidMessage;
+        private readonly MessageContainer invalidMessage;
 
         public InvalidLyricToolTip()
         {
-            Child = invalidMessage = new OsuTextFlowContainer(s => s.Font = s.Font.With(size: 14))
+            Child = invalidMessage = new MessageContainer(s => s.Font = s.Font.With(size: 14))
             {
                 Width = 300,
                 AutoSizeAxes = Axes.Y,
