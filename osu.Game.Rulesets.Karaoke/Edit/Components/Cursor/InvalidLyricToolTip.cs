@@ -8,6 +8,7 @@ using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
@@ -23,6 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 Width = 300,
                 AutoSizeAxes = Axes.Y,
                 Colour = Color4.White.Opacity(0.75f),
+                Spacing = new Vector2(0, 5),
                 Name = "Invalid message",
             };
         }

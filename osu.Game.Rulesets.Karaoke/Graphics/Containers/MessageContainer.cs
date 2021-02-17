@@ -22,33 +22,33 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
 
         public void AddSuccessParagraph(string text, Action<SpriteText> creationParameters = null)
         {
+            NewParagraph();
             AddIcon(FontAwesome.Solid.Check, icon =>
             {
                 icon.Colour = colours.Green;
             });
             AddText($" {text}", creationParameters);
-            NewLine();
         }
 
         public void AddWarningParagraph(string text, Action<SpriteText> creationParameters = null)
         {
+            NewParagraph();
             AddIcon(FontAwesome.Solid.ExclamationTriangle, icon =>
             {
                 icon.Colour = colours.Yellow;
                 icon.Scale = new Vector2(0.9f);
             });
             AddText($" {text}", creationParameters);
-            NewLine();
         }
 
         public void AddAlertParagraph(string text, Action<SpriteText> creationParameters = null)
         {
+            NewParagraph();
             AddIcon(FontAwesome.Solid.TimesCircle, icon =>
             {
                 icon.Colour = colours.Red;
             });
             AddText($" {text}", creationParameters);
-            NewLine();
         }
     }
 }
