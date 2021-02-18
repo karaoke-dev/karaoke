@@ -208,7 +208,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                             {
                                 StartIndex = 2,
                                 EndIndex = 3,
-                                Text = "Invalid ruby"
+                                Text = "か"
+                            },
+                            new RubyTag
+                            {
+                                StartIndex = 2,
+                                EndIndex = 3,
+                                Text = "ら"
                             }
                         }
                     }
@@ -223,7 +229,25 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                             {
                                 StartIndex = 2,
                                 EndIndex = 3,
-                                Text = "Invalid romaji"
+                                Text = "ka"
+                            },
+                            new RomajiTag
+                            {
+                                StartIndex = 4,
+                                EndIndex = 5,
+                                Text = "ra"
+                            },
+                            new RomajiTag
+                            {
+                                StartIndex = 5,
+                                EndIndex = 6,
+                                Text = "o"
+                            },
+                            new RomajiTag
+                            {
+                                StartIndex = 6,
+                                EndIndex = 7,
+                                Text = "ke"
                             }
                         }
                     },

@@ -52,6 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
                 messageContainer.AddSuccessParagraph("Success message");
                 messageContainer.AddWarningParagraph("Warning message");
                 messageContainer.AddAlertParagraph("Alert message");
+                messageContainer.AddHighlightText("I'm highlighting.");
             });
         }
 

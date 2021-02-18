@@ -50,5 +50,14 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
             });
             AddText($" {text}", creationParameters);
         }
+
+        public void AddHighlightText(string text, Action<SpriteText> creationParameters = null)
+        {
+            AddText($" {text}", c =>
+            {
+                c.Colour = colours.Yellow;
+                creationParameters?.Invoke(c);
+            });
+        }
     }
 }

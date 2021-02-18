@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public bool DeleteLyricText(CursorPosition position)
         {
             var lyric = position.Lyric;
-            var index = TextIndexUtils.ToLyricIndex(position.Index);
+            var index = TextIndexUtils.ToStringIndex(position.Index);
             if (index <= 0)
                 return false;
 

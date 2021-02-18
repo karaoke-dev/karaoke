@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         return new TextIndex(currentIndex.Index - 1, currentIndex.State);
 
                     case Mode.TimeTagEditMode:
-                        var nextIndex = TextIndexUtils.ToLyricIndex(currentIndex) - 1;
+                        var nextIndex = TextIndexUtils.ToStringIndex(currentIndex) - 1;
                         var nextState = TextIndexUtils.ReverseState(currentIndex.State);
                         return new TextIndex(nextIndex, nextState);
 
@@ -155,7 +155,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         return new TextIndex(currentIndex.Index + 1, currentIndex.State);
 
                     case Mode.TimeTagEditMode:
-                        var nextIndex = TextIndexUtils.ToLyricIndex(currentIndex);
+                        var nextIndex = TextIndexUtils.ToStringIndex(currentIndex);
                         var nextState = TextIndexUtils.ReverseState(currentIndex.State);
                         return new TextIndex(nextIndex, nextState);
 

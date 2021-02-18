@@ -21,6 +21,15 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return new TimeTag(index, time);
         }
 
+        /// <summary>
+        /// Display string with time format
+        /// </summary>
+        /// <example>
+        /// 02:32:155
+        /// --:--:---
+        /// </example>
+        /// <param name="timeTag"></param>
+        /// <returns></returns>
         public static string FormattedString(TimeTag timeTag)
         {
             return timeTag?.Time?.ToEditorFormattedString() ?? "--:--:---";

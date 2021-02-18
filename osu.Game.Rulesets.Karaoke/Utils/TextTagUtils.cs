@@ -27,5 +27,22 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 Text = textTag.Text
             };
         }
+
+        /// <summary>
+        /// Display tag with position format
+        /// </summary>
+        /// <example>
+        /// ka(-2~-1)
+        /// ra(4~6)
+        /// </example>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="textTag"></param>
+        /// <returns></returns>
+        public static string PositionFormattedString<T>(T textTag) where T : ITextTag
+        {
+            var fixedTag = FixTimeTagPosition(textTag);
+            var text = string.IsNullOrWhiteSpace(fixedTag.Text) ? "empty" : fixedTag.Text;
+            return $"{text}({fixedTag.StartIndex} ~ {fixedTag.EndIndex})";
+        }
     }
 }

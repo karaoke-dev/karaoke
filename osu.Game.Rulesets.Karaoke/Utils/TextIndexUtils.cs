@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class TextIndexUtils
     {
-        public static int ToLyricIndex(TextIndex index)
+        public static int ToStringIndex(TextIndex index)
         {
             if (index.State == TextIndex.IndexState.Start)
                 return index.Index;
@@ -23,6 +23,22 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static TextIndex ShiftingIndex(TextIndex originIndex, int shifting)
         {
             return new TextIndex(originIndex.Index + shifting, originIndex.State);
+        }
+
+        /// <summary>
+        /// Display string with position format
+        /// </summary>
+        /// <example>
+        /// 3
+        /// 4(end)
+        /// </example>
+        /// <param name="timeTag"></param>
+        /// <returns></returns>
+        public static string PositionFormattedString(TextIndex textIndex)
+        {
+            var index = textIndex.Index;
+            var state = textIndex.State == TextIndex.IndexState.End ? "(end)" : "";
+            return $"{index}{state}";
         }
     }
 }

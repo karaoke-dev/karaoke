@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
@@ -8,6 +9,8 @@ using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 using osuTK.Graphics;
 
@@ -72,15 +75,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 switch (timeInvalid)
                 {
                     case TimeInvalid.Overlapping:
-                        invalidMessage.AddAlertParagraph("Check is start time larger then end time in lyric.");
+                        invalidMessage.AddAlertParagraph("Start time larger then end time in lyric.");
                         break;
 
                     case TimeInvalid.StartTimeInvalid:
-                        invalidMessage.AddAlertParagraph("Check start time is larger than minimux time tag's time.");
+                        invalidMessage.AddAlertParagraph("Start time is larger than minimux time tag's time.");
                         break;
 
                     case TimeInvalid.EndTimeInvalid:
-                        invalidMessage.AddAlertParagraph("Check end time is smaller than maximum time tag's time.");
+                        invalidMessage.AddAlertParagraph("End time is smaller than maximum time tag's time.");
                         break;
                 }
             }
@@ -90,13 +93,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 switch (invalid)
                 {
                     case TimeTagInvalid.OutOfRange:
-                        invalidMessage.AddAlertParagraph("Seems some time tag is out of lyric text size.");
+                        invalidMessage.AddAlertParagraph("Time tag(s) is out of lyric text size at position ");
                         break;
 
                     case TimeTagInvalid.Overlapping:
-                        invalidMessage.AddAlertParagraph("Seems some time tag is invalid.");
+                        invalidMessage.AddAlertParagraph("Time tag(s) is invalid at position ");
                         break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(invalid));
                 }
+
+                displayInvalidTag(timeTags, tag => invalidMessage.AddHighlightText(TextIndexUtils.PositionFormattedString(tag.Index)));
             }
 
             void createRubyInvalidMessage(RubyTagInvalid invalid, RubyTag[] rubyTags)
@@ -104,13 +112,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 switch (invalid)
                 {
                     case RubyTagInvalid.OutOfRange:
-                        invalidMessage.AddAlertParagraph("Seems some ruby tag is out of lyric text size.");
+                        invalidMessage.AddAlertParagraph("Ruby tag(s) is out of lyric text size at position ");
                         break;
 
                     case RubyTagInvalid.Overlapping:
-                        invalidMessage.AddAlertParagraph("Seems some ruby tag is overlapping to others.");
+                        invalidMessage.AddAlertParagraph("Ruby tag(s) is overlapping to others at position ");
                         break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(invalid));
                 }
+
+                displayInvalidTag(rubyTags, tag => invalidMessage.AddHighlightText(TextTagUtils.PositionFormattedString(tag)));
             }
 
             void createRomajiInvalidMessage(RomajiTagInvalid invalid, RomajiTag[] romajiTags)
@@ -118,12 +131,41 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 switch (invalid)
                 {
                     case RomajiTagInvalid.OutOfRange:
-                        invalidMessage.AddAlertParagraph("Seems some romaji tag is out of lyric text size.");
+                        invalidMessage.AddAlertParagraph("Romaji tag(s) is out of lyric text size at position ");
                         break;
 
                     case RomajiTagInvalid.Overlapping:
-                        invalidMessage.AddAlertParagraph("Seems some romaji tag is overlapping to others.");
+                        invalidMessage.AddAlertParagraph("Romaji tag(s) is overlapping to others at position ");
                         break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(invalid));
+                }
+
+                displayInvalidTag(romajiTags, tag => invalidMessage.AddHighlightText(TextTagUtils.PositionFormattedString(tag)));
+            }
+
+            void displayInvalidTag<T>(T[] tags, Action<T> action)
+            {
+                if (tags == null)
+                    throw new ArgumentNullException(nameof(tags));
+
+                // e.g: ka(-2~-1), ra(4~6), and ke(6~7)
+                for (int i = 0; i < tags.Length; i++)
+                {
+                    action?.Invoke(tags[i]);
+                    if (i >= 0 && tags.Length > 1)
+                    {
+                        invalidMessage.AddText(", ");
+                    }
+                    else if (i == tags.Length - 2 && tags.Length > 1)
+                    {
+                        invalidMessage.AddText(" and ");
+                    }
+                    else
+                    {
+                        invalidMessage.AddText(".");
+                    }
                 }
             }
         }
