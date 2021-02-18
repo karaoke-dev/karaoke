@@ -126,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             switch (stateManager.Mode)
             {
                 case Mode.EditMode:
-                    var splitPosition = TextIndexUtils.ToLyricIndex(position.Index);
+                    var splitPosition = TextIndexUtils.ToStringIndex(position.Index);
                     lyricManager?.SplitLyric(Lyric, splitPosition);
                     return true;
 
@@ -289,7 +289,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             var index = position.Index;
             if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)
-                index = new TextIndex(TextIndexUtils.ToLyricIndex(index));
+                index = new TextIndex(TextIndexUtils.ToStringIndex(index));
 
             var offset = 0;
             if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)

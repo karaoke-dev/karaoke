@@ -14,10 +14,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(0, TextIndex.IndexState.End, 1)]
         [TestCase(-1, TextIndex.IndexState.Start, -1)] // In utils not checking is index out of range
         [TestCase(-1, TextIndex.IndexState.End, 0)]
-        public void TestToLyricIndex(int index, TextIndex.IndexState state, int actualIndex)
+        public void TestToStringIndex(int index, TextIndex.IndexState state, int actualIndex)
         {
             var textIndex = new TextIndex(index, state);
-            Assert.AreEqual(TextIndexUtils.ToLyricIndex(textIndex), actualIndex);
+            Assert.AreEqual(TextIndexUtils.ToStringIndex(textIndex), actualIndex);
         }
 
         [TestCase(TextIndex.IndexState.Start, TextIndex.IndexState.End)]

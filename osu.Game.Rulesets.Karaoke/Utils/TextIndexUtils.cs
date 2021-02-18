@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class TextIndexUtils
     {
-        public static int ToLyricIndex(TextIndex index)
+        public static int ToStringIndex(TextIndex index)
         {
             if (index.State == TextIndex.IndexState.Start)
                 return index.Index;
