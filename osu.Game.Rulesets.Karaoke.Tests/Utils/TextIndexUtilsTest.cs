@@ -37,5 +37,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var actualTextIndex = new TextIndex(actualIndex, actualState);
             Assert.AreEqual(TextIndexUtils.ShiftingIndex(textIndex, shifting), actualTextIndex);
         }
+
+        [TestCase(0, TextIndex.IndexState.Start, "0")]
+        [TestCase(0, TextIndex.IndexState.End, "0(end)")]
+        [TestCase(-1, TextIndex.IndexState.Start, "-1")]
+        [TestCase(-1, TextIndex.IndexState.End, "-1(end)")]
+        public void TestPositionFormattedString(int index, TextIndex.IndexState state, string actual)
+        {
+            var textIndex = new TextIndex(index, state);
+            Assert.AreEqual(TextIndexUtils.PositionFormattedString(textIndex), actual);
+        }
     }
 }

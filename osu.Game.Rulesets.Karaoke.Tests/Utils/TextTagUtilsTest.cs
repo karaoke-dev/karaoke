@@ -45,5 +45,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var actualRomaji = TestCaseTagHelper.ParseRubyTag(actualTag);
             Assert.AreEqual(TextTagUtils.Shifting(romajiTag, shifting), actualRomaji);
         }
+
+        [TestCase("[0,1]:ka", "ka(0 ~ 1)")]
+        [TestCase("[0,1]:", "empty(0 ~ 1)")]
+        [TestCase("[-1,1]:ka", "ka(-1 ~ 1)")]
+        [TestCase("[-1,-1]:ka", "ka(-1 ~ -1)")]
+        [TestCase("[-1,-2]:ka", "ka(-2 ~ -1)")]
+        [TestCase("[2,1]:ka", "ka(1 ~ 2)")]
+        public void TestPositionFormattedString(string textTag, string actual)
+        {
+            var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
+            Assert.AreEqual(TextTagUtils.PositionFormattedString(rubyTag), actual);
+        }
     }
 }

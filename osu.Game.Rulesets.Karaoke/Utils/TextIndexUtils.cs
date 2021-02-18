@@ -24,5 +24,21 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         {
             return new TextIndex(originIndex.Index + shifting, originIndex.State);
         }
+
+        /// <summary>
+        /// Display string with position format
+        /// </summary>
+        /// <example>
+        /// 3
+        /// 4(end)
+        /// </example>
+        /// <param name="timeTag"></param>
+        /// <returns></returns>
+        public static string PositionFormattedString(TextIndex textIndex)
+        {
+            var index = textIndex.Index;
+            var state = textIndex.State == TextIndex.IndexState.End ? "(end)" : "";
+            return $"{index}{state}";
+        }
     }
 }
