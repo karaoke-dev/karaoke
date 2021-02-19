@@ -154,13 +154,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 for (int i = 0; i < tags.Length; i++)
                 {
                     action?.Invoke(tags[i]);
-                    if (i >= 0 && tags.Length > 1)
-                    {
-                        invalidMessage.AddText(", ");
-                    }
-                    else if (i == tags.Length - 2 && tags.Length > 1)
+                    if (i == tags.Length - 2 && tags.Length > 1)
                     {
                         invalidMessage.AddText(" and ");
+                    }
+                    else if (i >= 0 && tags.Length > 1)
+                    {
+                        invalidMessage.AddText(", ");
                     }
                     else
                     {
