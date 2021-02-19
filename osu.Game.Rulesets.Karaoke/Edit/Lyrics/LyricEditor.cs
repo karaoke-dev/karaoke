@@ -155,6 +155,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             var currentTimeTag = cursorPosition.TimeTag;
+
             switch (action)
             {
                 case KaraokeEditAction.ClearTime:

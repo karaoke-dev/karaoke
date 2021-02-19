@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
         [Test]
         public void ShowWithNoFetch()
         {
-            var providers = new []
+            var providers = new[]
             {
                 OverlayColourProvider.Red,
                 OverlayColourProvider.Pink,

@@ -259,6 +259,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 return;
 
             var timeTag = position.TimeTag;
+
             if (!drawableLyric.TimeTagsBindable.Value.Contains(timeTag))
             {
                 cursor.Hide();

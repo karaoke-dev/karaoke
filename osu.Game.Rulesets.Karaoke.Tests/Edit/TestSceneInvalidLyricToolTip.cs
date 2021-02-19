@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 {
                     {
                         TimeTagInvalid.OutOfRange,
-                        new []
+                        new[]
                         {
                             new TimeTag(new TextIndex(2, TextIndex.IndexState.Start))
                         }
@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 {
                     {
                         TimeTagInvalid.Overlapping,
-                        new []
+                        new[]
                         {
                             new TimeTag(new TextIndex(2, TextIndex.IndexState.Start))
                         }
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 {
                     {
                         RubyTagInvalid.OutOfRange,
-                        new []
+                        new[]
                         {
                             new RubyTag
                             {
@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 {
                     {
                         RubyTagInvalid.Overlapping,
-                        new []
+                        new[]
                         {
                             new RubyTag
                             {
@@ -145,7 +145,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 {
                     {
                         RomajiTagInvalid.OutOfRange,
-                        new []
+                        new[]
                         {
                             new RomajiTag
                             {
@@ -164,7 +164,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 {
                     {
                         RomajiTagInvalid.Overlapping,
-                        new []
+                        new[]
                         {
                             new RomajiTag
                             {
@@ -192,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 {
                     {
                         TimeTagInvalid.OutOfRange,
-                        new []
+                        new[]
                         {
                             new TimeTag(new TextIndex(2, TextIndex.IndexState.Start))
                         }
@@ -202,7 +202,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 {
                     {
                         RubyTagInvalid.Overlapping,
-                        new []
+                        new[]
                         {
                             new RubyTag
                             {
@@ -223,7 +223,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 {
                     {
                         RomajiTagInvalid.OutOfRange,
-                        new []
+                        new[]
                         {
                             new RomajiTag
                             {
