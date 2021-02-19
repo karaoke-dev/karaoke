@@ -9,7 +9,6 @@ using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 using osuTK.Graphics;
@@ -65,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             }
 
             // show no problem message
-            if(report.IsValid)
+            if (report.IsValid)
                 invalidMessage.AddSuccessParagraph("Seems no issue in this lyric.");
 
             return true;
@@ -154,13 +153,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 for (int i = 0; i < tags.Length; i++)
                 {
                     action?.Invoke(tags[i]);
-                    if (i >= 0 && tags.Length > 1)
-                    {
-                        invalidMessage.AddText(", ");
-                    }
-                    else if (i == tags.Length - 2 && tags.Length > 1)
+
+                    if (i == tags.Length - 2 && tags.Length > 1)
                     {
                         invalidMessage.AddText(" and ");
+                    }
+                    else if (i >= 0 && tags.Length > 1)
+                    {
+                        invalidMessage.AddText(", ");
                     }
                     else
                     {

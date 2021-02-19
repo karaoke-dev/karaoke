@@ -88,6 +88,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checker.Lyrics
         // create checker with default config.
         // config change is not test scope so use default it ok.
         private static LyricChecker createChecker()
-            => new LyricChecker(new LyricCheckerConfig().CreateDefaultConfig());
+            => new(new LyricCheckerConfig().CreateDefaultConfig());
     }
 }

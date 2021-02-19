@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -42,10 +43,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return true;
 
                 case RecordingMovingCursorMode.OnlyStartTag:
-                    return timeTag.Index.State == Framework.Graphics.Sprites.TextIndex.IndexState.Start;
+                    return timeTag.Index.State == TextIndex.IndexState.Start;
 
                 case RecordingMovingCursorMode.OnlyEndTag:
-                    return timeTag.Index.State == Framework.Graphics.Sprites.TextIndex.IndexState.End;
+                    return timeTag.Index.State == TextIndex.IndexState.End;
 
                 default:
                     throw new InvalidOperationException(nameof(RecordingMovingCursorMode));
