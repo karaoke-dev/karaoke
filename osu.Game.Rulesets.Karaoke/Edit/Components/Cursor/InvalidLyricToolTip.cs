@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             }
 
             // show no problem message
-            if(report.IsValid)
+            if (report.IsValid)
                 invalidMessage.AddSuccessParagraph("Seems no issue in this lyric.");
 
             return true;

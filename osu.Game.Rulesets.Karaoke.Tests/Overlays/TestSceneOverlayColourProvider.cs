@@ -3,19 +3,19 @@
 
 using System.Linq;
 using NUnit.Framework;
+using osu.Framework.Allocation;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Overlays;
-using osu.Game.Tests.Visual;
-using osu.Game.Rulesets.Karaoke.Extensions;
-using osuTK.Graphics;
 using osu.Framework.Graphics.Shapes;
-using osu.Game.Graphics.Sprites;
-using osu.Framework.Extensions.Color4Extensions;
-using osu.Game.Graphics.Containers;
 using osu.Framework.Input.Events;
-using osu.Framework.Allocation;
 using osu.Framework.Platform;
+using osu.Game.Graphics.Containers;
+using osu.Game.Graphics.Sprites;
+using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Extensions;
+using osu.Game.Tests.Visual;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 {
