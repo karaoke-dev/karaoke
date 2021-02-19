@@ -58,10 +58,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
         protected void RemoveFromCheckList(Lyric lyric)
             => BindableReports.Remove(lyric);
 
-        [BackgroundDependencyLoader]
+        [BackgroundDependencyLoader(true)]
         private void load(EditorBeatmap beatmap, KaraokeRulesetEditCheckerConfigManager rulesetEditCheckerConfigManager)
         {
-            var config = rulesetEditCheckerConfigManager.Get<LyricCheckerConfig>(KaraokeRulesetEditCheckerSetting.Lyric);
+            var config = rulesetEditCheckerConfigManager?.Get<LyricCheckerConfig>(KaraokeRulesetEditCheckerSetting.Lyric) ?? new LyricCheckerConfig().CreateDefaultConfig();
             lyricChecker = new LyricChecker(config);
 
             // load lyric in here

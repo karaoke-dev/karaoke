@@ -11,9 +11,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
     public class TextTagsUtilsTest
     {
         [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o" }, TextTagsUtils.Sorting.Asc, new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o" })]
-        [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o" }, TextTagsUtils.Sorting.Desc, new[] { "[2,3]:o", "[1,2]:ra", "[0,1]:ka", })]
+        [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o" }, TextTagsUtils.Sorting.Desc, new[] { "[2,3]:o", "[1,2]:ra", "[0,1]:ka" })]
         [TestCase(new[] { "[0,1]:ka", "[2,3]:o", "[1,2]:ra" }, TextTagsUtils.Sorting.Asc, new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o" })]
-        [TestCase(new[] { "[0,1]:ka", "[2,3]:o", "[1,2]:ra" }, TextTagsUtils.Sorting.Desc, new[] { "[2,3]:o", "[1,2]:ra", "[0,1]:ka", })]
+        [TestCase(new[] { "[0,1]:ka", "[2,3]:o", "[1,2]:ra" }, TextTagsUtils.Sorting.Desc, new[] { "[2,3]:o", "[1,2]:ra", "[0,1]:ka" })]
         public void TestSort(string[] textTags, TextTagsUtils.Sorting sorting, string[] actualTextTags)
         {
             var sortedTextTags = TextTagsUtils.Sort(TestCaseTagHelper.ParseRubyTags(textTags), sorting);

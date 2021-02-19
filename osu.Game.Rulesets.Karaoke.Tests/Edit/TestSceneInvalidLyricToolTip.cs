@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                         TimeTagInvalid.OutOfRange,
                         new[]
                         {
-                            new TimeTag(new TextIndex(2, TextIndex.IndexState.Start))
+                            new TimeTag(new TextIndex(2))
                         }
                     },
                 }
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                         TimeTagInvalid.Overlapping,
                         new[]
                         {
-                            new TimeTag(new TextIndex(2, TextIndex.IndexState.Start))
+                            new TimeTag(new TextIndex(2))
                         }
                     }
                 }
@@ -194,7 +194,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                         TimeTagInvalid.OutOfRange,
                         new[]
                         {
-                            new TimeTag(new TextIndex(2, TextIndex.IndexState.Start))
+                            new TimeTag(new TextIndex(2))
                         }
                     },
                 },
