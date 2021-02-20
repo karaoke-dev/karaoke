@@ -167,7 +167,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 case CursorMode.Edit:
                 case CursorMode.Recording:
-                        return movePositionTo(position);
+                        return moveHoverPositionTo(position);
                 default:
                     throw new IndexOutOfRangeException(nameof(position.Mode));
             }
@@ -183,6 +183,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             BindableHoverCursorPosition.Value = new CursorPosition();
             BindableCursorPosition.Value = position;
+            return true;
+        }
+
+        private bool moveHoverPositionTo(CursorPosition position)
+        {
+            if (position.Lyric == null)
+                return false;
+
+            if (!CursorMovable(position))
+                return false;
+
+            BindableHoverCursorPosition.Value = position;
             return true;
         }
 

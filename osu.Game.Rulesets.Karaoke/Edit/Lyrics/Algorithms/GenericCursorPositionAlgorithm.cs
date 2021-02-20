@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
                 return null;
 
             var lyricTextLength = lyric.Text?.Length ?? 0;
-            var index = Math.Min(currentPosition.Index.Index, lyricTextLength - 1);
+            var index = Math.Clamp(currentPosition.Index.Index, 0, lyricTextLength - 1);
             var state = currentPosition.Index.State;
 
             return new CursorPosition(lyric, new TextIndex(index, state));
@@ -43,12 +43,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public CursorPosition? MoveDown(CursorPosition currentPosition)
         {
-            var lyric = Lyrics.GetPrevious(currentPosition.Lyric);
+            var lyric = Lyrics.GetNext(currentPosition.Lyric);
             if (lyric == null)
                 return null;
 
             var lyricTextLength = lyric.Text?.Length ?? 0;
-            var index = Math.Min(currentPosition.Index.Index, lyricTextLength - 1);
+            var index = Math.Clamp(currentPosition.Index.Index, 0, lyricTextLength - 1);
             var state = currentPosition.Index.State;
 
             return new CursorPosition(lyric, new TextIndex(index, state));
@@ -57,23 +57,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
         public CursorPosition? MoveLeft(CursorPosition currentPosition)
         {
             // get previous cursor and make a check is need to change line.
+            var lyric = currentPosition.Lyric;
             var previousIndex = GetPreviousIndex(currentPosition.Index);
 
-            if (previousIndex.Index < 0)
-                return MoveDown(new CursorPosition(currentPosition.Lyric, new TextIndex(int.MaxValue)));
+            if (TextIndexUtils.OutOfRange(previousIndex, lyric?.Text))
+                return MoveUp(new CursorPosition(currentPosition.Lyric, new TextIndex(int.MaxValue)));
 
             return new CursorPosition(currentPosition.Lyric, previousIndex);
         }
 
         public CursorPosition? MoveRight(CursorPosition currentPosition)
         {
-            var textLength = currentPosition.Lyric?.Text?.Length ?? 0;
-
             // get next cursor and make a check is need to change line.
+            var lyric = currentPosition.Lyric;
             var nextIndex = GetNextIndex(currentPosition.Index);
 
-            if (nextIndex.Index >= textLength)
-                MoveDown(new CursorPosition(currentPosition.Lyric, new TextIndex(int.MinValue)));
+            if (TextIndexUtils.OutOfRange(nextIndex, lyric?.Text))
+                return MoveDown(new CursorPosition(currentPosition.Lyric, new TextIndex(int.MinValue)));
 
             return new CursorPosition(currentPosition.Lyric, nextIndex);
         }

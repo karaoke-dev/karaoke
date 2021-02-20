@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (string.IsNullOrEmpty(lyric))
                 return true;
 
-            return index.Index < 0 || index.Index > lyric.Length;
+            return index.Index < 0 || index.Index >= lyric.Length;
         }
 
         /// <summary>
