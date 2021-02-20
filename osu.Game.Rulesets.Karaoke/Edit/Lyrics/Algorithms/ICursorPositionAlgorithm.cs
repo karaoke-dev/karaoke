@@ -5,7 +5,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
     public interface ICursorPositionAlgorithm
     {
-
         bool PositionMovable(CursorPosition position);
 
         CursorPosition? MoveUp(CursorPosition currentPosition);
