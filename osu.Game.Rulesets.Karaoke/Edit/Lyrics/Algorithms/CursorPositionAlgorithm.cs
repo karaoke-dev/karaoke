@@ -1,0 +1,19 @@
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// See the LICENCE file in the repository root for full licence text.
+
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
+
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
+{
+    public abstract class CursorPositionAlgorithm
+    {
+        // Lyrics is not lock and can be accessible.
+        protected readonly Lyric[] Lyrics;
+
+        public CursorPositionAlgorithm(Lyric[] lyrics)
+        {
+            Lyrics = LyricsUtils.FindUnlockLyrics(OrderUtils.Sorted(lyrics));
+        }
+    }
+}
