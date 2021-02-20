@@ -3,17 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public partial class LyricEditorStateManager : Component
+    public partial class LyricEditor
     {
         public Bindable<Mode> BindableMode { get; } = new Bindable<Mode>();
 
@@ -25,12 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableInt BindableAutoFocusEditLyricSkipRows { get; } = new BindableInt();
 
-        public Mode Mode => BindableMode.Value;
-
-        public LyricFastEditMode FastEditMode => BindableFastEditMode.Value;
-
-        public RecordingMovingCursorMode RecordingMovingCursorMode => BindableRecordingMovingCursorMode.Value;
-
         public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
 
         // Lyrics is not lock and can be accessible.
@@ -39,26 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public Bindable<CursorPosition> BindableHoverCursorPosition { get; } = new Bindable<CursorPosition>();
 
         public Bindable<CursorPosition> BindableCursorPosition { get; } = new Bindable<CursorPosition>();
-
-        [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap)
-        {
-            // load lyric in here
-            var lyrics = OrderUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
-            BindableLyrics.AddRange(lyrics);
-
-            // need to check is there any lyric added or removed.
-            beatmap.HitObjectAdded += e =>
-            {
-                if (e is Lyric lyric)
-                    BindableLyrics.Add(lyric);
-            };
-            beatmap.HitObjectRemoved += e =>
-            {
-                if (e is Lyric lyric)
-                    BindableLyrics.Remove(lyric);
-            };
-        }
 
         public void SetMode(Mode mode)
         {
@@ -125,6 +95,37 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 default:
                     throw new IndexOutOfRangeException(nameof(Mode));
             }
+        }
+
+        public bool MoveCursorToTargetPosition(CursorPosition position)
+        {
+            switch (position.Mode)
+            {
+                case CursorMode.Edit:
+                    return moveCursorToTargetPosition(position.Lyric, position.Index);
+                case CursorMode.Recording:
+                    return moveRecordCursorToTargetPosition(position.TimeTag);
+                default:
+                    throw new IndexOutOfRangeException(nameof(position.Mode));
+            }
+        }
+
+        public bool MoveHoverCursorToTargetPosition(CursorPosition position)
+        {
+            switch (position.Mode)
+            {
+                case CursorMode.Edit:
+                    return moveHoverCursorToTargetPosition(position.Lyric, position.Index);
+                case CursorMode.Recording:
+                    return moveHoverRecordCursorToTargetPosition(position.TimeTag);
+                default:
+                    throw new IndexOutOfRangeException(nameof(position.Mode));
+            }
+        }
+
+        public void ClearHoverCursorPosition()
+        {
+            BindableHoverCursorPosition.Value = new CursorPosition();
         }
     }
 

@@ -10,27 +10,24 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public partial class LyricEditorStateManager
+    public partial class LyricEditor
     {
-        public void MoveCursorToTargetPosition(Lyric lyric, TextIndex index)
+        private bool moveCursorToTargetPosition(Lyric lyric, TextIndex index)
         {
             if (!Lyrics.Contains(lyric))
-                return;
+                return false;
 
             movePositionTo(new CursorPosition(lyric, index));
+            return true;
         }
 
-        public void MoveHoverCursorToTargetPosition(Lyric lyric, TextIndex index)
+        private bool moveHoverCursorToTargetPosition(Lyric lyric, TextIndex index)
         {
             if (!Lyrics.Contains(lyric))
-                return;
+                return false;
 
             moveHoverPositionTo(new CursorPosition(lyric, index));
-        }
-
-        public void ClearHoverCursorPosition()
-        {
-            BindableHoverCursorPosition.Value = new CursorPosition();
+            return true;
         }
 
         private bool moveCursor(MovingCursorAction action)

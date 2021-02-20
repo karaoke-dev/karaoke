@@ -54,10 +54,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, LyricEditorStateManager stateManager)
+        private void load(OsuColour colours, ILyricEditorState state)
         {
             dragAlert.Colour = colours.YellowDarker;
-            bindableMode.BindTo(stateManager.BindableMode);
+            bindableMode.BindTo(state.BindableMode);
         }
 
         protected override bool OnDragStart(DragStartEvent e)

@@ -134,13 +134,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, LyricEditorStateManager stateManager)
+        private void load(OsuColour colours, ILyricEditorState state)
         {
             background.Colour = colours.Gray2;
             headerBackground.Colour = colours.Gray3;
 
-            bindableMode.BindTo(stateManager.BindableMode);
-            bindableLyricFastEditMode.BindTo(stateManager.BindableFastEditMode);
+            bindableMode.BindTo(state.BindableMode);
+            bindableLyricFastEditMode.BindTo(state.BindableFastEditMode);
         }
 
         protected void CreateBadge(LyricFastEditMode mode)
