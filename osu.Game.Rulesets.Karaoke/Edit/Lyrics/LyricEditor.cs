@@ -71,6 +71,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (e is Lyric lyric)
                     BindableLyrics.Remove(lyric);
             };
+
+            // create algorithm set
+            createAlgorithmList();
         }
 
         protected override bool OnKeyDown(KeyDownEvent e)

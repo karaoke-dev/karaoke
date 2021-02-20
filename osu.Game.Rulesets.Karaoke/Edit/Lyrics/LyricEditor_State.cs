@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Bindables;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -23,12 +25,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
 
-        // Lyrics is not lock and can be accessible.
-        protected IEnumerable<Lyric> Lyrics => LyricsUtils.FindUnlockLyrics(OrderUtils.Sorted(BindableLyrics));
-
         public Bindable<CursorPosition> BindableHoverCursorPosition { get; } = new Bindable<CursorPosition>();
 
         public Bindable<CursorPosition> BindableCursorPosition { get; } = new Bindable<CursorPosition>();
+
+        private Dictionary<Mode, ICursorPositionAlgorithm> cursorMovingAlgorithmSet = new Dictionary<Mode, ICursorPositionAlgorithm>();
+
+        private ICursorPositionAlgorithm algorithm => cursorMovingAlgorithmSet[Mode];
 
         public void SetMode(Mode mode)
         {
@@ -61,6 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public void SetRecordingMovingCursorMode(RecordingMovingCursorMode mode)
         {
             BindableRecordingMovingCursorMode.Value = mode;
+            createAlgorithmList();
 
             // todo : might move cursor to valid position.
         }
@@ -75,6 +79,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             BindableAutoFocusEditLyricSkipRows.Value = row;
         }
 
+        private void createAlgorithmList()
+        {
+            cursorMovingAlgorithmSet = new Dictionary<Mode, ICursorPositionAlgorithm>
+            {
+                { Mode.TypingMode, new TypingCursorPositionAlgorithm(BindableLyrics.ToArray())},
+                { Mode.RecordMode, new RecordingCursorPositionAlgorithm(BindableLyrics.ToArray(), RecordingMovingCursorMode)},
+                { Mode.TimeTagEditMode, new GenericCursorPositionAlgorithm(BindableLyrics.ToArray())}
+            };
+        }
+
         public bool MoveCursor(MovingCursorAction action)
         {
             switch (Mode)
@@ -84,11 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 case Mode.EditMode:
                 case Mode.TypingMode:
-                    return moveCursor(action);
-
                 case Mode.RecordMode:
-                    return moveRecordCursor(action);
-
                 case Mode.TimeTagEditMode:
                     return moveCursor(action);
 
@@ -97,14 +107,55 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
+        private bool moveCursor(MovingCursorAction action)
+        {
+            var currentPosition = BindableCursorPosition.Value;
+            CursorPosition? position;
+
+            switch (action)
+            {
+                case MovingCursorAction.Up:
+                    position = algorithm.MoveUp(currentPosition);
+                    break;
+
+                case MovingCursorAction.Down:
+                    position = algorithm.MoveDown(currentPosition);
+                    break;
+
+                case MovingCursorAction.Left:
+                    position = algorithm.MoveLeft(currentPosition);
+                    break;
+
+                case MovingCursorAction.Right:
+                    position = algorithm.MoveRight(currentPosition);
+                    break;
+
+                case MovingCursorAction.First:
+                    position = algorithm.MoveToFirst();
+                    break;
+
+                case MovingCursorAction.Last:
+                    position = algorithm.MoveToLast();
+                    break;
+
+                default:
+                    throw new InvalidOperationException(nameof(action));
+            }
+
+            if (position == null)
+                return false;
+
+            movePositionTo(position.Value);
+            return true;
+        }
+
         public bool MoveCursorToTargetPosition(CursorPosition position)
         {
             switch (position.Mode)
             {
                 case CursorMode.Edit:
-                    return moveCursorToTargetPosition(position.Lyric, position.Index);
                 case CursorMode.Recording:
-                    return moveRecordCursorToTargetPosition(position.TimeTag);
+                    return movePositionTo(position);
                 default:
                     throw new IndexOutOfRangeException(nameof(position.Mode));
             }
@@ -115,17 +166,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             switch (position.Mode)
             {
                 case CursorMode.Edit:
-                    return moveHoverCursorToTargetPosition(position.Lyric, position.Index);
                 case CursorMode.Recording:
-                    return moveHoverRecordCursorToTargetPosition(position.TimeTag);
+                        return movePositionTo(position);
                 default:
                     throw new IndexOutOfRangeException(nameof(position.Mode));
             }
         }
 
+        private bool movePositionTo(CursorPosition position)
+        {
+            if (position.Lyric == null)
+                return false;
+
+            if (!CursorMovable(position))
+                return false;
+
+            BindableHoverCursorPosition.Value = new CursorPosition();
+            BindableCursorPosition.Value = position;
+            return true;
+        }
+
         public void ClearHoverCursorPosition()
         {
             BindableHoverCursorPosition.Value = new CursorPosition();
+        }
+
+        public bool CursorMovable(CursorPosition position)
+        {
+            return algorithm.PositionMovable(position);
         }
     }
 
