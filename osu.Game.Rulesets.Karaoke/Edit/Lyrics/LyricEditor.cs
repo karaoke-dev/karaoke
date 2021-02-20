@@ -13,7 +13,8 @@ using osuTK.Input;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public class LyricEditor : Container, IKeyBindingHandler<KaraokeEditAction>
+    [Cached(typeof(ILyricEditorState))]
+    public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHandler<KaraokeEditAction>
     {
         [Resolved(canBeNull: true)]
         private LyricManager lyricManager { get; set; }
@@ -21,16 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(canBeNull: true)]
         private IFrameBasedClock framedClock { get; set; }
 
-        [Cached]
-        private LyricEditorStateManager stateManager;
-
         private KaraokeLyricEditorSkin skin;
         private DrawableLyricEditList container;
-
-        public LyricEditor()
-        {
-            Add(stateManager = new LyricEditorStateManager());
-        }
 
         [BackgroundDependencyLoader]
         private void load()
@@ -44,13 +37,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             };
 
-            container.Items.BindTo(stateManager.BindableLyrics);
+            container.Items.BindTo(BindableLyrics);
             if (lyricManager != null)
                 container.OnOrderChanged += lyricManager.ChangeLyricOrder;
 
-            stateManager.MoveCursor(MovingCursorAction.First);
+            MoveCursor(MovingCursorAction.First);
 
-            stateManager.BindableMode.BindValueChanged(e =>
+            BindableMode.BindValueChanged(e =>
             {
                 // display add new lyric only with edit mode.
                 container.DisplayBottomDrawable = e.NewValue == Mode.EditMode;
@@ -62,10 +55,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager == null)
                 return false;
 
-            if (stateManager.Mode != Mode.TypingMode)
+            if (Mode != Mode.TypingMode)
                 return false;
 
-            var position = stateManager.BindableCursorPosition.Value;
+            var position = BindableCursorPosition.Value;
 
             switch (e.Key)
             {
@@ -73,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     // delete single character.
                     var deletedSuccess = lyricManager.DeleteLyricText(position);
                     if (deletedSuccess)
-                        stateManager.MoveCursor(MovingCursorAction.Left);
+                        MoveCursor(MovingCursorAction.Left);
                     return deletedSuccess;
 
                 default:
@@ -90,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (isMoving)
                 return true;
 
-            switch (stateManager.Mode)
+            switch (Mode)
             {
                 case Mode.ViewMode:
                     return false;
@@ -109,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return HandleCreateOrDeleterTimeTagEvent(action);
 
                 default:
-                    throw new IndexOutOfRangeException(nameof(stateManager.Mode));
+                    throw new IndexOutOfRangeException(nameof(Mode));
             }
         }
 
@@ -123,22 +116,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             switch (action)
             {
                 case KaraokeEditAction.Up:
-                    return stateManager.MoveCursor(MovingCursorAction.Up);
+                    return MoveCursor(MovingCursorAction.Up);
 
                 case KaraokeEditAction.Down:
-                    return stateManager.MoveCursor(MovingCursorAction.Down);
+                    return MoveCursor(MovingCursorAction.Down);
 
                 case KaraokeEditAction.Left:
-                    return stateManager.MoveCursor(MovingCursorAction.Left);
+                    return MoveCursor(MovingCursorAction.Left);
 
                 case KaraokeEditAction.Right:
-                    return stateManager.MoveCursor(MovingCursorAction.Right);
+                    return MoveCursor(MovingCursorAction.Right);
 
                 case KaraokeEditAction.First:
-                    return stateManager.MoveCursor(MovingCursorAction.First);
+                    return MoveCursor(MovingCursorAction.First);
 
                 case KaraokeEditAction.Last:
-                    return stateManager.MoveCursor(MovingCursorAction.Last);
+                    return MoveCursor(MovingCursorAction.Last);
 
                 default:
                     return false;
@@ -150,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager == null)
                 return false;
 
-            var cursorPosition = stateManager.BindableCursorPosition.Value;
+            var cursorPosition = BindableCursorPosition.Value;
             if (cursorPosition.Mode != CursorMode.Recording)
                 return false;
 
@@ -168,7 +161,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     var currentTime = framedClock.CurrentTime;
                     var setTimeSuccess = lyricManager.SetTimeTagTime(currentTimeTag, currentTime);
                     if (setTimeSuccess)
-                        stateManager.MoveCursor(MovingCursorAction.Right);
+                        MoveCursor(MovingCursorAction.Right);
                     return setTimeSuccess;
 
                 default:
@@ -181,7 +174,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager == null)
                 return false;
 
-            var position = stateManager.BindableCursorPosition.Value;
+            var position = BindableCursorPosition.Value;
 
             switch (action)
             {
@@ -204,32 +197,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Mode Mode
         {
-            get => stateManager.Mode;
-            set => stateManager.SetMode(value);
+            get => BindableMode.Value;
+            set => SetMode(value);
         }
 
         public LyricFastEditMode LyricFastEditMode
         {
-            get => stateManager.FastEditMode;
-            set => stateManager.SetFastEditMode(value);
+            get => BindableFastEditMode.Value;
+            set => SetFastEditMode(value);
         }
 
         public RecordingMovingCursorMode RecordingMovingCursorMode
         {
-            get => stateManager.RecordingMovingCursorMode;
-            set => stateManager.SetRecordingMovingCursorMode(value);
+            get => BindableRecordingMovingCursorMode.Value;
+            set => SetRecordingMovingCursorMode(value);
         }
 
         public bool AutoFocusEditLyric
         {
-            get => stateManager.BindableAutoFocusEditLyric.Value;
-            set => stateManager.SetBindableAutoFocusEditLyric(value);
+            get => BindableAutoFocusEditLyric.Value;
+            set => SetBindableAutoFocusEditLyric(value);
         }
 
         public int AutoFocusEditLyricSkipRows
         {
-            get => stateManager.BindableAutoFocusEditLyricSkipRows.Value;
-            set => stateManager.SetBindableAutoFocusEditLyricSkipRows(value);
+            get => BindableAutoFocusEditLyricSkipRows.Value;
+            set => SetBindableAutoFocusEditLyricSkipRows(value);
         }
     }
 }

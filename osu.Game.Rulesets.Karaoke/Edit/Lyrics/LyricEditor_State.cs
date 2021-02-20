@@ -6,14 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public partial class LyricEditorStateManager : Component
+    public partial class LyricEditor
     {
         public Bindable<Mode> BindableMode { get; } = new Bindable<Mode>();
 
@@ -24,12 +23,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public BindableBool BindableAutoFocusEditLyric { get; } = new BindableBool();
 
         public BindableInt BindableAutoFocusEditLyricSkipRows { get; } = new BindableInt();
-
-        public Mode Mode => BindableMode.Value;
-
-        public LyricFastEditMode FastEditMode => BindableFastEditMode.Value;
-
-        public RecordingMovingCursorMode RecordingMovingCursorMode => BindableRecordingMovingCursorMode.Value;
 
         public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
 

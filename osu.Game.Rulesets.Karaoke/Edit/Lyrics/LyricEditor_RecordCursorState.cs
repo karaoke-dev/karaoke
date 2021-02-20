@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public partial class LyricEditorStateManager
+    public partial class LyricEditor
     {
         public bool MoveRecordCursorToTargetPosition(TimeTag timeTag)
         {
