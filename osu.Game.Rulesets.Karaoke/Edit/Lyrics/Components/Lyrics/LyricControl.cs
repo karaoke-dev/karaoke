@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             // todo : get real index.
             var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
             var index = drawableLyric.GetHoverIndex(position);
-            state.MoveHoverCursorToTargetPosition(Lyric, index);
+            state.MoveHoverCursorToTargetPosition(new CursorPosition(Lyric, index));
             return base.OnMouseMove(e);
         }
 
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             // place hover cursor to target position.
             var index = state.BindableHoverCursorPosition.Value.Index;
-            state.MoveCursorToTargetPosition(Lyric, index);
+            state.MoveCursorToTargetPosition(new CursorPosition(Lyric, index));
 
             return true;
         }
@@ -243,7 +243,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             foreach (var timeTag in timeTags)
             {
                 var spacing = textIndexPosition(timeTag.Index) + extraSpacing(timeTag);
-                timeTagContainer.Add(new DrawableTimeTag(timeTag)
+                timeTagContainer.Add(new DrawableTimeTag(timeTag, Lyric)
                 {
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,

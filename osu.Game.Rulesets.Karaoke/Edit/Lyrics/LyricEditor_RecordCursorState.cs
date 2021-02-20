@@ -12,29 +12,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditor
     {
-        public bool MoveRecordCursorToTargetPosition(TimeTag timeTag)
-        {
-            if (timeTagInLyric(timeTag) == null)
-                return false;
-
-            moveCursorTo(timeTag);
-            return true;
-        }
-
-        public bool MoveHoverRecordCursorToTargetPosition(TimeTag timeTag)
-        {
-            if (timeTagInLyric(timeTag) == null)
-                return false;
-
-            moveHoverCursorTo(timeTag);
-            return true;
-        }
-
-        public void ClearHoverRecordCursorPosition()
-        {
-            BindableHoverCursorPosition.Value = new CursorPosition();
-        }
-
         public bool RecordingCursorMovable(TimeTag timeTag)
         {
             switch (RecordingMovingCursorMode)
@@ -51,6 +28,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 default:
                     throw new InvalidOperationException(nameof(RecordingMovingCursorMode));
             }
+        }
+
+        private bool moveRecordCursorToTargetPosition(TimeTag timeTag)
+        {
+            if (timeTagInLyric(timeTag) == null)
+                return false;
+
+            moveCursorTo(timeTag);
+            return true;
+        }
+
+        private bool moveHoverRecordCursorToTargetPosition(TimeTag timeTag)
+        {
+            if (timeTagInLyric(timeTag) == null)
+                return false;
+
+            moveHoverCursorTo(timeTag);
+            return true;
         }
 
         private bool moveRecordCursor(MovingCursorAction action)

@@ -96,6 +96,37 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     throw new IndexOutOfRangeException(nameof(Mode));
             }
         }
+
+        public bool MoveCursorToTargetPosition(CursorPosition position)
+        {
+            switch (position.Mode)
+            {
+                case CursorMode.Edit:
+                    return moveCursorToTargetPosition(position.Lyric, position.Index);
+                case CursorMode.Recording:
+                    return moveRecordCursorToTargetPosition(position.TimeTag);
+                default:
+                    throw new IndexOutOfRangeException(nameof(position.Mode));
+            }
+        }
+
+        public bool MoveHoverCursorToTargetPosition(CursorPosition position)
+        {
+            switch (position.Mode)
+            {
+                case CursorMode.Edit:
+                    return moveHoverCursorToTargetPosition(position.Lyric, position.Index);
+                case CursorMode.Recording:
+                    return moveHoverRecordCursorToTargetPosition(position.TimeTag);
+                default:
+                    throw new IndexOutOfRangeException(nameof(position.Mode));
+            }
+        }
+
+        public void ClearHoverCursorPosition()
+        {
+            BindableHoverCursorPosition.Value = new CursorPosition();
+        }
     }
 
     public enum Mode
