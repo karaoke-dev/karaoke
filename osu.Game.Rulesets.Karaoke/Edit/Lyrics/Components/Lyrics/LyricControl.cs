@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
         private LyricManager lyricManager { get; set; }
 
         [Resolved]
-        private LyricEditorStateManager stateManager { get; set; }
+        private ILyricEditorState state { get; set; }
 
         public Lyric Lyric { get; }
 
@@ -82,48 +82,48 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             if (lyricManager == null)
                 return false;
 
-            if (!isTrigger(stateManager.Mode))
+            if (!isTrigger(state.Mode))
                 return false;
 
             // todo : get real index.
             var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
             var index = drawableLyric.GetHoverIndex(position);
-            stateManager.MoveHoverCursorToTargetPosition(Lyric, index);
+            state.MoveHoverCursorToTargetPosition(Lyric, index);
             return base.OnMouseMove(e);
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
         {
-            if (!isTrigger(stateManager.Mode))
+            if (!isTrigger(state.Mode))
                 return;
 
             // lost hover cursor and time-tag cursor
-            stateManager.ClearHoverCursorPosition();
+            state.ClearHoverCursorPosition();
             base.OnHoverLost(e);
         }
 
         protected override bool OnClick(ClickEvent e)
         {
-            if (!isTrigger(stateManager.Mode))
+            if (!isTrigger(state.Mode))
                 return false;
 
             // place hover cursor to target position.
-            var index = stateManager.BindableHoverCursorPosition.Value.Index;
-            stateManager.MoveCursorToTargetPosition(Lyric, index);
+            var index = state.BindableHoverCursorPosition.Value.Index;
+            state.MoveCursorToTargetPosition(Lyric, index);
 
             return true;
         }
 
         protected override bool OnDoubleClick(DoubleClickEvent e)
         {
-            if (!isTrigger(stateManager.Mode))
+            if (!isTrigger(state.Mode))
                 return false;
 
             // todo : not really sure is ok to split time-tag by double click?
             // need to make an ux research.
-            var position = stateManager.BindableHoverCursorPosition.Value;
+            var position = state.BindableHoverCursorPosition.Value;
 
-            switch (stateManager.Mode)
+            switch (state.Mode)
             {
                 case Mode.EditMode:
                     var splitPosition = TextIndexUtils.ToStringIndex(position.Index);
@@ -139,14 +139,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
         private void load(EditorClock clock)
         {
             drawableLyric.Clock = clock;
-            stateManager.BindableMode.BindValueChanged(e =>
+            state.BindableMode.BindValueChanged(e =>
             {
                 // initial default cursor here
                 CreateCursor(e.NewValue);
             }, true);
 
             // update change if cursor changed.
-            stateManager.BindableHoverCursorPosition.BindValueChanged(e =>
+            state.BindableHoverCursorPosition.BindValueChanged(e =>
             {
                 var cursorPosition = e.NewValue;
 
@@ -164,7 +164,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                         throw new InvalidOperationException(nameof(cursorPosition.Mode));
                 }
             });
-            stateManager.BindableCursorPosition.BindValueChanged(e =>
+            state.BindableCursorPosition.BindValueChanged(e =>
             {
                 var cursorPosition = e.NewValue;
 
@@ -289,11 +289,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 return;
 
             var index = position.Index;
-            if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)
+            if (state.Mode == Mode.EditMode || state.Mode == Mode.TypingMode)
                 index = new TextIndex(TextIndexUtils.ToStringIndex(index));
 
             var offset = 0;
-            if (stateManager.Mode == Mode.EditMode || stateManager.Mode == Mode.TypingMode)
+            if (state.Mode == Mode.EditMode || state.Mode == Mode.TypingMode)
                 offset = -10;
 
             var pos = new Vector2(textIndexPosition(index) + offset, 0);

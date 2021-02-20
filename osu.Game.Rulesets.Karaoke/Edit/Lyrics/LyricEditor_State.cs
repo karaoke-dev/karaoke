@@ -3,12 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -32,26 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public Bindable<CursorPosition> BindableHoverCursorPosition { get; } = new Bindable<CursorPosition>();
 
         public Bindable<CursorPosition> BindableCursorPosition { get; } = new Bindable<CursorPosition>();
-
-        [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap)
-        {
-            // load lyric in here
-            var lyrics = OrderUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
-            BindableLyrics.AddRange(lyrics);
-
-            // need to check is there any lyric added or removed.
-            beatmap.HitObjectAdded += e =>
-            {
-                if (e is Lyric lyric)
-                    BindableLyrics.Add(lyric);
-            };
-            beatmap.HitObjectRemoved += e =>
-            {
-                if (e is Lyric lyric)
-                    BindableLyrics.Remove(lyric);
-            };
-        }
 
         public void SetMode(Mode mode)
         {

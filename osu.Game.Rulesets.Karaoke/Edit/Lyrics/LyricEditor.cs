@@ -2,12 +2,16 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Framework.Timing;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 using osuTK.Input;
 
@@ -22,11 +26,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(canBeNull: true)]
         private IFrameBasedClock framedClock { get; set; }
 
-        private KaraokeLyricEditorSkin skin;
-        private DrawableLyricEditList container;
+        private readonly KaraokeLyricEditorSkin skin;
+        private readonly DrawableLyricEditList container;
 
-        [BackgroundDependencyLoader]
-        private void load()
+        public LyricEditor()
         {
             Child = new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin())
             {
@@ -48,6 +51,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // display add new lyric only with edit mode.
                 container.DisplayBottomDrawable = e.NewValue == Mode.EditMode;
             }, true);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(EditorBeatmap beatmap)
+        {
+            // load lyric in here
+            var lyrics = OrderUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
+            BindableLyrics.AddRange(lyrics);
+
+            // need to check is there any lyric added or removed.
+            beatmap.HitObjectAdded += e =>
+            {
+                if (e is Lyric lyric)
+                    BindableLyrics.Add(lyric);
+            };
+            beatmap.HitObjectRemoved += e =>
+            {
+                if (e is Lyric lyric)
+                    BindableLyrics.Remove(lyric);
+            };
         }
 
         protected override bool OnKeyDown(KeyDownEvent e)
