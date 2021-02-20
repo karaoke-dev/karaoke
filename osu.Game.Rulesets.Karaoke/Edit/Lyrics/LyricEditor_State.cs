@@ -4,80 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms;
-using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditor
     {
-        public Bindable<Mode> BindableMode { get; } = new Bindable<Mode>();
-
-        public Bindable<LyricFastEditMode> BindableFastEditMode { get; } = new Bindable<LyricFastEditMode>();
-
-        public Bindable<RecordingMovingCursorMode> BindableRecordingMovingCursorMode { get; } = new Bindable<RecordingMovingCursorMode>();
-
-        public BindableBool BindableAutoFocusEditLyric { get; } = new BindableBool();
-
-        public BindableInt BindableAutoFocusEditLyricSkipRows { get; } = new BindableInt();
-
-        public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
-
-        public Bindable<CursorPosition> BindableHoverCursorPosition { get; } = new Bindable<CursorPosition>();
-
-        public Bindable<CursorPosition> BindableCursorPosition { get; } = new Bindable<CursorPosition>();
 
         private Dictionary<Mode, ICursorPositionAlgorithm> cursorMovingAlgorithmSet = new Dictionary<Mode, ICursorPositionAlgorithm>();
 
         private ICursorPositionAlgorithm algorithm => cursorMovingAlgorithmSet[Mode];
-
-        public void SetMode(Mode mode)
-        {
-            BindableMode.Value = mode;
-
-            switch (mode)
-            {
-                case Mode.ViewMode:
-                case Mode.EditMode:
-                case Mode.TypingMode:
-                    return;
-
-                case Mode.RecordMode:
-                    MoveCursor(MovingCursorAction.First);
-                    return;
-
-                case Mode.TimeTagEditMode:
-                    return;
-
-                default:
-                    throw new IndexOutOfRangeException(nameof(Mode));
-            }
-        }
-
-        public void SetFastEditMode(LyricFastEditMode fastEditMode)
-        {
-            BindableFastEditMode.Value = fastEditMode;
-        }
-
-        public void SetRecordingMovingCursorMode(RecordingMovingCursorMode mode)
-        {
-            BindableRecordingMovingCursorMode.Value = mode;
-            createAlgorithmList();
-
-            // todo : might move cursor to valid position.
-        }
-
-        public void SetBindableAutoFocusEditLyric(bool focus)
-        {
-            BindableAutoFocusEditLyric.Value = focus;
-        }
-
-        public void SetBindableAutoFocusEditLyricSkipRows(int row)
-        {
-            BindableAutoFocusEditLyricSkipRows.Value = row;
-        }
 
         private void createAlgorithmList()
         {
@@ -91,24 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public bool MoveCursor(MovingCursorAction action)
         {
-            switch (Mode)
-            {
-                case Mode.ViewMode:
-                    return false;
+            if (Mode == Mode.ViewMode)
+                return false;
 
-                case Mode.EditMode:
-                case Mode.TypingMode:
-                case Mode.RecordMode:
-                case Mode.TimeTagEditMode:
-                    return moveCursor(action);
-
-                default:
-                    throw new IndexOutOfRangeException(nameof(Mode));
-            }
-        }
-
-        private bool moveCursor(MovingCursorAction action)
-        {
             var currentPosition = BindableCursorPosition.Value;
             CursorPosition? position;
 
@@ -173,6 +94,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
+        public void ClearHoverCursorPosition()
+        {
+            BindableHoverCursorPosition.Value = new CursorPosition();
+        }
+
+        public bool CursorMovable(CursorPosition position)
+        {
+            return algorithm.PositionMovable(position);
+        }
+
         private bool movePositionTo(CursorPosition position)
         {
             if (position.Lyric == null)
@@ -196,16 +127,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             BindableHoverCursorPosition.Value = position;
             return true;
-        }
-
-        public void ClearHoverCursorPosition()
-        {
-            BindableHoverCursorPosition.Value = new CursorPosition();
-        }
-
-        public bool CursorMovable(CursorPosition position)
-        {
-            return algorithm.PositionMovable(position);
         }
     }
 

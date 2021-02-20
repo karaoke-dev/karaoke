@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
@@ -25,6 +26,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Resolved(canBeNull: true)]
         private IFrameBasedClock framedClock { get; set; }
+
+        public Bindable<Mode> BindableMode { get; } = new Bindable<Mode>();
+
+        public Bindable<LyricFastEditMode> BindableFastEditMode { get; } = new Bindable<LyricFastEditMode>();
+
+        public Bindable<RecordingMovingCursorMode> BindableRecordingMovingCursorMode { get; } = new Bindable<RecordingMovingCursorMode>();
+
+        public BindableBool BindableAutoFocusEditLyric { get; } = new BindableBool();
+
+        public BindableInt BindableAutoFocusEditLyricSkipRows { get; } = new BindableInt();
+
+        public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
+
+        public Bindable<CursorPosition> BindableHoverCursorPosition { get; } = new Bindable<CursorPosition>();
+
+        public Bindable<CursorPosition> BindableCursorPosition { get; } = new Bindable<CursorPosition>();
 
         private readonly KaraokeLyricEditorSkin skin;
         private readonly DrawableLyricEditList container;
@@ -224,31 +241,64 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public Mode Mode
         {
             get => BindableMode.Value;
-            set => SetMode(value);
+            set
+            {
+                if (BindableMode.Value == value)
+                    return;
+
+                BindableMode.Value = value;
+
+                switch (Mode)
+                {
+                    case Mode.ViewMode:
+                    case Mode.EditMode:
+                    case Mode.TypingMode:
+                        return;
+
+                    case Mode.RecordMode:
+                        MoveCursor(MovingCursorAction.First);
+                        return;
+
+                    case Mode.TimeTagEditMode:
+                        return;
+
+                    default:
+                        throw new IndexOutOfRangeException(nameof(Mode));
+                }
+            }
         }
 
         public LyricFastEditMode LyricFastEditMode
         {
             get => BindableFastEditMode.Value;
-            set => SetFastEditMode(value);
+            set => BindableFastEditMode.Value = value;
         }
 
         public RecordingMovingCursorMode RecordingMovingCursorMode
         {
             get => BindableRecordingMovingCursorMode.Value;
-            set => SetRecordingMovingCursorMode(value);
+            set
+            {
+                if (BindableRecordingMovingCursorMode.Value == value)
+                    return;
+
+                BindableRecordingMovingCursorMode.Value = value;
+                createAlgorithmList();
+
+                // todo : might move cursor to valid position.
+            }
         }
 
         public bool AutoFocusEditLyric
         {
             get => BindableAutoFocusEditLyric.Value;
-            set => SetBindableAutoFocusEditLyric(value);
+            set => BindableAutoFocusEditLyric.Value = value;
         }
 
         public int AutoFocusEditLyricSkipRows
         {
             get => BindableAutoFocusEditLyricSkipRows.Value;
-            set => SetBindableAutoFocusEditLyricSkipRows(value);
+            set => BindableAutoFocusEditLyricSkipRows.Value = value;
         }
     }
 }
