@@ -10,12 +10,13 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.FixedInfo;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.MainInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.SubInfo;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
@@ -24,7 +25,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
     {
         private const int max_height = 120;
 
+        private readonly Box background;
         private readonly Box headerBackground;
+        private readonly OsuSpriteText timeRange;
         private readonly Container subInfoContainer;
 
         private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
@@ -44,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
 
             Children = new Drawable[]
             {
-                headerBackground = new Box
+                background = new Box
                 {
                     RelativeSizeAxes = Axes.X,
                     Height = max_height,
@@ -59,10 +62,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
                     Spacing = new Vector2(5),
                     Children = new Drawable[]
                     {
-                        new TimeInfoContainer(Lyric)
+                        new Container
                         {
                             RelativeSizeAxes = Axes.X,
                             Height = 36,
+                            Children = new Drawable[]
+                            {
+                                headerBackground = new Box
+                                {
+                                    RelativeSizeAxes = Axes.Both
+                                },
+                                timeRange = new OsuSpriteText
+                                {
+                                    Anchor = Anchor.CentreLeft,
+                                    Origin = Anchor.CentreLeft,
+                                    Font = OsuFont.GetFont(size: 16, fixedWidth: true),
+                                    Margin = new MarginPadding(10),
+                                },
+                                new InvalidInfo(lyric)
+                                {
+                                    Anchor = Anchor.CentreRight,
+                                    Origin = Anchor.CentreRight,
+                                    Margin = new MarginPadding(10),
+                                    Scale = new Vector2(1.3f),
+                                    Y = 1,
+                                },
+                            }
                         },
                         new GridContainer
                         {
@@ -89,7 +114,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
                                         Spacing = new Vector2(5),
                                         Children = new Drawable[]
                                         {
-                                            new InvalidInfo(lyric),
                                             new OrderInfo(lyric),
                                             new LockInfo(lyric),
                                         }
@@ -101,6 +125,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
                 },
             };
 
+            timeRange.Text = LyricUtils.LyricTimeFormattedString(lyric);
+
             bindableLyricFastEditMode.BindValueChanged(e =>
             {
                 CreateBadge(e.NewValue);
@@ -110,7 +136,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, LyricEditorStateManager stateManager)
         {
-            headerBackground.Colour = colours.Gray2;
+            background.Colour = colours.Gray2;
+            headerBackground.Colour = colours.Gray3;
 
             bindableMode.BindTo(stateManager.BindableMode);
             bindableLyricFastEditMode.BindTo(stateManager.BindableFastEditMode);
@@ -123,7 +150,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
             if (subInfo == null)
                 return;
 
-            subInfo.Margin = new MarginPadding { Right = 5 };
+            subInfo.Margin = new MarginPadding { Right = 15 };
             subInfo.Anchor = Anchor.TopRight;
             subInfo.Origin = Anchor.TopRight;
             subInfoContainer.Add(subInfo);

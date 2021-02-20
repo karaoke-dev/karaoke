@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
             {
                 // create report record if not have.
                 if (!BindableReports.Contains(lyric))
-                    BindableReports.Add(lyric, new LyricCheckReport());
+                    BindableReports.Add(lyric, new LyricCheckReport(lyric));
 
                 var report = BindableReports[lyric];
                 if (checkProperty.HasFlag(LyricCheckProperty.Time))

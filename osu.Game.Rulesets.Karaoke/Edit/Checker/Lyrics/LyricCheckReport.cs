@@ -8,6 +8,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
 {
     public class LyricCheckReport
     {
+        public LyricCheckReport(Lyric lyric)
+        {
+            CheckObject = lyric;
+        }
+
+        public Lyric CheckObject { get; }
+
         public TimeInvalid[] TimeInvalid { get; set; }
 
         public Dictionary<TimeTagInvalid, TimeTag[]> InvalidTimeTags { get; set; }
