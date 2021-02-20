@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
         {
             var currentTimeTag = currentPosition.TimeTag;
 
-            // neeed to check is lyric in time-tag is valid.
+            // need to check is lyric in time-tag is valid.
             var currentLyric = timeTagInLyric(currentTimeTag);
             if (currentLyric != currentPosition.Lyric)
                 throw new ArgumentException(nameof(currentPosition.Lyric));
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
         {
             var currentTimeTag = currentPosition.TimeTag;
 
-            // neeed to check is lyric in time-tag is valid.
+            // need to check is lyric in time-tag is valid.
             var currentLyric = timeTagInLyric(currentTimeTag);
             if (currentLyric != currentPosition.Lyric)
                 throw new ArgumentException(nameof(currentPosition.Lyric));
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
         public CursorPosition? MoveRight(CursorPosition currentPosition)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
-            var nextTimeTag =  timeTags.GetNextMatch(currentPosition.TimeTag, timeTagMovable);
+            var nextTimeTag = timeTags.GetNextMatch(currentPosition.TimeTag, timeTagMovable);
             return timeTagToPosition(nextTimeTag);
         }
 

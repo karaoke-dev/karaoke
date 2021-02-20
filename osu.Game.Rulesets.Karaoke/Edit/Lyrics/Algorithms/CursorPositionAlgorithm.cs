@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
         // Lyrics is not lock and can be accessible.
         protected readonly Lyric[] Lyrics;
 
-        public CursorPositionAlgorithm(Lyric[] lyrics)
+        protected CursorPositionAlgorithm(Lyric[] lyrics)
         {
             Lyrics = LyricsUtils.FindUnlockLyrics(OrderUtils.Sorted(lyrics));
         }

@@ -10,7 +10,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditor
     {
-
         private Dictionary<Mode, ICursorPositionAlgorithm> cursorMovingAlgorithmSet = new Dictionary<Mode, ICursorPositionAlgorithm>();
 
         private ICursorPositionAlgorithm algorithm => cursorMovingAlgorithmSet[Mode];
@@ -20,10 +19,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var lyrics = BindableLyrics.ToArray();
             cursorMovingAlgorithmSet = new Dictionary<Mode, ICursorPositionAlgorithm>
             {
-                { Mode.EditMode, new CuttingCursorPositionAlgorithm(lyrics)},
-                { Mode.TypingMode, new TypingCursorPositionAlgorithm(lyrics)},
-                { Mode.RecordMode, new RecordingCursorPositionAlgorithm(lyrics, RecordingMovingCursorMode)},
-                { Mode.TimeTagEditMode, new GenericCursorPositionAlgorithm(lyrics)}
+                { Mode.EditMode, new CuttingCursorPositionAlgorithm(lyrics) },
+                { Mode.TypingMode, new TypingCursorPositionAlgorithm(lyrics) },
+                { Mode.RecordMode, new RecordingCursorPositionAlgorithm(lyrics, RecordingMovingCursorMode) },
+                { Mode.TimeTagEditMode, new GenericCursorPositionAlgorithm(lyrics) }
             };
         }
 
@@ -79,6 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case CursorMode.Edit:
                 case CursorMode.Recording:
                     return movePositionTo(position);
+
                 default:
                     throw new IndexOutOfRangeException(nameof(position.Mode));
             }
@@ -90,7 +90,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 case CursorMode.Edit:
                 case CursorMode.Recording:
-                        return moveHoverPositionTo(position);
+                    return moveHoverPositionTo(position);
+
                 default:
                     throw new IndexOutOfRangeException(nameof(position.Mode));
             }

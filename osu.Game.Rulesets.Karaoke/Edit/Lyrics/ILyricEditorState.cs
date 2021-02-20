@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         #region general
 
-        Bindable<Mode>  BindableMode { get; }
+        Bindable<Mode> BindableMode { get; }
 
         Mode Mode { get; }
 
