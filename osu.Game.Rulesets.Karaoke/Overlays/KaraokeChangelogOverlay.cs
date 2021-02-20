@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
 
         private Container<ChangelogContent> content;
 
-        private SampleChannel sampleBack;
+        private Sample sampleBack;
 
         private List<KaraokeChangelogBuild> builds;
 
