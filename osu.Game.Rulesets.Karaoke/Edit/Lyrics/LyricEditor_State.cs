@@ -17,11 +17,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private void createAlgorithmList()
         {
+            var lyrics = BindableLyrics.ToArray();
             cursorMovingAlgorithmSet = new Dictionary<Mode, ICursorPositionAlgorithm>
             {
-                { Mode.TypingMode, new TypingCursorPositionAlgorithm(BindableLyrics.ToArray())},
-                { Mode.RecordMode, new RecordingCursorPositionAlgorithm(BindableLyrics.ToArray(), RecordingMovingCursorMode)},
-                { Mode.TimeTagEditMode, new GenericCursorPositionAlgorithm(BindableLyrics.ToArray())}
+                { Mode.EditMode, new CuttingCursorPositionAlgorithm(lyrics)},
+                { Mode.TypingMode, new TypingCursorPositionAlgorithm(lyrics)},
+                { Mode.RecordMode, new RecordingCursorPositionAlgorithm(lyrics, RecordingMovingCursorMode)},
+                { Mode.TimeTagEditMode, new GenericCursorPositionAlgorithm(lyrics)}
             };
         }
 

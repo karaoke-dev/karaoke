@@ -81,12 +81,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             beatmap.HitObjectAdded += e =>
             {
                 if (e is Lyric lyric)
+                {
                     BindableLyrics.Add(lyric);
+                    createAlgorithmList();
+                }
             };
             beatmap.HitObjectRemoved += e =>
             {
                 if (e is Lyric lyric)
+                {
                     BindableLyrics.Remove(lyric);
+                    createAlgorithmList();
+                }
             };
 
             // create algorithm set

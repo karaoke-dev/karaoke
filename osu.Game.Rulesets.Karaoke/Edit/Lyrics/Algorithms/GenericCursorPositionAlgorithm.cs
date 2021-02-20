@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
         {
         }
 
-        public bool PositionMovable(CursorPosition position)
+        public virtual bool PositionMovable(CursorPosition position)
         {
             if (position.Lyric == null)
                 return false;
