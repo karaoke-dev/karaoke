@@ -31,13 +31,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [Test]
         public void TestValidLyric()
         {
-            setTooltip("valid lyric", new LyricCheckReport());
+            setTooltip("valid lyric", new TestLyricCheckReport());
         }
 
         [Test]
         public void TestTimeInvalidLyric()
         {
-            setTooltip("overlapping time", new LyricCheckReport
+            setTooltip("overlapping time", new TestLyricCheckReport
             {
                 TimeInvalid = new[]
                 {
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 }
             });
 
-            setTooltip("start time invalid", new LyricCheckReport
+            setTooltip("start time invalid", new TestLyricCheckReport
             {
                 TimeInvalid = new[]
                 {
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 }
             });
 
-            setTooltip("end time invalid", new LyricCheckReport
+            setTooltip("end time invalid", new TestLyricCheckReport
             {
                 TimeInvalid = new[]
                 {
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [Test]
         public void TestTimeTagInvalidLyric()
         {
-            setTooltip("time tag out of range", new LyricCheckReport
+            setTooltip("time tag out of range", new TestLyricCheckReport
             {
                 InvalidTimeTags = new Dictionary<TimeTagInvalid, TimeTag[]>
                 {
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 }
             });
 
-            setTooltip("time tag out of range", new LyricCheckReport
+            setTooltip("time tag out of range", new TestLyricCheckReport
             {
                 InvalidTimeTags = new Dictionary<TimeTagInvalid, TimeTag[]>
                 {
@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [Test]
         public void TestRubyTagInvalidLyric()
         {
-            setTooltip("ruby tag out of range", new LyricCheckReport
+            setTooltip("ruby tag out of range", new TestLyricCheckReport
             {
                 InvalidRubyTags = new Dictionary<RubyTagInvalid, RubyTag[]>
                 {
@@ -116,7 +116,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 }
             });
 
-            setTooltip("ruby tag out of range", new LyricCheckReport
+            setTooltip("ruby tag out of range", new TestLyricCheckReport
             {
                 InvalidRubyTags = new Dictionary<RubyTagInvalid, RubyTag[]>
                 {
@@ -139,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [Test]
         public void TestRomajiTagInvalidLyric()
         {
-            setTooltip("romaji tag out of range", new LyricCheckReport
+            setTooltip("romaji tag out of range", new TestLyricCheckReport
             {
                 InvalidRomajiTags = new Dictionary<RomajiTagInvalid, RomajiTag[]>
                 {
@@ -158,7 +158,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 }
             });
 
-            setTooltip("romaji tag out of range", new LyricCheckReport
+            setTooltip("romaji tag out of range", new TestLyricCheckReport
             {
                 InvalidRomajiTags = new Dictionary<RomajiTagInvalid, RomajiTag[]>
                 {
@@ -181,7 +181,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [Test]
         public void TestMultiInvalidLyric()
         {
-            setTooltip("multi property is invalid", new LyricCheckReport
+            setTooltip("multi property is invalid", new TestLyricCheckReport
             {
                 TimeInvalid = new[]
                 {
@@ -261,6 +261,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             {
                 toolTip.SetContent(timeTag);
             });
+        }
+
+        internal class TestLyricCheckReport : LyricCheckReport
+        {
+            public TestLyricCheckReport()
+                : base(new Lyric())
+            {
+            }
         }
     }
 }
