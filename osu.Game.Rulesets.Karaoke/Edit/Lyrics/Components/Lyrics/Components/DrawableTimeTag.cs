@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 
         private void updateStyle()
         {
-            if (isTrigger(bindableMode.Value) && !state.RecordingCursorMovable(timeTag))
+            if (isTrigger(bindableMode.Value) && !state.CursorMovable(new CursorPosition(lyric, timeTag)))
             {
                 InternalChild.Alpha = 0.3f;
             }

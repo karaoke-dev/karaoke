@@ -2,8 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Bindables;
-using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -11,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         #region general
 
-        Bindable<Mode>  BindableMode { get; }
+        Bindable<Mode> BindableMode { get; }
 
         Mode Mode { get; }
 
@@ -37,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         void ClearHoverCursorPosition();
 
-        bool RecordingCursorMovable(TimeTag timeTag);
+        bool CursorMovable(CursorPosition timeTag);
 
         #endregion
     }

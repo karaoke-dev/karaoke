@@ -25,6 +25,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return new TextIndex(originIndex.Index + shifting, originIndex.State);
         }
 
+        public static bool OutOfRange(TextIndex index, string lyric)
+        {
+            if (string.IsNullOrEmpty(lyric))
+                return true;
+
+            return index.Index < 0 || index.Index >= lyric.Length;
+        }
+
         /// <summary>
         /// Display string with position format
         /// </summary>

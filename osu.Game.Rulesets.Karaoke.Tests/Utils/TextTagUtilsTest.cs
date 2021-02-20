@@ -46,6 +46,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(TextTagUtils.Shifting(romajiTag, shifting), actualRomaji);
         }
 
+        [TestCase("[0,1]:ka", "karaoke", false)]
+        [TestCase("[0,1]:ka", "", true)]
+        [TestCase("[0,1]:ka", null, true)]
+        [TestCase("[0,-1]:ka", "karaoke", true)]
+        [TestCase("[0,0]:ka", "", true)] // should be counted as out of range if lyric is empty
+        [TestCase("[0,0]:ka", null, true)] // should be counted as out of range if lyric is null
+        public void TestOutOfRange(string textTag, string lyric, bool outOfRange)
+        {
+            var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
+            Assert.AreEqual(TextTagUtils.OutOfRange(rubyTag, lyric), outOfRange);
+        }
+
         [TestCase("[0,1]:ka", "ka(0 ~ 1)")]
         [TestCase("[0,1]:", "empty(0 ~ 1)")]
         [TestCase("[-1,1]:ka", "ka(-1 ~ 1)")]
