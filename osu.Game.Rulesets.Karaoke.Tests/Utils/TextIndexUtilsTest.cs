@@ -38,6 +38,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(TextIndexUtils.ShiftingIndex(textIndex, shifting), actualTextIndex);
         }
 
+        [TestCase(0, TextIndex.IndexState.Start, "karaoke", false)]
+        [TestCase(0, TextIndex.IndexState.End, "karaoke", false)]
+        [TestCase(-1, TextIndex.IndexState.Start, "karaoke", true)]
+        [TestCase(-1, TextIndex.IndexState.End, "karaoke", true)]
+        [TestCase(0, TextIndex.IndexState.Start, "", true)] // should be counted as out of range if lyric is empty
+        [TestCase(0, TextIndex.IndexState.End, "", true)]
+        [TestCase(0, TextIndex.IndexState.Start, null, true)] // should be counted as out of range if lyric is null
+        [TestCase(0, TextIndex.IndexState.End, null, true)]
+        public void TestOutOfRange(int index, TextIndex.IndexState state, string lyric, bool outOfRange)
+        {
+            var textIndex = new TextIndex(index, state);
+            Assert.AreEqual(TextIndexUtils.OutOfRange(textIndex, lyric), outOfRange);
+        }
+
         [TestCase(0, TextIndex.IndexState.Start, "0")]
         [TestCase(0, TextIndex.IndexState.End, "0(end)")]
         [TestCase(-1, TextIndex.IndexState.Start, "-1")]

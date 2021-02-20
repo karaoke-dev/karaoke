@@ -28,6 +28,15 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             };
         }
 
+        public static bool OutOfRange<T>(T textTag, string lyric) where T : ITextTag
+        {
+            if (string.IsNullOrEmpty(lyric))
+                return true;
+
+            var fixedTextTag = FixTimeTagPosition(textTag);
+            return fixedTextTag.StartIndex < 0 || fixedTextTag.EndIndex > lyric.Length;
+        }
+
         /// <summary>
         /// Display tag with position format
         /// </summary>

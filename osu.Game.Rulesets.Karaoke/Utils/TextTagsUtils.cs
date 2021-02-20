@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static T[] FindOutOfRange<T>(T[] textTags, string lyric) where T : ITextTag
         {
-            return textTags?.Where(x => x.StartIndex < 0 || x.EndIndex > lyric.Length).ToArray();
+            return textTags?.Where(x => TextTagUtils.OutOfRange(x, lyric)).ToArray();
         }
 
         public static T[] FindOverlapping<T>(T[] textTags, Sorting sorting = Sorting.Asc) where T : ITextTag
