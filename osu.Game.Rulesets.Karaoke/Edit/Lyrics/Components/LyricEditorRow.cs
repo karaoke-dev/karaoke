@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 {
     public abstract class LyricEditorRow : CompositeDrawable
     {
-        private const int info_part_spacing = 200;
+        private const int info_part_spacing = 210;
         private const int min_height = 75;
         private const int max_height = 120;
 
