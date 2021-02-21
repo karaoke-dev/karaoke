@@ -9,7 +9,7 @@ using osu.Game.Graphics;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
     public class DrawableLyricInputCursor : Caret, IDrawableCursor
     {
