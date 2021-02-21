@@ -3,8 +3,8 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
-    public interface IHasCursorPosition
+    public interface IHasCaretPosition
     {
-        CursorPosition CursorPosition { get; set; }
+        CursorPosition CaretPosition { get; set; }
     }
 }

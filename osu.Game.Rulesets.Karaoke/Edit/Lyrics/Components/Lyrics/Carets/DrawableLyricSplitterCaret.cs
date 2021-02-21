@@ -11,12 +11,12 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
-    public class DrawableLyricSplitterCursor : CompositeDrawable, IDrawableCursor
+    public class DrawableLyricSplitterCaret : CompositeDrawable, IDrawableCaret
     {
         private readonly Container splitter;
         private readonly SpriteIcon splitIcon;
 
-        public DrawableLyricSplitterCursor()
+        public DrawableLyricSplitterCaret()
         {
             RelativeSizeAxes = Axes.Y;
             Width = 10;

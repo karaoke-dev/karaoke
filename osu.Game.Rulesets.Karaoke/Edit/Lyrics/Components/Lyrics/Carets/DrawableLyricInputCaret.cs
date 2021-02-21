@@ -11,7 +11,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
-    public class DrawableLyricInputCursor : Caret, IDrawableCursor
+    public class DrawableLyricInputCaret : Caret, IDrawableCaret
     {
         private const float caret_move_time = 60;
         private const float caret_width = 3;
@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
         [Resolved]
         private OsuColour colours { get; set; }
 
-        public DrawableLyricInputCursor()
+        public DrawableLyricInputCaret()
         {
             RelativeSizeAxes = Axes.Y;
             Width = caret_width;

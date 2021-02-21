@@ -203,7 +203,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 cursor.Anchor = Anchor.BottomLeft;
                 cursor.Origin = Anchor.BottomLeft;
 
-                if (cursor is IDrawableCursor drawableCursor)
+                if (cursor is IDrawableCaret drawableCursor)
                     drawableCursor.Preview = isPreview;
 
                 cursorContainer.Add(cursor);
@@ -217,16 +217,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                         return null;
 
                     case Mode.EditMode:
-                        return new DrawableLyricSplitterCursor();
+                        return new DrawableLyricSplitterCaret();
 
                     case Mode.TypingMode:
-                        return new DrawableLyricInputCursor();
+                        return new DrawableLyricInputCaret();
 
                     case Mode.RecordMode:
-                        return new DrawableTimeTagRecordCursor();
+                        return new DrawableTimeTagRecordCaret();
 
                     case Mode.TimeTagEditMode:
-                        return new DrawableTimeTagEditCursor();
+                        return new DrawableTimeTagEditCaret();
 
                     default:
                         throw new IndexOutOfRangeException(nameof(mode));
@@ -255,7 +255,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
         protected void UpdateTimeTagCursor(CursorPosition position, bool preview)
         {
-            var cursor = cursorContainer.OfType<DrawableTimeTagRecordCursor>().FirstOrDefault(x => x.Preview == preview);
+            var cursor = cursorContainer.OfType<DrawableTimeTagRecordCaret>().FirstOrDefault(x => x.Preview == preview);
             if (cursor == null)
                 return;
 
@@ -276,7 +276,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
         protected void UpdateCursor(CursorPosition position, bool preview)
         {
-            var cursor = cursorContainer.OfType<IDrawableCursor>().FirstOrDefault(x => x.Preview == preview);
+            var cursor = cursorContainer.OfType<IDrawableCaret>().FirstOrDefault(x => x.Preview == preview);
             if (cursor == null)
                 return;
 
@@ -299,7 +299,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             var pos = new Vector2(textIndexPosition(index) + offset, 0);
 
-            if (cursor is DrawableLyricInputCursor inputCursor)
+            if (cursor is DrawableLyricInputCaret inputCursor)
             {
                 inputCursor.DisplayAt(pos, null);
             }
@@ -308,9 +308,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 drawableCursor.Position = pos;
             }
 
-            if (cursor is IHasCursorPosition cursorPosition)
+            if (cursor is IHasCaretPosition caretPosition)
             {
-                cursorPosition.CursorPosition = position;
+                caretPosition.CaretPosition = position;
             }
 
             // show after cursor position has been ready.
