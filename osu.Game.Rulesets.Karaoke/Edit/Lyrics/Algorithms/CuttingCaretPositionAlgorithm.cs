@@ -13,12 +13,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
         {
         }
 
-        public override bool PositionMovable(TimeTagIndexCaretPosition position)
+        public override bool PositionMovable(TextCaretPosition position)
         {
             if (!base.PositionMovable(position))
                 return false;
 
-            if (TextIndexUtils.ToStringIndex(position.Index) == 0)
+            if (position.Index == 0)
                 return false;
 
             return true;

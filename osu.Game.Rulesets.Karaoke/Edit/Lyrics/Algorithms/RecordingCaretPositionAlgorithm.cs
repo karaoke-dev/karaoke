@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return timeTagMovable(position.TimeTag);
         }
 
-        public TimeTagCaretPosition? MoveUp(TimeTagCaretPosition currentPosition)
+        public TimeTagCaretPosition MoveUp(TimeTagCaretPosition currentPosition)
         {
             var currentTimeTag = currentPosition.TimeTag;
 
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return timeTagToPosition(upTimeTag);
         }
 
-        public TimeTagCaretPosition? MoveDown(TimeTagCaretPosition currentPosition)
+        public TimeTagCaretPosition MoveDown(TimeTagCaretPosition currentPosition)
         {
             var currentTimeTag = currentPosition.TimeTag;
 
@@ -51,35 +51,35 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return timeTagToPosition(downTimeTag);
         }
 
-        public TimeTagCaretPosition? MoveLeft(TimeTagCaretPosition currentPosition)
+        public TimeTagCaretPosition MoveLeft(TimeTagCaretPosition currentPosition)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var previousTimeTag = timeTags.GetPreviousMatch(currentPosition.TimeTag, timeTagMovable);
             return timeTagToPosition(previousTimeTag);
         }
 
-        public TimeTagCaretPosition? MoveRight(TimeTagCaretPosition currentPosition)
+        public TimeTagCaretPosition MoveRight(TimeTagCaretPosition currentPosition)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var nextTimeTag = timeTags.GetNextMatch(currentPosition.TimeTag, timeTagMovable);
             return timeTagToPosition(nextTimeTag);
         }
 
-        public TimeTagCaretPosition? MoveToFirst()
+        public TimeTagCaretPosition MoveToFirst()
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var firstTimeTag = timeTags.FirstOrDefault();
             return timeTagToPosition(firstTimeTag);
         }
 
-        public TimeTagCaretPosition? MoveToLast()
+        public TimeTagCaretPosition MoveToLast()
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var lastTag = timeTags.LastOrDefault();
             return timeTagToPosition(lastTag);
         }
 
-        private TimeTagCaretPosition? timeTagToPosition(TimeTag timeTag)
+        private TimeTagCaretPosition timeTagToPosition(TimeTag timeTag)
         {
             if (timeTag == null)
                 return null;
