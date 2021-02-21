@@ -12,6 +12,7 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Edit;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
@@ -25,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 
         [Resolved]
         private ILyricEditorState state { get; set; }
+
+        [Resolved]
+        private EditorClock editorClock { get; set; }
 
         private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
         private readonly Bindable<RecordingMovingCursorMode> bindableRecordingMovingCursorMode = new Bindable<RecordingMovingCursorMode>();
@@ -98,6 +102,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 
         protected override bool OnClick(ClickEvent e)
         {
+            // navigation to target time
+            // todo : might apply config to allow this behavior in target place.
+            var time = timeTag.Time;
+            if (time != null)
+                editorClock.SeekSmoothlyTo(time.Value);
+
             if (!isTrigger(bindableMode.Value))
                 return false;
 
