@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly Bindable<int> bindableLyricEditorFontSize = new Bindable<int>();
         private readonly Bindable<Mode> bindableLyricEditorMode = new Bindable<Mode>();
         private readonly Bindable<LyricFastEditMode> bindableLyricEditorFastEditMode = new Bindable<LyricFastEditMode>();
-        private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCursorMode = new Bindable<RecordingMovingCaretMode>();
+        private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
         private readonly BindableBool bindableAutoFocusToEditLyric = new BindableBool();
         private readonly BindableInt bindableAutoFocusToEditLyricSkipRows = new BindableInt();
 
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             {
                 lyricEditor.FontSize = e.NewValue;
             });
-            bindableRecordingMovingCursorMode.BindValueChanged(e =>
+            bindableRecordingMovingCaretMode.BindValueChanged(e =>
             {
                 lyricEditor.RecordingMovingCaretMode = e.NewValue;
             });
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorFontSize, bindableLyricEditorFontSize);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorMode, bindableLyricEditorMode);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorFastEditMode, bindableLyricEditorFastEditMode);
-            editConfigManager.BindWith(KaraokeRulesetEditSetting.RecordingMovingCursorMode, bindableRecordingMovingCursorMode);
+            editConfigManager.BindWith(KaraokeRulesetEditSetting.RecordingMovingCaretMode, bindableRecordingMovingCaretMode);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.AutoFocusToEditLyric, bindableAutoFocusToEditLyric);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.AutoFocusToEditLyricSkipRows, bindableAutoFocusToEditLyricSkipRows);
         }

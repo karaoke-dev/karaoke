@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         #endregion
 
-        #region cursor position
+        #region caret position
 
         Bindable<CaretPosition> BindableHoverCaretPosition { get; }
 

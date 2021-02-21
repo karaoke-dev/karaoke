@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public CaretPosition? MoveLeft(CaretPosition currentPosition)
         {
-            // get previous cursor and make a check is need to change line.
+            // get previous caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
             var previousIndex = GetPreviousIndex(currentPosition.Index);
 
@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public CaretPosition? MoveRight(CaretPosition currentPosition)
         {
-            // get next cursor and make a check is need to change line.
+            // get next caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
             var nextIndex = GetNextIndex(currentPosition.Index);
 

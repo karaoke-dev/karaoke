@@ -134,9 +134,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                     Items = EnumUtils.GetValues<RecordingMovingCaretMode>()
                                 }.With(x =>
                                 {
-                                    x.Current.BindValueChanged(recordingMovingCursorMode =>
+                                    x.Current.BindValueChanged(recordingMovingCaretMode =>
                                     {
-                                        editor.RecordingMovingCaretMode = recordingMovingCursorMode.NewValue;
+                                        editor.RecordingMovingCaretMode = recordingMovingCaretMode.NewValue;
                                     });
                                 }),
                                 new OsuButton

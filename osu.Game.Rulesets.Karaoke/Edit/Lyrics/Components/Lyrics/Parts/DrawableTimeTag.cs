@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
         private EditorClock editorClock { get; set; }
 
         private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
-        private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCursorMode = new Bindable<RecordingMovingCaretMode>();
+        private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
 
         private readonly TimeTag timeTag;
         private readonly Lyric lyric;
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
                 updateStyle();
             });
 
-            bindableRecordingMovingCursorMode.BindValueChanged(x =>
+            bindableRecordingMovingCaretMode.BindValueChanged(x =>
             {
                 updateStyle();
             });
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
             InternalChild.Colour = timeTag.Time.HasValue ? colours.Yellow : colours.Gray7;
 
             bindableMode.BindTo(state.BindableMode);
-            bindableRecordingMovingCursorMode.BindTo(state.BindableRecordingMovingCaretMode);
+            bindableRecordingMovingCaretMode.BindTo(state.BindableRecordingMovingCaretMode);
         }
 
         protected override bool OnHover(HoverEvent e)
@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
         protected override void Dispose(bool isDisposing)
         {
             bindableMode.UnbindAll();
-            bindableRecordingMovingCursorMode.UnbindAll();
+            bindableRecordingMovingCaretMode.UnbindAll();
 
             base.Dispose(isDisposing);
         }
