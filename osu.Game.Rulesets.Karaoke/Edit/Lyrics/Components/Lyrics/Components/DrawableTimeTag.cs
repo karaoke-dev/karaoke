@@ -5,16 +5,18 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 {
-    public class DrawableTimeTag : CompositeDrawable
+    public class DrawableTimeTag : CompositeDrawable, IHasCustomTooltip
     {
         /// <summary>
         /// Height of major bar line triangles.
@@ -112,5 +114,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 
         private bool isTrigger(Mode mode)
             => mode == Mode.RecordMode;
+
+        public object TooltipContent => timeTag;
+
+        public ITooltip GetCustomTooltip() => new TimeTagTooltip();
     }
 }
