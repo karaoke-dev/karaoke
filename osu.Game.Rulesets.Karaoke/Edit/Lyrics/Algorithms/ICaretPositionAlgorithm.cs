@@ -3,11 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
-    public interface ICaretPositionAlgorithm
-    {
-    }
-
-    public interface ICaretPositionAlgorithm<T> : ICaretPositionAlgorithm where T : ICaretPosition
+    public interface ICaretPositionAlgorithm<T> where T : ICaretPosition
     {
         bool PositionMovable(T position);
 

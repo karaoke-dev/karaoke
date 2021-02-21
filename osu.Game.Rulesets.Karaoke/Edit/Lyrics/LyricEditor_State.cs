@@ -6,18 +6,18 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms;
-using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Extensions;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditor
     {
-        private Dictionary<Mode, ICaretPositionAlgorithm> caretMovingAlgorithmSet = new Dictionary<Mode, ICaretPositionAlgorithm>();
+        private Dictionary<Mode, CaretPositionAlgorithm> caretMovingAlgorithmSet = new Dictionary<Mode, CaretPositionAlgorithm>();
 
         private void createAlgorithmList()
         {
             var lyrics = BindableLyrics.ToArray();
-            caretMovingAlgorithmSet = new Dictionary<Mode, ICaretPositionAlgorithm>
+            caretMovingAlgorithmSet = new Dictionary<Mode, CaretPositionAlgorithm>
             {
                 { Mode.EditMode, new CuttingCaretPositionAlgorithm(lyrics) },
                 { Mode.TypingMode, new TypingCaretPositionAlgorithm(lyrics) },
@@ -26,9 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             };
         }
 
-        protected ICaretPositionAlgorithm<T> GetCaretPositionAlgorithm<T>(T position) where T : ICaretPosition
+        protected object GetCaretPositionAlgorithm()
         {
-            return (ICaretPositionAlgorithm<T>)caretMovingAlgorithmSet[Mode];
+            return caretMovingAlgorithmSet[Mode];
         }
 
         public bool MoveCaret(MovingCaretAction action)
@@ -37,33 +37,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             var currentPosition = BindableCaretPosition.Value;
-            var algorithm = GetCaretPositionAlgorithm(currentPosition);
+            var algorithm = GetCaretPositionAlgorithm();
             ICaretPosition position;
 
             switch (action)
             {
                 case MovingCaretAction.Up:
-                    position = algorithm.MoveUp(currentPosition);
+                    position = algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveUp", currentPosition);
                     break;
 
                 case MovingCaretAction.Down:
-                    position = algorithm.MoveDown(currentPosition);
+                    position = algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveDown", currentPosition);
                     break;
 
                 case MovingCaretAction.Left:
-                    position = algorithm.MoveLeft(currentPosition);
+                    position = algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveLeft", currentPosition);
                     break;
 
                 case MovingCaretAction.Right:
-                    position = algorithm.MoveRight(currentPosition);
+                    position = algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveRight", currentPosition);
                     break;
 
                 case MovingCaretAction.First:
-                    position = algorithm.MoveToFirst();
+                    position = algorithm.CallMethod<ICaretPosition>("MoveToFirst");
                     break;
 
                 case MovingCaretAction.Last:
-                    position = algorithm.MoveToLast();
+                    position = algorithm.CallMethod<ICaretPosition>("MoveToLast");
                     break;
 
                 default:
@@ -115,8 +115,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public bool CaretMovable(ICaretPosition position)
         {
-            var algorithm = GetCaretPositionAlgorithm(position);
-            return algorithm.PositionMovable(position);
+            var algorithm = GetCaretPositionAlgorithm();
+            return algorithm.CallMethod<bool, ICaretPosition>("PositionMovable", position);
         }
 
         private ICaretPosition generatePosition(Mode mode)
