@@ -106,13 +106,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (Mode != Mode.TypingMode)
                 return false;
 
-            var position = BindableCaretPosition.Value;
+            var caretPosition = BindableCaretPosition.Value;
+            if (!(caretPosition is TextCaretPosition textCaretPosition))
+                throw new NotSupportedException(nameof(caretPosition));
+
+            var lyric = textCaretPosition.Lyric;
+            var index = textCaretPosition.Index;
 
             switch (e.Key)
             {
                 case Key.BackSpace:
                     // delete single character.
-                    var deletedSuccess = lyricManager.DeleteLyricText(position);
+                    var deletedSuccess = lyricManager.DeleteLyricText(lyric, index);
                     if (deletedSuccess)
                         MoveCaret(MovingCaretAction.Left);
                     return deletedSuccess;
@@ -192,10 +197,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             var caretPosition = BindableCaretPosition.Value;
-            if (caretPosition.Mode != CaretMode.Recording)
-                return false;
+            if (!(caretPosition is TimeTagCaretPosition timeTagCaretPosition))
+                throw new NotSupportedException(nameof(caretPosition));
 
-            var currentTimeTag = caretPosition.TimeTag;
+            var currentTimeTag = timeTagCaretPosition.TimeTag;
 
             switch (action)
             {
@@ -219,15 +224,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager == null)
                 return false;
 
-            var position = BindableCaretPosition.Value;
+            if (!(BindableCaretPosition.Value is TimeTagIndexCaretPosition position))
+                throw new NotSupportedException(nameof(position));
+
+            var lyric = position.Lyric;
+            var index = position.Index;
 
             switch (action)
             {
                 case KaraokeEditAction.Create:
-                    return lyricManager.AddTimeTagByPosition(position);
+                    return lyricManager.AddTimeTagByPosition(lyric, index);
 
                 case KaraokeEditAction.Remove:
-                    return lyricManager.RemoveTimeTagByPosition(position);
+                    return lyricManager.RemoveTimeTagByPosition(lyric, index);
 
                 default:
                     return false;
@@ -248,6 +257,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (BindableMode.Value == value)
                     return;
 
+                ResetPosition(value);
                 BindableMode.Value = value;
 
                 switch (Mode)

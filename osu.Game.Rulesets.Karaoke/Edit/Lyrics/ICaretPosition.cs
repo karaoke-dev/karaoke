@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public Lyric Lyric { get; }
     }
 
-    public readonly struct TextCaretPosition : ICaretPosition
+    public class TextCaretPosition : ICaretPosition
     {
         public TextCaretPosition(Lyric lyric, int index)
         {
@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public int Index { get; }
     }
 
-    public readonly struct TimeTagIndexCaretPosition : ICaretPosition
+    public class TimeTagIndexCaretPosition : ICaretPosition
     {
         public TimeTagIndexCaretPosition(Lyric lyric, TextIndex index)
         {
@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public TextIndex Index { get; }
     }
 
-    public readonly struct TimeTagCaretPosition : ICaretPosition
+    public class TimeTagCaretPosition : ICaretPosition
     {
         public TimeTagCaretPosition(Lyric lyric, TimeTag timeTag)
         {

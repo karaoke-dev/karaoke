@@ -4,15 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditor
     {
         private Dictionary<Mode, ICaretPositionAlgorithm> caretMovingAlgorithmSet = new Dictionary<Mode, ICaretPositionAlgorithm>();
-
-        private ICaretPositionAlgorithm caretMovingAlgorithm => caretMovingAlgorithmSet[Mode];
 
         private void createAlgorithmList()
         {
@@ -26,38 +26,44 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             };
         }
 
+        protected ICaretPositionAlgorithm<T> GetCaretPositionAlgorithm<T>(T position) where T : ICaretPosition
+        {
+            return (ICaretPositionAlgorithm<T>)caretMovingAlgorithmSet[Mode];
+        }
+
         public bool MoveCaret(MovingCaretAction action)
         {
             if (Mode == Mode.ViewMode)
                 return false;
 
             var currentPosition = BindableCaretPosition.Value;
-            ICaretPosition? position;
+            var algorithm = GetCaretPositionAlgorithm(currentPosition);
+            ICaretPosition position;
 
             switch (action)
             {
                 case MovingCaretAction.Up:
-                    position = caretMovingAlgorithm.MoveUp(currentPosition);
+                    position = algorithm.MoveUp(currentPosition);
                     break;
 
                 case MovingCaretAction.Down:
-                    position = caretMovingAlgorithm.MoveDown(currentPosition);
+                    position = algorithm.MoveDown(currentPosition);
                     break;
 
                 case MovingCaretAction.Left:
-                    position = caretMovingAlgorithm.MoveLeft(currentPosition);
+                    position = algorithm.MoveLeft(currentPosition);
                     break;
 
                 case MovingCaretAction.Right:
-                    position = caretMovingAlgorithm.MoveRight(currentPosition);
+                    position = algorithm.MoveRight(currentPosition);
                     break;
 
                 case MovingCaretAction.First:
-                    position = caretMovingAlgorithm.MoveToFirst();
+                    position = algorithm.MoveToFirst();
                     break;
 
                 case MovingCaretAction.Last:
-                    position = caretMovingAlgorithm.MoveToLast();
+                    position = algorithm.MoveToLast();
                     break;
 
                 default:
@@ -67,47 +73,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (position == null)
                 return false;
 
-            movePositionTo(position.Value);
+            MoveCaretToTargetPosition(position);
             return true;
         }
 
         public bool MoveCaretToTargetPosition(ICaretPosition position)
-        {
-            switch (position.Mode)
-            {
-                case CaretMode.Edit:
-                case CaretMode.Recording:
-                    return movePositionTo(position);
-
-                default:
-                    throw new IndexOutOfRangeException(nameof(position.Mode));
-            }
-        }
-
-        public bool MoveHoverCaretToTargetPosition(ICaretPosition position)
-        {
-            switch (position.Mode)
-            {
-                case CaretMode.Edit:
-                case CaretMode.Recording:
-                    return moveHoverPositionTo(position);
-
-                default:
-                    throw new IndexOutOfRangeException(nameof(position.Mode));
-            }
-        }
-
-        public void ClearHoverCaretPosition()
-        {
-            BindableHoverCaretPosition.Value = new ICaretPosition();
-        }
-
-        public bool CaretMovable(ICaretPosition position)
-        {
-            return caretMovingAlgorithm.PositionMovable(position);
-        }
-
-        private bool movePositionTo(ICaretPosition position)
         {
             if (position.Lyric == null)
                 return false;
@@ -115,12 +85,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (!CaretMovable(position))
                 return false;
 
-            BindableHoverCaretPosition.Value = new ICaretPosition();
+            BindableHoverCaretPosition.Value = generatePosition(Mode);
             BindableCaretPosition.Value = position;
             return true;
         }
 
-        private bool moveHoverPositionTo(ICaretPosition position)
+        public bool MoveHoverCaretToTargetPosition(ICaretPosition position)
         {
             if (position.Lyric == null)
                 return false;
@@ -130,6 +100,39 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             BindableHoverCaretPosition.Value = position;
             return true;
+        }
+
+        public void ClearHoverCaretPosition()
+        {
+            BindableHoverCaretPosition.Value = generatePosition(Mode);
+        }
+
+        public void ResetPosition(Mode mode)
+        {
+            BindableCaretPosition.Value = generatePosition(mode);
+            BindableHoverCaretPosition.Value = generatePosition(mode);
+        }
+
+        public bool CaretMovable(ICaretPosition position)
+        {
+            var algorithm = GetCaretPositionAlgorithm(position);
+            return algorithm.PositionMovable(position);
+        }
+
+        private ICaretPosition generatePosition(Mode mode)
+        {
+            switch (mode)
+            {
+                case Mode.EditMode:
+                case Mode.TypingMode:
+                    return new TextCaretPosition(null, 0);
+                case Mode.RecordMode:
+                    return new TimeTagCaretPosition(null, null);
+                case Mode.TimeTagEditMode:
+                    return new TimeTagIndexCaretPosition(null, new TextIndex(0));
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Mode));
+            }
         }
     }
 

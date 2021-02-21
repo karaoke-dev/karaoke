@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             // todo : get real index.
             var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
             var index = drawableLyric.GetHoverIndex(position);
-            state.MoveHoverCaretToTargetPosition(new ICaretPosition(Lyric, index));
+            state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, index));
             return base.OnMouseMove(e);
         }
 
@@ -109,8 +109,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 return false;
 
             // place hover caret to target position.
-            var index = state.BindableHoverCaretPosition.Value.Index;
-            state.MoveCaretToTargetPosition(new ICaretPosition(Lyric, index));
+            var position = state.BindableHoverCaretPosition.Value;
+            state.MoveCaretToTargetPosition(position);
 
             return true;
         }
@@ -123,16 +123,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             // todo : not really sure is ok to split time-tag by double click?
             // need to make an ux research.
             var position = state.BindableHoverCaretPosition.Value;
-
-            switch (state.Mode)
+            if (position is TextCaretPosition textCaretPosition)
             {
-                case Mode.EditMode:
-                    var splitPosition = TextIndexUtils.ToStringIndex(position.Index);
-                    lyricManager?.SplitLyric(Lyric, splitPosition);
-                    return true;
-
-                default:
-                    return base.OnDoubleClick(e);
+                lyricManager?.SplitLyric(Lyric, textCaretPosition.Index);
+                return true;
+            }
+            else
+            {
+                throw new NotSupportedException(nameof(position));
             }
         }
 
@@ -151,36 +149,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             {
                 var caretPosition = e.NewValue;
 
-                switch (caretPosition.Mode)
+                if (caretPosition is TimeTagIndexCaretPosition indexCaretPosition)
                 {
-                    case CaretMode.Edit:
-                        UpdateCaret(e.NewValue, true);
-                        break;
-
-                    case CaretMode.Recording:
-                        UpdateTimeTagCaret(e.NewValue, true);
-                        break;
-
-                    default:
-                        throw new InvalidOperationException(nameof(caretPosition.Mode));
+                    UpdateCaret(indexCaretPosition, true);
+                }
+                else if (caretPosition is TimeTagCaretPosition timeTagCaretPosition)
+                {
+                    UpdateTimeTagCaret(timeTagCaretPosition, true);
+                }
+                else
+                {
+                    throw new NotSupportedException(nameof(caretPosition));
                 }
             });
             state.BindableCaretPosition.BindValueChanged(e =>
             {
                 var caretPosition = e.NewValue;
 
-                switch (caretPosition.Mode)
+                if (caretPosition is TimeTagIndexCaretPosition indexCaretPosition)
                 {
-                    case CaretMode.Edit:
-                        UpdateCaret(e.NewValue, false);
-                        break;
-
-                    case CaretMode.Recording:
-                        UpdateTimeTagCaret(e.NewValue, false);
-                        break;
-
-                    default:
-                        throw new InvalidOperationException(nameof(caretPosition.Mode));
+                    UpdateCaret(indexCaretPosition, false);
+                }
+                else if (caretPosition is TimeTagCaretPosition timeTagCaretPosition)
+                {
+                    UpdateTimeTagCaret(timeTagCaretPosition, false);
+                }
+                else
+                {
+                    throw new NotSupportedException(nameof(caretPosition));
                 }
             });
         }
@@ -253,7 +249,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             }
         }
 
-        protected void UpdateTimeTagCaret(ICaretPosition position, bool preview)
+        protected void UpdateTimeTagCaret(TimeTagCaretPosition position, bool preview)
         {
             var caret = caretContainer.OfType<DrawableTimeTagRecordCaret>().FirstOrDefault(x => x.Preview == preview);
             if (caret == null)
@@ -274,7 +270,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             caret.TimeTag = timeTag;
         }
 
-        protected void UpdateCaret(ICaretPosition position, bool preview)
+        protected void UpdateCaret(TimeTagIndexCaretPosition position, bool preview)
         {
             var caret = caretContainer.OfType<IDrawableCaret>().FirstOrDefault(x => x.Preview == preview);
             if (caret == null)

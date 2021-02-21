@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
 
         private void updateStyle()
         {
-            if (isTrigger(bindableMode.Value) && !state.CaretMovable(new ICaretPosition(lyric, timeTag)))
+            if (isTrigger(bindableMode.Value) && !state.CaretMovable(new TimeTagCaretPosition(lyric, timeTag)))
             {
                 InternalChild.Alpha = 0.3f;
             }
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
             if (!isTrigger(bindableMode.Value))
                 return false;
 
-            return state?.MoveHoverCaretToTargetPosition(new ICaretPosition(lyric, timeTag)) ?? false;
+            return state?.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag)) ?? false;
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
             if (!isTrigger(bindableMode.Value))
                 return false;
 
-            return state.MoveCaretToTargetPosition(new ICaretPosition(lyric, timeTag));
+            return state.MoveCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag));
         }
 
         protected override void Dispose(bool isDisposing)

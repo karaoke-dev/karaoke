@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
@@ -84,10 +85,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         #region Text
 
-        public bool DeleteLyricText(ICaretPosition position)
+        public bool DeleteLyricText(Lyric lyric, int index)
         {
-            var lyric = position.Lyric;
-            var index = TextIndexUtils.ToStringIndex(position.Index);
             if (index <= 0)
                 return false;
 
@@ -265,10 +264,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return true;
         }
 
-        public bool AddTimeTagByPosition(ICaretPosition position)
+        public bool AddTimeTagByPosition(Lyric lyric, TextIndex index)
         {
-            var lyric = position.Lyric;
-            var index = position.Index;
             if (!beatmap.HitObjects.Contains(lyric))
                 return false;
 
@@ -288,10 +285,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return false;
         }
 
-        public bool RemoveTimeTagByPosition(ICaretPosition position)
+        public bool RemoveTimeTagByPosition(Lyric lyric, TextIndex index)
         {
-            var lyric = position.Lyric;
-            var index = position.Index;
             if (!beatmap.HitObjects.Contains(lyric))
                 return false;
 

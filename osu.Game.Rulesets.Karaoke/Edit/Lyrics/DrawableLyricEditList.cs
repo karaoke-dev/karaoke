@@ -53,6 +53,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             state.BindableCaretPosition.BindValueChanged(e =>
             {
                 var listItem = getListItem(e.NewValue.Lyric);
+                if (listItem == null)
+                    return;
 
                 // move to target position.
                 if (state.BindableAutoFocusEditLyric.Value)
