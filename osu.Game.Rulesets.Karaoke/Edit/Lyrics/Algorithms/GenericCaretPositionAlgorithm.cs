@@ -10,14 +10,14 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
-    public class GenericCursorPositionAlgorithm : CursorPositionAlgorithm, ICursorPositionAlgorithm
+    public class GenericCaretPositionAlgorithm : CaretPositionAlgorithm, ICaretPositionAlgorithm
     {
-        public GenericCursorPositionAlgorithm(Lyric[] lyrics)
+        public GenericCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
         }
 
-        public virtual bool PositionMovable(CursorPosition position)
+        public virtual bool PositionMovable(CaretPosition position)
         {
             if (position.Lyric == null)
                 return false;
@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return true;
         }
 
-        public CursorPosition? MoveUp(CursorPosition currentPosition)
+        public CaretPosition? MoveUp(CaretPosition currentPosition)
         {
             var lyric = Lyrics.GetPrevious(currentPosition.Lyric);
             if (lyric == null)
@@ -38,10 +38,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             var index = Math.Clamp(currentPosition.Index.Index, 0, lyricTextLength - 1);
             var state = currentPosition.Index.State;
 
-            return new CursorPosition(lyric, new TextIndex(index, state));
+            return new CaretPosition(lyric, new TextIndex(index, state));
         }
 
-        public CursorPosition? MoveDown(CursorPosition currentPosition)
+        public CaretPosition? MoveDown(CaretPosition currentPosition)
         {
             var lyric = Lyrics.GetNext(currentPosition.Lyric);
             if (lyric == null)
@@ -51,44 +51,44 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             var index = Math.Clamp(currentPosition.Index.Index, 0, lyricTextLength - 1);
             var state = currentPosition.Index.State;
 
-            return new CursorPosition(lyric, new TextIndex(index, state));
+            return new CaretPosition(lyric, new TextIndex(index, state));
         }
 
-        public CursorPosition? MoveLeft(CursorPosition currentPosition)
+        public CaretPosition? MoveLeft(CaretPosition currentPosition)
         {
-            // get previous cursor and make a check is need to change line.
+            // get previous caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
             var previousIndex = GetPreviousIndex(currentPosition.Index);
 
             if (TextIndexUtils.OutOfRange(previousIndex, lyric?.Text))
-                return MoveUp(new CursorPosition(currentPosition.Lyric, new TextIndex(int.MaxValue)));
+                return MoveUp(new CaretPosition(currentPosition.Lyric, new TextIndex(int.MaxValue)));
 
-            return new CursorPosition(currentPosition.Lyric, previousIndex);
+            return new CaretPosition(currentPosition.Lyric, previousIndex);
         }
 
-        public CursorPosition? MoveRight(CursorPosition currentPosition)
+        public CaretPosition? MoveRight(CaretPosition currentPosition)
         {
-            // get next cursor and make a check is need to change line.
+            // get next caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
             var nextIndex = GetNextIndex(currentPosition.Index);
 
             if (TextIndexUtils.OutOfRange(nextIndex, lyric?.Text))
-                return MoveDown(new CursorPosition(currentPosition.Lyric, new TextIndex(int.MinValue)));
+                return MoveDown(new CaretPosition(currentPosition.Lyric, new TextIndex(int.MinValue)));
 
-            return new CursorPosition(currentPosition.Lyric, nextIndex);
+            return new CaretPosition(currentPosition.Lyric, nextIndex);
         }
 
-        public CursorPosition? MoveToFirst()
+        public CaretPosition? MoveToFirst()
         {
             var lyric = Lyrics.FirstOrDefault();
             if (lyric == null)
                 return null;
 
             var index = new TextIndex();
-            return new CursorPosition(lyric, index);
+            return new CaretPosition(lyric, index);
         }
 
-        public CursorPosition? MoveToLast()
+        public CaretPosition? MoveToLast()
         {
             var lyric = Lyrics.LastOrDefault();
             if (lyric == null)
@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
             var textLength = lyric?.Text.Length ?? 0;
             var index = new TextIndex(textLength - 1, TextIndex.IndexState.End);
-            return new CursorPosition(lyric, index);
+            return new CaretPosition(lyric, index);
         }
 
         protected virtual TextIndex GetPreviousIndex(TextIndex currentIndex)

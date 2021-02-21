@@ -7,12 +7,11 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
-    public class DrawableTimeTagRecordCursor : CompositeDrawable, IDrawableCursor, IHasTimeTag
+    public class DrawableTimeTagEditCaret : CompositeDrawable, IDrawableCaret, IHasCaretPosition
     {
         private const float triangle_width = 8;
 
@@ -21,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 
         private readonly RightTriangle drawableTimeTag;
 
-        public DrawableTimeTagRecordCursor()
+        public DrawableTimeTagEditCaret()
         {
             AutoSizeAxes = Axes.Both;
 
@@ -34,16 +33,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
             };
         }
 
-        private TimeTag timeTag;
+        private CaretPosition position;
 
-        public TimeTag TimeTag
+        public CaretPosition CaretPosition
         {
-            get => timeTag;
+            get => position;
             set
             {
-                timeTag = value;
-                drawableTimeTag.Scale = new Vector2(timeTag.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1);
-                drawableTimeTag.Colour = timeTag.Time.HasValue ? colours.YellowDarker : colours.Gray3;
+                position = value;
+                drawableTimeTag.Scale = new Vector2(position.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1);
+
+                // todo : color is by has time-tag here?
+                // drawableTimeTag.Colour = position.Time.HasValue ? colours.YellowDarker : colours.Gray3;
             }
         }
 

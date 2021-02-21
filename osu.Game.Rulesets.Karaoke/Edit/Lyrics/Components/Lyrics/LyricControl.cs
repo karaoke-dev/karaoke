@@ -8,7 +8,8 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
@@ -22,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
         private readonly DrawableEditLyric drawableLyric;
         private readonly Container timeTagContainer;
-        private readonly Container cursorContainer;
+        private readonly Container caretContainer;
 
         [Resolved(canBeNull: true)]
         private LyricManager lyricManager { get; set; }
@@ -46,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                     {
                         // need to delay until karaoke text has been calculated.
                         ScheduleAfterChildren(UpdateTimeTags);
-                        cursorContainer.Height = font.LyricTextFontInfo.LyricTextFontInfo.CharSize * 1.7f;
+                        caretContainer.Height = font.LyricTextFontInfo.LyricTextFontInfo.CharSize * 1.7f;
                     }
                 },
                 timeTagContainer = new Container
@@ -55,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                     Origin = Anchor.BottomLeft,
                     RelativeSizeAxes = Axes.Both,
                 },
-                cursorContainer = new Container
+                caretContainer = new Container
                 {
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
@@ -68,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 var displayRomaji = e?.NewValue?.Any() ?? false;
                 var marginWidth = displayRomaji ? 30 : 15;
                 timeTagContainer.Margin = new MarginPadding { Bottom = marginWidth };
-                cursorContainer.Margin = new MarginPadding { Bottom = marginWidth };
+                caretContainer.Margin = new MarginPadding { Bottom = marginWidth };
             }, true);
 
             drawableLyric.TimeTagsBindable.BindValueChanged(e =>
@@ -88,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             // todo : get real index.
             var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
             var index = drawableLyric.GetHoverIndex(position);
-            state.MoveHoverCursorToTargetPosition(new CursorPosition(Lyric, index));
+            state.MoveHoverCaretToTargetPosition(new CaretPosition(Lyric, index));
             return base.OnMouseMove(e);
         }
 
@@ -97,8 +98,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             if (!isTrigger(state.Mode))
                 return;
 
-            // lost hover cursor and time-tag cursor
-            state.ClearHoverCursorPosition();
+            // lost hover caret and time-tag caret
+            state.ClearHoverCaretPosition();
             base.OnHoverLost(e);
         }
 
@@ -107,9 +108,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             if (!isTrigger(state.Mode))
                 return false;
 
-            // place hover cursor to target position.
-            var index = state.BindableHoverCursorPosition.Value.Index;
-            state.MoveCursorToTargetPosition(new CursorPosition(Lyric, index));
+            // place hover caret to target position.
+            var index = state.BindableHoverCaretPosition.Value.Index;
+            state.MoveCaretToTargetPosition(new CaretPosition(Lyric, index));
 
             return true;
         }
@@ -121,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             // todo : not really sure is ok to split time-tag by double click?
             // need to make an ux research.
-            var position = state.BindableHoverCursorPosition.Value;
+            var position = state.BindableHoverCaretPosition.Value;
 
             switch (state.Mode)
             {
@@ -141,74 +142,74 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             drawableLyric.Clock = clock;
             state.BindableMode.BindValueChanged(e =>
             {
-                // initial default cursor here
-                CreateCursor(e.NewValue);
+                // initial default caret here
+                CreateCaret(e.NewValue);
             }, true);
 
-            // update change if cursor changed.
-            state.BindableHoverCursorPosition.BindValueChanged(e =>
+            // update change if caret changed.
+            state.BindableHoverCaretPosition.BindValueChanged(e =>
             {
-                var cursorPosition = e.NewValue;
+                var caretPosition = e.NewValue;
 
-                switch (cursorPosition.Mode)
+                switch (caretPosition.Mode)
                 {
-                    case CursorMode.Edit:
-                        UpdateCursor(e.NewValue, true);
+                    case CaretMode.Edit:
+                        UpdateCaret(e.NewValue, true);
                         break;
 
-                    case CursorMode.Recording:
-                        UpdateTimeTagCursor(e.NewValue, true);
+                    case CaretMode.Recording:
+                        UpdateTimeTagCaret(e.NewValue, true);
                         break;
 
                     default:
-                        throw new InvalidOperationException(nameof(cursorPosition.Mode));
+                        throw new InvalidOperationException(nameof(caretPosition.Mode));
                 }
             });
-            state.BindableCursorPosition.BindValueChanged(e =>
+            state.BindableCaretPosition.BindValueChanged(e =>
             {
-                var cursorPosition = e.NewValue;
+                var caretPosition = e.NewValue;
 
-                switch (cursorPosition.Mode)
+                switch (caretPosition.Mode)
                 {
-                    case CursorMode.Edit:
-                        UpdateCursor(e.NewValue, false);
+                    case CaretMode.Edit:
+                        UpdateCaret(e.NewValue, false);
                         break;
 
-                    case CursorMode.Recording:
-                        UpdateTimeTagCursor(e.NewValue, false);
+                    case CaretMode.Recording:
+                        UpdateTimeTagCaret(e.NewValue, false);
                         break;
 
                     default:
-                        throw new InvalidOperationException(nameof(cursorPosition.Mode));
+                        throw new InvalidOperationException(nameof(caretPosition.Mode));
                 }
             });
         }
 
-        protected void CreateCursor(Mode mode)
+        protected void CreateCaret(Mode mode)
         {
-            cursorContainer.Clear();
+            caretContainer.Clear();
 
-            // create preview and real cursor
-            addCursor(false);
-            addCursor(true);
+            // create preview and real caret
+            addCaret(false);
+            addCaret(true);
 
-            void addCursor(bool isPreview)
+            void addCaret(bool isPreview)
             {
-                var cursor = createCursor(mode);
-                if (cursor == null)
+                var caret = createCaret(mode);
+                if (caret == null)
                     return;
 
-                cursor.Hide();
-                cursor.Anchor = Anchor.BottomLeft;
-                cursor.Origin = Anchor.BottomLeft;
+                caret.Hide();
+                caret.Anchor = Anchor.BottomLeft;
+                caret.Origin = Anchor.BottomLeft;
 
-                if (cursor is IDrawableCursor drawableCursor)
-                    drawableCursor.Preview = isPreview;
+                if (caret is IDrawableCaret drawableCaret)
+                    drawableCaret.Preview = isPreview;
 
-                cursorContainer.Add(cursor);
+                caretContainer.Add(caret);
             }
 
-            static Drawable createCursor(Mode mode)
+            static Drawable createCaret(Mode mode)
             {
                 switch (mode)
                 {
@@ -216,16 +217,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                         return null;
 
                     case Mode.EditMode:
-                        return new DrawableLyricSplitterCursor();
+                        return new DrawableLyricSplitterCaret();
 
                     case Mode.TypingMode:
-                        return new DrawableLyricInputCursor();
+                        return new DrawableLyricInputCaret();
 
                     case Mode.RecordMode:
-                        return new DrawableTimeTagRecordCursor();
+                        return new DrawableTimeTagRecordCaret();
 
                     case Mode.TimeTagEditMode:
-                        return new DrawableTimeTagEditCursor();
+                        return new DrawableTimeTagEditCaret();
 
                     default:
                         throw new IndexOutOfRangeException(nameof(mode));
@@ -252,40 +253,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             }
         }
 
-        protected void UpdateTimeTagCursor(CursorPosition position, bool preview)
+        protected void UpdateTimeTagCaret(CaretPosition position, bool preview)
         {
-            var cursor = cursorContainer.OfType<DrawableTimeTagRecordCursor>().FirstOrDefault(x => x.Preview == preview);
-            if (cursor == null)
+            var caret = caretContainer.OfType<DrawableTimeTagRecordCaret>().FirstOrDefault(x => x.Preview == preview);
+            if (caret == null)
                 return;
 
             var timeTag = position.TimeTag;
 
             if (!drawableLyric.TimeTagsBindable.Value.Contains(timeTag))
             {
-                cursor.Hide();
+                caret.Hide();
                 return;
             }
 
-            cursor.Show();
+            caret.Show();
 
             var spacing = textIndexPosition(timeTag.Index) + extraSpacing(timeTag);
-            cursor.X = spacing;
-            cursor.TimeTag = timeTag;
+            caret.X = spacing;
+            caret.TimeTag = timeTag;
         }
 
-        protected void UpdateCursor(CursorPosition position, bool preview)
+        protected void UpdateCaret(CaretPosition position, bool preview)
         {
-            var cursor = cursorContainer.OfType<IDrawableCursor>().FirstOrDefault(x => x.Preview == preview);
-            if (cursor == null)
+            var caret = caretContainer.OfType<IDrawableCaret>().FirstOrDefault(x => x.Preview == preview);
+            if (caret == null)
                 return;
 
             if (position.Lyric != Lyric)
             {
-                cursor.Hide();
+                caret.Hide();
                 return;
             }
 
-            if (!(cursor is Drawable drawableCursor))
+            if (!(caret is Drawable drawableCaret))
                 return;
 
             var index = position.Index;
@@ -298,22 +299,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             var pos = new Vector2(textIndexPosition(index) + offset, 0);
 
-            if (cursor is DrawableLyricInputCursor inputCursor)
+            if (caret is DrawableLyricInputCaret inputCaret)
             {
-                inputCursor.DisplayAt(pos, null);
+                inputCaret.DisplayAt(pos, null);
             }
             else
             {
-                drawableCursor.Position = pos;
+                drawableCaret.Position = pos;
             }
 
-            if (cursor is IHasCursorPosition cursorPosition)
+            if (caret is IHasCaretPosition caretPosition)
             {
-                cursorPosition.CursorPosition = position;
+                caretPosition.CaretPosition = position;
             }
 
-            // show after cursor position has been ready.
-            cursor.Show();
+            // show after caret position has been ready.
+            caret.Show();
         }
 
         private float textIndexPosition(TextIndex textIndex)

@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
 {
     public class DrawableTimeTag : CompositeDrawable, IHasCustomTooltip
     {
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
         private EditorClock editorClock { get; set; }
 
         private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
-        private readonly Bindable<RecordingMovingCursorMode> bindableRecordingMovingCursorMode = new Bindable<RecordingMovingCursorMode>();
+        private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
 
         private readonly TimeTag timeTag;
         private readonly Lyric lyric;
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
                 updateStyle();
             });
 
-            bindableRecordingMovingCursorMode.BindValueChanged(x =>
+            bindableRecordingMovingCaretMode.BindValueChanged(x =>
             {
                 updateStyle();
             });
@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 
         private void updateStyle()
         {
-            if (isTrigger(bindableMode.Value) && !state.CursorMovable(new CursorPosition(lyric, timeTag)))
+            if (isTrigger(bindableMode.Value) && !state.CaretMovable(new CaretPosition(lyric, timeTag)))
             {
                 InternalChild.Alpha = 0.3f;
             }
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
             InternalChild.Colour = timeTag.Time.HasValue ? colours.Yellow : colours.Gray7;
 
             bindableMode.BindTo(state.BindableMode);
-            bindableRecordingMovingCursorMode.BindTo(state.BindableRecordingMovingCursorMode);
+            bindableRecordingMovingCaretMode.BindTo(state.BindableRecordingMovingCaretMode);
         }
 
         protected override bool OnHover(HoverEvent e)
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
             if (!isTrigger(bindableMode.Value))
                 return false;
 
-            return state?.MoveHoverCursorToTargetPosition(new CursorPosition(lyric, timeTag)) ?? false;
+            return state?.MoveHoverCaretToTargetPosition(new CaretPosition(lyric, timeTag)) ?? false;
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
             if (!isTrigger(bindableMode.Value))
                 return;
 
-            state?.ClearHoverCursorPosition();
+            state?.ClearHoverCaretPosition();
             base.OnHoverLost(e);
         }
 
@@ -111,13 +111,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
             if (!isTrigger(bindableMode.Value))
                 return false;
 
-            return state.MoveCursorToTargetPosition(new CursorPosition(lyric, timeTag));
+            return state.MoveCaretToTargetPosition(new CaretPosition(lyric, timeTag));
         }
 
         protected override void Dispose(bool isDisposing)
         {
             bindableMode.UnbindAll();
-            bindableRecordingMovingCursorMode.UnbindAll();
+            bindableRecordingMovingCaretMode.UnbindAll();
 
             base.Dispose(isDisposing);
         }

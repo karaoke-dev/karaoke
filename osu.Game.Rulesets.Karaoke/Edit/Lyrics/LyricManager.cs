@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         #region Text
 
-        public bool DeleteLyricText(CursorPosition position)
+        public bool DeleteLyricText(CaretPosition position)
         {
             var lyric = position.Lyric;
             var index = TextIndexUtils.ToStringIndex(position.Index);
@@ -265,7 +265,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return true;
         }
 
-        public bool AddTimeTagByPosition(CursorPosition position)
+        public bool AddTimeTagByPosition(CaretPosition position)
         {
             var lyric = position.Lyric;
             var index = position.Index;
@@ -288,7 +288,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return false;
         }
 
-        public bool RemoveTimeTagByPosition(CursorPosition position)
+        public bool RemoveTimeTagByPosition(CaretPosition position)
         {
             var lyric = position.Lyric;
             var index = position.Index;

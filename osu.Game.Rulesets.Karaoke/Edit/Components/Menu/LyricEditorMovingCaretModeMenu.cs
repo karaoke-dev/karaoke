@@ -7,26 +7,26 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public class LyricEditorMovingCursorModeMenu : EnumMenu<RecordingMovingCursorMode>
+    public class LyricEditorMovingCaretModeMenu : EnumMenu<RecordingMovingCaretMode>
     {
-        protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.RecordingMovingCursorMode;
+        protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.RecordingMovingCaretMode;
 
-        public LyricEditorMovingCursorModeMenu(KaraokeRulesetEditConfigManager config, string text)
+        public LyricEditorMovingCaretModeMenu(KaraokeRulesetEditConfigManager config, string text)
             : base(config, text)
         {
         }
 
-        protected override string GetName(RecordingMovingCursorMode selection)
+        protected override string GetName(RecordingMovingCaretMode selection)
         {
             switch (selection)
             {
-                case RecordingMovingCursorMode.None:
+                case RecordingMovingCaretMode.None:
                     return "None";
 
-                case RecordingMovingCursorMode.OnlyStartTag:
+                case RecordingMovingCaretMode.OnlyStartTag:
                     return "Skip start tag";
 
-                case RecordingMovingCursorMode.OnlyEndTag:
+                case RecordingMovingCaretMode.OnlyEndTag:
                     return "Skip end tag";
 
                 default:

@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                 new EditorMenuItemSpacer(),
                                 new LyricEditorEditModeMenu(config, "Lyric editor mode"),
                                 new LyricEditorLeftSideModeMenu(config, "Lyric editor left side mode"),
-                                new LyricEditorMovingCursorModeMenu(config, "Record cursor moving mode"),
+                                new LyricEditorMovingCaretModeMenu(config, "Record carot moving mode"),
                                 new LyricEditorTextSizeMenu(config, "Text size"),
                                 new EditorMenuItemSpacer(),
                                 new NoteEditorPreviewMenu(config, "Note editor"),

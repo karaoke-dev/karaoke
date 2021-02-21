@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         Bindable<LyricFastEditMode> BindableFastEditMode { get; }
 
-        Bindable<RecordingMovingCursorMode> BindableRecordingMovingCursorMode { get; }
+        Bindable<RecordingMovingCaretMode> BindableRecordingMovingCaretMode { get; }
 
         BindableBool BindableAutoFocusEditLyric { get; }
 
@@ -23,19 +23,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         #endregion
 
-        #region cursor position
+        #region caret position
 
-        Bindable<CursorPosition> BindableHoverCursorPosition { get; }
+        Bindable<CaretPosition> BindableHoverCaretPosition { get; }
 
-        Bindable<CursorPosition> BindableCursorPosition { get; }
+        Bindable<CaretPosition> BindableCaretPosition { get; }
 
-        bool MoveCursorToTargetPosition(CursorPosition position);
+        bool MoveCaretToTargetPosition(CaretPosition position);
 
-        bool MoveHoverCursorToTargetPosition(CursorPosition position);
+        bool MoveHoverCaretToTargetPosition(CaretPosition position);
 
-        void ClearHoverCursorPosition();
+        void ClearHoverCaretPosition();
 
-        bool CursorMovable(CursorPosition timeTag);
+        bool CaretMovable(CaretPosition timeTag);
 
         #endregion
     }

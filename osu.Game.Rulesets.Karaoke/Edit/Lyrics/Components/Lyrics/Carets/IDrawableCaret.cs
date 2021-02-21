@@ -3,12 +3,12 @@
 
 using osu.Framework.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
-    public interface IDrawableCursor : IDrawable
+    public interface IDrawableCaret : IDrawable
     {
         /// <summary>
-        /// Is previewing cursor
+        /// Is previewing caret
         /// </summary>
         bool Preview { get; set; }
     }

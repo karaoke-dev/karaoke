@@ -6,9 +6,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
-    public class TypingCursorPositionAlgorithm : GenericCursorPositionAlgorithm
+    public class TypingCaretPositionAlgorithm : GenericCaretPositionAlgorithm
     {
-        public TypingCursorPositionAlgorithm(Lyric[] lyrics)
+        public TypingCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
         }

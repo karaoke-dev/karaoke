@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Bindable<LyricFastEditMode> BindableFastEditMode { get; } = new Bindable<LyricFastEditMode>();
 
-        public Bindable<RecordingMovingCursorMode> BindableRecordingMovingCursorMode { get; } = new Bindable<RecordingMovingCursorMode>();
+        public Bindable<RecordingMovingCaretMode> BindableRecordingMovingCaretMode { get; } = new Bindable<RecordingMovingCaretMode>();
 
         public BindableBool BindableAutoFocusEditLyric { get; } = new BindableBool();
 
@@ -38,9 +38,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
 
-        public Bindable<CursorPosition> BindableHoverCursorPosition { get; } = new Bindable<CursorPosition>();
+        public Bindable<CaretPosition> BindableHoverCaretPosition { get; } = new Bindable<CaretPosition>();
 
-        public Bindable<CursorPosition> BindableCursorPosition { get; } = new Bindable<CursorPosition>();
+        public Bindable<CaretPosition> BindableCaretPosition { get; } = new Bindable<CaretPosition>();
 
         private readonly KaraokeLyricEditorSkin skin;
         private readonly DrawableLyricEditList container;
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager != null)
                 container.OnOrderChanged += lyricManager.ChangeLyricOrder;
 
-            MoveCursor(MovingCursorAction.First);
+            MoveCaret(MovingCaretAction.First);
 
             BindableMode.BindValueChanged(e =>
             {
@@ -106,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (Mode != Mode.TypingMode)
                 return false;
 
-            var position = BindableCursorPosition.Value;
+            var position = BindableCaretPosition.Value;
 
             switch (e.Key)
             {
@@ -114,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     // delete single character.
                     var deletedSuccess = lyricManager.DeleteLyricText(position);
                     if (deletedSuccess)
-                        MoveCursor(MovingCursorAction.Left);
+                        MoveCaret(MovingCaretAction.Left);
                     return deletedSuccess;
 
                 default:
@@ -160,26 +160,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         protected bool HandleMovingEvent(KaraokeEditAction action)
         {
-            // moving cursor action
+            // moving caret action
             switch (action)
             {
                 case KaraokeEditAction.Up:
-                    return MoveCursor(MovingCursorAction.Up);
+                    return MoveCaret(MovingCaretAction.Up);
 
                 case KaraokeEditAction.Down:
-                    return MoveCursor(MovingCursorAction.Down);
+                    return MoveCaret(MovingCaretAction.Down);
 
                 case KaraokeEditAction.Left:
-                    return MoveCursor(MovingCursorAction.Left);
+                    return MoveCaret(MovingCaretAction.Left);
 
                 case KaraokeEditAction.Right:
-                    return MoveCursor(MovingCursorAction.Right);
+                    return MoveCaret(MovingCaretAction.Right);
 
                 case KaraokeEditAction.First:
-                    return MoveCursor(MovingCursorAction.First);
+                    return MoveCaret(MovingCaretAction.First);
 
                 case KaraokeEditAction.Last:
-                    return MoveCursor(MovingCursorAction.Last);
+                    return MoveCaret(MovingCaretAction.Last);
 
                 default:
                     return false;
@@ -191,11 +191,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager == null)
                 return false;
 
-            var cursorPosition = BindableCursorPosition.Value;
-            if (cursorPosition.Mode != CursorMode.Recording)
+            var caretPosition = BindableCaretPosition.Value;
+            if (caretPosition.Mode != CaretMode.Recording)
                 return false;
 
-            var currentTimeTag = cursorPosition.TimeTag;
+            var currentTimeTag = caretPosition.TimeTag;
 
             switch (action)
             {
@@ -206,7 +206,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     var currentTime = editorClock.CurrentTime;
                     var setTimeSuccess = lyricManager.SetTimeTagTime(currentTimeTag, currentTime);
                     if (setTimeSuccess)
-                        MoveCursor(MovingCursorAction.Right);
+                        MoveCaret(MovingCaretAction.Right);
                     return setTimeSuccess;
 
                 default:
@@ -219,7 +219,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager == null)
                 return false;
 
-            var position = BindableCursorPosition.Value;
+            var position = BindableCaretPosition.Value;
 
             switch (action)
             {
@@ -258,7 +258,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         return;
 
                     case Mode.RecordMode:
-                        MoveCursor(MovingCursorAction.First);
+                        MoveCaret(MovingCaretAction.First);
                         return;
 
                     case Mode.TimeTagEditMode:
@@ -276,18 +276,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             set => BindableFastEditMode.Value = value;
         }
 
-        public RecordingMovingCursorMode RecordingMovingCursorMode
+        public RecordingMovingCaretMode RecordingMovingCaretMode
         {
-            get => BindableRecordingMovingCursorMode.Value;
+            get => BindableRecordingMovingCaretMode.Value;
             set
             {
-                if (BindableRecordingMovingCursorMode.Value == value)
+                if (BindableRecordingMovingCaretMode.Value == value)
                     return;
 
-                BindableRecordingMovingCursorMode.Value = value;
+                BindableRecordingMovingCaretMode.Value = value;
                 createAlgorithmList();
 
-                // todo : might move cursor to valid position.
+                // todo : might move caret to valid position.
             }
         }
 

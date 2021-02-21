@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            OsuDropdown<RecordingMovingCursorMode> recordingModeDropdown = null;
+            OsuDropdown<RecordingMovingCaretMode> recordingModeDropdown = null;
 
             Child = new GridContainer
             {
@@ -128,15 +128,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                         editor.LyricFastEditMode = fastEditMode.NewValue;
                                     });
                                 }),
-                                recordingModeDropdown = new OsuDropdown<RecordingMovingCursorMode>
+                                recordingModeDropdown = new OsuDropdown<RecordingMovingCaretMode>
                                 {
                                     Width = 150,
-                                    Items = EnumUtils.GetValues<RecordingMovingCursorMode>()
+                                    Items = EnumUtils.GetValues<RecordingMovingCaretMode>()
                                 }.With(x =>
                                 {
-                                    x.Current.BindValueChanged(recordingMovingCursorMode =>
+                                    x.Current.BindValueChanged(recordingMovingCaretMode =>
                                     {
-                                        editor.RecordingMovingCursorMode = recordingMovingCursorMode.NewValue;
+                                        editor.RecordingMovingCaretMode = recordingMovingCaretMode.NewValue;
                                     });
                                 }),
                                 new OsuButton
