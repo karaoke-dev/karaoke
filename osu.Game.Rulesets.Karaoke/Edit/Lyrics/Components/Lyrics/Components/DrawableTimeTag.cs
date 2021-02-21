@@ -5,16 +5,19 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Edit;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 {
-    public class DrawableTimeTag : CompositeDrawable
+    public class DrawableTimeTag : CompositeDrawable, IHasCustomTooltip
     {
         /// <summary>
         /// Height of major bar line triangles.
@@ -23,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 
         [Resolved]
         private ILyricEditorState state { get; set; }
+
+        [Resolved]
+        private EditorClock editorClock { get; set; }
 
         private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
         private readonly Bindable<RecordingMovingCursorMode> bindableRecordingMovingCursorMode = new Bindable<RecordingMovingCursorMode>();
@@ -96,6 +102,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 
         protected override bool OnClick(ClickEvent e)
         {
+            // navigation to target time
+            // todo : might apply config to allow this behavior in target place.
+            var time = timeTag.Time;
+            if (time != null)
+                editorClock.SeekSmoothlyTo(time.Value);
+
             if (!isTrigger(bindableMode.Value))
                 return false;
 
@@ -112,5 +124,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Components
 
         private bool isTrigger(Mode mode)
             => mode == Mode.RecordMode;
+
+        public object TooltipContent => timeTag;
+
+        public ITooltip GetCustomTooltip() => new TimeTagTooltip();
     }
 }

@@ -17,12 +17,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 {
     public class TimeTagTooltip : BackgroundToolTip
     {
-        private const int time_display_height = 35;
+        private const int time_display_height = 25;
 
         private Box background;
         private readonly OsuSpriteText trackTimer;
         private readonly OsuSpriteText index;
         private readonly OsuSpriteText indexState;
+
+        protected override float Padding => 5;
 
         public TimeTagTooltip()
         {
@@ -45,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                     {
                         trackTimer = new OsuSpriteText
                         {
-                            Font = OsuFont.GetFont(size: 25, fixedWidth: true)
+                            Font = OsuFont.GetFont(size: 21, fixedWidth: true)
                         }
                     },
                     null,
@@ -57,8 +59,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                             Spacing = new Vector2(10),
                             Children = new[]
                             {
-                                index = new OsuSpriteText(),
-                                indexState = new OsuSpriteText()
+                                index = new OsuSpriteText
+                                {
+                                    Font = OsuFont.GetFont(size: 12)
+                                },
+                                indexState = new OsuSpriteText
+                                {
+                                    Font = OsuFont.GetFont(size: 12)
+                                }
                             }
                         }
                     }
@@ -71,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             return background = new Box
             {
                 RelativeSizeAxes = Axes.X,
-                Height = time_display_height + BORDER * 2
+                Height = time_display_height + BORDER
             };
         }
 
@@ -81,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 return false;
 
             trackTimer.Text = TimeTagUtils.FormattedString(timeTag);
-            index.Text = $"At index {timeTag.Index.Index}";
+            index.Text = $"Position: {timeTag.Index.Index}";
             indexState.Text = timeTag.Index.State == TextIndex.IndexState.Start ? "Start" : "End";
 
             return true;
