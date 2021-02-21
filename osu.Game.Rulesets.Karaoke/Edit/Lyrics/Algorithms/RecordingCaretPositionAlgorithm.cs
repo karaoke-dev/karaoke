@@ -10,11 +10,11 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
-    public class RecordingCursorPositionAlgorithm : CursorPositionAlgorithm, ICursorPositionAlgorithm
+    public class RecordingCaretPositionAlgorithm : CaretPositionAlgorithm, ICaretPositionAlgorithm
     {
         private readonly RecordingMovingCursorMode mode;
 
-        public RecordingCursorPositionAlgorithm(Lyric[] lyrics, RecordingMovingCursorMode mode)
+        public RecordingCaretPositionAlgorithm(Lyric[] lyrics, RecordingMovingCursorMode mode)
             : base(lyrics)
         {
             this.mode = mode;

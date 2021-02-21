@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager != null)
                 container.OnOrderChanged += lyricManager.ChangeLyricOrder;
 
-            MoveCursor(MovingCursorAction.First);
+            MoveCaret(MovingCursorAction.First);
 
             BindableMode.BindValueChanged(e =>
             {
@@ -114,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     // delete single character.
                     var deletedSuccess = lyricManager.DeleteLyricText(position);
                     if (deletedSuccess)
-                        MoveCursor(MovingCursorAction.Left);
+                        MoveCaret(MovingCursorAction.Left);
                     return deletedSuccess;
 
                 default:
@@ -164,22 +164,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             switch (action)
             {
                 case KaraokeEditAction.Up:
-                    return MoveCursor(MovingCursorAction.Up);
+                    return MoveCaret(MovingCursorAction.Up);
 
                 case KaraokeEditAction.Down:
-                    return MoveCursor(MovingCursorAction.Down);
+                    return MoveCaret(MovingCursorAction.Down);
 
                 case KaraokeEditAction.Left:
-                    return MoveCursor(MovingCursorAction.Left);
+                    return MoveCaret(MovingCursorAction.Left);
 
                 case KaraokeEditAction.Right:
-                    return MoveCursor(MovingCursorAction.Right);
+                    return MoveCaret(MovingCursorAction.Right);
 
                 case KaraokeEditAction.First:
-                    return MoveCursor(MovingCursorAction.First);
+                    return MoveCaret(MovingCursorAction.First);
 
                 case KaraokeEditAction.Last:
-                    return MoveCursor(MovingCursorAction.Last);
+                    return MoveCaret(MovingCursorAction.Last);
 
                 default:
                     return false;
@@ -206,7 +206,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     var currentTime = editorClock.CurrentTime;
                     var setTimeSuccess = lyricManager.SetTimeTagTime(currentTimeTag, currentTime);
                     if (setTimeSuccess)
-                        MoveCursor(MovingCursorAction.Right);
+                        MoveCaret(MovingCursorAction.Right);
                     return setTimeSuccess;
 
                 default:
@@ -258,7 +258,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         return;
 
                     case Mode.RecordMode:
-                        MoveCursor(MovingCursorAction.First);
+                        MoveCaret(MovingCursorAction.First);
                         return;
 
                     case Mode.TimeTagEditMode:

@@ -6,12 +6,12 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
-    public abstract class CursorPositionAlgorithm
+    public abstract class CaretPositionAlgorithm
     {
         // Lyrics is not lock and can be accessible.
         protected readonly Lyric[] Lyrics;
 
-        protected CursorPositionAlgorithm(Lyric[] lyrics)
+        protected CaretPositionAlgorithm(Lyric[] lyrics)
         {
             Lyrics = LyricsUtils.FindUnlockLyrics(OrderUtils.Sorted(lyrics));
         }

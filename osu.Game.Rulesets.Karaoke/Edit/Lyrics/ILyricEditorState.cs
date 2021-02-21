@@ -29,13 +29,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         Bindable<CursorPosition> BindableCursorPosition { get; }
 
-        bool MoveCursorToTargetPosition(CursorPosition position);
+        bool MoveCaretToTargetPosition(CursorPosition position);
 
-        bool MoveHoverCursorToTargetPosition(CursorPosition position);
+        bool MoveHoverCaretToTargetPosition(CursorPosition position);
 
-        void ClearHoverCursorPosition();
+        void ClearHoverCaretPosition();
 
-        bool CursorMovable(CursorPosition timeTag);
+        bool CaretMovable(CursorPosition timeTag);
 
         #endregion
     }

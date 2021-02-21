@@ -10,9 +10,9 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
-    public class GenericCursorPositionAlgorithm : CursorPositionAlgorithm, ICursorPositionAlgorithm
+    public class GenericCaretPositionAlgorithm : CaretPositionAlgorithm, ICaretPositionAlgorithm
     {
-        public GenericCursorPositionAlgorithm(Lyric[] lyrics)
+        public GenericCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
         }

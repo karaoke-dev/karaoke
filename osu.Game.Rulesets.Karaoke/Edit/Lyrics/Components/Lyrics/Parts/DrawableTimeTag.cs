@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
 
         private void updateStyle()
         {
-            if (isTrigger(bindableMode.Value) && !state.CursorMovable(new CursorPosition(lyric, timeTag)))
+            if (isTrigger(bindableMode.Value) && !state.CaretMovable(new CursorPosition(lyric, timeTag)))
             {
                 InternalChild.Alpha = 0.3f;
             }
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
             if (!isTrigger(bindableMode.Value))
                 return false;
 
-            return state?.MoveHoverCursorToTargetPosition(new CursorPosition(lyric, timeTag)) ?? false;
+            return state?.MoveHoverCaretToTargetPosition(new CursorPosition(lyric, timeTag)) ?? false;
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
             if (!isTrigger(bindableMode.Value))
                 return;
 
-            state?.ClearHoverCursorPosition();
+            state?.ClearHoverCaretPosition();
             base.OnHoverLost(e);
         }
 
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
             if (!isTrigger(bindableMode.Value))
                 return false;
 
-            return state.MoveCursorToTargetPosition(new CursorPosition(lyric, timeTag));
+            return state.MoveCaretToTargetPosition(new CursorPosition(lyric, timeTag));
         }
 
         protected override void Dispose(bool isDisposing)
