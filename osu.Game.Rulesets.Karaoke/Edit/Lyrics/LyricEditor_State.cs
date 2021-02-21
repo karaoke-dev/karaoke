@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             var currentPosition = BindableCaretPosition.Value;
-            CaretPosition? position;
+            ICaretPosition? position;
 
             switch (action)
             {
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return true;
         }
 
-        public bool MoveCaretToTargetPosition(CaretPosition position)
+        public bool MoveCaretToTargetPosition(ICaretPosition position)
         {
             switch (position.Mode)
             {
@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        public bool MoveHoverCaretToTargetPosition(CaretPosition position)
+        public bool MoveHoverCaretToTargetPosition(ICaretPosition position)
         {
             switch (position.Mode)
             {
@@ -99,15 +99,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void ClearHoverCaretPosition()
         {
-            BindableHoverCaretPosition.Value = new CaretPosition();
+            BindableHoverCaretPosition.Value = new ICaretPosition();
         }
 
-        public bool CaretMovable(CaretPosition position)
+        public bool CaretMovable(ICaretPosition position)
         {
             return caretMovingAlgorithm.PositionMovable(position);
         }
 
-        private bool movePositionTo(CaretPosition position)
+        private bool movePositionTo(ICaretPosition position)
         {
             if (position.Lyric == null)
                 return false;
@@ -115,12 +115,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (!CaretMovable(position))
                 return false;
 
-            BindableHoverCaretPosition.Value = new CaretPosition();
+            BindableHoverCaretPosition.Value = new ICaretPosition();
             BindableCaretPosition.Value = position;
             return true;
         }
 
-        private bool moveHoverPositionTo(CaretPosition position)
+        private bool moveHoverPositionTo(ICaretPosition position)
         {
             if (position.Lyric == null)
                 return false;

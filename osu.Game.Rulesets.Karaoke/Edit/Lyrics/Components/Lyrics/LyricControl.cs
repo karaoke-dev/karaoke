@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             // todo : get real index.
             var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
             var index = drawableLyric.GetHoverIndex(position);
-            state.MoveHoverCaretToTargetPosition(new CaretPosition(Lyric, index));
+            state.MoveHoverCaretToTargetPosition(new ICaretPosition(Lyric, index));
             return base.OnMouseMove(e);
         }
 
@@ -110,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             // place hover caret to target position.
             var index = state.BindableHoverCaretPosition.Value.Index;
-            state.MoveCaretToTargetPosition(new CaretPosition(Lyric, index));
+            state.MoveCaretToTargetPosition(new ICaretPosition(Lyric, index));
 
             return true;
         }
@@ -253,7 +253,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             }
         }
 
-        protected void UpdateTimeTagCaret(CaretPosition position, bool preview)
+        protected void UpdateTimeTagCaret(ICaretPosition position, bool preview)
         {
             var caret = caretContainer.OfType<DrawableTimeTagRecordCaret>().FirstOrDefault(x => x.Preview == preview);
             if (caret == null)
@@ -274,7 +274,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             caret.TimeTag = timeTag;
         }
 
-        protected void UpdateCaret(CaretPosition position, bool preview)
+        protected void UpdateCaret(ICaretPosition position, bool preview)
         {
             var caret = caretContainer.OfType<IDrawableCaret>().FirstOrDefault(x => x.Preview == preview);
             if (caret == null)

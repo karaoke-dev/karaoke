@@ -38,9 +38,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
 
-        public Bindable<CaretPosition> BindableHoverCaretPosition { get; } = new Bindable<CaretPosition>();
+        public Bindable<ICaretPosition> BindableHoverCaretPosition { get; } = new Bindable<ICaretPosition>();
 
-        public Bindable<CaretPosition> BindableCaretPosition { get; } = new Bindable<CaretPosition>();
+        public Bindable<ICaretPosition> BindableCaretPosition { get; } = new Bindable<ICaretPosition>();
 
         private readonly KaraokeLyricEditorSkin skin;
         private readonly DrawableLyricEditList container;

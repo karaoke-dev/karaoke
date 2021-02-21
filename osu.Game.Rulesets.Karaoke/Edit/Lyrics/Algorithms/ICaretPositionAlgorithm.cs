@@ -5,18 +5,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
     public interface ICaretPositionAlgorithm
     {
-        bool PositionMovable(CaretPosition position);
+    }
 
-        CaretPosition? MoveUp(CaretPosition currentPosition);
+    public interface ICaretPositionAlgorithm<T> : ICaretPositionAlgorithm where T : struct, ICaretPosition
+    {
+        bool PositionMovable(T position);
 
-        CaretPosition? MoveDown(CaretPosition currentPosition);
+        T? MoveUp(T currentPosition);
 
-        CaretPosition? MoveLeft(CaretPosition currentPosition);
+        T? MoveDown(T currentPosition);
 
-        CaretPosition? MoveRight(CaretPosition currentPosition);
+        T? MoveLeft(T currentPosition);
 
-        CaretPosition? MoveToFirst();
+        T? MoveRight(T currentPosition);
 
-        CaretPosition? MoveToLast();
+        T? MoveToFirst();
+
+        T? MoveToLast();
     }
 }

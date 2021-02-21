@@ -10,14 +10,14 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
-    public class GenericCaretPositionAlgorithm : CaretPositionAlgorithm, ICaretPositionAlgorithm
+    public class GenericCaretPositionAlgorithm : CaretPositionAlgorithm, ICaretPositionAlgorithm<TimeTagIndexCaretPosition>
     {
         public GenericCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
         }
 
-        public virtual bool PositionMovable(CaretPosition position)
+        public virtual bool PositionMovable(TimeTagIndexCaretPosition position)
         {
             if (position.Lyric == null)
                 return false;
@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return true;
         }
 
-        public CaretPosition? MoveUp(CaretPosition currentPosition)
+        public TimeTagIndexCaretPosition? MoveUp(TimeTagIndexCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetPrevious(currentPosition.Lyric);
             if (lyric == null)
@@ -38,10 +38,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             var index = Math.Clamp(currentPosition.Index.Index, 0, lyricTextLength - 1);
             var state = currentPosition.Index.State;
 
-            return new CaretPosition(lyric, new TextIndex(index, state));
+            return new TimeTagIndexCaretPosition(lyric, new TextIndex(index, state));
         }
 
-        public CaretPosition? MoveDown(CaretPosition currentPosition)
+        public TimeTagIndexCaretPosition? MoveDown(TimeTagIndexCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetNext(currentPosition.Lyric);
             if (lyric == null)
@@ -51,44 +51,44 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             var index = Math.Clamp(currentPosition.Index.Index, 0, lyricTextLength - 1);
             var state = currentPosition.Index.State;
 
-            return new CaretPosition(lyric, new TextIndex(index, state));
+            return new TimeTagIndexCaretPosition(lyric, new TextIndex(index, state));
         }
 
-        public CaretPosition? MoveLeft(CaretPosition currentPosition)
+        public TimeTagIndexCaretPosition? MoveLeft(TimeTagIndexCaretPosition currentPosition)
         {
             // get previous caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
             var previousIndex = GetPreviousIndex(currentPosition.Index);
 
             if (TextIndexUtils.OutOfRange(previousIndex, lyric?.Text))
-                return MoveUp(new CaretPosition(currentPosition.Lyric, new TextIndex(int.MaxValue)));
+                return MoveUp(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MaxValue)));
 
-            return new CaretPosition(currentPosition.Lyric, previousIndex);
+            return new TimeTagIndexCaretPosition(currentPosition.Lyric, previousIndex);
         }
 
-        public CaretPosition? MoveRight(CaretPosition currentPosition)
+        public TimeTagIndexCaretPosition? MoveRight(TimeTagIndexCaretPosition currentPosition)
         {
             // get next caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
             var nextIndex = GetNextIndex(currentPosition.Index);
 
             if (TextIndexUtils.OutOfRange(nextIndex, lyric?.Text))
-                return MoveDown(new CaretPosition(currentPosition.Lyric, new TextIndex(int.MinValue)));
+                return MoveDown(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MinValue)));
 
-            return new CaretPosition(currentPosition.Lyric, nextIndex);
+            return new TimeTagIndexCaretPosition(currentPosition.Lyric, nextIndex);
         }
 
-        public CaretPosition? MoveToFirst()
+        public TimeTagIndexCaretPosition? MoveToFirst()
         {
             var lyric = Lyrics.FirstOrDefault();
             if (lyric == null)
                 return null;
 
             var index = new TextIndex();
-            return new CaretPosition(lyric, index);
+            return new TimeTagIndexCaretPosition(lyric, index);
         }
 
-        public CaretPosition? MoveToLast()
+        public TimeTagIndexCaretPosition? MoveToLast()
         {
             var lyric = Lyrics.LastOrDefault();
             if (lyric == null)
@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
             var textLength = lyric?.Text.Length ?? 0;
             var index = new TextIndex(textLength - 1, TextIndex.IndexState.End);
-            return new CaretPosition(lyric, index);
+            return new TimeTagIndexCaretPosition(lyric, index);
         }
 
         protected virtual TextIndex GetPreviousIndex(TextIndex currentIndex)

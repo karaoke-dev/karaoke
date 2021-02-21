@@ -25,17 +25,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         #region caret position
 
-        Bindable<CaretPosition> BindableHoverCaretPosition { get; }
+        Bindable<ICaretPosition> BindableHoverCaretPosition { get; }
 
-        Bindable<CaretPosition> BindableCaretPosition { get; }
+        Bindable<ICaretPosition> BindableCaretPosition { get; }
 
-        bool MoveCaretToTargetPosition(CaretPosition position);
+        bool MoveCaretToTargetPosition(ICaretPosition position);
 
-        bool MoveHoverCaretToTargetPosition(CaretPosition position);
+        bool MoveHoverCaretToTargetPosition(ICaretPosition position);
 
         void ClearHoverCaretPosition();
 
-        bool CaretMovable(CaretPosition timeTag);
+        bool CaretMovable(ICaretPosition timeTag);
 
         #endregion
     }

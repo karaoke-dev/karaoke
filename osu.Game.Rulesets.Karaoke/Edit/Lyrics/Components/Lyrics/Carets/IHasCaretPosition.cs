@@ -5,6 +5,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
 {
     public interface IHasCaretPosition
     {
-        CaretPosition CaretPosition { get; set; }
+        ICaretPosition CaretPosition { get; set; }
     }
 }
