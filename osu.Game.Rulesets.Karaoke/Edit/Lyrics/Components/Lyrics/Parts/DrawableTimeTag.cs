@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
         private EditorClock editorClock { get; set; }
 
         private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
-        private readonly Bindable<RecordingMovingCursorMode> bindableRecordingMovingCursorMode = new Bindable<RecordingMovingCursorMode>();
+        private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCursorMode = new Bindable<RecordingMovingCaretMode>();
 
         private readonly TimeTag timeTag;
         private readonly Lyric lyric;
@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
 
         private void updateStyle()
         {
-            if (isTrigger(bindableMode.Value) && !state.CaretMovable(new CursorPosition(lyric, timeTag)))
+            if (isTrigger(bindableMode.Value) && !state.CaretMovable(new CaretPosition(lyric, timeTag)))
             {
                 InternalChild.Alpha = 0.3f;
             }
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
             InternalChild.Colour = timeTag.Time.HasValue ? colours.Yellow : colours.Gray7;
 
             bindableMode.BindTo(state.BindableMode);
-            bindableRecordingMovingCursorMode.BindTo(state.BindableRecordingMovingCursorMode);
+            bindableRecordingMovingCursorMode.BindTo(state.BindableRecordingMovingCaretMode);
         }
 
         protected override bool OnHover(HoverEvent e)
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
             if (!isTrigger(bindableMode.Value))
                 return false;
 
-            return state?.MoveHoverCaretToTargetPosition(new CursorPosition(lyric, timeTag)) ?? false;
+            return state?.MoveHoverCaretToTargetPosition(new CaretPosition(lyric, timeTag)) ?? false;
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
             if (!isTrigger(bindableMode.Value))
                 return false;
 
-            return state.MoveCaretToTargetPosition(new CursorPosition(lyric, timeTag));
+            return state.MoveCaretToTargetPosition(new CaretPosition(lyric, timeTag));
         }
 
         protected override void Dispose(bool isDisposing)

@@ -6,22 +6,22 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public readonly struct CursorPosition
+    public readonly struct CaretPosition
     {
-        public CursorPosition(Lyric lyric, TextIndex index)
+        public CaretPosition(Lyric lyric, TextIndex index)
         {
             Lyric = lyric;
             Index = index;
             TimeTag = null;
-            Mode = CursorMode.Edit;
+            Mode = CaretMode.Edit;
         }
 
-        public CursorPosition(Lyric lyric, TimeTag timeTag)
+        public CaretPosition(Lyric lyric, TimeTag timeTag)
         {
             Lyric = lyric;
             Index = default;
             TimeTag = timeTag;
-            Mode = CursorMode.Recording;
+            Mode = CaretMode.Recording;
         }
 
         public Lyric Lyric { get; }
@@ -30,10 +30,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public TimeTag TimeTag { get; }
 
-        public CursorMode Mode { get; }
+        public CaretMode Mode { get; }
     }
 
-    public enum CursorMode
+    public enum CaretMode
     {
         Edit,
 

@@ -33,9 +33,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
             };
         }
 
-        private CursorPosition position;
+        private CaretPosition position;
 
-        public CursorPosition CaretPosition
+        public CaretPosition CaretPosition
         {
             get => position;
             set

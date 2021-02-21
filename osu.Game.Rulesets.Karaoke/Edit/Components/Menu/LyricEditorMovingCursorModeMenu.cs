@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public class LyricEditorMovingCursorModeMenu : EnumMenu<RecordingMovingCursorMode>
+    public class LyricEditorMovingCursorModeMenu : EnumMenu<RecordingMovingCaretMode>
     {
         protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.RecordingMovingCursorMode;
 
@@ -16,17 +16,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
         {
         }
 
-        protected override string GetName(RecordingMovingCursorMode selection)
+        protected override string GetName(RecordingMovingCaretMode selection)
         {
             switch (selection)
             {
-                case RecordingMovingCursorMode.None:
+                case RecordingMovingCaretMode.None:
                     return "None";
 
-                case RecordingMovingCursorMode.OnlyStartTag:
+                case RecordingMovingCaretMode.OnlyStartTag:
                     return "Skip start tag";
 
-                case RecordingMovingCursorMode.OnlyEndTag:
+                case RecordingMovingCaretMode.OnlyEndTag:
                     return "Skip end tag";
 
                 default:

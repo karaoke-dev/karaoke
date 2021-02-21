@@ -44,13 +44,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private void load(ILyricEditorState state)
         {
             // update hover style to child
-            state.BindableHoverCursorPosition.BindValueChanged(e =>
+            state.BindableHoverCaretPosition.BindValueChanged(e =>
             {
                 var listItem = getListItem(e.NewValue.Lyric);
             });
 
             // update selected style to child
-            state.BindableCursorPosition.BindValueChanged(e =>
+            state.BindableCaretPosition.BindValueChanged(e =>
             {
                 var listItem = getListItem(e.NewValue.Lyric);
 

@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             // todo : get real index.
             var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
             var index = drawableLyric.GetHoverIndex(position);
-            state.MoveHoverCaretToTargetPosition(new CursorPosition(Lyric, index));
+            state.MoveHoverCaretToTargetPosition(new CaretPosition(Lyric, index));
             return base.OnMouseMove(e);
         }
 
@@ -109,8 +109,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 return false;
 
             // place hover cursor to target position.
-            var index = state.BindableHoverCursorPosition.Value.Index;
-            state.MoveCaretToTargetPosition(new CursorPosition(Lyric, index));
+            var index = state.BindableHoverCaretPosition.Value.Index;
+            state.MoveCaretToTargetPosition(new CaretPosition(Lyric, index));
 
             return true;
         }
@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             // todo : not really sure is ok to split time-tag by double click?
             // need to make an ux research.
-            var position = state.BindableHoverCursorPosition.Value;
+            var position = state.BindableHoverCaretPosition.Value;
 
             switch (state.Mode)
             {
@@ -147,17 +147,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             }, true);
 
             // update change if cursor changed.
-            state.BindableHoverCursorPosition.BindValueChanged(e =>
+            state.BindableHoverCaretPosition.BindValueChanged(e =>
             {
                 var cursorPosition = e.NewValue;
 
                 switch (cursorPosition.Mode)
                 {
-                    case CursorMode.Edit:
+                    case CaretMode.Edit:
                         UpdateCursor(e.NewValue, true);
                         break;
 
-                    case CursorMode.Recording:
+                    case CaretMode.Recording:
                         UpdateTimeTagCursor(e.NewValue, true);
                         break;
 
@@ -165,17 +165,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                         throw new InvalidOperationException(nameof(cursorPosition.Mode));
                 }
             });
-            state.BindableCursorPosition.BindValueChanged(e =>
+            state.BindableCaretPosition.BindValueChanged(e =>
             {
                 var cursorPosition = e.NewValue;
 
                 switch (cursorPosition.Mode)
                 {
-                    case CursorMode.Edit:
+                    case CaretMode.Edit:
                         UpdateCursor(e.NewValue, false);
                         break;
 
-                    case CursorMode.Recording:
+                    case CaretMode.Recording:
                         UpdateTimeTagCursor(e.NewValue, false);
                         break;
 
@@ -253,7 +253,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             }
         }
 
-        protected void UpdateTimeTagCursor(CursorPosition position, bool preview)
+        protected void UpdateTimeTagCursor(CaretPosition position, bool preview)
         {
             var cursor = cursorContainer.OfType<DrawableTimeTagRecordCaret>().FirstOrDefault(x => x.Preview == preview);
             if (cursor == null)
@@ -274,7 +274,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             cursor.TimeTag = timeTag;
         }
 
-        protected void UpdateCursor(CursorPosition position, bool preview)
+        protected void UpdateCursor(CaretPosition position, bool preview)
         {
             var cursor = cursorContainer.OfType<IDrawableCaret>().FirstOrDefault(x => x.Preview == preview);
             if (cursor == null)

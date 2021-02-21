@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
         {
         }
 
-        public override bool PositionMovable(CursorPosition position)
+        public override bool PositionMovable(CaretPosition position)
         {
             if (!base.PositionMovable(position))
                 return false;
