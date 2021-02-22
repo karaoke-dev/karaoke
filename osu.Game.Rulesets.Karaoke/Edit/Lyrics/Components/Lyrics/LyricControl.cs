@@ -147,38 +147,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             // update change if caret changed.
             state.BindableHoverCaretPosition.BindValueChanged(e =>
             {
-                var caretPosition = e.NewValue;
-
-                if (caretPosition is TimeTagIndexCaretPosition indexCaretPosition)
-                {
-                    UpdateCaret(indexCaretPosition, true);
-                }
-                else if (caretPosition is TimeTagCaretPosition timeTagCaretPosition)
-                {
-                    UpdateTimeTagCaret(timeTagCaretPosition, true);
-                }
-                else
-                {
-                    throw new NotSupportedException(nameof(caretPosition));
-                }
+                updateCaretPosition(e.NewValue, true);
             });
             state.BindableCaretPosition.BindValueChanged(e =>
             {
-                var caretPosition = e.NewValue;
-
-                if (caretPosition is TimeTagIndexCaretPosition indexCaretPosition)
-                {
-                    UpdateCaret(indexCaretPosition, false);
-                }
-                else if (caretPosition is TimeTagCaretPosition timeTagCaretPosition)
-                {
-                    UpdateTimeTagCaret(timeTagCaretPosition, false);
-                }
-                else
-                {
-                    throw new NotSupportedException(nameof(caretPosition));
-                }
+                updateCaretPosition(e.NewValue, false);
             });
+
+            void updateCaretPosition(ICaretPosition position, bool hover)
+            {
+                switch (position)
+                {
+                    case TextCaretPosition textCaretPosition:
+
+                        break;
+                    case TimeTagIndexCaretPosition indexCaretPosition:
+                        UpdateCaret(indexCaretPosition, hover);
+                        break;
+                    case TimeTagCaretPosition timeTagCaretPosition:
+                        UpdateTimeTagCaret(timeTagCaretPosition, hover);
+                        break;
+                    default:
+                        throw new NotSupportedException(nameof(position));
+                }
+            }
         }
 
         protected void CreateCaret(Mode mode)
