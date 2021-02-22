@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
-    public class RecordingCaretPositionAlgorithm : CaretPositionAlgorithm, ICaretPositionAlgorithm<TimeTagCaretPosition>
+    public class RecordingCaretPositionAlgorithm : CaretPositionAlgorithm<TimeTagCaretPosition>
     {
         private readonly RecordingMovingCaretMode mode;
 
@@ -20,12 +20,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             this.mode = mode;
         }
 
-        public bool PositionMovable(TimeTagCaretPosition position)
+        public override bool PositionMovable(TimeTagCaretPosition position)
         {
             return timeTagMovable(position.TimeTag);
         }
 
-        public TimeTagCaretPosition MoveUp(TimeTagCaretPosition currentPosition)
+        public override TimeTagCaretPosition MoveUp(TimeTagCaretPosition currentPosition)
         {
             var currentTimeTag = currentPosition.TimeTag;
 
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return timeTagToPosition(upTimeTag);
         }
 
-        public TimeTagCaretPosition MoveDown(TimeTagCaretPosition currentPosition)
+        public override TimeTagCaretPosition MoveDown(TimeTagCaretPosition currentPosition)
         {
             var currentTimeTag = currentPosition.TimeTag;
 
@@ -51,28 +51,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return timeTagToPosition(downTimeTag);
         }
 
-        public TimeTagCaretPosition MoveLeft(TimeTagCaretPosition currentPosition)
+        public override TimeTagCaretPosition MoveLeft(TimeTagCaretPosition currentPosition)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var previousTimeTag = timeTags.GetPreviousMatch(currentPosition.TimeTag, timeTagMovable);
             return timeTagToPosition(previousTimeTag);
         }
 
-        public TimeTagCaretPosition MoveRight(TimeTagCaretPosition currentPosition)
+        public override TimeTagCaretPosition MoveRight(TimeTagCaretPosition currentPosition)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var nextTimeTag = timeTags.GetNextMatch(currentPosition.TimeTag, timeTagMovable);
             return timeTagToPosition(nextTimeTag);
         }
 
-        public TimeTagCaretPosition MoveToFirst()
+        public override TimeTagCaretPosition MoveToFirst()
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var firstTimeTag = timeTags.FirstOrDefault();
             return timeTagToPosition(firstTimeTag);
         }
 
-        public TimeTagCaretPosition MoveToLast()
+        public override TimeTagCaretPosition MoveToLast()
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var lastTag = timeTags.LastOrDefault();

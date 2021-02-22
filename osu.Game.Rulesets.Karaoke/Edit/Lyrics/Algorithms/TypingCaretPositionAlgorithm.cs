@@ -10,14 +10,14 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
-    public class TypingCaretPositionAlgorithm : CaretPositionAlgorithm, ICaretPositionAlgorithm<TextCaretPosition>
+    public class TypingCaretPositionAlgorithm : CaretPositionAlgorithm<TextCaretPosition>
     {
         public TypingCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
         }
 
-        public virtual bool PositionMovable(TextCaretPosition position)
+        public override bool PositionMovable(TextCaretPosition position)
         {
             if (position.Lyric == null)
                 return false;
@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return true;
         }
 
-        public TextCaretPosition MoveUp(TextCaretPosition currentPosition)
+        public override TextCaretPosition MoveUp(TextCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetPrevious(currentPosition.Lyric);
             if (lyric == null)
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return new TextCaretPosition(lyric, index);
         }
 
-        public TextCaretPosition MoveDown(TextCaretPosition currentPosition)
+        public override TextCaretPosition MoveDown(TextCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetNext(currentPosition.Lyric);
             if (lyric == null)
@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return new TextCaretPosition(lyric, index);
         }
 
-        public TextCaretPosition MoveLeft(TextCaretPosition currentPosition)
+        public override TextCaretPosition MoveLeft(TextCaretPosition currentPosition)
         {
             // get previous caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return new TextCaretPosition(currentPosition.Lyric, previousIndex);
         }
 
-        public TextCaretPosition MoveRight(TextCaretPosition currentPosition)
+        public override TextCaretPosition MoveRight(TextCaretPosition currentPosition)
         {
             // get next caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return new TextCaretPosition(currentPosition.Lyric, nextIndex);
         }
 
-        public TextCaretPosition MoveToFirst()
+        public override TextCaretPosition MoveToFirst()
         {
             var lyric = Lyrics.FirstOrDefault();
             if (lyric == null)
@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return new TextCaretPosition(lyric, 0);
         }
 
-        public TextCaretPosition MoveToLast()
+        public override TextCaretPosition MoveToLast()
         {
             var lyric = Lyrics.LastOrDefault();
             if (lyric == null)

@@ -12,12 +12,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditor
     {
-        private Dictionary<Mode, CaretPositionAlgorithm> caretMovingAlgorithmSet = new Dictionary<Mode, CaretPositionAlgorithm>();
+        private Dictionary<Mode, ICaretPositionAlgorithm> caretMovingAlgorithmSet = new Dictionary<Mode, ICaretPositionAlgorithm>();
 
         private void createAlgorithmList()
         {
             var lyrics = BindableLyrics.ToArray();
-            caretMovingAlgorithmSet = new Dictionary<Mode, CaretPositionAlgorithm>
+            caretMovingAlgorithmSet = new Dictionary<Mode, ICaretPositionAlgorithm>
             {
                 { Mode.EditMode, new CuttingCaretPositionAlgorithm(lyrics) },
                 { Mode.TypingMode, new TypingCaretPositionAlgorithm(lyrics) },
