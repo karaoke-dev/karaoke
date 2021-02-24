@@ -1,8 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
@@ -13,12 +13,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
         {
         }
 
-        public override bool PositionMovable(CaretPosition position)
+        public override bool PositionMovable(TextCaretPosition position)
         {
             if (!base.PositionMovable(position))
                 return false;
 
-            if (TextIndexUtils.ToStringIndex(position.Index) == 0)
+            if (position.Index == 0)
                 return false;
 
             return true;

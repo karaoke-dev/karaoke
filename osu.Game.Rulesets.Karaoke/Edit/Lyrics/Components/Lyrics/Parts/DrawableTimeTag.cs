@@ -10,6 +10,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
@@ -64,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
 
         private void updateStyle()
         {
-            if (isTrigger(bindableMode.Value) && !state.CaretMovable(new CaretPosition(lyric, timeTag)))
+            if (isTrigger(bindableMode.Value) && !state.CaretMovable(new TimeTagCaretPosition(lyric, timeTag)))
             {
                 InternalChild.Alpha = 0.3f;
             }
@@ -88,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
             if (!isTrigger(bindableMode.Value))
                 return false;
 
-            return state?.MoveHoverCaretToTargetPosition(new CaretPosition(lyric, timeTag)) ?? false;
+            return state?.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag)) ?? false;
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
@@ -111,7 +112,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
             if (!isTrigger(bindableMode.Value))
                 return false;
 
-            return state.MoveCaretToTargetPosition(new CaretPosition(lyric, timeTag));
+            return state.MoveCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag));
         }
 
         protected override void Dispose(bool isDisposing)

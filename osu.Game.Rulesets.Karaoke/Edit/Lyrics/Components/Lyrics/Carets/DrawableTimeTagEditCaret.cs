@@ -1,11 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osuTK;
 
@@ -33,15 +35,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets
             };
         }
 
-        private CaretPosition position;
+        private ICaretPosition position;
 
-        public CaretPosition CaretPosition
+        public ICaretPosition CaretPosition
         {
             get => position;
             set
             {
+                if (!(value is TimeTagIndexCaretPosition tagIndexCaretPosition))
+                    throw new NotSupportedException(nameof(value));
+
                 position = value;
-                drawableTimeTag.Scale = new Vector2(position.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1);
+                drawableTimeTag.Scale = new Vector2(tagIndexCaretPosition.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1);
 
                 // todo : color is by has time-tag here?
                 // drawableTimeTag.Colour = position.Time.HasValue ? colours.YellowDarker : colours.Gray3;

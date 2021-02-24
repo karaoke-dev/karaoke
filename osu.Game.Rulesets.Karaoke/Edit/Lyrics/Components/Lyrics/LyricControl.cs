@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -86,10 +87,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             if (!isTrigger(state.Mode))
                 return false;
 
-            // todo : get real index.
-            var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
-            var index = drawableLyric.GetHoverIndex(position);
-            state.MoveHoverCaretToTargetPosition(new CaretPosition(Lyric, index));
+            if (state.Mode == Mode.TimeTagEditMode)
+            {
+                var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
+                var index = drawableLyric.GetHoverIndex(position);
+                state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, index));
+            }
+            else
+            {
+                var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
+                var index = drawableLyric.GetHoverIndex(position);
+                state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, TextIndexUtils.ToStringIndex(index)));
+            }
+           
             return base.OnMouseMove(e);
         }
 
@@ -109,8 +119,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 return false;
 
             // place hover caret to target position.
-            var index = state.BindableHoverCaretPosition.Value.Index;
-            state.MoveCaretToTargetPosition(new CaretPosition(Lyric, index));
+            var position = state.BindableHoverCaretPosition.Value;
+            state.MoveCaretToTargetPosition(position);
 
             return true;
         }
@@ -123,16 +133,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             // todo : not really sure is ok to split time-tag by double click?
             // need to make an ux research.
             var position = state.BindableHoverCaretPosition.Value;
-
-            switch (state.Mode)
+            if (position is TextCaretPosition textCaretPosition)
             {
-                case Mode.EditMode:
-                    var splitPosition = TextIndexUtils.ToStringIndex(position.Index);
-                    lyricManager?.SplitLyric(Lyric, splitPosition);
-                    return true;
-
-                default:
-                    return base.OnDoubleClick(e);
+                lyricManager?.SplitLyric(Lyric, textCaretPosition.Index);
+                return true;
+            }
+            else
+            {
+                throw new NotSupportedException(nameof(position));
             }
         }
 
@@ -149,39 +157,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             // update change if caret changed.
             state.BindableHoverCaretPosition.BindValueChanged(e =>
             {
-                var caretPosition = e.NewValue;
-
-                switch (caretPosition.Mode)
-                {
-                    case CaretMode.Edit:
-                        UpdateCaret(e.NewValue, true);
-                        break;
-
-                    case CaretMode.Recording:
-                        UpdateTimeTagCaret(e.NewValue, true);
-                        break;
-
-                    default:
-                        throw new InvalidOperationException(nameof(caretPosition.Mode));
-                }
+                UpdateCaretPosition(e.NewValue, true);
             });
             state.BindableCaretPosition.BindValueChanged(e =>
             {
-                var caretPosition = e.NewValue;
-
-                switch (caretPosition.Mode)
-                {
-                    case CaretMode.Edit:
-                        UpdateCaret(e.NewValue, false);
-                        break;
-
-                    case CaretMode.Recording:
-                        UpdateTimeTagCaret(e.NewValue, false);
-                        break;
-
-                    default:
-                        throw new InvalidOperationException(nameof(caretPosition.Mode));
-                }
+                UpdateCaretPosition(e.NewValue, false);
             });
         }
 
@@ -234,6 +214,62 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             }
         }
 
+        protected void UpdateCaretPosition(ICaretPosition position, bool hover)
+        {
+            var caret = caretContainer.OfType<IDrawableCaret>().FirstOrDefault(x => x.Preview == hover);
+            if (caret == null)
+                return;
+
+            if (position.Lyric != Lyric)
+            {
+                caret.Hide();
+                return;
+            }
+
+            float caretPosition = 0;
+            switch (position)
+            {
+                case TextCaretPosition textCaretPosition:
+                    var index = new TextIndex(textCaretPosition.Index);
+                    caretPosition = textIndexPosition(index) - 10; // todo : might have better way to get position.
+                    break;
+
+                case TimeTagIndexCaretPosition indexCaretPosition:
+                    caretPosition = textIndexPosition(indexCaretPosition.Index);
+                    break;
+
+                case TimeTagCaretPosition timeTagCaretPosition:
+                    var timeTag = timeTagCaretPosition.TimeTag;
+                    caretPosition = textIndexPosition(timeTag.Index) + extraSpacing(timeTag);
+                    break;
+
+                default:
+                    throw new NotSupportedException(nameof(position));
+            }
+
+            // set position
+            if (caret is DrawableLyricInputCaret inputCaret)
+            {
+                inputCaret.DisplayAt(new Vector2(caretPosition, 0), null);
+            }
+            else if(caret is Drawable drawable)
+            {
+                drawable.X = caretPosition;
+            }
+
+            // set other property
+            if (caret is IHasCaretPosition hasCaretPosition)
+            {
+                hasCaretPosition.CaretPosition = position;
+            }
+            else if (caret is IHasTimeTag hasTimeTag)
+            {
+                hasTimeTag.TimeTag = (position as TimeTagCaretPosition).TimeTag;
+            }
+
+            caret.Show();
+        }
+
         protected void UpdateTimeTags()
         {
             timeTagContainer.Clear();
@@ -251,70 +287,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                     X = spacing
                 });
             }
-        }
-
-        protected void UpdateTimeTagCaret(CaretPosition position, bool preview)
-        {
-            var caret = caretContainer.OfType<DrawableTimeTagRecordCaret>().FirstOrDefault(x => x.Preview == preview);
-            if (caret == null)
-                return;
-
-            var timeTag = position.TimeTag;
-
-            if (!drawableLyric.TimeTagsBindable.Value.Contains(timeTag))
-            {
-                caret.Hide();
-                return;
-            }
-
-            caret.Show();
-
-            var spacing = textIndexPosition(timeTag.Index) + extraSpacing(timeTag);
-            caret.X = spacing;
-            caret.TimeTag = timeTag;
-        }
-
-        protected void UpdateCaret(CaretPosition position, bool preview)
-        {
-            var caret = caretContainer.OfType<IDrawableCaret>().FirstOrDefault(x => x.Preview == preview);
-            if (caret == null)
-                return;
-
-            if (position.Lyric != Lyric)
-            {
-                caret.Hide();
-                return;
-            }
-
-            if (!(caret is Drawable drawableCaret))
-                return;
-
-            var index = position.Index;
-            if (state.Mode == Mode.EditMode || state.Mode == Mode.TypingMode)
-                index = new TextIndex(TextIndexUtils.ToStringIndex(index));
-
-            var offset = 0;
-            if (state.Mode == Mode.EditMode || state.Mode == Mode.TypingMode)
-                offset = -10;
-
-            var pos = new Vector2(textIndexPosition(index) + offset, 0);
-
-            if (caret is DrawableLyricInputCaret inputCaret)
-            {
-                inputCaret.DisplayAt(pos, null);
-            }
-            else
-            {
-                drawableCaret.Position = pos;
-            }
-
-            if (caret is IHasCaretPosition caretPosition)
-            {
-                caretPosition.CaretPosition = position;
-            }
-
-            // show after caret position has been ready.
-            caret.Show();
         }
 
         private float textIndexPosition(TextIndex textIndex)

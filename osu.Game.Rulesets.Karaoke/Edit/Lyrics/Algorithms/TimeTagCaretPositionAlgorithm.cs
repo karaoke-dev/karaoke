@@ -5,27 +5,28 @@ using System;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
-    public class RecordingCaretPositionAlgorithm : CaretPositionAlgorithm, ICaretPositionAlgorithm
+    public class TimeTagCaretPositionAlgorithm : CaretPositionAlgorithm<TimeTagCaretPosition>
     {
         private readonly RecordingMovingCaretMode mode;
 
-        public RecordingCaretPositionAlgorithm(Lyric[] lyrics, RecordingMovingCaretMode mode)
+        public TimeTagCaretPositionAlgorithm(Lyric[] lyrics, RecordingMovingCaretMode mode)
             : base(lyrics)
         {
             this.mode = mode;
         }
 
-        public bool PositionMovable(CaretPosition position)
+        public override bool PositionMovable(TimeTagCaretPosition position)
         {
             return timeTagMovable(position.TimeTag);
         }
 
-        public CaretPosition? MoveUp(CaretPosition currentPosition)
+        public override TimeTagCaretPosition MoveUp(TimeTagCaretPosition currentPosition)
         {
             var currentTimeTag = currentPosition.TimeTag;
 
@@ -38,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return timeTagToPosition(upTimeTag);
         }
 
-        public CaretPosition? MoveDown(CaretPosition currentPosition)
+        public override TimeTagCaretPosition MoveDown(TimeTagCaretPosition currentPosition)
         {
             var currentTimeTag = currentPosition.TimeTag;
 
@@ -51,40 +52,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return timeTagToPosition(downTimeTag);
         }
 
-        public CaretPosition? MoveLeft(CaretPosition currentPosition)
+        public override TimeTagCaretPosition MoveLeft(TimeTagCaretPosition currentPosition)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var previousTimeTag = timeTags.GetPreviousMatch(currentPosition.TimeTag, timeTagMovable);
             return timeTagToPosition(previousTimeTag);
         }
 
-        public CaretPosition? MoveRight(CaretPosition currentPosition)
+        public override TimeTagCaretPosition MoveRight(TimeTagCaretPosition currentPosition)
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var nextTimeTag = timeTags.GetNextMatch(currentPosition.TimeTag, timeTagMovable);
             return timeTagToPosition(nextTimeTag);
         }
 
-        public CaretPosition? MoveToFirst()
+        public override TimeTagCaretPosition MoveToFirst()
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var firstTimeTag = timeTags.FirstOrDefault();
             return timeTagToPosition(firstTimeTag);
         }
 
-        public CaretPosition? MoveToLast()
+        public override TimeTagCaretPosition MoveToLast()
         {
             var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
             var lastTag = timeTags.LastOrDefault();
             return timeTagToPosition(lastTag);
         }
 
-        private CaretPosition? timeTagToPosition(TimeTag timeTag)
+        private TimeTagCaretPosition timeTagToPosition(TimeTag timeTag)
         {
             if (timeTag == null)
                 return null;
 
-            return new CaretPosition(timeTagInLyric(timeTag), timeTag);
+            return new TimeTagCaretPosition(timeTagInLyric(timeTag), timeTag);
         }
 
         private Lyric timeTagInLyric(TimeTag timeTag)
