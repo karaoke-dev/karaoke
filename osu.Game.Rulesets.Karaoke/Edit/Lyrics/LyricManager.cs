@@ -121,17 +121,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         #region Create/delete lyric
 
-        public void CreateLyric()
+        public void CreateLyric(int? targetOrder = null)
         {
+            var maxOrder = OrderUtils.GetMaxOrderNumber(Lyrics.ToArray());
+            var order = targetOrder ?? OrderUtils.GetMaxOrderNumber(Lyrics.ToArray()) + 1;
+            if (order < 0 && order > maxOrder + 1)
+                throw new ArgumentOutOfRangeException(nameof(order));
+
             changeHandler?.BeginChange();
 
-            var mexOrder = OrderUtils.GetMaxOrderNumber(Lyrics.ToArray());
             var createLyric = new Lyric
             {
                 Text = "New lyric",
-                Order = mexOrder + 1,
+                Order = order,
             };
             beatmap.Add(createLyric);
+
+            // need to re-sort lyric order in here because sometimes new lyric will insert into center.
+            OrderUtils.ResortOrder(Lyrics.ToArray());
 
             changeHandler?.EndChange();
         }
