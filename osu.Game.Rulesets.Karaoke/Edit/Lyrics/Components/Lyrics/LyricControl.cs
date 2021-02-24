@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Carets;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts;
 using osu.Game.Rulesets.Karaoke.Objects;
