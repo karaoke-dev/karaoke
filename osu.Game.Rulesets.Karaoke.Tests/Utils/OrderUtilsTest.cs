@@ -57,6 +57,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(result, actualOrders);
         }
 
+        [TestCase(new[] { 1, 2, 3, 4 }, 1, new[] { 2, 3, 4, 5 })]
+        [TestCase(new[] { 1, 2, 3, 4 }, -1, new[] { 0, 1, 2, 3 })]
+        [TestCase(new[] { 1, 1, 1, 1 }, 1, new[] { 2, 2, 2, 2 })]
+        [TestCase(new[] { 4, 3, 2, 1 }, 1, new[] { 5, 4, 3, 2 })] // Not care order in objects and just doing shifting job.
+        public void TestShiftingOrder(int[] orders, int shifting, int[] newOrder)
+        {
+            var objects = orders?.Select(x => new TestOrderObject { Order = x }).ToArray();
+            OrderUtils.ShiftingOrder(objects, shifting);
+
+            // convert order result.
+            var result = objects?.Select(x => x.Order).ToArray();
+            Assert.AreEqual(result, newOrder);
+        }
+
         [TestCase(new[] { 1, 2, 3, 4 }, 1, new int[] { }, new[] { 1, 2, 3, 4 })]
         [TestCase(new[] { 1, 2, 3, 4 }, -1, new[] { 1, 2, 3, 4 }, new[] { -1, 0, 1, 2 })]
         [TestCase(new[] { 1, 2, 3, 4 }, 3, new[] { 4, 3, 2, 1 }, new[] { 3, 4, 5, 6 })] // change id should consider will affect exist mapping.
@@ -73,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 movingStepResult.Add(o);
             });
 
-            // change order result.
+            // convert order result.
             var result = objects?.Select(x => x.Order).ToArray();
             Assert.AreEqual(result, newOrder);
 
