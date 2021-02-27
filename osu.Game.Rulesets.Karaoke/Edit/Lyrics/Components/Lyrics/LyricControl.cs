@@ -279,7 +279,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             foreach (var timeTag in timeTags)
             {
                 var spacing = textIndexPosition(timeTag.Index) + extraSpacing(timeTag);
-                timeTagContainer.Add(new DrawableTimeTag(timeTag, Lyric)
+                timeTagContainer.Add(new DrawableTimeTag(new TimeTagCaretPosition(Lyric, timeTag))
                 {
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
