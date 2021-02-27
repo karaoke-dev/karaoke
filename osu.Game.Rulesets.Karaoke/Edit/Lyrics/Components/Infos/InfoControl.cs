@@ -224,7 +224,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
                     }
                 }));
 
-
                 return menuItems.ToArray();
             }
         }

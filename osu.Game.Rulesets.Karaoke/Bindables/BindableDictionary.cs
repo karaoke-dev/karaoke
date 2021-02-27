@@ -197,7 +197,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             // Removal may have come from an equality comparison.
             // Always return the original reference from the list to other bindings and events.
             var listItem = collection[key];
-            var index = Keys.ToList().IndexOf(key); ;
+            var index = Keys.ToList().IndexOf(key);
 
             collection.Remove(key);
 
