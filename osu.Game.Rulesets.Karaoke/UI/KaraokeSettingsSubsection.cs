@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -178,7 +179,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             private class MicrophoneDeviceDropdownControl : DropdownControl
             {
-                protected override string GenerateItemText(string item)
+                protected override LocalisableString GenerateItemText(string item)
                     => string.IsNullOrEmpty(item) ? "Default" : base.GenerateItemText(item);
             }
         }
