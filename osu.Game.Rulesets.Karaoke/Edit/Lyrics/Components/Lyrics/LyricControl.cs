@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                 var index = drawableLyric.GetHoverIndex(position);
                 state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, TextIndexUtils.ToStringIndex(index)));
             }
-           
+
             return base.OnMouseMove(e);
         }
 
@@ -133,6 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             // todo : not really sure is ok to split time-tag by double click?
             // need to make an ux research.
             var position = state.BindableCaretPosition.Value;
+
             if (position is TextCaretPosition textCaretPosition)
             {
                 lyricManager?.SplitLyric(Lyric, textCaretPosition.Index);
@@ -227,6 +228,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             }
 
             float caretPosition = 0;
+
             switch (position)
             {
                 case TextCaretPosition textCaretPosition:
@@ -251,7 +253,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             {
                 inputCaret.DisplayAt(new Vector2(caretPosition, 0), null);
             }
-            else if(caret is Drawable drawable)
+            else if (caret is Drawable drawable)
             {
                 drawable.X = caretPosition;
             }
@@ -263,7 +265,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             }
             else if (caret is IHasTimeTag hasTimeTag)
             {
-                hasTimeTag.TimeTag = (position as TimeTagCaretPosition).TimeTag;
+                hasTimeTag.TimeTag = (position as TimeTagCaretPosition)?.TimeTag;
             }
 
             caret.Show();
