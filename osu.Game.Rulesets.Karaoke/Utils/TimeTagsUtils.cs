@@ -83,6 +83,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns>List of invalid time tags</returns>
         public static TimeTag[] FindInvalid(TimeTag[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
+            if (timeTags == null)
+                return null;
+
             var sortedTimeTags = Sort(timeTags);
             var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Index.Index);
 

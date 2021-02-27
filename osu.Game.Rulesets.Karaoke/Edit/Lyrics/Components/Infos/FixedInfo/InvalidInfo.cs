@@ -38,6 +38,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.FixedInfo
         {
             lyricCheckerManager.BindableReports.BindCollectionChanged((i, args) =>
             {
+                if (args.NewItems == null)
+                    return;
+
                 var dict = args.NewItems.Cast<Dictionary<Lyric, LyricCheckReport>>().FirstOrDefault();
                 if (!dict.ContainsKey(lyric))
                     return;
