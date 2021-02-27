@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
@@ -105,13 +106,43 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void SplitLyric(Lyric lyric, int index)
         {
-            // todo : make sure split works with order and other property.
+            changeHandler?.BeginChange();
+
+            // Shifting order that order is larger than current lyric 
+            var lyricOrder = lyric.Order;
+            OrderUtils.ShiftingOrder(Lyrics.Where(x => x.Order > lyricOrder).ToArray(), 1);
+
+            // Split lyric
             var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, index);
+            firstLyric.Order = lyric.Order;
+            secondLyric.Order = lyric.Order + 1;
+
+            // Add those tho lyric and remove old one.
+            beatmap.Add(secondLyric);
+            beatmap.Add(firstLyric);
+            beatmap.Remove(lyric);
+
+            changeHandler?.EndChange();
+        }
+
+        public void CombineWithPreviousLyric(Lyric lyric)
+        {
+            var previousLyric = Lyrics.GetPrevious(lyric);
+            if (previousLyric == null)
+                throw new ArgumentNullException(nameof(previousLyric));
 
             changeHandler?.BeginChange();
 
-            beatmap.Add(firstLyric);
-            beatmap.Add(secondLyric);
+            // Shifting order that order is larger than current lyric 
+            var lyricOrder = previousLyric.Order;
+            OrderUtils.ShiftingOrder(Lyrics.Where(x => x.Order > lyricOrder).ToArray(), -1);
+
+            var newLyric = LyricsUtils.CombineLyric(previousLyric, lyric);
+            newLyric.Order = lyricOrder;
+
+            // Add created lyric and remove old two.
+            beatmap.Add(newLyric);
+            beatmap.Remove(previousLyric);
             beatmap.Remove(lyric);
 
             changeHandler?.EndChange();
@@ -121,24 +152,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         #region Create/delete lyric
 
-        public void CreateLyric(int? targetOrder = null)
+        public void CreateLyric(int? nextToOrder = null)
         {
             var maxOrder = OrderUtils.GetMaxOrderNumber(Lyrics.ToArray());
-            var order = targetOrder ?? OrderUtils.GetMaxOrderNumber(Lyrics.ToArray()) + 1;
+            var order = nextToOrder ?? maxOrder;
             if (order < 0 && order > maxOrder + 1)
                 throw new ArgumentOutOfRangeException(nameof(order));
 
             changeHandler?.BeginChange();
 
+            // Shifting order that order is larger than current lyric 
+            OrderUtils.ShiftingOrder(Lyrics.Where(x => x.Order > order).ToArray(), 1);
+
+            // Add new lyric to target order.
             var createLyric = new Lyric
             {
                 Text = "New lyric",
-                Order = order,
+                Order = order + 1,
             };
             beatmap.Add(createLyric);
-
-            // need to re-sort lyric order in here because sometimes new lyric will insert into center.
-            OrderUtils.ResortOrder(Lyrics.ToArray());
 
             changeHandler?.EndChange();
         }
@@ -147,10 +179,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             changeHandler?.BeginChange();
 
+            // Shifting order that order is larger than current lyric 
+            OrderUtils.ShiftingOrder(Lyrics.Where(x => x.Order > lyric.Order).ToArray(), -1);
             beatmap.Remove(lyric);
-
-            // need to re-sort lyric order in here.
-            OrderUtils.ResortOrder(Lyrics.ToArray());
 
             changeHandler?.EndChange();
         }

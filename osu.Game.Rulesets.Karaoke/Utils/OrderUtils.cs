@@ -64,6 +64,20 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         }
 
         /// <summary>
+        /// Shifting order.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="objects"></param>
+        /// <param name="shifting"></param>
+        public static void ShiftingOrder<T>(T[] objects, int shifting) where T : IHasOrder
+        {
+            foreach (var processObject in objects)
+            {
+                processObject.Order += shifting;
+            }
+        }
+
+        /// <summary>
         /// Re-generate order number if has gap between two order number
         /// </summary>
         /// <example>

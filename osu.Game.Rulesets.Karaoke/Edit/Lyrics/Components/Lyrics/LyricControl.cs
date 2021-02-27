@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
             // todo : not really sure is ok to split time-tag by double click?
             // need to make an ux research.
-            var position = state.BindableHoverCaretPosition.Value;
+            var position = state.BindableCaretPosition.Value;
             if (position is TextCaretPosition textCaretPosition)
             {
                 lyricManager?.SplitLyric(Lyric, textCaretPosition.Index);

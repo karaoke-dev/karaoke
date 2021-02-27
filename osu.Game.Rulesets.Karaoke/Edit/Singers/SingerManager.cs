@@ -51,10 +51,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 
         public void DeleteSinger(Singer singer)
         {
+            // Shifting order that order is larger than current singer 
+            OrderUtils.ShiftingOrder(Singers.Where(x => x.Order > singer.Order).ToArray(), -1);
             Singers.Remove(singer);
-
-            // should re-sort order
-            OrderUtils.ResortOrder(Singers.ToArray());
         }
     }
 }

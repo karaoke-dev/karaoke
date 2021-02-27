@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -187,31 +188,43 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
                 if (bindableMode.Value != Mode.EditMode)
                     return null;
 
-                return new MenuItem[]
+                var menuItems = new List<MenuItem>
                 {
                     new OsuMenuItem("Create new lyric", MenuItemType.Standard, () =>
                     {
-                        // add new lyric with below of current lyric.
-                        var targetOrder = Lyric.Order + 1;
+                    // add new lyric with below of current lyric.
+                    var targetOrder = Lyric.Order;
                         lyricManager.CreateLyric(targetOrder);
-                    }),
-                    new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
-                    {
-                        if (dialogOverlay == null)
-                        {
-                            // todo : remove lyric directly in test case because pop-up dialog is not registered.
-                            lyricManager.DeleteLyric(Lyric);
-                        }
-                        else
-                        {
-                            dialogOverlay.Push(new DeleteLyricDialog(isOk =>
-                            {
-                                if (isOk)
-                                    lyricManager.DeleteLyric(Lyric);
-                            }));
-                        }
-                    }),
+                    })
                 };
+
+                // use lazy way to check lyric is not in first
+                if (Lyric.Order > 1)
+                {
+                    menuItems.Add(new OsuMenuItem("Combine with previous lyric", MenuItemType.Standard, () =>
+                    {
+                        lyricManager.CombineWithPreviousLyric(Lyric);
+                    }));
+                }
+
+                menuItems.Add(new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
+                {
+                    if (dialogOverlay == null)
+                    {
+                        // todo : remove lyric directly in test case because pop-up dialog is not registered.
+                        lyricManager.DeleteLyric(Lyric);
+                    }
+                    else
+                    {
+                        dialogOverlay.Push(new DeleteLyricDialog(isOk =>
+                        {
+                            if (isOk)
+                                lyricManager.DeleteLyric(Lyric);
+                        }));
+                    }
+                }));
+
+                return menuItems.ToArray();
             }
         }
     }

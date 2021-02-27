@@ -86,7 +86,10 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
                 }
             }
 
-            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, item, lastItem));
+            var oldItem = new KeyValuePair<TKey, TValue>(index, item);
+            var newItem = new KeyValuePair<TKey, TValue>(index, lastItem);
+            var keyIndex = Keys.ToList().IndexOf(index);
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, oldItem, newItem, keyIndex));
         }
 
         /// <summary>
@@ -123,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
                 }
             }
 
-            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, collection.Count - 1));
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(item.Key, item.Value), collection.Count - 1));
         }
 
         /// <summary>
@@ -194,6 +197,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             // Removal may have come from an equality comparison.
             // Always return the original reference from the list to other bindings and events.
             var listItem = collection[key];
+            var index = Keys.ToList().IndexOf(key);
 
             collection.Remove(key);
 
@@ -208,7 +212,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
                 }
             }
 
-            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, listItem));
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, new KeyValuePair<TKey, TValue>(key, listItem), index));
 
             return true;
         }
@@ -438,7 +442,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         {
             CollectionChanged += onChange;
             if (runOnceImmediately)
-                onChange(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, collection));
+                onChange(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, collection.ToList()));
         }
 
         private void addWeakReference(WeakReference<BindableDictionary<TKey, TValue>> weakReference)
