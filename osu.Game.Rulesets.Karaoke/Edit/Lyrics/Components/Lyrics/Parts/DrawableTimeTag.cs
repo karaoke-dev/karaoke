@@ -38,8 +38,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
 
         public DrawableTimeTag(TimeTagCaretPosition timeTagCaretPosition)
         {
-            AutoSizeAxes = Axes.Both;
             this.timeTagCaretPosition = timeTagCaretPosition;
+            Size = new Vector2(triangle_width);
 
             bindableMode.BindValueChanged(x =>
             {
