@@ -86,7 +86,9 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
                 }
             }
 
-            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, item, lastItem));
+            var oldDictionary = new Dictionary<TKey, TValue> { { index, item } };
+            var newDictionary = new Dictionary<TKey, TValue> { { index, lastItem } };
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, oldDictionary, newDictionary));
         }
 
         /// <summary>
@@ -123,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
                 }
             }
 
-            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, collection.Count - 1));
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new Dictionary<TKey, TValue> { { item.Key, item.Value } }, collection.Count - 1));
         }
 
         /// <summary>
@@ -156,7 +158,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
                 }
             }
 
-            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, clearedItems, 0));
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, clearedItems.ToDictionary(k => k.Key, v => v.Value), 0));
         }
 
         /// <summary>
@@ -208,7 +210,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
                 }
             }
 
-            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, listItem));
+            notifyCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, new Dictionary<TKey, TValue> { { key, listItem } }));
 
             return true;
         }
