@@ -52,7 +52,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
         }
 
         public float GetPercentageWidth(int startIndex, int endIndex, float percentage = 0)
-            => GetPercentageWidth(new TextIndex(startIndex), new TextIndex(endIndex), percentage);
+        {
+            return GetPercentageWidth(getTextIndexByIndex(startIndex), getTextIndexByIndex(endIndex), percentage);
+
+            // todo : it's a temp way to get position.
+            TextIndex getTextIndexByIndex(int index)
+            {
+                if (HitObject.Text?.Length <= index)
+                    return new TextIndex(index - 1, TextIndex.IndexState.End);
+
+                return new TextIndex(index);
+            }
+        }
 
         public float GetPercentageWidth(TextIndex startIndex, TextIndex endIndex, float percentage = 0)
             => KaraokeText.GetPercentageWidth(startIndex, endIndex, percentage);

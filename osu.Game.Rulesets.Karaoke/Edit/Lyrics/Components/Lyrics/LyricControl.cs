@@ -230,8 +230,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             switch (position)
             {
                 case TextCaretPosition textCaretPosition:
-                    var index = new TextIndex(textCaretPosition.Index);
-                    caretPosition = textIndexPosition(index) - 10; // todo : might have better way to get position.
+                    caretPosition = textIndexPosition(textCaretPosition.Index);
                     break;
 
                 case TimeTagIndexCaretPosition indexCaretPosition:
@@ -280,7 +279,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             foreach (var timeTag in timeTags)
             {
                 var spacing = textIndexPosition(timeTag.Index) + extraSpacing(timeTag);
-                timeTagContainer.Add(new DrawableTimeTag(timeTag, Lyric)
+                timeTagContainer.Add(new DrawableTimeTag(new TimeTagCaretPosition(Lyric, timeTag))
                 {
                     Anchor = Anchor.BottomLeft,
                     Origin = Anchor.BottomLeft,
@@ -289,12 +288,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
             }
         }
 
+        private float textIndexPosition(int textIndex)
+        {
+            var isEnd = Lyric.Text?.Length <= textIndex;
+            var percentage = isEnd ? 1 : 0;
+            var offset = isEnd ? 10 : -10; // todo : might have better way to get position.
+            return drawableLyric.GetPercentageWidth(textIndex, textIndex + 1, percentage) * 2 + offset;
+        }
+
         private float textIndexPosition(TextIndex textIndex)
         {
-            var index = Math.Min(textIndex.Index, Lyric.Text.Length - 1);
             var isStart = textIndex.State == TextIndex.IndexState.Start;
             var percentage = isStart ? 0 : 1;
-            return drawableLyric.GetPercentageWidth(index, index + 1, percentage) * 2;
+            return drawableLyric.GetPercentageWidth(textIndex, textIndex, percentage) * 2;
         }
 
         private float extraSpacing(TimeTag timeTag)

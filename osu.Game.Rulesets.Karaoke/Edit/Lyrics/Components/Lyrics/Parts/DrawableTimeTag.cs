@@ -34,14 +34,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
         private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
         private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
 
-        private readonly TimeTag timeTag;
-        private readonly Lyric lyric;
+        private readonly TimeTagCaretPosition timeTagCaretPosition;
 
-        public DrawableTimeTag(TimeTag timeTag, Lyric lyric)
+        public DrawableTimeTag(TimeTagCaretPosition timeTagCaretPosition)
         {
-            this.timeTag = timeTag;
-            this.lyric = lyric;
-            AutoSizeAxes = Axes.Both;
+            this.timeTagCaretPosition = timeTagCaretPosition;
+            Size = new Vector2(triangle_width);
 
             bindableMode.BindValueChanged(x =>
             {
@@ -53,19 +51,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
                 updateStyle();
             });
 
+            var index = timeTagCaretPosition.TimeTag.Index;
             InternalChild = new RightTriangle
             {
                 Name = "Time tag triangle",
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(triangle_width),
-                Scale = new Vector2(timeTag.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1)
+                Scale = new Vector2(index.State == TextIndex.IndexState.Start ? 1 : -1, 1)
             };
         }
 
         private void updateStyle()
         {
-            if (isTrigger(bindableMode.Value) && !state.CaretMovable(new TimeTagCaretPosition(lyric, timeTag)))
+            if (isTrigger(bindableMode.Value) && !state.CaretMovable(timeTagCaretPosition))
             {
                 InternalChild.Alpha = 0.3f;
             }
@@ -78,7 +77,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            InternalChild.Colour = timeTag.Time.HasValue ? colours.Yellow : colours.Gray7;
+            var time = timeTagCaretPosition.TimeTag.Time;
+            InternalChild.Colour = time.HasValue ? colours.Yellow : colours.Gray7;
 
             bindableMode.BindTo(state.BindableMode);
             bindableRecordingMovingCaretMode.BindTo(state.BindableRecordingMovingCaretMode);
@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
             if (!isTrigger(bindableMode.Value))
                 return false;
 
-            return state?.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag)) ?? false;
+            return state?.MoveHoverCaretToTargetPosition(timeTagCaretPosition) ?? false;
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
@@ -105,14 +105,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
         {
             // navigation to target time
             // todo : might apply config to allow this behavior in target place.
-            var time = timeTag.Time;
+            var time = timeTagCaretPosition.TimeTag.Time;
             if (time != null)
                 editorClock.SeekSmoothlyTo(time.Value);
 
             if (!isTrigger(bindableMode.Value))
                 return false;
 
-            return state.MoveCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag));
+            return state.MoveCaretToTargetPosition(timeTagCaretPosition);
         }
 
         protected override void Dispose(bool isDisposing)
@@ -126,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics.Parts
         private bool isTrigger(Mode mode)
             => mode == Mode.RecordMode;
 
-        public object TooltipContent => timeTag;
+        public object TooltipContent => timeTagCaretPosition.TimeTag;
 
         public ITooltip GetCustomTooltip() => new TimeTagTooltip();
     }
