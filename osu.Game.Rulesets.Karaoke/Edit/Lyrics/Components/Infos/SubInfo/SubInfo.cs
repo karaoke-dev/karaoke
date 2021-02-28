@@ -5,6 +5,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -44,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.SubInfo
             };
         }
 
-        public string BadgeText
+        public LocalisableString BadgeText
         {
             get => badgeText.Text;
             set => badgeText.Text = value;

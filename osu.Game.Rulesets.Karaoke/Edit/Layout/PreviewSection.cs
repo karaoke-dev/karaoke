@@ -11,6 +11,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.IO;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
@@ -213,7 +214,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             {
                 private class StyleDropdownControl : DropdownControl
                 {
-                    protected override string GenerateItemText(KeyValuePair<int, string> item)
+                    protected override LocalisableString GenerateItemText(KeyValuePair<int, string> item)
                         => item.Value ?? $"Style{item.Key}";
                 }
             }

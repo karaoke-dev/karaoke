@@ -2,13 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Globalization;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
 {
     public class LanguageDropdown : OsuDropdown<CultureInfo>
     {
-        protected override string GenerateItemText(CultureInfo item)
+        protected override LocalisableString GenerateItemText(CultureInfo item)
             => item.DisplayName;
     }
 }

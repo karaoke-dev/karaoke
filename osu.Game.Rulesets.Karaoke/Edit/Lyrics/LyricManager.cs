@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             changeHandler?.BeginChange();
 
-            // Shifting order that order is larger than current lyric 
+            // Shifting order that order is larger than current lyric.
             var lyricOrder = lyric.Order;
             OrderUtils.ShiftingOrder(Lyrics.Where(x => x.Order > lyricOrder).ToArray(), 1);
 
@@ -133,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             changeHandler?.BeginChange();
 
-            // Shifting order that order is larger than current lyric 
+            // Shifting order that order is larger than current lyric.
             var lyricOrder = previousLyric.Order;
             OrderUtils.ShiftingOrder(Lyrics.Where(x => x.Order > lyricOrder).ToArray(), -1);
 
@@ -161,7 +161,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             changeHandler?.BeginChange();
 
-            // Shifting order that order is larger than current lyric 
+            // Shifting order that order is larger than current lyric.
             OrderUtils.ShiftingOrder(Lyrics.Where(x => x.Order > order).ToArray(), 1);
 
             // Add new lyric to target order.
@@ -179,7 +179,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             changeHandler?.BeginChange();
 
-            // Shifting order that order is larger than current lyric 
+            // Shifting order that order is larger than current lyric.
             OrderUtils.ShiftingOrder(Lyrics.Where(x => x.Order > lyric.Order).ToArray(), -1);
             beatmap.Remove(lyric);
 

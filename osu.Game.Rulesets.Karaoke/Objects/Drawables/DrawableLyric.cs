@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
             if (DisplayTranslateLanguage == null)
             {
-                translateText.Text = null;
+                translateText.Text = (string)null;
             }
             else
             {
