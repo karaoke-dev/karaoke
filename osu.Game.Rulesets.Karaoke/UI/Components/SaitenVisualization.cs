@@ -131,6 +131,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             }
         }
 
+        public void Clear()
+        {
+            frames.Clear();
+            ClearInternal();
+        }
+
         private float scrollLength;
 
         protected override void Update()

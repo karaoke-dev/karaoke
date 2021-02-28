@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -17,6 +18,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Resources.Fonts;
 using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
 using osu.Game.Scoring;
 using osu.Game.Users;
@@ -33,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         private Stream trackData;
 
-        public override Score CreateReplayScore(IBeatmap beatmap) => new Score
+        public override Score CreateReplayScore(IBeatmap beatmap, IReadOnlyList<Mod> mods) => new Score
         {
             ScoreInfo = new ScoreInfo { User = new User { Username = "karaoke!singer" } },
             Replay = Replay = new KaraokeAutoGeneratorBySinger((KaraokeBeatmap)beatmap, trackData).Generate(),
