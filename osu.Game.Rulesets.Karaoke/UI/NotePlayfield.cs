@@ -254,6 +254,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
             base.OnNewDrawableHitObject(drawableHitObject);
         }
 
+        public void ClearReplay()
+        {
+            replaySaitenVisualization.Clear();
+        }
+
         public void AddReplay(KaraokeReplayFrame frame)
         {
             replaySaitenVisualization.Add(frame);
