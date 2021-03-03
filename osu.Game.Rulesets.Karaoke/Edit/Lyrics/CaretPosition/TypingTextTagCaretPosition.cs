@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition
 {
-    public class TypingTextTagCaretPosition : ICaretPosition
+    public class TypingTextTagCaretPosition : ITextTagCaretPosition
     {
         public TypingTextTagCaretPosition(Lyric lyric, ITextTag textTag, int typingCaretIndex)
         {

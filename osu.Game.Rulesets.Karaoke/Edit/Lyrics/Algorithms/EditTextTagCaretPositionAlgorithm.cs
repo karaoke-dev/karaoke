@@ -18,11 +18,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         }
 
-        public override bool PositionMovable(EditTextTagCaretPosition position)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override EditTextTagCaretPosition MoveUp(EditTextTagCaretPosition currentPosition)
         {
             throw new System.NotImplementedException();

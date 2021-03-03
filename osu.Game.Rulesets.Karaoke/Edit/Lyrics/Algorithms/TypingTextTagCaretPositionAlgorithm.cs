@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -19,37 +20,60 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public override bool PositionMovable(TypingTextTagCaretPosition position)
         {
-            throw new System.NotImplementedException();
+            if (!base.PositionMovable(position))
+                return false;
+
+            // check cursor in in the range
+            var text = position.TextTag.Text;
+            if (text == null)
+                return false;
+
+            return position.TypingCaretIndex >= 0 && position.TypingCaretIndex <= text.Length;
         }
 
         public override TypingTextTagCaretPosition MoveUp(TypingTextTagCaretPosition currentPosition)
         {
-            throw new System.NotImplementedException();
+            // in typing mode should not have moving up.
+            return currentPosition;
         }
 
         public override TypingTextTagCaretPosition MoveDown(TypingTextTagCaretPosition currentPosition)
         {
-            throw new System.NotImplementedException();
+            // in typing mode should not have moving up.
+            return currentPosition;
         }
 
         public override TypingTextTagCaretPosition MoveLeft(TypingTextTagCaretPosition currentPosition)
         {
-            throw new System.NotImplementedException();
+            // only move cursor position in terxt tag.
+            var newIndex = Math.Max(currentPosition.TypingCaretIndex - 1, 0);
+            if (newIndex == currentPosition.TypingCaretIndex)
+                return currentPosition;
+
+            return new TypingTextTagCaretPosition(currentPosition.Lyric, currentPosition.TextTag, newIndex);
         }
 
         public override TypingTextTagCaretPosition MoveRight(TypingTextTagCaretPosition currentPosition)
         {
-            throw new System.NotImplementedException();
+            // only move cursor position in terxt tag.
+            var text = currentPosition.TextTag.Text;
+            var newIndex = Math.Min(currentPosition.TypingCaretIndex + 1, text.Length);
+            if (newIndex == currentPosition.TypingCaretIndex)
+                return currentPosition;
+
+            return new TypingTextTagCaretPosition(currentPosition.Lyric, currentPosition.TextTag, newIndex);
         }
 
         public override TypingTextTagCaretPosition MoveToFirst()
         {
-            throw new System.NotImplementedException();
+            // might not support this feature if typing.
+            throw new NotSupportedException($"{nameof(MoveToFirst)} is not support in this algorithm.");
         }
 
         public override TypingTextTagCaretPosition MoveToLast()
         {
-            throw new System.NotImplementedException();
+            // might not support this feature if typing.
+            throw new NotSupportedException($"{nameof(MoveToLast)} is not support in this algorithm.");
         }
     }
 }

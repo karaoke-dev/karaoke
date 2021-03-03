@@ -19,7 +19,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public override bool PositionMovable(CreateTextTagCaretPosition position)
         {
-            throw new System.NotImplementedException();
+            // only check type is ok then let it pass.
+            if (!IsTextTagTypeValid(position))
+                return false;
+
+            return true;
         }
 
         public override CreateTextTagCaretPosition MoveUp(CreateTextTagCaretPosition currentPosition)
