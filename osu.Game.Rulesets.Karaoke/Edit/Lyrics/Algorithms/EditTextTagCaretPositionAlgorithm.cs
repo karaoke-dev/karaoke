@@ -1,8 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Linq;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
@@ -20,32 +25,119 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public override EditTextTagCaretPosition MoveUp(EditTextTagCaretPosition currentPosition)
         {
-            throw new System.NotImplementedException();
+            base.MoveUp(currentPosition);
+
+            var currentTextTag = currentPosition.TextTag;
+
+            // need to check is lyric in time-tag is valid.
+            var currentLyric = tagInLyric(currentTextTag);
+            if (currentLyric != currentPosition.Lyric)
+                throw new ArgumentException(nameof(currentPosition.Lyric));
+
+            // find previous lyric that contains ruby/romaji tags.
+            var previousLyric = getPreviousLyricWithTextTag(currentLyric, currentTextTag);
+            if (previousLyric == null)
+                return null;
+
+            // todo : might check is default struct
+            var textTags = getRelatedTypeTextTag(previousLyric, currentPosition);
+            var upTextTag = textTags.FirstOrDefault(x => x.StartIndex >= currentTextTag.StartIndex);
+            return new EditTextTagCaretPosition(previousLyric, upTextTag);
         }
 
         public override EditTextTagCaretPosition MoveDown(EditTextTagCaretPosition currentPosition)
         {
-            throw new System.NotImplementedException();
+            base.MoveDown(currentPosition);
+
+            var currentTextTag = currentPosition.TextTag;
+
+            // need to check is lyric in text-tag is valid.
+            var currentLyric = tagInLyric(currentTextTag);
+            if (currentLyric != currentPosition.Lyric)
+                throw new ArgumentException(nameof(currentPosition.Lyric));
+
+            // find previous lyric that contains ruby/romaji tags.
+            var nextLyric = getNextLyricWithTextTag(currentLyric, currentTextTag);
+            if (nextLyric == null)
+                return null;
+
+            // todo : might check is default struct
+            var textTags = getRelatedTypeTextTag(nextLyric, currentPosition);
+            var downTextTag = textTags.FirstOrDefault(x => x.StartIndex >= currentTextTag.StartIndex);
+            return new EditTextTagCaretPosition(nextLyric, downTextTag);
         }
 
         public override EditTextTagCaretPosition MoveLeft(EditTextTagCaretPosition currentPosition)
         {
-            throw new System.NotImplementedException();
+            base.MoveLeft(currentPosition);
+
+            var currentTextTag = currentPosition.TextTag;
+
+            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition)).ToArray();
+            var previousTextTag = textTags.GetPrevious(currentTextTag);
+
+            var currentLyric = currentPosition.Lyric;
+            if (getRelatedTypeTextTag(currentLyric, currentPosition).Contains(previousTextTag))
+                return new EditTextTagCaretPosition(currentLyric, previousTextTag);
+
+            var previousLyric = getPreviousLyricWithTextTag(currentLyric, currentTextTag);
+            return new EditTextTagCaretPosition(previousLyric, previousTextTag);
         }
 
         public override EditTextTagCaretPosition MoveRight(EditTextTagCaretPosition currentPosition)
         {
-            throw new System.NotImplementedException();
+            base.MoveRight(currentPosition);
+
+            var currentTextTag = currentPosition.TextTag;
+
+            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition)).ToArray();
+            var nextTextTag = textTags.GetNext(currentTextTag);
+
+            var currentLyric = currentPosition.Lyric;
+            if (getRelatedTypeTextTag(currentLyric, currentPosition).Contains(nextTextTag))
+                return new EditTextTagCaretPosition(currentLyric, nextTextTag);
+
+            var nextLyric = getNextLyricWithTextTag(currentLyric, currentTextTag);
+            return new EditTextTagCaretPosition(nextLyric, nextTextTag);
         }
 
         public override EditTextTagCaretPosition MoveToFirst()
         {
-            throw new System.NotImplementedException();
+            // might need to move to first ruby/romaji, but it can unsupport now.
+            return null;
         }
 
         public override EditTextTagCaretPosition MoveToLast()
         {
-            throw new System.NotImplementedException();
+            // might need to move to first ruby/romaji, but it can unsupport now.
+            return null;
         }
+
+        private Lyric tagInLyric(ITextTag textTag)
+        {
+            return Lyrics.FirstOrDefault(x => getRelatedTypeTextTag(x, textTag)?.Contains(textTag) ?? false);
+        }
+
+        private ITextTag[] getRelatedTypeTextTag(Lyric lyric, EditTextTagCaretPosition sample)
+            => getRelatedTypeTextTag(lyric, sample.TextTag);
+
+        private ITextTag[] getRelatedTypeTextTag(Lyric lyric, ITextTag sample)
+        {
+            switch (sample)
+            {
+                case RubyTag _:
+                    return lyric.RubyTags.OfType<ITextTag>().ToArray();
+                case RomajiTag _:
+                    return lyric.RomajiTags.OfType<ITextTag>().ToArray();
+                default:
+                    throw new InvalidCastException(nameof(sample));
+            }
+        }
+
+        private Lyric getPreviousLyricWithTextTag(Lyric current, ITextTag textTag)
+            => Lyrics.GetPreviousMatch(current, x => getRelatedTypeTextTag(x, textTag).Any());
+
+        private Lyric getNextLyricWithTextTag(Lyric current, ITextTag textTag)
+            => Lyrics.GetNextMatch(current, x => getRelatedTypeTextTag(x, textTag).Any());
     }
 }

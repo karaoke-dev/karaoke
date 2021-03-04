@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
-    public abstract class TextTagCaretPositionAlgorithm<T> : CaretPositionAlgorithm<T> where T : ITextTagCaretPosition
+    public abstract class TextTagCaretPositionAlgorithm<T> : CaretPositionAlgorithm<T> where T : class, ITextTagCaretPosition
     {
         protected readonly EditArea EditArea;
         public TextTagCaretPositionAlgorithm(Lyric[] lyrics, EditArea editArea)
@@ -32,6 +32,38 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
                 default:
                     throw new InvalidCastException(nameof(position.TextTag));
             }
+        }
+
+        public override T MoveUp(T currentPosition)
+        {
+            if (!IsTextTagTypeValid(currentPosition))
+                throw new InvalidCastException(nameof(currentPosition.TextTag));
+
+            return null;
+        }
+
+        public override T MoveDown(T currentPosition)
+        {
+            if (!IsTextTagTypeValid(currentPosition))
+                throw new InvalidCastException(nameof(currentPosition.TextTag));
+
+            return null;
+        }
+
+        public override T MoveLeft(T currentPosition)
+        {
+            if (!IsTextTagTypeValid(currentPosition))
+                throw new InvalidCastException(nameof(currentPosition.TextTag));
+
+            return null;
+        }
+
+        public override T MoveRight(T currentPosition)
+        {
+            if (!IsTextTagTypeValid(currentPosition))
+                throw new InvalidCastException(nameof(currentPosition.TextTag));
+
+            return null;
         }
 
         protected bool IsTextTagTypeValid(T position)
