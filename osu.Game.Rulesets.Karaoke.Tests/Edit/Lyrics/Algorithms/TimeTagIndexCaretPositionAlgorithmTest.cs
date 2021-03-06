@@ -113,7 +113,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             TestMoveToLast(lyrics, caretPosition);
         }
 
-
         protected override void AssertEqual(TimeTagIndexCaretPosition compare, TimeTagIndexCaretPosition actual)
         {
             if (compare == null)
