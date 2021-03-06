@@ -82,8 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             if (lyric == null)
                 return null;
 
-            var textLength = lyric?.Text.Length ?? 0;
-            var index = textLength - 1;
+            var index = lyric.Text?.Length ?? 0;
             return new TextCaretPosition(lyric, index);
         }
 
@@ -91,13 +90,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
         {
             var text = lyric.Text;
             if (string.IsNullOrEmpty(text))
-                return false;
+                return index == 0;
 
             return index >= GetMinIndex(text) && index <= GetMaxIndex(text);
         }
 
         protected virtual int GetMinIndex(string text) => 0;
 
-        protected virtual int GetMaxIndex(string text) => text.Length;
+        protected virtual int GetMaxIndex(string text) => text?.Length ?? 0;
     }
 }
