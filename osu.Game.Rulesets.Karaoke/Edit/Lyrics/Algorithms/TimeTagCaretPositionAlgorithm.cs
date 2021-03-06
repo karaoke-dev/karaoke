@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
                 throw new ArgumentException(nameof(currentPosition.Lyric));
 
             var upTimeTag = Lyrics.GetPreviousMatch(currentLyric, l => l.TimeTags?.Any() ?? false)
-                ?.TimeTags.FirstOrDefault(x => x.Index >= currentTimeTag.Index && timeTagMovable(x));
+                                  ?.TimeTags.FirstOrDefault(x => x.Index >= currentTimeTag.Index && timeTagMovable(x));
             return timeTagToPosition(upTimeTag);
         }
 
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
                 throw new ArgumentException(nameof(currentPosition.Lyric));
 
             var downTimeTag = Lyrics.GetNextMatch(currentLyric, l => l.TimeTags?.Any() ?? false)
-                ?.TimeTags?.FirstOrDefault(x => x.Index >= currentTimeTag.Index && timeTagMovable(x));
+                                    ?.TimeTags?.FirstOrDefault(x => x.Index >= currentTimeTag.Index && timeTagMovable(x));
             return timeTagToPosition(downTimeTag);
         }
 
