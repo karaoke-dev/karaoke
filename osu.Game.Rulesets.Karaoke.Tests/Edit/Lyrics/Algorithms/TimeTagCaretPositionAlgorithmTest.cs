@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
         [TestCase(nameof(singleLyric), RecordingMovingCaretMode.None, 0, 0, NOT_EXIST, NOT_EXIST_TAG)]
         [TestCase(nameof(twoLyricsWithText), RecordingMovingCaretMode.None, 1, 0, 0, 4)]
         [TestCase(nameof(twoLyricsWithText), RecordingMovingCaretMode.OnlyStartTag, 1, 0, 0, 3)]
-        [TestCase(nameof(twoLyricsWithText), RecordingMovingCaretMode.OnlyEndTag, 1, 0, 0, 4)] 
+        [TestCase(nameof(twoLyricsWithText), RecordingMovingCaretMode.OnlyEndTag, 1, 0, 0, 4)]
         [TestCase(nameof(threeLyricsWithSpacing), RecordingMovingCaretMode.None, 2, 0, 0, 4)]
         [TestCase(nameof(threeLyricsWithSpacing), RecordingMovingCaretMode.OnlyStartTag, 2, 0, 0, 3)]
         [TestCase(nameof(threeLyricsWithSpacing), RecordingMovingCaretMode.OnlyEndTag, 2, 0, 0, 4)]
@@ -167,18 +167,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
                 return null;
 
             var lyric = lyrics.ElementAtOrDefault(lyricIndex);
-            var timeTag = lyric.TimeTags?.ElementAtOrDefault(timeTagIndex);
+            var timeTag = lyric?.TimeTags?.ElementAtOrDefault(timeTagIndex);
             return new TimeTagCaretPosition(lyric, timeTag);
         }
 
         #region source
 
-        private Lyric[] singleLyric => new Lyric[]
+        private Lyric[] singleLyric => new[]
         {
             new Lyric
             {
                 Text = "カラオケ",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(new []
+                TimeTags = TestCaseTagHelper.ParseTimeTags(new[]
                 {
                     "[0,start]:1000",
                     "[1,start]:2000",
@@ -189,7 +189,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             }
         };
 
-        private Lyric[] singleLyricWithoutTimeTag => new Lyric[]
+        private Lyric[] singleLyricWithoutTimeTag => new[]
         {
             new Lyric
             {
@@ -197,17 +197,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             }
         };
 
-        private Lyric[] singleLyricWithNoText => new Lyric[]
+        private Lyric[] singleLyricWithNoText => new[]
         {
             new Lyric()
         };
 
-        private Lyric[] twoLyricsWithText => new Lyric[]
+        private Lyric[] twoLyricsWithText => new[]
         {
             new Lyric
             {
                 Text = "カラオケ",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(new []
+                TimeTags = TestCaseTagHelper.ParseTimeTags(new[]
                 {
                     "[0,start]:1000",
                     "[1,start]:2000",
@@ -219,7 +219,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             new Lyric
             {
                 Text = "大好き",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(new []
+                TimeTags = TestCaseTagHelper.ParseTimeTags(new[]
                 {
                     "[0,start]:1000",
                     "[1,start]:2000",
@@ -229,12 +229,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             }
         };
 
-        private Lyric[] threeLyricsWithSpacing => new Lyric[]
+        private Lyric[] threeLyricsWithSpacing => new[]
         {
             new Lyric
             {
                 Text = "カラオケ",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(new []
+                TimeTags = TestCaseTagHelper.ParseTimeTags(new[]
                 {
                     "[0,start]:1000",
                     "[1,start]:2000",
@@ -247,7 +247,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             new Lyric
             {
                 Text = "大好き",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(new []
+                TimeTags = TestCaseTagHelper.ParseTimeTags(new[]
                 {
                     "[0,start]:1000",
                     "[1,start]:2000",

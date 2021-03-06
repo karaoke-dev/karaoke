@@ -12,6 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
     [TestFixture]
     public class TypingCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<TypingCaretPositionAlgorithm, TextCaretPosition>
     {
+        protected const int INDEX_EXIST_TAG = -1;
+
         [TestCase(nameof(singleLyric), 0, 0, true)]
         [TestCase(nameof(singleLyric), 0, 4, true)]
         [TestCase(nameof(singleLyric), 0, 5, false)]
@@ -27,8 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             TestPositionMovable(lyrics, caretPosition, movable);
         }
 
-        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, NOT_EXIST)] // cannot move up if at top index.
-        [TestCase(nameof(singleLyricWithNoText), 0, 0, NOT_EXIST, NOT_EXIST)]
+        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, INDEX_EXIST_TAG)] // cannot move up if at top index.
+        [TestCase(nameof(singleLyricWithNoText), 0, 0, NOT_EXIST, INDEX_EXIST_TAG)]
         [TestCase(nameof(twoLyricsWithText), 1, 0, 0, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 0, 1, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 3, 1, 0)]
@@ -42,8 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             TestMoveUp(lyrics, caretPosition, newCaretPosition);
         }
 
-        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, NOT_EXIST)] // cannot move down if at bottom index.
-        [TestCase(nameof(singleLyricWithNoText), 0, 0, NOT_EXIST, NOT_EXIST)]
+        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, INDEX_EXIST_TAG)] // cannot move down if at bottom index.
+        [TestCase(nameof(singleLyricWithNoText), 0, 0, NOT_EXIST, INDEX_EXIST_TAG)]
         [TestCase(nameof(twoLyricsWithText), 0, 0, 1, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 0, 1, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 4, 1, 0)]
@@ -57,8 +59,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             TestMoveDown(lyrics, caretPosition, newCaretPosition);
         }
 
-        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, NOT_EXIST)]
-        [TestCase(nameof(singleLyricWithNoText), 0, 0, NOT_EXIST, NOT_EXIST)]
+        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, INDEX_EXIST_TAG)]
+        [TestCase(nameof(singleLyricWithNoText), 0, 0, NOT_EXIST, INDEX_EXIST_TAG)]
         [TestCase(nameof(twoLyricsWithText), 1, 0, 0, 4)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 0, 1, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 3, 2, 2)]
@@ -72,8 +74,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             TestMoveLeft(lyrics, caretPosition, newCaretPosition);
         }
 
-        [TestCase(nameof(singleLyric), 0, 4, NOT_EXIST, NOT_EXIST)]
-        [TestCase(nameof(singleLyricWithNoText), 0, 0, NOT_EXIST, NOT_EXIST)]
+        [TestCase(nameof(singleLyric), 0, 4, NOT_EXIST, INDEX_EXIST_TAG)]
+        [TestCase(nameof(singleLyricWithNoText), 0, 0, NOT_EXIST, INDEX_EXIST_TAG)]
         [TestCase(nameof(twoLyricsWithText), 0, 4, 1, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 4, 1, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 3, 0, 4)]
@@ -137,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
 
         #region source
 
-        private Lyric[] singleLyric => new Lyric[]
+        private Lyric[] singleLyric => new[]
         {
             new Lyric
             {
@@ -145,12 +147,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             }
         };
 
-        private Lyric[] singleLyricWithNoText => new Lyric[]
+        private Lyric[] singleLyricWithNoText => new[]
         {
             new Lyric()
         };
 
-        private Lyric[] twoLyricsWithText => new Lyric[]
+        private Lyric[] twoLyricsWithText => new[]
         {
             new Lyric
             {
@@ -162,7 +164,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             }
         };
 
-        private Lyric[] threeLyricsWithSpacing => new Lyric[]
+        private Lyric[] threeLyricsWithSpacing => new[]
         {
             new Lyric
             {

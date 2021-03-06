@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
 
         #region source
 
-        private Lyric[] singleLyric => new Lyric[]
+        private Lyric[] singleLyric => new[]
         {
             new Lyric
             {
@@ -148,10 +148,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
 
         private Lyric[] singleLyricWithNoText => new Lyric[]
         {
-            new Lyric()
+            new()
         };
 
-        private Lyric[] twoLyricsWithText => new Lyric[]
+        private Lyric[] twoLyricsWithText => new[]
         {
             new Lyric
             {
@@ -163,7 +163,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             }
         };
 
-        private Lyric[] threeLyricsWithSpacing => new Lyric[]
+        private Lyric[] threeLyricsWithSpacing => new[]
         {
             new Lyric
             {
