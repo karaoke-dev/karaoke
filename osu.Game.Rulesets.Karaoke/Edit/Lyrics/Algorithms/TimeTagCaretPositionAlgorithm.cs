@@ -13,12 +13,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
     public class TimeTagCaretPositionAlgorithm : CaretPositionAlgorithm<TimeTagCaretPosition>
     {
-        private readonly RecordingMovingCaretMode mode;
+        public RecordingMovingCaretMode Mode { get; set; }
 
-        public TimeTagCaretPositionAlgorithm(Lyric[] lyrics, RecordingMovingCaretMode mode)
+        public TimeTagCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
-            this.mode = mode;
         }
 
         public override bool PositionMovable(TimeTagCaretPosition position)
@@ -98,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         private bool timeTagMovable(TimeTag timeTag)
         {
-            switch (mode)
+            switch (Mode)
             {
                 case RecordingMovingCaretMode.None:
                     return true;
