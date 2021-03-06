@@ -108,13 +108,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public override EditTextTagCaretPosition MoveToFirst()
         {
-            // might need to move to first ruby/romaji, but it can unsupport now.
+            // might need to move to first ruby/romaji, but it can un-supported now.
             return null;
         }
 
         public override EditTextTagCaretPosition MoveToLast()
         {
-            // might need to move to first ruby/romaji, but it can unsupport now.
+            // might need to move to first ruby/romaji, but it can un-supported now.
             return null;
         }
 
@@ -132,8 +132,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             {
                 case RubyTag _:
                     return lyric.RubyTags?.OfType<ITextTag>().ToArray();
+
                 case RomajiTag _:
                     return lyric.RomajiTags?.OfType<ITextTag>().ToArray();
+
                 default:
                     throw new InvalidCastException(nameof(sample));
             }

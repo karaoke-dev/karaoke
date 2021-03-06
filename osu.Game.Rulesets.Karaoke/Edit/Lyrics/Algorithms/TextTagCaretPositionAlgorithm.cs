@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
     {
         public EditArea EditArea { get; set; }
 
-        public TextTagCaretPositionAlgorithm(Lyric[] lyrics)
+        protected TextTagCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
         }
@@ -27,8 +27,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             {
                 case RubyTag rubyTag:
                     return position.Lyric.RubyTags.Contains(rubyTag);
+
                 case RomajiTag romajiTag:
                     return position.Lyric.RomajiTags.Contains(romajiTag);
+
                 default:
                     throw new InvalidCastException(nameof(position.TextTag));
             }
@@ -72,10 +74,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             {
                 case EditArea.Ruby:
                     return position.TextTag is RubyTag;
+
                 case EditArea.Romaji:
                     return position.TextTag is RomajiTag;
+
                 case EditArea.Both:
                     return true;
+
                 default:
                     throw new IndexOutOfRangeException(nameof(position.TextTag));
             }

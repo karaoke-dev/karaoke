@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public override TypingTextTagCaretPosition MoveLeft(TypingTextTagCaretPosition currentPosition)
         {
-            // only move cursor position in terxt tag.
+            // only move cursor position in text tag.
             var newIndex = Math.Max(currentPosition.TypingCaretIndex - 1, 0);
             if (newIndex == currentPosition.TypingCaretIndex)
                 return null;
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public override TypingTextTagCaretPosition MoveRight(TypingTextTagCaretPosition currentPosition)
         {
-            // only move cursor position in terxt tag.
+            // only move cursor position in text tag.
             var text = currentPosition.TextTag.Text;
             var newIndex = Math.Min(currentPosition.TypingCaretIndex + 1, text.Length);
             if (newIndex == currentPosition.TypingCaretIndex)
