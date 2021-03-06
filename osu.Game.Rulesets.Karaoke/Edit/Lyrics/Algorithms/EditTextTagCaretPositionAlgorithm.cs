@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
             // todo : might check is default struct
             var textTags = getRelatedTypeTextTag(previousLyric, currentPosition);
-            var upTextTag = textTags.FirstOrDefault(x => x.StartIndex >= currentTextTag.StartIndex);
+            var upTextTag = textTags.FirstOrDefault(x => x.StartIndex >= currentTextTag.StartIndex) ?? textTags.LastOrDefault();
             return new EditTextTagCaretPosition(previousLyric, upTextTag);
         }
 
@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
             // todo : might check is default struct
             var textTags = getRelatedTypeTextTag(nextLyric, currentPosition);
-            var downTextTag = textTags.FirstOrDefault(x => x.StartIndex >= currentTextTag.StartIndex);
+            var downTextTag = textTags.FirstOrDefault(x => x.StartIndex >= currentTextTag.StartIndex) ?? textTags.LastOrDefault();
             return new EditTextTagCaretPosition(nextLyric, downTextTag);
         }
 
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
             var currentTextTag = currentPosition.TextTag;
 
-            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition)).ToArray();
+            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition) ?? new ITextTag[] { }).ToArray();
             var previousTextTag = textTags.GetPrevious(currentTextTag);
 
             var currentLyric = currentPosition.Lyric;
@@ -80,6 +80,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
                 return new EditTextTagCaretPosition(currentLyric, previousTextTag);
 
             var previousLyric = getPreviousLyricWithTextTag(currentLyric, currentTextTag);
+            if (previousLyric == null)
+                return null;
+
             return new EditTextTagCaretPosition(previousLyric, previousTextTag);
         }
 
@@ -89,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
             var currentTextTag = currentPosition.TextTag;
 
-            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition)).ToArray();
+            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition) ?? new ITextTag[] { }).ToArray();
             var nextTextTag = textTags.GetNext(currentTextTag);
 
             var currentLyric = currentPosition.Lyric;
@@ -97,6 +100,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
                 return new EditTextTagCaretPosition(currentLyric, nextTextTag);
 
             var nextLyric = getNextLyricWithTextTag(currentLyric, currentTextTag);
+            if (nextLyric == null)
+                return null;
+
             return new EditTextTagCaretPosition(nextLyric, nextTextTag);
         }
 
@@ -125,18 +131,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             switch (sample)
             {
                 case RubyTag _:
-                    return lyric.RubyTags.OfType<ITextTag>().ToArray();
+                    return lyric.RubyTags?.OfType<ITextTag>().ToArray();
                 case RomajiTag _:
-                    return lyric.RomajiTags.OfType<ITextTag>().ToArray();
+                    return lyric.RomajiTags?.OfType<ITextTag>().ToArray();
                 default:
                     throw new InvalidCastException(nameof(sample));
             }
         }
 
         private Lyric getPreviousLyricWithTextTag(Lyric current, ITextTag textTag)
-            => Lyrics.GetPreviousMatch(current, x => getRelatedTypeTextTag(x, textTag).Any());
+            => Lyrics.GetPreviousMatch(current, x => getRelatedTypeTextTag(x, textTag)?.Any() ?? false);
 
         private Lyric getNextLyricWithTextTag(Lyric current, ITextTag textTag)
-            => Lyrics.GetNextMatch(current, x => getRelatedTypeTextTag(x, textTag).Any());
+            => Lyrics.GetNextMatch(current, x => getRelatedTypeTextTag(x, textTag)?.Any() ?? false);
     }
 }
