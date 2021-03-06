@@ -3,9 +3,9 @@
 
 using System;
 using System.Linq;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public override TimeTagIndexCaretPosition MoveUp(TimeTagIndexCaretPosition currentPosition)
         {
-            var lyric = Lyrics.GetPrevious(currentPosition.Lyric);
+            var lyric = Lyrics.GetPreviousMatch(currentPosition.Lyric, l => !string.IsNullOrEmpty(l.Text));
             if (lyric == null)
                 return null;
 
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public override TimeTagIndexCaretPosition MoveDown(TimeTagIndexCaretPosition currentPosition)
         {
-            var lyric = Lyrics.GetNext(currentPosition.Lyric);
+            var lyric = Lyrics.GetNextMatch(currentPosition.Lyric, l => !string.IsNullOrEmpty(l.Text));
             if (lyric == null)
                 return null;
 
@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             var previousIndex = GetPreviousIndex(currentPosition.Index);
 
             if (TextIndexUtils.OutOfRange(previousIndex, lyric?.Text))
-                return MoveUp(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MaxValue)));
+                return MoveUp(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MaxValue, TextIndex.IndexState.End)));
 
             return new TimeTagIndexCaretPosition(currentPosition.Lyric, previousIndex);
         }
@@ -81,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public override TimeTagIndexCaretPosition MoveToFirst()
         {
-            var lyric = Lyrics.FirstOrDefault();
+            var lyric = Lyrics.FirstOrDefault(l => !string.IsNullOrEmpty(l.Text));
             if (lyric == null)
                 return null;
 
@@ -91,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public override TimeTagIndexCaretPosition MoveToLast()
         {
-            var lyric = Lyrics.LastOrDefault();
+            var lyric = Lyrics.LastOrDefault(l => !string.IsNullOrEmpty(l.Text));
             if (lyric == null)
                 return null;
 
