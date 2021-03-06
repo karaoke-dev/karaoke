@@ -99,6 +99,30 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
         }
 
         /// <summary>
+        /// Process test case text tag string format into <see cref="TextIndex"/>
+        /// </summary>
+        /// <example>
+        /// [0,start]
+        /// </example>
+        /// <param name="str">Text tag string format</param>
+        /// <returns><see cref="TimeTag"/>Text tag object</returns>
+        public static TextIndex ParseTextIndex(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return new TextIndex();
+
+            var regex = new Regex("(?<index>[-0-9]+),(?<state>start|end)]");
+            var result = regex.Match(str);
+            if (!result.Success)
+                throw new ArgumentException(null, nameof(str));
+
+            var index = int.Parse(result.Groups["index"].Value);
+            var state = result.Groups["state"].Value == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
+
+            return new TextIndex(index, state);
+        }
+
+        /// <summary>
         /// Process test case lyric string format into <see cref="Lyric"/>
         /// </summary>
         /// <example>

@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -13,12 +12,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
     public class TimeTagCaretPositionAlgorithm : CaretPositionAlgorithm<TimeTagCaretPosition>
     {
-        private readonly RecordingMovingCaretMode mode;
+        public RecordingMovingCaretMode Mode { get; set; }
 
-        public TimeTagCaretPositionAlgorithm(Lyric[] lyrics, RecordingMovingCaretMode mode)
+        public TimeTagCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
-            this.mode = mode;
         }
 
         public override bool PositionMovable(TimeTagCaretPosition position)
@@ -35,7 +33,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             if (currentLyric != currentPosition.Lyric)
                 throw new ArgumentException(nameof(currentPosition.Lyric));
 
-            var upTimeTag = Lyrics.GetPrevious(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= currentTimeTag.Index && timeTagMovable(x));
+            var upTimeTag = Lyrics.GetPreviousMatch(currentLyric, l => l.TimeTags?.Any() ?? false)
+                ?.TimeTags.FirstOrDefault(x => x.Index >= currentTimeTag.Index && timeTagMovable(x));
             return timeTagToPosition(upTimeTag);
         }
 
@@ -48,35 +47,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             if (currentLyric != currentPosition.Lyric)
                 throw new ArgumentException(nameof(currentPosition.Lyric));
 
-            var downTimeTag = Lyrics.GetNext(currentLyric)?.TimeTags?.FirstOrDefault(x => x.Index >= currentTimeTag.Index && timeTagMovable(x));
+            var downTimeTag = Lyrics.GetNextMatch(currentLyric, l => l.TimeTags?.Any() ?? false)
+                ?.TimeTags?.FirstOrDefault(x => x.Index >= currentTimeTag.Index && timeTagMovable(x));
             return timeTagToPosition(downTimeTag);
         }
 
         public override TimeTagCaretPosition MoveLeft(TimeTagCaretPosition currentPosition)
         {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
+            var timeTags = Lyrics.SelectMany(x => x.TimeTags ?? new TimeTag[] { }).ToArray();
             var previousTimeTag = timeTags.GetPreviousMatch(currentPosition.TimeTag, timeTagMovable);
             return timeTagToPosition(previousTimeTag);
         }
 
         public override TimeTagCaretPosition MoveRight(TimeTagCaretPosition currentPosition)
         {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
+            var timeTags = Lyrics.SelectMany(x => x.TimeTags ?? new TimeTag[] { }).ToArray();
             var nextTimeTag = timeTags.GetNextMatch(currentPosition.TimeTag, timeTagMovable);
             return timeTagToPosition(nextTimeTag);
         }
 
         public override TimeTagCaretPosition MoveToFirst()
         {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
-            var firstTimeTag = timeTags.FirstOrDefault();
+            var timeTags = Lyrics.SelectMany(x => x.TimeTags ?? new TimeTag[] { }).ToArray();
+            var firstTimeTag = timeTags.FirstOrDefault(timeTagMovable);
             return timeTagToPosition(firstTimeTag);
         }
 
         public override TimeTagCaretPosition MoveToLast()
         {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
-            var lastTag = timeTags.LastOrDefault();
+            var timeTags = Lyrics.SelectMany(x => x.TimeTags ?? new TimeTag[] { }).ToArray();
+            var lastTag = timeTags.LastOrDefault(timeTagMovable);
             return timeTagToPosition(lastTag);
         }
 
@@ -98,7 +98,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         private bool timeTagMovable(TimeTag timeTag)
         {
-            switch (mode)
+            if (timeTag == null)
+                return false;
+
+            switch (Mode)
             {
                 case RecordingMovingCaretMode.None:
                     return true;
