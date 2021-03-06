@@ -66,14 +66,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 
         public override TypingTextTagCaretPosition MoveToFirst()
         {
-            // might not support this feature if typing.
-            throw new NotSupportedException($"{nameof(MoveToFirst)} is not support in this algorithm.");
+            // not support this feature if typing.
+            return null;
         }
 
         public override TypingTextTagCaretPosition MoveToLast()
         {
-            // might not support this feature if typing.
-            throw new NotSupportedException($"{nameof(MoveToLast)} is not support in this algorithm.");
+            // not support this feature if typing.
+            return null;
         }
     }
 }
