@@ -128,9 +128,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
 
         protected TimeTagIndexCaretPosition CreateTimeTagIndexCaretPosition(Lyric[] lyrics, int lyricIndex, string textIndexText)
         {
+            if (lyricIndex == NOT_EXIST)
+                return null;
+
             var lyric = lyrics.ElementAtOrDefault(lyricIndex);
             var textTag = TestCaseTagHelper.ParseTextIndex(textIndexText);
-            return lyric != null ? new TimeTagIndexCaretPosition(lyric, textTag) : null;
+            return new TimeTagIndexCaretPosition(lyric, textTag);
         }
 
         #region source

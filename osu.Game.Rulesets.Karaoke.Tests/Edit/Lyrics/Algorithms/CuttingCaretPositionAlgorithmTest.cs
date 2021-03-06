@@ -127,8 +127,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
 
         protected TextCaretPosition CreateTextCaretPosition(Lyric[] lyrics, int lyricIndex, int index)
         {
+            if (lyricIndex == NOT_EXIST)
+                return null;
+
             var lyric = lyrics.ElementAtOrDefault(lyricIndex);
-            return lyric != null ? new TextCaretPosition(lyric, index) : null;
+            return new TextCaretPosition(lyric, index);
         }
 
         #region source
