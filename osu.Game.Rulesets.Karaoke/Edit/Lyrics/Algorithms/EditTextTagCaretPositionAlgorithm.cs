@@ -17,10 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
     /// </summary>
     public class EditTextTagCaretPositionAlgorithm : TextTagCaretPositionAlgorithm<EditTextTagCaretPosition>
     {
-        public EditTextTagCaretPositionAlgorithm(Lyric[] lyrics, EditArea editArea)
-            : base(lyrics, editArea)
+        public EditTextTagCaretPositionAlgorithm(Lyric[] lyrics)
+            : base(lyrics)
         {
-
         }
 
         public override EditTextTagCaretPosition MoveUp(EditTextTagCaretPosition currentPosition)

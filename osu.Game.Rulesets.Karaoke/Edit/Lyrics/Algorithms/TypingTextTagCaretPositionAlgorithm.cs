@@ -12,8 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
     /// </summary>
     public class TypingTextTagCaretPositionAlgorithm : TextTagCaretPositionAlgorithm<TypingTextTagCaretPosition>
     {
-        public TypingTextTagCaretPositionAlgorithm(Lyric[] lyrics, EditArea editArea)
-            : base(lyrics, editArea)
+        public TypingTextTagCaretPositionAlgorithm(Lyric[] lyrics)
+            : base(lyrics)
         {
 
         }

@@ -10,11 +10,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
     public abstract class TextTagCaretPositionAlgorithm<T> : CaretPositionAlgorithm<T> where T : class, ITextTagCaretPosition
     {
-        protected readonly EditArea EditArea;
-        public TextTagCaretPositionAlgorithm(Lyric[] lyrics, EditArea editArea)
+        public EditArea EditArea { get; set; }
+
+        public TextTagCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
-            EditArea = editArea;
         }
 
         public override bool PositionMovable(T position)
