@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition
         public CreateTextTagCaretPosition(Lyric lyric, ITextTag textTag)
         {
             Lyric = lyric;
-            TextTag = textTag;
+            TextTag = textTag; // use text tag in order to let us know will create ruby or romaji.
         }
 
         public Lyric Lyric { get; }

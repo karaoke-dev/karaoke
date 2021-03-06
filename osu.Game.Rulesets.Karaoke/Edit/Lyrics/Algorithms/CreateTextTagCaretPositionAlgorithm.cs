@@ -22,37 +22,48 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             if (!IsTextTagTypeValid(position))
                 return false;
 
-            return true;
+            // need to check is start and end index in the range
+            var text = position.Lyric.Text;
+            if (string.IsNullOrEmpty(text))
+                return false;
+
+            return position.TextTag.StartIndex >= 0 && position.TextTag.EndIndex <= text.Length;
         }
 
         public override CreateTextTagCaretPosition MoveUp(CreateTextTagCaretPosition currentPosition)
         {
-            throw new System.NotImplementedException();
+            // It's tricky to drag create area and moving by keyboard at the same time.
+            return null;
         }
 
         public override CreateTextTagCaretPosition MoveDown(CreateTextTagCaretPosition currentPosition)
         {
-            throw new System.NotImplementedException();
+            // It's tricky to drag create area and moving by keyboard at the same time.
+            return null;
         }
 
         public override CreateTextTagCaretPosition MoveLeft(CreateTextTagCaretPosition currentPosition)
         {
-            throw new System.NotImplementedException();
+            // It's tricky to drag create area and moving by keyboard at the same time.
+            return null;
         }
 
         public override CreateTextTagCaretPosition MoveRight(CreateTextTagCaretPosition currentPosition)
         {
-            throw new System.NotImplementedException();
+            // It's tricky to drag create area and moving by keyboard at the same time.
+            return null;
         }
 
         public override CreateTextTagCaretPosition MoveToFirst()
         {
-            throw new System.NotImplementedException();
+            // Of course it's not have move to first feature.
+            return null;
         }
 
         public override CreateTextTagCaretPosition MoveToLast()
         {
-            throw new System.NotImplementedException();
+            // Of course it's not have move to last feature.
+            return null;
         }
     }
 }

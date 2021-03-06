@@ -10,10 +10,9 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
 {
+    [TestFixture]
     public class TypingTextTagCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<TypingTextTagCaretPositionAlgorithm, TypingTextTagCaretPosition>
     {
-        protected const int INDEX_EXIST_TAG = -1;
-
         [TestCase(nameof(singleLyric), 0, 0, 0, true)]
         [TestCase(nameof(singleLyric), 0, 0, 1, true)]
         [TestCase(nameof(singleLyric), 0, 0, 2, false)]
