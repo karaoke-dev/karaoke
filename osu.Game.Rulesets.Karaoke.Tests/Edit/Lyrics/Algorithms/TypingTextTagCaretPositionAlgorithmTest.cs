@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             var lyrics = GetLyricsByMethodName(sourceName);
             var caretPosition = CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
 
-            // In this algoright cannot move-up
+            // In this algorithm cannot move-up
             TestMoveUp(lyrics, caretPosition, null);
         }
 
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             var lyrics = GetLyricsByMethodName(sourceName);
             var caretPosition = CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
 
-            // In this algoright cannot move-down
+            // In this algorithm cannot move-down
             TestMoveDown(lyrics, caretPosition, null);
         }
 
@@ -59,9 +59,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             var lyrics = GetLyricsByMethodName(sourceName);
             var caretPosition = CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
             var newCaretPosition = typingCaretIndex != newTypingCaretIndex
-                ? CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, newTypingCaretIndex) : null;
+                ? CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, newTypingCaretIndex)
+                : null;
 
-            // In this algoright cannot move-down
+            // In this algorithm cannot move-down
             TestMoveLeft(lyrics, caretPosition, newCaretPosition);
         }
 
@@ -72,9 +73,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             var lyrics = GetLyricsByMethodName(sourceName);
             var caretPosition = CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
             var newCaretPosition = typingCaretIndex != newTypingCaretIndex
-                ? CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, newTypingCaretIndex) : null;
+                ? CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, newTypingCaretIndex)
+                : null;
 
-            // In this algoright cannot move-down
+            // In this algorithm cannot move-down
             TestMoveRight(lyrics, caretPosition, newCaretPosition);
         }
 
@@ -83,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
         {
             var lyrics = GetLyricsByMethodName(sourceName);
 
-            // In this algoright cannot move to first
+            // In this algorithm cannot move to first
             TestMoveToFirst(lyrics, null);
         }
 
@@ -92,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
         {
             var lyrics = GetLyricsByMethodName(sourceName);
 
-            // In this algoright cannot move to last
+            // In this algorithm cannot move to last
             TestMoveToLast(lyrics, null);
         }
 
@@ -118,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             var lyric = lyrics.ElementAtOrDefault(lyricIndex);
 
             // todo : need to able to switch between ruby or romaji.
-            var textTag = lyric.RubyTags.ElementAtOrDefault(textTagIndex);
+            var textTag = lyric?.RubyTags.ElementAtOrDefault(textTagIndex);
             return new TypingTextTagCaretPosition(lyric, textTag, typingCaretIndex);
         }
 
@@ -128,7 +130,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
         {
             new Lyric
             {
-                RubyTags = TestCaseTagHelper.ParseRubyTags(new []
+                RubyTags = TestCaseTagHelper.ParseRubyTags(new[]
                 {
                     "[0,1]:か",
                     "[1,2]:ら",

@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             var lyric = lyrics.ElementAtOrDefault(lyricIndex);
 
             // todo : need to able to switch between ruby or romaji.
-            var ruby = lyric.RubyTags.ElementAtOrDefault(timeTagIndex);
+            var ruby = lyric?.RubyTags.ElementAtOrDefault(timeTagIndex);
             return new EditTextTagCaretPosition(lyric, ruby);
         }
 
@@ -141,7 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
         {
             new Lyric
             {
-                RubyTags = TestCaseTagHelper.ParseRubyTags(new []
+                RubyTags = TestCaseTagHelper.ParseRubyTags(new[]
                 {
                     "[0,1]:か",
                     "[1,2]:ら",
@@ -161,7 +161,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
         {
             new Lyric
             {
-                RubyTags = TestCaseTagHelper.ParseRubyTags(new []
+                RubyTags = TestCaseTagHelper.ParseRubyTags(new[]
                 {
                     "[0,1]:か",
                     "[1,2]:ら",
@@ -172,7 +172,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             },
             new Lyric
             {
-                RubyTags = TestCaseTagHelper.ParseRubyTags(new []
+                RubyTags = TestCaseTagHelper.ParseRubyTags(new[]
                 {
                     "[0,1]:だい",
                     "[1,2]:す",
@@ -185,7 +185,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
         {
             new Lyric
             {
-                RubyTags = TestCaseTagHelper.ParseRubyTags(new []
+                RubyTags = TestCaseTagHelper.ParseRubyTags(new[]
                 {
                     "[0,1]:か",
                     "[1,2]:ら",
@@ -197,7 +197,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             new Lyric(),
             new Lyric
             {
-                RubyTags = TestCaseTagHelper.ParseRubyTags(new []
+                RubyTags = TestCaseTagHelper.ParseRubyTags(new[]
                 {
                     "[0,1]:だい",
                     "[1,2]:す",

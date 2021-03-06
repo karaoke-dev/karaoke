@@ -15,7 +15,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
         public TypingTextTagCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
-
         }
 
         public override bool PositionMovable(TypingTextTagCaretPosition position)

@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
         {
             new Lyric
             {
-                RubyTags = TestCaseTagHelper.ParseRubyTags(new []
+                RubyTags = TestCaseTagHelper.ParseRubyTags(new[]
                 {
                     "[0,1]:か",
                     "[1,2]:ら",
