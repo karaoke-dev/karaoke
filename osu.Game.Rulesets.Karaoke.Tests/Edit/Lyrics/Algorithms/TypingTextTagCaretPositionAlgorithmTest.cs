@@ -130,10 +130,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             {
                 RubyTags = TestCaseTagHelper.ParseRubyTags(new []
                 {
-                    "[0,1]:カ",
-                    "[1,2]:ラ",
-                    "[2,3]:オ",
-                    "[3,4]:ケ"
+                    "[0,1]:か",
+                    "[1,2]:ら",
+                    "[2,3]:お",
+                    "[3,4]:け"
                 }),
                 Text = "カラオケ"
             }
