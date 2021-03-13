@@ -1,4 +1,6 @@
-# karaoke!
+![](assets/logo.png)
+
+# karaoke --dev
 [![CodeFactor](https://www.codefactor.io/repository/github/karaoke-dev/karaoke/badge)](https://www.codefactor.io/repository/github/karaoke-dev/karaoke)
 [![Build status](https://ci.appveyor.com/api/projects/status/07ytm0sei6l5oy08?svg=true)](https://ci.appveyor.com/project/andy840119/karaoke)
 [![NuGet](https://img.shields.io/badge/月子我婆-passed-ff69b4.svg)](https://github.com/karaoke-dev/karaoke)
@@ -8,13 +10,13 @@
 [![](https://tokei.rs/b1/github/karaoke-dev/karaoke)](https://github.com/karaoke-dev/karaoke)
 
 
-The source code of the `karaoke!` ruleset, running on [osu!lazer](https://github.com/ppy/osu).
+The source code of the `karaoke` ruleset, running on [osu!lazer](https://github.com/ppy/osu).
 
 ## Status
 
 Some features are still under heavy development, but existing features should work fine.
 
-If you run into any problems, you can shoot me an email (andy840119@gmail.com) or send me a message on [discord](https://discord.gg/ga2xZXk). I will typically reply faster on discord.
+If you run into any problems, you can shoot us an email (support@karaoke.dev) or send me a message on [discord](https://discord.gg/ga2xZXk). I will typically reply faster on discord.
 
 And feel free to report any bugs if found.
 
@@ -30,7 +32,7 @@ Notice : The launcher is still under development, so it might not work as intend
 ## License
 
 This repo is covered under the [GPL V3](LICENSE) license.
-If you plan on using this repo for commercial purposes, please contact me at (andy840119@gmail.com) to get permission first.
+If you plan on using this repo for commercial purposes, please contact us at (support@karaoke.dev) to get permission first.
 Using this repo to create `PIRATED` karaoke songs/beatmaps is absolutely forbidden.
 
 ## Thanks to
@@ -45,3 +47,5 @@ Parts of the lyrics editor in this ruleset were inspired by them.
 - [Jetbrain](https://www.jetbrains.com/?from=osu-karaoke), for contributing a free [rider](https://www.jetbrains.com/rider/) license used to clean-up the code.
 
 - [Appveyor](https://www.appveyor.com/), [CodeFactor](https://www.codefactor.io/) and [Github action](https://github.com/features/actions) for providing free `CI`/`CD` service.
+
+- [Figma](https://www.figma.com/), for fast creating assets like logo or icon.
