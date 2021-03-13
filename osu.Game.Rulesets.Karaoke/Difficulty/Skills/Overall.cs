@@ -4,6 +4,7 @@
 using osu.Game.Rulesets.Difficulty.Preprocessing;
 using osu.Game.Rulesets.Difficulty.Skills;
 using osu.Game.Rulesets.Karaoke.Difficulty.Preprocessing;
+using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
 {
@@ -17,7 +18,8 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
         private readonly int columnCount;
         private readonly int minColumn;
 
-        public Overall(int columnCount, int minColumn)
+        public Overall(int columnCount, int minColumn, Mod[] mods)
+            : base(mods)
         {
             this.columnCount = columnCount;
             this.minColumn = minColumn;

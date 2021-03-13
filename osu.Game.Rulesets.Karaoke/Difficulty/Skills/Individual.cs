@@ -5,6 +5,7 @@ using System.Linq;
 using osu.Game.Rulesets.Difficulty.Preprocessing;
 using osu.Game.Rulesets.Difficulty.Skills;
 using osu.Game.Rulesets.Karaoke.Difficulty.Preprocessing;
+using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
 {
@@ -18,7 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
         private readonly int column;
         private readonly int minColumn;
 
-        public Individual(int column, int columnCount, int minColumn)
+        public Individual(int column, int columnCount, int minColumn, Mod[] mods)
+            : base(mods)
         {
             this.column = column;
             this.minColumn = minColumn;
