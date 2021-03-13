@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
                 yield return new KaraokeDifficultyHitObject(notes[i], notes[i - 1], clockRate);
         }
 
-        protected override Skill[] CreateSkills(IBeatmap beatmap)
+        protected override Skill[] CreateSkills(IBeatmap beatmap, Mod[] mods)
         {
             // Only karaoke note can be apply in difficulty calculation
             var notes = beatmap.HitObjects.OfType<Note>().ToList();
@@ -101,10 +101,10 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
 
             int columnCount = maxNoteColumn.Scale - minNoteColumn.Scale + 1;
 
-            var skills = new List<Skill> { new Overall(columnCount, minNoteColumn.Scale) };
+            var skills = new List<Skill> { new Overall(columnCount, minNoteColumn.Scale, mods) };
 
             for (int i = 0; i < columnCount; i++)
-                skills.Add(new Individual(i, columnCount, minNoteColumn.Scale));
+                skills.Add(new Individual(i, columnCount, minNoteColumn.Scale, mods));
 
             return skills.ToArray();
         }
