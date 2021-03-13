@@ -47,3 +47,5 @@ Parts of the lyrics editor in this ruleset were inspired by them.
 - [Jetbrain](https://www.jetbrains.com/?from=osu-karaoke), for contributing a free [rider](https://www.jetbrains.com/rider/) license used to clean-up the code.
 
 - [Appveyor](https://www.appveyor.com/), [CodeFactor](https://www.codefactor.io/) and [Github action](https://github.com/features/actions) for providing free `CI`/`CD` service.
+
+- [Figma](https://www.figma.com/), for fast creating assets like logo or icon.
