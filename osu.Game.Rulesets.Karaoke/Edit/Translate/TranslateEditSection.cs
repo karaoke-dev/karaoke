@@ -277,12 +277,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             };
             languageDropdown.Current.BindValueChanged(v =>
             {
-                textBox.Text = translateManager.GetTranslate(lyric, v.NewValue);
-            });
+                var hasCultureInfo = v.NewValue != null;
+
+                // disable and clear textbox if contains no language in language list.
+                textBox.Text = hasCultureInfo ? translateManager.GetTranslate(lyric, v.NewValue) : null;
+                ScheduleAfterChildren(() =>
+                {
+                    textBox.Current.Disabled = !hasCultureInfo;
+                });
+            }, true);
             textBox.Current.BindValueChanged(textBoxValue =>
             {
-                var translateText = textBoxValue.NewValue;
                 var cultureInfo = languageDropdown.Current.Value;
+                if (cultureInfo == null)
+                    return;
+
+                var translateText = textBoxValue.NewValue;
                 translateManager.SaveTranslate(lyric, cultureInfo, translateText);
             });
             return textBox;
