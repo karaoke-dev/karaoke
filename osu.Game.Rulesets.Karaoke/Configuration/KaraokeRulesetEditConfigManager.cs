@@ -15,22 +15,22 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             base.InitialiseDefaults();
 
             // Edit mode
-            Set(KaraokeRulesetEditSetting.EditMode, EditMode.LyricEditor);
+            SetDefault(KaraokeRulesetEditSetting.EditMode, EditMode.LyricEditor);
 
             // Lyric editor
-            Set(KaraokeRulesetEditSetting.LyricEditorFontSize, 28);
-            Set(KaraokeRulesetEditSetting.LyricEditorMode, Mode.ViewMode);
-            Set(KaraokeRulesetEditSetting.LyricEditorFastEditMode, LyricFastEditMode.None);
-            Set(KaraokeRulesetEditSetting.RecordingMovingCaretMode, RecordingMovingCaretMode.None);
-            Set(KaraokeRulesetEditSetting.AutoFocusToEditLyric, true);
-            Set(KaraokeRulesetEditSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);
+            SetDefault(KaraokeRulesetEditSetting.LyricEditorFontSize, 28);
+            SetDefault(KaraokeRulesetEditSetting.LyricEditorMode, Mode.ViewMode);
+            SetDefault(KaraokeRulesetEditSetting.LyricEditorFastEditMode, LyricFastEditMode.None);
+            SetDefault(KaraokeRulesetEditSetting.RecordingMovingCaretMode, RecordingMovingCaretMode.None);
+            SetDefault(KaraokeRulesetEditSetting.AutoFocusToEditLyric, true);
+            SetDefault(KaraokeRulesetEditSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);
 
-            Set(KaraokeRulesetEditSetting.DisplayRuby, true);
-            Set(KaraokeRulesetEditSetting.DisplayRomaji, true);
-            Set(KaraokeRulesetEditSetting.DisplayTranslate, true);
+            SetDefault(KaraokeRulesetEditSetting.DisplayRuby, true);
+            SetDefault(KaraokeRulesetEditSetting.DisplayRomaji, true);
+            SetDefault(KaraokeRulesetEditSetting.DisplayTranslate, true);
 
             // Lock
-            Set(KaraokeRulesetEditSetting.ClickToLockLyricState, LockState.Partial);
+            SetDefault(KaraokeRulesetEditSetting.ClickToLockLyricState, LockState.Partial);
         }
     }
 

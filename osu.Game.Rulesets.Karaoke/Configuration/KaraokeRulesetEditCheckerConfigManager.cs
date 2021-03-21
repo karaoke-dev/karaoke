@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             base.InitialiseDefaults();
 
             // Lyric
-            Set(KaraokeRulesetEditCheckerSetting.Lyric, CreateDefaultConfig<LyricCheckerConfig>());
+            SetDefault(KaraokeRulesetEditCheckerSetting.Lyric, CreateDefaultConfig<LyricCheckerConfig>());
         }
 
         protected static T CreateDefaultConfig<T>() where T : IHasConfig<T>, new()

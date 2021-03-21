@@ -23,35 +23,35 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             base.InitialiseDefaults();
 
             // Visual
-            Set(KaraokeRulesetSetting.ScrollTime, 5000.0, 1000.0, 10000.0, 100.0);
-            Set(KaraokeRulesetSetting.ScrollDirection, KaraokeScrollingDirection.Left);
-            Set(KaraokeRulesetSetting.DisplayAlternativeText, false);
-            Set(KaraokeRulesetSetting.ShowCursor, false);
+            SetDefault(KaraokeRulesetSetting.ScrollTime, 5000.0, 1000.0, 10000.0, 100.0);
+            SetDefault(KaraokeRulesetSetting.ScrollDirection, KaraokeScrollingDirection.Left);
+            SetDefault(KaraokeRulesetSetting.DisplayAlternativeText, false);
+            SetDefault(KaraokeRulesetSetting.ShowCursor, false);
 
             // Translate
-            Set(KaraokeRulesetSetting.UseTranslate, true);
-            Set(KaraokeRulesetSetting.PreferLanguage, "en-US");
+            SetDefault(KaraokeRulesetSetting.UseTranslate, true);
+            SetDefault(KaraokeRulesetSetting.PreferLanguage, "en-US");
 
-            Set(KaraokeRulesetSetting.DisplayRuby, true);
-            Set(KaraokeRulesetSetting.DisplayRomaji, true);
+            SetDefault(KaraokeRulesetSetting.DisplayRuby, true);
+            SetDefault(KaraokeRulesetSetting.DisplayRomaji, true);
 
             // Pitch
-            Set(KaraokeRulesetSetting.OverridePitchAtGameplay, false);
-            Set(KaraokeRulesetSetting.Pitch, 0, -10, 10);
-            Set(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay, false);
-            Set(KaraokeRulesetSetting.VocalPitch, 0, -10, 10);
-            Set(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay, false);
-            Set(KaraokeRulesetSetting.SaitenPitch, 0, -10, 10);
+            SetDefault(KaraokeRulesetSetting.OverridePitchAtGameplay, false);
+            SetDefault(KaraokeRulesetSetting.Pitch, 0, -10, 10);
+            SetDefault(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay, false);
+            SetDefault(KaraokeRulesetSetting.VocalPitch, 0, -10, 10);
+            SetDefault(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay, false);
+            SetDefault(KaraokeRulesetSetting.SaitenPitch, 0, -10, 10);
 
             // Playback
-            Set(KaraokeRulesetSetting.OverridePlaybackSpeedAtGameplay, false);
-            Set(KaraokeRulesetSetting.PlaybackSpeed, 0, -10, 10);
+            SetDefault(KaraokeRulesetSetting.OverridePlaybackSpeedAtGameplay, false);
+            SetDefault(KaraokeRulesetSetting.PlaybackSpeed, 0, -10, 10);
 
             // Practice
-            Set(KaraokeRulesetSetting.PracticePreemptTime, 3000.0, 0.0, 5000.0, 100.0);
+            SetDefault(KaraokeRulesetSetting.PracticePreemptTime, 3000.0, 0.0, 5000.0, 100.0);
 
             // Device
-            Set(KaraokeRulesetSetting.MicrophoneDevice, "");
+            SetDefault(KaraokeRulesetSetting.MicrophoneDevice, "");
         }
 
         protected override void AddBindable<TBindable>(KaraokeRulesetSetting lookup, Bindable<TBindable> bindable)
