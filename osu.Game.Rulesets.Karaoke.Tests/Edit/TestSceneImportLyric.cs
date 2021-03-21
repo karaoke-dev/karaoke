@@ -12,6 +12,8 @@ using osu.Framework.Screens;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
@@ -30,18 +32,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [Cached(typeof(IBeatSnapProvider))]
         private readonly EditorBeatmap editorBeatmap;
 
+        [Cached]
+        private readonly KaraokeRulesetEditConfigManager configManager;
+
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
         private DialogOverlay dialogOverlay;
         private LanguageSelectionDialog languageSelectionDialog;
         private TestImportLyricScreen screen;
         private ImportLyricManager importManager;
+        private LyricCheckerManager lyricCheckerManager;
 
         public TestSceneImportLyric()
         {
             var beatmap = new TestKaraokeBeatmap(null);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
             editorBeatmap = new EditorBeatmap(karaokeBeatmap);
+            configManager = new KaraokeRulesetEditConfigManager();
         }
 
         [BackgroundDependencyLoader]
@@ -54,12 +61,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 Content,
                 dialogOverlay = new DialogOverlay(),
                 languageSelectionDialog = new LanguageSelectionDialog(),
-                importManager = new ImportLyricManager()
+                importManager = new ImportLyricManager(),
+                lyricCheckerManager = new LyricCheckerManager()
             });
 
             Dependencies.Cache(dialogOverlay);
             Dependencies.Cache(languageSelectionDialog);
             Dependencies.Cache(importManager);
+            Dependencies.Cache(lyricCheckerManager);
         }
 
         [Test]
