@@ -9,6 +9,8 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
@@ -21,15 +23,18 @@ using osuTK;
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 {
     [TestFixture]
-    [Ignore("This test case run failed in appveyor : (")]
     public class TestSceneLyricEditor : EditorClockTestScene
     {
+        [Cached]
+        private readonly KaraokeRulesetEditConfigManager configManager;
+
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
         private DialogOverlay dialogOverlay;
         private LanguageSelectionDialog languageSelectionDialog;
         private ImportLyricManager importManager;
         private LyricManager lyricManager;
+        private LyricCheckerManager lyricCheckManager;
 
         private LyricEditor editor;
 
@@ -37,6 +42,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         {
             // It's a tricky to let osu! to read karaoke testing beatmap
             KaraokeLegacyBeatmapDecoder.Register();
+
+            configManager = new KaraokeRulesetEditConfigManager();
         }
 
         [Cached(typeof(EditorBeatmap))]
@@ -63,12 +70,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 languageSelectionDialog = new LanguageSelectionDialog(),
                 importManager = new ImportLyricManager(),
                 lyricManager = new LyricManager(),
+                lyricCheckManager = new LyricCheckerManager(),
             });
 
             Dependencies.Cache(dialogOverlay);
             Dependencies.Cache(languageSelectionDialog);
             Dependencies.Cache(importManager);
             Dependencies.Cache(lyricManager);
+            Dependencies.Cache(lyricCheckManager);
         }
 
         [SetUp]
