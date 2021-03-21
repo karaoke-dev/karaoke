@@ -83,6 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (e is Lyric lyric)
                 {
                     var previousLyric = BindableLyrics.LastOrDefault(x => x.Order < lyric.Order);
+
                     if (previousLyric != null)
                     {
                         var insertIndex = BindableLyrics.IndexOf(previousLyric) + 1;
@@ -93,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         // insert to first.
                         BindableLyrics.Insert(0, lyric);
                     }
-                    
+
                     createAlgorithmList();
                 }
             };

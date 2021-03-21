@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 { Mode.EditMode, new CuttingCaretPositionAlgorithm(lyrics) },
                 { Mode.TypingMode, new TypingCaretPositionAlgorithm(lyrics) },
-                { Mode.RecordMode, new TimeTagCaretPositionAlgorithm(lyrics){ Mode = RecordingMovingCaretMode} },
+                { Mode.RecordMode, new TimeTagCaretPositionAlgorithm(lyrics) { Mode = RecordingMovingCaretMode } },
                 { Mode.TimeTagEditMode, new TimeTagIndexCaretPositionAlgorithm(lyrics) }
             };
         }
@@ -127,10 +127,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case Mode.EditMode:
                 case Mode.TypingMode:
                     return new TextCaretPosition(null, 0);
+
                 case Mode.RecordMode:
                     return new TimeTagCaretPosition(null, null);
+
                 case Mode.TimeTagEditMode:
                     return new TimeTagIndexCaretPosition(null, new TextIndex(0));
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Mode));
             }
