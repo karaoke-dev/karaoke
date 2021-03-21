@@ -9,6 +9,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
@@ -27,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(OsuColour colours, DialogOverlay dialogOverlay, LanguageSelectionDialog languageSelectionDialog)
         {
             Child = new Container
             {
@@ -61,6 +62,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                     }
                 }
             };
+
+            // ask only once if contains no language after switch to translate editor.
+            var alreadyAsked = false;
+            TranslateManager.Languages.BindCollectionChanged((a, b) =>
+            {
+                alreadyAsked = true;
+                if (TranslateManager.Languages.Count == 0 && !alreadyAsked) {
+                    dialogOverlay.Push(new CreateNewLanguagePopupDialog(isOK =>
+                    {
+                        if (isOK) {
+                            languageSelectionDialog.Show();
+                        }
+                    }));
+                }
+            }, true);
         }
 
         internal class TranslateScreenHeader : OverlayHeader

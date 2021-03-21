@@ -285,7 +285,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 {
                     textBox.Current.Disabled = !hasCultureInfo;
                 });
-            });
+            }, true);
             textBox.Current.BindValueChanged(textBoxValue =>
             {
                 var cultureInfo = languageDropdown.Current.Value;
