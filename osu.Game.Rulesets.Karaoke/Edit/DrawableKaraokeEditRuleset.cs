@@ -36,9 +36,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 else
                     Playfield.Show();
             }, true);
-            bindableDisplayRubyToggle.BindValueChanged(x => { Session.Set(KaraokeRulesetSession.DisplayRuby, x.NewValue); });
-            bindableDisplayRomajiToggle.BindValueChanged(x => { Session.Set(KaraokeRulesetSession.DisplayRomaji, x.NewValue); });
-            bindableDisplayTranslateToggle.BindValueChanged(x => { Session.Set(KaraokeRulesetSession.UseTranslate, x.NewValue); });
+            bindableDisplayRubyToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.DisplayRuby, x.NewValue); });
+            bindableDisplayRomajiToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.DisplayRomaji, x.NewValue); });
+            bindableDisplayTranslateToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.UseTranslate, x.NewValue); });
         }
 
         protected override void InitialOverlay()
