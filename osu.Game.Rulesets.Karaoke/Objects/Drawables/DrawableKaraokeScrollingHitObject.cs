@@ -13,11 +13,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 {
     public abstract class DrawableKaraokeScrollingHitObject : DrawableHitObject<KaraokeHitObject>
     {
-        /// <summary>
-        /// Whether this <see cref="DrawableKaraokeHitObject"/> should always remain alive.
-        /// </summary>
-        internal bool AlwaysAlive;
-
         protected readonly IBindable<ScrollingDirection> Direction = new Bindable<ScrollingDirection>();
 
         protected readonly IBindable<double> TimeRange = new Bindable<double>();
@@ -37,7 +32,62 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             TimeRange.BindValueChanged(OnTimeRangeChanged, true);
         }
 
-        protected override bool ShouldBeAlive => AlwaysAlive || base.ShouldBeAlive;
+        private double computedLifetimeStart;
+
+        public override double LifetimeStart
+        {
+            get => base.LifetimeStart;
+            set
+            {
+                computedLifetimeStart = value;
+
+                if (!AlwaysAlive)
+                    base.LifetimeStart = value;
+            }
+        }
+
+        private double computedLifetimeEnd;
+
+        public override double LifetimeEnd
+        {
+            get => base.LifetimeEnd;
+            set
+            {
+                computedLifetimeEnd = value;
+
+                if (!AlwaysAlive)
+                    base.LifetimeEnd = value;
+            }
+        }
+
+        private bool alwaysAlive;
+
+        /// <summary>
+        /// Whether this <see cref="DrawableManiaHitObject"/> should always remain alive.
+        /// </summary>
+        internal bool AlwaysAlive
+        {
+            get => alwaysAlive;
+            set
+            {
+                if (alwaysAlive == value)
+                    return;
+
+                alwaysAlive = value;
+
+                if (value)
+                {
+                    // Set the base lifetimes directly, to avoid mangling the computed lifetimes
+                    base.LifetimeStart = double.MinValue;
+                    base.LifetimeEnd = double.MaxValue;
+                }
+                else
+                {
+                    LifetimeStart = computedLifetimeStart;
+                    LifetimeEnd = computedLifetimeEnd;
+                }
+            }
+        }
 
         protected virtual void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> e)
         {
@@ -46,13 +96,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         protected virtual void OnTimeRangeChanged(ValueChangedEvent<double> e)
         {
-        }
-
-        protected override void UpdateInitialTransforms()
-        {
-            base.UpdateInitialTransforms();
-            // Adjust life time
-            LifetimeEnd = HitObject.GetEndTime() + TimeRange.Value;
         }
     }
 
