@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -73,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         public string GetTranslate(Lyric lyric, CultureInfo cultureInfo)
         {
             if (cultureInfo == null)
-                return null;
+                throw new ArgumentNullException(nameof(cultureInfo));
 
             if (lyric.Translates.TryGetValue(cultureInfo, out string translate))
                 return translate;
