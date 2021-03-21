@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         public Drawable GetDrawableComponent(ISkinComponent component) => null;
 
-        public Sample GetSample(ISampleInfo sampleInfo) => null;
+        public ISample GetSample(ISampleInfo sampleInfo) => null;
 
         public Texture GetTexture(string componentName, WrapMode wrapModeS, WrapMode wrapModeT) => null;
 

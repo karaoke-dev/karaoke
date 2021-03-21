@@ -2,8 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Internal;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
