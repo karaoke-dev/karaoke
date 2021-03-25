@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 
         private DialogOverlay dialogOverlay;
 
-        private LanguageSelectionDialog dialog;
+        private FontSelectionDialog dialog;
 
         [BackgroundDependencyLoader]
         private void load()

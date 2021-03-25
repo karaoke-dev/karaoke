@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
     /// Implement most feature for searchable text container.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class RearrangeableTextListContainer<T> : OsuRearrangeableListContainer<T>
+    public class RearrangeableTextListContainer<T> : OsuRearrangeableListContainer<T>
     {
         public readonly Bindable<T> SelectedSet = new Bindable<T>();
 
@@ -39,7 +39,14 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             searchContainer.SearchTerm = text;
         }
 
-        public abstract class DrawableLanguageListItem<T> : OsuRearrangeableListItem<T>, IFilterable
+        protected override OsuRearrangeableListItem<T> CreateOsuDrawable(T item)
+               => new DrawableLanguageListItem<T>(item)
+               {
+                   SelectedSet = { BindTarget = SelectedSet },
+                   RequestSelection = set => RequestSelection?.Invoke(set)
+               };
+
+        public class DrawableLanguageListItem<T> : OsuRearrangeableListItem<T>, IFilterable
         {
             public readonly Bindable<T> SelectedSet = new Bindable<T>();
 
@@ -89,7 +96,10 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 return true;
             }
 
-            public abstract IEnumerable<string> FilterTerms { get; }
+            public virtual IEnumerable<string> FilterTerms => new[]
+            {
+                Model.ToString()
+            };
 
             protected virtual string GetDisplayText(T model) => model.ToString();
 
