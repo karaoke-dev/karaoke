@@ -21,6 +21,10 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         protected override string Title => "Select font";
 
         private readonly SpriteText previewText;
+        private readonly TextPropertyList<string> familyProperty;
+        private readonly TextPropertyList<string> weightProperty;
+        private readonly TextPropertyList<float> fontSizeProperty;
+        private readonly OsuCheckbox fixedWidthCheckbox;
 
         private readonly BindableWithCurrent<FontUsage> current = new BindableWithCurrent<FontUsage>();
 
@@ -73,12 +77,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                 {
                                     new Drawable[]
                                     {
-                                        new TextPropertyList<int>
+                                        familyProperty = new TextPropertyList<string>
                                         {
                                             Name = "Font family selection area",
                                             RelativeSizeAxes = Axes.Both
                                         },
-                                        new TextPropertyList<int>
+                                        weightProperty = new TextPropertyList<string>
                                         {
                                             Name = "Font widget selection area",
                                             RelativeSizeAxes = Axes.Both
@@ -96,15 +100,15 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                             {
                                                 new Drawable[]
                                                 {
-                                                    new TextPropertyList<int>
+                                                    fontSizeProperty = new TextPropertyList<float>
                                                     {
                                                         Name = "Font size selection area",
-                                                        RelativeSizeAxes = Axes.Both
+                                                        RelativeSizeAxes = Axes.Both,
                                                     },
                                                 },
                                                 new Drawable[]
                                                 {
-                                                    new OsuCheckbox
+                                                    fixedWidthCheckbox = new OsuCheckbox
                                                     {
                                                         Name = "Font fixed width selection area",
                                                         RelativeSizeAxes = Axes.X,
@@ -139,6 +143,18 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     }
                 }
             };
+
+            familyProperty.Current.BindValueChanged(x => previewChange());
+            weightProperty.Current.BindValueChanged(x => previewChange());
+            fontSizeProperty.Current.BindValueChanged(x => previewChange());
+            fixedWidthCheckbox.Current.BindValueChanged(x => previewChange());
+            Current.BindValueChanged(e => {
+                var newFont = e.NewValue;
+                familyProperty.Current.Value = newFont.Family;
+                weightProperty.Current.Value = newFont.Weight;
+                fontSizeProperty.Current.Value = newFont.Size;
+                fixedWidthCheckbox.Current.Value = newFont.FixedWidth;
+            });
         }
 
         private void previewChange()
@@ -148,8 +164,17 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
         private FontUsage generateFontUsage()
         {
-            // todo : implemeht
-            return OsuFont.Default;
+            var family = familyProperty.Current.Value;
+            var weight = weightProperty.Current.Value;
+            var size = fontSizeProperty.Current.Value;
+            var fixedWidth = fixedWidthCheckbox.Current.Value;
+            return new FontUsage(family, size, weight, false, fixedWidth);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            fontSizeProperty.Items.AddRange(new float[] { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 });
         }
 
         internal class TextPropertyList<T> : CompositeDrawable
@@ -166,7 +191,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 set => current.Current = value;
             }
 
-            public BindableList<T> List => propertyList.Items;
+            public BindableList<T> Items => propertyList.Items;
 
             public TextPropertyList()
             {
@@ -205,7 +230,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                     RequestSelection = item =>
                                     {
                                         Current.Value = item;
-                                        Hide();
                                     },
                                 }
                             }
