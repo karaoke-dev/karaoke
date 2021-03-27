@@ -29,7 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.IO.Archives
 
         public override Stream GetStream(string name)
         {
-            ZipArchiveEntry entry = archive.Entries.SingleOrDefault(e => e.Key == name);
+            // will search .fnt file or image in here.
+            var file = Path.HasExtension(name) ? name : $"{name}.bin";
+            ZipArchiveEntry entry = archive.Entries.SingleOrDefault(e => e.Key == file);
             if (entry == null)
                 throw new FileNotFoundException();
 
