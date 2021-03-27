@@ -1,16 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
-using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
-using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
@@ -87,26 +83,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             }
         }
 
-        public class DrawableLanguageList : OsuRearrangeableListContainer<CultureInfo>
+        public class DrawableLanguageList : RearrangeableTextListContainer<CultureInfo>
         {
-            public readonly Bindable<CultureInfo> SelectedSet = new Bindable<CultureInfo>();
-
-            public Action<CultureInfo> RequestSelection;
-
-            private SearchContainer<RearrangeableListItem<CultureInfo>> searchContainer;
-
-            protected override FillFlowContainer<RearrangeableListItem<CultureInfo>> CreateListFillFlowContainer() => searchContainer = new SearchContainer<RearrangeableListItem<CultureInfo>>
-            {
-                Spacing = new Vector2(0, 3),
-                LayoutDuration = 200,
-                LayoutEasing = Easing.OutQuint,
-            };
-
-            public void Filter(string text)
-            {
-                searchContainer.SearchTerm = text;
-            }
-
             protected override OsuRearrangeableListItem<CultureInfo> CreateOsuDrawable(CultureInfo item)
                 => new DrawableLanguageListItem(item)
                 {
@@ -114,83 +92,22 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     RequestSelection = set => RequestSelection?.Invoke(set)
                 };
 
-            public class DrawableLanguageListItem : OsuRearrangeableListItem<CultureInfo>, IFilterable
+            public class DrawableLanguageListItem : DrawableLanguageListItem<CultureInfo>, IFilterable
             {
-                public readonly Bindable<CultureInfo> SelectedSet = new Bindable<CultureInfo>();
-
-                public Action<CultureInfo> RequestSelection;
-
-                private TextFlowContainer text;
-
-                private Color4 selectedColour;
-
                 public DrawableLanguageListItem(CultureInfo item)
                     : base(item)
                 {
                     Padding = new MarginPadding { Left = 5 };
-                    FilterTerms = new List<string>
-                    {
-                        item.Name,
-                        item.DisplayName,
-                        item.EnglishName,
-                        item.NativeName
-                    };
                 }
 
-                [BackgroundDependencyLoader]
-                private void load(OsuColour colours)
-                {
-                    selectedColour = colours.Yellow;
-                    HandleColour = colours.Gray5;
-                }
-
-                protected override void LoadComplete()
-                {
-                    base.LoadComplete();
-
-                    SelectedSet.BindValueChanged(set =>
-                    {
-                        if (set.OldValue?.Equals(Model) != true && set.NewValue?.Equals(Model) != true)
-                            return;
-
-                        var equal = Equals(set.NewValue, Model);
-                        text.FadeColour(equal ? selectedColour : Color4.White, FADE_DURATION);
-                    }, true);
-                }
-
-                protected override Drawable CreateContent() => text = new OsuTextFlowContainer
-                {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Text = Model.EnglishName,
+                public override IEnumerable<string> FilterTerms => new[] {
+                    Model.Name,
+                    Model.DisplayName,
+                    Model.EnglishName,
+                    Model.NativeName
                 };
 
-                protected override bool OnClick(ClickEvent e)
-                {
-                    RequestSelection?.Invoke(Model);
-                    return true;
-                }
-
-                public IEnumerable<string> FilterTerms { get; }
-
-                private bool matchingFilter = true;
-
-                public bool MatchingFilter
-                {
-                    get => matchingFilter;
-                    set
-                    {
-                        if (matchingFilter == value)
-                            return;
-
-                        matchingFilter = value;
-                        updateFilter();
-                    }
-                }
-
-                private void updateFilter() => this.FadeTo(MatchingFilter ? 1 : 0, 200);
-
-                public bool FilteringActive { get; set; }
+                protected override string GetDisplayText(CultureInfo model) => model.DisplayName;
             }
         }
     }

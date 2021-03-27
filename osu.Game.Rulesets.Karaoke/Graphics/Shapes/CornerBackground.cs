@@ -7,7 +7,7 @@ using osu.Framework.Graphics.Shapes;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Shapes
 {
-    public class CornerBackground : Container
+    public class CornerBackground : CompositeDrawable
     {
         public CornerBackground()
         {
