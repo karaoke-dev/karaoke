@@ -88,5 +88,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         protected override ReplayInputHandler CreateReplayInputHandler(Replay replay) => new KaraokeFramedReplayInputHandler(replay);
 
         protected override ReplayRecorder CreateReplayRecorder(Score score) => new KaraokeReplayRecorder(score);
+
+        // todo : for now get the fonts in here, might move to better place.
+        public override PlayfieldAdjustmentContainer CreatePlayfieldAdjustmentContainer() => new KaraokePlayfieldAdjustmentContainer();
     }
 }
