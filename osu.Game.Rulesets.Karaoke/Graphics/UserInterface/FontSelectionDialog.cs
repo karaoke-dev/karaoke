@@ -201,47 +201,46 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     RelativeSizeAxes = Axes.Both,
                     Children = new Drawable[]
                     {
-                    background = new CornerBackground
-                    {
-                        RelativeSizeAxes = Axes.Both
-                    },
-                    new GridContainer
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        RowDimensions = new[]
+                        background = new CornerBackground
                         {
-                            new Dimension(GridSizeMode.Absolute, 40),
-                            new Dimension()
+                            RelativeSizeAxes = Axes.Both
                         },
-                        Content = new[]
+                        new GridContainer
                         {
-                            new Drawable[]
+                            RelativeSizeAxes = Axes.Both,
+                            RowDimensions = new[]
                             {
-                                filter = new TextPropertySearchTextBox
-                                {
-                                    RelativeSizeAxes = Axes.X,
-                                }
+                                new Dimension(GridSizeMode.Absolute, 40),
+                                new Dimension()
                             },
-                            new Drawable[]
+                            Content = new[]
                             {
-                                propertyList = new RearrangeableTextListContainer<T>
+                                new Drawable[]
                                 {
-                                    RelativeSizeAxes = Axes.Both,
-                                    RequestSelection = item =>
+                                    filter = new TextPropertySearchTextBox
                                     {
-                                        Current.Value = item;
-                                    },
+                                        RelativeSizeAxes = Axes.X,
+                                    }
+                                },
+                                new Drawable[]
+                                {
+                                    propertyList = new RearrangeableTextListContainer<T>
+                                    {
+                                        RelativeSizeAxes = Axes.Both,
+                                        RequestSelection = item =>
+                                        {
+                                            Current.Value = item;
+                                        },
+                                    }
                                 }
                             }
                         }
-                    }
                     }
                 };
 
                 filter.Current.BindValueChanged(e => propertyList.Filter(e.NewValue));
                 Current.BindValueChanged(e => propertyList.SelectedSet.Value = e.NewValue);
             }
-
 
             [BackgroundDependencyLoader]
             private void load(OsuColour colours)
