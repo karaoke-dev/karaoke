@@ -10,6 +10,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     public abstract class KaraokeSettingsSubsection : SettingsSubsection
     {
         [Resolved]
-        protected KaraokeRulesetConfigManager Config { get; set; }
+        protected KaraokeRulesetConfigManager Config { get; private set; }
     }
 }
