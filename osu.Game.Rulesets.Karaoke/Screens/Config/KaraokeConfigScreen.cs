@@ -12,6 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     public class KaraokeConfigScreen : OsuScreen
     {
         private readonly KaraokeConfigWaveContainer waves;
+        private readonly KaraokeSettingsOverlay settingsOverlay;
 
         public KaraokeConfigScreen()
         {
@@ -31,6 +32,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     {
                         RelativeSizeAxes = Axes.Both,
                         Padding = new MarginPadding { Top = Header.HEIGHT },
+                        Children = new Drawable[]
+                        {
+                            settingsOverlay = new KaraokeSettingsOverlay(),
+                        }
                     },
                     new Header(),
                 }
