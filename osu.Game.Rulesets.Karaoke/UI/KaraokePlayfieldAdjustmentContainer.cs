@@ -35,6 +35,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
             var files = storage.GetFiles($"fonts/cached");
             foreach (var file in files)
             {
+                // should only accept .cached extension.
+                if (Path.GetExtension(file) != ".cached")
+                    return;
+
                 var fontName = Path.GetFileNameWithoutExtension(file);
                 var resources = new CachedFontArchiveReader(storage.GetStream(file), fontName);
                 var store = new GlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}", host.CreateTextureLoaderStore(resources));
