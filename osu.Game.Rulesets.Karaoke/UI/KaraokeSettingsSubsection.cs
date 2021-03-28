@@ -9,10 +9,13 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Input;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Overlays;
+using osu.Game.Rulesets.Karaoke.Screens.Config;
+using osu.Game.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
@@ -138,6 +141,23 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 },
                 new SettingsButton
                 {
+                    Text = "Open config",
+                    TooltipText = "Hello config",
+                    Action = () =>
+                    {
+                        try
+                        {
+                            ScreenStack?.Push(new KaraokeConfigScreen());
+                            SettingsOverlay?.Hide();
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                },
+                new SettingsButton
+                {
                     Text = "Change log",
                     TooltipText = "Let's see what karaoke! changed.",
                     Action = () =>
@@ -151,6 +171,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                                 DisplayContainer.Add(changelogOverlay = new KaraokeChangelogOverlay("karaoke-dev"));
 
                             changelogOverlay?.Show();
+                            SettingsOverlay?.Hide();
                         }
                         catch
                         {
@@ -162,6 +183,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
         }
 
         protected Container DisplayContainer => Game?.Children[3] as Container;
+
+        protected OsuScreenStack ScreenStack => (Game?.Children[2] as Container)?.Children.OfType<OsuScreenStack>().FirstOrDefault();
+
+        protected SettingsOverlay SettingsOverlay => (Game?.Children[5] as Container)?.Children.OfType<SettingsOverlay>().FirstOrDefault();
 
         private class PitchSlider : OsuSliderBar<int>
         {
