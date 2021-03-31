@@ -10,6 +10,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
+using osu.Game.Overlays.Settings;
 using osu.Game.Screens;
 using osuTK;
 
@@ -19,13 +20,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     {
         public const float HEIGHT = 80;
 
+        private readonly KaraokeConfigHeaderTitle title;
+        public readonly PageTabControl<SettingsSection> Tabs;
+
         public Header()
         {
             RelativeSizeAxes = Axes.X;
             Height = HEIGHT;
-
-            KaraokeConfigHeaderTitle title;
-            PageTabControl<KaraokeConfigCategory> tabs;
 
             Children = new Drawable[]
             {
@@ -47,22 +48,22 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.BottomLeft,
                         },
-                        tabs = new PageTabControl<KaraokeConfigCategory>
+                        Tabs = new PageTabControl<SettingsSection>
                         {
                             Anchor = Anchor.BottomLeft,
                             Origin = Anchor.BottomLeft,
                             RelativeSizeAxes = Axes.X,
+                            Scale = new Vector2(1.5f)
                         },
                     },
                 },
             };
 
-            tabs.Current.Value = KaraokeConfigCategory.Config;
-            tabs.Current.BindValueChanged(x =>
+            Tabs.Current.BindValueChanged(x =>
             {
                 // todo : might apply translate in here.
-                title.PageTitle = x.NewValue.ToString();
-            }, true);
+                title.PageTitle = x.NewValue.Header;
+            });
             
         }
 

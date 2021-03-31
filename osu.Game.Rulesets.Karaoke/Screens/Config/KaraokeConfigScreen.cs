@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
@@ -13,6 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     {
         private readonly KaraokeConfigWaveContainer waves;
         private readonly KaraokeSettingsOverlay settingsOverlay;
+        private readonly Header header;
 
         public KaraokeConfigScreen()
         {
@@ -28,18 +30,23 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                         RelativeSizeAxes = Axes.Both,
                         Colour = backgroundColour,
                     },
-                    new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Padding = new MarginPadding { Top = Header.HEIGHT },
-                        Children = new Drawable[]
-                        {
-                            settingsOverlay = new KaraokeSettingsOverlay(),
-                        }
-                    },
-                    new Header(),
+                    settingsOverlay = new KaraokeSettingsOverlay(),
+                    header = new Header(),
                 }
             };
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            // todo : should move into better place.
+            header.Tabs.Items = settingsOverlay.SectionsContainer.Children;
+            settingsOverlay.SectionsContainer.SelectedSection.ValueChanged += section =>
+            {
+                header.Tabs.Current.Value = section.NewValue;
+            };
+
+            header.Tabs.Current.ValueChanged += term => settingsOverlay.SectionsContainer.SearchContainer.SearchTerm = term.NewValue.Header;
         }
 
         protected override void LoadComplete()

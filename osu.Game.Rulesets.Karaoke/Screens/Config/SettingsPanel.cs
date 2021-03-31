@@ -28,13 +28,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
         public const float TRANSITION_LENGTH = 600;
 
-        public const float WIDTH = 400;
+        public const float WIDTH = 300;
 
         protected Container<Drawable> ContentContainer;
 
         protected override Container<Drawable> Content => ContentContainer;
 
-        protected SettingsSectionsContainer SectionsContainer;
+        public SettingsSectionsContainer SectionsContainer;
 
         private SeekLimitedSearchTextBox searchTextBox;
 
@@ -124,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             Padding = new MarginPadding { Top = GetToolbarHeight?.Invoke() ?? 0 };
         }
 
-        protected class SettingsSectionsContainer : SectionsContainer<SettingsSection>
+        public class SettingsSectionsContainer : SectionsContainer<SettingsSection>
         {
             public SearchContainer<SettingsSection> SearchContainer;
 
