@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Sections;
 
@@ -17,6 +18,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             new ConfigSection(),
             new StyleSection(),
             new ScoringSection()
+        };
+
+        protected override Drawable CreateFooter() => new Container
+        {
+            Height = 130,
         };
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)

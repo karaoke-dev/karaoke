@@ -8,6 +8,7 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
@@ -27,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
         private readonly Box background;
         private readonly KaraokeConfigHeaderTitle title;
-        private readonly PageTabControl<SettingsSection> tabs;
+        private readonly KaraokeConfigPageTabControl tabs;
 
         public Header()
         {
@@ -54,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.BottomLeft,
                         },
-                        tabs = new PageTabControl<SettingsSection>
+                        tabs = new KaraokeConfigPageTabControl
                         {
                             Anchor = Anchor.BottomLeft,
                             Origin = Anchor.BottomLeft,
@@ -141,6 +142,22 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     pageTitle.Text = x.NewValue.Header;
                     pageTitle.FadeColour(colour, 200);
                 });
+            }
+        }
+
+        private class KaraokeConfigPageTabControl : PageTabControl<SettingsSection>
+        {
+            protected override TabItem<SettingsSection> CreateTabItem(SettingsSection value)
+                => new KaraokeConfigPageTabItem(value);
+
+            internal class KaraokeConfigPageTabItem : PageTabItem
+            {
+                public KaraokeConfigPageTabItem(SettingsSection value)
+                    : base(value)
+                {
+                }
+
+                protected override string CreateText() => Value.Header;
             }
         }
     }
