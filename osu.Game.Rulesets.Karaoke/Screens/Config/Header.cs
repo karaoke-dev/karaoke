@@ -64,7 +64,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 // todo : might apply translate in here.
                 title.PageTitle = x.NewValue.Header;
             });
-            
         }
 
         private class KaraokeConfigHeaderTitle : CompositeDrawable

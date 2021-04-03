@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Gameplay
         [BackgroundDependencyLoader]
         private void load()
         {
-            // todo : should separate saite and pitch part?
+            // todo : should separate saiten and pitch part?
             Children = new Drawable[]
             {
                 new SettingsCheckbox

@@ -112,7 +112,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
                         }
                         catch
                         {
-
                         }
                     }
                 },

@@ -50,6 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             {
                 if (settingsOverlay.SectionsContainer.SelectedSection.Value == term.NewValue)
                     return;
+
                 settingsOverlay.SectionsContainer.ScrollTo(term.NewValue);
             };
         }
