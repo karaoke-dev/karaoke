@@ -5,13 +5,10 @@ using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Input;
-using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Extensions;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Overlays;
 using osu.Game.Rulesets.Karaoke.Screens.Config;
 
@@ -30,13 +27,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
         protected OsuGame Game { get; private set; }
 
         private KaraokeChangelogOverlay changelogOverlay;
-        private LanguageSelectionDialog languageSelectionDialog;
 
         [BackgroundDependencyLoader]
         private void load()
         {
             var config = (KaraokeRulesetConfigManager)Config;
-            var microphoneManager = new MicrophoneManager();
 
             Children = new Drawable[]
             {
@@ -57,38 +52,15 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     LabelText = "Translate",
                     Current = config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate)
                 },
-                new SettingsButton
+                new SettingsLanguage
                 {
-                    Text = "Prefer language",
+                    LabelText = "Prefer language",
                     TooltipText = "Select prefer translate language.",
-                    Action = () =>
-                    {
-                        try
-                        {
-                            var displayContainer = Game.GetDisplayContainer();
-                            if (displayContainer == null)
-                                return;
-
-                            if (languageSelectionDialog == null && !displayContainer.Children.OfType<LanguageSelectionDialog>().Any())
-                            {
-                                displayContainer.Add(languageSelectionDialog = new LanguageSelectionDialog
-                                {
-                                    Current = config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferLanguage)
-                                });
-                            }
-
-                            languageSelectionDialog?.Show();
-                        }
-                        catch
-                        {
-                            // maybe this overlay has been moved into internal.
-                        }
-                    }
+                    Current = config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferLanguage)
                 },
-                new MicrophoneDeviceSettingsDropdown
+                new SettingsMicrophoneDeviceDropdown
                 {
                     LabelText = "Microphone devices",
-                    Items = microphoneManager.MicrophoneDeviceNames,
                     Current = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
                 },
                 // Practice
@@ -146,17 +118,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private class TimeSlider : OsuSliderBar<double>
         {
             public override string TooltipText => Current.Value.ToString("N0") + "ms";
-        }
-
-        private class MicrophoneDeviceSettingsDropdown : SettingsDropdown<string>
-        {
-            protected override OsuDropdown<string> CreateDropdown() => new MicrophoneDeviceDropdownControl();
-
-            private class MicrophoneDeviceDropdownControl : DropdownControl
-            {
-                protected override LocalisableString GenerateItemText(string item)
-                    => string.IsNullOrEmpty(item) ? "Default" : base.GenerateItemText(item);
-            }
         }
     }
 }
