@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Config.Sections;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config
 {
-    public class KaraokeSettingsOverlay : SettingsPanel
+    public class KaraokeSettingsPanel : SettingsPanel
     {
         protected override IEnumerable<SettingsSection> CreateSections() => new SettingsSection[]
         {

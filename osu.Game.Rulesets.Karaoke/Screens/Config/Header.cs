@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 {
     public class Header : Container
     {
-        public const float HEIGHT = 80;
+        public const float HEIGHT = 75;
 
         [Resolved]
         private ConfigColourProvider colourProvider { get; set; }
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
                     RelativeSizeAxes = Axes.Both,
-                    Padding = new MarginPadding { Left = WaveOverlayContainer.WIDTH_PADDING + OsuScreen.HORIZONTAL_OVERFLOW_PADDING },
+                    Padding = new MarginPadding { Left = 10 },
                     Children = new Drawable[]
                     {
                         title = new KaraokeConfigHeaderTitle
