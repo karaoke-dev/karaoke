@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Game.Overlays.Settings;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
 {
@@ -15,7 +16,32 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
         {
             Children = new Drawable[]
             {
-
+                new SettingsFont
+                {
+                    LabelText = "Default main font"
+                },
+                new SettingsFont
+                {
+                    LabelText = "Default ruby font"
+                },
+                new SettingsFont
+                {
+                    LabelText = "Default romaji font"
+                },
+                new SettingsCheckbox
+                {
+                    LabelText = "Force use default lyric font.",
+                    TooltipText = "Force use default font even has customize font in skin or beatmap.",
+                },
+                new SettingsFont
+                {
+                    LabelText = "Translate font"
+                },
+                new SettingsCheckbox
+                {
+                    LabelText = "Force use default translate font.",
+                    TooltipText = "Force use default font even has customize font in skin or beatmap.",
+                }
             };
         }
     }

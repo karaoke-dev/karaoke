@@ -8,7 +8,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Input;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Overlays;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -47,6 +46,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     LabelText = "Scroll speed",
                     Current = config.GetBindable<double>(KaraokeRulesetSetting.ScrollTime)
                 },
+                new SettingsCheckbox
+                {
+                    LabelText = "Show cursor while playing",
+                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor)
+                },
                 // Translate
                 new SettingsCheckbox
                 {
@@ -81,42 +85,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
                         }
                     }
                 },
-                // Pitch
-                new SettingsCheckbox
-                {
-                    LabelText = "Override pitch at gameplay",
-                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay)
-                },
                 new MicrophoneDeviceSettingsDropdown
                 {
                     LabelText = "Microphone devices",
                     Items = microphoneManager.MicrophoneDeviceNames,
                     Current = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
-                },
-                new SettingsSlider<int, PitchSlider>
-                {
-                    LabelText = "Pitch",
-                    Current = config.GetBindable<int>(KaraokeRulesetSetting.Pitch)
-                },
-                new SettingsCheckbox
-                {
-                    LabelText = "Override vocal pitch at gameplay",
-                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay)
-                },
-                new SettingsSlider<int, PitchSlider>
-                {
-                    LabelText = "Vocal pitch",
-                    Current = config.GetBindable<int>(KaraokeRulesetSetting.VocalPitch)
-                },
-                new SettingsCheckbox
-                {
-                    LabelText = "Override saiten pitch at gameplay",
-                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay)
-                },
-                new SettingsSlider<int, PitchSlider>
-                {
-                    LabelText = "Saiten pitch",
-                    Current = config.GetBindable<int>(KaraokeRulesetSetting.SaitenPitch)
                 },
                 // Practice
                 new SettingsSlider<double, TimeSlider>
@@ -169,11 +142,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     }
                 }
             };
-        }
-
-        private class PitchSlider : OsuSliderBar<int>
-        {
-            public override string TooltipText => (Current.Value >= 0 ? "+" : "") + Current.Value.ToString("N0");
         }
 
         private class TimeSlider : OsuSliderBar<double>

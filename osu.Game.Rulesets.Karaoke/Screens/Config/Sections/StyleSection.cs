@@ -22,6 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections
             Children = new Drawable[]
             {
                 new LyricFontSettings(),
+                new NoteFontSettings(),
                 new ManageFontSettings(),
             };
         }
