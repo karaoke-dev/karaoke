@@ -67,8 +67,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
             tabs.Current.BindValueChanged(x =>
             {
-                // todo : might apply translate in here.
-                // background.FadeColour()
+                background.Delay(200).Then().FadeColour(colourProvider.GetBackground2Colour(x.NewValue), 500);
+
+                tabs.Colour = colourProvider.GetContent2Colour(x.NewValue);
+                tabs.StripColour = colourProvider.GetContentColour(x.NewValue);
             });
         }
 
@@ -134,7 +136,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             {
                 selectedSection.BindValueChanged(x =>
                 {
-                    var colour = colourProvider.GetPageTitleColour(x.NewValue);
+                    var colour = colourProvider.GetContentColour(x.NewValue);
 
                     pageTitle.Text = x.NewValue.Header;
                     pageTitle.FadeColour(colour, 200);

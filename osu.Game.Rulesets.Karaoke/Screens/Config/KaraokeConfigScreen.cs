@@ -39,19 +39,22 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                         RelativeSizeAxes = Axes.Both,
                         Colour = backgroundColour,
                     },
-                    settingsOverlay = new KaraokeSettingsOverlay(),
+                    settingsOverlay = new KaraokeSettingsOverlay
+                    {
+                        Margin = new MarginPadding{ Top = 80},
+                    },
                     header = new Header(),
                 }
             };
 
             selectedSection.ValueChanged += term =>
             {
-                if (settingsOverlay.SectionsContainer.SelectedSection.Value == term.NewValue)
+                var newSection = term.NewValue;
+                if (settingsOverlay.SectionsContainer.SelectedSection.Value == newSection)
                     return;
 
-                // update scroll position
-                settingsOverlay.SectionsContainer.ScrollTo(term.NewValue);
-                // change background color
+                settingsOverlay.SectionsContainer.ScrollTo(newSection);
+                background.Delay(200).Then().FadeColour(colourProvider.GetBackgroundColour(newSection), 500);
             };
         }
 

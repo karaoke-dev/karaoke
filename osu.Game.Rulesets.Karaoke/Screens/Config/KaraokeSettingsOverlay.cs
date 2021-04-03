@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Sections;
 
@@ -26,6 +28,16 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 dependencies.Cache(config);
 
             return dependencies;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ConfigColourProvider colourProvider, Bindable<SettingsSection> selectedSection)
+        {
+            selectedSection.BindValueChanged(x =>
+            {
+                var colour = colourProvider.GetBackground3Colour(x.NewValue);
+                Background.Delay(200).Then().FadeColour(colour, 500);
+            });
         }
     }
 }
