@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     LabelText = "Practice preempt time",
                     Current = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime)
                 },
-                new SettingsButton
+                new DangerousSettingsButton
                 {
                     Text = "Open config",
                     TooltipText = "Hello config",
