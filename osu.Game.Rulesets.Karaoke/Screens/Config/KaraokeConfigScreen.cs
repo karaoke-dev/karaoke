@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
         private readonly KaraokeConfigWaveContainer waves;
         private readonly Box background;
-        private readonly KaraokeSettingsOverlay settingsOverlay;
+        private readonly KaraokeSettingsPanel settingsPanel;
         private readonly Header header;
 
         public KaraokeConfigScreen()
@@ -39,30 +39,30 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                         RelativeSizeAxes = Axes.Both,
                         Colour = backgroundColour,
                     },
-                    settingsOverlay = new KaraokeSettingsOverlay
+                    settingsPanel = new KaraokeSettingsPanel(),
+                    header = new Header
                     {
-                        Margin = new MarginPadding{ Top = 80},
+                        Padding = new MarginPadding{ Left = SettingsPanel.WIDTH },
                     },
-                    header = new Header(),
                 }
             };
 
-            selectedSection.ValueChanged += term =>
+            selectedSection.BindValueChanged(e =>
             {
-                var newSection = term.NewValue;
-                if (settingsOverlay.SectionsContainer.SelectedSection.Value == newSection)
-                    return;
-
-                settingsOverlay.SectionsContainer.ScrollTo(newSection);
+                var newSection = e.NewValue;
                 background.Delay(200).Then().FadeColour(colourProvider.GetBackgroundColour(newSection), 500);
-            };
+
+                // prevent trigger secoll by config section.
+                if (settingsPanel.SectionsContainer.SelectedSection.Value != newSection)
+                    settingsPanel.SectionsContainer.ScrollTo(newSection);
+            });
         }
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            header.TabItems = settingsOverlay.SectionsContainer.Children;
-            settingsOverlay.SectionsContainer.SelectedSection.ValueChanged += section =>
+            header.TabItems = settingsPanel.SectionsContainer.Children;
+            settingsPanel.SectionsContainer.SelectedSection.ValueChanged += section =>
             {
                 selectedSection.Value = section.NewValue;
             };
