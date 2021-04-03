@@ -1,7 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -20,8 +22,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     {
         public const float HEIGHT = 80;
 
+        [Resolved]
+        private ConfigColourProvider colourProvider { get; set; }
+
+        private readonly Box background;
         private readonly KaraokeConfigHeaderTitle title;
-        public readonly PageTabControl<SettingsSection> Tabs;
+        private readonly PageTabControl<SettingsSection> tabs;
 
         public Header()
         {
@@ -30,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
             Children = new Drawable[]
             {
-                new Box
+                background = new Box
                 {
                     RelativeSizeAxes = Axes.Both,
                     Colour = Color4Extensions.FromHex(@"#1f1921"),
@@ -48,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.BottomLeft,
                         },
-                        Tabs = new PageTabControl<SettingsSection>
+                        tabs = new PageTabControl<SettingsSection>
                         {
                             Anchor = Anchor.BottomLeft,
                             Origin = Anchor.BottomLeft,
@@ -59,11 +65,23 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 },
             };
 
-            Tabs.Current.BindValueChanged(x =>
+            tabs.Current.BindValueChanged(x =>
             {
                 // todo : might apply translate in here.
-                title.PageTitle = x.NewValue.Header;
+                // background.FadeColour()
             });
+        }
+
+        public IReadOnlyList<SettingsSection> TabItems
+        {
+            get => tabs.Items;
+            set => tabs.Items = value;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(Bindable<SettingsSection> selectedSection)
+        {
+            tabs.Current.BindTo(selectedSection);
         }
 
         private class KaraokeConfigHeaderTitle : CompositeDrawable
@@ -72,11 +90,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
             private readonly OsuSpriteText dot;
             private readonly OsuSpriteText pageTitle;
-
-            public string PageTitle
-            {
-                set => pageTitle.Text = value;
-            }
 
             public KaraokeConfigHeaderTitle()
             {
@@ -117,9 +130,15 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             }
 
             [BackgroundDependencyLoader]
-            private void load(OsuColour colours)
+            private void load(ConfigColourProvider colourProvider, Bindable<SettingsSection> selectedSection)
             {
-                pageTitle.Colour = dot.Colour = colours.Yellow;
+                selectedSection.BindValueChanged(x =>
+                {
+                    var colour = colourProvider.GetPageTitleColour(x.NewValue);
+
+                    pageTitle.Text = x.NewValue.Header;
+                    pageTitle.FadeColour(colour, 200);
+                });
             }
         }
     }
