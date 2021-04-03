@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Timeline
     public class TimelineBlueprintContainer : BlueprintContainer
     {
         [Resolved(CanBeNull = true)]
-        private Screens.Edit.Compose.Components.Timeline.Timeline timeline { get; set; }
+        private Game.Screens.Edit.Compose.Components.Timeline.Timeline timeline { get; set; }
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }

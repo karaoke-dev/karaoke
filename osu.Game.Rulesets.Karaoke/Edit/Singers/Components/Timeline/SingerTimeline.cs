@@ -8,7 +8,7 @@ using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
 {
-    public class SingerTimeline : Screens.Edit.Compose.Components.Timeline.Timeline
+    public class SingerTimeline : Game.Screens.Edit.Compose.Components.Timeline.Timeline
     {
         [Resolved(CanBeNull = true)]
         private SingerManager singerManager { get; set; }

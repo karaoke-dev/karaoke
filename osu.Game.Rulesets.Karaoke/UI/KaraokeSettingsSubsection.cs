@@ -5,14 +5,15 @@ using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Input;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Overlays;
+using osu.Game.Rulesets.Karaoke.Screens.Config;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
@@ -39,21 +40,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             Children = new Drawable[]
             {
-                // Visual
-                new SettingsEnumDropdown<KaraokeScrollingDirection>
-                {
-                    LabelText = "Scrolling direction",
-                    Current = config.GetBindable<KaraokeScrollingDirection>(KaraokeRulesetSetting.ScrollDirection)
-                },
+                // Scrolling
                 new SettingsSlider<double, TimeSlider>
                 {
                     LabelText = "Scroll speed",
                     Current = config.GetBindable<double>(KaraokeRulesetSetting.ScrollTime)
-                },
-                new SettingsCheckbox
-                {
-                    LabelText = "Display alternative text",
-                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.DisplayAlternativeText)
                 },
                 new SettingsCheckbox
                 {
@@ -74,12 +65,13 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     {
                         try
                         {
-                            if (DisplayContainer == null)
+                            var displayContainer = Game.GetDisplayContainer();
+                            if (displayContainer == null)
                                 return;
 
-                            if (languageSelectionDialog == null && !DisplayContainer.Children.OfType<LanguageSelectionDialog>().Any())
+                            if (languageSelectionDialog == null && !displayContainer.Children.OfType<LanguageSelectionDialog>().Any())
                             {
-                                DisplayContainer.Add(languageSelectionDialog = new LanguageSelectionDialog
+                                displayContainer.Add(languageSelectionDialog = new LanguageSelectionDialog
                                 {
                                     Current = config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferLanguage)
                                 });
@@ -93,48 +85,35 @@ namespace osu.Game.Rulesets.Karaoke.UI
                         }
                     }
                 },
-                // Pitch
-                new SettingsCheckbox
-                {
-                    LabelText = "Override pitch at gameplay",
-                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay)
-                },
                 new MicrophoneDeviceSettingsDropdown
                 {
                     LabelText = "Microphone devices",
                     Items = microphoneManager.MicrophoneDeviceNames,
                     Current = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
                 },
-                new SettingsSlider<int, PitchSlider>
-                {
-                    LabelText = "Pitch",
-                    Current = config.GetBindable<int>(KaraokeRulesetSetting.Pitch)
-                },
-                new SettingsCheckbox
-                {
-                    LabelText = "Override vocal pitch at gameplay",
-                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay)
-                },
-                new SettingsSlider<int, PitchSlider>
-                {
-                    LabelText = "Vocal pitch",
-                    Current = config.GetBindable<int>(KaraokeRulesetSetting.VocalPitch)
-                },
-                new SettingsCheckbox
-                {
-                    LabelText = "Override saiten pitch at gameplay",
-                    Current = config.GetBindable<bool>(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay)
-                },
-                new SettingsSlider<int, PitchSlider>
-                {
-                    LabelText = "Saiten pitch",
-                    Current = config.GetBindable<int>(KaraokeRulesetSetting.SaitenPitch)
-                },
                 // Practice
                 new SettingsSlider<double, TimeSlider>
                 {
                     LabelText = "Practice preempt time",
                     Current = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime)
+                },
+                new DangerousSettingsButton
+                {
+                    Text = "Open config",
+                    TooltipText = "Hello config",
+                    Action = () =>
+                    {
+                        try
+                        {
+                            var screenStake = Game.GetScreenStack();
+                            var settingOverlay = Game.GetSettingsOverlay();
+                            screenStake?.Push(new KaraokeConfigScreen());
+                            settingOverlay?.Hide();
+                        }
+                        catch
+                        {
+                        }
+                    }
                 },
                 new SettingsButton
                 {
@@ -144,13 +123,16 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     {
                         try
                         {
-                            if (DisplayContainer == null)
+                            var displayContainer = Game.GetDisplayContainer();
+                            var settingOverlay = Game.GetSettingsOverlay();
+                            if (displayContainer == null)
                                 return;
 
-                            if (changelogOverlay == null && !DisplayContainer.Children.OfType<KaraokeChangelogOverlay>().Any())
-                                DisplayContainer.Add(changelogOverlay = new KaraokeChangelogOverlay("karaoke-dev"));
+                            if (changelogOverlay == null && !displayContainer.Children.OfType<KaraokeChangelogOverlay>().Any())
+                                displayContainer.Add(changelogOverlay = new KaraokeChangelogOverlay("karaoke-dev"));
 
                             changelogOverlay?.Show();
+                            settingOverlay?.Hide();
                         }
                         catch
                         {
@@ -159,13 +141,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     }
                 }
             };
-        }
-
-        protected Container DisplayContainer => Game?.Children[3] as Container;
-
-        private class PitchSlider : OsuSliderBar<int>
-        {
-            public override string TooltipText => (Current.Value >= 0 ? "+" : "") + Current.Value.ToString("N0");
         }
 
         private class TimeSlider : OsuSliderBar<double>
