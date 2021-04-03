@@ -5,8 +5,6 @@ using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Input;
-using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -34,7 +32,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private void load()
         {
             var config = (KaraokeRulesetConfigManager)Config;
-            var microphoneManager = new MicrophoneManager();
 
             Children = new Drawable[]
             {
@@ -61,10 +58,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     TooltipText = "Select prefer translate language.",
                     Current = config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferLanguage)
                 },
-                new MicrophoneDeviceSettingsDropdown
+                new SettingsMicrophoneDeviceDropdown
                 {
                     LabelText = "Microphone devices",
-                    Items = microphoneManager.MicrophoneDeviceNames,
                     Current = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
                 },
                 // Practice
@@ -122,17 +118,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private class TimeSlider : OsuSliderBar<double>
         {
             public override string TooltipText => Current.Value.ToString("N0") + "ms";
-        }
-
-        private class MicrophoneDeviceSettingsDropdown : SettingsDropdown<string>
-        {
-            protected override OsuDropdown<string> CreateDropdown() => new MicrophoneDeviceDropdownControl();
-
-            private class MicrophoneDeviceDropdownControl : DropdownControl
-            {
-                protected override LocalisableString GenerateItemText(string item)
-                    => string.IsNullOrEmpty(item) ? "Default" : base.GenerateItemText(item);
-            }
         }
     }
 }
