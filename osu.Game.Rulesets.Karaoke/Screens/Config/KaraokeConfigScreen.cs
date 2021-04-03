@@ -47,15 +47,15 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 }
             };
 
-            selectedSection.ValueChanged += term =>
+            selectedSection.BindValueChanged(e =>
             {
-                var newSection = term.NewValue;
-                if (settingsOverlay.SectionsContainer.SelectedSection.Value == newSection)
-                    return;
-
-                settingsOverlay.SectionsContainer.ScrollTo(newSection);
+                var newSection = e.NewValue;
                 background.Delay(200).Then().FadeColour(colourProvider.GetBackgroundColour(newSection), 500);
-            };
+
+                // prevent trigger secoll by config section.
+                if (settingsOverlay.SectionsContainer.SelectedSection.Value != newSection)
+                    settingsOverlay.SectionsContainer.ScrollTo(newSection);
+            });
         }
 
         [BackgroundDependencyLoader]
