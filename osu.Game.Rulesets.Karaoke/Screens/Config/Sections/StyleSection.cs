@@ -3,12 +3,11 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections
 {
-    public class StyleSection : SettingsSection
+    public class StyleSection : KaraokeSettingsSection
     {
         public override string Header => "Style";
 

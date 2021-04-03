@@ -2,17 +2,26 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
+using osu.Game.Overlays.Settings;
 using osu.Game.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config
 {
     public class KaraokeConfigScreen : OsuScreen
     {
+        [Cached]
+        private ConfigColourProvider colourProvider = new ConfigColourProvider();
+
+        [Cached]
+        private Bindable<SettingsSection> selectedSection = new Bindable<SettingsSection>();
+
         private readonly KaraokeConfigWaveContainer waves;
+        private readonly Box background;
         private readonly KaraokeSettingsOverlay settingsOverlay;
         private readonly Header header;
 
@@ -25,33 +34,37 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 RelativeSizeAxes = Axes.Both,
                 Children = new Drawable[]
                 {
-                    new Box
+                    background = new Box
                     {
                         RelativeSizeAxes = Axes.Both,
                         Colour = backgroundColour,
                     },
-                    settingsOverlay = new KaraokeSettingsOverlay(),
+                    settingsOverlay = new KaraokeSettingsOverlay
+                    {
+                        Margin = new MarginPadding{ Top = 80},
+                    },
                     header = new Header(),
                 }
+            };
+
+            selectedSection.ValueChanged += term =>
+            {
+                var newSection = term.NewValue;
+                if (settingsOverlay.SectionsContainer.SelectedSection.Value == newSection)
+                    return;
+
+                settingsOverlay.SectionsContainer.ScrollTo(newSection);
+                background.Delay(200).Then().FadeColour(colourProvider.GetBackgroundColour(newSection), 500);
             };
         }
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            // todo : should move into better place.
-            header.Tabs.Items = settingsOverlay.SectionsContainer.Children;
+            header.TabItems = settingsOverlay.SectionsContainer.Children;
             settingsOverlay.SectionsContainer.SelectedSection.ValueChanged += section =>
             {
-                header.Tabs.Current.Value = section.NewValue;
-            };
-
-            header.Tabs.Current.ValueChanged += term =>
-            {
-                if (settingsOverlay.SectionsContainer.SelectedSection.Value == term.NewValue)
-                    return;
-
-                settingsOverlay.SectionsContainer.ScrollTo(term.NewValue);
+                selectedSection.Value = section.NewValue;
             };
         }
 

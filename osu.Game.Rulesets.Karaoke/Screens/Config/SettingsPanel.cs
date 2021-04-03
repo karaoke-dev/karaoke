@@ -141,16 +141,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 HeaderBackground = new Box
                 {
                     Colour = Color4.Black,
-                    RelativeSizeAxes = Axes.Both
+                    RelativeSizeAxes = Axes.Both,
+                    Alpha = 0.3f,
                 };
-            }
-
-            protected override void UpdateAfterChildren()
-            {
-                base.UpdateAfterChildren();
-
-                // no null check because the usage of this class is strict
-                HeaderBackground.Alpha = -ExpandableHeader.Y / ExpandableHeader.LayoutSize.Y;
             }
         }
     }

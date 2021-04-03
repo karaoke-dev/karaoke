@@ -3,6 +3,9 @@
 
 using System.Collections.Generic;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Sections;
 
@@ -17,6 +20,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             new ScoringSection()
         };
 
+        protected override Drawable CreateFooter() => new Container
+        {
+            Height = 130,
+        };
+
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
             var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
@@ -26,6 +34,16 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 dependencies.Cache(config);
 
             return dependencies;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ConfigColourProvider colourProvider, Bindable<SettingsSection> selectedSection)
+        {
+            selectedSection.BindValueChanged(x =>
+            {
+                var colour = colourProvider.GetBackground3Colour(x.NewValue);
+                Background.Delay(200).Then().FadeColour(colour, 500);
+            });
         }
     }
 }
