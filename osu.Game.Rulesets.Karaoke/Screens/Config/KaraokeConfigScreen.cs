@@ -46,7 +46,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 header.Tabs.Current.Value = section.NewValue;
             };
 
-            header.Tabs.Current.ValueChanged += term => settingsOverlay.SectionsContainer.SearchContainer.SearchTerm = term.NewValue.Header;
+            header.Tabs.Current.ValueChanged += term =>
+            {
+                if (settingsOverlay.SectionsContainer.SelectedSection.Value == term.NewValue)
+                    return;
+                settingsOverlay.SectionsContainer.ScrollTo(term.NewValue);
+            };
         }
 
         protected override void LoadComplete()

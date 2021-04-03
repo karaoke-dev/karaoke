@@ -4,6 +4,7 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Settings;
+using osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections
 {
@@ -15,5 +16,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections
         {
             Icon = FontAwesome.Solid.PaintBrush
         };
+
+        public StyleSection()
+        {
+            Children = new Drawable[]
+            {
+                new LyricFontSettings(),
+                new ManageFontSettings(),
+            };
+        }
     }
 }
