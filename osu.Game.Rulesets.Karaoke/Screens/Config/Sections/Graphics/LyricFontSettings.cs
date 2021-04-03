@@ -3,7 +3,9 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Settings;
+using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
 {
@@ -18,29 +20,35 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
             {
                 new SettingsFont
                 {
-                    LabelText = "Default main font"
+                    LabelText = "Default main font",
+                    Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.MainFont)
                 },
                 new SettingsFont
                 {
-                    LabelText = "Default ruby font"
+                    LabelText = "Default ruby font",
+                    Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.RubyFont)
                 },
                 new SettingsFont
                 {
-                    LabelText = "Default romaji font"
+                    LabelText = "Default romaji font",
+                    Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.RomajiFont)
                 },
                 new SettingsCheckbox
                 {
                     LabelText = "Force use default lyric font.",
                     TooltipText = "Force use default font even has customize font in skin or beatmap.",
+                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultFont)
                 },
                 new SettingsFont
                 {
-                    LabelText = "Translate font"
+                    LabelText = "Translate font",
+                    Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.TranslateFont)
                 },
                 new SettingsCheckbox
                 {
                     LabelText = "Force use default translate font.",
                     TooltipText = "Force use default font even has customize font in skin or beatmap.",
+                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultFont)
                 }
             };
         }

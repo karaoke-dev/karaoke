@@ -3,7 +3,9 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Settings;
+using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
 {
@@ -18,12 +20,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
             {
                 new SettingsFont
                 {
-                    LabelText = "Note font"
+                    LabelText = "Note font",
+                    Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.NoteFont)
                 },
                 new SettingsCheckbox
                 {
                     LabelText = "Force use default note font.",
                     TooltipText = "Force use default font even has customize font in skin or beatmap.",
+                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultNoteFont)
                 }
             };
         }
