@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
                 {
                     LabelText = "Force use default translate font.",
                     TooltipText = "Force use default font even has customize font in skin or beatmap.",
-                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultFont)
+                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultTranslateFont)
                 }
             };
         }
