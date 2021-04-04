@@ -4,6 +4,7 @@
 using System.Globalization;
 using osu.Framework.Bindables;
 using osu.Framework.Configuration.Tracking;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Configuration;
 using osu.Game.Rulesets.Karaoke.Bindables;
@@ -52,6 +53,16 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Device
             SetDefault(KaraokeRulesetSetting.MicrophoneDevice, "");
+
+            // Font
+            SetDefault(KaraokeRulesetSetting.MainFont, FontUsage.Default);
+            SetDefault(KaraokeRulesetSetting.RubyFont, FontUsage.Default);
+            SetDefault(KaraokeRulesetSetting.RomajiFont, FontUsage.Default);
+            SetDefault(KaraokeRulesetSetting.ForceUseDefaultFont, false);
+            SetDefault(KaraokeRulesetSetting.TranslateFont, FontUsage.Default);
+            SetDefault(KaraokeRulesetSetting.ForceUseDefaultTranslateFont, false);
+            SetDefault(KaraokeRulesetSetting.NoteFont, FontUsage.Default);
+            SetDefault(KaraokeRulesetSetting.ForceUseDefaultNoteFont, false);
         }
 
         protected override void AddBindable<TBindable>(KaraokeRulesetSetting lookup, Bindable<TBindable> bindable)
@@ -61,6 +72,14 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
                 case KaraokeRulesetSetting.PreferLanguage:
                     // todo : need to hve a default value here because it will cause error if object is null while saving.
                     base.AddBindable(lookup, new BindableCultureInfo(new CultureInfo("en-US")));
+                    break;
+
+                case KaraokeRulesetSetting.MainFont:
+                case KaraokeRulesetSetting.RubyFont:
+                case KaraokeRulesetSetting.RomajiFont:
+                case KaraokeRulesetSetting.TranslateFont:
+                case KaraokeRulesetSetting.NoteFont:
+                    base.AddBindable(lookup, new BindableFontUsage(FontUsage.Default));
                     break;
 
                 default:
@@ -107,6 +126,16 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         PracticePreemptTime,
 
         // Device
-        MicrophoneDevice
+        MicrophoneDevice,
+
+        // Font
+        MainFont,
+        RubyFont,
+        RomajiFont,
+        ForceUseDefaultFont,
+        TranslateFont,
+        ForceUseDefaultTranslateFont,
+        NoteFont,
+        ForceUseDefaultNoteFont,
     }
 }
