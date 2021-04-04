@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     {
         protected override Drawable CreateControl() => new LanguageSelectionButton
         {
-            Padding = new MarginPadding { Top = 5},
+            Padding = new MarginPadding { Top = 5 },
             RelativeSizeAxes = Axes.X,
         };
 
@@ -47,13 +47,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
                         // Should only has one instance.
                         var dialog = displayContainer.Children.OfType<LanguageSelectionDialog>().FirstOrDefault();
+
                         if (dialog == null)
                         {
                             displayContainer.Add(dialog = new LanguageSelectionDialog());
                         }
 
                         dialog.Current = Current;
-                        dialog?.Show();
+                        dialog.Show();
                     }
                     catch
                     {

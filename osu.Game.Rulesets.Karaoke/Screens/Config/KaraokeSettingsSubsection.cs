@@ -2,8 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
+using osu.Framework.Input.Events;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Screens.Config.Previews;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config
 {
@@ -11,5 +14,16 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     {
         [Resolved]
         protected KaraokeRulesetConfigManager Config { get; private set; }
+
+        [Resolved]
+        private Bindable<SettingsSubsection> selectedSubsection { get; set; }
+
+        public virtual SettingsSubsectionPreview CreatePreview() => new UnderConstructionMessage("Oops");
+
+        protected override bool OnHover(HoverEvent e)
+        {
+            selectedSubsection.Value = this;
+            return base.OnHover(e);
+        }
     }
 }

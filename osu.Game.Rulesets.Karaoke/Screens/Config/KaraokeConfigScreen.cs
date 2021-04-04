@@ -5,7 +5,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using osu.Game.Screens;
@@ -20,10 +22,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
         [Cached]
         private Bindable<SettingsSection> selectedSection = new Bindable<SettingsSection>();
 
+        [Cached]
+        private Bindable<SettingsSubsection> selectedSubsection = new Bindable<SettingsSubsection>();
+
         private readonly KaraokeConfigWaveContainer waves;
         private readonly Box background;
         private readonly KaraokeSettingsPanel settingsPanel;
         private readonly Header header;
+        private readonly Container previewArea;
 
         public KaraokeConfigScreen()
         {
@@ -42,8 +48,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     settingsPanel = new KaraokeSettingsPanel(),
                     header = new Header
                     {
-                        Padding = new MarginPadding{ Left = SettingsPanel.WIDTH },
+                        Padding = new MarginPadding { Left = SettingsPanel.WIDTH },
                     },
+                    previewArea = new Container
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Padding = new MarginPadding { Top = Header.HEIGHT, Left = SettingsPanel.WIDTH }
+                    }
                 }
             };
 
@@ -52,9 +63,17 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 var newSection = e.NewValue;
                 background.Delay(200).Then().FadeColour(colourProvider.GetBackgroundColour(newSection), 500);
 
-                // prevent trigger secoll by config section.
+                // prevent trigger scroll by config section.
                 if (settingsPanel.SectionsContainer.SelectedSection.Value != newSection)
                     settingsPanel.SectionsContainer.ScrollTo(newSection);
+            });
+
+            selectedSubsection.BindValueChanged(e =>
+            {
+                if (e.NewValue is KaraokeSettingsSubsection settingsSubsection)
+                {
+                    previewArea.Child = settingsSubsection.CreatePreview();
+                }
             });
         }
 
@@ -72,6 +91,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
         {
             base.LoadComplete();
             waves.Show();
+        }
+
+        protected override bool OnScroll(ScrollEvent e)
+        {
+            // Prevent scroll event cause volume control appear.
+            return true;
         }
 
         private class KaraokeConfigWaveContainer : WaveContainer

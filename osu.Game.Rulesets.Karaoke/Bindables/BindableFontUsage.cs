@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using osu.Framework.Bindables;
@@ -26,6 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
 
             var regex = new Regex(@"\b(?<key>font|family|weight|size|italics|fixedWidth)(?<op>[=]+)(?<value>("".*"")|(\S*))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             var dictionary = regex.Matches(str).ToDictionary(k => k.Groups["key"].Value.ToLower(), v => v.Groups["value"].Value);
+
             if (dictionary.ContainsKey("font"))
             {
                 var font = dictionary["font"];

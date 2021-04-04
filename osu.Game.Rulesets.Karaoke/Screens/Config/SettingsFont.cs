@@ -11,7 +11,6 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config
 {
@@ -48,6 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
                         // Should only has one instance.
                         var dialog = displayContainer.Children.OfType<FontSelectionDialog>().FirstOrDefault();
+
                         if (dialog == null)
                         {
                             displayContainer.Add(dialog = new FontSelectionDialog());
