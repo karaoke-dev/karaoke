@@ -6,6 +6,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Input.Events;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Screens.Config.Previews;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config
 {
@@ -16,6 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
         [Resolved]
         private Bindable<SettingsSubsection> selectedSubsection { get; set; }
+
+        public virtual SettingsSubsectionPreview CreatePreview() => new UnderConstructionMessage("Oops");
 
         protected override bool OnHover(HoverEvent e)
         {

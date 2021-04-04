@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             {
                 if (e.NewValue is KaraokeSettingsSubsection settingsSubsection)
                 {
-                    // todo : place preview component into here.
+                    previewArea.Child = settingsSubsection.CreatePreview();
                 }
             });
         }
