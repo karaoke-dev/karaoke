@@ -6,6 +6,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using osu.Game.Screens;
@@ -72,6 +73,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
         {
             base.LoadComplete();
             waves.Show();
+        }
+
+        protected override bool OnScroll(ScrollEvent e)
+        {
+            // Prevent scroll event cause volume control appear.
+            return true;
         }
 
         private class KaraokeConfigWaveContainer : WaveContainer
