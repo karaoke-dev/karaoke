@@ -71,12 +71,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                         Colour = OsuColour.Gray(0.05f),
                         Alpha = 1,
                     },
-                    SectionsContainer = new SettingsSectionsContainer
-                    {
-                        Masking = true,
-                        RelativeSizeAxes = Axes.Both,
-                        ExpandableHeader = CreateHeader(),
-                        FixedHeader = searchTextBox = new SeekLimitedSearchTextBox
+                    SectionsContainer = CreateSettingsSections().With(x => {
+                        x.Masking = true;
+                        x.RelativeSizeAxes = Axes.Both;
+                        x.ExpandableHeader = CreateHeader();
+                        x.FixedHeader = searchTextBox = new SeekLimitedSearchTextBox
                         {
                             RelativeSizeAxes = Axes.X,
                             Origin = Anchor.TopCentre,
@@ -87,9 +86,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                                 Top = 20,
                                 Bottom = 20
                             },
-                        },
-                        Footer = CreateFooter()
-                    },
+                        };
+                        x.Footer = CreateFooter();
+                    }),
                 }
             };
 
@@ -104,6 +103,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
         }
 
         protected virtual Drawable CreateHeader() => new Container();
+
+        protected virtual SettingsSectionsContainer CreateSettingsSections() => new SettingsSectionsContainer();
 
         protected virtual Drawable CreateFooter() => new Container();
 

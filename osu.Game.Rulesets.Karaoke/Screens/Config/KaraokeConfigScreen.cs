@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics.Containers;
@@ -21,10 +22,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
         [Cached]
         private Bindable<SettingsSection> selectedSection = new Bindable<SettingsSection>();
 
+        [Cached]
+        private Bindable<SettingsSubsection> selectedSubsection = new Bindable<SettingsSubsection>();
+
         private readonly KaraokeConfigWaveContainer waves;
         private readonly Box background;
         private readonly KaraokeSettingsPanel settingsPanel;
         private readonly Header header;
+        private readonly Container previewArea;
 
         public KaraokeConfigScreen()
         {
@@ -45,6 +50,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     {
                         Padding = new MarginPadding{ Left = SettingsPanel.WIDTH },
                     },
+                    previewArea = new Container
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Padding = new MarginPadding { Top = Header.HEIGHT, Left = SettingsPanel.WIDTH }
+                    }
                 }
             };
 
@@ -56,6 +66,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 // prevent trigger secoll by config section.
                 if (settingsPanel.SectionsContainer.SelectedSection.Value != newSection)
                     settingsPanel.SectionsContainer.ScrollTo(newSection);
+            });
+
+            selectedSubsection.BindValueChanged(e =>
+            {
+                if (e.NewValue is KaraokeSettingsSubsection settingsSubsection)
+                {
+                    // todo : place preview component into here.
+                }
             });
         }
 
