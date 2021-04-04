@@ -71,7 +71,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                         Colour = OsuColour.Gray(0.05f),
                         Alpha = 1,
                     },
-                    SectionsContainer = CreateSettingsSections().With(x => {
+                    SectionsContainer = CreateSettingsSections().With(x =>
+                    {
                         x.Masking = true;
                         x.RelativeSizeAxes = Axes.Both;
                         x.ExpandableHeader = CreateHeader();

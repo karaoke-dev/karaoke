@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
                 selectedSubsection.BindValueChanged(x =>
                 {
-                    var offset = 20;
+                    const int offset = 20;
                     var position = scrollContainer.GetChildPosInContent(x.NewValue);
                     background.MoveToY(position + offset, 50);
                     background.ResizeHeightTo(x.NewValue.DrawHeight, 100);

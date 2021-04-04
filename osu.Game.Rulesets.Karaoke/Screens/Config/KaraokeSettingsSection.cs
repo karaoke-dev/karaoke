@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     {
         private const int margin = 20;
 
-        public KaraokeSettingsSection()
+        protected KaraokeSettingsSection()
         {
             Margin = new MarginPadding { Bottom = margin };
         }
@@ -25,7 +25,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
             // set header box and text to target color.
             var headerBox = InternalChildren.FirstOrDefault();
-            var title = (InternalChildren.LastOrDefault() as Container).Children?.FirstOrDefault();
+            var title = (InternalChildren.LastOrDefault() as Container)?.Children?.FirstOrDefault();
+            if (headerBox == null || title == null)
+                return;
+
             headerBox.Colour = colour;
             title.Colour = colour;
         }

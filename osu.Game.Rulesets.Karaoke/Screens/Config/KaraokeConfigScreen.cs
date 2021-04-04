@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     settingsPanel = new KaraokeSettingsPanel(),
                     header = new Header
                     {
-                        Padding = new MarginPadding{ Left = SettingsPanel.WIDTH },
+                        Padding = new MarginPadding { Left = SettingsPanel.WIDTH },
                     },
                     previewArea = new Container
                     {
@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 var newSection = e.NewValue;
                 background.Delay(200).Then().FadeColour(colourProvider.GetBackgroundColour(newSection), 500);
 
-                // prevent trigger secoll by config section.
+                // prevent trigger scroll by config section.
                 if (settingsPanel.SectionsContainer.SelectedSection.Value != newSection)
                     settingsPanel.SectionsContainer.ScrollTo(newSection);
             });
