@@ -67,9 +67,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 scrollContainer.Add(background = new Box
                 {
                     RelativeSizeAxes = Axes.X,
-                    Colour = Colour4.Red,
                     Depth = 1,
-                    Alpha = 0.3f
+                    Alpha = 0.6f
                 });
 
                 selectedSection.BindValueChanged(x =>
@@ -82,8 +81,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 {
                     var offset = 20;
                     var position = scrollContainer.GetChildPosInContent(x.NewValue);
-                    background.Y = position + offset;
-                    background.Height = x.NewValue.DrawHeight;
+                    background.MoveToY(position + offset, 50);
+                    background.ResizeHeightTo(x.NewValue.DrawHeight, 100);
                 });
             }
 
