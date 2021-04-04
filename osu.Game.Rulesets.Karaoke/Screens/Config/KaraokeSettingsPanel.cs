@@ -15,6 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 {
     public class KaraokeSettingsPanel : SettingsPanel
     {
+        public new KaraokeSettingsSectionsContainer SectionsContainer => (KaraokeSettingsSectionsContainer)base.SectionsContainer;
+
         protected override IEnumerable<SettingsSection> CreateSections() => new SettingsSection[]
         {
             new ConfigSection(),
@@ -83,6 +85,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     background.Y = position + offset;
                     background.Height = x.NewValue.DrawHeight;
                 });
+            }
+
+            public new void ScrollTo(Drawable section)
+            {
+                base.ScrollTo(section);
+
+                // re-scroll to target place, not with weird spacing.
+                scrollContainer.ScrollTo(scrollContainer.GetChildPosInContent(section) - (FixedHeader?.BoundingBox.Height ?? 0));
             }
         }
     }
