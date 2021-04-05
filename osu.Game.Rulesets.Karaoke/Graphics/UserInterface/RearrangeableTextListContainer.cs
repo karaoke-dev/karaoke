@@ -40,13 +40,13 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         }
 
         protected override OsuRearrangeableListItem<T> CreateOsuDrawable(T item)
-               => new DrawableLanguageListItem<T>(item)
-               {
-                   SelectedSet = { BindTarget = SelectedSet },
-                   RequestSelection = set => RequestSelection?.Invoke(set)
-               };
+            => new DrawableTextListItem(item)
+            {
+                SelectedSet = { BindTarget = SelectedSet },
+                RequestSelection = set => RequestSelection?.Invoke(set)
+            };
 
-        public class DrawableLanguageListItem<T> : OsuRearrangeableListItem<T>, IFilterable
+        public class DrawableTextListItem : OsuRearrangeableListItem<T>, IFilterable
         {
             public readonly Bindable<T> SelectedSet = new Bindable<T>();
 
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
             private Color4 selectedColour;
 
-            public DrawableLanguageListItem(T item)
+            public DrawableTextListItem(T item)
                 : base(item)
             {
                 Padding = new MarginPadding { Left = 5 };

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.ComponentModel;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -11,6 +12,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components;
 using osuTK;
+using Container = osu.Framework.Graphics.Containers.Container;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
@@ -180,10 +182,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 
     public enum Style
     {
-        [System.ComponentModel.Description("Lyric")]
+        [Description("Lyric")]
         Lyric,
 
-        [System.ComponentModel.Description("Note")]
+        [Description("Note")]
         Note
     }
 }

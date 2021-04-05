@@ -11,6 +11,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 using osuTK.Graphics;
 
@@ -73,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                     new Dimension(GridSizeMode.Relative, 0.3f),
                                     new Dimension(GridSizeMode.Relative, 0.2f),
                                 },
-                                Content = new []
+                                Content = new[]
                                 {
                                     new Drawable[]
                                     {
@@ -92,11 +93,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                             RelativeSizeAxes = Axes.Both,
                                             RowDimensions = new[]
                                             {
-                                                new Dimension(GridSizeMode.Distributed),
+                                                new Dimension(),
                                                 new Dimension(GridSizeMode.Absolute, 48),
                                                 new Dimension(GridSizeMode.Absolute, 64),
                                             },
-                                            Content = new []
+                                            Content = new[]
                                             {
                                                 new Drawable[]
                                                 {
@@ -126,7 +127,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                                         Padding = new MarginPadding(10),
                                                         Text = "OK",
                                                         Height = 64,
-                                                        Action = () => {
+                                                        Action = () =>
+                                                        {
                                                             // set to current value and hide.
                                                             var font = generateFontUsage();
                                                             Current.Value = font;
@@ -148,7 +150,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             weightProperty.Current.BindValueChanged(x => previewChange());
             fontSizeProperty.Current.BindValueChanged(x => previewChange());
             fixedWidthCheckbox.Current.BindValueChanged(x => previewChange());
-            Current.BindValueChanged(e => {
+            Current.BindValueChanged(e =>
+            {
                 var newFont = e.NewValue;
                 familyProperty.Current.Value = newFont.Family;
                 weightProperty.Current.Value = newFont.Weight;
@@ -174,7 +177,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         [BackgroundDependencyLoader]
         private void load()
         {
-            fontSizeProperty.Items.AddRange(new float[] { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 });
+            var sizes = FontUtils.DefaultFontSize();
+            fontSizeProperty.Items.AddRange(sizes);
         }
 
         internal class TextPropertyList<T> : CompositeDrawable

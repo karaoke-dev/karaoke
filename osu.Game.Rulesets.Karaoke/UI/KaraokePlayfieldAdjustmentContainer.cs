@@ -7,6 +7,7 @@ using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Karaoke.IO.Archives;
 using osu.Game.Rulesets.UI;
+using osuTK.Graphics.ES30;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
@@ -25,14 +26,15 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private void load(GameHost host)
         {
             var storage = host.Storage;
-            if (!storage.ExistsDirectory($"fonts/cached"))
+            if (!storage.ExistsDirectory("fonts/cached"))
                 return;
 
             // create font store if wants to import.
-            localFontStore = new FontStore(scaleAdjust: 200, minFilterMode: osuTK.Graphics.ES30.All.Linear);
+            localFontStore = new FontStore(scaleAdjust: 200, minFilterMode: All.Linear);
             fontStore.AddStore(localFontStore);
 
-            var files = storage.GetFiles($"fonts/cached");
+            var files = storage.GetFiles("fonts/cached");
+
             foreach (var file in files)
             {
                 // should only accept .cached extension.
