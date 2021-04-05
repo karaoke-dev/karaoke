@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
     public static class OsuGameExtensions
     {
         public static Container GetDisplayContainer(this OsuGame game)
-        => game?.Children[3] as Container;
+            => game?.Children[3] as Container;
 
         public static OsuScreenStack GetScreenStack(this OsuGame game)
             => (game?.Children[2] as Container)?.Children.OfType<OsuScreenStack>().FirstOrDefault();

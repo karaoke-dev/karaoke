@@ -43,8 +43,9 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             var notePlayfield = karaokePlayfield.NotePlayfield;
             var frames = Replay.Frames.OfType<KaraokeReplayFrame>();
 
-            // for safty purpose should clear reply to make sure not cause crash if apply to ruleset runs more then one times.
+            // for safety purpose should clear reply to make sure not cause crash if apply to ruleset runs more then one times.
             notePlayfield.ClearReplay();
+
             foreach (var frame in frames)
             {
                 notePlayfield.AddReplay(frame);

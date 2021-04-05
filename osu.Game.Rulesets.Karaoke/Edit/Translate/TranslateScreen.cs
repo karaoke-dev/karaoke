@@ -64,14 +64,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             };
 
             // ask only once if contains no language after switch to translate editor.
-            var alreadyAsked = false;
+            bool alreadyAsked;
             TranslateManager.Languages.BindCollectionChanged((a, b) =>
             {
                 alreadyAsked = true;
-                if (TranslateManager.Languages.Count == 0 && !alreadyAsked) {
-                    dialogOverlay.Push(new CreateNewLanguagePopupDialog(isOK =>
+
+                if (TranslateManager.Languages.Count == 0 && !alreadyAsked)
+                {
+                    dialogOverlay.Push(new CreateNewLanguagePopupDialog(isOk =>
                     {
-                        if (isOK) {
+                        if (isOk)
+                        {
                             languageSelectionDialog.Show();
                         }
                     }));

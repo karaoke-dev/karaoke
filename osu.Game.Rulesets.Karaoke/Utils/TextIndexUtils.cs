@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// 3
         /// 4(end)
         /// </example>
-        /// <param name="timeTag"></param>
+        /// <param name="textIndex"></param>
         /// <returns></returns>
         public static string PositionFormattedString(TextIndex textIndex)
         {

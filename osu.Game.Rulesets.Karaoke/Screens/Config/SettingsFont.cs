@@ -129,7 +129,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                         },
                     }
                 };
-                
 
                 Current.BindValueChanged(e =>
                 {

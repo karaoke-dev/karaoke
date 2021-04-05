@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     RequestSelection = set => RequestSelection?.Invoke(set)
                 };
 
-            public class DrawableLanguageListItem : DrawableLanguageListItem<CultureInfo>, IFilterable
+            public class DrawableLanguageListItem : DrawableTextListItem, IFilterable
             {
                 public DrawableLanguageListItem(CultureInfo item)
                     : base(item)
@@ -100,7 +100,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     Padding = new MarginPadding { Left = 5 };
                 }
 
-                public override IEnumerable<string> FilterTerms => new[] {
+                public override IEnumerable<string> FilterTerms => new[]
+                {
                     Model.Name,
                     Model.DisplayName,
                     Model.EnglishName,
