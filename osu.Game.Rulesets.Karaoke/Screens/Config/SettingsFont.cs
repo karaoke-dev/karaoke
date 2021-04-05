@@ -5,6 +5,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
@@ -18,16 +19,19 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     {
         protected override Drawable CreateControl() => new FontSelectionButton
         {
-            Padding = new MarginPadding { Top = 5 },
+            Margin = new MarginPadding { Top = 5 },
             RelativeSizeAxes = Axes.X,
         };
 
-        internal class FontSelectionButton : TriangleButton, IHasCurrentValue<FontUsage>
+        internal class FontSelectionButton : CompositeDrawable, IHasCurrentValue<FontUsage>
         {
+            private const float height = 30;
+
             [Resolved(canBeNull: true)]
             protected OsuGame Game { get; private set; }
 
             private readonly BindableWithCurrent<FontUsage> current = new BindableWithCurrent<FontUsage>();
+            private readonly TriangleButton fontButton;
 
             public Bindable<FontUsage> Current
             {
@@ -37,30 +41,82 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
             public FontSelectionButton()
             {
-                Action = () =>
+                AutoSizeAxes = Axes.Y;
+                InternalChild = new GridContainer
                 {
-                    try
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    ColumnDimensions = new[]
                     {
-                        var displayContainer = Game.GetDisplayContainer();
-                        if (displayContainer == null)
-                            return;
-
-                        // Should only has one instance.
-                        var dialog = displayContainer.Children.OfType<FontSelectionDialog>().FirstOrDefault();
-
-                        if (dialog == null)
+                        new Dimension(GridSizeMode.Distributed),
+                        new Dimension(GridSizeMode.Absolute, 5),
+                        new Dimension(GridSizeMode.Absolute, height),
+                        new Dimension(GridSizeMode.Absolute, 5),
+                        new Dimension(GridSizeMode.Absolute, height),
+                    },
+                    RowDimensions = new[]
+                    {
+                        new Dimension(GridSizeMode.AutoSize)
+                    },
+                    Content = new[]
+                    {
+                        new []
                         {
-                            displayContainer.Add(dialog = new FontSelectionDialog());
-                        }
+                            fontButton = new TriangleButton
+                            {
+                                RelativeSizeAxes = Axes.X,
+                                Height = height,
+                                Action = () =>
+                                {
+                                    try
+                                    {
+                                        var displayContainer = Game.GetDisplayContainer();
+                                        if (displayContainer == null)
+                                            return;
 
-                        dialog.Current = Current;
-                        dialog?.Show();
-                    }
-                    catch
-                    {
-                        // maybe this overlay has been moved into internal.
+                                        // Should only has one instance.
+                                        var dialog = displayContainer.Children.OfType<FontSelectionDialog>().FirstOrDefault();
+
+                                        if (dialog == null)
+                                        {
+                                            displayContainer.Add(dialog = new FontSelectionDialog());
+                                        }
+
+                                        dialog.Current = Current;
+                                        dialog?.Show();
+                                    }
+                                    catch
+                                    {
+                                        // maybe this overlay has been moved into internal.
+                                    }
+                                }
+                            },
+                            null,
+                            new TriangleButton
+                            {
+                                RelativeSizeAxes = Axes.X,
+                                Height = height,
+                                Text = "-",
+                                Action = () =>
+                                {
+
+                                }
+                            },
+                            null,
+                            new TriangleButton
+                            {
+                                RelativeSizeAxes = Axes.X,
+                                Height = height,
+                                Text = "+",
+                                Action = () =>
+                                {
+
+                                }
+                            }
+                        },
                     }
                 };
+                
 
                 Current.BindValueChanged(e =>
                 {
@@ -70,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     var size = $"{font.Size}px";
                     var fixedWidthText = font.FixedWidth ? "(fixed width)" : "";
                     var displayText = $"{family}{weight}, {size} {fixedWidthText}";
-                    Text = displayText;
+                    fontButton.Text = displayText;
                 });
             }
         }
