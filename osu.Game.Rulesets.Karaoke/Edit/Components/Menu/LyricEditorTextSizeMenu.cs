@@ -7,12 +7,13 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
     public class LyricEditorTextSizeMenu : MenuItem
     {
-        private readonly Bindable<int> bindableFontSize = new Bindable<int>();
+        private readonly Bindable<float> bindableFontSize = new Bindable<float>();
 
         public LyricEditorTextSizeMenu(KaraokeRulesetEditConfigManager config, string text)
             : base(text)
@@ -25,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                 var newSelection = e.NewValue;
                 Items.OfType<ToggleMenuItem>().ForEach(x =>
                 {
-                    var match = x.Text.Value == getName(newSelection);
+                    var match = x.Text.Value == FontUtils.GetText(newSelection);
                     x.State.Value = match;
                 });
             }, true);
@@ -33,20 +34,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private ToggleMenuItem[] createMenuItems()
         {
-            var enums = new[] { 12, 14, 16, 18, 20, 22, 24, 26, 28, 32, 36, 40, 48 };
-            return enums.Select(e =>
+            var sizes = FontUtils.DefaultPreviewFontSize();
+            return sizes.Select(e =>
             {
-                var item = new ToggleMenuItem(getName(e), MenuItemType.Standard, _ => updateMode(e));
+                var item = new ToggleMenuItem(FontUtils.GetText(e), MenuItemType.Standard, _ => updateMode(e));
                 return item;
             }).ToArray();
         }
 
-        private string getName(float size)
-        {
-            return $"{size} px";
-        }
-
-        private void updateMode(int size)
+        private void updateMode(float size)
         {
             bindableFontSize.Value = size;
         }

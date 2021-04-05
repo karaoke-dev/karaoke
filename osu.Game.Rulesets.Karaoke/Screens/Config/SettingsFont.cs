@@ -12,6 +12,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config
 {
@@ -99,7 +100,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                                 Text = "-",
                                 Action = () =>
                                 {
+                                    var currentSize = current.Value.Size;
+                                    var sizes = FontUtils.DefaultFontSize();
+                                    var nextSize = sizes.Reverse().FirstOrDefault(x => x < currentSize);
+                                    if(nextSize == 0)
+                                        return;
 
+                                    current.Value = current.Value.With(size: nextSize);
                                 }
                             },
                             null,
@@ -110,7 +117,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                                 Text = "+",
                                 Action = () =>
                                 {
+                                    var currentSize = current.Value.Size;
+                                    var sizes = FontUtils.DefaultFontSize();
+                                    var nextSize = sizes.FirstOrDefault(x => x > currentSize);
+                                    if(nextSize == 0)
+                                        return;
 
+                                    current.Value = current.Value.With(size: nextSize);
                                 }
                             }
                         },
@@ -123,7 +136,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     var font = e.NewValue;
                     var family = font.Family ?? "[Unknown font]";
                     var weight = string.IsNullOrEmpty(font.Weight) ? $"-{font.Weight}" : "";
-                    var size = $"{font.Size}px";
+                    var size = FontUtils.GetText(font.Size);
                     var fixedWidthText = font.FixedWidth ? "(fixed width)" : "";
                     var displayText = $"{family}{weight}, {size} {fixedWidthText}";
                     fontButton.Text = displayText;

@@ -11,6 +11,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 using osuTK.Graphics;
 
@@ -174,7 +175,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         [BackgroundDependencyLoader]
         private void load()
         {
-            fontSizeProperty.Items.AddRange(new float[] { 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72 });
+            var sizes = FontUtils.DefaultFontSize();
+            fontSizeProperty.Items.AddRange(sizes);
         }
 
         internal class TextPropertyList<T> : CompositeDrawable
