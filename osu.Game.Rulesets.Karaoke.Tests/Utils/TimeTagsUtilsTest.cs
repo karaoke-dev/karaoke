@@ -90,12 +90,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         [TestCase(new[] { "[0,start]:2000", "[0,end]:1000" }, GroupCheck.Asc, SelfCheck.BasedOnStart, new[] { "[0,start]:2000", "[0,end]:2000" })]
         [TestCase(new[] { "[0,start]:2000", "[0,end]:1000" }, GroupCheck.Asc, SelfCheck.BasedOnEnd, new[] { "[0,start]:1000", "[0,end]:1000" })]
-        [TestCase(new[] { "[0,start]:1100", "[0,end]:2100", "[1,start]:2000", "[1,end]:3000" }, GroupCheck.Asc, SelfCheck.BasedOnStart, new[] { "[0,start]:1100", "[0,end]:2100", "[1,start]:2100", "[1,end]:3000" })]
-        [TestCase(new[] { "[0,start]:1100", "[0,end]:2100", "[1,start]:2000", "[1,end]:3000" }, GroupCheck.Desc, SelfCheck.BasedOnStart, new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2000", "[1,end]:3000" })]
-        [TestCase(new[] { "[0,start]:1000", "[0,end]:5000", "[1,start]:2000", "[1,end]:3000" }, GroupCheck.Asc, SelfCheck.BasedOnStart, new[] { "[0,start]:1000", "[0,end]:5000", "[1,start]:5000", "[1,end]:5000" })]
-        [TestCase(new[] { "[0,start]:1000", "[0,end]:5000", "[1,start]:2000", "[1,end]:3000" }, GroupCheck.Desc, SelfCheck.BasedOnStart, new[] { "[0,start]:1000", "[0,end]:2000", "[1,start]:2000", "[1,end]:3000" })]
-        [TestCase(new[] { "[0,start]:1000", "[0,end]:2000", "[1,start]:0", "[1,end]:3000" }, GroupCheck.Asc, SelfCheck.BasedOnStart, new[] { "[0,start]:1000", "[0,end]:2000", "[1,start]:2000", "[1,end]:3000" })]
-        [TestCase(new[] { "[0,start]:1000", "[0,end]:2000", "[1,start]:0", "[1,end]:3000" }, GroupCheck.Desc, SelfCheck.BasedOnStart, new[] { "[0,start]:0", "[0,end]:0", "[1,start]:0", "[1,end]:3000" })]
+        [TestCase(new[] { "[0,start]:1100", "[0,end]:2100", "[1,start]:2000", "[1,end]:3000" }, GroupCheck.Asc, SelfCheck.BasedOnStart,
+            new[] { "[0,start]:1100", "[0,end]:2100", "[1,start]:2100", "[1,end]:3000" })]
+        [TestCase(new[] { "[0,start]:1100", "[0,end]:2100", "[1,start]:2000", "[1,end]:3000" }, GroupCheck.Desc, SelfCheck.BasedOnStart,
+            new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2000", "[1,end]:3000" })]
+        [TestCase(new[] { "[0,start]:1000", "[0,end]:5000", "[1,start]:2000", "[1,end]:3000" }, GroupCheck.Asc, SelfCheck.BasedOnStart,
+            new[] { "[0,start]:1000", "[0,end]:5000", "[1,start]:5000", "[1,end]:5000" })]
+        [TestCase(new[] { "[0,start]:1000", "[0,end]:5000", "[1,start]:2000", "[1,end]:3000" }, GroupCheck.Desc, SelfCheck.BasedOnStart,
+            new[] { "[0,start]:1000", "[0,end]:2000", "[1,start]:2000", "[1,end]:3000" })]
+        [TestCase(new[] { "[0,start]:1000", "[0,end]:2000", "[1,start]:0", "[1,end]:3000" }, GroupCheck.Asc, SelfCheck.BasedOnStart,
+            new[] { "[0,start]:1000", "[0,end]:2000", "[1,start]:2000", "[1,end]:3000" })]
+        [TestCase(new[] { "[0,start]:1000", "[0,end]:2000", "[1,start]:0", "[1,end]:3000" }, GroupCheck.Desc, SelfCheck.BasedOnStart,
+            new[] { "[0,start]:0", "[0,end]:0", "[1,start]:0", "[1,end]:3000" })]
         //[TestCase(new[] { "[0,start]:4000", "[0,end]:3000", "[1,start]:2000", "[1,end]:1000" }, GroupCheck.Asc, SelfCheck.BasedOnStart, new double[] { "[0,start]:4000", "[0,end]:4000", "[1,start]:4000", "[1,end]:4000" })]
         //[TestCase(new[] { "[0,start]:4000", "[0,end]:3000", "[1,start]:2000", "[1,end]:1000" }, GroupCheck.Asc, SelfCheck.BasedOnEnd, new double[] { "[0,start]:3000", "[0,end]:3000", "[1,start]:3000", "[1,end]:3000" })]
         //[TestCase(new[] { "[0,start]:4000", "[0,end]:3000", "[1,start]:2000", "[1,end]:1000" }, GroupCheck.Desc, SelfCheck.BasedOnStart, new double[] { "[0,start]:2000", "[0,end]:2000", "[1,start]:2000", "[1,end]:2000" })]

@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     },
                     Content = new[]
                     {
-                        new []
+                        new[]
                         {
                             fontButton = new TriangleButton
                             {
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                                     var currentSize = current.Value.Size;
                                     var sizes = FontUtils.DefaultFontSize();
                                     var nextSize = sizes.Reverse().FirstOrDefault(x => x < currentSize);
-                                    if(nextSize == 0)
+                                    if (nextSize == 0)
                                         return;
 
                                     current.Value = current.Value.With(size: nextSize);
@@ -120,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                                     var currentSize = current.Value.Size;
                                     var sizes = FontUtils.DefaultFontSize();
                                     var nextSize = sizes.FirstOrDefault(x => x > currentSize);
-                                    if(nextSize == 0)
+                                    if (nextSize == 0)
                                         return;
 
                                     current.Value = current.Value.With(size: nextSize);

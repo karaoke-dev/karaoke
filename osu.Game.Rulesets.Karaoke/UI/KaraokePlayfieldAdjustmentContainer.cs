@@ -7,6 +7,7 @@ using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Karaoke.IO.Archives;
 using osu.Game.Rulesets.UI;
+using osuTK.Graphics.ES30;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
@@ -29,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 return;
 
             // create font store if wants to import.
-            localFontStore = new FontStore(scaleAdjust: 200, minFilterMode: osuTK.Graphics.ES30.All.Linear);
+            localFontStore = new FontStore(scaleAdjust: 200, minFilterMode: All.Linear);
             fontStore.AddStore(localFontStore);
 
             var files = storage.GetFiles("fonts/cached");
