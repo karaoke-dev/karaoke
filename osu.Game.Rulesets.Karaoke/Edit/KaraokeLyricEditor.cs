@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     {
         private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
 
-        private readonly Bindable<int> bindableLyricEditorFontSize = new Bindable<int>();
+        private readonly Bindable<float> bindableLyricEditorFontSize = new Bindable<float>();
         private readonly Bindable<Mode> bindableLyricEditorMode = new Bindable<Mode>();
         private readonly Bindable<LyricFastEditMode> bindableLyricEditorFastEditMode = new Bindable<LyricFastEditMode>();
         private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
