@@ -21,8 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Difficulty
 
         protected override string ResourceAssembly => "osu.Game.Rulesets.Karaoke.Tests";
 
-        [TestCase(4.7027494671566066, "karaoke-file-samples")]
-        [TestCase(4.7048320627456297, "karaoke-file-samples-without-note")]
+        [TestCase(1.9444209148909803, "karaoke-file-samples")]
+        [TestCase(1.9316073518582557, "karaoke-file-samples-without-note")]
         public void Test(double expected, string name)
             => base.Test(expected, name);
 

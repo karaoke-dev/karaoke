@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             {
                 Value = Beatmap.Value.BeatmapInfo.BeatDivisor
             };
-            var editorClock = new EditorClock(Beatmap.Value, beatDivisor) { IsCoupled = false };
+            var editorClock = new EditorClock(Beatmap.Value.Beatmap, beatDivisor) { IsCoupled = false };
             Dependencies.CacheAs(editorClock);
             Dependencies.Cache(beatDivisor);
             Dependencies.Cache(dialogOverlay);

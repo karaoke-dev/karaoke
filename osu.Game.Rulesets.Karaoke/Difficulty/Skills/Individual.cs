@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
 {
-    public class Individual : Skill
+    public class Individual : StrainSkill
     {
         protected override double SkillMultiplier => 1;
         protected override double StrainDecayBase => 0.125;
