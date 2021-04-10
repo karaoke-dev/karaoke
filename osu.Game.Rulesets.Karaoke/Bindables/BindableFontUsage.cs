@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using osu.Framework.Bindables;
@@ -13,6 +14,32 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         public BindableFontUsage(FontUsage value = default)
             : base(value)
         {
+            MinFontSize = DefaultMinFontSize;
+            MaxFontSize = DefaultMaxFontSize;
+        }
+
+        public float MinFontSize { get; set; }
+        public float MaxFontSize { get; set; }
+
+        protected float DefaultMinFontSize => 0;
+
+        protected float DefaultMaxFontSize => 200;
+
+        public override FontUsage Value
+        {
+            get => base.Value;
+            set => base.Value = value.With(size: Math.Clamp(value.Size, MinFontSize, MaxFontSize));
+        }
+
+        public override void BindTo(Bindable<FontUsage> them)
+        {
+            if (them is BindableFontUsage other)
+            {
+                MinFontSize = Math.Max(MinFontSize, other.MinFontSize);
+                MaxFontSize = Math.Min(MaxFontSize, other.MaxFontSize);
+            }
+
+            base.BindTo(them);
         }
 
         public override void Parse(object input)
