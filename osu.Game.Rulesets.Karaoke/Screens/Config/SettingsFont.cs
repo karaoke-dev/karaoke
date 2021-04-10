@@ -149,11 +149,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 Current.BindValueChanged(e =>
                 {
                     var font = e.NewValue;
-                    var family = font.Family ?? "[Unknown font]";
-                    var weight = string.IsNullOrEmpty(font.Weight) ? $"-{font.Weight}" : "";
+                    var fontName = font.FontName ?? "[Unknown font]";
                     var size = FontUtils.GetText(font.Size);
                     var fixedWidthText = font.FixedWidth ? "(fixed width)" : "";
-                    var displayText = $"{family}{weight}, {size} {fixedWidthText}";
+                    var displayText = $"{fontName}, {size} {fixedWidthText}";
                     fontButton.Text = displayText;
                 });
             }

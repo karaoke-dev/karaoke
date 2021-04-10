@@ -50,6 +50,8 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
                 return;
             }
 
+            // because FontUsage.ToString() will have "," symbol.
+            str = str.Replace(",", "");
             var regex = new Regex(@"\b(?<key>font|family|weight|size|italics|fixedWidth)(?<op>[=]+)(?<value>("".*"")|(\S*))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             var dictionary = regex.Matches(str).ToDictionary(k => k.Groups["key"].Value.ToLower(), v => v.Groups["value"].Value);
 
@@ -75,6 +77,6 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         }
 
         // IDK why not being called in here while saving.
-        public override string ToString() => $"family={Value.Family}, weight={Value.Weight}, size={Value.Size}, italics={Value.Italics}, fixedWidth={Value.FixedWidth}";
+        public override string ToString() => $"family={Value.Family} weight={Value.Weight} size={Value.Size} italics={Value.Italics} fixedWidth={Value.FixedWidth}";
     }
 }
