@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Translate
             SetDefault(KaraokeRulesetSetting.UseTranslate, true);
-            SetDefault(KaraokeRulesetSetting.PreferLanguage, "en-US");
+            SetDefault(KaraokeRulesetSetting.PreferLanguage, new CultureInfo("en-US"));
 
             SetDefault(KaraokeRulesetSetting.DisplayRuby, true);
             SetDefault(KaraokeRulesetSetting.DisplayRomaji, true);
