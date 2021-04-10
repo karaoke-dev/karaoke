@@ -6,13 +6,14 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Sprites;
 using osu.Framework.Platform;
 
 namespace osu.Game.Rulesets.Karaoke.Fonts
 {
     public class FontManager : Component
     {
+        private const string base_path = "fonts\\cached";
+
         public readonly BindableList<FontInfo> Fonts = new BindableList<FontInfo>();
 
         private readonly Storage storage;
@@ -51,10 +52,10 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
         [BackgroundDependencyLoader]
         private void load()
         {
-            if (!storage.ExistsDirectory("fonts/cached"))
+            if (!storage.ExistsDirectory(base_path))
                 return;
 
-            var fontFiles = storage.GetFiles("fonts/cached", "*.cached").ToList();
+            var fontFiles = storage.GetFiles(base_path, "*.cached").ToList();
             Fonts.AddRange(fontFiles.Select(x =>
             {
                 var fontName = Path.GetFileNameWithoutExtension(x);
