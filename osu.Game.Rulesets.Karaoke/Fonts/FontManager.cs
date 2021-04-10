@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
             Fonts.AddRange(fontFiles.Select(x =>
             {
                 var fontName = Path.GetFileNameWithoutExtension(x);
-                return new FontInfo(fontName);
+                return new FontInfo(fontName, true);
             }));
         }
     }

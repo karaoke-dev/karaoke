@@ -14,9 +14,12 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
 
         public string Weight { get; set; }
 
-        public FontInfo(string fileName)
+        public bool UserImport { get; set; }
+
+        public FontInfo(string fileName, bool userImport = false)
         {
             FileName = fileName;
+            UserImport = userImport;
 
             var parts = fileName.Split('-');
             switch (parts.Length)
