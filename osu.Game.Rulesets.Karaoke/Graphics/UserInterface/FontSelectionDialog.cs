@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -9,6 +10,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -32,7 +34,21 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         public Bindable<FontUsage> Current
         {
             get => current.Current;
-            set => current.Current = value;
+            set
+            {
+                current.Current = value;
+
+                // should calculate available size until has bindable text.
+                fontSizeProperty.Items.Clear();
+                if (value is BindableFontUsage bindableFontUsage)
+                {
+                    fontSizeProperty.Items.AddRange(FontUtils.DefaultFontSize(bindableFontUsage.MinFontSize, bindableFontUsage.MaxFontSize));
+                }
+                else
+                {
+                    fontSizeProperty.Items.AddRange(FontUtils.DefaultFontSize());
+                }
+            }
         }
 
         public FontSelectionDialog()
@@ -172,13 +188,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             var size = fontSizeProperty.Current.Value;
             var fixedWidth = fixedWidthCheckbox.Current.Value;
             return new FontUsage(family, size, weight, false, fixedWidth);
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            var sizes = FontUtils.DefaultFontSize();
-            fontSizeProperty.Items.AddRange(sizes);
         }
 
         internal class TextPropertyList<T> : CompositeDrawable

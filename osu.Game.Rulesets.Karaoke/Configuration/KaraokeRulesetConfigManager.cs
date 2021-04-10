@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Globalization;
 using osu.Framework.Bindables;
 using osu.Framework.Configuration.Tracking;
@@ -55,13 +56,13 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetSetting.MicrophoneDevice, "");
 
             // Font
-            SetDefault(KaraokeRulesetSetting.MainFont, FontUsage.Default);
-            SetDefault(KaraokeRulesetSetting.RubyFont, FontUsage.Default);
-            SetDefault(KaraokeRulesetSetting.RomajiFont, FontUsage.Default);
+            SetDefault(KaraokeRulesetSetting.MainFont, FontUsage.Default, 20f);
+            SetDefault(KaraokeRulesetSetting.RubyFont, FontUsage.Default, 8f, 48f);
+            SetDefault(KaraokeRulesetSetting.RomajiFont, FontUsage.Default, 8f, 48f);
             SetDefault(KaraokeRulesetSetting.ForceUseDefaultFont, false);
-            SetDefault(KaraokeRulesetSetting.TranslateFont, FontUsage.Default);
+            SetDefault(KaraokeRulesetSetting.TranslateFont, FontUsage.Default, 10f, 48f);
             SetDefault(KaraokeRulesetSetting.ForceUseDefaultTranslateFont, false);
-            SetDefault(KaraokeRulesetSetting.NoteFont, FontUsage.Default);
+            SetDefault(KaraokeRulesetSetting.NoteFont, FontUsage.Default, 10f, 32f);
             SetDefault(KaraokeRulesetSetting.ForceUseDefaultNoteFont, false);
         }
 
@@ -86,6 +87,22 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
                     base.AddBindable(lookup, bindable);
                     break;
             }
+        }
+
+        protected BindableFontUsage SetDefault(KaraokeRulesetSetting setting, FontUsage fontUsage, float? minFontSize = null, float? maxFontSize = null)
+        {
+            base.SetDefault(setting, fontUsage);
+
+            // Should not use base.setDefault's value because it will return Bindable<FontUsage>, not BindableFontUsage
+            var bindable = GetOriginalBindable<FontUsage>(setting);
+            if (!(bindable is BindableFontUsage bindableFontUsage))
+                throw new InvalidCastException(nameof(bindable));
+
+            // Assign size restriction in here.
+            if (minFontSize.HasValue) bindableFontUsage.MinFontSize = minFontSize.Value;
+            if (maxFontSize.HasValue) bindableFontUsage.MaxFontSize = maxFontSize.Value;
+
+            return bindableFontUsage;
         }
 
         public override TrackedSettings CreateTrackedSettings() => new TrackedSettings

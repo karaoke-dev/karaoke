@@ -3,12 +3,12 @@
 
 using NUnit.Framework;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Testing;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Tests.Visual;
 
@@ -37,7 +37,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            var language = new Bindable<FontUsage>(new FontUsage());
+            var language = new BindableFontUsage(new FontUsage())
+            {
+                MinFontSize = 32,
+                MaxFontSize = 72
+            };
             Child = dialog = new FontSelectionDialog
             {
                 Current = language,
