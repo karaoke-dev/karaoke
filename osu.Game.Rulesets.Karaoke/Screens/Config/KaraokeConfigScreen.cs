@@ -8,8 +8,11 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
+using osu.Framework.Platform;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays.Settings;
+using osu.Game.Rulesets.Karaoke.Extensions;
+using osu.Game.Rulesets.Karaoke.Fonts;
 using osu.Game.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config
@@ -78,8 +81,17 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(GameHost host)
         {
+            // todo : not really sure how to clean-up cached manager
+            if (host.Dependencies.Get<FontManager>() == null)
+            {
+                // because not possible to remove cache from host, so only inject once.
+                var manager = new FontManager(host.Storage);
+                AddInternal(manager);
+                host.Dependencies.Cache(manager);
+            }
+
             header.TabItems = settingsPanel.SectionsContainer.Children;
             settingsPanel.SectionsContainer.SelectedSection.ValueChanged += section =>
             {
