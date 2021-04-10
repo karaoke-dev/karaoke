@@ -10,6 +10,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
+using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -32,12 +33,28 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             protected OsuGame Game { get; private set; }
 
             private readonly BindableWithCurrent<FontUsage> current = new BindableWithCurrent<FontUsage>();
+            private BindableFontUsage bindableFontUsage;
             private readonly TriangleButton fontButton;
+
+            private float[] availableSizes = FontUtils.DefaultFontSize();
 
             public Bindable<FontUsage> Current
             {
                 get => current.Current;
-                set => current.Current = value;
+                set
+                {
+                    current.Current = value;
+                    bindableFontUsage = value as BindableFontUsage;
+
+                    if (bindableFontUsage != null)
+                    {
+                        availableSizes = FontUtils.DefaultFontSize(bindableFontUsage.MinFontSize, bindableFontUsage.MaxFontSize);
+                    }
+                    else
+                    {
+                        availableSizes = FontUtils.DefaultFontSize();
+                    }
+                }
             }
 
             public FontSelectionButton()
@@ -83,7 +100,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                                             displayContainer.Add(dialog = new FontSelectionDialog());
                                         }
 
-                                        dialog.Current = Current;
+                                        // If has bindable font usage source, the bind with it first(for getter other property in bindable).
+                                        dialog.Current = bindableFontUsage ?? Current;
                                         dialog?.Show();
                                     }
                                     catch
@@ -101,8 +119,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                                 Action = () =>
                                 {
                                     var currentSize = current.Value.Size;
-                                    var sizes = FontUtils.DefaultFontSize();
-                                    var nextSize = sizes.Reverse().FirstOrDefault(x => x < currentSize);
+                                    var nextSize = availableSizes.Reverse().FirstOrDefault(x => x < currentSize);
                                     if (nextSize == 0)
                                         return;
 
@@ -118,8 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                                 Action = () =>
                                 {
                                     var currentSize = current.Value.Size;
-                                    var sizes = FontUtils.DefaultFontSize();
-                                    var nextSize = sizes.FirstOrDefault(x => x > currentSize);
+                                    var nextSize = availableSizes.FirstOrDefault(x => x > currentSize);
                                     if (nextSize == 0)
                                         return;
 
