@@ -11,6 +11,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Bindables;
+using osu.Game.Rulesets.Karaoke.Fonts;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -30,6 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         private readonly OsuCheckbox fixedWidthCheckbox;
 
         private readonly BindableWithCurrent<FontUsage> current = new BindableWithCurrent<FontUsage>();
+        private readonly BindableList<FontInfo> fonts = new BindableList<FontInfo>();
 
         public Bindable<FontUsage> Current
         {
@@ -162,7 +164,25 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 }
             };
 
-            familyProperty.Current.BindValueChanged(x => previewChange());
+            fonts.BindCollectionChanged((a, b) =>
+            {
+                // re-calculate if source changed.
+                familyProperty.Items.Clear();
+                familyProperty.Items.AddRange(fonts.Select(x => x.Family).Distinct());
+            });
+
+            familyProperty.Current.BindValueChanged(x =>
+            {
+                previewChange();
+
+                // re-calculate if family changed.
+                var weight = fonts.Where(f => f.Family == x.NewValue).Select(x => x.Weight).Where(x => !string.IsNullOrEmpty(x)).Distinct();
+                weightProperty.Items.Clear();
+                weightProperty.Items.AddRange(weight);
+
+                // set to first or empty if change new family.
+                weightProperty.Current.Value = weight.FirstOrDefault();
+            });
             weightProperty.Current.BindValueChanged(x => previewChange());
             fontSizeProperty.Current.BindValueChanged(x => previewChange());
             fixedWidthCheckbox.Current.BindValueChanged(x => previewChange());
@@ -174,6 +194,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 fontSizeProperty.Current.Value = newFont.Size;
                 fixedWidthCheckbox.Current.Value = newFont.FixedWidth;
             });
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(FontManager fontManager)
+        {
+            fonts.BindTo(fontManager.Fonts);
         }
 
         private void previewChange()

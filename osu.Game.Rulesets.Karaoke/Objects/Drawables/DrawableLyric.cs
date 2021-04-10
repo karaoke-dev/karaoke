@@ -12,6 +12,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Bindables;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
@@ -29,6 +30,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
     {
         protected KaraokeSpriteText KaraokeText { get; private set; }
         private OsuSpriteText translateText;
+
+        [Resolved(canBeNull: true)]
+        private KaraokeRulesetConfigManager config { get; set; }
 
         public readonly IBindable<string> TextBindable = new Bindable<string>();
         public readonly IBindable<TimeTag[]> TimeTagsBindable = new Bindable<TimeTag[]>();
@@ -163,19 +167,49 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             // Apply text font info
             var lyricFont = font.LyricTextFontInfo.LyricTextFontInfo;
-            KaraokeText.Font = new FontUsage(size: lyricFont.CharSize); // TODO : FontName and Bold
+            KaraokeText.Font = getFont(KaraokeRulesetSetting.MainFont, lyricFont.CharSize);
             KaraokeText.Border = lyricFont.EdgeSize > 0;
             KaraokeText.BorderRadius = lyricFont.EdgeSize;
 
             var rubyFont = font.RubyTextFontInfo.LyricTextFontInfo;
-            KaraokeText.RubyFont = new FontUsage(size: rubyFont.CharSize); // TODO : FontName and Bold
+            KaraokeText.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, rubyFont.CharSize);
 
             var romajiFont = font.RomajiTextFontInfo.LyricTextFontInfo;
-            KaraokeText.RomajiFont = new FontUsage(size: romajiFont.CharSize); // TODO : FontName and Bold
+            KaraokeText.RomajiFont = getFont(KaraokeRulesetSetting.RomajiFont, romajiFont.CharSize);
+
+            // Apply translate font.
+            translateText.Font = getFont(KaraokeRulesetSetting.TranslateFont);
 
             // Apply shadow
             KaraokeText.Shadow = font.UseShadow;
             KaraokeText.ShadowOffset = font.ShadowOffset;
+
+            FontUsage getFont(KaraokeRulesetSetting setting, float? charSize = null)
+            {
+                // todo : should interfact with skin font
+                var forceUseDefault = forceUseDefaultFont();
+                var font = config?.Get<FontUsage>(setting) ?? FontUsage.Default;
+
+                if(forceUseDefault || charSize == null)
+                    return font;
+
+                return font.With(size: charSize.Value);
+
+                bool forceUseDefaultFont()
+                {
+                    switch (setting)
+                    {
+                        case KaraokeRulesetSetting.MainFont:
+                        case KaraokeRulesetSetting.RubyFont:
+                        case KaraokeRulesetSetting.RomajiFont:
+                            return config?.Get<bool>(KaraokeRulesetSetting.ForceUseDefaultFont) ?? false;
+                        case KaraokeRulesetSetting.TranslateFont:
+                            return config?.Get<bool>(KaraokeRulesetSetting.ForceUseDefaultTranslateFont) ?? false;
+                        default:
+                            throw new InvalidOperationException(nameof(setting));
+                    }
+                }
+            }
         }
 
         protected virtual void ApplyLayout(LyricLayout layout)

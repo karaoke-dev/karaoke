@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Translate
             SetDefault(KaraokeRulesetSetting.UseTranslate, true);
-            SetDefault(KaraokeRulesetSetting.PreferLanguage, "en-US");
+            SetDefault(KaraokeRulesetSetting.PreferLanguage, new CultureInfo("en-US"));
 
             SetDefault(KaraokeRulesetSetting.DisplayRuby, true);
             SetDefault(KaraokeRulesetSetting.DisplayRomaji, true);
@@ -56,13 +56,13 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetSetting.MicrophoneDevice, "");
 
             // Font
-            SetDefault(KaraokeRulesetSetting.MainFont, FontUsage.Default, 20f);
-            SetDefault(KaraokeRulesetSetting.RubyFont, FontUsage.Default, 8f, 48f);
-            SetDefault(KaraokeRulesetSetting.RomajiFont, FontUsage.Default, 8f, 48f);
+            SetDefault(KaraokeRulesetSetting.MainFont, new FontUsage("Torus", 48, "Bold"), 20f);
+            SetDefault(KaraokeRulesetSetting.RubyFont, new FontUsage("Torus", 20, "Bold"), 8f, 48f);
+            SetDefault(KaraokeRulesetSetting.RomajiFont, new FontUsage("Torus", 20, "Bold"), 8f, 48f);
             SetDefault(KaraokeRulesetSetting.ForceUseDefaultFont, false);
-            SetDefault(KaraokeRulesetSetting.TranslateFont, FontUsage.Default, 10f, 48f);
+            SetDefault(KaraokeRulesetSetting.TranslateFont, new FontUsage("Torus", 18, "Bold"), 10f, 48f);
             SetDefault(KaraokeRulesetSetting.ForceUseDefaultTranslateFont, false);
-            SetDefault(KaraokeRulesetSetting.NoteFont, FontUsage.Default, 10f, 32f);
+            SetDefault(KaraokeRulesetSetting.NoteFont, new FontUsage("Torus", 12, "Bold"), 10f, 32f);
             SetDefault(KaraokeRulesetSetting.ForceUseDefaultNoteFont, false);
         }
 
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             {
                 case KaraokeRulesetSetting.PreferLanguage:
                     // todo : need to hve a default value here because it will cause error if object is null while saving.
-                    base.AddBindable(lookup, new BindableCultureInfo(new CultureInfo("en-US")));
+                    base.AddBindable(lookup, new BindableCultureInfo(bindable.Value as CultureInfo));
                     break;
 
                 case KaraokeRulesetSetting.MainFont:
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
                 case KaraokeRulesetSetting.RomajiFont:
                 case KaraokeRulesetSetting.TranslateFont:
                 case KaraokeRulesetSetting.NoteFont:
-                    base.AddBindable(lookup, new BindableFontUsage(FontUsage.Default));
+                    base.AddBindable(lookup, new BindableFontUsage((FontUsage)Convert.ChangeType(bindable.Value, typeof(FontUsage))));
                     break;
 
                 default:
