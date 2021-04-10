@@ -6,9 +6,11 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Platform;
 using osu.Framework.Testing;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Bindables;
+using osu.Game.Rulesets.Karaoke.Fonts;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Tests.Visual;
 
@@ -22,16 +24,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 
         private FontSelectionDialog dialog;
 
+        private FontManager fontManager;
+
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(GameHost host)
         {
             base.Content.AddRange(new Drawable[]
             {
                 Content,
-                dialogOverlay = new DialogOverlay()
+                dialogOverlay = new DialogOverlay(),
+                fontManager = new FontManager(host.Storage),
             });
 
             Dependencies.Cache(dialogOverlay);
+            Dependencies.Cache(fontManager);
         }
 
         [SetUp]
