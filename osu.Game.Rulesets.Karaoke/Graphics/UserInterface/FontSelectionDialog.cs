@@ -190,13 +190,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             return new FontUsage(family, size, weight, false, fixedWidth);
         }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            var sizes = FontUtils.DefaultFontSize();
-            fontSizeProperty.Items.AddRange(sizes);
-        }
-
         internal class TextPropertyList<T> : CompositeDrawable
         {
             private readonly CornerBackground background;
