@@ -75,7 +75,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             {
                 if (e.NewValue is KaraokeSettingsSubsection settingsSubsection)
                 {
-                    previewArea.Child = settingsSubsection.CreatePreview();
+                    previewArea.Child = new DelayedLoadWrapper(settingsSubsection.CreatePreview(), 500)
+                    {
+                        RelativeSizeAxes = Axes.Both
+                    };
                 }
             });
         }
