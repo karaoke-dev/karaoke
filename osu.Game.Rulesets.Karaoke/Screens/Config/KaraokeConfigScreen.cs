@@ -11,7 +11,6 @@ using osu.Framework.Input.Events;
 using osu.Framework.Platform;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Fonts;
 using osu.Game.Screens;
 
@@ -81,6 +80,17 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     };
                 }
             });
+        }
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        {
+            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+
+            var config = dependencies.Get<RulesetConfigCache>().GetConfigFor(new KaraokeRuleset());
+            if (config != null)
+                dependencies.Cache(config);
+
+            return dependencies;
         }
 
         [BackgroundDependencyLoader]
