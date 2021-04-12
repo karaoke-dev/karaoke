@@ -21,7 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
             {
                 Child = preview = new MicrophoneSoundVisualizer
                 {
-                    Width = 300,
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre
                 }
