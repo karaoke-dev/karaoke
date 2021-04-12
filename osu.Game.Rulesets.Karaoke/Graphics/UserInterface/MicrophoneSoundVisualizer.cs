@@ -127,6 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         internal class MicrophoneInfo : CompositeDrawable
         {
             private readonly Box background;
+            private readonly OsuSpriteText deviceName;
 
             public MicrophoneInfo()
             {
@@ -145,6 +146,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                             Left = 15
                         },
                         Spacing = new Vector2(15),
+                        Direction = FillDirection.Horizontal,
                         Children = new Drawable []
                         {
                             new SpriteIcon
@@ -152,17 +154,23 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                 Size = new Vector2(24),
                                 Icon = FontAwesome.Solid.Microphone
                             },
-                            new OsuSpriteText
+                            deviceName = new OsuSpriteText
                             {
+                                Width = 250,
                                 Font = OsuFont.Default.With(size: 20),
-                                Text = "Microphone name"
+                                Text = "Microphone name",
+                                Truncate = true,
                             }
                         }
                     }
                 };
             }
 
-            public string DeviceName { get; set; }
+            public string DeviceName
+            {
+                get => deviceName.Text.ToString();
+                set => deviceName.Text = value;
+            }
 
 
             [BackgroundDependencyLoader]
@@ -242,31 +250,57 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             private const float spacing = 5;
 
             private readonly FillFlowContainer dots;
+            private readonly PitchDot currentDot;
 
             public PitchVisualier()
             {
                 // todo : draw that stupid shapes with progressive background color.
                 AutoSizeAxes = Axes.Both;
-                InternalChildren = new[]
+                InternalChildren = new Drawable[]
                 {
                     dots = new FillFlowContainer
                     {
                         AutoSizeAxes = Axes.Both,
                         Spacing = new Vector2(spacing),
-                    }
+                    },
+                    currentDot = new PitchDot
+                    {
+                        Alpha = 0,
+                    },
                 };
-
-                const float start_v = 0.4f;
-                const float end_v = 0.7f;
 
                 for (int i = 0; i < dot_amount; i++)
                 {
-                    var v = (end_v - start_v) / dot_amount * i + start_v;
                     dots.Add(new PitchDot
                     {
-                        Colour = Color4Extensions.FromHSV(0, 0.8f, v)
+                        Colour = calcualteDotColour(i, 0.8f)
                     });
                 }
+            }
+
+            private float pitch;
+
+            public float Pitch
+            {
+                get => pitch;
+                set
+                {
+                    if (pitch == value)
+                        return;
+
+                    pitch = value;
+
+                    var showPitch = pitch != 0;
+                    // todo : adjust position and colour
+                }
+            }
+
+            private Color4 calcualteDotColour(int index, float s)
+            {
+                const float start_v = 0.4f;
+                const float end_v = 0.7f;
+                var v = (end_v - start_v) / dot_amount * index + start_v;
+                return Color4Extensions.FromHSV(0, s, v);
             }
 
             public class PitchDot : Container

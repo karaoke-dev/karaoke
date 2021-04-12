@@ -10,7 +10,7 @@ using osu.Game.Tests.Visual;
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 {
     [TestFixture]
-    public class TestSceneMicrophonePreview : OsuTestScene
+    public class TestSceneMicrophoneSoundVisualizer : OsuTestScene
     {
         private MicrophoneSoundVisualizer preview;
 
@@ -22,7 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
                 Child = preview = new MicrophoneSoundVisualizer
                 {
                     Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre
+                    Origin = Anchor.Centre,
+                    DeviceName = "Super large microphone device name : )"
                 }
             };
         });
