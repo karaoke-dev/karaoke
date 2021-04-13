@@ -17,6 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 {
     public class MicrophoneSoundVisualizer : CompositeDrawable
     {
+        private static float max_loudness = 100;
+        private static float max_pitch = 60;
+
         private readonly Box background;
         private readonly MicrophoneInfo microphoneInfo;
         private readonly LoudnessVisualizer loudnessVisualizer;
@@ -111,6 +114,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
         protected virtual bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
         {
+            loudnessVisualizer.Loudness = 0;
+            pitchVisualier.Pitch = 0;
+
             return false;
         }
 
@@ -119,7 +125,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             var loudness = e.CurrentState.Microphone.Loudness;
             var pitch = e.CurrentState.Microphone.Pitch;
 
-            // todo : draw the pitch position and loudness into this composite drawable.
+            // todo : should convert to better value.
+            loudnessVisualizer.Loudness = loudness;
+            pitchVisualier.Pitch = pitch / 8;
 
             return false;
         }
@@ -182,6 +190,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
         internal class LoudnessVisualizer : CompositeDrawable
         {
+            private const float var_width = 294;
+
             private readonly Box background;
             private readonly Box loudnessMarker;
             private readonly Box loudnessRippleMarker;
@@ -189,7 +199,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
             public LoudnessVisualizer()
             {
-                Width = 294;
+                Width = var_width;
                 Height = 8;
                 InternalChildren = new Drawable[]
                 {
@@ -209,7 +219,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     {
                         RelativeSizeAxes = Axes.Y,
                         Width = 5,
-                        Alpha = 0,
                     },
                 };
             }
@@ -230,8 +239,19 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     if (loudness > maxLoudness)
                         maxLoudness = loudness;
 
-                    // todo : update position in here.
+                    loudnessMarker.Width = calculatePosition(Loudness);
+                    maxLoudnessMarker.X = calculatePosition(maxLoudness);
                 }
+            }
+
+            private float rippleLoudness;
+
+            protected override void Update()
+            {
+                base.Update();
+
+                // todo : celculate ripple loudness
+                loudnessRippleMarker.Width = rippleLoudness;
             }
 
             [BackgroundDependencyLoader]
@@ -240,6 +260,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 background.Colour = colours.Gray5;
                 maxLoudnessMarker.Colour = colours.Red;
             }
+
+            private float calculatePosition(float loudness)
+                => loudness / max_loudness * var_width;
         }
 
         internal class PitchVisualier : CompositeDrawable
@@ -280,6 +303,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
             private float pitch;
 
+            private bool showPitch;
+
             public float Pitch
             {
                 get => pitch;
@@ -290,8 +315,23 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
                     pitch = value;
 
+                    // adjust dot position
+                    currentDot.X = calculateDotPosition((int)pitch);
+
+                    // adjust show / hide.
                     var showPitch = pitch != 0;
-                    // todo : adjust position and colour
+                    if (this.showPitch == showPitch)
+                        return;
+
+                    this.showPitch = showPitch;
+                    if (showPitch)
+                    {
+                        currentDot.FadeIn(200);
+                    }
+                    else
+                    {
+                        currentDot.FadeOut(200);
+                    }
                 }
             }
 
@@ -302,6 +342,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 var v = (end_v - start_v) / dot_amount * index + start_v;
                 return Color4Extensions.FromHSV(0, s, v);
             }
+
+            private float calculateDotPosition(int index)
+                => (dot_width + spacing) * index;
 
             public class PitchDot : Container
             {
