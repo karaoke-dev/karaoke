@@ -31,17 +31,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             Height = 130,
         };
 
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-
-            var config = dependencies.Get<RulesetConfigCache>().GetConfigFor(new KaraokeRuleset());
-            if (config != null)
-                dependencies.Cache(config);
-
-            return dependencies;
-        }
-
         [BackgroundDependencyLoader]
         private void load(ConfigColourProvider colourProvider, Bindable<SettingsSection> selectedSection)
         {
