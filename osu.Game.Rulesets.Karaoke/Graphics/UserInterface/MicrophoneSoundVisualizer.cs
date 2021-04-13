@@ -239,6 +239,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     if (loudness > maxLoudness)
                         maxLoudness = loudness;
 
+                    if(loudness > rippleLoudness)
+                        rippleLoudness = value;
+
                     loudnessMarker.Width = calculatePosition(Loudness);
                     maxLoudnessMarker.X = calculatePosition(maxLoudness);
                 }
@@ -250,7 +253,16 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             {
                 base.Update();
 
-                // todo : celculate ripple loudness
+                if (rippleLoudness <= 0)
+                    return;
+
+                //1% of extra bar length to make it a little faster when bar is almost at it's minimum
+                rippleLoudness *= 0.99f;
+
+                // just make value to 0 if too small;
+                if (rippleLoudness < 0.5)
+                    rippleLoudness = 0;
+
                 loudnessRippleMarker.Width = rippleLoudness;
             }
 
@@ -258,6 +270,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             private void load(OsuColour colours)
             {
                 background.Colour = colours.Gray5;
+                loudnessMarker.Colour = colours.GrayD;
+                loudnessRippleMarker.Colour = colours.GrayA;
                 maxLoudnessMarker.Colour = colours.Red;
             }
 
