@@ -16,6 +16,9 @@ The source code of the `karaoke` ruleset, running on [osu!lazer](https://github.
 
 Some features are still under heavy development, but existing features should work fine.
 
+And notice that this project not have much [demo](https://github.com/karaoke-dev/sample-beatmap) can try, and most of them are written in Japanese.
+So recommand looking this project around for seeing new feature instead of actually using it.
+
 If you run into any problems, you can shoot us an email (support@karaoke.dev) or send me a message on [discord](https://discord.gg/ga2xZXk). I will typically reply faster on discord.
 
 And feel free to report any bugs if found.
@@ -25,9 +28,6 @@ And feel free to report any bugs if found.
 See [this tutorial](https://karaoke-dev.github.io/how-to-install/README.html) to get the ruleset from the existing build.
 
 Or you can compile it yourself: `release build` then copy `osu.Game.Rulesets.Karaoke.Packed.dll` into your [ruleset folder](https://github.com/LumpBloom7/sentakki/wiki/Ruleset-installation-guide)
-
-If you want to try the ruleset on another platform like android or ios, you would use [launcher](https://github.com/karaoke-dev/launcher).    
-Notice : The launcher is still under development, so it might not work as intended.
 
 ## License
 
