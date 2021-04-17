@@ -3,7 +3,7 @@
 
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Checks
+namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Configs
 {
     public class LyricCheckerConfig : IHasConfig<LyricCheckerConfig>
     {
