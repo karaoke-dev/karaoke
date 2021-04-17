@@ -170,6 +170,8 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override HitObjectComposer CreateHitObjectComposer() => new KaraokeHitObjectComposer(this);
 
+        public override IBeatmapVerifier CreateBeatmapVerifier() => new KaraokeBeatmapVerifier();
+
         public override string Description => "karaoke!";
 
         public override string ShortName => "karaoke!";
