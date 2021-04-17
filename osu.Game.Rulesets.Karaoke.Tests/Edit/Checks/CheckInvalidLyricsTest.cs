@@ -1,11 +1,17 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Checks;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
+using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checker.Lyrics
 {
@@ -13,8 +19,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checker.Lyrics
     /// Test all the lyric check result and invalid type
     /// </summary>
     [TestFixture]
-    public class LyricCheckerConfigTest
+    public class CheckInvalidLyricsTest
     {
+        private CheckInvalidLyrics check;
+
+        [SetUp]
+        public void Setup()
+        {
+            var config = new LyricCheckerConfig().CreateDefaultConfig();
+            check = new CheckInvalidLyrics(config);
+        }
+
         [TestCase("[1000,3000]:カラオケ", new[] { "[0,start]:1000", "[3,end]:3000" }, new TimeInvalid[] { })]
         [TestCase("[3000,1000]:カラオケ", new string[] { }, new[] { TimeInvalid.Overlapping })]
         [TestCase("[2000,3000]:カラオケ", new[] { "[0,start]:1000", "[3,end]:3000" }, new[] { TimeInvalid.StartTimeInvalid })]
@@ -24,9 +39,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checker.Lyrics
             var lyric = TestCaseTagHelper.ParseLyric(lyricText);
             lyric.TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags);
 
-            var checker = createChecker();
-            var result = checker.CheckInvalidLyricTime(lyric);
-            Assert.AreEqual(result, invalid);
+            var issue = run(lyric).OfType<LyricTimeIssue>().FirstOrDefault();
+            var invalidTimeTagDictionaryKeys = issue?.InvalidLyricTime ?? new TimeInvalid[] { };
+            Assert.AreEqual(invalidTimeTagDictionaryKeys, invalid);
         }
 
         [TestCase("カラオケ", new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new TimeTagInvalid[] { })]
@@ -42,9 +57,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checker.Lyrics
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
             };
 
-            var checker = createChecker();
-            var result = checker.CheckInvalidTimeTags(lyric);
-            Assert.AreEqual(result.Keys.ToArray(), invalids);
+            var issue = run(lyric).OfType<TimeTagIssue>().FirstOrDefault();
+            var invalidTimeTagDictionaryKeys = issue?.InvalidTimeTags.Keys.ToArray() ?? new TimeTagInvalid[] { };
+            Assert.AreEqual(invalidTimeTagDictionaryKeys, invalids);
         }
 
         [TestCase("カラオケ", new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, new RubyTagInvalid[] { })]
@@ -61,9 +76,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checker.Lyrics
                 RubyTags = TestCaseTagHelper.ParseRubyTags(rubies)
             };
 
-            var checker = createChecker();
-            var result = checker.CheckInvalidRubyTags(lyric);
-            Assert.AreEqual(result.Keys.ToArray(), invalids);
+            var issue = run(lyric).OfType<RubyTagIssue>().FirstOrDefault();
+            var invalidRubyTagDictionaryKeys = issue?.InvalidRubyTags.Keys.ToArray() ?? new RubyTagInvalid[] { };
+            Assert.AreEqual(invalidRubyTagDictionaryKeys, invalids);
         }
 
         [TestCase("karaoke", new[] { "[0,2]:ka", "[2,4]:ra", "[4,5]:o", "[5,7]:ke" }, new RomajiTagInvalid[] { })]
@@ -80,14 +95,21 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checker.Lyrics
                 RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies)
             };
 
-            var checker = createChecker();
-            var result = checker.CheckInvalidRomajiTags(lyric);
-            Assert.AreEqual(result.Keys.ToArray(), invalids);
+            var issue = run(lyric).OfType<RomajiTagIssue>().FirstOrDefault();
+            var invalidRomajiTagDictionaryKeys = issue?.InvalidRomajiTags.Keys.ToArray() ?? new RomajiTagInvalid[] { };
+            Assert.AreEqual(invalidRomajiTagDictionaryKeys, invalids);
         }
 
-        // create checker with default config.
-        // config change is not test scope so use default it ok.
-        private static LyricChecker createChecker()
-            => new(new LyricCheckerConfig().CreateDefaultConfig());
+        private IEnumerable<Issue> run(Lyric lyric)
+        {
+            var beatmap = new Beatmap
+            {
+                HitObjects = new List<HitObject>()
+                {
+                    lyric
+                }
+            };
+            return check.Run(beatmap);
+        }
     }
 }
