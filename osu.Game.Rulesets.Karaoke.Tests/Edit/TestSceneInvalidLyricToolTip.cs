@@ -235,7 +235,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         internal class TestLyricTimeIssue : LyricTimeIssue
         {
             public TestLyricTimeIssue(TimeInvalid[] invalidLyricTime)
-                : base(null, null, invalidLyricTime)
+                : base(new Lyric(), null, invalidLyricTime)
             {
             }
         }
@@ -243,7 +243,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         internal class TestRubyTagIssue : RubyTagIssue
         {
             public TestRubyTagIssue(Dictionary<RubyTagInvalid, RubyTag[]> invalidRubyTags)
-                : base(null, null, invalidRubyTags)
+                : base(new Lyric(),  null, invalidRubyTags)
             {
             }
         }
@@ -251,7 +251,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         internal class TestRomajiTagIssue : RomajiTagIssue
         {
             public TestRomajiTagIssue(Dictionary<RomajiTagInvalid, RomajiTag[]> invalidRomajiTags)
-                : base(null, null, invalidRomajiTags)
+                : base(new Lyric(), null, invalidRomajiTags)
             {
             }
         }
@@ -259,7 +259,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         internal class TestTimeTagIssue : TimeTagIssue
         {
             public TestTimeTagIssue(Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags)
-                : base(null, null, invalidTimeTags)
+                : base(new Lyric(), null, invalidTimeTags)
             {
             }
         }

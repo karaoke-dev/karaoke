@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Checker
 {
     /// <summary>
     /// This manager is for register and able to get invalid change by bindable.
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
             lyricChecker = new CheckInvalidLyrics(config);
 
             // load lyric in here
-            CheckLyrics(beatmap.HitObjects.ToList());
+            CheckLyrics(beatmap.HitObjects.Where(x => x is Lyric).ToList());
 
             // need to check is there any lyric added or removed.
             beatmap.HitObjectAdded += e =>
