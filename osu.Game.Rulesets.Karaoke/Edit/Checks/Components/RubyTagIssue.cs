@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
@@ -17,5 +16,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
         {
             InvalidRubyTags = invalidRubyTags;
         }
+    }
+
+    public enum RubyTagInvalid
+    {
+        OutOfRange,
+
+        Overlapping
     }
 }

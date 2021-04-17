@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -35,25 +34,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         {
             foreach (var lyric in beatmap.HitObjects.OfType<Lyric>())
             {
-                var invalidLyricTime = checkInvalidLyricTime(lyric);
+                var invalidLyricTime = CheckInvalidLyricTime(lyric);
                 if (invalidLyricTime.Any())
                     yield return new IssueTemplateInvalidLyricTime(this).Create(lyric, invalidLyricTime);
 
-                var invalidRubyTags = checkInvalidRubyTags(lyric);
+                var invalidRubyTags = CheckInvalidRubyTags(lyric);
                 if (invalidRubyTags.Any())
                     yield return new IssueTemplateInvalidRuby(this).Create(lyric, invalidRubyTags);
 
-                var invalidRomajiTags = checkInvalidRomajiTags(lyric);
+                var invalidRomajiTags = CheckInvalidRomajiTags(lyric);
                 if (invalidRomajiTags.Any())
                     yield return new IssueTemplateInvalidRomaji(this).Create(lyric, invalidRomajiTags);
 
-                var invalidTimeTags = checkInvalidTimeTags(lyric);
+                var invalidTimeTags = CheckInvalidTimeTags(lyric);
                 if (invalidTimeTags.Any())
                     yield return new IssueTemplateInvalidTimeTag(this).Create(lyric, invalidTimeTags);
             }
         }
 
-        private TimeInvalid[] checkInvalidLyricTime(Lyric lyric)
+        public TimeInvalid[] CheckInvalidLyricTime(Lyric lyric)
         {
             var result = new List<TimeInvalid>();
 
@@ -69,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             return result.ToArray();
         }
 
-        private Dictionary<RubyTagInvalid, RubyTag[]> checkInvalidRubyTags(Lyric lyric)
+        public Dictionary<RubyTagInvalid, RubyTag[]> CheckInvalidRubyTags(Lyric lyric)
         {
             var result = new Dictionary<RubyTagInvalid, RubyTag[]>();
 
@@ -87,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             return result;
         }
 
-        private Dictionary<RomajiTagInvalid, RomajiTag[]> checkInvalidRomajiTags(Lyric lyric)
+        public Dictionary<RomajiTagInvalid, RomajiTag[]> CheckInvalidRomajiTags(Lyric lyric)
         {
             var result = new Dictionary<RomajiTagInvalid, RomajiTag[]>();
 
@@ -105,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             return result;
         }
 
-        private Dictionary<TimeTagInvalid, TimeTag[]> checkInvalidTimeTags(Lyric lyric)
+        public Dictionary<TimeTagInvalid, TimeTag[]> CheckInvalidTimeTags(Lyric lyric)
         {
             var result = new Dictionary<TimeTagInvalid, TimeTag[]>();
 

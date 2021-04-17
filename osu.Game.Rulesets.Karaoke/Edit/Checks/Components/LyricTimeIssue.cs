@@ -1,27 +1,29 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 
+
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
 {
-    public class TimeTagIssue : Issue
+    public class LyricTimeIssue : Issue
     {
-        public readonly Dictionary<TimeTagInvalid, TimeTag[]> InvalidTimeTags;
+        public readonly TimeInvalid[] InvalidLyricTime;
 
-        public TimeTagIssue(Lyric layic, IssueTemplate template, Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags, params object[] args)
+        public LyricTimeIssue(Lyric layic, IssueTemplate template, TimeInvalid[] invalidLyricTime, params object[] args)
             : base(layic, template, args)
         {
-            InvalidTimeTags = invalidTimeTags;
+            InvalidLyricTime = invalidLyricTime;
         }
     }
 
-    public enum TimeTagInvalid
+    public enum TimeInvalid
     {
-        OutOfRange,
-
         Overlapping,
+
+        StartTimeInvalid,
+
+        EndTimeInvalid
     }
 }

@@ -8,6 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -20,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
     {
         public BindableDictionary<Lyric, LyricCheckReport> BindableReports = new BindableDictionary<Lyric, LyricCheckReport>();
 
-        private LyricChecker lyricChecker;
+        private CheckInvalidLyrics lyricChecker;
 
         public void CheckLyrics(List<Lyric> lyrics, LyricCheckProperty checkProperty = LyricCheckProperty.All)
         {
@@ -62,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
         private void load(EditorBeatmap beatmap, KaraokeRulesetEditCheckerConfigManager rulesetEditCheckerConfigManager)
         {
             var config = rulesetEditCheckerConfigManager?.Get<LyricCheckerConfig>(KaraokeRulesetEditCheckerSetting.Lyric) ?? new LyricCheckerConfig().CreateDefaultConfig();
-            lyricChecker = new LyricChecker(config);
+            lyricChecker = new CheckInvalidLyrics(config);
 
             // load lyric in here
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();

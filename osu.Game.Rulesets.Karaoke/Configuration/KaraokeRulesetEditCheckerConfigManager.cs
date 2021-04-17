@@ -2,8 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Checker.Types;
+using osu.Game.Rulesets.Karaoke.Edit.Checks;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
 {

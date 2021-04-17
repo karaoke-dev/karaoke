@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
@@ -42,35 +43,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
                 return true;
             }
         }
-    }
-
-    public enum TimeInvalid
-    {
-        Overlapping,
-
-        StartTimeInvalid,
-
-        EndTimeInvalid
-    }
-
-    public enum TimeTagInvalid
-    {
-        OutOfRange,
-
-        Overlapping,
-    }
-
-    public enum RubyTagInvalid
-    {
-        OutOfRange,
-
-        Overlapping
-    }
-
-    public enum RomajiTagInvalid
-    {
-        OutOfRange,
-
-        Overlapping
     }
 }
