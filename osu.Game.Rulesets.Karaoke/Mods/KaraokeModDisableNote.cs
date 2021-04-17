@@ -12,6 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Mods
     public class KaraokeModDisableNote : Mod, IApplicableToHitObject
     {
         public override string Name => "Disable note";
+
+        public override string Description => "Disable note";
         public override string Acronym => "DN";
         public override double ScoreMultiplier => 0;
         public override IconUsage? Icon => KaraokeIcon.ModDisableNote;

@@ -18,6 +18,8 @@ namespace osu.Game.Rulesets.Karaoke.Mods
     public class KaraokeModSnow : Mod, IApplicableToHUD
     {
         public override string Name => "Snow";
+
+        public override string Description => "Display some snow";
         public override string Acronym => "SW";
         public override double ScoreMultiplier => 1.0f;
         public override IconUsage? Icon => FontAwesome.Regular.Snowflake;
