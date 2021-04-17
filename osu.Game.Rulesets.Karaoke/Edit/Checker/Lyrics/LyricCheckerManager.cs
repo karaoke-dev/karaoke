@@ -6,10 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
@@ -20,11 +23,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
     /// </summary>
     public class LyricCheckerManager : Component
     {
-        public BindableDictionary<Lyric, LyricCheckReport> BindableReports = new BindableDictionary<Lyric, LyricCheckReport>();
+        public BindableDictionary<Lyric, Issue[]> BindableReports = new BindableDictionary<Lyric, Issue[]>();
 
         private CheckInvalidLyrics lyricChecker;
 
-        public void CheckLyrics(List<Lyric> lyrics, LyricCheckProperty checkProperty = LyricCheckProperty.All)
+        public void CheckLyrics(List<HitObject> lyrics)
         {
             if (lyrics == null)
                 throw new ArgumentNullException(nameof(lyrics));
@@ -32,30 +35,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
             if (lyricChecker == null)
                 throw new NullReferenceException(nameof(lyricChecker));
 
+            var result = lyricChecker.Run(new Beatmap
+            {
+                HitObjects = lyrics
+            });
+
             // re-calculate and add
             foreach (var lyric in lyrics)
             {
-                // create report record if not have.
+                // save issue to list.
+                var issues = result.Where(x => x.HitObjects.Contains(lyric)).ToArray();
                 if (!BindableReports.Contains(lyric))
-                    BindableReports.Add(lyric, new LyricCheckReport(lyric));
-
-                var report = BindableReports[lyric];
-                if (checkProperty.HasFlag(LyricCheckProperty.Time))
-                    report.TimeInvalid = lyricChecker.CheckInvalidLyricTime(lyric);
-
-                if (checkProperty.HasFlag(LyricCheckProperty.TimeTag))
-                    report.InvalidTimeTags = lyricChecker.CheckInvalidTimeTags(lyric);
-
-                if (checkProperty.HasFlag(LyricCheckProperty.Ruby))
-                    report.InvalidRubyTags = lyricChecker.CheckInvalidRubyTags(lyric);
-
-                if (checkProperty.HasFlag(LyricCheckProperty.Romaji))
-                    report.InvalidRomajiTags = lyricChecker.CheckInvalidRomajiTags(lyric);
+                    BindableReports.Add(lyric, issues);
+                else
+                    BindableReports[lyric] = issues;
             }
         }
 
-        public void CheckLyric(Lyric lyric, LyricCheckProperty checkProperty = LyricCheckProperty.All)
-            => CheckLyrics(new List<Lyric> { lyric }, checkProperty);
+        public void CheckLyric(Lyric lyric)
+            => CheckLyrics(new List<HitObject> { lyric });
 
         protected void RemoveFromCheckList(Lyric lyric)
             => BindableReports.Remove(lyric);
@@ -67,8 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
             lyricChecker = new CheckInvalidLyrics(config);
 
             // load lyric in here
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-            CheckLyrics(lyrics);
+            CheckLyrics(beatmap.HitObjects.ToList());
 
             // need to check is there any lyric added or removed.
             beatmap.HitObjectAdded += e =>

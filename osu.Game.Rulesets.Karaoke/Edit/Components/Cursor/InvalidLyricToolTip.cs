@@ -3,7 +3,9 @@
 
 using System;
 using osu.Framework.Extensions.Color4Extensions;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -34,38 +36,44 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 
         public override bool SetContent(object content)
         {
-            if (!(content is LyricCheckReport report))
+            if (!(content is Issue[] issues))
                 return false;
 
             // clear exist warning.
             invalidMessage.Clear();
 
-            // Print time invalid message
-            foreach (var invalid in report.TimeInvalid.EmptyIfNull())
+            foreach (var issue in issues)
             {
-                createTimeInvalidMessage(invalid);
-            }
+                switch (issue)
+                {
+                    // Print time invalid message
+                    case LyricTimeIssue lyricTimeIssue:
+                        lyricTimeIssue.InvalidLyricTime?.ForEach(createTimeInvalidMessage);
+                        break;
 
-            // Print time-tag invalid message
-            foreach (var invalidTimeTags in report.InvalidTimeTags.EmptyIfNull())
-            {
-                createTimeTagInvalidMessage(invalidTimeTags.Key, invalidTimeTags.Value);
-            }
+                    // Print time-tag invalid message
+                    case TimeTagIssue timeTagIssue:
+                        timeTagIssue.InvalidTimeTags?.ForEach(x => createTimeTagInvalidMessage(x.Key, x.Value));
+                        break;
 
-            // Print ruby invalid message
-            foreach (var invalidRubyTags in report.InvalidRubyTags.EmptyIfNull())
-            {
-                createRubyInvalidMessage(invalidRubyTags.Key, invalidRubyTags.Value);
-            }
+                    // Print ruby invalid message
+                    case RubyTagIssue rubyTagIssue:
+                        rubyTagIssue.InvalidRubyTags?.ForEach(x => createRubyInvalidMessage(x.Key, x.Value));
+                        break;
 
-            // Print romaji invalid message
-            foreach (var invalidRomajiTags in report.InvalidRomajiTags.EmptyIfNull())
-            {
-                createRomajiInvalidMessage(invalidRomajiTags.Key, invalidRomajiTags.Value);
+                    // Print romaji invalid message
+                    case RomajiTagIssue romajiTagIssue:
+                        romajiTagIssue.InvalidRomajiTags?.ForEach(x => createRomajiInvalidMessage(x.Key, x.Value));
+                        break;
+
+                    // Should throw exception because every issue message should be printed.
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(issue));
+                }
             }
 
             // show no problem message
-            if (report.IsValid)
+            if (issues.Length == 0)
                 invalidMessage.AddSuccessParagraph("Seems no issue in this lyric.");
 
             return true;
