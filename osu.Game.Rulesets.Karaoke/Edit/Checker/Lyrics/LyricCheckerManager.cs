@@ -16,6 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics
 {
     /// <summary>
     /// This manager is for register and able to get invalid change by bindable.
+    /// Note : this manager will be removed if able to get check result directly.
     /// </summary>
     public class LyricCheckerManager : Component
     {

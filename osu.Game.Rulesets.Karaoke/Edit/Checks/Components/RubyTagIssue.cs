@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
 {
@@ -11,8 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
     {
         public readonly Dictionary<RubyTagInvalid, RubyTag[]> InvalidRubyTags;
 
-        public RubyTagIssue(Lyric layic, IssueTemplate template, Dictionary<RubyTagInvalid, RubyTag[]> invalidRubyTags, params object[] args)
-            : base (layic, template, args)
+        public RubyTagIssue(HitObject lyric, IssueTemplate template, Dictionary<RubyTagInvalid, RubyTag[]> invalidRubyTags, params object[] args)
+            : base(lyric, template, args)
         {
             InvalidRubyTags = invalidRubyTags;
         }

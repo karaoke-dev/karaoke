@@ -6,7 +6,6 @@ using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 
 namespace osu.Game.Rulesets.Karaoke.Edit

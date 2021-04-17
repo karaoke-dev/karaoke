@@ -6,14 +6,13 @@ using System.Linq;
 using NUnit.Framework;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checker.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
 {
     /// <summary>
     /// Test all the lyric check result and invalid type
@@ -100,11 +99,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checker.Lyrics
             Assert.AreEqual(invalidRomajiTagDictionaryKeys, invalids);
         }
 
-        private IEnumerable<Issue> run(Lyric lyric)
+        private IEnumerable<Issue> run(HitObject lyric)
         {
             var beatmap = new Beatmap
             {
-                HitObjects = new List<HitObject>()
+                HitObjects = new List<HitObject>
                 {
                     lyric
                 }

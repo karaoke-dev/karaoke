@@ -2,8 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Objects;
-
+using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
 {
@@ -11,8 +10,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
     {
         public readonly TimeInvalid[] InvalidLyricTime;
 
-        public LyricTimeIssue(Lyric layic, IssueTemplate template, TimeInvalid[] invalidLyricTime, params object[] args)
-            : base(layic, template, args)
+        public LyricTimeIssue(HitObject lyric, IssueTemplate template, TimeInvalid[] invalidLyricTime, params object[] args)
+            : base(lyric, template, args)
         {
             InvalidLyricTime = invalidLyricTime;
         }

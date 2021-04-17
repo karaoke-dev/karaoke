@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
 {
@@ -11,8 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
     {
         public readonly Dictionary<RomajiTagInvalid, RomajiTag[]> InvalidRomajiTags;
 
-        public RomajiTagIssue(Lyric layic, IssueTemplate template, Dictionary<RomajiTagInvalid, RomajiTag[]> invalidRomajiTags, params object[] args)
-            : base(layic, template, args)
+        public RomajiTagIssue(HitObject lyric, IssueTemplate template, Dictionary<RomajiTagInvalid, RomajiTag[]> invalidRomajiTags, params object[] args)
+            : base(lyric, template, args)
         {
             InvalidRomajiTags = invalidRomajiTags;
         }

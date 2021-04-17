@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
 {
@@ -11,8 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
     {
         public readonly Dictionary<TimeTagInvalid, TimeTag[]> InvalidTimeTags;
 
-        public TimeTagIssue(Lyric layic, IssueTemplate template, Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags, params object[] args)
-            : base(layic, template, args)
+        public TimeTagIssue(HitObject lyric, IssueTemplate template, Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags, params object[] args)
+            : base(lyric, template, args)
         {
             InvalidTimeTags = invalidTimeTags;
         }
