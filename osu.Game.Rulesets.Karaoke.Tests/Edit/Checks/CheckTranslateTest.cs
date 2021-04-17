@@ -5,18 +5,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
-using osu.Framework.Audio.Sample;
-using osu.Framework.Bindables;
-using osu.Framework.Graphics;
-using osu.Framework.Graphics.OpenGL.Textures;
-using osu.Framework.Graphics.Textures;
-using osu.Game.Audio;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
-using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
 {

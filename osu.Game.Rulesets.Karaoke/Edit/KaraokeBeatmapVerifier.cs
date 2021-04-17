@@ -15,8 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     {
         private readonly List<ICheck> checks = new List<ICheck>
         {
-            // todo : implement config apply.
-            new CheckInvalidLyrics(new LyricCheckerConfig().CreateDefaultConfig())
+            new CheckInvalidLyrics(new LyricCheckerConfig().CreateDefaultConfig()), // todo : implement config apply.
+            new CheckTranslate(),
         };
 
         public IEnumerable<Issue> Run(IBeatmap beatmap) => checks.SelectMany(check => check.Run(beatmap));
