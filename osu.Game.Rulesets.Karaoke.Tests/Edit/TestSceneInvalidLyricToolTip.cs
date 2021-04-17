@@ -58,72 +58,72 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         public void TestRubyTagInvalidLyric()
         {
             setTooltip("ruby tag out of range", new TestRubyTagIssue(new Dictionary<RubyTagInvalid, RubyTag[]>
+            {
                 {
+                    RubyTagInvalid.OutOfRange,
+                    new[]
                     {
-                        RubyTagInvalid.OutOfRange,
-                        new[]
+                        new RubyTag
                         {
-                            new RubyTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "Invalid ruby"
-                            }
-                        }
-                    },
-                }));
-
-            setTooltip("ruby tag out of range", new TestRubyTagIssue(new Dictionary<RubyTagInvalid, RubyTag[]>
-                {
-                    {
-                        RubyTagInvalid.Overlapping,
-                        new[]
-                        {
-                            new RubyTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "Invalid ruby"
-                            }
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "Invalid ruby"
                         }
                     }
-                }));
+                },
+            }));
+
+            setTooltip("ruby tag out of range", new TestRubyTagIssue(new Dictionary<RubyTagInvalid, RubyTag[]>
+            {
+                {
+                    RubyTagInvalid.Overlapping,
+                    new[]
+                    {
+                        new RubyTag
+                        {
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "Invalid ruby"
+                        }
+                    }
+                }
+            }));
         }
 
         [Test]
         public void TestRomajiTagInvalidLyric()
         {
             setTooltip("romaji tag out of range", new TestRomajiTagIssue(new Dictionary<RomajiTagInvalid, RomajiTag[]>
+            {
                 {
+                    RomajiTagInvalid.OutOfRange,
+                    new[]
                     {
-                        RomajiTagInvalid.OutOfRange,
-                        new[]
+                        new RomajiTag
                         {
-                            new RomajiTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "Invalid romaji"
-                            }
-                        }
-                    },
-                }));
-
-            setTooltip("romaji tag out of range", new TestRomajiTagIssue(new Dictionary<RomajiTagInvalid, RomajiTag[]>
-                {
-                    {
-                        RomajiTagInvalid.Overlapping,
-                        new[]
-                        {
-                            new RomajiTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "Invalid romaji"
-                            }
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "Invalid romaji"
                         }
                     }
-                }));
+                },
+            }));
+
+            setTooltip("romaji tag out of range", new TestRomajiTagIssue(new Dictionary<RomajiTagInvalid, RomajiTag[]>
+            {
+                {
+                    RomajiTagInvalid.Overlapping,
+                    new[]
+                    {
+                        new RomajiTag
+                        {
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "Invalid romaji"
+                        }
+                    }
+                }
+            }));
         }
 
         [Test]
@@ -142,89 +142,89 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 }));
 
             setTooltip("time tag out of range", new TestTimeTagIssue(new Dictionary<TimeTagInvalid, TimeTag[]>
+            {
                 {
+                    TimeTagInvalid.Overlapping,
+                    new[]
                     {
-                        TimeTagInvalid.Overlapping,
-                        new[]
-                        {
-                            new TimeTag(new TextIndex(2))
-                        }
+                        new TimeTag(new TextIndex(2))
                     }
-                }));
+                }
+            }));
         }
 
         [Test]
         public void TestMultiInvalidLyric()
         {
             setTooltip("multi property is invalid", new TestLyricTimeIssue(new[]
+            {
+                TimeInvalid.Overlapping,
+                TimeInvalid.StartTimeInvalid,
+            }), new TestRubyTagIssue(new Dictionary<RubyTagInvalid, RubyTag[]>
+            {
                 {
-                    TimeInvalid.Overlapping,
-                    TimeInvalid.StartTimeInvalid,
-                }), new TestRubyTagIssue(new Dictionary<RubyTagInvalid, RubyTag[]>
-                {
+                    RubyTagInvalid.Overlapping,
+                    new[]
                     {
-                        RubyTagInvalid.Overlapping,
-                        new[]
+                        new RubyTag
                         {
-                            new RubyTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "か"
-                            },
-                            new RubyTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "ら"
-                            }
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "か"
+                        },
+                        new RubyTag
+                        {
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "ら"
                         }
                     }
-                }), new TestRomajiTagIssue(new Dictionary<RomajiTagInvalid, RomajiTag[]>
+                }
+            }), new TestRomajiTagIssue(new Dictionary<RomajiTagInvalid, RomajiTag[]>
+            {
                 {
+                    RomajiTagInvalid.OutOfRange,
+                    new[]
                     {
-                        RomajiTagInvalid.OutOfRange,
-                        new[]
+                        new RomajiTag
                         {
-                            new RomajiTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "ka"
-                            },
-                            new RomajiTag
-                            {
-                                StartIndex = 4,
-                                EndIndex = 5,
-                                Text = "ra"
-                            },
-                            new RomajiTag
-                            {
-                                StartIndex = 5,
-                                EndIndex = 6,
-                                Text = "o"
-                            },
-                            new RomajiTag
-                            {
-                                StartIndex = 6,
-                                EndIndex = 7,
-                                Text = "ke"
-                            }
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "ka"
+                        },
+                        new RomajiTag
+                        {
+                            StartIndex = 4,
+                            EndIndex = 5,
+                            Text = "ra"
+                        },
+                        new RomajiTag
+                        {
+                            StartIndex = 5,
+                            EndIndex = 6,
+                            Text = "o"
+                        },
+                        new RomajiTag
+                        {
+                            StartIndex = 6,
+                            EndIndex = 7,
+                            Text = "ke"
                         }
-                    },
-                }), new TestTimeTagIssue(new Dictionary<TimeTagInvalid, TimeTag[]>
+                    }
+                },
+            }), new TestTimeTagIssue(new Dictionary<TimeTagInvalid, TimeTag[]>
+            {
                 {
+                    TimeTagInvalid.OutOfRange,
+                    new[]
                     {
-                        TimeTagInvalid.OutOfRange,
-                        new[]
-                        {
-                            new TimeTag(new TextIndex(2))
-                        }
-                    },
-                }));
+                        new TimeTag(new TextIndex(2))
+                    }
+                },
+            }));
         }
 
-        private void setTooltip(string testName,params Issue[] issues)
+        private void setTooltip(string testName, params Issue[] issues)
         {
             AddStep(testName, () =>
             {
@@ -243,7 +243,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         internal class TestRubyTagIssue : RubyTagIssue
         {
             public TestRubyTagIssue(Dictionary<RubyTagInvalid, RubyTag[]> invalidRubyTags)
-                : base(new Lyric(),  null, invalidRubyTags)
+                : base(new Lyric(), null, invalidRubyTags)
             {
             }
         }
