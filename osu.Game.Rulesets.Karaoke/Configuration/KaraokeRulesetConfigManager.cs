@@ -29,6 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetSetting.ScrollDirection, KaraokeScrollingDirection.Left);
             SetDefault(KaraokeRulesetSetting.DisplayAlternativeText, false);
             SetDefault(KaraokeRulesetSetting.ShowCursor, false);
+            SetDefault(KaraokeRulesetSetting.NoteAlpha, 1, 0.2, 1, 0.01);
+            SetDefault(KaraokeRulesetSetting.LyricAlpha, 1, 0.2, 1, 0.01);
 
             // Translate
             SetDefault(KaraokeRulesetSetting.UseTranslate, true);
@@ -118,6 +120,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         ScrollDirection,
         DisplayAlternativeText,
         ShowCursor,
+        NoteAlpha,
+        LyricAlpha,
 
         // Translate
         UseTranslate,

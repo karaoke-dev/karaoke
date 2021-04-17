@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -34,6 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly BindableInt bindablePitch = new BindableInt();
         private readonly BindableInt bindableVocalPitch = new BindableInt();
         private readonly BindableInt bindablePlayback = new BindableInt();
+        private readonly BindableDouble notePlayfieldAlpha = new BindableDouble();
+        private readonly BindableDouble lyricPlayfieldAlpha = new BindableDouble();
 
         public KaraokePlayfield()
         {
@@ -74,6 +77,15 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 var newValue = 1.0f + (float)value.NewValue / 40;
                 WorkingBeatmap.Track.Tempo.Value = newValue;
             });
+
+            // Alpha
+            notePlayfieldAlpha.BindValueChanged(x =>
+            {
+                // todo : how to check is there any notes in this playfield?
+                var alpha = NotePlayfield.AllHitObjects.Any() ? x.NewValue : 0;
+                NotePlayfield.Alpha = (float)alpha;
+            });
+            lyricPlayfieldAlpha.BindValueChanged(x => LyricPlayfield.Alpha = (float)x.NewValue);
         }
 
         #region Pooling support
@@ -88,9 +100,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
                 case Note _:
                 case BarLine _:
-                    // hidden the note playfield until receive any note.
-                    NotePlayfield.Alpha = 1;
                     NotePlayfield.Add(h);
+
                     break;
 
                 default:
@@ -127,9 +138,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     break;
 
                 case DrawableNote _:
-                    // hidden the note playfield until receive any note.
-                    NotePlayfield.Alpha = 1;
                     NotePlayfield.Add(h);
+
                     break;
 
                 default:
@@ -155,15 +165,28 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         #endregion
 
+        public override void PostProcess()
+        {
+            base.PostProcess();
+
+            // trigger again to update note playfield alpha.
+            notePlayfieldAlpha.TriggerChange();
+        }
+
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetConfigManager rulesetConfig, KaraokeSessionStatics session)
         {
+            // Cursor
             rulesetConfig?.BindWith(KaraokeRulesetSetting.ShowCursor, DisplayCursor);
 
             // Pitch
             session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
             session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
             session.BindWith(KaraokeRulesetSession.PlaybackSpeed, bindablePlayback);
+
+            // Alpha
+            rulesetConfig.BindWith(KaraokeRulesetSetting.NoteAlpha, notePlayfieldAlpha);
+            rulesetConfig.BindWith(KaraokeRulesetSetting.LyricAlpha, lyricPlayfieldAlpha);
         }
     }
 }
