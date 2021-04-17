@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
+using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Tests.Visual;
@@ -31,164 +32,105 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [Test]
         public void TestValidLyric()
         {
-            setTooltip("valid lyric", new TestLyricCheckReport());
+            setTooltip("valid lyric");
         }
 
         [Test]
         public void TestTimeInvalidLyric()
         {
-            setTooltip("overlapping time", new TestLyricCheckReport
+            setTooltip("overlapping time", new TestLyricTimeIssue(new[]
             {
-                TimeInvalid = new[]
-                {
-                    TimeInvalid.Overlapping,
-                }
-            });
+                TimeInvalid.Overlapping,
+            }));
 
-            setTooltip("start time invalid", new TestLyricCheckReport
+            setTooltip("start time invalid", new TestLyricTimeIssue(new[]
             {
-                TimeInvalid = new[]
-                {
-                    TimeInvalid.StartTimeInvalid,
-                }
-            });
+                TimeInvalid.StartTimeInvalid,
+            }));
 
-            setTooltip("end time invalid", new TestLyricCheckReport
+            setTooltip("end time invalid", new TestLyricTimeIssue(new[]
             {
-                TimeInvalid = new[]
-                {
-                    TimeInvalid.EndTimeInvalid,
-                }
-            });
-        }
-
-        [Test]
-        public void TestTimeTagInvalidLyric()
-        {
-            setTooltip("time tag out of range", new TestLyricCheckReport
-            {
-                InvalidTimeTags = new Dictionary<TimeTagInvalid, TimeTag[]>
-                {
-                    {
-                        TimeTagInvalid.OutOfRange,
-                        new[]
-                        {
-                            new TimeTag(new TextIndex(2))
-                        }
-                    },
-                }
-            });
-
-            setTooltip("time tag out of range", new TestLyricCheckReport
-            {
-                InvalidTimeTags = new Dictionary<TimeTagInvalid, TimeTag[]>
-                {
-                    {
-                        TimeTagInvalid.Overlapping,
-                        new[]
-                        {
-                            new TimeTag(new TextIndex(2))
-                        }
-                    }
-                }
-            });
+                TimeInvalid.EndTimeInvalid,
+            }));
         }
 
         [Test]
         public void TestRubyTagInvalidLyric()
         {
-            setTooltip("ruby tag out of range", new TestLyricCheckReport
+            setTooltip("ruby tag out of range", new TestRubyTagIssue(new Dictionary<RubyTagInvalid, RubyTag[]>
             {
-                InvalidRubyTags = new Dictionary<RubyTagInvalid, RubyTag[]>
                 {
+                    RubyTagInvalid.OutOfRange,
+                    new[]
                     {
-                        RubyTagInvalid.OutOfRange,
-                        new[]
+                        new RubyTag
                         {
-                            new RubyTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "Invalid ruby"
-                            }
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "Invalid ruby"
                         }
-                    },
-                }
-            });
+                    }
+                },
+            }));
 
-            setTooltip("ruby tag out of range", new TestLyricCheckReport
+            setTooltip("ruby tag out of range", new TestRubyTagIssue(new Dictionary<RubyTagInvalid, RubyTag[]>
             {
-                InvalidRubyTags = new Dictionary<RubyTagInvalid, RubyTag[]>
                 {
+                    RubyTagInvalid.Overlapping,
+                    new[]
                     {
-                        RubyTagInvalid.Overlapping,
-                        new[]
+                        new RubyTag
                         {
-                            new RubyTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "Invalid ruby"
-                            }
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "Invalid ruby"
                         }
                     }
                 }
-            });
+            }));
         }
 
         [Test]
         public void TestRomajiTagInvalidLyric()
         {
-            setTooltip("romaji tag out of range", new TestLyricCheckReport
+            setTooltip("romaji tag out of range", new TestRomajiTagIssue(new Dictionary<RomajiTagInvalid, RomajiTag[]>
             {
-                InvalidRomajiTags = new Dictionary<RomajiTagInvalid, RomajiTag[]>
                 {
+                    RomajiTagInvalid.OutOfRange,
+                    new[]
                     {
-                        RomajiTagInvalid.OutOfRange,
-                        new[]
+                        new RomajiTag
                         {
-                            new RomajiTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "Invalid romaji"
-                            }
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "Invalid romaji"
                         }
-                    },
-                }
-            });
+                    }
+                },
+            }));
 
-            setTooltip("romaji tag out of range", new TestLyricCheckReport
+            setTooltip("romaji tag out of range", new TestRomajiTagIssue(new Dictionary<RomajiTagInvalid, RomajiTag[]>
             {
-                InvalidRomajiTags = new Dictionary<RomajiTagInvalid, RomajiTag[]>
                 {
+                    RomajiTagInvalid.Overlapping,
+                    new[]
                     {
-                        RomajiTagInvalid.Overlapping,
-                        new[]
+                        new RomajiTag
                         {
-                            new RomajiTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "Invalid romaji"
-                            }
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "Invalid romaji"
                         }
                     }
                 }
-            });
+            }));
         }
 
         [Test]
-        public void TestMultiInvalidLyric()
+        public void TestTimeTagInvalidLyric()
         {
-            setTooltip("multi property is invalid", new TestLyricCheckReport
-            {
-                TimeInvalid = new[]
-                {
-                    TimeInvalid.Overlapping,
-                    TimeInvalid.StartTimeInvalid,
-                },
-                InvalidTimeTags = new Dictionary<TimeTagInvalid, TimeTag[]>
+            setTooltip("time tag out of range", new TestTimeTagIssue(
+                new Dictionary<TimeTagInvalid, TimeTag[]>
                 {
                     {
                         TimeTagInvalid.OutOfRange,
@@ -197,76 +139,127 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                             new TimeTag(new TextIndex(2))
                         }
                     },
-                },
-                InvalidRubyTags = new Dictionary<RubyTagInvalid, RubyTag[]>
+                }));
+
+            setTooltip("time tag out of range", new TestTimeTagIssue(new Dictionary<TimeTagInvalid, TimeTag[]>
+            {
                 {
+                    TimeTagInvalid.Overlapping,
+                    new[]
                     {
-                        RubyTagInvalid.Overlapping,
-                        new[]
+                        new TimeTag(new TextIndex(2))
+                    }
+                }
+            }));
+        }
+
+        [Test]
+        public void TestMultiInvalidLyric()
+        {
+            setTooltip("multi property is invalid", new TestLyricTimeIssue(new[]
+            {
+                TimeInvalid.Overlapping,
+                TimeInvalid.StartTimeInvalid,
+            }), new TestRubyTagIssue(new Dictionary<RubyTagInvalid, RubyTag[]>
+            {
+                {
+                    RubyTagInvalid.Overlapping,
+                    new[]
+                    {
+                        new RubyTag
                         {
-                            new RubyTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "か"
-                            },
-                            new RubyTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "ら"
-                            }
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "か"
+                        },
+                        new RubyTag
+                        {
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "ら"
+                        }
+                    }
+                }
+            }), new TestRomajiTagIssue(new Dictionary<RomajiTagInvalid, RomajiTag[]>
+            {
+                {
+                    RomajiTagInvalid.OutOfRange,
+                    new[]
+                    {
+                        new RomajiTag
+                        {
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = "ka"
+                        },
+                        new RomajiTag
+                        {
+                            StartIndex = 4,
+                            EndIndex = 5,
+                            Text = "ra"
+                        },
+                        new RomajiTag
+                        {
+                            StartIndex = 5,
+                            EndIndex = 6,
+                            Text = "o"
+                        },
+                        new RomajiTag
+                        {
+                            StartIndex = 6,
+                            EndIndex = 7,
+                            Text = "ke"
                         }
                     }
                 },
-                InvalidRomajiTags = new Dictionary<RomajiTagInvalid, RomajiTag[]>
+            }), new TestTimeTagIssue(new Dictionary<TimeTagInvalid, TimeTag[]>
+            {
                 {
+                    TimeTagInvalid.OutOfRange,
+                    new[]
                     {
-                        RomajiTagInvalid.OutOfRange,
-                        new[]
-                        {
-                            new RomajiTag
-                            {
-                                StartIndex = 2,
-                                EndIndex = 3,
-                                Text = "ka"
-                            },
-                            new RomajiTag
-                            {
-                                StartIndex = 4,
-                                EndIndex = 5,
-                                Text = "ra"
-                            },
-                            new RomajiTag
-                            {
-                                StartIndex = 5,
-                                EndIndex = 6,
-                                Text = "o"
-                            },
-                            new RomajiTag
-                            {
-                                StartIndex = 6,
-                                EndIndex = 7,
-                                Text = "ke"
-                            }
-                        }
-                    },
-                }
-            });
+                        new TimeTag(new TextIndex(2))
+                    }
+                },
+            }));
         }
 
-        private void setTooltip(string testName, LyricCheckReport timeTag)
+        private void setTooltip(string testName, params Issue[] issues)
         {
             AddStep(testName, () =>
             {
-                toolTip.SetContent(timeTag);
+                toolTip.SetContent(issues);
             });
         }
 
-        internal class TestLyricCheckReport : LyricCheckReport
+        internal class TestLyricTimeIssue : LyricTimeIssue
         {
-            public TestLyricCheckReport()
-                : base(new Lyric())
+            public TestLyricTimeIssue(TimeInvalid[] invalidLyricTime)
+                : base(new Lyric(), null, invalidLyricTime)
+            {
+            }
+        }
+
+        internal class TestRubyTagIssue : RubyTagIssue
+        {
+            public TestRubyTagIssue(Dictionary<RubyTagInvalid, RubyTag[]> invalidRubyTags)
+                : base(new Lyric(), null, invalidRubyTags)
+            {
+            }
+        }
+
+        internal class TestRomajiTagIssue : RomajiTagIssue
+        {
+            public TestRomajiTagIssue(Dictionary<RomajiTagInvalid, RomajiTag[]> invalidRomajiTags)
+                : base(new Lyric(), null, invalidRomajiTags)
+            {
+            }
+        }
+
+        internal class TestTimeTagIssue : TimeTagIssue
+        {
+            public TestTimeTagIssue(Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags)
+                : base(new Lyric(), null, invalidTimeTags)
             {
             }
         }

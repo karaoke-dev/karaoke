@@ -8,7 +8,8 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Checker.Lyrics;
+using osu.Game.Rulesets.Edit.Checks.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
@@ -24,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.FixedInfo
 
         private readonly Lyric lyric;
 
-        private LyricCheckReport report;
+        private Issue[] report;
 
         public InvalidInfo(Lyric lyric)
         {
@@ -42,20 +43,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.FixedInfo
                 if (args.NewItems == null)
                     return;
 
-                var dict = args.NewItems.Cast<KeyValuePair<Lyric, LyricCheckReport>>().ToDictionary(k => k.Key, v => v.Value);
+                var dict = args.NewItems.Cast<KeyValuePair<Lyric, Issue[]>>().ToDictionary(k => k.Key, v => v.Value);
                 if (!dict.ContainsKey(lyric))
                     return;
 
                 report = dict[lyric];
 
-                switch (report.IsValid)
+                switch (report.Length)
                 {
-                    case true:
+                    case 0:
                         Icon = FontAwesome.Solid.CheckCircle;
                         Colour = colours.Green;
                         break;
 
-                    case false:
+                    default:
                         Icon = FontAwesome.Solid.TimesCircle;
                         Colour = colours.Red;
                         break;
