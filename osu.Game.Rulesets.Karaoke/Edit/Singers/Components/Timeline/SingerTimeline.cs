@@ -3,6 +3,7 @@
 
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
@@ -12,6 +13,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
     {
         [Resolved(CanBeNull = true)]
         private SingerManager singerManager { get; set; }
+
+        public SingerTimeline(Drawable userContent)
+            : base(userContent)
+        {
+        }
 
         [BackgroundDependencyLoader]
         private void load()
