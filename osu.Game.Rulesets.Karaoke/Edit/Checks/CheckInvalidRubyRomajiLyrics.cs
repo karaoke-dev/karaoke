@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
-    public class CheckInvalidLyrics : ICheck
+    public class CheckInvalidRubyRomajiLyrics : ICheck
     {
         private readonly LyricCheckerConfig config;
 
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateInvalidTimeTag(this),
         };
 
-        public CheckInvalidLyrics(LyricCheckerConfig config)
+        public CheckInvalidRubyRomajiLyrics(LyricCheckerConfig config)
         {
             this.config = config;
         }

@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly List<ICheck> checks = new List<ICheck>
         {
             new CheckInvalidPropertyLyrics(),
-            new CheckInvalidLyrics(new LyricCheckerConfig().CreateDefaultConfig()), // todo : implement config apply.
+            new CheckInvalidRubyRomajiLyrics(new LyricCheckerConfig().CreateDefaultConfig()), // todo : implement config apply.
             new CheckTranslate(),
         };
 

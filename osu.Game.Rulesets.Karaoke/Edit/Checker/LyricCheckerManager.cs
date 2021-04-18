@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
     {
         public BindableDictionary<Lyric, Issue[]> BindableReports = new BindableDictionary<Lyric, Issue[]>();
 
-        private CheckInvalidLyrics lyricChecker;
+        private CheckInvalidRubyRomajiLyrics lyricChecker;
 
         public void CheckLyrics(List<HitObject> lyrics)
         {
@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
         private void load(EditorBeatmap beatmap, KaraokeRulesetEditCheckerConfigManager rulesetEditCheckerConfigManager)
         {
             var config = rulesetEditCheckerConfigManager?.Get<LyricCheckerConfig>(KaraokeRulesetEditCheckerSetting.Lyric) ?? new LyricCheckerConfig().CreateDefaultConfig();
-            lyricChecker = new CheckInvalidLyrics(config);
+            lyricChecker = new CheckInvalidRubyRomajiLyrics(config);
 
             // load lyric in here
             CheckLyrics(beatmap.HitObjects.Where(x => x is Lyric).ToList());

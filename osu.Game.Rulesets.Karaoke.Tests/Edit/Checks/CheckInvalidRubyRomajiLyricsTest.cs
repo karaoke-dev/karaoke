@@ -15,19 +15,16 @@ using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
 {
-    /// <summary>
-    /// Test all the lyric check result and invalid type
-    /// </summary>
     [TestFixture]
-    public class CheckInvalidLyricsTest
+    public class CheckInvalidRubyRomajiLyricsTest
     {
-        private CheckInvalidLyrics check;
+        private CheckInvalidRubyRomajiLyrics check;
 
         [SetUp]
         public void Setup()
         {
             var config = new LyricCheckerConfig().CreateDefaultConfig();
-            check = new CheckInvalidLyrics(config);
+            check = new CheckInvalidRubyRomajiLyrics(config);
         }
 
         [TestCase("[1000,3000]:カラオケ", new[] { "[0,start]:1000", "[3,end]:3000" }, new TimeInvalid[] { })]
