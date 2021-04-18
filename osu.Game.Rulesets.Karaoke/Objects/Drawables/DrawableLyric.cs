@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         [BackgroundDependencyLoader]
         private void load()
         {
-            Scale = new Vector2((float)config.Get<double>(KaraokeRulesetSetting.LyricScale));
+            Scale = new Vector2((float)(config?.Get<double>(KaraokeRulesetSetting.LyricScale) ?? 2));
             AutoSizeAxes = Axes.Both;
 
             AddInternal(KaraokeText = new KaraokeSpriteText());
