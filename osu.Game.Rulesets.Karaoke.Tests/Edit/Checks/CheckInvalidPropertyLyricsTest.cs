@@ -47,7 +47,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
         [TestCase(null, true)]
         public void TestCheckLayout(int? layout, bool hasIssue)
         {
-
         }
 
         [TestCase("karaoke", false)]
@@ -85,7 +84,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
 
         public void TestCheckSingerInBeatmap(int[] singers, bool hasIssue)
         {
-
         }
 
         private IEnumerable<Issue> run(HitObject lyric)
