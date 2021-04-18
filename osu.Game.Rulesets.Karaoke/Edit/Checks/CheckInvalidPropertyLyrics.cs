@@ -13,7 +13,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
     {
         public CheckMetadata Metadata => new CheckMetadata(CheckCategory.HitObjects, "Lyrics with invalid property.");
 
-        public IEnumerable<IssueTemplate> PossibleTemplates => throw new System.NotImplementedException();
+        public IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
+        {
+            new IssueTemplateNotFillLanguage(this),
+            new IssueTemplateNoText(this),
+            new IssueTemplateNoSinger(this),
+        };
 
         public IEnumerable<Issue> Run(IBeatmap beatmap)
         {

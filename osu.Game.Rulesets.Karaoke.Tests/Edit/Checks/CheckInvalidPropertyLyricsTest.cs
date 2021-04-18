@@ -82,6 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             Assert.AreEqual(issueTemplate != null, hasIssue);
         }
 
+        [Ignore("Not implement.")]
         public void TestCheckSingerInBeatmap(int[] singers, bool hasIssue)
         {
         }
