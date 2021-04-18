@@ -20,6 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections
         {
             Children = new Drawable[]
             {
+                new TransparentSettings(),
                 new LyricFontSettings(),
                 new NoteFontSettings(),
                 new ManageFontSettings(),
