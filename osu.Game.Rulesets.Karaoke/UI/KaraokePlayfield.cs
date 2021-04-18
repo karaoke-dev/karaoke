@@ -2,12 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             notePlayfieldAlpha.BindValueChanged(x =>
             {
                 // todo : how to check is there any notes in this playfield?
-                var alpha = NotePlayfield.AllHitObjects.Any() ? x.NewValue : 0;
+                var alpha = WorkingBeatmap.Beatmap.IsScorable() ? x.NewValue : 0;
                 NotePlayfield.Alpha = (float)alpha;
             });
             lyricPlayfieldAlpha.BindValueChanged(x => LyricPlayfield.Alpha = (float)x.NewValue);
