@@ -46,7 +46,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestSeparateNoteOtherProperty()
         {
             const double percentage = 0.3;
-            var lyric = new Lyric();
+            var lyric = new Lyric
+            {
+                Singers = new[] { 0 },
+            };
 
             var note = new Note
             {
@@ -55,7 +58,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 StartIndex = 1,
                 EndIndex = 2,
                 Text = "ka",
-                Singers = new[] { 0 },
                 Display = false,
                 Tone = new Tone(-1, true),
                 ParentLyric = lyric
@@ -79,12 +81,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 Assert.AreEqual(expect.EndIndex, actual.EndIndex);
                 Assert.AreEqual(expect.Text, actual.Text);
 
-                Assert.AreEqual(expect.Singers, actual.Singers);
-                Assert.AreNotSame(expect.Singers, actual.Singers);
-
                 Assert.AreEqual(expect.Display, actual.Display);
                 Assert.AreEqual(expect.Tone, actual.Tone);
                 Assert.AreEqual(expect.ParentLyric, actual.ParentLyric);
+
+                Assert.AreEqual(expect.ParentLyric.Singers, actual.ParentLyric.Singers);
             }
         }
 

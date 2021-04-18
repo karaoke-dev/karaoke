@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Note : KaraokeHitObject, IHasDuration, IHasText, IHasSingers
+    public class Note : KaraokeHitObject, IHasDuration, IHasText
     {
         [JsonIgnore]
         public readonly Bindable<string> TextBindable = new Bindable<string>();
@@ -35,18 +35,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         {
             get => AlternativeTextBindable.Value;
             set => AlternativeTextBindable.Value = value;
-        }
-
-        [JsonIgnore]
-        public readonly Bindable<int[]> SingersBindable = new Bindable<int[]>();
-
-        /// <summary>
-        /// Singers
-        /// </summary>
-        public int[] Singers
-        {
-            get => SingersBindable.Value;
-            set => SingersBindable.Value = value;
         }
 
         [JsonIgnore]

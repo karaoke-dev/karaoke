@@ -28,7 +28,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 StartIndex = originNote.StartIndex,
                 EndIndex = originNote.EndIndex,
                 Text = originNote.Text,
-                Singers = originNote.Singers?.Clone() as int[],
                 Display = originNote.Display,
                 Tone = originNote.Tone,
                 ParentLyric = originNote.ParentLyric
