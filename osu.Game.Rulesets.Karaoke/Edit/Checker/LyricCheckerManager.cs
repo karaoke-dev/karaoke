@@ -7,6 +7,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -26,17 +27,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
     {
         public BindableDictionary<Lyric, Issue[]> BindableReports = new BindableDictionary<Lyric, Issue[]>();
 
-        private CheckInvalidRubyRomajiLyrics lyricChecker;
+        private LyricVerifier lyricVerifier;
 
         public void CheckLyrics(List<HitObject> lyrics)
         {
             if (lyrics == null)
                 throw new ArgumentNullException(nameof(lyrics));
 
-            if (lyricChecker == null)
-                throw new NullReferenceException(nameof(lyricChecker));
+            if (lyricVerifier == null)
+                throw new NullReferenceException(nameof(lyricVerifier));
 
-            var result = lyricChecker.Run(new Beatmap
+            var result = lyricVerifier.Run(new Beatmap
             {
                 HitObjects = lyrics
             });
@@ -63,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
         private void load(EditorBeatmap beatmap, KaraokeRulesetEditCheckerConfigManager rulesetEditCheckerConfigManager)
         {
             var config = rulesetEditCheckerConfigManager?.Get<LyricCheckerConfig>(KaraokeRulesetEditCheckerSetting.Lyric) ?? new LyricCheckerConfig().CreateDefaultConfig();
-            lyricChecker = new CheckInvalidRubyRomajiLyrics(config);
+            lyricVerifier = new LyricVerifier(config);
 
             // load lyric in here
             CheckLyrics(beatmap.HitObjects.Where(x => x is Lyric).ToList());
@@ -79,6 +80,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
                 if (e is Lyric lyric)
                     RemoveFromCheckList(lyric);
             };
+        }
+
+        // It's a temp verifier for just checking lyric relative things.
+        public class LyricVerifier : IBeatmapVerifier
+        {
+            private readonly List<ICheck> checks;
+            public LyricVerifier(LyricCheckerConfig config)
+            {
+                checks = new List<ICheck>
+                {
+                    new CheckInvalidPropertyLyrics(),
+                    new CheckInvalidRubyRomajiLyrics(config),
+                    new CheckInvalidTimeLyrics(config),
+                };
+            }
+
+            public IEnumerable<Issue> Run(IBeatmap beatmap) => checks.SelectMany(check => check.Run(beatmap));
         }
     }
 }

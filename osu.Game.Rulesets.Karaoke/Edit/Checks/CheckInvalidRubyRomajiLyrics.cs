@@ -20,10 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         public IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
-            new IssueTemplateInvalidLyricTime(this),
             new IssueTemplateInvalidRuby(this),
             new IssueTemplateInvalidRomaji(this),
-            new IssueTemplateInvalidTimeTag(this),
         };
 
         public CheckInvalidRubyRomajiLyrics(LyricCheckerConfig config)
@@ -35,10 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         {
             foreach (var lyric in beatmap.HitObjects.OfType<Lyric>())
             {
-                var invalidLyricTime = checkInvalidLyricTime(lyric);
-                if (invalidLyricTime.Any())
-                    yield return new IssueTemplateInvalidLyricTime(this).Create(lyric, invalidLyricTime);
-
                 var invalidRubyTags = checkInvalidRubyTags(lyric);
                 if (invalidRubyTags.Any())
                     yield return new IssueTemplateInvalidRuby(this).Create(lyric, invalidRubyTags);
@@ -46,27 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 var invalidRomajiTags = checkInvalidRomajiTags(lyric);
                 if (invalidRomajiTags.Any())
                     yield return new IssueTemplateInvalidRomaji(this).Create(lyric, invalidRomajiTags);
-
-                var invalidTimeTags = checkInvalidTimeTags(lyric);
-                if (invalidTimeTags.Any())
-                    yield return new IssueTemplateInvalidTimeTag(this).Create(lyric, invalidTimeTags);
             }
-        }
-
-        private TimeInvalid[] checkInvalidLyricTime(Lyric lyric)
-        {
-            var result = new List<TimeInvalid>();
-
-            if (LyricUtils.CheckIsTimeOverlapping(lyric))
-                result.Add(TimeInvalid.Overlapping);
-
-            if (LyricUtils.CheckIsStartTimeInvalid(lyric))
-                result.Add(TimeInvalid.StartTimeInvalid);
-
-            if (LyricUtils.CheckIsEndTimeInvalid(lyric))
-                result.Add(TimeInvalid.EndTimeInvalid);
-
-            return result.ToArray();
         }
 
         private Dictionary<RubyTagInvalid, RubyTag[]> checkInvalidRubyTags(Lyric lyric)
@@ -105,36 +79,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             return result;
         }
 
-        private Dictionary<TimeTagInvalid, TimeTag[]> checkInvalidTimeTags(Lyric lyric)
-        {
-            var result = new Dictionary<TimeTagInvalid, TimeTag[]>();
-
-            // todo : check out of range.
-            var outOfRangeTags = TimeTagsUtils.FindOutOfRange(lyric.TimeTags, lyric.Text);
-            if (outOfRangeTags?.Length > 0)
-                result.Add(TimeTagInvalid.OutOfRange, outOfRangeTags);
-
-            // Check overlapping.
-            var groupCheck = config.TimeTagTimeGroupCheck;
-            var selfCheck = config.TimeTagTimeSelfCheck;
-            var invalidTimeTags = TimeTagsUtils.FindInvalid(lyric.TimeTags, groupCheck, selfCheck);
-            if (invalidTimeTags?.Length > 0)
-                result.Add(TimeTagInvalid.Overlapping, invalidTimeTags);
-
-            return result;
-        }
-
-        public class IssueTemplateInvalidLyricTime : IssueTemplate
-        {
-            public IssueTemplateInvalidLyricTime(ICheck check)
-                : base(check, IssueType.Problem, "This lyric contains invalid time.")
-            {
-            }
-
-            public Issue Create(Lyric lyric, TimeInvalid[] invalidTime)
-                => new LyricTimeIssue(lyric, this, invalidTime);
-        }
-
         public class IssueTemplateInvalidRuby : IssueTemplate
         {
             public IssueTemplateInvalidRuby(ICheck check)
@@ -155,17 +99,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
             public Issue Create(Lyric lyric, Dictionary<RomajiTagInvalid, RomajiTag[]> invalidRomajiTags)
                 => new RomajiTagIssue(lyric, this, invalidRomajiTags);
-        }
-
-        public class IssueTemplateInvalidTimeTag : IssueTemplate
-        {
-            public IssueTemplateInvalidTimeTag(ICheck check)
-                : base(check, IssueType.Problem, "This lyric contains invalid time-tag.")
-            {
-            }
-
-            public Issue Create(Lyric lyric, Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags)
-                => new TimeTagIssue(lyric, this, invalidTimeTags);
         }
     }
 }

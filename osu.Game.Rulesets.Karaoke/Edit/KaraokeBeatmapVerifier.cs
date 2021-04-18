@@ -17,6 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             new CheckInvalidPropertyLyrics(),
             new CheckInvalidRubyRomajiLyrics(new LyricCheckerConfig().CreateDefaultConfig()), // todo : implement config apply.
+            new CheckInvalidTimeLyrics(new LyricCheckerConfig().CreateDefaultConfig()), // todo : implement config apply.
             new CheckTranslate(),
         };
 
