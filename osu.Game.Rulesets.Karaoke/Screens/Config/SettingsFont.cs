@@ -34,7 +34,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
             private readonly BindableWithCurrent<FontUsage> current = new BindableWithCurrent<FontUsage>();
             private BindableFontUsage bindableFontUsage;
+
+            private readonly GridContainer grid;
             private readonly TriangleButton fontButton;
+            private readonly TriangleButton decreaseFontSizeButton;
+            private readonly TriangleButton increaseFontSizeButton;
 
             private float[] availableSizes = FontUtils.DefaultFontSize();
 
@@ -54,24 +58,31 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     {
                         availableSizes = FontUtils.DefaultFontSize();
                     }
+
+                    var showSizeButton = availableSizes.Length > 1;
+                    decreaseFontSizeButton.Alpha = showSizeButton ? 1 : 0;
+                    increaseFontSizeButton.Alpha = showSizeButton ? 1 : 0;
+
+                    var spacing = showSizeButton ? 5 : 0;
+                    var buttonWidth = showSizeButton ? height : 0;
+                    grid.ColumnDimensions = new[]
+                    {
+                        new Dimension(GridSizeMode.Distributed),
+                        new Dimension(GridSizeMode.Absolute, spacing),
+                        new Dimension(GridSizeMode.Absolute, buttonWidth),
+                        new Dimension(GridSizeMode.Absolute, spacing),
+                        new Dimension(GridSizeMode.Absolute, buttonWidth),
+                    };
                 }
             }
 
             public FontSelectionButton()
             {
                 AutoSizeAxes = Axes.Y;
-                InternalChild = new GridContainer
+                InternalChild = grid = new GridContainer
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
-                    ColumnDimensions = new[]
-                    {
-                        new Dimension(GridSizeMode.Distributed),
-                        new Dimension(GridSizeMode.Absolute, 5),
-                        new Dimension(GridSizeMode.Absolute, height),
-                        new Dimension(GridSizeMode.Absolute, 5),
-                        new Dimension(GridSizeMode.Absolute, height),
-                    },
                     RowDimensions = new[]
                     {
                         new Dimension(GridSizeMode.AutoSize)
@@ -111,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                                 }
                             },
                             null,
-                            new TriangleButton
+                            decreaseFontSizeButton = new TriangleButton
                             {
                                 RelativeSizeAxes = Axes.X,
                                 Height = height,
@@ -127,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                                 }
                             },
                             null,
-                            new TriangleButton
+                            increaseFontSizeButton = new TriangleButton
                             {
                                 RelativeSizeAxes = Axes.X,
                                 Height = height,
