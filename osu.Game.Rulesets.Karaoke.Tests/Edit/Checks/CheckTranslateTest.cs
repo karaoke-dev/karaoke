@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
+using osu.Game.Tests.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
 {
@@ -29,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
         {
             // test no lyric and no default language. (should not show alert)
             var beatmap = createTestingBeatmap(null, null);
-            var result = check.Run(beatmap);
+            var result = check.Run(beatmap, new TestWorkingBeatmap(beatmap));
             Assert.AreEqual(result.Count(), 0);
         }
 
@@ -39,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             // test no lyric and have language. (should not show alert)
             var translateLanguages = new CultureInfo[] { new CultureInfo("Ja-jp") };
             var beatmap = createTestingBeatmap(translateLanguages, null);
-            var result = check.Run(beatmap);
+            var result = check.Run(beatmap, new TestWorkingBeatmap(beatmap));
             Assert.AreEqual(result.Count(), 0);
         }
 
@@ -49,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             // test have lyric and no language. (should not show alert)
             var lyrics = new Lyric[] { new Lyric() };
             var beatmap = createTestingBeatmap(null, lyrics);
-            var result = check.Run(beatmap);
+            var result = check.Run(beatmap, new TestWorkingBeatmap(beatmap));
             Assert.AreEqual(result.Count(), 0);
         }
 
@@ -63,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
                 createLyric(),
                 createLyric(),
             });
-            Assert.AreEqual(check.Run(beatmap).Count(), 1);
+            Assert.AreEqual(check.Run(beatmap, new TestWorkingBeatmap(beatmap)).Count(), 1);
 
             // no lyric with translate string. (should have issue)
             var beatmap2 = createTestingBeatmap(translateLanguages, new Lyric[]
@@ -71,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
                 createLyric(new CultureInfo("Ja-jp")),
                 createLyric(),
             });
-            Assert.AreEqual(check.Run(beatmap2).Count(), 1);
+            Assert.AreEqual(check.Run(beatmap2, new TestWorkingBeatmap(beatmap2)).Count(), 1);
 
             // no lyric with translate string. (should have issue)
             var beatmap3 = createTestingBeatmap(translateLanguages, new Lyric[]
@@ -79,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
                 createLyric(new CultureInfo("Ja-jp")),
                 createLyric(new CultureInfo("Ja-jp"), ""),
             });
-            Assert.AreEqual(check.Run(beatmap3).Count(), 1);
+            Assert.AreEqual(check.Run(beatmap3, new TestWorkingBeatmap(beatmap3)).Count(), 1);
 
             // some lyric with translate string. (should have issue)
             var beatmap4 = createTestingBeatmap(translateLanguages, new Lyric[]
@@ -87,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
                 createLyric(new CultureInfo("Ja-jp"), "translate1"),
                 createLyric(new CultureInfo("Ja-jp")),
             });
-            Assert.AreEqual(check.Run(beatmap4).Count(), 1);
+            Assert.AreEqual(check.Run(beatmap4, new TestWorkingBeatmap(beatmap4)).Count(), 1);
 
             // every lyric with translate string. (should not have issue)
             var beatmap5 = createTestingBeatmap(translateLanguages, new Lyric[]
@@ -95,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
                 createLyric(new CultureInfo("Ja-jp"), "translate1"),
                 createLyric(new CultureInfo("Ja-jp"), "translate2"),
             });
-            Assert.AreEqual(check.Run(beatmap5).Count(), 0);
+            Assert.AreEqual(check.Run(beatmap5, new TestWorkingBeatmap(beatmap5)).Count(), 0);
 
             static Lyric createLyric(CultureInfo cultureInfo = null, string translate = null)
             {

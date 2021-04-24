@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
+using osu.Game.Tests.Beatmaps;
 using static osu.Game.Rulesets.Karaoke.Edit.Checks.CheckInvalidPropertyLyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
@@ -96,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
                     lyric
                 }
             };
-            return check.Run(beatmap);
+            return check.Run(beatmap, new TestWorkingBeatmap(beatmap));
         }
     }
 }
