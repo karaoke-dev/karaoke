@@ -9,7 +9,9 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
@@ -17,8 +19,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     public class DrawableLyricEditListItem : OsuRearrangeableListItem<Lyric>
     {
         private Box dragAlert;
+        private FillFlowContainer content;
 
         private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
+        private readonly Bindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
 
         public DrawableLyricEditListItem(Lyric item)
             : base(item)
@@ -27,7 +31,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 // Only draggable in edit mode.
                 ShowDragHandle.Value = e.NewValue == Mode.EditMode;
+
+                // should remove overlay if mod is not support that.
             }, true);
+
+            bindableCaretPosition.BindValueChanged(e =>
+            {
+                // todo : show extra overlay if hover to current lyric.
+                var editOverlay = new EditNoteOverlay(Model)
+                {
+                    RelativeSizeAxes = Axes.X
+                };
+                content.Add(editOverlay);
+                editOverlay.Show();
+            });
         }
 
         protected override Drawable CreateContent()
@@ -45,9 +62,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         RelativeSizeAxes = Axes.Both,
                         Alpha = 0
                     },
-                    new EditLyricRow(Model)
+                    content = new FillFlowContainer
                     {
-                        RelativeSizeAxes = Axes.X
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Children = new Drawable[]
+                        {
+                            new EditLyricRow(Model)
+                            {
+                                RelativeSizeAxes = Axes.X
+                            }
+                        }
                     }
                 }
             };
@@ -58,6 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             dragAlert.Colour = colours.YellowDarker;
             bindableMode.BindTo(state.BindableMode);
+            bindableCaretPosition.BindTo(state.BindableCaretPosition);
         }
 
         protected override bool OnDragStart(DragStartEvent e)
