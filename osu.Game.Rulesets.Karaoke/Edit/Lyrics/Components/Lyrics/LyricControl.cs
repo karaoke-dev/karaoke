@@ -203,6 +203,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
                     case Mode.TypingMode:
                         return new DrawableLyricInputCaret();
 
+                    case Mode.EditNoteMode:
+                        return null;
+
                     case Mode.RecordMode:
                         return new DrawableTimeTagRecordCaret();
 
