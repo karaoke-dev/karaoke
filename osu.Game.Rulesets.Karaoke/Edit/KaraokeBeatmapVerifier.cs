@@ -22,6 +22,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             new CheckTranslate(),
         };
 
-        public IEnumerable<Issue> Run(IBeatmap beatmap) => checks.SelectMany(check => check.Run(beatmap));
+        public IEnumerable<Issue> Run(IBeatmap beatmap, WorkingBeatmap workingBeatmap) => checks.SelectMany(check => check.Run(beatmap, workingBeatmap));
     }
 }
