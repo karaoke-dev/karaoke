@@ -5,7 +5,7 @@ using osu.Framework.Allocation;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.SubInfo
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos.SubInfo
 {
     public class LayoutInfo : SubInfo
     {

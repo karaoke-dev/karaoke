@@ -9,7 +9,7 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.SubInfo
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos.SubInfo
 {
     public abstract class SubInfo : Container
     {

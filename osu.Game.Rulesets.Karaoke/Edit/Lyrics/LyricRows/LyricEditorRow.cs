@@ -9,7 +9,7 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows
 {
     public abstract class LyricEditorRow : CompositeDrawable
     {

@@ -14,13 +14,13 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.FixedInfo;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos.SubInfo;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos.FixedInfo;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos.SubInfo;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Infos
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos
 {
     public class InfoControl : Container, IHasContextMenu
     {
