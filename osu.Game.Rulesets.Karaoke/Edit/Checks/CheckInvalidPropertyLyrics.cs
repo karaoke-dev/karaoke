@@ -20,9 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateNoSinger(this),
         };
 
-        public IEnumerable<Issue> Run(IBeatmap beatmap)
+        public IEnumerable<Issue> Run(IBeatmap playableBeatmap, IWorkingBeatmap workingBeatmap)
         {
-            foreach (var lyric in beatmap.HitObjects.OfType<Lyric>())
+            foreach (var lyric in playableBeatmap.HitObjects.OfType<Lyric>())
             {
                 if(lyric.Language == null)
                     yield return new IssueTemplateNotFillLanguage(this).Create(lyric);

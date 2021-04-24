@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
             var result = lyricVerifier.Run(new Beatmap
             {
                 HitObjects = lyrics
-            });
+            }, null);
 
             // re-calculate and add
             foreach (var lyric in lyrics)
@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
                 };
             }
 
-            public IEnumerable<Issue> Run(IBeatmap beatmap) => checks.SelectMany(check => check.Run(beatmap));
+            public IEnumerable<Issue> Run(IBeatmap beatmap, WorkingBeatmap workingBeatmap) => checks.SelectMany(check => check.Run(beatmap, workingBeatmap));
         }
     }
 }

@@ -29,9 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             this.config = config;
         }
 
-        public IEnumerable<Issue> Run(IBeatmap beatmap)
+        public IEnumerable<Issue> Run(IBeatmap playableBeatmap, IWorkingBeatmap workingBeatmap)
         {
-            foreach (var lyric in beatmap.HitObjects.OfType<Lyric>())
+            foreach (var lyric in playableBeatmap.HitObjects.OfType<Lyric>())
             {
                 var invalidRubyTags = checkInvalidRubyTags(lyric);
                 if (invalidRubyTags.Any())

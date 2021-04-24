@@ -22,13 +22,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateMissingPartialTranslate(this),
         };
 
-        public IEnumerable<Issue> Run(IBeatmap beatmap)
+        public IEnumerable<Issue> Run(IBeatmap playableBeatmap, IWorkingBeatmap workingBeatmap)
         {
-            var languages = availableTranslateInBeatmap(beatmap);
+            var languages = availableTranslateInBeatmap(playableBeatmap);
             if (languages == null || languages.Length == 0)
                 yield break;
 
-            var lyric = beatmap.HitObjects.OfType<Lyric>().ToList();
+            var lyric = playableBeatmap.HitObjects.OfType<Lyric>().ToList();
             if (lyric.Count == 0)
                 yield break;
 

@@ -18,10 +18,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateInvalidParentLyric(this),
         };
 
-        public IEnumerable<Issue> Run(IBeatmap beatmap)
+        public IEnumerable<Issue> Run(IBeatmap playableBeatmap, IWorkingBeatmap workingBeatmap)
         {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>();
-            foreach (var note in beatmap.HitObjects.OfType<Note>())
+            var lyrics = playableBeatmap.HitObjects.OfType<Lyric>();
+            foreach (var note in playableBeatmap.HitObjects.OfType<Note>())
             {
                 if(note.ParentLyric == null || !lyrics.Contains(note.ParentLyric))
                     yield return new IssueTemplateInvalidParentLyric(this).Create(note);
