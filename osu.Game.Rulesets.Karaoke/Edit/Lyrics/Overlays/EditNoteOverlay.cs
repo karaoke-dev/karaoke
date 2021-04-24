@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
 {
     public class EditNoteOverlay : EditOverlay
     {
-        public override float ContentHeight => 240;
+        public override float ContentHeight => 180;
 
         public EditNoteOverlay(Lyric lyric)
             : base(lyric)

@@ -87,17 +87,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             if (!isTrigger(state.Mode))
                 return false;
 
-            if (state.Mode == Mode.TimeTagEditMode)
+            var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
+            var index = drawableLyric.GetHoverIndex(position);
+
+            switch (state.Mode)
             {
-                var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
-                var index = drawableLyric.GetHoverIndex(position);
-                state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, index));
-            }
-            else
-            {
-                var position = ToLocalSpace(e.ScreenSpaceMousePosition).X / 2;
-                var index = drawableLyric.GetHoverIndex(position);
-                state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, TextIndexUtils.ToStringIndex(index)));
+                case Mode.EditMode:
+                case Mode.TypingMode:
+                    state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, TextIndexUtils.ToStringIndex(index)));
+                    break;
+
+                case Mode.TimeTagEditMode:
+                    
+                    state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, index));
+                    break;
+
+                case Mode.EditNoteMode:
+                    state.MoveHoverCaretToTargetPosition(new EditNoteCaretPosition(Lyric));
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state.Mode));
             }
 
             return base.OnMouseMove(e);
@@ -321,6 +331,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
         }
 
         private bool isTrigger(Mode mode)
-            => mode == Mode.EditMode || mode == Mode.TypingMode || mode == Mode.TimeTagEditMode;
+            => mode == Mode.EditMode || mode == Mode.TypingMode || mode == Mode.EditNoteMode || mode == Mode.TimeTagEditMode;
     }
 }
