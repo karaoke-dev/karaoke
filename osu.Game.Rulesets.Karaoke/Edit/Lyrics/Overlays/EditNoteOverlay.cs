@@ -3,14 +3,13 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
 {
     public class EditNoteOverlay : EditOverlay
     {
-        protected override float ContentHeight => 240;
+        public override float ContentHeight => 240;
 
         public EditNoteOverlay(Lyric lyric)
             : base(lyric)

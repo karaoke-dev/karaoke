@@ -8,7 +8,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
@@ -18,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
         private const int info_part_spacing = 210;
         private const float transition_duration = 600;
 
-        protected abstract float ContentHeight { get; }
+        public abstract float ContentHeight { get; }
 
         private readonly Lyric lyric;
 
@@ -66,13 +65,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
 
         protected override void PopIn()
         {
-            this.ResizeTo(new Vector2(1, ContentHeight), transition_duration, Easing.OutQuint);
+            this.ResizeHeightTo(ContentHeight, transition_duration, Easing.OutQuint);
             this.FadeIn(transition_duration, Easing.OutQuint);
         }
 
         protected override void PopOut()
         {
-            this.ResizeTo(new Vector2(1, 0), transition_duration, Easing.OutQuint);
+            this.ResizeHeightTo(0, transition_duration, Easing.OutQuint);
             this.FadeOut(transition_duration);
         }
 

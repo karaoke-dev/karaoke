@@ -75,11 +75,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             }
 
-            EditOverlay getOverlay()
-            {
-                return content?.Children.OfType<EditOverlay>().FirstOrDefault();
-            }
-
             void removeOverlay()
             {
                 var existOverlay = getOverlay();
@@ -90,6 +85,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 content.Remove(existOverlay);
             }
         }
+
+        private EditOverlay getOverlay()
+        {
+            return content?.Children.OfType<EditOverlay>().FirstOrDefault();
+        }
+
+        public float OverlayHeight => getOverlay()?.ContentHeight ?? 0;
 
         protected override Drawable CreateContent()
         {
