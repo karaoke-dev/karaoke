@@ -14,12 +14,12 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
     public static class OsuGameExtensions
     {
         public static Container GetDisplayContainer(this OsuGame game)
-            => game?.Children[3] as Container;
+            => game?.Children[7] as Container;
 
         public static OsuScreenStack GetScreenStack(this OsuGame game)
-            => (game?.Children[2] as Container)?.Children.OfType<OsuScreenStack>().FirstOrDefault();
+            => (game?.Children[3] as Container)?.Children.OfType<OsuScreenStack>().FirstOrDefault();
 
         public static SettingsOverlay GetSettingsOverlay(this OsuGame game)
-            => (game?.Children[5] as Container)?.Children.OfType<SettingsOverlay>().FirstOrDefault();
+            => (game?.Children[6] as Container)?.Children.OfType<SettingsOverlay>().FirstOrDefault();
     }
 }
