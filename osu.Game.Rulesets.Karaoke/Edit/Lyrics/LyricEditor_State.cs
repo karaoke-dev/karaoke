@@ -124,6 +124,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             switch (mode)
             {
+                case Mode.ViewMode:
+                    return null;
                 case Mode.EditMode:
                 case Mode.TypingMode:
                     return new TextCaretPosition(null, 0);

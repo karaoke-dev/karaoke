@@ -217,6 +217,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components.Lyrics
 
         protected void UpdateCaretPosition(ICaretPosition position, bool hover)
         {
+            if (position == null)
+                return;
+
             var caret = caretContainer.OfType<IDrawableCaret>().FirstOrDefault(x => x.Preview == hover);
             if (caret == null)
                 return;
