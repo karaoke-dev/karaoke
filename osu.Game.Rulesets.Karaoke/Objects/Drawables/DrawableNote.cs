@@ -81,9 +81,17 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             TextBindable.BindTo(HitObject.TextBindable);
             AlternativeTextBindable.BindTo(HitObject.AlternativeTextBindable);
-            SingersBindable.BindTo(HitObject.SingersBindable);
             DisplayBindable.BindTo(HitObject.DisplayBindable);
             ToneBindable.BindTo(HitObject.ToneBindable);
+
+            if (HitObject.ParentLyric != null)
+            {
+                HitObject.ParentLyricBindable.BindValueChanged(x =>
+                {
+                    SingersBindable.UnbindAll();
+                    SingersBindable.BindTo(x.NewValue.SingersBindable);
+                }, true);
+            }
         }
 
         protected override void OnFree()
@@ -92,9 +100,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             TextBindable.UnbindFrom(HitObject.TextBindable);
             AlternativeTextBindable.UnbindFrom(HitObject.AlternativeTextBindable);
-            SingersBindable.UnbindFrom(HitObject.SingersBindable);
             DisplayBindable.UnbindFrom(HitObject.DisplayBindable);
             ToneBindable.UnbindFrom(HitObject.ToneBindable);
+
+            if (HitObject.ParentLyric != null)
+                SingersBindable.UnbindFrom(HitObject.ParentLyric?.SingersBindable);
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)
@@ -107,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (HitObject == null)
                 return;
 
-            var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, HitObject.Singers))?.Value;
+            var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, HitObject.ParentLyric?.Singers))?.Value;
             if (noteSkin == null)
                 return;
 
