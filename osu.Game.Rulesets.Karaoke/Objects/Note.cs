@@ -77,8 +77,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public int EndIndex { get; set; }
 
+        [JsonIgnore]
+        public readonly Bindable<Lyric> ParentLyricBindable = new Bindable<Lyric>();
+
+        /// <summary>
+        /// Relative lyric.
+        /// Technically parent lyric will not change after assign, but should not restrict in model layer.
+        /// </summary>
         [JsonProperty(IsReference = true)]
-        public Lyric ParentLyric { get; set; }
+        public Lyric ParentLyric
+        {
+            get => ParentLyricBindable.Value;
+            set => ParentLyricBindable.Value = value;
+        }
 
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();
     }

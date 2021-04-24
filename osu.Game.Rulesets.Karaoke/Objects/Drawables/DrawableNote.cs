@@ -84,8 +84,14 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             DisplayBindable.BindTo(HitObject.DisplayBindable);
             ToneBindable.BindTo(HitObject.ToneBindable);
 
-            if(HitObject.ParentLyric!= null)
-                SingersBindable.BindTo(HitObject.ParentLyric.SingersBindable);
+            if (HitObject.ParentLyric != null)
+            {
+                HitObject.ParentLyricBindable.BindValueChanged(x =>
+                {
+                    SingersBindable.UnbindAll();
+                    SingersBindable.BindTo(x.NewValue.SingersBindable);
+                }, true);
+            }
         }
 
         protected override void OnFree()
