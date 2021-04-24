@@ -29,6 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                 case Mode.TypingMode:
                     return "Typing";
 
+                case Mode.EditNoteMode:
+                    return "Edit note";
+
                 case Mode.RecordMode:
                     return "Record";
 

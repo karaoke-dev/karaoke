@@ -6,10 +6,11 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
+using System;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -43,53 +44,64 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [BackgroundDependencyLoader]
         private void load(ILyricEditorState state)
         {
-            // update hover style to child
-            state.BindableHoverCaretPosition.BindValueChanged(e =>
-            {
-                if (e.NewValue == null)
-                    return;
-
-                var listItem = getListItem(e.NewValue.Lyric);
-            });
-
             // update selected style to child
             state.BindableCaretPosition.BindValueChanged(e =>
             {
-                if (e.NewValue == null)
-                    return;
-
-                var listItem = getListItem(e.NewValue.Lyric);
-                if (listItem == null)
+                var oldLyric = e.OldValue?.Lyric;
+                var newLyric = e.NewValue?.Lyric;
+                if (newLyric == null)
                     return;
 
                 // move to target position.
                 if (state.BindableAutoFocusEditLyric.Value)
                 {
                     var skippingRows = state.BindableAutoFocusEditLyricSkipRows.Value;
-                    moveItemToTargetPosition(listItem, listItem.Height * skippingRows);
+                    moveItemToTargetPosition(newLyric, oldLyric, skippingRows);
                 }
             });
-
-            DrawableLyricEditListItem getListItem(Lyric lyric)
-                => ListContainer.Children.FirstOrDefault(x => x.Model == lyric) as DrawableLyricEditListItem;
         }
 
-        private bool moveItemToTargetPosition(DrawableLyricEditListItem item, float spacing)
+        private bool moveItemToTargetPosition(Lyric newLyric, Lyric oldLyric, int skippingRows)
         {
+            var oldItem = getListItem(oldLyric);
+            var newItem = getListItem(newLyric);
+            if (newItem == null)
+                throw new ArgumentNullException(nameof(newItem));
+
+            var spacing = newItem.Height * skippingRows;
+
             // do not scroll if position is smaller then spacing.
-            var scrollPosition = ScrollContainer.GetChildPosInContent(item);
+            var scrollPosition = ScrollContainer.GetChildPosInContent(newItem);
             if (scrollPosition < spacing)
                 return false;
 
             // do not scroll if posiiton is too large and not able to move to target position.
-            var itemHeight = item.Height;
+            var itemHeight = newItem.Height + newItem.OverlayHeight;
             var contentHeight = ScrollContainer.ScrollContent.Height;
             var containerHeight = ScrollContainer.DrawHeight;
             if (contentHeight - scrollPosition + itemHeight < containerHeight - spacing)
                 return false;
 
-            ScrollContainer.ScrollTo(scrollPosition - spacing);
+            ScrollContainer.ScrollTo(scrollPosition - spacing + getOffsetPosition(newItem, oldItem));
             return true;
+
+            DrawableLyricEditListItem getListItem(Lyric lyric)
+                => ListContainer.Children.FirstOrDefault(x => x.Model == lyric) as DrawableLyricEditListItem;
+
+            float getOffsetPosition(DrawableLyricEditListItem newItem, DrawableLyricEditListItem oldItem)
+            {
+                if (oldItem == null)
+                    return 0;
+
+                var neeItemPosition = ScrollContainer.GetChildPosInContent(newItem);
+                var oldItemPosition = ScrollContainer.GetChildPosInContent(oldItem);
+                if (oldItemPosition > scrollPosition)
+                    return 0;
+
+                // if previous lyric is in front of current lyirc row, due to overlay in previous row has been removed.
+                // it will cause offset from previous row overlay.
+                return -newItem.OverlayHeight;
+            }
         }
     }
 }

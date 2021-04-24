@@ -22,6 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 { Mode.EditMode, new CuttingCaretPositionAlgorithm(lyrics) },
                 { Mode.TypingMode, new TypingCaretPositionAlgorithm(lyrics) },
+                { Mode.EditNoteMode, new EditNoteCaretPositionAlgorithm(lyrics) },
                 { Mode.RecordMode, new TimeTagCaretPositionAlgorithm(lyrics) { Mode = RecordingMovingCaretMode } },
                 { Mode.TimeTagEditMode, new TimeTagIndexCaretPositionAlgorithm(lyrics) }
             };
@@ -126,9 +127,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 case Mode.ViewMode:
                     return null;
+
                 case Mode.EditMode:
                 case Mode.TypingMode:
                     return new TextCaretPosition(null, 0);
+
+                case Mode.EditNoteMode:
+                    return new EditNoteCaretPosition(null);
 
                 case Mode.RecordMode:
                     return new TimeTagCaretPosition(null, null);
@@ -158,6 +163,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// Able to typing lyric.
         /// </summary>
         TypingMode,
+
+        /// <summary>
+        /// Aboe to create/delete/mode/split/combine note.
+        /// </summary>
+        EditNoteMode,
 
         /// <summary>
         /// Click white-space to set current time into time-tag.

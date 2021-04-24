@@ -152,13 +152,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             switch (Mode)
             {
                 case Mode.ViewMode:
-                    return false;
-
                 case Mode.EditMode:
-                    return false;
-
-                case Mode.TypingMode:
-                    // will handle in OnKeyDown
+                case Mode.TypingMode: // will handle in OnKeyDown
+                case Mode.EditNoteMode:
                     return false;
 
                 case Mode.RecordMode:
@@ -278,6 +274,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case Mode.ViewMode:
                     case Mode.EditMode:
                     case Mode.TypingMode:
+                    case Mode.EditNoteMode:
                         return;
 
                     case Mode.RecordMode:
