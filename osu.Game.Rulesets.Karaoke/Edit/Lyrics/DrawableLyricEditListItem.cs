@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -32,19 +33,62 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // Only draggable in edit mode.
                 ShowDragHandle.Value = e.NewValue == Mode.EditMode;
 
-                // should remove overlay if mod is not support that.
+                // should remove overlay when switch mode.
+                removeOverlay();
             }, true);
 
             bindableCaretPosition.BindValueChanged(e =>
             {
-                // todo : show extra overlay if hover to current lyric.
-                var editOverlay = new EditNoteOverlay(Model)
+                if (e.NewValue == null)
+                    return;
+
+                if (e.NewValue.Lyric != Model)
                 {
-                    RelativeSizeAxes = Axes.X
-                };
+                    removeOverlay();
+                    return;
+                }
+
+                // show not create again if contains same overlay.
+                var existOverlay = getOverlay();
+                if (existOverlay != null)
+                    return;
+
+                // show extra overlay if hover to current lyric.
+                var editOverlay = createOverlay(bindableMode.Value, Model);
+                if (editOverlay == null)
+                    return;
+
+                editOverlay.RelativeSizeAxes = Axes.X;
                 content.Add(editOverlay);
                 editOverlay.Show();
             });
+
+            static EditOverlay createOverlay(Mode mode, Lyric lyric)
+            {
+                switch (mode)
+                {
+                    case Mode.EditNoteMode:
+                        return new EditNoteOverlay(lyric);
+
+                    default:
+                        return null;
+                }
+            }
+
+            EditOverlay getOverlay()
+            {
+                return content?.Children.OfType<EditOverlay>().FirstOrDefault();
+            }
+
+            void removeOverlay()
+            {
+                var existOverlay = getOverlay();
+                if (existOverlay == null)
+                    return;
+
+                // todo : might remove component until overlay effect end.
+                content.Remove(existOverlay);
+            }
         }
 
         protected override Drawable CreateContent()

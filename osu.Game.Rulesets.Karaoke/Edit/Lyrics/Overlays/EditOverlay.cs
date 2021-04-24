@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
@@ -73,6 +74,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
         {
             this.ResizeTo(new Vector2(1, 0), transition_duration, Easing.OutQuint);
             this.FadeOut(transition_duration);
+        }
+
+        protected override bool OnDragStart(DragStartEvent e)
+        {
+            // prevent scroll container drag event.
+            return true;
         }
     }
 }
