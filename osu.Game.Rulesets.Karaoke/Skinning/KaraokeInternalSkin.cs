@@ -14,6 +14,7 @@ using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
@@ -25,6 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     {
         protected readonly Bindable<LyricFont> BindableFont;
         protected readonly Bindable<LyricLayout> BindableLayout;
+        protected readonly Bindable<NoteSkin> BindableNote;
 
         protected abstract string ResourceName { get; }
 
@@ -40,6 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                 BindableFont = new Bindable<LyricFont>(skin.Fonts.FirstOrDefault());
                 BindableLayout = new Bindable<LyricLayout>(skin.Layouts.FirstOrDefault());
+                BindableNote = new Bindable<NoteSkin>(skin.NoteSkins.FirstOrDefault());
             }
         }
 
@@ -63,6 +66,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                 case KaraokeSkinConfiguration.LyricLayout:
                     return SkinUtils.As<TValue>(BindableLayout);
+
+                case KaraokeSkinConfiguration.NoteStyle:
+                    return SkinUtils.As<TValue>(BindableNote);
 
                 default:
                     throw new NotSupportedException();
