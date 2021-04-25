@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
+using System;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
@@ -51,9 +52,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
                 case DrawableLyric lyric:
                     return new LyricSelectionBlueprint(lyric);
-            }
 
-            return base.CreateBlueprintFor(hitObject);
+                default:
+                    throw new IndexOutOfRangeException(nameof(hitObject));
+            }
         }
 
         protected override SelectionHandler CreateSelectionHandler() => new KaraokeSelectionHandler();
