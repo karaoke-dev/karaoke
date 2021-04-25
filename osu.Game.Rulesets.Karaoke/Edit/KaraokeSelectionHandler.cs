@@ -39,6 +39,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Resolved]
         private LyricManager lyricManager { get; set; }
 
+        protected virtual NotePlayfield NotePlayfield => ((KaraokeHitObjectComposer)composer).Playfield.NotePlayfield;
+
         protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint> selection)
         {
             if (selection.All(x => x is LyricSelectionBlueprint))
@@ -131,10 +133,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             if (!(moveEvent.Blueprint is NoteSelectionBlueprint))
                 return;
 
-            var karaokePlayfield = ((KaraokeHitObjectComposer)composer).Playfield;
-
             // top position
-            var dragHeight = karaokePlayfield.NotePlayfield.ToLocalSpace(moveEvent.ScreenSpacePosition).Y;
+            var dragHeight = NotePlayfield.ToLocalSpace(moveEvent.ScreenSpacePosition).Y;
             var lastHeight = convertToneToHeight(lastTone);
             var moveHeight = dragHeight - lastHeight;
 

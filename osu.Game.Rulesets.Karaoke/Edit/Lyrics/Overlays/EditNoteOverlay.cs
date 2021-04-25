@@ -1,18 +1,20 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
+using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
 {
@@ -63,8 +65,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
                 }
             }
 
+            // find time in first note.
+            protected override double CurrentTime => TargetLyric.StartTime;
+
             protected override Playfield CreatePlayfield()
                 => new NotePlayfield(9);
+
+            protected override ComposeBlueprintContainer CreateBlueprintContainer()
+                => new EditNoteBlueprintContainer(this);
 
             #region IPlacementHandler
 
@@ -84,6 +92,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
             }
 
             #endregion
+
+            internal class EditNoteBlueprintContainer : ComposeBlueprintContainer
+            {
+                public EditNoteBlueprintContainer(HitObjectComposer composer)
+                    : base(composer)
+                {
+                }
+
+                public override OverlaySelectionBlueprint CreateBlueprintFor(DrawableHitObject hitObject)
+                {
+                    switch (hitObject)
+                    {
+                        case DrawableNote note:
+                            return new NoteSelectionBlueprint(note);
+
+                        default:
+                            throw new IndexOutOfRangeException(nameof(hitObject));
+                    }
+                }
+
+                protected override SelectionHandler CreateSelectionHandler() => new EditNoteSelectionHandler();
+
+                internal class EditNoteSelectionHandler : KaraokeSelectionHandler
+                {
+                    [Resolved]
+                    private HitObjectComposer composer { get; set; }
+
+                    protected override NotePlayfield NotePlayfield => (composer as EditNoteHitObjectComposer).Playfield as NotePlayfield;
+                }
+            }
         }
     }
 }
