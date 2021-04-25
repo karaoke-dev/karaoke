@@ -34,8 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
                 new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.8f,
-                    Colour = Color4.Black
+                    Colour = colours.Gray2,
                 },
                 new GridContainer
                 {
