@@ -8,7 +8,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
 {
@@ -34,8 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
                 new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.8f,
-                    Colour = Color4.Black
+                    Colour = colours.Gray2,
                 },
                 new GridContainer
                 {
@@ -52,7 +50,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
                         new[]
                         {
                             CreateInfo(lyric),
-                            CreateContent(lyric)
+                            new Container
+                            {
+                                Masking = true,
+                                RelativeSizeAxes = Axes.X,
+                                AutoSizeAxes = Axes.Y,
+                                Child = CreateContent(lyric),
+                            }
                         }
                     }
                 }

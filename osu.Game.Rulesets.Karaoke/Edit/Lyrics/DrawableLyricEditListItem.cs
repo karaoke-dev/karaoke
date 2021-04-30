@@ -70,6 +70,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case Mode.EditNoteMode:
                         return new EditNoteOverlay(lyric);
 
+                    case Mode.TimeTagEditMode:
+                        return new EditTimeTagOverlay(lyric);
+
                     default:
                         return null;
                 }

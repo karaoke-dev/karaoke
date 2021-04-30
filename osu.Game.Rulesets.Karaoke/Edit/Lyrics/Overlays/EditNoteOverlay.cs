@@ -1,9 +1,20 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Objects;
+using osu.Game.Rulesets.Objects.Drawables;
+using osu.Game.Rulesets.UI;
+using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
 {
@@ -25,7 +36,101 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
         protected override Drawable CreateContent(Lyric lyric)
         {
             // todo : waiting for implementation.
-            return new Container();
+            return new EditNoteHitObjectComposer(lyric)
+            {
+                RelativeSizeAxes = Axes.X,
+                Height = 150,
+            };
+        }
+
+        internal class EditNoteHitObjectComposer : OverlayHitObjectComposer
+        {
+            protected Lyric TargetLyric { get; private set; }
+
+            public EditNoteHitObjectComposer(Lyric lyric)
+            {
+                TargetLyric = lyric;
+            }
+
+            [BackgroundDependencyLoader]
+            private void load()
+            {
+                // add all matched notes into playfield
+                var notes = EditorBeatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == TargetLyric).ToList();
+                foreach (var note in notes)
+                {
+                    // todo : should support pooling.
+                    var drawableNote = new DrawableNote(note);
+                    Playfield.Add(drawableNote);
+                }
+            }
+
+            // find time in first note.
+            protected override double CurrentTime => TargetLyric.LyricStartTime;
+
+            protected override Playfield CreatePlayfield()
+                => new EditNotePlayfield(9);
+
+            protected override ComposeBlueprintContainer CreateBlueprintContainer()
+                => new EditNoteBlueprintContainer(this);
+
+            #region IPlacementHandler
+
+            public override void BeginPlacement(HitObject hitObject)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public override void Delete(HitObject hitObject)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public override void EndPlacement(HitObject hitObject, bool commit)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            #endregion
+
+            internal class EditNotePlayfield : NotePlayfield
+            {
+                public EditNotePlayfield(int columns)
+                    : base(columns)
+                {
+                    // todo : remain only needed component.
+                }
+            }
+
+            internal class EditNoteBlueprintContainer : ComposeBlueprintContainer
+            {
+                public EditNoteBlueprintContainer(HitObjectComposer composer)
+                    : base(composer)
+                {
+                }
+
+                public override OverlaySelectionBlueprint CreateBlueprintFor(DrawableHitObject hitObject)
+                {
+                    switch (hitObject)
+                    {
+                        case DrawableNote note:
+                            return new NoteSelectionBlueprint(note);
+
+                        default:
+                            throw new IndexOutOfRangeException(nameof(hitObject));
+                    }
+                }
+
+                protected override SelectionHandler CreateSelectionHandler() => new EditNoteSelectionHandler();
+
+                internal class EditNoteSelectionHandler : KaraokeSelectionHandler
+                {
+                    [Resolved]
+                    private HitObjectComposer composer { get; set; }
+
+                    protected override NotePlayfield NotePlayfield => (composer as EditNoteHitObjectComposer).Playfield as NotePlayfield;
+                }
+            }
         }
     }
 }
