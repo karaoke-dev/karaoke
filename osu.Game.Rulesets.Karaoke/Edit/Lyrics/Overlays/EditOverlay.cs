@@ -50,7 +50,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
                         new[]
                         {
                             CreateInfo(lyric),
-                            CreateContent(lyric)
+                            new Container
+                            {
+                                Masking = true,
+                                RelativeSizeAxes = Axes.X,
+                                AutoSizeAxes = Axes.Y,
+                                Child = CreateContent(lyric),
+                            }
                         }
                     }
                 }

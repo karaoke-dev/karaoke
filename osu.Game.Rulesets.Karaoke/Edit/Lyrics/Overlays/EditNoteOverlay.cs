@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
             }
 
             // find time in first note.
-            protected override double CurrentTime => TargetLyric.StartTime;
+            protected override double CurrentTime => TargetLyric.LyricStartTime;
 
             protected override Playfield CreatePlayfield()
                 => new NotePlayfield(9);
