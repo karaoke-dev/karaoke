@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public override void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
         {
             // Got no idea why edit ruleset call this shit.
-            if (drawableRuleset is DrawableKaraokeEditRuleset)
+            if (drawableRuleset is DrawableKaraokeEditorRuleset)
                 return;
 
             base.ApplyToDrawableRuleset(drawableRuleset);

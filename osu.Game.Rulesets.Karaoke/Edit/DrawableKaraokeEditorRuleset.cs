@@ -15,7 +15,7 @@ using osu.Game.Rulesets.UI.Scrolling;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    public class DrawableKaraokeEditRuleset : DrawableKaraokeRuleset
+    public class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
     {
         private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
         private readonly Bindable<bool> bindableDisplayRubyToggle = new Bindable<bool>();
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         public override bool DisplayNotePlayfield => true;
 
-        public DrawableKaraokeEditRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
+        public DrawableKaraokeEditorRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)
         {
             bindableEditMode.BindValueChanged(e =>
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h) => null;
 
-        protected override Playfield CreatePlayfield() => new KaraokeEditPlayfield();
+        protected override Playfield CreatePlayfield() => new KaraokeEditorPlayfield();
 
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetEditConfigManager editConfigManager)

@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
     {
-        private DrawableKaraokeEditRuleset drawableRuleset;
+        private DrawableKaraokeEditorRuleset drawableRuleset;
 
         [Cached(Type = typeof(IPositionCalculator))]
         private readonly PositionCalculator positionCalculator;
@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         }
 
         protected override DrawableRuleset<KaraokeHitObject> CreateDrawableRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
-            => drawableRuleset = new DrawableKaraokeEditRuleset(ruleset, beatmap, mods);
+            => drawableRuleset = new DrawableKaraokeEditorRuleset(ruleset, beatmap, mods);
 
         protected override ComposeBlueprintContainer CreateBlueprintContainer()
             => new KaraokeBlueprintContainer(this);
