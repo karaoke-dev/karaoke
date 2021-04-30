@@ -7,9 +7,9 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    public class KaraokeEditPlayfield : KaraokePlayfield
+    public class KaraokeEditorPlayfield : KaraokePlayfield
     {
-        public KaraokeEditPlayfield()
+        public KaraokeEditorPlayfield()
         {
             LyricPlayfield.Anchor = LyricPlayfield.Origin = Anchor.BottomCentre;
             LyricPlayfield.Margin = new MarginPadding { Top = 150, Bottom = -100 };
