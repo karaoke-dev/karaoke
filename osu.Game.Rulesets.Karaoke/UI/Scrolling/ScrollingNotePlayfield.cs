@@ -30,8 +30,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
         protected readonly Container HitObjectLayer;
         protected readonly Container HitObjectArea;
 
+        public int Columns { get; }
+
         public ScrollingNotePlayfield(int columns)
         {
+            Columns = columns;
+
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
             InternalChildren = new Drawable[]
@@ -42,7 +46,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
                     Origin = Anchor.CentreLeft,
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
-                    Padding = new MarginPadding { Top = 30, Bottom = 30 },
                     Masking = true,
                     CornerRadius = 5,
                     Children = new Drawable[]

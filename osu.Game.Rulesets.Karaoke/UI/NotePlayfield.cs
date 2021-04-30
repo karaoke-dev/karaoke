@@ -27,18 +27,17 @@ namespace osu.Game.Rulesets.Karaoke.UI
     {
         private readonly BindableInt saitenPitch = new BindableInt();
 
+        private readonly CenterLine centerLine;
+
         private readonly Container judgementArea;
         private readonly JudgementContainer<DrawableNoteJudgement> judgements;
+        private readonly Drawable judgementLine;
+        private readonly SaitenMarker saitenMarker;
 
-        private readonly CenterLine centerLine;
         private readonly RealTimeSaitenVisualization realTimeSaitenVisualization;
         private readonly SaitenVisualization replaySaitenVisualization;
-        private readonly SaitenMarker saitenMarker;
-        private readonly Drawable judgementLine;
 
         private readonly SaitenStatus saitenStatus;
-
-        public int Columns { get; }
 
         // Note playfield should be present even being hidden.
         public override bool IsPresent => true;
@@ -46,7 +45,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public NotePlayfield(int columns)
             : base(columns)
         {
-            Columns = columns;
+            if (InternalChild is Container container)
+            {
+                // add padding to first children.
+                container.Padding = new MarginPadding { Top = 30, Bottom = 30 };
+            }
 
             BackgroundLayer.AddRange(new Drawable[]
             {

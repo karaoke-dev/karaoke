@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
@@ -69,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
             protected override double CurrentTime => TargetLyric.LyricStartTime;
 
             protected override Playfield CreatePlayfield()
-                => new EditNotePlayfield(9);
+                => new EditorNotePlayfield(9);
 
             protected override ComposeBlueprintContainer CreateBlueprintContainer()
                 => new EditNoteBlueprintContainer(this);
@@ -92,15 +93,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
             }
 
             #endregion
-
-            internal class EditNotePlayfield : NotePlayfield
-            {
-                public EditNotePlayfield(int columns)
-                    : base(columns)
-                {
-                    // todo : remain only needed component.
-                }
-            }
 
             internal class EditNoteBlueprintContainer : ComposeBlueprintContainer
             {
@@ -128,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
                     [Resolved]
                     private HitObjectComposer composer { get; set; }
 
-                    protected override NotePlayfield NotePlayfield => (composer as EditNoteHitObjectComposer).Playfield as NotePlayfield;
+                    protected override ScrollingNotePlayfield NotePlayfield => (composer as EditNoteHitObjectComposer).Playfield as ScrollingNotePlayfield;
                 }
             }
         }
