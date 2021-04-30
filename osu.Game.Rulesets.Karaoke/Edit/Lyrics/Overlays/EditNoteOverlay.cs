@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
             protected override double CurrentTime => TargetLyric.LyricStartTime;
 
             protected override Playfield CreatePlayfield()
-                => new NotePlayfield(9);
+                => new EditNotePlayfield(9);
 
             protected override ComposeBlueprintContainer CreateBlueprintContainer()
                 => new EditNoteBlueprintContainer(this);
@@ -92,6 +92,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
             }
 
             #endregion
+
+            internal class EditNotePlayfield : NotePlayfield
+            {
+                public EditNotePlayfield(int columns)
+                    : base(columns)
+                {
+                    // todo : remain only needed component.
+                }
+            }
 
             internal class EditNoteBlueprintContainer : ComposeBlueprintContainer
             {
