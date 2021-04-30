@@ -3,7 +3,6 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -15,32 +14,22 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.UI.Components;
-using osu.Game.Rulesets.Karaoke.UI.Position;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
-using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
 using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class NotePlayfield : ScrollingPlayfield, IKeyBindingHandler<KaraokeSaitenAction>
+    public class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<KaraokeSaitenAction>
     {
-        [Resolved]
-        private IPositionCalculator calculator { get; set; }
-
-        public const float COLUMN_SPACING = 1;
-
         private readonly BindableInt saitenPitch = new BindableInt();
-
-        private readonly FillFlowContainer<DefaultColumnBackground> columnFlow;
 
         private readonly Container judgementArea;
         private readonly JudgementContainer<DrawableNoteJudgement> judgements;
 
-        private readonly Container hitObjectArea;
-        private readonly Container hitObjectsContainer;
         private readonly CenterLine centerLine;
         private readonly RealTimeSaitenVisualization realTimeSaitenVisualization;
         private readonly SaitenVisualization replaySaitenVisualization;
@@ -55,165 +44,102 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public override bool IsPresent => true;
 
         public NotePlayfield(int columns)
+            : base(columns)
         {
             Columns = columns;
 
-            RelativeSizeAxes = Axes.X;
-            AutoSizeAxes = Axes.Y;
-            InternalChildren = new Drawable[]
+            BackgroundLayer.AddRange(new Drawable[]
             {
-                new Container
+                new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.StageBackground), _ => null)
                 {
-                    Anchor = Anchor.CentreLeft,
-                    Origin = Anchor.CentreLeft,
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Padding = new MarginPadding { Top = 30, Bottom = 30 },
-                    Masking = true,
-                    CornerRadius = 5,
-                    Children = new Drawable[]
-                    {
-                        new Container
-                        {
-                            Name = "Background mask",
-                            RelativeSizeAxes = Axes.X,
-                            AutoSizeAxes = Axes.Y,
-                            Masking = true,
-                            CornerRadius = 5,
-                            Children = new Drawable[]
-                            {
-                                new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.StageBackground), _ => null)
-                                {
-                                    RelativeSizeAxes = Axes.Both
-                                },
-                                new Box
-                                {
-                                    Name = "Background",
-                                    RelativeSizeAxes = Axes.Both,
-                                    Colour = Color4.Black,
-                                    Alpha = 0.5f
-                                },
-                                columnFlow = new FillFlowContainer<DefaultColumnBackground>
-                                {
-                                    Name = "Columns",
-                                    RelativeSizeAxes = Axes.X,
-                                    AutoSizeAxes = Axes.Y,
-                                    Direction = FillDirection.Vertical,
-                                    Padding = new MarginPadding { Top = COLUMN_SPACING, Bottom = COLUMN_SPACING },
-                                    Spacing = new Vector2(0, COLUMN_SPACING)
-                                },
-                                centerLine = new CenterLine
-                                {
-                                    Anchor = Anchor.Centre,
-                                    Origin = Anchor.Centre,
-                                }
-                            }
-                        },
-                        new Container
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Children = new Drawable[]
-                            {
-                                judgementArea = new Container
-                                {
-                                    RelativeSizeAxes = Axes.Both,
-                                    RelativePositionAxes = Axes.X,
-                                    Children = new[]
-                                    {
-                                        judgements = new JudgementContainer<DrawableNoteJudgement>
-                                        {
-                                            Anchor = Anchor.CentreLeft,
-                                            Origin = Anchor.CentreLeft,
-                                            AutoSizeAxes = Axes.Both,
-                                            BypassAutoSizeAxes = Axes.Both
-                                        },
-                                        judgementLine = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.JudgementLine), _ => new DefaultJudgementLine())
-                                        {
-                                            RelativeSizeAxes = Axes.Y,
-                                            Anchor = Anchor.Centre,
-                                            Origin = Anchor.Centre,
-                                        },
-                                        saitenMarker = new SaitenMarker
-                                        {
-                                            Alpha = 0
-                                        }
-                                    }
-                                },
-                                hitObjectArea = new Container
-                                {
-                                    Depth = 1,
-                                    RelativeSizeAxes = Axes.Both,
-                                    RelativePositionAxes = Axes.X,
-                                    Children = new Drawable[]
-                                    {
-                                        hitObjectsContainer = new Container
-                                        {
-                                            Name = "Hit objects",
-                                            RelativeSizeAxes = Axes.Both,
-                                            Child = HitObjectContainer
-                                        },
-                                        replaySaitenVisualization = new SaitenVisualization
-                                        {
-                                            Name = "Saiten Visualization",
-                                            RelativeSizeAxes = Axes.Both,
-                                            PathRadius = 1.5f,
-                                            Alpha = 0.6f
-                                        },
-                                        realTimeSaitenVisualization = new RealTimeSaitenVisualization
-                                        {
-                                            Name = "Saiten Visualization",
-                                            RelativeSizeAxes = Axes.Both,
-                                            Masking = true,
-                                            PathRadius = 2.5f,
-                                            OrientatePosition = SaitenVisualization.SaitenOrientatePosition.End
-                                        },
-                                    }
-                                }
-                            },
-                        },
-                    }
+                    Depth = 2,
+                    RelativeSizeAxes = Axes.Both
                 },
-                saitenStatus = new SaitenStatus(SaitenStatusMode.NotInitialized)
+                new Box
                 {
-                    Anchor = Anchor.BottomLeft,
-                    Origin = Anchor.BottomLeft,
+                    Depth = 1,
+                    Name = "Background",
+                    RelativeSizeAxes = Axes.Both,
+                    Colour = Color4.Black,
+                    Alpha = 0.5f
+                },
+                centerLine = new CenterLine
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
                 }
-            };
+            });
 
-            for (int i = 0; i < columns; i++)
+            HitObjectLayer.Add(judgementArea = new Container
             {
-                var column = new DefaultColumnBackground(i)
+                RelativeSizeAxes = Axes.Both,
+                RelativePositionAxes = Axes.X,
+                Children = new[]
                 {
-                    IsSpecial = i % 2 == 0
-                };
+                    judgements = new JudgementContainer<DrawableNoteJudgement>
+                    {
+                        Anchor = Anchor.CentreLeft,
+                        Origin = Anchor.CentreLeft,
+                        AutoSizeAxes = Axes.Both,
+                        BypassAutoSizeAxes = Axes.Both
+                    },
+                    judgementLine = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.JudgementLine), _ => new DefaultJudgementLine())
+                    {
+                        RelativeSizeAxes = Axes.Y,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                    },
+                    saitenMarker = new SaitenMarker
+                    {
+                        Alpha = 0
+                    }
+                }
+            });
 
-                AddColumn(column);
-            }
-
-            Direction.BindValueChanged(dir =>
+            HitObjectArea.AddRange(new Drawable[]
             {
-                bool left = dir.NewValue == ScrollingDirection.Left;
+                replaySaitenVisualization = new SaitenVisualization
+                {
+                    Name = "Saiten Visualization",
+                    RelativeSizeAxes = Axes.Both,
+                    PathRadius = 1.5f,
+                    Alpha = 0.6f
+                },
+                realTimeSaitenVisualization = new RealTimeSaitenVisualization
+                {
+                    Name = "Saiten Visualization",
+                    RelativeSizeAxes = Axes.Both,
+                    Masking = true,
+                    PathRadius = 2.5f,
+                    OrientatePosition = SaitenVisualization.SaitenOrientatePosition.End
+                },
+            });
 
-                //TODO : will apply in skin
-                var judgementAreaPercentage = 0.4f;
-                var judgementPadding = 10;
+            AddInternal(saitenStatus = new SaitenStatus(SaitenStatusMode.NotInitialized));
+        }
 
-                judgementArea.Size = new Vector2(judgementAreaPercentage, 1);
-                judgementArea.X = left ? 0 : 1 - judgementAreaPercentage;
+        protected override void OnDirectionChanged(KaraokeScrollingDirection direction)
+        {
+            base.OnDirectionChanged(direction);
 
-                judgementLine.Anchor = left ? Anchor.CentreRight : Anchor.CentreLeft;
-                saitenMarker.Anchor = saitenMarker.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
-                saitenMarker.Scale = left ? new Vector2(1, 1) : new Vector2(-1, 1);
+            bool left = direction == KaraokeScrollingDirection.Left;
 
-                judgements.Anchor = judgements.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
-                judgements.X = left ? -judgementPadding : judgementPadding;
+            //TODO : will apply in skin
+            var judgementAreaPercentage = 0.4f;
+            var judgementPadding = 10;
 
-                hitObjectArea.Size = new Vector2(1 - judgementAreaPercentage, 1);
-                hitObjectArea.X = left ? judgementAreaPercentage : 0;
+            judgementArea.Size = new Vector2(judgementAreaPercentage, 1);
+            judgementArea.X = left ? 0 : 1 - judgementAreaPercentage;
 
-                realTimeSaitenVisualization.Anchor = left ? Anchor.CentreLeft : Anchor.CentreRight;
-                realTimeSaitenVisualization.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
-            }, true);
+            judgementLine.Anchor = left ? Anchor.CentreRight : Anchor.CentreLeft;
+            saitenMarker.Anchor = saitenMarker.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
+            saitenMarker.Scale = left ? new Vector2(1, 1) : new Vector2(-1, 1);
+
+            judgements.Anchor = judgements.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
+            judgements.X = left ? -judgementPadding : judgementPadding;
+
+            realTimeSaitenVisualization.Anchor = left ? Anchor.CentreLeft : Anchor.CentreRight;
+            realTimeSaitenVisualization.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
         }
 
         protected override void LoadComplete()
@@ -226,7 +152,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             {
                 var newValue = value.NewValue;
                 var targetTone = new Tone((newValue < 0 ? newValue - 1 : newValue) / 2, newValue % 2 != 0);
-                var targetY = calculator.YPositionAt(targetTone);
+                var targetY = Calculator.YPositionAt(targetTone);
                 var targetHeight = targetTone.Half ? 5 : DefaultColumnBackground.COLUMN_HEIGHT;
                 var alpha = targetTone.Half ? 0.6f : 0.2f;
 
@@ -234,24 +160,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 centerLine.ResizeHeightTo(targetHeight, 100);
                 centerLine.Alpha = alpha;
             }, true);
-        }
-
-        protected void AddColumn(DefaultColumnBackground c)
-        {
-            columnFlow.Add(c);
-        }
-
-        protected override void OnNewDrawableHitObject(DrawableHitObject drawableHitObject)
-        {
-            if (drawableHitObject is DrawableNote drawableNote)
-            {
-                drawableNote.ToneBindable.BindValueChanged(tone =>
-                {
-                    drawableHitObject.Y = calculator.YPositionAt(tone.NewValue);
-                });
-            }
-
-            base.OnNewDrawableHitObject(drawableHitObject);
         }
 
         public void ClearReplay()
@@ -278,7 +186,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Y = calculator.YPositionAt(note.HitObject.Tone + 2)
+                Y = Calculator.YPositionAt(note.HitObject.Tone + 2)
             });
 
             // Add hit explosion
@@ -288,12 +196,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
             var explosion = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.HitExplosion), _ =>
                 new DefaultHitExplosion(judgedObject.AccentColour.Value, judgedObject is DrawableNote))
             {
-                Y = calculator.YPositionAt(note.HitObject.Tone)
+                Y = Calculator.YPositionAt(note.HitObject.Tone)
             };
 
             // todo : should be added into hitObjectArea.Explosions
             // see how mania ruleset do
-            hitObjectArea.Add(explosion);
+            HitObjectArea.Add(explosion);
 
             explosion.Delay(200).Expire(true);
         }
@@ -301,22 +209,18 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, KaraokeSessionStatics session)
         {
-            columnFlow.Children.ForEach(x => x.Colour = x.IsSpecial ? colours.Gray9 : colours.Gray0);
             replaySaitenVisualization.LineColour = Color4.White;
             realTimeSaitenVisualization.LineColour = colours.Yellow;
 
             session.BindWith(KaraokeRulesetSession.SaitenPitch, saitenPitch);
 
             session.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
-
-            RegisterPool<Note, DrawableNote>(50);
-            RegisterPool<BarLine, DrawableBarLine>(15);
         }
 
         public bool OnPressed(KaraokeSaitenAction action)
         {
             // TODO : appear marker and move position with delay time
-            saitenMarker.Y = calculator.YPositionAt(action);
+            saitenMarker.Y = Calculator.YPositionAt(action);
             saitenMarker.Alpha = 1;
 
             // Mark as singing
