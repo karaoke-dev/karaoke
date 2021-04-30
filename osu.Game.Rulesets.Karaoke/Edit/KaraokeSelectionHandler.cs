@@ -14,9 +14,9 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
-using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Screens.Edit.Compose.Components;
 using osu.Game.Skinning;
 
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Resolved]
         private LyricManager lyricManager { get; set; }
 
-        protected virtual NotePlayfield NotePlayfield => ((KaraokeHitObjectComposer)composer).Playfield.NotePlayfield;
+        protected virtual ScrollingNotePlayfield NotePlayfield => ((KaraokeHitObjectComposer)composer).Playfield.NotePlayfield;
 
         protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint> selection)
         {
@@ -139,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             var moveHeight = dragHeight - lastHeight;
 
             var deltaTone = new Tone();
-            const float trigger_height = NotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT;
+            const float trigger_height = ScrollingNotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT;
 
             if (moveHeight > trigger_height)
                 deltaTone = -new Tone { Half = true };

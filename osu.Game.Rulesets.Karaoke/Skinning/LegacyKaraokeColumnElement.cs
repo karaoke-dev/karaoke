@@ -2,14 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Bindables;
-using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
     public class LegacyKaraokeColumnElement : LegacyKaraokeElement
     {
-        protected NotePlayfield NotePlayfield => Playfield?.NotePlayfield;
+        protected ScrollingNotePlayfield NotePlayfield => Playfield?.NotePlayfield;
 
         // TODO : get current index
         protected override IBindable<T> GetKaraokeSkinConfig<T>(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, int? index = null)

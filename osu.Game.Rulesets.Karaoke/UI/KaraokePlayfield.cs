@@ -11,8 +11,10 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
+using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
 using osuTK;
 
@@ -25,9 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public WorkingBeatmap WorkingBeatmap => beatmap.Value;
 
-        public LyricPlayfield LyricPlayfield { get; }
+        public Playfield LyricPlayfield { get; }
 
-        public NotePlayfield NotePlayfield { get; }
+        public ScrollingNotePlayfield NotePlayfield { get; }
 
         public BindableBool DisplayCursor { get; set; } = new BindableBool();
         public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => !DisplayCursor.Value && base.ReceivePositionalInputAt(screenSpacePos);
@@ -40,20 +42,19 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public KaraokePlayfield()
         {
-            AddInternal(LyricPlayfield = new LyricPlayfield
+            AddInternal(LyricPlayfield = CreateLyricPlayfield().With(x =>
             {
-                RelativeSizeAxes = Axes.Both,
-            });
+                x.RelativeSizeAxes = Axes.Both;
+            }));
 
             AddInternal(new Container
             {
                 Padding = new MarginPadding(50),
                 RelativeSizeAxes = Axes.Both,
-                Child = NotePlayfield = new NotePlayfield(9)
-                {
-                    Alpha = 0,
-                    RelativeSizeAxes = Axes.X
-                }
+                Child = NotePlayfield = CreateNotePlayfield(9).With(x => {
+                    x.Alpha = 0;
+                    x.RelativeSizeAxes = Axes.X;
+                })
             });
 
             AddNested(LyricPlayfield);
@@ -87,6 +88,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
             });
             lyricPlayfieldAlpha.BindValueChanged(x => LyricPlayfield.Alpha = (float)x.NewValue);
         }
+
+        protected virtual Playfield CreateLyricPlayfield()
+            => new LyricPlayfield();
+
+        protected virtual ScrollingNotePlayfield CreateNotePlayfield(int columns)
+            => new NotePlayfield(columns);
 
         #region Pooling support
 

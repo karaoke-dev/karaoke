@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.UI;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Extensions
@@ -18,12 +19,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Extensions
             return testPlayer.GetDrawableRuleset()?.Playfield;
         }
 
-        public static NotePlayfield GetNotePlayfield(this TestPlayer testPlayer)
+        public static Playfield GetNotePlayfield(this TestPlayer testPlayer)
         {
             return testPlayer.GetPlayfield()?.NotePlayfield;
         }
 
-        public static LyricPlayfield GetLyricPlayfield(this TestPlayer testPlayer)
+        public static Playfield GetLyricPlayfield(this TestPlayer testPlayer)
         {
             return testPlayer.GetPlayfield()?.LyricPlayfield;
         }

@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             if (!(drawableRuleset.Playfield is KaraokePlayfield karaokePlayfield))
                 return;
 
-            var notePlayfield = karaokePlayfield.NotePlayfield;
+            var notePlayfield = karaokePlayfield.NotePlayfield as NotePlayfield;
             var frames = Replay.Frames.OfType<KaraokeReplayFrame>();
 
             // for safety purpose should clear reply to make sure not cause crash if apply to ruleset runs more then one times.

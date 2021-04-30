@@ -3,6 +3,7 @@
 
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
@@ -15,5 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             LyricPlayfield.Margin = new MarginPadding { Top = 150, Bottom = -100 };
             LyricPlayfield.Scale = new Vector2(0.7f);
         }
+
+        protected override ScrollingNotePlayfield CreateNotePlayfield(int columns)
+            => new EditorNotePlayfield(columns);
     }
 }
