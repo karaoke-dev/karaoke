@@ -8,10 +8,12 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Skinning.Legacy;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI.Scrolling;
+using osu.Game.Skinning;
 using osuTK;
 using System;
 
@@ -32,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
 
         public int Columns { get; }
 
-        public ScrollingNotePlayfield(int columns)
+        protected ScrollingNotePlayfield(int columns)
         {
             Columns = columns;
 
@@ -151,13 +153,40 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
             base.OnNewDrawableHitObject(drawableHitObject);
         }
 
+        private ISkinSource currentSkin;
+
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(OsuColour colours, ISkinSource skin)
         {
+            currentSkin = skin;
             columnFlow.Children.ForEach(x => x.Colour = x.IsSpecial ? colours.Gray9 : colours.Gray0);
+
+            skin.SourceChanged += onSkinChanged;
+            onSkinChanged();
 
             RegisterPool<Note, DrawableNote>(50);
             RegisterPool<BarLine, DrawableBarLine>(15);
+        }
+
+        private void onSkinChanged()
+        {
+            for (int i = 0; i < Columns; i++)
+            {
+                // apply column height from skin.
+                float? height = currentSkin.GetConfig<LegacyKaraokeSkinConfigurationLookup, float>(
+                                               new LegacyKaraokeSkinConfigurationLookup(i, LegacyKaraokeSkinConfigurationLookups.ColumnHeight, Columns))
+                                           ?.Value;
+
+                columnFlow[i].Height = height ?? DefaultColumnBackground.COLUMN_HEIGHT;
+            }
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            if (currentSkin != null)
+                currentSkin.SourceChanged -= onSkinChanged;
         }
     }
 }
