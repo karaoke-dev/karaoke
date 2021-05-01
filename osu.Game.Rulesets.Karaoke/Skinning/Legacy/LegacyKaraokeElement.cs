@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning
+namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
     /// <summary>
     /// A karaoke legacy skin element.

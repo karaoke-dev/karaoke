@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Rulesets.Karaoke.Skinning.Legacy;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
 

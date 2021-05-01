@@ -21,7 +21,7 @@ using osu.Game.Skinning;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning
+namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
     public class LegacyNotePiece : LegacyKaraokeColumnElement
     {

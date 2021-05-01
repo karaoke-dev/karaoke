@@ -5,7 +5,7 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning
+namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
     public class LegacyKaraokeColumnElement : LegacyKaraokeElement
     {
