@@ -8,10 +8,12 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI.Scrolling;
+using osu.Game.Skinning;
 using osuTK;
 using System;
 
@@ -32,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
 
         public int Columns { get; }
 
-        public ScrollingNotePlayfield(int columns)
+        protected ScrollingNotePlayfield(int columns)
         {
             Columns = columns;
 
@@ -113,27 +115,33 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
 
             Direction.BindValueChanged(dir =>
             {
-                switch (dir.NewValue)
+                Schedule(() =>
                 {
-                    case ScrollingDirection.Left:
-                        OnDirectionChanged(KaraokeScrollingDirection.Left);
-                        break;
+                    var judgementAreaPercentage = currentSkin.GetConfig<KaraokeSkinConfigurationLookup, float>(
+                                               new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.JudgementAresPrecentage, 0))
+                                           ?.Value ?? 0.4f;
 
-                    case ScrollingDirection.Right:
-                        OnDirectionChanged(KaraokeScrollingDirection.Right);
-                        break;
+                    switch (dir.NewValue)
+                    {
+                        case ScrollingDirection.Left:
+                            OnDirectionChanged(KaraokeScrollingDirection.Left, judgementAreaPercentage);
+                            break;
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(dir.NewValue));
-                }
+                        case ScrollingDirection.Right:
+                            OnDirectionChanged(KaraokeScrollingDirection.Right, judgementAreaPercentage);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(dir.NewValue));
+                    }
+                });
             });
         }
 
-        protected virtual void OnDirectionChanged(KaraokeScrollingDirection direction)
+        protected virtual void OnDirectionChanged(KaraokeScrollingDirection direction, float judgementAreaPercentage)
         {
             bool left = direction == KaraokeScrollingDirection.Left;
-            //TODO : will apply in skin
-            var judgementAreaPercentage = 0.4f;
+
             HitObjectArea.Size = new Vector2(1 - judgementAreaPercentage, 1);
             HitObjectArea.X = left ? judgementAreaPercentage : 0;
         }
@@ -151,13 +159,40 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
             base.OnNewDrawableHitObject(drawableHitObject);
         }
 
+        private ISkinSource currentSkin;
+
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(OsuColour colours, ISkinSource skin)
         {
+            currentSkin = skin;
             columnFlow.Children.ForEach(x => x.Colour = x.IsSpecial ? colours.Gray9 : colours.Gray0);
+
+            skin.SourceChanged += onSkinChanged;
+            onSkinChanged();
 
             RegisterPool<Note, DrawableNote>(50);
             RegisterPool<BarLine, DrawableBarLine>(15);
+        }
+
+        private void onSkinChanged()
+        {
+            for (int i = 0; i < Columns; i++)
+            {
+                // apply column height from skin.
+                float? height = currentSkin.GetConfig<KaraokeSkinConfigurationLookup, float>(
+                                               new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight, i))
+                                           ?.Value;
+
+                columnFlow[i].Height = height ?? DefaultColumnBackground.COLUMN_HEIGHT;
+            }
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            if (currentSkin != null)
+                currentSkin.SourceChanged -= onSkinChanged;
         }
     }
 }

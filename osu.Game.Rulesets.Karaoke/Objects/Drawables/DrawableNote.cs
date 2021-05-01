@@ -9,8 +9,8 @@ using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Judgements;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces;
 using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Scoring;
@@ -116,6 +116,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             if (HitObject == null)
                 return;
+
+            var columns = 9; // todo : get real number
+            var column = 0; // todo : get real number
+            var columnHeight = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(new KaraokeSkinConfigurationLookup(columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight, column))?.Value;
+            if (columnHeight != null)
+                Height = columnHeight.Value; // todo : might have a better way to assign height.
 
             var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, HitObject.ParentLyric?.Singers))?.Value;
             if (noteSkin == null)

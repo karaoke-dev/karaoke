@@ -9,6 +9,16 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     public readonly struct KaraokeSkinLookup
     {
         /// <summary>
+        /// Parts wants to be searched.
+        /// </summary>
+        public KaraokeSkinConfiguration Config { get; }
+
+        /// <summary>
+        /// Lookup index
+        /// </summary>
+        public int Lookup { get; }
+
+        /// <summary>
         /// Ctor for <see cref="KaraokeSkinConfiguration.LyricStyle"/> and <see cref="KaraokeSkinConfiguration.NoteStyle"/>
         /// </summary>
         /// <param name="config"></param>
@@ -24,11 +34,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             Config = config;
             Lookup = lookup;
-            Editor = false;
         }
-
-        public KaraokeSkinConfiguration Config { get; }
-        public int Lookup { get; }
-        public bool Editor { get; }
     }
 }

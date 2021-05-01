@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Objects.Drawables.Pieces
+namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 {
     public class SingerDisplay : Container, IHasCurrentValue<IReadOnlyList<Singer>>
     {

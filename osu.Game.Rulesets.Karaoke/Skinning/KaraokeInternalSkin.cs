@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         public Texture GetTexture(string componentName, WrapMode wrapModeS, WrapMode wrapModeT) => null;
 
-        public IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
+        public virtual IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
         {
             if (!(lookup is KaraokeSkinLookup skinLookup))
                 throw new NotSupportedException();

@@ -3,13 +3,13 @@
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
-    public class LegacyKaraokeSkinConfigurationLookup
+    public class KaraokeSkinConfigurationLookup
     {
         public readonly int Columns;
         public readonly LegacyKaraokeSkinConfigurationLookups Lookup;
         public readonly int? TargetColumn;
 
-        public LegacyKaraokeSkinConfigurationLookup(int columns, LegacyKaraokeSkinConfigurationLookups lookup, int? targetColumn = null)
+        public KaraokeSkinConfigurationLookup(int columns, LegacyKaraokeSkinConfigurationLookups lookup, int? targetColumn = null)
         {
             Columns = columns;
             Lookup = lookup;
@@ -29,6 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         JudgementLineHeadImage,
         JudgementLineTailImage,
         JudgementLineBodyImage,
+        JudgementAresPrecentage,
         ShowJudgementLine,
         NoteHeadImage,
         NoteTailImage,

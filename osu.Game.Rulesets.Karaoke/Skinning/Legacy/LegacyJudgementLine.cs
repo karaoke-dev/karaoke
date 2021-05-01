@@ -12,7 +12,7 @@ using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning
+namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
     public class LegacyJudgementLine : LegacyKaraokeElement
     {
