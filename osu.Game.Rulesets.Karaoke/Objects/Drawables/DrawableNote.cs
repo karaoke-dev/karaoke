@@ -117,6 +117,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (HitObject == null)
                 return;
 
+            var columns = 9; // todo : get real number
+            var column = 0; // todo : get real number
+            var columnHeight = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(new KaraokeSkinConfigurationLookup(columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight, column))?.Value;
+            if (columnHeight != null)
+                Height = columnHeight.Value; // todo : might have a better way to assign height.
+
             var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, HitObject.ParentLyric?.Singers))?.Value;
             if (noteSkin == null)
                 return;
