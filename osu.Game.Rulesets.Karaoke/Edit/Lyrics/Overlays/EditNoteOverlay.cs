@@ -10,7 +10,6 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
@@ -46,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
 
         internal class EditNoteHitObjectComposer : OverlayHitObjectComposer
         {
-            protected Lyric TargetLyric { get; private set; }
+            protected Lyric TargetLyric { get; }
 
             public EditNoteHitObjectComposer(Lyric lyric)
             {
@@ -58,6 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
             {
                 // add all matched notes into playfield
                 var notes = EditorBeatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == TargetLyric).ToList();
+
                 foreach (var note in notes)
                 {
                     // todo : should support pooling.
@@ -79,17 +79,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
 
             public override void BeginPlacement(HitObject hitObject)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
 
             public override void Delete(HitObject hitObject)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
 
             public override void EndPlacement(HitObject hitObject, bool commit)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
 
             #endregion
@@ -120,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
                     [Resolved]
                     private HitObjectComposer composer { get; set; }
 
-                    protected override ScrollingNotePlayfield NotePlayfield => (composer as EditNoteHitObjectComposer).Playfield as ScrollingNotePlayfield;
+                    protected override ScrollingNotePlayfield NotePlayfield => (composer as EditNoteHitObjectComposer)?.Playfield as ScrollingNotePlayfield;
                 }
             }
         }

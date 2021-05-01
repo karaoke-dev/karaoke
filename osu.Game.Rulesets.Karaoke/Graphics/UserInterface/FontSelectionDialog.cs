@@ -42,6 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
                 // should calculate available size until has bindable text.
                 fontSizeProperty.Items.Clear();
+
                 if (value is BindableFontUsage bindableFontUsage)
                 {
                     fontSizeProperty.Items.AddRange(FontUtils.DefaultFontSize(bindableFontUsage.MinFontSize, bindableFontUsage.MaxFontSize));

@@ -21,9 +21,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public IEnumerable<Issue> Run(IBeatmap playableBeatmap, IWorkingBeatmap workingBeatmap)
         {
             var lyrics = playableBeatmap.HitObjects.OfType<Lyric>();
+
             foreach (var note in playableBeatmap.HitObjects.OfType<Note>())
             {
-                if(note.ParentLyric == null || !lyrics.Contains(note.ParentLyric))
+                if (note.ParentLyric == null || !lyrics.Contains(note.ParentLyric))
                     yield return new IssueTemplateInvalidParentLyric(this).Create(note);
             }
         }
@@ -31,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public class IssueTemplateInvalidParentLyric : IssueTemplate
         {
             public IssueTemplateInvalidParentLyric(ICheck check)
-                : base(check, IssueType.Problem, "Note must have its parent lyric. If see this issue, please contact to developrt.")
+                : base(check, IssueType.Problem, "Note must have its parent lyric. If see this issue, please contact to ruleset developer.")
             {
             }
 

@@ -34,11 +34,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             var notInBeatmapLyric = new Lyric();
 
             var note = new Note();
+
             switch (lyricIndex)
             {
                 case 0:
                     note.ParentLyric = lyric;
-                break;
+                    break;
 
                 case 1:
                     note.ParentLyric = notInBeatmapLyric;

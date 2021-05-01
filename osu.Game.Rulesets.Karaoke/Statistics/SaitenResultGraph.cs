@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
         {
             public NoteGraph(ScoreInfo score)
             {
-                var noteEvents = score.HitEvents?.Where(x => x.HitObject is Note note && note.Display).ToList() ?? new List<HitEvent>();
+                var noteEvents = score.HitEvents?.Where(x => x.HitObject is Note { Display: true }).ToList() ?? new List<HitEvent>();
 
                 foreach (var noteEvent in noteEvents)
                 {

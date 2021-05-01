@@ -51,9 +51,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
             var skinLookups = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Style)?.Value;
 
-            foreach (var skinLookup in skinLookups)
+            if (skinLookups == null)
+                return;
+
+            foreach (var (key, value) in skinLookups)
             {
-                PreviewFontSelections.Add(skinLookup.Key, skinLookup.Value);
+                PreviewFontSelections.Add(key, value);
             }
         }
 

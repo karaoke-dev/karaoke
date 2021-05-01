@@ -279,7 +279,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             {
                 var hasCultureInfo = v.NewValue != null;
 
-                // disable and clear textbox if contains no language in language list.
+                // disable and clear text box if contains no language in language list.
                 textBox.Text = hasCultureInfo ? translateManager.GetTranslate(lyric, v.NewValue) : null;
                 ScheduleAfterChildren(() =>
                 {

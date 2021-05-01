@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
         /// <summary>
         /// Retrieve the relevant <see cref="Playfield"/> at a specified screen-space position.
         /// In cases where a ruleset doesn't require custom logic (due to nested playfields, for example)
-        /// this will return the ruleset's main playfield.
+        /// this will return the ruleset main playfield.
         /// </summary>
         /// <param name="screenSpacePosition">The screen-space position to query.</param>
         /// <returns>The most relevant <see cref="Playfield"/>.</returns>

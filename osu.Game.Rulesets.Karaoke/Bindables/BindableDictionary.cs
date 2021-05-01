@@ -41,9 +41,9 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         {
             if (items != null)
             {
-                foreach (var item in items)
+                foreach (var (key, value) in items)
                 {
-                    collection.Add(item.Key, item.Value);
+                    collection.Add(key, value);
                 }
             }
         }

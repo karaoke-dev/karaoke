@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
     public static class FontUtils
     {
         /// <summary>
-        /// For seleting size
+        /// For selecting size
         /// </summary>
         /// <returns></returns>
         public static float[] DefaultFontSize()

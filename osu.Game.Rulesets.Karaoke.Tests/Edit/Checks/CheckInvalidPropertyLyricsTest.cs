@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             Assert.AreEqual(issueTemplate != null, hasIssue);
         }
 
-        [TestCase(new[] { 1, 2, 3}, false)]
+        [TestCase(new[] { 1, 2, 3 }, false)]
         [TestCase(new[] { 1 }, false)]
         [TestCase(new[] { 100 }, false)] // although singer is not exist, but should not check in this test case.
         [TestCase(new int[] { }, true)]

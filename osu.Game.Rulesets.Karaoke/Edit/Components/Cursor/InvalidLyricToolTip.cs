@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                         break;
 
                     case TimeInvalid.StartTimeInvalid:
-                        invalidMessage.AddAlertParagraph("Start time is larger than minimux time tag's time.");
+                        invalidMessage.AddAlertParagraph("Start time is larger than minimum time tag's time.");
                         break;
 
                     case TimeInvalid.EndTimeInvalid:

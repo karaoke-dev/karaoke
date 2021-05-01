@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
         protected virtual Drawable CreateTimeLinePart(KaraokeHitObjectComposer composer)
         {
             // todo : implement Drawable.Empty() args.
-            return new SingerTimeline(Drawable.Empty())
+            return new SingerTimeline(Empty())
             {
                 RelativeSizeAxes = Axes.Both,
                 Child = new LyricBlueprintContainer(composer, singer)

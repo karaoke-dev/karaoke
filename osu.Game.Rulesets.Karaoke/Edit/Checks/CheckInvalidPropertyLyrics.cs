@@ -24,15 +24,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         {
             foreach (var lyric in playableBeatmap.HitObjects.OfType<Lyric>())
             {
-                if(lyric.Language == null)
+                if (lyric.Language == null)
                     yield return new IssueTemplateNotFillLanguage(this).Create(lyric);
 
                 // todo : check lyric layout.
 
-                if(string.IsNullOrWhiteSpace(lyric.Text))
+                if (string.IsNullOrWhiteSpace(lyric.Text))
                     yield return new IssueTemplateNoText(this).Create(lyric);
 
-                if(lyric.Singers == null || lyric.Singers.Length == 0)
+                if (lyric.Singers == null || lyric.Singers.Length == 0)
                     yield return new IssueTemplateNoSinger(this).Create(lyric);
 
                 // todo : check is singer in singer list.

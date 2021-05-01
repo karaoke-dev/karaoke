@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             TestMoveUp(lyrics, caretPosition, newCaretPosition);
         }
 
-        [TestCase(nameof(singleLyric), 0,  NOT_EXIST)] // cannot move down if at bottom index.
+        [TestCase(nameof(singleLyric), 0, NOT_EXIST)] // cannot move down if at bottom index.
         [TestCase(nameof(singleLyricWithNoText), 0, NOT_EXIST)]
         [TestCase(nameof(twoLyricsWithText), 0, 1)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 1)]

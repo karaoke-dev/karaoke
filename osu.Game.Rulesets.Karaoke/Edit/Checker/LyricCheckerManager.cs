@@ -86,6 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
         public class LyricVerifier : IBeatmapVerifier
         {
             private readonly List<ICheck> checks;
+
             public LyricVerifier(LyricCheckerConfig config)
             {
                 checks = new List<ICheck>

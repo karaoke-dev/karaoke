@@ -12,8 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.IO.Archives
 {
     /// <summary>
     /// For reading cached font reader.
-    /// Cached font will be saved as xxx.cachedfnt into cached folder.
-    /// And notice that this class is just cupied ftom <see cref="ZipArchiveReader"/>
+    /// Cached font will be saved as xxx.cached fnt into cached folder.
+    /// And notice that this class is just copied from <see cref="ZipArchiveReader"/>
     /// </summary>
     public class CachedFontArchiveReader : ArchiveReader
     {
