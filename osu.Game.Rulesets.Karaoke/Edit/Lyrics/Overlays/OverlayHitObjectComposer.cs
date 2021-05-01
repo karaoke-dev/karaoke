@@ -179,7 +179,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
         {
             public IBindable<ScrollingDirection> Direction { get; } = new Bindable<ScrollingDirection>(ScrollingDirection.Left);
 
-            public IBindable<double> TimeRange { get; } = new BindableDouble(1500);
+            public IBindable<double> TimeRange { get; } = new BindableDouble(5000);
 
             public IScrollAlgorithm Algorithm { get; set; } = new SequentialScrollAlgorithm(new List<MultiplierControlPoint>());
         }
