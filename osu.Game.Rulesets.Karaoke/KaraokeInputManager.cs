@@ -85,8 +85,7 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override void HandleInputStateChange(InputStateChangeEvent inputStateChange)
         {
-            if (inputStateChange is ReplayInputHandler.ReplayStateChangeEvent<KaraokeSaitenAction> replayStateChanged
-                && replayStateChanged.Input is ReplayInputHandler.ReplayState<KaraokeSaitenAction> replayState)
+            if (inputStateChange is ReplayInputHandler.ReplayStateChangeEvent<KaraokeSaitenAction> { Input: ReplayInputHandler.ReplayState<KaraokeSaitenAction> replayState } replayStateChanged)
             {
                 // Deal with replay event
                 // Release event should be trigger first

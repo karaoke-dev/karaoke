@@ -40,13 +40,13 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 new GridContainer
                 {
                     RelativeSizeAxes = Axes.Both,
-                    RowDimensions = new []
+                    RowDimensions = new[]
                     {
                         new Dimension(GridSizeMode.Relative, 0.6f),
                         new Dimension(GridSizeMode.Relative, 0.2f),
                         new Dimension(GridSizeMode.Relative, 0.2f),
                     },
-                    Content = new []
+                    Content = new[]
                     {
                         new Drawable[]
                         {
@@ -155,7 +155,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                         },
                         Spacing = new Vector2(15),
                         Direction = FillDirection.Horizontal,
-                        Children = new Drawable []
+                        Children = new Drawable[]
                         {
                             new SpriteIcon
                             {
@@ -238,7 +238,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     if (loudness > maxLoudness)
                         maxLoudness = loudness;
 
-                    if(loudness > rippleLoudness)
+                    if (loudness > rippleLoudness)
                         rippleLoudness = value;
 
                     loudnessMarker.Width = calculatePosition(Loudness);

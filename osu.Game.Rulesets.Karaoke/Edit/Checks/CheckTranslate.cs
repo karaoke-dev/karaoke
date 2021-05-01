@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 {
                     yield return new IssueTemplateMissingTranslate(this).Create(language);
                 }
-                else if(notTranslateLyrics.Any())
+                else if (notTranslateLyrics.Any())
                 {
                     yield return new IssueTemplateMissingPartialTranslate(this).Create(language);
                 }
