@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                     break;
 
                 case Mode.TimeTagEditMode:
-                    
+
                     state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, index));
                     break;
 
@@ -149,10 +149,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                 lyricManager?.SplitLyric(Lyric, textCaretPosition.Index);
                 return true;
             }
-            else
-            {
-                throw new NotSupportedException(nameof(position));
-            }
+
+            throw new NotSupportedException(nameof(position));
         }
 
         [BackgroundDependencyLoader]

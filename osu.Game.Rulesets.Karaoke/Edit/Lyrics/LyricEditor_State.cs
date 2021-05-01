@@ -165,7 +165,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         TypingMode,
 
         /// <summary>
-        /// Aboe to create/delete/mode/split/combine note.
+        /// Able to create/delete/mode/split/combine note.
         /// </summary>
         EditNoteMode,
 

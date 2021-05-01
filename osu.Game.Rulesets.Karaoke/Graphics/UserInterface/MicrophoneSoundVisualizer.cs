@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         private readonly Box background;
         private readonly MicrophoneInfo microphoneInfo;
         private readonly LoudnessVisualizer loudnessVisualizer;
-        private readonly PitchVisualier pitchVisualier;
+        private readonly PitchVisualizer pitchVisualizer;
 
         public MicrophoneSoundVisualizer()
         {
@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                         },
                         new Drawable[]
                         {
-                            pitchVisualier = new PitchVisualier
+                            pitchVisualizer = new PitchVisualizer
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
@@ -115,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         protected virtual bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
         {
             loudnessVisualizer.Loudness = 0;
-            pitchVisualier.Pitch = 0;
+            pitchVisualizer.Pitch = 0;
 
             return false;
         }
@@ -127,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
             // todo : should convert to better value.
             loudnessVisualizer.Loudness = loudness;
-            pitchVisualier.Pitch = pitch / 8;
+            pitchVisualizer.Pitch = pitch / 8;
 
             return false;
         }
@@ -278,7 +278,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 => loudness / max_loudness * var_width;
         }
 
-        internal class PitchVisualier : CompositeDrawable
+        internal class PitchVisualizer : CompositeDrawable
         {
             private const int dot_width = 5;
             private const int dot_height = 10;
@@ -288,7 +288,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             private readonly FillFlowContainer dots;
             private readonly PitchDot currentDot;
 
-            public PitchVisualier()
+            public PitchVisualizer()
             {
                 // todo : draw that stupid shapes with progressive background color.
                 AutoSizeAxes = Axes.Both;

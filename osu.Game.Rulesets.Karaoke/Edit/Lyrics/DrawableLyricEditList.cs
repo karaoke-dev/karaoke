@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (scrollPosition < spacing)
                 return false;
 
-            // do not scroll if posiiton is too large and not able to move to target position.
+            // do not scroll if position is too large and not able to move to target position.
             var itemHeight = newItem.Height + newItem.OverlayHeight;
             var contentHeight = ScrollContainer.ScrollContent.Height;
             var containerHeight = ScrollContainer.DrawHeight;
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (oldItemPosition > scrollPosition)
                     return 0;
 
-                // if previous lyric is in front of current lyirc row, due to overlay in previous row has been removed.
+                // if previous lyric is in front of current lyric row, due to overlay in previous row has been removed.
                 // it will cause offset from previous row overlay.
                 return -newItem.OverlayHeight;
             }

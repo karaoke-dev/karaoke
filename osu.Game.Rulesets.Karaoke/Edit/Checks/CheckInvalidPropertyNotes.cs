@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public class IssueTemplateInvalidParentLyric : IssueTemplate
         {
             public IssueTemplateInvalidParentLyric(ICheck check)
-                : base(check, IssueType.Problem, "Note must have its parent lyric. If see this issue, please contact to developrt.")
+                : base(check, IssueType.Problem, "Note must have its parent lyric. If see this issue, please contact to ruleset developer.")
             {
             }
 
