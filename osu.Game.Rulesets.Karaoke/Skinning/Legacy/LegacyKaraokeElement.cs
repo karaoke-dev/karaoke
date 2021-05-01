@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         /// <param name="lookup">The value to retrieve.</param>
         /// <param name="index">If not null, denotes the index of the column to which the entry applies.</param>
         protected virtual IBindable<T> GetKaraokeSkinConfig<T>(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, int? index = null)
-            => skin.GetConfig<LegacyKaraokeSkinConfigurationLookup, T>(
-                new LegacyKaraokeSkinConfigurationLookup(Playfield?.NotePlayfield.Columns ?? 4, lookup, index));
+            => skin.GetConfig<KaraokeSkinConfigurationLookup, T>(
+                new KaraokeSkinConfigurationLookup(Playfield?.NotePlayfield.Columns ?? 4, lookup, index));
     }
 }

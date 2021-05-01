@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Skinning.Legacy;
+using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Objects.Drawables;
@@ -173,8 +173,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
             for (int i = 0; i < Columns; i++)
             {
                 // apply column height from skin.
-                float? height = currentSkin.GetConfig<LegacyKaraokeSkinConfigurationLookup, float>(
-                                               new LegacyKaraokeSkinConfigurationLookup(i, LegacyKaraokeSkinConfigurationLookups.ColumnHeight, Columns))
+                float? height = currentSkin.GetConfig<KaraokeSkinConfigurationLookup, float>(
+                                               new KaraokeSkinConfigurationLookup(i, LegacyKaraokeSkinConfigurationLookups.ColumnHeight, Columns))
                                            ?.Value;
 
                 columnFlow[i].Height = height ?? DefaultColumnBackground.COLUMN_HEIGHT;

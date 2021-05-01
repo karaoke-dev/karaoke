@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public override IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
         {
-            if (lookup is LegacyKaraokeSkinConfigurationLookup skinConfigurationLookup)
+            if (lookup is KaraokeSkinConfigurationLookup skinConfigurationLookup)
             {
                 switch (skinConfigurationLookup.Lookup)
                 {
