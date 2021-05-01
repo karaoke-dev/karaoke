@@ -115,27 +115,33 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
 
             Direction.BindValueChanged(dir =>
             {
-                switch (dir.NewValue)
+                Schedule(() =>
                 {
-                    case ScrollingDirection.Left:
-                        OnDirectionChanged(KaraokeScrollingDirection.Left);
-                        break;
+                    var judgementAreaPercentage = currentSkin.GetConfig<KaraokeSkinConfigurationLookup, float>(
+                                               new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.JudgementAresPrecentage, 0))
+                                           ?.Value ?? 0.4f;
 
-                    case ScrollingDirection.Right:
-                        OnDirectionChanged(KaraokeScrollingDirection.Right);
-                        break;
+                    switch (dir.NewValue)
+                    {
+                        case ScrollingDirection.Left:
+                            OnDirectionChanged(KaraokeScrollingDirection.Left, judgementAreaPercentage);
+                            break;
 
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(dir.NewValue));
-                }
+                        case ScrollingDirection.Right:
+                            OnDirectionChanged(KaraokeScrollingDirection.Right, judgementAreaPercentage);
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(dir.NewValue));
+                    }
+                });
             });
         }
 
-        protected virtual void OnDirectionChanged(KaraokeScrollingDirection direction)
+        protected virtual void OnDirectionChanged(KaraokeScrollingDirection direction, float judgementAreaPercentage)
         {
             bool left = direction == KaraokeScrollingDirection.Left;
-            //TODO : will apply in skin
-            var judgementAreaPercentage = 0.4f;
+
             HitObjectArea.Size = new Vector2(1 - judgementAreaPercentage, 1);
             HitObjectArea.X = left ? judgementAreaPercentage : 0;
         }
@@ -174,7 +180,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
             {
                 // apply column height from skin.
                 float? height = currentSkin.GetConfig<KaraokeSkinConfigurationLookup, float>(
-                                               new KaraokeSkinConfigurationLookup(i, LegacyKaraokeSkinConfigurationLookups.ColumnHeight, Columns))
+                                               new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight, i))
                                            ?.Value;
 
                 columnFlow[i].Height = height ?? DefaultColumnBackground.COLUMN_HEIGHT;

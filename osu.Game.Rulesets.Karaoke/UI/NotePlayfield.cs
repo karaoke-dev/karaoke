@@ -121,14 +121,13 @@ namespace osu.Game.Rulesets.Karaoke.UI
             AddInternal(saitenStatus = new SaitenStatus(SaitenStatusMode.NotInitialized));
         }
 
-        protected override void OnDirectionChanged(KaraokeScrollingDirection direction)
+        protected override void OnDirectionChanged(KaraokeScrollingDirection direction, float judgementAreaPercentage)
         {
-            base.OnDirectionChanged(direction);
+            base.OnDirectionChanged(direction, judgementAreaPercentage);
 
             bool left = direction == KaraokeScrollingDirection.Left;
 
             //TODO : will apply in skin
-            var judgementAreaPercentage = 0.4f;
             var judgementPadding = 10;
 
             judgementArea.Size = new Vector2(judgementAreaPercentage, 1);
