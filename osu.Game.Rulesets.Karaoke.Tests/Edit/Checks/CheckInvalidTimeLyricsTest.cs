@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -38,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             lyric.TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags);
 
             var issue = run(lyric).OfType<LyricTimeIssue>().FirstOrDefault();
-            var invalidTimeTagDictionaryKeys = issue?.InvalidLyricTime ?? new TimeInvalid[] { };
+            var invalidTimeTagDictionaryKeys = issue?.InvalidLyricTime ?? Array.Empty<TimeInvalid>();
             Assert.AreEqual(invalidTimeTagDictionaryKeys, invalid);
         }
 
@@ -56,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             };
 
             var issue = run(lyric).OfType<TimeTagIssue>().FirstOrDefault();
-            var invalidTimeTagDictionaryKeys = issue?.InvalidTimeTags.Keys.ToArray() ?? new TimeTagInvalid[] { };
+            var invalidTimeTagDictionaryKeys = issue?.InvalidTimeTags.Keys.ToArray() ?? Array.Empty<TimeTagInvalid>();
             Assert.AreEqual(invalidTimeTagDictionaryKeys, invalids);
         }
 

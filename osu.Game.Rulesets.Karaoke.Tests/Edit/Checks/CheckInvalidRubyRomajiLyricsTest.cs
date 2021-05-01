@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -43,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             };
 
             var issue = run(lyric).OfType<RubyTagIssue>().FirstOrDefault();
-            var invalidRubyTagDictionaryKeys = issue?.InvalidRubyTags.Keys.ToArray() ?? new RubyTagInvalid[] { };
+            var invalidRubyTagDictionaryKeys = issue?.InvalidRubyTags.Keys.ToArray() ?? Array.Empty<RubyTagInvalid>();
             Assert.AreEqual(invalidRubyTagDictionaryKeys, invalids);
         }
 
@@ -62,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             };
 
             var issue = run(lyric).OfType<RomajiTagIssue>().FirstOrDefault();
-            var invalidRomajiTagDictionaryKeys = issue?.InvalidRomajiTags.Keys.ToArray() ?? new RomajiTagInvalid[] { };
+            var invalidRomajiTagDictionaryKeys = issue?.InvalidRomajiTags.Keys.ToArray() ?? Array.Empty<RomajiTagInvalid>();
             Assert.AreEqual(invalidRomajiTagDictionaryKeys, invalids);
         }
 

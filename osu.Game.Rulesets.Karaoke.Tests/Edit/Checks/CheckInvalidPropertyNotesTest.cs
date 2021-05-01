@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             {
                 case 0:
                     note.ParentLyric = lyric;
-                break;
+                    break;
 
                 case 1:
                     note.ParentLyric = notInBeatmapLyric;
