@@ -34,6 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             var notInBeatmapLyric = new Lyric();
 
             var note = new Note();
+
             switch (lyricIndex)
             {
                 case 0:

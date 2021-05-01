@@ -190,7 +190,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 var forceUseDefault = forceUseDefaultFont();
                 var font = config?.Get<FontUsage>(setting) ?? FontUsage.Default;
 
-                if(forceUseDefault || charSize == null)
+                if (forceUseDefault || charSize == null)
                     return font;
 
                 return font.With(size: charSize.Value);
@@ -203,8 +203,10 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                         case KaraokeRulesetSetting.RubyFont:
                         case KaraokeRulesetSetting.RomajiFont:
                             return config?.Get<bool>(KaraokeRulesetSetting.ForceUseDefaultFont) ?? false;
+
                         case KaraokeRulesetSetting.TranslateFont:
                             return config?.Get<bool>(KaraokeRulesetSetting.ForceUseDefaultTranslateFont) ?? false;
+
                         default:
                             throw new InvalidOperationException(nameof(setting));
                     }

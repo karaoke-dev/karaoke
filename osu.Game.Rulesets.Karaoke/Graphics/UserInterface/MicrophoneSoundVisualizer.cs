@@ -180,7 +180,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 set => deviceName.Text = value;
             }
 
-
             [BackgroundDependencyLoader]
             private void load(OsuColour colours)
             {
@@ -338,6 +337,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                         return;
 
                     this.showPitch = showPitch;
+
                     if (showPitch)
                     {
                         currentDot.FadeIn(200);

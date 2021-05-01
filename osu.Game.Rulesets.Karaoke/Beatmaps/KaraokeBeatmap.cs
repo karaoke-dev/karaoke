@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
             if (scorable)
             {
-                int notes = HitObjects.Count(s => s is Note note && note.Display);
+                int notes = HitObjects.Count(s => s is Note { Display: true });
                 defaultStatistic.Add(new BeatmapStatistic
                 {
                     Name = @"Note",

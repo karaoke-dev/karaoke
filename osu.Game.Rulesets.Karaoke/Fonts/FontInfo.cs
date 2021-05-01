@@ -1,20 +1,19 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Fonts
 {
     public class FontInfo
     {
-        public string FileName { get; set; }
+        public string FileName { get; }
 
-        public string Family { get; set; }
+        public string Family { get; }
 
-        public string Weight { get; set; }
+        public string Weight { get; }
 
-        public bool UserImport { get; set; }
+        public bool UserImport { get; }
 
         public FontInfo(string fileName, bool userImport = false)
         {
@@ -22,6 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
             UserImport = userImport;
 
             var parts = fileName.Split('-');
+
             switch (parts.Length)
             {
                 case 1:
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
 
                 default:
                     Weight = fileName.Split('-').LastOrDefault();
-                    Family = string.Join('-', parts.Take(parts.Count() - 1));
+                    Family = string.Join('-', parts.Take(parts.Length - 1));
                     break;
             }
         }

@@ -118,9 +118,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
                     case ScrollingDirection.Left:
                         OnDirectionChanged(KaraokeScrollingDirection.Left);
                         break;
+
                     case ScrollingDirection.Right:
                         OnDirectionChanged(KaraokeScrollingDirection.Right);
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(dir.NewValue));
                 }
