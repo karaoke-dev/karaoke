@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Timeline
     /// <summary>
     /// This is the copy version of official <see cref="TimelineBlueprintContainer"/> because it's mark as internal
     /// </summary>
-    public class TimelineBlueprintContainer : BlueprintContainer
+    public class TimelineBlueprintContainer : EditorBlueprintContainer
     {
         [Resolved(CanBeNull = true)]
         private Game.Screens.Edit.Compose.Components.Timeline.Timeline timeline { get; set; }
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Timeline
 
         private Bindable<HitObject> placement;
 
-        private SelectionBlueprint placementBlueprint;
+        private SelectionBlueprint<HitObject> placementBlueprint;
 
         public TimelineBlueprintContainer(HitObjectComposer composer)
             : base(composer)
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Timeline
             }
         }
 
-        protected override Container<SelectionBlueprint> CreateSelectionBlueprintContainer() => new TimelineSelectionBlueprintContainer { RelativeSizeAxes = Axes.Both };
+        protected override Container<SelectionBlueprint<HitObject>> CreateSelectionBlueprintContainer() => new TimelineSelectionBlueprintContainer { RelativeSizeAxes = Axes.Both };
 
         protected override void OnDrag(DragEvent e)
         {
@@ -107,9 +107,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Timeline
             base.Update();
         }
 
-        protected override SelectionHandler CreateSelectionHandler() => new TimelineSelectionHandler();
+        protected override SelectionHandler<HitObject> CreateSelectionHandler() => new TimelineSelectionHandler();
 
-        protected override SelectionBlueprint CreateBlueprintFor(HitObject hitObject) => new TimelineHitObjectBlueprint(hitObject)
+        protected override SelectionBlueprint<HitObject> CreateBlueprintFor(HitObject hitObject) => new TimelineHitObjectBlueprint(hitObject)
         {
             OnDragHandled = handleScrollViaDrag
         };
@@ -136,10 +136,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Timeline
             }
         }
 
-        internal class TimelineSelectionHandler : SelectionHandler
+        internal class TimelineSelectionHandler : EditorSelectionHandler
         {
             // for now we always allow movement. snapping is provided by the timeline "distance" snap implementation
-            public override bool HandleMovement(MoveSelectionEvent moveEvent) => true;
+            public override bool HandleMovement(MoveSelectionEvent<HitObject> moveEvent) => true;
         }
 
         private class TimelineDragBox : DragBox
@@ -178,13 +178,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Timeline
             }
         }
 
-        protected class TimelineSelectionBlueprintContainer : Container<SelectionBlueprint>
+        protected class TimelineSelectionBlueprintContainer : Container<SelectionBlueprint<HitObject>>
         {
-            protected override Container<SelectionBlueprint> Content { get; }
+            protected override Container<SelectionBlueprint<HitObject>> Content { get; }
 
             public TimelineSelectionBlueprintContainer()
             {
-                AddInternal(new TimelinePart<SelectionBlueprint>(Content = new Container<SelectionBlueprint> { RelativeSizeAxes = Axes.Both }) { RelativeSizeAxes = Axes.Both });
+                AddInternal(new TimelinePart<SelectionBlueprint<HitObject>>(Content = new HitObjectOrderedSelectionContainer { RelativeSizeAxes = Axes.Both }) { RelativeSizeAxes = Axes.Both });
             }
         }
     }

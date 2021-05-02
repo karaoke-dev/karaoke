@@ -20,10 +20,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
             this.singer = singer;
         }
 
-        protected override SelectionHandler CreateSelectionHandler()
+        protected override SelectionHandler<HitObject> CreateSelectionHandler()
             => new LyricTimelineSelectionHandler();
 
-        protected override SelectionBlueprint CreateBlueprintFor(HitObject hitObject)
+        protected override SelectionBlueprint<HitObject> CreateBlueprintFor(HitObject hitObject)
         {
             if (!(hitObject is Lyric))
                 return null;

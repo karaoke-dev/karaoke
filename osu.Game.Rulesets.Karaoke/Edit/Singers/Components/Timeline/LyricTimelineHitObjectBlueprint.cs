@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
         [BackgroundDependencyLoader]
         private void load(LyricManager lyricManager)
         {
-            if (HitObject is Lyric lyric)
+            if (Item is Lyric lyric)
             {
                 lyric.SingersBindable.BindValueChanged(e =>
                 {
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
             }
         }
 
-        public object TooltipContent => HitObject;
+        public object TooltipContent => Item;
 
         public ITooltip GetCustomTooltip() => new LyricTooltip();
     }
