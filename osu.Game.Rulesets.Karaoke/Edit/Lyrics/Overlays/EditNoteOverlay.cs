@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
                     }
                 }
 
-                protected override SelectionHandler CreateSelectionHandler() => new EditNoteSelectionHandler();
+                protected override SelectionHandler<HitObject> CreateSelectionHandler() => new EditNoteSelectionHandler();
 
                 internal class EditNoteSelectionHandler : KaraokeSelectionHandler
                 {

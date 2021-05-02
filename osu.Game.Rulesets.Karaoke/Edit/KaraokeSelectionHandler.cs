@@ -17,12 +17,13 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    public class KaraokeSelectionHandler : SelectionHandler
+    public class KaraokeSelectionHandler : EditorSelectionHandler
     {
         [Resolved]
         private IPositionCalculator calculator { get; set; }
@@ -41,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         protected virtual ScrollingNotePlayfield NotePlayfield => ((KaraokeHitObjectComposer)composer).Playfield.NotePlayfield;
 
-        protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint> selection)
+        protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<HitObject>> selection)
         {
             if (selection.All(x => x is LyricSelectionBlueprint))
             {
@@ -80,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             return new OsuMenuItem($"{displayText} {selectedObject.Count()} notes.", display ? MenuItemType.Destructive : MenuItemType.Standard,
                 () =>
                 {
-                    var selectedNotes = SelectedBlueprints.Select(x => x.HitObject).OfType<Note>().ToList();
+                    var selectedNotes = SelectedBlueprints.Select(x => x.Item).OfType<Note>().ToList();
                     noteManager.ChangeDisplay(selectedNotes, !display);
                 });
         }
@@ -116,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             return new SingerContextMenu(lyricManager, lyrics, "Singer");
         }
 
-        public override bool HandleMovement(MoveSelectionEvent moveEvent)
+        public override bool HandleMovement(MoveSelectionEvent<HitObject> moveEvent)
         {
             // Only note can be moved.
             if (!(moveEvent.Blueprint is NoteSelectionBlueprint noteSelectionBlueprint))
@@ -128,13 +129,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             return true;
         }
 
-        private void performColumnMovement(Tone lastTone, MoveSelectionEvent moveEvent)
+        private void performColumnMovement(Tone lastTone, MoveSelectionEvent<HitObject> moveEvent)
         {
             if (!(moveEvent.Blueprint is NoteSelectionBlueprint))
                 return;
 
             // top position
-            var dragHeight = NotePlayfield.ToLocalSpace(moveEvent.ScreenSpacePosition).Y;
+            var screenSpacePosition = moveEvent.Blueprint.ScreenSpaceSelectionPoint + moveEvent.ScreenSpaceDelta;
+            var dragHeight = NotePlayfield.ToLocalSpace(screenSpacePosition).Y;
             var lastHeight = convertToneToHeight(lastTone);
             var moveHeight = dragHeight - lastHeight;
 

@@ -9,6 +9,7 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 using static osu.Game.Rulesets.Karaoke.Edit.Components.Timeline.TimelineBlueprintContainer;
 
@@ -19,11 +20,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
         [Resolved]
         private LyricManager lyricManager { get; set; }
 
-        public override bool HandleMovement(MoveSelectionEvent moveEvent) => false;
+        public override bool HandleMovement(MoveSelectionEvent<HitObject> moveEvent) => false;
 
-        protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint> selection)
+        protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<HitObject>> selection)
         {
-            var lyrics = selection.Select(x => x.HitObject).OfType<Lyric>().ToList();
+            var lyrics = selection.Select(x => x.Item).OfType<Lyric>().ToList();
             var contextMenu = new SingerContextMenu(lyricManager, lyrics, "");
             return contextMenu.Items;
         }

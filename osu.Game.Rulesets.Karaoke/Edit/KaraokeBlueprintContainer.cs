@@ -8,6 +8,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
@@ -58,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             }
         }
 
-        protected override SelectionHandler CreateSelectionHandler() => new KaraokeSelectionHandler();
+        protected override SelectionHandler<HitObject> CreateSelectionHandler() => new KaraokeSelectionHandler();
 
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetEditConfigManager editConfigManager)
