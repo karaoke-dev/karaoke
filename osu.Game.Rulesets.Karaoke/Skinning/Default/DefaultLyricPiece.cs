@@ -34,19 +34,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             this.hitObject = hitObject;
             this.chunkIndex = chunkIndex;
 
-            TextBindable.BindTo(hitObject.TextBindable);
-            TimeTagsBindable.BindTo(hitObject.TimeTagsBindable);
-            RubyTagsBindable.BindTo(hitObject.RubyTagsBindable);
-            RomajiTagsBindable.BindTo(hitObject.RomajiTagsBindable);
-        }
-
-        [BackgroundDependencyLoader(true)]
-        private void load(ISkinSource skin)
-        {
             TextBindable.BindValueChanged(text => applyText(text.NewValue));
             TimeTagsBindable.BindValueChanged(timeTags => applyTimeTag(timeTags.NewValue));
             RubyTagsBindable.BindValueChanged(rubyTags => applyRuby(rubyTags.NewValue));
             RomajiTagsBindable.BindValueChanged(romajiTags => applyRomaji(romajiTags.NewValue));
+
+            TextBindable.BindTo(hitObject.TextBindable);
+            TimeTagsBindable.BindTo(hitObject.TimeTagsBindable);
+            RubyTagsBindable.BindTo(hitObject.RubyTagsBindable);
+            RomajiTagsBindable.BindTo(hitObject.RomajiTagsBindable);
         }
 
         private void applyText(string text)
@@ -97,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             }
         }
 
-        protected virtual void ApplyFont(LyricFont font)
+        public virtual void ApplyFont(LyricFont font)
         {
             // From text sample
             FrontTextTexture = new SolidTexture { SolidColor = Color4.Blue }; // font.FrontTextBrushInfo.TextBrush.ConvertToTextureSample();
