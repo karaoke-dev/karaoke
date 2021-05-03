@@ -48,7 +48,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                     {
                         // need to delay until karaoke text has been calculated.
                         ScheduleAfterChildren(UpdateTimeTags);
-                        caretContainer.Height = font.LyricTextFontInfo.LyricTextFontInfo.CharSize * 1.7f;
+                        // it's a magic number and should find a way to fix that.
+                        caretContainer.Height = font.LyricTextFontInfo.LyricTextFontInfo.CharSize * 2f + 13; 
                     }
                 },
                 timeTagContainer = new Container
@@ -309,14 +310,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             var isEnd = Lyric.Text?.Length <= textIndex;
             var percentage = isEnd ? 1 : 0;
             var offset = isEnd ? 10 : -10; // todo : might have better way to get position.
-            return lyricPiece.GetPercentageWidth(textIndex, textIndex + 1, percentage) * 2 + offset;
+            return lyricPiece.GetPercentageWidth(textIndex, textIndex + 1, percentage) + offset;
         }
 
         private float textIndexPosition(TextIndex textIndex)
         {
             var isStart = textIndex.State == TextIndex.IndexState.Start;
             var percentage = isStart ? 0 : 1;
-            return lyricPiece.GetPercentageWidth(textIndex, textIndex, percentage) * 2;
+            return lyricPiece.GetPercentageWidth(textIndex, textIndex, percentage);
         }
 
         private float extraSpacing(TimeTag timeTag)
