@@ -3,7 +3,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;

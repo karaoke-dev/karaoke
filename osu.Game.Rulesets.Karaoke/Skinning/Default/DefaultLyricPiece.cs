@@ -2,12 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
-using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Skinning;
 using System;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osuTK.Graphics;
