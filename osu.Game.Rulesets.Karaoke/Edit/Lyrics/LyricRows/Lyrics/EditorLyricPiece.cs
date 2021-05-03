@@ -2,53 +2,35 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using osu.Framework.Graphics;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
+using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 {
-    public class DrawableEditLyric : DrawableLyric
+    public class EditorLyricPiece : DefaultLyricPiece
     {
         public Action<LyricFont> ApplyFontAction;
 
-        public DrawableEditLyric(Lyric lyric)
+        protected Lyric HitObject;
+
+        public EditorLyricPiece(Lyric lyric)
             : base(lyric)
         {
+            HitObject = lyric;
+
             DisplayRuby = true;
             DisplayRomaji = true;
         }
 
-        protected override void ApplyFont(LyricFont font)
+        public override void ApplyFont(LyricFont font)
         {
             ApplyFontAction?.Invoke(font);
             base.ApplyFont(font);
-        }
-
-        protected override void ApplyLayout(LyricLayout layout)
-        {
-            base.ApplyLayout(layout);
-            Padding = new MarginPadding(0);
-        }
-
-        protected override void UpdateStartTimeStateTransforms()
-        {
-            // Do not fade-in / fade-out while changing armed state.
-        }
-
-        public override double LifetimeStart
-        {
-            get => double.MinValue;
-            set => base.LifetimeStart = double.MinValue;
-        }
-
-        public override double LifetimeEnd
-        {
-            get => double.MaxValue;
-            set => base.LifetimeEnd = double.MaxValue;
         }
 
         public float GetPercentageWidth(int startIndex, int endIndex, float percentage = 0)
@@ -58,19 +40,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             // todo : it's a temp way to get position.
             TextIndex getTextIndexByIndex(int index)
             {
-                if (HitObject.Text?.Length <= index)
+                if (Text?.Length <= index)
                     return new TextIndex(index - 1, TextIndex.IndexState.End);
 
                 return new TextIndex(index);
             }
         }
 
-        public float GetPercentageWidth(TextIndex startIndex, TextIndex endIndex, float percentage = 0)
-            => KaraokeText.GetPercentageWidth(startIndex, endIndex, percentage);
-
         public TextIndex GetHoverIndex(float position)
         {
-            var text = KaraokeText.Text;
+            var text = Text;
             if (string.IsNullOrEmpty(text))
                 return new TextIndex();
 
@@ -84,6 +63,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             }
 
             return new TextIndex(text.Length - 1, TextIndex.IndexState.End);
+        }
+
+        [BackgroundDependencyLoader(true)]
+        private void load(ISkinSource skin)
+        {
+            // this is a temp way to apply font.
+            skin.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(karaokeFont =>
+            {
+                var newFont = karaokeFont.NewValue;
+                if (newFont == null)
+                    return;
+
+                ApplyFont(karaokeFont.NewValue);
+
+                // Apply text font info
+                var lyricFont = newFont.LyricTextFontInfo.LyricTextFontInfo;
+                Font = getFont(lyricFont.CharSize);
+
+                var rubyFont = newFont.RubyTextFontInfo.LyricTextFontInfo;
+                RubyFont = getFont(rubyFont.CharSize);
+
+                var romajiFont = newFont.RomajiTextFontInfo.LyricTextFontInfo;
+                RomajiFont = getFont(romajiFont.CharSize);
+
+                static FontUsage getFont(float? charSize = null)
+                    => FontUsage.Default.With(size: charSize * 2);
+            }, true);
         }
     }
 }
