@@ -11,9 +11,10 @@ using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEditor
 {
+    [Cached]
     public class TimeTagEditor : ZoomableScrollContainer
     {
-        private const float timeline_height = 72;
+        private const float timeline_height = 48;
 
         private readonly IBindable<TimeTag[]> timeTags = new Bindable<TimeTag[]>();
 
@@ -53,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
                     Children = new Drawable[]
                     {
                         ticks = new TimelineTickDisplay(),
-                        new TimeTagEditorBlueprintContainer(),
+                        new TimeTagEditorBlueprintContainer(HitObject),
                     }
                 },
             });
