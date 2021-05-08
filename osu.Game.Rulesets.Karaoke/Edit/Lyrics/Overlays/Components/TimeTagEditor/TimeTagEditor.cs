@@ -17,8 +17,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
     {
         private const float timeline_height = 48;
 
-        private readonly IBindable<TimeTag[]> timeTags = new Bindable<TimeTag[]>();
-
         [Resolved]
         private EditorClock editorClock { get; set; }
 
@@ -34,8 +32,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             ZoomDuration = 200;
             ZoomEasing = Easing.OutQuint;
             ScrollbarVisible = false;
-
-            timeTags.BindTo(lyric.TimeTagsBindable);
         }
 
         private Container mainContent;
@@ -61,12 +57,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
                         currentTimeMarker = new CurrentTimeMarker(),
                     }
                 },
-            });
-
-            // initialize time-tag if value changed.
-            timeTags.BindValueChanged(e =>
-            {
-                var timeTags = e.NewValue;
             });
 
             // initialize scroll zone.
