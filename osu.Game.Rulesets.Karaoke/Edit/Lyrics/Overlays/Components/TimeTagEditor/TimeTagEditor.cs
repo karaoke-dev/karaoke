@@ -5,7 +5,6 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -48,24 +47,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         [BackgroundDependencyLoader]
         private void load(OsuColour colour)
         {
-            AddInternal(new Container
+            AddInternal(background = new Box
             {
+                Name = "Background",
                 Depth = 1,
                 RelativeSizeAxes = Axes.X,
                 Height = timeline_height,
-                Masking = true,
-                EdgeEffect = new EdgeEffectParameters
-                {
-                    Type = EdgeEffectType.Shadow,
-                },
-                Children = new[]
-                {
-                    background = new Box
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Colour = colour.Gray3,
-                    }
-                }
+                Colour = colour.Gray3,
             });
             AddRange(new Drawable[]
             {
