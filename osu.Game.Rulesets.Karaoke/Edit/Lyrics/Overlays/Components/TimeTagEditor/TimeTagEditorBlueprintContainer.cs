@@ -4,13 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Framework.Utils;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
@@ -26,24 +29,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         [Resolved]
         private LyricManager lyricManager { get; set; }
 
-        private DragEvent lastDragEvent;
+        [UsedImplicitly]
+        private readonly Bindable<TimeTag[]> timeTags;
 
         protected readonly Lyric Lyric;
 
         public TimeTagEditorBlueprintContainer(Lyric lyric)
         {
             Lyric = lyric;
+            timeTags = lyric.TimeTagsBindable.GetBoundCopy();
         }
 
         [BackgroundDependencyLoader]
         private void load()
         {
             // Add time-tag into blueprint container
-            if (Lyric != null)
+            timeTags.BindValueChanged(e =>
             {
-                foreach (var obj in Lyric.TimeTags)
+                // remove old item.
+                var removedItems = e.OldValue?.Except(e.NewValue).ToList();
+
+                if (removedItems != null)
+                {
+                    foreach (var obj in removedItems)
+                        RemoveBlueprintFor(obj);
+                }
+
+                // add new time-tags
+                foreach (var obj in e.NewValue)
                     AddBlueprintFor(obj);
-            }
+            }, true);
         }
 
         protected override IEnumerable<SelectionBlueprint<TimeTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<TimeTag>> blueprints)
@@ -58,23 +73,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             if (firstDragTimeTagTime == null)
                 return false;
 
+            // main goal is applying delta time while dragging.
             if (result.Time.HasValue)
             {
                 // Apply the start time at the newly snapped-to position
                 double offset = result.Time.Value - firstDragTimeTagTime.Value;
 
-                if (offset != 0)
+                if (offset == 0)
+                    return false;
+
+                // todo : should not save separately.
+                foreach (var blueprint in blueprints)
                 {
-                    // todo : should not save separately.
-                    foreach (var blueprint in blueprints)
-                    {
-                        // todo : fix logic error.
-                        // lyricManager.SetTimeTagTime(blueprint.Item.Time.Value + offset);
-                    }
+                    // todo : fix logic error.
+                    var timeTag = blueprint.Item;
+                    timeTag.Time += offset;
                 }
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Commit time-tag time.
+        /// </summary>
+        protected override void DragOperationCompleted()
+        {
+            var processedTimeTags = SelectionBlueprints.Where(x => x.State == SelectionState.Selected).Select(x => x.Item);
+
+            // todo : should change together.
+            foreach (var timeTag in processedTimeTags)
+            {
+                if (timeTag.Time.HasValue)
+                    lyricManager.SetTimeTagTime(timeTag, timeTag.Time.Value);
+            }
         }
 
         protected override Container<SelectionBlueprint<TimeTag>> CreateSelectionBlueprintContainer()
@@ -84,34 +116,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             => new TimeTagEditorSelectionHandler();
 
         protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
-        {
-            return new TimeTagEditorHitObjectBlueprint(item)
-            {
-                OnDragHandled = handleScrollViaDrag
-            };
-        }
+            => new TimeTagEditorHitObjectBlueprint(item);
 
         protected override DragBox CreateDragBox(Action<RectangleF> performSelect) => new TimelineDragBox(performSelect);
-
-        private void handleScrollViaDrag(DragEvent e)
-        {
-            lastDragEvent = e;
-
-            if (lastDragEvent == null)
-                return;
-
-            if (timeline != null)
-            {
-                var timelineQuad = timeline.ScreenSpaceDrawQuad;
-                var mouseX = e.ScreenSpaceMousePosition.X;
-
-                // scroll if in a drag and dragging outside visible extents
-                if (mouseX > timelineQuad.TopRight.X)
-                    timeline.ScrollBy((float)((mouseX - timelineQuad.TopRight.X) / 10 * Clock.ElapsedFrameTime));
-                else if (mouseX < timelineQuad.TopLeft.X)
-                    timeline.ScrollBy((float)((mouseX - timelineQuad.TopLeft.X) / 10 * Clock.ElapsedFrameTime));
-            }
-        }
 
         protected class TimeTagEditorSelectionHandler : SelectionHandler<TimeTag>
         {

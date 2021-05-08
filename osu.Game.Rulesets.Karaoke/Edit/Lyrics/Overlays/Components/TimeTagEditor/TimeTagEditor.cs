@@ -7,14 +7,17 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEditor
 {
+    [Cached(typeof(IPositionSnapProvider))]
     [Cached]
-    public class TimeTagEditor : ZoomableScrollContainer
+    public class TimeTagEditor : ZoomableScrollContainer, IPositionSnapProvider
     {
         private const float timeline_height = 38;
 
@@ -96,7 +99,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             currentTimeMarker.MoveToX(position);
         }
 
+        public SnapResult SnapScreenSpacePositionToValidPosition(Vector2 screenSpacePosition) =>
+            new SnapResult(screenSpacePosition, null);
+
+        public SnapResult SnapScreenSpacePositionToValidTime(Vector2 screenSpacePosition) =>
+            new SnapResult(screenSpacePosition, getTimeFromPosition(Content.ToLocalSpace(screenSpacePosition)));
+
+        private double getTimeFromPosition(Vector2 localPosition) =>
+            (localPosition.X / Content.DrawWidth) * editorClock.TrackLength;
+
         private float getPositionFromTime(double time)
             => (float)(time / editorClock.TrackLength) * Content.DrawWidth;
+
+        public float GetBeatSnapDistanceAt(double referenceTime) => throw new NotImplementedException();
+
+        public float DurationToDistance(double referenceTime, double duration) => throw new NotImplementedException();
+
+        public double DistanceToDuration(double referenceTime, float distance) => throw new NotImplementedException();
+
+        public double GetSnappedDurationFromDistance(double referenceTime, float distance) => throw new NotImplementedException();
+
+        public float GetSnappedDistanceFromDistance(double referenceTime, float distance) => throw new NotImplementedException();
     }
 }
