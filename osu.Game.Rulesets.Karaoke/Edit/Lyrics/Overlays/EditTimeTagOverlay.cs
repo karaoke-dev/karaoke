@@ -3,6 +3,7 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEditor;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
@@ -25,7 +26,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
         protected override Drawable CreateContent(Lyric lyric)
         {
             // todo : waiting for implementation.
-            return new Container();
+            return new TimeTagEditor(lyric)
+            {
+                RelativeSizeAxes = Axes.X,
+                Height = 100,
+            };
         }
     }
 }

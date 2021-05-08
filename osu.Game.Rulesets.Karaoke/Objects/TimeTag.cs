@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
@@ -19,9 +20,15 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// </summary>
         public TextIndex Index { get; }
 
+        public readonly Bindable<double?> TimeBindable = new Bindable<double?>();
+
         /// <summary>
         /// Time
         /// </summary>
-        public double? Time { get; set; }
+        public double? Time
+        {
+            get => TimeBindable.Value;
+            set => TimeBindable.Value = value;
+        }
     }
 }
