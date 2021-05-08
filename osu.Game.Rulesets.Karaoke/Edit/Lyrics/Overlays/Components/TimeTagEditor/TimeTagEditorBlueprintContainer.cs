@@ -197,10 +197,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             {
                 AddInternal(new TimelinePart<SelectionBlueprint<TimeTag>>(Content = new TimeTagOrderedSelectionContainer { RelativeSizeAxes = Axes.Both }) { RelativeSizeAxes = Axes.Both });
             }
-
-            protected class TimeTagOrderedSelectionContainer : Container<SelectionBlueprint<TimeTag>>
-            {
-            }
         }
     }
 }
