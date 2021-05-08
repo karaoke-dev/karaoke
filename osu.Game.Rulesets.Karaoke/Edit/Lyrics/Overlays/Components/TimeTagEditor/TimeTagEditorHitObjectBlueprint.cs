@@ -3,32 +3,33 @@
 
 using System;
 using JetBrains.Annotations;
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEditor
 {
     public class TimeTagEditorHitObjectBlueprint : SelectionBlueprint<TimeTag>
     {
-        private const float circle_size = 38;
-
         public Action<DragEvent> OnDragHandled;
 
         [UsedImplicitly]
         private readonly Bindable<double?> startTime;
 
-        private readonly ExtendableCircle circle;
+        private readonly TimeTagPiece timeTagPiece;
+        private readonly TimeTagWithNoTimePiece timeTagWithNoTimePiece;
+        private readonly OsuSpriteText timeTagText;
 
         public TimeTagEditorHitObjectBlueprint(TimeTag item)
             : base(item)
@@ -49,24 +50,75 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
                 else
                 {
                     // todo : should get relative position.
+                    X = 18000f;
                 }
             }, true);
 
             RelativePositionAxes = Axes.X;
 
-            RelativeSizeAxes = Axes.X;
-            Height = circle_size;
+            RelativeSizeAxes = Axes.Y;
+            AutoSizeAxes = Axes.X;
 
             AddRangeInternal(new Drawable[]
             {
-                circle = new ExtendableCircle
+                timeTagPiece = new TimeTagPiece(item)
                 {
-                    RelativeSizeAxes = Axes.Both,
                     Anchor = Anchor.CentreLeft,
-                    Origin = Anchor.CentreLeft,
                 },
+                timeTagWithNoTimePiece = new TimeTagWithNoTimePiece(item)
+                {
+                    Anchor = Anchor.BottomLeft,
+                },
+                timeTagText = new OsuSpriteText
+                {
+                    Text = "Demo",
+                    Anchor = Anchor.BottomLeft,
+                    Y = 10,
+                }
             });
+
+            switch (item.Index.State)
+            {
+                case TextIndex.IndexState.Start:
+                    timeTagPiece.Origin = Anchor.CentreLeft;
+                    timeTagWithNoTimePiece.Origin = Anchor.BottomLeft;
+                    timeTagText.Origin = Anchor.TopLeft;
+                    break;
+
+                case TextIndex.IndexState.End:
+                    timeTagPiece.Origin = Anchor.CentreRight;
+                    timeTagWithNoTimePiece.Origin = Anchor.BottomLeft;
+                    timeTagText.Origin = Anchor.TopRight;
+                    break;
+            }
         }
+
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours)
+        {
+            timeTagPiece.Colour = colours.BlueLight;
+            timeTagWithNoTimePiece.Colour = colours.Red;
+            startTime.BindValueChanged(e =>
+            {
+                // adjust style if time changed.
+                var hasValue = hasTime();
+
+                switch (hasValue)
+                {
+                    case true:
+                        timeTagPiece.Show();
+                        timeTagWithNoTimePiece.Hide();
+                        break;
+
+                    case false:
+                        timeTagPiece.Hide();
+                        timeTagWithNoTimePiece.Show();
+                        break;
+                }
+            }, true);
+        }
+
+        private bool hasTime() => this.startTime.Value.HasValue;
 
         protected override void OnSelected()
         {
@@ -79,39 +131,83 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         }
 
         public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) =>
-            circle.ReceivePositionalInputAt(screenSpacePos);
+            hasTime() ? timeTagPiece.ReceivePositionalInputAt(screenSpacePos) : timeTagWithNoTimePiece.ReceivePositionalInputAt(screenSpacePos);
 
-        public override Quad SelectionQuad => circle.ScreenSpaceDrawQuad;
+        public override Quad SelectionQuad =>
+            hasTime() ? timeTagPiece.ScreenSpaceDrawQuad : timeTagWithNoTimePiece.ScreenSpaceDrawQuad;
 
         public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
 
-        /// <summary>
-        /// A circle with externalised end caps so it can take up the full width of a relative width area.
-        /// </summary>
-        public class ExtendableCircle : CompositeDrawable
+        public class TimeTagPiece : CompositeDrawable
         {
-            protected readonly Circle Content;
+            protected readonly Box box;
 
-            public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => Content.ReceivePositionalInputAt(screenSpacePos);
+            protected readonly RightTriangle triangle;
 
-            public override Quad ScreenSpaceDrawQuad => Content.ScreenSpaceDrawQuad;
-
-            public ExtendableCircle()
+            public TimeTagPiece(TimeTag timeTag)
             {
-                Padding = new MarginPadding { Horizontal = -circle_size / 2f };
-                InternalChild = Content = new Circle
+                RelativeSizeAxes = Axes.Y;
+                Width = 10;
+                InternalChildren = new Drawable[]
                 {
-                    BorderColour = OsuColour.Gray(0.75f),
-                    BorderThickness = 4,
-                    Masking = true,
-                    RelativeSizeAxes = Axes.Both,
-                    EdgeEffect = new EdgeEffectParameters
+                    box = new Box
                     {
-                        Type = EdgeEffectType.Shadow,
-                        Radius = 5,
-                        Colour = Color4.Black.Opacity(0.4f)
+                        RelativeSizeAxes = Axes.Y,
+                        Width = 1.5f,
+                    },
+                    triangle = new RightTriangle
+                    {
+                        Size = new Vector2(10),
+                        Anchor = Anchor.BottomCentre,
+                        Origin = Anchor.BottomCentre
                     }
                 };
+
+                switch (timeTag.Index.State)
+                {
+                    case TextIndex.IndexState.Start:
+                        triangle.Scale = new Vector2(1);
+                        box.Anchor = Anchor.CentreLeft;
+                        box.Origin = Anchor.CentreLeft;
+                        break;
+
+                    case TextIndex.IndexState.End:
+                        triangle.Scale = new Vector2(-1, 1);
+                        box.Anchor = Anchor.CentreRight;
+                        box.Origin = Anchor.CentreRight;
+                        break;
+                }
+            }
+        }
+
+        public class TimeTagWithNoTimePiece : CompositeDrawable
+        {
+            protected readonly RightTriangle triangle;
+
+            public TimeTagWithNoTimePiece(TimeTag timeTag)
+            {
+                AutoSizeAxes = Axes.Y;
+                Width = 10;
+                InternalChildren = new Drawable[]
+                {
+                    triangle = new RightTriangle
+                    {
+                        Size = new Vector2(10),
+                        Anchor = Anchor.BottomCentre,
+                        Origin = Anchor.BottomCentre
+                    }
+                };
+
+                switch (timeTag.Index.State)
+                {
+                    case TextIndex.IndexState.Start:
+                        triangle.Scale = new Vector2(1);
+                        break;
+
+                    case TextIndex.IndexState.End:
+                        triangle.Scale = new Vector2(-1, 1);
+                        break;
+                }
             }
         }
     }
