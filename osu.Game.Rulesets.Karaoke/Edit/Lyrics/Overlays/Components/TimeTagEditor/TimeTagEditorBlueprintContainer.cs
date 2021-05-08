@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
@@ -26,24 +28,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         [Resolved]
         private LyricManager lyricManager { get; set; }
 
-        private DragEvent lastDragEvent;
+        [UsedImplicitly]
+        private readonly Bindable<TimeTag[]> timeTags;
 
         protected readonly Lyric Lyric;
 
         public TimeTagEditorBlueprintContainer(Lyric lyric)
         {
             Lyric = lyric;
+            timeTags = lyric.TimeTagsBindable.GetBoundCopy();
         }
 
         [BackgroundDependencyLoader]
         private void load()
         {
             // Add time-tag into blueprint container
-            if (Lyric != null)
+            timeTags.BindValueChanged(e =>
             {
-                foreach (var obj in Lyric.TimeTags)
+                // remove old item.
+                var removedItems = e.OldValue?.Except(e.NewValue).ToList();
+
+                if (removedItems != null)
+                {
+                    foreach (var obj in removedItems)
+                        RemoveBlueprintFor(obj);
+                }
+
+                // add new time-tags
+                foreach (var obj in e.NewValue)
                     AddBlueprintFor(obj);
-            }
+            }, true);
         }
 
         protected override IEnumerable<SelectionBlueprint<TimeTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<TimeTag>> blueprints)
