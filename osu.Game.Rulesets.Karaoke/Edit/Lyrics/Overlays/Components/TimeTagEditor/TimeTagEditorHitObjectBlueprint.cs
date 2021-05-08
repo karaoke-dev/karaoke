@@ -22,14 +22,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
 {
     public class TimeTagEditorHitObjectBlueprint : SelectionBlueprint<TimeTag>
     {
-        private const float circle_size = 38;
-
         public Action<DragEvent> OnDragHandled;
 
         [UsedImplicitly]
         private readonly Bindable<double?> startTime;
 
         private readonly TimeTagPiece timeTagPiece;
+        private readonly TimeTagWithNoTimePiece timeTagWithNoTimePiece;
         private readonly OsuSpriteText timeTagText;
 
         public TimeTagEditorHitObjectBlueprint(TimeTag item)
@@ -51,13 +50,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
                 else
                 {
                     // todo : should get relative position.
+                    X = 18000f;
                 }
             }, true);
 
             RelativePositionAxes = Axes.X;
 
-            RelativeSizeAxes = Axes.X;
-            Height = circle_size;
+            RelativeSizeAxes = Axes.Y;
+            AutoSizeAxes = Axes.X;
 
             AddRangeInternal(new Drawable[]
             {
@@ -65,10 +65,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
                 {
                     Anchor = Anchor.CentreLeft,
                 },
+                timeTagWithNoTimePiece = new TimeTagWithNoTimePiece(item)
+                {
+                    Anchor = Anchor.BottomLeft,
+                },
                 timeTagText = new OsuSpriteText
                 {
                     Text = "Demo",
                     Anchor = Anchor.BottomLeft,
+                    Y = 10,
                 }
             });
 
@@ -76,11 +81,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             {
                 case TextIndex.IndexState.Start:
                     timeTagPiece.Origin = Anchor.CentreLeft;
+                    timeTagWithNoTimePiece.Origin = Anchor.TopLeft;
                     timeTagText.Origin = Anchor.TopLeft;
                     break;
 
                 case TextIndex.IndexState.End:
                     timeTagPiece.Origin = Anchor.CentreRight;
+                    timeTagWithNoTimePiece.Origin = Anchor.TopRight;
                     timeTagText.Origin = Anchor.TopRight;
                     break;
             }
@@ -89,6 +96,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
+            timeTagPiece.Colour = colours.BlueLight;
+            timeTagWithNoTimePiece.Colour = colours.Red;
             startTime.BindValueChanged(e =>
             {
                 // assign blueprint position in here.
@@ -97,11 +106,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
                 switch (hasValue)
                 {
                     case true:
-                        timeTagPiece.Colour = colours.BlueLight;
+                        timeTagPiece.Show();
+                        timeTagWithNoTimePiece.Hide();
                         break;
 
                     case false:
-                        timeTagPiece.Colour = colours.Red;
+                        timeTagPiece.Hide();
+                        timeTagWithNoTimePiece.Show();
                         break;
                 }
             }, true);
@@ -161,6 +172,37 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
                         triangle.Scale = new Vector2(-1, 1);
                         box.Anchor = Anchor.CentreRight;
                         box.Origin = Anchor.CentreRight;
+                        break;
+                }
+            }
+        }
+
+        public class TimeTagWithNoTimePiece : CompositeDrawable
+        {
+            protected readonly RightTriangle triangle;
+
+            public TimeTagWithNoTimePiece(TimeTag timeTag)
+            {
+                AutoSizeAxes = Axes.Y;
+                Width = 10;
+                InternalChildren = new Drawable[]
+                {
+                    triangle = new RightTriangle
+                    {
+                        Size = new Vector2(10),
+                        Anchor = Anchor.BottomCentre,
+                        Origin = Anchor.BottomCentre
+                    }
+                };
+
+                switch (timeTag.Index.State)
+                {
+                    case TextIndex.IndexState.Start:
+                        triangle.Scale = new Vector2(1);
+                        break;
+
+                    case TextIndex.IndexState.End:
+                        triangle.Scale = new Vector2(-1, 1);
                         break;
                 }
             }
