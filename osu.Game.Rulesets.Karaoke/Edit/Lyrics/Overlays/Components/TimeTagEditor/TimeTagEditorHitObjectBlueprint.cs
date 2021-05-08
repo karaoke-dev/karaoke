@@ -3,19 +3,20 @@
 
 using System;
 using JetBrains.Annotations;
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEditor
 {
@@ -28,7 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         [UsedImplicitly]
         private readonly Bindable<double?> startTime;
 
-        private readonly ExtendableCircle circle;
+        private readonly TimeTagPiece timeTagPiece;
+        private readonly OsuSpriteText timeTagText;
 
         public TimeTagEditorHitObjectBlueprint(TimeTag item)
             : base(item)
@@ -59,13 +61,50 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
 
             AddRangeInternal(new Drawable[]
             {
-                circle = new ExtendableCircle
+                timeTagPiece = new TimeTagPiece(item)
                 {
-                    RelativeSizeAxes = Axes.Both,
                     Anchor = Anchor.CentreLeft,
-                    Origin = Anchor.CentreLeft,
                 },
+                timeTagText = new OsuSpriteText
+                {
+                    Text = "Demo",
+                    Anchor = Anchor.BottomLeft,
+                }
             });
+
+            switch (item.Index.State)
+            {
+                case TextIndex.IndexState.Start:
+                    timeTagPiece.Origin = Anchor.CentreLeft;
+                    timeTagText.Origin = Anchor.TopLeft;
+                    break;
+
+                case TextIndex.IndexState.End:
+                    timeTagPiece.Origin = Anchor.CentreRight;
+                    timeTagText.Origin = Anchor.TopRight;
+                    break;
+            }
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours)
+        {
+            startTime.BindValueChanged(e =>
+            {
+                // assign blueprint position in here.
+                var hasValue = e.NewValue.HasValue;
+
+                switch (hasValue)
+                {
+                    case true:
+                        timeTagPiece.Colour = colours.BlueLight;
+                        break;
+
+                    case false:
+                        timeTagPiece.Colour = colours.Red;
+                        break;
+                }
+            }, true);
         }
 
         protected override void OnSelected()
@@ -79,39 +118,51 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         }
 
         public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) =>
-            circle.ReceivePositionalInputAt(screenSpacePos);
+            timeTagPiece.ReceivePositionalInputAt(screenSpacePos);
 
-        public override Quad SelectionQuad => circle.ScreenSpaceDrawQuad;
+        public override Quad SelectionQuad => timeTagPiece.ScreenSpaceDrawQuad;
 
         public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
 
-        /// <summary>
-        /// A circle with externalised end caps so it can take up the full width of a relative width area.
-        /// </summary>
-        public class ExtendableCircle : CompositeDrawable
+        public class TimeTagPiece : CompositeDrawable
         {
-            protected readonly Circle Content;
+            protected readonly Box box;
 
-            public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => Content.ReceivePositionalInputAt(screenSpacePos);
+            protected readonly RightTriangle triangle;
 
-            public override Quad ScreenSpaceDrawQuad => Content.ScreenSpaceDrawQuad;
-
-            public ExtendableCircle()
+            public TimeTagPiece(TimeTag timeTag)
             {
-                Padding = new MarginPadding { Horizontal = -circle_size / 2f };
-                InternalChild = Content = new Circle
+                RelativeSizeAxes = Axes.Y;
+                Width = 10;
+                InternalChildren = new Drawable[]
                 {
-                    BorderColour = OsuColour.Gray(0.75f),
-                    BorderThickness = 4,
-                    Masking = true,
-                    RelativeSizeAxes = Axes.Both,
-                    EdgeEffect = new EdgeEffectParameters
+                    box = new Box
                     {
-                        Type = EdgeEffectType.Shadow,
-                        Radius = 5,
-                        Colour = Color4.Black.Opacity(0.4f)
+                        RelativeSizeAxes = Axes.Y,
+                        Width = 1.5f,
+                    },
+                    triangle = new RightTriangle
+                    {
+                        Size = new Vector2(10),
+                        Anchor = Anchor.BottomCentre,
+                        Origin = Anchor.BottomCentre
                     }
                 };
+
+                switch (timeTag.Index.State)
+                {
+                    case TextIndex.IndexState.Start:
+                        triangle.Scale = new Vector2(1);
+                        box.Anchor = Anchor.CentreLeft;
+                        box.Origin = Anchor.CentreLeft;
+                        break;
+
+                    case TextIndex.IndexState.End:
+                        triangle.Scale = new Vector2(-1, 1);
+                        box.Anchor = Anchor.CentreRight;
+                        box.Origin = Anchor.CentreRight;
+                        break;
+                }
             }
         }
     }
