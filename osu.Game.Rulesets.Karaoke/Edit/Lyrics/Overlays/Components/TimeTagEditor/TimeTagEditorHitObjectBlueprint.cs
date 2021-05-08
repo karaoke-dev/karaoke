@@ -39,6 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             startTime = item.TimeBindable.GetBoundCopy();
             startTime.BindValueChanged(e =>
             {
+                // assign blueprint position in here.
                 var time = e.NewValue;
 
                 if (time != null)

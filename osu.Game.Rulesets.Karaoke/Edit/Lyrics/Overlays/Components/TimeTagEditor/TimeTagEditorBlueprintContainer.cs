@@ -118,6 +118,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             [Resolved]
             private LyricManager lyricManager { get; set; }
 
+            // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
+            public override bool HandleMovement(MoveSelectionEvent<TimeTag> moveEvent) => true;
+
             protected override void DeleteItems(IEnumerable<TimeTag> items)
             {
                 // todo : delete time-line
