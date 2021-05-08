@@ -13,6 +13,7 @@ using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Framework.Utils;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
@@ -91,6 +92,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Commit time-tag time.
+        /// </summary>
+        protected override void DragOperationCompleted()
+        {
+            var processedTimeTags = SelectionBlueprints.Where(x => x.State == SelectionState.Selected).Select(x => x.Item);
+
+            // todo : should change together.
+            foreach (var timeTag in processedTimeTags)
+            {
+                if (timeTag.Time.HasValue)
+                    lyricManager.SetTimeTagTime(timeTag, timeTag.Time.Value);
+            }
         }
 
         protected override Container<SelectionBlueprint<TimeTag>> CreateSelectionBlueprintContainer()
