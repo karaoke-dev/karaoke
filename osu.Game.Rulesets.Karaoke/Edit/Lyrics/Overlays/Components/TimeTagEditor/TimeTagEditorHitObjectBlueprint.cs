@@ -62,6 +62,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             });
         }
 
+        protected override void OnSelected()
+        {
+            // base logic hides selected blueprints when not selected, but timeline doesn't do that.
+        }
+
+        protected override void OnDeselected()
+        {
+            // base logic hides selected blueprints when not selected, but timeline doesn't do that.
+        }
+
         public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) =>
             circle.ReceivePositionalInputAt(screenSpacePos);
 
