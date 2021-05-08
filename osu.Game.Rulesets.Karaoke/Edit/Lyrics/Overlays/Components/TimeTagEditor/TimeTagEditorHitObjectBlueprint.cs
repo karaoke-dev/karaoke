@@ -81,13 +81,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             {
                 case TextIndex.IndexState.Start:
                     timeTagPiece.Origin = Anchor.CentreLeft;
-                    timeTagWithNoTimePiece.Origin = Anchor.TopLeft;
+                    timeTagWithNoTimePiece.Origin = Anchor.BottomLeft;
                     timeTagText.Origin = Anchor.TopLeft;
                     break;
 
                 case TextIndex.IndexState.End:
                     timeTagPiece.Origin = Anchor.CentreRight;
-                    timeTagWithNoTimePiece.Origin = Anchor.TopRight;
+                    timeTagWithNoTimePiece.Origin = Anchor.BottomLeft;
                     timeTagText.Origin = Anchor.TopRight;
                     break;
             }
@@ -100,8 +100,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             timeTagWithNoTimePiece.Colour = colours.Red;
             startTime.BindValueChanged(e =>
             {
-                // assign blueprint position in here.
-                var hasValue = e.NewValue.HasValue;
+                // adjust style if time changed.
+                var hasValue = hasTime();
 
                 switch (hasValue)
                 {
@@ -118,6 +118,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             }, true);
         }
 
+        private bool hasTime() => this.startTime.Value.HasValue;
+
         protected override void OnSelected()
         {
             // base logic hides selected blueprints when not selected, but timeline doesn't do that.
@@ -129,9 +131,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         }
 
         public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) =>
-            timeTagPiece.ReceivePositionalInputAt(screenSpacePos);
+            hasTime() ? timeTagPiece.ReceivePositionalInputAt(screenSpacePos) : timeTagWithNoTimePiece.ReceivePositionalInputAt(screenSpacePos);
 
-        public override Quad SelectionQuad => timeTagPiece.ScreenSpaceDrawQuad;
+        public override Quad SelectionQuad =>
+            hasTime() ? timeTagPiece.ScreenSpaceDrawQuad : timeTagWithNoTimePiece.ScreenSpaceDrawQuad;
 
         public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
 
