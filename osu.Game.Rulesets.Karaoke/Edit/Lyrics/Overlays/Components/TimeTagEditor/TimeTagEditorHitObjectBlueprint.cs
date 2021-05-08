@@ -51,6 +51,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
                 }
             }, true);
 
+            RelativePositionAxes = Axes.X;
+
+            RelativeSizeAxes = Axes.X;
+            Height = circle_size;
+
             AddRangeInternal(new Drawable[]
             {
                 circle = new ExtendableCircle
