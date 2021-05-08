@@ -23,6 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         [Resolved(CanBeNull = true)]
         private TimeTagEditor timeline { get; set; }
 
+        [Resolved]
+        private LyricManager lyricManager { get; set; }
+
         private DragEvent lastDragEvent;
 
         protected readonly Lyric Lyric;
@@ -45,6 +48,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
 
         protected override IEnumerable<SelectionBlueprint<TimeTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<TimeTag>> blueprints)
             => blueprints.OrderBy(b => b.Item.Time);
+
+        protected override bool ApplySnapResult(SelectionBlueprint<TimeTag>[] blueprints, SnapResult result)
+        {
+            if (!base.ApplySnapResult(blueprints, result))
+                return false;
+
+            var firstDragTimeTagTime = blueprints.First().Item.Time;
+            if (firstDragTimeTagTime == null)
+                return false;
+
+            if (result.Time.HasValue)
+            {
+                // Apply the start time at the newly snapped-to position
+                double offset = result.Time.Value - firstDragTimeTagTime.Value;
+
+                if (offset != 0)
+                {
+                    // todo : should not save separately.
+                    foreach (var blueprint in blueprints)
+                    {
+                        // todo : fix logic error.
+                        // lyricManager.SetTimeTagTime(blueprint.Item.Time.Value + offset);
+                    }
+                }
+            }
+
+            return true;
+        }
 
         protected override Container<SelectionBlueprint<TimeTag>> CreateSelectionBlueprintContainer()
             => new TimeTagEditorSelectionBlueprintContainer { RelativeSizeAxes = Axes.Both };
@@ -94,13 +125,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
                 {
                     lyricManager.RemoveTimeTag(item);
                 }
-            }
-
-            public override bool HandleMovement(MoveSelectionEvent<TimeTag> moveEvent)
-            {
-                // todo : should handle drag position in here.
-
-                return base.HandleMovement(moveEvent);
             }
         }
 

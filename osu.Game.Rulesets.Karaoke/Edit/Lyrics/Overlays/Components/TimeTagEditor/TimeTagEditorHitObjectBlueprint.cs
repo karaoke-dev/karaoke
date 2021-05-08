@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using JetBrains.Annotations;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -23,6 +25,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
 
         public Action<DragEvent> OnDragHandled;
 
+        [UsedImplicitly]
+        private readonly Bindable<double?> startTime;
+
         private readonly ExtendableCircle circle;
 
         public TimeTagEditorHitObjectBlueprint(TimeTag item)
@@ -30,6 +35,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         {
             Anchor = Anchor.CentreLeft;
             Origin = Anchor.CentreLeft;
+
+            startTime = item.TimeBindable.GetBoundCopy();
+            startTime.BindValueChanged(e =>
+            {
+                var time = e.NewValue;
+
+                if (time != null)
+                {
+                    X = (float)time.Value;
+                }
+                else
+                {
+                    // todo : should get relative position.
+                }
+            }, true);
 
             AddRangeInternal(new Drawable[]
             {
@@ -41,6 +61,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
                 },
             });
         }
+
+        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) =>
+            circle.ReceivePositionalInputAt(screenSpacePos);
+
+        public override Quad SelectionQuad => circle.ScreenSpaceDrawQuad;
+
+        public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
 
         /// <summary>
         /// A circle with externalised end caps so it can take up the full width of a relative width area.
