@@ -10,7 +10,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
@@ -23,8 +22,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
 {
     public class TimeTagEditorHitObjectBlueprint : SelectionBlueprint<TimeTag>
     {
-        public Action<DragEvent> OnDragHandled;
-
         [UsedImplicitly]
         private readonly Bindable<double?> startTime;
 
@@ -72,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
 
                 case TextIndex.IndexState.End:
                     timeTagPiece.Origin = Anchor.CentreRight;
-                    timeTagWithNoTimePiece.Origin = Anchor.BottomLeft;
+                    timeTagWithNoTimePiece.Origin = Anchor.BottomRight;
                     timeTagText.Origin = Anchor.TopRight;
                     break;
             }

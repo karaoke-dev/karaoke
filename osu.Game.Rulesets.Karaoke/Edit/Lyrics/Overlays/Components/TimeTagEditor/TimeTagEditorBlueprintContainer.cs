@@ -58,19 +58,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             if (firstDragTimeTagTime == null)
                 return false;
 
+            // main goal is applying delta time while dragging.
             if (result.Time.HasValue)
             {
                 // Apply the start time at the newly snapped-to position
                 double offset = result.Time.Value - firstDragTimeTagTime.Value;
 
-                if (offset != 0)
+                if (offset == 0)
+                    return false;
+
+                // todo : should not save separately.
+                foreach (var blueprint in blueprints)
                 {
-                    // todo : should not save separately.
-                    foreach (var blueprint in blueprints)
-                    {
-                        // todo : fix logic error.
-                        // lyricManager.SetTimeTagTime(blueprint.Item.Time.Value + offset);
-                    }
+                    // todo : fix logic error.
+                    var timeTag = blueprint.Item;
+                    timeTag.Time += offset;
                 }
             }
 
@@ -84,34 +86,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             => new TimeTagEditorSelectionHandler();
 
         protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
-        {
-            return new TimeTagEditorHitObjectBlueprint(item)
-            {
-                OnDragHandled = handleScrollViaDrag
-            };
-        }
+            => new TimeTagEditorHitObjectBlueprint(item);
 
         protected override DragBox CreateDragBox(Action<RectangleF> performSelect) => new TimelineDragBox(performSelect);
-
-        private void handleScrollViaDrag(DragEvent e)
-        {
-            lastDragEvent = e;
-
-            if (lastDragEvent == null)
-                return;
-
-            if (timeline != null)
-            {
-                var timelineQuad = timeline.ScreenSpaceDrawQuad;
-                var mouseX = e.ScreenSpaceMousePosition.X;
-
-                // scroll if in a drag and dragging outside visible extents
-                if (mouseX > timelineQuad.TopRight.X)
-                    timeline.ScrollBy((float)((mouseX - timelineQuad.TopRight.X) / 10 * Clock.ElapsedFrameTime));
-                else if (mouseX < timelineQuad.TopLeft.X)
-                    timeline.ScrollBy((float)((mouseX - timelineQuad.TopLeft.X) / 10 * Clock.ElapsedFrameTime));
-            }
-        }
 
         protected class TimeTagEditorSelectionHandler : SelectionHandler<TimeTag>
         {
