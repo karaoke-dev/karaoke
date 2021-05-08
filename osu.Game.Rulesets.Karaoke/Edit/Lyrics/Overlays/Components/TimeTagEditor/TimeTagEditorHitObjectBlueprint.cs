@@ -14,6 +14,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
@@ -34,28 +35,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         public TimeTagEditorHitObjectBlueprint(TimeTag item)
             : base(item)
         {
+            startTime = item.TimeBindable.GetBoundCopy();
+
             Anchor = Anchor.CentreLeft;
             Origin = Anchor.CentreLeft;
 
-            startTime = item.TimeBindable.GetBoundCopy();
-            startTime.BindValueChanged(e =>
-            {
-                // assign blueprint position in here.
-                var time = e.NewValue;
-
-                if (time != null)
-                {
-                    X = (float)time.Value;
-                }
-                else
-                {
-                    // todo : should get relative position.
-                    X = 18000f;
-                }
-            }, true);
-
             RelativePositionAxes = Axes.X;
-
             RelativeSizeAxes = Axes.Y;
             AutoSizeAxes = Axes.X;
 
@@ -94,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(TimeTagEditor timeline, OsuColour colours)
         {
             timeTagPiece.Colour = colours.BlueLight;
             timeTagWithNoTimePiece.Colour = colours.Red;
@@ -116,9 +101,41 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
                         break;
                 }
             }, true);
+
+            startTime.BindValueChanged(e =>
+            {
+                // assign blueprint position in here.
+                var time = e.NewValue;
+
+                if (time != null)
+                {
+                    X = (float)time.Value;
+                }
+                else
+                {
+                    var timeTags = timeline.HitObject.TimeTags;
+
+                    const float preempt_time = 200;
+                    var previousTimeTagWithTime = timeTags.GetPreviousMatch(Item, x => x.Time.HasValue);
+                    var nextTimeTagWithTime = timeTags.GetNextMatch(Item, x => x.Time.HasValue);
+
+                    if (previousTimeTagWithTime?.Time != null)
+                    {
+                        X = (float)previousTimeTagWithTime.Time.Value + preempt_time;
+                    }
+                    else if (nextTimeTagWithTime?.Time != null)
+                    {
+                        X = (float)nextTimeTagWithTime.Time.Value - preempt_time;
+                    }
+                    else
+                    {
+                        throw new ArgumentNullException(nameof(previousTimeTagWithTime));
+                    }
+                }
+            }, true);
         }
 
-        private bool hasTime() => this.startTime.Value.HasValue;
+        private bool hasTime() => startTime.Value.HasValue;
 
         protected override void OnSelected()
         {
@@ -140,9 +157,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
 
         public class TimeTagPiece : CompositeDrawable
         {
-            protected readonly Box box;
+            private readonly Box box;
 
-            protected readonly RightTriangle triangle;
+            private readonly RightTriangle triangle;
 
             public TimeTagPiece(TimeTag timeTag)
             {
@@ -182,7 +199,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
 
         public class TimeTagWithNoTimePiece : CompositeDrawable
         {
-            protected readonly RightTriangle triangle;
+            private readonly RightTriangle triangle;
 
             public TimeTagWithNoTimePiece(TimeTag timeTag)
             {
