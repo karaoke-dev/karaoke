@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -39,6 +40,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
 
         private Container mainContent;
 
+        private CurrentTimeMarker currentTimeMarker;
+
         private TimelineTickDisplay ticks;
 
         [BackgroundDependencyLoader]
@@ -55,6 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
                     {
                         ticks = new TimelineTickDisplay(),
                         new TimeTagEditorBlueprintContainer(HitObject),
+                        currentTimeMarker = new CurrentTimeMarker(),
                     }
                 },
             });
@@ -64,6 +68,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             {
                 var timeTags = e.NewValue;
             });
+
+            // initialize scroll zone.
+            MaxZoom = getZoomLevelForVisibleMilliseconds(500);
+            MinZoom = getZoomLevelForVisibleMilliseconds(10000);
+            Zoom = getZoomLevelForVisibleMilliseconds(2000);
         }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            var position = getPositionFromTime(HitObject.LyricStartTime);
+            ScrollTo(position, false);
+        }
+
+        private float getZoomLevelForVisibleMilliseconds(double milliseconds) => Math.Max(1, (float)(editorClock.TrackLength / milliseconds));
+
+        protected override void UpdateAfterChildren()
+        {
+            base.UpdateAfterChildren();
+
+            var position = getPositionFromTime(editorClock.CurrentTime);
+            currentTimeMarker.MoveToX(position);
+        }
+
+        private float getPositionFromTime(double time)
+            => (float)(time / editorClock.TrackLength) * Content.DrawWidth;
     }
 }

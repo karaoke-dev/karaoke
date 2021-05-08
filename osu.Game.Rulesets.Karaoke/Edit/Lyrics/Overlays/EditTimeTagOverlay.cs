@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
             return new TimeTagEditor(lyric)
             {
                 RelativeSizeAxes = Axes.X,
-                Height = 150,
+                Height = 100,
             };
         }
     }
