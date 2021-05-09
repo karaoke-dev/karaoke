@@ -13,7 +13,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit.Singers.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Detail;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
