@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 using static osu.Game.Rulesets.Karaoke.Edit.Components.Timeline.TimelineBlueprintContainer;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
 {
     internal class LyricTimelineSelectionHandler : TimelineSelectionHandler
     {

@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
 {
@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
         protected virtual Drawable CreateTimeLinePart(KaraokeHitObjectComposer composer)
         {
             // todo : implement Drawable.Empty() args.
-            return new SingerTimeline(Empty())
+            return new SingerLyricEditor.SingerLyricEditor(Empty())
             {
                 RelativeSizeAxes = Axes.Both,
                 Child = new LyricBlueprintContainer(composer, singer)

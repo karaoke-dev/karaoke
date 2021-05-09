@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
 {
     public class LyricBlueprintContainer : TimelineBlueprintContainer
     {

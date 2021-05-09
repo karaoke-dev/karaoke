@@ -7,14 +7,14 @@ using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Timeline
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
 {
-    public class SingerTimeline : Game.Screens.Edit.Compose.Components.Timeline.Timeline
+    public class SingerLyricEditor : Timeline
     {
         [Resolved(CanBeNull = true)]
         private SingerManager singerManager { get; set; }
 
-        public SingerTimeline(Drawable userContent)
+        public SingerLyricEditor(Drawable userContent)
             : base(userContent)
         {
         }
