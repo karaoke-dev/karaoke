@@ -168,6 +168,10 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (string.IsNullOrEmpty(text))
                 throw new ArgumentNullException(nameof(text));
 
+            // not showing text if index out of range.
+            if (index.Index < 0 || index.Index >= text.Length)
+                return "-";
+
             var timeTags = lyric.TimeTags;
 
             if (index.State == TextIndex.IndexState.Start)

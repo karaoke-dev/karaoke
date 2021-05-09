@@ -167,6 +167,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("からおけ", "[0,end]", "-か")]
         [TestCase("からおけ", "[3,start]", "け-")]
         [TestCase("からおけ", "[3,end]", "-からおけ")]
+        [TestCase("からおけ", "[4,start]", "-")] // not showing text if index out of range.
+        [TestCase("からおけ", "[4,end]", "-")]
+        [TestCase("からおけ", "[-1,start]", "-")]
+        [TestCase("からおけ", "[-1,end]", "-")]
         public void TestGetTimeTagIndexDisplayText(string text, string textIndexStr, string actual)
         {
             var lyric = TestCaseTagHelper.ParseLyricWithTimeTag(text);
