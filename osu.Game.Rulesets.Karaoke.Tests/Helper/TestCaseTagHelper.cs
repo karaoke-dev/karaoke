@@ -2,9 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -155,6 +158,34 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
                     new TimeTag(new TextIndex((int)text?.Length - 1, TextIndex.IndexState.End), endTime)
                 }
             };
+        }
+
+        /// <summary>
+        /// Process test case lyric string format into <see cref="Lyric"/>
+        /// </summary>
+        /// <example>
+        /// "[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]"
+        /// </example>
+        /// <param name="str">Lyric string format</param>
+        /// <returns><see cref="Lyric"/>Lyric object</returns>
+        public static Lyric ParseLyricWithTimeTag(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return new Lyric();
+
+            using (var stream = new MemoryStream())
+            using (var writer = new StreamWriter(stream))
+            using (var reader = new LineBufferedReader(stream))
+            {
+                // Create stream
+                writer.Write(str);
+                writer.Flush();
+                stream.Position = 0;
+
+                // Create karaoke note decoder
+                var decoder = new LrcDecoder();
+                return decoder.Decode(reader).HitObjects.OfType<Lyric>().FirstOrDefault();
+            }
         }
 
         /// <summary>

@@ -136,7 +136,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         #endregion
 
-        #region Text tags
+        #region Time tags
 
         public static bool HasTimedTimeTags(List<Lyric> lyrics)
             => lyrics?.Any(LyricUtils.HasTimedTimeTags) ?? false;
