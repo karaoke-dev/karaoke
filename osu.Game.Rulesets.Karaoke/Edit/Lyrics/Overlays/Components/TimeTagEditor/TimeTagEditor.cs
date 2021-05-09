@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -26,9 +27,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
 
         public readonly Lyric HitObject;
 
+        private double startPosition;
+
+        private double endPosition;
+
         public TimeTagEditor(Lyric lyric)
         {
             HitObject = lyric;
+            lyric.TimeTagsBindable.GetBoundCopy().BindValueChanged(e =>
+            {
+                // todo : change time mignt not call time-tag changed.
+                startPosition = e.NewValue?.Where(x => x.Time != null).FirstOrDefault()?.Time ?? 0 - 500;
+                endPosition = e.NewValue?.Where(x => x.Time != null).LastOrDefault()?.Time ?? 1000000;
+            }, true);
 
             RelativeSizeAxes = Axes.X;
             Padding = new MarginPadding { Top = 10 };
@@ -97,6 +108,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
 
             var position = getPositionFromTime(editorClock.CurrentTime);
             currentTimeMarker.MoveToX(position);
+        }
+
+        protected override void OnUserScroll(float value, bool animated = true, double? distanceDecay = null)
+        {
+            const float preempt_time = 1000;
+            var zoomMillionSecond = editorClock.TrackLength / CurrentZoom;
+            var position = getTimeFromPosition(new Vector2(value));
+
+            // should prevent dragging or moving is out of time-tag range.
+            if (position < startPosition - preempt_time)
+                value = getPositionFromTime(startPosition - preempt_time);
+
+            if (position > endPosition - zoomMillionSecond + preempt_time)
+                value = getPositionFromTime(endPosition - zoomMillionSecond + preempt_time);
+
+            base.OnUserScroll(value, animated, distanceDecay);
         }
 
         public SnapResult SnapScreenSpacePositionToValidPosition(Vector2 screenSpacePosition) =>
