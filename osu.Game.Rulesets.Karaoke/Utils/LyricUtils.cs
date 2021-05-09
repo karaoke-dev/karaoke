@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -156,6 +157,40 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static bool HasTimedTimeTags(Lyric lyric)
         {
             return lyric?.TimeTags?.Any(x => x.Time.HasValue) ?? false;
+        }
+
+        public static string GetTimeTagIndexDisplayText(Lyric lyric, TextIndex index)
+        {
+            if (lyric == null)
+                throw new ArgumentNullException(nameof(lyric));
+
+            var text = lyric.Text;
+            if (string.IsNullOrEmpty(text))
+                throw new ArgumentNullException(nameof(text));
+
+            // not showing text if index out of range.
+            if (index.Index < 0 || index.Index >= text.Length)
+                return "-";
+
+            var timeTags = lyric.TimeTags;
+
+            if (index.State == TextIndex.IndexState.Start)
+            {
+                var previousTimeTag = timeTags.FirstOrDefault(x => x.Index > index);
+                var startIndex = index.Index;
+                var endIndex = previousTimeTag?.Index.Index ?? text.Length;
+                return $"{text.Substring(startIndex, endIndex - startIndex)}-";
+            }
+
+            if (index.State == TextIndex.IndexState.End)
+            {
+                var previousTimeTag = timeTags.Reverse().FirstOrDefault(x => x.Index < index);
+                var startIndex = previousTimeTag?.Index.Index ?? 0;
+                var endIndex = index.Index + 1;
+                return $"-{text.Substring(startIndex, endIndex - startIndex)}";
+            }
+
+            throw new IndexOutOfRangeException(nameof(index.State));
         }
 
         #endregion

@@ -16,6 +16,7 @@ using osu.Framework.Utils;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osu.Game.Screens.Edit.Compose.Components;
 
@@ -25,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
     {
         [Resolved(CanBeNull = true)]
         private TimeTagEditor timeline { get; set; }
+
+        [Resolved]
+        private EditorClock editorClock { get; set; }
 
         [Resolved]
         private LyricManager lyricManager { get; set; }
@@ -119,6 +123,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             => new TimeTagEditorHitObjectBlueprint(item);
 
         protected override DragBox CreateDragBox(Action<RectangleF> performSelect) => new TimelineDragBox(performSelect);
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            base.OnClick(e);
+
+            // skip if already have selected blueprint.
+            if (ClickedBlueprint != null)
+                return true;
+
+            // navigation to target time.
+            var navigationTime = timeline.SnapScreenSpacePositionToValidTime(e.ScreenSpaceMousePosition);
+            if (navigationTime.Time == null)
+                return false;
+
+            editorClock.SeekSmoothlyTo(navigationTime.Time.Value);
+            return true;
+        }
 
         protected class TimeTagEditorSelectionHandler : SelectionHandler<TimeTag>
         {

@@ -16,6 +16,7 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEditor
@@ -78,6 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         [BackgroundDependencyLoader]
         private void load(TimeTagEditor timeline, OsuColour colours)
         {
+            timeTagText.Text = LyricUtils.GetTimeTagIndexDisplayText(timeline.HitObject, Item.Index);
             timeTagPiece.Colour = colours.BlueLight;
             timeTagWithNoTimePiece.Colour = colours.Red;
             startTime.BindValueChanged(e =>

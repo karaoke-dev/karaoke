@@ -155,6 +155,29 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(LyricUtils.HasTimedTimeTags(lyric), hasTimedTimeTag);
         }
 
+        [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "[0,start]", "か-")]
+        [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "[0,end]", "-か")]
+        [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "[3,start]", "け-")]
+        [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "[3,end]", "-け")]
+        [TestCase("[00:01.00]からおけ[00:05.00]", "[0,start]", "からおけ-")]
+        [TestCase("[00:01.00]からおけ[00:05.00]", "[0,end]", "-か")]
+        [TestCase("[00:01.00]からおけ[00:05.00]", "[3,start]", "け-")]
+        [TestCase("[00:01.00]からおけ[00:05.00]", "[3,end]", "-からおけ")]
+        [TestCase("からおけ", "[0,start]", "からおけ-")]
+        [TestCase("からおけ", "[0,end]", "-か")]
+        [TestCase("からおけ", "[3,start]", "け-")]
+        [TestCase("からおけ", "[3,end]", "-からおけ")]
+        [TestCase("からおけ", "[4,start]", "-")] // not showing text if index out of range.
+        [TestCase("からおけ", "[4,end]", "-")]
+        [TestCase("からおけ", "[-1,start]", "-")]
+        [TestCase("からおけ", "[-1,end]", "-")]
+        public void TestGetTimeTagIndexDisplayText(string text, string textIndexStr, string actual)
+        {
+            var lyric = TestCaseTagHelper.ParseLyricWithTimeTag(text);
+            var textIndex = TestCaseTagHelper.ParseTextIndex(textIndexStr);
+            Assert.AreEqual(LyricUtils.GetTimeTagIndexDisplayText(lyric, textIndex), actual);
+        }
+
         #endregion
 
         #region Time display
