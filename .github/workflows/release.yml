@@ -11,6 +11,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+    - name: Setup dotnet version
+      uses: actions/setup-dotnet@v1 # Build with netCore 3.1 because ILRepack not support .net5
+      with:
+        dotnet-version: '3.1.x' # SDK Version to use.
     - name: Fetch all tags
       run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
     - name: Get current tag
