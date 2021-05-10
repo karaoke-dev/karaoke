@@ -18,22 +18,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
 {
     public class LyricTimelineHitObjectBlueprint : SelectionBlueprint<Lyric>, IHasCustomTooltip
     {
+        private const float lyric_size = 20;
+
         public LyricTimelineHitObjectBlueprint(Lyric item)
             : base(item)
         {
             Anchor = Anchor.CentreLeft;
             Origin = Anchor.CentreLeft;
 
+            X = (float)Item.LyricStartTime;
+
             RelativePositionAxes = Axes.X;
-            RelativeSizeAxes = Axes.Y;
-            AutoSizeAxes = Axes.X;
+            RelativeSizeAxes = Axes.X;
+            Height = lyric_size;
 
             AddInternal(new Container
             {
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,
-                RelativeSizeAxes = Axes.X,
-                Height = 20,
+                RelativeSizeAxes = Axes.Both,
                 Masking = true,
                 CornerRadius = 5,
                 Children = new Drawable[]
@@ -57,7 +60,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
         [BackgroundDependencyLoader]
         private void load(LyricManager lyricManager, SingerLyricEditor editor)
         {
-            X = (float)Item.LyricStartTime;
             Item.SingersBindable.BindValueChanged(e =>
             {
                 // Check is lyric contains this singer, or default singer
@@ -89,5 +91,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
         }
 
         public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
+
+        protected override void Update()
+        {
+            base.Update();
+
+            // no bindable so we perform this every update
+            float duration = (float)(Item.LyricDuration);
+
+            if (Width != duration)
+            {
+                Width = duration;
+            }
+        }
     }
 }

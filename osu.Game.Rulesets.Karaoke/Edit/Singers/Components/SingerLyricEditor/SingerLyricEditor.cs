@@ -72,9 +72,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
             });
 
             // initialize scroll zone.
-            MaxZoom = getZoomLevelForVisibleMilliseconds(5000);
-            MinZoom = getZoomLevelForVisibleMilliseconds(100000);
-            Zoom = getZoomLevelForVisibleMilliseconds(20000);
+            MaxZoom = getZoomLevelForVisibleMilliseconds(2000);
+            MinZoom = getZoomLevelForVisibleMilliseconds(20000);
+            Zoom = getZoomLevelForVisibleMilliseconds(5000);
 
             // todo : might need better way to sync the zoom.
             singerManager?.BindableZoom.BindValueChanged(e =>
