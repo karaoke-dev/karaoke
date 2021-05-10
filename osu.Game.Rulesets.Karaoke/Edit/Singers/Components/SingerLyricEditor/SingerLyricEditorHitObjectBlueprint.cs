@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
+using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
@@ -19,6 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
     public class LyricTimelineHitObjectBlueprint : SelectionBlueprint<Lyric>, IHasCustomTooltip
     {
         private const float lyric_size = 20;
+
+        private bool isSingerMatched;
 
         public LyricTimelineHitObjectBlueprint(Lyric item)
             : base(item)
@@ -63,9 +66,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
             Item.SingersBindable.BindValueChanged(e =>
             {
                 // Check is lyric contains this singer, or default singer
-                var isSingerMatch = lyricManager.SingerInLyric(editor.Singer, Item);
+                isSingerMatched = lyricManager.SingerInLyric(editor.Singer, Item);
 
-                if (isSingerMatch)
+                if (isSingerMatched)
                 {
                     Show();
                 }
@@ -89,6 +92,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
         {
             // base logic hides selected blueprints when not selected, but timeline doesn't do that.
         }
+
+        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) =>
+            isSingerMatched && base.ReceivePositionalInputAt(screenSpacePos);
 
         public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
 

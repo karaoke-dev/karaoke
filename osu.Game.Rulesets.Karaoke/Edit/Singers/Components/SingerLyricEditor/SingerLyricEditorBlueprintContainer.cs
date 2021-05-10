@@ -70,7 +70,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
 
             protected override void DeleteItems(IEnumerable<Lyric> items)
             {
-                // should not able to delete lyric in here.
+                // todo : remove all in the same time.
+                foreach (var item in items)
+                {
+                    lyricManager.ClearAllSingersFromLyric(item);
+                }
             }
         }
 

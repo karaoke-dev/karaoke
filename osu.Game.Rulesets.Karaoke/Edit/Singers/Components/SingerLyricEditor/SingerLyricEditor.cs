@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -9,6 +10,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
@@ -24,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
 
         [Resolved]
         private EditorClock editorClock { get; set; }
+
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
 
         public readonly Singer Singer;
 
@@ -100,5 +105,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
 
             return true;
         }
+
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            const float preempt_time = 1000;
+
+            var firstLyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault(x => x.LyricStartTime > 0);
+            if (firstLyric == null)
+                return;
+
+            var position = getPositionFromTime(firstLyric.LyricStartTime - preempt_time);
+            ScrollTo(position, false);
+        }
+
+        private float getPositionFromTime(double time)
+            => (float)(time / editorClock.TrackLength) * Content.DrawWidth;
     }
 }
