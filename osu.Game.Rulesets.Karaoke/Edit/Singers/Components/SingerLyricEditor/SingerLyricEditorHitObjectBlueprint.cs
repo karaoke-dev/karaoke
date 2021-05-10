@@ -2,35 +2,32 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Objects;
-using osu.Game.Screens.Edit.Compose.Components.Timeline;
+using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
 {
-    public class LyricTimelineHitObjectBlueprint : TimelineHitObjectBlueprint, IHasCustomTooltip
+    public class LyricTimelineHitObjectBlueprint : SelectionBlueprint<Lyric>, IHasCustomTooltip
     {
-        private readonly Singer singer;
-
-        public LyricTimelineHitObjectBlueprint(HitObject hitObject, Singer singer)
-            : base(hitObject)
+        public LyricTimelineHitObjectBlueprint(Lyric item)
+            : base(item)
         {
-            this.singer = singer;
+            Anchor = Anchor.CentreLeft;
+            Origin = Anchor.CentreLeft;
 
-            // Use tricky way to hide the timeline component.
-            InternalChildren.ForEach(x => x.Alpha = 0);
+            RelativePositionAxes = Axes.X;
+            RelativeSizeAxes = Axes.Y;
+            AutoSizeAxes = Axes.X;
 
-            // todo : wait for better solution until some of child component is overridable.
             AddInternal(new Container
             {
                 Anchor = Anchor.CentreLeft,
@@ -51,36 +48,46 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
                         Anchor = Anchor.CentreLeft,
                         Origin = Anchor.CentreLeft,
                         Margin = new MarginPadding { Left = 10 },
-                        Text = (hitObject as Lyric)?.Text
+                        Text = item?.Text
                     }
                 }
             });
         }
 
         [BackgroundDependencyLoader]
-        private void load(LyricManager lyricManager)
+        private void load(LyricManager lyricManager, SingerLyricEditor editor)
         {
-            if (Item is Lyric lyric)
+            X = (float)Item.LyricStartTime;
+            Item.SingersBindable.BindValueChanged(e =>
             {
-                lyric.SingersBindable.BindValueChanged(e =>
-                {
-                    // Check is lyric contains this singer, or default singer
-                    var isSingerMatch = lyricManager.SingerInLyric(singer, lyric);
+                // Check is lyric contains this singer, or default singer
+                var isSingerMatch = lyricManager.SingerInLyric(editor.Singer, Item);
 
-                    if (isSingerMatch)
-                    {
-                        Show();
-                    }
-                    else
-                    {
-                        Hide();
-                    }
-                }, true);
-            }
+                if (isSingerMatch)
+                {
+                    Show();
+                }
+                else
+                {
+                    Hide();
+                }
+            }, true);
         }
 
         public object TooltipContent => Item;
 
         public ITooltip GetCustomTooltip() => new LyricTooltip();
+
+        protected override void OnSelected()
+        {
+            // base logic hides selected blueprints when not selected, but timeline doesn't do that.
+        }
+
+        protected override void OnDeselected()
+        {
+            // base logic hides selected blueprints when not selected, but timeline doesn't do that.
+        }
+
+        public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
     }
 }
