@@ -81,13 +81,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
             MinZoom = getZoomLevelForVisibleMilliseconds(20000);
             Zoom = getZoomLevelForVisibleMilliseconds(5000);
 
-            // todo : might need better way to sync the zoom.
+            // todo : might need better way to sync the zoom and scroll position.
             singerManager?.BindableZoom.BindValueChanged(e =>
             {
                 if (e.NewValue == Zoom)
                     return;
 
                 Zoom = e.NewValue;
+            });
+
+            singerManager?.BindableCurrent.BindValueChanged(e =>
+            {
+                // not make self-assign.
+                if (Current != Target)
+                    return;
+
+                ScrollTo(e.NewValue, false);
             });
         }
 
@@ -118,6 +127,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
 
             var position = getPositionFromTime(firstLyric.LyricStartTime - preempt_time);
             ScrollTo(position, false);
+        }
+
+        protected override void UpdateAfterChildren()
+        {
+            base.UpdateAfterChildren();
+
+            singerManager.BindableCurrent.Value = Current;
         }
 
         private float getPositionFromTime(double time)
