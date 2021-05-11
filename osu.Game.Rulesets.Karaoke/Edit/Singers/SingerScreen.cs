@@ -10,7 +10,7 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Singers.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Detail;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {

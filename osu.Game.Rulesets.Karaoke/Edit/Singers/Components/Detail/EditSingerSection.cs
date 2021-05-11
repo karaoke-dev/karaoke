@@ -8,7 +8,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Edit
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Detail
 {
     internal abstract class EditSingerSection : Container
     {

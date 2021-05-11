@@ -440,6 +440,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return (bool)lyric.Singers?.Contains(singer.ID);
         }
 
+        public void ClearAllSingersFromLyric(Lyric lyric)
+        {
+            if (!lyric.Singers.Any())
+                return;
+
+            var matchedSingers = Singers.Where(x => lyric.Singers.Contains(x.ID)).ToList();
+            RemoveSingersToLyrics(matchedSingers, new List<Lyric> { lyric });
+        }
+
         #endregion
 
         #region Lock
