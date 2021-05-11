@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
                 }
                 else
                 {
-                    Hide();
+                    this.FadeTo(0.1f, 200);
                 }
             }, true);
         }
@@ -92,10 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
             // base logic hides selected blueprints when not selected, but timeline doesn't do that.
         }
 
-        public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) =>
-            isSingerMatched && base.ReceivePositionalInputAt(screenSpacePos);
-
-        public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
+        public override Vector2 ScreenSpaceSelectionPoint => isSingerMatched ? ScreenSpaceDrawQuad.TopLeft : new Vector2(int.MinValue);
 
         protected override void Update()
         {
