@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                         // need to delay until karaoke text has been calculated.
                         ScheduleAfterChildren(UpdateTimeTags);
                         // it's a magic number and should find a way to fix that.
-                        caretContainer.Height = font.LyricTextFontInfo.LyricTextFontInfo.CharSize * 2f + 13; 
+                        caretContainer.Height = font.LyricTextFontInfo.LyricTextFontInfo.CharSize * 2f + 13;
                     }
                 },
                 timeTagContainer = new Container
