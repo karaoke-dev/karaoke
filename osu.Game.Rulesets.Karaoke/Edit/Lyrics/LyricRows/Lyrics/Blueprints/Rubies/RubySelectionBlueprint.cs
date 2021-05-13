@@ -2,13 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.Rubies
 {
-    public class RubySelectionBlueprint : SelectionBlueprint<RubyTag>
+    public class RubySelectionBlueprint : SelectionBlueprint<ITextTag>
     {
-        public RubySelectionBlueprint(RubyTag item)
+        public RubySelectionBlueprint(ITextTag item)
             : base(item)
         {
         }

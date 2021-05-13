@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -41,9 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
         }
 
         protected override SelectionHandler<ITextTag> CreateSelectionHandler()
-        {
-            throw new System.NotImplementedException();
-        }
+            => new RubyRomajiSelectionHandler();
 
         protected override SelectionBlueprint<ITextTag> CreateBlueprintFor(ITextTag item)
         {
@@ -57,6 +56,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(item));
+            }
+        }
+
+        protected class RubyRomajiSelectionHandler : SelectionHandler<ITextTag>
+        {
+            [Resolved]
+            private LyricManager lyricManager { get; set; }
+
+            // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
+            public override bool HandleMovement(MoveSelectionEvent<ITextTag> moveEvent) => true;
+
+            protected override void DeleteItems(IEnumerable<ITextTag> items)
+            {
+                // todo : delete ruby or romaji
             }
         }
     }

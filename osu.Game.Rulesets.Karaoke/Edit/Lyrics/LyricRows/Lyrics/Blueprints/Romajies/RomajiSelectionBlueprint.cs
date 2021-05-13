@@ -2,13 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.Romajies
 {
-    public class RomajiSelectionBlueprint : SelectionBlueprint<RomajiTag>
+    public class RomajiSelectionBlueprint : SelectionBlueprint<ITextTag>
     {
-        public RomajiSelectionBlueprint(RomajiTag item)
+        public RomajiSelectionBlueprint(ITextTag item)
             : base(item)
         {
         }
