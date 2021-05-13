@@ -3,8 +3,10 @@
 
 using System;
 using osu.Framework.Allocation;
+using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
@@ -63,6 +65,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             }
 
             return new TextIndex(text.Length - 1, TextIndex.IndexState.End);
+        }
+
+        public RectangleF GetTextTagPosition(ITextTag textTag)
+        {
+            switch (textTag)
+            {
+                case RubyTag rubyTag:
+                    return new RectangleF();
+
+                case RomajiTag romajiTag:
+                    return new RectangleF();
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(textTag));
+            }
         }
 
         [BackgroundDependencyLoader(true)]
