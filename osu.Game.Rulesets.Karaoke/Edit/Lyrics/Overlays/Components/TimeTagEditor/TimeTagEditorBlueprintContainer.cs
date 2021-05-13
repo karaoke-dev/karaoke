@@ -15,6 +15,7 @@ using osu.Framework.Input.Events;
 using osu.Framework.Utils;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
@@ -22,7 +23,7 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEditor
 {
-    public class TimeTagEditorBlueprintContainer : BlueprintContainer<TimeTag>
+    public class TimeTagEditorBlueprintContainer : ExtendBlueprintContainer<TimeTag>
     {
         [Resolved(CanBeNull = true)]
         private TimeTagEditor timeline { get; set; }
@@ -48,21 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         private void load()
         {
             // Add time-tag into blueprint container
-            timeTags.BindValueChanged(e =>
-            {
-                // remove old item.
-                var removedItems = e.OldValue?.Except(e.NewValue).ToList();
-
-                if (removedItems != null)
-                {
-                    foreach (var obj in removedItems)
-                        RemoveBlueprintFor(obj);
-                }
-
-                // add new time-tags
-                foreach (var obj in e.NewValue)
-                    AddBlueprintFor(obj);
-            }, true);
+            RegistBindable(timeTags);
         }
 
         protected override IEnumerable<SelectionBlueprint<TimeTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<TimeTag>> blueprints)
