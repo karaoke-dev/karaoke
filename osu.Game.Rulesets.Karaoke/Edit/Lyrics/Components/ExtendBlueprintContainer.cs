@@ -24,8 +24,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
                 }
 
                 // add new time-tags
-                foreach (var obj in e.NewValue)
-                    AddBlueprintFor(obj);
+                if (e.NewValue != null)
+                {
+                    foreach (var obj in e.NewValue)
+                        AddBlueprintFor(obj);
+                }
             }, true);
         }
     }

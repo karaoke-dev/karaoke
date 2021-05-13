@@ -164,8 +164,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             lyricPiece.Clock = clock;
             state.BindableMode.BindValueChanged(e =>
             {
-                // initial default caret here
-                CreateCaret(e.NewValue);
+                // initial default caret.
+                InitializeCaret(e.NewValue);
+
+                // Initial blueprint container.
+                InitializeBlueprint(e.NewValue);
             }, true);
 
             // update change if caret changed.
@@ -179,7 +182,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             });
         }
 
-        protected void CreateCaret(Mode mode)
+        protected void InitializeBlueprint(Mode mode)
+        {
+            // remove all exist blueprint container
+            RemoveAll(x => x is RubyRomajiBlueprintContainer);
+
+            // create preview and real caret
+            var blueprintContainer = createBlueprintContainer(mode, Lyric);
+            if (blueprintContainer == null)
+                return;
+
+            AddInternal(blueprintContainer);
+
+            static Drawable createBlueprintContainer(Mode mode, Lyric lyric)
+            {
+                switch (mode)
+                {
+                    case Mode.RubyRomajiMode:
+                        return new RubyRomajiBlueprintContainer(lyric);
+
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        protected void InitializeCaret(Mode mode)
         {
             caretContainer.Clear();
 
