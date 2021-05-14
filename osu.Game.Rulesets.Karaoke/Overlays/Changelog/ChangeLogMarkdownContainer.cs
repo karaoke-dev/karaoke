@@ -11,18 +11,17 @@ using Markdig.Extensions.AutoIdentifiers;
 using Markdig.Extensions.Yaml;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
-using osu.Framework.Graphics.Sprites;
 using osu.Framework.Layout;
+using osu.Game.Graphics.Containers.Markdown;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
-    public class ChangeLogMarkdownContainer : MarkdownContainer
+    public class ChangeLogMarkdownContainer : OsuMarkdownContainer
     {
         public ChangeLogMarkdownContainer(KaraokeChangelogBuild build)
         {
@@ -45,92 +44,15 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         }
 
         /// <summary>
-        /// Override <see cref="MarkdownHeading"/> to change default heading size.
-        /// </summary>
-        /// <param name="headingBlock"></param>
-        /// <returns></returns>
-        protected override MarkdownHeading CreateHeading(HeadingBlock headingBlock) => new ChangeLogMarkdownHeading(headingBlock);
-
-        /// <summary>
         /// Override <see cref="MarkdownTextFlowContainer"/> to limit image display size
         /// </summary>
         /// <returns></returns>
         public override MarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
 
         /// <summary>
-        /// Override <see cref="MarkdownParagraph"/> to add dot before text.
-        /// </summary>
-        /// <param name="paragraphBlock"></param>
-        /// <param name="level"></param>
-        /// <returns></returns>
-        protected override MarkdownParagraph CreateParagraph(ParagraphBlock paragraphBlock, int level) => new ChangeLogMarkdownParagraph(paragraphBlock);
-
-        /// <summary>
-        /// Add dot before paragraph.
-        /// </summary>
-        public class ChangeLogMarkdownParagraph : MarkdownParagraph
-        {
-            private readonly bool displayDot;
-
-            public ChangeLogMarkdownParagraph(ParagraphBlock paragraphBlock)
-                : base(paragraphBlock)
-            {
-                displayDot = paragraphBlock == paragraphBlock.Parent[0];
-            }
-
-            [BackgroundDependencyLoader]
-            private void load()
-            {
-                if (displayDot)
-                {
-                    AddInternal(new SpriteIcon
-                    {
-                        Anchor = Anchor.CentreLeft,
-                        Origin = Anchor.CentreRight,
-                        Margin = new MarginPadding { Right = 10 },
-                        Icon = FontAwesome.Solid.DotCircle,
-                        Size = new Vector2(10)
-                    });
-                }
-            }
-        }
-
-        /// <summary>
-        /// Re-assize heading size.
-        /// </summary>
-        public class ChangeLogMarkdownHeading : MarkdownHeading
-        {
-            public ChangeLogMarkdownHeading(HeadingBlock heading)
-                : base(heading)
-            {
-            }
-
-            protected override float GetFontSizeByLevel(int level)
-            {
-                switch (level)
-                {
-                    case 1:
-                        return 1.7f;
-
-                    case 2:
-                        return 1.5f;
-
-                    case 3:
-                        return 1.3f;
-
-                    case 4:
-                        return 1.2f;
-
-                    default:
-                        return 1;
-                }
-            }
-        }
-
-        /// <summary>
         /// Re-calculate image size by changelog width.
         /// </summary>
-        public class ChangeLogMarkdownTextFlowContainer : MarkdownTextFlowContainer
+        public class ChangeLogMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer
         {
             protected override void AddImage(LinkInline linkInline) => AddDrawable(new ChangeLogMarkdownImage(linkInline.Url));
 

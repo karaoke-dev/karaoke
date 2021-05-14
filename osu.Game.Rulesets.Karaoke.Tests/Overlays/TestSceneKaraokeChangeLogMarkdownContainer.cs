@@ -2,7 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 using osu.Game.Tests.Visual;
@@ -12,23 +16,44 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
     [TestFixture]
     public class TestSceneKaraokeChangeLogMarkdownContainer : OsuTestScene
     {
-        private ChangeLogMarkdownContainer changelog;
+        private ChangeLogMarkdownContainer markdownContainer;
+
+        [Cached]
+        private readonly OverlayColourProvider overlayColour = new OverlayColourProvider(OverlayColourScheme.Orange);
 
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            Child = changelog = new ChangeLogMarkdownContainer(new KaraokeChangelogBuild("karaoke-dev", "karaoke-dev.github.io")
+            var build = new KaraokeChangelogBuild("karaoke-dev", "karaoke-dev.github.io")
             {
                 Path = "changelog/2020.0620",
                 RootUrl = "https://github.com/karaoke-dev/karaoke-dev.github.io/tree/master/changelog/2020.0620"
-            });
-            Child.RelativeSizeAxes = Axes.Both;
+            };
+
+            Children = new Drawable[]
+            {
+                new Box
+                {
+                    Colour = overlayColour.Background5,
+                    RelativeSizeAxes = Axes.Both,
+                },
+                new BasicScrollContainer
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Padding = new MarginPadding(20),
+                    Child = markdownContainer = new ChangeLogMarkdownContainer(build)
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y
+                    }
+                }
+            };
         });
 
         [Test]
         public void ShowWithNoFetch()
         {
-            AddStep(@"Show", () => changelog.Show());
+            AddStep(@"Show", () => markdownContainer.Show());
         }
     }
 }
