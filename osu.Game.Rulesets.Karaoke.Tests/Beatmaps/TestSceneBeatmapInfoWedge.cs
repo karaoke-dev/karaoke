@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
 
         private void selectBeatmap(IBeatmap b, string fileName)
         {
-            BeatmapInfoWedge.BufferedWedgeInfo infoBefore = null;
+            BeatmapInfoWedge.WedgeInfoText infoBefore = null;
 
             AddStep($"select {b?.Metadata.Title ?? fileName} beatmap", () =>
             {
@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
 
         private class TestBeatmapInfoWedge : BeatmapInfoWedge
         {
-            public new BufferedWedgeInfo Info => base.Info;
+            public new WedgeInfoText Info => base.Info;
         }
     }
 }

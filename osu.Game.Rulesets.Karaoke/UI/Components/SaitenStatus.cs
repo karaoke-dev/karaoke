@@ -20,6 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
     {
         private const float size = 22;
 
+        private readonly SpriteIcon icon;
+        private readonly MarkdownTextFlowContainer messageText;
+
         public SpriteText CreateSpriteText() => new SpriteText();
 
         public SaitenStatus(SaitenStatusMode statusMode)
@@ -28,6 +31,19 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             Direction = FillDirection.Horizontal;
             AutoSizeAxes = Axes.Both;
             SaitenStatusMode = statusMode;
+
+            Children = new Drawable[]
+            {
+                icon = new SpriteIcon
+                {
+                    Size = new Vector2(size),
+                },
+                messageText = new MarkdownTextFlowContainer
+                {
+                    RelativeSizeAxes = Axes.None,
+                    AutoSizeAxes = Axes.Both
+                }
+            };
         }
 
         private SaitenStatusMode statusMode;
@@ -38,11 +54,20 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             set
             {
                 statusMode = value;
-                Children = new[]
+
+                Schedule(() =>
                 {
-                    createIcon(statusMode == SaitenStatusMode.Saitening),
-                    createStatusSpriteText(GetSaitenStatusText(statusMode))
-                };
+                    var saitenable = statusMode == SaitenStatusMode.Saitening;
+                    icon.Icon = saitenable ? FontAwesome.Regular.DotCircle : FontAwesome.Regular.PauseCircle;
+                    icon.Colour = saitenable ? Color4.Red : Color4.LightGray;
+
+                    var text = GetSaitenStatusText(statusMode);
+                    var block = Markdown.Parse(text).OfType<ParagraphBlock>().FirstOrDefault();
+
+                    messageText.Clear();
+                    if (block != null)
+                        messageText.AddInlineText(block.Inline);
+                });
             }
         }
 
@@ -88,30 +113,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
                 default:
                     return "Weird... Should not goes to here either :oops:";
-            }
-        }
-
-        private Drawable createIcon(bool saitenable) => new SpriteIcon
-        {
-            Size = new Vector2(size),
-            Icon = saitenable ? FontAwesome.Regular.DotCircle : FontAwesome.Regular.PauseCircle,
-            Colour = saitenable ? Color4.Red : Color4.LightGray
-        };
-
-        private Drawable createStatusSpriteText(string markdownText) => new StatusSpriteText(markdownText)
-        {
-            RelativeSizeAxes = Axes.None,
-            AutoSizeAxes = Axes.Both
-        };
-
-        internal class StatusSpriteText : MarkdownTextFlowContainer
-        {
-            public StatusSpriteText(string text)
-            {
-                var block = Markdown.Parse(text).OfType<ParagraphBlock>().FirstOrDefault();
-
-                if (block != null)
-                    AddInlineText(block.Inline);
             }
         }
     }

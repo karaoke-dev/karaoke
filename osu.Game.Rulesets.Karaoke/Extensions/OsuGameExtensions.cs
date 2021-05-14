@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
             => game?.Children[7] as Container;
 
         public static OsuScreenStack GetScreenStack(this OsuGame game)
-            => (game?.Children[3] as Container)?.Children.OfType<OsuScreenStack>().FirstOrDefault();
+            => ((game?.Children[3] as Container)?.Child as Container)?.Children.OfType<OsuScreenStack>().FirstOrDefault();
 
         public static SettingsOverlay GetSettingsOverlay(this OsuGame game)
             => (game?.Children[6] as Container)?.Children.OfType<SettingsOverlay>().FirstOrDefault();
