@@ -5,6 +5,7 @@ using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags.Ja
@@ -46,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags.Ja
             var rubyTags = generator.CreateRubyTags(lyric);
             var actualRubyTags = TestCaseTagHelper.ParseRubyTags(actualRuby);
 
-            Assert.AreEqual(rubyTags, actualRubyTags);
+            TextTagAssert.ArePropertyEqual(rubyTags, actualRubyTags);
         }
 
         private JaRubyTagGeneratorConfig generatorConfig(params string[] properties)

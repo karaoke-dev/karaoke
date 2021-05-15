@@ -3,13 +3,13 @@
 
 using System.Collections.Generic;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Asserts
 {
-    public class TimeTagAssert : Assert
+    public class TextTagAssert : Assert
     {
-        public static void ArePropertyEqual(IReadOnlyList<TimeTag> expect, IReadOnlyList<TimeTag> actually)
+        public static void ArePropertyEqual<T>(IReadOnlyList<T> expect, IReadOnlyList<T> actually) where T : ITextTag
         {
             AreEqual(expect?.Count, actually?.Count);
             if (expect == null || actually == null)
@@ -18,13 +18,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Asserts
             for (int i = 0; i < expect.Count; i++)
             {
                 ArePropertyEqual(expect[i], actually[i]);
+                ArePropertyEqual(expect[i], actually[i]);
             }
         }
 
-        public static void ArePropertyEqual(TimeTag expect, TimeTag actually)
+        public static void ArePropertyEqual<T>(T expect, T actually) where T : ITextTag
         {
-            AreEqual(expect.Index, actually.Index);
-            AreEqual(expect.Time, actually.Time);
+            AreEqual(expect.Text, actually.Text);
+            AreEqual(expect.StartIndex, actually.StartIndex);
+            AreEqual(expect.EndIndex, actually.EndIndex);
         }
     }
 }
