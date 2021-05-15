@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags
             };
             var selector = new TimeTagGeneratorSelector();
             var generatedTimeTags = selector.GenerateTimeTags(lyric);
-            TimeTagAssert.AreEqual(generatedTimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTag));
+            TimeTagAssert.ArePropertyEqual(generatedTimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTag));
         }
     }
 }

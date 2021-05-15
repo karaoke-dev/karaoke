@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.TimeTags
             var actualIndexed = TestCaseTagHelper.ParseTimeTags(actualTimeTags);
 
             // check should be equal
-            TimeTagAssert.AreEqual(timeTags, actualIndexed);
+            TimeTagAssert.ArePropertyEqual(timeTags, actualIndexed);
         }
 
         protected TConfig GeneratorConfig(params string[] properties)

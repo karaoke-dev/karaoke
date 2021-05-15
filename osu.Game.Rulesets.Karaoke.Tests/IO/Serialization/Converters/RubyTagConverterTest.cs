@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
@@ -49,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 EndIndex = endIndex,
                 Text = text
             };
-            Assert.AreEqual(result, actual);
+            TextTagAssert.ArePropertyEqual(result, actual);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
             var sortedTimeTag = TimeTagsUtils.Sort(timeTags);
-            TimeTagAssert.AreEqual(sortedTimeTag, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
+            TimeTagAssert.ArePropertyEqual(sortedTimeTag, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
         }
 
         [TestCase("カラオケ", new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new string[] { })]
@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
             var outOfRangeTimeTags = TimeTagsUtils.FindOutOfRange(timeTags, text);
-            TimeTagAssert.AreEqual(outOfRangeTimeTags, TestCaseTagHelper.ParseTimeTags(invalidTimeTags));
+            TimeTagAssert.ArePropertyEqual(outOfRangeTimeTags, TestCaseTagHelper.ParseTimeTags(invalidTimeTags));
         }
 
         [TestCase(new[] { "[0,start]:2000", "[0,end]:1000" }, GroupCheck.Asc, SelfCheck.BasedOnStart, new[] { 1 })]
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             // check which part is fixed, using list of time to check result.
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
             var fixedTimeTag = TimeTagsUtils.FixInvalid(timeTags, other, self);
-            TimeTagAssert.AreEqual(fixedTimeTag, TestCaseTagHelper.ParseTimeTags(actualTimeTagTexts));
+            TimeTagAssert.ArePropertyEqual(fixedTimeTag, TestCaseTagHelper.ParseTimeTags(actualTimeTagTexts));
         }
 
         [TestCase(new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" }, new double[] { 1100, 2000, 2100, 3000 })]

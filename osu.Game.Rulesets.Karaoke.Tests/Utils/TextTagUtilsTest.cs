@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -21,12 +22,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             // test ruby tag.
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
             var actualRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
-            Assert.AreEqual(TextTagUtils.FixTimeTagPosition(rubyTag), actualRubyTag);
+            TextTagAssert.ArePropertyEqual(TextTagUtils.FixTimeTagPosition(rubyTag), actualRubyTag);
 
             // test romaji tag.
             var romajiTag = TestCaseTagHelper.ParseRubyTag(textTag);
             var actualRomaji = TestCaseTagHelper.ParseRubyTag(actualTag);
-            Assert.AreEqual(TextTagUtils.FixTimeTagPosition(romajiTag), actualRomaji);
+            TextTagAssert.ArePropertyEqual(TextTagUtils.FixTimeTagPosition(romajiTag), actualRomaji);
         }
 
         [TestCase("[0,1]:ka", 1, "[1,2]:ka")]
@@ -38,12 +39,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             // test ruby tag.
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
             var actualRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
-            Assert.AreEqual(TextTagUtils.Shifting(rubyTag, shifting), actualRubyTag);
+            TextTagAssert.ArePropertyEqual(TextTagUtils.Shifting(rubyTag, shifting), actualRubyTag);
 
             // test romaji tag.
             var romajiTag = TestCaseTagHelper.ParseRubyTag(textTag);
             var actualRomaji = TestCaseTagHelper.ParseRubyTag(actualTag);
-            Assert.AreEqual(TextTagUtils.Shifting(romajiTag, shifting), actualRomaji);
+            TextTagAssert.ArePropertyEqual(TextTagUtils.Shifting(romajiTag, shifting), actualRomaji);
         }
 
         [TestCase("[0,1]:ka", "karaoke", false)]

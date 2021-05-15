@@ -5,6 +5,7 @@ using System.Globalization;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RomajiTags
@@ -23,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RomajiTags
             };
             var selector = new RomajiTagGeneratorSelector();
             var generatedRomaji = selector.GenerateRomajiTags(lyric);
-            Assert.AreEqual(generatedRomaji, TestCaseTagHelper.ParseRomajiTags(actualRomaji));
+            TextTagAssert.ArePropertyEqual(generatedRomaji, TestCaseTagHelper.ParseRomajiTags(actualRomaji));
         }
     }
 }

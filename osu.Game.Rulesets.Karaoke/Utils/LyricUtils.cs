@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 int endIndex = key.Index;
 
                 var text = lyric.Text[startIndex..endIndex];
-                var ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault().Text;
+                var ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
 
                 if (!string.IsNullOrEmpty(text))
                 {
