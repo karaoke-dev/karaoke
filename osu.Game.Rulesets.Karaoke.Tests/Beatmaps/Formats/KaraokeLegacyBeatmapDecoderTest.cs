@@ -36,17 +36,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
                 var working = new TestWorkingBeatmap(decoder.Decode(stream));
 
-                Assert.AreEqual(1, working.BeatmapInfo.BeatmapVersion);
-                Assert.AreEqual(1, working.Beatmap.BeatmapInfo.BeatmapVersion);
-                Assert.AreEqual(1, working.GetPlayableBeatmap(new KaraokeRuleset().RulesetInfo, Array.Empty<Mod>()).BeatmapInfo.BeatmapVersion);
+                Assert.AreEqual(working.BeatmapInfo.BeatmapVersion, 1);
+                Assert.AreEqual(working.Beatmap.BeatmapInfo.BeatmapVersion, 1);
+                Assert.AreEqual(working.GetPlayableBeatmap(new KaraokeRuleset().RulesetInfo, Array.Empty<Mod>()).BeatmapInfo.BeatmapVersion, 1);
 
                 // Test lyric part decode result
                 var lyrics = working.Beatmap.HitObjects.OfType<Lyric>();
-                Assert.AreEqual(54, lyrics.Count());
+                Assert.AreEqual(lyrics.Count(), 54);
 
                 // Test note decode part
                 var notes = working.Beatmap.HitObjects.OfType<Note>().Where(x => x.Display).ToList();
-                Assert.AreEqual(36, notes.Count);
+                Assert.AreEqual(notes.Count, 36);
 
                 testNote("た", 0, note: notes[0]);
                 testNote("だ", 0, note: notes[1]);
@@ -142,8 +142,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
         private static void testNote(string text, int tone, bool half = false, Note note = null)
         {
-            Assert.AreEqual(text, note?.Text);
-            Assert.AreEqual(tone, note?.Tone.Scale);
+            Assert.AreEqual(note?.Text, text);
+            Assert.AreEqual(note?.Tone.Scale, tone);
         }
     }
 }
