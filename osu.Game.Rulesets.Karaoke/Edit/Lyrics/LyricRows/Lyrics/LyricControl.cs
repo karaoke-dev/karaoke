@@ -98,10 +98,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                     state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, TextIndexUtils.ToStringIndex(index)));
                     break;
 
-                case Mode.RubyRomajiMode:
-                    state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
-                    break;
-
                 case Mode.TimeTagEditMode:
 
                     state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, index));
@@ -365,6 +361,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
         }
 
         private bool isTrigger(Mode mode)
-            => mode == Mode.EditMode || mode == Mode.TypingMode || mode == Mode.RubyRomajiMode || mode == Mode.EditNoteMode || mode == Mode.TimeTagEditMode;
+            => mode == Mode.EditMode || mode == Mode.TypingMode || mode == Mode.EditNoteMode || mode == Mode.TimeTagEditMode;
     }
 }

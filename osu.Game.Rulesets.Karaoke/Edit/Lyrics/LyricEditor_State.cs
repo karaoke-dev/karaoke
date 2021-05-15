@@ -22,7 +22,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 { Mode.EditMode, new CuttingCaretPositionAlgorithm(lyrics) },
                 { Mode.TypingMode, new TypingCaretPositionAlgorithm(lyrics) },
-                { Mode.RubyRomajiMode, new NavigateCaretPositionAlgorithm(lyrics) },
                 { Mode.EditNoteMode, new NavigateCaretPositionAlgorithm(lyrics) },
                 { Mode.RecordMode, new TimeTagCaretPositionAlgorithm(lyrics) { Mode = RecordingMovingCaretMode } },
                 { Mode.TimeTagEditMode, new TimeTagIndexCaretPositionAlgorithm(lyrics) }
@@ -36,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public bool MoveCaret(MovingCaretAction action)
         {
-            if (Mode == Mode.ViewMode)
+            if (Mode == Mode.ViewMode || Mode == Mode.RubyRomajiMode)
                 return false;
 
             var currentPosition = BindableCaretPosition.Value;
@@ -134,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return new TextCaretPosition(null, 0);
 
                 case Mode.RubyRomajiMode:
-                    return new NavigateCaretPosition(null);
+                    return null;
 
                 case Mode.EditNoteMode:
                     return new NavigateCaretPosition(null);

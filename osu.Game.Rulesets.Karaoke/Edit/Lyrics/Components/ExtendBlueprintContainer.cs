@@ -7,7 +7,7 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 {
-    public abstract class ExtendBlueprintContainer<T> : BlueprintContainer<T>
+    public abstract class ExtendBlueprintContainer<T> : BlueprintContainer<T> where T : class
     {
         protected void RegistBindable<TItem>(Bindable<TItem[]> bindable) where TItem : T
         {
