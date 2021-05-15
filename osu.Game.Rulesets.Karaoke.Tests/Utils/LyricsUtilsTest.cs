@@ -54,8 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, splitIndex);
 
-            TimeTagAssert.AreEqual(firstLyric.TimeTags, TestCaseTagHelper.ParseTimeTags(firstTimeTags));
-            TimeTagAssert.AreEqual(secondLyric.TimeTags, TestCaseTagHelper.ParseTimeTags(secondTimeTags));
+            TimeTagAssert.ArePropertyEqual(firstLyric.TimeTags, TestCaseTagHelper.ParseTimeTags(firstTimeTags));
+            TimeTagAssert.ArePropertyEqual(secondLyric.TimeTags, TestCaseTagHelper.ParseTimeTags(secondTimeTags));
         }
 
         [TestCase("カラオケ", new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 2,

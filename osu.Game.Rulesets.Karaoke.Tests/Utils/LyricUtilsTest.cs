@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             };
             LyricUtils.RemoveText(lyric, position, count);
-            TimeTagAssert.AreEqual(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
+            TimeTagAssert.ArePropertyEqual(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
         }
 
         [TestCase("kake", 2, "rao", "karaoke")]
@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             };
             LyricUtils.AddText(lyric, position, addedText);
-            TimeTagAssert.AreEqual(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
+            TimeTagAssert.ArePropertyEqual(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
         }
 
         #endregion
