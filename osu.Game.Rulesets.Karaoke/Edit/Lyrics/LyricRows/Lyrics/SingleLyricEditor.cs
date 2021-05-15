@@ -18,11 +18,13 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 {
-    public class LyricControl : Container
+    public class SingleLyricEditor : Container
     {
         private const int time_tag_spacing = 8;
 
+        [Cached]
         private readonly EditorLyricPiece lyricPiece;
+
         private readonly Container timeTagContainer;
         private readonly Container caretContainer;
 
@@ -34,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
         public Lyric Lyric { get; }
 
-        public LyricControl(Lyric lyric)
+        public SingleLyricEditor(Lyric lyric)
         {
             Lyric = lyric;
             CornerRadius = 5;
