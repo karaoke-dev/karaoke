@@ -17,8 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Asserts
 
             for (int i = 0; i < expect.Count; i++)
             {
-                AreEqual(expect[i], actually[i]);
-                AreEqual(expect[i], actually[i]);
+                ArePropertyEqual(expect[i], actually[i]);
+                ArePropertyEqual(expect[i], actually[i]);
             }
         }
 

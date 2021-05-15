@@ -76,8 +76,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, splitIndex);
 
-            Assert.AreEqual(firstLyric.RubyTags, TestCaseTagHelper.ParseRubyTags(firstRubyTags));
-            Assert.AreEqual(secondLyric.RubyTags, TestCaseTagHelper.ParseRubyTags(secondRubyTags));
+            TextTagAssert.ArePropertyEqual(firstLyric.RubyTags, TestCaseTagHelper.ParseRubyTags(firstRubyTags));
+            TextTagAssert.ArePropertyEqual(secondLyric.RubyTags, TestCaseTagHelper.ParseRubyTags(secondRubyTags));
         }
 
         [TestCase("カラオケ", new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, 2,
@@ -98,8 +98,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, splitIndex);
 
-            Assert.AreEqual(firstLyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(firstRomajiTags));
-            Assert.AreEqual(secondLyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(secondRomajiTags));
+            TextTagAssert.ArePropertyEqual(firstLyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(firstRomajiTags));
+            TextTagAssert.ArePropertyEqual(secondLyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(secondRomajiTags));
         }
 
         [Ignore("Not really sure second lyric is based on lyric time or time-tag time.")]
@@ -248,7 +248,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
             var rubyTags = combineLyric.RubyTags;
-            Assert.AreEqual(rubyTags, TestCaseTagHelper.ParseRubyTags(actualRubyTags));
+            TextTagAssert.ArePropertyEqual(rubyTags, TestCaseTagHelper.ParseRubyTags(actualRubyTags));
         }
 
         [TestCase(new[] { "[0,0]:romaji" }, new[] { "[0,0]:ローマ字" }, new[] { "[0,0]:romaji", "[7,7]:ローマ字" })]
@@ -271,7 +271,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
             var romajiTags = combineLyric.RomajiTags;
-            Assert.AreEqual(romajiTags, TestCaseTagHelper.ParseRomajiTags(actualRomajiTags));
+            TextTagAssert.ArePropertyEqual(romajiTags, TestCaseTagHelper.ParseRomajiTags(actualRomajiTags));
         }
 
         [TestCase(new double[] { 1000, 0 }, new double[] { 1000, 0 }, new double[] { 1000, 0 })]

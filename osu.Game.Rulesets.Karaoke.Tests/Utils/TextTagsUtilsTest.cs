@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -17,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestSort(string[] textTags, TextTagsUtils.Sorting sorting, string[] actualTextTags)
         {
             var sortedTextTags = TextTagsUtils.Sort(TestCaseTagHelper.ParseRubyTags(textTags), sorting);
-            Assert.AreEqual(sortedTextTags, TestCaseTagHelper.ParseRubyTags(actualTextTags));
+            TextTagAssert.ArePropertyEqual(sortedTextTags, TestCaseTagHelper.ParseRubyTags(actualTextTags));
         }
 
         [TestCase(new[] { "[0,7]:ka" }, "karaoke", new string[] { })]
@@ -26,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestFindOutOfRange(string[] textTags, string lyric, string[] actualTextTags)
         {
             var invalidTextTag = TextTagsUtils.FindOutOfRange(TestCaseTagHelper.ParseRubyTags(textTags), lyric);
-            Assert.AreEqual(invalidTextTag, TestCaseTagHelper.ParseRubyTags(actualTextTags));
+            TextTagAssert.ArePropertyEqual(invalidTextTag, TestCaseTagHelper.ParseRubyTags(actualTextTags));
         }
 
         [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o" }, TextTagsUtils.Sorting.Asc, new string[] { })]
@@ -42,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestFindOverlapping(string[] textTags, TextTagsUtils.Sorting sorting, string[] actualTextTags)
         {
             var invalidTextTag = TextTagsUtils.FindOverlapping(TestCaseTagHelper.ParseRubyTags(textTags), sorting);
-            Assert.AreEqual(invalidTextTag, TestCaseTagHelper.ParseRubyTags(actualTextTags));
+            TextTagAssert.ArePropertyEqual(invalidTextTag, TestCaseTagHelper.ParseRubyTags(actualTextTags));
         }
 
         [TestCase(new[] { "[0,1]:ka" }, "[0,1]:ka")]
@@ -51,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         {
             var rubyTags = TestCaseTagHelper.ParseRubyTags(textTags);
             var actualRubyTag = TestCaseTagHelper.ParseRubyTag(actualTextTag);
-            Assert.AreEqual(TextTagsUtils.Combine(rubyTags), actualRubyTag);
+            TextTagAssert.ArePropertyEqual(TextTagsUtils.Combine(rubyTags), actualRubyTag);
         }
     }
 }

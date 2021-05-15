@@ -5,6 +5,7 @@ using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RomajiTags.Ja
@@ -38,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RomajiTags.Ja
             var romajiTags = generator.CreateRomajiTags(lyric);
             var actualRomajiTags = TestCaseTagHelper.ParseRomajiTags(actualRomaji);
 
-            Assert.AreEqual(romajiTags, actualRomajiTags);
+            TextTagAssert.ArePropertyEqual(romajiTags, actualRomajiTags);
         }
 
         private JaRomajiTagGeneratorConfig generatorConfig(params string[] properties)

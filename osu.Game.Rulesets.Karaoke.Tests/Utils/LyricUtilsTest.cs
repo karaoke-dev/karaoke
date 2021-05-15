@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RubyTags = TestCaseTagHelper.ParseRubyTags(rubies),
             };
             LyricUtils.RemoveText(lyric, position, count);
-            Assert.AreEqual(lyric.RubyTags, TestCaseTagHelper.ParseRubyTags(targetRubies));
+            TextTagAssert.ArePropertyEqual(lyric.RubyTags, TestCaseTagHelper.ParseRubyTags(targetRubies));
         }
 
         [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, 0, 2, new[] { "[0,1]:o", "[1,2]:ke" })]
@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
             };
             LyricUtils.RemoveText(lyric, position, count);
-            Assert.AreEqual(lyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(targetRomajies));
+            TextTagAssert.ArePropertyEqual(lyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(targetRomajies));
         }
 
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 0, 2, new[] { "[0,start]:3000", "[1,start]:4000" })]
@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RubyTags = TestCaseTagHelper.ParseRubyTags(rubies),
             };
             LyricUtils.AddText(lyric, position, addedText);
-            Assert.AreEqual(lyric.RubyTags, TestCaseTagHelper.ParseRubyTags(targetRubies));
+            TextTagAssert.ArePropertyEqual(lyric.RubyTags, TestCaseTagHelper.ParseRubyTags(targetRubies));
         }
 
         [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 0, "karaoke", new[] { "[7,8]:か", "[8,9]:ら", "[9,10]:お", "[10,11]:け" })]
@@ -114,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
             };
             LyricUtils.AddText(lyric, position, addedText);
-            Assert.AreEqual(lyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(targetRomajies));
+            TextTagAssert.ArePropertyEqual(lyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(targetRomajies));
         }
 
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 0, "karaoke", new[] { "[7,start]:1000", "[8,start]:2000", "[9,start]:3000", "[10,start]:4000" })]

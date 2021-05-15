@@ -5,6 +5,7 @@ using System.Globalization;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags
@@ -23,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags
             };
             var selector = new RubyTagGeneratorSelector();
             var generatedRuby = selector.GenerateRubyTags(lyric);
-            Assert.AreEqual(generatedRuby, TestCaseTagHelper.ParseRubyTags(actualRuby));
+            TextTagAssert.ArePropertyEqual(generatedRuby, TestCaseTagHelper.ParseRubyTags(actualRuby));
         }
     }
 }
