@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
@@ -22,6 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             new CheckTranslate(),
         };
 
-        public IEnumerable<Issue> Run(IBeatmap beatmap, WorkingBeatmap workingBeatmap) => checks.SelectMany(check => check.Run(beatmap, workingBeatmap));
+        public IEnumerable<Issue> Run(BeatmapVerifierContext context) => checks.SelectMany(check => check.Run(context));
     }
 }

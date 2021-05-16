@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -22,13 +23,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateMissingPartialTranslate(this),
         };
 
-        public IEnumerable<Issue> Run(IBeatmap playableBeatmap, IWorkingBeatmap workingBeatmap)
+        public IEnumerable<Issue> Run(BeatmapVerifierContext context)
         {
-            var languages = availableTranslateInBeatmap(playableBeatmap);
+            var languages = availableTranslateInBeatmap(context.Beatmap);
             if (languages == null || languages.Length == 0)
                 yield break;
 
-            var lyric = playableBeatmap.HitObjects.OfType<Lyric>().ToList();
+            var lyric = context.Beatmap.HitObjects.OfType<Lyric>().ToList();
             if (lyric.Count == 0)
                 yield break;
 

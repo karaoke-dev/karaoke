@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -97,7 +98,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
                     lyric
                 }
             };
-            return check.Run(beatmap, new TestWorkingBeatmap(beatmap));
+            var context = new BeatmapVerifierContext(beatmap, new TestWorkingBeatmap(beatmap));
+            return check.Run(context);
         }
     }
 }

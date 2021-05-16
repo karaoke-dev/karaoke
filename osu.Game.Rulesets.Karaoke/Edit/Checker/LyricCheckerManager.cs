@@ -37,10 +37,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
             if (lyricVerifier == null)
                 throw new NullReferenceException(nameof(lyricVerifier));
 
-            var result = lyricVerifier.Run(new Beatmap
+            var fakeBeatmap = new Beatmap
             {
                 HitObjects = lyrics
-            }, null);
+            };
+            var result = lyricVerifier.Run(new BeatmapVerifierContext(fakeBeatmap, null));
 
             // re-calculate and add
             foreach (var lyric in lyrics)
@@ -97,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
                 };
             }
 
-            public IEnumerable<Issue> Run(IBeatmap beatmap, WorkingBeatmap workingBeatmap) => checks.SelectMany(check => check.Run(beatmap, workingBeatmap));
+            public IEnumerable<Issue> Run(BeatmapVerifierContext context) => checks.SelectMany(check => check.Run(context));
         }
     }
 }
