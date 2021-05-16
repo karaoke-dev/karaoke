@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -18,11 +18,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             new IssueTemplateInvalidParentLyric(this),
         };
 
-        public IEnumerable<Issue> Run(IBeatmap playableBeatmap, IWorkingBeatmap workingBeatmap)
+        public IEnumerable<Issue> Run(BeatmapVerifierContext context)
         {
-            var lyrics = playableBeatmap.HitObjects.OfType<Lyric>();
+            var lyrics = context.Beatmap.HitObjects.OfType<Lyric>();
 
-            foreach (var note in playableBeatmap.HitObjects.OfType<Note>())
+            foreach (var note in context.Beatmap.HitObjects.OfType<Note>())
             {
                 if (note.ParentLyric == null || !lyrics.Contains(note.ParentLyric))
                     yield return new IssueTemplateInvalidParentLyric(this).Create(note);

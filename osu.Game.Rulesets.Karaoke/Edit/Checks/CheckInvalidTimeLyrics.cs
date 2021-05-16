@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Configs;
@@ -29,9 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             this.config = config;
         }
 
-        public IEnumerable<Issue> Run(IBeatmap playableBeatmap, IWorkingBeatmap workingBeatmap)
+        public IEnumerable<Issue> Run(BeatmapVerifierContext context)
         {
-            foreach (var lyric in playableBeatmap.HitObjects.OfType<Lyric>())
+            foreach (var lyric in context.Beatmap.HitObjects.OfType<Lyric>())
             {
                 var invalidLyricTime = checkInvalidLyricTime(lyric);
                 if (invalidLyricTime.Any())
