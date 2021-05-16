@@ -2,7 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -14,7 +16,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 {
-    public class EditorLyricPiece : DefaultLyricPiece
+    public class EditorLyricPiece : DefaultLyricPiece<EditorLyricPiece.EditorLyricSpriteText>
     {
         public Action<LyricFont> ApplyFontAction;
 
@@ -69,13 +71,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
         public RectangleF GetTextTagPosition(ITextTag textTag)
         {
+            var spriteText = (InternalChildren.FirstOrDefault() as Container)?.Child as EditorLyricSpriteText;
+            if (spriteText == null)
+                return new RectangleF();
+
             switch (textTag)
             {
                 case RubyTag rubyTag:
-                    return new RectangleF();
+                    return spriteText.GetRubyTagPosition(rubyTag);
 
                 case RomajiTag romajiTag:
-                    return new RectangleF();
+                    return spriteText.GetRomajiTagPosition(romajiTag);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(textTag));
@@ -107,6 +113,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                 static FontUsage getFont(float? charSize = null)
                     => FontUsage.Default.With(size: charSize * 2);
             }, true);
+        }
+
+        public class EditorLyricSpriteText : LyricSpriteText
+        {
+            public RectangleF GetRubyTagPosition(RubyTag rubyTag)
+            {
+                return Characters[0].DrawRectangle;
+            }
+
+            public RectangleF GetRomajiTagPosition(RomajiTag romajiTag)
+            {
+                return Characters[0].DrawRectangle;
+            }
         }
     }
 }
