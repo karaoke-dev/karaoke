@@ -15,11 +15,14 @@ using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 {
     public class EditorLyricPiece : DefaultLyricPiece<EditorLyricPiece.EditorLyricSpriteText>
     {
+        private const int time_tag_spacing = 8;
+
         public Action<LyricFont> ApplyFontAction;
 
         protected Lyric HitObject;
@@ -73,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
         public RectangleF GetTextTagPosition(ITextTag textTag)
         {
-            var spriteText = (InternalChildren.FirstOrDefault() as Container)?.Child as EditorLyricSpriteText;
+            var spriteText = getSpriteText();
             if (spriteText == null)
                 return new RectangleF();
 
@@ -89,6 +92,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                     throw new ArgumentOutOfRangeException(nameof(textTag));
             }
         }
+
+        public Vector2 GetTimeTagPosition(TimeTag timeTag)
+        {
+            var basePostion = GetTextIndexPosition(timeTag.Index);
+            var extraPosition = extraSpacing(timeTag);
+            return basePostion + new Vector2(extraPosition);
+        }
+
+        public Vector2 GetTextIndexPosition(TextIndex index)
+        {
+            var spriteText = getSpriteText();
+            if (spriteText == null)
+                return new Vector2();
+
+            return spriteText.GetTimeTagPosition(index);
+        }
+
+        private float extraSpacing(TimeTag timeTag)
+        {
+            var isStart = timeTag.Index.State == TextIndex.IndexState.Start;
+            var timeTags = isStart ? TimeTagsBindable.Value.Reverse() : TimeTagsBindable.Value;
+            var duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == timeTag.Index) - 1;
+            var spacing = duplicatedTagAmount * time_tag_spacing * (isStart ? 1 : -1);
+            return spacing;
+        }
+
+        private EditorLyricSpriteText getSpriteText()
+            => (InternalChildren.FirstOrDefault() as Container)?.Child as EditorLyricSpriteText;
 
         [BackgroundDependencyLoader(true)]
         private void load(ISkinSource skin)
@@ -143,6 +174,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                 var count = matchedRomaji.Text.Length;
                 var rectangles = Characters.GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
                 return RectangleFUtils.Union(rectangles);
+            }
+
+            public Vector2 GetTimeTagPosition(TextIndex index)
+            {
+                if (string.IsNullOrEmpty(Text))
+                    return default;
+
+                var charIndex = Math.Min(index.Index, Text.Length - 1);
+                var drawRectangle = Characters[charIndex].DrawRectangle;
+                return index.State == TextIndex.IndexState.Start ? drawRectangle.BottomLeft : drawRectangle.BottomRight;
             }
 
             private int skinIndex(PositionText[] positionTexts, int endIndex)
