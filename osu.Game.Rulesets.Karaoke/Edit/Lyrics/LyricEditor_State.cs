@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 { Mode.EditMode, new CuttingCaretPositionAlgorithm(lyrics) },
                 { Mode.TypingMode, new TypingCaretPositionAlgorithm(lyrics) },
-                { Mode.EditNoteMode, new EditNoteCaretPositionAlgorithm(lyrics) },
+                { Mode.EditNoteMode, new NavigateCaretPositionAlgorithm(lyrics) },
                 { Mode.RecordMode, new TimeTagCaretPositionAlgorithm(lyrics) { Mode = RecordingMovingCaretMode } },
                 { Mode.TimeTagEditMode, new TimeTagIndexCaretPositionAlgorithm(lyrics) }
             };
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public bool MoveCaret(MovingCaretAction action)
         {
-            if (Mode == Mode.ViewMode)
+            if (Mode == Mode.ViewMode || Mode == Mode.RubyRomajiMode)
                 return false;
 
             var currentPosition = BindableCaretPosition.Value;
@@ -132,8 +132,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case Mode.TypingMode:
                     return new TextCaretPosition(null, 0);
 
+                case Mode.RubyRomajiMode:
+                    return null;
+
                 case Mode.EditNoteMode:
-                    return new EditNoteCaretPosition(null);
+                    return new NavigateCaretPosition(null);
 
                 case Mode.RecordMode:
                     return new TimeTagCaretPosition(null, null);
@@ -163,6 +166,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// Able to typing lyric.
         /// </summary>
         TypingMode,
+
+        /// <summary>
+        /// Able to create/delete ruby/romaji.
+        /// </summary>
+        RubyRomajiMode,
 
         /// <summary>
         /// Able to create/delete/mode/split/combine note.

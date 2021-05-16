@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
 {
-    public class EditNoteCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<EditNoteCaretPositionAlgorithm, EditNoteCaretPosition>
+    public class NavigateCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<NavigateCaretPositionAlgorithm, NavigateCaretPosition>
     {
         [TestCase(nameof(singleLyric), 0, true)]
         [TestCase(nameof(singleLyricWithNoText), 0, true)]
@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             TestMoveToLast(lyrics, caretPosition);
         }
 
-        protected override void AssertEqual(EditNoteCaretPosition compare, EditNoteCaretPosition actual)
+        protected override void AssertEqual(NavigateCaretPosition compare, NavigateCaretPosition actual)
         {
             if (compare == null)
             {
@@ -116,13 +116,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             }
         }
 
-        protected EditNoteCaretPosition CreateEditNoteCaretPosition(Lyric[] lyrics, int lyricIndex)
+        protected NavigateCaretPosition CreateEditNoteCaretPosition(Lyric[] lyrics, int lyricIndex)
         {
             if (lyricIndex == NOT_EXIST)
                 return null;
 
             var lyric = lyrics.ElementAtOrDefault(lyricIndex);
-            return new EditNoteCaretPosition(lyric);
+            return new NavigateCaretPosition(lyric);
         }
 
         #region source

@@ -154,6 +154,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case Mode.ViewMode:
                 case Mode.EditMode:
                 case Mode.TypingMode: // will handle in OnKeyDown
+                case Mode.RubyRomajiMode:
                 case Mode.EditNoteMode:
                     return false;
 
@@ -274,6 +275,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case Mode.ViewMode:
                     case Mode.EditMode:
                     case Mode.TypingMode:
+                    case Mode.RubyRomajiMode:
                     case Mode.EditNoteMode:
                         return;
 

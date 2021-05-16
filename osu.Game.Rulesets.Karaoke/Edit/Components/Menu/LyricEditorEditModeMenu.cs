@@ -29,6 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                 case Mode.TypingMode:
                     return "Typing";
 
+                case Mode.RubyRomajiMode:
+                    return "Edit ruby / romaji";
+
                 case Mode.EditNoteMode:
                     return "Edit note";
 

@@ -18,11 +18,13 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 {
-    public class LyricControl : Container
+    public class SingleLyricEditor : Container
     {
         private const int time_tag_spacing = 8;
 
+        [Cached]
         private readonly EditorLyricPiece lyricPiece;
+
         private readonly Container timeTagContainer;
         private readonly Container caretContainer;
 
@@ -34,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
         public Lyric Lyric { get; }
 
-        public LyricControl(Lyric lyric)
+        public SingleLyricEditor(Lyric lyric)
         {
             Lyric = lyric;
             CornerRadius = 5;
@@ -49,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                         // need to delay until karaoke text has been calculated.
                         ScheduleAfterChildren(UpdateTimeTags);
                         // it's a magic number and should find a way to fix that.
-                        caretContainer.Height = font.LyricTextFontInfo.LyricTextFontInfo.CharSize * 2f + 13; 
+                        caretContainer.Height = font.LyricTextFontInfo.LyricTextFontInfo.CharSize * 2f + 13;
                     }
                 },
                 timeTagContainer = new Container
@@ -104,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                     break;
 
                 case Mode.EditNoteMode:
-                    state.MoveHoverCaretToTargetPosition(new EditNoteCaretPosition(Lyric));
+                    state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                     break;
 
                 default:
@@ -160,8 +162,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             lyricPiece.Clock = clock;
             state.BindableMode.BindValueChanged(e =>
             {
-                // initial default caret here
-                CreateCaret(e.NewValue);
+                // initial default caret.
+                InitializeCaret(e.NewValue);
+
+                // Initial blueprint container.
+                InitializeBlueprint(e.NewValue);
             }, true);
 
             // update change if caret changed.
@@ -175,7 +180,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             });
         }
 
-        protected void CreateCaret(Mode mode)
+        protected void InitializeBlueprint(Mode mode)
+        {
+            // remove all exist blueprint container
+            RemoveAll(x => x is RubyRomajiBlueprintContainer);
+
+            // create preview and real caret
+            var blueprintContainer = createBlueprintContainer(mode, Lyric);
+            if (blueprintContainer == null)
+                return;
+
+            AddInternal(blueprintContainer);
+
+            static Drawable createBlueprintContainer(Mode mode, Lyric lyric)
+            {
+                switch (mode)
+                {
+                    case Mode.RubyRomajiMode:
+                        return new RubyRomajiBlueprintContainer(lyric);
+
+                    default:
+                        return null;
+                }
+            }
+        }
+
+        protected void InitializeCaret(Mode mode)
         {
             caretContainer.Clear();
 
@@ -211,6 +241,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
                     case Mode.TypingMode:
                         return new DrawableLyricInputCaret();
+
+                    case Mode.RubyRomajiMode:
+                        return null;
 
                     case Mode.EditNoteMode:
                         return null;

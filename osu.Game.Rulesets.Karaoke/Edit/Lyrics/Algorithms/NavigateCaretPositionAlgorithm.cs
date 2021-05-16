@@ -8,62 +8,62 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
 {
-    public class EditNoteCaretPositionAlgorithm : CaretPositionAlgorithm<EditNoteCaretPosition>
+    public class NavigateCaretPositionAlgorithm : CaretPositionAlgorithm<NavigateCaretPosition>
     {
-        public EditNoteCaretPositionAlgorithm(Lyric[] lyrics)
+        public NavigateCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
         }
 
-        public override bool PositionMovable(EditNoteCaretPosition position)
+        public override bool PositionMovable(NavigateCaretPosition position)
         {
             return true;
         }
 
-        public override EditNoteCaretPosition MoveUp(EditNoteCaretPosition currentPosition)
+        public override NavigateCaretPosition MoveUp(NavigateCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetPrevious(currentPosition.Lyric);
             if (lyric == null)
                 return null;
 
-            return new EditNoteCaretPosition(lyric);
+            return new NavigateCaretPosition(lyric);
         }
 
-        public override EditNoteCaretPosition MoveDown(EditNoteCaretPosition currentPosition)
+        public override NavigateCaretPosition MoveDown(NavigateCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetNext(currentPosition.Lyric);
             if (lyric == null)
                 return null;
 
-            return new EditNoteCaretPosition(lyric);
+            return new NavigateCaretPosition(lyric);
         }
 
-        public override EditNoteCaretPosition MoveLeft(EditNoteCaretPosition currentPosition)
+        public override NavigateCaretPosition MoveLeft(NavigateCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override EditNoteCaretPosition MoveRight(EditNoteCaretPosition currentPosition)
+        public override NavigateCaretPosition MoveRight(NavigateCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override EditNoteCaretPosition MoveToFirst()
+        public override NavigateCaretPosition MoveToFirst()
         {
             var lyric = Lyrics.FirstOrDefault();
             if (lyric == null)
                 return null;
 
-            return new EditNoteCaretPosition(lyric);
+            return new NavigateCaretPosition(lyric);
         }
 
-        public override EditNoteCaretPosition MoveToLast()
+        public override NavigateCaretPosition MoveToLast()
         {
             var lyric = Lyrics.LastOrDefault();
             if (lyric == null)
                 return null;
 
-            return new EditNoteCaretPosition(lyric);
+            return new NavigateCaretPosition(lyric);
         }
     }
 }
