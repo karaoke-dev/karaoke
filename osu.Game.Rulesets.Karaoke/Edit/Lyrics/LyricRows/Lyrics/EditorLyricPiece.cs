@@ -7,11 +7,13 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
@@ -119,13 +121,35 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
         {
             public RectangleF GetRubyTagPosition(RubyTag rubyTag)
             {
-                return Characters[0].DrawRectangle;
+                var matchedRuby = Rubies.FirstOrDefault(x => propertyMatched(x, rubyTag));
+                var rubyIndex = Rubies.IndexOf(matchedRuby);
+                if (rubyIndex < 0)
+                    throw new IndexOutOfRangeException(nameof(rubyIndex));
+
+                var startCharacterIndex = Text.Length + skinIndex(Rubies, rubyIndex);
+                var count = matchedRuby.Text.Length;
+                var rectangles = Characters.GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
+                return RectangleFUtils.Union(rectangles);
             }
 
             public RectangleF GetRomajiTagPosition(RomajiTag romajiTag)
             {
-                return Characters[0].DrawRectangle;
+                var matchedRomaji = Romajies.FirstOrDefault(x => propertyMatched(x, romajiTag));
+                var romajiIndex = Romajies.IndexOf(matchedRomaji);
+                if (romajiIndex < 0)
+                    throw new IndexOutOfRangeException(nameof(romajiIndex));
+
+                var startCharacterIndex = Text.Length + skinIndex(Rubies, Rubies.Length) + skinIndex(Romajies, romajiIndex);
+                var count = matchedRomaji.Text.Length;
+                var rectangles = Characters.GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
+                return RectangleFUtils.Union(rectangles);
             }
+
+            private int skinIndex(PositionText[] positionTexts, int endIndex)
+                => positionTexts.Where((x, i) => i < endIndex).Sum(x => x.Text.Length);
+
+            private bool propertyMatched(PositionText positionText, ITextTag textTag)
+                => positionText.StartIndex == textTag.StartIndex && positionText.EndIndex == textTag.EndIndex && positionText.Text == textTag.Text;
         }
     }
 }

@@ -126,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             ShadowOffset = font.ShadowOffset;
         }
 
-        private bool displayRuby;
+        private bool displayRuby = true;
 
         public bool DisplayRuby
         {
@@ -141,7 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             }
         }
 
-        private bool displayRomaji;
+        private bool displayRomaji = true;
 
         public bool DisplayRomaji
         {
