@@ -23,8 +23,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
     {
         private const int time_tag_spacing = 8;
 
-        public Action<LyricFont> ApplyFontAction;
-
         protected Lyric HitObject;
 
         public EditorLyricPiece(Lyric lyric)
@@ -34,12 +32,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
             DisplayRuby = true;
             DisplayRomaji = true;
-        }
-
-        public override void ApplyFont(LyricFont font)
-        {
-            ApplyFontAction?.Invoke(font);
-            base.ApplyFont(font);
         }
 
         public float GetPercentageWidth(int startIndex, int endIndex, float percentage = 0)

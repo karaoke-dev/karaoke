@@ -42,14 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             Padding = new MarginPadding { Bottom = 10 };
             Children = new Drawable[]
             {
-                lyricPiece = new EditorLyricPiece(lyric)
-                {
-                    ApplyFontAction = font =>
-                    {
-                        // need to delay until karaoke text has been calculated.
-                        // ScheduleAfterChildren(UpdateTimeTags);
-                    }
-                },
+                lyricPiece = new EditorLyricPiece(lyric),
                 timeTagContainer = new Container
                 {
                     RelativeSizeAxes = Axes.Both,
