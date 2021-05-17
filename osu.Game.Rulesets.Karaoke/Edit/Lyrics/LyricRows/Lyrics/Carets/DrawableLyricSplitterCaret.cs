@@ -18,7 +18,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Carets
 
         public DrawableLyricSplitterCaret()
         {
-            RelativeSizeAxes = Axes.Y;
             Width = 10;
             InternalChildren = new Drawable[]
             {

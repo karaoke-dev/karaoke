@@ -21,7 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Carets
 
         public DrawableLyricInputCaret()
         {
-            RelativeSizeAxes = Axes.Y;
             Width = caret_width;
 
             Colour = Color4.Transparent;
