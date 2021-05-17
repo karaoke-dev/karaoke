@@ -15,12 +15,13 @@ using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 {
     public class EditorLyricPiece : DefaultLyricPiece<EditorLyricPiece.EditorLyricSpriteText>
     {
-        public Action<LyricFont> ApplyFontAction;
+        private const int time_tag_spacing = 8;
 
         protected Lyric HitObject;
 
@@ -33,26 +34,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             DisplayRomaji = true;
         }
 
-        public override void ApplyFont(LyricFont font)
-        {
-            ApplyFontAction?.Invoke(font);
-            base.ApplyFont(font);
-        }
-
-        public float GetPercentageWidth(int startIndex, int endIndex, float percentage = 0)
-        {
-            return GetPercentageWidth(getTextIndexByIndex(startIndex), getTextIndexByIndex(endIndex), percentage);
-
-            // todo : it's a temp way to get position.
-            TextIndex getTextIndexByIndex(int index)
-            {
-                if (Text?.Length <= index)
-                    return new TextIndex(index - 1, TextIndex.IndexState.End);
-
-                return new TextIndex(index);
-            }
-        }
-
         public TextIndex GetHoverIndex(float position)
         {
             var text = Text;
@@ -61,19 +42,41 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
             for (int i = 0; i < text.Length; i++)
             {
-                if (GetPercentageWidth(i, i + 1, 0.5f) > position)
+                if (getTriggerPositionByTimeIndex(new TextIndex(i)) > position)
                     return new TextIndex(i);
 
-                if (GetPercentageWidth(i, i + 1, 1f) > position)
+                if (getTriggerPositionByTimeIndex(new TextIndex(i, TextIndex.IndexState.End)) > position)
                     return new TextIndex(i, TextIndex.IndexState.End);
             }
 
             return new TextIndex(text.Length - 1, TextIndex.IndexState.End);
+
+            // todo : might have a better way to call GetTextIndexPosition just once.
+            float getTriggerPositionByTimeIndex(TextIndex textIndex)
+            {
+                var charindex = textIndex.Index;
+                var startPosition = GetTextIndexPosition(new TextIndex(charindex)).X;
+                var endPosition = GetTextIndexPosition(new TextIndex(charindex, TextIndex.IndexState.End)).X;
+
+                if (textIndex.State == TextIndex.IndexState.Start)
+                    return startPosition + (endPosition - startPosition) / 2;
+
+                return endPosition;
+            }
+        }
+
+        public float GetTextHeight()
+        {
+            var spriteText = getSpriteText();
+            if (spriteText == null)
+                return 0;
+
+            return spriteText.GetTextHeight();
         }
 
         public RectangleF GetTextTagPosition(ITextTag textTag)
         {
-            var spriteText = (InternalChildren.FirstOrDefault() as Container)?.Child as EditorLyricSpriteText;
+            var spriteText = getSpriteText();
             if (spriteText == null)
                 return new RectangleF();
 
@@ -89,6 +92,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                     throw new ArgumentOutOfRangeException(nameof(textTag));
             }
         }
+
+        public Vector2 GetTimeTagPosition(TimeTag timeTag)
+        {
+            var basePostion = GetTextIndexPosition(timeTag.Index);
+            var extraPosition = extraSpacing(timeTag);
+            return basePostion + new Vector2(extraPosition);
+        }
+
+        public Vector2 GetTextIndexPosition(TextIndex index)
+        {
+            var spriteText = getSpriteText();
+            if (spriteText == null)
+                return new Vector2();
+
+            return spriteText.GetTimeTagPosition(index);
+        }
+
+        private float extraSpacing(TimeTag timeTag)
+        {
+            var isStart = timeTag.Index.State == TextIndex.IndexState.Start;
+            var timeTags = isStart ? TimeTagsBindable.Value.Reverse() : TimeTagsBindable.Value;
+            var duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == timeTag.Index) - 1;
+            var spacing = duplicatedTagAmount * time_tag_spacing * (isStart ? 1 : -1);
+            return spacing;
+        }
+
+        private EditorLyricSpriteText getSpriteText()
+            => (InternalChildren.FirstOrDefault() as Container)?.Child as EditorLyricSpriteText;
 
         [BackgroundDependencyLoader(true)]
         private void load(ISkinSource skin)
@@ -119,6 +150,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
         public class EditorLyricSpriteText : LyricSpriteText
         {
+            public float GetTextHeight()
+            {
+                if (string.IsNullOrEmpty(Text))
+                    return 0;
+
+                return Characters.FirstOrDefault().Height;
+            }
+
             public RectangleF GetRubyTagPosition(RubyTag rubyTag)
             {
                 var matchedRuby = Rubies.FirstOrDefault(x => propertyMatched(x, rubyTag));
@@ -143,6 +182,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                 var count = matchedRomaji.Text.Length;
                 var rectangles = Characters.GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
                 return RectangleFUtils.Union(rectangles);
+            }
+
+            public Vector2 GetTimeTagPosition(TextIndex index)
+            {
+                if (string.IsNullOrEmpty(Text))
+                    return default;
+
+                var charIndex = Math.Min(index.Index, Text.Length - 1);
+                var drawRectangle = Characters[charIndex].DrawRectangle;
+                return index.State == TextIndex.IndexState.Start ? drawRectangle.BottomLeft : drawRectangle.BottomRight;
             }
 
             private int skinIndex(PositionText[] positionTexts, int endIndex)
