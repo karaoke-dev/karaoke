@@ -34,20 +34,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             DisplayRomaji = true;
         }
 
-        public float GetPercentageWidth(int startIndex, int endIndex, float percentage = 0)
-        {
-            return GetPercentageWidth(getTextIndexByIndex(startIndex), getTextIndexByIndex(endIndex), percentage);
-
-            // todo : it's a temp way to get position.
-            TextIndex getTextIndexByIndex(int index)
-            {
-                if (Text?.Length <= index)
-                    return new TextIndex(index - 1, TextIndex.IndexState.End);
-
-                return new TextIndex(index);
-            }
-        }
-
         public TextIndex GetHoverIndex(float position)
         {
             var text = Text;
@@ -56,14 +42,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
             for (int i = 0; i < text.Length; i++)
             {
-                if (GetPercentageWidth(i, i + 1, 0.5f) > position)
+                if (getTriggerPositionByTimeIndex(new TextIndex(i)) > position)
                     return new TextIndex(i);
 
-                if (GetPercentageWidth(i, i + 1, 1f) > position)
+                if (getTriggerPositionByTimeIndex(new TextIndex(i, TextIndex.IndexState.End)) > position)
                     return new TextIndex(i, TextIndex.IndexState.End);
             }
 
             return new TextIndex(text.Length - 1, TextIndex.IndexState.End);
+
+            // todo : might have a better way to call GetTextIndexPosition just once.
+            float getTriggerPositionByTimeIndex(TextIndex textIndex)
+            {
+                var charindex = textIndex.Index;
+                var startPosition = GetTextIndexPosition(new TextIndex(charindex)).X;
+                var endPosition = GetTextIndexPosition(new TextIndex(charindex, TextIndex.IndexState.End)).X;
+
+                if (textIndex.State == TextIndex.IndexState.Start)
+                    return startPosition + (endPosition - startPosition) / 2;
+
+                return endPosition;
+            }
         }
 
         public float GetTextHeight()
