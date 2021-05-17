@@ -18,13 +18,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.Time
         public TimeTagSelectionBlueprint(TimeTag item)
             : base(item)
         {
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
             updatePosition();
         }
 
         private void updatePosition()
         {
-            var position = editorLyricPiece.GetTimeTagPosition(Item);
-            var rectangle = new RectangleF(position, new Vector2(time_tag_size));
+            var size = new Vector2(time_tag_size);
+            var position = editorLyricPiece.GetTimeTagPosition(Item) - size / 2;
+            var rectangle = new RectangleF(position, size);
             UpdatePositionAndSize(rectangle);
         }
     }

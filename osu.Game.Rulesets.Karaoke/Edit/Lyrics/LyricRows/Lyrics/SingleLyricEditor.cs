@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
         protected void InitializeBlueprint(Mode mode)
         {
             // remove all exist blueprint container
-            RemoveAll(x => x is RubyRomajiBlueprintContainer);
+            RemoveAll(x => x is RubyRomajiBlueprintContainer || x is TimeTagBlueprintContainer);
 
             // create preview and real caret
             var blueprintContainer = createBlueprintContainer(mode, Lyric);
@@ -175,6 +175,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                 {
                     case Mode.RubyRomajiMode:
                         return new RubyRomajiBlueprintContainer(lyric);
+
+                    // todo : might think is this really needed because it'll use cannot let user clicking time-tag.
+                    // or just let it cannot interact.
+                    case Mode.TimeTagEditMode:
+                        return new TimeTagBlueprintContainer(lyric);
 
                     default:
                         return null;
