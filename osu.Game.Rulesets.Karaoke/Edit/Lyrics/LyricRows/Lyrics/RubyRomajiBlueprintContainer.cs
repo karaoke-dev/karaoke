@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             state.ClearSelectedTextTags();
         }
 
-        protected class RubyRomajiSelectionHandler : SelectionHandler<ITextTag>
+        protected class RubyRomajiSelectionHandler : ExtendSelectionHandler<ITextTag>
         {
             [Resolved]
             private ILyricEditorState state { get; set; }

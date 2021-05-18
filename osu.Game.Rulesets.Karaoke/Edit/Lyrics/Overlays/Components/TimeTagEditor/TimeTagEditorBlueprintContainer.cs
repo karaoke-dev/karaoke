@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             state.ClearSelectedTimeTags();
         }
 
-        protected class TimeTagEditorSelectionHandler : SelectionHandler<TimeTag>
+        protected class TimeTagEditorSelectionHandler : ExtendSelectionHandler<TimeTag>
         {
             [Resolved]
             private ILyricEditorState state { get; set; }

@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             state.ClearSelectedTimeTags();
         }
 
-        protected class TimeTahSelectionHandler : SelectionHandler<TimeTag>
+        protected class TimeTahSelectionHandler : ExtendSelectionHandler<TimeTag>
         {
             [Resolved]
             private ILyricEditorState state { get; set; }
