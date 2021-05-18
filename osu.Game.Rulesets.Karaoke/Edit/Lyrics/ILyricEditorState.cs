@@ -3,6 +3,8 @@
 
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -37,6 +39,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         void ClearHoverCaretPosition();
 
         bool CaretMovable(ICaretPosition timeTag);
+
+        #endregion
+
+        # region blueprint
+
+        BindableList<TimeTag> SelectedTimeTags { get; }
+
+        BindableList<ITextTag> SelectedTextTags { get; }
 
         #endregion
     }

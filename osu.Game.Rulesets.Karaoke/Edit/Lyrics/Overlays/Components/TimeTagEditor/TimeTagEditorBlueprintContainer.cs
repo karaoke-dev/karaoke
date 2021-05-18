@@ -25,6 +25,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
 {
     public class TimeTagEditorBlueprintContainer : ExtendBlueprintContainer<TimeTag>
     {
+        [Resolved]
+        private ILyricEditorState state { get; set; }
+
         [Resolved(CanBeNull = true)]
         private TimeTagEditor timeline { get; set; }
 
@@ -48,6 +51,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         [BackgroundDependencyLoader]
         private void load()
         {
+            SelectedItems.BindTo(state.SelectedTimeTags);
+
             // Add time-tag into blueprint container
             RegistBindable(timeTags);
         }
@@ -131,7 +136,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
         protected class TimeTagEditorSelectionHandler : SelectionHandler<TimeTag>
         {
             [Resolved]
+            private ILyricEditorState state { get; set; }
+
+            [Resolved]
             private LyricManager lyricManager { get; set; }
+
+            [BackgroundDependencyLoader]
+            private void load()
+            {
+                SelectedItems.BindTo(state.SelectedTimeTags);
+            }
 
             // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
             public override bool HandleMovement(MoveSelectionEvent<TimeTag> moveEvent) => true;

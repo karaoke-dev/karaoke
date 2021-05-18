@@ -11,6 +11,7 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
@@ -42,6 +43,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public Bindable<ICaretPosition> BindableHoverCaretPosition { get; } = new Bindable<ICaretPosition>();
 
         public Bindable<ICaretPosition> BindableCaretPosition { get; } = new Bindable<ICaretPosition>();
+
+        public BindableList<TimeTag> SelectedTimeTags { get; } = new BindableList<TimeTag>();
+
+        public BindableList<ITextTag> SelectedTextTags { get; } = new BindableList<ITextTag>();
 
         private readonly KaraokeLyricEditorSkin skin;
         private readonly DrawableLyricEditList container;

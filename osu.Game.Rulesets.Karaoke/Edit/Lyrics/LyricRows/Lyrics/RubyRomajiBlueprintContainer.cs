@@ -18,6 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 {
     public class RubyRomajiBlueprintContainer : ExtendBlueprintContainer<ITextTag>
     {
+        [Resolved]
+        private ILyricEditorState state { get; set; }
+
         [UsedImplicitly]
         private readonly Bindable<RubyTag[]> rubyTags;
 
@@ -36,6 +39,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
         [BackgroundDependencyLoader]
         private void load()
         {
+            SelectedItems.BindTo(state.SelectedTextTags);
+
             // Add ruby and romaji tag into blueprint container
             RegistBindable(rubyTags);
             RegistBindable(romajiTags);
@@ -62,7 +67,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
         protected class RubyRomajiSelectionHandler : SelectionHandler<ITextTag>
         {
             [Resolved]
+            private ILyricEditorState state { get; set; }
+
+            [Resolved]
             private LyricManager lyricManager { get; set; }
+
+            [BackgroundDependencyLoader]
+            private void load()
+            {
+                SelectedItems.BindTo(state.SelectedTextTags);
+            }
 
             // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
             public override bool HandleMovement(MoveSelectionEvent<ITextTag> moveEvent) => true;
