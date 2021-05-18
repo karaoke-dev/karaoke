@@ -7,12 +7,14 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -21,7 +23,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEditor
 {
-    public class TimeTagEditorHitObjectBlueprint : SelectionBlueprint<TimeTag>
+    public class TimeTagEditorHitObjectBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip
     {
         [UsedImplicitly]
         private readonly Bindable<double?> startTime;
@@ -153,6 +155,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             hasTime() ? timeTagPiece.ScreenSpaceDrawQuad : timeTagWithNoTimePiece.ScreenSpaceDrawQuad;
 
         public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
+
+        public object TooltipContent => Item;
+
+        public ITooltip GetCustomTooltip() => new TimeTagTooltip();
 
         public class TimeTagPiece : CompositeDrawable
         {
