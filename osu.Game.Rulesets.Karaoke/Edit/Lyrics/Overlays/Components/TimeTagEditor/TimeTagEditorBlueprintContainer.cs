@@ -133,6 +133,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEdito
             return true;
         }
 
+        protected override void DeselectAll()
+        {
+            state.ClearSelectedTimeTags();
+        }
+
         protected class TimeTagEditorSelectionHandler : SelectionHandler<TimeTag>
         {
             [Resolved]

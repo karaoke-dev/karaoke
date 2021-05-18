@@ -48,6 +48,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         BindableList<ITextTag> SelectedTextTags { get; }
 
+        void ClearSelectedTimeTags();
+
+        void ClearSelectedTextTags();
+
         #endregion
     }
 }

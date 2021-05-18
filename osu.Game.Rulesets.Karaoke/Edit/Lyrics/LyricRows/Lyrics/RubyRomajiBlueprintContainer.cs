@@ -64,6 +64,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             }
         }
 
+        protected override void DeselectAll()
+        {
+            state.ClearSelectedTextTags();
+        }
+
         protected class RubyRomajiSelectionHandler : SelectionHandler<ITextTag>
         {
             [Resolved]
