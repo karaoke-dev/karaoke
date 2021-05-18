@@ -44,6 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
         protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
             => new TimeTagSelectionBlueprint(item);
 
+        public override bool HandlePositionalInput => false;
+
         protected override void DeselectAll()
         {
             state.ClearSelectedTimeTags();
