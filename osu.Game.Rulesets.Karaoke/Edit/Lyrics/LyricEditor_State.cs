@@ -148,6 +148,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     throw new ArgumentOutOfRangeException(nameof(Mode));
             }
         }
+
+        public void ClearSelectedTimeTags()
+        {
+            SelectedTimeTags.Clear();
+        }
+
+        public void ClearSelectedTextTags()
+        {
+            SelectedTextTags.Clear();
+        }
     }
 
     public enum Mode

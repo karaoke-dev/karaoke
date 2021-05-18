@@ -3,6 +3,7 @@
 
 using System.Linq;
 using osu.Framework.Bindables;
+using osu.Framework.Input.Events;
 using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
@@ -30,6 +31,45 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
                         AddBlueprintFor(obj);
                 }
             }, true);
+        }
+
+        protected override bool OnDragStart(DragStartEvent e)
+        {
+            if (!base.OnDragStart(e))
+                return false;
+
+            // should clear all selected text-tag if start selecting.
+            if (containsSelectionFromOtherBlueprintContainer())
+                DeselectAll();
+
+            return true;
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            if (!base.OnClick(e))
+                return false;
+
+            // should clear all selected text-tag if start selecting.
+            if (containsSelectionFromOtherBlueprintContainer())
+                DeselectAll();
+
+            return true;
+        }
+
+        /// <summary>
+        /// This function will de-select all selection in relative blueprint container
+        /// </summary>
+        protected virtual void DeselectAll()
+        {
+        }
+
+        private bool containsSelectionFromOtherBlueprintContainer()
+        {
+            var items = SelectionBlueprints.Select(x => x.Item);
+
+            // check any selected items that is not in current blueprint container.
+            return SelectedItems.Any(x => !items.Contains(x));
         }
     }
 }
