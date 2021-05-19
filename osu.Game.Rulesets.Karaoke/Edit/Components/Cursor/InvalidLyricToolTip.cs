@@ -64,6 +64,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                         romajiTagIssue.InvalidRomajiTags?.ForEach(x => createRomajiInvalidMessage(x.Key, x.Value));
                         break;
 
+                    // print normal message
+                    case Issue _:
+                        invalidMessage.AddAlertParagraph(issue.Template.GetMessage());
+                        break;
+
                     // Should throw exception because every issue message should be printed.
                     default:
                         throw new ArgumentOutOfRangeException(nameof(issue));
