@@ -4,6 +4,7 @@
 using System;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI.Components;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Position
@@ -19,9 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 
         public Tone ToneAt(Vector2 screenSpacePosition) => throw new NotImplementedException();
 
-        public float YPositionAt(Tone tone) => -(NotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT) * (tone.Scale + (tone.Half ? 0.5f : 0));
+        public float YPositionAt(Tone tone) => -(ScrollingNotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT) * (tone.Scale + (tone.Half ? 0.5f : 0));
 
-        public float YPositionAt(KaraokeSaitenAction action) => -(NotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT) * action.Scale;
+        public float YPositionAt(KaraokeSaitenAction action) => -(ScrollingNotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT) * action.Scale;
 
         public float CenterPosition() => YPositionAt(new Tone { Scale = column / 2, Half = column % 2 == 1 });
 

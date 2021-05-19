@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -10,7 +11,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
-using System;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
