@@ -51,7 +51,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
             {
                 Padding = new MarginPadding(50),
                 RelativeSizeAxes = Axes.Both,
-                Child = NotePlayfield = CreateNotePlayfield(9).With(x => {
+                Child = NotePlayfield = CreateNotePlayfield(9).With(x =>
+                {
                     x.Alpha = 0;
                     x.RelativeSizeAxes = Axes.X;
                 })
@@ -186,14 +187,14 @@ namespace osu.Game.Rulesets.Karaoke.UI
             // Cursor
             rulesetConfig?.BindWith(KaraokeRulesetSetting.ShowCursor, DisplayCursor);
 
+            // Alpha
+            rulesetConfig?.BindWith(KaraokeRulesetSetting.NoteAlpha, notePlayfieldAlpha);
+            rulesetConfig?.BindWith(KaraokeRulesetSetting.LyricAlpha, lyricPlayfieldAlpha);
+
             // Pitch
             session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
             session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
             session.BindWith(KaraokeRulesetSession.PlaybackSpeed, bindablePlayback);
-
-            // Alpha
-            rulesetConfig.BindWith(KaraokeRulesetSetting.NoteAlpha, notePlayfieldAlpha);
-            rulesetConfig.BindWith(KaraokeRulesetSetting.LyricAlpha, lyricPlayfieldAlpha);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
@@ -15,7 +16,6 @@ using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
 using osuTK;
-using System;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
 {
@@ -118,8 +118,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
                 Schedule(() =>
                 {
                     var judgementAreaPercentage = currentSkin.GetConfig<KaraokeSkinConfigurationLookup, float>(
-                                               new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.JudgementAresPrecentage, 0))
-                                           ?.Value ?? 0.4f;
+                                                                 new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.JudgementAresPrecentage, 0))
+                                                             ?.Value ?? 0.4f;
 
                     switch (dir.NewValue)
                     {

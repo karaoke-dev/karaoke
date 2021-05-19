@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
         private ChangeLogMarkdownContainer markdownContainer;
 
         [Cached]
-        private readonly OverlayColourProvider overlayColour = new OverlayColourProvider(OverlayColourScheme.Orange);
+        private readonly OverlayColourProvider overlayColour = new(OverlayColourScheme.Orange);
 
         [SetUp]
         public void SetUp() => Schedule(() =>
