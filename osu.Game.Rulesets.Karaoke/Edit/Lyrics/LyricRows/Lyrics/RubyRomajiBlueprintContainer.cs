@@ -103,9 +103,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             {
                 base.OnSelectionChanged();
 
-                // in ruby / romaji blueprint container, it's able to let user drag to change start and end index.
-                SelectionBox.CanScaleX = true;
-                SelectionBox.CanReverse = false;
+                // it's able to let user drag to change start and end index if only select one ruby / romaji tag.
+                SelectionBox.CanScaleX = SelectedItems.Count == 1;
             }
         }
     }
