@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.RomajiTags;
@@ -13,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.RubyTags
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Screens.Edit.Compose.Components;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 {
@@ -89,6 +91,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             protected override void DeleteItems(IEnumerable<ITextTag> items)
             {
                 // todo : delete ruby or romaji
+            }
+
+            public override bool HandleScale(Vector2 scale, Anchor anchor)
+            {
+                // todo : should handle size change in here.
+                return true;
+            }
+
+            protected override void OnSelectionChanged()
+            {
+                base.OnSelectionChanged();
+
+                // in ruby / romaji blueprint container, it's able to let user drag to change start and end index.
+                SelectionBox.CanScaleX = true;
+                SelectionBox.CanReverse = false;
             }
         }
     }
