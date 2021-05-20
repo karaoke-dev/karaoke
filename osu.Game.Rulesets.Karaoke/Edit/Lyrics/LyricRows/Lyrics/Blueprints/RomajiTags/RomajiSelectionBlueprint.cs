@@ -46,8 +46,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.Roma
 
         private void updatePosition()
         {
-            var position = editorLyricPiece.GetTextTagPosition(Item);
-            UpdatePositionAndSize(position);
+            // wait until lyric update romaji position.
+            ScheduleAfterChildren(() =>
+            {
+                var position = editorLyricPiece.GetTextTagPosition(Item);
+                UpdatePositionAndSize(position);
+            });
         }
     }
 }

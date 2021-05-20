@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -13,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.RomajiTa
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.RubyTags;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
 
@@ -48,6 +50,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             RegistBindable(romajiTags);
         }
 
+        protected override bool ApplySnapResult(SelectionBlueprint<ITextTag>[] blueprints, SnapResult result)
+        {
+            if (!base.ApplySnapResult(blueprints, result))
+                return false;
+
+            // todo : handle lots of ruby / romaji drag position changed.
+            return true;
+        }
+
         protected override SelectionHandler<ITextTag> CreateSelectionHandler()
             => new RubyRomajiSelectionHandler();
 
@@ -79,6 +90,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             [Resolved]
             private LyricManager lyricManager { get; set; }
 
+            [Resolved]
+            private EditorLyricPiece editorLyricPiece { get; set; }
+
             [BackgroundDependencyLoader]
             private void load()
             {
@@ -95,7 +109,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
             public override bool HandleScale(Vector2 scale, Anchor anchor)
             {
-                // todo : should handle size change in here.
+                // 0. notice that this feature only works if only select one ruby / romaji tag.
+                var selectedTextTag = SelectedItems.FirstOrDefault();
+                if (selectedTextTag == null)
+                    return false;
+
+                // 1. we should get real left-side and right-side position
+                var leftPosition = 50;
+                var rightPosition = 70;
+
+                // 2. get updated text-tag index
+                var startIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(leftPosition));
+                var endIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(rightPosition));
+
+                // apply new index and note that should change lyric property also.
+                selectedTextTag.StartIndex = startIndex;
+                selectedTextTag.EndIndex = endIndex;
+
                 return true;
             }
 
@@ -103,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             {
                 base.OnSelectionChanged();
 
-                // it's able to let user drag to change start and end index if only select one ruby / romaji tag.
+                // only select one ruby / romaji tag can let user drag to change start and end index.
                 SelectionBox.CanScaleX = SelectedItems.Count == 1;
             }
         }

@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
 {
     public static class BindableExtensions
     {
-        public static void BindArrayChanged<T>(this Bindable<T[]> bindable, Action<T[]> add, Action<T[]> remove, bool runOnceImmediately = false)
+        public static void BindArrayChanged<T>(this IBindable<T[]> bindable, Action<T[]> add, Action<T[]> remove, bool runOnceImmediately = false)
         {
             // Add time-tag into blueprint container
             bindable.BindValueChanged(e =>
