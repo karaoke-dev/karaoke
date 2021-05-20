@@ -107,26 +107,49 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                 // todo : delete ruby or romaji
             }
 
+            private float deltaPosition = 0;
+
+            protected override void OnOperationBegan()
+            {
+                base.OnOperationBegan();
+                deltaPosition = 0;
+            }
+
             public override bool HandleScale(Vector2 scale, Anchor anchor)
             {
-                // 0. notice that this feature only works if only select one ruby / romaji tag.
+                deltaPosition += scale.X;
+
+                // this feature only works if only select one ruby / romaji tag.
                 var selectedTextTag = SelectedItems.FirstOrDefault();
                 if (selectedTextTag == null)
                     return false;
 
-                // 1. we should get real left-side and right-side position
-                var leftPosition = 50;
-                var rightPosition = 70;
+                // get real left-side and right-side position
+                var rect = editorLyricPiece.GetTextTagPosition(selectedTextTag);
 
-                // 2. get updated text-tag index
-                var startIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(leftPosition));
-                var endIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(rightPosition));
+                switch (anchor)
+                {
+                    case Anchor.CentreLeft:
+                        var leftPosition = rect.Left + deltaPosition;
+                        var startIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(leftPosition));
+                        if (startIndex >= selectedTextTag.EndIndex)
+                            return false;
 
-                // apply new index and note that should change lyric property also.
-                selectedTextTag.StartIndex = startIndex;
-                selectedTextTag.EndIndex = endIndex;
+                        selectedTextTag.StartIndex = startIndex;
+                        return true;
 
-                return true;
+                    case Anchor.CentreRight:
+                        var rightPosition = rect.Right + deltaPosition;
+                        var endIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(rightPosition));
+                        if (endIndex <= selectedTextTag.StartIndex)
+                            return false;
+
+                        selectedTextTag.EndIndex = endIndex;
+                        return true;
+
+                    default:
+                        return false;
+                }
             }
 
             protected override void OnSelectionChanged()
