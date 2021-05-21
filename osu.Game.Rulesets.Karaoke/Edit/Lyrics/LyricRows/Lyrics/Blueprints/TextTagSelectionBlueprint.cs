@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
@@ -10,13 +11,14 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints
 {
     public abstract class TextTagSelectionBlueprint<T> : SelectionBlueprint<T> where T : ITextTag
     {
-        private readonly Box previewTextArea;
-        private readonly Box indexRangeBackground;
+        private readonly Container previewTextArea;
+        private readonly Container indexRangeBackground;
 
         [Resolved]
         private EditorLyricPiece editorLyricPiece { get; set; }
@@ -24,16 +26,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints
         protected TextTagSelectionBlueprint(T item)
             : base(item)
         {
-            InternalChildren = new Drawable[]
+            InternalChildren = new[]
             {
-                previewTextArea = new Box
+                previewTextArea = new Container
                 {
                     Alpha = 0,
-                    AlwaysPresent = true, // test can be removed?
                 },
-                indexRangeBackground = new Box
+                indexRangeBackground = new Container
                 {
+                    Masking = true,
+                    BorderThickness = 3,
                     Alpha = 0,
+                    BorderColour = Color4.White,
+                    Children = new Drawable[]
+                    {
+                        new Box
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Alpha = 0f,
+                            AlwaysPresent = true,
+                        },
+                    }
                 },
             };
         }
@@ -41,12 +54,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints
         [BackgroundDependencyLoader]
         private void load(OsuColour colour)
         {
-            indexRangeBackground.Colour = colour.Gray1;
+            indexRangeBackground.Colour = colour.Pink;
         }
 
         protected override void OnSelected()
         {
-            indexRangeBackground.FadeTo(0.3f, 500);
+            indexRangeBackground.FadeIn(500);
         }
 
         protected override void OnDeselected()
