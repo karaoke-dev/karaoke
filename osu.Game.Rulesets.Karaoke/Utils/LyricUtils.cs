@@ -193,6 +193,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             throw new IndexOutOfRangeException(nameof(index.State));
         }
 
+        public static bool AbleToInsertTextTagAtIndex(Lyric lyric, int index)
+            => index >= 0 && index <= (lyric.Text?.Length ?? 0);
+
         #endregion
 
         #region Time display
