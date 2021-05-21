@@ -24,6 +24,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
         [Resolved]
         private ILyricEditorState state { get; set; }
 
+        [Resolved]
+        private EditorLyricPiece editorLyricPiece { get; set; }
+
         [UsedImplicitly]
         private readonly Bindable<RubyTag[]> rubyTags;
 
@@ -54,9 +57,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             if (!base.ApplySnapResult(blueprints, result))
                 return false;
 
-            // todo : handle lots of ruby / romaji drag position changed.
+            // handle lots of ruby / romaji drag position changed.
+            var items = blueprints.Select(x => x.Item).ToArray();
+            if (!items.Any())
+                return false;
+
+            var leftPosition = ToLocalSpace(result.ScreenSpacePosition).X;
+            var startIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(leftPosition));
+            var diff = startIndex - items.First().StartIndex;
+            if (diff == 0)
+                return false;
+
+            foreach (var item in items)
+            {
+                var newStartIndex = item.StartIndex + diff;
+                var newEndIndex = item.EndIndex + diff;
+                if (!LyricUtils.AbleToInsertTextTagAtIndex(Lyric, newStartIndex) || !LyricUtils.AbleToInsertTextTagAtIndex(Lyric, newEndIndex))
+                    continue;
+
+                item.StartIndex = newStartIndex;
+                item.EndIndex = newEndIndex;
+            }
+
             return true;
         }
+
+        protected override IEnumerable<SelectionBlueprint<ITextTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<ITextTag>> blueprints)
+            => blueprints.OrderBy(b => b.Item.StartIndex);
 
         protected override SelectionHandler<ITextTag> CreateSelectionHandler()
             => new RubyRomajiSelectionHandler();
