@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -48,7 +49,41 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             TextBindable.BindValueChanged(text => applyText(text.NewValue));
             TimeTagsBindable.BindValueChanged(timeTags => applyTimeTag(timeTags.NewValue));
             RubyTagsBindable.BindValueChanged(rubyTags => applyRuby(rubyTags.NewValue));
+            RubyTagsBindable.BindArrayChanged(addItems =>
+            {
+                foreach (var obj in addItems)
+                {
+                    obj.StartIndexBindable.BindValueChanged(x => applyRuby(RubyTagsBindable.Value));
+                    obj.EndIndexBindable.BindValueChanged(x => applyRuby(RubyTagsBindable.Value));
+                    obj.TextBindable.BindValueChanged(x => applyRuby(RubyTagsBindable.Value));
+                }
+            }, removedItems =>
+            {
+                foreach (var obj in removedItems)
+                {
+                    obj.StartIndexBindable.UnbindEvents();
+                    obj.EndIndexBindable.UnbindEvents();
+                    obj.TextBindable.UnbindEvents();
+                }
+            });
             RomajiTagsBindable.BindValueChanged(romajiTags => applyRomaji(romajiTags.NewValue));
+            RomajiTagsBindable.BindArrayChanged(addItems =>
+            {
+                foreach (var obj in addItems)
+                {
+                    obj.StartIndexBindable.BindValueChanged(x => applyRomaji(RomajiTagsBindable.Value));
+                    obj.EndIndexBindable.BindValueChanged(x => applyRomaji(RomajiTagsBindable.Value));
+                    obj.TextBindable.BindValueChanged(x => applyRomaji(RomajiTagsBindable.Value));
+                }
+            }, removedItems =>
+            {
+                foreach (var obj in removedItems)
+                {
+                    obj.StartIndexBindable.UnbindEvents();
+                    obj.EndIndexBindable.UnbindEvents();
+                    obj.TextBindable.UnbindEvents();
+                }
+            });
 
             TextBindable.BindTo(hitObject.TextBindable);
             TimeTagsBindable.BindTo(hitObject.TimeTagsBindable);

@@ -2,13 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Graphics.Primitives;
+using osu.Framework.Graphics;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints
 {
-    public class TimeTagSelectionBlueprint : TagSelectionBlueprint<TimeTag>
+    public class TimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>
     {
         private const float time_tag_size = 10;
 
@@ -18,6 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.Time
         public TimeTagSelectionBlueprint(TimeTag item)
             : base(item)
         {
+            RelativeSizeAxes = Axes.None;
         }
 
         [BackgroundDependencyLoader]
@@ -30,8 +32,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.Time
         {
             var size = new Vector2(time_tag_size);
             var position = editorLyricPiece.GetTimeTagPosition(Item) - size / 2;
-            var rectangle = new RectangleF(position, size);
-            UpdatePositionAndSize(rectangle);
+
+            X = position.X;
+            Y = position.Y;
+            Width = time_tag_size;
+            Height = time_tag_size;
         }
+
+        public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
     }
 }

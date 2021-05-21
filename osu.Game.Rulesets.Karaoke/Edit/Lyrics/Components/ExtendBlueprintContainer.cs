@@ -4,6 +4,7 @@
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Input.Events;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
@@ -13,23 +14,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
         protected void RegistBindable<TItem>(Bindable<TItem[]> bindable) where TItem : T
         {
             // Add time-tag into blueprint container
-            bindable.BindValueChanged(e =>
+            bindable.BindArrayChanged(addItems =>
             {
-                // remove old item.
-                var removedItems = e.OldValue?.Except(e.NewValue).ToList();
-
-                if (removedItems != null)
-                {
-                    foreach (var obj in removedItems)
-                        RemoveBlueprintFor(obj);
-                }
-
-                // add new time-tags
-                if (e.NewValue != null)
-                {
-                    foreach (var obj in e.NewValue)
-                        AddBlueprintFor(obj);
-                }
+                foreach (var obj in addItems)
+                    AddBlueprintFor(obj);
+            }, removedItems =>
+            {
+                foreach (var obj in removedItems)
+                    RemoveBlueprintFor(obj);
             }, true);
         }
 

@@ -20,6 +20,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(TextIndexUtils.ToStringIndex(textIndex), actualIndex);
         }
 
+        [TestCase(0, false, 0, TextIndex.IndexState.Start)]
+        [TestCase(1, true, 0, TextIndex.IndexState.End)]
+        [TestCase(0, true, -1, TextIndex.IndexState.End)] // In utils not checking is index out of range
+        public void TestFromStringIndex(int textindex, bool end, int actualIndex, TextIndex.IndexState actualState)
+        {
+            var actualTextIndex = new TextIndex(actualIndex, actualState);
+            Assert.AreEqual(TextIndexUtils.FromStringIndex(textindex, end), actualTextIndex);
+        }
+
         [TestCase(TextIndex.IndexState.Start, TextIndex.IndexState.End)]
         [TestCase(TextIndex.IndexState.End, TextIndex.IndexState.Start)]
         public void TestReverseState(TextIndex.IndexState state, TextIndex.IndexState actualState)
