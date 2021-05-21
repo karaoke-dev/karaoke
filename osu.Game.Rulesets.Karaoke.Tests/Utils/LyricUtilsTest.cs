@@ -178,6 +178,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(LyricUtils.GetTimeTagIndexDisplayText(lyric, textIndex), actual);
         }
 
+        [TestCase("からおけ", 0, true)]
+        [TestCase("からおけ", 4, true)]
+        [TestCase("からおけ", -1, false)]
+        [TestCase("からおけ", 5, false)]
+        [TestCase("", 0, true)]
+        [TestCase(null, 0, true)]
+        public void TestAbleToInsertTextTagAtIndex(string text, int index, bool actual)
+        {
+            var lyric = TestCaseTagHelper.ParseLyricWithTimeTag(text);
+            Assert.AreEqual(LyricUtils.AbleToInsertTextTagAtIndex(lyric, index), actual);
+        }
+
         #endregion
 
         #region Time display
