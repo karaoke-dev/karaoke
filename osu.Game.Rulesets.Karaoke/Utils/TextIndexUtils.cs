@@ -15,6 +15,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return index.Index + 1;
         }
 
+        public static TextIndex FromStringIndex(int index, bool end)
+        {
+            if (end)
+                return new TextIndex(index - 1, TextIndex.IndexState.End);
+
+            return new TextIndex(index);
+        }
+
         public static TextIndex.IndexState ReverseState(TextIndex.IndexState state)
         {
             return state == TextIndex.IndexState.Start ? TextIndex.IndexState.End : TextIndex.IndexState.Start;
