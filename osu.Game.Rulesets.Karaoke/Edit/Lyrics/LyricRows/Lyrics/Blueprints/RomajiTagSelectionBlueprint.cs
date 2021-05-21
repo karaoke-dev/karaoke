@@ -8,9 +8,9 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.RubyTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints
 {
-    public class RubySelectionBlueprint : TagSelectionBlueprint<ITextTag>
+    public class RomajiTagSelectionBlueprint : TextTagSelectionBlueprint<ITextTag>
     {
         [UsedImplicitly]
         private readonly Bindable<string> text;
@@ -24,10 +24,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.Ruby
         [Resolved]
         private EditorLyricPiece editorLyricPiece { get; set; }
 
-        public RubySelectionBlueprint(ITextTag item)
+        public RomajiTagSelectionBlueprint(ITextTag item)
             : base(item)
         {
-            if (!(item is RubyTag romajiTag))
+            if (!(item is RomajiTag romajiTag))
                 throw new InvalidCastException(nameof(item));
 
             text = romajiTag.TextBindable.GetBoundCopy();
@@ -38,20 +38,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.Ruby
         [BackgroundDependencyLoader]
         private void load()
         {
-            updatePosition();
-            text.BindValueChanged(e => updatePosition());
-            startIndex.BindValueChanged(e => updatePosition());
-            endIndex.BindValueChanged(e => updatePosition());
-        }
-
-        private void updatePosition()
-        {
-            // wait until lyric update ruby position.
-            ScheduleAfterChildren(() =>
-            {
-                var position = editorLyricPiece.GetTextTagPosition(Item);
-                UpdatePositionAndSize(position);
-            });
+            UpdatePositionAndSize();
+            text.BindValueChanged(e => UpdatePositionAndSize());
+            startIndex.BindValueChanged(e => UpdatePositionAndSize());
+            endIndex.BindValueChanged(e => UpdatePositionAndSize());
         }
     }
 }

@@ -10,8 +10,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.RomajiTags;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.RubyTags;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -67,10 +66,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             switch (item)
             {
                 case RubyTag rubyTag:
-                    return new RubySelectionBlueprint(rubyTag);
+                    return new RubyTagSelectionBlueprint(rubyTag);
 
                 case RomajiTag romajiTag:
-                    return new RomajiSelectionBlueprint(romajiTag);
+                    return new RomajiTagSelectionBlueprint(romajiTag);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(item));

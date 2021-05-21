@@ -8,9 +8,9 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.RomajiTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints
 {
-    public class RomajiSelectionBlueprint : TagSelectionBlueprint<ITextTag>
+    public class RubyTagSelectionBlueprint : TextTagSelectionBlueprint<ITextTag>
     {
         [UsedImplicitly]
         private readonly Bindable<string> text;
@@ -21,13 +21,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.Roma
         [UsedImplicitly]
         private readonly BindableNumber<int> endIndex;
 
-        [Resolved]
-        private EditorLyricPiece editorLyricPiece { get; set; }
-
-        public RomajiSelectionBlueprint(ITextTag item)
+        public RubyTagSelectionBlueprint(ITextTag item)
             : base(item)
         {
-            if (!(item is RomajiTag romajiTag))
+            if (!(item is RubyTag romajiTag))
                 throw new InvalidCastException(nameof(item));
 
             text = romajiTag.TextBindable.GetBoundCopy();
@@ -38,20 +35,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.Roma
         [BackgroundDependencyLoader]
         private void load()
         {
-            updatePosition();
-            text.BindValueChanged(e => updatePosition());
-            startIndex.BindValueChanged(e => updatePosition());
-            endIndex.BindValueChanged(e => updatePosition());
-        }
-
-        private void updatePosition()
-        {
-            // wait until lyric update romaji position.
-            ScheduleAfterChildren(() =>
-            {
-                var position = editorLyricPiece.GetTextTagPosition(Item);
-                UpdatePositionAndSize(position);
-            });
+            UpdatePositionAndSize();
+            text.BindValueChanged(e => UpdatePositionAndSize());
+            startIndex.BindValueChanged(e => UpdatePositionAndSize());
+            endIndex.BindValueChanged(e => UpdatePositionAndSize());
         }
     }
 }

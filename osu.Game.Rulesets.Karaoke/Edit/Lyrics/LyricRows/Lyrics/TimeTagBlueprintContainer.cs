@@ -7,7 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints.TimeTags;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 
