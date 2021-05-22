@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Beatmaps;
@@ -35,6 +36,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
     {
+        private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
+
         private DrawableKaraokeEditorRuleset drawableRuleset;
 
         [Cached(Type = typeof(IPositionCalculator))]
@@ -65,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly SingerManager singerManager;
 
         [Cached]
-        private readonly LanguageSelectionDialog languageSelectionDialog;
+        private LanguageSelectionDialog languageSelectionDialog;
 
         [Resolved]
         private Editor editor { get; set; }
@@ -84,11 +87,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(lyricManager = new LyricManager());
             AddInternal(lyricCheckerManager = new LyricCheckerManager());
             AddInternal(singerManager = new SingerManager());
-            LayerBelowRuleset.Add(new KaraokeLyricEditor(ruleset)
+            LayerBelowRuleset.Add(languageSelectionDialog = new LanguageSelectionDialog());
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            CreateMenuBar();
+            AddInternal(new KaraokeLyricEditor(Ruleset)
             {
                 RelativeSizeAxes = Axes.Both
             });
-            LayerBelowRuleset.Add(languageSelectionDialog = new LanguageSelectionDialog());
+
+            bindableEditMode.BindValueChanged(e =>
+            {
+                if (e.NewValue == EditMode.LyricEditor)
+                {
+                    InternalChildren[0].Hide(); // hide content
+                    InternalChildren[1].Hide(); // hide left-side toggle.
+                    InternalChildren[2].Show(); // show lyric editor.
+                }
+                else
+                {
+                    InternalChildren[0].Show();
+                    InternalChildren[1].Show();
+                    InternalChildren[2].Hide();
+                }
+            }, true);
+            editConfigManager.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
         }
 
         public new KaraokePlayfield Playfield => drawableRuleset.Playfield;
@@ -190,11 +216,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         protected override IReadOnlyList<HitObjectCompositionTool> CompositionTools => Array.Empty<HitObjectCompositionTool>();
 
         protected override IEnumerable<TernaryButton> CreateTernaryButtons() => Array.Empty<TernaryButton>();
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            CreateMenuBar();
-        }
     }
 }

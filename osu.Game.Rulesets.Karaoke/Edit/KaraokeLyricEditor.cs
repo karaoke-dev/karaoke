@@ -12,8 +12,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeLyricEditor : CompositeDrawable
     {
-        private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
-
         private readonly Bindable<float> bindableLyricEditorFontSize = new Bindable<float>();
         private readonly Bindable<Mode> bindableLyricEditorMode = new Bindable<Mode>();
         private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
@@ -31,14 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 {
                     RelativeSizeAxes = Axes.Both,
                 }
-            });
-
-            bindableEditMode.BindValueChanged(e =>
-            {
-                if (e.NewValue == EditMode.LyricEditor)
-                    Show();
-                else
-                    Hide();
             });
             bindableLyricEditorMode.BindValueChanged(e =>
             {
@@ -65,8 +55,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetEditConfigManager editConfigManager)
         {
-            editConfigManager.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
-
             editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorFontSize, bindableLyricEditorFontSize);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorMode, bindableLyricEditorMode);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.RecordingMovingCaretMode, bindableRecordingMovingCaretMode);
