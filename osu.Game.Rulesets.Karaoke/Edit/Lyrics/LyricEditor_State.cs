@@ -26,7 +26,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 { Mode.TypingMode, new TypingCaretPositionAlgorithm(lyrics) },
                 { Mode.EditNoteMode, new NavigateCaretPositionAlgorithm(lyrics) },
                 { Mode.RecordMode, new TimeTagCaretPositionAlgorithm(lyrics) { Mode = RecordingMovingCaretMode } },
-                { Mode.TimeTagEditMode, new TimeTagIndexCaretPositionAlgorithm(lyrics) }
+                { Mode.TimeTagEditMode, new TimeTagIndexCaretPositionAlgorithm(lyrics) },
+                { Mode.Layout, new NavigateCaretPositionAlgorithm(lyrics) },
+                { Mode.Singer, new NavigateCaretPositionAlgorithm(lyrics) },
+                { Mode.Language, new NavigateCaretPositionAlgorithm(lyrics) },
             };
         }
 
@@ -116,10 +119,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var lyric = BindableCaretPosition.Value?.Lyric;
             var algorithm = GetCaretPositionAlgorithm();
 
-            if (lyric != null && algorithm != null)
+            if (algorithm != null)
             {
-                BindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTargetLyric", lyric);
-                BindableHoverCaretPosition.Value = generatePosition(mode);
+                if (lyric != null)
+                {
+                    BindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
+                    BindableHoverCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
+                }
+                else
+                {
+                    BindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition>("MoveToFirst");
+                    BindableHoverCaretPosition.Value = algorithm.CallMethod<ICaretPosition>("MoveToFirst");
+                }
             }
             else
             {
@@ -156,6 +167,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 case Mode.TimeTagEditMode:
                     return new TimeTagIndexCaretPosition(null, new TextIndex(0));
+
+                case Mode.Layout:
+                case Mode.Singer:
+                case Mode.Language:
+                    return new NavigateCaretPosition(null);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Mode));
@@ -208,15 +224,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// <summary>
         /// Enable to create/delete and reset time tag.
         /// </summary>
-        TimeTagEditMode
-    }
-
-    public enum LyricFastEditMode
-    {
-        /// <summary>
-        /// User can only see start and end time.
-        /// </summary>
-        None,
+        TimeTagEditMode,
 
         /// <summary>
         /// Can edit each lyric's layout.
@@ -232,11 +240,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// Can edit each lyric's language.
         /// </summary>
         Language,
-
-        /// <summary>
-        /// Display lyric time-tag's first and last time.
-        /// </summary>
-        TimeTag,
     }
 
     public enum RecordingMovingCaretMode

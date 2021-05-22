@@ -41,6 +41,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                 case Mode.TimeTagEditMode:
                     return "Edit time tag";
 
+                case Mode.Layout:
+                    return "Select layout";
+
+                case Mode.Singer:
+                    return "Select singer";
+
+                case Mode.Language:
+                    return "Select language";
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(selection));
             }

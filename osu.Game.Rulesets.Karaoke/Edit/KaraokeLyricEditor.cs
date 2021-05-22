@@ -16,7 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         private readonly Bindable<float> bindableLyricEditorFontSize = new Bindable<float>();
         private readonly Bindable<Mode> bindableLyricEditorMode = new Bindable<Mode>();
-        private readonly Bindable<LyricFastEditMode> bindableLyricEditorFastEditMode = new Bindable<LyricFastEditMode>();
         private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
         private readonly BindableBool bindableAutoFocusToEditLyric = new BindableBool();
         private readonly BindableInt bindableAutoFocusToEditLyricSkipRows = new BindableInt();
@@ -45,10 +44,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             {
                 lyricEditor.Mode = e.NewValue;
             });
-            bindableLyricEditorFastEditMode.BindValueChanged(e =>
-            {
-                lyricEditor.LyricFastEditMode = e.NewValue;
-            });
             bindableLyricEditorFontSize.BindValueChanged(e =>
             {
                 lyricEditor.FontSize = e.NewValue;
@@ -74,7 +69,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
             editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorFontSize, bindableLyricEditorFontSize);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorMode, bindableLyricEditorMode);
-            editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorFastEditMode, bindableLyricEditorFastEditMode);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.RecordingMovingCaretMode, bindableRecordingMovingCaretMode);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.AutoFocusToEditLyric, bindableAutoFocusToEditLyric);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.AutoFocusToEditLyricSkipRows, bindableAutoFocusToEditLyricSkipRows);

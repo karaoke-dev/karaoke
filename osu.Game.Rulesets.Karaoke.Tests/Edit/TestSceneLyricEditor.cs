@@ -126,17 +126,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                         }
                                     });
                                 }),
-                                new OsuDropdown<LyricFastEditMode>
-                                {
-                                    Width = 150,
-                                    Items = EnumUtils.GetValues<LyricFastEditMode>()
-                                }.With(x =>
-                                {
-                                    x.Current.BindValueChanged(fastEditMode =>
-                                    {
-                                        editor.LyricFastEditMode = fastEditMode.NewValue;
-                                    });
-                                }),
                                 recordingModeDropdown = new OsuDropdown<RecordingMovingCaretMode>
                                 {
                                     Width = 150,

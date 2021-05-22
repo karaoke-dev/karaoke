@@ -78,7 +78,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                     break;
 
                 case Mode.TimeTagEditMode:
-
                     state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, index));
                     break;
 
@@ -233,6 +232,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
                     case Mode.TimeTagEditMode:
                         return new DrawableTimeTagEditCaret();
+
+                    case Mode.Layout:
+                    case Mode.Singer:
+                    case Mode.Language:
+                        return null;
 
                     default:
                         throw new IndexOutOfRangeException(nameof(mode));
