@@ -25,7 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
             => base.CreateContent().With(x =>
             {
                 LyricEditor.Mode = Mode.TimeTagEditMode;
-                LyricEditor.LyricFastEditMode = LyricFastEditMode.Language;
             });
 
         protected override void LoadComplete()

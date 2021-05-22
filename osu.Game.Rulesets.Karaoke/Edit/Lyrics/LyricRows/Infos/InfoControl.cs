@@ -32,7 +32,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos
         private readonly Container subInfoContainer;
 
         private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
-        private readonly Bindable<LyricFastEditMode> bindableLyricFastEditMode = new Bindable<LyricFastEditMode>();
 
         [Resolved(canBeNull: true)]
         private DialogOverlay dialogOverlay { get; set; }
@@ -128,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos
 
             timeRange.Text = LyricUtils.LyricTimeFormattedString(lyric);
 
-            bindableLyricFastEditMode.BindValueChanged(e =>
+            bindableMode.BindValueChanged(e =>
             {
                 CreateBadge(e.NewValue);
             });
@@ -141,10 +140,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos
             headerBackground.Colour = colours.Gray3;
 
             bindableMode.BindTo(state.BindableMode);
-            bindableLyricFastEditMode.BindTo(state.BindableFastEditMode);
         }
 
-        protected void CreateBadge(LyricFastEditMode mode)
+        protected void CreateBadge(Mode mode)
         {
             subInfoContainer.Clear();
             var subInfo = createSubInfo();
@@ -160,20 +158,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos
             {
                 switch (mode)
                 {
-                    case LyricFastEditMode.None:
+                    case Mode.ViewMode:
+                    case Mode.EditMode:
+                    case Mode.TypingMode:
+                    case Mode.RubyRomajiMode:
+                    case Mode.EditNoteMode:
                         return null;
 
-                    case LyricFastEditMode.Layout:
+                    case Mode.RecordMode:
+                    case Mode.TimeTagEditMode:
+                        return new TimeTagInfo(Lyric);
+
+                    case Mode.Layout:
                         return new LayoutInfo(Lyric);
 
-                    case LyricFastEditMode.Singer:
+                    case Mode.Singer:
                         return new SingerInfo(Lyric);
 
-                    case LyricFastEditMode.Language:
+                    case Mode.Language:
                         return new LanguageInfo(Lyric);
-
-                    case LyricFastEditMode.TimeTag:
-                        return new TimeTagInfo(Lyric);
 
                     default:
                         throw new IndexOutOfRangeException(nameof(mode));

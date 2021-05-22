@@ -30,8 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Bindable<Mode> BindableMode { get; } = new Bindable<Mode>();
 
-        public Bindable<LyricFastEditMode> BindableFastEditMode { get; } = new Bindable<LyricFastEditMode>();
-
         public Bindable<RecordingMovingCaretMode> BindableRecordingMovingCaretMode { get; } = new Bindable<RecordingMovingCaretMode>();
 
         public BindableBool BindableAutoFocusEditLyric { get; } = new BindableBool();
@@ -295,12 +293,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         throw new IndexOutOfRangeException(nameof(Mode));
                 }
             }
-        }
-
-        public LyricFastEditMode LyricFastEditMode
-        {
-            get => BindableFastEditMode.Value;
-            set => BindableFastEditMode.Value = value;
         }
 
         public RecordingMovingCaretMode RecordingMovingCaretMode

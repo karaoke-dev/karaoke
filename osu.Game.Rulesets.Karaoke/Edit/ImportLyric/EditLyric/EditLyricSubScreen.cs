@@ -25,7 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
             => base.CreateContent().With(x =>
             {
                 LyricEditor.Mode = Mode.EditMode;
-                LyricEditor.LyricFastEditMode = LyricFastEditMode.None;
             });
 
         protected override void LoadComplete()

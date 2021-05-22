@@ -208,15 +208,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// <summary>
         /// Enable to create/delete and reset time tag.
         /// </summary>
-        TimeTagEditMode
-    }
-
-    public enum LyricFastEditMode
-    {
-        /// <summary>
-        /// User can only see start and end time.
-        /// </summary>
-        None,
+        TimeTagEditMode,
 
         /// <summary>
         /// Can edit each lyric's layout.
@@ -232,11 +224,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// Can edit each lyric's language.
         /// </summary>
         Language,
-
-        /// <summary>
-        /// Display lyric time-tag's first and last time.
-        /// </summary>
-        TimeTag,
     }
 
     public enum RecordingMovingCaretMode
