@@ -5,11 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Configs;
@@ -44,11 +44,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
             var result = lyricVerifier.Run(new BeatmapVerifierContext(fakeBeatmap, null));
 
             // re-calculate and add
-            foreach (var lyric in lyrics)
+            foreach (var lyric in lyrics.OfType<Lyric>())
             {
                 // save issue to list.
                 var issues = result.Where(x => x.HitObjects.Contains(lyric)).ToArray();
-                if (!BindableReports.Contains(lyric))
+                if (!BindableReports.ContainsKey(lyric))
                     BindableReports.Add(lyric, issues);
                 else
                     BindableReports[lyric] = issues;

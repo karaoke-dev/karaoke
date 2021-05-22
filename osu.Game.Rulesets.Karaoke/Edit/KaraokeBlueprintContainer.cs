@@ -5,9 +5,8 @@ using System;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
-using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
@@ -19,14 +18,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
         }
 
-        public override OverlaySelectionBlueprint CreateBlueprintFor(DrawableHitObject hitObject)
+        public override HitObjectSelectionBlueprint CreateHitObjectBlueprintFor(HitObject hitObject)
         {
             switch (hitObject)
             {
-                case DrawableNote note:
+                case Note note:
                     return new NoteSelectionBlueprint(note);
 
-                case DrawableLyric lyric:
+                case Lyric lyric:
                     return new LyricSelectionBlueprint(lyric);
 
                 default:

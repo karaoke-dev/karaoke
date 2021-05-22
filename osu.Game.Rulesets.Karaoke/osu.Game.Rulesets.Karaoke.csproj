@@ -15,9 +15,11 @@
     <PackageReference Include="Octokit" Version="0.50.0" />
     <PackageReference Include="osu.Framework.KaraokeFont" Version="1.8.3" />
     <PackageReference Include="osu.Framework.Microphone" Version="1.2.0" />
-    <PackageReference Include="ppy.osu.Game" Version="2021.515.0" />
+    <PackageReference Include="ppy.osu.Game" Version="2021.523.0" />
     <PackageReference Include="LyricMaker" Version="1.1.1" />
     <PackageReference Include="NicoKaraParser" Version="1.1.0" />
+    <!--install because it might cause "Could not load file or assembly" error, might be removed eventually-->
+    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1" />
     <PackageReference Include="WanaKanaSharp" Version="0.1.1" />
     <PackageReference Include="Zipangu" Version="1.1.8" />
   </ItemGroup>
