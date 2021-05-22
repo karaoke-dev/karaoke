@@ -104,6 +104,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             TestMoveToLast(lyrics, caretPosition);
         }
 
+        [TestCase(nameof(singleLyric), 0)]
+        [TestCase(nameof(singleLyricWithNoText), 0)]
+        public void TestMoveToTarget(string sourceName, int lyricIndex)
+        {
+            var lyrics = GetLyricsByMethodName(sourceName);
+            var lyric = lyrics[lyricIndex];
+            var caretPosition = CreateEditNoteCaretPosition(lyrics, lyricIndex);
+
+            // Check move to target position.
+            TestMoveToTarget(lyrics, lyric, caretPosition);
+        }
+
         protected override void AssertEqual(NavigateCaretPosition compare, NavigateCaretPosition actual)
         {
             if (compare == null)

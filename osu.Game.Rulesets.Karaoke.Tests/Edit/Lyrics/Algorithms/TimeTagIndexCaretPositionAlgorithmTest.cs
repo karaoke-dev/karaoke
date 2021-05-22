@@ -113,6 +113,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             TestMoveToLast(lyrics, caretPosition);
         }
 
+        [TestCase(nameof(singleLyric), 0, "[0,start]")]
+        [TestCase(nameof(singleLyricWithNoText), 0, NOT_EXIST_TAG)]
+        public void TestMoveToTarget(string sourceName, int lyricIndex, string textTag)
+        {
+            var lyrics = GetLyricsByMethodName(sourceName);
+            var lyric = lyrics[lyricIndex];
+            var caretPosition = CreateTimeTagIndexCaretPosition(lyrics, lyricIndex, textTag);
+
+            // Check move to target position.
+            TestMoveToTarget(lyrics, lyric, caretPosition);
+        }
+
         protected override void AssertEqual(TimeTagIndexCaretPosition compare, TimeTagIndexCaretPosition actual)
         {
             if (compare == null)

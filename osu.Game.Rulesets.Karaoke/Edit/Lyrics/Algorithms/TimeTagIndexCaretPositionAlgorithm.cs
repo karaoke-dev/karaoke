@@ -100,6 +100,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return new TimeTagIndexCaretPosition(lyric, index);
         }
 
+        public override TimeTagIndexCaretPosition MoveToTarget(Lyric lyric)
+        {
+            var index = new TextIndex();
+            return new TimeTagIndexCaretPosition(lyric, index);
+        }
+
         protected virtual TextIndex GetPreviousIndex(TextIndex currentIndex)
         {
             var nextIndex = TextIndexUtils.ToStringIndex(currentIndex) - 1;

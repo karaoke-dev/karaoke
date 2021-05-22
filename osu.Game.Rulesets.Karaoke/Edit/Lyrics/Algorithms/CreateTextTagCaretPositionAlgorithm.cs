@@ -65,5 +65,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             // Of course it's not have move to last feature.
             return null;
         }
+
+        public override CreateTextTagCaretPosition MoveToTarget(Lyric lyric)
+        {
+            // lazy to implement this algorithm because this algorithm haven't being used.
+            return null;
+        }
     }
 }

@@ -74,5 +74,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             // not support this feature if typing.
             return null;
         }
+
+        public override TypingTextTagCaretPosition MoveToTarget(Lyric lyric)
+        {
+            // lazy to implement this algorithm because this algorithm haven't being used.
+            return null;
+        }
     }
 }

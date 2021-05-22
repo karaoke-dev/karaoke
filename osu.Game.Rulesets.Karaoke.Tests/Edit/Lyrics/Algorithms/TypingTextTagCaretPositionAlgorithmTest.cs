@@ -98,6 +98,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             TestMoveToLast(lyrics, null);
         }
 
+        [TestCase(nameof(singleLyric), 0)]
+        public void TestMoveToTarget(string sourceName, int lyricIndex)
+        {
+            var lyrics = GetLyricsByMethodName(sourceName);
+            var lyric = lyrics[lyricIndex];
+
+            // lazy to implement this algorithm because this algorithm haven't being used.
+            TestMoveToTarget(lyrics, lyric, null);
+        }
+
         protected override void AssertEqual(TypingTextTagCaretPosition compare, TypingTextTagCaretPosition actual)
         {
             if (compare == null)
