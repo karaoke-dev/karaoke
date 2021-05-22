@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Extensions;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -30,16 +32,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         protected object GetCaretPositionAlgorithm()
         {
-            return caretMovingAlgorithmSet[Mode];
+            return caretMovingAlgorithmSet.GetOrDefault(Mode);
         }
 
         public bool MoveCaret(MovingCaretAction action)
         {
-            if (Mode == Mode.ViewMode || Mode == Mode.RubyRomajiMode)
+            var algorithm = GetCaretPositionAlgorithm();
+            if (algorithm == null)
                 return false;
 
             var currentPosition = BindableCaretPosition.Value;
-            var algorithm = GetCaretPositionAlgorithm();
             ICaretPosition position;
 
             switch (action)
@@ -111,8 +113,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void ResetPosition(Mode mode)
         {
-            BindableCaretPosition.Value = generatePosition(mode);
-            BindableHoverCaretPosition.Value = generatePosition(mode);
+            var lyric = BindableCaretPosition.Value?.Lyric;
+            var algorithm = GetCaretPositionAlgorithm();
+
+            if (lyric != null && algorithm != null)
+            {
+                BindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTargetLyric", lyric);
+                BindableHoverCaretPosition.Value = generatePosition(mode);
+            }
+            else
+            {
+                BindableCaretPosition.Value = generatePosition(mode);
+                BindableHoverCaretPosition.Value = generatePosition(mode);
+            }
         }
 
         public bool CaretMovable(ICaretPosition position)

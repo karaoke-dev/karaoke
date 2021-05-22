@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
     {
         public static T CallMethod<T>(this object obj, string methodName)
         {
-            return (T)obj.GetType().GetMethod(methodName).Invoke(obj, null);
+            return (T)obj.GetType().GetMethod(methodName)?.Invoke(obj, null);
         }
 
         public static T CallMethod<T, P>(this object obj, string methodName, P param)
@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
 
         public static T CallMethod<T>(this object obj, string methodName, object[] Params)
         {
-            return (T)obj.GetType().GetMethod(methodName).Invoke(obj, Params);
+            return (T)obj.GetType().GetMethod(methodName)?.Invoke(obj, Params);
         }
     }
 }
