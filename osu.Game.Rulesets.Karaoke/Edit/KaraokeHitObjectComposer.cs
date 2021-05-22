@@ -36,6 +36,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
     {
+        private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
+
         private DrawableKaraokeEditorRuleset drawableRuleset;
 
         [Cached(Type = typeof(IPositionCalculator))]
@@ -97,7 +99,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 RelativeSizeAxes = Axes.Both
             });
 
-            var bindableEditMode = new Bindable<EditMode>();
             bindableEditMode.BindValueChanged(e =>
             {
                 if (e.NewValue == EditMode.LyricEditor)
@@ -112,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     InternalChildren[1].Show();
                     InternalChildren[2].Hide();
                 }
-            });
+            }, true);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
         }
 
