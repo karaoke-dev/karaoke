@@ -12,7 +12,6 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects;
-using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
 using osu.Game.Screens.Edit.Compose.Components;
 
@@ -101,11 +100,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
                 {
                 }
 
-                public override OverlaySelectionBlueprint CreateBlueprintFor(DrawableHitObject hitObject)
+                public override HitObjectSelectionBlueprint CreateHitObjectBlueprintFor(HitObject hitObject)
                 {
                     switch (hitObject)
                     {
-                        case DrawableNote note:
+                        case Note note:
                             return new NoteSelectionBlueprint(note);
 
                         default:

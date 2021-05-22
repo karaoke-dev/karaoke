@@ -2,14 +2,13 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics
 {
     public class LyricSelectionBlueprint : KaraokeSelectionBlueprint<Lyric>
     {
-        public LyricSelectionBlueprint(DrawableLyric hitObject)
-            : base(hitObject)
+        public LyricSelectionBlueprint(Lyric lyric)
+            : base(lyric)
         {
         }
     }

@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
             Position = Parent.ToLocalSpace(DrawableObject.ToScreenSpace(Vector2.Zero));
         }
 
-        public NoteSelectionBlueprint(DrawableNote note)
+        public NoteSelectionBlueprint(Note note)
             : base(note)
         {
             AddInternal(new EditBodyPiece

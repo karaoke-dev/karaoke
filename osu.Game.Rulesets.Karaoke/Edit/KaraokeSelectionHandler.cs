@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
             return new OsuMenuItem("Layout")
             {
-                Items = layoutDictionary.Select(x => new TernaryStateMenuItem(x.Value, selectedLayoutIndex == x.Key ? MenuItemType.Highlighted : MenuItemType.Standard, state =>
+                Items = layoutDictionary.Select(x => new TernaryStateToggleMenuItem(x.Value, selectedLayoutIndex == x.Key ? MenuItemType.Highlighted : MenuItemType.Standard, state =>
                 {
                     if (state != TernaryState.True)
                         return;

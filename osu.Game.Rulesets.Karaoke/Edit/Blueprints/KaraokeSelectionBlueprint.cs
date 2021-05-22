@@ -4,17 +4,14 @@
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints
 {
-    public class KaraokeSelectionBlueprint<T> : OverlaySelectionBlueprint
+    public class KaraokeSelectionBlueprint<T> : HitObjectSelectionBlueprint<T>
         where T : KaraokeHitObject
     {
-        protected new T HitObject => (T)DrawableObject.HitObject;
-
-        public KaraokeSelectionBlueprint(DrawableHitObject drawableObject)
-            : base(drawableObject)
+        protected KaraokeSelectionBlueprint(T hitObject)
+            : base(hitObject)
         {
             RelativeSizeAxes = Axes.None;
         }
