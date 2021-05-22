@@ -118,6 +118,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return null;
         }
 
+        public override EditTextTagCaretPosition MoveToTarget(Lyric lyric)
+        {
+            // lazy to implement this algorithm because this algorithm haven't being used.
+            return null;
+        }
+
         private Lyric tagInLyric(ITextTag textTag)
         {
             return Lyrics.FirstOrDefault(x => getRelatedTypeTextTag(x, textTag)?.Contains(textTag) ?? false);

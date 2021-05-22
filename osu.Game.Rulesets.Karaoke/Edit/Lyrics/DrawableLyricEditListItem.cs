@@ -19,7 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class DrawableLyricEditListItem : OsuRearrangeableListItem<Lyric>
     {
-        private Box dragAlert;
+        private Box draggingBackground;
+        private Box selectedBackground;
         private FillFlowContainer content;
 
         private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
@@ -45,8 +46,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (e.NewValue.Lyric != Model)
                 {
                     removeOverlay();
+                    selectedBackground.Hide();
                     return;
                 }
+
+                // show selected background.
+                selectedBackground.Show();
 
                 // show not create again if contains same overlay.
                 var existOverlay = getOverlay();
@@ -106,7 +111,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 RelativeSizeAxes = Axes.X,
                 Children = new Drawable[]
                 {
-                    dragAlert = new Box
+                    draggingBackground = new Box
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Alpha = 0
+                    },
+                    selectedBackground = new Box
                     {
                         RelativeSizeAxes = Axes.Both,
                         Alpha = 0
@@ -130,7 +140,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, ILyricEditorState state)
         {
-            dragAlert.Colour = colours.YellowDarker;
+            draggingBackground.Colour = colours.YellowDarker;
+            selectedBackground.Colour = colours.PinkDark;
+
             bindableMode.BindTo(state.BindableMode);
             bindableCaretPosition.BindTo(state.BindableCaretPosition);
         }
@@ -140,13 +152,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (!base.OnDragStart(e))
                 return false;
 
-            dragAlert.Show();
+            draggingBackground.Show();
             return true;
         }
 
         protected override void OnDragEnd(DragEndEvent e)
         {
-            dragAlert.Hide();
+            draggingBackground.Hide();
             base.OnDragEnd(e);
         }
     }

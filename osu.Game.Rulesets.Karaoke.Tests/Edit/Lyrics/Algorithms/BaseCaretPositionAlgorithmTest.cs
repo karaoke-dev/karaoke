@@ -63,6 +63,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
             AssertEqual(algorithm.MoveToLast(), actual);
         }
 
+        protected void TestMoveToTarget(Lyric[] lyrics, Lyric lyric, C actual, Action<T> invokeAlgorithm = null)
+        {
+            var algorithm = (T)Activator.CreateInstance(typeof(T), new object[] { lyrics });
+            invokeAlgorithm?.Invoke(algorithm);
+            AssertEqual(algorithm.MoveToTarget(lyric), actual);
+        }
+
         protected abstract void AssertEqual(C compare, C actual);
 
         protected Lyric[] GetLyricsByMethodName(string methodName)

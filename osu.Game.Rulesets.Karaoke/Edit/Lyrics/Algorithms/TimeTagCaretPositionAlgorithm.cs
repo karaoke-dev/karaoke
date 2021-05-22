@@ -80,6 +80,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
             return timeTagToPosition(lastTag);
         }
 
+        public override TimeTagCaretPosition MoveToTarget(Lyric lyric)
+        {
+            var timeTags = lyric.TimeTags ?? new TimeTag[] { };
+            if (timeTags.Any())
+                return new TimeTagCaretPosition(lyric, timeTags.FirstOrDefault());
+
+            return new TimeTagCaretPosition(lyric, null);
+        }
+
         private TimeTagCaretPosition timeTagToPosition(TimeTag timeTag)
         {
             if (timeTag == null)

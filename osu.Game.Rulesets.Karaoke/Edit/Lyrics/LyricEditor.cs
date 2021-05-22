@@ -272,8 +272,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (BindableMode.Value == value)
                     return;
 
-                ResetPosition(value);
                 BindableMode.Value = value;
+                ResetPosition(value);
 
                 switch (Mode)
                 {

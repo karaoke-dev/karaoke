@@ -30,5 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
         public abstract T MoveToFirst();
 
         public abstract T MoveToLast();
+
+        public abstract T MoveToTarget(Lyric lyric);
     }
 }
