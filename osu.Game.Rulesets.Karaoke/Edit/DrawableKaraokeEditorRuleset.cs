@@ -17,7 +17,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
     {
-        private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
         private readonly Bindable<bool> bindableDisplayRubyToggle = new Bindable<bool>();
         private readonly Bindable<bool> bindableDisplayRomajiToggle = new Bindable<bool>();
         private readonly Bindable<bool> bindableDisplayTranslateToggle = new Bindable<bool>();
@@ -29,13 +28,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         public DrawableKaraokeEditorRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)
         {
-            bindableEditMode.BindValueChanged(e =>
-            {
-                if (e.NewValue == EditMode.LyricEditor)
-                    Playfield.Hide();
-                else
-                    Playfield.Show();
-            }, true);
             bindableDisplayRubyToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.DisplayRuby, x.NewValue); });
             bindableDisplayRomajiToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.DisplayRomaji, x.NewValue); });
             bindableDisplayTranslateToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.UseTranslate, x.NewValue); });
@@ -52,7 +44,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetEditConfigManager editConfigManager)
         {
-            editConfigManager.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayRuby, bindableDisplayRubyToggle);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayRomaji, bindableDisplayRomajiToggle);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayTranslate, bindableDisplayTranslateToggle);
