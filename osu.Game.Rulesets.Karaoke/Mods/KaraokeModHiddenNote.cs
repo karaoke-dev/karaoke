@@ -36,6 +36,29 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             base.ApplyToDrawableHitObjects(drawables);
         }
 
+        protected override void ApplyIncreasedVisibilityState(DrawableHitObject hitObject, ArmedState state)
+        {
+            // todo : not really sure what this do so just copy the code in below.
+            if (!(hitObject is DrawableNote note))
+                return;
+
+            var h = note.HitObject;
+
+            var fadeOutStartTime = h.StartTime - h.TimePreempt + h.TimeFadeIn;
+            var fadeOutDuration = h.TimePreempt * fade_out_duration_multiplier;
+
+            // new duration from completed fade in to end (before fading out)
+            var longFadeDuration = h.EndTime - fadeOutStartTime;
+
+            // Apply duration
+            using (note.BeginAbsoluteSequence(fadeOutStartTime, true))
+                note.FadeOut(fadeOutDuration, Easing.Out);
+
+            // Show after exceed hit point
+            using (note.BeginAbsoluteSequence(fadeOutStartTime + longFadeDuration, true))
+                note.FadeIn(fadeOutDuration, Easing.Out);
+        }
+
         protected override void ApplyNormalVisibilityState(DrawableHitObject hitObject, ArmedState state)
         {
             if (!(hitObject is DrawableNote note))
