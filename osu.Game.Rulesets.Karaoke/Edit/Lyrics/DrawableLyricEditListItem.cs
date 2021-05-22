@@ -41,7 +41,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             bindableCaretPosition.BindValueChanged(e =>
             {
                 if (e.NewValue == null)
+                {
+                    selectedBackground.Hide();
                     return;
+                }
 
                 if (e.NewValue.Lyric != Model)
                 {

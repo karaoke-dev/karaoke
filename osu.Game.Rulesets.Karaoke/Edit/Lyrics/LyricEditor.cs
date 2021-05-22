@@ -167,6 +167,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case Mode.TimeTagEditMode:
                     return HandleCreateOrDeleterTimeTagEvent(action);
 
+                case Mode.Layout:
+                case Mode.Singer:
+                case Mode.Language:
+                    return false;
+
                 default:
                     throw new IndexOutOfRangeException(nameof(Mode));
             }
@@ -272,26 +277,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 BindableMode.Value = value;
                 ResetPosition(value);
-
-                switch (Mode)
-                {
-                    case Mode.ViewMode:
-                    case Mode.EditMode:
-                    case Mode.TypingMode:
-                    case Mode.RubyRomajiMode:
-                    case Mode.EditNoteMode:
-                        return;
-
-                    case Mode.RecordMode:
-                        MoveCaret(MovingCaretAction.First);
-                        return;
-
-                    case Mode.TimeTagEditMode:
-                        return;
-
-                    default:
-                        throw new IndexOutOfRangeException(nameof(Mode));
-                }
             }
         }
 
