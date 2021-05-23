@@ -70,5 +70,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
             Assert.AreEqual(TextTagUtils.PositionFormattedString(rubyTag), actual);
         }
+
+        [TestCase("[0,1]:ka", "カラオケ", "カ")]
+        [TestCase("[0,4]:karaoke", "カラオケ", "カラオケ")]
+        [TestCase("[-1,0]:", "カラオケ", "")]
+        [TestCase("[4,5]:", "カラオケ", "")]
+        [TestCase("[4,0]:karaoke", "カラオケ", "カラオケ")] // should not have those state but still give it a value.
+        [TestCase("[0,4]:karaoke", "", "")]
+        [TestCase("[0,4]:karaoke", null, null)]
+        public void TestGetTextFromLyric(string textTag, string lyric, string actual)
+        {
+            var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
+            Assert.AreEqual(TextTagUtils.GetTextFromLyric(rubyTag, lyric), actual);
+        }
     }
 }
