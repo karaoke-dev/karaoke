@@ -2,11 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types
 {
     public interface ISinger : IHasOrder
     {
         int ID { get; }
+
+        Color4? Color { get; set; }
     }
 }

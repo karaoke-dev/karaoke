@@ -4,7 +4,7 @@
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Textures;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
             BorderThickness = 5;
         }
 
-        public override Singer Singer
+        public override ISinger Singer
         {
             get => base.Singer;
             set

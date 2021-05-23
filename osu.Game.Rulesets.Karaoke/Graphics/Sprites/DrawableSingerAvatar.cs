@@ -7,7 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
@@ -32,9 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
             });
         }
 
-        private Singer singer;
+        private ISinger singer;
 
-        public virtual Singer Singer
+        public virtual ISinger Singer
         {
             get => singer;
             set
