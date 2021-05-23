@@ -7,9 +7,12 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -46,17 +49,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableList<ITextTag> SelectedTextTags { get; } = new BindableList<ITextTag>();
 
+        private readonly GridContainer gridContainer;
+        private readonly Container leftSideExtendArea;
+        private readonly Container rightSideExtendArea;
         private readonly KaraokeLyricEditorSkin skin;
         private readonly DrawableLyricEditList container;
 
         public LyricEditor()
         {
-            Child = new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin())
+            Child = gridContainer = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = container = new DrawableLyricEditList
+                Content = new[]
                 {
-                    RelativeSizeAxes = Axes.Both,
+                    new Drawable[]
+                    {
+                        leftSideExtendArea = new Container
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                        },
+                        new Box(),
+                        new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin())
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Child = container = new DrawableLyricEditList
+                            {
+                                RelativeSizeAxes = Axes.Both,
+                            }
+                        },
+                        new Box(),
+                        rightSideExtendArea = new Container
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                        },
+                    }
                 }
             };
 
@@ -70,7 +96,59 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 // display add new lyric only with edit mode.
                 container.DisplayBottomDrawable = e.NewValue == Mode.EditMode;
+
+                // should control grid container spacing and place some component.
+                initializeExtendArea();
             }, true);
+        }
+
+        private void initializeExtendArea()
+        {
+            leftSideExtendArea.Clear();
+            rightSideExtendArea.Clear();
+
+            var extendArea = getExtendArea();
+            var direction = extendArea?.Direction;
+            var width = extendArea?.ExtendWidth ?? 0;
+            const int spacing = 10;
+
+            gridContainer.ColumnDimensions = new[]
+            {
+                new Dimension(GridSizeMode.Absolute, direction == ExtendDirection.Left ? width : 0),
+                new Dimension(GridSizeMode.Absolute, direction == ExtendDirection.Left ? spacing : 0),
+                new Dimension(),
+                new Dimension(GridSizeMode.Absolute, direction == ExtendDirection.Right ? spacing : 0),
+                new Dimension(GridSizeMode.Absolute, direction == ExtendDirection.Right ? width : 0),
+            };
+
+            if (extendArea == null)
+                return;
+
+            switch (extendArea.Direction)
+            {
+                case ExtendDirection.Left:
+                    leftSideExtendArea.Add(extendArea);
+                    break;
+
+                case ExtendDirection.Right:
+                    rightSideExtendArea.Add(extendArea);
+                    break;
+
+                default:
+                    throw new IndexOutOfRangeException(nameof(extendArea.Direction));
+            }
+
+            EditExtend getExtendArea()
+            {
+                switch (Mode)
+                {
+                    case Mode.RubyRomajiMode:
+                        return new TextTagExtend();
+
+                    default:
+                        return null;
+                }
+            }
         }
 
         [BackgroundDependencyLoader]

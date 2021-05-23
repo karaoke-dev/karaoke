@@ -53,5 +53,16 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var text = string.IsNullOrWhiteSpace(fixedTag.Text) ? "empty" : fixedTag.Text;
             return $"{text}({fixedTag.StartIndex} ~ {fixedTag.EndIndex})";
         }
+
+        public static string GetTextFromLyric<T>(T textTag, string lyric) where T : ITextTag
+        {
+            if (textTag == null || lyric == null)
+                return null;
+
+            var fixedTextTag = FixTimeTagPosition(textTag);
+            var startIndex = Math.Max(0, fixedTextTag.StartIndex);
+            var endIndex = Math.Min(lyric.Length, fixedTextTag.EndIndex);
+            return lyric.Substring(startIndex, endIndex - startIndex);
+        }
     }
 }
