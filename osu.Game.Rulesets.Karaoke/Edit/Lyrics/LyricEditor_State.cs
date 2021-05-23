@@ -24,6 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 { Mode.EditMode, new CuttingCaretPositionAlgorithm(lyrics) },
                 { Mode.TypingMode, new TypingCaretPositionAlgorithm(lyrics) },
+                { Mode.RubyRomajiMode, new NavigateCaretPositionAlgorithm(lyrics) },
                 { Mode.EditNoteMode, new NavigateCaretPositionAlgorithm(lyrics) },
                 { Mode.RecordMode, new TimeTagCaretPositionAlgorithm(lyrics) { Mode = RecordingMovingCaretMode } },
                 { Mode.TimeTagEditMode, new TimeTagIndexCaretPositionAlgorithm(lyrics) },
