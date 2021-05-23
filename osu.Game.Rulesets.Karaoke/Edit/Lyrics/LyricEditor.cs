@@ -13,6 +13,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -144,6 +145,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 {
                     case Mode.RubyRomajiMode:
                         return new TextTagExtend();
+
+                    case Mode.Singer:
+                        return new SingerExtend();
 
                     default:
                         return null;

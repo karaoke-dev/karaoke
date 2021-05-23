@@ -5,15 +5,15 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
 {
-    public class TextTagExtend : EditExtend
+    public class SingerExtend : EditExtend
     {
-        public override ExtendDirection Direction => ExtendDirection.Right;
+        public override ExtendDirection Direction => ExtendDirection.Left;
 
         public override float ExtendWidth => 300;
 
-        public TextTagExtend()
+        public SingerExtend()
         {
             InternalChild = new OsuScrollContainer
             {
@@ -24,8 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     AutoSizeAxes = Axes.Y,
                     Children = new Drawable[]
                     {
-                        new RubyTagEditSection(),
-                        new RomajiTagEditSection(),
+                        new SingerEditSection(),
                     }
                 }
             };
