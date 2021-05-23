@@ -15,7 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         {
             state.BindableCaretPosition.BindValueChanged(x =>
             {
-                var romajiTags = x.NewValue.Lyric?.RomajiTags;
+                Lyric = x.NewValue.Lyric;
+                var romajiTags = Lyric?.RomajiTags;
                 TextTags.Clear();
                 if (romajiTags != null)
                     TextTags.AddRange(romajiTags);

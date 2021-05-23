@@ -9,7 +9,9 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
@@ -17,13 +19,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
     {
         protected readonly BindableList<T> TextTags = new BindableList<T>();
 
+        protected Lyric Lyric { get; set; }
+
         protected TextTagEditSection()
         {
             // create list of text-tag text-box if bindable changed.
             TextTags.BindCollectionChanged((a, b) =>
             {
                 Content.RemoveAll(x => x is LabelledTextTagTextBox);
-                Content.AddRange(TextTags.Select(x => new LabelledTextTagTextBox(x)));
+                Content.AddRange(TextTags.Select(x =>
+                {
+                    var relativeToLyricText = TextTagUtils.GetTextFromLyric(x, Lyric?.Text);
+                    var range = TextTagUtils.PositionFormattedString(x);
+                    return new LabelledTextTagTextBox(x)
+                    {
+                        Label = relativeToLyricText,
+                        Description = range,
+                    };
+                }));
             });
 
             // add create button.
