@@ -2,8 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
-using osu.Game.Graphics.Containers;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
@@ -15,19 +13,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
         public TextTagExtend()
         {
-            InternalChild = new OsuScrollContainer
+            Children = new Drawable[]
             {
-                RelativeSizeAxes = Axes.Both,
-                Child = new FillFlowContainer
-                {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Children = new Drawable[]
-                    {
-                        new RubyTagEditSection(),
-                        new RomajiTagEditSection(),
-                    }
-                }
+                new RubyTagEditSection(),
+                new RomajiTagEditSection(),
             };
         }
     }

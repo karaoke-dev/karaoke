@@ -1,10 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
-using osu.Game.Graphics.Containers;
-
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
 {
     public class SingerExtend : EditExtend
@@ -15,18 +11,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
 
         public SingerExtend()
         {
-            InternalChild = new OsuScrollContainer
+            Children = new[]
             {
-                RelativeSizeAxes = Axes.Both,
-                Child = new FillFlowContainer
-                {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Children = new Drawable[]
-                    {
-                        new SingerEditSection(),
-                    }
-                }
+                new SingerEditSection(),
             };
         }
     }
