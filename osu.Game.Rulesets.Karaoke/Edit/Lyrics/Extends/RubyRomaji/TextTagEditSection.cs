@@ -1,11 +1,14 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Input.Events;
+using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
@@ -62,13 +65,69 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         public class LabelledTextTagTextBox : LabelledTextBox
         {
             [Resolved]
-            private ILyricEditorState state { get; set; }
+            private OsuColour colours { get; set; }
+
+            private readonly BindableList<ITextTag> selectedTextTag = new BindableList<ITextTag>();
+
+            private readonly ITextTag textTag;
 
             public LabelledTextTagTextBox(ITextTag textTag)
             {
-                // should set ruby / romaji as hover if text-box is selected.
+                this.textTag = textTag;
+
+                // apply current text from text-tag.
+                Component.Text = textTag.Text;
 
                 // should change preview text box if selected ruby/romaji changed.
+                OnCommit += (sender, newText) =>
+                {
+                    textTag.Text = sender.Text;
+                };
+
+                // change style if focus.
+                selectedTextTag.BindCollectionChanged((e, a) =>
+                {
+                    var highLight = selectedTextTag.Contains(textTag);
+
+                    Component.BorderColour = highLight ? colours.Yellow : colours.Blue;
+                    Component.BorderThickness = highLight ? 3 : 0;
+                });
+            }
+
+            protected override OsuTextBox CreateTextBox() => new TextTagTextBox
+            {
+                CommitOnFocusLost = true,
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                RelativeSizeAxes = Axes.X,
+                CornerRadius = CORNER_RADIUS,
+                Selected = () =>
+                {
+                    // not trigger again if already focus.
+                    if (selectedTextTag.Contains(textTag) && selectedTextTag.Count == 1)
+                        return;
+
+                    // trigger selected.
+                    selectedTextTag.Clear();
+                    selectedTextTag.Add(textTag);
+                }
+            };
+
+            [BackgroundDependencyLoader]
+            private void load(ILyricEditorState state)
+            {
+                state.SelectedTextTags.BindTo(selectedTextTag);
+            }
+
+            internal class TextTagTextBox : OsuTextBox
+            {
+                public Action Selected;
+
+                protected override void OnFocus(FocusEvent e)
+                {
+                    Selected?.Invoke();
+                    base.OnFocus(e);
+                }
             }
         }
 
