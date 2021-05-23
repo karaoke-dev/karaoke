@@ -13,9 +13,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         [BackgroundDependencyLoader]
         private void load(ILyricEditorState state)
         {
-            state.BindableCaretPosition.BindValueChanged(x =>
+            state.BindableCaretPosition.BindValueChanged(e =>
             {
-                Lyric = x.NewValue.Lyric;
+                Lyric = e.NewValue.Lyric;
                 var rubyTags = Lyric?.RubyTags;
                 TextTags.Clear();
                 if (rubyTags != null)

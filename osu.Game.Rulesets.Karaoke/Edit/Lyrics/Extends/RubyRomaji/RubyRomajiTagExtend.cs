@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
         public TextTagExtend()
         {
-            InternalChild = new OsuScrollContainer()
+            InternalChild = new OsuScrollContainer
             {
                 RelativeSizeAxes = Axes.Both,
                 Child = new FillFlowContainer
