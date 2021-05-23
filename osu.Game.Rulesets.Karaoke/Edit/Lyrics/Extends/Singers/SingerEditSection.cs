@@ -4,11 +4,15 @@
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Screens.Edit;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
 {
@@ -62,11 +66,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
 
         public class LabelledSingerSwitchButton : LabelledSwitchButton
         {
+            protected const float AVATAR_CORNER_RADIUS = 40f;
+
             public ISinger Singer { get; }
 
             public LabelledSingerSwitchButton(ISinger singer)
             {
                 Singer = singer;
+
+                if (InternalChildren[1] is FillFlowContainer fillflowContainer)
+                {
+                    fillflowContainer.Padding
+                        = new MarginPadding
+                        {
+                            Horizontal = CONTENT_PADDING_HORIZONTAL,
+                            Vertical = CONTENT_PADDING_VERTICAL,
+                            Left = CONTENT_PADDING_HORIZONTAL + 40 + CONTENT_PADDING_HORIZONTAL,
+                        };
+                }
+
+                AddInternal(new DrawableCircleSingerAvatar
+                {
+                    Singer = singer,
+                    Size = new Vector2(AVATAR_CORNER_RADIUS),
+                    Anchor = Anchor.CentreLeft,
+                    Origin = Anchor.CentreLeft,
+                    Margin = new MarginPadding
+                    {
+                        Left = CONTENT_PADDING_HORIZONTAL,
+                    }
+                });
             }
         }
     }
