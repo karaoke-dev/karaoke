@@ -12,6 +12,7 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -148,6 +149,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                     case Mode.Singer:
                         return new SingerExtend();
+
+                    case Mode.Layout:
+                        return new LayoutExtend();
 
                     default:
                         return null;
