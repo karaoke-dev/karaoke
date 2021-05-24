@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
         {
             Lyric = lyric;
             rubyTags = lyric.RubyTagsBindable.GetBoundCopy();
-            romajiTags = lyric.RomajiTagsBindable.GetUnboundCopy();
+            romajiTags = lyric.RomajiTagsBindable.GetBoundCopy();
         }
 
         [BackgroundDependencyLoader]
