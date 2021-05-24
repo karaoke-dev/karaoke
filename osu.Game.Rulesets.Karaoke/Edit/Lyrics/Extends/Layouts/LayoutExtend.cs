@@ -1,19 +1,19 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
 {
-    public class SingerExtend : EditExtend
+    public class LayoutExtend : EditExtend
     {
         public override ExtendDirection Direction => ExtendDirection.Left;
 
-        public override float ExtendWidth => 300;
+        public override float ExtendWidth => 240;
 
-        public SingerExtend()
+        public LayoutExtend()
         {
             Children = new[]
             {
-                new SingerEditSection(),
+                new LayoutSelection(),
             };
         }
     }
