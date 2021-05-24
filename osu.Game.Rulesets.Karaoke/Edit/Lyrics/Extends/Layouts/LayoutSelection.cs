@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -22,7 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
     public class LayoutSelection : Section
     {
         private const float layout_settion_horizontal_padding = 20;
-        private const float selection_size = (240 - layout_settion_horizontal_padding * 2 - SECTION_SPACING) / 2;
+
+        private const float layout_setting_vertical_spacing = 15;
 
         protected override string Title => "Layout";
 
@@ -39,6 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
 
             // use lazy way to initialize fill flow container in section.
             fillFlowContainer.Direction = FillDirection.Full;
+            fillFlowContainer.Spacing = new Vector2(SECTION_SPACING, layout_setting_vertical_spacing);
         }
 
         [BackgroundDependencyLoader]
@@ -51,10 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
             foreach (var layoutIndex in layoutDictionary)
             {
                 var layout = skinSource?.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, layoutIndex.Key)).Value;
-                Content.Add(new LayoutSelectionItem(layout)
-                {
-                    Size = new Vector2(selection_size)
-                });
+                Content.Add(new LayoutSelectionItem(layout));
             }
 
             state.BindableCaretPosition.BindValueChanged(e =>
@@ -69,11 +69,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
             }, true);
         }
 
-        public class LayoutSelectionItem : CompositeDrawable
+        public class LayoutSelectionItem : FillFlowContainer
         {
+            private const float selection_size = (240 - layout_settion_horizontal_padding * 2 - SECTION_SPACING) / 2;
+
             private readonly Bindable<int> selectedLayoutIndex = new Bindable<int>();
 
             private readonly DrawableLayoutPreview drawableLayoutPreview;
+
+            private readonly Container cornerContainer;
 
             private readonly LyricLayout layout;
 
@@ -81,29 +85,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
             {
                 this.layout = layout;
 
-                Masking = true;
-                CornerRadius = 5f;
+                AutoSizeAxes = Axes.Both;
+                Spacing = new Vector2(5);
+                Direction = FillDirection.Vertical;
 
                 InternalChildren = new Drawable[]
                 {
-                    drawableLayoutPreview = new DrawableLayoutPreview
+                    cornerContainer = new Container
                     {
-                        RelativeSizeAxes = Axes.Both,
-                        Layout = layout,
+                        AutoSizeAxes = Axes.Both,
+                        Masking = true,
+                        CornerRadius = 5f,
+                        Child = drawableLayoutPreview = new DrawableLayoutPreview
+                        {
+                            Size = new Vector2(selection_size),
+                            Layout = layout,
+                        }
+                    },
+                    new OsuSpriteText
+                    {
+                        Text = layout.Name
                     }
                 };
 
                 selectedLayoutIndex.BindValueChanged(e =>
                 {
                     var selected = layout.ID == e.NewValue;
-                    BorderThickness = selected ? 3 : 0;
+                    cornerContainer.BorderThickness = selected ? 3 : 0;
                 }, true);
             }
 
             [BackgroundDependencyLoader]
             private void load(OsuColour colour)
             {
-                BorderColour = colour.Yellow;
+                cornerContainer.BorderColour = colour.Yellow;
             }
 
             public Lyric Lyric
