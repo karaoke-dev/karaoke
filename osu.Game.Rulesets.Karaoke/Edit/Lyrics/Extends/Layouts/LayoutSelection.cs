@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
@@ -18,20 +19,26 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
 {
-    public class LayoutSelection : FillFlowContainer
+    public class LayoutSelection : Section
     {
-        private const float padding = 20;
-        private const float spacing = 10;
+        private const float layout_settion_horizontal_padding = 20;
+        private const float selection_size = (240 - layout_settion_horizontal_padding * 2 - SECTION_SPACING) / 2;
 
-        private const float selection_size = (240 - padding * 2 - spacing) / 2;
+        protected override string Title => "Layout";
 
         public LayoutSelection()
         {
-            RelativeSizeAxes = Axes.X;
-            AutoSizeAxes = Axes.Y;
-            Spacing = new Vector2(spacing);
-            Direction = FillDirection.Full;
-            Padding = new MarginPadding(padding);
+            Padding = new MarginPadding
+            {
+                Horizontal = layout_settion_horizontal_padding,
+                Vertical = SECTION_PADDING,
+            };
+
+            if (!(Content is FillFlowContainer fillFlowContainer))
+                return;
+
+            // use lazy way to initialize fill flow container in section.
+            fillFlowContainer.Direction = FillDirection.Full;
         }
 
         [BackgroundDependencyLoader]
@@ -44,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
             foreach (var layoutIndex in layoutDictionary)
             {
                 var layout = skinSource?.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, layoutIndex.Key)).Value;
-                AddInternal(new LayoutSelectionItem(layout)
+                Content.Add(new LayoutSelectionItem(layout)
                 {
                     Size = new Vector2(selection_size)
                 });
@@ -53,13 +60,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
             state.BindableCaretPosition.BindValueChanged(e =>
             {
                 var lyric = e.NewValue?.Lyric;
-                var layoutSelectionItems = InternalChildren.OfType<LayoutSelectionItem>();
+                var layoutSelectionItems = Content.Children.OfType<LayoutSelectionItem>();
 
                 foreach (var item in layoutSelectionItems)
                 {
                     item.Lyric = lyric;
                 }
-            });
+            }, true);
         }
 
         public class LayoutSelectionItem : CompositeDrawable
@@ -108,13 +115,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
                         return;
 
                     // unbind previous event
-                    Lyric?.LayoutIndexBindable.UnbindFrom(selectedLayoutIndex);
+                    if (Lyric != null)
+                    {
+                        selectedLayoutIndex.UnbindFrom(Lyric.LayoutIndexBindable);
+                    }
 
                     // update lyric
                     drawableLayoutPreview.Lyric = value;
 
                     // bind layout index.
-                    Lyric?.LayoutIndexBindable.BindTo(selectedLayoutIndex);
+                    if (Lyric != null)
+                    {
+                        selectedLayoutIndex.BindTo(Lyric.LayoutIndexBindable);
+                    }
                 }
             }
 
