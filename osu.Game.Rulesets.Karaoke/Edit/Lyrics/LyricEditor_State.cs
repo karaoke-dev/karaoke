@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions;
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -93,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (!CaretMovable(position))
                 return false;
 
-            BindableHoverCaretPosition.Value = generatePosition(Mode);
+            BindableHoverCaretPosition.Value = null;
             BindableCaretPosition.Value = position;
             return true;
         }
@@ -112,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void ClearHoverCaretPosition()
         {
-            BindableHoverCaretPosition.Value = generatePosition(Mode);
+            BindableHoverCaretPosition.Value = null;
         }
 
         public void ResetPosition(Mode mode)
@@ -135,8 +134,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
             else
             {
-                BindableCaretPosition.Value = generatePosition(mode);
-                BindableHoverCaretPosition.Value = generatePosition(mode);
+                BindableCaretPosition.Value = null;
+                BindableHoverCaretPosition.Value = null;
             }
         }
 
@@ -144,39 +143,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             var algorithm = GetCaretPositionAlgorithm();
             return algorithm.CallMethod<bool, ICaretPosition>("PositionMovable", position);
-        }
-
-        private ICaretPosition generatePosition(Mode mode)
-        {
-            switch (mode)
-            {
-                case Mode.ViewMode:
-                    return null;
-
-                case Mode.EditMode:
-                case Mode.TypingMode:
-                    return new TextCaretPosition(null, 0);
-
-                case Mode.RubyRomajiMode:
-                    return null;
-
-                case Mode.EditNoteMode:
-                    return new NavigateCaretPosition(null);
-
-                case Mode.RecordMode:
-                    return new TimeTagCaretPosition(null, null);
-
-                case Mode.TimeTagEditMode:
-                    return new TimeTagIndexCaretPosition(null, new TextIndex(0));
-
-                case Mode.Layout:
-                case Mode.Singer:
-                case Mode.Language:
-                    return new NavigateCaretPosition(null);
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(Mode));
-            }
         }
 
         public void ClearSelectedTimeTags()

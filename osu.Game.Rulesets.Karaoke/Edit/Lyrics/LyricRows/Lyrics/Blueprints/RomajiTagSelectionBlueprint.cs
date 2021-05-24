@@ -21,9 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints
         [UsedImplicitly]
         private readonly BindableNumber<int> endIndex;
 
-        [Resolved]
-        private EditorLyricPiece editorLyricPiece { get; set; }
-
         public RomajiTagSelectionBlueprint(ITextTag item)
             : base(item)
         {
