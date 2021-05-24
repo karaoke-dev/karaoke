@@ -44,24 +44,32 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var newLyric = lyric.Text.Substring(0, position) + lyric.Text[(position + count)..];
             lyric.Text = newLyric;
 
-            static T[] processTags<T>(T[] tags, int position, int count) where T : ITextTag
+            static T[] processTags<T>(T[] tags, int position, int count) where T : class, ITextTag
             {
-                var endPosition = position + count;
-                return tags?.SkipWhile(x => x.StartIndex >= position && x.EndIndex <= endPosition)
-                           .Select(x =>
-                           {
-                               if (x.StartIndex < position)
-                                   x.EndIndex = Math.Min(x.EndIndex, position);
+                if (tags == null)
+                    return null;
 
-                               if (x.EndIndex > position)
-                               {
-                                   x.StartIndex = Math.Max(x.StartIndex, endPosition) - count;
-                                   x.EndIndex -= count;
-                               }
+                // shifting index.
+                foreach (var tag in tags)
+                {
+                    if (tag.StartIndex > position + count)
+                    {
+                        tag.StartIndex -= count;
+                        tag.EndIndex -= count;
+                    }
+                    else if (tag.StartIndex > position)
+                    {
+                        tag.StartIndex = position;
+                        tag.EndIndex -= count;
+                    }
+                    else if (tag.EndIndex > position)
+                    {
+                        tag.EndIndex = Math.Max(position, tag.EndIndex - count);
+                    }
+                }
 
-                               return x;
-                           })
-                           .ToArray();
+                // if end index less or equal than start index, means this tag has been deleted.
+                return tags.Where(x => x.StartIndex < x.EndIndex).ToArray();
             }
 
             static TimeTag[] processTimeTags(TimeTag[] timeTags, int position, int count)
