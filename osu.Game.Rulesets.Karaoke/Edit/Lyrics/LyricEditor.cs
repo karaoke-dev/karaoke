@@ -362,7 +362,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return;
 
                 BindableMode.Value = value;
-                ResetPosition(value);
+
+                // should wait until beatmap has been loaded.
+                Schedule(() => ResetPosition(value));
             }
         }
 
@@ -375,9 +377,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return;
 
                 BindableRecordingMovingCaretMode.Value = value;
-                createAlgorithmList();
 
-                // todo : might move caret to valid position.
+                // should wait until beatmap has been loaded.
+                Schedule(createAlgorithmList);
             }
         }
 
