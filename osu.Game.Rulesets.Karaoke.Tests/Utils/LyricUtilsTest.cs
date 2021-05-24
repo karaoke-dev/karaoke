@@ -37,7 +37,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         }
 
         [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 0, 2, new[] { "[0,1]:お", "[1,2]:け" })]
+        [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 1, 1, new[] { "[0,1]:か", "[1,2]:お", "[2,3]:け" })]
         [TestCase(new[] { "[0,2]:から", "[2,4]:おけ" }, 1, 2, new[] { "[0,1]:から", "[1,2]:おけ" })]
+        [TestCase(new[] { "[0,4]:からおけ" }, 0, 1, new[] { "[0,3]:からおけ" })]
+        [TestCase(new[] { "[0,4]:からおけ" }, 1, 2, new[] { "[0,2]:からおけ" })]
         public void TestRemoveTextRuby(string[] rubies, int position, int count, string[] targetRubies)
         {
             var lyric = new Lyric
