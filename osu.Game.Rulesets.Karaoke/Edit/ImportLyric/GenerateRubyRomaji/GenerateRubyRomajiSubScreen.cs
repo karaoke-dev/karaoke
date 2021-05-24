@@ -5,11 +5,12 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.RubyRomaji;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 {
-    public class GenerateRubyRomajiSubScreen : ImportLyricSubScreenWithTopNavigation
+    public class GenerateRubyRomajiSubScreen : ImportLyricSubScreenWithLyricEditor
     {
         public override string Title => "Generate ruby";
 
@@ -31,10 +32,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
             => new GenerateRubyNavigation(this);
 
         protected override Drawable CreateContent()
-            => new RubyRomajiEditor
+            => base.CreateContent().With(x =>
             {
-                RelativeSizeAxes = Axes.Both,
-            };
+                LyricEditor.Mode = Mode.RubyRomajiMode;
+            });
 
         protected override void LoadComplete()
         {
