@@ -158,7 +158,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return new TextCaretPosition(null, 0);
 
                 case Mode.RubyRomajiMode:
-                    return null;
+                    return new NavigateCaretPosition(null);
 
                 case Mode.EditNoteMode:
                     return new NavigateCaretPosition(null);
