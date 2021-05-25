@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
@@ -15,6 +16,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
@@ -38,6 +40,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     {
                         Label = relativeToLyricText,
                         Description = range,
+                        OnDeleteButtonClick = () =>
+                        {
+                            LyricUtils.RemoveTextTag(Lyric, x);
+                        }
                     };
                 }));
             });
@@ -64,12 +70,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
         public class LabelledTextTagTextBox : LabelledTextBox
         {
+            protected const float DELETE_BUTTON_SIZE = 20f;
+
             [Resolved]
             private OsuColour colours { get; set; }
 
             private readonly BindableList<ITextTag> selectedTextTag = new BindableList<ITextTag>();
 
             private readonly ITextTag textTag;
+
+            public Action OnDeleteButtonClick;
 
             public LabelledTextTagTextBox(ITextTag textTag)
             {
@@ -92,6 +102,47 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     Component.BorderColour = highLight ? colours.Yellow : colours.Blue;
                     Component.BorderThickness = highLight ? 3 : 0;
                 });
+
+                if (InternalChildren[1] is FillFlowContainer fillFlowContainer)
+                {
+                    // change padding to place delete button.
+                    fillFlowContainer.Padding = new MarginPadding
+                    {
+                        Horizontal = CONTENT_PADDING_HORIZONTAL,
+                        Vertical = CONTENT_PADDING_VERTICAL,
+                        Right = CONTENT_PADDING_HORIZONTAL + DELETE_BUTTON_SIZE + CONTENT_PADDING_HORIZONTAL,
+                    };
+
+                    // add delete button.
+                    AddInternal(new Container
+                    {
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Padding = new MarginPadding
+                        {
+                            Top = CONTENT_PADDING_VERTICAL + 10,
+                            Right = CONTENT_PADDING_HORIZONTAL,
+                        },
+                        Child = new IconButton
+                        {
+                            Anchor = Anchor.TopRight,
+                            Origin = Anchor.TopRight,
+                            Icon = FontAwesome.Solid.Trash,
+                            Size = new Vector2(DELETE_BUTTON_SIZE),
+                            Action = () => OnDeleteButtonClick?.Invoke(),
+                        }
+                    });
+                }
+            }
+
+            protected override void OnFocus(FocusEvent e)
+            {
+                // do not trigger origin focus event if this drawable has been removed.
+                // usually cause by user clicking the delete button.
+                if (Parent == null)
+                    return;
+
+                base.OnFocus(e);
             }
 
             protected override OsuTextBox CreateTextBox() => new TextTagTextBox
