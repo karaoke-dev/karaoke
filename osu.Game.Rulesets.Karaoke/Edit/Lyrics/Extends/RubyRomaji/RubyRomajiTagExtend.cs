@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
     {
         public override ExtendDirection Direction => ExtendDirection.Right;
 
-        public override float ExtendWidth => 300;
+        public override float ExtendWidth => 350;
 
         public TextTagExtend()
         {

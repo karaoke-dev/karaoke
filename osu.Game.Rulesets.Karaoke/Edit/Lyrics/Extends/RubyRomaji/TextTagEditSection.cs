@@ -103,36 +103,51 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     Component.BorderThickness = highLight ? 3 : 0;
                 });
 
-                if (InternalChildren[1] is FillFlowContainer fillFlowContainer)
-                {
-                    // change padding to place delete button.
-                    fillFlowContainer.Padding = new MarginPadding
-                    {
-                        Horizontal = CONTENT_PADDING_HORIZONTAL,
-                        Vertical = CONTENT_PADDING_VERTICAL,
-                        Right = CONTENT_PADDING_HORIZONTAL + DELETE_BUTTON_SIZE + CONTENT_PADDING_HORIZONTAL,
-                    };
+                if (!(InternalChildren[1] is FillFlowContainer fillFlowContainer))
+                    return;
 
-                    // add delete button.
-                    AddInternal(new Container
+                // change padding to place delete button.
+                fillFlowContainer.Padding = new MarginPadding
+                {
+                    Horizontal = CONTENT_PADDING_HORIZONTAL,
+                    Vertical = CONTENT_PADDING_VERTICAL,
+                    Right = CONTENT_PADDING_HORIZONTAL + DELETE_BUTTON_SIZE + CONTENT_PADDING_HORIZONTAL,
+                };
+
+                // add delete button.
+                AddInternal(new Container
+                {
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    Padding = new MarginPadding
                     {
-                        RelativeSizeAxes = Axes.X,
-                        AutoSizeAxes = Axes.Y,
-                        Padding = new MarginPadding
+                        Top = CONTENT_PADDING_VERTICAL + 10,
+                        Right = CONTENT_PADDING_HORIZONTAL,
+                    },
+                    Child = new DeleteIconButton
+                    {
+                        Anchor = Anchor.TopRight,
+                        Origin = Anchor.TopRight,
+                        Size = new Vector2(DELETE_BUTTON_SIZE),
+                        Action = () => OnDeleteButtonClick?.Invoke(),
+                        Hover = hover =>
                         {
-                            Top = CONTENT_PADDING_VERTICAL + 10,
-                            Right = CONTENT_PADDING_HORIZONTAL,
-                        },
-                        Child = new IconButton
-                        {
-                            Anchor = Anchor.TopRight,
-                            Origin = Anchor.TopRight,
-                            Icon = FontAwesome.Solid.Trash,
-                            Size = new Vector2(DELETE_BUTTON_SIZE),
-                            Action = () => OnDeleteButtonClick?.Invoke(),
+                            if (hover)
+                            {
+                                // trigger selected if hover on delete button.
+                                selectedTextTag.Add(textTag);
+                            }
+                            else
+                            {
+                                // do not clear current selected if typing.
+                                if (Component.HasFocus)
+                                    return;
+
+                                selectedTextTag.Remove(textTag);
+                            }
                         }
-                    });
-                }
+                    }
+                });
             }
 
             protected override void OnFocus(FocusEvent e)
@@ -178,6 +193,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                 {
                     Selected?.Invoke();
                     base.OnFocus(e);
+                }
+            }
+
+            internal class DeleteIconButton : IconButton
+            {
+                [Resolved]
+                protected OsuColour Colours { get; private set; }
+
+                public Action<bool> Hover;
+
+                public DeleteIconButton()
+                {
+                    Icon = FontAwesome.Solid.Trash;
+                }
+
+                protected override bool OnHover(HoverEvent e)
+                {
+                    Colour = Colours.Yellow;
+                    Hover?.Invoke(true);
+                    return base.OnHover(e);
+                }
+
+                protected override void OnHoverLost(HoverLostEvent e)
+                {
+                    Colour = Colours.GrayF;
+                    Hover?.Invoke(false);
+                    base.OnHoverLost(e);
                 }
             }
         }
