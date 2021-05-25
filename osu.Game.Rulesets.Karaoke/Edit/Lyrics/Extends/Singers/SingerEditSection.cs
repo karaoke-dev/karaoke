@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
 
         public class LabelledSingerSwitchButton : LabelledSwitchButton
         {
-            protected const float AVATAR_CORNER_RADIUS = 40f;
+            protected const float AVATAR_SIZE = 40f;
 
             public ISinger Singer { get; }
 
@@ -74,9 +74,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
             {
                 Singer = singer;
 
-                if (InternalChildren[1] is FillFlowContainer fillflowContainer)
+                if (InternalChildren[1] is FillFlowContainer fillFlowContainer)
                 {
-                    fillflowContainer.Padding
+                    fillFlowContainer.Padding
                         = new MarginPadding
                         {
                             Horizontal = CONTENT_PADDING_HORIZONTAL,
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
                 AddInternal(new DrawableCircleSingerAvatar
                 {
                     Singer = singer,
-                    Size = new Vector2(AVATAR_CORNER_RADIUS),
+                    Size = new Vector2(AVATAR_SIZE),
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
                     Margin = new MarginPadding
