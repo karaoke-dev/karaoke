@@ -16,10 +16,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             state.BindableCaretPosition.BindValueChanged(e =>
             {
                 Lyric = e.NewValue.Lyric;
-                var romajiTags = Lyric?.RomajiTags;
-                TextTags.Clear();
-                if (romajiTags != null)
-                    TextTags.AddRange(romajiTags);
+
+                if (e.OldValue?.Lyric != null)
+                {
+                    TextTags.UnbindFrom(e.OldValue.Lyric.RomajiTagsBindable);
+                }
+
+                if (e.NewValue?.Lyric != null)
+                {
+                    TextTags.BindTo(e.NewValue.Lyric.RomajiTagsBindable);
+                }
             });
         }
     }

@@ -3,6 +3,7 @@
 
 using System.Linq;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
@@ -143,7 +144,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         #endregion
 
-        #region Text tags
+        #region Time tag
 
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, true)]
         [TestCase(new string[] { }, false)]
@@ -181,6 +182,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(LyricUtils.GetTimeTagIndexDisplayText(lyric, textIndex), actual);
         }
 
+        #endregion
+
+        #region Ruby/romaji tag
+
         [TestCase("からおけ", 0, true)]
         [TestCase("からおけ", 4, true)]
         [TestCase("からおけ", -1, false)]
@@ -191,6 +196,30 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         {
             var lyric = TestCaseTagHelper.ParseLyricWithTimeTag(text);
             Assert.AreEqual(LyricUtils.AbleToInsertTextTagAtIndex(lyric, index), actual);
+        }
+
+        [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, "[3,4]:ke", true)]
+        [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, "[0,4]:karaoke", false)]
+        [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, null, false)]
+        [TestCase(new string[] { }, "[0,4]:karaoke", false)]
+        [TestCase(null, "[0,4]:karaoke", false)]
+        public void TestRemoveTextTag(string[] textTags, string removeTextTag, bool actual)
+        {
+            var lyric = new Lyric
+            {
+                Text = "からおけ",
+                RubyTags = TestCaseTagHelper.ParseRubyTags(textTags),
+                RomajiTags = TestCaseTagHelper.ParseRomajiTags(textTags)
+            };
+
+            var fromIndex = textTags?.IndexOf(removeTextTag) ?? -1;
+
+            // test ruby and romaji at the same test.
+            var removeRubyTag = fromIndex >= 0 ? lyric.RubyTags[fromIndex] : TestCaseTagHelper.ParseRubyTag(removeTextTag);
+            var removeRomajiTag = fromIndex >= 0 ? lyric.RomajiTags[fromIndex] : TestCaseTagHelper.ParseRomajiTag(removeTextTag);
+
+            Assert.AreEqual(LyricUtils.RemoveTextTag(lyric, removeRubyTag), actual);
+            Assert.AreEqual(LyricUtils.RemoveTextTag(lyric, removeRomajiTag), actual);
         }
 
         #endregion

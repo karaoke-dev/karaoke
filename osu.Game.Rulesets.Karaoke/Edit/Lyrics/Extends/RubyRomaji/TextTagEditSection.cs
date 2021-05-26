@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
@@ -15,22 +16,23 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
     public abstract class TextTagEditSection<T> : Section where T : ITextTag
     {
-        protected readonly BindableList<T> TextTags = new BindableList<T>();
+        protected readonly Bindable<T[]> TextTags = new Bindable<T[]>();
 
         protected Lyric Lyric { get; set; }
 
         protected TextTagEditSection()
         {
             // create list of text-tag text-box if bindable changed.
-            TextTags.BindCollectionChanged((a, b) =>
+            TextTags.BindValueChanged(e =>
             {
                 Content.RemoveAll(x => x is LabelledTextTagTextBox);
-                Content.AddRange(TextTags.Select(x =>
+                Content.AddRange(e.NewValue.Select(x =>
                 {
                     var relativeToLyricText = TextTagUtils.GetTextFromLyric(x, Lyric?.Text);
                     var range = TextTagUtils.PositionFormattedString(x);
@@ -38,6 +40,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     {
                         Label = relativeToLyricText,
                         Description = range,
+                        OnDeleteButtonClick = () =>
+                        {
+                            LyricUtils.RemoveTextTag(Lyric, x);
+                        }
                     };
                 }));
             });
@@ -64,12 +70,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
         public class LabelledTextTagTextBox : LabelledTextBox
         {
+            protected const float DELETE_BUTTON_SIZE = 20f;
+
             [Resolved]
             private OsuColour colours { get; set; }
 
             private readonly BindableList<ITextTag> selectedTextTag = new BindableList<ITextTag>();
 
             private readonly ITextTag textTag;
+
+            public Action OnDeleteButtonClick;
 
             public LabelledTextTagTextBox(ITextTag textTag)
             {
@@ -92,6 +102,62 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     Component.BorderColour = highLight ? colours.Yellow : colours.Blue;
                     Component.BorderThickness = highLight ? 3 : 0;
                 });
+
+                if (!(InternalChildren[1] is FillFlowContainer fillFlowContainer))
+                    return;
+
+                // change padding to place delete button.
+                fillFlowContainer.Padding = new MarginPadding
+                {
+                    Horizontal = CONTENT_PADDING_HORIZONTAL,
+                    Vertical = CONTENT_PADDING_VERTICAL,
+                    Right = CONTENT_PADDING_HORIZONTAL + DELETE_BUTTON_SIZE + CONTENT_PADDING_HORIZONTAL,
+                };
+
+                // add delete button.
+                AddInternal(new Container
+                {
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    Padding = new MarginPadding
+                    {
+                        Top = CONTENT_PADDING_VERTICAL + 10,
+                        Right = CONTENT_PADDING_HORIZONTAL,
+                    },
+                    Child = new DeleteIconButton
+                    {
+                        Anchor = Anchor.TopRight,
+                        Origin = Anchor.TopRight,
+                        Size = new Vector2(DELETE_BUTTON_SIZE),
+                        Action = () => OnDeleteButtonClick?.Invoke(),
+                        Hover = hover =>
+                        {
+                            if (hover)
+                            {
+                                // trigger selected if hover on delete button.
+                                selectedTextTag.Add(textTag);
+                            }
+                            else
+                            {
+                                // do not clear current selected if typing.
+                                if (Component.HasFocus)
+                                    return;
+
+                                selectedTextTag.Remove(textTag);
+                            }
+                        }
+                    }
+                });
+            }
+
+            protected override void OnFocus(FocusEvent e)
+            {
+                // do not trigger origin focus event if this drawable has been removed.
+                // usually cause by user clicking the delete button.
+                if (Parent == null)
+                    return;
+
+                base.OnFocus(e);
             }
 
             protected override OsuTextBox CreateTextBox() => new TextTagTextBox
@@ -127,6 +193,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                 {
                     Selected?.Invoke();
                     base.OnFocus(e);
+                }
+            }
+
+            internal class DeleteIconButton : IconButton
+            {
+                [Resolved]
+                protected OsuColour Colours { get; private set; }
+
+                public Action<bool> Hover;
+
+                public DeleteIconButton()
+                {
+                    Icon = FontAwesome.Solid.Trash;
+                }
+
+                protected override bool OnHover(HoverEvent e)
+                {
+                    Colour = Colours.Yellow;
+                    Hover?.Invoke(true);
+                    return base.OnHover(e);
+                }
+
+                protected override void OnHoverLost(HoverLostEvent e)
+                {
+                    Colour = Colours.GrayF;
+                    Hover?.Invoke(false);
+                    base.OnHoverLost(e);
                 }
             }
         }

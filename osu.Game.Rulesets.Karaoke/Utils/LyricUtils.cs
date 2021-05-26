@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         #endregion
 
-        #region Text tags
+        #region Time tag
 
         public static bool HasTimedTimeTags(Lyric lyric)
         {
@@ -201,8 +201,31 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             throw new IndexOutOfRangeException(nameof(index.State));
         }
 
+        #endregion
+
+        #region Ruby/romaji tag
+
         public static bool AbleToInsertTextTagAtIndex(Lyric lyric, int index)
             => index >= 0 && index <= (lyric.Text?.Length ?? 0);
+
+        public static bool RemoveTextTag<T>(Lyric lyric, T textTag) where T : ITextTag
+        {
+            switch (textTag)
+            {
+                case RubyTag rubyTag:
+                    var containRuby = lyric.RubyTags?.Contains(rubyTag) ?? false;
+                    lyric.RubyTags = lyric.RubyTags?.Where(x => x != rubyTag).ToArray();
+                    return containRuby;
+
+                case RomajiTag romajiTag:
+                    var containRomaji = lyric.RomajiTags?.Contains(romajiTag) ?? false;
+                    lyric.RomajiTags = lyric.RomajiTags?.Where(x => x != romajiTag).ToArray();
+                    return containRomaji;
+
+                default:
+                    throw new InvalidCastException(nameof(textTag));
+            }
+        }
 
         #endregion
 
