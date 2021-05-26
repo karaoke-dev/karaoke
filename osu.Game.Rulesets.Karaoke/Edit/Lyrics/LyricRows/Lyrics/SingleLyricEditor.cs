@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Carets;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Parts;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Screens.Edit;
 using osuTK;
 
@@ -64,24 +65,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
             if (lyricManager == null)
                 return false;
 
-            if (!isTrigger(state.Mode))
+            if (!state.CaretEnabled)
                 return false;
 
             var position = ToLocalSpace(e.ScreenSpaceMousePosition).X;
-            var index = lyricPiece.GetHoverIndex(position);
 
             switch (state.Mode)
             {
                 case Mode.EditMode:
                 case Mode.TypingMode:
-                    state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, TextIndexUtils.ToStringIndex(index)));
+                    var lyricStringIndex = TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position));
+                    state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, lyricStringIndex));
+                    break;
+
+                case Mode.RubyRomajiMode:
+                case Mode.EditNoteMode:
+                    state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
+                    break;
+
+                case Mode.RecordMode:
+                    // todo : should be able to get hover tag.
+                    //state.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(Lyric, TextIndexUtils.ToStringIndex(index)));
                     break;
 
                 case Mode.TimeTagEditMode:
-                    state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, index));
+                    var textIndex = lyricPiece.GetHoverIndex(position);
+                    state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, textIndex));
                     break;
 
-                case Mode.EditNoteMode:
+                case Mode.Layout:
+                case Mode.Singer:
                     state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                     break;
 
@@ -94,7 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
         protected override void OnHoverLost(HoverLostEvent e)
         {
-            if (!isTrigger(state.Mode))
+            if (!state.CaretEnabled)
                 return;
 
             // lost hover caret and time-tag caret
@@ -104,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
         protected override bool OnClick(ClickEvent e)
         {
-            if (!isTrigger(state.Mode))
+            if (!state.CaretEnabled)
                 return false;
 
             // place hover caret to target position.
@@ -116,7 +129,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
         protected override bool OnDoubleClick(DoubleClickEvent e)
         {
-            if (!isTrigger(state.Mode))
+            if (state.Mode != Mode.EditMode)
                 return false;
 
             // todo : not really sure is ok to split time-tag by double click?
@@ -332,8 +345,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                 });
             }
         }
-
-        private bool isTrigger(Mode mode)
-            => mode == Mode.EditMode || mode == Mode.TypingMode || mode == Mode.EditNoteMode || mode == Mode.TimeTagEditMode;
     }
 }

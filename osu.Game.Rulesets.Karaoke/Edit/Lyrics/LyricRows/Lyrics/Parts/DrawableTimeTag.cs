@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Parts
 
         private void updateStyle()
         {
-            if (isTrigger(bindableMode.Value) && !state.CaretMovable(timeTagCaretPosition))
+            if (isTrigger(bindableMode.Value) && !state.CaretPositionMovable(timeTagCaretPosition))
             {
                 InternalChild.Alpha = 0.3f;
             }

@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (position.Lyric == null)
                 return false;
 
-            if (!CaretMovable(position))
+            if (!CaretPositionMovable(position))
                 return false;
 
             BindableHoverCaretPosition.Value = null;
@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (position.Lyric == null)
                 return false;
 
-            if (!CaretMovable(position))
+            if (!CaretPositionMovable(position))
                 return false;
 
             BindableHoverCaretPosition.Value = position;
@@ -138,11 +138,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        public bool CaretMovable(ICaretPosition position)
+        public bool CaretPositionMovable(ICaretPosition position)
         {
             var algorithm = GetCaretPositionAlgorithm();
-            return algorithm.CallMethod<bool, ICaretPosition>("PositionMovable", position);
+            return algorithm?.CallMethod<bool, ICaretPosition>("PositionMovable", position) ?? false;
         }
+
+        public bool CaretEnabled => GetCaretPositionAlgorithm() != null;
 
         public void ClearSelectedTimeTags()
         {

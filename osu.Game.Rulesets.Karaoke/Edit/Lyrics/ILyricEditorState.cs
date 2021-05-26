@@ -36,7 +36,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         void ClearHoverCaretPosition();
 
-        bool CaretMovable(ICaretPosition timeTag);
+        bool CaretPositionMovable(ICaretPosition timeTag);
+
+        bool CaretEnabled { get; }
 
         #endregion
 
