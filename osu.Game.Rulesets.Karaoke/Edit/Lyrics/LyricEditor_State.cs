@@ -29,7 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 { Mode.TimeTagEditMode, new TimeTagIndexCaretPositionAlgorithm(lyrics) },
                 { Mode.Layout, new NavigateCaretPositionAlgorithm(lyrics) },
                 { Mode.Singer, new NavigateCaretPositionAlgorithm(lyrics) },
-                { Mode.Language, new NavigateCaretPositionAlgorithm(lyrics) },
             };
         }
 
