@@ -13,7 +13,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Carets;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Parts;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Rulesets.Mods;
 using osu.Game.Screens.Edit;
 using osuTK;
 
@@ -122,6 +121,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
 
             // place hover caret to target position.
             var position = state.BindableHoverCaretPosition.Value;
+            if (position == null)
+                return false;
+
             state.MoveCaretToTargetPosition(position);
 
             return true;
