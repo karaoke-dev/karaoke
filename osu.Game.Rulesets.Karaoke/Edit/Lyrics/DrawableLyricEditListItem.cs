@@ -21,9 +21,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         private Box draggingBackground;
         private Box selectedBackground;
+        private Box hoverBackground;
         private FillFlowContainer content;
 
         private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
+        private readonly Bindable<ICaretPosition> bindableHoverCaretPosition = new Bindable<ICaretPosition>();
         private readonly Bindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
 
         public DrawableLyricEditListItem(Lyric item)
@@ -37,6 +39,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // should remove overlay when switch mode.
                 removeOverlay();
             }, true);
+
+            bindableHoverCaretPosition.BindValueChanged(e =>
+            {
+                if (e.NewValue == null)
+                {
+                    hoverBackground.Hide();
+                    return;
+                }
+
+                if (e.NewValue.Lyric != Model)
+                {
+                    removeOverlay();
+                    hoverBackground.Hide();
+                    return;
+                }
+
+                // show selected background.
+                hoverBackground.Show();
+            });
 
             bindableCaretPosition.BindValueChanged(e =>
             {
@@ -119,6 +140,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         RelativeSizeAxes = Axes.Both,
                         Alpha = 0
                     },
+                    hoverBackground = new Box
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Alpha = 0
+                    },
                     selectedBackground = new Box
                     {
                         RelativeSizeAxes = Axes.Both,
@@ -145,8 +171,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             draggingBackground.Colour = colours.YellowDarker;
             selectedBackground.Colour = colours.PinkDark;
+            hoverBackground.Colour = colours.PinkLight;
 
             bindableMode.BindTo(state.BindableMode);
+            bindableHoverCaretPosition.BindTo(state.BindableHoverCaretPosition);
             bindableCaretPosition.BindTo(state.BindableCaretPosition);
         }
 
