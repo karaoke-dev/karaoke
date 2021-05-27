@@ -22,6 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections
             {
                 new GeneralSettings(),
                 new NoteSettings(),
+                new LyricSettings(),
                 new TranslateSettings(),
             };
         }
