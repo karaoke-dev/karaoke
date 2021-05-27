@@ -75,12 +75,44 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     }
                 }
             };
+
+            updateDeviceInfo();
         }
+
+        private string deviceName;
 
         public string DeviceName
         {
-            get => microphoneInfo.DeviceName;
-            set => microphoneInfo.DeviceName = value;
+            get => deviceName;
+            set
+            {
+                if (deviceName == value)
+                    return;
+
+                deviceName = value;
+                updateDeviceInfo();
+            }
+        }
+
+        private bool hasDevice;
+
+        public bool HasDevice
+        {
+            get => hasDevice;
+            set
+            {
+                if (hasDevice == value)
+                    return;
+
+                hasDevice = value;
+                updateDeviceInfo();
+            }
+        }
+
+        private void updateDeviceInfo()
+        {
+            microphoneInfo.DeviceName = HasDevice ? DeviceName : "Seems no microphone device.";
+            microphoneInfo.HasDevice = HasDevice;
         }
 
         protected override bool Handle(UIEvent e)
@@ -135,7 +167,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         internal class MicrophoneInfo : CompositeDrawable
         {
             private readonly Box background;
+            private readonly SpriteIcon microphoneIcon;
             private readonly OsuSpriteText deviceName;
+
+            [Resolved]
+            private OsuColour colours { get; set; }
 
             public MicrophoneInfo()
             {
@@ -157,7 +193,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                         Direction = FillDirection.Horizontal,
                         Children = new Drawable[]
                         {
-                            new SpriteIcon
+                            microphoneIcon = new SpriteIcon
                             {
                                 Size = new Vector2(24),
                                 Icon = FontAwesome.Solid.Microphone
@@ -176,8 +212,16 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
             public string DeviceName
             {
-                get => deviceName.Text.ToString();
                 set => deviceName.Text = value;
+            }
+
+            public bool HasDevice
+            {
+                set =>
+                    Schedule(() =>
+                    {
+                        microphoneIcon.Colour = value ? colours.GrayF : colours.RedLight;
+                    });
             }
 
             [BackgroundDependencyLoader]

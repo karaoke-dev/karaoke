@@ -25,15 +25,19 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Input
             {
                 // Find index by selection id
                 var microphoneList = new MicrophoneManager().MicrophoneDeviceNames.ToList();
+                var deviceName = x.NewValue;
                 var deviceIndex = microphoneList.IndexOf(x.NewValue);
-                InternalChild = new MicrophoneInputManager(-1)
+                var hasDevice = !string.IsNullOrEmpty(x.NewValue);
+
+                InternalChild = new MicrophoneInputManager(deviceIndex)
                 {
                     RelativeSizeAxes = Axes.Both,
                     Child = new MicrophoneSoundVisualizer
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        DeviceName = x.NewValue,
+                        DeviceName = deviceName,
+                        HasDevice = hasDevice,
                     }
                 };
             }, true);
