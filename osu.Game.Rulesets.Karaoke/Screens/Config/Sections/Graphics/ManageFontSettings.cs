@@ -4,12 +4,16 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Overlays.Settings;
+using osu.Game.Rulesets.Karaoke.Screens.Config.Previews;
+using osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
 {
     public class ManageFontSettings : KaraokeSettingsSubsection
     {
         protected override string Header => "Font Management";
+
+        public override SettingsSubsectionPreview CreatePreview() => new ManageFontPreview();
 
         [BackgroundDependencyLoader]
         private void load()
