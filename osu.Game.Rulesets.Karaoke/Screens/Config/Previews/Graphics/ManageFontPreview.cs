@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Audio.Track;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -119,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
 
                 foreach (var text in Children)
                 {
-                    text.ScaleTo(new Vector2(1.2f), 30, Easing.OutBack)
+                    text.ScaleTo(new Vector2(1.1f), 30, Easing.OutBack)
                         .Then()
                         .ScaleTo(1, 20, Easing.OutBack);
                 }
@@ -148,10 +149,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                 bool startFromLeft = direction == GenerateDirection.LeftToRight;
                 var text = new OsuSpriteText
                 {
-                    Text = getRandomText(),
-                    Font = OsuFont.Default.With(size: font_size),
                     Anchor = startFromLeft ? Anchor.CentreLeft : Anchor.CentreRight,
                     Origin = Anchor.Centre,
+                    Text = getRandomText(),
+                    Colour = getRandomColour(),
+                    Font = OsuFont.Default.With(size: font_size),
                 };
                 Add(text);
 
@@ -169,10 +171,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                     var maxNumber = words.Values.Sum();
                     var randomNumber = random.Next(maxNumber - 1);
 
-                    if (randomNumber > 87)
-                    {
-                    }
-
                     foreach (var (key, value) in words)
                     {
                         if (value >= randomNumber)
@@ -181,7 +179,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                         randomNumber -= value;
                     }
 
-                    throw new Exception("Should not goes to here :thinking:");
+                    return ":Bug:";
+                }
+
+                Colour4 getRandomColour()
+                {
+                    var randomNumber = random.Next(1, 359);
+                    return Color4Extensions.FromHSV(randomNumber, 0.2f, 0.7f);
                 }
             }
         }
