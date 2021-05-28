@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews
 {
     public class SettingsSubsectionPreview : CompositeDrawable
     {
-        [Resolved]
+        [Resolved(canBeNull: true)]
         protected KaraokeRulesetConfigManager Config { get; private set; }
     }
 }
