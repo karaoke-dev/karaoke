@@ -81,20 +81,24 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                 { "文字", 10 },
                 { "Moji", 10 },
                 { "もじ", 10 },
-                { "Management", 7 },
+                { "Config", 10 },
                 { "Style", 7 },
-                { "Coolest", 7 },
-                { "Random", 7 },
                 { "karaoke!", 5 },
                 { "カラオケ！", 5 },
+                { "Random", 2 },
                 { "osu!", 2 },
                 { "lazer!", 2 },
                 { "egg", 1 },
-                { "andy840119", 1 },
                 { "\\andy840119/", 1 },
                 { "UWU", 1 },
-                { "ODO", 1 },
-                { "OWO", 1 },
+                { "OwO", 1 },
+                { "=U=", 1 },
+                { "(*´▽`*)", 1 },
+                { "(」・ω・)」うー！", 1 },
+                { "(／・ω・)／", 1 },
+                { "(((ﾟдﾟ)))", 1 },
+                { "( • ̀ω•́ )", 1 },
+                { "┌(┌^o^)┐", 1 },
             };
 
             private readonly Random random = new Random();
@@ -131,7 +135,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                 base.Update();
 
                 var lastChild = Children?.LastOrDefault();
-                ;
                 bool generateNewObject = lastChild == null || isAllTextPartAppear(lastChild, direction);
                 if (generateNewObject && Children?.Count < max_text_amount)
                     createNewText();
