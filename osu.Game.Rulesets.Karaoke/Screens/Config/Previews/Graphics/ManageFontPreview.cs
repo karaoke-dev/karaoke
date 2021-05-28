@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
     public class ManageFontPreview : SettingsSubsectionPreview
     {
         private const float preview_width = 400;
-        private const float preview_height = 300;
+        private const float preview_height = 320;
 
         private const float angle = 30;
 
@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
 
             private const float moving_speed = 60;
             private const float max_text_amount = 10;
-            private const float spacing_between_text = 0;
+            private const float spacing_between_text = 20;
             private const float font_size = 48;
 
             private readonly GenerateDirection direction;
@@ -157,14 +157,15 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                 };
                 Add(text);
 
-                // set start position.
+                // set start position
                 var fontWidth = text.DrawWidth;
-                text.X = fontWidth * (startFromLeft ? -1 : 1);
+                text.X = fontWidth * (startFromLeft ? -0.5f : 0.5f);
 
-                // set moving direction and destroy time;
-                var movePosition = startFromLeft ? DrawWidth : -DrawWidth;
-                var duration = (DrawWidth + fontWidth) / moving_speed * 1000;
-                text.MoveTo(new Vector2(movePosition, 0), duration).Then().Expire();
+                // set moving transform.
+                var moveLength = DrawWidth + fontWidth + spacing_between_text;
+                var movePosition = startFromLeft ? moveLength : -moveLength;
+                var duration = moveLength / moving_speed * 1000;
+                text.MoveToOffset(new Vector2(movePosition, 0), duration).Then().Expire();
 
                 string getRandomText()
                 {
