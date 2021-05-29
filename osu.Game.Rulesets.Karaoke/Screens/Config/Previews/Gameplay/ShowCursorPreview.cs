@@ -51,9 +51,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(KaraokeRulesetConfigManager config)
         {
-            Config.BindWith(KaraokeRulesetSetting.ShowCursor, bindableShowCursor);
+            config.BindWith(KaraokeRulesetSetting.ShowCursor, bindableShowCursor);
         }
     }
 }

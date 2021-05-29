@@ -2,11 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews
@@ -14,9 +12,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews
     public abstract class SettingsSubsectionPreview : Container
     {
         private const double transition_time = 1000;
-
-        [Resolved(canBeNull: true)]
-        protected KaraokeRulesetConfigManager Config { get; private set; }
 
         private readonly Container boxContainer;
         private readonly Box background;

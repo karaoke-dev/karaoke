@@ -84,16 +84,16 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
         private readonly Bindable<KaraokeScrollingDirection> configDirection = new Bindable<KaraokeScrollingDirection>();
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(KaraokeRulesetConfigManager config)
         {
-            Config.BindWith(KaraokeRulesetSetting.ScrollDirection, configDirection);
+            config.BindWith(KaraokeRulesetSetting.ScrollDirection, configDirection);
             configDirection.BindValueChanged(direction =>
             {
                 if (scrollingInfo.Direction is Bindable<ScrollingDirection> bindableScrollingDirection)
                     bindableScrollingDirection.Value = (ScrollingDirection)direction.NewValue;
             }, true);
 
-            Config.BindWith(KaraokeRulesetSetting.ScrollTime, scrollingInfo.TimeRange as BindableDouble);
+            config.BindWith(KaraokeRulesetSetting.ScrollTime, scrollingInfo.TimeRange as BindableDouble);
         }
 
         private IBeatmap createSampleBeatmap()

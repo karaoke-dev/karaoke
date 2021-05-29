@@ -3,6 +3,7 @@
 
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -12,16 +13,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Input
 {
     public class MicrophoneDevicePreview : SettingsSubsectionPreview
     {
+        private readonly Bindable<string> bindableMicrophoneDeviceName = new Bindable<string>();
+
         public MicrophoneDevicePreview()
         {
             ShowBackground = false;
-        }
-
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            var microphoneBindable = Config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice);
-            microphoneBindable.BindValueChanged(x =>
+            bindableMicrophoneDeviceName.BindValueChanged(x =>
             {
                 // Find index by selection id
                 var microphoneList = new MicrophoneManager().MicrophoneDeviceNames.ToList();
@@ -41,6 +38,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Input
                     }
                 };
             }, true);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(KaraokeRulesetConfigManager config)
+        {
+            config.BindWith(KaraokeRulesetSetting.MicrophoneDevice, bindableMicrophoneDeviceName);
         }
     }
 }
