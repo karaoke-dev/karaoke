@@ -136,6 +136,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
                     }
                 });
             });
+
+            RegisterPool<Note, DrawableNote>(50);
+            RegisterPool<BarLine, DrawableBarLine>(15);
         }
 
         protected virtual void OnDirectionChanged(KaraokeScrollingDirection direction, float judgementAreaPercentage)
@@ -169,9 +172,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
 
             skin.SourceChanged += onSkinChanged;
             onSkinChanged();
-
-            RegisterPool<Note, DrawableNote>(50);
-            RegisterPool<BarLine, DrawableBarLine>(15);
         }
 
         private void onSkinChanged()

@@ -27,13 +27,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
 
         public ManageFontPreview()
         {
-            RelativeSizeAxes = Axes.Both;
+            ShowBackground = false;
         }
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colour)
         {
-            InternalChild = new Container
+            Child = new Container
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,

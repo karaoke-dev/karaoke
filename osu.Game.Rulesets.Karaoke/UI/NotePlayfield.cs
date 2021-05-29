@@ -1,6 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
+using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -45,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public NotePlayfield(int columns)
             : base(columns)
         {
-            if (InternalChild is Container container)
+            if (InternalChildren.FirstOrDefault() is Container container)
             {
                 // add padding to first children.
                 container.Padding = new MarginPadding { Top = 30, Bottom = 30 };
@@ -208,15 +210,15 @@ namespace osu.Game.Rulesets.Karaoke.UI
             explosion.Delay(200).Expire(true);
         }
 
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours, KaraokeSessionStatics session)
+        [BackgroundDependencyLoader(true)]
+        private void load(OsuColour colours, [CanBeNull] KaraokeSessionStatics session)
         {
             replaySaitenVisualization.LineColour = Color4.White;
             realTimeSaitenVisualization.LineColour = colours.Yellow;
 
-            session.BindWith(KaraokeRulesetSession.SaitenPitch, saitenPitch);
+            session?.BindWith(KaraokeRulesetSession.SaitenPitch, saitenPitch);
 
-            session.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
+            session?.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
         }
 
         public bool OnPressed(KaraokeSaitenAction action)
