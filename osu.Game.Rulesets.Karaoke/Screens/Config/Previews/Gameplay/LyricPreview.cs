@@ -38,11 +38,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             displayRuby.BindValueChanged(e =>
             {
                 drawableLyric.DisplayRuby = e.NewValue;
-            });
+            }, true);
             displayRomaji.BindValueChanged(e =>
             {
                 drawableLyric.DisplayRomaji = e.NewValue;
-            });
+            }, true);
             useTranslate.BindValueChanged(e =>
             {
                 updateTranslate();
