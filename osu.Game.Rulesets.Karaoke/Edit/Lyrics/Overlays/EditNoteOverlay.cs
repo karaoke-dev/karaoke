@@ -9,7 +9,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.UI;
@@ -59,9 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
 
                 foreach (var note in notes)
                 {
-                    // todo : should support pooling.
-                    var drawableNote = new DrawableNote(note);
-                    Playfield.Add(drawableNote);
+                    Playfield.Add(note);
                 }
             }
 
