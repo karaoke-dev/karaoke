@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using Newtonsoft.Json;
+using NuGet.Packaging;
 using osu.Framework.Bindables;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
@@ -133,7 +134,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public IDictionary<CultureInfo, string> Translates
         {
             get => TranslateTextBindable;
-            // todo : how to set value to here from json?
+            set
+            {
+                TranslateTextBindable.Clear();
+                TranslateTextBindable.AddRange(value);
+            }
         }
 
         [JsonIgnore]

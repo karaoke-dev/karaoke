@@ -4,12 +4,16 @@
 using osu.Framework.Allocation;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Screens.Config.Previews;
+using osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Gameplay
 {
     public class LyricSettings : KaraokeSettingsSubsection
     {
         protected override string Header => "Lyric";
+
+        public override SettingsSubsectionPreview CreatePreview() => new LyricPreview();
 
         [BackgroundDependencyLoader]
         private void load()

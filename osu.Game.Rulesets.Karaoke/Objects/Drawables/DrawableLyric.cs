@@ -249,7 +249,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             }
         }
 
-        private bool displayRuby;
+        private bool displayRuby = true;
 
         public bool DisplayRuby
         {
@@ -260,11 +260,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                     return;
 
                 displayRuby = value;
-                Schedule(() => lyricPieces.ForEach(x => DisplayRuby = displayRuby));
+                Schedule(() => lyricPieces.ForEach(x => x.DisplayRuby = displayRuby));
             }
         }
 
-        private bool displayRomaji;
+        private bool displayRomaji = true;
 
         public bool DisplayRomaji
         {
@@ -275,7 +275,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                     return;
 
                 displayRomaji = value;
-                Schedule(() => lyricPieces.ForEach(x => DisplayRomaji = displayRomaji));
+                Schedule(() => lyricPieces.ForEach(x => x.DisplayRomaji = displayRomaji));
             }
         }
 
