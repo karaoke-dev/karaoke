@@ -92,20 +92,32 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
                     Origin = Anchor.Centre,
                 }
             };
+        }
 
-            var beatmap = createSampleBeatmap();
-            var barLines = new BarLineGenerator<BarLine>(beatmap).BarLines;
+        private double lastCreateSampleTime;
 
-            foreach (var hitObject in beatmap.HitObjects)
+        protected override void Update()
+        {
+            base.Update();
+
+            if (Time.Current > lastCreateSampleTime + 3000)
             {
-                // todo : should support pooling.
-                var drawableNote = new DrawableNote(hitObject as Note);
-                notePlayfield.Add(drawableNote);
-            }
+                lastCreateSampleTime = Time.Current;
 
-            foreach (var barLine in barLines)
-            {
-                // notePlayfield.Add(barLine);
+                var startTime = Time.Current + 3000;
+                notePlayfield.Add(new Note
+                {
+                    StartTime = startTime,
+                    Duration = 1000,
+                    Text = "Note",
+                    HitWindows = new KaraokeHitWindows(),
+                });
+
+                notePlayfield.Add(new BarLine
+                {
+                    StartTime = startTime,
+                    Major = true
+                });
             }
         }
 
@@ -123,7 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             var hitObjects = new List<HitObject>(new HitObject[100]).Select((x, i) => new Note
             {
                 StartTime = i * 2000,
-                EndIndex = i * 2000 + 1000,
+                Duration = 1000,
                 Text = "Note",
                 HitWindows = new KaraokeHitWindows(),
             }).OfType<HitObject>().ToList();
