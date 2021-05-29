@@ -6,12 +6,16 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Screens.Config.Previews;
+using osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
 {
     public class LyricFontSettings : KaraokeSettingsSubsection
     {
         protected override string Header => "Lyric font";
+
+        public override SettingsSubsectionPreview CreatePreview() => new LyricPreview();
 
         [BackgroundDependencyLoader]
         private void load()
