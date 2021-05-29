@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Input
     {
         public MicrophoneDevicePreview()
         {
-            RelativeSizeAxes = Axes.Both;
+            ShowBackground = false;
         }
 
         [BackgroundDependencyLoader]
@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Input
                 var deviceIndex = microphoneList.IndexOf(x.NewValue);
                 var hasDevice = !string.IsNullOrEmpty(x.NewValue);
 
-                InternalChild = new MicrophoneInputManager(deviceIndex)
+                Child = new MicrophoneInputManager(deviceIndex)
                 {
                     RelativeSizeAxes = Axes.Both,
                     Child = new MicrophoneSoundVisualizer
