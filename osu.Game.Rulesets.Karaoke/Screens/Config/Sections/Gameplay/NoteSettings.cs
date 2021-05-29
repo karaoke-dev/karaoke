@@ -6,6 +6,8 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Screens.Config.Previews;
+using osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay;
 using osu.Game.Rulesets.Karaoke.UI;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Gameplay
@@ -13,6 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Gameplay
     public class NoteSettings : KaraokeSettingsSubsection
     {
         protected override string Header => "Note";
+
+        public override SettingsSubsectionPreview CreatePreview() => new NotePlayfieldPreview();
 
         [BackgroundDependencyLoader]
         private void load()
