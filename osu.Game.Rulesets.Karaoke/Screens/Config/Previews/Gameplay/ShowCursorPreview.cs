@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.Cursor;
 using osu.Game.Graphics.Sprites;
@@ -12,6 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
 {
     public class ShowCursorPreview : SettingsSubsectionPreview
     {
+        private readonly Bindable<bool> bindableShowCursor = new Bindable<bool>();
         private readonly MenuCursor.Cursor cursor;
 
         public ShowCursorPreview()
@@ -32,13 +34,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
                     Text = "Wanna show this while gameplay?"
                 }
             };
-        }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            var showCursorBindable = Config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor);
-            showCursorBindable.BindValueChanged(e =>
+            bindableShowCursor.BindValueChanged(e =>
             {
                 var showCursor = e.NewValue;
 
@@ -51,6 +48,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
                     cursor.FadeTo(0.5f, 200);
                 }
             }, true);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            Config.BindWith(KaraokeRulesetSetting.ShowCursor, bindableShowCursor);
         }
     }
 }
