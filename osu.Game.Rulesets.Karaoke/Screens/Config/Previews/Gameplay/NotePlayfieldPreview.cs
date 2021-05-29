@@ -2,12 +2,18 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Lists;
+using osu.Game.Beatmaps;
+using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Objects;
@@ -65,6 +71,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             MaxValue = time_span_max
         };
 
+        private readonly NotePlayfield notePlayfield;
+
         public NotePlayfieldPreview()
         {
             Size = new Vector2(0.7f, 0.5f);
@@ -78,12 +86,27 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             {
                 RelativeSizeAxes = Axes.Both,
                 Padding = new MarginPadding(30),
-                Child = new NotePlayfield(row_amount)
+                Child = notePlayfield = new NotePlayfield(row_amount)
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
                 }
             };
+
+            var beatmap = createSampleBeatmap();
+            var barLines = new BarLineGenerator<BarLine>(beatmap).BarLines;
+
+            foreach (var hitObject in beatmap.HitObjects)
+            {
+                // todo : should support pooling.
+                var drawableNote = new DrawableNote(hitObject as Note);
+                notePlayfield.Add(drawableNote);
+            }
+
+            foreach (var barLine in barLines)
+            {
+                // notePlayfield.Add(barLine);
+            }
         }
 
         [BackgroundDependencyLoader]
@@ -93,6 +116,26 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             configDirection.BindValueChanged(direction => Direction.Value = (ScrollingDirection)direction.NewValue, true);
 
             Config.BindWith(KaraokeRulesetSetting.ScrollTime, TimeRange);
+        }
+
+        private IBeatmap createSampleBeatmap()
+        {
+            var hitObjects = new List<HitObject>(new HitObject[100]).Select((x, i) => new Note
+            {
+                StartTime = i * 2000,
+                EndIndex = i * 2000 + 1000,
+                Text = "Note",
+                HitWindows = new KaraokeHitWindows(),
+            }).OfType<HitObject>().ToList();
+
+            var controlPointInfo = new ControlPointInfo();
+            controlPointInfo.Add(0, new TimingControlPoint());
+
+            return new Beatmap
+            {
+                HitObjects = hitObjects,
+                ControlPointInfo = controlPointInfo,
+            };
         }
 
         private class LocalScrollingInfo : IScrollingInfo
