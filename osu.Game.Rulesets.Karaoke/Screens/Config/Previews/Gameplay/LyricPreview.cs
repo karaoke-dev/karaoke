@@ -6,11 +6,11 @@ using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Timing;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Scoring;
+using osu.Game.Rulesets.Karaoke.Timing;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
@@ -115,29 +115,5 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
                 },
                 HitWindows = new KaraokeHitWindows(),
             };
-
-        private class StopClock : IFrameBasedClock
-        {
-            public StopClock(double targetTime)
-            {
-                CurrentTime = targetTime;
-            }
-
-            public double ElapsedFrameTime => 0;
-
-            public double FramesPerSecond => 0;
-
-            public FrameTimeInfo TimeInfo => new FrameTimeInfo { Current = CurrentTime, Elapsed = ElapsedFrameTime };
-
-            public double CurrentTime { get; private set; }
-
-            public double Rate => 0;
-
-            public bool IsRunning => false;
-
-            public void ProcessFrame()
-            {
-            }
-        }
     }
 }
