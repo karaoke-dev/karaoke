@@ -7,9 +7,9 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input;
-using osu.Framework.Timing;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Timing;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Timing;
@@ -182,30 +182,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
             public IBindable<double> TimeRange { get; } = new BindableDouble(5000);
 
             public IScrollAlgorithm Algorithm { get; set; } = new SequentialScrollAlgorithm(new List<MultiplierControlPoint>());
-        }
-
-        private class StopClock : IFrameBasedClock
-        {
-            public StopClock(double targetTime)
-            {
-                CurrentTime = targetTime;
-            }
-
-            public double ElapsedFrameTime => 0;
-
-            public double FramesPerSecond => 0;
-
-            public FrameTimeInfo TimeInfo => new FrameTimeInfo { Current = CurrentTime, Elapsed = ElapsedFrameTime };
-
-            public double CurrentTime { get; private set; }
-
-            public double Rate => 0;
-
-            public bool IsRunning => false;
-
-            public void ProcessFrame()
-            {
-            }
         }
     }
 }
