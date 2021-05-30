@@ -50,7 +50,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 if (e.NewValue.Lyric != Model)
                 {
-                    removeOverlay();
                     hoverBackground.Hide();
                     return;
                 }
