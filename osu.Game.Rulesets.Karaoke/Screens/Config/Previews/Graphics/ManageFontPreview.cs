@@ -110,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                                 return ("Eggs/pink-easter-egg", 1, 30);
 
                             case "UWU":
-                                return ("Eggs/yellow-easter-egg", 1, 30);
+                                return ("Eggs/yellow-easter-egg", 1, 50);
 
                             case "karaoke!":
                             case "カラオケ！":
@@ -118,6 +118,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
 
                             case "\\andy840119/":
                                 return ("Eggs/easter-egg-roll", 0.3f, 30);
+
+                            case "=U=":
+                                return ("Eggs/camp-tent", 0.5f, 50);
 
                             default:
                                 return (null, 0, 0);
