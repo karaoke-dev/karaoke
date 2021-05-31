@@ -10,6 +10,9 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
+using osu.Framework.Input.Events;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
@@ -30,47 +33,101 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
             ShowBackground = false;
         }
 
+        private EggContaner eggContainer;
+        private FillFlowContainer<GenerateRowContainer> textContainer;
+
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour)
+        private void load(TextureStore textures, OsuColour colour)
         {
-            Child = new Container
+            Children = new Drawable[]
             {
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Size = new Vector2(preview_width, preview_height),
-                Masking = true,
-                CornerRadius = 15,
-                BorderThickness = 10f,
-                BorderColour = colour.Gray6,
-                Children = new Drawable[]
+                eggContainer = new EggContaner
                 {
-                    new Box
+                    Name = "Egg container",
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Size = new Vector2(preview_width, preview_height),
+                },
+                new Container
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Size = new Vector2(preview_width, preview_height),
+                    Masking = true,
+                    CornerRadius = 15,
+                    BorderThickness = 10f,
+                    BorderColour = colour.Gray6,
+                    Children = new Drawable[]
                     {
-                        RelativeSizeAxes = Axes.Both,
-                        Colour = colour.Gray3,
-                    },
-                    new FillFlowContainer<GenerateRowContainer>
-                    {
-                        Anchor = Anchor.Centre,
-                        Origin = Anchor.Centre,
-                        Width = preview_width / (float)Math.Cos(Math.PI * angle / 180.0),
-                        AutoSizeAxes = Axes.Y,
-                        Spacing = new Vector2(10),
-                        Rotation = -angle,
-                        Children = new[]
+                        new Box
                         {
-                            new GenerateRowContainer(GenerateDirection.LeftToRight),
-                            new GenerateRowContainer(GenerateDirection.RightToLeft),
-                            new GenerateRowContainer(GenerateDirection.LeftToRight),
-                            new GenerateRowContainer(GenerateDirection.RightToLeft),
-                            new GenerateRowContainer(GenerateDirection.LeftToRight),
-                            new GenerateRowContainer(GenerateDirection.RightToLeft),
-                            new GenerateRowContainer(GenerateDirection.LeftToRight),
-                            new GenerateRowContainer(GenerateDirection.RightToLeft),
+                            RelativeSizeAxes = Axes.Both,
+                            Colour = colour.Gray3,
+                        },
+                        textContainer = new FillFlowContainer<GenerateRowContainer>
+                        {
+                            Anchor = Anchor.Centre,
+                            Origin = Anchor.Centre,
+                            Width = preview_width / (float)Math.Cos(Math.PI * angle / 180.0),
+                            AutoSizeAxes = Axes.Y,
+                            Spacing = new Vector2(10),
+                            Rotation = -angle,
+                            Children = new[]
+                            {
+                                new GenerateRowContainer(GenerateDirection.LeftToRight),
+                                new GenerateRowContainer(GenerateDirection.RightToLeft),
+                                new GenerateRowContainer(GenerateDirection.LeftToRight),
+                                new GenerateRowContainer(GenerateDirection.RightToLeft),
+                                new GenerateRowContainer(GenerateDirection.LeftToRight),
+                                new GenerateRowContainer(GenerateDirection.RightToLeft),
+                                new GenerateRowContainer(GenerateDirection.LeftToRight),
+                                new GenerateRowContainer(GenerateDirection.RightToLeft),
+                            }
                         }
                     }
                 }
             };
+
+            foreach (var row in textContainer.Children)
+            {
+                row.ClickedText += (text) =>
+                {
+                    var (textureName, scale, yOffset) = getTexture(text);
+                    if (string.IsNullOrEmpty(textureName))
+                        return;
+
+                    eggContainer.GenerateEgg(textureName, scale, yOffset);
+
+                    static (string, float, float) getTexture(string text)
+                    {
+                        switch (text)
+                        {
+                            case "egg":
+                                return ("Eggs/blue-easter-egg", 1, 30);
+
+                            case "osu!":
+                            case "lazer!":
+                                return ("Eggs/pink-easter-egg", 1, 30);
+
+                            case "UWU":
+                                return ("Eggs/yellow-easter-egg", 1, 50);
+
+                            case "karaoke!":
+                            case "カラオケ！":
+                                return ("Eggs/golden-egg", 0.6f, 80);
+
+                            case "\\andy840119/":
+                                return ("Eggs/easter-egg-roll", 0.3f, 30);
+
+                            case "=U=":
+                                return ("Eggs/camp-tent", 0.5f, 50);
+
+                            default:
+                                return (null, 0, 0);
+                        }
+                    }
+                };
+            }
         }
 
         public class GenerateRowContainer : BeatSyncedContainer
@@ -110,6 +167,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
 
             private readonly GenerateDirection direction;
 
+            public Action<string> ClickedText;
+
             public GenerateRowContainer(GenerateDirection direction)
             {
                 this.direction = direction;
@@ -145,6 +204,17 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                     var textEndPositionX = text.X + (text.DrawWidth / 2) * (startFromLeft ? -1 : 1);
                     return startFromLeft ? textEndPositionX > spacing_between_text : textEndPositionX < -spacing_between_text;
                 }
+            }
+
+            protected override bool OnClick(ClickEvent e)
+            {
+                foreach (var spriteText in Children.OfType<OsuSpriteText>())
+                {
+                    if (spriteText.ReceivePositionalInputAt(e.ScreenSpaceMousePosition))
+                        ClickedText?.Invoke(spriteText.Text.ToString());
+                }
+
+                return base.OnClick(e);
             }
 
             private void createNewText()
@@ -190,6 +260,57 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                 {
                     var randomNumber = random.Next(1, 359);
                     return Color4Extensions.FromHSV(randomNumber, 0.2f, 0.7f);
+                }
+            }
+        }
+
+        public class EggContaner : BeatSyncedContainer
+        {
+            [Resolved]
+            private TextureStore textures { get; set; }
+
+            public void GenerateEgg(string textureName, float scale, float yOffset)
+            {
+                var texture = textures.Get(textureName);
+                if (texture == null)
+                    return;
+
+                var drawableEgg = new Container
+                {
+                    Scale = new Vector2(scale),
+                    Child = new Sprite
+                    {
+                        Origin = Anchor.BottomCentre,
+                        Y = yOffset,
+                        Texture = texture
+                    }
+                };
+                Add(drawableEgg);
+
+                // moving around the corner.
+                var width = DrawWidth;
+                var height = DrawHeight;
+                const int speed = 100;
+                drawableEgg.MoveToOffset(new Vector2(width, 0), width / speed * 1000).Then()
+                           .RotateTo(90, 300, Easing.In).MoveToOffset(new Vector2(0, height), height / speed * 1000).Then()
+                           .RotateTo(180, 300, Easing.In).MoveToOffset(new Vector2(-width, 0), width / speed * 1000).Then()
+                           .RotateTo(270, 300, Easing.In).MoveToOffset(new Vector2(0, -height), height / speed * 1000).Then()
+                           .RotateTo(520, 1000, Easing.In).ScaleTo(0, 1000, Easing.In).Expire();
+
+                // swing effect.
+                drawableEgg.Child.RotateTo(-15, 500, Easing.In).Then()
+                           .RotateTo(15, 500, Easing.In).Loop();
+            }
+
+            protected override void OnNewBeat(int beatIndex, TimingControlPoint timingPoint, EffectControlPoint effectPoint, ChannelAmplitudes amplitudes)
+            {
+                base.OnNewBeat(beatIndex, timingPoint, effectPoint, amplitudes);
+
+                foreach (var text in Children.OfType<Container>())
+                {
+                    text.Child.MoveToOffset(new Vector2(0, -15), 100, Easing.OutBack)
+                        .Then()
+                        .MoveToOffset(new Vector2(0, 15), 100, Easing.OutBack);
                 }
             }
         }
