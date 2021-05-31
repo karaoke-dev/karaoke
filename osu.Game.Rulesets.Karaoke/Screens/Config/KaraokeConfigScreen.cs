@@ -7,7 +7,9 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Events;
+using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays.Settings;
@@ -86,9 +88,16 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
         {
             var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
+            // cache ruleset config
             var config = dependencies.Get<RulesetConfigCache>().GetConfigFor(new KaraokeRuleset());
             if (config != null)
                 dependencies.Cache(config);
+
+            // cache texture in ruleset.
+            var host = parent.Get<GameHost>();
+            var resources = new KaraokeRuleset().CreateResourceStore();
+            var textureStore = new TextureStore(host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(resources, @"Textures")));
+            dependencies.CacheAs(textureStore);
 
             return dependencies;
         }
