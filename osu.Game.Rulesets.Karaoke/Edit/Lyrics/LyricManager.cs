@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved(CanBeNull = true)]
         private IEditorChangeHandler changeHandler { get; set; }
 
-        protected IEnumerable<Lyric> Lyrics => beatmap.HitObjects.OfType<Lyric>();
+        protected IEnumerable<Lyric> Lyrics => beatmap.HitObjects.OfType<Lyric>().OrderBy(x => x.Order);
 
         public IEnumerable<Singer> Singers => (beatmap.PlayableBeatmap as KaraokeBeatmap)?.Singers;
 
@@ -94,6 +94,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             changeHandler?.BeginChange();
 
             LyricUtils.RemoveText(lyric, index - 1);
+
+            if (string.IsNullOrEmpty(lyric.Text))
+            {
+                OrderUtils.ShiftingOrder(Lyrics.Where(x => x.Order > lyric.Order).ToArray(), -1);
+                beatmap.Remove(lyric);
+            }
 
             changeHandler?.EndChange();
 

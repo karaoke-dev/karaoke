@@ -6,7 +6,6 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Carets;
@@ -315,7 +314,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
                 switch (position)
                 {
                     case TextCaretPosition textCaretPosition:
-                        var originPosition = lyricPiece.GetTextIndexPosition(new TextIndex(textCaretPosition.Index));
+                        var end = textCaretPosition.Index == textCaretPosition.Lyric?.Text?.Length;
+                        var originPosition = lyricPiece.GetTextIndexPosition(TextIndexUtils.FromStringIndex(textCaretPosition.Index, end));
                         return new Vector2(originPosition.X, originPosition.Y - textHeight);
 
                     case TimeTagIndexCaretPosition indexCaretPosition:

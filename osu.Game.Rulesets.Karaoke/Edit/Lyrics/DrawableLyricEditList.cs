@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -65,8 +64,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             var oldItem = getListItem(oldLyric);
             var newItem = getListItem(newLyric);
+
+            // new item might been deleted.
             if (newItem == null)
-                throw new ArgumentNullException(nameof(newItem));
+                return false;
 
             var spacing = newItem.Height * skippingRows;
 
@@ -93,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (oldItem == null)
                     return 0;
 
-                var neeItemPosition = ScrollContainer.GetChildPosInContent(newItem);
+                var newItemPosition = ScrollContainer.GetChildPosInContent(newItem);
                 var oldItemPosition = ScrollContainer.GetChildPosInContent(oldItem);
                 if (oldItemPosition > scrollPosition)
                     return 0;
