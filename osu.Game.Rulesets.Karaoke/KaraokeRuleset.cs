@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
+using osu.Framework.IO.Stores;
 using osu.Framework.Testing;
 using osu.Game.Beatmaps;
 using osu.Game.Configuration;
@@ -165,6 +167,16 @@ namespace osu.Game.Rulesets.Karaoke
                 },
             }
         };
+
+        public override IResourceStore<byte[]> CreateResourceStore()
+        {
+            var store = base.CreateResourceStore();
+            if (store.GetAvailableResources().Any())
+                return store;
+
+            // IRMerge might change the assembly name, which will cause resource not found.
+            return new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Game.Rulesets.Karaoke.dll"), @"Resources");
+        }
 
         public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new KaraokeDifficultyCalculator(this, beatmap);
 
