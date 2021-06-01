@@ -95,6 +95,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             LyricUtils.RemoveText(lyric, index - 1);
 
+            if (string.IsNullOrEmpty(lyric.Text))
+            {
+                OrderUtils.ShiftingOrder(Lyrics.Where(x => x.Order > lyric.Order).ToArray(), -1);
+                beatmap.Remove(lyric);
+            }
+
             changeHandler?.EndChange();
 
             return true;
