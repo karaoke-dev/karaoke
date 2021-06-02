@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 {
     [Cached]
     public class SingerLyricEditor : ZoomableScrollContainer

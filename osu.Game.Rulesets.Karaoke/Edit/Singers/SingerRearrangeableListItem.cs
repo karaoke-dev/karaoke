@@ -9,7 +9,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit.Singers.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {

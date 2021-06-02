@@ -10,7 +10,7 @@ using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Bindables;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Detail
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Detail
 {
     internal class MetadataSection : EditSingerSection
     {

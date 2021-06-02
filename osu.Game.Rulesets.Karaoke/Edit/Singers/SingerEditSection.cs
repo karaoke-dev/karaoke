@@ -4,7 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.Singers.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {

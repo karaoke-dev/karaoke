@@ -9,7 +9,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 {
     public class CreateNewLyricPlacementColumn : LyricPlacementColumn
     {

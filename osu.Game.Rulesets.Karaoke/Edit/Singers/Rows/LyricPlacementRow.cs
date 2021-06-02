@@ -8,8 +8,9 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 {
     public abstract class LyricPlacementColumn : CompositeDrawable
     {
@@ -65,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
 
         protected virtual Drawable CreateTimeLinePart(KaraokeHitObjectComposer composer)
         {
-            return new SingerLyricEditor.SingerLyricEditor(singer)
+            return new SingerLyricEditor(singer)
             {
                 RelativeSizeAxes = Axes.Both,
             };
