@@ -4,12 +4,11 @@
 using System;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
     public class TimeTagIndexCaretPositionAlgorithm : CaretPositionAlgorithm<TimeTagIndexCaretPosition>
     {

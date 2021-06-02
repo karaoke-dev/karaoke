@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 

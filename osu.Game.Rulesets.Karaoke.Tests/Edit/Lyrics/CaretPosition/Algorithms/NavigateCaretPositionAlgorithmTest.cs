@@ -3,11 +3,11 @@
 
 using System.Linq;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.Algorithms
+namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
 {
     public class NavigateCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<NavigateCaretPositionAlgorithm, NavigateCaretPosition>
     {

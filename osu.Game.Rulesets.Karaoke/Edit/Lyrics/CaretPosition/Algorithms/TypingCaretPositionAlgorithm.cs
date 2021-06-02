@@ -3,11 +3,10 @@
 
 using System;
 using System.Linq;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
     public class TypingCaretPositionAlgorithm : CaretPositionAlgorithm<TextCaretPosition>
     {

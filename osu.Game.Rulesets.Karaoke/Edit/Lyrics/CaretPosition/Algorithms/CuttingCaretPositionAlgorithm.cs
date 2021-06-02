@@ -3,7 +3,7 @@
 
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
     public class CuttingCaretPositionAlgorithm : TypingCaretPositionAlgorithm
     {
