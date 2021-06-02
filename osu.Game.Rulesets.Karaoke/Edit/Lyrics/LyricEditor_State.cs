@@ -156,37 +156,4 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             SelectedTextTags.Clear();
         }
     }
-
-    public enum RecordingMovingCaretMode
-    {
-        /// <summary>
-        /// Move to any tag
-        /// </summary>
-        None,
-
-        /// <summary>
-        /// Only move to next start tag.
-        /// </summary>
-        OnlyStartTag,
-
-        /// <summary>
-        /// Only move to next end tag.
-        /// </summary>
-        OnlyEndTag,
-    }
-
-    public enum MovingCaretAction
-    {
-        Up,
-
-        Down,
-
-        Left,
-
-        Right,
-
-        First,
-
-        Last,
-    }
 }
