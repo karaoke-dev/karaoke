@@ -14,7 +14,7 @@ using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEditor
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components.TimeTagEditor
 {
     [Cached(typeof(IPositionSnapProvider))]
     [Cached]

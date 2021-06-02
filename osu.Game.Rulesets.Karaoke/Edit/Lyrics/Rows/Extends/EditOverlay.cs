@@ -9,7 +9,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends
 {
     public abstract class EditOverlay : VisibilityContainer
     {

@@ -21,7 +21,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEditor
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components.TimeTagEditor
 {
     public class TimeTagEditorHitObjectBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip
     {

@@ -8,14 +8,14 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Carets;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Parts;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 {
     public class SingleLyricEditor : Container
     {

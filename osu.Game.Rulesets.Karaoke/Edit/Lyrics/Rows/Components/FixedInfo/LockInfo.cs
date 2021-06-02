@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos.FixedInfo
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
 {
     public class LockInfo : SpriteIcon, IHasContextMenu
     {

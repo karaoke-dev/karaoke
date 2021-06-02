@@ -10,14 +10,14 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Blueprints;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 {
     public class RubyRomajiBlueprintContainer : ExtendBlueprintContainer<ITextTag>
     {

@@ -21,7 +21,7 @@ using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEditor
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components.TimeTagEditor
 {
     public class TimeTagEditorBlueprintContainer : ExtendBlueprintContainer<TimeTag>
     {

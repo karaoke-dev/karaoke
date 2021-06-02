@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.UI;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends
 {
     public class EditNoteOverlay : EditOverlay
     {

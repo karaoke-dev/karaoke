@@ -21,7 +21,7 @@ using osu.Game.Screens.Edit.Compose;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends
 {
     public abstract class OverlayHitObjectComposer : HitObjectComposer, IPlacementHandler
     {

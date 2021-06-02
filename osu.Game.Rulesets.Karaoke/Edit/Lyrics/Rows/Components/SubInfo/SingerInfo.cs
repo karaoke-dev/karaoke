@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos.SubInfo
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
 {
     public class SingerInfo : Container
     {

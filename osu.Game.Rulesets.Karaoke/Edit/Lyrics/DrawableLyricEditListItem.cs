@@ -11,8 +11,8 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics

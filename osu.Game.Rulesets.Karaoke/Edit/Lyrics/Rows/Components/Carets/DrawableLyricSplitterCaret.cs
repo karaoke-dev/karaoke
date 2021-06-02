@@ -9,7 +9,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Carets
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 {
     public class DrawableLyricSplitterCaret : CompositeDrawable, IDrawableCaret
     {

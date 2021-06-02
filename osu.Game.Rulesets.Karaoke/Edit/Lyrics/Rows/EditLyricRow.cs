@@ -2,11 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 {
     public class EditLyricRow : LyricEditorRow
     {

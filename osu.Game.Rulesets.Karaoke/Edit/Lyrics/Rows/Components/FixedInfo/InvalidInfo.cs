@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos.FixedInfo
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
 {
     public class InvalidInfo : SpriteIcon, IHasContextMenu, IHasCustomTooltip
     {

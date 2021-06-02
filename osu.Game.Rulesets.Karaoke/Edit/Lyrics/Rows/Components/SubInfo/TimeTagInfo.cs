@@ -6,7 +6,7 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Infos.SubInfo
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
 {
     public class TimeTagInfo : SubInfo
     {

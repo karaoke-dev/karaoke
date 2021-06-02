@@ -17,7 +17,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 {
     public class EditorLyricPiece : DefaultLyricPiece<EditorLyricPiece.EditorLyricSpriteText>
     {

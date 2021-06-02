@@ -8,7 +8,7 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Blueprints
 {
     public class RomajiTagSelectionBlueprint : TextTagSelectionBlueprint<ITextTag>
     {

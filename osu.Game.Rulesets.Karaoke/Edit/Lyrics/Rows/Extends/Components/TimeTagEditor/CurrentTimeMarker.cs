@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Overlays.Components.TimeTagEditor
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components.TimeTagEditor
 {
     public class CurrentTimeMarker : CompositeDrawable
     {

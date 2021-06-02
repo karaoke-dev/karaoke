@@ -4,10 +4,11 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricRows.Lyrics.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Blueprints
 {
     public class TimeTagSelectionBlueprint : SelectionBlueprint<TimeTag>
     {
