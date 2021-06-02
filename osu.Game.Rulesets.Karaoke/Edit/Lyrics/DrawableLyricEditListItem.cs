@@ -13,6 +13,8 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics

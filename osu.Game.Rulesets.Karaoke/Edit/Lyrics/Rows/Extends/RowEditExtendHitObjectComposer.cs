@@ -23,7 +23,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends
 {
-    public abstract class OverlayHitObjectComposer : HitObjectComposer, IPlacementHandler
+    public abstract class RowEditExtendHitObjectComposer : HitObjectComposer, IPlacementHandler
     {
         [Cached(Type = typeof(IScrollingInfo))]
         private readonly LocalScrollingInfo scrollingInfo;
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends
 
         private InputManager inputManager;
 
-        protected OverlayHitObjectComposer()
+        protected RowEditExtendHitObjectComposer()
         {
             scrollingInfo = new LocalScrollingInfo();
         }

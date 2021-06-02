@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.UI;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 {
     public class EditNoteOverlay : EditOverlay
     {
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends
             };
         }
 
-        internal class EditNoteHitObjectComposer : OverlayHitObjectComposer
+        internal class EditNoteHitObjectComposer : RowEditExtendHitObjectComposer
         {
             protected Lyric TargetLyric { get; }
 

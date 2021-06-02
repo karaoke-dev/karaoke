@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components.TimeTagEditor
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 {
     /// <summary>
     /// A container for <see cref="SelectionBlueprint{T}"/> ordered by their <see cref="TimeTag"/> start times.
