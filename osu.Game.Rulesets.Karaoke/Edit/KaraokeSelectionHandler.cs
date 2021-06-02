@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Resolved]
         private LyricManager lyricManager { get; set; }
 
-        protected virtual ScrollingNotePlayfield NotePlayfield => ((KaraokeHitObjectComposer)composer).Playfield.NotePlayfield;
+        protected ScrollingNotePlayfield NotePlayfield => ((KaraokeHitObjectComposer)composer).Playfield.NotePlayfield;
 
         protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<HitObject>> selection)
         {
