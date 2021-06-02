@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         protected override Drawable CreateContent()
             => base.CreateContent().With(x =>
             {
-                LyricEditor.Mode = Mode.EditMode;
+                LyricEditor.Mode = LyricEditorMode.Manage;
             });
 
         protected override void LoadComplete()
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
             ScreenStack.Push(ImportLyricStep.AssignLanguage);
         }
 
-        internal void SwitchLyricEditorMode(Mode mode)
+        internal void SwitchLyricEditorMode(LyricEditorMode mode)
         {
             // todo : will cause text update because has ScheduleAfterChildren in lyric editor.
             LyricEditor.Mode = mode;
@@ -74,11 +74,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 
                         switch (mode)
                         {
-                            case Mode.EditMode:
+                            case LyricEditorMode.Manage:
                                 NavigationText = $"Cool! Try switching to [{typing_mode}] if you wants to edit lyric.";
                                 break;
 
-                            case Mode.TypingMode:
+                            case LyricEditorMode.Typing:
                                 NavigationText = $"Cool! Try switching to [{cutting_mode}] if you wants to cut or combine lyric.";
                                 break;
 
@@ -101,8 +101,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
             {
                 public EditLyricTextFlowContainer(EditLyricSubScreen screen)
                 {
-                    AddLinkFactory(cutting_mode, "cutting mode", () => screen.SwitchLyricEditorMode(Mode.EditMode));
-                    AddLinkFactory(typing_mode, "typing mode", () => screen.SwitchLyricEditorMode(Mode.TypingMode));
+                    AddLinkFactory(cutting_mode, "cutting mode", () => screen.SwitchLyricEditorMode(LyricEditorMode.Manage));
+                    AddLinkFactory(typing_mode, "typing mode", () => screen.SwitchLyricEditorMode(LyricEditorMode.Typing));
                 }
             }
         }

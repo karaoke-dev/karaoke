@@ -12,9 +12,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         #region general
 
-        Bindable<Mode> BindableMode { get; }
+        Bindable<LyricEditorMode> BindableMode { get; }
 
-        Mode Mode { get; }
+        LyricEditorMode Mode { get; }
 
         Bindable<RecordingMovingCaretMode> BindableRecordingMovingCaretMode { get; }
 

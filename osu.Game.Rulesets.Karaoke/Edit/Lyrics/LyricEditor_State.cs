@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Algorithms;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -14,21 +14,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditor
     {
-        private Dictionary<Mode, ICaretPositionAlgorithm> caretMovingAlgorithmSet = new Dictionary<Mode, ICaretPositionAlgorithm>();
+        private Dictionary<LyricEditorMode, ICaretPositionAlgorithm> caretMovingAlgorithmSet = new Dictionary<LyricEditorMode, ICaretPositionAlgorithm>();
 
         private void createAlgorithmList()
         {
             var lyrics = BindableLyrics.ToArray();
-            caretMovingAlgorithmSet = new Dictionary<Mode, ICaretPositionAlgorithm>
+            caretMovingAlgorithmSet = new Dictionary<LyricEditorMode, ICaretPositionAlgorithm>
             {
-                { Mode.EditMode, new CuttingCaretPositionAlgorithm(lyrics) },
-                { Mode.TypingMode, new TypingCaretPositionAlgorithm(lyrics) },
-                { Mode.RubyRomajiMode, new NavigateCaretPositionAlgorithm(lyrics) },
-                { Mode.EditNoteMode, new NavigateCaretPositionAlgorithm(lyrics) },
-                { Mode.RecordMode, new TimeTagCaretPositionAlgorithm(lyrics) { Mode = RecordingMovingCaretMode } },
-                { Mode.TimeTagEditMode, new TimeTagIndexCaretPositionAlgorithm(lyrics) },
-                { Mode.Layout, new NavigateCaretPositionAlgorithm(lyrics) },
-                { Mode.Singer, new NavigateCaretPositionAlgorithm(lyrics) },
+                { LyricEditorMode.Manage, new CuttingCaretPositionAlgorithm(lyrics) },
+                { LyricEditorMode.Typing, new TypingCaretPositionAlgorithm(lyrics) },
+                { LyricEditorMode.EditRubyRomaji, new NavigateCaretPositionAlgorithm(lyrics) },
+                { LyricEditorMode.EditNote, new NavigateCaretPositionAlgorithm(lyrics) },
+                { LyricEditorMode.RecordTimeTag, new TimeTagCaretPositionAlgorithm(lyrics) { Mode = RecordingMovingCaretMode } },
+                { LyricEditorMode.EditTimeTag, new TimeTagIndexCaretPositionAlgorithm(lyrics) },
+                { LyricEditorMode.Layout, new NavigateCaretPositionAlgorithm(lyrics) },
+                { LyricEditorMode.Singer, new NavigateCaretPositionAlgorithm(lyrics) },
             };
         }
 
@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             BindableHoverCaretPosition.Value = null;
         }
 
-        public void ResetPosition(Mode mode)
+        public void ResetPosition(LyricEditorMode mode)
         {
             var lyric = BindableCaretPosition.Value?.Lyric;
             var algorithm = GetCaretPositionAlgorithm();
@@ -155,91 +155,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             SelectedTextTags.Clear();
         }
-    }
-
-    public enum Mode
-    {
-        /// <summary>
-        /// Cannot edit anything except each lyric's left-side part.
-        /// </summary>
-        ViewMode,
-
-        /// <summary>
-        /// Can create/delete/mode/split/combine lyric.
-        /// </summary>
-        EditMode,
-
-        /// <summary>
-        /// Able to typing lyric.
-        /// </summary>
-        TypingMode,
-
-        /// <summary>
-        /// Able to create/delete ruby/romaji.
-        /// </summary>
-        RubyRomajiMode,
-
-        /// <summary>
-        /// Able to create/delete/mode/split/combine note.
-        /// </summary>
-        EditNoteMode,
-
-        /// <summary>
-        /// Click white-space to set current time into time-tag.
-        /// </summary>
-        RecordMode,
-
-        /// <summary>
-        /// Enable to create/delete and reset time tag.
-        /// </summary>
-        TimeTagEditMode,
-
-        /// <summary>
-        /// Can edit each lyric's layout.
-        /// </summary>
-        Layout,
-
-        /// <summary>
-        /// Can edit each lyric's singer.
-        /// </summary>
-        Singer,
-
-        /// <summary>
-        /// Can edit each lyric's language.
-        /// </summary>
-        Language,
-    }
-
-    public enum RecordingMovingCaretMode
-    {
-        /// <summary>
-        /// Move to any tag
-        /// </summary>
-        None,
-
-        /// <summary>
-        /// Only move to next start tag.
-        /// </summary>
-        OnlyStartTag,
-
-        /// <summary>
-        /// Only move to next end tag.
-        /// </summary>
-        OnlyEndTag,
-    }
-
-    public enum MovingCaretAction
-    {
-        Up,
-
-        Down,
-
-        Left,
-
-        Right,
-
-        First,
-
-        Last,
     }
 }

@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public class LyricEditorEditModeMenu : EnumMenu<Mode>
+    public class LyricEditorEditModeMenu : EnumMenu<LyricEditorMode>
     {
         protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.LyricEditorMode;
 
@@ -16,38 +16,38 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
         {
         }
 
-        protected override string GetName(Mode selection)
+        protected override string GetName(LyricEditorMode selection)
         {
             switch (selection)
             {
-                case Mode.ViewMode:
+                case LyricEditorMode.View:
                     return "View";
 
-                case Mode.EditMode:
+                case LyricEditorMode.Manage:
                     return "Edit";
 
-                case Mode.TypingMode:
+                case LyricEditorMode.Typing:
                     return "Typing";
 
-                case Mode.RubyRomajiMode:
+                case LyricEditorMode.EditRubyRomaji:
                     return "Edit ruby / romaji";
 
-                case Mode.EditNoteMode:
+                case LyricEditorMode.EditNote:
                     return "Edit note";
 
-                case Mode.RecordMode:
+                case LyricEditorMode.RecordTimeTag:
                     return "Record";
 
-                case Mode.TimeTagEditMode:
+                case LyricEditorMode.EditTimeTag:
                     return "Edit time tag";
 
-                case Mode.Layout:
+                case LyricEditorMode.Layout:
                     return "Select layout";
 
-                case Mode.Singer:
+                case LyricEditorMode.Singer:
                     return "Select singer";
 
-                case Mode.Language:
+                case LyricEditorMode.Language:
                     return "Select language";
 
                 default:

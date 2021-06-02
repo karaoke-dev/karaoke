@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
         protected override Drawable CreateContent()
             => base.CreateContent().With(x =>
             {
-                LyricEditor.Mode = Mode.RubyRomajiMode;
+                LyricEditor.Mode = LyricEditorMode.EditRubyRomaji;
             });
 
         protected override void LoadComplete()

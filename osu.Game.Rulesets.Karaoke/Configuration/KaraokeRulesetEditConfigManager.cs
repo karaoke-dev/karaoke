@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Lyric editor
             SetDefault(KaraokeRulesetEditSetting.LyricEditorFontSize, 28f);
-            SetDefault(KaraokeRulesetEditSetting.LyricEditorMode, Mode.ViewMode);
+            SetDefault(KaraokeRulesetEditSetting.LyricEditorMode, LyricEditorMode.View);
             SetDefault(KaraokeRulesetEditSetting.RecordingMovingCaretMode, RecordingMovingCaretMode.None);
             SetDefault(KaraokeRulesetEditSetting.AutoFocusToEditLyric, true);
             SetDefault(KaraokeRulesetEditSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);

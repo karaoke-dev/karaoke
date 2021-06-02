@@ -106,17 +106,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                             Spacing = new Vector2(10),
                             Children = new Drawable[]
                             {
-                                new OsuDropdown<Mode>
+                                new OsuDropdown<LyricEditorMode>
                                 {
                                     Width = 150,
-                                    Items = EnumUtils.GetValues<Mode>(),
+                                    Items = EnumUtils.GetValues<LyricEditorMode>(),
                                 }.With(x =>
                                 {
                                     x.Current.BindValueChanged(mode =>
                                     {
                                         editor.Mode = mode.NewValue;
 
-                                        if (editor.Mode == Mode.RecordMode)
+                                        if (editor.Mode == LyricEditorMode.RecordTimeTag)
                                         {
                                             recordingModeDropdown.Show();
                                         }
