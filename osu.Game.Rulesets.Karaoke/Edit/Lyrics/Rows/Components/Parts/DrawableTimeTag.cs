@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
         [Resolved]
         private EditorClock editorClock { get; set; }
 
-        private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
+        private readonly Bindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
 
         private readonly TimeTagCaretPosition timeTagCaretPosition;
@@ -122,8 +122,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
             base.Dispose(isDisposing);
         }
 
-        private bool isTrigger(Mode mode)
-            => mode == Mode.RecordMode;
+        private bool isTrigger(LyricEditorMode mode)
+            => mode == LyricEditorMode.RecordTimeTag;
 
         public object TooltipContent => timeTagCaretPosition.TimeTag;
 

@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     public class KaraokeLyricEditor : CompositeDrawable
     {
         private readonly Bindable<float> bindableLyricEditorFontSize = new Bindable<float>();
-        private readonly Bindable<Mode> bindableLyricEditorMode = new Bindable<Mode>();
+        private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new Bindable<LyricEditorMode>();
         private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
         private readonly BindableBool bindableAutoFocusToEditLyric = new BindableBool();
         private readonly BindableInt bindableAutoFocusToEditLyricSkipRows = new BindableInt();

@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private Box hoverBackground;
         private FillFlowContainer content;
 
-        private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
+        private readonly Bindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly Bindable<ICaretPosition> bindableHoverCaretPosition = new Bindable<ICaretPosition>();
         private readonly Bindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
 
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             bindableMode.BindValueChanged(e =>
             {
                 // Only draggable in edit mode.
-                ShowDragHandle.Value = e.NewValue == Mode.EditMode;
+                ShowDragHandle.Value = e.NewValue == LyricEditorMode.Manage;
 
                 // should remove overlay when switch mode.
                 removeOverlay();
@@ -91,14 +91,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 editOverlay.Show();
             });
 
-            static EditOverlay createOverlay(Mode mode, Lyric lyric)
+            static EditOverlay createOverlay(LyricEditorMode mode, Lyric lyric)
             {
                 switch (mode)
                 {
-                    case Mode.EditNoteMode:
+                    case LyricEditorMode.EditNote:
                         return new EditNoteOverlay(lyric);
 
-                    case Mode.TimeTagEditMode:
+                    case LyricEditorMode.EditTimeTag:
                         return new EditTimeTagOverlay(lyric);
 
                     default:

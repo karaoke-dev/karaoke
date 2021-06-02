@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved]
         private EditorClock editorClock { get; set; }
 
-        public Bindable<Mode> BindableMode { get; } = new Bindable<Mode>();
+        public Bindable<LyricEditorMode> BindableMode { get; } = new Bindable<LyricEditorMode>();
 
         public Bindable<RecordingMovingCaretMode> BindableRecordingMovingCaretMode { get; } = new Bindable<RecordingMovingCaretMode>();
 
@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             BindableMode.BindValueChanged(e =>
             {
                 // display add new lyric only with edit mode.
-                container.DisplayBottomDrawable = e.NewValue == Mode.EditMode;
+                container.DisplayBottomDrawable = e.NewValue == LyricEditorMode.Manage;
 
                 // should control grid container spacing and place some component.
                 initializeExtendArea();
@@ -144,13 +144,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 switch (Mode)
                 {
-                    case Mode.RubyRomajiMode:
+                    case LyricEditorMode.EditRubyRomaji:
                         return new TextTagExtend();
 
-                    case Mode.Singer:
+                    case LyricEditorMode.Singer:
                         return new SingerExtend();
 
-                    case Mode.Layout:
+                    case LyricEditorMode.Layout:
                         return new LayoutExtend();
 
                     default:
@@ -205,7 +205,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager == null)
                 return false;
 
-            if (Mode != Mode.TypingMode)
+            if (Mode != LyricEditorMode.Typing)
                 return false;
 
             var caretPosition = BindableCaretPosition.Value;
@@ -240,22 +240,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             switch (Mode)
             {
-                case Mode.ViewMode:
-                case Mode.EditMode:
-                case Mode.TypingMode: // will handle in OnKeyDown
-                case Mode.RubyRomajiMode:
-                case Mode.EditNoteMode:
+                case LyricEditorMode.View:
+                case LyricEditorMode.Manage:
+                case LyricEditorMode.Typing: // will handle in OnKeyDown
+                case LyricEditorMode.EditRubyRomaji:
+                case LyricEditorMode.EditNote:
                     return false;
 
-                case Mode.RecordMode:
+                case LyricEditorMode.RecordTimeTag:
                     return HandleSetTimeEvent(action);
 
-                case Mode.TimeTagEditMode:
+                case LyricEditorMode.EditTimeTag:
                     return HandleCreateOrDeleterTimeTagEvent(action);
 
-                case Mode.Layout:
-                case Mode.Singer:
-                case Mode.Language:
+                case LyricEditorMode.Layout:
+                case LyricEditorMode.Singer:
+                case LyricEditorMode.Language:
                     return false;
 
                 default:
@@ -353,7 +353,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             set => skin.FontSize = value;
         }
 
-        public Mode Mode
+        public LyricEditorMode Mode
         {
             get => BindableMode.Value;
             set

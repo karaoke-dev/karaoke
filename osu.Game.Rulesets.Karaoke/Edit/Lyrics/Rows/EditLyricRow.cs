@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             private readonly OsuSpriteText timeRange;
             private readonly Container subInfoContainer;
 
-            private readonly Bindable<Mode> bindableMode = new Bindable<Mode>();
+            private readonly Bindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
             [Resolved(canBeNull: true)]
             private DialogOverlay dialogOverlay { get; set; }
@@ -187,7 +187,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 bindableMode.BindTo(state.BindableMode);
             }
 
-            protected void CreateBadge(Mode mode)
+            protected void CreateBadge(LyricEditorMode mode)
             {
                 subInfoContainer.Clear();
                 var subInfo = createSubInfo();
@@ -203,24 +203,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 {
                     switch (mode)
                     {
-                        case Mode.ViewMode:
-                        case Mode.EditMode:
-                        case Mode.TypingMode:
-                        case Mode.RubyRomajiMode:
-                        case Mode.EditNoteMode:
+                        case LyricEditorMode.View:
+                        case LyricEditorMode.Manage:
+                        case LyricEditorMode.Typing:
+                        case LyricEditorMode.EditRubyRomaji:
+                        case LyricEditorMode.EditNote:
                             return null;
 
-                        case Mode.RecordMode:
-                        case Mode.TimeTagEditMode:
+                        case LyricEditorMode.RecordTimeTag:
+                        case LyricEditorMode.EditTimeTag:
                             return new TimeTagInfo(Lyric);
 
-                        case Mode.Layout:
+                        case LyricEditorMode.Layout:
                             return new LayoutInfo(Lyric);
 
-                        case Mode.Singer:
+                        case LyricEditorMode.Singer:
                             return new SingerInfo(Lyric);
 
-                        case Mode.Language:
+                        case LyricEditorMode.Language:
                             return new LanguageInfo(Lyric);
 
                         default:
@@ -233,7 +233,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             {
                 get
                 {
-                    if (bindableMode.Value != Mode.EditMode)
+                    if (bindableMode.Value != LyricEditorMode.Manage)
                         return null;
 
                     var menuItems = new List<MenuItem>
@@ -330,29 +330,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                 switch (state.Mode)
                 {
-                    case Mode.EditMode:
-                    case Mode.TypingMode:
+                    case LyricEditorMode.Manage:
+                    case LyricEditorMode.Typing:
                         var lyricStringIndex = TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position));
                         state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, lyricStringIndex));
                         break;
 
-                    case Mode.RubyRomajiMode:
-                    case Mode.EditNoteMode:
+                    case LyricEditorMode.EditRubyRomaji:
+                    case LyricEditorMode.EditNote:
                         state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                         break;
 
-                    case Mode.RecordMode:
+                    case LyricEditorMode.RecordTimeTag:
                         // todo : should be able to get hover tag.
                         //state.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(Lyric, TextIndexUtils.ToStringIndex(index)));
                         break;
 
-                    case Mode.TimeTagEditMode:
+                    case LyricEditorMode.EditTimeTag:
                         var textIndex = lyricPiece.GetHoverIndex(position);
                         state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, textIndex));
                         break;
 
-                    case Mode.Layout:
-                    case Mode.Singer:
+                    case LyricEditorMode.Layout:
+                    case LyricEditorMode.Singer:
                         state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                         break;
 
@@ -390,7 +390,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
             protected override bool OnDoubleClick(DoubleClickEvent e)
             {
-                if (state.Mode != Mode.EditMode)
+                if (state.Mode != LyricEditorMode.Manage)
                     return false;
 
                 // todo : not really sure is ok to split time-tag by double click?
@@ -430,7 +430,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 });
             }
 
-            protected void InitializeBlueprint(Mode mode)
+            protected void InitializeBlueprint(LyricEditorMode mode)
             {
                 // remove all exist blueprint container
                 RemoveAll(x => x is RubyRomajiBlueprintContainer || x is TimeTagBlueprintContainer);
@@ -442,16 +442,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                 AddInternal(blueprintContainer);
 
-                static Drawable createBlueprintContainer(Mode mode, Lyric lyric)
+                static Drawable createBlueprintContainer(LyricEditorMode mode, Lyric lyric)
                 {
                     switch (mode)
                     {
-                        case Mode.RubyRomajiMode:
+                        case LyricEditorMode.EditRubyRomaji:
                             return new RubyRomajiBlueprintContainer(lyric);
 
                         // todo : might think is this really needed because it'll use cannot let user clicking time-tag.
                         // or just let it cannot interact.
-                        case Mode.TimeTagEditMode:
+                        case LyricEditorMode.EditTimeTag:
                             return new TimeTagBlueprintContainer(lyric);
 
                         default:
@@ -460,7 +460,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 }
             }
 
-            protected void InitializeCaret(Mode mode)
+            protected void InitializeCaret(LyricEditorMode mode)
             {
                 caretContainer.Clear();
 
@@ -482,34 +482,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     caretContainer.Add(caret);
                 }
 
-                static Drawable createCaret(Mode mode)
+                static Drawable createCaret(LyricEditorMode mode)
                 {
                     switch (mode)
                     {
-                        case Mode.ViewMode:
+                        case LyricEditorMode.View:
                             return null;
 
-                        case Mode.EditMode:
+                        case LyricEditorMode.Manage:
                             return new DrawableLyricSplitterCaret();
 
-                        case Mode.TypingMode:
+                        case LyricEditorMode.Typing:
                             return new DrawableLyricInputCaret();
 
-                        case Mode.RubyRomajiMode:
+                        case LyricEditorMode.EditRubyRomaji:
                             return null;
 
-                        case Mode.EditNoteMode:
+                        case LyricEditorMode.EditNote:
                             return null;
 
-                        case Mode.RecordMode:
+                        case LyricEditorMode.RecordTimeTag:
                             return new DrawableTimeTagRecordCaret();
 
-                        case Mode.TimeTagEditMode:
+                        case LyricEditorMode.EditTimeTag:
                             return new DrawableTimeTagEditCaret();
 
-                        case Mode.Layout:
-                        case Mode.Singer:
-                        case Mode.Language:
+                        case LyricEditorMode.Layout:
+                        case LyricEditorMode.Singer:
+                        case LyricEditorMode.Language:
                             return null;
 
                         default:
