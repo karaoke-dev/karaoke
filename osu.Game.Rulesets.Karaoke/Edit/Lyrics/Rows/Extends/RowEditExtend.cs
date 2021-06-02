@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends
 {
-    public abstract class EditOverlay : VisibilityContainer
+    public abstract class RowEditExtend : VisibilityContainer
     {
         private const int info_part_spacing = 210;
         private const float transition_duration = 600;
@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends
 
         private readonly Lyric lyric;
 
-        protected EditOverlay(Lyric lyric)
+        protected RowEditExtend(Lyric lyric)
         {
             this.lyric = lyric;
         }

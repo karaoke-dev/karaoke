@@ -16,11 +16,11 @@ using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 {
-    public class EditNoteOverlay : EditOverlay
+    public class NoteExtend : RowEditExtend
     {
         public override float ContentHeight => 180;
 
-        public EditNoteOverlay(Lyric lyric)
+        public NoteExtend(Lyric lyric)
             : base(lyric)
         {
         }
