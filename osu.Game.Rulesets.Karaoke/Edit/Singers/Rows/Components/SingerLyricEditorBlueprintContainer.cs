@@ -16,12 +16,13 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 {
     public class LyricBlueprintContainer : BlueprintContainer<Lyric>
     {

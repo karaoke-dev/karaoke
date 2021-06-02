@@ -5,7 +5,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 {
     public class DefaultLyricPlacementColumn : LyricPlacementColumn
     {

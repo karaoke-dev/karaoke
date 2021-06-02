@@ -5,7 +5,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit.Singers.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osuTK;
 

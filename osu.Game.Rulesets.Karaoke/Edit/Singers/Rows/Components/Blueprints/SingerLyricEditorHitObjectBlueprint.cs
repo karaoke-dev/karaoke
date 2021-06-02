@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.SingerLyricEditor
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
 {
     public class LyricTimelineHitObjectBlueprint : SelectionBlueprint<Lyric>, IHasCustomTooltip
     {

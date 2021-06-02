@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Components.Detail
+namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Detail
 {
     public class EditSingerDialog : PopupFocusedOverlayContainer, IHasCurrentValue<Singer>
     {
