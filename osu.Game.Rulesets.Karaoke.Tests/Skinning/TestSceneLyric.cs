@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
     {
         public TestSceneLyric()
         {
-            AddStep("Default Lyric", () => SetContents(() => testSingle()));
+            AddStep("Default Lyric", () => SetContents(_ => testSingle()));
         }
 
         private Drawable testSingle(bool auto = false, double timeOffset = 0)
