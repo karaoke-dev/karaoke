@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         {
             foreach (var result in EnumUtils.GetValues<HitResult>().Skip(1))
             {
-                AddStep("Show " + result.GetDescription(), () => SetContents(() =>
+                AddStep("Show " + result.GetDescription(), () => SetContents(_ =>
                     new DrawableNoteJudgement(new JudgementResult(new HitObject(), new Judgement()) { Type = result }, null)
                     {
                         Anchor = Anchor.Centre,

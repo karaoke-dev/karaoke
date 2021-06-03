@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         [BackgroundDependencyLoader]
         private void load()
         {
-            SetContents(() => new NotePlayfieldTestContainer(0)
+            SetContents(_ => new NotePlayfieldTestContainer(0)
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
