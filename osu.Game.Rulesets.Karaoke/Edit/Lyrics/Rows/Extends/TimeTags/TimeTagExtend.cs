@@ -7,11 +7,11 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 {
-    public class EditTimeTagOverlay : EditOverlay
+    public class TimeTagExtend : RowEditExtend
     {
         public override float ContentHeight => 100;
 
-        public EditTimeTagOverlay(Lyric lyric)
+        public TimeTagExtend(Lyric lyric)
             : base(lyric)
         {
         }
