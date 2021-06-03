@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             TextTags.BindValueChanged(e =>
             {
                 Content.RemoveAll(x => x is LabelledTextTagTextBox);
-                Content.AddRange(e.NewValue.Select(x =>
+                Content.AddRange(e.NewValue?.Select(x =>
                 {
                     var relativeToLyricText = TextTagUtils.GetTextFromLyric(x, Lyric?.Text);
                     var range = TextTagUtils.PositionFormattedString(x);
