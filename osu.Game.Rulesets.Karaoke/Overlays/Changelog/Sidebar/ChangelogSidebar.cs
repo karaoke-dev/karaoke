@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
         private FillFlowContainer<ChangelogSection> changelogsFlow;
 
         [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider)
+        private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogBuild> current)
         {
             RelativeSizeAxes = Axes.Y;
             Width = 250;
@@ -90,6 +90,15 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
                     }
                 }
             };
+
+            // should switch year selection if user switch changelog and the new changelog is not current year.
+            current.BindValueChanged(e =>
+            {
+                if (e.NewValue == null)
+                    return;
+
+                Year.Value = e.NewValue.PublishedAt.Year;
+            });
         }
 
         protected override void LoadComplete()

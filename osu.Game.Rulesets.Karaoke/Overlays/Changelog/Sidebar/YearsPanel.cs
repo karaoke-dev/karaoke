@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
                     var isCurrent = this.year == e.NewValue;
 
                     // update hover color.
-                    IdleColour = isCurrent ? Color4.White : colourProvider.Light2;
+                    Colour = isCurrent ? Color4.White : colourProvider.Light2;
                     HoverColour = isCurrent ? Color4.White : colourProvider.Light1;
 
                     // update font.
