@@ -19,6 +19,9 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
         [Cached]
         public readonly Bindable<APIChangelogSidebar> Metadata = new Bindable<APIChangelogSidebar>();
 
+        [Cached]
+        public readonly Bindable<int> Year = new Bindable<int>();
+
         private FillFlowContainer<ChangelogSection> changelogsFlow;
 
         [BackgroundDependencyLoader]
@@ -93,38 +96,25 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
         {
             base.LoadComplete();
 
-            Metadata.BindValueChanged(onMetadataChanged, true);
+            Metadata.BindValueChanged(e => onMetadataChanged(e.NewValue, Year.Value), true);
+            Year.BindValueChanged(e => onMetadataChanged(Metadata.Value, e.NewValue), true);
         }
 
-        private void onMetadataChanged(ValueChangedEvent<APIChangelogSidebar> metadata)
+        private void onMetadataChanged(APIChangelogSidebar metadata, int targetYear)
         {
             changelogsFlow.Clear();
 
-            if (metadata.NewValue == null)
+            if (metadata == null)
                 return;
 
-            var allPosts = metadata.NewValue.Changelogs;
+            var allPosts = metadata.Changelogs;
 
             if (allPosts?.Any() != true)
                 return;
 
-            var lookup = metadata.NewValue.Changelogs.ToLookup(post => post.PublishedAt.Year);
-
-            var keys = lookup.Select(kvp => kvp.Key);
-            var sortedKeys = keys.OrderByDescending(k => k).ToList();
-
-            var currentYear = metadata.NewValue.CurrentYear;
-
-            for (int i = 0; i < sortedKeys.Count; i++)
-            {
-                var year = sortedKeys[i];
-                var posts = lookup[year];
-
-                changelogsFlow.Add(new ChangelogSection(year, posts)
-                {
-                    Expanded = { Value = year == currentYear }
-                });
-            }
+            var lookup = metadata.Changelogs.ToLookup(post => post.PublishedAt.Year);
+            var posts = lookup[targetYear];
+            changelogsFlow.Add(new ChangelogSection(targetYear, posts));
         }
     }
 }

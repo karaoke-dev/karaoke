@@ -70,50 +70,51 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
                 return;
             }
 
-            var currentYear = metadata.Value.CurrentYear;
-
             foreach (var y in metadata.Value.Years)
-                yearsFlow.Add(new YearButton(y, y == currentYear));
+                yearsFlow.Add(new YearButton(y));
 
             Show();
         }
 
         public class YearButton : OsuHoverContainer
         {
-            public int Year { get; }
+            private readonly int year;
+            private readonly OsuSpriteText yearText;
 
-            private readonly bool isCurrent;
-
-            public YearButton(int year, bool isCurrent)
+            public YearButton(int year)
             {
-                Year = year;
-                this.isCurrent = isCurrent;
+                this.year = year;
 
                 RelativeSizeAxes = Axes.X;
                 Width = 0.25f;
                 Height = 15;
 
-                Child = new OsuSpriteText
+                Child = yearText = new OsuSpriteText
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    Font = OsuFont.GetFont(size: 12, weight: isCurrent ? FontWeight.SemiBold : FontWeight.Medium),
                     Text = year.ToString()
                 };
             }
 
             [BackgroundDependencyLoader]
-            private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogSidebar> metadata)
+            private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogSidebar> metadata, Bindable<int> year)
             {
-                IdleColour = isCurrent ? Color4.White : colourProvider.Light2;
-                HoverColour = isCurrent ? Color4.White : colourProvider.Light1;
+                year.BindValueChanged(e =>
+                {
+                    var isCurrent = this.year == e.NewValue;
+
+                    // update hover color.
+                    IdleColour = isCurrent ? Color4.White : colourProvider.Light2;
+                    HoverColour = isCurrent ? Color4.White : colourProvider.Light1;
+
+                    // update font.
+                    yearText.Font = OsuFont.GetFont(size: 12, weight: isCurrent ? FontWeight.SemiBold : FontWeight.Medium);
+                }, true);
+
                 Action = () =>
                 {
-                    if (!isCurrent)
-                    {
-                        metadata.Value.CurrentYear = Year;
-                        metadata.TriggerChange();
-                    }
+                    year.Value = this.year;
                 };
             }
         }

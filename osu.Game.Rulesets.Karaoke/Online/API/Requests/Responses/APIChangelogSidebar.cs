@@ -7,8 +7,6 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
 {
     public class APIChangelogSidebar
     {
-        public int CurrentYear { get; set; }
-
         public IEnumerable<APIChangelogBuild> Changelogs { get; set; }
 
         public int[] Years { get; set; }

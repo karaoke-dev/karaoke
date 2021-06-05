@@ -168,9 +168,9 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                     Current.TriggerChange();
 
                     var years = builds.Select(x => x.PublishedAt.Year).Distinct().ToArray();
+                    sidebar.Year.Value = years.Max();
                     sidebar.Metadata.Value = new APIChangelogSidebar
                     {
-                        CurrentYear = years.Max(),
                         Changelogs = builds,
                         Years = years
                     };
