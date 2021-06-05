@@ -1,6 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+
 namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
 {
     public class APIChangelogBuild
@@ -63,6 +65,11 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
         /// Version
         /// </summary>
         public VersionNavigation Versions { get; }
+
+        /// <summary>
+        /// Created date.
+        /// </summary>
+        public DateTimeOffset PublishedAt { get; set; }
 
         public class VersionNavigation
         {
