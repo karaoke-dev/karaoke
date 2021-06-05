@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("カラオケ", 0, 100, "")] // test end position not in the range
         [TestCase("", 0, 0, "")]
         [TestCase(null, 0, 0, null)]
-        public void TestRemoveTextText(string text, int position, int count, string actualText)
+        public void TestRemoveText(string text, int position, int count, string actualText)
         {
             try
             {
@@ -141,6 +141,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         #endregion
 
         #region create default
+
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "カ", "ラ", "オ", "ケ" })]
+        public void TestCreateDefaultNotes(string[] timeTags, string[] noteTexts)
+        {
+            var lyric = new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
+            };
+
+            var notes = LyricUtils.CreateDefaultNotes(lyric);
+            Assert.AreEqual(notes.Select(x => x.Text).ToArray(), noteTexts);
+        }
 
         #endregion
 

@@ -34,13 +34,23 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private IEnumerable<TimeTag> convertTimeTag(string text, IReadOnlyDictionary<TextIndex, double> tags)
         {
+            // total time-tag amount in lyric maker.
             var totalTags = text.Length * 2 + 2;
 
             for (int i = 0; i < totalTags; i++)
             {
+                // should return empty tag if no time-tag in lyric.
+                if (tags.Count == 0)
+                {
+                    yield return new TimeTag();
+
+                    continue;
+                }
+
                 var (lastTag, lastTagTime) = tags.LastOrDefault();
 
-                if (lastTag.Index * 2 == i)
+                // create end time-tag
+                if ((lastTag.Index + 1) * 2 == i)
                 {
                     yield return new TimeTag
                     {
@@ -54,6 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                 var (firstTag, firstTagTime) = tags.FirstOrDefault(x => x.Key.Index * 2 + 1 == i);
 
+                // create start time-tag
                 if (firstTagTime > 0 && firstTag != lastTag)
                 {
                     yield return new TimeTag
@@ -66,6 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     continue;
                 }
 
+                // if has no match tag in lyric, should return empty one.
                 yield return new TimeTag();
             }
         }

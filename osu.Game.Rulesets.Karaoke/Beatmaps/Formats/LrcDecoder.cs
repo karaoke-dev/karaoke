@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     var lrcTimeTag = line.TimeTags;
                     var timeTags = line.TimeTags.Where(x => x.Check).ToDictionary(k =>
                     {
-                        var index = (int)Math.Ceiling((double)(Array.IndexOf(lrcTimeTag, k) - 1) / 2);
+                        var index = (Array.IndexOf(lrcTimeTag, k) - 1) / 2;
                         var state = (Array.IndexOf(lrcTimeTag, k) - 1) % 2 == 0 ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
                         return new TextIndex(index, state);
                     }, v => (double)v.Time);
