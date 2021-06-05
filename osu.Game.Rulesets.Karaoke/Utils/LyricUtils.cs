@@ -137,7 +137,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 var startTime = timeTag.Value;
 
                 int startIndex = timeTag.Key.Index;
-                int endIndex = key.Index;
+                int endIndex = TextIndexUtils.ToStringIndex(key);
 
                 var text = lyric.Text[startIndex..endIndex];
                 var ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
@@ -184,9 +184,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             if (index.State == TextIndex.IndexState.Start)
             {
-                var previousTimeTag = timeTags.FirstOrDefault(x => x.Index > index);
+                var nextTimeTag = timeTags.FirstOrDefault(x => x.Index > index);
                 var startIndex = index.Index;
-                var endIndex = previousTimeTag?.Index.Index ?? text.Length;
+                var endIndex = TextIndexUtils.ToStringIndex(nextTimeTag?.Index ?? new TextIndex(text.Length));
                 return $"{text.Substring(startIndex, endIndex - startIndex)}-";
             }
 

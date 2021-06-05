@@ -9,49 +9,51 @@ using osu.Game.Beatmaps;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 {
     [TestFixture]
     public class LrcDecoderTest
     {
-        [Test]
-        public void TestDecodeLyric()
+        [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "からおけ", 1000, 5000)]
+        public void TestLyricTextAndTime(string lyricText, string text, double startTime, double endTime)
         {
-            const string lyric_text = "[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]";
-            var beatmap = decodeLrcLine(lyric_text);
+            var beatmap = decodeLrcLine(lyricText);
 
-            // Get first beatmap
+            // Get first lyric from beatmap
             var lyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
 
             // Check lyric
-            Assert.AreEqual(lyric?.Text, "からおけ");
-            Assert.AreEqual(lyric?.StartTime, 1000);
-            Assert.AreEqual(lyric?.EndTime, 5000);
+            Assert.AreEqual(lyric?.Text, text);
+            Assert.AreEqual(lyric?.StartTime, startTime);
+            Assert.AreEqual(lyric?.EndTime, endTime);
+        }
+
+        [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" })]
+        public void TestLyricTimeTag(string text, string[] timeTags)
+        {
+            var beatmap = decodeLrcLine(text);
+
+            // Get first lyric from beatmap
+            var lyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
 
             // Check time tag
-            var tags = TimeTagsUtils.ToDictionary(lyric?.TimeTags);
-            var checkedTags = tags.ToArray();
-            Assert.AreEqual(tags.Count, 5);
-            Assert.AreEqual(checkedTags.Length, 5);
-            Assert.AreEqual(string.Join(',', tags.Select(x => x.Key.Index)), "0,1,2,3,4");
-            Assert.AreEqual(string.Join(',', tags.Select(x => x.Value)), "1000,2000,3000,4000,5000");
+            TimeTagAssert.ArePropertyEqual(lyric?.TimeTags, TestCaseTagHelper.ParseTimeTags(timeTags));
         }
 
-        [Test]
-        public void TestDecodeLyricWithDuplicatedTimeTag()
+        [TestCase("[00:04.00]か[00:04.00]ら[00:05.00]お[00:06.00]け[00:07.00]")]
+        public void TestDecodeLyricWithDuplicatedTimeTag(string text)
         {
-            const string wrong_lyric_text = "[00:04.00]か[00:04.00]ら[00:05.00]お[00:06.00]け[00:07.00]";
-            Assert.Throws<FormatException>(() => decodeLrcLine(wrong_lyric_text));
+            Assert.Throws<FormatException>(() => decodeLrcLine(text));
         }
 
-        [Test]
         [Ignore("Waiting for lyric parser update.")]
-        public void TestDecodeLyricWithTimeTagNotOrder()
+        [TestCase("[00:04.00]か[00:03.00]ら[00:02.00]お[00:01.00]け[00:00.00]")]
+        public void TestDecodeLyricWithTimeTagNotOrder(string text)
         {
-            const string wrong_lyric_text = "[00:04.00]か[00:03.00]ら[00:02.00]お[00:01.00]け[00:00.00]";
-            Assert.Throws<FormatException>(() => decodeLrcLine(wrong_lyric_text));
+            Assert.Throws<FormatException>(() => decodeLrcLine(text));
         }
 
         private static Beatmap decodeLrcLine(string line)
