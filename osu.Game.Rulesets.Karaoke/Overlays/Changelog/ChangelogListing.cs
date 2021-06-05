@@ -11,13 +11,13 @@ using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
     /// <summary>
-    /// Display list of <see cref="KaraokeChangelogBuild"/>
+    /// Display list of <see cref="APIChangelogBuild"/>
     /// </summary>
     public class ChangelogListing : ChangelogContent
     {
-        private readonly List<KaraokeChangelogBuild> entries;
+        private readonly List<APIChangelogBuild> entries;
 
-        public ChangelogListing(List<KaraokeChangelogBuild> entries)
+        public ChangelogListing(List<APIChangelogBuild> entries)
         {
             this.entries = entries;
         }

@@ -26,13 +26,13 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
 {
     public class KaraokeChangelogOverlay : FullscreenOverlay<ChangelogHeader>
     {
-        public readonly Bindable<KaraokeChangelogBuild> Current = new Bindable<KaraokeChangelogBuild>();
+        public readonly Bindable<APIChangelogBuild> Current = new Bindable<APIChangelogBuild>();
 
         private Container<ChangelogContent> content;
 
         private Sample sampleBack;
 
-        private List<KaraokeChangelogBuild> builds;
+        private List<APIChangelogBuild> builds;
 
         private readonly string organizationName;
         private readonly string branchName;
@@ -103,8 +103,8 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         /// <summary>
         /// Fetches and shows a specific build from a specific update stream.
         /// </summary>
-        /// Must contain at least <see cref="KaraokeChangelogBuild"/> and
-        public void ShowBuild([NotNull] KaraokeChangelogBuild build)
+        /// Must contain at least <see cref="APIChangelogBuild"/> and
+        public void ShowBuild([NotNull] APIChangelogBuild build)
         {
             if (build == null)
                 throw new ArgumentNullException(nameof(build));
@@ -167,7 +167,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
 
                 if (reposAscending.Any())
                 {
-                    builds = reposAscending.Reverse().Where(x => x.Type == ContentType.Dir).Select(x => new KaraokeChangelogBuild(organizationName, projectName, branchName)
+                    builds = reposAscending.Reverse().Where(x => x.Type == ContentType.Dir).Select(x => new APIChangelogBuild(organizationName, projectName, branchName)
                     {
                         RootUrl = x.HtmlUrl,
                         Path = x.Path,
