@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
@@ -19,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
         public ChangelogListing(List<APIChangelogBuild> entries)
         {
-            this.entries = entries;
+            this.entries = entries.Take(4).ToList();
         }
 
         [BackgroundDependencyLoader]

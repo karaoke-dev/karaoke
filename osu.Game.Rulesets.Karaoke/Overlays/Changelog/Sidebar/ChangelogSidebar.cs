@@ -108,21 +108,21 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
             if (allPosts?.Any() != true)
                 return;
 
-            var lookup = metadata.NewValue.Changelogs.ToLookup(post => post.PublishedAt.Month);
+            var lookup = metadata.NewValue.Changelogs.ToLookup(post => post.PublishedAt.Year);
 
             var keys = lookup.Select(kvp => kvp.Key);
             var sortedKeys = keys.OrderByDescending(k => k).ToList();
 
-            var year = metadata.NewValue.CurrentYear;
+            var currentYear = metadata.NewValue.CurrentYear;
 
             for (int i = 0; i < sortedKeys.Count; i++)
             {
-                var month = sortedKeys[i];
-                var posts = lookup[month];
+                var year = sortedKeys[i];
+                var posts = lookup[year];
 
-                changelogsFlow.Add(new ChangelogSection(month, year, posts)
+                changelogsFlow.Add(new ChangelogSection(year, posts)
                 {
-                    Expanded = { Value = i == 0 }
+                    Expanded = { Value = year == currentYear }
                 });
             }
         }

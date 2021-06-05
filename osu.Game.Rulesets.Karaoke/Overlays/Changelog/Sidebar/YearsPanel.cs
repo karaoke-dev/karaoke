@@ -82,9 +82,6 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
         {
             public int Year { get; }
 
-            [Resolved(canBeNull: true)]
-            private NewsOverlay overlay { get; set; }
-
             private readonly bool isCurrent;
 
             public YearButton(int year, bool isCurrent)
@@ -106,14 +103,17 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
             }
 
             [BackgroundDependencyLoader]
-            private void load(OverlayColourProvider colourProvider)
+            private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogSidebar> metadata)
             {
                 IdleColour = isCurrent ? Color4.White : colourProvider.Light2;
                 HoverColour = isCurrent ? Color4.White : colourProvider.Light1;
                 Action = () =>
                 {
                     if (!isCurrent)
-                        overlay?.ShowYear(Year);
+                    {
+                        metadata.Value.CurrentYear = Year;
+                        metadata.TriggerChange();
+                    }
                 };
             }
         }

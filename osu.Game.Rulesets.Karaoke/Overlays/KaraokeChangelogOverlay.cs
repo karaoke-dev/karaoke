@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -14,10 +15,12 @@ using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Overlays.Changelog;
+using osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays
@@ -26,7 +29,12 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
     {
         public override bool IsPresent => base.IsPresent || Scheduler.HasPendingTasks;
 
+        [Cached]
         public readonly Bindable<APIChangelogBuild> Current = new Bindable<APIChangelogBuild>();
+
+        private readonly Container sidebarContainer;
+        private readonly ChangelogSidebar sidebar;
+        private readonly Container content;
 
         private Sample sampleBack;
 
@@ -42,6 +50,37 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         {
             organizationName = organization;
             branchName = branch;
+
+            Child = new GridContainer
+            {
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                RowDimensions = new[]
+                {
+                    new Dimension(GridSizeMode.AutoSize)
+                },
+                ColumnDimensions = new[]
+                {
+                    new Dimension(GridSizeMode.AutoSize),
+                    new Dimension()
+                },
+                Content = new[]
+                {
+                    new Drawable[]
+                    {
+                        sidebarContainer = new Container
+                        {
+                            AutoSizeAxes = Axes.X,
+                            Child = sidebar = new ChangelogSidebar()
+                        },
+                        content = new Container
+                        {
+                            RelativeSizeAxes = Axes.X,
+                            AutoSizeAxes = Axes.Y
+                        }
+                    }
+                }
+            };
         }
 
         [BackgroundDependencyLoader]
@@ -60,6 +99,13 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                     loadContent(new ChangelogListing(builds));
                 }
             });
+        }
+
+        protected override void UpdateAfterChildren()
+        {
+            base.UpdateAfterChildren();
+            sidebarContainer.Height = DrawHeight;
+            sidebarContainer.Y = Math.Clamp(ScrollFlow.Current - Header.DrawHeight, 0, Math.Max(ScrollFlow.ScrollContent.DrawHeight - DrawHeight - Header.DrawHeight, 0));
         }
 
         protected override ChangelogHeader CreateHeader() => new ChangelogHeader
@@ -114,9 +160,22 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         {
             base.PopIn();
 
+            // fetch and refresh to show listing, if no other request was made via Show methods
             if (initialFetchTask == null)
-                // fetch and refresh to show listing, if no other request was made via Show methods
-                performAfterFetch(() => Current.TriggerChange());
+            {
+                performAfterFetch(() =>
+                {
+                    Current.TriggerChange();
+
+                    var years = builds.Select(x => x.PublishedAt.Year).Distinct().ToArray();
+                    sidebar.Metadata.Value = new APIChangelogSidebar
+                    {
+                        CurrentYear = years.Max(),
+                        Changelogs = builds,
+                        Years = years
+                    };
+                });
+            }
         }
 
         private Task initialFetchTask;
@@ -142,7 +201,8 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                     {
                         RootUrl = x.HtmlUrl,
                         Path = x.Path,
-                        DisplayVersion = x.Name
+                        DisplayVersion = x.Name,
+                        PublishedAt = getPublishDateFromName(x.Name)
                     }).ToList();
 
                     foreach (var build in builds)
@@ -160,23 +220,37 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
 
                 await tcs.Task;
             });
+
+            DateTimeOffset getPublishDateFromName(string name)
+            {
+                var regex = new Regex("(?<year>[-0-9]+).(?<month>[-0-9]{2})(?<day>[-0-9]{2})");
+                var result = regex.Match(name);
+                if (!result.Success)
+                    return DateTimeOffset.MaxValue;
+
+                var year = int.Parse(result.Groups["year"].Value);
+                var month = int.Parse(result.Groups["month"].Value);
+                var day = int.Parse(result.Groups["day"].Value);
+
+                return new DateTimeOffset(new DateTime(year, month, day));
+            }
         }
 
         private CancellationTokenSource loadContentCancellation;
 
         private void loadContent(ChangelogContent newContent)
         {
-            Content.FadeTo(0.2f, 300, Easing.OutQuint);
+            content.FadeTo(0.2f, 300, Easing.OutQuint);
 
             loadContentCancellation?.Cancel();
 
             LoadComponentAsync(newContent, c =>
             {
-                Content.FadeIn(300, Easing.OutQuint);
+                content.FadeIn(300, Easing.OutQuint);
 
                 // if content changed view version
                 c.BuildSelected = ShowBuild;
-                Content.Child = c;
+                content.Child = c;
             }, (loadContentCancellation = new CancellationTokenSource()).Token);
         }
     }
