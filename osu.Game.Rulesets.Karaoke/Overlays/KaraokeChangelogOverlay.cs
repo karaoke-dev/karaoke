@@ -14,21 +14,19 @@ using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
-using osu.Game.Graphics.Containers;
 using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Overlays.Changelog;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays
 {
-    public class KaraokeChangelogOverlay : FullscreenOverlay<ChangelogHeader>
+    public class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
     {
-        public readonly Bindable<APIChangelogBuild> Current = new Bindable<APIChangelogBuild>();
+        public override bool IsPresent => base.IsPresent || Scheduler.HasPendingTasks;
 
-        private Container<ChangelogContent> content;
+        public readonly Bindable<APIChangelogBuild> Current = new Bindable<APIChangelogBuild>();
 
         private Sample sampleBack;
 
@@ -40,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         private string projectName => $"{organizationName}.github.io";
 
         public KaraokeChangelogOverlay(string organization, string branch = "master")
-            : base(OverlayColourScheme.Purple)
+            : base(OverlayColourScheme.Purple, false)
         {
             organizationName = organization;
             branchName = branch;
@@ -49,38 +47,9 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         [BackgroundDependencyLoader]
         private void load(AudioManager audio)
         {
-            Children = new Drawable[]
-            {
-                new Box
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = ColourProvider.Background4,
-                },
-                new OverlayScrollContainer
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    ScrollbarVisible = false,
-                    Child = new ReverseChildIDFillFlowContainer<Drawable>
-                    {
-                        RelativeSizeAxes = Axes.X,
-                        AutoSizeAxes = Axes.Y,
-                        Direction = FillDirection.Vertical,
-                        Children = new Drawable[]
-                        {
-                            Header.With(h => { h.ListingSelected = ShowListing; }),
-                            content = new Container<ChangelogContent>
-                            {
-                                RelativeSizeAxes = Axes.X,
-                                AutoSizeAxes = Axes.Y,
-                            }
-                        },
-                    },
-                },
-            };
+            Header.Build.BindTo(Current);
 
             sampleBack = audio.Samples.Get(@"UI/generic-select-soft");
-
-            Header.Build.BindTo(Current);
 
             Current.BindValueChanged(e =>
             {
@@ -88,11 +57,17 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                     loadContent(new ChangelogSingleBuild(e.NewValue));
                 else
                 {
-                    // loading empty change log
                     loadContent(new ChangelogListing(builds));
                 }
             });
         }
+
+        protected override ChangelogHeader CreateHeader() => new ChangelogHeader
+        {
+            ListingSelected = ShowListing,
+        };
+
+        protected override Color4 BackgroundColour => ColourProvider.Background4;
 
         public void ShowListing()
         {
@@ -103,20 +78,16 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         /// <summary>
         /// Fetches and shows a specific build from a specific update stream.
         /// </summary>
-        /// Must contain at least <see cref="APIChangelogBuild"/> and
+        /// <param name="build">Must contain at least <see cref="APIUpdateStream.Name"/> and
+        /// <see cref="APIChangelogBuild.Version"/>. If <see cref="APIUpdateStream.DisplayName"/> and
+        /// <see cref="APIChangelogBuild.DisplayVersion"/> are specified, the header will instantly display them.</param>
         public void ShowBuild([NotNull] APIChangelogBuild build)
         {
-            if (build == null)
-                throw new ArgumentNullException(nameof(build));
+            if (build == null) throw new ArgumentNullException(nameof(build));
 
             Current.Value = build;
             Show();
         }
-
-        protected override ChangelogHeader CreateHeader() => new ChangelogHeader
-        {
-            ListingSelected = ShowListing,
-        };
 
         public override bool OnPressed(GlobalAction action)
         {
@@ -195,17 +166,17 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
 
         private void loadContent(ChangelogContent newContent)
         {
-            content.FadeTo(0.2f, 300, Easing.OutQuint);
+            Content.FadeTo(0.2f, 300, Easing.OutQuint);
 
             loadContentCancellation?.Cancel();
 
             LoadComponentAsync(newContent, c =>
             {
-                content.FadeIn(300, Easing.OutQuint);
+                Content.FadeIn(300, Easing.OutQuint);
 
                 // if content changed view version
                 c.BuildSelected = ShowBuild;
-                content.Child = c;
+                Content.Child = c;
             }, (loadContentCancellation = new CancellationTokenSource()).Token);
         }
     }
