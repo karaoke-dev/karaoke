@@ -13,9 +13,9 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
     /// </summary>
     public abstract class ChangelogContent : FillFlowContainer
     {
-        public Action<KaraokeChangelogBuild> BuildSelected;
+        public Action<APIChangelogBuild> BuildSelected;
 
-        public void SelectBuild(KaraokeChangelogBuild build) => BuildSelected?.Invoke(build);
+        public void SelectBuild(APIChangelogBuild build) => BuildSelected?.Invoke(build);
 
         protected ChangelogContent()
         {

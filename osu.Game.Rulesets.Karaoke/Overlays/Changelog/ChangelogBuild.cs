@@ -14,19 +14,19 @@ using osuTK.Graphics;
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
     /// <summary>
-    /// Display full content in <see cref="KaraokeChangelogBuild"/>
+    /// Display full content in <see cref="APIChangelogBuild"/>
     /// </summary>
     public class ChangelogBuild : FillFlowContainer
     {
         public const float HORIZONTAL_PADDING = 70;
 
-        public Action<KaraokeChangelogBuild> SelectBuild;
+        public Action<APIChangelogBuild> SelectBuild;
 
-        protected readonly KaraokeChangelogBuild Build;
+        protected readonly APIChangelogBuild Build;
 
         public readonly ChangeLogMarkdownContainer ChangelogEntries;
 
-        public ChangelogBuild(KaraokeChangelogBuild build)
+        public ChangelogBuild(APIChangelogBuild build)
         {
             Build = build;
 

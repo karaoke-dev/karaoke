@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -15,24 +16,29 @@ using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
-using osu.Game.Graphics.Containers;
 using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Overlays.Changelog;
+using osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays
 {
-    public class KaraokeChangelogOverlay : FullscreenOverlay<ChangelogHeader>
+    public class KaraokeChangelogOverlay : OnlineOverlay<ChangelogHeader>
     {
-        public readonly Bindable<KaraokeChangelogBuild> Current = new Bindable<KaraokeChangelogBuild>();
+        public override bool IsPresent => base.IsPresent || Scheduler.HasPendingTasks;
 
-        private Container<ChangelogContent> content;
+        [Cached]
+        public readonly Bindable<APIChangelogBuild> Current = new Bindable<APIChangelogBuild>();
+
+        private readonly Container sidebarContainer;
+        private readonly ChangelogSidebar sidebar;
+        private readonly Container content;
 
         private Sample sampleBack;
 
-        private List<KaraokeChangelogBuild> builds;
+        private List<APIChangelogBuild> builds;
 
         private readonly string organizationName;
         private readonly string branchName;
@@ -40,47 +46,49 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         private string projectName => $"{organizationName}.github.io";
 
         public KaraokeChangelogOverlay(string organization, string branch = "master")
-            : base(OverlayColourScheme.Purple)
+            : base(OverlayColourScheme.Purple, false)
         {
             organizationName = organization;
             branchName = branch;
+
+            Child = new GridContainer
+            {
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                RowDimensions = new[]
+                {
+                    new Dimension(GridSizeMode.AutoSize)
+                },
+                ColumnDimensions = new[]
+                {
+                    new Dimension(GridSizeMode.AutoSize),
+                    new Dimension()
+                },
+                Content = new[]
+                {
+                    new Drawable[]
+                    {
+                        sidebarContainer = new Container
+                        {
+                            AutoSizeAxes = Axes.X,
+                            Child = sidebar = new ChangelogSidebar()
+                        },
+                        content = new Container
+                        {
+                            RelativeSizeAxes = Axes.X,
+                            AutoSizeAxes = Axes.Y
+                        }
+                    }
+                }
+            };
         }
 
         [BackgroundDependencyLoader]
         private void load(AudioManager audio)
         {
-            Children = new Drawable[]
-            {
-                new Box
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = ColourProvider.Background4,
-                },
-                new OverlayScrollContainer
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    ScrollbarVisible = false,
-                    Child = new ReverseChildIDFillFlowContainer<Drawable>
-                    {
-                        RelativeSizeAxes = Axes.X,
-                        AutoSizeAxes = Axes.Y,
-                        Direction = FillDirection.Vertical,
-                        Children = new Drawable[]
-                        {
-                            Header.With(h => { h.ListingSelected = ShowListing; }),
-                            content = new Container<ChangelogContent>
-                            {
-                                RelativeSizeAxes = Axes.X,
-                                AutoSizeAxes = Axes.Y,
-                            }
-                        },
-                    },
-                },
-            };
+            Header.Build.BindTo(Current);
 
             sampleBack = audio.Samples.Get(@"UI/generic-select-soft");
-
-            Header.Build.BindTo(Current);
 
             Current.BindValueChanged(e =>
             {
@@ -88,11 +96,24 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                     loadContent(new ChangelogSingleBuild(e.NewValue));
                 else
                 {
-                    // loading empty change log
                     loadContent(new ChangelogListing(builds));
                 }
             });
         }
+
+        protected override void UpdateAfterChildren()
+        {
+            base.UpdateAfterChildren();
+            sidebarContainer.Height = DrawHeight;
+            sidebarContainer.Y = Math.Clamp(ScrollFlow.Current - Header.DrawHeight, 0, Math.Max(ScrollFlow.ScrollContent.DrawHeight - DrawHeight - Header.DrawHeight, 0));
+        }
+
+        protected override ChangelogHeader CreateHeader() => new ChangelogHeader
+        {
+            ListingSelected = ShowListing,
+        };
+
+        protected override Color4 BackgroundColour => ColourProvider.Background4;
 
         public void ShowListing()
         {
@@ -103,20 +124,16 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         /// <summary>
         /// Fetches and shows a specific build from a specific update stream.
         /// </summary>
-        /// Must contain at least <see cref="KaraokeChangelogBuild"/> and
-        public void ShowBuild([NotNull] KaraokeChangelogBuild build)
+        /// <param name="build">Must contain at least <see cref="APIUpdateStream.Name"/> and
+        /// <see cref="APIChangelogBuild.Version"/>. If <see cref="APIUpdateStream.DisplayName"/> and
+        /// <see cref="APIChangelogBuild.DisplayVersion"/> are specified, the header will instantly display them.</param>
+        public void ShowBuild([NotNull] APIChangelogBuild build)
         {
-            if (build == null)
-                throw new ArgumentNullException(nameof(build));
+            if (build == null) throw new ArgumentNullException(nameof(build));
 
             Current.Value = build;
             Show();
         }
-
-        protected override ChangelogHeader CreateHeader() => new ChangelogHeader
-        {
-            ListingSelected = ShowListing,
-        };
 
         public override bool OnPressed(GlobalAction action)
         {
@@ -143,9 +160,22 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         {
             base.PopIn();
 
+            // fetch and refresh to show listing, if no other request was made via Show methods
             if (initialFetchTask == null)
-                // fetch and refresh to show listing, if no other request was made via Show methods
-                performAfterFetch(() => Current.TriggerChange());
+            {
+                performAfterFetch(() =>
+                {
+                    Current.TriggerChange();
+
+                    var years = builds.Select(x => x.PublishedAt.Year).Distinct().ToArray();
+                    sidebar.Year.Value = years.Max();
+                    sidebar.Metadata.Value = new APIChangelogSidebar
+                    {
+                        Changelogs = builds,
+                        Years = years
+                    };
+                });
+            }
         }
 
         private Task initialFetchTask;
@@ -167,11 +197,12 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
 
                 if (reposAscending.Any())
                 {
-                    builds = reposAscending.Reverse().Where(x => x.Type == ContentType.Dir).Select(x => new KaraokeChangelogBuild(organizationName, projectName, branchName)
+                    builds = reposAscending.Reverse().Where(x => x.Type == ContentType.Dir).Select(x => new APIChangelogBuild(organizationName, projectName, branchName)
                     {
                         RootUrl = x.HtmlUrl,
                         Path = x.Path,
-                        DisplayVersion = x.Name
+                        DisplayVersion = x.Name,
+                        PublishedAt = getPublishDateFromName(x.Name)
                     }).ToList();
 
                     foreach (var build in builds)
@@ -189,6 +220,20 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
 
                 await tcs.Task;
             });
+
+            DateTimeOffset getPublishDateFromName(string name)
+            {
+                var regex = new Regex("(?<year>[-0-9]+).(?<month>[-0-9]{2})(?<day>[-0-9]{2})");
+                var result = regex.Match(name);
+                if (!result.Success)
+                    return DateTimeOffset.MaxValue;
+
+                var year = int.Parse(result.Groups["year"].Value);
+                var month = int.Parse(result.Groups["month"].Value);
+                var day = int.Parse(result.Groups["day"].Value);
+
+                return new DateTimeOffset(new DateTime(year, month, day));
+            }
         }
 
         private CancellationTokenSource loadContentCancellation;

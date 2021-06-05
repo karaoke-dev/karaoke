@@ -16,13 +16,13 @@ using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
     /// <summary>
-    /// Display <see cref="KaraokeChangelogBuild"/> detail
+    /// Display <see cref="APIChangelogBuild"/> detail
     /// </summary>
     public class ChangelogSingleBuild : ChangelogContent
     {
-        private readonly KaraokeChangelogBuild build;
+        private readonly APIChangelogBuild build;
 
-        public ChangelogSingleBuild(KaraokeChangelogBuild build)
+        public ChangelogSingleBuild(APIChangelogBuild build)
         {
             this.build = build;
         }
@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
         public class ChangelogBuildWithNavigation : ChangelogBuild
         {
-            public ChangelogBuildWithNavigation(KaraokeChangelogBuild build)
+            public ChangelogBuildWithNavigation(APIChangelogBuild build)
                 : base(build)
             {
             }
@@ -76,9 +76,9 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
         private class NavigationIconButton : IconButton
         {
-            public Action<KaraokeChangelogBuild> SelectBuild;
+            public Action<APIChangelogBuild> SelectBuild;
 
-            public NavigationIconButton(KaraokeChangelogBuild build)
+            public NavigationIconButton(APIChangelogBuild build)
             {
                 Anchor = Anchor.Centre;
                 Origin = Anchor.Centre;

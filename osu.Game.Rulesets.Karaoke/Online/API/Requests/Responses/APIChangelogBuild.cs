@@ -1,9 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+
 namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
 {
-    public class KaraokeChangelogBuild
+    public class APIChangelogBuild
     {
         /// <summary>
         ///
@@ -11,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
         /// <param name="organization">Account or organization name</param>
         /// <param name="project">Project name</param>
         /// <param name="branch">Branch name</param>
-        public KaraokeChangelogBuild(string organization, string project, string branch = "master")
+        public APIChangelogBuild(string organization, string project, string branch = "master")
         {
             OrganizationName = organization;
             ProjectName = project;
@@ -64,17 +66,22 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
         /// </summary>
         public VersionNavigation Versions { get; }
 
+        /// <summary>
+        /// Created date.
+        /// </summary>
+        public DateTimeOffset PublishedAt { get; set; }
+
         public class VersionNavigation
         {
             /// <summary>
             /// Next version
             /// </summary>
-            public KaraokeChangelogBuild Next { get; set; }
+            public APIChangelogBuild Next { get; set; }
 
             /// <summary>
             /// Previous version
             /// </summary>
-            public KaraokeChangelogBuild Previous { get; set; }
+            public APIChangelogBuild Previous { get; set; }
         }
     }
 }

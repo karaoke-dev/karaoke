@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
     public class ChangeLogMarkdownContainer : OsuMarkdownContainer
     {
-        public ChangeLogMarkdownContainer(KaraokeChangelogBuild build)
+        public ChangeLogMarkdownContainer(APIChangelogBuild build)
         {
             DocumentUrl = build.DocumentUrl;
             RootUrl = build.RootUrl;

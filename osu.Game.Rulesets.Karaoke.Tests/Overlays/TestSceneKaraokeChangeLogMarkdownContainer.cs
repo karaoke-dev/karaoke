@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            var build = new KaraokeChangelogBuild("karaoke-dev", "karaoke-dev.github.io")
+            var build = new APIChangelogBuild("karaoke-dev", "karaoke-dev.github.io")
             {
                 Path = "changelog/2020.0620",
                 RootUrl = "https://github.com/karaoke-dev/karaoke-dev.github.io/tree/master/changelog/2020.0620"

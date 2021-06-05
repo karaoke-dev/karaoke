@@ -2,28 +2,31 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 {
     /// <summary>
-    /// Display list of <see cref="KaraokeChangelogBuild"/>
+    /// Display list of <see cref="APIChangelogBuild"/>
     /// </summary>
     public class ChangelogListing : ChangelogContent
     {
-        private readonly List<KaraokeChangelogBuild> entries;
+        private readonly List<APIChangelogBuild> entries;
 
-        public ChangelogListing(List<KaraokeChangelogBuild> entries)
+        public ChangelogListing(List<APIChangelogBuild> entries)
         {
-            this.entries = entries;
+            this.entries = entries.Take(4).ToList();
         }
 
         [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider)
+        private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogBuild> current)
         {
             if (entries == null)
                 return;
@@ -47,6 +50,20 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                     AutoSizeAxes = Axes.None,
                     Height = 300,
                     SelectBuild = SelectBuild
+                });
+            }
+
+            if (entries.Any())
+            {
+                Add(new ShowMoreButton
+                {
+                    Anchor = Anchor.TopCentre,
+                    Origin = Anchor.TopCentre,
+                    Padding = new MarginPadding { Top = 15, Bottom = 15 },
+                    Action = () =>
+                    {
+                        current.Value = entries.LastOrDefault();
+                    },
                 });
             }
         }
