@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                             {
                                 new EditModeMenu(config, "Edit mode"),
                                 new EditorMenuItemSpacer(),
-                                new LyricEditorEditModeMenu(config, "Lyric editor mode"),
+                                new LyricEditorModeMenu(config, "Lyric editor mode"),
                                 new LyricEditorMovingCaretModeMenu(config, "Record caret moving mode"),
                                 new LyricEditorTextSizeMenu(config, "Text size"),
                                 new EditorMenuItemSpacer(),
