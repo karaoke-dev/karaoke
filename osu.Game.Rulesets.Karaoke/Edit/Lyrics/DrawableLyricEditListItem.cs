@@ -38,8 +38,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // Only draggable in edit mode.
                 ShowDragHandle.Value = e.NewValue == LyricEditorMode.Manage;
 
-                // should remove overlay when switch mode.
-                removeOverlay();
+                // should remove extend when switch mode.
+                removeExtend();
             }, true);
 
             bindableHoverCaretPosition.BindValueChanged(e =>
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 if (e.NewValue.Lyric != Model)
                 {
-                    removeOverlay();
+                    removeExtend();
                     selectedBackground.Hide();
                     return;
                 }
@@ -78,22 +78,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // show selected background.
                 selectedBackground.Show();
 
-                // show not create again if contains same overlay.
-                var existOverlay = getOverlay();
-                if (existOverlay != null)
+                // show not create again if contains same extend.
+                var existExtend = getExtend();
+                if (existExtend != null)
                     return;
 
-                // show extra overlay if hover to current lyric.
-                var editOverlay = createOverlay(bindableMode.Value, Model);
-                if (editOverlay == null)
+                // show extra extend if hover to current lyric.
+                var editExtend = createExtend(bindableMode.Value, Model);
+                if (editExtend == null)
                     return;
 
-                editOverlay.RelativeSizeAxes = Axes.X;
-                content.Add(editOverlay);
-                editOverlay.Show();
+                editExtend.RelativeSizeAxes = Axes.X;
+                content.Add(editExtend);
+                editExtend.Show();
             });
 
-            static RowEditExtend createOverlay(LyricEditorMode mode, Lyric lyric)
+            static RowEditExtend createExtend(LyricEditorMode mode, Lyric lyric)
             {
                 switch (mode)
                 {
@@ -108,23 +108,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             }
 
-            void removeOverlay()
+            void removeExtend()
             {
-                var existOverlay = getOverlay();
-                if (existOverlay == null)
+                var existExtend = getExtend();
+                if (existExtend == null)
                     return;
 
-                // todo : might remove component until overlay effect end.
-                content.Remove(existOverlay);
+                // todo : might remove component until Extend effect end.
+                content.Remove(existExtend);
             }
         }
 
-        private RowEditExtend getOverlay()
+        private RowEditExtend getExtend()
         {
             return content?.Children.OfType<RowEditExtend>().FirstOrDefault();
         }
 
-        public float OverlayHeight => getOverlay()?.ContentHeight ?? 0;
+        public float ExtendHeight => getExtend()?.ContentHeight ?? 0;
 
         protected override Drawable CreateContent()
         {
