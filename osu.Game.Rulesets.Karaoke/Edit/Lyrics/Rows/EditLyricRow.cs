@@ -333,7 +333,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     case LyricEditorMode.Manage:
                     case LyricEditorMode.Typing:
                         var lyricStringIndex = TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position));
-                        state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, lyricStringIndex));
+
+                        // let lyric easy to select if user hover at the right side.
+                        var processedIndex = Math.Clamp(lyricStringIndex, 0, Lyric.Text.Length - 1);
+                        state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, processedIndex));
                         break;
 
                     case LyricEditorMode.EditRubyRomaji:
