@@ -5,11 +5,13 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -32,9 +34,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     Masking = true,
                     CornerRadius = 5,
                     RelativeSizeAxes = Axes.Both,
-                    Child = new CreateNewLyricRow
+                    Children = new Drawable[]
                     {
-                        RelativeSizeAxes = Axes.Both,
+                        new Box
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Alpha = 0.5f,
+                            Colour = Color4.Black
+                        },
+                        new CreateNewLyricRow
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                        }
                     }
                 }
             };

@@ -8,7 +8,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
-using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
@@ -16,15 +15,17 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class DrawableLyricEditListItem : OsuRearrangeableListItem<Lyric>
     {
-        private Box draggingBackground;
-        private Box selectedBackground;
-        private Box hoverBackground;
+        private Box background;
         private FillFlowContainer content;
+
+        [Resolved]
+        private LyricEditorColourProvider colourProvider { get; set; }
 
         private readonly Bindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly Bindable<ICaretPosition> bindableHoverCaretPosition = new Bindable<ICaretPosition>();
@@ -44,39 +45,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             bindableHoverCaretPosition.BindValueChanged(e =>
             {
-                if (e.NewValue == null)
-                {
-                    hoverBackground.Hide();
-                    return;
-                }
-
-                if (e.NewValue.Lyric != Model)
-                {
-                    hoverBackground.Hide();
-                    return;
-                }
-
-                // show selected background.
-                hoverBackground.Show();
+                updateBackgroundColour();
             });
 
             bindableCaretPosition.BindValueChanged(e =>
             {
-                if (e.NewValue == null)
-                {
-                    selectedBackground.Hide();
-                    return;
-                }
+                updateBackgroundColour();
 
                 if (e.NewValue.Lyric != Model)
                 {
                     removeExtend();
-                    selectedBackground.Hide();
                     return;
                 }
-
-                // show selected background.
-                selectedBackground.Show();
 
                 // show not create again if contains same extend.
                 var existExtend = getExtend();
@@ -136,20 +116,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 RelativeSizeAxes = Axes.X,
                 Children = new Drawable[]
                 {
-                    draggingBackground = new Box
+                    background = new Box
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Alpha = 0
-                    },
-                    hoverBackground = new Box
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Alpha = 0
-                    },
-                    selectedBackground = new Box
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Alpha = 0
+                        Alpha = 0.5f
                     },
                     content = new FillFlowContainer
                     {
@@ -168,30 +138,54 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, ILyricEditorState state)
+        private void load(ILyricEditorState state)
         {
-            draggingBackground.Colour = colours.YellowDarker;
-            selectedBackground.Colour = colours.PinkDark;
-            hoverBackground.Colour = colours.PinkLight;
-
             bindableMode.BindTo(state.BindableMode);
             bindableHoverCaretPosition.BindTo(state.BindableHoverCaretPosition);
             bindableCaretPosition.BindTo(state.BindableCaretPosition);
+
+            updateBackgroundColour();
         }
+
+        private bool isDragging;
 
         protected override bool OnDragStart(DragStartEvent e)
         {
             if (!base.OnDragStart(e))
                 return false;
 
-            draggingBackground.Show();
+            isDragging = true;
+            updateBackgroundColour();
+
             return true;
         }
 
         protected override void OnDragEnd(DragEndEvent e)
         {
-            draggingBackground.Hide();
+            isDragging = false;
+            updateBackgroundColour();
+
             base.OnDragEnd(e);
+        }
+
+        private void updateBackgroundColour()
+        {
+            background.Colour = getColour();
+
+            Color4 getColour()
+            {
+                var mode = bindableMode.Value;
+                if (isDragging)
+                    return colourProvider.Background3(mode);
+
+                if (bindableCaretPosition.Value?.Lyric == Model)
+                    return colourProvider.Background3(mode);
+
+                if (bindableHoverCaretPosition.Value?.Lyric == Model)
+                    return colourProvider.Background6(mode);
+
+                return Color4.Black;
+            }
         }
     }
 }

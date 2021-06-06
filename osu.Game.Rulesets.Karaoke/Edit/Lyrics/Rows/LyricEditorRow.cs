@@ -4,10 +4,8 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 {
@@ -27,31 +25,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            InternalChildren = new Drawable[]
+            InternalChild = new GridContainer
             {
-                new Box
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                ColumnDimensions = new[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.5f,
-                    Colour = Color4.Black
+                    new Dimension(GridSizeMode.Absolute, info_part_spacing),
+                    new Dimension()
                 },
-                new GridContainer
+                RowDimensions = new[] { new Dimension(GridSizeMode.AutoSize, minSize: min_height, maxSize: max_height) },
+                Content = new[]
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    ColumnDimensions = new[]
+                    new[]
                     {
-                        new Dimension(GridSizeMode.Absolute, info_part_spacing),
-                        new Dimension()
-                    },
-                    RowDimensions = new[] { new Dimension(GridSizeMode.AutoSize, minSize: min_height, maxSize: max_height) },
-                    Content = new[]
-                    {
-                        new[]
-                        {
-                            CreateLyricInfo(lyric),
-                            CreateContent(lyric)
-                        }
+                        CreateLyricInfo(lyric),
+                        CreateContent(lyric)
                     }
                 }
             };
