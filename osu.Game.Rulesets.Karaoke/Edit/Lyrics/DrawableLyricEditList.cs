@@ -5,11 +5,13 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -32,9 +34,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     Masking = true,
                     CornerRadius = 5,
                     RelativeSizeAxes = Axes.Both,
-                    Child = new CreateNewLyricRow
+                    Children = new Drawable[]
                     {
-                        RelativeSizeAxes = Axes.Both,
+                        new Box
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Alpha = 0.5f,
+                            Colour = Color4.Black
+                        },
+                        new CreateNewLyricRow
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                        }
                     }
                 }
             };
@@ -77,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             // do not scroll if position is too large and not able to move to target position.
-            var itemHeight = newItem.Height + newItem.OverlayHeight;
+            var itemHeight = newItem.Height + newItem.ExtendHeight;
             var contentHeight = ScrollContainer.ScrollContent.Height;
             var containerHeight = ScrollContainer.DrawHeight;
             if (contentHeight - scrollPosition + itemHeight < containerHeight - spacing)
@@ -99,9 +110,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (oldItemPosition > scrollPosition)
                     return 0;
 
-                // if previous lyric is in front of current lyric row, due to overlay in previous row has been removed.
-                // it will cause offset from previous row overlay.
-                return -newItem.OverlayHeight;
+                // if previous lyric is in front of current lyric row, due to extend in previous row has been removed.
+                // it will cause offset from previous row extend.
+                return -newItem.ExtendHeight;
             }
         }
     }

@@ -33,6 +33,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved]
         private EditorClock editorClock { get; set; }
 
+        [Cached]
+        private readonly LyricEditorColourProvider colourProvider = new LyricEditorColourProvider();
+
         public Bindable<LyricEditorMode> BindableMode { get; } = new Bindable<LyricEditorMode>();
 
         public Bindable<RecordingMovingCaretMode> BindableRecordingMovingCaretMode { get; } = new Bindable<RecordingMovingCaretMode>();

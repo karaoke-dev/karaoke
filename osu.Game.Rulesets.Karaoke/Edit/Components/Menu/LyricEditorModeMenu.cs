@@ -7,11 +7,11 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public class LyricEditorEditModeMenu : EnumMenu<LyricEditorMode>
+    public class LyricEditorModeMenu : EnumMenu<LyricEditorMode>
     {
         protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.LyricEditorMode;
 
-        public LyricEditorEditModeMenu(KaraokeRulesetEditConfigManager config, string text)
+        public LyricEditorModeMenu(KaraokeRulesetEditConfigManager config, string text)
             : base(config, text)
         {
         }
@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                     return "View";
 
                 case LyricEditorMode.Manage:
-                    return "Edit";
+                    return "Manage lyrics";
 
                 case LyricEditorMode.Typing:
                     return "Typing";
