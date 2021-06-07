@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 updateBackgroundColour();
 
-                if (e.NewValue.Lyric != Model)
+                if (e.NewValue?.Lyric != Model)
                 {
                     removeExtend();
                     return;

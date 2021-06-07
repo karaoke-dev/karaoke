@@ -86,7 +86,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             timeTagWithNoTimePiece.Colour = colours.Red;
             startTime.BindValueChanged(e =>
             {
-                // adjust style if time changed.
+                adjustStyle();
+                adjustPosition();
+            }, true);
+
+            // adjust style if time changed.
+            void adjustStyle()
+            {
                 var hasValue = hasTime();
 
                 switch (hasValue)
@@ -101,12 +107,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                         timeTagWithNoTimePiece.Show();
                         break;
                 }
-            }, true);
+            }
 
-            startTime.BindValueChanged(e =>
+            // assign blueprint position in here.
+            void adjustPosition()
             {
-                // assign blueprint position in here.
-                var time = e.NewValue;
+                var time = startTime.Value;
 
                 if (time != null)
                 {
@@ -133,10 +139,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                         throw new ArgumentNullException(nameof(previousTimeTagWithTime));
                     }
                 }
-            }, true);
+            }
         }
-
-        private bool hasTime() => startTime.Value.HasValue;
 
         protected override void OnSelected()
         {
@@ -159,6 +163,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         public object TooltipContent => Item;
 
         public ITooltip GetCustomTooltip() => new TimeTagTooltip();
+
+        private bool hasTime() => startTime.Value.HasValue;
 
         public class TimeTagPiece : CompositeDrawable
         {

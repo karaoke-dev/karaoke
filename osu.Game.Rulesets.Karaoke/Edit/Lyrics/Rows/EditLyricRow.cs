@@ -331,12 +331,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 switch (state.Mode)
                 {
                     case LyricEditorMode.Manage:
-                    case LyricEditorMode.Typing:
-                        var lyricStringIndex = TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position));
+                        var cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position)), 0, Lyric.Text.Length - 1);
+                        state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, cuttingLyricStringIndex));
+                        break;
 
-                        // let lyric easy to select if user hover at the right side.
-                        var processedIndex = Math.Clamp(lyricStringIndex, 0, Lyric.Text.Length - 1);
-                        state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, processedIndex));
+                    case LyricEditorMode.Typing:
+                        var typingStringIndex = TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position));
+                        state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, typingStringIndex));
                         break;
 
                     case LyricEditorMode.EditRubyRomaji:
@@ -345,8 +346,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         break;
 
                     case LyricEditorMode.RecordTimeTag:
-                        // todo : should be able to get hover tag.
-                        //state.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(Lyric, TextIndexUtils.ToStringIndex(index)));
+                        var timeTag = lyricPiece.GetHoverTimeTag(position);
+                        state.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(Lyric, timeTag));
                         break;
 
                     case LyricEditorMode.EditTimeTag:

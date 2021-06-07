@@ -34,6 +34,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             DisplayRomaji = true;
         }
 
+        public TimeTag GetHoverTimeTag(float position)
+        {
+            var textIndex = GetHoverIndex(position);
+            return HitObject?.TimeTags.FirstOrDefault(x => x.Index == textIndex);
+        }
+
         public TextIndex GetHoverIndex(float position)
         {
             var text = Text;
