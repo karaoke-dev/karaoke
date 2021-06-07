@@ -346,8 +346,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         break;
 
                     case LyricEditorMode.RecordTimeTag:
-                        // todo : should be able to get hover tag.
-                        //state.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(Lyric, TextIndexUtils.ToStringIndex(index)));
+                        var timeTag = lyricPiece.GetHoverTimeTag(position);
+                        state.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(Lyric, timeTag));
                         break;
 
                     case LyricEditorMode.EditTimeTag:
