@@ -107,7 +107,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                         timeTagWithNoTimePiece.Show();
                         break;
                 }
-
             }
 
             // assign blueprint position in here.
@@ -143,8 +142,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             }
         }
 
-        private bool hasTime() => startTime.Value.HasValue;
-
         protected override void OnSelected()
         {
             // base logic hides selected blueprints when not selected, but timeline doesn't do that.
@@ -166,6 +163,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         public object TooltipContent => Item;
 
         public ITooltip GetCustomTooltip() => new TimeTagTooltip();
+
+        private bool hasTime() => startTime.Value.HasValue;
 
         public class TimeTagPiece : CompositeDrawable
         {
