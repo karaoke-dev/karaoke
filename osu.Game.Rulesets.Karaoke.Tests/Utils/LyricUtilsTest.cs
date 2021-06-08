@@ -195,6 +195,57 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(LyricUtils.GetTimeTagIndexDisplayText(lyric, textIndex), actual);
         }
 
+        [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "[0,start]", "か-")]
+        [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "[3,start]", "け-")]
+        [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "[3,end]", "-け")]
+        [TestCase("[00:01.00]からおけ[00:05.00]", "[0,start]", "からおけ-")]
+        [TestCase("[00:01.00]からおけ[00:05.00]", "[3,end]", "-からおけ")]
+        public void TestGetTimeTagDisplayText(string text, string textIndexStr, string actual)
+        {
+            var lyric = TestCaseTagHelper.ParseLyricWithTimeTag(text);
+            var textIndex = TestCaseTagHelper.ParseTextIndex(textIndexStr);
+            var timeTag = lyric.TimeTags?.Where(x => x.Index == textIndex).FirstOrDefault();
+            Assert.AreEqual(LyricUtils.GetTimeTagDisplayText(lyric, timeTag), actual);
+        }
+
+        [TestCase(0, "(か)-")]
+        [TestCase(1, "(か)-")]
+        [TestCase(2, "-(か)")]
+        [TestCase(3, "ラ-")]
+        [TestCase(4, "ラ-")]
+        [TestCase(5, "-ラ")]
+        [TestCase(6, "(お)-")]
+        [TestCase(7, "(け)-")]
+        [TestCase(8, "(け)-")]
+        [TestCase(9, "-(け)")]
+        public void TestGetTimeTagDisplayRubyText(int indexOfTimeTag, string actual)
+        {
+            var lyric = new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(new[]
+                {
+                    "[0,start]:1000",
+                    "[0,start]:1000",
+                    "[0,end]:1000",
+                    "[1,start]:2000",
+                    "[1,start]:2000",
+                    "[1,end]:2000",
+                    "[2,start]:3000",
+                    "[2,start]:3000",
+                    "[3,start]:4000",
+                    "[3,end]:5000",
+                }),
+                RubyTags = TestCaseTagHelper.ParseRubyTags(new[]
+                {
+                    "[0,1]:か",
+                    "[2,4]:おけ",
+                })
+            };
+            var timeTag = lyric.TimeTags[indexOfTimeTag];
+            Assert.AreEqual(LyricUtils.GetTimeTagDisplayRubyText(lyric, timeTag), actual);
+        }
+
         #endregion
 
         #region Ruby/romaji tag
