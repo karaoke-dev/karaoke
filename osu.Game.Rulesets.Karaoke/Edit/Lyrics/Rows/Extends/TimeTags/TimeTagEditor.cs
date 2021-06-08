@@ -162,6 +162,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                 return time.Value;
 
             var timeTags = HitObject.TimeTags;
+            var index = timeTags.IndexOf(timeTag);
 
             const float preempt_time = 200;
             var previousTimeTagWithTime = timeTags.GetPreviousMatch(timeTag, x => x.Time.HasValue);
@@ -169,16 +170,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 
             if (previousTimeTagWithTime?.Time != null)
             {
-                return previousTimeTagWithTime.Time.Value + preempt_time;
+                var diffIndex = timeTags.IndexOf(previousTimeTagWithTime) - index;
+                return previousTimeTagWithTime.Time.Value - preempt_time * diffIndex;
             }
 
             if (nextTimeTagWithTime?.Time != null)
             {
-                return nextTimeTagWithTime.Time.Value - preempt_time;
+                var diffIndex = timeTags.IndexOf(nextTimeTagWithTime) - index;
+                return nextTimeTagWithTime.Time.Value - preempt_time * diffIndex;
             }
 
             // will goes in here if all time-tag are no time.
-            var index = timeTags.IndexOf(timeTag);
             return index * preempt_time;
         }
 
