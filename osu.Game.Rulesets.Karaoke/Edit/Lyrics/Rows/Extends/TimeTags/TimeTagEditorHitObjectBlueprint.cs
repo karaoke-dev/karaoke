@@ -115,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 
                 if (time != null)
                 {
-                    X = (float)time.Value;
+                    PreviewTime = (float)time.Value;
                 }
                 else
                 {
@@ -127,19 +127,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 
                     if (previousTimeTagWithTime?.Time != null)
                     {
-                        X = (float)previousTimeTagWithTime.Time.Value + preempt_time;
+                        PreviewTime = (float)previousTimeTagWithTime.Time.Value + preempt_time;
                     }
                     else if (nextTimeTagWithTime?.Time != null)
                     {
-                        X = (float)nextTimeTagWithTime.Time.Value - preempt_time;
+                        PreviewTime = (float)nextTimeTagWithTime.Time.Value - preempt_time;
                     }
                     else
                     {
                         // will goes in here if all time-tag are no time.
                         var index = timeTags.IndexOf(Item);
-                        X = (float)timeline.StartTime + index * preempt_time;
+                        PreviewTime = (float)timeline.StartTime + index * preempt_time;
                     }
                 }
+            }
+        }
+
+        private double previewTime;
+
+        public double PreviewTime
+        {
+            get => previewTime;
+            set
+            {
+                if(previewTime == value)
+                    return;
+
+                previewTime = value;
+                X = (float)previewTime;
             }
         }
 

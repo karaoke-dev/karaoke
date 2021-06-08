@@ -65,26 +65,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             if (!base.ApplySnapResult(blueprints, result))
                 return false;
 
-            var firstDragTimeTagTime = blueprints.First().Item.Time;
-            if (firstDragTimeTagTime == null)
+            if (result.Time == null)
                 return false;
 
-            // main goal is applying delta time while dragging.
-            if (result.Time.HasValue)
+            var timeTagBlueprints = blueprints.OfType<TimeTagEditorHitObjectBlueprint>();
+            var firstDragBlueprint = timeTagBlueprints.FirstOrDefault();
+            if (firstDragBlueprint == null)
+                return false;
+
+            var offset = result.Time.Value - firstDragBlueprint.PreviewTime;
+            if (offset == 0)
+                return false;
+
+            // todo : should not save separately.
+            foreach (var blueprint in blueprints.OfType<TimeTagEditorHitObjectBlueprint>())
             {
-                // Apply the start time at the newly snapped-to position
-                double offset = result.Time.Value - firstDragTimeTagTime.Value;
-
-                if (offset == 0)
-                    return false;
-
-                // todo : should not save separately.
-                foreach (var blueprint in blueprints)
-                {
-                    // todo : fix logic error.
-                    var timeTag = blueprint.Item;
-                    timeTag.Time += offset;
-                }
+                var timeTag = blueprint.Item;
+                timeTag.Time = blueprint.PreviewTime + offset;
             }
 
             return true;
