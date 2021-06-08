@@ -4,11 +4,13 @@
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
@@ -22,6 +24,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
     {
         private const float timeline_height = 38;
 
+        public readonly IBindable<TimeTag[]> TimeTagsBindable = new Bindable<TimeTag[]>();
+
         [Resolved]
         private EditorClock editorClock { get; set; }
 
@@ -34,12 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         public TimeTagEditor(Lyric lyric)
         {
             HitObject = lyric;
-            lyric.TimeTagsBindable.GetBoundCopy().BindValueChanged(e =>
-            {
-                // todo : change time mignt not call time-tag changed.
-                StartTime = e.NewValue?.Where(x => x.Time != null).FirstOrDefault()?.Time ?? 0 - 500;
-                EndTime = e.NewValue?.Where(x => x.Time != null).LastOrDefault()?.Time ?? 1000000;
-            }, true);
 
             RelativeSizeAxes = Axes.X;
             Padding = new MarginPadding { Top = 10 };
@@ -48,6 +46,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             ZoomDuration = 200;
             ZoomEasing = Easing.OutQuint;
             ScrollbarVisible = false;
+
+            TimeTagsBindable.BindArrayChanged(addItems =>
+            {
+                foreach (var obj in addItems)
+                {
+                    obj.TimeBindable.BindValueChanged(e =>
+                    {
+                        updateTimeRange();
+                    });
+                }
+            }, removedItems =>
+            {
+                foreach (var obj in removedItems)
+                {
+                    obj.TimeBindable.UnbindEvents();
+                }
+            });
+
+            TimeTagsBindable.BindTo(lyric.TimeTagsBindable);
+
+            updateTimeRange();
+        }
+
+        private void updateTimeRange()
+        {
+            var fistTimeTag = TimeTagsBindable.Value.FirstOrDefault();
+            var lastTimeTag = TimeTagsBindable.Value.LastOrDefault();
+
+            StartTime = GetPreviewTime(fistTimeTag) - 500;
+            EndTime = GetPreviewTime(lastTimeTag) + 500;
         }
 
         private Box background;
@@ -124,6 +152,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                 value = getPositionFromTime(EndTime - zoomMillionSecond + preempt_time);
 
             base.OnUserScroll(value, animated, distanceDecay);
+        }
+
+        public double GetPreviewTime(TimeTag timeTag)
+        {
+            var time = timeTag.Time;
+
+            if (time != null)
+                return time.Value;
+
+            var timeTags = HitObject.TimeTags;
+
+            const float preempt_time = 200;
+            var previousTimeTagWithTime = timeTags.GetPreviousMatch(timeTag, x => x.Time.HasValue);
+            var nextTimeTagWithTime = timeTags.GetNextMatch(timeTag, x => x.Time.HasValue);
+
+            if (previousTimeTagWithTime?.Time != null)
+            {
+                return previousTimeTagWithTime.Time.Value + preempt_time;
+            }
+
+            if (nextTimeTagWithTime?.Time != null)
+            {
+                return nextTimeTagWithTime.Time.Value - preempt_time;
+            }
+
+            // will goes in here if all time-tag are no time.
+            var index = timeTags.IndexOf(timeTag);
+            return index * preempt_time;
         }
 
         public SnapResult SnapScreenSpacePositionToValidPosition(Vector2 screenSpacePosition) =>
