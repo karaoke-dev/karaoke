@@ -27,9 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 
         public readonly Lyric HitObject;
 
-        private double startPosition;
+        public double StartTime { get; private set; }
 
-        private double endPosition;
+        public double EndTime { get; private set; }
 
         public TimeTagEditor(Lyric lyric)
         {
@@ -37,8 +37,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             lyric.TimeTagsBindable.GetBoundCopy().BindValueChanged(e =>
             {
                 // todo : change time mignt not call time-tag changed.
-                startPosition = e.NewValue?.Where(x => x.Time != null).FirstOrDefault()?.Time ?? 0 - 500;
-                endPosition = e.NewValue?.Where(x => x.Time != null).LastOrDefault()?.Time ?? 1000000;
+                StartTime = e.NewValue?.Where(x => x.Time != null).FirstOrDefault()?.Time ?? 0 - 500;
+                EndTime = e.NewValue?.Where(x => x.Time != null).LastOrDefault()?.Time ?? 1000000;
             }, true);
 
             RelativeSizeAxes = Axes.X;
@@ -117,11 +117,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             var position = getTimeFromPosition(new Vector2(value));
 
             // should prevent dragging or moving is out of time-tag range.
-            if (position < startPosition - preempt_time)
-                value = getPositionFromTime(startPosition - preempt_time);
+            if (position < StartTime - preempt_time)
+                value = getPositionFromTime(StartTime - preempt_time);
 
-            if (position > endPosition - zoomMillionSecond + preempt_time)
-                value = getPositionFromTime(endPosition - zoomMillionSecond + preempt_time);
+            if (position > EndTime - zoomMillionSecond + preempt_time)
+                value = getPositionFromTime(EndTime - zoomMillionSecond + preempt_time);
 
             base.OnUserScroll(value, animated, distanceDecay);
         }
