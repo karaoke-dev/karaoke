@@ -74,8 +74,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             var fistTimeTag = TimeTagsBindable.Value.FirstOrDefault();
             var lastTimeTag = TimeTagsBindable.Value.LastOrDefault();
 
-            StartTime = GetPreviewTime(fistTimeTag) - 500;
-            EndTime = GetPreviewTime(lastTimeTag) + 500;
+            if (fistTimeTag != null && lastTimeTag != null)
+            {
+                StartTime = GetPreviewTime(fistTimeTag) - 500;
+                EndTime = GetPreviewTime(lastTimeTag) + 500;
+            }
+            else
+            {
+                StartTime = 0;
+                EndTime = 0;
+            }
         }
 
         private Box background;

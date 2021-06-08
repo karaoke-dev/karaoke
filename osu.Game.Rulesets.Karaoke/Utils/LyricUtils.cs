@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Internal;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Extensions;
@@ -182,23 +183,96 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             var timeTags = lyric.TimeTags;
 
-            if (index.State == TextIndex.IndexState.Start)
+            switch (index.State)
             {
-                var nextTimeTag = timeTags.FirstOrDefault(x => x.Index > index);
-                var startIndex = index.Index;
-                var endIndex = TextIndexUtils.ToStringIndex(nextTimeTag?.Index ?? new TextIndex(text.Length));
-                return $"{text.Substring(startIndex, endIndex - startIndex)}-";
-            }
+                case TextIndex.IndexState.Start:
+                {
+                    var nextTimeTag = timeTags.FirstOrDefault(x => x.Index > index);
+                    var startIndex = index.Index;
+                    var endIndex = TextIndexUtils.ToStringIndex(nextTimeTag?.Index ?? new TextIndex(text.Length));
+                    return $"{text.Substring(startIndex, endIndex - startIndex)}-";
+                }
 
-            if (index.State == TextIndex.IndexState.End)
+                case TextIndex.IndexState.End:
+                {
+                    var previousTimeTag = timeTags.Reverse().FirstOrDefault(x => x.Index < index);
+                    var startIndex = previousTimeTag?.Index.Index ?? 0;
+                    var endIndex = index.Index + 1;
+                    return $"-{text.Substring(startIndex, endIndex - startIndex)}";
+                }
+
+                default:
+                    throw new IndexOutOfRangeException(nameof(index.State));
+            }
+        }
+
+        public static string GetTimeTagDisplayText(Lyric lyric, TimeTag timeTag)
+        {
+            if (timeTag == null)
+                throw new ArgumentNullException(nameof(timeTag));
+
+            return GetTimeTagIndexDisplayText(lyric, timeTag.Index);
+        }
+
+        public static string GetTimeTagDisplayRubyText(Lyric lyric, TimeTag timeTag)
+        {
+            if (timeTag == null)
+                throw new ArgumentNullException(nameof(timeTag));
+
+            // should check has ruby in target lyric with target index.
+            var matchRuby = lyric?.RubyTags.Where(x =>
             {
-                var previousTimeTag = timeTags.Reverse().FirstOrDefault(x => x.Index < index);
-                var startIndex = previousTimeTag?.Index.Index ?? 0;
-                var endIndex = index.Index + 1;
-                return $"-{text.Substring(startIndex, endIndex - startIndex)}";
-            }
+                var stringIndex = TextIndexUtils.ToStringIndex(timeTag.Index);
 
-            throw new IndexOutOfRangeException(nameof(index.State));
+                switch (timeTag.Index.State)
+                {
+                    case TextIndex.IndexState.Start:
+                        return x.StartIndex <= stringIndex && x.EndIndex > stringIndex;
+
+                    case TextIndex.IndexState.End:
+                        return x.StartIndex < stringIndex && x.EndIndex >= stringIndex;
+
+                    default:
+                        throw new IndexOutOfRangeException(nameof(timeTag.Index.State));
+                }
+            }).FirstOrDefault();
+
+            if (matchRuby == null || string.IsNullOrEmpty(matchRuby.Text))
+                return GetTimeTagDisplayText(lyric, timeTag);
+
+            // get all the rubies with same index.
+            var timeTagsWithSameIndex = lyric.TimeTags.Where(x =>
+            {
+                if (x.Index.Index < matchRuby.StartIndex || x.Index.Index > matchRuby.EndIndex)
+                    return false;
+
+                if (x.Index.State == TextIndex.IndexState.Start && x.Index.Index == matchRuby.EndIndex)
+                    return false;
+
+                return true;
+            });
+
+            // get ruby text and should notice exceed case if time-tag is more than ruby text.
+            var index = timeTagsWithSameIndex.IndexOf(timeTag);
+            var text = matchRuby.Text;
+            var subtext = timeTagsWithSameIndex.Count() == 1 ? text : text.Substring(Math.Min(text.Length - 1, index), 1);
+
+            // return substring with format.
+            switch (timeTag.Index.State)
+            {
+                case TextIndex.IndexState.Start:
+                {
+                    return $"({subtext})-";
+                }
+
+                case TextIndex.IndexState.End:
+                {
+                    return $"-({subtext})";
+                }
+
+                default:
+                    throw new IndexOutOfRangeException(nameof(timeTag.Index.State));
+            }
         }
 
         #endregion

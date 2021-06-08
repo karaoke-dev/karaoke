@@ -79,7 +79,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         [BackgroundDependencyLoader]
         private void load(TimeTagEditor timeline, OsuColour colours)
         {
-            timeTagText.Text = LyricUtils.GetTimeTagIndexDisplayText(timeline.HitObject, Item.Index);
+            // todo : should be able to let user able to select show from ruby or main text.
+            timeTagText.Text = LyricUtils.GetTimeTagDisplayRubyText(timeline.HitObject, Item);
             timeTagPiece.Colour = colours.BlueLight;
             timeTagWithNoTimePiece.Colour = colours.Red;
             startTime.BindValueChanged(e =>
