@@ -241,13 +241,21 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 return GetTimeTagDisplayText(lyric, timeTag);
 
             // get all the rubies with same index.
-            var timeTagsWithSameIndex
-                = lyric.TimeTags.Where(x => x.Index.Index >= matchRuby.StartIndex && x.Index.Index <= matchRuby.EndIndex);
-            var index = timeTagsWithSameIndex.IndexOf(timeTag);
+            var timeTagsWithSameIndex = lyric.TimeTags.Where(x =>
+            {
+                if (x.Index.Index < matchRuby.StartIndex || x.Index.Index > matchRuby.EndIndex)
+                    return false;
+
+                if (x.Index.State == TextIndex.IndexState.Start && x.Index.Index == matchRuby.EndIndex)
+                    return false;
+
+                return true;
+            });
 
             // get ruby text and should notice exceed case if time-tag is more than ruby text.
+            var index = timeTagsWithSameIndex.IndexOf(timeTag);
             var text = matchRuby.Text;
-            var subtext = text.Substring(Math.Min(text.Length - 1, index), 1);
+            var subtext = timeTagsWithSameIndex.Count() == 1 ? text : text.Substring(Math.Min(text.Length - 1, index), 1);
 
             // return substring with format.
             switch (timeTag.Index.State)
