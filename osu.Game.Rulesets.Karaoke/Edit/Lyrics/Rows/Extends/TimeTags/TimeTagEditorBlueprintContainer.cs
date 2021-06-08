@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         }
 
         protected override IEnumerable<SelectionBlueprint<TimeTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<TimeTag>> blueprints)
-            => blueprints.OrderBy(b => b.Item.Time);
+            => blueprints.OrderBy(b => b.Item.Index);
 
         protected override bool ApplySnapResult(SelectionBlueprint<TimeTag>[] blueprints, SnapResult result)
         {
@@ -174,6 +174,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                         new OsuMenuItem("Clear time", MenuItemType.Standard, () =>
                         {
                             timeTags.ForEach(x => x.Time = null);
+
+                            // todo : should re-calculate all preview position because some time-tag without position might be affected.
                         })
                     };
                 }
