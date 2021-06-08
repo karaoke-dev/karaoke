@@ -7,10 +7,12 @@ using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Framework.Utils;
 using osu.Game.Graphics.UserInterface;
@@ -58,33 +60,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         }
 
         protected override IEnumerable<SelectionBlueprint<TimeTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<TimeTag>> blueprints)
-            => blueprints.OrderBy(b => b.Item.Time);
+            => blueprints.OrderBy(b => b.Item.Index);
 
         protected override bool ApplySnapResult(SelectionBlueprint<TimeTag>[] blueprints, SnapResult result)
         {
             if (!base.ApplySnapResult(blueprints, result))
                 return false;
 
-            var firstDragTimeTagTime = blueprints.First().Item.Time;
-            if (firstDragTimeTagTime == null)
+            if (result.Time == null)
                 return false;
 
-            // main goal is applying delta time while dragging.
-            if (result.Time.HasValue)
+            var timeTagBlueprints = blueprints.OfType<TimeTagEditorHitObjectBlueprint>();
+            var firstDragBlueprint = timeTagBlueprints.FirstOrDefault();
+            if (firstDragBlueprint == null)
+                return false;
+
+            var offset = result.Time.Value - timeline.GetPreviewTime(firstDragBlueprint.Item);
+            if (offset == 0)
+                return false;
+
+            // todo : should not save separately.
+            foreach (var blueprint in timeTagBlueprints)
             {
-                // Apply the start time at the newly snapped-to position
-                double offset = result.Time.Value - firstDragTimeTagTime.Value;
-
-                if (offset == 0)
-                    return false;
-
-                // todo : should not save separately.
-                foreach (var blueprint in blueprints)
-                {
-                    // todo : fix logic error.
-                    var timeTag = blueprint.Item;
-                    timeTag.Time += offset;
-                }
+                var timeTag = blueprint.Item;
+                timeTag.Time = timeline.GetPreviewTime(timeTag) + offset;
             }
 
             return true;
@@ -162,6 +161,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                 {
                     lyricManager.RemoveTimeTag(item);
                 }
+            }
+
+            protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<TimeTag>> selection)
+            {
+                var timeTags = selection.Select(x => x.Item);
+
+                if (timeTags.Any(x => x.Time != null))
+                {
+                    return new[]
+                    {
+                        new OsuMenuItem("Clear time", MenuItemType.Standard, () =>
+                        {
+                            timeTags.ForEach(x => x.Time = null);
+
+                            // todo : should re-calculate all preview position because some time-tag without position might be affected.
+                        })
+                    };
+                }
+
+                return base.GetContextMenuItemsForSelection(selection);
             }
         }
 

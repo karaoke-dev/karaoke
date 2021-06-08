@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -15,7 +14,6 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
-using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -86,15 +84,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             timeTagWithNoTimePiece.Colour = colours.Red;
             startTime.BindValueChanged(e =>
             {
-                adjustStyle();
-                adjustPosition();
-            }, true);
-
-            // adjust style if time changed.
-            void adjustStyle()
-            {
                 var hasValue = hasTime();
 
+                // update show time-tag style.
                 switch (hasValue)
                 {
                     case true:
@@ -107,39 +99,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                         timeTagWithNoTimePiece.Show();
                         break;
                 }
-            }
 
-            // assign blueprint position in here.
-            void adjustPosition()
-            {
-                var time = startTime.Value;
-
-                if (time != null)
+                Schedule(() =>
                 {
-                    X = (float)time.Value;
-                }
-                else
-                {
-                    var timeTags = timeline.HitObject.TimeTags;
-
-                    const float preempt_time = 200;
-                    var previousTimeTagWithTime = timeTags.GetPreviousMatch(Item, x => x.Time.HasValue);
-                    var nextTimeTagWithTime = timeTags.GetNextMatch(Item, x => x.Time.HasValue);
-
-                    if (previousTimeTagWithTime?.Time != null)
-                    {
-                        X = (float)previousTimeTagWithTime.Time.Value + preempt_time;
-                    }
-                    else if (nextTimeTagWithTime?.Time != null)
-                    {
-                        X = (float)nextTimeTagWithTime.Time.Value - preempt_time;
-                    }
-                    else
-                    {
-                        throw new ArgumentNullException(nameof(previousTimeTagWithTime));
-                    }
-                }
-            }
+                    // should wait until all time-tag time has been modified.
+                    X = (float)timeline.GetPreviewTime(Item);
+                });
+            }, true);
         }
 
         protected override void OnSelected()
