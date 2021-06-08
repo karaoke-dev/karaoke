@@ -7,10 +7,12 @@ using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Framework.Utils;
 using osu.Game.Graphics.UserInterface;
@@ -78,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                 return false;
 
             // todo : should not save separately.
-            foreach (var blueprint in blueprints.OfType<TimeTagEditorHitObjectBlueprint>())
+            foreach (var blueprint in timeTagBlueprints)
             {
                 var timeTag = blueprint.Item;
                 timeTag.Time = blueprint.PreviewTime + offset;
@@ -159,6 +161,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                 {
                     lyricManager.RemoveTimeTag(item);
                 }
+            }
+
+            protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<TimeTag>> selection)
+            {
+                var timeTags = selection.Select(x => x.Item);
+
+                if (timeTags.Any(x => x.Time != null))
+                {
+                    return new[]
+                    {
+                        new OsuMenuItem("Clear time", MenuItemType.Standard, () =>
+                        {
+                            timeTags.ForEach(x => x.Time = null);
+                        })
+                    };
+                }
+
+                return base.GetContextMenuItemsForSelection(selection);
             }
         }
 

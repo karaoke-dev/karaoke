@@ -154,6 +154,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                     return;
 
                 previewTime = value;
+
+                // update position also.
                 X = (float)previewTime;
             }
         }
