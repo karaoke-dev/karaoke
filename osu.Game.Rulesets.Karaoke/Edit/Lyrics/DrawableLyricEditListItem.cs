@@ -73,15 +73,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 editExtend.Show();
             });
 
-            static RowEditExtend createExtend(LyricEditorMode mode, Lyric lyric)
+            static EditRowExtend createExtend(LyricEditorMode mode, Lyric lyric)
             {
                 switch (mode)
                 {
                     case LyricEditorMode.EditNote:
-                        return new NoteExtend(lyric);
+                        return new NoteEditRowExtend(lyric);
 
                     case LyricEditorMode.EditTimeTag:
-                        return new TimeTagExtend(lyric);
+                        return new TimeTagEditRowExtend(lyric);
 
                     default:
                         return null;
@@ -99,9 +99,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        private RowEditExtend getExtend()
+        private EditRowExtend getExtend()
         {
-            return content?.Children.OfType<RowEditExtend>().FirstOrDefault();
+            return content?.Children.OfType<EditRowExtend>().FirstOrDefault();
         }
 
         public float ExtendHeight => getExtend()?.ContentHeight ?? 0;
