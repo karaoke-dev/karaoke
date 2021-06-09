@@ -4,8 +4,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Beatmaps;
-using osu.Game.Replays;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
@@ -19,14 +17,12 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 {
     public class KaraokeModAutoplay : ModAutoplay, IApplicableToDrawableRuleset<KaraokeHitObject>, IApplicableToMicrophone
     {
-        protected Replay Replay;
-
         public bool MicrophoneEnabled => false;
 
         public override Score CreateReplayScore(IBeatmap beatmap, IReadOnlyList<Mod> mods) => new Score
         {
             ScoreInfo = new ScoreInfo { User = new User { Username = "osu!7pupu" } },
-            Replay = Replay = new KaraokeAutoGenerator((KaraokeBeatmap)beatmap).Generate(),
+            Replay = new KaraokeAutoGenerator(beatmap, mods).Generate(),
         };
 
         public virtual void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
@@ -38,8 +34,9 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             if (!(drawableRuleset.Playfield is KaraokePlayfield karaokePlayfield))
                 return;
 
+            var replay = new KaraokeAutoGenerator(drawableRuleset.Beatmap).Generate();
             var notePlayfield = karaokePlayfield.NotePlayfield as NotePlayfield;
-            var frames = Replay.Frames.OfType<KaraokeReplayFrame>();
+            var frames = replay.Frames.OfType<KaraokeReplayFrame>();
 
             // for safety purpose should clear reply to make sure not cause crash if apply to ruleset runs more then one times.
             notePlayfield?.ClearReplay();

@@ -3,16 +3,17 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using osu.Game.Beatmaps;
 using osu.Game.Replays;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Replays;
 
 namespace osu.Game.Rulesets.Karaoke.Replays
 {
     public class KaraokeAutoGenerator : AutoGenerator
     {
-        public KaraokeAutoGenerator(KaraokeBeatmap beatmap)
+        public KaraokeAutoGenerator(IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
             : base(beatmap)
         {
         }

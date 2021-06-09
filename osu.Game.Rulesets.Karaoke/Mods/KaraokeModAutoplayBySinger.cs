@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public override Score CreateReplayScore(IBeatmap beatmap, IReadOnlyList<Mod> mods) => new Score
         {
             ScoreInfo = new ScoreInfo { User = new User { Username = "karaoke!singer" } },
-            Replay = Replay = new KaraokeAutoGeneratorBySinger((KaraokeBeatmap)beatmap, trackData).Generate(),
+            Replay = new KaraokeAutoGeneratorBySinger((KaraokeBeatmap)beatmap, trackData).Generate(),
         };
 
         public override void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
