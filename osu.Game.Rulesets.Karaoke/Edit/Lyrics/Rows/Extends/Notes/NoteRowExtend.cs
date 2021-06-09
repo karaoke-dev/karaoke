@@ -7,11 +7,11 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 {
-    public class NoteEditRowExtend : EditRowExtend
+    public class NoteRowExtend : EditRowExtend
     {
         public override float ContentHeight => 180;
 
-        public NoteEditRowExtend(Lyric lyric)
+        public NoteRowExtend(Lyric lyric)
             : base(lyric)
         {
         }

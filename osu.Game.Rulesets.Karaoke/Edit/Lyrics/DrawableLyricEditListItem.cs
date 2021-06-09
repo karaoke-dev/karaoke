@@ -78,10 +78,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 switch (mode)
                 {
                     case LyricEditorMode.EditNote:
-                        return new NoteEditRowExtend(lyric);
+                        return new NoteRowExtend(lyric);
 
                     case LyricEditorMode.EditTimeTag:
-                        return new TimeTagEditRowExtend(lyric);
+                        return new TimeTagRowExtend(lyric);
 
                     default:
                         return null;
