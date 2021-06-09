@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
             Children = new Drawable[]
             {
                 new TimeTagEditModeSection(),
-                new InvalidTimeTagSection(),
+                new TimeTagIssueSection(),
             };
         }
     }
