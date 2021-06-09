@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
                 yield return new KaraokeDifficultyHitObject(notes[i], notes[i - 1], clockRate);
         }
 
-        protected override Skill[] CreateSkills(IBeatmap beatmap, Mod[] mods)
+        protected override Skill[] CreateSkills(IBeatmap beatmap, Mod[] mods, double clockRate)
         {
             // Only karaoke note can be apply in difficulty calculation
             var notes = beatmap.HitObjects.OfType<Note>().ToList();
