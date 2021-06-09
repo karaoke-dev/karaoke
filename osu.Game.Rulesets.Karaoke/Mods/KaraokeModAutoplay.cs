@@ -17,7 +17,7 @@ using osu.Game.Users;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModAutoplay : ModAutoplay<KaraokeHitObject>, IApplicableToMicrophone
+    public class KaraokeModAutoplay : ModAutoplay, IApplicableToDrawableRuleset<KaraokeHitObject>, IApplicableToMicrophone
     {
         protected Replay Replay;
 
@@ -29,13 +29,11 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             Replay = Replay = new KaraokeAutoGenerator((KaraokeBeatmap)beatmap).Generate(),
         };
 
-        public override void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
+        public virtual void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
         {
             // Got no idea why edit ruleset call this shit.
             if (drawableRuleset is DrawableKaraokeEditorRuleset)
                 return;
-
-            base.ApplyToDrawableRuleset(drawableRuleset);
 
             if (!(drawableRuleset.Playfield is KaraokePlayfield karaokePlayfield))
                 return;
@@ -44,11 +42,11 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             var frames = Replay.Frames.OfType<KaraokeReplayFrame>();
 
             // for safety purpose should clear reply to make sure not cause crash if apply to ruleset runs more then one times.
-            notePlayfield.ClearReplay();
+            notePlayfield?.ClearReplay();
 
             foreach (var frame in frames)
             {
-                notePlayfield.AddReplay(frame);
+                notePlayfield?.AddReplay(frame);
             }
         }
     }

@@ -16,7 +16,7 @@ using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModPractice : ModAutoplay<KaraokeHitObject>, IApplicableToSettingHUDOverlay, IApplicableToBeatmap
+    public class KaraokeModPractice : ModAutoplay, IApplicableToDrawableRuleset<KaraokeHitObject>, IApplicableToSettingHUDOverlay, IApplicableToBeatmap
     {
         public override string Name => "Practice";
         public override string Acronym => "Practice";
@@ -28,10 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         public void ApplyToBeatmap(IBeatmap beatmap) => this.beatmap = beatmap as KaraokeBeatmap;
 
-        public override void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
+        public void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
         {
-            base.ApplyToDrawableRuleset(drawableRuleset);
-
             beatmap = drawableRuleset.Beatmap as KaraokeBeatmap;
 
             if (drawableRuleset.Playfield is KaraokePlayfield karaokePlayfield)
