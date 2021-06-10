@@ -75,6 +75,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             if (overlappingTimeTags?.Length > 0)
                 result.Add(TimeTagInvalid.Overlapping, overlappingTimeTags);
 
+            // Check time-tag should have time.
+            var noTimeTimeTags = TimeTagsUtils.FindNoneTime(lyric.TimeTags);
+            if (noTimeTimeTags?.Length > 0)
+                result.Add(TimeTagInvalid.EmptyTime, noTimeTimeTags);
+
             return result;
         }
 

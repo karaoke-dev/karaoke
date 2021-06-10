@@ -75,6 +75,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         }
 
         /// <summary>
+        /// Find time-tag that has no time.
+        /// </summary>
+        /// <param name="timeTags"></param>
+        /// <returns></returns>
+        public static TimeTag[] FindNoneTime(TimeTag[] timeTags)
+            => timeTags?.Where(x => x.Time == null).ToArray();
+
+        /// <summary>
         /// Find overlapping time tags.
         /// </summary>
         /// <param name="timeTags">Time tags</param>
