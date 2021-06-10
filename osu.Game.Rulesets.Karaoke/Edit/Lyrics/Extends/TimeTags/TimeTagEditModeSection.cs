@@ -2,9 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
@@ -15,25 +15,42 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
     {
         protected override string Title => "Edit mode";
 
+        private EditModeButton[] buttons;
+
         [BackgroundDependencyLoader]
         private void load(OsuColour colour)
         {
-            Children = new[]
+            Child = new GridContainer
             {
-                new EditModeButton(TimeTagEditMode.View)
+                RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
+                RowDimensions = new[]
                 {
-                    Text = "View",
-                    Action = updateEditMode,
+                    new Dimension(GridSizeMode.AutoSize)
                 },
-                new EditModeButton(TimeTagEditMode.Create)
+                Content = new[]
                 {
-                    Text = "Create",
-                    Action = updateEditMode,
-                },
-                new EditModeButton(TimeTagEditMode.Edit)
-                {
-                    Text = "Edit",
-                    Action = updateEditMode,
+                    buttons = new[]
+                    {
+                        new EditModeButton(TimeTagEditMode.View)
+                        {
+                            Text = "View",
+                            Action = updateEditMode,
+                            Padding = new MarginPadding { Horizontal = 5 },
+                        },
+                        new EditModeButton(TimeTagEditMode.Create)
+                        {
+                            Text = "Create",
+                            Action = updateEditMode,
+                            Padding = new MarginPadding { Horizontal = 5 },
+                        },
+                        new EditModeButton(TimeTagEditMode.Edit)
+                        {
+                            Text = "Edit",
+                            Action = updateEditMode,
+                            Padding = new MarginPadding { Horizontal = 5 },
+                        }
+                    }
                 }
             };
 
@@ -41,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
             void updateEditMode(TimeTagEditMode mode)
             {
-                foreach (var child in Children.OfType<EditModeButton>())
+                foreach (var child in buttons)
                 {
                     var highLight = child.Mode == mode;
                     child.Alpha = highLight ? 0.8f : 0.4f;
@@ -77,12 +94,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 Content.CornerRadius = 15;
 
                 base.Action = () => Action.Invoke(mode);
-            }
-
-            public new bool Enabled
-            {
-                get => base.Enabled.Value;
-                set => base.Enabled.Value = value;
             }
         }
     }
