@@ -71,9 +71,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             // Check overlapping.
             var groupCheck = config.TimeTagTimeGroupCheck;
             var selfCheck = config.TimeTagTimeSelfCheck;
-            var invalidTimeTags = TimeTagsUtils.FindInvalid(lyric.TimeTags, groupCheck, selfCheck);
-            if (invalidTimeTags?.Length > 0)
-                result.Add(TimeTagInvalid.Overlapping, invalidTimeTags);
+            var overlappingTimeTags = TimeTagsUtils.FindOverlapping(lyric.TimeTags, groupCheck, selfCheck);
+            if (overlappingTimeTags?.Length > 0)
+                result.Add(TimeTagInvalid.Overlapping, overlappingTimeTags);
 
             return result;
         }

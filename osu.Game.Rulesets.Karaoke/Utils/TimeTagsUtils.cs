@@ -75,13 +75,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         }
 
         /// <summary>
-        /// Find invalid time tags.
+        /// Find overlapping time tags.
         /// </summary>
         /// <param name="timeTags">Time tags</param>
         /// <param name="other">Check way</param>
         /// <param name="self">Check way</param>
-        /// <returns>List of invalid time tags</returns>
-        public static TimeTag[] FindInvalid(TimeTag[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
+        /// <returns>List of overlapping time tags</returns>
+        public static TimeTag[] FindOverlapping(TimeTag[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
             if (timeTags == null)
                 return null;
@@ -89,29 +89,29 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var sortedTimeTags = Sort(timeTags);
             var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Index.Index);
 
-            var invalidList = new List<TimeTag>();
+            var overlappingTimeTagList = new List<TimeTag>();
 
             foreach (var groupedTimeTag in groupedTimeTags)
             {
                 var startTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.Start && x.Time != null);
                 var endTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.End && x.Time != null);
 
-                // add invalid group into list.
-                var groupInvalid = findGroupInvalid();
-                if (groupInvalid != null)
-                    invalidList.AddRange(groupInvalid);
+                // add overlapping group into list.
+                var groupoverlapping = findGroupOverlapping();
+                if (groupoverlapping != null)
+                    overlappingTimeTagList.AddRange(groupoverlapping);
 
-                // add invalid self into list.
-                var selfInvalid = findSelfInvalid();
-                if (selfInvalid != null)
-                    invalidList.AddRange(selfInvalid);
+                // add overlapping self into list.
+                var selfoverlapping = findSelfOverlapping();
+                if (selfoverlapping != null)
+                    overlappingTimeTagList.AddRange(selfoverlapping);
 
-                List<TimeTag> findGroupInvalid()
+                List<TimeTag> findGroupOverlapping()
                 {
                     switch (other)
                     {
                         case GroupCheck.Asc:
-                            // mark next is invalid if smaller then self
+                            // mark next is overlapping if smaller then self
                             var groupMaxTime = groupedTimeTag.Max(x => x.Time);
                             if (groupMaxTime == null)
                                 return null;
@@ -119,7 +119,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                             return sortedTimeTags.Where(x => x.Index.Index > groupedTimeTag.Key && x.Time < groupMaxTime).ToList();
 
                         case GroupCheck.Desc:
-                            // mark previous is invalid if larger then self
+                            // mark previous is overlapping if larger then self
                             var groupMinTime = groupedTimeTag.Min(x => x.Time);
                             if (groupMinTime == null)
                                 return null;
@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     }
                 }
 
-                List<TimeTag> findSelfInvalid()
+                List<TimeTag> findSelfOverlapping()
                 {
                     switch (self)
                     {
@@ -155,17 +155,17 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 }
             }
 
-            return Sort(invalidList.Distinct().ToArray());
+            return Sort(overlappingTimeTagList.Distinct().ToArray());
         }
 
         /// <summary>
-        /// Auto fix invalid time tags.
+        /// Auto fix overlapping time tags.
         /// </summary>
         /// <param name="timeTags">Time tags</param>
         /// <param name="other">Fix way</param>
         /// <param name="self">Fix way</param>
         /// <returns>Fixed time tags.</returns>
-        public static TimeTag[] FixInvalid(TimeTag[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
+        public static TimeTag[] FixOverlapping(TimeTag[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
             if (timeTags == null || timeTags.Length == 0)
                 return timeTags;
@@ -173,15 +173,15 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var sortedTimeTags = Sort(timeTags);
             var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Index.Index);
 
-            var invalidTimeTags = FindInvalid(timeTags, other, self);
-            var validTimeTags = sortedTimeTags.Except(invalidTimeTags);
+            var overlappingTimeTags = FindOverlapping(timeTags, other, self);
+            var validTimeTags = sortedTimeTags.Except(overlappingTimeTags);
 
-            foreach (var invalidTimeTag in invalidTimeTags)
+            foreach (var overlappingTimeTag in overlappingTimeTags)
             {
-                var listIndex = sortedTimeTags.IndexOf(invalidTimeTag);
-                var timeTag = invalidTimeTag.Index;
+                var listIndex = sortedTimeTags.IndexOf(overlappingTimeTag);
+                var timeTag = overlappingTimeTag.Index;
 
-                // fix self-invalid
+                // fix self-overlapping
                 var groupedTimeTag = groupedTimeTags.FirstOrDefault(x => x.Key == timeTag.Index).ToList();
                 var startTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.Start && x.Time != null);
                 var endTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.End && x.Time != null);
@@ -191,7 +191,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     case TextIndex.IndexState.Start:
                         var minEndTime = endTimeGroup.Min(x => x.Time);
 
-                        if (minEndTime != null && minEndTime < invalidTimeTag.Time)
+                        if (minEndTime != null && minEndTime < overlappingTimeTag.Time)
                         {
                             sortedTimeTags[listIndex] = new TimeTag(timeTag, minEndTime);
                             continue;
@@ -202,7 +202,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     case TextIndex.IndexState.End:
                         var maxStartTime = startTimeGroup.Max(x => x.Time);
 
-                        if (maxStartTime != null && maxStartTime > invalidTimeTag.Time)
+                        if (maxStartTime != null && maxStartTime > overlappingTimeTag.Time)
                         {
                             sortedTimeTags[listIndex] = new TimeTag(timeTag, maxStartTime);
                             continue;
@@ -252,7 +252,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 return new Dictionary<TextIndex, double>();
 
             // sorted value
-            var sortedTimeTags = applyFix ? FixInvalid(timeTags, other, self) : Sort(timeTags);
+            var sortedTimeTags = applyFix ? FixOverlapping(timeTags, other, self) : Sort(timeTags);
 
             // convert to dictionary, will get start's smallest time and end's largest time.
             return sortedTimeTags.Where(x => x.Time != null).GroupBy(x => x.Index).Select(x =>
