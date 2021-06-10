@@ -15,6 +15,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -149,6 +150,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 {
                     case LyricEditorMode.EditRubyRomaji:
                         return new TextTagExtend();
+
+                    case LyricEditorMode.EditTimeTag:
+                        return new TimeTagExtend();
 
                     case LyricEditorMode.Singer:
                         return new SingerExtend();

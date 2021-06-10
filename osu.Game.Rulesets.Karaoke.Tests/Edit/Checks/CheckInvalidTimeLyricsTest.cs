@@ -49,6 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
         [TestCase("カラオケ", new[] { "[-1,start]:1000" }, new[] { TimeTagInvalid.OutOfRange })]
         [TestCase("カラオケ", new[] { "[4,start]:4000" }, new[] { TimeTagInvalid.OutOfRange })]
         [TestCase("カラオケ", new[] { "[0,start]:5000", "[3,end]:1000" }, new[] { TimeTagInvalid.Overlapping })]
+        [TestCase("カラオケ", new[] { "[0,start]:" }, new[] { TimeTagInvalid.EmptyTime })]
         public void TestCheckInvalidTimeTags(string text, string[] timeTags, TimeTagInvalid[] invalids)
         {
             var lyric = new Lyric
