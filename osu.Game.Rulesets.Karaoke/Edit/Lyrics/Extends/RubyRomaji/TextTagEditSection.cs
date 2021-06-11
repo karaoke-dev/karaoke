@@ -43,7 +43,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                         OnDeleteButtonClick = () =>
                         {
                             LyricUtils.RemoveTextTag(Lyric, x);
-                        }
+                        },
+                        TabbableContentContainer = this
                     };
                 }));
             });
