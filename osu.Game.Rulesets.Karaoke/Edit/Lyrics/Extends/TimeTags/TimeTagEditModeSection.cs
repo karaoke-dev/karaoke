@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                             break;
 
                         case LyricEditorMode.RecordTimeTag:
-                            child.BackgroundColour = highLight ? colour.Green : colour.GreenDarker;
+                            child.BackgroundColour = highLight ? colour.Red : colour.RedDarker;
                             break;
 
                         case LyricEditorMode.AdjustTimeTag:
