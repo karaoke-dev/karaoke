@@ -18,6 +18,7 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -60,12 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
             public const int TEXT_SIZE = 14;
 
             [Resolved]
-            private EditorClock clock { get; set; }
-
-            [Resolved]
             private OsuColour colour { get; set; }
-
-            private Bindable<TimeTagIssue> selectedIssue;
 
             protected readonly FillFlowContainer<RowBackground> BackgroundFlow;
 
@@ -75,6 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 AutoSizeAxes = Axes.Y;
 
                 RowSize = new Dimension(GridSizeMode.Absolute, ROW_HEIGHT);
+                Columns = createHeaders();
 
                 AddInternal(BackgroundFlow = new FillFlowContainer<RowBackground>
                 {
@@ -94,26 +91,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     if (value == null)
                         return;
 
-                    foreach (var issue in value)
-                    {
-                        BackgroundFlow.Add(new RowBackground(issue)
-                        {
-                            Action = () =>
-                            {
-                                selectedIssue.Value = issue;
-
-                                if (issue.Time != null)
-                                {
-                                    // seek to target time-tag time if time-tag has time.
-                                    clock.Seek(issue.Time.Value);
-                                }
-
-                                // todo : select target time-tag.
-                            },
-                        });
-                    }
-
-                    Columns = createHeaders();
                     Content = value.Select((g, i) =>
                     {
                         var lyric = g.HitObjects.FirstOrDefault() as Lyric;
@@ -130,21 +107,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
                         return rows;
                     }).SelectMany(x => x).ToArray().ToRectangular();
+
+                    BackgroundFlow.Children = value.Select((g, i) =>
+                    {
+                        var lyric = g.HitObjects.FirstOrDefault() as Lyric;
+
+                        var rows = new List<RowBackground>();
+
+                        foreach (var (_, timeTags) in g.InvalidTimeTags)
+                        {
+                            foreach (var timeTag in timeTags)
+                            {
+                                rows.Add(new RowBackground(lyric, timeTag));
+                            }
+                        }
+
+                        return rows;
+                    }).SelectMany(x => x).ToArray();
                 }
-            }
-
-            protected override void LoadComplete()
-            {
-                base.LoadComplete();
-
-                // todo : might get from outside.
-                // selectedIssue = verify.SelectedIssue.GetBoundCopy();
-
-                selectedIssue = new Bindable<TimeTagIssue>();
-                selectedIssue.BindValueChanged(issue =>
-                {
-                    foreach (var b in BackgroundFlow) b.Selected = b.Item == issue.NewValue;
-                }, true);
             }
 
             private TableColumn[] createHeaders()
@@ -239,7 +219,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
             public class RowBackground : OsuClickableContainer
             {
-                public readonly object Item;
+                private readonly Lyric lyric;
+                private readonly TimeTag timeTag;
 
                 private const int fade_duration = 100;
 
@@ -248,9 +229,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 [Resolved]
                 private EditorClock clock { get; set; }
 
-                public RowBackground(object item)
+                public RowBackground(Lyric lyric, TimeTag timeTag)
                 {
-                    Item = item;
+                    this.lyric = lyric;
+                    this.timeTag = timeTag;
 
                     RelativeSizeAxes = Axes.X;
                     Height = 25;
@@ -268,36 +250,59 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                             Alpha = 0,
                         },
                     };
-
-                    // todo delete
-                    Action = () =>
-                    {
-                    };
                 }
 
                 private Color4 colourHover;
                 private Color4 colourSelected;
 
+                private bool selected;
+                private BindableList<TimeTag> selectedTimeTags;
+
                 [BackgroundDependencyLoader]
-                private void load(LyricEditorColourProvider colourProvider)
+                private void load(LyricEditorColourProvider colourProvider, ILyricEditorState state)
                 {
                     hoveredBackground.Colour = colourHover = colourProvider.Background1(LyricEditorMode.EditTimeTag);
                     colourSelected = colourProvider.Colour3(LyricEditorMode.EditTimeTag);
-                }
 
-                private bool selected;
-
-                public bool Selected
-                {
-                    get => selected;
-                    set
+                    // update selected state by bindable.
+                    selectedTimeTags = state.SelectedTimeTags.GetBoundCopy();
+                    selectedTimeTags.BindCollectionChanged((a, b) =>
                     {
-                        if (value == selected)
-                            return;
-
-                        selected = value;
+                        selected = selectedTimeTags.Contains(timeTag);
                         updateState();
-                    }
+                    });
+
+                    Action = () =>
+                    {
+                        // set current time-tag as selected.
+                        selectedTimeTags.Clear();
+                        selectedTimeTags.Add(timeTag);
+
+                        // navigate to current lyric.
+                        switch (state.Mode)
+                        {
+                            case LyricEditorMode.EditTimeTag:
+                                state.BindableCaretPosition.Value = new TimeTagIndexCaretPosition(lyric, timeTag.Index);
+                                break;
+
+                            case LyricEditorMode.RecordTimeTag:
+                                state.BindableCaretPosition.Value = new TimeTagCaretPosition(lyric, timeTag);
+                                break;
+
+                            case LyricEditorMode.AdjustTimeTag:
+                                state.BindableCaretPosition.Value = new NavigateCaretPosition(lyric);
+                                break;
+
+                            default:
+                                throw new IndexOutOfRangeException(nameof(state.Mode));
+                        }
+
+                        if (timeTag.Time != null)
+                        {
+                            // seek to target time-tag time if time-tag has time.
+                            clock.Seek(timeTag.Time.Value);
+                        }
+                    };
                 }
 
                 protected override bool OnHover(HoverEvent e)
