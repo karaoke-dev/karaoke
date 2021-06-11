@@ -35,10 +35,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                 case LyricEditorMode.EditNote:
                     return "Edit note";
 
-                case LyricEditorMode.RecordTimeTag:
-                    return "Record";
-
                 case LyricEditorMode.EditTimeTag:
+                case LyricEditorMode.RecordTimeTag:
+                case LyricEditorMode.AdjustTimeTag:
                     return "Edit time tag";
 
                 case LyricEditorMode.Layout:

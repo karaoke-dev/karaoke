@@ -254,11 +254,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.EditNote:
                     return false;
 
+                case LyricEditorMode.EditTimeTag:
+                    return HandleCreateOrDeleterTimeTagEvent(action);
+
                 case LyricEditorMode.RecordTimeTag:
                     return HandleSetTimeEvent(action);
 
-                case LyricEditorMode.EditTimeTag:
-                    return HandleCreateOrDeleterTimeTagEvent(action);
+                case LyricEditorMode.AdjustTimeTag:
+                    return false;
 
                 case LyricEditorMode.Layout:
                 case LyricEditorMode.Singer:
