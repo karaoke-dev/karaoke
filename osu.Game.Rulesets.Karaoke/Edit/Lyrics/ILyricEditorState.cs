@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         Bindable<LyricEditorMode> BindableMode { get; }
 
-        LyricEditorMode Mode { get; }
+        LyricEditorMode Mode { get; set; }
 
         Bindable<RecordingMovingCaretMode> BindableRecordingMovingCaretMode { get; }
 
