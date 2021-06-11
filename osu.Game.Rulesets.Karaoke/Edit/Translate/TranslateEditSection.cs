@@ -274,6 +274,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,
                 RelativeSizeAxes = Axes.X,
+                TabbableContentContainer = this,
             };
             languageDropdown.Current.BindValueChanged(v =>
             {
