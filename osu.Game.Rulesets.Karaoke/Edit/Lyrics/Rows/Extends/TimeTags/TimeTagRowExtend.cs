@@ -24,7 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 
         protected override Drawable CreateContent(Lyric lyric)
         {
-            // todo : waiting for implementation.
             return new TimeTagEditor(lyric)
             {
                 RelativeSizeAxes = Axes.X,

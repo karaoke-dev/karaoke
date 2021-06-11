@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
         private EditModeButton[] buttons;
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour)
+        private void load(OsuColour colour, ILyricEditorState state)
         {
             Child = new GridContainer
             {
@@ -32,21 +32,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 {
                     buttons = new[]
                     {
-                        new EditModeButton(TimeTagEditMode.View)
-                        {
-                            Text = "View",
-                            Action = updateEditMode,
-                            Padding = new MarginPadding { Horizontal = 5 },
-                        },
-                        new EditModeButton(TimeTagEditMode.Create)
+                        new EditModeButton(LyricEditorMode.CreateTimeTag)
                         {
                             Text = "Create",
                             Action = updateEditMode,
                             Padding = new MarginPadding { Horizontal = 5 },
                         },
-                        new EditModeButton(TimeTagEditMode.Edit)
+                        new EditModeButton(LyricEditorMode.RecordTimeTag)
                         {
-                            Text = "Edit",
+                            Text = "Recording",
+                            Action = updateEditMode,
+                            Padding = new MarginPadding { Horizontal = 5 },
+                        },
+                        new EditModeButton(LyricEditorMode.AdjustTimeTag)
+                        {
+                            Text = "Adjust",
                             Action = updateEditMode,
                             Padding = new MarginPadding { Horizontal = 5 },
                         }
@@ -54,9 +54,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 }
             };
 
-            updateEditMode(TimeTagEditMode.View);
+            updateEditMode(state.Mode);
 
-            void updateEditMode(TimeTagEditMode mode)
+            void updateEditMode(LyricEditorMode mode)
             {
                 foreach (var child in buttons)
                 {
@@ -65,29 +65,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
                     switch (child.Mode)
                     {
-                        case TimeTagEditMode.View:
+                        case LyricEditorMode.CreateTimeTag:
                             child.BackgroundColour = highLight ? colour.Blue : colour.BlueDarker;
                             break;
 
-                        case TimeTagEditMode.Create:
+                        case LyricEditorMode.RecordTimeTag:
                             child.BackgroundColour = highLight ? colour.Green : colour.GreenDarker;
                             break;
 
-                        case TimeTagEditMode.Edit:
+                        case LyricEditorMode.AdjustTimeTag:
                             child.BackgroundColour = highLight ? colour.Yellow : colour.YellowDarker;
                             break;
                     }
                 }
+
+                state.Mode = mode;
             }
         }
 
         public class EditModeButton : OsuButton
         {
-            public new Action<TimeTagEditMode> Action;
+            public new Action<LyricEditorMode> Action;
 
-            public TimeTagEditMode Mode { get; }
+            public LyricEditorMode Mode { get; }
 
-            public EditModeButton(TimeTagEditMode mode)
+            public EditModeButton(LyricEditorMode mode)
             {
                 Mode = mode;
                 RelativeSizeAxes = Axes.X;

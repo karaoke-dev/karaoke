@@ -103,6 +103,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // display add new lyric only with edit mode.
                 container.DisplayBottomDrawable = e.NewValue == LyricEditorMode.Manage;
 
+                // should wait until beatmap has been loaded.
+                Schedule(() => ResetPosition(e.NewValue));
+
                 // should control grid container spacing and place some component.
                 initializeExtendArea();
             }, true);
@@ -110,10 +113,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private void initializeExtendArea()
         {
+            var extendArea = getExtendArea();
+            if (extendArea != null && checkDuplicatedWithExistExtend(extendArea))
+                return;
+
             leftSideExtendArea.Clear();
             rightSideExtendArea.Clear();
 
-            var extendArea = getExtendArea();
             var direction = extendArea?.Direction;
             var width = extendArea?.ExtendWidth ?? 0;
             const int spacing = 10;
@@ -151,7 +157,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case LyricEditorMode.EditRubyRomaji:
                         return new TextTagExtend();
 
-                    case LyricEditorMode.EditTimeTag:
+                    case LyricEditorMode.CreateTimeTag:
+                    case LyricEditorMode.RecordTimeTag:
+                    case LyricEditorMode.AdjustTimeTag:
                         return new TimeTagExtend();
 
                     case LyricEditorMode.Singer:
@@ -163,6 +171,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     default:
                         return null;
                 }
+            }
+
+            bool checkDuplicatedWithExistExtend(EditExtend extend)
+            {
+                var type = extendArea.GetType();
+                if (leftSideExtendArea.Children?.FirstOrDefault()?.GetType() == type)
+                    return true;
+
+                if (rightSideExtendArea.Children?.FirstOrDefault()?.GetType() == type)
+                    return true;
+
+                return false;
             }
         }
 
@@ -254,11 +274,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.EditNote:
                     return false;
 
+                case LyricEditorMode.CreateTimeTag:
+                    return HandleCreateOrDeleterTimeTagEvent(action);
+
                 case LyricEditorMode.RecordTimeTag:
                     return HandleSetTimeEvent(action);
 
-                case LyricEditorMode.EditTimeTag:
-                    return HandleCreateOrDeleterTimeTagEvent(action);
+                case LyricEditorMode.AdjustTimeTag:
+                    return false;
 
                 case LyricEditorMode.Layout:
                 case LyricEditorMode.Singer:
@@ -363,16 +386,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public LyricEditorMode Mode
         {
             get => BindableMode.Value;
-            set
-            {
-                if (BindableMode.Value == value)
-                    return;
-
-                BindableMode.Value = value;
-
-                // should wait until beatmap has been loaded.
-                Schedule(() => ResetPosition(value));
-            }
+            set => BindableMode.Value = value;
         }
 
         public RecordingMovingCaretMode RecordingMovingCaretMode

@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case LyricEditorMode.EditNote:
                         return new NoteRowExtend(lyric);
 
-                    case LyricEditorMode.EditTimeTag:
+                    case LyricEditorMode.AdjustTimeTag:
                         return new TimeTagRowExtend(lyric);
 
                     default:

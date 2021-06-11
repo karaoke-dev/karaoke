@@ -16,6 +16,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
         {
         }
 
+        protected override LyricEditorMode[] ValidEnums => new[]
+        {
+            LyricEditorMode.View,
+            LyricEditorMode.Manage,
+            LyricEditorMode.Typing,
+            LyricEditorMode.EditRubyRomaji,
+            LyricEditorMode.EditNote,
+            LyricEditorMode.CreateTimeTag,
+            LyricEditorMode.Layout,
+            LyricEditorMode.Singer,
+            LyricEditorMode.Language
+        };
+
         protected override string GetName(LyricEditorMode selection)
         {
             switch (selection)
@@ -35,10 +48,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                 case LyricEditorMode.EditNote:
                     return "Edit note";
 
+                case LyricEditorMode.CreateTimeTag:
                 case LyricEditorMode.RecordTimeTag:
-                    return "Record";
-
-                case LyricEditorMode.EditTimeTag:
+                case LyricEditorMode.AdjustTimeTag:
                     return "Edit time tag";
 
                 case LyricEditorMode.Layout:

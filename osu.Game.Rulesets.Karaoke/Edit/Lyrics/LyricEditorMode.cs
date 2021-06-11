@@ -31,14 +31,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         EditNote,
 
         /// <summary>
+        /// Enable to create/delete and reset time tag.
+        /// </summary>
+        CreateTimeTag,
+
+        /// <summary>
         /// Click white-space to set current time into time-tag.
         /// </summary>
         RecordTimeTag,
 
         /// <summary>
-        /// Enable to create/delete and reset time tag.
+        /// Precisely adjust time-tag time.
         /// </summary>
-        EditTimeTag,
+        AdjustTimeTag,
 
         /// <summary>
         /// Can edit each lyric's layout.

@@ -210,8 +210,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.EditNote:
                             return null;
 
+                        case LyricEditorMode.CreateTimeTag:
                         case LyricEditorMode.RecordTimeTag:
-                        case LyricEditorMode.EditTimeTag:
+                        case LyricEditorMode.AdjustTimeTag:
                             return new TimeTagInfo(Lyric);
 
                         case LyricEditorMode.Layout:
@@ -345,16 +346,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                         break;
 
+                    case LyricEditorMode.CreateTimeTag:
+                        var textIndex = lyricPiece.GetHoverIndex(position);
+                        state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, textIndex));
+                        break;
+
                     case LyricEditorMode.RecordTimeTag:
                         var timeTag = lyricPiece.GetHoverTimeTag(position);
                         state.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(Lyric, timeTag));
                         break;
 
-                    case LyricEditorMode.EditTimeTag:
-                        var textIndex = lyricPiece.GetHoverIndex(position);
-                        state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, textIndex));
-                        break;
-
+                    case LyricEditorMode.AdjustTimeTag:
                     case LyricEditorMode.Layout:
                     case LyricEditorMode.Singer:
                         state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
@@ -453,9 +455,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.EditRubyRomaji:
                             return new RubyRomajiBlueprintContainer(lyric);
 
-                        // todo : might think is this really needed because it'll use cannot let user clicking time-tag.
-                        // or just let it cannot interact.
-                        case LyricEditorMode.EditTimeTag:
+                        case LyricEditorMode.AdjustTimeTag:
                             return new TimeTagBlueprintContainer(lyric);
 
                         default:
@@ -505,12 +505,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.EditNote:
                             return null;
 
+                        case LyricEditorMode.CreateTimeTag:
+                            return new DrawableTimeTagEditCaret();
+
                         case LyricEditorMode.RecordTimeTag:
                             return new DrawableTimeTagRecordCaret();
 
-                        case LyricEditorMode.EditTimeTag:
-                            return new DrawableTimeTagEditCaret();
-
+                        case LyricEditorMode.AdjustTimeTag:
                         case LyricEditorMode.Layout:
                         case LyricEditorMode.Singer:
                         case LyricEditorMode.Language:
