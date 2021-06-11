@@ -455,8 +455,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.EditRubyRomaji:
                             return new RubyRomajiBlueprintContainer(lyric);
 
-                        // todo : might think is this really needed because it'll use cannot let user clicking time-tag.
-                        // or just let it cannot interact.
                         case LyricEditorMode.AdjustTimeTag:
                             return new TimeTagBlueprintContainer(lyric);
 
