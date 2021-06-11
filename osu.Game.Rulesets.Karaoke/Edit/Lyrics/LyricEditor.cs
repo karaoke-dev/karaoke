@@ -114,8 +114,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private void initializeExtendArea()
         {
             var extendArea = getExtendArea();
-
-            // prevent destroy and create same extend area.
             if (extendArea != null && checkDuplicatedWithExistExtend(extendArea))
                 return;
 
