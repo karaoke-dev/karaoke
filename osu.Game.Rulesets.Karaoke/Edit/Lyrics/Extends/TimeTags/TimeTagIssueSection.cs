@@ -157,7 +157,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 },
                 new OsuSpriteText
                 {
-                    Text = TimeTagUtils.FormattedString(timeTag),
+                    Text = TextIndexUtils.PositionFormattedString(timeTag.Index),
                     Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
                     Margin = new MarginPadding { Right = 10 },
                 },
