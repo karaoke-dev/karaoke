@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// <summary>
         /// Enable to create/delete and reset time tag.
         /// </summary>
-        EditTimeTag,
+        CreateTimeTag,
 
         /// <summary>
         /// Click white-space to set current time into time-tag.

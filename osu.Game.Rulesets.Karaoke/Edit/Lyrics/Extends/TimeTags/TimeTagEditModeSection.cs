@@ -32,9 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 {
                     buttons = new[]
                     {
-                        new EditModeButton(LyricEditorMode.EditTimeTag)
+                        new EditModeButton(LyricEditorMode.CreateTimeTag)
                         {
-                            Text = "Edit",
+                            Text = "Create",
                             Action = updateEditMode,
                             Padding = new MarginPadding { Horizontal = 5 },
                         },
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
                     switch (child.Mode)
                     {
-                        case LyricEditorMode.EditTimeTag:
+                        case LyricEditorMode.CreateTimeTag:
                             child.BackgroundColour = highLight ? colour.Blue : colour.BlueDarker;
                             break;
 

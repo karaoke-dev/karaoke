@@ -261,8 +261,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 [BackgroundDependencyLoader]
                 private void load(LyricEditorColourProvider colourProvider, ILyricEditorState state)
                 {
-                    hoveredBackground.Colour = colourHover = colourProvider.Background1(LyricEditorMode.EditTimeTag);
-                    colourSelected = colourProvider.Colour3(LyricEditorMode.EditTimeTag);
+                    hoveredBackground.Colour = colourHover = colourProvider.Background1(LyricEditorMode.CreateTimeTag);
+                    colourSelected = colourProvider.Colour3(LyricEditorMode.CreateTimeTag);
 
                     // update selected state by bindable.
                     selectedTimeTags = state.SelectedTimeTags.GetBoundCopy();
@@ -281,7 +281,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         // navigate to current lyric.
                         switch (state.Mode)
                         {
-                            case LyricEditorMode.EditTimeTag:
+                            case LyricEditorMode.CreateTimeTag:
                                 state.BindableCaretPosition.Value = new TimeTagIndexCaretPosition(lyric, timeTag.Index);
                                 break;
 

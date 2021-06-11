@@ -159,7 +159,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case LyricEditorMode.EditRubyRomaji:
                         return new TextTagExtend();
 
-                    case LyricEditorMode.EditTimeTag:
+                    case LyricEditorMode.CreateTimeTag:
                     case LyricEditorMode.RecordTimeTag:
                     case LyricEditorMode.AdjustTimeTag:
                         return new TimeTagExtend();
@@ -276,7 +276,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.EditNote:
                     return false;
 
-                case LyricEditorMode.EditTimeTag:
+                case LyricEditorMode.CreateTimeTag:
                     return HandleCreateOrDeleterTimeTagEvent(action);
 
                 case LyricEditorMode.RecordTimeTag:
