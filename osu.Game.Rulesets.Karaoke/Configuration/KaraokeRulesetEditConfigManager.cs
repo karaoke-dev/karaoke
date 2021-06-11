@@ -41,7 +41,6 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         // Lyric editor
         LyricEditorFontSize,
         LyricEditorMode,
-        LyricEditorFastEditMode,
         RecordingMovingCaretMode,
         AutoFocusToEditLyric,
         AutoFocusToEditLyricSkipRows,
