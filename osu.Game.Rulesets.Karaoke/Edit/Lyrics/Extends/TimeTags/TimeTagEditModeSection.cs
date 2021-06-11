@@ -6,7 +6,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Containers.Markdown;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
@@ -15,42 +17,54 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
     {
         protected override string Title => "Edit mode";
 
+        [Cached]
+        private readonly OverlayColourProvider overlayColourProvider = OverlayColourProvider.Blue;
+
         private EditModeButton[] buttons;
+        private OsuMarkdownContainer description;
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colour, ILyricEditorState state)
         {
-            Child = new GridContainer
+            Children = new Drawable[]
             {
-                RelativeSizeAxes = Axes.X,
-                AutoSizeAxes = Axes.Y,
-                RowDimensions = new[]
+                new GridContainer
                 {
-                    new Dimension(GridSizeMode.AutoSize)
-                },
-                Content = new[]
-                {
-                    buttons = new[]
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    RowDimensions = new[]
                     {
-                        new EditModeButton(LyricEditorMode.CreateTimeTag)
+                        new Dimension(GridSizeMode.AutoSize)
+                    },
+                    Content = new[]
+                    {
+                        buttons = new[]
                         {
-                            Text = "Create",
-                            Action = updateEditMode,
-                            Padding = new MarginPadding { Horizontal = 5 },
-                        },
-                        new EditModeButton(LyricEditorMode.RecordTimeTag)
-                        {
-                            Text = "Recording",
-                            Action = updateEditMode,
-                            Padding = new MarginPadding { Horizontal = 5 },
-                        },
-                        new EditModeButton(LyricEditorMode.AdjustTimeTag)
-                        {
-                            Text = "Adjust",
-                            Action = updateEditMode,
-                            Padding = new MarginPadding { Horizontal = 5 },
+                            new EditModeButton(LyricEditorMode.CreateTimeTag)
+                            {
+                                Text = "Create",
+                                Action = updateEditMode,
+                                Padding = new MarginPadding { Horizontal = 5 },
+                            },
+                            new EditModeButton(LyricEditorMode.RecordTimeTag)
+                            {
+                                Text = "Recording",
+                                Action = updateEditMode,
+                                Padding = new MarginPadding { Horizontal = 5 },
+                            },
+                            new EditModeButton(LyricEditorMode.AdjustTimeTag)
+                            {
+                                Text = "Adjust",
+                                Action = updateEditMode,
+                                Padding = new MarginPadding { Horizontal = 5 },
+                            }
                         }
                     }
+                },
+                description = new OsuMarkdownContainer
+                {
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
                 }
             };
 
@@ -58,6 +72,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
             void updateEditMode(LyricEditorMode mode)
             {
+                state.Mode = mode;
+
+                // update button style.
                 foreach (var child in buttons)
                 {
                     var highLight = child.Mode == mode;
@@ -79,7 +96,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     }
                 }
 
-                state.Mode = mode;
+                // update description text.
+                switch (mode)
+                {
+                    case LyricEditorMode.CreateTimeTag:
+                        description.Text = "Use keyboard to control caret position, press `N` to create new time-tag and press `D` to delete exist time-tag.";
+                        break;
+
+                    case LyricEditorMode.RecordTimeTag:
+                        description.Text = "Press spacing button at the right time to set current time to time-tag.";
+                        break;
+
+                    case LyricEditorMode.AdjustTimeTag:
+                        description.Text = "Drag to adjust time-tag time precisely.";
+                        break;
+                }
             }
         }
 
