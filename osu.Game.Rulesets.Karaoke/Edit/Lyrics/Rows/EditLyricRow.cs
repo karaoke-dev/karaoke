@@ -457,7 +457,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                         // todo : might think is this really needed because it'll use cannot let user clicking time-tag.
                         // or just let it cannot interact.
-                        case LyricEditorMode.EditTimeTag:
+                        case LyricEditorMode.AdjustTimeTag:
                             return new TimeTagBlueprintContainer(lyric);
 
                         default:

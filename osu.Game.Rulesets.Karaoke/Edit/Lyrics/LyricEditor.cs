@@ -152,6 +152,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         return new TextTagExtend();
 
                     case LyricEditorMode.EditTimeTag:
+                    case LyricEditorMode.RecordTimeTag:
+                    case LyricEditorMode.AdjustTimeTag:
                         return new TimeTagExtend();
 
                     case LyricEditorMode.Singer:
