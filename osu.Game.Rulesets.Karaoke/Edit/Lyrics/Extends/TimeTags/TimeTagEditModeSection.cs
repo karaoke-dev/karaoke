@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     }
                 }
 
-                state.BindableMode.Value = mode;
+                state.Mode = mode;
             }
         }
 

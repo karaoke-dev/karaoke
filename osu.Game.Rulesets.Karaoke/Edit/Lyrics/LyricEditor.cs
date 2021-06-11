@@ -103,6 +103,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // display add new lyric only with edit mode.
                 container.DisplayBottomDrawable = e.NewValue == LyricEditorMode.Manage;
 
+                // should wait until beatmap has been loaded.
+                Schedule(() => ResetPosition(e.NewValue));
+
                 // should control grid container spacing and place some component.
                 initializeExtendArea();
             }, true);
@@ -385,16 +388,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public LyricEditorMode Mode
         {
             get => BindableMode.Value;
-            set
-            {
-                if (BindableMode.Value == value)
-                    return;
-
-                BindableMode.Value = value;
-
-                // should wait until beatmap has been loaded.
-                Schedule(() => ResetPosition(value));
-            }
+            set => BindableMode.Value = value;
         }
 
         public RecordingMovingCaretMode RecordingMovingCaretMode
