@@ -110,10 +110,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private void initializeExtendArea()
         {
+            var extendArea = getExtendArea();
+
+            // prevent destroy and create same extend area.
+            if (extendArea != null && checkDuplicatedWithExistExtend(extendArea))
+                return;
+
             leftSideExtendArea.Clear();
             rightSideExtendArea.Clear();
 
-            var extendArea = getExtendArea();
             var direction = extendArea?.Direction;
             var width = extendArea?.ExtendWidth ?? 0;
             const int spacing = 10;
@@ -165,6 +170,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     default:
                         return null;
                 }
+            }
+
+            bool checkDuplicatedWithExistExtend(EditExtend extend)
+            {
+                var type = extendArea.GetType();
+                if (leftSideExtendArea.Children?.FirstOrDefault()?.GetType() == type)
+                    return true;
+
+                if (rightSideExtendArea.Children?.FirstOrDefault()?.GetType() == type)
+                    return true;
+
+                return false;
             }
         }
 
