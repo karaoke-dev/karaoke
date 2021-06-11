@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
@@ -13,10 +14,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
     {
         protected override string Title => "Config";
 
+        private Bindable<LyricEditorMode> bindableMode;
+
         [BackgroundDependencyLoader]
         private void load(ILyricEditorState state)
         {
-            state.BindableMode.BindValueChanged(e =>
+            bindableMode = state.BindableMode.GetBoundCopy();
+            bindableMode.BindValueChanged(e =>
             {
                 switch (e.NewValue)
                 {
