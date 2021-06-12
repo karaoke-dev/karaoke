@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
         /// <summary>
         /// Path to download readme url
         /// </summary>
-        public string ReadmeDownloadUrl => $"{DocumentUrl}README.md";
+        public string ReadmeDownloadUrl => $"{DocumentUrl}index.md";
 
         /// <summary>
         /// Display version
