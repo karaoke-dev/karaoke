@@ -193,7 +193,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                 var tcs = new TaskCompletionSource<bool>();
 
                 var client = new GitHubClient(new ProductHeaderValue(organizationName));
-                var reposAscending = await client.Repository.Content.GetAllContentsByRef(organizationName, projectName, "changelog", branchName);
+                var reposAscending = await client.Repository.Content.GetAllContentsByRef(organizationName, projectName, "content/changelog", branchName);
 
                 if (reposAscending.Any())
                 {

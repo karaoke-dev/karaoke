@@ -26,8 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
         {
             var build = new APIChangelogBuild("karaoke-dev", "karaoke-dev.github.io")
             {
-                Path = "changelog/2020.0620",
-                RootUrl = "https://github.com/karaoke-dev/karaoke-dev.github.io/tree/master/changelog/2020.0620"
+                Path = "content/changelog/2020.0620",
+                RootUrl = "https://github.com/karaoke-dev/karaoke-dev.github.io/tree/master/content/changelog/2020.0620"
             };
 
             Children = new Drawable[]
