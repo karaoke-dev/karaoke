@@ -115,6 +115,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             BindableRecordingMovingCaretMode.BindValueChanged(e =>
             {
                 initialCaretPositionAlgorithm();
+
+                ResetPosition(Mode);
             });
         }
 
