@@ -32,6 +32,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
             if (beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap)
             {
                 Singers.AddRange(karaokeBeatmap.Singers);
+
+                // should write-back if singer changed.
+                Singers.BindCollectionChanged((a, b) =>
+                {
+                    karaokeBeatmap.Singers = Singers.ToArray();
+                });
             }
         }
 
