@@ -76,13 +76,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             TimeTagAssert.ArePropertyEqual(outOfRangeTimeTags, TestCaseTagHelper.ParseTimeTags(invalidTimeTags));
         }
 
-        [TestCase("カラオケ", new[] { "[0,start]:1000", "[3,start]:2000" }, new string[] { "[3,start]:2000" })]
-        [TestCase("カラオケ", new[] { "[3,start]:2000", "[3,start]:3000", "[3,end]:4000" }, new[] { "[3,start]:2000", "[3,start]:3000" })]
-        public void TestFindStartTimeTagAtTheEndOfLyric(string text, string[] timeTagTexts, string[] invalidTimeTags)
+        [TestCase("カラオケ", new[] { "[0,start]:1000", "[3,end]:2000" }, true)]
+        [TestCase("カラオケ", new[] { "[3,start]:2000", "[3,start]:3000", "[3,end]:4000" }, true)]
+        [TestCase("カラオケ", new[] { "[0,start]:1000" }, false)]
+        [TestCase("カラオケ", new[] { "[0,start]:1000", "[5,end]:2000" }, false)] // out of range end time-tag should be count as missing.
+        [TestCase("", new[] { "[0,start]:1000", "[0,end]:2000" }, false)] // empty lyric should always count as missing.
+        public void TestHasEndTimeTagInLyric(string text, string[] timeTagTexts, bool actual)
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
-            var startTimeTagsAtTheEndOfLyric = TimeTagsUtils.FindStartTimeTagAtTheEndOfLyric(timeTags, text);
-            TimeTagAssert.ArePropertyEqual(startTimeTagsAtTheEndOfLyric, TestCaseTagHelper.ParseTimeTags(invalidTimeTags));
+            var missing = TimeTagsUtils.HasEndTimeTagInLyric(timeTags, text);
+            Assert.AreEqual(missing, actual);
         }
 
         [TestCase(new[] { "[0,start]:2000", "[0,end]:1000" }, GroupCheck.Asc, SelfCheck.BasedOnStart, new[] { 1 })]
