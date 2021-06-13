@@ -100,6 +100,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             BindableMode.BindValueChanged(e =>
             {
+                initialCaretPositionAlgorithm();
+
                 // display add new lyric only with edit mode.
                 container.DisplayBottomDrawable = e.NewValue == LyricEditorMode.Manage;
 
@@ -109,6 +111,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // should control grid container spacing and place some component.
                 initializeExtendArea();
             }, true);
+
+            BindableRecordingMovingCaretMode.BindValueChanged(e =>
+            {
+                initialCaretPositionAlgorithm();
+
+                ResetPosition(Mode);
+            });
         }
 
         private void initializeExtendArea()
@@ -211,7 +220,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         BindableLyrics.Insert(0, lyric);
                     }
 
-                    createAlgorithmList();
+                    initialCaretPositionAlgorithm();
                 }
             };
             beatmap.HitObjectRemoved += e =>
@@ -219,12 +228,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (e is Lyric lyric)
                 {
                     BindableLyrics.Remove(lyric);
-                    createAlgorithmList();
+                    initialCaretPositionAlgorithm();
                 }
             };
 
-            // create algorithm set
-            createAlgorithmList();
+            initialCaretPositionAlgorithm();
         }
 
         protected override bool OnKeyDown(KeyDownEvent e)
@@ -392,16 +400,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public RecordingMovingCaretMode RecordingMovingCaretMode
         {
             get => BindableRecordingMovingCaretMode.Value;
-            set
-            {
-                if (BindableRecordingMovingCaretMode.Value == value)
-                    return;
-
-                BindableRecordingMovingCaretMode.Value = value;
-
-                // should wait until beatmap has been loaded.
-                Schedule(createAlgorithmList);
-            }
+            set => BindableRecordingMovingCaretMode.Value = value;
         }
 
         public bool AutoFocusEditLyric

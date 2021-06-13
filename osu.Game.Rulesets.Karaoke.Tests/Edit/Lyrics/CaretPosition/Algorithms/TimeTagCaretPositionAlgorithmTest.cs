@@ -148,16 +148,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             TestMoveToLast(lyrics, caretPosition, algorithms => algorithms.Mode = mode);
         }
 
-        [TestCase(nameof(singleLyric), 0, 0)]
-        [TestCase(nameof(singleLyricWithNoText), 0, NOT_EXIST_TAG)]
-        public void TestMoveToTarget(string sourceName, int lyricIndex, int index)
+        [TestCase(nameof(singleLyric), RecordingMovingCaretMode.None, 0, 0)]
+        [TestCase(nameof(singleLyric), RecordingMovingCaretMode.OnlyStartTag, 0, 0)]
+        [TestCase(nameof(singleLyric), RecordingMovingCaretMode.OnlyEndTag, 0, 4)]
+        [TestCase(nameof(singleLyricWithNoText), RecordingMovingCaretMode.None, 0, NOT_EXIST_TAG)]
+        public void TestMoveToTarget(string sourceName, RecordingMovingCaretMode mode, int lyricIndex, int index)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var lyric = lyrics[lyricIndex];
             var caretPosition = CreateTimeTagCaretPosition(lyrics, lyricIndex, index);
 
             // Check move to target position.
-            TestMoveToTarget(lyrics, lyric, caretPosition);
+            TestMoveToTarget(lyrics, lyric, caretPosition, algorithms => algorithms.Mode = mode);
         }
 
         protected override void AssertEqual(TimeTagCaretPosition compare, TimeTagCaretPosition actual)

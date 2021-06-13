@@ -42,12 +42,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
 
             bindableMode.BindValueChanged(x =>
             {
-                updateStyle();
+                // should wait until caret position algorithm loaded.
+                Schedule(updateStyle);
             });
 
             bindableRecordingMovingCaretMode.BindValueChanged(x =>
             {
-                updateStyle();
+                // should wait until caret position algorithm loaded.
+                Schedule(updateStyle);
             });
 
             var index = timeTagCaretPosition.TimeTag.Index;
