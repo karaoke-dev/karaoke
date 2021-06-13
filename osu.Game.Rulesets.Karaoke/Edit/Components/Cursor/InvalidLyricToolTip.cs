@@ -51,6 +51,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 
                     // Print time-tag invalid message
                     case TimeTagIssue timeTagIssue:
+                        if (timeTagIssue.MissingEndTimeTag)
+                            invalidMessage.AddAlertParagraph("Missing end time tag at the end of lyric.");
+
                         timeTagIssue.InvalidTimeTags?.ForEach(x => createTimeTagInvalidMessage(x.Key, x.Value));
                         break;
 
@@ -109,6 +112,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 
                     case TimeTagInvalid.Overlapping:
                         invalidMessage.AddAlertParagraph("Time tag(s) is invalid at position ");
+                        break;
+
+                    case TimeTagInvalid.EmptyTime:
+                        invalidMessage.AddAlertParagraph("Time tag(s) is missing time at position ");
                         break;
 
                     default:

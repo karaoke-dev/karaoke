@@ -67,13 +67,26 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             TimeTagAssert.ArePropertyEqual(outOfRangeTimeTags, TestCaseTagHelper.ParseTimeTags(invalidTimeTags));
         }
 
-        [TestCase(new[] { "[0,start]:1000", "[1,start]:", "[2,start]:3000", "[3,start]:", "[3,end]:5000" }, new string[] { "[1,start]:", "[3,start]:" })]
-        [TestCase(new[] { "[0,start]:", "[3,end]:" }, new string[] { "[0,start]:", "[3,end]:" })]
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:", "[2,start]:3000", "[3,start]:", "[3,end]:5000" }, new[] { "[1,start]:", "[3,start]:" })]
+        [TestCase(new[] { "[0,start]:", "[3,end]:" }, new[] { "[0,start]:", "[3,end]:" })]
         public void TestFindNoneTime(string[] timeTagTexts, string[] invalidTimeTags)
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
             var outOfRangeTimeTags = TimeTagsUtils.FindNoneTime(timeTags);
             TimeTagAssert.ArePropertyEqual(outOfRangeTimeTags, TestCaseTagHelper.ParseTimeTags(invalidTimeTags));
+        }
+
+        [TestCase("カラオケ", new[] { "[0,start]:1000", "[3,end]:2000" }, true)]
+        [TestCase("カラオケ", new[] { "[3,start]:2000", "[3,start]:3000", "[3,end]:4000" }, true)]
+        [TestCase("カラオケ", new[] { "[3,end]:3000", "[3,end]:4000" }, true)] // multiple end time-tag is ok.
+        [TestCase("カラオケ", new[] { "[0,start]:1000" }, false)]
+        [TestCase("カラオケ", new[] { "[0,start]:1000", "[5,end]:2000" }, false)] // out of range end time-tag should be count as missing.
+        [TestCase("", new[] { "[0,start]:1000", "[0,end]:2000" }, false)] // empty lyric should always count as missing.
+        public void TestHasEndTimeTagInLyric(string text, string[] timeTagTexts, bool actual)
+        {
+            var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
+            var missing = TimeTagsUtils.HasEndTimeTagInLyric(timeTags, text);
+            Assert.AreEqual(missing, actual);
         }
 
         [TestCase(new[] { "[0,start]:2000", "[0,end]:1000" }, GroupCheck.Asc, SelfCheck.BasedOnStart, new[] { 1 })]
