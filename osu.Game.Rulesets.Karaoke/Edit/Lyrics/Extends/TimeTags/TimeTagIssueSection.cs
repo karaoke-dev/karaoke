@@ -10,6 +10,7 @@ using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
@@ -97,6 +98,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
                         var rows = new List<Drawable[]>();
 
+                        if (g.MissingEndTimeTag)
+                            rows.Add(createMissingEndTimeTagContent(lyric));
+
                         foreach (var (invalidReason, timeTags) in g.InvalidTimeTags)
                         {
                             foreach (var timeTag in timeTags)
@@ -113,6 +117,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         var lyric = g.HitObjects.FirstOrDefault() as Lyric;
 
                         var rows = new List<RowBackground>();
+
+                        if (g.MissingEndTimeTag)
+                            rows.Add(new RowBackground(lyric, null));
 
                         foreach (var (_, timeTags) in g.InvalidTimeTags)
                         {
@@ -164,6 +171,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 new OsuSpriteText
                 {
                     Text = getInvalidReason(invalid),
+                    Truncate = true,
+                    RelativeSizeAxes = Axes.X,
+                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium)
+                },
+            };
+
+            private Drawable[] createMissingEndTimeTagContent(Lyric lyric) => new Drawable[]
+            {
+                new SpriteIcon
+                {
+                    Origin = Anchor.Centre,
+                    Size = new Vector2(10),
+                    Colour = colour.Red,
+                    Margin = new MarginPadding { Left = 10 },
+                    Icon = FontAwesome.Solid.AlignLeft
+                },
+                new OsuSpriteText
+                {
+                    Text = $"#{lyric.Order}",
+                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
+                    Margin = new MarginPadding { Right = 10 },
+                },
+                new OsuSpriteText
+                {
+                    Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Bold),
+                    Margin = new MarginPadding { Right = 10 },
+                },
+                new OsuSpriteText
+                {
+                    Text = "Missing end time-tag in lyric.",
                     Truncate = true,
                     RelativeSizeAxes = Axes.X,
                     Font = OsuFont.GetFont(size: TEXT_SIZE, weight: FontWeight.Medium)
@@ -274,15 +311,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
                     Action = () =>
                     {
-                        // set current time-tag as selected.
-                        selectedTimeTags.Clear();
-                        selectedTimeTags.Add(timeTag);
-
                         // navigate to current lyric.
                         switch (state.Mode)
                         {
                             case LyricEditorMode.CreateTimeTag:
-                                state.BindableCaretPosition.Value = new TimeTagIndexCaretPosition(lyric, timeTag.Index);
+                                state.BindableCaretPosition.Value = new TimeTagIndexCaretPosition(lyric, timeTag?.Index ?? new TextIndex());
                                 break;
 
                             case LyricEditorMode.RecordTimeTag:
@@ -297,11 +330,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                                 throw new IndexOutOfRangeException(nameof(state.Mode));
                         }
 
-                        if (timeTag.Time != null)
-                        {
-                            // seek to target time-tag time if time-tag has time.
-                            clock.Seek(timeTag.Time.Value);
-                        }
+                        // set current time-tag as selected.
+                        selectedTimeTags.Clear();
+                        if (timeTag == null)
+                            return;
+
+                        // select time-tag is not null.
+                        selectedTimeTags.Add(timeTag);
+                        if (timeTag.Time == null)
+                            return;
+
+                        // seek to target time-tag time if time-tag has time.
+                        clock.Seek(timeTag.Time.Value);
                     };
                 }
 
