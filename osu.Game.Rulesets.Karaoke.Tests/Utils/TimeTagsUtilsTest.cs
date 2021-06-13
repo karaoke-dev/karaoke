@@ -76,6 +76,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             TimeTagAssert.ArePropertyEqual(outOfRangeTimeTags, TestCaseTagHelper.ParseTimeTags(invalidTimeTags));
         }
 
+        [TestCase("カラオケ", new[] { "[0,start]:1000", "[3,start]:2000" }, new string[] { "[3,start]:2000" })]
+        [TestCase("カラオケ", new[] { "[3,start]:2000", "[3,start]:3000", "[3,end]:4000" }, new[] { "[3,start]:2000", "[3,start]:3000" })]
+        public void TestFindStartTimeTagAtTheEndOfLyric(string text, string[] timeTagTexts, string[] invalidTimeTags)
+        {
+            var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
+            var startTimeTagsAtTheEndOfLyric = TimeTagsUtils.FindStartTimeTagAtTheEndOfLyric(timeTags, text);
+            TimeTagAssert.ArePropertyEqual(startTimeTagsAtTheEndOfLyric, TestCaseTagHelper.ParseTimeTags(invalidTimeTags));
+        }
+
         [TestCase(new[] { "[0,start]:2000", "[0,end]:1000" }, GroupCheck.Asc, SelfCheck.BasedOnStart, new[] { 1 })]
         [TestCase(new[] { "[0,start]:2000", "[0,end]:1000" }, GroupCheck.Asc, SelfCheck.BasedOnEnd, new[] { 0 })]
         [TestCase(new[] { "[0,start]:1100", "[0,end]:2100", "[1,start]:2000", "[1,end]:3000" }, GroupCheck.Asc, SelfCheck.BasedOnStart, new[] { 2 })]

@@ -83,6 +83,15 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             => timeTags?.Where(x => x.Time == null).ToArray();
 
         /// <summary>
+        /// Fins start time-tag the at the end of lyric.
+        /// </summary>
+        /// <param name="timeTags"></param>
+        /// <param name="lyric"></param>
+        /// <returns></returns>
+        public static TimeTag[] FindStartTimeTagAtTheEndOfLyric(TimeTag[] timeTags, string lyric)
+            => timeTags?.Where(x => x.Index.State == TextIndex.IndexState.Start && x.Index.Index == lyric.Length - 1).ToArray();
+
+        /// <summary>
         /// Find overlapping time tags.
         /// </summary>
         /// <param name="timeTags">Time tags</param>
