@@ -109,6 +109,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // should control grid container spacing and place some component.
                 initializeExtendArea();
             }, true);
+
+            BindableRecordingMovingCaretMode.BindValueChanged(e =>
+            {
+                Schedule(createAlgorithmList);
+            });
         }
 
         private void initializeExtendArea()
@@ -392,16 +397,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public RecordingMovingCaretMode RecordingMovingCaretMode
         {
             get => BindableRecordingMovingCaretMode.Value;
-            set
-            {
-                if (BindableRecordingMovingCaretMode.Value == value)
-                    return;
-
-                BindableRecordingMovingCaretMode.Value = value;
-
-                // should wait until beatmap has been loaded.
-                Schedule(createAlgorithmList);
-            }
+            set => BindableRecordingMovingCaretMode.Value = value;
         }
 
         public bool AutoFocusEditLyric
