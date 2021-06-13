@@ -141,7 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                     },
                 }));
 
-            setTooltip("time tag out of range", new TestTimeTagIssue(new Dictionary<TimeTagInvalid, TimeTag[]>
+            setTooltip("time tag overlapping", new TestTimeTagIssue(new Dictionary<TimeTagInvalid, TimeTag[]>
             {
                 {
                     TimeTagInvalid.Overlapping,
@@ -151,6 +151,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                     }
                 }
             }));
+
+            setTooltip("time tag with no time", new TestTimeTagIssue(new Dictionary<TimeTagInvalid, TimeTag[]>
+            {
+                {
+                    TimeTagInvalid.EmptyTime,
+                    new[]
+                    {
+                        new TimeTag(new TextIndex(2))
+                    }
+                }
+            }));
+
+            setTooltip("missing end time-tag", new TestTimeTagIssue(null, true));
         }
 
         [Test]
