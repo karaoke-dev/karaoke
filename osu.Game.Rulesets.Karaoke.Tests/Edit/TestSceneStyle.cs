@@ -9,6 +9,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Style;
 using osu.Game.Rulesets.Karaoke.Skinning.Legacy;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
@@ -18,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
     [TestFixture]
     public class TestSceneStyle : EditorClockTestScene
     {
-        private readonly KaraokeLayoutTestSkin skin = new();
+        private readonly KaraokeLegacySkinTransformer skin = TestResources.GetKaraokeLegacySkinTransformer("special-skin");
 
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
@@ -40,14 +41,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 RelativeSizeAxes = Axes.Both,
                 Child = new StyleScreen(),
             };
-        }
-
-        public class KaraokeLayoutTestSkin : KaraokeLegacySkinTransformer
-        {
-            public KaraokeLayoutTestSkin()
-                : base(null)
-            {
-            }
         }
     }
 }
