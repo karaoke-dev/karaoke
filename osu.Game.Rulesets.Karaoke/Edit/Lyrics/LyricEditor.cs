@@ -100,6 +100,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             BindableMode.BindValueChanged(e =>
             {
+                initialCaretPositionAlgorithm();
+
                 // display add new lyric only with edit mode.
                 container.DisplayBottomDrawable = e.NewValue == LyricEditorMode.Manage;
 
@@ -112,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             BindableRecordingMovingCaretMode.BindValueChanged(e =>
             {
-                Schedule(createAlgorithmList);
+                initialCaretPositionAlgorithm();
             });
         }
 
@@ -216,7 +218,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         BindableLyrics.Insert(0, lyric);
                     }
 
-                    createAlgorithmList();
+                    initialCaretPositionAlgorithm();
                 }
             };
             beatmap.HitObjectRemoved += e =>
@@ -224,12 +226,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (e is Lyric lyric)
                 {
                     BindableLyrics.Remove(lyric);
-                    createAlgorithmList();
+                    initialCaretPositionAlgorithm();
                 }
             };
 
-            // create algorithm set
-            createAlgorithmList();
+            initialCaretPositionAlgorithm();
         }
 
         protected override bool OnKeyDown(KeyDownEvent e)

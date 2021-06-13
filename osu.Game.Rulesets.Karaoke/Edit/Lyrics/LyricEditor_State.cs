@@ -2,9 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using osu.Framework.Extensions;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -14,33 +12,46 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public partial class LyricEditor
     {
-        private Dictionary<LyricEditorMode, ICaretPositionAlgorithm> caretMovingAlgorithmSet = new Dictionary<LyricEditorMode, ICaretPositionAlgorithm>();
+        private ICaretPositionAlgorithm algorithm;
 
-        private void createAlgorithmList()
+        private void initialCaretPositionAlgorithm()
         {
             var lyrics = BindableLyrics.ToArray();
-            caretMovingAlgorithmSet = new Dictionary<LyricEditorMode, ICaretPositionAlgorithm>
-            {
-                { LyricEditorMode.Manage, new CuttingCaretPositionAlgorithm(lyrics) },
-                { LyricEditorMode.Typing, new TypingCaretPositionAlgorithm(lyrics) },
-                { LyricEditorMode.EditRubyRomaji, new NavigateCaretPositionAlgorithm(lyrics) },
-                { LyricEditorMode.EditNote, new NavigateCaretPositionAlgorithm(lyrics) },
-                { LyricEditorMode.CreateTimeTag, new TimeTagIndexCaretPositionAlgorithm(lyrics) },
-                { LyricEditorMode.RecordTimeTag, new TimeTagCaretPositionAlgorithm(lyrics) { Mode = RecordingMovingCaretMode } },
-                { LyricEditorMode.AdjustTimeTag, new NavigateCaretPositionAlgorithm(lyrics) },
-                { LyricEditorMode.Layout, new NavigateCaretPositionAlgorithm(lyrics) },
-                { LyricEditorMode.Singer, new NavigateCaretPositionAlgorithm(lyrics) },
-            };
-        }
+            algorithm = getAlgorithmByMode(Mode);
 
-        protected object GetCaretPositionAlgorithm()
-        {
-            return caretMovingAlgorithmSet.GetOrDefault(Mode);
+            ICaretPositionAlgorithm getAlgorithmByMode(LyricEditorMode mode)
+            {
+                switch (mode)
+                {
+                    case LyricEditorMode.Manage:
+                        return new CuttingCaretPositionAlgorithm(lyrics);
+
+                    case LyricEditorMode.Typing:
+                        return new TypingCaretPositionAlgorithm(lyrics);
+
+                    case LyricEditorMode.EditRubyRomaji:
+                    case LyricEditorMode.EditNote:
+                        return new NavigateCaretPositionAlgorithm(lyrics);
+
+                    case LyricEditorMode.CreateTimeTag:
+                        return new TimeTagIndexCaretPositionAlgorithm(lyrics);
+
+                    case LyricEditorMode.RecordTimeTag:
+                        return new TimeTagCaretPositionAlgorithm(lyrics) { Mode = RecordingMovingCaretMode };
+
+                    case LyricEditorMode.AdjustTimeTag:
+                    case LyricEditorMode.Layout:
+                    case LyricEditorMode.Singer:
+                        return new NavigateCaretPositionAlgorithm(lyrics);
+
+                    default:
+                        return null;
+                }
+            }
         }
 
         public bool MoveCaret(MovingCaretAction action)
         {
-            var algorithm = GetCaretPositionAlgorithm();
             if (algorithm == null)
                 return false;
 
@@ -117,7 +128,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public void ResetPosition(LyricEditorMode mode)
         {
             var lyric = BindableCaretPosition.Value?.Lyric;
-            var algorithm = GetCaretPositionAlgorithm();
 
             if (algorithm != null)
             {
@@ -141,11 +151,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public bool CaretPositionMovable(ICaretPosition position)
         {
-            var algorithm = GetCaretPositionAlgorithm();
             return algorithm?.CallMethod<bool, ICaretPosition>("PositionMovable", position) ?? false;
         }
 
-        public bool CaretEnabled => GetCaretPositionAlgorithm() != null;
+        public bool CaretEnabled => algorithm != null;
 
         public void ClearSelectedTimeTags()
         {
