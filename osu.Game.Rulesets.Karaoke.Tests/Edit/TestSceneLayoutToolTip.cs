@@ -9,6 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Legacy;
+using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
 
@@ -17,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
     [TestFixture]
     public class TestSceneLayoutToolTip : OsuTestScene
     {
-        private readonly KaraokeLayoutTestSkin skin = new();
+        private readonly KaraokeLegacySkinTransformer skin = TestResources.GetKaraokeLegacySkinTransformer("special-skin");
         private LayoutToolTip toolTip;
 
         [SetUp]
@@ -59,14 +60,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 callBack?.Invoke(singer);
                 toolTip.SetContent(singer);
             });
-        }
-
-        public class KaraokeLayoutTestSkin : KaraokeLegacySkinTransformer
-        {
-            public KaraokeLayoutTestSkin()
-                : base(null)
-            {
-            }
         }
     }
 }
