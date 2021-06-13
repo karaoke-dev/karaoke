@@ -67,8 +67,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             TimeTagAssert.ArePropertyEqual(outOfRangeTimeTags, TestCaseTagHelper.ParseTimeTags(invalidTimeTags));
         }
 
-        [TestCase(new[] { "[0,start]:1000", "[1,start]:", "[2,start]:3000", "[3,start]:", "[3,end]:5000" }, new string[] { "[1,start]:", "[3,start]:" })]
-        [TestCase(new[] { "[0,start]:", "[3,end]:" }, new string[] { "[0,start]:", "[3,end]:" })]
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:", "[2,start]:3000", "[3,start]:", "[3,end]:5000" }, new[] { "[1,start]:", "[3,start]:" })]
+        [TestCase(new[] { "[0,start]:", "[3,end]:" }, new[] { "[0,start]:", "[3,end]:" })]
         public void TestFindNoneTime(string[] timeTagTexts, string[] invalidTimeTags)
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
