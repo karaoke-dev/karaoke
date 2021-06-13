@@ -258,8 +258,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
         internal class TestTimeTagIssue : TimeTagIssue
         {
-            public TestTimeTagIssue(Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags)
-                : base(new Lyric(), null, invalidTimeTags)
+            public TestTimeTagIssue(Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags, bool missingEndTimeTag = false)
+                : base(new Lyric(), null, invalidTimeTags, missingEndTimeTag)
             {
             }
         }

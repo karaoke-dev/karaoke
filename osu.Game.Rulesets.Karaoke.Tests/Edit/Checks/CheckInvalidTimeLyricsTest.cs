@@ -50,7 +50,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
         [TestCase("カラオケ", new[] { "[4,start]:4000" }, new[] { TimeTagInvalid.OutOfRange })]
         [TestCase("カラオケ", new[] { "[0,start]:5000", "[3,end]:1000" }, new[] { TimeTagInvalid.Overlapping })]
         [TestCase("カラオケ", new[] { "[0,start]:" }, new[] { TimeTagInvalid.EmptyTime })]
-        public void TestCheckInvalidTimeTags(string text, string[] timeTags, TimeTagInvalid[] invalids)
+        [TestCase("カラオケ", new[] { "[0,start]:1000", "[3,end]:5000" }, new TimeTagInvalid[] { }, false)]
+        [TestCase("カラオケ", new[] { "[0,start]:1000" }, new TimeTagInvalid[] { }, true)]
+        public void TestCheckInvalidTimeTags(string text, string[] timeTags, TimeTagInvalid[] invalids, bool? missingEndTimeTag = null)
         {
             var lyric = new Lyric
             {
@@ -61,6 +63,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             var issue = run(lyric).OfType<TimeTagIssue>().FirstOrDefault();
             var invalidTimeTagDictionaryKeys = issue?.InvalidTimeTags.Keys.ToArray() ?? Array.Empty<TimeTagInvalid>();
             Assert.AreEqual(invalidTimeTagDictionaryKeys, invalids);
+
+            // if test case wants to check is missing time-tag.
+            if (missingEndTimeTag != null)
+            {
+                if (missingEndTimeTag.Value)
+                {
+                    Assert.True(issue?.MissingEndTimeTag);
+                }
+                else
+                {
+                    Assert.IsNull(issue);
+                }
+            }
         }
 
         private IEnumerable<Issue> run(HitObject lyric)
