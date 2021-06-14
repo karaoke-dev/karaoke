@@ -109,11 +109,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
             if (e.AltPressed)
             {
+                // todo : this event not working while zooming, because zooming will also call scrollto.
+                // bindableCurrent.Value = getCurrentPosition();
+
                 // Update zoom to target, ignore easing value.
                 bindableZoom.Value = Zoom;
             }
 
             return true;
+
+            float getCurrentPosition()
+            {
+                // params
+                var zoomedContent = Content;
+                var focusPoint = zoomedContent.ToLocalSpace(e.ScreenSpaceMousePosition).X;
+                var contentSize = zoomedContent.DrawWidth;
+                var scrollOffset = Current;
+
+                // calculation
+                float focusOffset = focusPoint - scrollOffset;
+                float expectedWidth = DrawWidth * Zoom;
+                float targetOffset = expectedWidth * (focusPoint / contentSize) - focusOffset;
+
+                return targetOffset;
+            }
         }
 
         protected override void LoadComplete()
