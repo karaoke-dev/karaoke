@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -21,14 +22,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
     {
         private const float timeline_height = 38;
 
-        [Resolved(CanBeNull = true)]
-        private SingerManager singerManager { get; set; }
-
         [Resolved]
         private EditorClock editorClock { get; set; }
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
+
+        public Bindable<float> bindableZoom;
+        public Bindable<float> bindableCurrent;
 
         public readonly Singer Singer;
 
@@ -48,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
         private Container mainContent;
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour)
+        private void load(SingerManager singerManager, OsuColour colour)
         {
             AddInternal(background = new Box
             {
@@ -81,23 +82,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             MinZoom = getZoomLevelForVisibleMilliseconds(20000);
             Zoom = getZoomLevelForVisibleMilliseconds(5000);
 
-            // todo : might need better way to sync the zoom and scroll position.
-            singerManager?.BindableZoom.BindValueChanged(e =>
+            bindableZoom = singerManager.BindableZoom.GetBoundCopy();
+            bindableCurrent = singerManager.BindableCurrent.GetBoundCopy();
+
+            bindableZoom.BindValueChanged(e =>
             {
                 if (e.NewValue == Zoom)
                     return;
 
                 Zoom = e.NewValue;
-            });
+            }, true);
 
-            singerManager?.BindableCurrent.BindValueChanged(e =>
+            bindableCurrent.BindValueChanged(e =>
             {
-                // not make self-assign.
-                if (Current != Target)
-                    return;
-
-                ScrollTo(e.NewValue, false);
-            });
+                ScrollTo(e.NewValue);
+            }, true);
         }
 
         private float getZoomLevelForVisibleMilliseconds(double milliseconds) => Math.Max(1, (float)(editorClock.TrackLength / milliseconds));
@@ -108,11 +107,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             if (!zoneChanged)
                 return false;
 
-            // Update bindable to trigger zone changed.
-            if (singerManager != null)
-                singerManager.BindableZoom.Value = Zoom;
+            if (e.AltPressed)
+            {
+                // todo : this event not working while zooming, because zooming will also call scrollto.
+                // bindableCurrent.Value = getCurrentPosition();
+
+                // Update zoom to target, ignore easing value.
+                bindableZoom.Value = Zoom;
+            }
 
             return true;
+
+            float getCurrentPosition()
+            {
+                // params
+                var zoomedContent = Content;
+                var focusPoint = zoomedContent.ToLocalSpace(e.ScreenSpaceMousePosition).X;
+                var contentSize = zoomedContent.DrawWidth;
+                var scrollOffset = Current;
+
+                // calculation
+                float focusOffset = focusPoint - scrollOffset;
+                float expectedWidth = DrawWidth * Zoom;
+                float targetOffset = expectedWidth * (focusPoint / contentSize) - focusOffset;
+
+                return targetOffset;
+            }
         }
 
         protected override void LoadComplete()
@@ -129,11 +149,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             ScrollTo(position, false);
         }
 
-        protected override void UpdateAfterChildren()
+        protected override void OnUserScroll(float value, bool animated = true, double? distanceDecay = null)
         {
-            base.UpdateAfterChildren();
+            base.OnUserScroll(value, animated, distanceDecay);
 
-            singerManager.BindableCurrent.Value = Current;
+            // update current value if user scroll to.
+            bindableCurrent.Value = value;
         }
 
         private float getPositionFromTime(double time)
