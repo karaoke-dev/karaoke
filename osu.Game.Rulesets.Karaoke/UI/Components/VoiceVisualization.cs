@@ -9,20 +9,18 @@ using osu.Framework.Bindables;
 using osu.Framework.Caching;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Lines;
 using osu.Framework.Graphics.Performance;
 using osu.Framework.Layout;
 using osu.Framework.Threading;
-using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.UI.Scrolling;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class SaitenVisualization : LifetimeManagementContainer
+    public abstract class VoiceVisualization<T> : LifetimeManagementContainer
     {
         private const float safe_lifetime_end_multiplier = 1;
 
@@ -37,54 +35,18 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         private readonly LayoutValue initialStateCache = new LayoutValue(Invalidation.RequiredParentSizeToFit | Invalidation.DrawInfo);
 
-        private readonly IDictionary<SaitenPath, List<KaraokeReplayFrame>> frames = new Dictionary<SaitenPath, List<KaraokeReplayFrame>>();
+        private readonly IDictionary<SaitenPath, IList<T>> frames = new Dictionary<SaitenPath, IList<T>>();
         private readonly IDictionary<SaitenPath, Cached> pathInitialStateCache = new Dictionary<SaitenPath, Cached>();
 
-        protected IEnumerable<SaitenPath> Paths => InternalChildren.Cast<SaitenPath>();
-        protected IEnumerable<SaitenPath> AlivePaths => AliveInternalChildren.Cast<SaitenPath>();
+        protected IEnumerable<SaitenPath> Paths => InternalChildren.OfType<SaitenPath>();
+        protected IEnumerable<SaitenPath> AlivePaths => AliveInternalChildren.OfType<SaitenPath>();
 
-        protected virtual void Add(Path hitObject) => AddInternal(hitObject);
-        protected virtual bool Remove(Path hitObject) => RemoveInternal(hitObject);
+        protected virtual float PathRadius => 2;
 
-        public SaitenVisualization()
+        protected VoiceVisualization()
         {
             AddLayout(initialStateCache);
         }
-
-        public ColourInfo LineColour
-        {
-            get => Colour;
-            set => Colour = value;
-        }
-
-        public new bool Masking
-        {
-            get => base.Masking;
-            set => base.Masking = value;
-        }
-
-        private float pathRadius = 2;
-
-        public float PathRadius
-        {
-            get => pathRadius;
-            set
-            {
-                if (pathRadius == value)
-                    return;
-
-                pathRadius = value;
-
-                foreach (var path in Paths)
-                {
-                    path.PathRadius = pathRadius;
-                }
-            }
-        }
-
-        protected double MaxAvailableTime => frames.LastOrDefault().Value?.LastOrDefault()?.Time ?? 0;
-
-        public SaitenOrientatePosition OrientatePosition { get; set; } = SaitenOrientatePosition.Start;
 
         [BackgroundDependencyLoader]
         private void load()
@@ -96,39 +58,25 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             timeRange.ValueChanged += _ => initialStateCache.Invalidate();
         }
 
-        private bool createNew = true;
+        protected abstract double GetTime(T point);
 
-        public void Add(KaraokeReplayFrame frame)
+        protected abstract float GetPosition(T point);
+
+        protected void CreateNew(T point)
         {
-            // Start time should be largest and cannot be removed.
-            var startTime = frame.Time;
-            if (startTime <= MaxAvailableTime)
-                throw new ArgumentOutOfRangeException($"{nameof(startTime)} out of range.");
-
-            if (!frame.Sound)
+            var path = new SaitenPath
             {
-                // Next replay frame will create new path
-                createNew = true;
-                return;
-            }
+                PathRadius = PathRadius,
+            };
+            frames.Add(path, new List<T> { point });
+            pathInitialStateCache.Add(path, new Cached());
 
-            if (createNew)
-            {
-                var path = new SaitenPath(startTime)
-                {
-                    PathRadius = PathRadius
-                };
-                frames.Add(path, new List<KaraokeReplayFrame> { frame });
-                pathInitialStateCache.Add(path, new Cached());
+            AddInternal(path);
+        }
 
-                Add(path);
-
-                createNew = false;
-            }
-            else
-            {
-                frames.LastOrDefault().Value.Add(frame);
-            }
+        protected void Append(T point)
+        {
+            frames.LastOrDefault().Value.Add(point);
         }
 
         public void Clear()
@@ -169,10 +117,14 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         private void computeLifetime(SaitenPath path)
         {
-            var startTime = path.StartTime;
-            var endTime = frames[path].LastOrDefault()?.Time;
-            if (endTime == null)
+            var firstFrameInPath = frames[path].FirstOrDefault();
+            var lastFrameInPath = frames[path].LastOrDefault();
+
+            if (firstFrameInPath == null || lastFrameInPath == null)
                 return;
+
+            var startTime = GetTime(firstFrameInPath);
+            var endTime = GetTime(lastFrameInPath);
 
             float originAdjustment = 0.0f;
 
@@ -188,13 +140,17 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             }
 
             path.LifetimeStart = scrollingInfo.Algorithm.GetDisplayStartTime(startTime, originAdjustment, timeRange.Value, scrollLength);
-            path.LifetimeEnd = scrollingInfo.Algorithm.TimeAt(scrollLength * safe_lifetime_end_multiplier, endTime.Value, timeRange.Value, scrollLength);
+            path.LifetimeEnd = scrollingInfo.Algorithm.TimeAt(scrollLength * safe_lifetime_end_multiplier, endTime, timeRange.Value, scrollLength);
         }
 
         // Cant use AddOnce() since the delegate is re-constructed every invocation
         private void computePath(SaitenPath path) => path.Schedule(() =>
         {
-            var startTime = path.StartTime;
+            var firstFrameInPath = frames[path].FirstOrDefault();
+            if (firstFrameInPath == null)
+                return;
+
+            var startTime = GetTime(firstFrameInPath);
             if (pathInitialStateCache[path].IsValid)
                 return;
 
@@ -215,8 +171,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
             foreach (var frame in frameList)
             {
-                var x = scrollingInfo.Algorithm.GetLength(startTime, frame.Time, timeRange.Value, scrollLength);
-                path.AddVertex(new Vector2(left ? x : -x, frame.Scale * scaleDistance - centerPosition));
+                var x = scrollingInfo.Algorithm.GetLength(startTime, GetTime(frame), timeRange.Value, scrollLength);
+                path.AddVertex(new Vector2(left ? x : -x, GetPosition(frame) * scaleDistance - centerPosition));
             }
         });
 
@@ -238,37 +194,29 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             base.OnChildLifetimeBoundaryCrossed(e);
         }
 
+        protected virtual float Offset => 0;
+
         private void updatePosition(SaitenPath path, double currentTime)
         {
-            double startTime = path.StartTime;
+            var firstFrameInPath = frames[path].FirstOrDefault();
+            if (firstFrameInPath == null)
+                return;
+
+            var startTime = GetTime(firstFrameInPath);
             var multiple = direction.Value == ScrollingDirection.Left ? 1 : -1;
             var x = scrollingInfo.Algorithm.PositionAt(startTime, currentTime, timeRange.Value, scrollLength);
-            var offset = OrientatePosition == SaitenOrientatePosition.End ? scrollLength : 0;
-            path.X = (x + offset) * multiple;
+            path.X = (x + Offset) * multiple;
         }
 
         public class SaitenPath : Path
         {
             public override bool RemoveWhenNotAlive => false;
 
-            public double StartTime { get; }
-
-            public SaitenPath(double startTime)
-            {
-                StartTime = startTime;
-            }
-
             /// <summary>
             /// Schedules an <see cref="Action"/> to this <see cref="SaitenPath"/>.
+            /// todo : might move this?
             /// </summary>
             protected internal new ScheduledDelegate Schedule(Action action) => base.Schedule(action);
-        }
-
-        public enum SaitenOrientatePosition
-        {
-            Start,
-
-            End
         }
     }
 }

@@ -113,30 +113,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
                 columnFlow.Add(column);
             }
 
-            Direction.BindValueChanged(dir =>
-            {
-                Schedule(() =>
-                {
-                    var judgementAreaPercentage = currentSkin.GetConfig<KaraokeSkinConfigurationLookup, float>(
-                                                                 new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.JudgementAresPrecentage, 0))
-                                                             ?.Value ?? 0.4f;
-
-                    switch (dir.NewValue)
-                    {
-                        case ScrollingDirection.Left:
-                            OnDirectionChanged(KaraokeScrollingDirection.Left, judgementAreaPercentage);
-                            break;
-
-                        case ScrollingDirection.Right:
-                            OnDirectionChanged(KaraokeScrollingDirection.Right, judgementAreaPercentage);
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(dir.NewValue));
-                    }
-                });
-            });
-
             RegisterPool<Note, DrawableNote>(50);
             RegisterPool<BarLine, DrawableBarLine>(15);
         }
@@ -172,6 +148,27 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
 
             skin.SourceChanged += onSkinChanged;
             onSkinChanged();
+
+            Direction.BindValueChanged(dir =>
+            {
+                var judgementAreaPercentage = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(
+                                                      new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.JudgementAresPrecentage, 0))
+                                                  ?.Value ?? 0.4f;
+
+                switch (dir.NewValue)
+                {
+                    case ScrollingDirection.Left:
+                        OnDirectionChanged(KaraokeScrollingDirection.Left, judgementAreaPercentage);
+                        break;
+
+                    case ScrollingDirection.Right:
+                        OnDirectionChanged(KaraokeScrollingDirection.Right, judgementAreaPercentage);
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(dir.NewValue));
+                }
+            });
         }
 
         private void onSkinChanged()
