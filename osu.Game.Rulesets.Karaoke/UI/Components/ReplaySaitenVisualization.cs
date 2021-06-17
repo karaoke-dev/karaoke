@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             }
         }
 
-        [BackgroundDependencyLoader(true)]
+        [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
             Colour = colours.GrayF;
