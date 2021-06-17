@@ -34,6 +34,8 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             if (!(drawableRuleset.Playfield is KaraokePlayfield karaokePlayfield))
                 return;
 
+            // todo : add replay visualization into note playfield from here?
+            // todo : should have a better way(or called more generic) way to apply replay into replay field.
             var replay = new KaraokeAutoGenerator(drawableRuleset.Beatmap).Generate();
             var notePlayfield = karaokePlayfield.NotePlayfield as NotePlayfield;
             var frames = replay.Frames.OfType<KaraokeReplayFrame>();
