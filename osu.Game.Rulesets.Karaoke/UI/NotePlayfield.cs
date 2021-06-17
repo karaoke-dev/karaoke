@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly SaitenMarker saitenMarker;
 
         private readonly RealTimeSaitenVisualization realTimeSaitenVisualization;
-        private readonly SaitenVisualization replaySaitenVisualization;
+        private readonly ReplaySaitenVisualization replaySaitenVisualization;
 
         private readonly SaitenStatus saitenStatus;
 
@@ -103,20 +103,17 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             HitObjectArea.AddRange(new Drawable[]
             {
-                replaySaitenVisualization = new SaitenVisualization
+                // todo : generate this only if in auto-play mode.
+                replaySaitenVisualization = new ReplaySaitenVisualization(null)
                 {
                     Name = "Saiten Visualization",
                     RelativeSizeAxes = Axes.Both,
-                    PathRadius = 1.5f,
                     Alpha = 0.6f
                 },
                 realTimeSaitenVisualization = new RealTimeSaitenVisualization
                 {
                     Name = "Saiten Visualization",
                     RelativeSizeAxes = Axes.Both,
-                    Masking = true,
-                    PathRadius = 2.5f,
-                    OrientatePosition = SaitenVisualization.SaitenOrientatePosition.End
                 },
             });
 
@@ -213,9 +210,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [BackgroundDependencyLoader(true)]
         private void load(OsuColour colours, [CanBeNull] KaraokeSessionStatics session)
         {
-            replaySaitenVisualization.LineColour = Color4.White;
-            realTimeSaitenVisualization.LineColour = colours.Yellow;
-
             session?.BindWith(KaraokeRulesetSession.SaitenPitch, saitenPitch);
 
             session?.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
