@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Screens;
@@ -13,6 +14,12 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
     /// </summary>
     public static class OsuGameExtensions
     {
+        public static KaraokeRuleset GetRuleset(this DependencyContainer dependencies)
+        {
+            var rulesets = dependencies.Get<RulesetStore>().AvailableRulesets.Select(info => info.CreateInstance());
+            return (KaraokeRuleset)rulesets.FirstOrDefault(r => r is KaraokeRuleset);
+        }
+
         public static Container GetDisplayContainer(this OsuGame game)
             => game?.Children[7] as Container;
 
