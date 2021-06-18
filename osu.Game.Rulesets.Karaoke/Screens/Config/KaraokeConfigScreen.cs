@@ -13,7 +13,9 @@ using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays.Settings;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Fonts;
+using osu.Game.Rulesets.UI;
 using osu.Game.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config
@@ -86,20 +88,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
-            var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+            var baseDependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
-            // cache ruleset config
-            var config = dependencies.Get<RulesetConfigCache>().GetConfigFor(new KaraokeRuleset());
-            if (config != null)
-                dependencies.Cache(config);
-
-            // cache texture in ruleset.
-            var host = parent.Get<GameHost>();
-            var resources = new KaraokeRuleset().CreateResourceStore();
-            var textureStore = new TextureStore(host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(resources, @"Textures")));
-            dependencies.CacheAs(textureStore);
-
-            return dependencies;
+            return new OsuScreenDependencies(false, new DrawableRulesetDependencies(baseDependencies.GetRuleset(), baseDependencies));
         }
 
         [BackgroundDependencyLoader]
