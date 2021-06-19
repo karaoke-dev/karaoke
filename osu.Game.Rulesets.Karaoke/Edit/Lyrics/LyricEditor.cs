@@ -282,6 +282,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.View:
                 case LyricEditorMode.Manage:
                 case LyricEditorMode.Typing: // will handle in OnKeyDown
+                case LyricEditorMode.Language:
                 case LyricEditorMode.EditRubyRomaji:
                     return false;
 
@@ -297,7 +298,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.EditNote:
                 case LyricEditorMode.Layout:
                 case LyricEditorMode.Singer:
-                case LyricEditorMode.Language:
                     return false;
 
                 default:

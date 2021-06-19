@@ -21,6 +21,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         Typing,
 
         /// <summary>
+        /// Can edit each lyric's language.
+        /// </summary>
+        Language,
+
+        /// <summary>
         /// Able to create/delete ruby/romaji.
         /// </summary>
         EditRubyRomaji,
@@ -54,10 +59,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// Can edit each lyric's singer.
         /// </summary>
         Singer,
-
-        /// <summary>
-        /// Can edit each lyric's language.
-        /// </summary>
-        Language,
     }
 }

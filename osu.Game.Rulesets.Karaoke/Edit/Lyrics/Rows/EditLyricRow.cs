@@ -206,6 +206,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.View:
                         case LyricEditorMode.Manage:
                         case LyricEditorMode.Typing:
+                            return null;
+
+                        case LyricEditorMode.Language:
+                            return new LanguageInfo(Lyric);
+
                         case LyricEditorMode.EditRubyRomaji:
                             return null;
 
@@ -222,9 +227,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                         case LyricEditorMode.Singer:
                             return new SingerInfo(Lyric);
-
-                        case LyricEditorMode.Language:
-                            return new LanguageInfo(Lyric);
 
                         default:
                             throw new IndexOutOfRangeException(nameof(mode));
@@ -501,6 +503,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.Typing:
                             return new DrawableLyricInputCaret();
 
+                        case LyricEditorMode.Language:
                         case LyricEditorMode.EditRubyRomaji:
                             return null;
 
@@ -514,7 +517,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.EditNote:
                         case LyricEditorMode.Layout:
                         case LyricEditorMode.Singer:
-                        case LyricEditorMode.Language:
                             return null;
 
                         default:
