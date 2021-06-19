@@ -5,14 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using osu.Framework.Allocation;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.IO.Stores;
-using osu.Framework.Platform;
 using osu.Game.Beatmaps;
-using osu.Game.Database;
-using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
@@ -43,49 +37,24 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         public override void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
         {
-            if (!(drawableRuleset is DrawableKaraokeRuleset drawableKaraokeRuleset))
-                return;
-
             if (!(drawableRuleset.Playfield is KaraokePlayfield karaokePlayfield))
                 return;
 
-            var accessResourceContainer = new AccessResourceContainer(karaokePlayfield.WorkingBeatmap.BeatmapInfo);
-            drawableKaraokeRuleset.Overlays.Add(accessResourceContainer);
-            trackData = accessResourceContainer.TrackData;
+            var workingBeatmap = karaokePlayfield.WorkingBeatmap;
+            var path = getPathForFile(workingBeatmap.BeatmapInfo);
+            trackData = workingBeatmap.GetStream(path);
 
             base.ApplyToDrawableRuleset(drawableRuleset);
         }
 
-        protected class AccessResourceContainer : Container
+        private string getPathForFile(BeatmapInfo beatmapInfo)
         {
-            protected readonly BeatmapSetInfo BeatmapSetInfo;
+            var beatmapSetInfo = beatmapInfo.BeatmapSet;
+            var audioFile = beatmapInfo.Metadata.AudioFile;
 
-            protected readonly BeatmapMetadata Metadata;
-
-            private IResourceStore<byte[]> store;
-
-            public Stream TrackData;
-
-            public AccessResourceContainer(BeatmapInfo beatmapInfo)
-            {
-                BeatmapSetInfo = beatmapInfo.BeatmapSet;
-                Metadata = beatmapInfo.Metadata;
-            }
-
-            [BackgroundDependencyLoader(true)]
-            private void load(Storage storage, IDatabaseContextFactory contextFactory)
-            {
-                var files = new FileStore(contextFactory, storage);
-                store = files.Store;
-                TrackData = store.GetStream(getPathForFile(Metadata.AudioFile));
-            }
-
-            /// <summary>
-            /// Copied from <see cref="WorkingBeatmap"/>
-            /// </summary>
-            /// <param name="filename"></param>
-            /// <returns></returns>
-            private string getPathForFile(string filename) => BeatmapSetInfo.Files.FirstOrDefault(f => string.Equals(f.Filename, filename, StringComparison.OrdinalIgnoreCase))?.FileInfo.StoragePath;
+            return beatmapSetInfo.Files
+                                 .FirstOrDefault(f => string.Equals(f.Filename, audioFile, StringComparison.OrdinalIgnoreCase))
+                                 ?.FileInfo.StoragePath;
         }
     }
 }
