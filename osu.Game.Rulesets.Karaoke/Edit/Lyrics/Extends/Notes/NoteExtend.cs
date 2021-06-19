@@ -15,7 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
         {
             Children = new Drawable[]
             {
-
+                new NoteAutoGenerateSection(),
+                new NoteIssueSection()
             };
         }
     }
