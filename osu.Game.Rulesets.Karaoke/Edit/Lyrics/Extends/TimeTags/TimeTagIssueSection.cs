@@ -98,8 +98,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
                         var rows = new List<Drawable[]>();
 
+                        if (g.MissingStartTimeTag)
+                            rows.Add(createMissingStartOrEndTimeTagContent(lyric));
+
                         if (g.MissingEndTimeTag)
-                            rows.Add(createMissingEndTimeTagContent(lyric));
+                            rows.Add(createMissingStartOrEndTimeTagContent(lyric));
 
                         foreach (var (invalidReason, timeTags) in g.InvalidTimeTags)
                         {
@@ -117,6 +120,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         var lyric = g.HitObjects.FirstOrDefault() as Lyric;
 
                         var rows = new List<RowBackground>();
+
+                        if (g.MissingStartTimeTag)
+                            rows.Add(new RowBackground(lyric, null));
 
                         if (g.MissingEndTimeTag)
                             rows.Add(new RowBackground(lyric, null));
@@ -177,7 +183,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 },
             };
 
-            private Drawable[] createMissingEndTimeTagContent(Lyric lyric) => new Drawable[]
+            private Drawable[] createMissingStartOrEndTimeTagContent(Lyric lyric) => new Drawable[]
             {
                 new SpriteIcon
                 {
