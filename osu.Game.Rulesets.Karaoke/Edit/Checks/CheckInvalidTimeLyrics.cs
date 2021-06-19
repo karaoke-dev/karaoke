@@ -38,9 +38,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                     yield return new IssueTemplateInvalidLyricTime(this).Create(lyric, invalidLyricTime);
 
                 var invalidTimeTags = checkInvalidTimeTags(lyric);
+                var missingStartTimeTag = checkMissingStartTimeTag(lyric);
                 var missingEndTimeTag = checkMissingEndTimeTag(lyric);
-                if (invalidTimeTags.Any() || missingEndTimeTag)
-                    yield return new IssueTemplateInvalidTimeTag(this).Create(lyric, invalidTimeTags, missingEndTimeTag);
+                if (invalidTimeTags.Any() || missingStartTimeTag || missingEndTimeTag)
+                    yield return new IssueTemplateInvalidTimeTag(this).Create(lyric, invalidTimeTags, missingStartTimeTag, missingEndTimeTag);
             }
         }
 
@@ -84,6 +85,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             return result;
         }
 
+        private bool checkMissingStartTimeTag(Lyric lyric)
+            => !TimeTagsUtils.HasStartTimeTagInLyric(lyric.TimeTags, lyric.Text);
+
         private bool checkMissingEndTimeTag(Lyric lyric)
             => !TimeTagsUtils.HasEndTimeTagInLyric(lyric.TimeTags, lyric.Text);
 
@@ -105,8 +109,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             {
             }
 
-            public Issue Create(Lyric lyric, Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags, bool missingEndTimeTag)
-                => new TimeTagIssue(lyric, this, invalidTimeTags, missingEndTimeTag);
+            public Issue Create(Lyric lyric, Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags, bool missingStartTimeTag, bool missingEndTimeTag)
+                => new TimeTagIssue(lyric, this, invalidTimeTags, missingStartTimeTag, missingEndTimeTag);
         }
     }
 }

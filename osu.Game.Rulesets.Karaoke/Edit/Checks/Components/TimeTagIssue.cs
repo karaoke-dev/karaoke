@@ -12,12 +12,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
     {
         public readonly Dictionary<TimeTagInvalid, TimeTag[]> InvalidTimeTags;
 
+        public readonly bool MissingStartTimeTag;
+
         public readonly bool MissingEndTimeTag;
 
-        public TimeTagIssue(HitObject lyric, IssueTemplate template, Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags, bool missingEndTimeTag, params object[] args)
+        public TimeTagIssue(HitObject lyric, IssueTemplate template, Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags, bool missingStartTimeTag, bool missingEndTimeTag, params object[] args)
             : base(lyric, template, args)
         {
             InvalidTimeTags = invalidTimeTags;
+            MissingStartTimeTag = missingStartTimeTag;
             MissingEndTimeTag = missingEndTimeTag;
         }
     }
