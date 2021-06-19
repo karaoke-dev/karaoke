@@ -82,6 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         public void Clear()
         {
             frames.Clear();
+            pathInitialStateCache.Clear();
             ClearInternal();
         }
 
@@ -114,6 +115,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         }
 
         protected void MarkAsInvalid(SaitenPath path) => pathInitialStateCache[path].Invalidate();
+
+        protected void Invalid() => initialStateCache.Invalidate();
 
         private void computeLifetime(SaitenPath path)
         {
