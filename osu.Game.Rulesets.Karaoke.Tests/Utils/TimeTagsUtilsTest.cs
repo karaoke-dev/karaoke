@@ -77,6 +77,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         }
 
         [TestCase("カラオケ", new[] { "[0,start]:1000", "[3,end]:2000" }, true)]
+        [TestCase("カラオケ", new[] { "[0,start]:2000", "[3,end]:3000", "[3,end]:4000" }, true)]
+        [TestCase("カラオケ", new[] { "[0,start]:3000", "[0,start]:4000" }, true)] // multiple start time-tag is ok.
+        [TestCase("カラオケ", new[] { "[3,end]:1000" }, false)]
+        [TestCase("カラオケ", new[] { "[-1,start]:1000", "[3,end]:2000" }, false)] // out of range end time-tag should be count as missing.
+        [TestCase("", new[] { "[0,start]:1000", "[0,end]:2000" }, false)] // empty lyric should always count as missing.
+        public void TestHasStartTimeTagInLyric(string text, string[] timeTagTexts, bool actual)
+        {
+            var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
+            var missing = TimeTagsUtils.HasStartTimeTagInLyric(timeTags, text);
+            Assert.AreEqual(missing, actual);
+        }
+
+        [TestCase("カラオケ", new[] { "[0,start]:1000", "[3,end]:2000" }, true)]
         [TestCase("カラオケ", new[] { "[3,start]:2000", "[3,start]:3000", "[3,end]:4000" }, true)]
         [TestCase("カラオケ", new[] { "[3,end]:3000", "[3,end]:4000" }, true)] // multiple end time-tag is ok.
         [TestCase("カラオケ", new[] { "[0,start]:1000" }, false)]

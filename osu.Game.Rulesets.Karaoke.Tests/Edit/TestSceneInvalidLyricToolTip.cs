@@ -163,7 +163,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 }
             }));
 
-            setTooltip("missing end time-tag", new TestTimeTagIssue(null, true));
+            setTooltip("missing start time-tag", new TestTimeTagIssue(null, true));
+            setTooltip("missing end time-tag", new TestTimeTagIssue(null, false, true));
+            setTooltip("missing start and end time-tag", new TestTimeTagIssue(null, true, true));
         }
 
         [Test]
@@ -271,8 +273,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
 
         internal class TestTimeTagIssue : TimeTagIssue
         {
-            public TestTimeTagIssue(Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags, bool missingEndTimeTag = false)
-                : base(new Lyric(), null, invalidTimeTags, missingEndTimeTag)
+            public TestTimeTagIssue(Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags, bool missingStartTimeTag = false, bool missingEndTimeTag = false)
+                : base(new Lyric(), null, invalidTimeTags, missingStartTimeTag, missingEndTimeTag)
             {
             }
         }

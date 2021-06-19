@@ -51,6 +51,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 
                     // Print time-tag invalid message
                     case TimeTagIssue timeTagIssue:
+                        if (timeTagIssue.MissingStartTimeTag)
+                            invalidMessage.AddAlertParagraph("Missing start time tag at the start of lyric.");
+
                         if (timeTagIssue.MissingEndTimeTag)
                             invalidMessage.AddAlertParagraph("Missing end time tag at the end of lyric.");
 
