@@ -2,8 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -24,16 +22,15 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         private const double fade_in_duration_multiplier = -1;
         private const double fade_out_duration_multiplier = 0.3;
 
-        public override void ApplyToDrawableHitObjects(IEnumerable<DrawableHitObject> drawables)
+        public override void ApplyToDrawableHitObject(DrawableHitObject dho)
         {
-            static void adjustFadeIn(KaraokeHitObject h) => h.TimeFadeIn = h.TimePreempt * fade_in_duration_multiplier;
-
-            foreach (var d in drawables.OfType<DrawableNote>())
+            if (dho is DrawableNote drawableNote)
             {
-                adjustFadeIn(d.HitObject);
+                var note = drawableNote.HitObject;
+                note.TimeFadeIn = note.TimePreempt * fade_in_duration_multiplier;
             }
 
-            base.ApplyToDrawableHitObjects(drawables);
+            base.ApplyToDrawableHitObject(dho);
         }
 
         protected override void ApplyIncreasedVisibilityState(DrawableHitObject hitObject, ArmedState state)
