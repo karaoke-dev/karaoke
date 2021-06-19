@@ -83,6 +83,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             => timeTags?.Where(x => x.Time == null).ToArray();
 
         /// <summary>
+        /// Check lyric has start time-tag
+        /// </summary>
+        /// <param name="timeTags"></param>
+        /// <param name="lyric"></param>
+        public static bool HasStartTimeTagInLyric(TimeTag[] timeTags, string lyric)
+            => !string.IsNullOrEmpty(lyric) && timeTags.Any(x => x.Index.State == TextIndex.IndexState.Start && x.Index.Index == 0);
+
+        /// <summary>
         /// Check lyric has end time-tag
         /// </summary>
         /// <param name="timeTags"></param>
