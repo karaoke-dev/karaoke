@@ -26,11 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         EditRubyRomaji,
 
         /// <summary>
-        /// Able to create/delete/mode/split/combine note.
-        /// </summary>
-        EditNote,
-
-        /// <summary>
         /// Enable to create/delete and reset time tag.
         /// </summary>
         CreateTimeTag,
@@ -44,6 +39,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// Precisely adjust time-tag time.
         /// </summary>
         AdjustTimeTag,
+
+        /// <summary>
+        /// Able to create/delete/mode/split/combine note.
+        /// </summary>
+        EditNote,
 
         /// <summary>
         /// Can edit each lyric's layout.

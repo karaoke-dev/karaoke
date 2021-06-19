@@ -207,13 +207,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.Manage:
                         case LyricEditorMode.Typing:
                         case LyricEditorMode.EditRubyRomaji:
-                        case LyricEditorMode.EditNote:
                             return null;
 
                         case LyricEditorMode.CreateTimeTag:
                         case LyricEditorMode.RecordTimeTag:
                         case LyricEditorMode.AdjustTimeTag:
                             return new TimeTagInfo(Lyric);
+
+                        case LyricEditorMode.EditNote:
+                            return null;
 
                         case LyricEditorMode.Layout:
                             return new LayoutInfo(Lyric);
@@ -342,7 +344,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         break;
 
                     case LyricEditorMode.EditRubyRomaji:
-                    case LyricEditorMode.EditNote:
                         state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                         break;
 
@@ -357,6 +358,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         break;
 
                     case LyricEditorMode.AdjustTimeTag:
+                    case LyricEditorMode.EditNote:
                     case LyricEditorMode.Layout:
                     case LyricEditorMode.Singer:
                         state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
@@ -502,9 +504,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.EditRubyRomaji:
                             return null;
 
-                        case LyricEditorMode.EditNote:
-                            return null;
-
                         case LyricEditorMode.CreateTimeTag:
                             return new DrawableTimeTagEditCaret();
 
@@ -512,6 +511,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                             return new DrawableTimeTagRecordCaret();
 
                         case LyricEditorMode.AdjustTimeTag:
+                        case LyricEditorMode.EditNote:
                         case LyricEditorMode.Layout:
                         case LyricEditorMode.Singer:
                         case LyricEditorMode.Language:

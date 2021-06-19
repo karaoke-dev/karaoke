@@ -51,13 +51,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.EditRubyRomaji:
                     return 333 / 360f; // pink
 
-                case LyricEditorMode.EditNote:
-                    return 203 / 360f; // blue
-
                 case LyricEditorMode.CreateTimeTag:
                 case LyricEditorMode.RecordTimeTag:
                 case LyricEditorMode.AdjustTimeTag:
                     return 33 / 360f; // orange
+
+                case LyricEditorMode.EditNote:
+                    return 203 / 360f; // blue
 
                 case LyricEditorMode.Layout:
                 case LyricEditorMode.Singer:
