@@ -21,14 +21,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         Typing,
 
         /// <summary>
+        /// Can edit each lyric's language.
+        /// </summary>
+        Language,
+
+        /// <summary>
         /// Able to create/delete ruby/romaji.
         /// </summary>
         EditRubyRomaji,
-
-        /// <summary>
-        /// Able to create/delete/mode/split/combine note.
-        /// </summary>
-        EditNote,
 
         /// <summary>
         /// Enable to create/delete and reset time tag.
@@ -46,6 +46,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         AdjustTimeTag,
 
         /// <summary>
+        /// Able to create/delete/mode/split/combine note.
+        /// </summary>
+        EditNote,
+
+        /// <summary>
         /// Can edit each lyric's layout.
         /// </summary>
         Layout,
@@ -54,10 +59,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// Can edit each lyric's singer.
         /// </summary>
         Singer,
-
-        /// <summary>
-        /// Can edit each lyric's language.
-        /// </summary>
-        Language,
     }
 }

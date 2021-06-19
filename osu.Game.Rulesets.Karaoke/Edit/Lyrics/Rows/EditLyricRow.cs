@@ -206,8 +206,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.View:
                         case LyricEditorMode.Manage:
                         case LyricEditorMode.Typing:
+                            return null;
+
+                        case LyricEditorMode.Language:
+                            return new LanguageInfo(Lyric);
+
                         case LyricEditorMode.EditRubyRomaji:
-                        case LyricEditorMode.EditNote:
                             return null;
 
                         case LyricEditorMode.CreateTimeTag:
@@ -215,14 +219,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.AdjustTimeTag:
                             return new TimeTagInfo(Lyric);
 
+                        case LyricEditorMode.EditNote:
+                            return null;
+
                         case LyricEditorMode.Layout:
                             return new LayoutInfo(Lyric);
 
                         case LyricEditorMode.Singer:
                             return new SingerInfo(Lyric);
-
-                        case LyricEditorMode.Language:
-                            return new LanguageInfo(Lyric);
 
                         default:
                             throw new IndexOutOfRangeException(nameof(mode));
@@ -342,7 +346,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         break;
 
                     case LyricEditorMode.EditRubyRomaji:
-                    case LyricEditorMode.EditNote:
                         state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                         break;
 
@@ -357,6 +360,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         break;
 
                     case LyricEditorMode.AdjustTimeTag:
+                    case LyricEditorMode.EditNote:
                     case LyricEditorMode.Layout:
                     case LyricEditorMode.Singer:
                         state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
@@ -499,10 +503,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.Typing:
                             return new DrawableLyricInputCaret();
 
+                        case LyricEditorMode.Language:
                         case LyricEditorMode.EditRubyRomaji:
-                            return null;
-
-                        case LyricEditorMode.EditNote:
                             return null;
 
                         case LyricEditorMode.CreateTimeTag:
@@ -512,9 +514,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                             return new DrawableTimeTagRecordCaret();
 
                         case LyricEditorMode.AdjustTimeTag:
+                        case LyricEditorMode.EditNote:
                         case LyricEditorMode.Layout:
                         case LyricEditorMode.Singer:
-                        case LyricEditorMode.Language:
                             return null;
 
                         default:

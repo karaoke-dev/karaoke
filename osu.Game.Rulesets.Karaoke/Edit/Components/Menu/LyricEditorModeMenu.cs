@@ -21,12 +21,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             LyricEditorMode.View,
             LyricEditorMode.Manage,
             LyricEditorMode.Typing,
+            LyricEditorMode.Language,
             LyricEditorMode.EditRubyRomaji,
-            LyricEditorMode.EditNote,
             LyricEditorMode.CreateTimeTag,
+            LyricEditorMode.EditNote,
             LyricEditorMode.Layout,
             LyricEditorMode.Singer,
-            LyricEditorMode.Language
         };
 
         protected override string GetName(LyricEditorMode selection)
@@ -42,25 +42,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                 case LyricEditorMode.Typing:
                     return "Typing";
 
+                case LyricEditorMode.Language:
+                    return "Select language";
+
                 case LyricEditorMode.EditRubyRomaji:
                     return "Edit ruby / romaji";
-
-                case LyricEditorMode.EditNote:
-                    return "Edit note";
 
                 case LyricEditorMode.CreateTimeTag:
                 case LyricEditorMode.RecordTimeTag:
                 case LyricEditorMode.AdjustTimeTag:
                     return "Edit time tag";
 
+                case LyricEditorMode.EditNote:
+                    return "Edit note";
+
                 case LyricEditorMode.Layout:
                     return "Select layout";
 
                 case LyricEditorMode.Singer:
                     return "Select singer";
-
-                case LyricEditorMode.Language:
-                    return "Select language";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(selection));
