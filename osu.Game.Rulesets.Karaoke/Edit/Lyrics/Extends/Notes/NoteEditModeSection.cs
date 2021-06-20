@@ -11,14 +11,14 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
-    public class TimeTagEditModeSection : Section
+    public class NoteEditModeSection : Section
     {
         protected override string Title => "Edit mode";
 
         [Cached]
-        private readonly OverlayColourProvider overlayColourProvider = OverlayColourProvider.Orange;
+        private readonly OverlayColourProvider overlayColourProvider = OverlayColourProvider.Blue;
 
         private EditModeButton[] buttons;
         private OsuMarkdownContainer description;
@@ -40,19 +40,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     {
                         buttons = new[]
                         {
-                            new EditModeButton(LyricEditorMode.CreateTimeTag)
+                            new EditModeButton(LyricEditorMode.CreateNote)
                             {
                                 Text = "Create",
                                 Action = updateEditMode,
                                 Padding = new MarginPadding { Horizontal = 5 },
                             },
-                            new EditModeButton(LyricEditorMode.RecordTimeTag)
+                            new EditModeButton(LyricEditorMode.CreateNotePosition)
                             {
-                                Text = "Recording",
+                                Text = "Position",
                                 Action = updateEditMode,
                                 Padding = new MarginPadding { Horizontal = 5 },
                             },
-                            new EditModeButton(LyricEditorMode.AdjustTimeTag)
+                            new EditModeButton(LyricEditorMode.AdjustNote)
                             {
                                 Text = "Adjust",
                                 Action = updateEditMode,
@@ -82,15 +82,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
                     switch (child.Mode)
                     {
-                        case LyricEditorMode.CreateTimeTag:
+                        case LyricEditorMode.CreateNote:
                             child.BackgroundColour = highLight ? colour.Blue : colour.BlueDarker;
                             break;
 
-                        case LyricEditorMode.RecordTimeTag:
+                        case LyricEditorMode.CreateNotePosition:
                             child.BackgroundColour = highLight ? colour.Red : colour.RedDarker;
                             break;
 
-                        case LyricEditorMode.AdjustTimeTag:
+                        case LyricEditorMode.AdjustNote:
                             child.BackgroundColour = highLight ? colour.Yellow : colour.YellowDarker;
                             break;
                     }
@@ -99,16 +99,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 // update description text.
                 switch (mode)
                 {
-                    case LyricEditorMode.CreateTimeTag:
-                        description.Text = "Use keyboard to control caret position, press `N` to create new time-tag and press `D` to delete exist time-tag.";
+                    case LyricEditorMode.CreateNote:
+                        description.Text = "Using time-tag to create default notes.";
                         break;
 
-                    case LyricEditorMode.RecordTimeTag:
-                        description.Text = "Press spacing button at the right time to set current time to time-tag.";
+                    case LyricEditorMode.CreateNotePosition:
+                        description.Text = "Using singer voice data to adjust note position.";
                         break;
 
-                    case LyricEditorMode.AdjustTimeTag:
-                        description.Text = "Drag to adjust time-tag time precisely.";
+                    case LyricEditorMode.AdjustNote:
+                        description.Text = "If you are note satisfied this result, you can adjust this by hands.";
                         break;
                 }
             }
