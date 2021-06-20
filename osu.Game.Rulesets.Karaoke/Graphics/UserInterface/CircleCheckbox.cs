@@ -10,12 +10,14 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Layout;
 using osu.Framework.Extensions.Color4Extensions;
+using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osuTK;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 {
-    public class CircleCheckbox : Checkbox
+    public class CircleCheckbox : Checkbox, IHasAccentColour
     {
         public const float EXPANDED_SIZE = 24;
 
@@ -73,16 +75,19 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             sampleUnchecked = audio.Samples.Get(@"UI/check-off");
         }
 
-        protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
-        {
-            if (invalidation == Invalidation.Colour)
-            {
-                background.Colour = Colour.AverageColour.Linear.Darken(1.5f);
-                border.Colour = Colour;
-                selectedIcon.Colour = Colour;
-            }
+        private Color4 accentColour;
 
-            return base.OnInvalidate(invalidation, source);
+        public Color4 AccentColour
+        {
+            get => accentColour;
+            set
+            {
+                accentColour = value;
+
+                background.Colour = AccentColour.Darken(1.5f);
+                border.Colour = AccentColour;
+                selectedIcon.Colour = AccentColour;
+            }
         }
 
         protected override void OnUserChange(bool value)
