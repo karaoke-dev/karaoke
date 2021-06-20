@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public const int MAX_FONT_SIZE = 45;
 
         protected readonly Bindable<float> BindableColumnHeight = new Bindable<float>(12);
-        protected readonly Bindable<float> BindableJudgementAresPrecentage = new Bindable<float>(0.05f);
+        protected readonly Bindable<float> BindableJudgementAresPercentage = new Bindable<float>(0.05f);
 
         protected override string ResourceName => @"osu.Game.Rulesets.Karaoke.Resources.Skin.editor.skin";
 
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                     // not have note playfield judgement spacing in lyric editor.
                     case LegacyKaraokeSkinConfigurationLookups.JudgementAresPrecentage:
-                        return SkinUtils.As<TValue>(BindableJudgementAresPrecentage);
+                        return SkinUtils.As<TValue>(BindableJudgementAresPercentage);
                 }
             }
 

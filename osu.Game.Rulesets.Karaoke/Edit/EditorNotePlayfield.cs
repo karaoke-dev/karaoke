@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 },
             });
 
-            HitObjectArea.Add(singerVoiceVisualization = new SingerVoiceVisualization()
+            HitObjectArea.Add(singerVoiceVisualization = new SingerVoiceVisualization
             {
                 Name = "Saiten Visualization",
                 RelativeSizeAxes = Axes.Both,

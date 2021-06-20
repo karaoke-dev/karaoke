@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
         }
 
         protected override SelectionBlueprint<Note> CreateBlueprintFor(Note hitObject)
-            => new NoteEditorHitObjectBlueprint(hitObject as Note);
+            => new NoteEditorHitObjectBlueprint(hitObject);
 
         protected override SelectionHandler<Note> CreateSelectionHandler() => new NoteEditorSelectionHandler();
 

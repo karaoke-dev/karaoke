@@ -4,14 +4,14 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
     internal class NoteFontSection : StyleSection
     {
-        private ColorPicker textColorPicker;
+        private LabelledColourSelector textColorPicker;
         private LabelledSwitchButton boldSwitchButton;
 
         protected override string Title => "Font";
@@ -21,9 +21,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         {
             Children = new Drawable[]
             {
-                textColorPicker = new ColorPicker
+                textColorPicker = new LabelledColourSelector
                 {
-                    RelativeSizeAxes = Axes.X,
+                    Label = "Color",
+                    Description = "Select color.",
                 },
                 boldSwitchButton = new LabelledSwitchButton
                 {

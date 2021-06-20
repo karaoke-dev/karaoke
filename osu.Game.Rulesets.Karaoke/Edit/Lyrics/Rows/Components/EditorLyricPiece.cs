@@ -60,9 +60,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             // todo : might have a better way to call GetTextIndexPosition just once.
             float getTriggerPositionByTimeIndex(TextIndex textIndex)
             {
-                var charindex = textIndex.Index;
-                var startPosition = GetTextIndexPosition(new TextIndex(charindex)).X;
-                var endPosition = GetTextIndexPosition(new TextIndex(charindex, TextIndex.IndexState.End)).X;
+                var charIndex = textIndex.Index;
+                var startPosition = GetTextIndexPosition(new TextIndex(charIndex)).X;
+                var endPosition = GetTextIndexPosition(new TextIndex(charIndex, TextIndex.IndexState.End)).X;
 
                 if (textIndex.State == TextIndex.IndexState.Start)
                     return startPosition + (endPosition - startPosition) / 2;
@@ -101,9 +101,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
         public Vector2 GetTimeTagPosition(TimeTag timeTag)
         {
-            var basePostion = GetTextIndexPosition(timeTag.Index);
+            var basePosition = GetTextIndexPosition(timeTag.Index);
             var extraPosition = extraSpacing(TimeTagsBindable.Value, timeTag);
-            return basePostion + new Vector2(extraPosition);
+            return basePosition + new Vector2(extraPosition);
 
             static float extraSpacing(TimeTag[] timeTagsInLyric, TimeTag timeTag)
             {

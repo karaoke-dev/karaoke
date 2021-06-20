@@ -3,7 +3,6 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -14,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
     {
         private LabelledDropdown<ColorArea> colorAreaDropdown;
         private LabelledDropdown<BrushType> brushTypeDropdown;
-        private ColorPicker colorPicker;
+        private LabelledColourSelector colorPicker;
 
         protected override string Title => "Color";
 
@@ -35,9 +34,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                     Description = "Select brush type",
                     Items = EnumUtils.GetValues<BrushType>()
                 },
-                colorPicker = new ColorPicker
+                colorPicker = new LabelledColourSelector
                 {
-                    RelativeSizeAxes = Axes.X,
+                    Label = "Color",
+                    Description = "Select color.",
                 }
             };
         }

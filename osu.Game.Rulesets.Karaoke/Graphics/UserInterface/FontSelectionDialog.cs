@@ -177,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 previewChange();
 
                 // re-calculate if family changed.
-                var weight = fonts.Where(f => f.Family == x.NewValue).Select(x => x.Weight).Where(x => !string.IsNullOrEmpty(x)).Distinct();
+                var weight = fonts.Where(f => f.Family == x.NewValue).Select(f => f.Weight).Where(s => !string.IsNullOrEmpty(s)).Distinct();
                 weightProperty.Items.Clear();
                 weightProperty.Items.AddRange(weight);
 

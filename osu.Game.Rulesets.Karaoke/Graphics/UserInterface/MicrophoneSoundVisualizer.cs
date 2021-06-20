@@ -353,7 +353,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 {
                     dots.Add(new PitchDot
                     {
-                        Colour = calcualteDotColour(i, 0.8f)
+                        Colour = calculateDotColour(i, 0.8f)
                     });
                 }
             }
@@ -393,7 +393,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 }
             }
 
-            private Color4 calcualteDotColour(int index, float s)
+            private Color4 calculateDotColour(int index, float s)
             {
                 const float start_v = 0.4f;
                 const float end_v = 0.7f;

@@ -48,8 +48,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
             var targetImportFontPaths = targetImportFonts.Select(x =>
             {
                 var path = Path.Combine(base_path, x.FontName);
-                var pathEithExtension = Path.ChangeExtension(path, "cached");
-                return pathEithExtension;
+                var pathWithExtension = Path.ChangeExtension(path, "cached");
+                return pathWithExtension;
             }).Where(p => storage.Exists(p)).Distinct().ToArray();
             if (!targetImportFontPaths.Any())
                 return;
