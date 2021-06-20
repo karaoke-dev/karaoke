@@ -2,19 +2,19 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
-    public class LabelledColourSelector : LabelledComponent<ColorPicker, Colour4>
+    public class LabelledColourSelector : LabelledComponent<BasicHSVColourPicker, Colour4>
     {
         public LabelledColourSelector()
             : base(true)
         {
         }
 
-        protected override ColorPicker CreateComponent()
-            => new ColorPicker();
+        protected override BasicHSVColourPicker CreateComponent()
+            => new BasicHSVColourPicker();
     }
 }
