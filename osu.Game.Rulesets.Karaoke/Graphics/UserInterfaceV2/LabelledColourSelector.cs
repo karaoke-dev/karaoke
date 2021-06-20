@@ -4,11 +4,10 @@
 using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
-    public class LabelledColourSelector : LabelledComponent<ColorPicker, Color4>
+    public class LabelledColourSelector : LabelledComponent<ColorPicker, Colour4>
     {
         public LabelledColourSelector()
             : base(true)
@@ -16,9 +15,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
         }
 
         protected override ColorPicker CreateComponent()
-            => new ColorPicker
-            {
-                RelativeSizeAxes = Axes.X,
-            };
+            => new ColorPicker();
     }
 }
