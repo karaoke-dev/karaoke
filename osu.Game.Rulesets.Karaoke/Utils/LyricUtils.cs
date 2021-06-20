@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
@@ -118,45 +117,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             static TimeTag[] processTimeTags(TimeTag[] timeTags, int startPosition, int shifting)
                 => timeTags?.Select(t => t.Index.Index >= startPosition ? TimeTagUtils.ShiftingTimeTag(t, shifting) : t).ToArray();
-        }
-
-        #endregion
-
-        #region create default
-
-        public static IEnumerable<Note> CreateDefaultNotes(Lyric lyric)
-        {
-            var timeTags = TimeTagsUtils.ToDictionary(lyric.TimeTags);
-
-            foreach (var timeTag in timeTags)
-            {
-                var (key, endTime) = timeTags.GetNext(timeTag);
-
-                if (key.Index <= 0)
-                    continue;
-
-                var startTime = timeTag.Value;
-
-                int startIndex = timeTag.Key.Index;
-                int endIndex = TextIndexUtils.ToStringIndex(key);
-
-                var text = lyric.Text[startIndex..endIndex];
-                var ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
-
-                if (!string.IsNullOrEmpty(text))
-                {
-                    yield return new Note
-                    {
-                        StartTime = startTime,
-                        Duration = endTime - startTime,
-                        StartIndex = startIndex,
-                        EndIndex = endIndex,
-                        Text = text,
-                        AlternativeText = ruby,
-                        ParentLyric = lyric
-                    };
-                }
-            }
         }
 
         #endregion

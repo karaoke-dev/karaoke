@@ -9,6 +9,7 @@ using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -99,6 +100,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private void processNotes(Beatmap beatmap, IList<string> lines)
         {
+            var noteGenerator = new NoteGenerator(new NoteGeneratorConfig());
+
             // Remove all karaoke note
             beatmap.HitObjects.RemoveAll(x => x is Note);
 
@@ -112,12 +115,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 // Create default note if not exist
                 if (string.IsNullOrEmpty(line))
                 {
-                    beatmap.HitObjects.AddRange(LyricUtils.CreateDefaultNotes(lyric));
+                    beatmap.HitObjects.AddRange(noteGenerator.CreateNotes(lyric));
                     continue;
                 }
 
                 var notes = line.Split(',');
-                var defaultNotes = LyricUtils.CreateDefaultNotes(lyric).ToList();
+                var defaultNotes = noteGenerator.CreateNotes(lyric).ToList();
                 var minNoteNumber = Math.Min(notes.Length, defaultNotes.Count);
 
                 // Process each note
