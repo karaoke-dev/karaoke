@@ -11,7 +11,9 @@ using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
@@ -26,8 +28,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         private BindableDictionary<Lyric, Issue[]> bindableReports;
 
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
+
         [BackgroundDependencyLoader]
-        private void load(LyricCheckerManager lyricCheckerManager)
+        private void load(LyricCheckerManager lyricCheckerManager, NoteManager noteManager)
         {
             bindableReports = lyricCheckerManager.BindableReports.GetBoundCopy();
             bindableReports.BindCollectionChanged((a, b) =>
@@ -54,7 +59,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                             Text = "Generate",
                             Action = () =>
                             {
-                                // todo : // auto-generate time-tag.
+                                // todo : should be able to apply only selected lyric.
+                                var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
+                                noteManager.AutoGenerateNotes(lyrics);
                             }
                         },
                     };

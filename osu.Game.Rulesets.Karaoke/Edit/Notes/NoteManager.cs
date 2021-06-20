@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
@@ -23,6 +24,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Notes
 
         [Resolved]
         private IPlacementHandler placementHandler { get; set; }
+
+        public void AutoGenerateNotes(Lyric[] lyrics)
+        {
+            changeHandler.BeginChange();
+
+            // clear exist notes if from those
+            var matchedNotes = beatmap.HitObjects.OfType<Note>().Where(x => lyrics.Contains(x.ParentLyric)).ToArray();
+            beatmap.RemoveRange(matchedNotes);
+
+            // todo : should get the config from setting.
+            var config = new NoteGeneratorConfig();
+            var generator = new NoteGenerator(config);
+
+            foreach (var lyric in lyrics)
+            {
+                var notes = generator.CreateNotes(lyric);
+                beatmap.AddRange(notes);
+            }
+
+            changeHandler.EndChange();
+        }
 
         public void ChangeDisplay(Note note, bool display)
         {
