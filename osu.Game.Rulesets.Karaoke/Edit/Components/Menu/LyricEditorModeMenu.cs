@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             LyricEditorMode.Language,
             LyricEditorMode.EditRubyRomaji,
             LyricEditorMode.CreateTimeTag,
-            LyricEditorMode.AdjustNote,
+            LyricEditorMode.CreateNote,
             LyricEditorMode.Layout,
             LyricEditorMode.Singer,
         };
