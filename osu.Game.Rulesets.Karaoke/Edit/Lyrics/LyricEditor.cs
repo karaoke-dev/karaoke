@@ -172,7 +172,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case LyricEditorMode.AdjustTimeTag:
                         return new TimeTagExtend();
 
-                    case LyricEditorMode.EditNote:
+                    case LyricEditorMode.CreateNote:
+                    case LyricEditorMode.CreateNotePosition:
+                    case LyricEditorMode.AdjustNote:
                         return new NoteExtend();
 
                     case LyricEditorMode.Singer:
@@ -295,7 +297,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.AdjustTimeTag:
                     return false;
 
-                case LyricEditorMode.EditNote:
+                case LyricEditorMode.CreateNote:
+                case LyricEditorMode.CreateNotePosition:
+                case LyricEditorMode.AdjustNote:
                 case LyricEditorMode.Layout:
                 case LyricEditorMode.Singer:
                     return false;

@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             LyricEditorMode.Language,
             LyricEditorMode.EditRubyRomaji,
             LyricEditorMode.CreateTimeTag,
-            LyricEditorMode.EditNote,
+            LyricEditorMode.AdjustNote,
             LyricEditorMode.Layout,
             LyricEditorMode.Singer,
         };
@@ -53,7 +53,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                 case LyricEditorMode.AdjustTimeTag:
                     return "Edit time tag";
 
-                case LyricEditorMode.EditNote:
+                case LyricEditorMode.CreateNote:
+                case LyricEditorMode.CreateNotePosition:
+                case LyricEditorMode.AdjustNote:
                     return "Edit note";
 
                 case LyricEditorMode.Layout:
