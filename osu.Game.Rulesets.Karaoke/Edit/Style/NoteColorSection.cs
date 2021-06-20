@@ -3,15 +3,15 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
     internal class NoteColorSection : StyleSection
     {
-        private ColorPicker noteColorPicker;
-        private ColorPicker blinkColorPicker;
+        private LabelledColourSelector noteColorPicker;
+        private LabelledColourSelector blinkColorPicker;
 
         protected override string Title => "Color";
 
@@ -20,13 +20,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         {
             Children = new Drawable[]
             {
-                noteColorPicker = new ColorPicker
+                noteColorPicker = new LabelledColourSelector
                 {
-                    RelativeSizeAxes = Axes.X,
+                    Label = "Note color",
+                    Description = "Select color.",
                 },
-                blinkColorPicker = new ColorPicker
+                blinkColorPicker = new LabelledColourSelector
                 {
-                    RelativeSizeAxes = Axes.X,
+                    Label = "Blink color",
+                    Description = "Select color.",
                 }
             };
         }
