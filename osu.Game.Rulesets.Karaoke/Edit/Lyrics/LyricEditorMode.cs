@@ -46,9 +46,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         AdjustTimeTag,
 
         /// <summary>
-        /// Able to create/delete/mode/split/combine note.
+        /// Enable to create/delete and reset note.
+        /// Also able to create default notes.
         /// </summary>
-        EditNote,
+        CreateNote,
+
+        /// <summary>
+        /// Auto adjust note position by singer voice data.
+        /// </summary>
+        CreateNotePosition,
+
+        /// <summary>
+        /// Adjust note position.
+        /// </summary>
+        AdjustNote,
 
         /// <summary>
         /// Can edit each lyric's layout.
