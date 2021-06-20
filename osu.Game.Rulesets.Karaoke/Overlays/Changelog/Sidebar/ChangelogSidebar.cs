@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
                         {
                             RelativeSizeAxes = Axes.X,
                             AutoSizeAxes = Axes.Y,
-                            Padding = new MarginPadding { Right = 3 }, // Addeded 3px back
+                            Padding = new MarginPadding { Right = 3 }, // Add 3px back
                             Child = new Container
                             {
                                 RelativeSizeAxes = Axes.X,

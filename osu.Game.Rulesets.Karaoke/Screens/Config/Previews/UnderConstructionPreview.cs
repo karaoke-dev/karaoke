@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews
 
             TextContainer.Position = new Vector2(DrawSize.X / 16, 0);
 
-            using (BeginDelayedSequence(100, true))
+            using (BeginDelayedSequence(100))
             {
                 TextContainer.MoveTo(Vector2.Zero, transition_time, Easing.OutExpo);
             }

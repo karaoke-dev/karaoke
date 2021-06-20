@@ -121,14 +121,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 var endTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.End && x.Time != null);
 
                 // add overlapping group into list.
-                var groupoverlapping = findGroupOverlapping();
-                if (groupoverlapping != null)
-                    overlappingTimeTagList.AddRange(groupoverlapping);
+                var groupOverlapping = findGroupOverlapping();
+                if (groupOverlapping != null)
+                    overlappingTimeTagList.AddRange(groupOverlapping);
 
                 // add overlapping self into list.
-                var selfoverlapping = findSelfOverlapping();
-                if (selfoverlapping != null)
-                    overlappingTimeTagList.AddRange(selfoverlapping);
+                var selfOverlapping = findSelfOverlapping();
+                if (selfOverlapping != null)
+                    overlappingTimeTagList.AddRange(selfOverlapping);
 
                 List<TimeTag> findGroupOverlapping()
                 {

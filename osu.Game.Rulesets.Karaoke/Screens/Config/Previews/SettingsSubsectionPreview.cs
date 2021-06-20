@@ -71,16 +71,16 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews
             }
         }
 
-        private bool showBackgrond;
+        private bool showBackground;
 
         public bool ShowBackground
         {
-            get => showBackgrond;
+            get => showBackground;
             set
             {
-                showBackgrond = value;
+                showBackground = value;
 
-                if (showBackgrond)
+                if (showBackground)
                 {
                     background.Show();
                 }

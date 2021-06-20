@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
             ShowBackground = false;
         }
 
-        private EggContaner eggContainer;
+        private EggContainer eggContainer;
         private FillFlowContainer<GenerateRowContainer> textContainer;
 
         [BackgroundDependencyLoader]
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
         {
             Children = new Drawable[]
             {
-                eggContainer = new EggContaner
+                eggContainer = new EggContainer
                 {
                     Name = "Egg container",
                     Anchor = Anchor.Centre,
@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
 
             foreach (var row in textContainer.Children)
             {
-                row.ClickedText += (text) =>
+                row.ClickedText += text =>
                 {
                     var (textureName, scale, yOffset) = getTexture(text);
                     if (string.IsNullOrEmpty(textureName))
@@ -264,7 +264,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
             }
         }
 
-        public class EggContaner : BeatSyncedContainer
+        public class EggContainer : BeatSyncedContainer
         {
             [Resolved]
             private TextureStore textures { get; set; }

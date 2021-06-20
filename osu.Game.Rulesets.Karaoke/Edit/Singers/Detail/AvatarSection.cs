@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Detail
                 new LabelledImageSelector
                 {
                     Label = "Avatar",
-                    Description = "Select image to set avater."
+                    Description = "Select image to set avatar."
                 },
                 new LabelledColourSelector
                 {
