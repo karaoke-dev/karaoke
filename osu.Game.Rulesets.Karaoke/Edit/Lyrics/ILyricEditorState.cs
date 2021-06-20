@@ -53,5 +53,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         void ClearSelectedTextTags();
 
         #endregion
+
+        #region Select to apply
+
+        BindableBool Selecting { get; }
+
+        BindableList<Lyric> SelectedLyrics { get; }
+
+        #endregion
     }
 }

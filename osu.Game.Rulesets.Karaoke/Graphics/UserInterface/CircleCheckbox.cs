@@ -8,7 +8,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Layout;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;

@@ -56,6 +56,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableList<ITextTag> SelectedTextTags { get; } = new BindableList<ITextTag>();
 
+        public BindableBool Selecting { get; } = new BindableBool();
+
+        public BindableList<Lyric> SelectedLyrics { get; } = new BindableList<Lyric>();
+
         private readonly GridContainer gridContainer;
         private readonly Container leftSideExtendArea;
         private readonly Container rightSideExtendArea;
