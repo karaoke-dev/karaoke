@@ -20,42 +20,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
 
         public Note[] CreateNotes(Lyric lyric)
         {
-            return createNotes(lyric).ToArray();
+            var timeTags = TimeTagsUtils.ToDictionary(lyric.TimeTags);
+            var notes = new List<Note>();
 
-            static IEnumerable<Note> createNotes(Lyric lyric)
+            foreach (var timeTag in timeTags)
             {
-                var timeTags = TimeTagsUtils.ToDictionary(lyric.TimeTags);
+                var (key, endTime) = timeTags.GetNext(timeTag);
 
-                foreach (var timeTag in timeTags)
+                if (key.Index <= 0)
+                    continue;
+
+                var startTime = timeTag.Value;
+
+                int startIndex = timeTag.Key.Index;
+                int endIndex = TextIndexUtils.ToStringIndex(key);
+
+                var text = lyric.Text[startIndex..endIndex];
+                var ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
+
+                if (!string.IsNullOrEmpty(text))
                 {
-                    var (key, endTime) = timeTags.GetNext(timeTag);
-
-                    if (key.Index <= 0)
-                        continue;
-
-                    var startTime = timeTag.Value;
-
-                    int startIndex = timeTag.Key.Index;
-                    int endIndex = TextIndexUtils.ToStringIndex(key);
-
-                    var text = lyric.Text[startIndex..endIndex];
-                    var ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
-
-                    if (!string.IsNullOrEmpty(text))
+                    notes.Add(new Note
                     {
-                        yield return new Note
-                        {
-                            StartTime = startTime,
-                            Duration = endTime - startTime,
-                            StartIndex = startIndex,
-                            EndIndex = endIndex,
-                            Text = text,
-                            AlternativeText = ruby,
-                            ParentLyric = lyric
-                        };
-                    }
+                        StartTime = startTime,
+                        Duration = endTime - startTime,
+                        StartIndex = startIndex,
+                        EndIndex = endIndex,
+                        Text = text,
+                        AlternativeText = ruby,
+                        ParentLyric = lyric
+                    });
                 }
             }
+
+            return notes.ToArray();
         }
     }
 }
