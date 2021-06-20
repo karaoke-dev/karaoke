@@ -6,7 +6,7 @@ using osu.Game.Graphics.UserInterfaceV2;
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
     /// <summary>
-    /// A labelled textbox which reveals an inline file chooser when clicked.
+    /// A labelled text box which reveals an inline file chooser when clicked.
     /// Will be replaced after has official one.
     /// </summary>
     public class LabelledImageSelector : LabelledTextBox

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Cursor;
@@ -43,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
                 if (args.NewItems == null)
                     return;
 
-                var dict = args.NewItems.Cast<KeyValuePair<Lyric, Issue[]>>().ToDictionary(k => k.Key, v => v.Value);
+                var dict = args.NewItems.ToDictionary(k => k.Key, v => v.Value);
                 if (!dict.ContainsKey(lyric))
                     return;
 

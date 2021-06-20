@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
             bindable.BindValueChanged(e =>
             {
                 // remove old item.
-                var removedItems = e.OldValue?.Except(e.NewValue).ToArray() ?? new T[] {};
+                var removedItems = e.OldValue?.Except(e.NewValue).ToArray() ?? new T[] { };
                 remove?.Invoke(removedItems);
 
                 // add new time-tags

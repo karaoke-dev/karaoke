@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
         private class SingerLyricDragBox : DragBox
         {
             // the following values hold the start and end X positions of the drag box in the timeline's local space,
-            // but with zoom unapplied in order to be able to compensate for positional changes
+            // but with zoom un-applied in order to be able to compensate for positional changes
             // while the timeline is being zoomed in/out.
             private float? selectionStart;
             private float selectionEnd;
