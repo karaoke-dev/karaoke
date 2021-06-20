@@ -140,23 +140,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         #endregion
 
-        #region create default
-
-        [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "カ", "ラ", "オ", "ケ" })]
-        public void TestCreateDefaultNotes(string[] timeTags, string[] noteTexts)
-        {
-            var lyric = new Lyric
-            {
-                Text = "カラオケ",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
-            };
-
-            var notes = LyricUtils.CreateDefaultNotes(lyric);
-            Assert.AreEqual(notes.Select(x => x.Text).ToArray(), noteTexts);
-        }
-
-        #endregion
-
         #region Time tag
 
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, true)]

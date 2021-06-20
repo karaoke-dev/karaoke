@@ -4,6 +4,7 @@
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
@@ -23,6 +24,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Layout generator
             SetDefault(KaraokeRulesetEditGeneratorSetting.LayoutGeneratorConfig, CreateDefaultConfig<LayoutGeneratorConfig>());
+
+            // Note generator
+            SetDefault(KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig, CreateDefaultConfig<NoteGeneratorConfig>());
 
             // Romaji generator
             SetDefault(KaraokeRulesetEditGeneratorSetting.JaRomajiTagGeneratorConfig, CreateDefaultConfig<JaRomajiTagGeneratorConfig>());
@@ -46,6 +50,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
         // Layout generator
         LayoutGeneratorConfig,
+
+        // Note generator
+        NoteGeneratorConfig,
 
         // Romaji generator
         JaRomajiTagGeneratorConfig,
