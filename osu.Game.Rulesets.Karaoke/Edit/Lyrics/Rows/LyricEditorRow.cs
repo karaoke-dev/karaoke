@@ -2,15 +2,20 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Graphics;
+using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input.Events;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 {
     public abstract class LyricEditorRow : CompositeDrawable
     {
+        public const int SELECT_AREA_WIDTH = 48;
+
         private const int info_part_spacing = 210;
         private const int min_height = 75;
         private const int max_height = 120;
@@ -23,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load()
         {
             InternalChild = new GridContainer
             {
@@ -31,6 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 AutoSizeAxes = Axes.Y,
                 ColumnDimensions = new[]
                 {
+                    new Dimension(GridSizeMode.AutoSize),
                     new Dimension(GridSizeMode.Absolute, info_part_spacing),
                     new Dimension()
                 },
@@ -39,6 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 {
                     new[]
                     {
+                        new SelectArea(lyric),
                         CreateLyricInfo(lyric),
                         CreateContent(lyric)
                     }
@@ -49,5 +56,92 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         protected abstract Drawable CreateLyricInfo(Lyric lyric);
 
         protected abstract Drawable CreateContent(Lyric lyric);
+
+        public class SelectArea : CompositeDrawable
+        {
+            private Bindable<LyricEditorMode> mode;
+            private Bindable<bool> selecting;
+            private BindableList<Lyric> selectedLyrics;
+
+            private readonly Box background;
+            private readonly CircleCheckbox selectedCheckbox;
+
+            private readonly Lyric lyric;
+
+            public SelectArea(Lyric lyric)
+            {
+                this.lyric = lyric;
+
+                Width = SELECT_AREA_WIDTH;
+                RelativeSizeAxes = Axes.Y;
+                InternalChildren = new Drawable[]
+                {
+                    background = new Box
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                    },
+                    selectedCheckbox = new CircleCheckbox
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                    }
+                };
+            }
+
+            protected override bool OnClick(ClickEvent e)
+            {
+                // trigger checkbox click if click this area.
+                selectedCheckbox.TriggerEvent(e);
+                return base.OnClick(e);
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
+            {
+                mode = state.BindableMode.GetBoundCopy();
+                selecting = state.Selecting.GetBoundCopy();
+                selectedLyrics = state.SelectedLyrics.GetBoundCopy();
+
+                // should update background if mode changed.
+                mode.BindValueChanged(e =>
+                {
+                    background.Colour = colourProvider.Dark2(state.Mode);
+                    selectedCheckbox.AccentColour = colourProvider.Colour2(state.Mode);
+                }, true);
+
+                // show this area only if in selecting.
+                selecting.BindValueChanged(e =>
+                {
+                    if (e.NewValue)
+                    {
+                        Show();
+                    }
+                    else
+                    {
+                        Hide();
+                    }
+                }, true);
+
+                // get bindable and update bindable if check / uncheck.
+                selectedLyrics.BindCollectionChanged((a, b) =>
+                {
+                    var selected = selectedLyrics.Contains(lyric);
+                    selectedCheckbox.Current.Value = selected;
+                }, true);
+
+                selectedCheckbox.Current.BindValueChanged(e =>
+                {
+                    if (e.NewValue)
+                    {
+                        if (!selectedLyrics.Contains(lyric))
+                            selectedLyrics.Add(lyric);
+                    }
+                    else
+                    {
+                        selectedLyrics.Remove(lyric);
+                    }
+                });
+            }
+        }
     }
 }

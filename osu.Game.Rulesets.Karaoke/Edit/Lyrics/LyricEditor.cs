@@ -56,11 +56,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableList<ITextTag> SelectedTextTags { get; } = new BindableList<ITextTag>();
 
+        public BindableBool Selecting { get; } = new BindableBool();
+
+        public BindableList<Lyric> SelectedLyrics { get; } = new BindableList<Lyric>();
+
+        public Action<LyricEditorSelectingAction> Action { get; }
+
         private readonly GridContainer gridContainer;
+        private readonly GridContainer lyricEditorGridContainer;
         private readonly Container leftSideExtendArea;
         private readonly Container rightSideExtendArea;
         private readonly KaraokeLyricEditorSkin skin;
         private readonly DrawableLyricEditList container;
+
+        private const int spacing = 10;
 
         public LyricEditor()
         {
@@ -76,12 +85,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                             RelativeSizeAxes = Axes.Both,
                         },
                         new Box(),
-                        new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin())
+                        lyricEditorGridContainer = new GridContainer
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Child = container = new DrawableLyricEditList
+                            Content = new[]
                             {
-                                RelativeSizeAxes = Axes.Both,
+                                new Drawable[]
+                                {
+                                    new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin())
+                                    {
+                                        RelativeSizeAxes = Axes.Both,
+                                        Child = container = new DrawableLyricEditList
+                                        {
+                                            RelativeSizeAxes = Axes.Both,
+                                        }
+                                    },
+                                },
+                                new Drawable[]
+                                {
+                                },
+                                new Drawable[]
+                                {
+                                    new ApplySelectingArea
+                                    {
+                                        RelativeSizeAxes = Axes.Both,
+                                    },
+                                }
                             }
                         },
                         new Box(),
@@ -119,6 +148,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 ResetPosition(Mode);
             });
+
+            Selecting.BindValueChanged(e =>
+            {
+                initializeApplySelectingArea();
+            }, true);
         }
 
         private void initializeExtendArea()
@@ -132,7 +166,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             var direction = extendArea?.Direction;
             var width = extendArea?.ExtendWidth ?? 0;
-            const int spacing = 10;
 
             gridContainer.ColumnDimensions = new[]
             {
@@ -199,6 +232,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 return false;
             }
+        }
+
+        private void initializeApplySelectingArea()
+        {
+            var show = Selecting.Value;
+            lyricEditorGridContainer.RowDimensions = new[]
+            {
+                new Dimension(),
+                new Dimension(GridSizeMode.Absolute, show ? spacing : 0),
+                new Dimension(GridSizeMode.Absolute, show ? 45 : 0),
+            };
         }
 
         [BackgroundDependencyLoader]
