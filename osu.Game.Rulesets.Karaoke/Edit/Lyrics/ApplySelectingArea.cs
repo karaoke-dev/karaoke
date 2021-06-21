@@ -69,7 +69,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                 BackgroundColour = colours.Red,
                                 Action = () =>
                                 {
-                                    // todo : implement
+                                    state.Selecting.Value = false;
+                                    state.Action?.Invoke(LyricEditorSelectingAction.Apply);
                                 }
                             },
                             new Box(),
@@ -78,7 +79,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                 Text = "Cancel",
                                 Action = () =>
                                 {
-                                    // todo : implement
+                                    state.Selecting.Value = false;
+                                    state.Action?.Invoke(LyricEditorSelectingAction.Cancel);
                                 }
                             },
                             new Box(),

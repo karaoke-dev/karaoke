@@ -60,6 +60,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableList<Lyric> SelectedLyrics { get; } = new BindableList<Lyric>();
 
+        public Action<LyricEditorSelectingAction> Action { get; }
+
         private readonly GridContainer gridContainer;
         private readonly GridContainer lyricEditorGridContainer;
         private readonly Container leftSideExtendArea;
