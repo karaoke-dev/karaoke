@@ -7,7 +7,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
-using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -15,6 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 {
     public abstract class LyricEditorRow : CompositeDrawable
     {
+        public const int SELECT_AREA_WIDTH = 48;
+
         private const int info_part_spacing = 210;
         private const int min_height = 75;
         private const int max_height = 120;
@@ -27,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load()
         {
             InternalChild = new GridContainer
             {
@@ -71,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             {
                 this.lyric = lyric;
 
-                Width = 48;
+                Width = SELECT_AREA_WIDTH;
                 RelativeSizeAxes = Axes.Y;
                 InternalChildren = new Drawable[]
                 {
