@@ -4,27 +4,34 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
-    public class AutoGenerateButton : OsuButton
+    public class SelectLyricButton : OsuButton
     {
         private Bindable<bool> selecting;
 
-        public AutoGenerateButton()
+        protected virtual string StandardText => "Select lyric";
+
+        protected virtual string SelectingText => "Cancel selecting";
+
+        public SelectLyricButton()
         {
             RelativeSizeAxes = Axes.X;
             Content.CornerRadius = 15;
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        private void load(OsuColour colour, ILyricEditorState state)
         {
             selecting = state.Selecting.GetBoundCopy();
             selecting.BindValueChanged(e =>
             {
-                Text = e.NewValue ? "Cancel generate" : "Generate";
+                var isSelecting = e.NewValue;
+                BackgroundColour = isSelecting ? colour.Blue : colour.Purple;
+                Text = isSelecting ? SelectingText : StandardText;
             }, true);
 
             Action = () =>
