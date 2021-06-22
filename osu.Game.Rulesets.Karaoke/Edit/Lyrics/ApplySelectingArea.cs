@@ -22,9 +22,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private const float spacing = 10;
         private const float button_width = 100;
 
+        private Bindable<bool> selecting;
+
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, ILyricEditorState state)
         {
+            RelativeSizeAxes = Axes.X;
+            Height = 45;
+
             Masking = true;
             CornerRadius = 5;
 
@@ -96,6 +101,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     }
                 }
             };
+
+            selecting = state.Selecting.GetBoundCopy();
+            selecting.BindValueChanged(e =>
+            {
+                if (e.NewValue)
+                {
+                    Show();
+                }
+                else
+                {
+                    Hide();
+                }
+            }, true);
         }
 
         public class SelectArea : CompositeDrawable

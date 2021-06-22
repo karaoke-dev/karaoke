@@ -107,10 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                 },
                                 new Drawable[]
                                 {
-                                    new ApplySelectingArea
-                                    {
-                                        RelativeSizeAxes = Axes.Both,
-                                    },
+                                    new ApplySelectingArea(),
                                 }
                             }
                         },
@@ -245,7 +242,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 new Dimension(),
                 new Dimension(GridSizeMode.Absolute, show ? spacing : 0),
-                new Dimension(GridSizeMode.Absolute, show ? 45 : 0),
+                new Dimension(GridSizeMode.AutoSize),
             };
         }
 
