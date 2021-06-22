@@ -9,17 +9,15 @@ using osu.Framework.Bindables;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input.Events;
 using osu.Game.Graphics;
-using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -55,32 +53,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
             }, true);
         }
 
-        public class TimeTagIssueTable : TableContainer
+        public class TimeTagIssueTable : IssueTableContainer
         {
-            protected const float ROW_HEIGHT = 25;
-
-            public const int TEXT_SIZE = 14;
-
             [Resolved]
             private OsuColour colour { get; set; }
-
-            protected readonly FillFlowContainer<RowBackground> BackgroundFlow;
-
-            public TimeTagIssueTable()
-            {
-                RelativeSizeAxes = Axes.X;
-                AutoSizeAxes = Axes.Y;
-
-                RowSize = new Dimension(GridSizeMode.Absolute, ROW_HEIGHT);
-                Columns = createHeaders();
-
-                AddInternal(BackgroundFlow = new FillFlowContainer<RowBackground>
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Depth = 1f,
-                    Margin = new MarginPadding { Top = ROW_HEIGHT }
-                });
-            }
 
             public IEnumerable<TimeTagIssue> Issues
             {
@@ -122,16 +98,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         var rows = new List<RowBackground>();
 
                         if (g.MissingStartTimeTag)
-                            rows.Add(new RowBackground(lyric, null));
+                            rows.Add(new TimeTagRowBackground(lyric, null));
 
                         if (g.MissingEndTimeTag)
-                            rows.Add(new RowBackground(lyric, null));
+                            rows.Add(new TimeTagRowBackground(lyric, null));
 
                         foreach (var (_, timeTags) in g.InvalidTimeTags)
                         {
                             foreach (var timeTag in timeTags)
                             {
-                                rows.Add(new RowBackground(lyric, timeTag));
+                                rows.Add(new TimeTagRowBackground(lyric, timeTag));
                             }
                         }
 
@@ -140,7 +116,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 }
             }
 
-            private TableColumn[] createHeaders()
+            protected override TableColumn[] CreateHeaders()
             {
                 var columns = new List<TableColumn>
                 {
@@ -251,68 +227,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
             protected override Drawable CreateHeader(int index, TableColumn column) => new HeaderText(column?.Header ?? string.Empty);
 
-            private class HeaderText : OsuSpriteText
-            {
-                public HeaderText(string text)
-                {
-                    Text = text.ToUpper();
-                    Font = OsuFont.GetFont(size: 12, weight: FontWeight.Bold);
-                }
-            }
-
-            public class RowBackground : OsuClickableContainer
+            public class TimeTagRowBackground : RowBackground
             {
                 private readonly Lyric lyric;
                 private readonly TimeTag timeTag;
 
-                private const int fade_duration = 100;
-
-                private readonly Box hoveredBackground;
-
                 [Resolved]
                 private EditorClock clock { get; set; }
 
-                public RowBackground(Lyric lyric, TimeTag timeTag)
+                public TimeTagRowBackground(Lyric lyric, TimeTag timeTag)
                 {
                     this.lyric = lyric;
                     this.timeTag = timeTag;
-
-                    RelativeSizeAxes = Axes.X;
-                    Height = 25;
-
-                    AlwaysPresent = true;
-
-                    CornerRadius = 3;
-                    Masking = true;
-
-                    Children = new Drawable[]
-                    {
-                        hoveredBackground = new Box
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Alpha = 0,
-                        },
-                    };
                 }
 
-                private Color4 colourHover;
-                private Color4 colourSelected;
-
-                private bool selected;
                 private BindableList<TimeTag> selectedTimeTags;
 
                 [BackgroundDependencyLoader]
-                private void load(LyricEditorColourProvider colourProvider, ILyricEditorState state)
+                private void load(ILyricEditorState state)
                 {
-                    hoveredBackground.Colour = colourHover = colourProvider.Background1(LyricEditorMode.CreateTimeTag);
-                    colourSelected = colourProvider.Colour3(LyricEditorMode.CreateTimeTag);
-
                     // update selected state by bindable.
                     selectedTimeTags = state.SelectedTimeTags.GetBoundCopy();
                     selectedTimeTags.BindCollectionChanged((a, b) =>
                     {
-                        selected = selectedTimeTags.Contains(timeTag);
-                        updateState();
+                        var selected = selectedTimeTags.Contains(timeTag);
+                        UpdateState(selected);
                     });
 
                     Action = () =>
@@ -349,28 +288,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         // seek to target time-tag time if time-tag has time.
                         clock.Seek(timeTag.Time.Value);
                     };
-                }
-
-                protected override bool OnHover(HoverEvent e)
-                {
-                    updateState();
-                    return base.OnHover(e);
-                }
-
-                protected override void OnHoverLost(HoverLostEvent e)
-                {
-                    updateState();
-                    base.OnHoverLost(e);
-                }
-
-                private void updateState()
-                {
-                    hoveredBackground.FadeColour(selected ? colourSelected : colourHover, 450, Easing.OutQuint);
-
-                    if (selected || IsHovered)
-                        hoveredBackground.FadeIn(fade_duration, Easing.OutQuint);
-                    else
-                        hoveredBackground.FadeOut(fade_duration, Easing.OutQuint);
                 }
             }
         }
