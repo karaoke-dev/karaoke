@@ -23,6 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private const float button_width = 100;
 
         private Bindable<bool> selecting;
+        private BindableList<Lyric> selectedLyrics;
+
+        private ActionButton applyButton;
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, ILyricEditorState state)
@@ -68,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                 RelativeSizeAxes = Axes.Both,
                             },
                             new Box(),
-                            new ActionButton
+                            applyButton = new ActionButton
                             {
                                 Text = "Apply",
                                 BackgroundColour = colours.Red,
@@ -113,6 +116,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 {
                     Hide();
                 }
+            }, true);
+
+            // get bindable and update bindable if select or not select all.
+            selectedLyrics = state.SelectedLyrics.GetBoundCopy();
+
+            selectedLyrics.BindCollectionChanged((a, b) =>
+            {
+                var selectAny = selectedLyrics.Any();
+                applyButton.Enabled.Value = selectAny;
             }, true);
         }
 
