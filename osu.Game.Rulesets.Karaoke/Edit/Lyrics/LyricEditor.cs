@@ -12,6 +12,7 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
@@ -60,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableList<Lyric> SelectedLyrics { get; } = new BindableList<Lyric>();
 
-        public Action<LyricEditorSelectingAction> Action { get; }
+        public Action<LyricEditorSelectingAction> Action { get; set; }
 
         private readonly GridContainer gridContainer;
         private readonly GridContainer lyricEditorGridContainer;
@@ -197,6 +198,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 switch (Mode)
                 {
+                    case LyricEditorMode.Language:
+                        return new LanguageExtend();
+
                     case LyricEditorMode.EditRubyRomaji:
                         return new TextTagExtend();
 

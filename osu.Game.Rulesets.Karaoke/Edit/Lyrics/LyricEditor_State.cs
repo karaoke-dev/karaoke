@@ -173,5 +173,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             SelectedLyrics.Clear();
             Selecting.Value = true;
         }
+
+        public void EndSelecting(LyricEditorSelectingAction aciton)
+        {
+            Selecting.Value = false;
+            Action.Invoke(aciton);
+        }
     }
 }

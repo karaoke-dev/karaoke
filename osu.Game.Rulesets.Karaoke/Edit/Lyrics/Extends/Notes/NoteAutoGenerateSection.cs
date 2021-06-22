@@ -4,13 +4,12 @@
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
@@ -67,15 +66,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                     };
                 }
             }, true);
-        }
-
-        public class AutoGenerateButton : OsuButton
-        {
-            public AutoGenerateButton()
-            {
-                RelativeSizeAxes = Axes.X;
-                Content.CornerRadius = 15;
-            }
         }
     }
 }

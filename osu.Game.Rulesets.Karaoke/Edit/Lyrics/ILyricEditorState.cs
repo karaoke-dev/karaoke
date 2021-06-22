@@ -61,9 +61,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         BindableList<Lyric> SelectedLyrics { get; }
 
-        Action<LyricEditorSelectingAction> Action { get; }
+        Action<LyricEditorSelectingAction> Action { get; set; }
 
         void StartSelecting();
+
+        void EndSelecting(LyricEditorSelectingAction action);
 
         #endregion
     }
