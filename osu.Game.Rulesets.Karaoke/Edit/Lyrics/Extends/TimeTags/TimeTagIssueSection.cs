@@ -36,11 +36,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
         private TimeTagIssueTable table;
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour, LyricCheckerManager lyricCheckerManager)
+        private void load(LyricCheckerManager lyricCheckerManager)
         {
             Children = new[]
             {
-                // todo : should all invalid tag number
                 table = new TimeTagIssueTable(),
             };
 
@@ -224,8 +223,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         throw new IndexOutOfRangeException(nameof(invalid));
                 }
             }
-
-            protected override Drawable CreateHeader(int index, TableColumn column) => new HeaderText(column?.Header ?? string.Empty);
 
             public class TimeTagRowBackground : RowBackground
             {

@@ -39,6 +39,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected abstract TableColumn[] CreateHeaders();
 
+        protected override Drawable CreateHeader(int index, TableColumn column) => new HeaderText(column?.Header ?? string.Empty);
+
         public class HeaderText : OsuSpriteText
         {
             public HeaderText(string text)
