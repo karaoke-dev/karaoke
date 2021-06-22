@@ -37,6 +37,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public void AutoDetectLyricLanguage()
         {
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+
+            AutoDetectLyricLanguage(lyrics);
+        }
+
+        public void AutoDetectLyricLanguage(List<Lyric> lyrics)
+        {
             if (!lyrics.Any())
                 return;
 
