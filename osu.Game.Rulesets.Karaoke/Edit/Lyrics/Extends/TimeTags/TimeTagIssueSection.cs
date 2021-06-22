@@ -115,18 +115,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 }
             }
 
-            protected override TableColumn[] CreateHeaders()
+            protected override TableColumn[] CreateHeaders() => new[]
             {
-                var columns = new List<TableColumn>
-                {
-                    new TableColumn(string.Empty, Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 30)),
-                    new TableColumn("Lyric", Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 40)),
-                    new TableColumn("Position", Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 60)),
-                    new TableColumn("Message", Anchor.CentreLeft),
-                };
-
-                return columns.ToArray();
-            }
+                new TableColumn(string.Empty, Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 30)),
+                new TableColumn("Lyric", Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 40)),
+                new TableColumn("Position", Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 60)),
+                new TableColumn("Message", Anchor.CentreLeft),
+            };
 
             private Drawable[] createContent(Lyric lyric, TimeTag timeTag, TimeTagInvalid invalid) => new Drawable[]
             {
