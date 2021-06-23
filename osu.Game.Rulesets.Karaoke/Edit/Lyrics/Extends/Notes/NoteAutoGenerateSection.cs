@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
         private EditorBeatmap beatmap { get; set; }
 
         [BackgroundDependencyLoader]
-        private void load(LyricCheckerManager lyricCheckerManager, NoteManager noteManager)
+        private void load(LyricCheckerManager lyricCheckerManager, NoteManager noteManager, ILyricEditorState state)
         {
             bindableReports = lyricCheckerManager.BindableReports.GetBoundCopy();
             bindableReports.BindCollectionChanged((a, b) =>
@@ -53,19 +53,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 {
                     Children = new[]
                     {
-                        new AutoGenerateButton
-                        {
-                            Text = "Generate",
-                            Action = () =>
-                            {
-                                // todo : should be able to apply only selected lyric.
-                                var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
-                                noteManager.AutoGenerateNotes(lyrics);
-                            }
-                        },
+                        new AutoGenerateButton(),
                     };
                 }
             }, true);
+
+            state.Action = (e) =>
+            {
+                if (e != LyricEditorSelectingAction.Apply)
+                    return;
+
+                // todo : should be able to apply only selected lyric.
+                var lyrics = state.SelectedLyrics.ToList();
+                noteManager.AutoGenerateNotes(lyrics);
+            };
         }
     }
 }
