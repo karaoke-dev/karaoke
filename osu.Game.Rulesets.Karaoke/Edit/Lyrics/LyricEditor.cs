@@ -201,7 +201,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case LyricEditorMode.Language:
                         return new LanguageExtend();
 
-                    case LyricEditorMode.EditRubyRomaji:
+                    case LyricEditorMode.EditRuby:
+                    case LyricEditorMode.EditRomaji:
                         return new TextTagExtend();
 
                     case LyricEditorMode.CreateTimeTag:
@@ -333,7 +334,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.Manage:
                 case LyricEditorMode.Typing: // will handle in OnKeyDown
                 case LyricEditorMode.Language:
-                case LyricEditorMode.EditRubyRomaji:
+                case LyricEditorMode.EditRuby:
+                case LyricEditorMode.EditRomaji:
                     return false;
 
                 case LyricEditorMode.CreateTimeTag:
