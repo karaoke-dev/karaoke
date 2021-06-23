@@ -138,6 +138,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 // should control grid container spacing and place some component.
                 initializeExtendArea();
+
+                // cancel selecting if switch mode.
+                EndSelecting(LyricEditorSelectingAction.Cancel);
             }, true);
 
             BindableRecordingMovingCaretMode.BindValueChanged(e =>
