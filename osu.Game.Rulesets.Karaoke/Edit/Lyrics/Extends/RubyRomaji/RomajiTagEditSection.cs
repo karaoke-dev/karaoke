@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
@@ -27,6 +28,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     TextTags.BindTo(e.NewValue.Lyric.RomajiTagsBindable);
                 }
             });
+        }
+
+        protected override LabelledTextTagTextBox<RomajiTag> CreateLabelledTextTagTextBox(RomajiTag textTag)
+            => new LabelledRomajiTagTextBox(textTag);
+
+        protected class LabelledRomajiTagTextBox : LabelledTextTagTextBox<RomajiTag>
+        {
+            public LabelledRomajiTagTextBox(RomajiTag textTag)
+                : base(textTag)
+            {
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(ILyricEditorState state)
+            {
+                state.SelectedRomajiTags.BindTo(SelectedTextTag);
+            }
         }
     }
 }

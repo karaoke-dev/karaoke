@@ -166,7 +166,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void ClearSelectedTextTags()
         {
-            SelectedTextTags.Clear();
+            SelectedRubyTags.Clear();
+            SelectedRomajiTags.Clear();
         }
 
         public void StartSelecting()

@@ -30,12 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             Lyric = lyric;
         }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            SelectedItems.BindTo(state.SelectedTextTags);
-        }
-
         protected override bool ApplySnapResult(SelectionBlueprint<T>[] blueprints, SnapResult result)
         {
             if (!base.ApplySnapResult(blueprints, result))
@@ -69,30 +63,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         protected override IEnumerable<SelectionBlueprint<T>> SortForMovement(IReadOnlyList<SelectionBlueprint<T>> blueprints)
             => blueprints.OrderBy(b => b.Item.StartIndex);
 
-        protected override SelectionHandler<T> CreateSelectionHandler()
-            => new RubyRomajiSelectionHandler();
-
         protected override void DeselectAll()
         {
             state.ClearSelectedTextTags();
         }
 
-        protected class RubyRomajiSelectionHandler : ExtendSelectionHandler<T>
+        protected class TextTagSelectionHandler : ExtendSelectionHandler<T>
         {
-            [Resolved]
-            private ILyricEditorState state { get; set; }
-
             [Resolved]
             private LyricManager lyricManager { get; set; }
 
             [Resolved]
             private EditorLyricPiece editorLyricPiece { get; set; }
-
-            [BackgroundDependencyLoader]
-            private void load()
-            {
-                SelectedItems.BindTo(state.SelectedTextTags);
-            }
 
             // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
             public override bool HandleMovement(MoveSelectionEvent<T> moveEvent) => true;

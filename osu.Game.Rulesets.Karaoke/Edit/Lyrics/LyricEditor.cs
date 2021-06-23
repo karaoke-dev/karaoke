@@ -19,7 +19,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
@@ -55,7 +54,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableList<TimeTag> SelectedTimeTags { get; } = new BindableList<TimeTag>();
 
-        public BindableList<ITextTag> SelectedTextTags { get; } = new BindableList<ITextTag>();
+        public BindableList<RubyTag> SelectedRubyTags { get; } = new BindableList<RubyTag>();
+
+        public BindableList<RomajiTag> SelectedRomajiTags { get; } = new BindableList<RomajiTag>();
 
         public BindableBool Selecting { get; } = new BindableBool();
 
