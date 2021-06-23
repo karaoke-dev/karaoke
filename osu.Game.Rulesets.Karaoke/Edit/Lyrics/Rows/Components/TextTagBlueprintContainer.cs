@@ -1,16 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -19,7 +15,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 {
-    public class RubyRomajiBlueprintContainer : ExtendBlueprintContainer<ITextTag>
+    public abstract class TextTagBlueprintContainer<T> : ExtendBlueprintContainer<T> where T : class, ITextTag
     {
         [Resolved]
         private ILyricEditorState state { get; set; }
@@ -27,32 +23,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         [Resolved]
         private EditorLyricPiece editorLyricPiece { get; set; }
 
-        [UsedImplicitly]
-        private readonly Bindable<RubyTag[]> rubyTags;
-
-        [UsedImplicitly]
-        private readonly Bindable<RomajiTag[]> romajiTags;
-
         protected readonly Lyric Lyric;
 
-        public RubyRomajiBlueprintContainer(Lyric lyric)
+        protected TextTagBlueprintContainer(Lyric lyric)
         {
             Lyric = lyric;
-            rubyTags = lyric.RubyTagsBindable.GetBoundCopy();
-            romajiTags = lyric.RomajiTagsBindable.GetBoundCopy();
         }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            SelectedItems.BindTo(state.SelectedTextTags);
-
-            // Add ruby and romaji tag into blueprint container
-            RegistBindable(rubyTags);
-            RegistBindable(romajiTags);
-        }
-
-        protected override bool ApplySnapResult(SelectionBlueprint<ITextTag>[] blueprints, SnapResult result)
+        protected override bool ApplySnapResult(SelectionBlueprint<T>[] blueprints, SnapResult result)
         {
             if (!base.ApplySnapResult(blueprints, result))
                 return false;
@@ -82,53 +60,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             return true;
         }
 
-        protected override IEnumerable<SelectionBlueprint<ITextTag>> SortForMovement(IReadOnlyList<SelectionBlueprint<ITextTag>> blueprints)
+        protected override IEnumerable<SelectionBlueprint<T>> SortForMovement(IReadOnlyList<SelectionBlueprint<T>> blueprints)
             => blueprints.OrderBy(b => b.Item.StartIndex);
-
-        protected override SelectionHandler<ITextTag> CreateSelectionHandler()
-            => new RubyRomajiSelectionHandler();
-
-        protected override SelectionBlueprint<ITextTag> CreateBlueprintFor(ITextTag item)
-        {
-            switch (item)
-            {
-                case RubyTag rubyTag:
-                    return new RubyTagSelectionBlueprint(rubyTag);
-
-                case RomajiTag romajiTag:
-                    return new RomajiTagSelectionBlueprint(romajiTag);
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(item));
-            }
-        }
 
         protected override void DeselectAll()
         {
             state.ClearSelectedTextTags();
         }
 
-        protected class RubyRomajiSelectionHandler : ExtendSelectionHandler<ITextTag>
+        protected class TextTagSelectionHandler : ExtendSelectionHandler<T>
         {
-            [Resolved]
-            private ILyricEditorState state { get; set; }
-
             [Resolved]
             private LyricManager lyricManager { get; set; }
 
             [Resolved]
             private EditorLyricPiece editorLyricPiece { get; set; }
 
-            [BackgroundDependencyLoader]
-            private void load()
-            {
-                SelectedItems.BindTo(state.SelectedTextTags);
-            }
-
             // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
-            public override bool HandleMovement(MoveSelectionEvent<ITextTag> moveEvent) => true;
+            public override bool HandleMovement(MoveSelectionEvent<T> moveEvent) => true;
 
-            protected override void DeleteItems(IEnumerable<ITextTag> items)
+            protected override void DeleteItems(IEnumerable<T> items)
             {
                 // todo : delete ruby or romaji
             }

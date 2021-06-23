@@ -211,7 +211,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.Language:
                             return new LanguageInfo(Lyric);
 
-                        case LyricEditorMode.EditRubyRomaji:
+                        case LyricEditorMode.EditRuby:
+                        case LyricEditorMode.EditRomaji:
                             return null;
 
                         case LyricEditorMode.CreateTimeTag:
@@ -347,7 +348,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, typingStringIndex));
                         break;
 
-                    case LyricEditorMode.EditRubyRomaji:
+                    case LyricEditorMode.EditRuby:
+                        state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
+                        break;
+
+                    case LyricEditorMode.EditRomaji:
                         state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                         break;
 
@@ -447,7 +452,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             protected void InitializeBlueprint(LyricEditorMode mode)
             {
                 // remove all exist blueprint container
-                RemoveAll(x => x is RubyRomajiBlueprintContainer || x is TimeTagBlueprintContainer);
+                RemoveAll(x => x is RubyBlueprintContainer || x is RomajiBlueprintContainer || x is TimeTagBlueprintContainer);
 
                 // create preview and real caret
                 var blueprintContainer = createBlueprintContainer(mode, Lyric);
@@ -460,8 +465,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 {
                     switch (mode)
                     {
-                        case LyricEditorMode.EditRubyRomaji:
-                            return new RubyRomajiBlueprintContainer(lyric);
+                        case LyricEditorMode.EditRuby:
+                            return new RubyBlueprintContainer(lyric);
+
+                        case LyricEditorMode.EditRomaji:
+                            return new RomajiBlueprintContainer(lyric);
 
                         case LyricEditorMode.AdjustTimeTag:
                             return new TimeTagBlueprintContainer(lyric);
@@ -508,7 +516,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                             return new DrawableLyricInputCaret();
 
                         case LyricEditorMode.Language:
-                        case LyricEditorMode.EditRubyRomaji:
+                        case LyricEditorMode.EditRuby:
+                        case LyricEditorMode.EditRomaji:
                             return null;
 
                         case LyricEditorMode.CreateTimeTag:

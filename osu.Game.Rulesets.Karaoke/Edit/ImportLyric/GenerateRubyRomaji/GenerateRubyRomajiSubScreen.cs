@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
         protected override Drawable CreateContent()
             => base.CreateContent().With(x =>
             {
-                LyricEditor.Mode = LyricEditorMode.EditRubyRomaji;
+                LyricEditor.Mode = LyricEditorMode.EditRomaji;
             });
 
         protected override void LoadComplete()
@@ -56,6 +56,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 
         internal void AskForAutoGenerateRuby()
         {
+            LyricEditor.Mode = LyricEditorMode.EditRuby;
+
             DialogOverlay.Push(new UseAutoGenerateRubyPopupDialog(ok =>
             {
                 if (!ok)
@@ -68,6 +70,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 
         internal void AskForAutoGenerateRomaji()
         {
+            LyricEditor.Mode = LyricEditorMode.EditRomaji;
+
             DialogOverlay.Push(new UseAutoGenerateRomajiPopupDialog(ok =>
             {
                 if (!ok)

@@ -19,7 +19,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
@@ -55,7 +54,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public BindableList<TimeTag> SelectedTimeTags { get; } = new BindableList<TimeTag>();
 
-        public BindableList<ITextTag> SelectedTextTags { get; } = new BindableList<ITextTag>();
+        public BindableList<RubyTag> SelectedRubyTags { get; } = new BindableList<RubyTag>();
+
+        public BindableList<RomajiTag> SelectedRomajiTags { get; } = new BindableList<RomajiTag>();
 
         public BindableBool Selecting { get; } = new BindableBool();
 
@@ -201,7 +202,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case LyricEditorMode.Language:
                         return new LanguageExtend();
 
-                    case LyricEditorMode.EditRubyRomaji:
+                    case LyricEditorMode.EditRuby:
+                    case LyricEditorMode.EditRomaji:
                         return new TextTagExtend();
 
                     case LyricEditorMode.CreateTimeTag:
@@ -333,7 +335,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.Manage:
                 case LyricEditorMode.Typing: // will handle in OnKeyDown
                 case LyricEditorMode.Language:
-                case LyricEditorMode.EditRubyRomaji:
+                case LyricEditorMode.EditRuby:
+                case LyricEditorMode.EditRomaji:
                     return false;
 
                 case LyricEditorMode.CreateTimeTag:

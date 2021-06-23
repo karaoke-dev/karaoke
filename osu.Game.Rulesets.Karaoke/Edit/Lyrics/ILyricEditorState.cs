@@ -5,7 +5,6 @@ using System;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -47,7 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         BindableList<TimeTag> SelectedTimeTags { get; }
 
-        BindableList<ITextTag> SelectedTextTags { get; }
+        BindableList<RubyTag> SelectedRubyTags { get; }
+
+        BindableList<RomajiTag> SelectedRomajiTags { get; }
 
         void ClearSelectedTimeTags();
 

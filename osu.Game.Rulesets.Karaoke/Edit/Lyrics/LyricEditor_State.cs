@@ -29,7 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case LyricEditorMode.Typing:
                         return new TypingCaretPositionAlgorithm(lyrics);
 
-                    case LyricEditorMode.EditRubyRomaji:
+                    case LyricEditorMode.EditRuby:
+                    case LyricEditorMode.EditRomaji:
                         return new NavigateCaretPositionAlgorithm(lyrics);
 
                     case LyricEditorMode.CreateTimeTag:
@@ -165,7 +166,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void ClearSelectedTextTags()
         {
-            SelectedTextTags.Clear();
+            SelectedRubyTags.Clear();
+            SelectedRomajiTags.Clear();
         }
 
         public void StartSelecting()

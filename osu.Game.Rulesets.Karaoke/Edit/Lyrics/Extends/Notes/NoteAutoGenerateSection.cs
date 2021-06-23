@@ -63,7 +63,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 if (e != LyricEditorSelectingAction.Apply)
                     return;
 
-                // todo : should be able to apply only selected lyric.
                 var lyrics = state.SelectedLyrics.ToList();
                 noteManager.AutoGenerateNotes(lyrics);
             };

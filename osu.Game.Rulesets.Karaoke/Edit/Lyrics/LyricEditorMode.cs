@@ -26,9 +26,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         Language,
 
         /// <summary>
-        /// Able to create/delete ruby/romaji.
+        /// Able to create/delete ruby.
         /// </summary>
-        EditRubyRomaji,
+        EditRuby,
+
+        /// <summary>
+        /// Able to create/delete romaji.
+        /// </summary>
+        EditRomaji,
 
         /// <summary>
         /// Enable to create/delete and reset time tag.

@@ -1,16 +1,14 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints
 {
-    public class RomajiTagSelectionBlueprint : TextTagSelectionBlueprint<ITextTag>
+    public class RomajiTagSelectionBlueprint : TextTagSelectionBlueprint<RomajiTag>
     {
         [UsedImplicitly]
         private readonly Bindable<string> text;
@@ -21,15 +19,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints
         [UsedImplicitly]
         private readonly BindableNumber<int> endIndex;
 
-        public RomajiTagSelectionBlueprint(ITextTag item)
+        public RomajiTagSelectionBlueprint(RomajiTag item)
             : base(item)
         {
-            if (!(item is RomajiTag romajiTag))
-                throw new InvalidCastException(nameof(item));
-
-            text = romajiTag.TextBindable.GetBoundCopy();
-            startIndex = romajiTag.StartIndexBindable.GetBoundCopy();
-            endIndex = romajiTag.EndIndexBindable.GetBoundCopy();
+            text = item.TextBindable.GetBoundCopy();
+            startIndex = item.StartIndexBindable.GetBoundCopy();
+            endIndex = item.EndIndexBindable.GetBoundCopy();
         }
 
         [BackgroundDependencyLoader]
