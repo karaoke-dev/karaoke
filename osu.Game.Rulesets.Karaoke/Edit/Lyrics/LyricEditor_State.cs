@@ -177,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public void EndSelecting(LyricEditorSelectingAction aciton)
         {
             Selecting.Value = false;
-            Action.Invoke(aciton);
+            Action?.Invoke(aciton);
         }
     }
 }
