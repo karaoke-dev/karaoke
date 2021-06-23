@@ -452,7 +452,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             protected void InitializeBlueprint(LyricEditorMode mode)
             {
                 // remove all exist blueprint container
-                RemoveAll(x => x is RubyRomajiBlueprintContainer || x is TimeTagBlueprintContainer);
+                RemoveAll(x => x is RubyBlueprintContainer || x is RomajiBlueprintContainer || x is TimeTagBlueprintContainer);
 
                 // create preview and real caret
                 var blueprintContainer = createBlueprintContainer(mode, Lyric);
@@ -465,11 +465,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 {
                     switch (mode)
                     {
-                        case LyricEditorMode.EditRubyRomaji:
-                            return new RubyRomajiBlueprintContainer(lyric);
+                        case LyricEditorMode.EditRuby:
+                            return new RubyBlueprintContainer(lyric);
 
-                        case LyricEditorMode.EditRubyRomaji:
-                            return new RubyRomajiBlueprintContainer(lyric);
+                        case LyricEditorMode.EditRomaji:
+                            return new RomajiBlueprintContainer(lyric);
 
                         case LyricEditorMode.AdjustTimeTag:
                             return new TimeTagBlueprintContainer(lyric);
