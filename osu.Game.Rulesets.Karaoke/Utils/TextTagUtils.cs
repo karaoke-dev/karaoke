@@ -37,6 +37,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return fixedTextTag.StartIndex < 0 || fixedTextTag.EndIndex > lyric.Length;
         }
 
+        public static bool EmptyText<T>(T textTag) where T : ITextTag
+        {
+            return string.IsNullOrEmpty(textTag.Text);
+        }
+
         /// <summary>
         /// Display tag with position format
         /// </summary>

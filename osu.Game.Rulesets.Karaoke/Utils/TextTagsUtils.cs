@@ -72,6 +72,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return Sort(invalidList.Distinct().ToArray());
         }
 
+        public static T[] FindEmptyText<T>(T[] textTags) where T : ITextTag
+        {
+            return textTags?.Where(TextTagUtils.EmptyText).ToArray();
+        }
+
         public static T Combine<T>(T textTagA, T textTagB) where T : ITextTag, new()
         {
             return Combine(new[] { textTagA, textTagB });

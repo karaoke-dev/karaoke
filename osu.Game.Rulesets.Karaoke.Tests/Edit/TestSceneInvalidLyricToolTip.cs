@@ -88,6 +88,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                     }
                 }
             }));
+
+            setTooltip("ruby tag text is empty", new TestRubyTagIssue(new Dictionary<RubyTagInvalid, RubyTag[]>
+            {
+                {
+                    RubyTagInvalid.Overlapping,
+                    new[]
+                    {
+                        new RubyTag
+                        {
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = null,
+                        }
+                    }
+                }
+            }));
         }
 
         [Test]
@@ -120,6 +136,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                             StartIndex = 2,
                             EndIndex = 3,
                             Text = "Invalid romaji"
+                        }
+                    }
+                }
+            }));
+
+            setTooltip("romaji tag text is empty", new TestRomajiTagIssue(new Dictionary<RomajiTagInvalid, RomajiTag[]>
+            {
+                {
+                    RomajiTagInvalid.Overlapping,
+                    new[]
+                    {
+                        new RomajiTag
+                        {
+                            StartIndex = 2,
+                            EndIndex = 3,
+                            Text = null,
                         }
                     }
                 }

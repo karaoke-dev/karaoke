@@ -59,6 +59,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(TextTagUtils.OutOfRange(rubyTag, lyric), outOfRange);
         }
 
+        [TestCase("[0,1]:ka", false)]
+        [TestCase("[0,1]:", true)]
+        public void TestEmptyText(string textTag, bool emptyText)
+        {
+            var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
+            Assert.AreEqual(TextTagUtils.EmptyText(rubyTag), emptyText);
+        }
+
         [TestCase("[0,1]:ka", "ka(0 ~ 1)")]
         [TestCase("[0,1]:", "empty(0 ~ 1)")]
         [TestCase("[-1,1]:ka", "ka(-1 ~ 1)")]

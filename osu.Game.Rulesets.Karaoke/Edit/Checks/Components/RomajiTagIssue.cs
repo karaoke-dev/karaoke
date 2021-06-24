@@ -23,6 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Components
     {
         OutOfRange,
 
-        Overlapping
+        Overlapping,
+
+        EmptyText,
     }
 }
