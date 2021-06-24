@@ -2,38 +2,32 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
-    public class TextTagExtend : EditExtend
+    public class RomajiTagExtend : TextTagExtend
     {
-        public override ExtendDirection Direction => ExtendDirection.Right;
-
-        public override float ExtendWidth => 350;
-
-        private Bindable<LyricEditorMode> bindableMode;
-
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        private void load()
         {
-            bindableMode = state.BindableMode.GetBoundCopy();
-            bindableMode.BindValueChanged(e =>
+            EditMode.BindValueChanged(e =>
             {
                 switch (e.NewValue)
                 {
-                    case LyricEditorMode.EditRuby:
+                    case TextTagEditMode.Edit:
                         Children = new Drawable[]
                         {
-                            new RubyTagEditSection(),
+                            new TextTagEditModeSection(),
+                            new RomajiTagEditSection(),
                         };
                         break;
 
-                    case LyricEditorMode.EditRomaji:
+                    case TextTagEditMode.Management:
                         Children = new Drawable[]
                         {
-                            new RomajiTagEditSection(),
+                            new TextTagEditModeSection(),
+                            new RomajiTagAutoGenerateSection(),
                         };
                         break;
 

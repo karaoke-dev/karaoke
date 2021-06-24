@@ -203,8 +203,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         return new LanguageExtend();
 
                     case LyricEditorMode.EditRuby:
+                        return new RubyTagExtend();
+
                     case LyricEditorMode.EditRomaji:
-                        return new TextTagExtend();
+                        return new RomajiTagExtend();
 
                     case LyricEditorMode.CreateTimeTag:
                     case LyricEditorMode.RecordTimeTag:
