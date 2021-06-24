@@ -36,6 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
         [TestCase("カラオケ", new[] { "[4,5]:け" }, new[] { RubyTagInvalid.OutOfRange })]
         [TestCase("カラオケ", new[] { "[0,1]:か", "[0,1]:ら" }, new[] { RubyTagInvalid.Overlapping })]
         [TestCase("カラオケ", new[] { "[0,3]:か", "[1,2]:ら" }, new[] { RubyTagInvalid.Overlapping })]
+        [TestCase("カラオケ", new[] { "[0,3]:" }, new[] { RubyTagInvalid.EmptyText })]
         public void TestCheckInvalidRubyTags(string text, string[] rubies, RubyTagInvalid[] invalids)
         {
             var lyric = new Lyric
@@ -55,6 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
         [TestCase("karaoke", new[] { "[7,8]:ke" }, new[] { RomajiTagInvalid.OutOfRange })]
         [TestCase("karaoke", new[] { "[0,2]:ka", "[1,3]:ra" }, new[] { RomajiTagInvalid.Overlapping })]
         [TestCase("karaoke", new[] { "[0,3]:ka", "[1,2]:ra" }, new[] { RomajiTagInvalid.Overlapping })]
+        [TestCase("karaoke", new[] { "[0,3]:" }, new[] { RomajiTagInvalid.EmptyText })]
         public void TestCheckInvalidRomajiTags(string text, string[] romajies, RomajiTagInvalid[] invalids)
         {
             var lyric = new Lyric

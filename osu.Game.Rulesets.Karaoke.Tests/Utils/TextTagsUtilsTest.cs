@@ -46,6 +46,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             TextTagAssert.ArePropertyEqual(invalidTextTag, TestCaseTagHelper.ParseRubyTags(actualTextTags));
         }
 
+        [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o" }, new string[] { })]
+        [TestCase(new string[] { }, new string[] { })]
+        [TestCase(new[] { "[0,1]:", "[1,2]:ra", "[2,3]:o" }, new[] { "[0,1]:" })]
+        [TestCase(new[] { "[0,1]:", "[1,2]:", "[2,3]:" }, new[] { "[0,1]:", "[1,2]:", "[2,3]:" })]
+        public void TestFindEmptyText(string[] textTags, string[] actualTextTags)
+        {
+            var invalidTextTag = TextTagsUtils.FindEmptyText(TestCaseTagHelper.ParseRubyTags(textTags));
+            TextTagAssert.ArePropertyEqual(invalidTextTag, TestCaseTagHelper.ParseRubyTags(actualTextTags));
+        }
+
         [TestCase(new[] { "[0,1]:ka" }, "[0,1]:ka")]
         [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, "[0,4]:karaoke")]
         public void TestCombine(string[] textTags, string actualTextTag)

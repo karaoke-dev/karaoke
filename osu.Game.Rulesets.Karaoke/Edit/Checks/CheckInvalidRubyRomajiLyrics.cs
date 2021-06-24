@@ -58,6 +58,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             if (overlappingTags?.Length > 0)
                 result.Add(RubyTagInvalid.Overlapping, overlappingTags);
 
+            // check empty string.
+            var emptyTextTags = TextTagsUtils.FindEmptyText(lyric.RubyTags);
+            if (emptyTextTags?.Length > 0)
+                result.Add(RubyTagInvalid.EmptyText, emptyTextTags);
+
             return result;
         }
 
@@ -75,6 +80,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             var overlappingTags = TextTagsUtils.FindOverlapping(lyric.RomajiTags, sorting);
             if (overlappingTags?.Length > 0)
                 result.Add(RomajiTagInvalid.Overlapping, overlappingTags);
+
+            // check empty string.
+            var emptyTextTags = TextTagsUtils.FindEmptyText(lyric.RomajiTags);
+            if (emptyTextTags?.Length > 0)
+                result.Add(RomajiTagInvalid.EmptyText, emptyTextTags);
 
             return result;
         }
