@@ -216,12 +216,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         #region TimeTag
 
-        /// <summary>
-        /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.TimeTags"/> and apply on them.
-        /// </summary>
         public void AutoGenerateTimeTags()
         {
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            AutoGenerateTimeTags(lyrics);
+        }
+
+        public void AutoGenerateTimeTags(List<Lyric> lyrics)
+        {
             if (!lyrics.Any())
                 return;
 
