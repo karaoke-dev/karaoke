@@ -42,13 +42,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                         {
                             new EditModeButton<TextTagEditMode>(TextTagEditMode.Edit)
                             {
-                                Text = "Create",
+                                Text = "Edit",
                                 Action = updateEditMode,
                                 Padding = new MarginPadding { Horizontal = 5 },
                             },
                             new EditModeButton<TextTagEditMode>(TextTagEditMode.Management)
                             {
-                                Text = "Recording",
+                                Text = "Management",
                                 Action = updateEditMode,
                                 Padding = new MarginPadding { Horizontal = 5 },
                             },

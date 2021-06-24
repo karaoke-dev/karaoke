@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                 {
                     TextTags.BindTo(e.NewValue.Lyric.RomajiTagsBindable);
                 }
-            });
+            }, true);
         }
 
         protected override LabelledTextTagTextBox<RomajiTag> CreateLabelledTextTagTextBox(RomajiTag textTag)
