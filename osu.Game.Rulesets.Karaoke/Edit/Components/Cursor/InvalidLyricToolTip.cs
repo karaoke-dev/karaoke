@@ -140,6 +140,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                         invalidMessage.AddAlertParagraph("Ruby tag(s) is overlapping to others at position ");
                         break;
 
+                    case RubyTagInvalid.EmptyText:
+                        invalidMessage.AddAlertParagraph("Ruby tag(s) has no text at position ");
+                        break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(invalid));
                 }
@@ -157,6 +161,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 
                     case RomajiTagInvalid.Overlapping:
                         invalidMessage.AddAlertParagraph("Romaji tag(s) is overlapping to others at position ");
+                        break;
+
+                    case RomajiTagInvalid.EmptyText:
+                        invalidMessage.AddAlertParagraph("Romaji tag(s) has no text at position ");
                         break;
 
                     default:
