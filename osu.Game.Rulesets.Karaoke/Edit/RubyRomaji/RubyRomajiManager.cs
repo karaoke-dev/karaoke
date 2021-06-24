@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -19,12 +20,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
         [Resolved(CanBeNull = true)]
         private IEditorChangeHandler changeHandler { get; set; }
 
-        /// <summary>
-        /// Will auto-detect each <see cref="Lyric"/> 's <see cref="Lyric.RubyTags"/> and apply on them.
-        /// </summary>
-        public void AutoGenerateRubyTags()
+        public void AutoGenerateLyricRuby()
         {
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            AutoGenerateLyricRuby(lyrics);
+        }
+
+        public void AutoGenerateLyricRuby(List<Lyric> lyrics)
+        {
             if (!lyrics.Any())
                 return;
 
@@ -41,9 +44,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
             changeHandler?.EndChange();
         }
 
-        public void AutoGenerateRomaji()
+        public void AutoGenerateLyricRomaji()
         {
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            AutoGenerateLyricRomaji(lyrics);
+        }
+
+        public void AutoGenerateLyricRomaji(List<Lyric> lyrics)
+        {
             if (!lyrics.Any())
                 return;
 

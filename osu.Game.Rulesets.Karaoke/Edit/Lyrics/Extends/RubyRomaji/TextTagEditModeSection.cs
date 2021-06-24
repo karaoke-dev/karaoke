@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
@@ -10,20 +11,20 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
-    public class NoteEditModeSection : Section
+    public class TextTagEditModeSection : Section
     {
-        protected override string Title => "Edit mode";
-
-        [Cached]
-        private readonly OverlayColourProvider overlayColourProvider = OverlayColourProvider.Blue;
-
-        private EditModeButton[] buttons;
+        private EditModeButton<TextTagEditMode>[] buttons;
         private OsuMarkdownContainer description;
 
+        [Cached]
+        private readonly OverlayColourProvider overlayColourProvider = OverlayColourProvider.Pink;
+
+        protected override string Title => "Edit mode";
+
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour, ILyricEditorState state)
+        private void load(Bindable<TextTagEditMode> bindableEditMode, OsuColour colour)
         {
             Children = new Drawable[]
             {
@@ -39,24 +40,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                     {
                         buttons = new[]
                         {
-                            new EditModeButton(LyricEditorMode.CreateNote)
+                            new EditModeButton<TextTagEditMode>(TextTagEditMode.Edit)
                             {
-                                Text = "Create",
+                                Text = "Edit",
                                 Action = updateEditMode,
                                 Padding = new MarginPadding { Horizontal = 5 },
                             },
-                            new EditModeButton(LyricEditorMode.CreateNotePosition)
+                            new EditModeButton<TextTagEditMode>(TextTagEditMode.Management)
                             {
-                                Text = "Position",
+                                Text = "Management",
                                 Action = updateEditMode,
                                 Padding = new MarginPadding { Horizontal = 5 },
                             },
-                            new EditModeButton(LyricEditorMode.AdjustNote)
-                            {
-                                Text = "Adjust",
-                                Action = updateEditMode,
-                                Padding = new MarginPadding { Horizontal = 5 },
-                            }
                         }
                     }
                 },
@@ -67,11 +62,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 }
             };
 
-            updateEditMode(state.Mode);
+            updateEditMode(bindableEditMode.Value);
 
-            void updateEditMode(LyricEditorMode mode)
+            void updateEditMode(TextTagEditMode mode)
             {
-                state.Mode = mode;
+                bindableEditMode.Value = mode;
 
                 // update button style.
                 foreach (var child in buttons)
@@ -81,16 +76,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
                     switch (child.Mode)
                     {
-                        case LyricEditorMode.CreateNote:
+                        case TextTagEditMode.Edit:
                             child.BackgroundColour = highLight ? colour.Blue : colour.BlueDarker;
                             break;
 
-                        case LyricEditorMode.CreateNotePosition:
+                        case TextTagEditMode.Management:
                             child.BackgroundColour = highLight ? colour.Red : colour.RedDarker;
-                            break;
-
-                        case LyricEditorMode.AdjustNote:
-                            child.BackgroundColour = highLight ? colour.Yellow : colour.YellowDarker;
                             break;
                     }
                 }
@@ -98,16 +89,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 // update description text.
                 switch (mode)
                 {
-                    case LyricEditorMode.CreateNote:
-                        description.Text = "Using time-tag to create default notes.";
+                    case TextTagEditMode.Edit:
+                        description.Text = "Create / delete and edit lyric text tag in here.";
                         break;
 
-                    case LyricEditorMode.CreateNotePosition:
-                        description.Text = "Using singer voice data to adjust note position.";
-                        break;
-
-                    case LyricEditorMode.AdjustNote:
-                        description.Text = "If you are note satisfied this result, you can adjust this by hands.";
+                    case TextTagEditMode.Management:
+                        description.Text = "Auto-generate and check invalid text tag in here.";
                         break;
                 }
             }

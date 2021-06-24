@@ -1,15 +1,14 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers.Markdown;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 {
@@ -111,22 +110,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         description.Text = "Drag to adjust time-tag time precisely.";
                         break;
                 }
-            }
-        }
-
-        public class EditModeButton : OsuButton
-        {
-            public new Action<LyricEditorMode> Action;
-
-            public LyricEditorMode Mode { get; }
-
-            public EditModeButton(LyricEditorMode mode)
-            {
-                Mode = mode;
-                RelativeSizeAxes = Axes.X;
-                Content.CornerRadius = 15;
-
-                base.Action = () => Action.Invoke(mode);
             }
         }
     }
