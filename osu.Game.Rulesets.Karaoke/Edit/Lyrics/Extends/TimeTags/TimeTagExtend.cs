@@ -1,6 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
@@ -10,15 +12,44 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
         public override ExtendDirection Direction => ExtendDirection.Right;
         public override float ExtendWidth => 300;
 
-        public TimeTagExtend()
+        private Bindable<LyricEditorMode> bindableMode;
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricEditorState state)
         {
-            Children = new Drawable[]
+            bindableMode = state.BindableMode.GetBoundCopy();
+            bindableMode.BindValueChanged(e =>
             {
-                new TimeTagEditModeSection(),
-                new TimeTagAutoGenerateSection(),
-                new TimeTagConfigSection(),
-                new TimeTagIssueSection(),
-            };
+                switch (e.NewValue)
+                {
+                    case LyricEditorMode.CreateTimeTag:
+                        Children = new Drawable[]
+                        {
+                            new TimeTagEditModeSection(),
+                            new TimeTagAutoGenerateSection(),
+                        };
+                        break;
+
+                    case LyricEditorMode.RecordTimeTag:
+                        Children = new Drawable[]
+                        {
+                            new TimeTagEditModeSection(),
+                            new TimeTagRecordingConfigSection(),
+                        };
+                        break;
+
+                    case LyricEditorMode.AdjustTimeTag:
+                        Children = new Drawable[]
+                        {
+                            new TimeTagEditModeSection(),
+                            new TimeTagIssueSection(),
+                        };
+                        break;
+
+                    default:
+                        return;
+                }
+            }, true);
         }
     }
 }
