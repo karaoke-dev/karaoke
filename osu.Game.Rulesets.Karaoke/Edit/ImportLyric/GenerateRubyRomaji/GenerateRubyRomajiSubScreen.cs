@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
                 if (!ok)
                     return;
 
-                RubyRomajiManager.AutoGenerateRubyTags();
+                RubyRomajiManager.AutoGenerateLyricRuby();
                 Navigation.State = NavigationState.Done;
             }));
         }
@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
                 if (!ok)
                     return;
 
-                RubyRomajiManager.AutoGenerateRomaji();
+                RubyRomajiManager.AutoGenerateLyricRomaji();
                 Navigation.State = NavigationState.Done;
             }));
         }
