@@ -8,6 +8,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
@@ -16,6 +17,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Checks;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 {
@@ -74,12 +76,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 
             protected override TableColumn[] CreateHeaders() => new[]
             {
+                new TableColumn(string.Empty, Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 30)),
                 new TableColumn("Lyric", Anchor.CentreLeft, new Dimension(GridSizeMode.AutoSize, minSize: 40)),
                 new TableColumn("Message", Anchor.CentreLeft),
             };
 
             private Drawable[] createContent(Lyric lyric) => new Drawable[]
             {
+                new SpriteIcon
+                {
+                    Origin = Anchor.Centre,
+                    Size = new Vector2(10),
+                    Colour = colour.Red,
+                    Margin = new MarginPadding { Left = 10 },
+                    Icon = FontAwesome.Solid.Globe,
+                },
                 new OsuSpriteText
                 {
                     Text = $"#{lyric.Order}",
