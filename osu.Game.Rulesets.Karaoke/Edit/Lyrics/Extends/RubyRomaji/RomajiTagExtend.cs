@@ -28,6 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                         {
                             new TextTagEditModeSection(),
                             new RomajiTagAutoGenerateSection(),
+                            new RomajiTagIssueSection(),
                         };
                         break;
 
