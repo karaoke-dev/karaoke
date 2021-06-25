@@ -213,9 +213,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                         case LyricEditorMode.EditRuby:
                         case LyricEditorMode.EditRomaji:
-                            return null;
+                            return new LanguageInfo(Lyric);
 
                         case LyricEditorMode.CreateTimeTag:
+                            return new LanguageInfo(Lyric);
+
                         case LyricEditorMode.RecordTimeTag:
                         case LyricEditorMode.AdjustTimeTag:
                             return new TimeTagInfo(Lyric);
