@@ -8,11 +8,11 @@ using osu.Framework.Allocation;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -61,12 +61,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
 
         private Drawable[] createContent(Lyric lyric, TTextTag textTag, TInvalid invalid) => new Drawable[]
         {
-            new RightTriangle
+            new SpriteIcon
             {
                 Origin = Anchor.Centre,
                 Size = new Vector2(10),
                 Colour = colour.Red,
                 Margin = new MarginPadding { Left = 10 },
+                Icon = FontAwesome.Solid.Tag,
             },
             new OsuSpriteText
             {
