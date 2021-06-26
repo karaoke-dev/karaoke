@@ -31,5 +31,29 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Extensions
             // apply changes
             bindableArray.Value = newValues;
         }
+
+        [TestCase(new[] { 1, 2, 3 }, new int[] { }, new int[] { })]
+        [TestCase(new int[] { }, new[] { 1, 2, 3 }, new[] { 1, 2, 3 })]
+        [TestCase(new[] { 1, 2, 3 }, new[] { 1, 2, 3 }, new int[] { 1, 2, 3 })]
+        [TestCase(new[] { 1, 2, 3 }, new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2, 3, 4, 5 })]
+        [TestCase(new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2, 3 }, new int[] { 1, 2, 3 })]
+        [TestCase(new[] { 1, 2, 3 }, new[] { 4, 5 }, new[] { 4, 5 })]
+        public void TestBindArrayChangedIfRunImmediately(int[] oldValues, int[] newValues, int[] addedValues)
+        {
+            // initial default value.
+            var bindableArray = new Bindable<int[]> { Value = oldValues };
+
+            // apply changes
+            bindableArray.Value = newValues;
+
+            bindableArray.BindArrayChanged(n =>
+            {
+                Assert.AreEqual(n, addedValues);
+            }, r =>
+            {
+                // should not goes to here if run immediately.
+                Assert.Fail();
+            }, true);
+        }
     }
 }

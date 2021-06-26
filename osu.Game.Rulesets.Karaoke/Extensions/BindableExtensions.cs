@@ -25,7 +25,12 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
 
                 // add new time-tags
                 add?.Invoke(newItems);
-            }, runOnceImmediately);
+            });
+
+            if (runOnceImmediately)
+            {
+                add?.Invoke(bindable.Value);
+            }
         }
     }
 }
