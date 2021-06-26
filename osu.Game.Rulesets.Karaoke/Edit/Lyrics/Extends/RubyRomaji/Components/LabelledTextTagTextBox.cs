@@ -6,11 +6,11 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osuTK;
 
@@ -135,33 +135,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
             {
                 Selected?.Invoke();
                 base.OnFocus(e);
-            }
-        }
-
-        internal class DeleteIconButton : IconButton
-        {
-            [Resolved]
-            protected OsuColour Colours { get; private set; }
-
-            public Action<bool> Hover;
-
-            public DeleteIconButton()
-            {
-                Icon = FontAwesome.Solid.Trash;
-            }
-
-            protected override bool OnHover(HoverEvent e)
-            {
-                Colour = Colours.Yellow;
-                Hover?.Invoke(true);
-                return base.OnHover(e);
-            }
-
-            protected override void OnHoverLost(HoverLostEvent e)
-            {
-                Colour = Colours.GrayF;
-                Hover?.Invoke(false);
-                base.OnHoverLost(e);
             }
         }
     }
