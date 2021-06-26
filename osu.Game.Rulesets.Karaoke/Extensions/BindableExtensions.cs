@@ -14,8 +14,11 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
             // Add time-tag into blueprint container
             bindable.BindValueChanged(e =>
             {
-                var newItems = e.NewValue ?? new T[] { };
-                var removedItems = e.OldValue?.Except(newItems).ToArray() ?? new T[] { };
+                var newValue = e.NewValue ?? new T[] { };
+                var oldValue = e.OldValue ?? new T[] { };
+
+                var newItems = newValue.Except(oldValue).ToArray();
+                var removedItems = oldValue.Except(newValue).ToArray();
 
                 // remove old item.
                 remove?.Invoke(removedItems);
