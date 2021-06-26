@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.RomajiTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.RubyTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Zh;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Edit
@@ -20,11 +21,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
     [TestFixture]
     public class TestSceneGeneratorConfigDialog : OsuTestScene
     {
+        private LanguageSelectionDialog languageSelectionDialog;
+
         [BackgroundDependencyLoader]
         private void load()
         {
             var config = new KaraokeRulesetEditGeneratorConfigManager();
+            Add(languageSelectionDialog = new LanguageSelectionDialog());
+
             Dependencies.Cache(config);
+            Dependencies.Cache(languageSelectionDialog);
         }
 
         [TestCase(typeof(LanguageDetectorConfigDialog), TestName = nameof(LanguageDetectorConfigDialog))]
@@ -41,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 Schedule(() =>
                 {
                     Child = Activator.CreateInstance(configType) as Drawable;
-                    Child.Show();
+                    Child?.Show();
                 });
             });
         }
