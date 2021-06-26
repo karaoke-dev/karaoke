@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray();
 
             // Add time-tag into blueprint container
-            RegistBindable(notes);
+            RegisterBindable(notes);
         }
 
         protected class NoteEditorSelectionHandler : ExtendSelectionHandler<Note>

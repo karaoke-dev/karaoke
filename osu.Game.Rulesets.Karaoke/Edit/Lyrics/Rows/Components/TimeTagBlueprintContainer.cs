@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             SelectedItems.BindTo(state.SelectedTimeTags);
 
             // Add time tag into blueprint container
-            RegistBindable(timeTags);
+            RegisterBindable(timeTags);
         }
 
         protected override SelectionHandler<TimeTag> CreateSelectionHandler()

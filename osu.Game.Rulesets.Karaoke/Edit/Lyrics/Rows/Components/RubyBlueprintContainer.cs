@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         {
             // Add ruby tag into blueprint container
             SelectedItems.BindTo(state.SelectedRubyTags);
-            RegistBindable(rubyTags);
+            RegisterBindable(rubyTags);
         }
 
         protected override SelectionHandler<RubyTag> CreateSelectionHandler()

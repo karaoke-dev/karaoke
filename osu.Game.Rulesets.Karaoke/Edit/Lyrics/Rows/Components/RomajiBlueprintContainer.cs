@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         {
             // Add romaji tag into blueprint container
             SelectedItems.BindTo(state.SelectedRomajiTags);
-            RegistBindable(romajiTags);
+            RegisterBindable(romajiTags);
         }
 
         protected override SelectionHandler<RomajiTag> CreateSelectionHandler()

@@ -176,10 +176,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             Selecting.Value = true;
         }
 
-        public void EndSelecting(LyricEditorSelectingAction aciton)
+        public void EndSelecting(LyricEditorSelectingAction action)
         {
             Selecting.Value = false;
-            Action?.Invoke(aciton);
+            Action?.Invoke(action);
         }
     }
 }

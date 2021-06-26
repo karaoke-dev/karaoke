@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
 {
     public class LayoutSelection : Section
     {
-        private const float layout_settion_horizontal_padding = 20;
+        private const float layout_setting_horizontal_padding = 20;
 
         private const float layout_setting_vertical_spacing = 15;
 
@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
         {
             Padding = new MarginPadding
             {
-                Horizontal = layout_settion_horizontal_padding,
+                Horizontal = layout_setting_horizontal_padding,
                 Vertical = SECTION_PADDING,
             };
 
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
 
         public class LayoutSelectionItem : FillFlowContainer
         {
-            private const float selection_size = (240 - layout_settion_horizontal_padding * 2 - SECTION_SPACING) / 2;
+            private const float selection_size = (240 - layout_setting_horizontal_padding * 2 - SECTION_SPACING) / 2;
 
             private readonly Bindable<int> selectedLayoutIndex = new Bindable<int>();
 
