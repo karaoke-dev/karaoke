@@ -217,7 +217,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
         {
-            var judgement = Result.Judgement as KaraokeLyricJudgement;
+            if (!(Result.Judgement is KaraokeLyricJudgement judgement))
+                return;
+
             var lyricStartOffset = timeOffset + HitObject.LyricDuration;
 
             if (lyricStartOffset < 0)

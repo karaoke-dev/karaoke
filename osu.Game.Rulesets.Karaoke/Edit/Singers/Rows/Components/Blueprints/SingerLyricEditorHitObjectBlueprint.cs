@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
             base.Update();
 
             // no bindable so we perform this every update
-            float duration = (float)(Item.LyricDuration);
+            float duration = (float)Item.LyricDuration;
 
             if (Width != duration)
             {
