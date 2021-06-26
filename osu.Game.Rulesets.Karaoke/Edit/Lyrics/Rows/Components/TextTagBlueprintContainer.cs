@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 // todo : delete ruby or romaji
             }
 
-            private float deltaPosition = 0;
+            private float deltaPosition;
 
             protected override void OnOperationBegan()
             {

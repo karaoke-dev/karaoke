@@ -260,10 +260,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 value = translate.Split('=').LastOrDefault()
             }).GroupBy(x => x.key, y => y.value).ToList();
 
-            for (int i = 0; i < translates.Count; i++)
+            foreach (var singleLanguage in translates)
             {
-                var singleLanguage = translates[i];
-
                 // get culture and translate
                 var languageCode = singleLanguage.Key;
                 var cultureInfo = new CultureInfo(languageCode);

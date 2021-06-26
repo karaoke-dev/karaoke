@@ -25,8 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
         {
             var ruleset = new KaraokeRuleset().RulesetInfo;
             var originBeatmap = new TestKaraokeBeatmap(ruleset);
-            var karaokeBeatmap = new KaraokeBeatmapConverter(originBeatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
-            if (karaokeBeatmap == null)
+            if (!(new KaraokeBeatmapConverter(originBeatmap, new KaraokeRuleset()).Convert() is KaraokeBeatmap karaokeBeatmap))
                 throw new ArgumentNullException(nameof(karaokeBeatmap));
 
             karaokeBeatmap.Singers = createDefaultSinger();
