@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
             if (e.AltPressed)
             {
-                // todo : this event not working while zooming, because zooming will also call scrollto.
+                // todo : this event not working while zooming, because zooming will also call scroll to.
                 // bindableCurrent.Value = getCurrentPosition();
 
                 // Update zoom to target, ignore easing value.
