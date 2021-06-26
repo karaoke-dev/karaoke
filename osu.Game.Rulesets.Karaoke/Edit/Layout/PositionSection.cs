@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 applyCurrent(verticalMarginSliderBar.Current, layout.VerticalMargin);
                 applyCurrent(smartHorizonDropdown.Current, layout.SmartHorizon);
 
-                void applyCurrent<T>(Bindable<T> bindable, T value)
+                static void applyCurrent<T>(Bindable<T> bindable, T value)
                     => bindable.Value = bindable.Default = value;
             }, true);
 

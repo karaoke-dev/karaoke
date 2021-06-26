@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
                 AvailableTranslates = translateLanguage,
                 HitObjects = lyrics?.OfType<KaraokeHitObject>().ToList() ?? new List<KaraokeHitObject>()
             };
-            return new EditorBeatmap(karaokeBeatmap, null);
+            return new EditorBeatmap(karaokeBeatmap);
         }
 
         private BeatmapVerifierContext getContext(IBeatmap beatmap)

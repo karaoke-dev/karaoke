@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         JudgementLineHeadImage,
         JudgementLineTailImage,
         JudgementLineBodyImage,
-        JudgementAresPrecentage,
+        JudgementAresPercentage,
         ShowJudgementLine,
         NoteHeadImage,
         NoteTailImage,

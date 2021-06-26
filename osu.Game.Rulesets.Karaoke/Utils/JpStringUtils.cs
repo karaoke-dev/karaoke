@@ -6,7 +6,7 @@ using Zipangu;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
-    public class JpStringUtils
+    public static class JpStringUtils
     {
         public static string ToHiragana(string text)
         {

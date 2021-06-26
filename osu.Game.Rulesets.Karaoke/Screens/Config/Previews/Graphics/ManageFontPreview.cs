@@ -201,7 +201,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                 static bool isAllTextPartAppear(Drawable text, GenerateDirection direction)
                 {
                     bool startFromLeft = direction == GenerateDirection.LeftToRight;
-                    var textEndPositionX = text.X + (text.DrawWidth / 2) * (startFromLeft ? -1 : 1);
+                    var textEndPositionX = text.X + text.DrawWidth / 2 * (startFromLeft ? -1 : 1);
                     return startFromLeft ? textEndPositionX > spacing_between_text : textEndPositionX < -spacing_between_text;
                 }
             }

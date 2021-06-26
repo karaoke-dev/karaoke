@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
                                         // If has bindable font usage source, the bind with it first(for getter other property in bindable).
                                         dialog.Current = bindableFontUsage ?? Current;
-                                        dialog?.Show();
+                                        dialog.Show();
                                     }
                                     catch
                                     {
@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 Current.BindValueChanged(e =>
                 {
                     var font = e.NewValue;
-                    var fontName = font.FontName ?? "[Unknown font]";
+                    var fontName = font.FontName;
                     var size = FontUtils.GetText(font.Size);
                     var fixedWidthText = font.FixedWidth ? "(fixed width)" : "";
                     var displayText = $"{fontName}, {size} {fixedWidthText}";

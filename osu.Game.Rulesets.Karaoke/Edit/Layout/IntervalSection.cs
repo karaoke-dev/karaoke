@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 applyCurrent(rubyIntervalSliderBar.Current, layout.RubyInterval);
                 applyCurrent(romajiIntervalSliderBar.Current, layout.RomajiInterval);
 
-                void applyCurrent<T>(Bindable<T> bindable, T value)
+                static void applyCurrent<T>(Bindable<T> bindable, T value)
                     => bindable.Value = bindable.Default = value;
             }, true);
 

@@ -102,18 +102,16 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var newLyric = lyric.Text?.Substring(0, position) + text + lyric.Text?[position..];
             lyric.Text = newLyric;
 
-            static T[] processTags<T>(T[] tags, int position, int shiftingLength) where T : ITextTag
-            {
-                return tags?.Select(x =>
-                           {
-                               if (x.StartIndex >= position)
-                                   x.StartIndex += shiftingLength;
-                               if (x.EndIndex > position)
-                                   x.EndIndex += shiftingLength;
-                               return x;
-                           })
-                           .ToArray();
-            }
+            static T[] processTags<T>(T[] tags, int position, int shiftingLength) where T : ITextTag =>
+                tags?.Select(x =>
+                    {
+                        if (x.StartIndex >= position)
+                            x.StartIndex += shiftingLength;
+                        if (x.EndIndex > position)
+                            x.EndIndex += shiftingLength;
+                        return x;
+                    })
+                    .ToArray();
 
             static TimeTag[] processTimeTags(TimeTag[] timeTags, int startPosition, int shifting)
                 => timeTags?.Select(t => t.Index.Index >= startPosition ? TimeTagUtils.ShiftingTimeTag(t, shifting) : t).ToArray();

@@ -28,8 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
-        public Bindable<float> bindableZoom;
-        public Bindable<float> bindableCurrent;
+        private Bindable<float> bindableZoom;
+        private Bindable<float> bindableCurrent;
 
         public readonly Singer Singer;
 
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
             if (e.AltPressed)
             {
-                // todo : this event not working while zooming, because zooming will also call scrollto.
+                // todo : this event not working while zooming, because zooming will also call scroll to.
                 // bindableCurrent.Value = getCurrentPosition();
 
                 // Update zoom to target, ignore easing value.

@@ -154,7 +154,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             FontUsage getFont(KaraokeRulesetSetting setting, float? charSize = null)
             {
-                // todo : should interfact with skin font
+                // todo : should interact with skin font
                 var forceUseDefault = forceUseDefaultFont();
                 var font = config?.Get<FontUsage>(setting) ?? FontUsage.Default;
 
@@ -217,7 +217,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
         {
-            var judgement = Result.Judgement as KaraokeLyricJudgement;
+            if (!(Result.Judgement is KaraokeLyricJudgement judgement))
+                return;
+
             var lyricStartOffset = timeOffset + HitObject.LyricDuration;
 
             if (lyricStartOffset < 0)
@@ -242,7 +244,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
             base.UpdateStartTimeStateTransforms();
 
-            using (BeginDelayedSequence(HitObject.Duration, true))
+            using (BeginDelayedSequence(HitObject.Duration))
             {
                 const float fade_out_time = 500;
                 this.FadeOut(fade_out_time);

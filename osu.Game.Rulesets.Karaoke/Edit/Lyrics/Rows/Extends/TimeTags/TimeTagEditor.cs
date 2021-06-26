@@ -199,7 +199,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             new SnapResult(screenSpacePosition, getTimeFromPosition(Content.ToLocalSpace(screenSpacePosition)));
 
         private double getTimeFromPosition(Vector2 localPosition) =>
-            (localPosition.X / Content.DrawWidth) * editorClock.TrackLength;
+            localPosition.X / Content.DrawWidth * editorClock.TrackLength;
 
         private float getPositionFromTime(double time)
             => (float)(time / editorClock.TrackLength) * Content.DrawWidth;

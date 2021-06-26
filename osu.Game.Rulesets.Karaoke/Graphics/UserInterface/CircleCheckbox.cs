@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
             Current.DisabledChanged += disabled => background.Alpha = selectedIcon.Alpha = disabled ? 0.3f : 1;
 
-            Current.ValueChanged += (e) =>
+            Current.ValueChanged += e =>
             {
                 selectedIcon.ScaleTo(e.NewValue ? 0.6f : 0, 200, Easing.OutElastic);
             };

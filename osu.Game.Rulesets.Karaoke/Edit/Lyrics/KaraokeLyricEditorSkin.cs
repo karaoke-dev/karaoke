@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         return SkinUtils.As<TValue>(BindableColumnHeight);
 
                     // not have note playfield judgement spacing in lyric editor.
-                    case LegacyKaraokeSkinConfigurationLookups.JudgementAresPrecentage:
+                    case LegacyKaraokeSkinConfigurationLookups.JudgementAresPercentage:
                         return SkinUtils.As<TValue>(BindableJudgementAresPercentage);
                 }
             }

@@ -151,9 +151,10 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                     }
 
                     return true;
-            }
 
-            return false;
+                default:
+                    return false;
+            }
         }
 
         protected override void PopIn()
@@ -221,7 +222,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                 await tcs.Task;
             });
 
-            DateTimeOffset getPublishDateFromName(string name)
+            static DateTimeOffset getPublishDateFromName(string name)
             {
                 var regex = new Regex("(?<year>[-0-9]+).(?<month>[-0-9]{2})(?<day>[-0-9]{2})");
                 var result = regex.Match(name);

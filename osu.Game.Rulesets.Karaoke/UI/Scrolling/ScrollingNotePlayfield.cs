@@ -152,7 +152,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
             Direction.BindValueChanged(dir =>
             {
                 var judgementAreaPercentage = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(
-                                                      new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.JudgementAresPrecentage, 0))
+                                                      new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.JudgementAresPercentage, 0))
                                                   ?.Value ?? 0.4f;
 
                 switch (dir.NewValue)

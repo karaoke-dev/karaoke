@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 {
     public abstract class ExtendBlueprintContainer<T> : BlueprintContainer<T> where T : class
     {
-        protected void RegistBindable<TItem>(Bindable<TItem[]> bindable) where TItem : T
+        protected void RegisterBindable<TItem>(Bindable<TItem[]> bindable) where TItem : T
         {
             // Add time-tag into blueprint container
             bindable.BindArrayChanged(addItems =>
