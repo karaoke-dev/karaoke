@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
             current.BindValueChanged(e =>
             {
                 var currentValue = getConfigValue<TValue>(e.NewValue, propertyName);
-                if (bindable.Value.Equals(currentValue))
+                if (bindable.Value?.Equals(currentValue) ?? false)
                     return;
 
                 bindable.Value = currentValue;
