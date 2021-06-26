@@ -5,6 +5,7 @@ using System;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Layouts;
@@ -23,11 +24,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
     {
         private LanguageSelectionDialog languageSelectionDialog;
 
+        protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
+
         [BackgroundDependencyLoader]
         private void load()
         {
             var config = new KaraokeRulesetEditGeneratorConfigManager();
-            Add(languageSelectionDialog = new LanguageSelectionDialog());
+            base.Content.AddRange(new Drawable[]
+            {
+                Content,
+                languageSelectionDialog = new LanguageSelectionDialog()
+            });
 
             Dependencies.Cache(config);
             Dependencies.Cache(languageSelectionDialog);
