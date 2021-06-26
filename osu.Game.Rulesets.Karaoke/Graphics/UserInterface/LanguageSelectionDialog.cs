@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     RequestSelection = set => RequestSelection?.Invoke(set)
                 };
 
-            public class DrawableLanguageListItem : DrawableTextListItem, IFilterable
+            public class DrawableLanguageListItem : DrawableTextListItem
             {
                 public DrawableLanguageListItem(CultureInfo item)
                     : base(item)

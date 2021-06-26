@@ -17,8 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 {
     public class MicrophoneSoundVisualizer : CompositeDrawable
     {
-        private static float max_loudness = 100;
-        private static float max_pitch = 60;
+        private const float max_loudness = 100;
+        private const float max_pitch = 60;
 
         private readonly Box background;
         private readonly MicrophoneInfo microphoneInfo;
