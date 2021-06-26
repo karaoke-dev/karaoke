@@ -55,14 +55,14 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             var regex = new Regex(@"\b(?<key>font|family|weight|size|italics|fixedWidth)(?<op>[=]+)(?<value>("".*"")|(\S*))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             var dictionary = regex.Matches(str).ToDictionary(k => k.Groups["key"].Value, v => v.Groups["value"].Value);
 
-            if (dictionary.ContainsKey("font"))
+            if (dictionary.ContainsKey("Font"))
             {
-                var font = dictionary["font"];
+                var font = dictionary["Font"];
                 var family = font.Contains('-') ? font.Split('-').FirstOrDefault() : font;
                 var weight = font.Contains('-') ? font.Split('-').LastOrDefault() : "";
-                var size = float.Parse(dictionary["size"]);
-                var italics = dictionary["italics"].ToLower() == "true";
-                var fixedWidth = dictionary["fixedWidth"].ToLower() == "true";
+                var size = float.Parse(dictionary["Size"]);
+                var italics = dictionary["Italics"].ToLower() == "true";
+                var fixedWidth = dictionary["FixedWidth"].ToLower() == "true";
                 Value = new FontUsage(family, size, weight, italics, fixedWidth);
             }
             else
