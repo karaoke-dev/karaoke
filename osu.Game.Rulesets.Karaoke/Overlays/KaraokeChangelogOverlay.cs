@@ -151,9 +151,10 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                     }
 
                     return true;
-            }
 
-            return false;
+                default:
+                    return false;
+            }
         }
 
         protected override void PopIn()

@@ -46,13 +46,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private string getName(int number)
         {
-            if (number == disable_selection_index)
-                return "Disable";
-
-            if (number == 0)
-                return "Enable";
-
-            return $"Enable (skip {number} rows)";
+            return number switch
+            {
+                disable_selection_index => "Disable",
+                0 => "Enable",
+                _ => $"Enable (skip {number} rows)"
+            };
         }
 
         private void updateAutoFocusToEditLyric()
