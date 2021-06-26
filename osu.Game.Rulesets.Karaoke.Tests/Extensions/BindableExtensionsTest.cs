@@ -20,16 +20,25 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Extensions
             // initial default value.
             var bindableArray = new Bindable<int[]> { Value = oldValues };
 
+            var addCount = 0;
+            var removedCount = 0;
+
             bindableArray.BindArrayChanged(n =>
             {
+                addCount++;
                 Assert.AreEqual(n, addedValues);
             }, r =>
             {
+                removedCount++;
                 Assert.AreEqual(r, removeValues);
             });
 
             // apply changes
             bindableArray.Value = newValues;
+
+            // should only run once.
+            Assert.AreEqual(addCount, 1);
+            Assert.AreEqual(removedCount, 1);
         }
 
         [TestCase(new[] { 1, 2, 3 }, new int[] { }, new int[] { })]
@@ -46,14 +55,21 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Extensions
             // apply changes
             bindableArray.Value = newValues;
 
+            var addCount = 0;
+            var removedCount = 0;
+
             bindableArray.BindArrayChanged(n =>
             {
+                addCount++;
                 Assert.AreEqual(n, addedValues);
             }, r =>
             {
-                // should not goes to here if run immediately.
-                Assert.Fail();
+                removedCount++;
             }, true);
+
+            // should only run once in add count event.
+            Assert.AreEqual(addCount, 1);
+            Assert.AreEqual(removedCount, 0);
         }
     }
 }
