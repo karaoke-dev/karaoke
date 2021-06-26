@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints
                 updateDrawableRect(indexRangeBackground, new RectangleF(indexRangePosition, indexRangeSize));
             });
 
-            void updateDrawableRect(Drawable target, RectangleF rect)
+            static void updateDrawableRect(Drawable target, RectangleF rect)
             {
                 target.X = rect.X;
                 target.Y = rect.Y;

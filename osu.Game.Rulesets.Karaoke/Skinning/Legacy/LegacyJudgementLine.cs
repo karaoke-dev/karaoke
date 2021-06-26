@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 subtractionCache.Validate();
             }
 
-            float getWidth(Sprite s) => s.Texture?.DisplayWidth ?? 0;
+            static float getWidth(Sprite s) => s.Texture?.DisplayWidth ?? 0;
         }
 
         protected Texture GetTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup)

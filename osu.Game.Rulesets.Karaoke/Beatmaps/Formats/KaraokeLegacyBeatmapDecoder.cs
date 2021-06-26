@@ -184,7 +184,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 }
             }
 
-            void applyNote(Note note, string noteStr, string ruby = null, double? duration = null)
+            static void applyNote(Note note, string noteStr, string ruby = null, double? duration = null)
             {
                 if (noteStr == "-")
                     note.Display = false;
@@ -201,7 +201,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     note.Duration = duration.Value;
 
                 //Support format : 1  1.  1.5  1+  1#
-                Tone convertTone(string tone)
+                static Tone convertTone(string tone)
                 {
                     var half = false;
 
