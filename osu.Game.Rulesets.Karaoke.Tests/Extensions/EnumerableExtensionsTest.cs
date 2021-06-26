@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Extensions;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Extensions
 {
-    public class TestEnumerableExtensions
+    public class EnumerableExtensionsTest
     {
         [TestCase(new[] { 1, 2, 3, 4, 5, 6 }, 1, 3, 3)]
         [TestCase(new[] { 1, 3, 2, 4, 6, 5 }, 1, 6, 6)]

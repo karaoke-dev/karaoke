@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
 {
     public class LanguageDetectorConfig : IHasConfig<LanguageDetectorConfig>
     {
-        public CultureInfo[] AcceptLanguage { get; set; }
+        public CultureInfo[] AcceptLanguages { get; set; }
 
         public LanguageDetectorConfig CreateDefaultConfig()
         {

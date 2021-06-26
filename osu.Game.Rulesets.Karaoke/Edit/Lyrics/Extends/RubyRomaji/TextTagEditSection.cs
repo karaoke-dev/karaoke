@@ -25,8 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             // create list of text-tag text-box if bindable changed.
             TextTags.BindValueChanged(e =>
             {
-                Content.RemoveAll(x => x is LabelledTextTagTextBox<T>);
-                Content.AddRange(e.NewValue?.Select(x =>
+                RemoveAll(x => x is LabelledTextTagTextBox<T>);
+                AddRange(e.NewValue?.Select(x =>
                 {
                     var relativeToLyricText = TextTagUtils.GetTextFromLyric(x, Lyric?.Text);
                     var range = TextTagUtils.PositionFormattedString(x);
@@ -57,7 +57,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             // create new button.
             fillFlowContainer?.Insert(int.MaxValue, new CreateNewButton
             {
-                Depth = float.MinValue,
                 Text = "Create new",
                 Action = () =>
                 {

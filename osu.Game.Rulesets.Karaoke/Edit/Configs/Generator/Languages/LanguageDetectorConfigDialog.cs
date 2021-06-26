@@ -20,7 +20,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
 
         protected override GeneratorConfigSection[] CreateConfigSection(Bindable<LanguageDetectorConfig> current)
         {
-            return null;
+            return new GeneratorConfigSection[]
+            {
+                new AcceptLanguagesSection(current),
+            };
         }
     }
 }
