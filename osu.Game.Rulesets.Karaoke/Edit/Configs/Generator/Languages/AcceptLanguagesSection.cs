@@ -8,11 +8,13 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
-using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
 {
@@ -25,50 +27,99 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
         public AcceptLanguagesSection(Bindable<LanguageDetectorConfig> current)
             : base(current)
         {
-            bindableCultureInfo.BindArrayChanged(n =>
+            bindableCultureInfo.BindValueChanged(e =>
             {
-                foreach (var cultureInfo in n)
+                RemoveAll(x => x is RemovableLabelledLanguageSelector);
+
+                for (int i = 0; i < e.NewValue.Length; i++)
                 {
+                    var cultureInfo = e.NewValue[i];
+
+                    var bindable = new Bindable<CultureInfo>(cultureInfo);
+                    bindable.BindValueChanged(c =>
+                    {
+                        removeCultureInfo(c.OldValue);
+                        addCultureInfo(c.NewValue);
+                    });
+
                     Add(new RemovableLabelledLanguageSelector
                     {
-                        Current =
-                        {
-                            Value = cultureInfo,
-                            Disabled = true
-                        }
+                        Label = $"#{i}",
+                        Description = "Language detector will only use those selected language.",
+                        Current = bindable,
+                        OnDeleteButtonClick = () => removeCultureInfo(cultureInfo)
                     });
                 }
-            }, r =>
-            {
-                RemoveAll(d =>
-                {
-                    if (d is RemovableLabelledLanguageSelector selector)
-                        return r.Contains(selector.Current.Value);
-
-                    return false;
-                });
             });
 
-            Add(new CreateLanguageButton
+            var fillFlowContainer = Content as FillFlowContainer;
+            fillFlowContainer?.Insert(int.MaxValue, new CreateLanguageButton
             {
                 Text = "Add new language",
-                LanguageSelected = e =>
-                {
-                    var languageList = bindableCultureInfo.Value?.ToList() ?? new List<CultureInfo>();
-                    if (languageList.Contains(e))
-                        return;
-
-                    languageList.Add(e);
-                    bindableCultureInfo.Value = languageList.ToArray();
-                }
+                LanguageSelected = addCultureInfo
             });
 
             RegisterConfig(bindableCultureInfo, nameof(LanguageDetectorConfig.AcceptLanguages));
         }
 
+        private void removeCultureInfo(CultureInfo cultureInfo)
+        {
+            var languageList = bindableCultureInfo.Value?.ToList() ?? new List<CultureInfo>();
+            if (!languageList.Contains(cultureInfo))
+                return;
+
+            languageList.Remove(cultureInfo);
+            bindableCultureInfo.Value = languageList.ToArray();
+        }
+
+        private void addCultureInfo(CultureInfo cultureInfo)
+        {
+            var languageList = bindableCultureInfo.Value?.ToList() ?? new List<CultureInfo>();
+            if (languageList.Contains(cultureInfo))
+                return;
+
+            languageList.Add(cultureInfo);
+            bindableCultureInfo.Value = languageList.ToArray();
+        }
+
         public class RemovableLabelledLanguageSelector : LabelledLanguageSelector
         {
-            // todo : add delete button.
+            protected const float DELETE_BUTTON_SIZE = 20f;
+
+            public Action OnDeleteButtonClick;
+
+            public RemovableLabelledLanguageSelector()
+            {
+                if (!(InternalChildren[1] is FillFlowContainer fillFlowContainer))
+                    return;
+
+                // change padding to place delete button.
+                fillFlowContainer.Padding = new MarginPadding
+                {
+                    Horizontal = CONTENT_PADDING_HORIZONTAL,
+                    Vertical = CONTENT_PADDING_VERTICAL,
+                    Right = CONTENT_PADDING_HORIZONTAL + DELETE_BUTTON_SIZE + CONTENT_PADDING_HORIZONTAL,
+                };
+
+                // add delete button.
+                AddInternal(new Container
+                {
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y,
+                    Padding = new MarginPadding
+                    {
+                        Top = CONTENT_PADDING_VERTICAL + 10,
+                        Right = CONTENT_PADDING_HORIZONTAL,
+                    },
+                    Child = new DeleteIconButton
+                    {
+                        Anchor = Anchor.TopRight,
+                        Origin = Anchor.TopRight,
+                        Size = new Vector2(DELETE_BUTTON_SIZE),
+                        Action = () => OnDeleteButtonClick?.Invoke(),
+                    }
+                });
+            }
         }
 
         public class CreateLanguageButton : OsuButton

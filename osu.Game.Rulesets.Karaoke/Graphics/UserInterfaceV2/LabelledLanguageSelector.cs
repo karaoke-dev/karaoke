@@ -4,6 +4,7 @@
 using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
@@ -36,6 +37,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 
             public LanguageSelectionButton()
             {
+                RelativeSizeAxes = Axes.X;
+                Content.CornerRadius = 15;
+
                 Action = () =>
                 {
                     LanguageSelectionDialog.Current = Current;
@@ -43,6 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                 };
 
                 Current.BindValueChanged(e => Text = e.NewValue.DisplayName);
+                Current.BindDisabledChanged(e => Enabled.Value = !e);
             }
         }
     }
