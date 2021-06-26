@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             // because FontUsage.ToString() will have "," symbol.
             str = str.Replace(",", "");
             var regex = new Regex(@"\b(?<key>font|family|weight|size|italics|fixedWidth)(?<op>[=]+)(?<value>("".*"")|(\S*))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            var dictionary = regex.Matches(str).ToDictionary(k => k.Groups["key"].Value.ToLower(), v => v.Groups["value"].Value);
+            var dictionary = regex.Matches(str).ToDictionary(k => k.Groups["key"].Value, v => v.Groups["value"].Value);
 
             if (dictionary.ContainsKey("font"))
             {
@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
                 var weight = font.Contains('-') ? font.Split('-').LastOrDefault() : "";
                 var size = float.Parse(dictionary["size"]);
                 var italics = dictionary["italics"].ToLower() == "true";
-                var fixedWidth = dictionary["fixedwidth"].ToLower() == "true";
+                var fixedWidth = dictionary["fixedWidth"].ToLower() == "true";
                 Value = new FontUsage(family, size, weight, italics, fixedWidth);
             }
             else
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
                 var weight = dictionary["weight"];
                 var size = float.Parse(dictionary["size"]);
                 var italics = dictionary["italics"].ToLower() == "true";
-                var fixedWidth = dictionary["fixedwidth"].ToLower() == "true";
+                var fixedWidth = dictionary["fixedWidth"].ToLower() == "true";
                 Value = new FontUsage(family, size, weight, italics, fixedWidth);
             }
         }
