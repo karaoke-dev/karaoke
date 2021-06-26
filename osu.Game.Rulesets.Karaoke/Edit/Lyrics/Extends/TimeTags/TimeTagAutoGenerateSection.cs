@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 new AutoGenerateButton(),
             };
 
-            state.Action = (e) =>
+            state.Action = e =>
             {
                 if (e != LyricEditorSelectingAction.Apply)
                     return;
