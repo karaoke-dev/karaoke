@@ -43,9 +43,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Extensions
 
         [TestCase(new[] { 1, 2, 3 }, new int[] { }, new int[] { })]
         [TestCase(new int[] { }, new[] { 1, 2, 3 }, new[] { 1, 2, 3 })]
-        [TestCase(new[] { 1, 2, 3 }, new[] { 1, 2, 3 }, new int[] { 1, 2, 3 })]
+        [TestCase(new[] { 1, 2, 3 }, new[] { 1, 2, 3 }, new[] { 1, 2, 3 })]
         [TestCase(new[] { 1, 2, 3 }, new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2, 3, 4, 5 })]
-        [TestCase(new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2, 3 }, new int[] { 1, 2, 3 })]
+        [TestCase(new[] { 1, 2, 3, 4, 5 }, new[] { 1, 2, 3 }, new[] { 1, 2, 3 })]
         [TestCase(new[] { 1, 2, 3 }, new[] { 4, 5 }, new[] { 4, 5 })]
         public void TestBindArrayChangedIfRunImmediately(int[] oldValues, int[] newValues, int[] addedValues)
         {
