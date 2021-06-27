@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
 
             if (runOnceImmediately)
             {
-                add?.Invoke(bindable.Value);
+                add?.Invoke(bindable.Value ?? new T[] { });
             }
         }
     }
