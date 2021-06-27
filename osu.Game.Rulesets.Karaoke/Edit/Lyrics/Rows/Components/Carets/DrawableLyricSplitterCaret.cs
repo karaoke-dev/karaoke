@@ -24,6 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             : base(preview)
         {
             Width = 10;
+            Origin = Anchor.TopCentre;
 
             InternalChildren = new Drawable[]
             {
@@ -73,9 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 
         public override void Apply(TextCaretPosition caret)
         {
-            var position = GetPosition(caret);
-            Position = position;
-
+            Position = GetPosition(caret);
             Height = lyricPiece.GetTextHeight();
         }
     }

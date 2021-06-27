@@ -8,7 +8,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 {
-    public abstract class DrawableLyricTextCaret : DrawableCaret<TextCaretPosition>
+    public abstract class DrawableLyricTextCaret : DrawableCaret, IApplicableCaretPosition<TextCaretPosition>
     {
         [Resolved]
         private EditorLyricPiece lyricPiece { get; set; }
@@ -24,6 +24,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             var end = caret.Index == caret.Lyric?.Text?.Length;
             var originPosition = lyricPiece.GetTextIndexPosition(TextIndexUtils.FromStringIndex(caret.Index, end));
             return new Vector2(originPosition.X, originPosition.Y - textHeight);
+        }
+
+        public virtual void Apply(TextCaretPosition caret)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -22,6 +22,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
@@ -293,7 +294,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             private readonly EditorLyricPiece lyricPiece;
 
             private readonly Container timeTagContainer;
-            private readonly Container caretContainer;
+            private readonly Container<DrawableCaret> caretContainer;
 
             [Resolved(canBeNull: true)]
             private LyricManager lyricManager { get; set; }
@@ -316,7 +317,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
-                    caretContainer = new Container
+                    caretContainer = new Container<DrawableCaret>
                     {
                         RelativeSizeAxes = Axes.Both,
                     }
@@ -501,7 +502,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     caretContainer.Add(caret);
                 }
 
-                static Drawable createCaret(LyricEditorMode mode, bool isPreview)
+                static DrawableCaret createCaret(LyricEditorMode mode, bool isPreview)
                 {
                     switch (mode)
                     {
@@ -544,7 +545,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 if (position == null)
                     return;
 
-                var caret = caretContainer.OfType<DrawableCaret<T>>().FirstOrDefault(x => x.Preview == hover);
+                var caret = caretContainer.Children.FirstOrDefault(x => x.Preview == hover);
                 if (caret == null)
                     return;
 
@@ -555,7 +556,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 }
 
                 caret.Show();
-                caret.Apply(position);
+                caret.CallMethod<T, T>("Apply", position);
             }
 
             protected void UpdateTimeTags()
