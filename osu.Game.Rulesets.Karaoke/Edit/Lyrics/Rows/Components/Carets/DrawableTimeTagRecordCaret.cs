@@ -3,12 +3,10 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
@@ -20,12 +18,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
         [Resolved]
         private OsuColour colours { get; set; }
 
+        [Resolved]
+        private EditorLyricPiece lyricPiece { get; set; }
+
         private readonly RightTriangle drawableTimeTag;
 
         public DrawableTimeTagRecordCaret(bool preview)
             : base(preview)
         {
             AutoSizeAxes = Axes.Both;
+            drawableTimeTag.Alpha = preview ? 0.5f : 1;
 
             InternalChild = drawableTimeTag = new RightTriangle
             {
@@ -36,29 +38,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             };
         }
 
-        private TimeTag timeTag;
-
-        public TimeTag TimeTag
+        public override void Apply(TimeTagCaretPosition caret)
         {
-            get => timeTag;
-            set
-            {
-                timeTag = value;
-                drawableTimeTag.Scale = new Vector2(timeTag.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1);
-                drawableTimeTag.Colour = timeTag.Time.HasValue ? colours.YellowDarker : colours.Gray3;
-            }
-        }
+            var timeTag = caret.TimeTag;
+            Position = lyricPiece.GetTimeTagPosition(timeTag);
 
-        private bool preview;
-
-        public bool Preview
-        {
-            get => preview;
-            set
-            {
-                preview = value;
-                drawableTimeTag.Alpha = preview ? 0.5f : 1;
-            }
+            drawableTimeTag.Scale = new Vector2(timeTag.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1);
+            drawableTimeTag.Colour = timeTag.Time.HasValue ? colours.YellowDarker : colours.Gray3;
         }
     }
 }

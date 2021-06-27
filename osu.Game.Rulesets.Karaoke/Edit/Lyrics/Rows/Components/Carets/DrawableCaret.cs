@@ -15,6 +15,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             Preview = preview;
         }
 
-        public abstract void Apply(ICaretPosition caret);
+        public abstract void Apply(TCaret caret);
     }
 }

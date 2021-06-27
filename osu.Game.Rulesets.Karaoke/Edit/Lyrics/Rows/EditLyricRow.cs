@@ -504,7 +504,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     caretContainer.Add(caret);
                 }
 
-                static Drawable createCaret(LyricEditorMode mode)
+                static Drawable createCaret(LyricEditorMode mode, bool isPreview)
                 {
                     switch (mode)
                     {
@@ -512,10 +512,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                             return null;
 
                         case LyricEditorMode.Manage:
-                            return new DrawableLyricSplitterCaret();
+                            return new DrawableLyricSplitterCaret(isPreview);
 
                         case LyricEditorMode.Typing:
-                            return new DrawableLyricInputCaret();
+                            return new DrawableLyricInputCaret(isPreview);
 
                         case LyricEditorMode.Language:
                         case LyricEditorMode.EditRuby:
@@ -523,10 +523,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                             return null;
 
                         case LyricEditorMode.CreateTimeTag:
-                            return new DrawableTimeTagEditCaret();
+                            return new DrawableTimeTagEditCaret(isPreview);
 
                         case LyricEditorMode.RecordTimeTag:
-                            return new DrawableTimeTagRecordCaret();
+                            return new DrawableTimeTagRecordCaret(isPreview);
 
                         case LyricEditorMode.AdjustTimeTag:
                         case LyricEditorMode.CreateNote:
