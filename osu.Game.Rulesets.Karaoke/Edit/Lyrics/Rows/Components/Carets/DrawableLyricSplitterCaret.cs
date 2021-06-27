@@ -7,18 +7,25 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 {
-    public class DrawableLyricSplitterCaret : CompositeDrawable, IDrawableCaret
+    public class DrawableLyricSplitterCaret : DrawableLyricTextCaret
     {
         private readonly Container splitter;
         private readonly SpriteIcon splitIcon;
 
-        public DrawableLyricSplitterCaret()
+        [Resolved]
+        private EditorLyricPiece lyricPiece { get; set; }
+
+        public DrawableLyricSplitterCaret(bool preview)
+            : base(preview)
         {
             Width = 10;
+            Origin = Anchor.TopCentre;
+
             InternalChildren = new Drawable[]
             {
                 splitIcon = new SpriteIcon
@@ -29,11 +36,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
                     X = 7,
                     Y = -5,
                     Size = new Vector2(10),
+                    Alpha = preview ? 1 : 0
                 },
                 splitter = new Container
                 {
                     RelativeSizeAxes = Axes.Y,
                     AutoSizeAxes = Axes.X,
+                    Alpha = preview ? 0.5f : 1,
                     Children = new Drawable[]
                     {
                         new Triangle
@@ -63,17 +72,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             splitIcon.Colour = colours.Yellow;
         }
 
-        private bool preview;
-
-        public bool Preview
+        public override void Apply(TextCaretPosition caret)
         {
-            get => preview;
-            set
-            {
-                preview = value;
-                splitter.Alpha = preview ? 0.5f : 1;
-                splitIcon.Alpha = preview ? 1 : 0;
-            }
+            Position = GetPosition(caret);
+            Height = lyricPiece.GetTextHeight();
         }
     }
 }
