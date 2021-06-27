@@ -27,7 +27,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             : base(preview)
         {
             AutoSizeAxes = Axes.Both;
-            drawableTimeTag.Alpha = preview ? 0.5f : 1;
 
             InternalChild = drawableTimeTag = new RightTriangle
             {
@@ -35,6 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
                 Anchor = Anchor.TopCentre,
                 Origin = Anchor.Centre,
                 Size = new Vector2(triangle_width),
+                Alpha = preview ? 0.5f : 1
             };
         }
 

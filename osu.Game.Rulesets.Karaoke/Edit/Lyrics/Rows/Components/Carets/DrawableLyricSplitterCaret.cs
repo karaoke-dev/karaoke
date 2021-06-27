@@ -25,9 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
         {
             Width = 10;
 
-            splitter.Alpha = preview ? 0.5f : 1;
-            splitIcon.Alpha = preview ? 1 : 0;
-
             InternalChildren = new Drawable[]
             {
                 splitIcon = new SpriteIcon
@@ -38,11 +35,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
                     X = 7,
                     Y = -5,
                     Size = new Vector2(10),
+                    Alpha = preview ? 1 : 0
                 },
                 splitter = new Container
                 {
                     RelativeSizeAxes = Axes.Y,
                     AutoSizeAxes = Axes.X,
+                    Alpha = preview ? 0.5f : 1,
                     Children = new Drawable[]
                     {
                         new Triangle

@@ -26,10 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             : base(preview)
         {
             Width = caret_width;
-            InternalChild.Alpha = preview ? 0.5f : 1;
-
             Colour = Color4.Transparent;
-
             Masking = true;
             CornerRadius = 1;
 
@@ -37,6 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             {
                 RelativeSizeAxes = Axes.Both,
                 Colour = Color4.White,
+                Alpha = preview ? 0.5f : 1
             };
         }
 
