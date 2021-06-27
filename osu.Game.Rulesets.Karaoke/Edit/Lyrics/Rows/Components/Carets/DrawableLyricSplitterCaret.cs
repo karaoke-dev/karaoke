@@ -12,15 +12,22 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 {
-    public class DrawableLyricSplitterCaret : DrawableCaret<TextCaretPosition>
+    public class DrawableLyricSplitterCaret : DrawableLyricTextCaret
     {
         private readonly Container splitter;
         private readonly SpriteIcon splitIcon;
+
+        [Resolved]
+        private EditorLyricPiece lyricPiece { get; set; }
 
         public DrawableLyricSplitterCaret(bool preview)
             : base(preview)
         {
             Width = 10;
+
+            splitter.Alpha = preview ? 0.5f : 1;
+            splitIcon.Alpha = preview ? 1 : 0;
+
             InternalChildren = new Drawable[]
             {
                 splitIcon = new SpriteIcon
@@ -65,17 +72,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             splitIcon.Colour = colours.Yellow;
         }
 
-        private bool preview;
-
-        public bool Preview
+        public override void Apply(TextCaretPosition caret)
         {
-            get => preview;
-            set
-            {
-                preview = value;
-                splitter.Alpha = preview ? 0.5f : 1;
-                splitIcon.Alpha = preview ? 1 : 0;
-            }
+            var position = GetPosition(caret);
+            Position = position;
+
+            Height = lyricPiece.GetTextHeight();
         }
     }
 }
