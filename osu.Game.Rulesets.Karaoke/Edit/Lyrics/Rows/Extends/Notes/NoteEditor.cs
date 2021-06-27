@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -9,9 +8,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Timing;
-using osu.Game.Rulesets.Timing;
-using osu.Game.Rulesets.UI.Scrolling;
-using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
@@ -20,9 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
     public class NoteEditor : Container
     {
         private const int row_amount = 9;
-
-        [Cached(Type = typeof(IScrollingInfo))]
-        private readonly LocalScrollingInfo scrollingInfo;
 
         private readonly Lyric lyric;
 
@@ -33,8 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
         public NoteEditor(Lyric lyric)
         {
             this.lyric = lyric;
-            scrollingInfo = new LocalScrollingInfo();
-
             InternalChild = new Container
             {
                 Name = "Content",
@@ -62,15 +53,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             {
                 Playfield.Add(note);
             }
-        }
-
-        private class LocalScrollingInfo : IScrollingInfo
-        {
-            public IBindable<ScrollingDirection> Direction { get; } = new Bindable<ScrollingDirection>(ScrollingDirection.Left);
-
-            public IBindable<double> TimeRange { get; } = new BindableDouble(5000);
-
-            public IScrollAlgorithm Algorithm { get; set; } = new SequentialScrollAlgorithm(new List<MultiplierControlPoint>());
         }
     }
 }
