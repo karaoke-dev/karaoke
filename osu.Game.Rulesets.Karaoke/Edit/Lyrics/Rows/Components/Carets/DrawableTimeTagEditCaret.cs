@@ -13,7 +13,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 {
-    public class DrawableTimeTagEditCaret : CompositeDrawable, IDrawableCaret, IHasCaretPosition
+    public class DrawableTimeTagEditCaret : DrawableCaret<TimeTagIndexCaretPosition>
     {
         private const float triangle_width = 8;
 
@@ -22,7 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 
         private readonly RightTriangle drawableTimeTag;
 
-        public DrawableTimeTagEditCaret()
+        public DrawableTimeTagEditCaret(bool preview)
+            : base(preview)
         {
             AutoSizeAxes = Axes.Both;
 

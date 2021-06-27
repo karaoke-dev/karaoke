@@ -7,16 +7,18 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 {
-    public class DrawableLyricSplitterCaret : CompositeDrawable, IDrawableCaret
+    public class DrawableLyricSplitterCaret : DrawableCaret<TextCaretPosition>
     {
         private readonly Container splitter;
         private readonly SpriteIcon splitIcon;
 
-        public DrawableLyricSplitterCaret()
+        public DrawableLyricSplitterCaret(bool preview)
+            : base(preview)
         {
             Width = 10;
             InternalChildren = new Drawable[]

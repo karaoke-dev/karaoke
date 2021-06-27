@@ -6,13 +6,14 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 {
-    public class DrawableTimeTagRecordCaret : CompositeDrawable, IDrawableCaret, IHasTimeTag
+    public class DrawableTimeTagRecordCaret : DrawableCaret<TimeTagCaretPosition>
     {
         private const float triangle_width = 8;
 
@@ -21,7 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 
         private readonly RightTriangle drawableTimeTag;
 
-        public DrawableTimeTagRecordCaret()
+        public DrawableTimeTagRecordCaret(bool preview)
+            : base(preview)
         {
             AutoSizeAxes = Axes.Both;
 

@@ -4,14 +4,14 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 {
-    public class DrawableLyricInputCaret : Caret, IDrawableCaret
+    public class DrawableLyricInputCaret : DrawableCaret<TextCaretPosition>
     {
         private const float caret_move_time = 60;
         private const float caret_width = 3;
@@ -19,7 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
         [Resolved]
         private OsuColour colours { get; set; }
 
-        public DrawableLyricInputCaret()
+        public DrawableLyricInputCaret(bool preview)
+            : base(preview)
         {
             Width = caret_width;
 
