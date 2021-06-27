@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 {
     public abstract class DrawableCaret<TCaret> : CompositeDrawable where TCaret : ICaretPosition
     {
-        protected readonly bool Preview;
+        public readonly bool Preview;
 
         protected DrawableCaret(bool preview)
         {

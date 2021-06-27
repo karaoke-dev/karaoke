@@ -492,14 +492,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                 void addCaret(bool isPreview)
                 {
-                    var caret = createCaret(mode);
+                    var caret = createCaret(mode, isPreview);
                     if (caret == null)
                         return;
 
                     caret.Hide();
-
-                    if (caret is IDrawableCaret drawableCaret)
-                        drawableCaret.Preview = isPreview;
 
                     caretContainer.Add(caret);
                 }
@@ -542,12 +539,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 }
             }
 
-            protected void UpdateCaretPosition(ICaretPosition position, bool hover)
+            protected void UpdateCaretPosition<T>(T position, bool hover) where T : ICaretPosition
             {
                 if (position == null)
                     return;
 
-                var caret = caretContainer.OfType<IDrawableCaret>().FirstOrDefault(x => x.Preview == hover);
+                var caret = caretContainer.OfType<DrawableCaret<T>>().FirstOrDefault(x => x.Preview == hover);
                 if (caret == null)
                     return;
 
@@ -557,62 +554,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     return;
                 }
 
-                Vector2 caretPosition = getCaretPosition();
-
-                // set position
-                if (caret is DrawableLyricInputCaret inputCaret)
-                {
-                    inputCaret.DisplayAt(caretPosition, null);
-                }
-                else if (caret is Drawable drawable)
-                {
-                    drawable.Position = caretPosition;
-                }
-
-                // todo : should have a better way to set height to input or split caret
-                if (caret is DrawableLyricInputCaret || caret is DrawableLyricSplitterCaret)
-                {
-                    if (caret is Drawable drawable)
-                    {
-                        var textHeight = lyricPiece.GetTextHeight();
-                        drawable.Height = textHeight;
-                    }
-                }
-
-                // set other property
-                if (caret is IHasCaretPosition hasCaretPosition)
-                {
-                    hasCaretPosition.CaretPosition = position;
-                }
-                else if (caret is IHasTimeTag hasTimeTag)
-                {
-                    hasTimeTag.TimeTag = (position as TimeTagCaretPosition)?.TimeTag;
-                }
-
                 caret.Show();
-
-                Vector2 getCaretPosition()
-                {
-                    var textHeight = lyricPiece.GetTextHeight();
-
-                    switch (position)
-                    {
-                        case TextCaretPosition textCaretPosition:
-                            var end = textCaretPosition.Index == textCaretPosition.Lyric?.Text?.Length;
-                            var originPosition = lyricPiece.GetTextIndexPosition(TextIndexUtils.FromStringIndex(textCaretPosition.Index, end));
-                            return new Vector2(originPosition.X, originPosition.Y - textHeight);
-
-                        case TimeTagIndexCaretPosition indexCaretPosition:
-                            return lyricPiece.GetTextIndexPosition(indexCaretPosition.Index);
-
-                        case TimeTagCaretPosition timeTagCaretPosition:
-                            var timeTag = timeTagCaretPosition.TimeTag;
-                            return lyricPiece.GetTimeTagPosition(timeTag);
-
-                        default:
-                            throw new NotSupportedException(nameof(position));
-                    }
-                }
+                caret.Apply(position);
             }
 
             protected void UpdateTimeTags()
