@@ -18,6 +18,7 @@ using osu.Framework.Utils;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
@@ -28,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
     public class TimeTagEditorBlueprintContainer : ExtendBlueprintContainer<TimeTag>
     {
         [Resolved]
-        private ILyricEditorState state { get; set; }
+        private BlueprintSelectionState blueprintSelectionState { get; set; }
 
         [Resolved(CanBeNull = true)]
         private TimeTagEditor timeline { get; set; }
@@ -53,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         [BackgroundDependencyLoader]
         private void load()
         {
-            SelectedItems.BindTo(state.SelectedTimeTags);
+            SelectedItems.BindTo(blueprintSelectionState.SelectedTimeTags);
 
             // Add time-tag into blueprint container
             RegisterBindable(timeTags);
@@ -134,21 +135,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 
         protected override void DeselectAll()
         {
-            state.ClearSelectedTimeTags();
+            blueprintSelectionState.ClearSelectedTimeTags();
         }
 
         protected class TimeTagEditorSelectionHandler : ExtendSelectionHandler<TimeTag>
         {
             [Resolved]
-            private ILyricEditorState state { get; set; }
-
-            [Resolved]
             private LyricManager lyricManager { get; set; }
 
             [BackgroundDependencyLoader]
-            private void load()
+            private void load(BlueprintSelectionState blueprintSelectionState)
             {
-                SelectedItems.BindTo(state.SelectedTimeTags);
+                SelectedItems.BindTo(blueprintSelectionState.SelectedTimeTags);
             }
 
             // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation

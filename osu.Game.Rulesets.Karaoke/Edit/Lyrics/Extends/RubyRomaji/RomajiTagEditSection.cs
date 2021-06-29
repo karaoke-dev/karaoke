@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
@@ -12,9 +13,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         protected override string Title => "Romaji";
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        private void load(LyricCaretState lyricCaretState)
         {
-            state.BindableCaretPosition.BindValueChanged(e =>
+            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
             {
                 Lyric = e.NewValue?.Lyric;
 
@@ -41,9 +42,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             }
 
             [BackgroundDependencyLoader]
-            private void load(ILyricEditorState state)
+            private void load(BlueprintSelectionState blueprintSelectionState)
             {
-                state.SelectedRomajiTags.BindTo(SelectedTextTag);
+                blueprintSelectionState.SelectedRomajiTags.BindTo(SelectedTextTag);
             }
         }
     }

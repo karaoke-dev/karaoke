@@ -6,6 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 
@@ -23,10 +24,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        private void load(BlueprintSelectionState blueprintSelectionState)
         {
             // Add romaji tag into blueprint container
-            SelectedItems.BindTo(state.SelectedRomajiTags);
+            SelectedItems.BindTo(blueprintSelectionState.SelectedRomajiTags);
             RegisterBindable(romajiTags);
         }
 
@@ -39,9 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         protected class RomajiTagSelectionHandler : TextTagSelectionHandler
         {
             [BackgroundDependencyLoader]
-            private void load(ILyricEditorState state)
+            private void load(BlueprintSelectionState blueprintSelectionState)
             {
-                SelectedItems.BindTo(state.SelectedRomajiTags);
+                SelectedItems.BindTo(blueprintSelectionState.SelectedRomajiTags);
             }
         }
     }

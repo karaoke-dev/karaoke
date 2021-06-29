@@ -2,22 +2,25 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Linq;
+using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
-    public partial class LyricEditor
+    public class LyricCaretState
     {
+        public Bindable<ICaretPosition> BindableHoverCaretPosition { get; } = new Bindable<ICaretPosition>();
+
+        public Bindable<ICaretPosition> BindableCaretPosition { get; } = new Bindable<ICaretPosition>();
+
         private ICaretPositionAlgorithm algorithm;
 
-        private void initialCaretPositionAlgorithm()
+        public void ChangePositionAlgorithm(Lyric[] lyrics, LyricEditorMode lyricEditorMode, RecordingMovingCaretMode recordingMovingCaretMode)
         {
-            var lyrics = BindableLyrics.ToArray();
-            algorithm = getAlgorithmByMode(Mode);
+            algorithm = getAlgorithmByMode(lyricEditorMode);
 
             ICaretPositionAlgorithm getAlgorithmByMode(LyricEditorMode mode)
             {
@@ -37,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         return new TimeTagIndexCaretPositionAlgorithm(lyrics);
 
                     case LyricEditorMode.RecordTimeTag:
-                        return new TimeTagCaretPositionAlgorithm(lyrics) { Mode = RecordingMovingCaretMode };
+                        return new TimeTagCaretPositionAlgorithm(lyrics) { Mode = recordingMovingCaretMode };
 
                     case LyricEditorMode.AdjustTimeTag:
                     case LyricEditorMode.CreateNote:
@@ -158,28 +161,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         public bool CaretEnabled => algorithm != null;
-
-        public void ClearSelectedTimeTags()
-        {
-            SelectedTimeTags.Clear();
-        }
-
-        public void ClearSelectedTextTags()
-        {
-            SelectedRubyTags.Clear();
-            SelectedRomajiTags.Clear();
-        }
-
-        public void StartSelecting()
-        {
-            SelectedLyrics.Clear();
-            Selecting.Value = true;
-        }
-
-        public void EndSelecting(LyricEditorSelectingAction action)
-        {
-            Selecting.Value = false;
-            Action?.Invoke(action);
-        }
     }
 }

@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
@@ -52,10 +53,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        private void load(ILyricEditorState state, LyricCaretState lyricCaretState)
         {
             // update selected style to child
-            state.BindableCaretPosition.BindValueChanged(e =>
+            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
             {
                 var oldLyric = e.OldValue?.Lyric;
                 var newLyric = e.NewValue?.Lyric;

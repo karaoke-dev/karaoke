@@ -6,6 +6,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
@@ -24,9 +25,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour, ILyricEditorState state)
+        private void load(OsuColour colour, LyricSelectionState lyricSelectionState)
         {
-            selecting = state.Selecting.GetBoundCopy();
+            selecting = lyricSelectionState.Selecting.GetBoundCopy();
             selecting.BindValueChanged(e =>
             {
                 var isSelecting = e.NewValue;
@@ -38,11 +39,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             {
                 if (selecting.Value)
                 {
-                    state.EndSelecting(LyricEditorSelectingAction.Cancel);
+                    lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
                 }
                 else
                 {
-                    state?.StartSelecting();
+                    lyricSelectionState.StartSelecting();
                 }
             };
         }
