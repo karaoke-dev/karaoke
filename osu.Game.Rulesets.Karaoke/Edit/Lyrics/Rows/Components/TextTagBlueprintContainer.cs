@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -18,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
     public abstract class TextTagBlueprintContainer<T> : ExtendBlueprintContainer<T> where T : class, ITextTag
     {
         [Resolved]
-        private ILyricEditorState state { get; set; }
+        private BlueprintSelectionState blueprintSelectionState { get; set; }
 
         [Resolved]
         private EditorLyricPiece editorLyricPiece { get; set; }
@@ -65,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
         protected override void DeselectAll()
         {
-            state.ClearSelectedTextTags();
+            blueprintSelectionState.ClearSelectedTextTags();
         }
 
         protected class TextTagSelectionHandler : ExtendSelectionHandler<T>

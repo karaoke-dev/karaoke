@@ -52,6 +52,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached]
         private readonly LyricCaretState lyricCaretState = new LyricCaretState();
 
+        [Cached]
+        private readonly BlueprintSelectionState blueprintSelectionState = new BlueprintSelectionState();
+
         public Bindable<LyricEditorMode> BindableMode { get; } = new Bindable<LyricEditorMode>();
 
         public Bindable<RecordingMovingCaretMode> BindableRecordingMovingCaretMode { get; } = new Bindable<RecordingMovingCaretMode>();
@@ -61,12 +64,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public BindableInt BindableAutoFocusEditLyricSkipRows { get; } = new BindableInt();
 
         public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
-
-        public BindableList<TimeTag> SelectedTimeTags { get; } = new BindableList<TimeTag>();
-
-        public BindableList<RubyTag> SelectedRubyTags { get; } = new BindableList<RubyTag>();
-
-        public BindableList<RomajiTag> SelectedRomajiTags { get; } = new BindableList<RomajiTag>();
 
         private readonly GridContainer gridContainer;
         private readonly GridContainer lyricEditorGridContainer;

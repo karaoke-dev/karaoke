@@ -237,10 +237,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 private BindableList<TimeTag> selectedTimeTags;
 
                 [BackgroundDependencyLoader]
-                private void load(ILyricEditorState state, LyricCaretState lyricCaretState)
+                private void load(ILyricEditorState state, LyricCaretState lyricCaretState, BlueprintSelectionState blueprintSelectionState)
                 {
                     // update selected state by bindable.
-                    selectedTimeTags = state.SelectedTimeTags.GetBoundCopy();
+                    selectedTimeTags = blueprintSelectionState.SelectedTimeTags.GetBoundCopy();
                     selectedTimeTags.BindCollectionChanged((a, b) =>
                     {
                         var selected = selectedTimeTags.Contains(timeTag);
