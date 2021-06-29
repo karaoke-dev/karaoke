@@ -2,12 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
-    public class BlueprintSelectionState : Component
+    public class BlueprintSelectionState
     {
         public BindableList<TimeTag> SelectedTimeTags { get; } = new BindableList<TimeTag>();
 

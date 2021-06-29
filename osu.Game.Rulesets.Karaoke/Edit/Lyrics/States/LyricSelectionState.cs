@@ -3,12 +3,11 @@
 
 using System;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
-    public class LyricSelectionState : Component
+    public class LyricSelectionState
     {
         public BindableBool Selecting { get; } = new BindableBool();
 

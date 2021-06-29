@@ -3,7 +3,6 @@
 
 using System;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -11,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
-    public class LyricCaretState : Component
+    public class LyricCaretState
     {
         public Bindable<ICaretPosition> BindableHoverCaretPosition { get; } = new Bindable<ICaretPosition>();
 
