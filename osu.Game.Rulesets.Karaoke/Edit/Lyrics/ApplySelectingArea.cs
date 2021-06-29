@@ -11,6 +11,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
@@ -28,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private ActionButton applyButton;
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, ILyricEditorState state)
+        private void load(OsuColour colours, LyricSelectionState lyricSelectionState)
         {
             RelativeSizeAxes = Axes.X;
             Height = 45;
@@ -77,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                 BackgroundColour = colours.Red,
                                 Action = () =>
                                 {
-                                    state.EndSelecting(LyricEditorSelectingAction.Apply);
+                                    lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Apply);
                                 }
                             },
                             new Box(),
@@ -86,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                 Text = "Cancel",
                                 Action = () =>
                                 {
-                                    state.EndSelecting(LyricEditorSelectingAction.Cancel);
+                                    lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
                                 }
                             },
                             new Box(),
@@ -105,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             };
 
-            selecting = state.Selecting.GetBoundCopy();
+            selecting = lyricSelectionState.Selecting.GetBoundCopy();
             selecting.BindValueChanged(e =>
             {
                 if (e.NewValue)
@@ -119,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }, true);
 
             // get bindable and update bindable if select or not select all.
-            selectedLyrics = state.SelectedLyrics.GetBoundCopy();
+            selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
 
             selectedLyrics.BindCollectionChanged((a, b) =>
             {
@@ -163,10 +164,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             private bool checkboxClicking;
 
             [BackgroundDependencyLoader]
-            private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider, EditorBeatmap beatmap)
+            private void load(ILyricEditorState state, LyricSelectionState lyricSelectionState, LyricEditorColourProvider colourProvider, EditorBeatmap beatmap)
             {
                 mode = state.BindableMode.GetBoundCopy();
-                selectedLyrics = state.SelectedLyrics.GetBoundCopy();
+                selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
 
                 // should update background if mode changed.
                 mode.BindValueChanged(e =>

@@ -169,17 +169,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             SelectedRubyTags.Clear();
             SelectedRomajiTags.Clear();
         }
-
-        public void StartSelecting()
-        {
-            SelectedLyrics.Clear();
-            Selecting.Value = true;
-        }
-
-        public void EndSelecting(LyricEditorSelectingAction action)
-        {
-            Selecting.Value = false;
-            Action?.Invoke(action);
-        }
     }
 }

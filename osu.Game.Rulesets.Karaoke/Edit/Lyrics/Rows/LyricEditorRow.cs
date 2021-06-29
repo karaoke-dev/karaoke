@@ -7,6 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -96,11 +97,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             }
 
             [BackgroundDependencyLoader]
-            private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
+            private void load(ILyricEditorState state, LyricSelectionState lyricSelectionState, LyricEditorColourProvider colourProvider)
             {
                 mode = state.BindableMode.GetBoundCopy();
-                selecting = state.Selecting.GetBoundCopy();
-                selectedLyrics = state.SelectedLyrics.GetBoundCopy();
+                selecting = lyricSelectionState.Selecting.GetBoundCopy();
+                selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
 
                 // should update background if mode changed.
                 mode.BindValueChanged(e =>

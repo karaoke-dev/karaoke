@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
@@ -31,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
         private EditorBeatmap beatmap { get; set; }
 
         [BackgroundDependencyLoader]
-        private void load(LyricCheckerManager lyricCheckerManager, NoteManager noteManager, ILyricEditorState state)
+        private void load(LyricCheckerManager lyricCheckerManager, NoteManager noteManager, LyricSelectionState lyricSelectionState)
         {
             bindableReports = lyricCheckerManager.BindableReports.GetBoundCopy();
             bindableReports.BindCollectionChanged((a, b) =>
@@ -58,12 +59,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 }
             }, true);
 
-            state.Action = e =>
+            lyricSelectionState.Action = e =>
             {
                 if (e != LyricEditorSelectingAction.Apply)
                     return;
 
-                var lyrics = state.SelectedLyrics.ToList();
+                var lyrics = lyricSelectionState.SelectedLyrics.ToList();
                 noteManager.AutoGenerateNotes(lyrics);
             };
         }
