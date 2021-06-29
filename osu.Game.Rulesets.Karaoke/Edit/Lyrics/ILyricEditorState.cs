@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Bindables;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
@@ -20,24 +19,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         BindableBool BindableAutoFocusEditLyric { get; }
 
         BindableInt BindableAutoFocusEditLyricSkipRows { get; }
-
-        #endregion
-
-        #region caret position
-
-        Bindable<ICaretPosition> BindableHoverCaretPosition { get; }
-
-        Bindable<ICaretPosition> BindableCaretPosition { get; }
-
-        bool MoveCaretToTargetPosition(ICaretPosition position);
-
-        bool MoveHoverCaretToTargetPosition(ICaretPosition position);
-
-        void ClearHoverCaretPosition();
-
-        bool CaretPositionMovable(ICaretPosition timeTag);
-
-        bool CaretEnabled { get; }
 
         #endregion
 

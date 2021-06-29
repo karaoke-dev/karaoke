@@ -22,6 +22,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -302,6 +303,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             [Resolved]
             private ILyricEditorState state { get; set; }
 
+            [Resolved]
+            private LyricCaretState lyricCaretState { get; set; }
+
             public Lyric Lyric { get; }
 
             public SingleLyricEditor(Lyric lyric)
@@ -334,7 +338,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 if (lyricManager == null)
                     return false;
 
-                if (!state.CaretEnabled)
+                if (!lyricCaretState.CaretEnabled)
                     return false;
 
                 var position = ToLocalSpace(e.ScreenSpaceMousePosition).X;
@@ -343,30 +347,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 {
                     case LyricEditorMode.Manage:
                         var cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position)), 0, Lyric.Text.Length - 1);
-                        state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, cuttingLyricStringIndex));
+                        lyricCaretState.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, cuttingLyricStringIndex));
                         break;
 
                     case LyricEditorMode.Typing:
                         var typingStringIndex = TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position));
-                        state.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, typingStringIndex));
+                        lyricCaretState.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, typingStringIndex));
                         break;
 
                     case LyricEditorMode.EditRuby:
-                        state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
+                        lyricCaretState.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                         break;
 
                     case LyricEditorMode.EditRomaji:
-                        state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
+                        lyricCaretState.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                         break;
 
                     case LyricEditorMode.CreateTimeTag:
                         var textIndex = lyricPiece.GetHoverIndex(position);
-                        state.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, textIndex));
+                        lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, textIndex));
                         break;
 
                     case LyricEditorMode.RecordTimeTag:
                         var timeTag = lyricPiece.GetHoverTimeTag(position);
-                        state.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(Lyric, timeTag));
+                        lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(Lyric, timeTag));
                         break;
 
                     case LyricEditorMode.AdjustTimeTag:
@@ -375,7 +379,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     case LyricEditorMode.AdjustNote:
                     case LyricEditorMode.Layout:
                     case LyricEditorMode.Singer:
-                        state.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
+                        lyricCaretState.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                         break;
 
                     default:
@@ -387,25 +391,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
             protected override void OnHoverLost(HoverLostEvent e)
             {
-                if (!state.CaretEnabled)
+                if (!lyricCaretState.CaretEnabled)
                     return;
 
                 // lost hover caret and time-tag caret
-                state.ClearHoverCaretPosition();
+                lyricCaretState.ClearHoverCaretPosition();
                 base.OnHoverLost(e);
             }
 
             protected override bool OnClick(ClickEvent e)
             {
-                if (!state.CaretEnabled)
+                if (!lyricCaretState.CaretEnabled)
                     return false;
 
                 // place hover caret to target position.
-                var position = state.BindableHoverCaretPosition.Value;
+                var position = lyricCaretState.BindableHoverCaretPosition.Value;
                 if (position == null)
                     return false;
 
-                state.MoveCaretToTargetPosition(position);
+                lyricCaretState.MoveCaretToTargetPosition(position);
 
                 return true;
             }
@@ -417,7 +421,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                 // todo : not really sure is ok to split time-tag by double click?
                 // need to make an ux research.
-                var position = state.BindableCaretPosition.Value;
+                var position = lyricCaretState.BindableCaretPosition.Value;
 
                 if (position is TextCaretPosition textCaretPosition)
                 {
@@ -442,11 +446,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 }, true);
 
                 // update change if caret changed.
-                state.BindableHoverCaretPosition.BindValueChanged(e =>
+                lyricCaretState.BindableHoverCaretPosition.BindValueChanged(e =>
                 {
                     UpdateCaretPosition(e.NewValue, true);
                 });
-                state.BindableCaretPosition.BindValueChanged(e =>
+                lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
                 {
                     UpdateCaretPosition(e.NewValue, false);
                 });

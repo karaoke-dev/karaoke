@@ -49,6 +49,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached]
         private readonly LyricSelectionState lyricSelectionState = new LyricSelectionState();
 
+        [Cached]
+        private readonly LyricCaretState lyricCaretState = new LyricCaretState();
+
         public Bindable<LyricEditorMode> BindableMode { get; } = new Bindable<LyricEditorMode>();
 
         public Bindable<RecordingMovingCaretMode> BindableRecordingMovingCaretMode { get; } = new Bindable<RecordingMovingCaretMode>();
@@ -58,10 +61,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public BindableInt BindableAutoFocusEditLyricSkipRows { get; } = new BindableInt();
 
         public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
-
-        public Bindable<ICaretPosition> BindableHoverCaretPosition { get; } = new Bindable<ICaretPosition>();
-
-        public Bindable<ICaretPosition> BindableCaretPosition { get; } = new Bindable<ICaretPosition>();
 
         public BindableList<TimeTag> SelectedTimeTags { get; } = new BindableList<TimeTag>();
 
@@ -130,7 +129,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager != null)
                 container.OnOrderChanged += lyricManager.ChangeLyricOrder;
 
-            MoveCaret(MovingCaretAction.First);
+            lyricCaretState.MoveCaret(MovingCaretAction.First);
 
             BindableMode.BindValueChanged(e =>
             {
@@ -140,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 container.DisplayBottomDrawable = e.NewValue == LyricEditorMode.Manage;
 
                 // should wait until beatmap has been loaded.
-                Schedule(() => ResetPosition(e.NewValue));
+                Schedule(() => lyricCaretState.ResetPosition(e.NewValue));
 
                 // should control grid container spacing and place some component.
                 initializeExtendArea();
@@ -153,7 +152,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 initialCaretPositionAlgorithm();
 
-                ResetPosition(Mode);
+                lyricCaretState.ResetPosition(Mode);
             });
 
             lyricSelectionState.Selecting.BindValueChanged(e =>
@@ -298,6 +297,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             initialCaretPositionAlgorithm();
         }
 
+        private void initialCaretPositionAlgorithm()
+        {
+            var lyrics = BindableLyrics.ToArray();
+            var state = Mode;
+            var recordingMovingCaretMode = RecordingMovingCaretMode;
+            lyricCaretState.ChangePositionAlgorithm(lyrics, state, recordingMovingCaretMode);
+        }
+
         protected override bool OnKeyDown(KeyDownEvent e)
         {
             if (lyricManager == null)
@@ -306,7 +313,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (Mode != LyricEditorMode.Typing)
                 return false;
 
-            var caretPosition = BindableCaretPosition.Value;
+            var caretPosition = lyricCaretState.BindableCaretPosition.Value;
             if (!(caretPosition is TextCaretPosition textCaretPosition))
                 throw new NotSupportedException(nameof(caretPosition));
 
@@ -319,7 +326,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     // delete single character.
                     var deletedSuccess = lyricManager.DeleteLyricText(lyric, index);
                     if (deletedSuccess)
-                        MoveCaret(MovingCaretAction.Left);
+                        lyricCaretState.MoveCaret(MovingCaretAction.Left);
                     return deletedSuccess;
 
                 default:
@@ -377,22 +384,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             switch (action)
             {
                 case KaraokeEditAction.Up:
-                    return MoveCaret(MovingCaretAction.Up);
+                    return lyricCaretState.MoveCaret(MovingCaretAction.Up);
 
                 case KaraokeEditAction.Down:
-                    return MoveCaret(MovingCaretAction.Down);
+                    return lyricCaretState.MoveCaret(MovingCaretAction.Down);
 
                 case KaraokeEditAction.Left:
-                    return MoveCaret(MovingCaretAction.Left);
+                    return lyricCaretState.MoveCaret(MovingCaretAction.Left);
 
                 case KaraokeEditAction.Right:
-                    return MoveCaret(MovingCaretAction.Right);
+                    return lyricCaretState.MoveCaret(MovingCaretAction.Right);
 
                 case KaraokeEditAction.First:
-                    return MoveCaret(MovingCaretAction.First);
+                    return lyricCaretState.MoveCaret(MovingCaretAction.First);
 
                 case KaraokeEditAction.Last:
-                    return MoveCaret(MovingCaretAction.Last);
+                    return lyricCaretState.MoveCaret(MovingCaretAction.Last);
 
                 default:
                     return false;
@@ -404,7 +411,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager == null)
                 return false;
 
-            var caretPosition = BindableCaretPosition.Value;
+            var caretPosition = lyricCaretState.BindableCaretPosition.Value;
             if (!(caretPosition is TimeTagCaretPosition timeTagCaretPosition))
                 throw new NotSupportedException(nameof(caretPosition));
 
@@ -419,7 +426,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     var currentTime = editorClock.CurrentTime;
                     var setTimeSuccess = lyricManager.SetTimeTagTime(currentTimeTag, currentTime);
                     if (setTimeSuccess)
-                        MoveCaret(MovingCaretAction.Right);
+                        lyricCaretState.MoveCaret(MovingCaretAction.Right);
                     return setTimeSuccess;
 
                 default:
@@ -432,7 +439,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager == null)
                 return false;
 
-            if (!(BindableCaretPosition.Value is TimeTagIndexCaretPosition position))
+            if (!(lyricCaretState.BindableCaretPosition.Value is TimeTagIndexCaretPosition position))
                 throw new NotSupportedException(nameof(position));
 
             var lyric = position.Lyric;

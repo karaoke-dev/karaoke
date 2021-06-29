@@ -12,6 +12,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
@@ -45,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
         }
 
         [BackgroundDependencyLoader]
-        private void load(ISkinSource skinSource, ILyricEditorState state)
+        private void load(ISkinSource skinSource, LyricCaretState lyricCaretState)
         {
             var layoutDictionary = skinSource.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
             if (layoutDictionary == null)
@@ -57,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
                 Content.Add(new LayoutSelectionItem(layout));
             }
 
-            state.BindableCaretPosition.BindValueChanged(e =>
+            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
             {
                 var lyric = e.NewValue?.Lyric;
                 var layoutSelectionItems = Content.Children.OfType<LayoutSelectionItem>();

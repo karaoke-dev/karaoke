@@ -10,6 +10,7 @@ using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Screens.Edit;
 using osuTK;
@@ -38,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, ILyricEditorState state)
+        private void load(EditorBeatmap beatmap, LyricCaretState lyricCaretState)
         {
             // update singer
             if (beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap)
@@ -57,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
             }
 
             // update lyric.
-            state.BindableCaretPosition.BindValueChanged(e =>
+            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
             {
                 e.OldValue?.Lyric?.SingersBindable.UnbindFrom(singerIndexes);
                 e.NewValue?.Lyric?.SingersBindable.BindTo(singerIndexes);

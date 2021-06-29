@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
 
@@ -140,11 +141,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        private void load(ILyricEditorState state, LyricCaretState lyricCaretState)
         {
             bindableMode.BindTo(state.BindableMode);
-            bindableHoverCaretPosition.BindTo(state.BindableHoverCaretPosition);
-            bindableCaretPosition.BindTo(state.BindableCaretPosition);
+            bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
+            bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
 
             updateBackgroundColour();
         }

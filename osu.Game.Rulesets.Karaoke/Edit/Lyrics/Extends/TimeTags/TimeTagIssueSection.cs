@@ -18,6 +18,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -236,7 +237,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 private BindableList<TimeTag> selectedTimeTags;
 
                 [BackgroundDependencyLoader]
-                private void load(ILyricEditorState state)
+                private void load(ILyricEditorState state, LyricCaretState lyricCaretState)
                 {
                     // update selected state by bindable.
                     selectedTimeTags = state.SelectedTimeTags.GetBoundCopy();
@@ -252,15 +253,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         switch (state.Mode)
                         {
                             case LyricEditorMode.CreateTimeTag:
-                                state.BindableCaretPosition.Value = new TimeTagIndexCaretPosition(lyric, timeTag?.Index ?? new TextIndex());
+                                lyricCaretState.BindableCaretPosition.Value = new TimeTagIndexCaretPosition(lyric, timeTag?.Index ?? new TextIndex());
                                 break;
 
                             case LyricEditorMode.RecordTimeTag:
-                                state.BindableCaretPosition.Value = new TimeTagCaretPosition(lyric, timeTag);
+                                lyricCaretState.BindableCaretPosition.Value = new TimeTagCaretPosition(lyric, timeTag);
                                 break;
 
                             case LyricEditorMode.AdjustTimeTag:
-                                state.BindableCaretPosition.Value = new NavigateCaretPosition(lyric);
+                                lyricCaretState.BindableCaretPosition.Value = new NavigateCaretPosition(lyric);
                                 break;
 
                             default:
