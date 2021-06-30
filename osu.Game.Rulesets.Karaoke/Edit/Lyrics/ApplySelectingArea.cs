@@ -132,6 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public class SelectArea : CompositeDrawable
         {
             private Bindable<LyricEditorMode> mode;
+            private BindableDictionary<Lyric, string> disableSelectingLyrics;
             private BindableList<Lyric> selectedLyrics;
 
             private readonly Box background;
@@ -167,6 +168,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             private void load(ILyricEditorState state, LyricSelectionState lyricSelectionState, LyricEditorColourProvider colourProvider, EditorBeatmap beatmap)
             {
                 mode = state.BindableMode.GetBoundCopy();
+                disableSelectingLyrics = lyricSelectionState.DisableSelectingLyric.GetBoundCopy();
                 selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
 
                 // should update background if mode changed.
@@ -175,6 +177,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     background.Colour = colourProvider.Dark2(state.Mode);
                     allSelectedCheckbox.AccentColour = colourProvider.Colour2(state.Mode);
                 }, true);
+
+                // should disable selection if current lyric is disabled.
+                disableSelectingLyrics.BindCollectionChanged((a, b) =>
+                {
+                    var disabledLyricNumber = lyricSelectionState.DisableSelectingLyric.Count;
+                    var totalLyrics = beatmap.HitObjects.OfType<Lyric>().Count();
+                    var disabled = disabledLyricNumber == totalLyrics;
+
+                    allSelectedCheckbox.Current.Disabled = disabled;
+                    allSelectedCheckbox.TooltipText = disabled ? "Seems all selection are disabled" : null;
+                });
 
                 // get bindable and update bindable if select or not select all.
                 selectedLyrics.BindCollectionChanged((a, b) =>
@@ -203,7 +216,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                     if (e.NewValue)
                     {
-                        var lyrics = beatmap.HitObjects.OfType<Lyric>();
+                        var disableSelectingLyrics = lyricSelectionState.DisableSelectingLyric.Keys;
+                        var lyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => !disableSelectingLyrics.Contains(x));
                         selectedLyrics.AddRange(lyrics);
                     }
 

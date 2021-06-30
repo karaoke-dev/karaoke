@@ -128,6 +128,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 // get bindable and update bindable if check / uncheck.
                 selectedLyrics.BindCollectionChanged((a, b) =>
                 {
+                    if (selectedCheckbox.Current.Disabled)
+                        return;
+
                     var selected = selectedLyrics.Contains(lyric);
                     selectedCheckbox.Current.Value = selected;
                 }, true);
