@@ -62,6 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         {
             private Bindable<LyricEditorMode> mode;
             private Bindable<bool> selecting;
+            private BindableDictionary<Lyric, string> disableSelectingLyrics;
             private BindableList<Lyric> selectedLyrics;
 
             private readonly Box background;
@@ -101,6 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             {
                 mode = state.BindableMode.GetBoundCopy();
                 selecting = lyricSelectionState.Selecting.GetBoundCopy();
+                disableSelectingLyrics = lyricSelectionState.DisableSelectingLyric.GetBoundCopy();
                 selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
 
                 // should update background if mode changed.
@@ -126,9 +128,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 // get bindable and update bindable if check / uncheck.
                 selectedLyrics.BindCollectionChanged((a, b) =>
                 {
+                    if (selectedCheckbox.Current.Disabled)
+                        return;
+
                     var selected = selectedLyrics.Contains(lyric);
                     selectedCheckbox.Current.Value = selected;
                 }, true);
+
+                // should disable selection if current lyric is disabled.
+                disableSelectingLyrics.BindCollectionChanged((a, b) =>
+                {
+                    var disabled = disableSelectingLyrics.Keys.Contains(lyric);
+                    selectedCheckbox.Current.Disabled = disabled;
+                    selectedCheckbox.TooltipText = disabled ? disableSelectingLyrics[lyric] : null;
+                });
 
                 selectedCheckbox.Current.BindValueChanged(e =>
                 {

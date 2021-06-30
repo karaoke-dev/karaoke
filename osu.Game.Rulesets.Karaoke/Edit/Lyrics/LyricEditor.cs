@@ -32,7 +32,7 @@ using osuTK.Input;
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     [Cached(typeof(ILyricEditorState))]
-    public partial class LyricEditor : Container, ILyricEditorState, IKeyBindingHandler<KaraokeEditAction>
+    public class LyricEditor : Container, ILyricEditorState, IKeyBindingHandler<KaraokeEditAction>
     {
         [Resolved(canBeNull: true)]
         private LyricManager lyricManager { get; set; }

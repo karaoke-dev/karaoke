@@ -4,6 +4,7 @@
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
@@ -13,7 +14,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
@@ -28,35 +28,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         private BindableDictionary<Lyric, Issue[]> bindableReports;
 
-        [Resolved]
-        private EditorBeatmap beatmap { get; set; }
+        private OsuSpriteText alertSpriteText;
 
         [BackgroundDependencyLoader]
         private void load(LyricCheckerManager lyricCheckerManager, NoteManager noteManager, LyricSelectionState lyricSelectionState)
         {
+            Children = new Drawable[]
+            {
+                new AutoGenerateButton
+                {
+                    StartSelecting = () =>
+                        bindableReports.Where(x => x.Value.OfType<TimeTagIssue>().Any())
+                                       .ToDictionary(k => k.Key, i => "Before generate time-tag, need to assign language first.")
+                },
+                alertSpriteText = new OsuSpriteText(),
+            };
+
             bindableReports = lyricCheckerManager.BindableReports.GetBoundCopy();
             bindableReports.BindCollectionChanged((a, b) =>
             {
                 var hasTimeTagIssue = bindableReports.Values.SelectMany(x => x)
                                                      .OfType<TimeTagIssue>().Any();
 
-                if (hasTimeTagIssue)
-                {
-                    Children = new[]
-                    {
-                        new OsuSpriteText
-                        {
-                            Text = "Seems there's some time-tag issue in lyric. \nGo to time-tag edit mode then clear those issues."
-                        }
-                    };
-                }
-                else
-                {
-                    Children = new[]
-                    {
-                        new AutoGenerateButton(),
-                    };
-                }
+                alertSpriteText.Text = hasTimeTagIssue ? "Seems there's some time-tag issue in lyric. \nGo to time-tag edit mode then clear those issues." : null;
             }, true);
 
             lyricSelectionState.Action = e =>

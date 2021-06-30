@@ -9,6 +9,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Extensions.Color4Extensions;
+using osu.Framework.Graphics.Cursor;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osuTK;
@@ -16,7 +17,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 {
-    public class CircleCheckbox : Checkbox, IHasAccentColour
+    public class CircleCheckbox : Checkbox, IHasAccentColour, IHasTooltip
     {
         public const float EXPANDED_SIZE = 24;
 
@@ -59,7 +60,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 new HoverSounds()
             };
 
-            Current.DisabledChanged += disabled => background.Alpha = selectedIcon.Alpha = disabled ? 0.3f : 1;
+            Current.DisabledChanged += disabled =>
+            {
+                background.Alpha = disabled ? 0.2f : 0.5f;
+                border.Alpha = selectedIcon.Alpha = disabled ? 0.2f : 1;
+            };
 
             Current.ValueChanged += e =>
             {
@@ -101,5 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     sampleUnchecked?.Play();
             }
         }
+
+        public string TooltipText { get; set; }
     }
 }
