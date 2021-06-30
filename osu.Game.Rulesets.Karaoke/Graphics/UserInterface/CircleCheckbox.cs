@@ -60,7 +60,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 new HoverSounds()
             };
 
-            Current.DisabledChanged += disabled => background.Alpha = selectedIcon.Alpha = disabled ? 0.3f : 1;
+            Current.DisabledChanged += disabled =>
+            {
+                background.Alpha = disabled ? 0.2f : 0.5f;
+                border.Alpha = selectedIcon.Alpha = disabled ? 0.2f : 1;
+            };
 
             Current.ValueChanged += e =>
             {
