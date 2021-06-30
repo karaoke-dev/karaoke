@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
     {
         public BindableBool Selecting { get; } = new BindableBool();
 
-        public BindableList<Lyric> DisableSelectingLyric { get; } = new BindableList<Lyric>();
+        public BindableDictionary<Lyric, string> DisableSelectingLyric { get; } = new BindableDictionary<Lyric, string>();
 
         public BindableList<Lyric> SelectedLyrics { get; } = new BindableList<Lyric>();
 
@@ -20,14 +20,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         public void StartSelecting()
         {
             SelectedLyrics.Clear();
-            DisableSelectingLyric.Clear();
             Selecting.Value = true;
         }
 
         public void EndSelecting(LyricEditorSelectingAction action)
         {
             Selecting.Value = false;
-            DisableSelectingLyric.Clear();
             Action?.Invoke(action);
         }
     }
