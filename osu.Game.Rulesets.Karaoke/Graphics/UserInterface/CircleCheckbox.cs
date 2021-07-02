@@ -10,6 +10,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics.Cursor;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osuTK;
@@ -107,6 +108,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             }
         }
 
-        public string TooltipText { get; set; }
+        public LocalisableString TooltipText { get; set; }
     }
 }

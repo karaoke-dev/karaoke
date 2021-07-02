@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Resources
             var store = new NamespacedResourceStore<byte[]>(GetStore(), $"Resources/{skinName}");
             var rawSkin = new TestLegacySkin(new SkinInfo { Name = skinName }, store);
             var skinSource = new SkinProvidingContainer(rawSkin);
-            return new KaraokeLegacySkinTransformer(skinSource);
+            return new KaraokeLegacySkinTransformer(skinSource, null);
         }
 
         internal class TestLegacySkin : LegacySkin
