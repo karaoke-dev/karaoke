@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -54,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Gameplay
 
         private class PitchSlider : OsuSliderBar<int>
         {
-            public override string TooltipText => (Current.Value >= 0 ? "+" : "") + Current.Value.ToString("N0");
+            public override LocalisableString TooltipText => (Current.Value >= 0 ? "+" : "") + Current.Value.ToString("N0");
         }
     }
 }

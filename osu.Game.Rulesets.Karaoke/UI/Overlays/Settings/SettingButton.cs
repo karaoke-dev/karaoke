@@ -2,13 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics.Cursor;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
 {
     public class SettingButton : TriangleButton, IHasTooltip
     {
-        public string TooltipText { get; set; }
+        public LocalisableString TooltipText { get; set; }
 
         public SettingButton()
         {

@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Cursor;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
@@ -40,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
             private readonly ToolTipButton decreaseButton;
             private readonly ToolTipButton increaseButton;
 
-            public override string TooltipText => (Current.Value >= 0 ? "+" : "") + Current.Value.ToString("N0");
+            public override LocalisableString TooltipText => (Current.Value >= 0 ? "+" : "") + Current.Value.ToString("N0");
 
             public ClickableSliderBar()
             {
@@ -89,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
 
         private class ToolTipButton : TriangleButton, IHasTooltip
         {
-            public string TooltipText { get; set; }
+            public LocalisableString TooltipText { get; set; }
         }
     }
 }
