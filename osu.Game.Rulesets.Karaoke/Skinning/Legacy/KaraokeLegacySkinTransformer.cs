@@ -7,19 +7,23 @@ using System.Linq;
 using System.Reflection;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Game.Beatmaps;
 using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
+using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
     public class KaraokeLegacySkinTransformer : LegacySkinTransformer
     {
-        private readonly ISkin source;
+        private readonly KaraokeBeatmap beatmap;
+        private readonly Lazy<bool> isLegacySkin;
 
         private readonly IDictionary<int, Bindable<LyricFont>> bindableFonts = new Dictionary<int, Bindable<LyricFont>>();
         private readonly IDictionary<int, Bindable<LyricLayout>> bindableLayouts = new Dictionary<int, Bindable<LyricLayout>>();
@@ -31,16 +35,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         private readonly Bindable<IDictionary<int, string>> bindableNotesLookup = new Bindable<IDictionary<int, string>>();
         private readonly Bindable<IDictionary<int, string>> bindableSingersLookup = new Bindable<IDictionary<int, string>>();
 
-        private Lazy<bool> isLegacySkin;
-
-        public KaraokeLegacySkinTransformer(ISkinSource source)
+        public KaraokeLegacySkinTransformer(ISkin source, IBeatmap beatmap)
             : base(source)
         {
-            this.source = source;
-
-            if (source != null)
-                source.SourceChanged += sourceChanged;
-            sourceChanged();
+            this.beatmap = (KaraokeBeatmap)beatmap;
+            isLegacySkin = new Lazy<bool>(() => GetConfig<LegacySkinConfiguration.LegacySetting, decimal>(LegacySkinConfiguration.LegacySetting.Version) != null);
 
             // TODO : need a better way to load resource
             var assembly = Assembly.GetExecutingAssembly();
@@ -64,66 +63,57 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 bindableLayoutsLookup.Value = skin.Layouts.ToDictionary(k => skin.Layouts.IndexOf(k), y => y.Name);
                 bindableNotesLookup.Value = skin.NoteSkins.ToDictionary(k => skin.NoteSkins.IndexOf(k), y => y.Name);
             }
-        }
 
-        private void sourceChanged()
-        {
-            isLegacySkin = new Lazy<bool>(() => source?.GetConfig<LegacySkinConfiguration.LegacySetting, decimal>(LegacySkinConfiguration.LegacySetting.Version) != null);
+            if (this.beatmap != null)
+            {
+                for (int i = 0; i < this.beatmap.Singers.Length; i++)
+                    bindableSingers.Add(i, new Bindable<Singer>(this.beatmap.Singers[i]));
+
+                bindableSingersLookup.Value = this.beatmap.Singers.ToDictionary(k => this.beatmap.Singers.ToList().IndexOf(k), y => y.Name);
+            }
         }
 
         public override Drawable GetDrawableComponent(ISkinComponent component)
         {
-            if (!(component is KaraokeSkinComponent karaokeComponent))
-                return null;
-
-            if (!isLegacySkin.Value)
-                return null;
-
-            switch (karaokeComponent.Component)
+            switch (component)
             {
-                case KaraokeSkinComponents.ColumnBackground:
-                    if (textureExist(LegacyColumnBackground.GetTextureName()))
-                        return new LegacyColumnBackground();
+                case GameplaySkinComponent<HitResult> resultComponent:
+                    return getResult(resultComponent.Component);
 
-                    return null;
+                case KaraokeSkinComponent karaokeComponent:
+                    if (!isLegacySkin.Value)
+                        return null;
 
-                case KaraokeSkinComponents.StageBackground:
-                    if (textureExist(LegacyStageBackground.GetTextureName()))
-                        return new LegacyStageBackground();
+                    switch (karaokeComponent.Component)
+                    {
+                        case KaraokeSkinComponents.ColumnBackground:
+                            return new LegacyColumnBackground();
 
-                    return null;
+                        case KaraokeSkinComponents.StageBackground:
+                            return new LegacyStageBackground();
 
-                case KaraokeSkinComponents.JudgementLine:
-                    var judgementLine = LegacyJudgementLine.GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage);
-                    if (textureExist(judgementLine))
-                        return new LegacyJudgementLine();
+                        case KaraokeSkinComponents.JudgementLine:
+                            return new LegacyJudgementLine();
 
-                    return null;
+                        case KaraokeSkinComponents.Note:
+                            return new LegacyNotePiece();
 
-                case KaraokeSkinComponents.Note:
-                    var foregroundBody = LegacyNotePiece.GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Foreground);
-                    var backgroundBody = LegacyNotePiece.GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, LegacyKaraokeSkinNoteLayer.Background);
-                    if (textureExist(foregroundBody, backgroundBody))
-                        return new LegacyNotePiece();
+                        case KaraokeSkinComponents.HitExplosion:
+                            return new LegacyHitExplosion();
 
-                    return null;
-
-                case KaraokeSkinComponents.HitExplosion:
-                    if (animationExist(LegacyHitExplosion.GetTextureName()))
-                        return new LegacyHitExplosion();
-
-                    return null;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(karaokeComponent.Component));
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(karaokeComponent.Component));
+                    }
             }
+
+            return base.GetDrawableComponent(component);
         }
 
-        private bool textureExist(params string[] textureNames)
-            => textureNames.All(x => source.GetTexture(x) != null);
-
-        private bool animationExist(params string[] textureNames)
-            => textureNames.All(x => source.GetAnimation(x, true, false) != null);
+        private Drawable getResult(HitResult result)
+        {
+            // todo : get real component
+            return null;
+        }
 
         public override IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
         {
@@ -172,7 +162,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     }
             }
 
-            return source.GetConfig<TLookup, TValue>(lookup);
+            return base.GetConfig<TLookup, TValue>(lookup);
         }
     }
 }
