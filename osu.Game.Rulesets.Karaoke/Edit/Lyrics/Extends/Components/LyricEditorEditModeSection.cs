@@ -10,6 +10,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         [Resolved]
         private ILyricEditorState state { get; set; }
 
+        protected sealed override LyricEditorMode DefaultMode()
+            => state.Mode;
+
         protected override void UpdateEditMode(LyricEditorMode mode)
         {
             // update mode back to lyric editor.

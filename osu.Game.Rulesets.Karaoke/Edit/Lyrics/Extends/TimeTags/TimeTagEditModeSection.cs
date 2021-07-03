@@ -15,9 +15,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Orange;
 
-        protected override LyricEditorMode DefaultMode()
-            => LyricEditorMode.CreateTimeTag;
-
         protected override Dictionary<LyricEditorMode, EditModeSelectionItem> CreateSelections()
             => new Dictionary<LyricEditorMode, EditModeSelectionItem>
             {

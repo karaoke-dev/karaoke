@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             => OverlayColourScheme.Pink;
 
         protected override TextTagEditMode DefaultMode()
-            => TextTagEditMode.Edit;
+            => bindableEditMode.Value;
 
         protected override Dictionary<TextTagEditMode, EditModeSelectionItem> CreateSelections()
             => new Dictionary<TextTagEditMode, EditModeSelectionItem>
