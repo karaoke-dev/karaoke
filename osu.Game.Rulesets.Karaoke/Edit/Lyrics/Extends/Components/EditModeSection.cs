@@ -25,11 +25,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         [Cached]
         private readonly OverlayColourProvider overlayColourProvider = OverlayColourProvider.Orange;
 
+        [Resolved]
+        private OsuColour colour { get; set; }
+
         private EditModeButton[] buttons;
         private OsuMarkdownContainer description;
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour)
+        private void load()
         {
             var selections = CreateSelections();
             Children = new Drawable[]
@@ -46,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                     {
                         buttons = selections.Select(x => new EditModeButton(x.Key, x.Value)
                         {
-                            Action = updateEditMode,
+                            Action = UpdateEditMode,
                         }).ToArray(),
                     }
                 },
@@ -57,24 +60,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 }
             };
 
-            updateEditMode(DefaultMode());
+            UpdateEditMode(DefaultMode());
+        }
 
-            void updateEditMode(T mode)
+        protected virtual void UpdateEditMode(T mode)
+        {
+            // update button style.
+            foreach (var child in buttons)
             {
-                // update button style.
-                foreach (var child in buttons)
-                {
-                    var highLight = Equals(child.Mode, mode);
-                    child.Alpha = highLight ? 0.8f : 0.4f;
-                    child.BackgroundColour = GetColour(colour, highLight);
+                var highLight = Equals(child.Mode, mode);
+                child.Alpha = highLight ? 0.8f : 0.4f;
+                child.BackgroundColour = GetColour(colour, highLight);
 
-                    if (highLight)
-                    {
-                        // update description text.
-                        var item = child.Item;
-                        description.Text = item.Description.Value.ToString();
-                    }
-                }
+                if (!highLight)
+                    continue;
+
+                // update description text.
+                var item = child.Item;
+                description.Text = item.Description.Value.ToString();
             }
         }
 
