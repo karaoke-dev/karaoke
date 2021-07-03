@@ -6,6 +6,8 @@ using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 {
@@ -14,11 +16,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
         protected override string Title => "Auto generate";
 
         [BackgroundDependencyLoader]
-        private void load(LyricManager lyricManager, LyricSelectionState lyricSelectionState)
+        private void load(EditorBeatmap beatmap, LyricManager lyricManager, LyricSelectionState lyricSelectionState)
         {
             Children = new[]
             {
-                new AutoGenerateButton(),
+                new AutoGenerateButton
+                {
+                    StartSelecting = () =>
+                        beatmap.HitObjects.OfType<Lyric>().Where(x => !string.IsNullOrEmpty(x.Text))
+                               .ToDictionary(k => k, i => "Should have text in lyric.")
+                },
             };
 
             lyricSelectionState.Action = e =>
