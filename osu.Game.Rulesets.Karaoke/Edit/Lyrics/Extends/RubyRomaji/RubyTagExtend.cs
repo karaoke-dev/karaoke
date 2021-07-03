@@ -23,11 +23,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                         };
                         break;
 
-                    case TextTagEditMode.Management:
+                    case TextTagEditMode.Generate:
                         Children = new Drawable[]
                         {
                             new TextTagEditModeSection(),
                             new RubyTagAutoGenerateSection(),
+                        };
+                        break;
+
+                    case TextTagEditMode.Verify:
+                        Children = new Drawable[]
+                        {
+                            new TextTagEditModeSection(),
                             new RubyTagIssueSection(),
                         };
                         break;

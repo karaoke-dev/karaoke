@@ -30,7 +30,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     TextTagEditMode.Edit, new EditModeSelectionItem("Edit", "Create / delete and edit lyric text tag in here.")
                 },
                 {
-                    TextTagEditMode.Management, new EditModeSelectionItem("Management", "Auto-generate and check invalid text tag in here.")
+                    TextTagEditMode.Generate, new EditModeSelectionItem("Generate", "Auto-generate ruby/romaji tag.")
+                },
+                {
+                    TextTagEditMode.Verify, new EditModeSelectionItem("Verify", "Check invalid text tag in here.")
                 }
             };
 
@@ -41,8 +44,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                 case TextTagEditMode.Edit:
                     return active ? colour.Blue : colour.BlueDarker;
 
-                case TextTagEditMode.Management:
+                case TextTagEditMode.Generate:
                     return active ? colour.Red : colour.RedDarker;
+
+                case TextTagEditMode.Verify:
+                    return active ? colour.Yellow : colour.YellowDarker;
 
                 default:
                     throw new IndexOutOfRangeException(nameof(mode));

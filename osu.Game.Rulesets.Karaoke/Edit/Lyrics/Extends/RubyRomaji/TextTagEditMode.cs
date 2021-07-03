@@ -7,6 +7,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
     {
         Edit,
 
-        Management
+        Generate,
+
+        Verify
     }
 }
