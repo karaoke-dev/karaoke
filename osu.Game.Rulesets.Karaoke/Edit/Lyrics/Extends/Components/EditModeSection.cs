@@ -23,13 +23,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         protected override string Title => "Edit mode";
 
         [Cached]
-        private readonly OverlayColourProvider overlayColourProvider = OverlayColourProvider.Orange;
+        private readonly OverlayColourProvider overlayColourProvider;
 
         [Resolved]
         private OsuColour colour { get; set; }
 
         private EditModeButton[] buttons;
         private OsuMarkdownContainer description;
+
+        protected EditModeSection()
+        {
+            overlayColourProvider = new OverlayColourProvider(CreateColourScheme());
+        }
 
         [BackgroundDependencyLoader]
         private void load()
@@ -49,6 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                     {
                         buttons = selections.Select(x => new EditModeButton(x.Key, x.Value)
                         {
+                            Padding = new MarginPadding { Horizontal = 5 },
                             Action = UpdateEditMode,
                         }).ToArray(),
                     }
@@ -70,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             {
                 var highLight = Equals(child.Mode, mode);
                 child.Alpha = highLight ? 0.8f : 0.4f;
-                child.BackgroundColour = GetColour(colour, highLight);
+                child.BackgroundColour = GetColour(colour, child.Mode, highLight);
 
                 if (!highLight)
                     continue;
@@ -81,11 +87,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             }
         }
 
+        protected abstract OverlayColourScheme CreateColourScheme();
+
         protected abstract T DefaultMode();
 
         protected abstract Dictionary<T, EditModeSelectionItem> CreateSelections();
 
-        protected abstract Color4 GetColour(OsuColour colour, bool active);
+        protected abstract Color4 GetColour(OsuColour colour, T mode, bool active);
 
         public class EditModeButton : OsuButton
         {
@@ -106,12 +114,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 item.Text.BindValueChanged(e =>
                 {
                     Text = e.NewValue;
-                });
+                }, true);
 
                 item.Alert.BindValueChanged(e =>
                 {
                     // todo : show / hide alert.
-                });
+                }, true);
 
                 base.Action = () => Action.Invoke(mode);
             }
@@ -133,6 +141,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             /// The alert number which this <see cref="EditModeButton"/> displays.
             /// </summary>
             public readonly Bindable<int> Alert = new Bindable<int>();
+
+            public EditModeSelectionItem(LocalisableString text, LocalisableString description)
+            {
+                Text.Value = text;
+                Description.Value = description;
+            }
         }
     }
 }
