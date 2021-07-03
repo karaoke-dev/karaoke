@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
                 new AutoGenerateButton
                 {
                     StartSelecting = () =>
-                        beatmap.HitObjects.OfType<Lyric>().Where(x => !string.IsNullOrEmpty(x.Text))
+                        beatmap.HitObjects.OfType<Lyric>().Where(x => string.IsNullOrEmpty(x.Text))
                                .ToDictionary(k => k, i => "Should have text in lyric.")
                 },
             };
