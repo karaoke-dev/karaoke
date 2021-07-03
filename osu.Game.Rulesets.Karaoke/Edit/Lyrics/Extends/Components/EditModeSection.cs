@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
     public abstract class EditModeSection<T> : Section where T : Enum
     {
-        protected override string Title => "Edit mode";
+        protected sealed override string Title => "Edit mode";
 
         [Cached]
         private readonly OverlayColourProvider overlayColourProvider;
@@ -28,18 +28,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         [Resolved]
         private OsuColour colour { get; set; }
 
-        private EditModeButton[] buttons;
-        private OsuMarkdownContainer description;
+        private readonly EditModeButton[] buttons;
+        private readonly OsuMarkdownContainer description;
 
         protected EditModeSection()
         {
             overlayColourProvider = new OverlayColourProvider(CreateColourScheme());
-        }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            var selections = CreateSelections();
             Children = new Drawable[]
             {
                 new GridContainer
@@ -52,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                     },
                     Content = new[]
                     {
-                        buttons = selections.Select(x => new EditModeButton(x.Key, x.Value)
+                        buttons = CreateSelections().Select(x => new EditModeButton(x.Key, x.Value)
                         {
                             Padding = new MarginPadding { Horizontal = 5 },
                             Action = UpdateEditMode,
@@ -66,7 +61,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 }
             };
 
-            UpdateEditMode(DefaultMode());
+            // should wait until derived class BDL ready.
+            Schedule(() =>
+            {
+                UpdateEditMode(DefaultMode());
+            });
         }
 
         protected virtual void UpdateEditMode(T mode)
@@ -95,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected abstract Color4 GetColour(OsuColour colour, T mode, bool active);
 
-        public class EditModeButton : OsuButton
+        private class EditModeButton : OsuButton
         {
             public new Action<T> Action;
 
@@ -125,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             }
         }
 
-        public class EditModeSelectionItem
+        protected class EditModeSelectionItem
         {
             /// <summary>
             /// The text which this <see cref="EditModeButton"/> displays.

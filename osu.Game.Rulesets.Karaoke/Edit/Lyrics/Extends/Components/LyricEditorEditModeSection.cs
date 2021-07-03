@@ -12,11 +12,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected override void UpdateEditMode(LyricEditorMode mode)
         {
-            Schedule(() =>
-            {
-                // update mode back to lyric editor.
-                state.Mode = mode;
-            });
+            // update mode back to lyric editor.
+            state.Mode = mode;
 
             base.UpdateEditMode(mode);
         }
