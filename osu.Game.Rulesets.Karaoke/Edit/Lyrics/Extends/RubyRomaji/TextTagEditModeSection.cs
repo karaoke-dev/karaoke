@@ -1,103 +1,59 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
-using osu.Game.Graphics.Containers.Markdown;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
-    public class TextTagEditModeSection : Section
+    public class TextTagEditModeSection : EditModeSection<TextTagEditMode>
     {
-        private EditModeButton<TextTagEditMode>[] buttons;
-        private OsuMarkdownContainer description;
+        [Resolved]
+        private Bindable<TextTagEditMode> bindableEditMode { get; set; }
 
-        [Cached]
-        private readonly OverlayColourProvider overlayColourProvider = OverlayColourProvider.Pink;
+        protected override OverlayColourScheme CreateColourScheme()
+            => OverlayColourScheme.Pink;
 
-        protected override string Title => "Edit mode";
+        protected override TextTagEditMode DefaultMode()
+            => bindableEditMode.Value;
 
-        [BackgroundDependencyLoader]
-        private void load(Bindable<TextTagEditMode> bindableEditMode, OsuColour colour)
-        {
-            Children = new Drawable[]
+        protected override Dictionary<TextTagEditMode, EditModeSelectionItem> CreateSelections()
+            => new Dictionary<TextTagEditMode, EditModeSelectionItem>
             {
-                new GridContainer
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    RowDimensions = new[]
-                    {
-                        new Dimension(GridSizeMode.AutoSize)
-                    },
-                    Content = new[]
-                    {
-                        buttons = new[]
-                        {
-                            new EditModeButton<TextTagEditMode>(TextTagEditMode.Edit)
-                            {
-                                Text = "Edit",
-                                Action = updateEditMode,
-                                Padding = new MarginPadding { Horizontal = 5 },
-                            },
-                            new EditModeButton<TextTagEditMode>(TextTagEditMode.Management)
-                            {
-                                Text = "Management",
-                                Action = updateEditMode,
-                                Padding = new MarginPadding { Horizontal = 5 },
-                            },
-                        }
-                    }
+                    TextTagEditMode.Edit, new EditModeSelectionItem("Edit", "Create / delete and edit lyric text tag in here.")
                 },
-                description = new OsuMarkdownContainer
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
+                    TextTagEditMode.Management, new EditModeSelectionItem("Management", "Auto-generate and check invalid text tag in here.")
                 }
             };
 
-            updateEditMode(bindableEditMode.Value);
-
-            void updateEditMode(TextTagEditMode mode)
+        protected override Color4 GetColour(OsuColour colour, TextTagEditMode mode, bool active)
+        {
+            switch (mode)
             {
-                bindableEditMode.Value = mode;
+                case TextTagEditMode.Edit:
+                    return active ? colour.Blue : colour.BlueDarker;
 
-                // update button style.
-                foreach (var child in buttons)
-                {
-                    var highLight = child.Mode == mode;
-                    child.Alpha = highLight ? 0.8f : 0.4f;
+                case TextTagEditMode.Management:
+                    return active ? colour.Red : colour.RedDarker;
 
-                    switch (child.Mode)
-                    {
-                        case TextTagEditMode.Edit:
-                            child.BackgroundColour = highLight ? colour.Blue : colour.BlueDarker;
-                            break;
-
-                        case TextTagEditMode.Management:
-                            child.BackgroundColour = highLight ? colour.Red : colour.RedDarker;
-                            break;
-                    }
-                }
-
-                // update description text.
-                switch (mode)
-                {
-                    case TextTagEditMode.Edit:
-                        description.Text = "Create / delete and edit lyric text tag in here.";
-                        break;
-
-                    case TextTagEditMode.Management:
-                        description.Text = "Auto-generate and check invalid text tag in here.";
-                        break;
-                }
+                default:
+                    throw new IndexOutOfRangeException(nameof(mode));
             }
+        }
+
+        protected override void UpdateEditMode(TextTagEditMode mode)
+        {
+            bindableEditMode.Value = mode;
+
+            base.UpdateEditMode(mode);
         }
     }
 }
