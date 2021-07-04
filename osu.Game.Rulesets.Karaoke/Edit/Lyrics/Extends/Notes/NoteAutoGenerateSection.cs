@@ -1,17 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
-using osu.Framework.Graphics;
-using osu.Game.Graphics.Sprites;
-using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -22,45 +17,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
     /// But need to make sure that lyric should not have any <see cref="TimeTagIssue"/>
     /// If found any issue, will navigate to target lyric.
     /// </summary>
-    public class NoteAutoGenerateSection : Section
+    public class NoteAutoGenerateSection : AutoGenerateSection
     {
-        protected override string Title => "Auto generate";
+        [Resolved]
+        private NoteManager noteManager { get; set; }
 
-        private BindableDictionary<Lyric, Issue[]> bindableReports;
+        [Resolved]
+        private LyricCheckerManager lyricCheckerManager { get; set; }
 
-        private OsuSpriteText alertSpriteText;
+        protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(Lyric[] lyrics)
+            => lyricCheckerManager.BindableReports.Where(x => x.Value.OfType<TimeTagIssue>().Any())
+                                  .ToDictionary(k => k.Key, i => "Before generate time-tag, need to assign language first.");
 
-        [BackgroundDependencyLoader]
-        private void load(LyricCheckerManager lyricCheckerManager, NoteManager noteManager, LyricSelectionState lyricSelectionState)
-        {
-            Children = new Drawable[]
-            {
-                new AutoGenerateButton
-                {
-                    StartSelecting = () =>
-                        bindableReports.Where(x => x.Value.OfType<TimeTagIssue>().Any())
-                                       .ToDictionary(k => k.Key, i => "Before generate time-tag, need to assign language first.")
-                },
-                alertSpriteText = new OsuSpriteText(),
-            };
-
-            bindableReports = lyricCheckerManager.BindableReports.GetBoundCopy();
-            bindableReports.BindCollectionChanged((a, b) =>
-            {
-                var hasTimeTagIssue = bindableReports.Values.SelectMany(x => x)
-                                                     .OfType<TimeTagIssue>().Any();
-
-                alertSpriteText.Text = hasTimeTagIssue ? "Seems there's some time-tag issue in lyric. \nGo to time-tag edit mode then clear those issues." : null;
-            }, true);
-
-            lyricSelectionState.Action = e =>
-            {
-                if (e != LyricEditorSelectingAction.Apply)
-                    return;
-
-                var lyrics = lyricSelectionState.SelectedLyrics.ToList();
-                noteManager.AutoGenerateNotes(lyrics);
-            };
-        }
+        protected override void Apply(Lyric[] lyrics)
+            => noteManager.AutoGenerateNotes(lyrics);
     }
 }

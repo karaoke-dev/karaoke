@@ -36,12 +36,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void AutoDetectLyricLanguage()
         {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
 
             AutoDetectLyricLanguage(lyrics);
         }
 
-        public void AutoDetectLyricLanguage(List<Lyric> lyrics)
+        public void AutoDetectLyricLanguage(Lyric[] lyrics)
         {
             if (!lyrics.Any())
                 return;
@@ -218,11 +218,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public void AutoGenerateTimeTags()
         {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
             AutoGenerateTimeTags(lyrics);
         }
 
-        public void AutoGenerateTimeTags(List<Lyric> lyrics)
+        public void AutoGenerateTimeTags(Lyric[] lyrics)
         {
             if (!lyrics.Any())
                 return;

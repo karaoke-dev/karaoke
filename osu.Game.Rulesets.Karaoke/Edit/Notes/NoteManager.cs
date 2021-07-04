@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Notes
         [Resolved]
         private IPlacementHandler placementHandler { get; set; }
 
-        public void AutoGenerateNotes(List<Lyric> lyrics)
+        public void AutoGenerateNotes(Lyric[] lyrics)
         {
             changeHandler.BeginChange();
 

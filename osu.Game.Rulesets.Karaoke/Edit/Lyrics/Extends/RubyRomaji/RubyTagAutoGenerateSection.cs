@@ -1,42 +1,25 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
-    public class RubyTagAutoGenerateSection : Section
+    public class RubyTagAutoGenerateSection : AutoGenerateSection
     {
-        protected override string Title => "Auto generate";
+        [Resolved]
+        private RubyRomajiManager rubyRomaji { get; set; }
 
-        [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, RubyRomajiManager rubyRomaji, LyricSelectionState lyricSelectionState)
-        {
-            Children = new[]
-            {
-                new AutoGenerateButton
-                {
-                    StartSelecting = () =>
-                        beatmap.HitObjects.OfType<Lyric>().Where(x => x.Language == null)
-                               .ToDictionary(k => k, i => "Before generate time-tag, need to assign language first.")
-                },
-            };
+        protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(Lyric[] lyrics)
+            => lyrics.Where(x => x.Language == null)
+                     .ToDictionary(k => k, i => "Before generate ruby-tag, need to assign language first.");
 
-            lyricSelectionState.Action = e =>
-            {
-                if (e != LyricEditorSelectingAction.Apply)
-                    return;
-
-                var selectedLyric = lyricSelectionState.SelectedLyrics.ToList();
-                rubyRomaji.AutoGenerateLyricRuby(selectedLyric);
-            };
-        }
+        protected override void Apply(Lyric[] lyrics)
+            => rubyRomaji.AutoGenerateLyricRuby(lyrics);
     }
 }
