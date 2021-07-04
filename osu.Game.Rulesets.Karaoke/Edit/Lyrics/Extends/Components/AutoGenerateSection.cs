@@ -25,22 +25,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         [BackgroundDependencyLoader]
         private void load(EditorBeatmap beatmap, LyricSelectionState lyricSelectionState, OsuColour colours)
         {
-            var disableSelectingLyrics = GetDisableSelectingLyrics(beatmap.HitObjects.OfType<Lyric>().ToArray());
-
-            Children = new Drawable[]
+            Schedule(() =>
             {
-                new AutoGenerateButton
+                var disableSelectingLyrics = GetDisableSelectingLyrics(beatmap.HitObjects.OfType<Lyric>().ToArray());
+
+                Children = new Drawable[]
                 {
-                    StartSelecting = () => disableSelectingLyrics
-                },
-                CreateInvalidLyricAlertTextContainer().With(t =>
-                {
-                    t.RelativeSizeAxes = Axes.X;
-                    t.AutoSizeAxes = Axes.Y;
-                    t.Colour = colours.GrayF;
-                    t.Alpha = disableSelectingLyrics.Any() ? 1 : 0;
-                })
-            };
+                    new AutoGenerateButton
+                    {
+                        StartSelecting = () => disableSelectingLyrics
+                    },
+                    CreateInvalidLyricAlertTextContainer().With(t =>
+                    {
+                        t.RelativeSizeAxes = Axes.X;
+                        t.AutoSizeAxes = Axes.Y;
+                        t.Colour = colours.GrayF;
+                        t.Alpha = disableSelectingLyrics.Any() ? 1 : 0;
+                        t.Padding = new MarginPadding { Horizontal = 20 };
+                    })
+                };
+            });
 
             lyricSelectionState.Action = e =>
             {
