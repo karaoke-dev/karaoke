@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         protected sealed override string Title => "Auto generate";
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, LyricSelectionState lyricSelectionState)
+        private void load(EditorBeatmap beatmap, LyricSelectionState lyricSelectionState, OsuColour colours)
         {
             var disableSelectingLyrics = GetDisableSelectingLyrics(beatmap.HitObjects.OfType<Lyric>().ToArray());
 
@@ -33,9 +33,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 {
                     StartSelecting = () => disableSelectingLyrics
                 },
-                CreateInvalidLyricAlertTextContainer().With(e =>
+                CreateInvalidLyricAlertTextContainer().With(t =>
                 {
-                    e.Alpha = disableSelectingLyrics.Any() ? 1 : 0;
+                    t.RelativeSizeAxes = Axes.X;
+                    t.AutoSizeAxes = Axes.Y;
+                    t.Colour = colours.GrayF;
+                    t.Alpha = disableSelectingLyrics.Any() ? 1 : 0;
                 })
             };
 
@@ -62,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             protected override string SelectingText => "Cancel generate";
         }
 
-        protected class InvalidLyricAlertTextContainer : CustomizableTextContainer
+        protected abstract class InvalidLyricAlertTextContainer : CustomizableTextContainer
         {
             [Resolved]
             private ILyricEditorState state { get; set; }
@@ -71,11 +74,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             {
                 AddIconFactory(name, () => new ClickableSpriteText
                 {
-                    Font = new FontUsage(size: 20),
                     Text = text,
                     Action = () => state.Mode = switchToEditMode,
                 });
             }
+
+            protected override SpriteText CreateSpriteText()
+                => base.CreateSpriteText().With(x => x.Font = x.Font.With(size: 16));
 
             internal class ClickableSpriteText : OsuSpriteText
             {
