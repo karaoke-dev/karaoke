@@ -31,5 +31,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         protected override void Apply(Lyric[] lyrics)
             => noteManager.AutoGenerateNotes(lyrics);
+
+        protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
+            => new InvalidLyricTimeTagAlertTextContainer();
+
+        protected class InvalidLyricTimeTagAlertTextContainer : InvalidLyricAlertTextContainer
+        {
+            private const string adjust_time_tag_mode = "ADJUST_TIME_TAG_MODE";
+
+            public InvalidLyricTimeTagAlertTextContainer()
+            {
+                SwitchToModel(adjust_time_tag_mode, "adjust time-tag mode", LyricEditorMode.AdjustTimeTag);
+                Text = $"Seems some lyric contains invalid time-tag, go to [{adjust_time_tag_mode}] to fix those issue.";
+            }
+        }
     }
 }
