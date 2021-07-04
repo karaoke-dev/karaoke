@@ -20,5 +20,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 
         protected override void Apply(Lyric[] lyrics)
             => lyricManager.AutoDetectLyricLanguage(lyrics);
+
+        protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
+            => new InvalidLyricTextAlertTextContainer();
+
+        protected class InvalidLyricTextAlertTextContainer : InvalidLyricAlertTextContainer
+        {
+            private const string edit_mode = "TYPING_MODE";
+
+            public InvalidLyricTextAlertTextContainer()
+            {
+                SwitchToModel(edit_mode, "typing mode", LyricEditorMode.Typing);
+                Text = $"Seems some lyric has no texts, go to [{edit_mode}] to fill the text.";
+            }
+        }
     }
 }
