@@ -27,10 +27,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             => new Dictionary<TextTagEditMode, EditModeSelectionItem>
             {
                 {
-                    TextTagEditMode.Edit, new EditModeSelectionItem("Edit", "Create / delete and edit lyric text tag in here.")
+                    TextTagEditMode.Generate, new EditModeSelectionItem("Generate", "Auto-generate ruby/romaji tag.")
                 },
                 {
-                    TextTagEditMode.Generate, new EditModeSelectionItem("Generate", "Auto-generate ruby/romaji tag.")
+                    TextTagEditMode.Edit, new EditModeSelectionItem("Edit", "Create / delete and edit lyric text tag in here.")
                 },
                 {
                     TextTagEditMode.Verify, new EditModeSelectionItem("Verify", "Check invalid text tag in here.")
@@ -41,10 +41,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         {
             switch (mode)
             {
-                case TextTagEditMode.Edit:
+                case TextTagEditMode.Generate:
                     return active ? colour.Blue : colour.BlueDarker;
 
-                case TextTagEditMode.Generate:
+                case TextTagEditMode.Edit:
                     return active ? colour.Red : colour.RedDarker;
 
                 case TextTagEditMode.Verify:
