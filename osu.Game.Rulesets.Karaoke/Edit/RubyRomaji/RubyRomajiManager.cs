@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -22,11 +21,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
 
         public void AutoGenerateLyricRuby()
         {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
             AutoGenerateLyricRuby(lyrics);
         }
 
-        public void AutoGenerateLyricRuby(List<Lyric> lyrics)
+        public void AutoGenerateLyricRuby(Lyric[] lyrics)
         {
             if (!lyrics.Any())
                 return;
@@ -46,11 +45,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
 
         public void AutoGenerateLyricRomaji()
         {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
             AutoGenerateLyricRomaji(lyrics);
         }
 
-        public void AutoGenerateLyricRomaji(List<Lyric> lyrics)
+        public void AutoGenerateLyricRomaji(Lyric[] lyrics)
         {
             if (!lyrics.Any())
                 return;
