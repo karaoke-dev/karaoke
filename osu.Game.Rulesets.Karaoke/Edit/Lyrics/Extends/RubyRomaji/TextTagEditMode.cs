@@ -5,9 +5,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
     public enum TextTagEditMode
     {
-        Edit,
-
         Generate,
+
+        Edit,
 
         Verify
     }

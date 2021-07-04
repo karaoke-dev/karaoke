@@ -13,6 +13,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         public override float ExtendWidth => 350;
 
         [Cached]
-        protected readonly Bindable<TextTagEditMode> EditMode = new Bindable<TextTagEditMode>();
+        protected readonly Bindable<TextTagEditMode> EditMode = new Bindable<TextTagEditMode>(TextTagEditMode.Edit);
     }
 }
