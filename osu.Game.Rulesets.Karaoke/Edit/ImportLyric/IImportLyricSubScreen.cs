@@ -3,10 +3,11 @@
 
 using System;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    public interface IImportLyricSubScreen
+    public interface IImportLyricSubScreen : IScreen
     {
         ImportLyricStep Step { get; }
 
