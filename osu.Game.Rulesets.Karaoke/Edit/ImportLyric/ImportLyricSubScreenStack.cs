@@ -57,5 +57,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     throw new ScreenNotCurrentException("Screen is not in the lyric import step.");
             }
         }
+
+        public void Pop(ImportLyricStep step)
+        {
+            // todo : implement
+        }
     }
 }
