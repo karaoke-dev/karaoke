@@ -74,12 +74,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             [Resolved]
             private ILyricEditorState state { get; set; }
 
-            protected void SwitchToEditorMode(string name, string text, LyricEditorMode switchToEditMode)
+            protected void SwitchToEditorMode(string name, string text, LyricEditorMode targetMode)
             {
                 AddIconFactory(name, () => new ClickableSpriteText
                 {
                     Text = text,
-                    Action = () => state.Mode = switchToEditMode,
+                    Action = () => state.NavigateToFix(targetMode),
                 });
             }
 

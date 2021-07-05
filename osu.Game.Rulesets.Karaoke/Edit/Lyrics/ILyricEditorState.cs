@@ -16,5 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         BindableBool BindableAutoFocusEditLyric { get; }
 
         BindableInt BindableAutoFocusEditLyricSkipRows { get; }
+
+        void NavigateToFix(LyricEditorMode mode);
     }
 }

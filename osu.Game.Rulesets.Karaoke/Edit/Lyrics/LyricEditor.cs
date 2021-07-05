@@ -485,6 +485,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             set => BindableAutoFocusEditLyricSkipRows.Value = value;
         }
 
+        public virtual void NavigateToFix(LyricEditorMode mode)
+        {
+            switch (mode)
+            {
+                case LyricEditorMode.Typing:
+                case LyricEditorMode.Language:
+                case LyricEditorMode.AdjustTimeTag:
+                    Mode = mode;
+                    break;
+
+                default:
+                    throw new IndexOutOfRangeException("Oops, seems some navigation to fix case has been missing.");
+            }
+        }
+
         private class LocalScrollingInfo : IScrollingInfo
         {
             public IBindable<ScrollingDirection> Direction { get; } = new Bindable<ScrollingDirection>(ScrollingDirection.Left);
