@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
             public InvalidLyricLanguageAlertTextContainer()
             {
-                SwitchToModel(language_mode, "edit language mode", LyricEditorMode.Language);
+                SwitchToEditorMode(language_mode, "edit language mode", LyricEditorMode.Language);
                 Text = $"Seems some lyric missing language, go to [{language_mode}] to fill the language.";
             }
         }

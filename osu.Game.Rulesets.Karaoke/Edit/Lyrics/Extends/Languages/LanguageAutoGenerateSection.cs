@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 
             public InvalidLyricTextAlertTextContainer()
             {
-                SwitchToModel(edit_mode, "typing mode", LyricEditorMode.Typing);
+                SwitchToEditorMode(edit_mode, "typing mode", LyricEditorMode.Typing);
                 Text = $"Seems some lyric has no texts, go to [{edit_mode}] to fill the text.";
             }
         }
