@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags.Ja
             TextTagAssert.ArePropertyEqual(rubyTags, actualRubyTags);
         }
 
-        private JaRubyTagGeneratorConfig generatorConfig(params string[] properties)
+        private static JaRubyTagGeneratorConfig generatorConfig(params string[] properties)
         {
             var config = new JaRubyTagGeneratorConfig();
             if (properties == null)

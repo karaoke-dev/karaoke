@@ -99,6 +99,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             });
             Assert.AreEqual(check.Run(getContext(beatmap5)).Count(), 0);
 
+            // lyric translate not listed. (should have issue)
+            var beatmap6 = createTestingBeatmap(null, new[]
+            {
+                createLyric(new CultureInfo("en-US"), "translate1"),
+            });
+            Assert.AreEqual(check.Run(getContext(beatmap6)).Count(), 1);
+
             static Lyric createLyric(CultureInfo cultureInfo = null, string translate = null)
             {
                 var lyric = new Lyric();
@@ -110,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             }
         }
 
-        private IBeatmap createTestingBeatmap(CultureInfo[] translateLanguage, Lyric[] lyrics)
+        private static IBeatmap createTestingBeatmap(CultureInfo[] translateLanguage, Lyric[] lyrics)
         {
             var karaokeBeatmap = new KaraokeBeatmap
             {
@@ -120,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             return new EditorBeatmap(karaokeBeatmap);
         }
 
-        private BeatmapVerifierContext getContext(IBeatmap beatmap)
+        private static BeatmapVerifierContext getContext(IBeatmap beatmap)
         {
             return new(beatmap, new TestWorkingBeatmap(beatmap));
         }

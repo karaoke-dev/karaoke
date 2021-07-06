@@ -147,7 +147,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
             Assert.AreEqual(numberToTone(tone1) <= scale1, match);
         }
 
-        private Tone numberToTone(double tone)
+        private static Tone numberToTone(double tone)
         {
             var half = Math.Abs(tone) % 1 == 0.5;
             var scale = tone < 0 ? (int)tone - (half ? 1 : 0) : (int)tone;

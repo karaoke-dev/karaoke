@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.Layouts
             Assert.AreEqual(lyrics.Select(x => $"[{x.StartTime},{x.EndTime}]").ToArray(), actualTimes);
         }
 
-        private LayoutGeneratorConfig generatorConfig()
+        private static LayoutGeneratorConfig generatorConfig()
         {
             return new()
             {
