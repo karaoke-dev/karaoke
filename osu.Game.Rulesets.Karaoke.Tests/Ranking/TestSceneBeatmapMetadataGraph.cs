@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
             };
         });
 
-        private Singer[] createDefaultSinger()
+        private static Singer[] createDefaultSinger()
         {
             var metadata = new List<Singer>();
 

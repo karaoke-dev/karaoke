@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             }
         }
 
-        private IBeatmap createTestingBeatmap(CultureInfo[] translateLanguage, Lyric[] lyrics)
+        private static IBeatmap createTestingBeatmap(CultureInfo[] translateLanguage, Lyric[] lyrics)
         {
             var karaokeBeatmap = new KaraokeBeatmap
             {
@@ -127,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             return new EditorBeatmap(karaokeBeatmap);
         }
 
-        private BeatmapVerifierContext getContext(IBeatmap beatmap)
+        private static BeatmapVerifierContext getContext(IBeatmap beatmap)
         {
             return new(beatmap, new TestWorkingBeatmap(beatmap));
         }

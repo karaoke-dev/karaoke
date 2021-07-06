@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RomajiTags.Ja
             TextTagAssert.ArePropertyEqual(romajiTags, actualRomajiTags);
         }
 
-        private JaRomajiTagGeneratorConfig generatorConfig(params string[] properties)
+        private static JaRomajiTagGeneratorConfig generatorConfig(params string[] properties)
         {
             var config = new JaRomajiTagGeneratorConfig();
             if (properties == null)
