@@ -99,6 +99,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Checks
             });
             Assert.AreEqual(check.Run(getContext(beatmap5)).Count(), 0);
 
+            // lyric translate not listed. (should have issue)
+            var beatmap6 = createTestingBeatmap(null, new[]
+            {
+                createLyric(new CultureInfo("en-US"), "translate1"),
+            });
+            Assert.AreEqual(check.Run(getContext(beatmap6)).Count(), 1);
+
             static Lyric createLyric(CultureInfo cultureInfo = null, string translate = null)
             {
                 var lyric = new Lyric();

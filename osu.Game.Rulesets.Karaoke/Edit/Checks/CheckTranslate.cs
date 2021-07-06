@@ -9,13 +9,14 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
     public class CheckTranslate : ICheck
     {
-        public CheckMetadata Metadata => new CheckMetadata(CheckCategory.Metadata, "Unfinished translate language.");
+        public CheckMetadata Metadata => new CheckMetadata(CheckCategory.HitObjects, "Unfinished translate language.");
 
         public IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
@@ -25,35 +26,48 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context)
         {
-            var languages = availableTranslateInBeatmap(context.Beatmap);
-            if (languages == null || languages.Length == 0)
+            var languages = availableTranslateInBeatmap(context.Beatmap) ?? new CultureInfo[] { };
+
+            var lyrics = context.Beatmap.HitObjects.OfType<Lyric>().ToList();
+            if (lyrics.Count == 0)
                 yield break;
 
-            var lyric = context.Beatmap.HitObjects.OfType<Lyric>().ToList();
-            if (lyric.Count == 0)
-                yield break;
-
+            // check if some translate is missing or empty.
             foreach (var language in languages)
             {
-                var notTranslateLyrics = lyric.Where(x =>
+                var notTranslateLyrics = lyrics.Where(x =>
                 {
+                    // lyric should contains current language translate.
                     if (!x.Translates.ContainsKey(language))
                         return true;
 
+                    // translate should noy be empty.
                     if (string.IsNullOrWhiteSpace(x.Translates[language]))
                         return true;
 
                     return false;
-                });
+                }).ToArray();
 
-                if (notTranslateLyrics.Count() == lyric.Count)
+                if (notTranslateLyrics.Length == lyrics.Count)
                 {
-                    yield return new IssueTemplateMissingTranslate(this).Create(language);
+                    yield return new IssueTemplateMissingTranslate(this).Create(notTranslateLyrics, language);
                 }
                 else if (notTranslateLyrics.Any())
                 {
-                    yield return new IssueTemplateMissingPartialTranslate(this).Create(language);
+                    yield return new IssueTemplateMissingPartialTranslate(this).Create(notTranslateLyrics, language);
                 }
+            }
+
+            // should check is lyric contains translate that is not listed in beatmap.
+            // if got this issue, then it's a bug.
+            var allTranslateLanguageInLyric = lyrics.SelectMany(x => x.Translates.Keys).Distinct();
+            var languageNotListInBeatmap = allTranslateLanguageInLyric.Except(languages);
+
+            foreach (var language in languageNotListInBeatmap)
+            {
+                var notTranslateLyrics = lyrics.Where(x => !x.Translates.ContainsKey(language));
+
+                yield return new IssueTemplateContainsNotListedLanguage(this).Create(notTranslateLyrics, language);
             }
         }
 
@@ -77,8 +91,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             {
             }
 
-            public Issue Create(CultureInfo cultureInfo)
-                => new Issue(this, cultureInfo);
+            public Issue Create(IEnumerable<HitObject> hitObjects, CultureInfo cultureInfo)
+                => new Issue(hitObjects, this, cultureInfo);
         }
 
         public class IssueTemplateMissingPartialTranslate : IssueTemplate
@@ -88,8 +102,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             {
             }
 
-            public Issue Create(CultureInfo cultureInfo)
-                => new Issue(this, cultureInfo);
+            public Issue Create(IEnumerable<HitObject> hitObjects, CultureInfo cultureInfo)
+                => new Issue(hitObjects, this, cultureInfo);
+        }
+
+        public class IssueTemplateContainsNotListedLanguage : IssueTemplate
+        {
+            public IssueTemplateContainsNotListedLanguage(ICheck check)
+                : base(check, IssueType.Problem, "Seems some translate language is not listed, plz contact developer to fix that bug.")
+            {
+            }
+
+            public Issue Create(IEnumerable<HitObject> hitObjects, CultureInfo cultureInfo)
+                => new Issue(hitObjects, this, cultureInfo);
         }
     }
 }
