@@ -64,11 +64,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                     }
                 },
             });
-
-            // initialize scroll zone.
-            MaxZoom = getZoomLevelForVisibleMilliseconds(500);
-            MinZoom = getZoomLevelForVisibleMilliseconds(10000);
-            Zoom = getZoomLevelForVisibleMilliseconds(3000);
         }
 
         protected override void LoadComplete()
@@ -79,8 +74,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             var position = getPositionFromTime(HitObject.LyricStartTime - preempt_time);
             ScrollTo(position, false);
         }
-
-        private float getZoomLevelForVisibleMilliseconds(double milliseconds) => Math.Max(1, (float)(editorClock.TrackLength / milliseconds));
 
         protected override void UpdateAfterChildren()
         {

@@ -1,10 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
@@ -15,6 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
     public abstract class TimeTagZoomableScrollContainer : ZoomableScrollContainer
     {
         protected readonly IBindable<TimeTag[]> TimeTagsBindable = new Bindable<TimeTag[]>();
+
+        protected readonly IBindable<WorkingBeatmap> Beatmap = new Bindable<WorkingBeatmap>();
 
         [Resolved]
         private EditorClock editorClock { get; set; }
@@ -73,6 +77,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
                 EndTime = 0;
             }
         }
+
+        [BackgroundDependencyLoader]
+        private void load(IBindable<WorkingBeatmap> beatmap)
+        {
+            Beatmap.BindTo(beatmap);
+
+            // initialize scroll zone.
+            MaxZoom = getZoomLevelForVisibleMilliseconds(500);
+            MinZoom = getZoomLevelForVisibleMilliseconds(10000);
+            Zoom = getZoomLevelForVisibleMilliseconds(3000);
+        }
+
+        private float getZoomLevelForVisibleMilliseconds(double milliseconds) => Math.Max(1, (float)(editorClock.TrackLength / milliseconds));
 
         public double GetPreviewTime(TimeTag timeTag)
         {
