@@ -20,9 +20,10 @@ using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 {
+    [Cached]
     public class RecordingTimeTagEditor : TimeTagZoomableScrollContainer
     {
-        private const float timeline_height = 20;
+        public const float TIMELINE_HEIGHT = 20;
 
         [Resolved]
         private EditorClock editorClock { get; set; }
@@ -52,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
         public RecordingTimeTagEditor(Lyric lyric)
             : base(lyric)
         {
-            Height = timeline_height;
+            Height = TIMELINE_HEIGHT;
         }
 
         private CurrentTimeMarker currentTimeMarker;
@@ -78,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                     Depth = 1,
                     Y = 10,
                     RelativeSizeAxes = Axes.X,
-                    Height = timeline_height,
+                    Height = TIMELINE_HEIGHT,
                     Colour = colours.Gray3,
                 },
                 currentTimeMarker = new CurrentTimeMarker
@@ -100,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 mainContent = new Container
                 {
                     RelativeSizeAxes = Axes.X,
-                    Height = timeline_height,
+                    Height = TIMELINE_HEIGHT,
                     Y = 10,
                     Depth = float.MaxValue,
                     Children = new Drawable[]
@@ -114,7 +115,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                             HighColour = colours.BlueDarker,
                         },
                         ticks = new TimelineTickDisplay(),
-                        userContent = new Container(),
+                        userContent = new Container
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                        },
                     }
                 },
             });
@@ -124,6 +128,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 waveform.Waveform = b.NewValue.Waveform;
                 track = b.NewValue.Track;
             }, true);
+
+            foreach (var timeTag in HitObject.TimeTags)
+            {
+                userContent.Add(new DrawableRecordingTimeTag(timeTag));
+            }
         }
 
         protected override void Update()
