@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 {
     public class RecordingTimeTagRowExtend : EditRowExtend
     {
-        public override float ContentHeight => 80;
+        public override float ContentHeight => 60;
 
         public RecordingTimeTagRowExtend(Lyric lyric)
             : base(lyric)
@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             return new RecordingTimeTagEditor(lyric)
             {
                 RelativeSizeAxes = Axes.X,
-                Height = 100,
+                Height = 60,
             };
         }
     }
