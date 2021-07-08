@@ -138,6 +138,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
         {
             base.Update();
 
+            // The extrema of track time should be positioned at the centre of the container when scrolled to the start or end
+            Content.Margin = new MarginPadding { Horizontal = DrawWidth / 2 };
+
             trackTimer.Text = editorClock.CurrentTime.ToEditorFormattedString();
 
             // This needs to happen after transforms are updated, but before the scroll position is updated in base.UpdateAfterChildren
