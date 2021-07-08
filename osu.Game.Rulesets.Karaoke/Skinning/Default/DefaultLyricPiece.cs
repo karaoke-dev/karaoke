@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
     /// <summary>
     /// This component is focusing on display ruby and romaji.
     /// </summary>
-    public class DefaultLyricPiece<T> : KaraokeSpriteText<T> where T : LyricSpriteText, new()
+    public abstract class DefaultLyricPiece<T> : KaraokeSpriteText<T> where T : LyricSpriteText, new()
     {
         private const int whole_chunk_index = -1;
 
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
         private readonly Lyric hitObject;
         private readonly int chunkIndex;
 
-        public DefaultLyricPiece(Lyric hitObject, int chunkIndex = whole_chunk_index)
+        protected DefaultLyricPiece(Lyric hitObject, int chunkIndex = whole_chunk_index)
         {
             this.hitObject = hitObject;
             this.chunkIndex = chunkIndex;
