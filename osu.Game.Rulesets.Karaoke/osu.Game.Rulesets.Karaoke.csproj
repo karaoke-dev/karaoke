@@ -13,9 +13,9 @@
     <PackageReference Include="ILRepack.MSBuild.Task" Version="2.0.13" />
     <PackageReference Include="LanguageDetection.karaoke-dev" Version="1.3.3-alpha" />
     <PackageReference Include="Octokit" Version="0.50.0" />
-    <PackageReference Include="osu.Framework.KaraokeFont" Version="2021.605.0" />
+    <PackageReference Include="osu.Framework.KaraokeFont" Version="2021.708.0" />
     <PackageReference Include="osu.Framework.Microphone" Version="1.2.0" />
-    <PackageReference Include="ppy.osu.Game" Version="2021.703.0" />
+    <PackageReference Include="ppy.osu.Game" Version="2021.707.0" />
     <PackageReference Include="LyricMaker" Version="1.1.1" />
     <PackageReference Include="NicoKaraParser" Version="1.1.0" />
     <!--install because it might cause "Could not load file or assembly" error, might be removed eventually-->

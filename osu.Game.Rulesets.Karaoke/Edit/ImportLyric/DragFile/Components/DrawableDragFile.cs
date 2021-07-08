@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile.Components
         private const float button_height = 50;
         private const float button_vertical_margin = 15;
 
-        private FileSelector fileSelector;
+        private OsuFileSelector fileSelector;
         private TextFlowContainer currentFileText;
 
         private TriangleButton importButton;
@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile.Components
                     Colour = colours.GreySeafoamDark,
                     RelativeSizeAxes = Axes.Both,
                 },
-                fileSelector = new FileSelector(validFileExtensions: ImportLyricManager.LyricFormatExtensions)
+                fileSelector = new OsuFileSelector(validFileExtensions: ImportLyricManager.LyricFormatExtensions)
                 {
                     RelativeSizeAxes = Axes.Both,
                     Width = 0.6f
