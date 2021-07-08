@@ -27,16 +27,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
         public DrawableRecordingTimeTag(TimeTag timeTag)
         {
             this.timeTag = timeTag;
-            Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT);
+            var start = timeTag.Index.State == TextIndex.IndexState.Start;
+
+            // Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT);
+            Anchor = Anchor.CentreLeft;
+            Origin = Anchor.CentreLeft;
+            // Origin = start ? Anchor.CentreLeft : Anchor.CentreRight;
+            RelativePositionAxes = Axes.X;
+            RelativeSizeAxes = Axes.Y;
+            AutoSizeAxes = Axes.X;
 
             bindableTIme = timeTag.TimeBindable.GetBoundCopy();
             InternalChild = new RightTriangle
             {
                 Name = "Time tag triangle",
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.Centre,
                 Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT),
-                Scale = new Vector2(timeTag.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1)
+                Scale = new Vector2(start ? 1 : -1, 1)
             };
         }
 
