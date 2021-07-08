@@ -64,8 +64,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
         private TimelineTickDisplay ticks;
 
-        private Container userContent;
-
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
@@ -94,6 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                     Font = OsuFont.GetFont(size: 16, fixedWidth: true),
                 }
             });
+
             AddRange(new Drawable[]
             {
                 mainContent = new Container
@@ -102,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                     Height = TIMELINE_HEIGHT,
                     Y = 10,
                     Depth = float.MaxValue,
-                    Children = new Drawable[]
+                    Children = new[]
                     {
                         waveform = new WaveformGraph
                         {
@@ -114,10 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                         },
                         centreMarker.CreateProxy(),
                         ticks = new TimelineTickDisplay(),
-                        userContent = new Container
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                        },
+                        new RecordingTimeTagPart(HitObject),
                     }
                 },
             });
@@ -127,11 +123,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 waveform.Waveform = b.NewValue.Waveform;
                 track = b.NewValue.Track;
             }, true);
-
-            foreach (var timeTag in HitObject.TimeTags)
-            {
-                userContent.Add(new DrawableRecordingTimeTag(timeTag));
-            }
         }
 
         protected override void Update()
