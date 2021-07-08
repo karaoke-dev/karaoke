@@ -9,12 +9,14 @@ using osu.Game.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 {
-    public class CurrentTimeMarker : CompositeDrawable
+    public class CentreMarker : CompositeDrawable
     {
         private const float bar_width = 2;
 
-        public CurrentTimeMarker()
+        public CentreMarker()
         {
+            Anchor = Anchor.Centre;
+            Origin = Anchor.Centre;
             RelativeSizeAxes = Axes.Y;
             InternalChild = new Box
             {

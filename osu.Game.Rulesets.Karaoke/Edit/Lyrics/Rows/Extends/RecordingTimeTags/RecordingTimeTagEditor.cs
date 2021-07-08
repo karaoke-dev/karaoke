@@ -56,8 +56,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             Height = TIMELINE_HEIGHT;
         }
 
-        private CurrentTimeMarker currentTimeMarker;
-
         private OsuSpriteText trackTimer;
 
         private Container mainContent;
@@ -71,6 +69,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
+            CentreMarker centreMarker;
+
+            // We don't want the centre marker to scroll
+            AddInternal(centreMarker = new CentreMarker());
+
             AddRangeInternal(new Drawable[]
             {
                 new Box
@@ -81,11 +84,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                     RelativeSizeAxes = Axes.X,
                     Height = TIMELINE_HEIGHT,
                     Colour = colours.Gray3,
-                },
-                currentTimeMarker = new CurrentTimeMarker
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
                 },
                 trackTimer = new OsuSpriteText
                 {
@@ -114,6 +112,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                             MidColour = colours.BlueDark,
                             HighColour = colours.BlueDarker,
                         },
+                        centreMarker.CreateProxy(),
                         ticks = new TimelineTickDisplay(),
                         userContent = new Container
                         {
