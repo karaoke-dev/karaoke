@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
+using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
@@ -55,6 +56,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
             private readonly Bindable<double?> bindableTIme;
 
+            private readonly RightTriangle timeTagTriangle;
+
             private readonly Lyric lyric;
             private readonly TimeTag timeTag;
 
@@ -72,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 bindableTIme = timeTag.TimeBindable.GetBoundCopy();
                 InternalChildren = new Drawable[]
                 {
-                    new RightTriangle
+                    timeTagTriangle = new RightTriangle
                     {
                         Name = "Time tag triangle",
                         Anchor = Anchor.Centre,
@@ -90,8 +93,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             }
 
             [BackgroundDependencyLoader]
-            private void load(RecordingTimeTagEditor timeline)
+            private void load(OsuColour colours, RecordingTimeTagEditor timeline)
             {
+                timeTagTriangle.Colour = colours.GetTimeTagColour(timeTag);
+
                 bindableTIme.BindValueChanged(e =>
                 {
                     var hasValue = e.NewValue.HasValue;
