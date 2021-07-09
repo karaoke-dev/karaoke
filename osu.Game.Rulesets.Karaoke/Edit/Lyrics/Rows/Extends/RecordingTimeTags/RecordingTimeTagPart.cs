@@ -54,19 +54,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 this.timeTag = timeTag;
                 var start = timeTag.Index.State == TextIndex.IndexState.Start;
 
-                // Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT);
                 Anchor = Anchor.CentreLeft;
-                Origin = Anchor.CentreLeft;
-                // Origin = start ? Anchor.CentreLeft : Anchor.CentreRight;
+                Origin = start ? Anchor.CentreLeft : Anchor.CentreRight;
                 RelativePositionAxes = Axes.X;
-                RelativeSizeAxes = Axes.Y;
-                AutoSizeAxes = Axes.X;
+                Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT);
 
                 bindableTIme = timeTag.TimeBindable.GetBoundCopy();
                 InternalChild = new RightTriangle
                 {
                     Name = "Time tag triangle",
-                    Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT),
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
                     Scale = new Vector2(start ? 1 : -1, 1)
                 };
             }
