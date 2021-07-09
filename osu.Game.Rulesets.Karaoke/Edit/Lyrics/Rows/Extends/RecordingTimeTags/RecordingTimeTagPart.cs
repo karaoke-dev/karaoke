@@ -7,9 +7,11 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osuTK;
@@ -36,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
             foreach (var timeTag in lyric.TimeTags)
             {
-                Add(new TimeLineVisualization(timeTag));
+                Add(new TimeLineVisualization(lyric, timeTag));
             }
         }
 
@@ -49,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
             private readonly TimeTag timeTag;
 
-            public TimeLineVisualization(TimeTag timeTag)
+            public TimeLineVisualization(Lyric lyric, TimeTag timeTag)
             {
                 this.timeTag = timeTag;
                 var start = timeTag.Index.State == TextIndex.IndexState.Start;
@@ -60,13 +62,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT);
 
                 bindableTIme = timeTag.TimeBindable.GetBoundCopy();
-                InternalChild = new RightTriangle
+                InternalChildren = new Drawable[]
                 {
-                    Name = "Time tag triangle",
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    RelativeSizeAxes = Axes.Both,
-                    Scale = new Vector2(start ? 1 : -1, 1)
+                    new RightTriangle
+                    {
+                        Name = "Time tag triangle",
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Scale = new Vector2(start ? 1 : -1, 1)
+                    },
+                    new OsuSpriteText
+                    {
+                        Text = LyricUtils.GetTimeTagDisplayRubyText(lyric, timeTag),
+                        Anchor = start ? Anchor.BottomLeft : Anchor.BottomRight,
+                        Origin = start ? Anchor.TopLeft : Anchor.TopRight,
+                    }
                 };
             }
 
