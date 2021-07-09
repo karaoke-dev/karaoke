@@ -7,8 +7,11 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -47,12 +50,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             [Resolved]
             private EditorClock editorClock { get; set; }
 
+            [Resolved]
+            private LyricCaretState lyricCaretState { get; set; }
+
             private readonly Bindable<double?> bindableTIme;
 
+            private readonly Lyric lyric;
             private readonly TimeTag timeTag;
 
             public TimeLineVisualization(Lyric lyric, TimeTag timeTag)
             {
+                this.lyric = lyric;
                 this.timeTag = timeTag;
                 var start = timeTag.Index.State == TextIndex.IndexState.Start;
 
@@ -94,6 +102,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
                     X = (float)timeline.GetPreviewTime(timeTag);
                 }, true);
+            }
+
+            protected override bool OnClick(ClickEvent e)
+            {
+                // navigation to target time
+                var time = timeTag.Time;
+                if (time != null)
+                    editorClock.SeekSmoothlyTo(time.Value);
+
+                lyricCaretState.MoveCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag));
+
+                return base.OnClick(e);
             }
 
             public object TooltipContent => timeTag;
