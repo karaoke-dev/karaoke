@@ -42,11 +42,71 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
             foreach (var timeTag in lyric.TimeTags)
             {
-                Add(new TimeLineVisualization(lyric, timeTag));
+                Add(new RecordingTimeTagVisualization(lyric, timeTag));
+            }
+
+            Add(new CurrentRecordingTimeTagVisualization(lyric));
+        }
+
+        private class CurrentRecordingTimeTagVisualization : CompositeDrawable
+        {
+            private Bindable<ICaretPosition> position;
+
+            private readonly Lyric lyric;
+
+            public CurrentRecordingTimeTagVisualization(Lyric lyric)
+            {
+                this.lyric = lyric;
+
+                Anchor = Anchor.BottomLeft;
+                RelativePositionAxes = Axes.X;
+                Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT / 2);
+
+                InternalChild = new RightTriangle
+                {
+                    Name = "Time tag triangle",
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
+                };
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(OsuColour colours, RecordingTimeTagEditor timeline, LyricCaretState lyricCaretState)
+            {
+                position = lyricCaretState.BindableCaretPosition.GetBoundCopy();
+                position.BindValueChanged(e =>
+                {
+                    if (!(e.NewValue is TimeTagCaretPosition timeTagCaretPosition))
+                        return;
+
+                    if (timeTagCaretPosition.Lyric != lyric)
+                    {
+                        Hide();
+                        return;
+                    }
+
+                    var timeTag = timeTagCaretPosition.TimeTag;
+                    var start = timeTag.Index.State == TextIndex.IndexState.Start;
+
+                    Origin = start ? Anchor.BottomLeft : Anchor.BottomRight;
+                    InternalChild.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
+                    InternalChild.Scale = new Vector2(start ? 1 : -1, 1);
+
+                    if (timeTag.Time.HasValue)
+                    {
+                        Show();
+                        this.MoveToX((float)timeline.GetPreviewTime(timeTag), 100, Easing.OutCubic);
+                    }
+                    else
+                    {
+                        Hide();
+                    }
+                });
             }
         }
 
-        private class TimeLineVisualization : CompositeDrawable, IHasCustomTooltip
+        private class RecordingTimeTagVisualization : CompositeDrawable, IHasCustomTooltip
         {
             [Resolved]
             private EditorClock editorClock { get; set; }
@@ -61,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             private readonly Lyric lyric;
             private readonly TimeTag timeTag;
 
-            public TimeLineVisualization(Lyric lyric, TimeTag timeTag)
+            public RecordingTimeTagVisualization(Lyric lyric, TimeTag timeTag)
             {
                 this.lyric = lyric;
                 this.timeTag = timeTag;
