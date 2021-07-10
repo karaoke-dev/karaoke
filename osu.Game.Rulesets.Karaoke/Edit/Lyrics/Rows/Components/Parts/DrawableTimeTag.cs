@@ -51,8 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, ILyricEditorState state, LyricCaretState lyricCaretState)
         {
-            var time = timeTag.Time;
-            InternalChild.Colour = time.HasValue ? colours.Yellow : colours.Gray7;
+            InternalChild.Colour = colours.GetTimeTagColour(timeTag);
 
             bindableMode = state.BindableMode.GetBoundCopy();
             bindableRecordingMovingCaretMode = state.BindableRecordingMovingCaretMode.GetBoundCopy();
