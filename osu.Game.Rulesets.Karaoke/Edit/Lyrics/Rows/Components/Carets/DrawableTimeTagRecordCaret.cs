@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             this.MoveTo(lyricPiece.GetTimeTagPosition(timeTag), Preview ? 0 : 100, Easing.OutCubic);
 
             drawableTimeTag.Scale = new Vector2(timeTag.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1);
-            drawableTimeTag.Colour = timeTag.Time.HasValue ? colours.YellowDarker : colours.Gray3;
+            drawableTimeTag.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
         }
     }
 }

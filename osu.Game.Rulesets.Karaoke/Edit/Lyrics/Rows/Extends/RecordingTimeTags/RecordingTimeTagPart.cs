@@ -7,9 +7,15 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Input.Events;
+using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osuTK;
@@ -36,44 +42,121 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
             foreach (var timeTag in lyric.TimeTags)
             {
-                Add(new TimeLineVisualization(timeTag));
+                Add(new RecordingTimeTagVisualization(lyric, timeTag));
             }
+
+            Add(new CurrentRecordingTimeTagVisualization(lyric));
         }
 
-        private class TimeLineVisualization : CompositeDrawable, IHasCustomTooltip
+        private class CurrentRecordingTimeTagVisualization : CompositeDrawable
         {
-            [Resolved]
-            private EditorClock editorClock { get; set; }
+            private Bindable<ICaretPosition> position;
 
-            private readonly Bindable<double?> bindableTIme;
+            private readonly Lyric lyric;
 
-            private readonly TimeTag timeTag;
-
-            public TimeLineVisualization(TimeTag timeTag)
+            public CurrentRecordingTimeTagVisualization(Lyric lyric)
             {
-                this.timeTag = timeTag;
-                var start = timeTag.Index.State == TextIndex.IndexState.Start;
+                this.lyric = lyric;
 
-                // Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT);
-                Anchor = Anchor.CentreLeft;
-                Origin = Anchor.CentreLeft;
-                // Origin = start ? Anchor.CentreLeft : Anchor.CentreRight;
+                Anchor = Anchor.BottomLeft;
                 RelativePositionAxes = Axes.X;
-                RelativeSizeAxes = Axes.Y;
-                AutoSizeAxes = Axes.X;
+                Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT / 2);
 
-                bindableTIme = timeTag.TimeBindable.GetBoundCopy();
                 InternalChild = new RightTriangle
                 {
                     Name = "Time tag triangle",
-                    Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT),
-                    Scale = new Vector2(start ? 1 : -1, 1)
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    RelativeSizeAxes = Axes.Both,
                 };
             }
 
             [BackgroundDependencyLoader]
-            private void load(RecordingTimeTagEditor timeline)
+            private void load(OsuColour colours, RecordingTimeTagEditor timeline, LyricCaretState lyricCaretState)
             {
+                position = lyricCaretState.BindableCaretPosition.GetBoundCopy();
+                position.BindValueChanged(e =>
+                {
+                    if (!(e.NewValue is TimeTagCaretPosition timeTagCaretPosition))
+                        return;
+
+                    if (timeTagCaretPosition.Lyric != lyric)
+                    {
+                        Hide();
+                        return;
+                    }
+
+                    var timeTag = timeTagCaretPosition.TimeTag;
+                    var start = timeTag.Index.State == TextIndex.IndexState.Start;
+
+                    Origin = start ? Anchor.BottomLeft : Anchor.BottomRight;
+                    InternalChild.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
+                    InternalChild.Scale = new Vector2(start ? 1 : -1, 1);
+
+                    if (timeTag.Time.HasValue)
+                    {
+                        Show();
+                        this.MoveToX((float)timeline.GetPreviewTime(timeTag), 100, Easing.OutCubic);
+                    }
+                    else
+                    {
+                        Hide();
+                    }
+                });
+            }
+        }
+
+        private class RecordingTimeTagVisualization : CompositeDrawable, IHasCustomTooltip
+        {
+            [Resolved]
+            private EditorClock editorClock { get; set; }
+
+            [Resolved]
+            private LyricCaretState lyricCaretState { get; set; }
+
+            private readonly Bindable<double?> bindableTIme;
+
+            private readonly RightTriangle timeTagTriangle;
+
+            private readonly Lyric lyric;
+            private readonly TimeTag timeTag;
+
+            public RecordingTimeTagVisualization(Lyric lyric, TimeTag timeTag)
+            {
+                this.lyric = lyric;
+                this.timeTag = timeTag;
+                var start = timeTag.Index.State == TextIndex.IndexState.Start;
+
+                Anchor = Anchor.CentreLeft;
+                Origin = start ? Anchor.CentreLeft : Anchor.CentreRight;
+                RelativePositionAxes = Axes.X;
+                Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT);
+
+                bindableTIme = timeTag.TimeBindable.GetBoundCopy();
+                InternalChildren = new Drawable[]
+                {
+                    timeTagTriangle = new RightTriangle
+                    {
+                        Name = "Time tag triangle",
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
+                        Scale = new Vector2(start ? 1 : -1, 1)
+                    },
+                    new OsuSpriteText
+                    {
+                        Text = LyricUtils.GetTimeTagDisplayRubyText(lyric, timeTag),
+                        Anchor = start ? Anchor.BottomLeft : Anchor.BottomRight,
+                        Origin = start ? Anchor.TopLeft : Anchor.TopRight,
+                    }
+                };
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(OsuColour colours, RecordingTimeTagEditor timeline)
+            {
+                timeTagTriangle.Colour = colours.GetTimeTagColour(timeTag);
+
                 bindableTIme.BindValueChanged(e =>
                 {
                     var hasValue = e.NewValue.HasValue;
@@ -84,6 +167,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
                     X = (float)timeline.GetPreviewTime(timeTag);
                 }, true);
+            }
+
+            protected override bool OnClick(ClickEvent e)
+            {
+                // navigation to target time
+                var time = timeTag.Time;
+                if (time != null)
+                    editorClock.SeekSmoothlyTo(time.Value);
+
+                lyricCaretState.MoveCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag));
+
+                return base.OnClick(e);
             }
 
             public object TooltipContent => timeTag;
