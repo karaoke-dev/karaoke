@@ -19,5 +19,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var start = timeTag.Index.State == TextIndex.IndexState.Start;
             return start ? colours.Yellow : colours.YellowDarker;
         }
+
+        public static Color4 GetEditTimeTagCaretColour(this OsuColour colours)
+            => colours.Blue;
+
+        public static Color4 GetRecordingTimeTagCaretColour(this OsuColour colours, TimeTag timeTag)
+            => timeTag.Time.HasValue ? colours.Red : colours.Gray3;
     }
 }
