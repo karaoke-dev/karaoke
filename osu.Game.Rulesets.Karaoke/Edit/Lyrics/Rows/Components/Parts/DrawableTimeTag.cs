@@ -7,13 +7,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
-using osu.Game.Screens.Edit;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
@@ -25,21 +24,38 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
         /// </summary>
         private const float triangle_width = 6;
 
-        [Resolved]
-        private LyricCaretState lyricCaretState { get; set; }
+        private Bindable<LyricEditorMode> bindableMode;
+        private Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode;
 
-        [Resolved]
-        private EditorClock editorClock { get; set; }
+        private readonly Lyric lyric;
+        private readonly TimeTag timeTag;
 
-        private readonly Bindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-        private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
-
-        private readonly TimeTagCaretPosition timeTagCaretPosition;
-
-        public DrawableTimeTag(TimeTagCaretPosition timeTagCaretPosition)
+        public DrawableTimeTag(Lyric lyric, TimeTag timeTag)
         {
-            this.timeTagCaretPosition = timeTagCaretPosition;
+            this.lyric = lyric;
+            this.timeTag = timeTag;
+
             Size = new Vector2(triangle_width);
+
+            var index = timeTag.Index;
+            InternalChild = new RightTriangle
+            {
+                Name = "Time tag triangle",
+                Anchor = Anchor.TopCentre,
+                Origin = Anchor.Centre,
+                Size = new Vector2(triangle_width),
+                Scale = new Vector2(index.State == TextIndex.IndexState.Start ? 1 : -1, 1)
+            };
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours, ILyricEditorState state, LyricCaretState lyricCaretState)
+        {
+            var time = timeTag.Time;
+            InternalChild.Colour = time.HasValue ? colours.Yellow : colours.Gray7;
+
+            bindableMode = state.BindableMode.GetBoundCopy();
+            bindableRecordingMovingCaretMode = state.BindableRecordingMovingCaretMode.GetBoundCopy();
 
             bindableMode.BindValueChanged(x =>
             {
@@ -53,82 +69,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
                 Schedule(updateStyle);
             });
 
-            var index = timeTagCaretPosition.TimeTag.Index;
-            InternalChild = new RightTriangle
+            void updateStyle()
             {
-                Name = "Time tag triangle",
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.Centre,
-                Size = new Vector2(triangle_width),
-                Scale = new Vector2(index.State == TextIndex.IndexState.Start ? 1 : -1, 1)
-            };
-        }
+                if (bindableMode.Value != LyricEditorMode.RecordTimeTag)
+                {
+                    InternalChild.Show();
+                    return;
+                }
 
-        private void updateStyle()
-        {
-            if (isTrigger(bindableMode.Value) && !lyricCaretState.CaretPositionMovable(timeTagCaretPosition))
-            {
-                InternalChild.Alpha = 0.3f;
-            }
-            else
-            {
-                InternalChild.Show();
+                if (!lyricCaretState.CaretPositionMovable(new TimeTagCaretPosition(lyric, timeTag)))
+                {
+                    InternalChild.Alpha = 0.3f;
+                }
+                else
+                {
+                    InternalChild.Show();
+                }
             }
         }
 
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours, ILyricEditorState state)
-        {
-            var time = timeTagCaretPosition.TimeTag.Time;
-            InternalChild.Colour = time.HasValue ? colours.Yellow : colours.Gray7;
-
-            bindableMode.BindTo(state.BindableMode);
-            bindableRecordingMovingCaretMode.BindTo(state.BindableRecordingMovingCaretMode);
-        }
-
-        protected override bool OnHover(HoverEvent e)
-        {
-            if (!isTrigger(bindableMode.Value))
-                return false;
-
-            return lyricCaretState?.MoveHoverCaretToTargetPosition(timeTagCaretPosition) ?? false;
-        }
-
-        protected override void OnHoverLost(HoverLostEvent e)
-        {
-            if (!isTrigger(bindableMode.Value))
-                return;
-
-            lyricCaretState?.ClearHoverCaretPosition();
-            base.OnHoverLost(e);
-        }
-
-        protected override bool OnClick(ClickEvent e)
-        {
-            // navigation to target time
-            // todo : might apply config to allow this behavior in target place.
-            var time = timeTagCaretPosition.TimeTag.Time;
-            if (time != null)
-                editorClock.SeekSmoothlyTo(time.Value);
-
-            if (!isTrigger(bindableMode.Value))
-                return false;
-
-            return lyricCaretState.MoveCaretToTargetPosition(timeTagCaretPosition);
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            bindableMode.UnbindAll();
-            bindableRecordingMovingCaretMode.UnbindAll();
-
-            base.Dispose(isDisposing);
-        }
-
-        private bool isTrigger(LyricEditorMode mode)
-            => mode == LyricEditorMode.RecordTimeTag;
-
-        public object TooltipContent => timeTagCaretPosition.TimeTag;
+        public object TooltipContent => timeTag;
 
         public ITooltip GetCustomTooltip() => new TimeTagTooltip();
     }

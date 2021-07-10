@@ -580,7 +580,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 foreach (var timeTag in timeTags)
                 {
                     var position = lyricPiece.GetTimeTagPosition(timeTag);
-                    timeTagContainer.Add(new DrawableTimeTag(new TimeTagCaretPosition(Lyric, timeTag))
+                    timeTagContainer.Add(new DrawableTimeTag(Lyric, timeTag)
                     {
                         Position = position
                     });
