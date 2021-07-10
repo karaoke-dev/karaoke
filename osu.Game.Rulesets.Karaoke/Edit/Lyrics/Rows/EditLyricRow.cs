@@ -304,6 +304,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             private ILyricEditorState state { get; set; }
 
             [Resolved]
+            private EditorClock editorClock { get; set; }
+
+            [Resolved]
             private LyricCaretState lyricCaretState { get; set; }
 
             public Lyric Lyric { get; }
@@ -416,20 +419,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
             protected override bool OnDoubleClick(DoubleClickEvent e)
             {
-                if (state.Mode != LyricEditorMode.Manage)
-                    return false;
-
-                // todo : not really sure is ok to split time-tag by double click?
-                // need to make an ux research.
                 var position = lyricCaretState.BindableCaretPosition.Value;
 
-                if (position is TextCaretPosition textCaretPosition)
+                switch (position)
                 {
-                    lyricManager?.SplitLyric(Lyric, textCaretPosition.Index);
-                    return true;
-                }
+                    case TextCaretPosition textCaretPosition:
+                        if (state.Mode == LyricEditorMode.Manage)
+                            lyricManager?.SplitLyric(Lyric, textCaretPosition.Index);
+                        return true;
 
-                throw new NotSupportedException(nameof(position));
+                    case TimeTagCaretPosition timeTagCaretPosition:
+                        var timeTagTime = timeTagCaretPosition.TimeTag.Time;
+                        if (timeTagTime.HasValue)
+                            editorClock.SeekSmoothlyTo(timeTagTime.Value);
+                        return true;
+
+                    default:
+                        return false;
+                }
             }
 
             [BackgroundDependencyLoader]
