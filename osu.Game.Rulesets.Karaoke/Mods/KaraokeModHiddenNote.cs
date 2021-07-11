@@ -48,11 +48,11 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             var longFadeDuration = h.EndTime - fadeOutStartTime;
 
             // Apply duration
-            using (note.BeginAbsoluteSequence(fadeOutStartTime, true))
+            using (note.BeginAbsoluteSequence(fadeOutStartTime))
                 note.FadeOut(fadeOutDuration, Easing.Out);
 
             // Show after exceed hit point
-            using (note.BeginAbsoluteSequence(fadeOutStartTime + longFadeDuration, true))
+            using (note.BeginAbsoluteSequence(fadeOutStartTime + longFadeDuration))
                 note.FadeIn(fadeOutDuration, Easing.Out);
         }
 
@@ -70,11 +70,11 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             var longFadeDuration = h.EndTime - fadeOutStartTime;
 
             // Apply duration
-            using (note.BeginAbsoluteSequence(fadeOutStartTime, true))
+            using (note.BeginAbsoluteSequence(fadeOutStartTime))
                 note.FadeOut(fadeOutDuration, Easing.Out);
 
             // Show after exceed hit point
-            using (note.BeginAbsoluteSequence(fadeOutStartTime + longFadeDuration, true))
+            using (note.BeginAbsoluteSequence(fadeOutStartTime + longFadeDuration))
                 note.FadeIn(fadeOutDuration, Easing.Out);
         }
     }

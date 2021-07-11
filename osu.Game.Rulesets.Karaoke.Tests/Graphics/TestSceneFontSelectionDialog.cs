@@ -5,7 +5,6 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Sprites;
 using osu.Framework.Platform;
 using osu.Framework.Testing;
 using osu.Game.Overlays;
@@ -43,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            var language = new BindableFontUsage(new FontUsage())
+            var language = new BindableFontUsage
             {
                 MinFontSize = 32,
                 MaxFontSize = 72

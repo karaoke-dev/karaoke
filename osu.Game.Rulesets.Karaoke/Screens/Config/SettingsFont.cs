@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     var buttonWidth = showSizeButton ? height : 0;
                     grid.ColumnDimensions = new[]
                     {
-                        new Dimension(GridSizeMode.Distributed),
+                        new Dimension(),
                         new Dimension(GridSizeMode.Absolute, spacing),
                         new Dimension(GridSizeMode.Absolute, buttonWidth),
                         new Dimension(GridSizeMode.Absolute, spacing),

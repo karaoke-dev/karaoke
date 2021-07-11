@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                     AutoSizeAxes = Axes.Y,
                                     ColumnDimensions = new[]
                                     {
-                                        new Dimension(GridSizeMode.Distributed),
+                                        new Dimension(),
                                         new Dimension(GridSizeMode.Absolute, column_spacing),
                                         new Dimension(GridSizeMode.Absolute, 50),
                                         new Dimension(GridSizeMode.Absolute, column_spacing),
