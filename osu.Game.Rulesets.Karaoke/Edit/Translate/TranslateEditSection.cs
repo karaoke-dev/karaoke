@@ -72,9 +72,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                         ColumnDimensions = columnDimensions,
                         RelativeSizeAxes = Axes.X,
                         AutoSizeAxes = Axes.Y,
-                        Content = new Drawable[][]
+                        Content = new[]
                         {
-                            new[]
+                            new Drawable[]
                             {
                                 null,
                                 null,

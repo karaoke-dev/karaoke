@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
             AddStep("Default Lyric", () => SetContents(_ => testSingle()));
         }
 
-        private Drawable testSingle(bool auto = false, double timeOffset = 0)
+        private Drawable testSingle(double timeOffset = 0)
         {
             var startTime = Time.Current + 1000 + timeOffset;
             const double duration = 2500;
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
             lyric.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 
-            var drawable = CreateDrawableLyric(lyric, auto);
+            var drawable = CreateDrawableLyric(lyric);
             drawable.DisplayTranslateLanguage = defaultLanguage;
 
             foreach (var mod in SelectedMods.Value.OfType<IApplicableToDrawableHitObject>())
@@ -90,8 +90,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
         private int depthIndex;
 
-        protected virtual TestDrawableLyric CreateDrawableLyric(Lyric lyric, bool auto)
-            => new(lyric, auto)
+        protected virtual TestDrawableLyric CreateDrawableLyric(Lyric lyric)
+            => new(lyric)
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
         protected class TestDrawableLyric : DrawableLyric
         {
-            public TestDrawableLyric(Lyric h, bool auto)
+            public TestDrawableLyric(Lyric h)
                 : base(h)
             {
             }

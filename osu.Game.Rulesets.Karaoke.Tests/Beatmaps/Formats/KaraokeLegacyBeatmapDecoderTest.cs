@@ -144,6 +144,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         {
             Assert.AreEqual(note?.Text, text);
             Assert.AreEqual(note?.Tone.Scale, tone);
+            Assert.AreEqual(note?.Tone.Half, half);
         }
     }
 }
