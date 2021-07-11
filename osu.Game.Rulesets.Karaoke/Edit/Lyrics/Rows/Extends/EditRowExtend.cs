@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends
                     ColumnDimensions = new[]
                     {
                         new Dimension(GridSizeMode.Absolute, info_part_spacing),
-                        new Dimension(GridSizeMode.Distributed)
+                        new Dimension()
                     },
                     RowDimensions = new[] { new Dimension(GridSizeMode.Relative) },
                     Content = new[]

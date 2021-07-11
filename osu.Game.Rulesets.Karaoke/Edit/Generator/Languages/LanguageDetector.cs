@@ -31,10 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
             var result = detector.DetectAll(lyric.Text);
             var languageCode = result.FirstOrDefault()?.Language;
 
-            if (languageCode == null)
-                return null;
-
-            return new CultureInfo(languageCode);
+            return languageCode == null ? null : new CultureInfo(languageCode);
         }
     }
 }

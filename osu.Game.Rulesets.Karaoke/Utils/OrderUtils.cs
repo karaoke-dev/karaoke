@@ -158,11 +158,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             foreach (var affectObject in affectObjects)
             {
-                if (affectObject.Order != old_order_temp_id)
-                {
-                    var affectObjectNewOrder = affectObject.Order + shiftingOrder;
-                    changeOrder(affectObject, affectObjectNewOrder);
-                }
+                if (affectObject.Order == old_order_temp_id)
+                    continue;
+
+                var affectObjectNewOrder = affectObject.Order + shiftingOrder;
+                changeOrder(affectObject, affectObjectNewOrder);
             }
 
             // set old order to new order

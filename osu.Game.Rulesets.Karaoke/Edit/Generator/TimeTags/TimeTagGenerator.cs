@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
             timeTags.Add(new TimeTag(new TextIndex(0)));
 
             if (Config.CheckLineEndKeyUp)
-                timeTags.Add(new TimeTag(new TextIndex(text.Length - 1, TextIndex.IndexState.End), null));
+                timeTags.Add(new TimeTag(new TextIndex(text.Length - 1, TextIndex.IndexState.End)));
 
             TimeTagLogic(lyric, timeTags);
 

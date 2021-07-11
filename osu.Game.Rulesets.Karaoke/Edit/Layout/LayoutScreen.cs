@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 ColumnDimensions = new[]
                 {
                     new Dimension(GridSizeMode.Relative, 0.3f),
-                    new Dimension(GridSizeMode.Distributed)
+                    new Dimension()
                 },
                 Content = new[]
                 {

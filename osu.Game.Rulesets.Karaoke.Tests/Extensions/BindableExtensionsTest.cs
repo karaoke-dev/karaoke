@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Extensions
             {
                 addCount++;
                 Assert.AreEqual(n, addedValues);
-            }, r =>
+            }, _ =>
             {
                 removedCount++;
             }, true);

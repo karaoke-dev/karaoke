@@ -346,6 +346,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                 switch (state.Mode)
                 {
+                    case LyricEditorMode.View:
+                        break;
+
                     case LyricEditorMode.Manage:
                         var cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position)), 0, Lyric.Text.Length - 1);
                         lyricCaretState.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, cuttingLyricStringIndex));
@@ -354,6 +357,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     case LyricEditorMode.Typing:
                         var typingStringIndex = TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position));
                         lyricCaretState.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, typingStringIndex));
+                        break;
+
+                    case LyricEditorMode.Language:
                         break;
 
                     case LyricEditorMode.EditRuby:

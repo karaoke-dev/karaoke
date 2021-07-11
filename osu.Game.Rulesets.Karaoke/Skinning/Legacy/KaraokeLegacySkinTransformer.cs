@@ -64,13 +64,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 bindableNotesLookup.Value = skin.NoteSkins.ToDictionary(k => skin.NoteSkins.IndexOf(k), y => y.Name);
             }
 
-            if (this.beatmap != null)
-            {
-                for (int i = 0; i < this.beatmap.Singers.Length; i++)
-                    bindableSingers.Add(i, new Bindable<Singer>(this.beatmap.Singers[i]));
+            if (this.beatmap == null)
+                return;
 
-                bindableSingersLookup.Value = this.beatmap.Singers.ToDictionary(k => this.beatmap.Singers.ToList().IndexOf(k), y => y.Name);
-            }
+            for (int i = 0; i < this.beatmap.Singers.Length; i++)
+                bindableSingers.Add(i, new Bindable<Singer>(this.beatmap.Singers[i]));
+
+            bindableSingersLookup.Value = this.beatmap.Singers.ToDictionary(k => this.beatmap.Singers.ToList().IndexOf(k), y => y.Name);
         }
 
         public override Drawable GetDrawableComponent(ISkinComponent component)

@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
         protected override Container<Drawable> Content => content;
 
-        protected virtual float Padding => 10;
+        protected virtual float ContentPadding => 10;
 
         protected BackgroundToolTip()
         {
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                     AutoSizeAxes = Axes.Both,
                     AutoSizeDuration = 200,
                     AutoSizeEasing = Easing.OutQuint,
-                    Padding = new MarginPadding(Padding)
+                    Padding = new MarginPadding(ContentPadding)
                 }
             };
         }

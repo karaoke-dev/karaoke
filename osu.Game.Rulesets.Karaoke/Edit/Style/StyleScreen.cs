@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                 ColumnDimensions = new[]
                 {
                     new Dimension(GridSizeMode.Relative, 0.3f),
-                    new Dimension(GridSizeMode.Distributed)
+                    new Dimension()
                 },
                 Content = new[]
                 {

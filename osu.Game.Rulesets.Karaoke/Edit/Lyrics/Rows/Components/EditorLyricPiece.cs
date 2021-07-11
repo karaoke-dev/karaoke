@@ -118,10 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         public Vector2 GetTextIndexPosition(TextIndex index)
         {
             var spriteText = getSpriteText();
-            if (spriteText == null)
-                return new Vector2();
-
-            return spriteText.GetTimeTagPosition(index);
+            return spriteText?.GetTimeTagPosition(index) ?? new Vector2();
         }
 
         private EditorLyricSpriteText getSpriteText()
