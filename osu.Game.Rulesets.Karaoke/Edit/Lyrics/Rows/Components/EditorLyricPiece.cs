@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
     {
         private const int time_tag_spacing = 8;
 
-        protected Lyric HitObject;
+        public Lyric HitObject;
 
         public EditorLyricPiece(Lyric lyric)
             : base(lyric)

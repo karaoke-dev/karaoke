@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -23,7 +22,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
-using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
@@ -451,16 +449,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     // Initial blueprint container.
                     InitializeBlueprint(e.NewValue);
                 }, true);
-
-                // update change if caret changed.
-                lyricCaretState.BindableHoverCaretPosition.BindValueChanged(e =>
-                {
-                    UpdateCaretPosition(e.NewValue, true);
-                });
-                lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
-                {
-                    UpdateCaretPosition(e.NewValue, false);
-                });
             }
 
             protected void InitializeBlueprint(LyricEditorMode mode)
@@ -549,25 +537,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                             throw new IndexOutOfRangeException(nameof(mode));
                     }
                 }
-            }
-
-            protected void UpdateCaretPosition<T>(T position, bool hover) where T : ICaretPosition
-            {
-                if (position == null)
-                    return;
-
-                var caret = caretContainer.Children.FirstOrDefault(x => x.Preview == hover);
-                if (caret == null)
-                    return;
-
-                if (position.Lyric != Lyric)
-                {
-                    caret.Hide();
-                    return;
-                }
-
-                caret.Show();
-                caret.CallMethod<T, T>("Apply", position);
             }
 
             protected void UpdateTimeTags()

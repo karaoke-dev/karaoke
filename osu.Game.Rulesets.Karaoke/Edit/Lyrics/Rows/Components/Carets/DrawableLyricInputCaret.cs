@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 
         public override void Hide() => this.FadeOut(200);
 
-        public override void Apply(TextCaretPosition caret)
+        protected override void Apply(TextCaretPosition caret)
         {
             Height = lyricPiece.GetTextHeight();
             var position = GetPosition(caret);
