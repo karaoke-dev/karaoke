@@ -11,7 +11,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 {
-    public class DrawableTimeTagRecordCaret : DrawableCaret, IApplicableCaretPosition<TimeTagCaretPosition>
+    public class DrawableTimeTagRecordCaret : DrawableCaret<TimeTagCaretPosition>
     {
         private const float triangle_width = 8;
 
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             };
         }
 
-        public void Apply(TimeTagCaretPosition caret)
+        protected override void Apply(TimeTagCaretPosition caret)
         {
             var timeTag = caret.TimeTag;
             this.MoveTo(lyricPiece.GetTimeTagPosition(timeTag), Preview ? 0 : 100, Easing.OutCubic);
