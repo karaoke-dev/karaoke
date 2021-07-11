@@ -50,14 +50,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     current.Current = value;
                     bindableFontUsage = value as BindableFontUsage;
 
-                    if (bindableFontUsage != null)
-                    {
-                        availableSizes = FontUtils.DefaultFontSize(bindableFontUsage.MinFontSize, bindableFontUsage.MaxFontSize);
-                    }
-                    else
-                    {
-                        availableSizes = FontUtils.DefaultFontSize();
-                    }
+                    availableSizes = bindableFontUsage != null
+                        ? FontUtils.DefaultFontSize(bindableFontUsage.MinFontSize, bindableFontUsage.MaxFontSize)
+                        : FontUtils.DefaultFontSize();
 
                     var showSizeButton = availableSizes.Length > 1;
                     decreaseFontSizeButton.Alpha = showSizeButton ? 1 : 0;
