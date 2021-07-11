@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
         private readonly OsuSpriteText index;
         private readonly OsuSpriteText indexState;
 
-        protected override float Padding => 5;
+        protected override float ContentPadding => 5;
 
         public TimeTagTooltip()
         {
