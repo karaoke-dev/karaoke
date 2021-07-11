@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 testNote("に", 1, note: notes[4]);
                 testNote("揺", 2, note: notes[5]);
                 testNote("ら", 3, note: notes[6]);
-                testNote("れ", 4, true, notes[7]);
+                testNote("れ", 4, note: notes[7]);
                 testNote("て", 3, note: notes[8]);
             }
         }
