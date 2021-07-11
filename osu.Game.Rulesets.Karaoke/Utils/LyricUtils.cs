@@ -204,10 +204,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 if (x.Index.Index < matchRuby.StartIndex || x.Index.Index > matchRuby.EndIndex)
                     return false;
 
-                if (x.Index.State == TextIndex.IndexState.Start && x.Index.Index == matchRuby.EndIndex)
-                    return false;
-
-                return true;
+                return x.Index.State != TextIndex.IndexState.Start || x.Index.Index != matchRuby.EndIndex;
             });
 
             // get ruby text and should notice exceed case if time-tag is more than ruby text.

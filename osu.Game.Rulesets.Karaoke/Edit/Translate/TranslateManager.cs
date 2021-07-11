@@ -76,10 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             if (cultureInfo == null)
                 throw new ArgumentNullException(nameof(cultureInfo));
 
-            if (lyric.Translates.TryGetValue(cultureInfo, out string translate))
-                return translate;
-
-            return null;
+            return lyric.Translates.TryGetValue(cultureInfo, out string translate) ? translate : null;
         }
 
         public void SaveTranslate(Lyric lyric, CultureInfo cultureInfo, string translate)

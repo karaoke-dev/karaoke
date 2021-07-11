@@ -24,6 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetEditSetting.AutoFocusToEditLyric, true);
             SetDefault(KaraokeRulesetEditSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);
 
+            // Note editor
             SetDefault(KaraokeRulesetEditSetting.DisplayRuby, true);
             SetDefault(KaraokeRulesetEditSetting.DisplayRomaji, true);
             SetDefault(KaraokeRulesetEditSetting.DisplayTranslate, true);
