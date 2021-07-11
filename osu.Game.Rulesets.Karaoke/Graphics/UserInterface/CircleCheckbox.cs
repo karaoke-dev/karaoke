@@ -99,13 +99,13 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         {
             base.OnUserChange(value);
 
-            if (PlaySoundsOnUserChange)
-            {
-                if (value)
-                    sampleChecked?.Play();
-                else
-                    sampleUnchecked?.Play();
-            }
+            if (!PlaySoundsOnUserChange)
+                return;
+
+            if (value)
+                sampleChecked?.Play();
+            else
+                sampleUnchecked?.Play();
         }
 
         public LocalisableString TooltipText { get; set; }

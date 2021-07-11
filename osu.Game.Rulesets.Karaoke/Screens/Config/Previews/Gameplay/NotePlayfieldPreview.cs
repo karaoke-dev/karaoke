@@ -60,25 +60,25 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
         {
             base.Update();
 
-            if (Time.Current > lastCreateSampleTime + 3000)
+            if (!(Time.Current > lastCreateSampleTime + 3000))
+                return;
+
+            lastCreateSampleTime = Time.Current;
+
+            var startTime = Time.Current + 3000;
+            notePlayfield.Add(new Note
             {
-                lastCreateSampleTime = Time.Current;
+                StartTime = startTime,
+                Duration = 1000,
+                Text = "Note",
+                HitWindows = new KaraokeHitWindows(),
+            });
 
-                var startTime = Time.Current + 3000;
-                notePlayfield.Add(new Note
-                {
-                    StartTime = startTime,
-                    Duration = 1000,
-                    Text = "Note",
-                    HitWindows = new KaraokeHitWindows(),
-                });
-
-                notePlayfield.Add(new BarLine
-                {
-                    StartTime = startTime,
-                    Major = true
-                });
-            }
+            notePlayfield.Add(new BarLine
+            {
+                StartTime = startTime,
+                Major = true
+            });
         }
 
         private readonly Bindable<KaraokeScrollingDirection> configDirection = new Bindable<KaraokeScrollingDirection>();

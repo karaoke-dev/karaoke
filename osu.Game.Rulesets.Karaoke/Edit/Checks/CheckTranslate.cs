@@ -35,18 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             // check if some translate is missing or empty.
             foreach (var language in languages)
             {
-                var notTranslateLyrics = lyrics.Where(x =>
-                {
-                    // lyric should contains current language translate.
-                    if (!x.Translates.ContainsKey(language))
-                        return true;
-
-                    // translate should noy be empty.
-                    if (string.IsNullOrWhiteSpace(x.Translates[language]))
-                        return true;
-
-                    return false;
-                }).ToArray();
+                var notTranslateLyrics = lyrics.Where(x => !x.Translates.ContainsKey(language) || string.IsNullOrWhiteSpace(x.Translates[language])).ToArray();
 
                 if (notTranslateLyrics.Length == lyrics.Count)
                 {

@@ -25,8 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [Resolved]
         private IBindable<WorkingBeatmap> beatmap { get; set; }
 
-        public IBeatmap Beatmap => beatmap.Value.Beatmap;
-
         public new IEnumerable<DrawableLyric> AllHitObjects => base.AllHitObjects.OfType<DrawableLyric>();
 
         protected WorkingBeatmap WorkingBeatmap => beatmap.Value;
