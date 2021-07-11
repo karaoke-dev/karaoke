@@ -82,10 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
                         foreach (var (invalidReason, timeTags) in g.InvalidTimeTags)
                         {
-                            foreach (var timeTag in timeTags)
-                            {
-                                rows.Add(createContent(lyric, timeTag, invalidReason));
-                            }
+                            rows.AddRange(timeTags.Select(timeTag => createContent(lyric, timeTag, invalidReason)));
                         }
 
                         return rows;
@@ -105,10 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
                         foreach (var (_, timeTags) in g.InvalidTimeTags)
                         {
-                            foreach (var timeTag in timeTags)
-                            {
-                                rows.Add(new TimeTagRowBackground(lyric, timeTag));
-                            }
+                            rows.AddRange(timeTags.Select(timeTag => new TimeTagRowBackground(lyric, timeTag)).Cast<RowBackground>());
                         }
 
                         return rows;

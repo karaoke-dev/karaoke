@@ -188,13 +188,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
         protected override bool OnMouseDown(MouseDownEvent e)
         {
-            if (base.OnMouseDown(e))
-            {
-                beginUserDrag();
-                return true;
-            }
+            if (!base.OnMouseDown(e))
+                return false;
 
-            return false;
+            beginUserDrag();
+            return true;
         }
 
         protected override void OnMouseUp(MouseUpEvent e)

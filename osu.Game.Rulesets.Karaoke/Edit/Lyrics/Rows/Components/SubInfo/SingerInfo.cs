@@ -37,24 +37,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
         {
             lyric.SingersBindable.BindValueChanged(value =>
             {
-                if (beatmap.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap)
-                {
-                    var singers = karaokeBeatmap.Singers?.Where(x => value.NewValue?.Contains(x.ID) ?? false).ToList();
+                if (!(beatmap.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap))
+                    return;
 
-                    if (singers?.Any() ?? false)
+                var singers = karaokeBeatmap.Singers?.Where(x => value.NewValue?.Contains(x.ID) ?? false).ToList();
+
+                if (singers?.Any() ?? false)
+                {
+                    singerDisplay.Current.Value = singers;
+                }
+                else
+                {
+                    singerDisplay.Current.Value = new List<Singer>
                     {
-                        singerDisplay.Current.Value = singers;
-                    }
-                    else
-                    {
-                        singerDisplay.Current.Value = new List<Singer>
+                        new Singer
                         {
-                            new Singer
-                            {
-                                Name = "No singer"
-                            }
-                        };
-                    }
+                            Name = "No singer"
+                        }
+                    };
                 }
             }, true);
         }
