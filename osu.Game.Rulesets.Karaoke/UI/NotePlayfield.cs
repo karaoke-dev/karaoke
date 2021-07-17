@@ -201,7 +201,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             var explosion = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.HitExplosion), _ =>
                 new DefaultHitExplosion(judgedObject.AccentColour.Value, judgedObject is DrawableNote))
             {
-                Y = notePositionInfo.Calculator.YPositionAt(note.HitObject.Tone)
+                Y = notePositionInfo.Calculator.YPositionAt(note.HitObject)
             };
 
             // todo : should be added into hitObjectArea.Explosions
