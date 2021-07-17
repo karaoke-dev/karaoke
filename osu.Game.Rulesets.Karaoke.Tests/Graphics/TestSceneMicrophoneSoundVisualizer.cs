@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            Child = new MicrophoneInputManager(-1)
+            Child = new MicrophoneInputManager()
             {
                 Child = preview = new MicrophoneSoundVisualizer
                 {

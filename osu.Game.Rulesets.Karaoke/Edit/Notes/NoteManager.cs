@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Notes
 
         public void SplitNote(Note note, float percentage = 0.5f)
         {
-            var (firstNote, secondNote) = NotesUtils.SplitNote(note, 0.5);
+            var (firstNote, secondNote) = NotesUtils.SplitNote(note);
             beatmap?.Add(firstNote);
             beatmap?.Add(secondNote);
             beatmap?.Remove(note);

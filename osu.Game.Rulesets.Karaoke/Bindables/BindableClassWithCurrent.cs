@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
         public void TriggerOtherChange()
         {
             // will trigger other bindable
-            TriggerValueChange(Value, this, true);
+            TriggerValueChange(Value, this);
             TriggerDisabledChange(this, false);
         }
     }
