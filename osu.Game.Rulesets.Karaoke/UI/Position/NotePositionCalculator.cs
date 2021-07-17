@@ -26,11 +26,13 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 
         public float YPositionAt(Tone tone) => -(columnSpacing + columnHeight) * (tone.Scale + (tone.Half ? 0.5f : 0));
 
+        public float YPositionAt(Note note) => YPositionAt(note.Tone);
+
         public float YPositionAt(KaraokeSaitenAction action) => -(columnSpacing + columnHeight) * action.Scale;
 
         public float CenterPosition() => YPositionAt(new Tone { Scale = column / 2, Half = column % 2 == 1 });
 
-        public float Distance() => YPositionAt(new Tone { Scale = 1 });
+        public float Height() => columnHeight;
 
         public Tone MaxTone() =>
             new Tone

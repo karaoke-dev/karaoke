@@ -16,6 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
     {
         private readonly Bindable<NotePositionCalculator> position = new Bindable<NotePositionCalculator>();
         public new IBindable<NotePositionCalculator> Position => position;
+        public NotePositionCalculator Calculator => Position.Value;
 
         private readonly IBindable<float> bindableColumnHeight = new Bindable<float>(DefaultColumnBackground.COLUMN_HEIGHT);
         private readonly IBindable<float> bindableColumnSpacing = new Bindable<float>(ScrollingNotePlayfield.COLUMN_SPACING);

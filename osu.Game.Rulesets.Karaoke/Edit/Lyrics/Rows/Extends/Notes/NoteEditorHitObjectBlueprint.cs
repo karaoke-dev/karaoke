@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             tone.BindValueChanged(e =>
             {
                 // todo : adjust y position
-                editBodyPiece.Y = positionCalculator.YPositionAt(e.NewValue);
+                editBodyPiece.Y = notePositionInfo.Calculator.YPositionAt(e.NewValue);
             }, true);
         }
 

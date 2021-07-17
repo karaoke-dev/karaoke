@@ -8,5 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
     public interface INotePositionInfo
     {
         IBindable<NotePositionCalculator> Position { get; }
+
+        NotePositionCalculator Calculator { get; }
     }
 }

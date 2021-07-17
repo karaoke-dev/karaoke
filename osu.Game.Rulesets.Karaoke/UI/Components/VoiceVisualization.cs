@@ -169,8 +169,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             bool left = direction.Value == ScrollingDirection.Left;
             path.Anchor = path.Origin = left ? Anchor.TopLeft : Anchor.TopRight;
 
+            var calculator = notePositionInfo.Calculator;
             var centerPosition = calculator.CenterPosition();
-            var scaleDistance = calculator.Distance();
+            var scaleDistance = calculator.Height();
 
             foreach (var frame in frameList)
             {

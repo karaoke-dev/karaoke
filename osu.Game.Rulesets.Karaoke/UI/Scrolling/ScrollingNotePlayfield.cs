@@ -11,8 +11,6 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI.Components;
-using osu.Game.Rulesets.Karaoke.UI.Position;
-using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
 using osuTK;
@@ -21,9 +19,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
 {
     public abstract class ScrollingNotePlayfield : ScrollingPlayfield
     {
-        [Resolved]
-        protected INotePositionInfo NotePositionInfo { get; private set; }
-
         public const float COLUMN_SPACING = 1;
 
         private readonly FillFlowContainer<DefaultColumnBackground> columnFlow;
@@ -123,19 +118,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
 
             HitObjectArea.Size = new Vector2(1 - judgementAreaPercentage, 1);
             HitObjectArea.X = left ? judgementAreaPercentage : 0;
-        }
-
-        protected override void OnNewDrawableHitObject(DrawableHitObject drawableHitObject)
-        {
-            if (drawableHitObject is DrawableNote drawableNote)
-            {
-                drawableNote.ToneBindable.BindValueChanged(tone =>
-                {
-                    drawableHitObject.Y = Calculator.YPositionAt(tone.NewValue);
-                });
-            }
-
-            base.OnNewDrawableHitObject(drawableHitObject);
         }
 
         private ISkinSource currentSkin;

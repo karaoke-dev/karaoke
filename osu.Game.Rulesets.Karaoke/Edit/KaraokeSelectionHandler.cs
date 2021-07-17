@@ -134,6 +134,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             if (!(moveEvent.Blueprint is NoteSelectionBlueprint))
                 return;
 
+            var calculator = notePositionInfo.Calculator;
+
             // top position
             var screenSpacePosition = moveEvent.Blueprint.ScreenSpaceSelectionPoint + moveEvent.ScreenSpaceDelta;
             var dragHeight = NotePlayfield.ToLocalSpace(screenSpacePosition).Y;
@@ -163,12 +165,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 //Change all note to visible
                 note.Display = true;
             }
-        }
 
-        private float convertToneToHeight(Tone tone)
-        {
-            var maxTone = calculator.MaxTone();
-            return calculator.YPositionAt(tone - maxTone);
+            // todo : should remove this because it seems weird.
+            float convertToneToHeight(Tone tone)
+            {
+                var maxTone = calculator.MaxTone();
+                return calculator.YPositionAt(tone - maxTone);
+            }
         }
     }
 }
