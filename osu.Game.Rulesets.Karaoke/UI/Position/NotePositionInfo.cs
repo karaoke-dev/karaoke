@@ -11,14 +11,14 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 {
     public class NotePositionInfo : Component, INotePositionInfo
     {
-        private readonly Bindable<IPositionCalculator> position = new Bindable<IPositionCalculator>();
-        public IBindable<IPositionCalculator> Position => position;
+        private readonly Bindable<NotePositionCalculator> position = new Bindable<NotePositionCalculator>();
+        public IBindable<NotePositionCalculator> Position => position;
 
         [BackgroundDependencyLoader]
         private void load(IBeatmap beatmap, ISkinSource skin)
         {
             // todo : apply the algorithm.
-            Position.Value = new PositionCalculator(9);
+            position.Value = new NotePositionCalculator(9);
         }
     }
 }

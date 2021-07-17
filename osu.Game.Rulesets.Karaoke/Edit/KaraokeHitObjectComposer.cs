@@ -41,8 +41,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         private DrawableKaraokeEditorRuleset drawableRuleset;
 
-        [Cached(Type = typeof(IPositionCalculator))]
-        private readonly PositionCalculator positionCalculator;
+        [Cached(Type = typeof(INotePositionInfo))]
+        private readonly NotePositionInfo notePositionInfo;
 
         [Cached]
         private readonly KaraokeRulesetEditConfigManager editConfigManager;
@@ -80,12 +80,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         public KaraokeHitObjectComposer(Ruleset ruleset)
             : base(ruleset)
         {
-            // Duplicated registration because selection handler need to use it.
-            positionCalculator = new PositionCalculator(9);
             editConfigManager = new KaraokeRulesetEditConfigManager();
             generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
             checkerConfigManager = new KaraokeRulesetEditCheckerConfigManager();
 
+            // Duplicated registration because selection handler need to use it.
+            AddInternal(notePositionInfo = new NotePositionInfo());
             AddInternal(exportLyricManager = new ExportLyricManager());
             AddInternal(noteManager = new NoteManager());
             AddInternal(lyricManager = new LyricManager());

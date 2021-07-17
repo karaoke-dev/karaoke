@@ -30,8 +30,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
         [Cached(Type = typeof(IScrollingInfo))]
         private readonly LocalScrollingInfo scrollingInfo;
 
-        [Cached(Type = typeof(IPositionCalculator))]
-        private readonly PositionCalculator positionCalculator;
+        [Cached(Type = typeof(INotePositionInfo))]
+        private readonly NotePositionInfo notePositionInfo;
 
         private readonly NotePlayfield notePlayfield;
 
@@ -39,8 +39,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
         {
             Size = new Vector2(0.7f, 0.5f);
 
-            positionCalculator = new PositionCalculator(row_amount);
             scrollingInfo = new LocalScrollingInfo();
+            notePositionInfo = new NotePositionInfo();
+
+            AddInternal(notePositionInfo);
 
             Child = new Container
             {

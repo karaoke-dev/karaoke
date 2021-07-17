@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
     public abstract class ScrollingNotePlayfield : ScrollingPlayfield
     {
         [Resolved]
-        protected IPositionCalculator Calculator { get; private set; }
+        protected INotePositionInfo NotePositionInfo { get; private set; }
 
         public const float COLUMN_SPACING = 1;
 

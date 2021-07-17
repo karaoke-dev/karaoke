@@ -34,8 +34,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         private readonly Bindable<KaraokeScrollingDirection> configDirection = new Bindable<KaraokeScrollingDirection>();
 
-        [Cached(Type = typeof(IPositionCalculator))]
-        private readonly PositionCalculator positionCalculator;
+        [Cached(Type = typeof(INotePositionInfo))]
+        private readonly NotePositionInfo positionCalculator;
 
         public override bool AllowGameplayOverlays => Beatmap.IsScorable() && !Mods.OfType<KaraokeModPractice>().Any();
 
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public DrawableKaraokeRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)
         {
-            positionCalculator = new PositionCalculator(9);
+            AddInternal(positionCalculator = new NotePositionInfo());
 
             InitialOverlay();
         }

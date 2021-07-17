@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         private IScrollingInfo scrollingInfo { get; set; }
 
         [Resolved]
-        private IPositionCalculator calculator { get; set; }
+        private INotePositionInfo notePositionInfo { get; set; }
 
         private readonly LayoutValue initialStateCache = new LayoutValue(Invalidation.RequiredParentSizeToFit | Invalidation.DrawInfo);
 

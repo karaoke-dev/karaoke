@@ -22,8 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         [Cached(Type = typeof(IScrollingInfo))]
         private readonly PreviewScrollingInfo scrollingInfo = new PreviewScrollingInfo();
 
-        [Cached(Type = typeof(IPositionCalculator))]
-        private readonly PositionCalculator positionCalculator = new PositionCalculator(preview_column);
+        [Cached(Type = typeof(INotePositionInfo))]
+        private readonly PreviewNotePositionInfo positionCalculator = new PreviewNotePositionInfo();
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
@@ -93,6 +93,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                 {
                 }
             }
+        }
+
+        private class PreviewNotePositionInfo : INotePositionInfo
+        {
+            public IBindable<NotePositionCalculator> Position { get; } = new Bindable<NotePositionCalculator>(new NotePositionCalculator(preview_column));
         }
     }
 }

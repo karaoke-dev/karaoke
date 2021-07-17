@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     public class KaraokeSelectionHandler : EditorSelectionHandler
     {
         [Resolved]
-        private IPositionCalculator calculator { get; set; }
+        private INotePositionInfo notePositionInfo { get; set; }
 
         [Resolved]
         private ISkinSource source { get; set; }
