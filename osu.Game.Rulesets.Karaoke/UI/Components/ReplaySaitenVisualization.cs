@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         protected override double GetTime(KaraokeReplayFrame frame) => frame.Time;
 
-        protected override float GetPosition(KaraokeReplayFrame frame) => notePositionInfo.Calculator.YPositionAt(frame.Scale);
+        protected override float GetPosition(KaraokeReplayFrame frame) => notePositionInfo.Calculator.YPositionAt(frame);
 
         private bool createNew = true;
 
