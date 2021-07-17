@@ -4,7 +4,6 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
@@ -22,13 +21,19 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
         private readonly IBindable<float> bindableColumnSpacing = new Bindable<float>(ScrollingNotePlayfield.COLUMN_SPACING);
 
         [BackgroundDependencyLoader]
-        private void load(IBeatmap beatmap, ISkinSource skin)
+        private void load(ISkinSource skin)
         {
             // todo : get from beatmap.
             const int columns = 9;
 
-            bindableColumnHeight.BindTo(skin.GetConfig<KaraokeSkinConfigurationLookup, float>(new KaraokeSkinConfigurationLookup(columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight)));
-            bindableColumnSpacing.BindTo(skin.GetConfig<KaraokeSkinConfigurationLookup, float>(new KaraokeSkinConfigurationLookup(columns, LegacyKaraokeSkinConfigurationLookups.ColumnSpacing)));
+            // todo : not able to get skin provider in here.
+            var columnHeight = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(new KaraokeSkinConfigurationLookup(columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight));
+            if (columnHeight != null)
+                bindableColumnHeight.BindTo(columnHeight);
+
+            var columnSpacing = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(new KaraokeSkinConfigurationLookup(columns, LegacyKaraokeSkinConfigurationLookups.ColumnSpacing));
+            if (columnSpacing != null)
+                bindableColumnSpacing.BindTo(columnSpacing);
 
             bindableColumnHeight.BindValueChanged(e => updatePositionCalculator());
             bindableColumnSpacing.BindValueChanged(e => updatePositionCalculator());

@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         {
             SetContents(_ => new KaraokeInputManager(new KaraokeRuleset().RulesetInfo)
             {
-                Child = new NotePlayfield(COLUMN_NUMBER)
+                Child = new NotePlayfield(COLUMNS)
             });
         }
     }

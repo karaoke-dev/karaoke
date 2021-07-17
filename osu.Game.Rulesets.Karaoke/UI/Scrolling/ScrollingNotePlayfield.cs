@@ -157,7 +157,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
         {
             for (int i = 0; i < Columns; i++)
             {
-                // apply column height from skin.
+                // todo : get from position calculator.
                 float? height = currentSkin.GetConfig<KaraokeSkinConfigurationLookup, float>(
                                                new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight, i))
                                            ?.Value;

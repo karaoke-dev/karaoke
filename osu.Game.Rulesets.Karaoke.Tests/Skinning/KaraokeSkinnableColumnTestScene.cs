@@ -8,7 +8,9 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osuTK.Graphics;
@@ -23,13 +25,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         protected const double START_TIME = 1000000000;
         protected const double DURATION = 1000000000;
 
-        public const int COLUMN_NUMBER = 9;
+        public const int COLUMNS = 9;
 
         [Cached(Type = typeof(IScrollingInfo))]
         private readonly TestScrollingInfo scrollingInfo = new();
 
-        [Cached(Type = typeof(IPositionCalculator))]
-        private readonly PositionCalculator positionCalculator = new(COLUMN_NUMBER);
+        [Cached(Type = typeof(INotePositionInfo))]
+        private readonly PreviewNotePositionInfo notePositionInfo = new();
 
         protected override Ruleset CreateRulesetForSkinProvider() => new KaraokeRuleset();
 
@@ -94,6 +96,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
             public void Reset()
             {
             }
+        }
+
+        private class PreviewNotePositionInfo : INotePositionInfo
+        {
+            public IBindable<NotePositionCalculator> Position { get; } = new Bindable<NotePositionCalculator>(new NotePositionCalculator(COLUMNS, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
+
+            public NotePositionCalculator Calculator => Position.Value;
         }
     }
 }

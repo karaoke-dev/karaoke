@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Beatmaps;
@@ -14,7 +15,9 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Tests.Visual;
@@ -29,8 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
         [Cached(typeof(IReadOnlyList<Mod>))]
         private IReadOnlyList<Mod> mods { get; set; } = Array.Empty<Mod>();
 
-        [Cached(Type = typeof(IPositionCalculator))]
-        private readonly PositionCalculator positionCalculator = new(COLUMNS);
+        [Cached(Type = typeof(INotePositionInfo))]
+        private readonly PreviewNotePositionInfo notePositionInfo = new();
 
         private readonly List<NotePlayfield> notePlayfields = new();
 
@@ -167,6 +170,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
                 TimeRange = 2000,
                 Child = playfield
             };
+        }
+
+        private class PreviewNotePositionInfo : INotePositionInfo
+        {
+            public IBindable<NotePositionCalculator> Position { get; } = new Bindable<NotePositionCalculator>(new NotePositionCalculator(COLUMNS, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
+
+            public NotePositionCalculator Calculator => Position.Value;
         }
     }
 }
