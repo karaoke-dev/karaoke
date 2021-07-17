@@ -28,13 +28,13 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 
         public float YPositionAt(Note note) => YPositionAt(note.Tone);
 
-        public float YPositionAt(Tone tone) => YPositionAt(tone.Scale + (tone.Half ? 0.5f : 0));
+        public float YPositionAt(Tone tone) => YPositionAt(toFloat(tone));
 
         public float YPositionAt(KaraokeSaitenAction action) => YPositionAt(action.Scale);
 
         public float YPositionAt(KaraokeReplayFrame frame) => YPositionAt(frame.Scale);
 
-        public float YPositionAt(float scale) => -(columnSpacing + columnHeight) * scale;
+        public float YPositionAt(float scale) => -(columnSpacing + columnHeight) * Math.Clamp(scale, toFloat(MinTone), toFloat(MaxTone));
 
         public Tone MaxTone =>
             new Tone
@@ -43,5 +43,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
             };
 
         public Tone MinTone => -MaxTone;
+
+        private float toFloat(Tone tone)
+            => tone.Scale + (tone.Half ? 0.5f : 0);
     }
 }
