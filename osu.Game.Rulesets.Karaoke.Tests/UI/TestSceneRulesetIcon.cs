@@ -12,9 +12,9 @@ using osuTK.Graphics;
 namespace osu.Game.Rulesets.Karaoke.Tests.UI
 {
     [TestFixture]
-    public class TestCaseRulesetIcon : OsuTestScene
+    public class TestSceneRulesetIcon : OsuTestScene
     {
-        public TestCaseRulesetIcon()
+        public TestSceneRulesetIcon()
         {
             Child = new ConstrainedIconContainer
             {
