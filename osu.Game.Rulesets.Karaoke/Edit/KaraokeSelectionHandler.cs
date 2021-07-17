@@ -155,9 +155,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
             foreach (var note in EditorBeatmap.SelectedHitObjects.OfType<Note>())
             {
-                if (note.Tone >= calculator.MaxTone() && deltaTone > 0)
+                if (note.Tone >= calculator.MaxTone && deltaTone > 0)
                     continue;
-                if (note.Tone <= calculator.MinTone() && deltaTone < 0)
+                if (note.Tone <= calculator.MinTone && deltaTone < 0)
                     continue;
 
                 note.Tone += deltaTone;
@@ -169,7 +169,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             // todo : should remove this because it seems weird.
             float convertToneToHeight(Tone tone)
             {
-                var maxTone = calculator.MaxTone();
+                var maxTone = calculator.MaxTone;
                 return calculator.YPositionAt(tone - maxTone);
             }
         }

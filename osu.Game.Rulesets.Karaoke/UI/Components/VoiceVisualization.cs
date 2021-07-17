@@ -14,7 +14,6 @@ using osu.Framework.Graphics.Lines;
 using osu.Framework.Graphics.Performance;
 using osu.Framework.Layout;
 using osu.Framework.Threading;
-using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.UI.Scrolling;
 using osuTK;
 
@@ -29,9 +28,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         [Resolved]
         private IScrollingInfo scrollingInfo { get; set; }
-
-        [Resolved]
-        private INotePositionInfo notePositionInfo { get; set; }
 
         private readonly LayoutValue initialStateCache = new LayoutValue(Invalidation.RequiredParentSizeToFit | Invalidation.DrawInfo);
 
@@ -169,14 +165,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             bool left = direction.Value == ScrollingDirection.Left;
             path.Anchor = path.Origin = left ? Anchor.TopLeft : Anchor.TopRight;
 
-            var calculator = notePositionInfo.Calculator;
-            var centerPosition = calculator.CenterPosition();
-            var scaleDistance = calculator.Height();
-
             foreach (var frame in frameList)
             {
                 var x = scrollingInfo.Algorithm.GetLength(startTime, GetTime(frame), timeRange.Value, scrollLength);
-                path.AddVertex(new Vector2(left ? x : -x, GetPosition(frame) * scaleDistance - centerPosition));
+                path.AddVertex(new Vector2(left ? x : -x, GetPosition(frame)));
             }
         });
 

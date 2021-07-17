@@ -8,12 +8,16 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Graphics;
 using osu.Game.Replays;
 using osu.Game.Rulesets.Karaoke.Replays;
+using osu.Game.Rulesets.Karaoke.UI.Position;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
     public class ReplaySaitenVisualization : VoiceVisualization<KaraokeReplayFrame>
     {
         protected override float PathRadius => 1.5f;
+
+        [Resolved]
+        private INotePositionInfo notePositionInfo { get; set; }
 
         public ReplaySaitenVisualization(Replay replay)
         {
@@ -23,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         protected override double GetTime(KaraokeReplayFrame frame) => frame.Time;
 
-        protected override float GetPosition(KaraokeReplayFrame frame) => frame.Scale;
+        protected override float GetPosition(KaraokeReplayFrame frame) => notePositionInfo.Calculator.YPositionAt(frame.Scale);
 
         private bool createNew = true;
 
