@@ -17,10 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static TextIndex FromStringIndex(int index, bool end)
         {
-            if (end)
-                return new TextIndex(index - 1, TextIndex.IndexState.End);
-
-            return new TextIndex(index);
+            return end ? new TextIndex(index - 1, TextIndex.IndexState.End) : new TextIndex(index);
         }
 
         public static TextIndex.IndexState ReverseState(TextIndex.IndexState state)
