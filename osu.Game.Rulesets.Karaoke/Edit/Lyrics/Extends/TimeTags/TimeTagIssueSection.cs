@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
                         foreach (var (_, timeTags) in g.InvalidTimeTags)
                         {
-                            rows.AddRange(timeTags.Select(timeTag => new TimeTagRowBackground(lyric, timeTag)).Cast<RowBackground>());
+                            rows.AddRange(timeTags.Select(timeTag => new TimeTagRowBackground(lyric, timeTag)));
                         }
 
                         return rows;
