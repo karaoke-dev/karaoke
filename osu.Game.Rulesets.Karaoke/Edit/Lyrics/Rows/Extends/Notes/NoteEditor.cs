@@ -8,6 +8,8 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Timing;
+using osu.Game.Rulesets.Karaoke.UI.Position;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
@@ -15,7 +17,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
     [Cached]
     public class NoteEditor : Container
     {
-        private const int row_amount = 9;
+        private const int columns = 9;
+
+        [Cached(Type = typeof(INotePositionInfo))]
+        private readonly PreviewNotePositionInfo notePositionInfo = new PreviewNotePositionInfo();
 
         private readonly Lyric lyric;
 
@@ -33,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
                 Children = new Drawable[]
                 {
                     // layers below playfield
-                    Playfield = new EditorNotePlayfield(row_amount),
+                    Playfield = new EditorNotePlayfield(columns),
                     // layers above playfield
                     new EditNoteBlueprintContainer(lyric),
                 }
@@ -53,6 +58,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             {
                 Playfield.Add(note);
             }
+        }
+
+        private class PreviewNotePositionInfo : INotePositionInfo
+        {
+            public IBindable<NotePositionCalculator> Position { get; } = new Bindable<NotePositionCalculator>(new NotePositionCalculator(columns, 12, ScrollingNotePlayfield.COLUMN_SPACING));
+
+            public NotePositionCalculator Calculator => Position.Value;
         }
     }
 }
