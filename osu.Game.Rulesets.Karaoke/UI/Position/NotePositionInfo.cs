@@ -13,35 +13,42 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 {
     public class NotePositionInfo : Component, INotePositionInfo
     {
+        private const int columns = 9;
+
         private readonly Bindable<NotePositionCalculator> position = new Bindable<NotePositionCalculator>();
         public new IBindable<NotePositionCalculator> Position => position;
         public NotePositionCalculator Calculator => Position.Value;
 
+        // todo : get from beatmap
+        private readonly IBindable<int> bindableColumns = new Bindable<int>(columns);
         private readonly IBindable<float> bindableColumnHeight = new Bindable<float>(DefaultColumnBackground.COLUMN_HEIGHT);
         private readonly IBindable<float> bindableColumnSpacing = new Bindable<float>(ScrollingNotePlayfield.COLUMN_SPACING);
+
+        public NotePositionInfo()
+        {
+            updatePositionCalculator();
+        }
 
         [BackgroundDependencyLoader]
         private void load(ISkinSource skin)
         {
-            // todo : get from beatmap.
-            const int columns = 9;
-
-            // todo : not able to get skin provider in here.
+            // todo : fix the case that not able to get skin provider in here.
             var columnHeight = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(new KaraokeSkinConfigurationLookup(columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight));
-            if (columnHeight != null)
-                bindableColumnHeight.BindTo(columnHeight);
+            if (columnHeight == null)
+                return;
 
             var columnSpacing = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(new KaraokeSkinConfigurationLookup(columns, LegacyKaraokeSkinConfigurationLookups.ColumnSpacing));
-            if (columnSpacing != null)
-                bindableColumnSpacing.BindTo(columnSpacing);
+            if (columnSpacing == null)
+                return;
+
+            bindableColumnHeight.BindTo(columnHeight);
+            bindableColumnSpacing.BindTo(columnSpacing);
 
             bindableColumnHeight.BindValueChanged(e => updatePositionCalculator());
             bindableColumnSpacing.BindValueChanged(e => updatePositionCalculator());
-
-            updatePositionCalculator();
-
-            void updatePositionCalculator()
-                => position.Value = new NotePositionCalculator(columns, bindableColumnHeight.Value, bindableColumnSpacing.Value);
         }
+
+        private void updatePositionCalculator()
+            => position.Value = new NotePositionCalculator(bindableColumns.Value, bindableColumnHeight.Value, bindableColumnSpacing.Value);
     }
 }

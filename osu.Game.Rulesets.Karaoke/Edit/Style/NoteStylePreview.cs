@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
     public class NoteStylePreview : Container
     {
-        private const int preview_column = 9;
+        private const int columns = 9;
 
         [Cached(Type = typeof(IScrollingInfo))]
         private readonly PreviewScrollingInfo scrollingInfo = new PreviewScrollingInfo();
@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         public class PreviewDrawableNoteArea : NotePlayfield
         {
             public PreviewDrawableNoteArea()
-                : base(preview_column)
+                : base(columns)
             {
             }
         }
@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 
         private class PreviewNotePositionInfo : INotePositionInfo
         {
-            public IBindable<NotePositionCalculator> Position { get; } = new Bindable<NotePositionCalculator>(new NotePositionCalculator(preview_column, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
+            public IBindable<NotePositionCalculator> Position { get; } = new Bindable<NotePositionCalculator>(new NotePositionCalculator(columns, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
 
             public NotePositionCalculator Calculator => Position.Value;
         }

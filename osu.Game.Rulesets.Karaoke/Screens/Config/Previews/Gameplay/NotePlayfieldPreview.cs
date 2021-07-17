@@ -14,7 +14,9 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Timing;
 using osu.Game.Rulesets.UI.Scrolling;
@@ -25,13 +27,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
 {
     public class NotePlayfieldPreview : SettingsSubsectionPreview
     {
-        private const int row_amount = 9;
+        private const int columns = 9;
 
         [Cached(Type = typeof(IScrollingInfo))]
-        private readonly LocalScrollingInfo scrollingInfo;
+        private readonly LocalScrollingInfo scrollingInfo = new LocalScrollingInfo();
 
         [Cached(Type = typeof(INotePositionInfo))]
-        private readonly NotePositionInfo notePositionInfo;
+        private readonly PreviewNotePositionInfo notePositionInfo = new PreviewNotePositionInfo();
 
         private readonly NotePlayfield notePlayfield;
 
@@ -39,16 +41,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
         {
             Size = new Vector2(0.7f, 0.5f);
 
-            scrollingInfo = new LocalScrollingInfo();
-            notePositionInfo = new NotePositionInfo();
-
-            AddInternal(notePositionInfo);
-
             Child = new Container
             {
                 RelativeSizeAxes = Axes.Both,
                 Padding = new MarginPadding(30),
-                Child = notePlayfield = new NotePlayfield(row_amount)
+                Child = notePlayfield = new NotePlayfield(columns)
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
@@ -125,6 +122,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             public IBindable<double> TimeRange { get; } = new BindableDouble(1500);
 
             public IScrollAlgorithm Algorithm { get; } = new SequentialScrollAlgorithm(new SortedList<MultiplierControlPoint>(Comparer<MultiplierControlPoint>.Default));
+        }
+
+        private class PreviewNotePositionInfo : INotePositionInfo
+        {
+            public IBindable<NotePositionCalculator> Position { get; } = new Bindable<NotePositionCalculator>(new NotePositionCalculator(columns, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
+
+            public NotePositionCalculator Calculator => Position.Value;
         }
     }
 }
