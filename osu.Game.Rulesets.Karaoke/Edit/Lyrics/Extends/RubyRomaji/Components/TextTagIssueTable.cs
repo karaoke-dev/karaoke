@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
 
         protected abstract string GetInvalidMessage(TInvalid invalid);
 
-        public class TextTagRowBackground : RowBackground
+        private class TextTagRowBackground : RowBackground
         {
             private readonly Lyric lyric;
             private readonly TTextTag textTag;

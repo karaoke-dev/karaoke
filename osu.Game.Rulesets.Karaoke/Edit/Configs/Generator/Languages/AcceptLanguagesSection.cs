@@ -82,9 +82,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
             bindableCultureInfo.Value = languageList.ToArray();
         }
 
-        public class RemovableLabelledLanguageSelector : LabelledLanguageSelector
+        private class RemovableLabelledLanguageSelector : LabelledLanguageSelector
         {
-            protected const float DELETE_BUTTON_SIZE = 20f;
+            private const float delete_button_size = 20f;
 
             public Action OnDeleteButtonClick;
 
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
                 {
                     Horizontal = CONTENT_PADDING_HORIZONTAL,
                     Vertical = CONTENT_PADDING_VERTICAL,
-                    Right = CONTENT_PADDING_HORIZONTAL + DELETE_BUTTON_SIZE + CONTENT_PADDING_HORIZONTAL,
+                    Right = CONTENT_PADDING_HORIZONTAL + delete_button_size + CONTENT_PADDING_HORIZONTAL,
                 };
 
                 // add delete button.
@@ -115,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
                     {
                         Anchor = Anchor.TopRight,
                         Origin = Anchor.TopRight,
-                        Size = new Vector2(DELETE_BUTTON_SIZE),
+                        Size = new Vector2(delete_button_size),
                         Action = () => OnDeleteButtonClick?.Invoke(),
                     }
                 });

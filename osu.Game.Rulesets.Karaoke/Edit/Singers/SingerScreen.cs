@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
             });
         }
 
-        internal class FixedSectionsContainer<T> : SectionsContainer<T> where T : Drawable
+        private class FixedSectionsContainer<T> : SectionsContainer<T> where T : Drawable
         {
             private readonly Container<T> content;
 
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
             }
         }
 
-        internal class SingerScreenHeader : OverlayHeader
+        private class SingerScreenHeader : OverlayHeader
         {
             protected override OverlayTitle CreateTitle() => new TranslateScreenTitle();
 
