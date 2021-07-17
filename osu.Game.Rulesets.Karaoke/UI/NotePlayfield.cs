@@ -16,6 +16,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.UI.Components;
+using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.UI;
@@ -43,6 +44,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         // Note playfield should be present even being hidden.
         public override bool IsPresent => true;
+
+        [Resolved]
+        private INotePositionInfo notePositionInfo { get; set; }
 
         public NotePlayfield(int columns)
             : base(columns)
@@ -153,7 +157,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             {
                 var newValue = value.NewValue;
                 var targetTone = new Tone((newValue < 0 ? newValue - 1 : newValue) / 2, newValue % 2 != 0);
-                var targetY = Calculator.YPositionAt(targetTone);
+                var targetY = notePositionInfo.Calculator.YPositionAt(targetTone);
                 var targetHeight = targetTone.Half ? 5 : DefaultColumnBackground.COLUMN_HEIGHT;
                 var alpha = targetTone.Half ? 0.6f : 0.2f;
 
@@ -187,7 +191,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
-                Y = Calculator.YPositionAt(note.HitObject.Tone + 2)
+                Y = notePositionInfo.Calculator.YPositionAt(note.HitObject.Tone + 2)
             });
 
             // Add hit explosion
@@ -197,7 +201,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             var explosion = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.HitExplosion), _ =>
                 new DefaultHitExplosion(judgedObject.AccentColour.Value, judgedObject is DrawableNote))
             {
-                Y = Calculator.YPositionAt(note.HitObject.Tone)
+                Y = notePositionInfo.Calculator.YPositionAt(note.HitObject)
             };
 
             // todo : should be added into hitObjectArea.Explosions
@@ -218,7 +222,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public bool OnPressed(KaraokeSaitenAction action)
         {
             // TODO : appear marker and move position with delay time
-            saitenMarker.Y = Calculator.YPositionAt(action);
+            saitenMarker.Y = notePositionInfo.Calculator.YPositionAt(action);
             saitenMarker.Alpha = 1;
 
             // Mark as singing

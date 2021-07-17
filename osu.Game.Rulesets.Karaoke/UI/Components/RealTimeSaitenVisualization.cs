@@ -6,6 +6,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Caching;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.UI.Position;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
@@ -17,6 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         protected override float Offset => DrawSize.X;
 
+        [Resolved]
+        private INotePositionInfo notePositionInfo { get; set; }
+
         public RealTimeSaitenVisualization()
         {
             Masking = true;
@@ -24,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         protected override double GetTime(KeyValuePair<double, KaraokeSaitenAction> action) => action.Key;
 
-        protected override float GetPosition(KeyValuePair<double, KaraokeSaitenAction> action) => action.Value.Scale;
+        protected override float GetPosition(KeyValuePair<double, KaraokeSaitenAction> action) => notePositionInfo.Calculator.YPositionAt(action.Value);
 
         private bool createNew = true;
 

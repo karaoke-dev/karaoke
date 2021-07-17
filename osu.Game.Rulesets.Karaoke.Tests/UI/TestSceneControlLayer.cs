@@ -12,7 +12,7 @@ using static osu.Game.Rulesets.Karaoke.UI.Overlays.SettingHUDOverlay;
 namespace osu.Game.Rulesets.Karaoke.Tests.UI
 {
     [TestFixture]
-    public class TestCaseControlLayer : OsuTestScene
+    public class TestSceneControlLayer : OsuTestScene
     {
         public ControlLayer ControlLayer { get; set; }
 

@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
-using osu.Game.Rulesets.Karaoke.UI.Components;
+using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
@@ -35,6 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         private readonly Bindable<bool> isHitting = new Bindable<bool>();
 
+        private readonly IBindable<NotePositionCalculator> positionBindable = new Bindable<NotePositionCalculator>();
+
         public readonly IBindable<string> TextBindable = new Bindable<string>();
         public readonly IBindable<string> AlternativeTextBindable = new Bindable<string>();
         public readonly IBindable<int[]> SingersBindable = new Bindable<int[]>();
@@ -49,8 +51,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public DrawableNote([CanBeNull] Note hitObject)
             : base(hitObject)
         {
-            Height = DefaultColumnBackground.COLUMN_HEIGHT;
-
             AddRangeInternal(new Drawable[]
             {
                 new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.Note), _ => new DefaultBodyPiece { RelativeSizeAxes = Axes.Both }),
@@ -67,12 +67,22 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(INotePositionInfo notePositionInfo)
         {
+            positionBindable.BindTo(notePositionInfo.Position);
+
+            positionBindable.BindValueChanged(e => updateNotePositionAndHeight());
             TextBindable.BindValueChanged(_ => { changeText(HitObject); });
             AlternativeTextBindable.BindValueChanged(_ => { changeText(HitObject); });
             SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
             DisplayBindable.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue; });
+            ToneBindable.BindValueChanged(e => updateNotePositionAndHeight());
+
+            void updateNotePositionAndHeight()
+            {
+                Y = notePositionInfo.Calculator.YPositionAt(HitObject);
+                Height = notePositionInfo.Calculator.ColumnHeight;
+            }
         }
 
         protected override void OnApply()
@@ -116,12 +126,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             if (HitObject == null)
                 return;
-
-            var columns = 9; // todo : get real number
-            var column = 0; // todo : get real number
-            var columnHeight = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(new KaraokeSkinConfigurationLookup(columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight, column))?.Value;
-            if (columnHeight != null)
-                Height = columnHeight.Value; // todo : might have a better way to assign height.
 
             var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, HitObject.ParentLyric?.Singers))?.Value;
             if (noteSkin == null)

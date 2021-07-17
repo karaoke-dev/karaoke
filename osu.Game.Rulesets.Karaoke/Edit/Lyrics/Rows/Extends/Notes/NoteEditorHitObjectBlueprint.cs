@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
         }
 
         [BackgroundDependencyLoader]
-        private void load(IPositionCalculator positionCalculator)
+        private void load(INotePositionInfo notePositionInfo)
         {
             editBodyPiece.Height = DefaultColumnBackground.COLUMN_HEIGHT;
 
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             tone.BindValueChanged(e =>
             {
                 // todo : adjust y position
-                editBodyPiece.Y = positionCalculator.YPositionAt(e.NewValue);
+                editBodyPiece.Y = notePositionInfo.Calculator.YPositionAt(e.NewValue);
             }, true);
         }
 

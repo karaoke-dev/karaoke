@@ -9,7 +9,9 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 
@@ -17,13 +19,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
     public class NoteStylePreview : Container
     {
-        private const int preview_column = 9;
+        private const int columns = 9;
 
         [Cached(Type = typeof(IScrollingInfo))]
         private readonly PreviewScrollingInfo scrollingInfo = new PreviewScrollingInfo();
 
-        [Cached(Type = typeof(IPositionCalculator))]
-        private readonly PositionCalculator positionCalculator = new PositionCalculator(preview_column);
+        [Cached(Type = typeof(INotePositionInfo))]
+        private readonly PreviewNotePositionInfo positionCalculator = new PreviewNotePositionInfo();
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
@@ -60,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         public class PreviewDrawableNoteArea : NotePlayfield
         {
             public PreviewDrawableNoteArea()
-                : base(preview_column)
+                : base(columns)
             {
             }
         }
@@ -93,6 +95,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                 {
                 }
             }
+        }
+
+        private class PreviewNotePositionInfo : INotePositionInfo
+        {
+            public IBindable<NotePositionCalculator> Position { get; } = new Bindable<NotePositionCalculator>(new NotePositionCalculator(columns, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
+
+            public NotePositionCalculator Calculator => Position.Value;
         }
     }
 }

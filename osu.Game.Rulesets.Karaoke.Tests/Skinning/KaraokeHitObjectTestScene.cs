@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 Padding = new MarginPadding { Left = PADDING, Right = PADDING },
                 Children = new[]
                 {
-                    new NotePlayfieldTestContainer(COLUMN_NUMBER)
+                    new NotePlayfieldTestContainer(COLUMNS)
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,

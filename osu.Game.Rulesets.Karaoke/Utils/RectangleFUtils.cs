@@ -18,12 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             var result = rectangles.FirstOrDefault();
 
-            foreach (var rectangle in rectangles)
-            {
-                result = RectangleF.Union(result, rectangle);
-            }
-
-            return result;
+            return rectangles.Aggregate(result, RectangleF.Union);
         }
     }
 }
