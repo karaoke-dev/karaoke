@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
         }
 
         /// <summary>
-        /// Process test case text tag string format into <see cref="TextIndex"/>
+        /// Process test case text index string format into <see cref="TextIndex"/>
         /// </summary>
         /// <example>
         /// [0,start]
