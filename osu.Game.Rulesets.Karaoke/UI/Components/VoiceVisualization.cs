@@ -204,7 +204,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             path.X = (x + Offset) * multiple;
         }
 
-        public class SaitenPath : Path
+        protected class SaitenPath : Path
         {
             public override bool RemoveWhenNotAlive => false;
 

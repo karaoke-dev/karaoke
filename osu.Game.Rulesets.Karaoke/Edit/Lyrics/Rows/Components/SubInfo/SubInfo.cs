@@ -45,13 +45,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
             };
         }
 
-        public LocalisableString BadgeText
+        protected LocalisableString BadgeText
         {
             get => badgeText.Text;
             set => badgeText.Text = value;
         }
 
-        public ColourInfo BadgeColour
+        protected ColourInfo BadgeColour
         {
             get => box.Colour;
             set => box.Colour = value;

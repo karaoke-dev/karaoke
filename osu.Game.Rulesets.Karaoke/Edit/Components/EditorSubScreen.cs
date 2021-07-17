@@ -5,9 +5,9 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components
 {
-    public class EditorSubScreen : EditorScreen
+    public abstract class EditorSubScreen : EditorScreen
     {
-        public EditorSubScreen()
+        protected EditorSubScreen()
             : base(EditorScreenMode.Compose)
         {
         }

@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 
     public abstract class DrawableCaret : CompositeDrawable
     {
-        public readonly bool Preview;
+        protected readonly bool Preview;
 
         protected DrawableCaret(bool preview)
         {

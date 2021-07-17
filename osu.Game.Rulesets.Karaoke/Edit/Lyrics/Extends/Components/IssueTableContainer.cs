@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
     {
         protected const float ROW_HEIGHT = 25;
 
-        public const int TEXT_SIZE = 14;
+        protected const int TEXT_SIZE = 14;
 
         protected readonly FillFlowContainer<RowBackground> BackgroundFlow;
 

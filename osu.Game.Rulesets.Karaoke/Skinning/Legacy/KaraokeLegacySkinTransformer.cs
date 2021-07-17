@@ -37,8 +37,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         private readonly Bindable<IDictionary<int, string>> bindableNotesLookup = new Bindable<IDictionary<int, string>>();
         private readonly Bindable<IDictionary<int, string>> bindableSingersLookup = new Bindable<IDictionary<int, string>>();
 
-        protected readonly Bindable<float> BindableColumnHeight = new Bindable<float>(DefaultColumnBackground.COLUMN_HEIGHT);
-        protected readonly Bindable<float> BindableColumnSpacing = new Bindable<float>(ScrollingNotePlayfield.COLUMN_SPACING);
+        private readonly Bindable<float> bindableColumnHeight = new Bindable<float>(DefaultColumnBackground.COLUMN_HEIGHT);
+        private readonly Bindable<float> bindableColumnSpacing = new Bindable<float>(ScrollingNotePlayfield.COLUMN_SPACING);
 
         public KaraokeLegacySkinTransformer(ISkin source, IBeatmap beatmap)
             : base(source)
@@ -171,11 +171,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     {
                         // should use customize height for note playfield in lyric editor.
                         case LegacyKaraokeSkinConfigurationLookups.ColumnHeight:
-                            return SkinUtils.As<TValue>(BindableColumnHeight);
+                            return SkinUtils.As<TValue>(bindableColumnHeight);
 
                         // not have note playfield judgement spacing in lyric editor.
                         case LegacyKaraokeSkinConfigurationLookups.ColumnSpacing:
-                            return SkinUtils.As<TValue>(BindableColumnSpacing);
+                            return SkinUtils.As<TValue>(bindableColumnSpacing);
                     }
 
                     break;
