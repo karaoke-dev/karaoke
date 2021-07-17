@@ -18,9 +18,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 
         public NotePositionCalculator(int columns, float columnHeight, float columnSpacing, Tone offset = new Tone())
         {
+            ColumnHeight = columnHeight;
+
             // todo : not sure should column can be even.
             this.columns = columns;
-            this.ColumnHeight = columnHeight;
             this.columnSpacing = columnSpacing;
             this.offset = offset;
         }

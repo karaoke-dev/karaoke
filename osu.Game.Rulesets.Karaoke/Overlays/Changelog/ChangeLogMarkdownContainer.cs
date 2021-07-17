@@ -116,6 +116,9 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
             protected override void AddLinkText(string text, LinkInline linkInline)
             {
+                if (linkInline.Url == null)
+                    return;
+
                 if (githubUrls.ContainsKey(text))
                 {
                     var baseUri = new Uri(githubUrls[text]);
