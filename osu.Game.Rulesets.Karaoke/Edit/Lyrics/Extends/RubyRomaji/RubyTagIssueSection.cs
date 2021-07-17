@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             }, true);
         }
 
-        public class RubyTagIssueTable : TextTagIssueTable<RubyTagInvalid, RubyTag>
+        private class RubyTagIssueTable : TextTagIssueTable<RubyTagInvalid, RubyTag>
         {
             protected override IEnumerable<Tuple<RubyTag, RubyTagInvalid>> GetInvalidByIssue(Issue issue)
             {

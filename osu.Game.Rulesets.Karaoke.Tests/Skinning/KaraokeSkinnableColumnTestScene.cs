@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         protected const double START_TIME = 1000000000;
         protected const double DURATION = 1000000000;
 
-        public const int COLUMNS = 9;
+        protected const int COLUMNS = 9;
 
         [Cached(Type = typeof(IScrollingInfo))]
         private readonly TestScrollingInfo scrollingInfo = new();

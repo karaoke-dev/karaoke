@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         public new IScrollingInfo ScrollingInfo => base.ScrollingInfo;
 
-        public override bool DisplayNotePlayfield => true;
+        protected override bool DisplayNotePlayfield => true;
 
         public DrawableKaraokeEditorRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)

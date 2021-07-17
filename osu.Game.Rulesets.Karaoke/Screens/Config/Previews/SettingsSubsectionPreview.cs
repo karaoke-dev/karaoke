@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews
 
         private bool showBackground;
 
-        public bool ShowBackground
+        protected bool ShowBackground
         {
             get => showBackground;
             set

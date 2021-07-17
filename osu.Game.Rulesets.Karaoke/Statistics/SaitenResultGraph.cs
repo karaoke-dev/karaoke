@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             background.Colour = colours.ContextMenuGray;
         }
 
-        internal class SaitenResultLyricPreview : LyricPreview
+        private class SaitenResultLyricPreview : LyricPreview
         {
             public SaitenResultLyricPreview(IBeatmap beatmap)
                 : base(beatmap.HitObjects.OfType<Lyric>())
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             protected override ClickableLyric CreateLyricContainer(Lyric lyric)
                 => new SaitenResultClickableLyric(lyric);
 
-            internal class SaitenResultClickableLyric : ClickableLyric
+            private class SaitenResultClickableLyric : ClickableLyric
             {
                 public SaitenResultClickableLyric(Lyric lyric)
                     : base(lyric)
@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             }
         }
 
-        internal class NoteGraph : CompositeDrawable
+        private class NoteGraph : CompositeDrawable
         {
             public NoteGraph(ScoreInfo score)
             {

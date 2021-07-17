@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             overlay.AddSettingsGroup(new PlaybackSettings { Expanded = false });
         }
 
-        public class PracticeOverlay : RightSideOverlay
+        private class PracticeOverlay : RightSideOverlay
         {
             public PracticeOverlay(IBeatmap beatmap)
             {

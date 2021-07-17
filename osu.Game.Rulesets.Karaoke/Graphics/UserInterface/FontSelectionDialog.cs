@@ -288,7 +288,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 background.Colour = colours.ContextMenuGray;
             }
 
-            public class TextPropertySearchTextBox : SearchTextBox
+            private class TextPropertySearchTextBox : SearchTextBox
             {
                 protected override Color4 SelectionColour => Color4.Gray;
 

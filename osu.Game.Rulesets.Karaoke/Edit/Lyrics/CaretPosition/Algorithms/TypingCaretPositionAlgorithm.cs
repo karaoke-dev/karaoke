@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         public override bool PositionMovable(TextCaretPosition position)
         {
-            return indexInTextRange(position.Index, position?.Lyric);
+            return indexInTextRange(position.Index, position.Lyric);
         }
 
         public override TextCaretPosition MoveUp(TextCaretPosition currentPosition)

@@ -27,10 +27,10 @@ namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHitObject>
     {
-        public KaraokeSessionStatics Session { get; private set; }
+        protected KaraokeSessionStatics Session { get; private set; }
         public new KaraokePlayfield Playfield => (KaraokePlayfield)base.Playfield;
 
-        public new KaraokeRulesetConfigManager Config => (KaraokeRulesetConfigManager)base.Config;
+        protected new KaraokeRulesetConfigManager Config => (KaraokeRulesetConfigManager)base.Config;
 
         private readonly Bindable<KaraokeScrollingDirection> configDirection = new Bindable<KaraokeScrollingDirection>();
 
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public override bool AllowGameplayOverlays => Beatmap.IsScorable() && !Mods.OfType<KaraokeModPractice>().Any();
 
-        public virtual bool DisplayNotePlayfield => Beatmap.IsScorable();
+        protected virtual bool DisplayNotePlayfield => Beatmap.IsScorable();
 
         public DrawableKaraokeRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
             : base(ruleset, beatmap, mods)

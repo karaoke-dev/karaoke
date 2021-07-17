@@ -106,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
                 },
             };
 
-            public class LyricLanguageRowBackground : RowBackground
+            private class LyricLanguageRowBackground : RowBackground
             {
                 private readonly Lyric lyric;
 

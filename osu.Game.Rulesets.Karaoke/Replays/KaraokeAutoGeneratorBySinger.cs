@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
             readTask = Task.Run(() =>
             {
-                int decodeStream = 0;
+                int decodeStream;
 
                 using (var fileCallbacks = new FileCallbacks(new DataStreamFileProcedures(data)))
                 {

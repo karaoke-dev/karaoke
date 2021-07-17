@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
     {
         public Action<APIChangelogBuild> BuildSelected;
 
-        public void SelectBuild(APIChangelogBuild build) => BuildSelected?.Invoke(build);
+        protected void SelectBuild(APIChangelogBuild build) => BuildSelected?.Invoke(build);
 
         protected ChangelogContent()
         {

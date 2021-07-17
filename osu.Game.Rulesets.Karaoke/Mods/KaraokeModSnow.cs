@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             Depth = 1,
         };
 
-        public class SnowContainer : Container
+        protected class SnowContainer : Container
         {
             // Max can have 1000 snow at the scene
             public int SnowGenerateParSecond { get; set; }

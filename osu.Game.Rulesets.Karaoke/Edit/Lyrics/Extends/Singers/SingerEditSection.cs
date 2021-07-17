@@ -65,9 +65,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
             });
         }
 
-        public class LabelledSingerSwitchButton : LabelledSwitchButton
+        private class LabelledSingerSwitchButton : LabelledSwitchButton
         {
-            protected const float AVATAR_SIZE = 40f;
+            private const float avatar_size = 40f;
 
             public ISinger Singer { get; }
 
@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
                 AddInternal(new DrawableCircleSingerAvatar
                 {
                     Singer = singer,
-                    Size = new Vector2(AVATAR_SIZE),
+                    Size = new Vector2(avatar_size),
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft,
                     Margin = new MarginPadding

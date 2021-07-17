@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 {
     public class CircleCheckbox : Checkbox, IHasAccentColour, IHasTooltip
     {
-        public const float EXPANDED_SIZE = 24;
+        private const float expanded_size = 24;
 
         private readonly Circle background;
         private readonly SpriteIcon border;
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
         public CircleCheckbox()
         {
-            Size = new Vector2(EXPANDED_SIZE);
+            Size = new Vector2(expanded_size);
 
             Children = new Drawable[]
             {

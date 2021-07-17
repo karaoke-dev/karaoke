@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             Current.BindValueChanged(e => languageList.SelectedSet.Value = e.NewValue);
         }
 
-        public class LanguageSelectionSearchTextBox : SearchTextBox
+        private class LanguageSelectionSearchTextBox : SearchTextBox
         {
             protected override Color4 SelectionColour => Color4.Gray;
 
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             }
         }
 
-        public class DrawableLanguageList : RearrangeableTextListContainer<CultureInfo>
+        private class DrawableLanguageList : RearrangeableTextListContainer<CultureInfo>
         {
             protected override OsuRearrangeableListItem<CultureInfo> CreateOsuDrawable(CultureInfo item)
                 => new DrawableLanguageListItem(item)
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     RequestSelection = set => RequestSelection?.Invoke(set)
                 };
 
-            public class DrawableLanguageListItem : DrawableTextListItem
+            private class DrawableLanguageListItem : DrawableTextListItem
             {
                 public DrawableLanguageListItem(CultureInfo item)
                     : base(item)
