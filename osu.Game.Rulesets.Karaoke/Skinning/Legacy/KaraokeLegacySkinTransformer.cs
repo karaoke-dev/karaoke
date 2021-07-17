@@ -15,6 +15,8 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
+using osu.Game.Rulesets.Karaoke.UI.Components;
+using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
 
@@ -34,6 +36,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         private readonly Bindable<IDictionary<int, string>> bindableLayoutsLookup = new Bindable<IDictionary<int, string>>();
         private readonly Bindable<IDictionary<int, string>> bindableNotesLookup = new Bindable<IDictionary<int, string>>();
         private readonly Bindable<IDictionary<int, string>> bindableSingersLookup = new Bindable<IDictionary<int, string>>();
+
+        protected readonly Bindable<float> BindableColumnHeight = new Bindable<float>(DefaultColumnBackground.COLUMN_HEIGHT);
+        protected readonly Bindable<float> BindableColumnSpacing = new Bindable<float>(ScrollingNotePlayfield.COLUMN_SPACING);
 
         public KaraokeLegacySkinTransformer(ISkin source, IBeatmap beatmap)
             : base(source)
@@ -160,6 +165,20 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                         default:
                             throw new ArgumentOutOfRangeException(nameof(indexLookup));
                     }
+
+                case KaraokeSkinConfigurationLookup skinConfigurationLookup:
+                    switch (skinConfigurationLookup.Lookup)
+                    {
+                        // should use customize height for note playfield in lyric editor.
+                        case LegacyKaraokeSkinConfigurationLookups.ColumnHeight:
+                            return SkinUtils.As<TValue>(BindableColumnHeight);
+
+                        // not have note playfield judgement spacing in lyric editor.
+                        case LegacyKaraokeSkinConfigurationLookups.ColumnSpacing:
+                            return SkinUtils.As<TValue>(BindableColumnSpacing);
+                    }
+
+                    break;
             }
 
             return base.GetConfig<TLookup, TValue>(lookup);

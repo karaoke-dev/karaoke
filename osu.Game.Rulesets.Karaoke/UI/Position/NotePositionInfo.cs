@@ -1,9 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
@@ -11,7 +9,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Position
 {
-    public class NotePositionInfo : Component, INotePositionInfo
+    public class NotePositionInfo : SkinReloadableDrawable, INotePositionInfo
     {
         private const int columns = 9;
 
@@ -29,9 +27,13 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
             updatePositionCalculator();
         }
 
-        [BackgroundDependencyLoader]
-        private void load(ISkinSource skin)
+        protected override void SkinChanged(ISkinSource skin)
         {
+            base.SkinChanged(skin);
+
+            bindableColumnHeight.UnbindAll();
+            bindableColumnSpacing.UnbindAll();
+
             // todo : fix the case that not able to get skin provider in here.
             var columnHeight = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(new KaraokeSkinConfigurationLookup(columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight));
             if (columnHeight == null)
