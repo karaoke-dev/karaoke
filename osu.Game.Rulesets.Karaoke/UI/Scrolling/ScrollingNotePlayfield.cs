@@ -3,6 +3,7 @@
 
 using System;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -11,6 +12,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI.Components;
+using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
 using osuTK;
@@ -26,6 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
         protected readonly Container BackgroundLayer;
         protected readonly Container HitObjectLayer;
         protected readonly Container HitObjectArea;
+
+        private readonly IBindable<NotePositionCalculator> calculator = new Bindable<NotePositionCalculator>();
 
         public int Columns { get; }
 
@@ -120,16 +124,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
             HitObjectArea.X = left ? judgementAreaPercentage : 0;
         }
 
-        private ISkinSource currentSkin;
-
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, ISkinSource skin)
+        private void load(OsuColour colours, ISkinSource skin, INotePositionInfo notePositionInfo)
         {
-            currentSkin = skin;
             columnFlow.Children.ForEach(x => x.Colour = x.IsSpecial ? colours.Gray9 : colours.Gray0);
-
-            skin.SourceChanged += onSkinChanged;
-            onSkinChanged();
 
             Direction.BindValueChanged(dir =>
             {
@@ -151,27 +149,17 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
                         throw new ArgumentOutOfRangeException(nameof(dir.NewValue));
                 }
             });
-        }
 
-        private void onSkinChanged()
-        {
-            for (int i = 0; i < Columns; i++)
+            calculator.BindTo(notePositionInfo.Position);
+            calculator.BindValueChanged(e =>
             {
-                // todo : get from position calculator.
-                float? height = currentSkin.GetConfig<KaraokeSkinConfigurationLookup, float>(
-                                               new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight, i))
-                                           ?.Value;
+                var columnHeight = e.NewValue.ColumnHeight;
 
-                columnFlow[i].Height = height ?? DefaultColumnBackground.COLUMN_HEIGHT;
-            }
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            base.Dispose(isDisposing);
-
-            if (currentSkin != null)
-                currentSkin.SourceChanged -= onSkinChanged;
+                for (int i = 0; i < Columns; i++)
+                {
+                    columnFlow[i].Height = columnHeight;
+                }
+            }, true);
         }
     }
 }

@@ -10,16 +10,17 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 {
     public class NotePositionCalculator
     {
-        private readonly int column;
-        private readonly float columnHeight;
+        private readonly int columns;
         private readonly float columnSpacing;
         private readonly Tone offset;
 
-        public NotePositionCalculator(int column, float columnHeight, float columnSpacing, Tone offset = new Tone())
+        public float ColumnHeight { get; }
+
+        public NotePositionCalculator(int columns, float columnHeight, float columnSpacing, Tone offset = new Tone())
         {
             // todo : not sure should column can be even.
-            this.column = column;
-            this.columnHeight = columnHeight;
+            this.columns = columns;
+            this.ColumnHeight = columnHeight;
             this.columnSpacing = columnSpacing;
             this.offset = offset;
         }
@@ -34,12 +35,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 
         public float YPositionAt(KaraokeReplayFrame frame) => YPositionAt(frame.Scale);
 
-        public float YPositionAt(float scale) => -(columnSpacing + columnHeight) * Math.Clamp(scale, toFloat(MinTone), toFloat(MaxTone));
+        public float YPositionAt(float scale) => -(columnSpacing + ColumnHeight) * Math.Clamp(scale, toFloat(MinTone), toFloat(MaxTone));
 
         public Tone MaxTone =>
             new Tone
             {
-                Scale = column / 2
+                Scale = columns / 2
             };
 
         public Tone MinTone => -MaxTone;
