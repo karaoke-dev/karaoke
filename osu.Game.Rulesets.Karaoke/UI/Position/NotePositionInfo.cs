@@ -17,7 +17,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
         public new IBindable<NotePositionCalculator> Position => position;
         public NotePositionCalculator Calculator => Position.Value;
 
-        // todo : get from beatmap
         private readonly IBindable<int> bindableColumns = new Bindable<int>(columns);
         private readonly IBindable<float> bindableColumnHeight = new Bindable<float>(DefaultColumnBackground.COLUMN_HEIGHT);
         private readonly IBindable<float> bindableColumnSpacing = new Bindable<float>(ScrollingNotePlayfield.COLUMN_SPACING);
@@ -34,7 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
             bindableColumnHeight.UnbindAll();
             bindableColumnSpacing.UnbindAll();
 
-            // todo : fix the case that not able to get skin provider in here.
             var columnHeight = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(new KaraokeSkinConfigurationLookup(columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight));
             if (columnHeight == null)
                 return;
