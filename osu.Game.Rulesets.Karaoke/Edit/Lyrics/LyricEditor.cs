@@ -41,6 +41,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved]
         private EditorClock editorClock { get; set; }
 
+        [Resolved]
+        private KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager { get; set; }
+
         [Cached]
         private readonly LyricEditorColourProvider colourProvider = new LyricEditorColourProvider();
 
@@ -59,6 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public Bindable<LyricEditorMode> BindableMode { get; } = new Bindable<LyricEditorMode>();
 
         private readonly Bindable<float> bindableFontSize = new Bindable<float>();
+        private readonly Bindable<MovingTimeTagCaretMode> bindableCreateMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
         private readonly Bindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
         private readonly BindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
@@ -145,6 +149,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             bindableFontSize.BindValueChanged(e =>
             {
                 skin.FontSize = e.NewValue;
+            });
+
+            bindableCreateMovingCaretMode.BindValueChanged(e =>
+            {
+                initialCaretPositionAlgorithm();
+
+                lyricCaretState.ResetPosition(Mode);
             });
 
             bindableRecordingMovingCaretMode.BindValueChanged(e =>
@@ -257,9 +268,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, EditorBeatmap beatmap)
+        private void load(EditorBeatmap beatmap)
         {
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, bindableCreateMovingCaretMode);
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, bindableRecordingMovingCaretMode);
 
             // load lyric in here
@@ -303,7 +315,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             var lyrics = bindableLyrics.ToArray();
             var state = Mode;
-            var recordingMovingCaretMode = bindableRecordingMovingCaretMode.Value;
+            var recordingMovingCaretMode = Mode == LyricEditorMode.RecordTimeTag
+                ? bindableRecordingMovingCaretMode.Value
+                : bindableCreateMovingCaretMode.Value;
+
             lyricCaretState.ChangePositionAlgorithm(lyrics, state, recordingMovingCaretMode);
         }
 
@@ -427,9 +442,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case KaraokeEditAction.SetTime:
                     var currentTime = editorClock.CurrentTime;
                     var setTimeSuccess = lyricManager.SetTimeTagTime(currentTimeTag, currentTime);
-                    if (setTimeSuccess)
+                    if (!setTimeSuccess)
+                        return false;
+
+                    if (lyricEditorConfigManager.Get<bool>(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag))
                         lyricCaretState.MoveCaret(MovingCaretAction.Right);
-                    return setTimeSuccess;
+
+                    return true;
 
                 default:
                     return false;
