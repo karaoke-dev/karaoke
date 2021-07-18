@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                         return new NavigateCaretPositionAlgorithm(lyrics);
 
                     case LyricEditorMode.CreateTimeTag:
-                        return new TimeTagIndexCaretPositionAlgorithm(lyrics);
+                        return new TimeTagIndexCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode };
 
                     case LyricEditorMode.RecordTimeTag:
                         return new TimeTagCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode };
