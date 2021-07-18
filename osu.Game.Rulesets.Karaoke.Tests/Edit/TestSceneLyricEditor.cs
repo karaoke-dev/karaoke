@@ -83,8 +83,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            OsuDropdown<RecordingMovingCaretMode> recordingModeDropdown = null;
-
             Child = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
@@ -115,26 +113,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                     x.Current.BindValueChanged(mode =>
                                     {
                                         editor.Mode = mode.NewValue;
-
-                                        if (editor.Mode == LyricEditorMode.RecordTimeTag)
-                                        {
-                                            recordingModeDropdown.Show();
-                                        }
-                                        else
-                                        {
-                                            recordingModeDropdown.Hide();
-                                        }
-                                    });
-                                }),
-                                recordingModeDropdown = new OsuDropdown<RecordingMovingCaretMode>
-                                {
-                                    Width = 150,
-                                    Items = EnumUtils.GetValues<RecordingMovingCaretMode>()
-                                }.With(x =>
-                                {
-                                    x.Current.BindValueChanged(recordingMovingCaretMode =>
-                                    {
-                                        editor.RecordingMovingCaretMode = recordingMovingCaretMode.NewValue;
                                     });
                                 }),
                                 new OsuButton
@@ -142,14 +120,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                     Width = 30,
                                     Height = 25,
                                     Text = "+",
-                                    Action = () => editor.FontSize += 3,
+                                    Action = () =>
+                                    {
+                                        var fontSize = lyricEditorConfigManager.Get<float>(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize);
+                                        lyricEditorConfigManager.SetValue(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, fontSize + 3);
+                                    }
                                 },
                                 new OsuButton
                                 {
                                     Width = 30,
                                     Height = 25,
                                     Text = "-",
-                                    Action = () => editor.FontSize -= 3,
+                                    Action = () =>
+                                    {
+                                        var fontSize = lyricEditorConfigManager.Get<float>(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize);
+                                        lyricEditorConfigManager.SetValue(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, fontSize - 3);
+                                    }
                                 },
                             }
                         }
@@ -163,8 +149,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                     }
                 }
             };
-
-            recordingModeDropdown.Hide();
         });
     }
 }
