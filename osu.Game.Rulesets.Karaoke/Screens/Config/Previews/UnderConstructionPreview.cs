@@ -11,13 +11,13 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews
 {
-    public class UnderConstructionMessage : SettingsSubsectionPreview
+    public class UnderConstructionPreview : SettingsSubsectionPreview
     {
         private const double transition_time = 1000;
 
         public FillFlowContainer TextContainer { get; }
 
-        public UnderConstructionMessage(string name)
+        public UnderConstructionPreview(string name)
         {
             Size = new Vector2(0.3f);
 
