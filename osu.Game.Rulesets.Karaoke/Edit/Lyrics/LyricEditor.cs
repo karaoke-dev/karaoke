@@ -11,6 +11,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages;
@@ -57,9 +58,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Bindable<LyricEditorMode> BindableMode { get; } = new Bindable<LyricEditorMode>();
 
-        public Bindable<RecordingMovingCaretMode> BindableRecordingMovingCaretMode { get; } = new Bindable<RecordingMovingCaretMode>();
-
-        public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
+        private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
+        private readonly BindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
         private readonly GridContainer gridContainer;
         private readonly GridContainer lyricEditorGridContainer;
@@ -118,7 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             };
 
-            container.Items.BindTo(BindableLyrics);
+            container.Items.BindTo(bindableLyrics);
             if (lyricManager != null)
                 container.OnOrderChanged += lyricManager.ChangeLyricOrder;
 
@@ -141,7 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
             }, true);
 
-            BindableRecordingMovingCaretMode.BindValueChanged(e =>
+            bindableRecordingMovingCaretMode.BindValueChanged(e =>
             {
                 initialCaretPositionAlgorithm();
 
@@ -251,28 +251,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap)
+        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, EditorBeatmap beatmap)
         {
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode, bindableRecordingMovingCaretMode);
+
             // load lyric in here
             var lyrics = OrderUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
-            BindableLyrics.AddRange(lyrics);
+            bindableLyrics.AddRange(lyrics);
 
             // need to check is there any lyric added or removed.
             beatmap.HitObjectAdded += e =>
             {
                 if (e is Lyric lyric)
                 {
-                    var previousLyric = BindableLyrics.LastOrDefault(x => x.Order < lyric.Order);
+                    var previousLyric = bindableLyrics.LastOrDefault(x => x.Order < lyric.Order);
 
                     if (previousLyric != null)
                     {
-                        var insertIndex = BindableLyrics.IndexOf(previousLyric) + 1;
-                        BindableLyrics.Insert(insertIndex, lyric);
+                        var insertIndex = bindableLyrics.IndexOf(previousLyric) + 1;
+                        bindableLyrics.Insert(insertIndex, lyric);
                     }
                     else
                     {
                         // insert to first.
-                        BindableLyrics.Insert(0, lyric);
+                        bindableLyrics.Insert(0, lyric);
                     }
 
                     initialCaretPositionAlgorithm();
@@ -282,7 +284,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 if (e is Lyric lyric)
                 {
-                    BindableLyrics.Remove(lyric);
+                    bindableLyrics.Remove(lyric);
                     initialCaretPositionAlgorithm();
                 }
             };
@@ -292,9 +294,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private void initialCaretPositionAlgorithm()
         {
-            var lyrics = BindableLyrics.ToArray();
+            var lyrics = bindableLyrics.ToArray();
             var state = Mode;
-            var recordingMovingCaretMode = RecordingMovingCaretMode;
+            var recordingMovingCaretMode = bindableRecordingMovingCaretMode.Value;
             lyricCaretState.ChangePositionAlgorithm(lyrics, state, recordingMovingCaretMode);
         }
 
@@ -451,22 +453,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        public float FontSize
-        {
-            get => skin.FontSize;
-            set => skin.FontSize = value;
-        }
-
         public LyricEditorMode Mode
         {
             get => BindableMode.Value;
             set => BindableMode.Value = value;
-        }
-
-        public RecordingMovingCaretMode RecordingMovingCaretMode
-        {
-            get => BindableRecordingMovingCaretMode.Value;
-            set => BindableRecordingMovingCaretMode.Value = value;
         }
 
         public virtual void NavigateToFix(LyricEditorMode mode)

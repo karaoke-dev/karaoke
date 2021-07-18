@@ -12,11 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeLyricEditor : CompositeDrawable
     {
-        private readonly Bindable<float> bindableLyricEditorFontSize = new Bindable<float>();
         private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new Bindable<LyricEditorMode>();
-        private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
-        private readonly BindableBool bindableAutoFocusToEditLyric = new BindableBool();
-        private readonly BindableInt bindableAutoFocusToEditLyricSkipRows = new BindableInt();
 
         private readonly LyricEditor lyricEditor;
 
@@ -34,32 +30,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             {
                 lyricEditor.Mode = e.NewValue;
             });
-            bindableLyricEditorFontSize.BindValueChanged(e =>
-            {
-                lyricEditor.FontSize = e.NewValue;
-            });
-            bindableRecordingMovingCaretMode.BindValueChanged(e =>
-            {
-                lyricEditor.RecordingMovingCaretMode = e.NewValue;
-            });
-            bindableAutoFocusToEditLyric.BindValueChanged(e =>
-            {
-                lyricEditor.AutoFocusEditLyric = e.NewValue;
-            });
-            bindableAutoFocusToEditLyricSkipRows.BindValueChanged(e =>
-            {
-                lyricEditor.AutoFocusEditLyricSkipRows = e.NewValue;
-            });
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetEditConfigManager editConfigManager)
+        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
-            editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorFontSize, bindableLyricEditorFontSize);
-            editConfigManager.BindWith(KaraokeRulesetEditSetting.LyricEditorMode, bindableLyricEditorMode);
-            editConfigManager.BindWith(KaraokeRulesetEditSetting.RecordingMovingCaretMode, bindableRecordingMovingCaretMode);
-            editConfigManager.BindWith(KaraokeRulesetEditSetting.AutoFocusToEditLyric, bindableAutoFocusToEditLyric);
-            editConfigManager.BindWith(KaraokeRulesetEditSetting.AutoFocusToEditLyricSkipRows, bindableAutoFocusToEditLyricSkipRows);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorMode, bindableLyricEditorMode);
         }
     }
 }

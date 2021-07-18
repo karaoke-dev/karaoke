@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
         protected override string Title => "Config";
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
             Children = new[]
             {
@@ -21,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 {
                     Label = "Record tag",
                     Description = "Only record time with start/end time-tag while recording.",
-                    Current = state.BindableRecordingMovingCaretMode,
+                    Current = lyricEditorConfigManager.GetBindable<RecordingMovingCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode),
                     Items = EnumUtils.GetValues<RecordingMovingCaretMode>(),
                 }
             };
