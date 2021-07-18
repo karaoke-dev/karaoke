@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Recording
             SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
-            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNext, true);
+            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag, true);
         }
     }
 
@@ -43,6 +43,6 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
         // Recording
         RecordingTimeTagMovingCaretMode,
-        RecordingAutoMoveToNext,
+        RecordingAutoMoveToNextTimeTag,
     }
 }

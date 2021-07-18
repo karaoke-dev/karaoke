@@ -27,6 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         {
                             new TimeTagEditModeSection(),
                             new TimeTagAutoGenerateSection(),
+                            new TimeTagCreateConfigSection(),
                         };
                         break;
 

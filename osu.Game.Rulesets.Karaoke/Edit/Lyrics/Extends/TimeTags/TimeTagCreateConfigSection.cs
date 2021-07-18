@@ -2,8 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Graphics;
-using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
@@ -11,27 +9,21 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 {
-    public class TimeTagRecordingConfigSection : Section
+    public class TimeTagCreateConfigSection : Section
     {
         protected override string Title => "Config";
 
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
-            Children = new Drawable[]
+            Children = new[]
             {
                 new LabelledDropdown<MovingTimeTagCaretMode>
                 {
-                    Label = "Record tag mode",
-                    Description = "Only record time with start/end time-tag while recording.",
-                    Current = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode),
+                    Label = "Create tag mode",
+                    Description = "Only create start/end time-tag or both.",
+                    Current = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode),
                     Items = EnumUtils.GetValues<MovingTimeTagCaretMode>(),
-                },
-                new LabelledSwitchButton
-                {
-                    Label = "Auto move to next tag",
-                    Description = "Auto move to next time-tag if set time to current time-tag.",
-                    Current = lyricEditorConfigManager.GetBindable<bool>(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag),
                 }
             };
         }
