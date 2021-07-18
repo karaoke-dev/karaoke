@@ -11,13 +11,13 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews
 {
-    public class UnderConstructionPreview : SettingsSubsectionPreview
+    public class DefaultPreview : SettingsSubsectionPreview
     {
         private const double transition_time = 1000;
 
         public FillFlowContainer TextContainer { get; }
 
-        public UnderConstructionPreview()
+        public DefaultPreview()
         {
             Size = new Vector2(0.3f);
 
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews
                 {
                     new SpriteIcon
                     {
-                        Icon = FontAwesome.Solid.UniversalAccess,
+                        Icon = FontAwesome.Solid.Cog,
                         Anchor = Anchor.TopCentre,
                         Origin = Anchor.TopCentre,
                         Size = new Vector2(50),
@@ -40,23 +40,16 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews
                     {
                         Anchor = Anchor.TopCentre,
                         Origin = Anchor.TopCentre,
-                        Text = "Oops",
+                        Text = "Welcome to config!",
                         Colour = ThemeColor.Lighten(0.8f),
-                        Font = OsuFont.GetFont(size: 36),
+                        Font = OsuFont.GetFont(size: 32),
                     },
                     new OsuSpriteText
                     {
                         Anchor = Anchor.TopCentre,
                         Origin = Anchor.TopCentre,
-                        Text = "this preview is not yet ready for use!",
+                        Text = "Select left size to adjust.",
                         Font = OsuFont.GetFont(size: 20),
-                    },
-                    new OsuSpriteText
-                    {
-                        Anchor = Anchor.TopCentre,
-                        Origin = Anchor.TopCentre,
-                        Text = "please check back a bit later.",
-                        Font = OsuFont.GetFont(size: 14),
                     },
                 }
             };
