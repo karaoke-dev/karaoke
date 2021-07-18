@@ -20,8 +20,12 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);
             SetDefault(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState, LockState.Partial);
 
+            // Create time-tag.
+            SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
+
             // Recording
-            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode, MovingTimeTagCaretMode.None);
+            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
+            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNext, true);
         }
     }
 
@@ -34,7 +38,11 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         AutoFocusToEditLyricSkipRows,
         ClickToLockLyricState,
 
+        // Create time-tag.
+        CreateTimeTagMovingCaretMode,
+
         // Recording
-        RecordingMovingCaretMode,
+        RecordingTimeTagMovingCaretMode,
+        RecordingAutoMoveToNext,
     }
 }

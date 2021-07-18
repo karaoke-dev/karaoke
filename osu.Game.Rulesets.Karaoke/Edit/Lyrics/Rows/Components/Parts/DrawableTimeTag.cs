@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
             InternalChild.Colour = colours.GetTimeTagColour(timeTag);
 
             bindableMode = state.BindableMode.GetBoundCopy();
-            bindableRecordingMovingCaretMode = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode).GetBoundCopy();
+            bindableRecordingMovingCaretMode = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode).GetBoundCopy();
 
             bindableMode.BindValueChanged(x =>
             {

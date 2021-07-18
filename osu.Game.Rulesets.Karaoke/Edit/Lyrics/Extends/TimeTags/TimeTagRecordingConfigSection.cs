@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 {
                     Label = "Record tag",
                     Description = "Only record time with start/end time-tag while recording.",
-                    Current = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode),
+                    Current = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode),
                     Items = EnumUtils.GetValues<MovingTimeTagCaretMode>(),
                 }
             };

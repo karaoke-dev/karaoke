@@ -260,7 +260,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, EditorBeatmap beatmap)
         {
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
-            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode, bindableRecordingMovingCaretMode);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, bindableRecordingMovingCaretMode);
 
             // load lyric in here
             var lyrics = OrderUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
