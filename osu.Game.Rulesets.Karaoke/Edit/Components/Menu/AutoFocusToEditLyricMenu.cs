@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
         private readonly BindableBool bindableAutoFocusToEditLyric = new BindableBool();
         private readonly BindableInt bindableAutoFocusToEditLyricSkipRows = new BindableInt();
 
-        public AutoFocusToEditLyricMenu(KaraokeRulesetEditConfigManager config, string text)
+        public AutoFocusToEditLyricMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
             : base(text)
         {
             var selections = new List<MenuItem>
@@ -28,8 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             selections.AddRange(Enumerable.Range(0, 4).Select(x => new ToggleMenuItem(getName(x), MenuItemType.Standard, _ => updateAutoFocusToEditLyricSkipRows(x))));
             Items = selections;
 
-            config.BindWith(KaraokeRulesetEditSetting.AutoFocusToEditLyric, bindableAutoFocusToEditLyric);
-            config.BindWith(KaraokeRulesetEditSetting.AutoFocusToEditLyricSkipRows, bindableAutoFocusToEditLyricSkipRows);
+            config.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric, bindableAutoFocusToEditLyric);
+            config.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, bindableAutoFocusToEditLyricSkipRows);
 
             // mark disable as selected option.
             bindableAutoFocusToEditLyric.BindValueChanged(e =>

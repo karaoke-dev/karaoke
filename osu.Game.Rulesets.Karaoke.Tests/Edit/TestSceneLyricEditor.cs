@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
     public class TestSceneLyricEditor : EditorClockTestScene
     {
         [Cached]
-        private readonly KaraokeRulesetEditConfigManager configManager;
+        private readonly KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager;
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             // It's a tricky to let osu! to read karaoke testing beatmap
             KaraokeLegacyBeatmapDecoder.Register();
 
-            configManager = new KaraokeRulesetEditConfigManager();
+            lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();
         }
 
         [Cached(typeof(EditorBeatmap))]
@@ -83,8 +83,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         [SetUp]
         public void SetUp() => Schedule(() =>
         {
-            OsuDropdown<RecordingMovingCaretMode> recordingModeDropdown = null;
-
             Child = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
@@ -115,26 +113,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                     x.Current.BindValueChanged(mode =>
                                     {
                                         editor.Mode = mode.NewValue;
-
-                                        if (editor.Mode == LyricEditorMode.RecordTimeTag)
-                                        {
-                                            recordingModeDropdown.Show();
-                                        }
-                                        else
-                                        {
-                                            recordingModeDropdown.Hide();
-                                        }
-                                    });
-                                }),
-                                recordingModeDropdown = new OsuDropdown<RecordingMovingCaretMode>
-                                {
-                                    Width = 150,
-                                    Items = EnumUtils.GetValues<RecordingMovingCaretMode>()
-                                }.With(x =>
-                                {
-                                    x.Current.BindValueChanged(recordingMovingCaretMode =>
-                                    {
-                                        editor.RecordingMovingCaretMode = recordingMovingCaretMode.NewValue;
                                     });
                                 }),
                                 new OsuButton
@@ -142,14 +120,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                                     Width = 30,
                                     Height = 25,
                                     Text = "+",
-                                    Action = () => editor.FontSize += 3,
+                                    Action = () =>
+                                    {
+                                        var fontSize = lyricEditorConfigManager.Get<float>(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize);
+                                        lyricEditorConfigManager.SetValue(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, fontSize + 3);
+                                    }
                                 },
                                 new OsuButton
                                 {
                                     Width = 30,
                                     Height = 25,
                                     Text = "-",
-                                    Action = () => editor.FontSize -= 3,
+                                    Action = () =>
+                                    {
+                                        var fontSize = lyricEditorConfigManager.Get<float>(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize);
+                                        lyricEditorConfigManager.SetValue(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, fontSize - 3);
+                                    }
                                 },
                             }
                         }
@@ -163,8 +149,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                     }
                 }
             };
-
-            recordingModeDropdown.Hide();
         });
     }
 }

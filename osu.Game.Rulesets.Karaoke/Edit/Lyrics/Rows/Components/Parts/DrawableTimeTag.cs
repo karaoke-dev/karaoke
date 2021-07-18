@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -49,12 +50,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, ILyricEditorState state, LyricCaretState lyricCaretState)
+        private void load(OsuColour colours, ILyricEditorState state, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, LyricCaretState lyricCaretState)
         {
             InternalChild.Colour = colours.GetTimeTagColour(timeTag);
 
             bindableMode = state.BindableMode.GetBoundCopy();
-            bindableRecordingMovingCaretMode = state.BindableRecordingMovingCaretMode.GetBoundCopy();
+            bindableRecordingMovingCaretMode = lyricEditorConfigManager.GetBindable<RecordingMovingCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode).GetBoundCopy();
 
             bindableMode.BindValueChanged(x =>
             {

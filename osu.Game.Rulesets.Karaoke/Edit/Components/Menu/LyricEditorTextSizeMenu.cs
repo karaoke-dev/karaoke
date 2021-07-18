@@ -15,12 +15,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
     {
         private readonly Bindable<float> bindableFontSize = new Bindable<float>();
 
-        public LyricEditorTextSizeMenu(KaraokeRulesetEditConfigManager config, string text)
+        public LyricEditorTextSizeMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
             : base(text)
         {
             Items = createMenuItems();
 
-            config.BindWith(KaraokeRulesetEditSetting.LyricEditorFontSize, bindableFontSize);
+            config.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
             bindableFontSize.BindValueChanged(e =>
             {
                 var newSelection = e.NewValue;

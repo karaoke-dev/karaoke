@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private readonly EditorBeatmap editorBeatmap;
 
         [Cached]
-        private readonly KaraokeRulesetEditConfigManager configManager;
+        private readonly KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager;
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             var beatmap = new TestKaraokeBeatmap(null);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
             editorBeatmap = new EditorBeatmap(karaokeBeatmap);
-            configManager = new KaraokeRulesetEditConfigManager();
+            lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();
         }
 
         [BackgroundDependencyLoader]

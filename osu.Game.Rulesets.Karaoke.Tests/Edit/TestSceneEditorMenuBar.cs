@@ -22,6 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         private void load()
         {
             var config = new KaraokeRulesetEditConfigManager();
+            var lyricEditorConfig = new KaraokeRulesetLyricEditorConfigManager();
             IScreen editor = null;
             Add(new Container
             {
@@ -53,8 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                             {
                                 new EditModeMenu(config, "Edit mode"),
                                 new EditorMenuItemSpacer(),
-                                new LyricEditorModeMenu(config, "Lyric editor mode"),
-                                new LyricEditorTextSizeMenu(config, "Text size"),
+                                new LyricEditorModeMenu(lyricEditorConfig, "Lyric editor mode"),
+                                new LyricEditorTextSizeMenu(lyricEditorConfig, "Text size"),
                                 new EditorMenuItemSpacer(),
                                 new NoteEditorPreviewMenu(config, "Note editor"),
                             }
