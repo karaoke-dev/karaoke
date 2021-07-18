@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
         private LyricManager lyricManager { get; set; }
 
         [Resolved]
-        private KaraokeRulesetEditConfigManager configManager { get; set; }
+        private KaraokeRulesetLyricEditorConfigManager configManager { get; set; }
 
         public MenuItem[] ContextMenuItems => new LyricLockContextMenu(lyricManager, lyric, "Lock").Items.ToArray();
 
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
             if (lyric.Lock == LockState.None)
             {
                 // change the state by config.
-                var newLockState = configManager.Get<LockState>(KaraokeRulesetEditSetting.ClickToLockLyricState);
+                var newLockState = configManager.Get<LockState>(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState);
                 lyricManager.LockLyric(lyric, newLockState);
             }
             else

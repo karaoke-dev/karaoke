@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
     public class TestSceneLyricEditor : EditorClockTestScene
     {
         [Cached]
-        private readonly KaraokeRulesetEditConfigManager configManager;
+        private readonly KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager;
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             // It's a tricky to let osu! to read karaoke testing beatmap
             KaraokeLegacyBeatmapDecoder.Register();
 
-            configManager = new KaraokeRulesetEditConfigManager();
+            lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();
         }
 
         [Cached(typeof(EditorBeatmap))]
