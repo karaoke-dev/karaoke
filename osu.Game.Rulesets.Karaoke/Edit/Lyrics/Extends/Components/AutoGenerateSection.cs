@@ -11,10 +11,12 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
@@ -31,9 +33,39 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
                 Children = new Drawable[]
                 {
-                    new AutoGenerateButton
+                    new GridContainer
                     {
-                        StartSelecting = () => disableSelectingLyrics
+                        AutoSizeAxes = Axes.Y,
+                        RelativeSizeAxes = Axes.X,
+                        ColumnDimensions = new[]
+                        {
+                            new Dimension(),
+                            new Dimension(GridSizeMode.Absolute, 5),
+                            new Dimension(GridSizeMode.Absolute, 36)
+                        },
+                        RowDimensions = new[]
+                        {
+                            new Dimension(GridSizeMode.AutoSize)
+                        },
+                        Content = new[]
+                        {
+                            new Drawable[]
+                            {
+                                new AutoGenerateButton
+                                {
+                                    StartSelecting = () => disableSelectingLyrics
+                                },
+                                null,
+                                new IconButton
+                                {
+                                    Anchor = Anchor.Centre,
+                                    Origin = Anchor.Centre,
+                                    Size = new Vector2(36),
+                                    Icon = FontAwesome.Solid.Cog,
+                                    Action = OpenConfigSetting,
+                                },
+                            }
+                        },
                     },
                     CreateInvalidLyricAlertTextContainer().With(t =>
                     {
@@ -61,6 +93,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         protected abstract void Apply(Lyric[] lyrics);
 
         protected abstract InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer();
+
+        protected virtual void OpenConfigSetting()
+        {
+            // todo : change to abstract class and force to implement.
+        }
 
         private class AutoGenerateButton : SelectLyricButton
         {
