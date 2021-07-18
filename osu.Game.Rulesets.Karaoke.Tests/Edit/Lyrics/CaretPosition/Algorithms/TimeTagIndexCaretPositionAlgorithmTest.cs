@@ -3,6 +3,7 @@
 
 using System.Linq;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -15,114 +16,154 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
     {
         protected const string NOT_EXIST_TAG = null;
 
-        [TestCase(nameof(singleLyric), 0, "[0,start]", true)]
-        [TestCase(nameof(singleLyric), 0, "[3,end]", true)]
-        [TestCase(nameof(singleLyric), 0, "[4,start]", false)]
-        [TestCase(nameof(singleLyric), 0, "[-1,end]", false)]
-        [TestCase(nameof(singleLyricWithNoText), 0, "[0,start]", false)] // it's not movable if no text
-        [TestCase(nameof(singleLyricWithNoText), 0, "[0,end]", false)]
-        public void TestPositionMovable(string sourceName, int lyricIndex, string timeTag, bool movable)
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[0,start]", true)]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[0,start]", true)]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[0,start]", false)]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[3,end]", true)]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[3,end]", false)]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[3,end]", true)]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[4,start]", false)] // should not out of range.
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[-1,end]", false)]
+        [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, 0, "[0,start]", false)] // it's not movable if no text
+        [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, 0, "[0,end]", false)]
+        public void TestPositionMovable(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string timeTag, bool movable)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caretPosition = CreateTimeTagIndexCaretPosition(lyrics, lyricIndex, timeTag);
 
             // Check is movable
-            TestPositionMovable(lyrics, caretPosition, movable);
+            TestPositionMovable(lyrics, caretPosition, movable, algorithms => algorithms.Mode = mode);
         }
 
-        [TestCase(nameof(singleLyric), 0, "[0,start]", NOT_EXIST, NOT_EXIST_TAG)] // cannot move up if at top index.
-        [TestCase(nameof(twoLyricsWithText), 1, "[0,start]", 0, "[0,start]")]
-        [TestCase(nameof(threeLyricsWithSpacing), 2, "[0,start]", 0, "[0,start]")]
-        [TestCase(nameof(threeLyricsWithSpacing), 2, "[2,start]", 0, "[2,start]")]
-        public void TestMoveUp(string sourceName, int lyricIndex, string textTag, int newLyricIndex, string newTextTag)
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[0,start]", NOT_EXIST, NOT_EXIST_TAG)] // cannot move up if at top index.
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 1, "[0,start]", 0, "[0,start]")]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 1, "[0,start]", 0, "[0,start]")]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 1, "[0,start]", 0, "[0,end]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, "[0,start]", 0, "[0,start]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 2, "[0,start]", 0, "[0,start]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 2, "[0,start]", 0, "[0,end]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, "[2,end]", 0, "[2,end]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 2, "[2,end]", 0, "[2,start]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 2, "[2,end]", 0, "[2,end]")]
+        public void TestMoveUp(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag, int newLyricIndex, string newTextTag)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caretPosition = CreateTimeTagIndexCaretPosition(lyrics, lyricIndex, textTag);
             var newCaretPosition = CreateTimeTagIndexCaretPosition(lyrics, newLyricIndex, newTextTag);
 
             // Check is movable
-            TestMoveUp(lyrics, caretPosition, newCaretPosition);
+            TestMoveUp(lyrics, caretPosition, newCaretPosition, algorithms => algorithms.Mode = mode);
         }
 
-        [TestCase(nameof(singleLyric), 0, "[0,start]", NOT_EXIST, NOT_EXIST_TAG)] // cannot move down if at bottom index.
-        [TestCase(nameof(twoLyricsWithText), 0, "[0,start]", 1, "[0,start]")]
-        [TestCase(nameof(threeLyricsWithSpacing), 0, "[0,start]", 2, "[0,start]")]
-        [TestCase(nameof(threeLyricsWithSpacing), 0, "[3,start]", 2, "[2,start]")]
-        [TestCase(nameof(threeLyricsWithSpacing), 0, "[3,end]", 2, "[2,end]")]
-        public void TestMoveDown(string sourceName, int lyricIndex, string textTag, int newLyricIndex, string newTextTag)
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[0,start]", NOT_EXIST, NOT_EXIST_TAG)] // cannot move down if at bottom index.
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 0, "[0,start]", 1, "[0,start]")]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 0, "[0,start]", 1, "[0,start]")]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 0, "[0,start]", 1, "[0,end]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, "[0,start]", 2, "[0,start]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 0, "[0,start]", 2, "[0,start]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 0, "[0,start]", 2, "[0,end]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, "[3,start]", 2, "[2,start]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 0, "[3,start]", 2, "[2,start]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 0, "[3,start]", 2, "[2,end]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, "[3,end]", 2, "[2,end]")]
+        public void TestMoveDown(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag, int newLyricIndex, string newTextTag)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caretPosition = CreateTimeTagIndexCaretPosition(lyrics, lyricIndex, textTag);
             var newCaretPosition = CreateTimeTagIndexCaretPosition(lyrics, newLyricIndex, newTextTag);
 
             // Check is movable
-            TestMoveDown(lyrics, caretPosition, newCaretPosition);
+            TestMoveDown(lyrics, caretPosition, newCaretPosition, algorithms => algorithms.Mode = mode);
         }
 
-        [TestCase(nameof(singleLyric), 0, "[0,start]", NOT_EXIST, NOT_EXIST_TAG)]
-        [TestCase(nameof(twoLyricsWithText), 1, "[0,start]", 0, "[3,end]")]
-        [TestCase(nameof(threeLyricsWithSpacing), 2, "[0,start]", 0, "[3,end]")]
-        [TestCase(nameof(threeLyricsWithSpacing), 2, "[2,end]", 2, "[2,start]")]
-        public void TestMoveLeft(string sourceName, int lyricIndex, string textTag, int newLyricIndex, string newTextTag)
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[0,start]", NOT_EXIST, NOT_EXIST_TAG)]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[1,start]", 0, "[0,end]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[1,start]", 0, "[0,start]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[1,start]", 0, "[0,end]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[1,end]", 0, "[1,start]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[1,end]", 0, "[1,start]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[1,end]", 0, "[0,end]")]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 1, "[0,start]", 0, "[3,end]")]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 1, "[0,start]", 0, "[3,start]")]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 1, "[0,start]", 0, "[3,end]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, "[0,start]", 0, "[3,end]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 2, "[0,start]", 0, "[3,start]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 2, "[0,start]", 0, "[3,end]")]
+        public void TestMoveLeft(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag, int newLyricIndex, string newTextTag)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caretPosition = CreateTimeTagIndexCaretPosition(lyrics, lyricIndex, textTag);
             var newCaretPosition = CreateTimeTagIndexCaretPosition(lyrics, newLyricIndex, newTextTag);
 
             // Check is movable
-            TestMoveLeft(lyrics, caretPosition, newCaretPosition);
+            TestMoveLeft(lyrics, caretPosition, newCaretPosition, algorithms => algorithms.Mode = mode);
         }
 
-        [TestCase(nameof(singleLyric), 0, "[3,end]", NOT_EXIST, NOT_EXIST_TAG)]
-        [TestCase(nameof(twoLyricsWithText), 0, "[3,end]", 1, "[0,start]")]
-        [TestCase(nameof(threeLyricsWithSpacing), 0, "[3,end]", 2, "[0,start]")]
-        [TestCase(nameof(threeLyricsWithSpacing), 0, "[2,end]", 0, "[3,start]")]
-        public void TestMoveRight(string sourceName, int lyricIndex, string textTag, int newLyricIndex, string newTextTag)
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[3,end]", NOT_EXIST, NOT_EXIST_TAG)]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[1,start]", 0, "[1,end]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[1,start]", 0, "[2,start]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[1,start]", 0, "[1,end]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[1,end]", 0, "[2,start]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[1,end]", 0, "[2,start]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[1,end]", 0, "[2,end]")]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 0, "[3,end]", 1, "[0,start]")]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 0, "[3,end]", 1, "[0,start]")]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 0, "[3,end]", 1, "[0,end]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, "[3,end]", 2, "[0,start]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 0, "[3,end]", 2, "[0,start]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 0, "[3,end]", 2, "[0,end]")]
+        public void TestMoveRight(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag, int newLyricIndex, string newTextTag)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caretPosition = CreateTimeTagIndexCaretPosition(lyrics, lyricIndex, textTag);
             var newCaretPosition = CreateTimeTagIndexCaretPosition(lyrics, newLyricIndex, newTextTag);
 
             // Check is movable
-            TestMoveRight(lyrics, caretPosition, newCaretPosition);
+            TestMoveRight(lyrics, caretPosition, newCaretPosition, algorithms => algorithms.Mode = mode);
         }
 
-        [TestCase(nameof(singleLyric), 0, "[0,start]")]
-        [TestCase(nameof(singleLyricWithNoText), NOT_EXIST, NOT_EXIST_TAG)]
-        [TestCase(nameof(twoLyricsWithText), 0, "[0,start]")]
-        [TestCase(nameof(threeLyricsWithSpacing), 0, "[0,start]")]
-        public void TestMoveToFirst(string sourceName, int lyricIndex, string textTag)
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[0,start]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[0,start]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[0,end]")]
+        [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, NOT_EXIST, NOT_EXIST_TAG)]
+        [TestCase(nameof(twoLyricsWithText), 0, MovingTimeTagCaretMode.None, "[0,start]")]
+        [TestCase(nameof(threeLyricsWithSpacing), 0, MovingTimeTagCaretMode.None, "[0,start]")]
+        public void TestMoveToFirst(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caretPosition = CreateTimeTagIndexCaretPosition(lyrics, lyricIndex, textTag);
 
             // Check first position
-            TestMoveToFirst(lyrics, caretPosition);
+            TestMoveToFirst(lyrics, caretPosition, algorithms => algorithms.Mode = mode);
         }
 
-        [TestCase(nameof(singleLyric), 0, "[3,end]")]
-        [TestCase(nameof(singleLyricWithNoText), NOT_EXIST, NOT_EXIST_TAG)]
-        [TestCase(nameof(twoLyricsWithText), 1, "[2,end]")]
-        [TestCase(nameof(threeLyricsWithSpacing), 2, "[2,end]")]
-        public void TestMoveToLast(string sourceName, int lyricIndex, string textTag)
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[3,end]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[3,start]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[3,end]")]
+        [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, NOT_EXIST, NOT_EXIST_TAG)]
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 1, "[2,end]")]
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, "[2,end]")]
+        public void TestMoveToLast(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caretPosition = CreateTimeTagIndexCaretPosition(lyrics, lyricIndex, textTag);
 
             // Check last position
-            TestMoveToLast(lyrics, caretPosition);
+            TestMoveToLast(lyrics, caretPosition, algorithms => algorithms.Mode = mode);
         }
 
-        [TestCase(nameof(singleLyric), 0, "[0,start]")]
-        [TestCase(nameof(singleLyricWithNoText), 0, NOT_EXIST_TAG)]
-        public void TestMoveToTarget(string sourceName, int lyricIndex, string textTag)
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, "[0,start]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, "[0,start]")]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, "[0,end]")]
+        [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, 0, NOT_EXIST_TAG)]
+        public void TestMoveToTarget(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, string textTag)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var lyric = lyrics[lyricIndex];
             var caretPosition = CreateTimeTagIndexCaretPosition(lyrics, lyricIndex, textTag);
 
             // Check move to target position.
-            TestMoveToTarget(lyrics, lyric, caretPosition);
+            TestMoveToTarget(lyrics, lyric, caretPosition, algorithms => algorithms.Mode = mode);
         }
 
         protected override void AssertEqual(TimeTagIndexCaretPosition compare, TimeTagIndexCaretPosition actual)

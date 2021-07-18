@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
         private const float triangle_width = 6;
 
         private Bindable<LyricEditorMode> bindableMode;
-        private Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode;
+        private Bindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode;
 
         private readonly Lyric lyric;
         private readonly TimeTag timeTag;
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
             InternalChild.Colour = colours.GetTimeTagColour(timeTag);
 
             bindableMode = state.BindableMode.GetBoundCopy();
-            bindableRecordingMovingCaretMode = lyricEditorConfigManager.GetBindable<RecordingMovingCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode).GetBoundCopy();
+            bindableRecordingMovingCaretMode = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode).GetBoundCopy();
 
             bindableMode.BindValueChanged(x =>
             {
