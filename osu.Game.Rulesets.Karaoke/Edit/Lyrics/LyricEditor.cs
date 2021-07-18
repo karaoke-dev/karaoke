@@ -59,10 +59,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Bindable<RecordingMovingCaretMode> BindableRecordingMovingCaretMode { get; } = new Bindable<RecordingMovingCaretMode>();
 
-        public BindableBool BindableAutoFocusEditLyric { get; } = new BindableBool();
-
-        public BindableInt BindableAutoFocusEditLyricSkipRows { get; } = new BindableInt();
-
         public BindableList<Lyric> BindableLyrics { get; } = new BindableList<Lyric>();
 
         private readonly GridContainer gridContainer;
@@ -471,18 +467,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             get => BindableRecordingMovingCaretMode.Value;
             set => BindableRecordingMovingCaretMode.Value = value;
-        }
-
-        public bool AutoFocusEditLyric
-        {
-            get => BindableAutoFocusEditLyric.Value;
-            set => BindableAutoFocusEditLyric.Value = value;
-        }
-
-        public int AutoFocusEditLyricSkipRows
-        {
-            get => BindableAutoFocusEditLyricSkipRows.Value;
-            set => BindableAutoFocusEditLyricSkipRows.Value = value;
         }
 
         public virtual void NavigateToFix(LyricEditorMode mode)

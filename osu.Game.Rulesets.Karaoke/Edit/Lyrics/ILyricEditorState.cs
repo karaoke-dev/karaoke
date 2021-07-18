@@ -13,10 +13,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         Bindable<RecordingMovingCaretMode> BindableRecordingMovingCaretMode { get; }
 
-        BindableBool BindableAutoFocusEditLyric { get; }
-
-        BindableInt BindableAutoFocusEditLyricSkipRows { get; }
-
         void NavigateToFix(LyricEditorMode mode);
     }
 }

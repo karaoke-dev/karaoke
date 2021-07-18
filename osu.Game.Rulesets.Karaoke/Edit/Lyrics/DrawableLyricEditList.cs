@@ -7,6 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
@@ -53,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state, LyricCaretState lyricCaretState)
+        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, LyricCaretState lyricCaretState)
         {
             // update selected style to child
             lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
@@ -63,12 +64,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (newLyric == null)
                     return;
 
-                // move to target position.
-                if (state.BindableAutoFocusEditLyric.Value)
-                {
-                    var skippingRows = state.BindableAutoFocusEditLyricSkipRows.Value;
-                    moveItemToTargetPosition(newLyric, oldLyric, skippingRows);
-                }
+                // move to target position if auto focus.
+                var autoFocus = lyricEditorConfigManager.Get<bool>(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric);
+                if (!autoFocus)
+                    return;
+
+                var skippingRows = lyricEditorConfigManager.Get<int>(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows);
+                moveItemToTargetPosition(newLyric, oldLyric, skippingRows);
             });
         }
 
