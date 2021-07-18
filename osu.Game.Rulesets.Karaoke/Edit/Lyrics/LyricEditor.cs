@@ -58,6 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public Bindable<LyricEditorMode> BindableMode { get; } = new Bindable<LyricEditorMode>();
 
+        private readonly Bindable<float> bindableFontSize = new Bindable<float>();
         private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
         private readonly BindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
@@ -140,6 +141,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // cancel selecting if switch mode.
                 lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
             }, true);
+
+            bindableFontSize.BindValueChanged(e =>
+            {
+                skin.FontSize = e.NewValue;
+            });
 
             bindableRecordingMovingCaretMode.BindValueChanged(e =>
             {
@@ -253,6 +259,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, EditorBeatmap beatmap)
         {
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode, bindableRecordingMovingCaretMode);
 
             // load lyric in here
