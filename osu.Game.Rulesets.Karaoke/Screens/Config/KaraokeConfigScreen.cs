@@ -13,6 +13,7 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Fonts;
+using osu.Game.Rulesets.Karaoke.Screens.Config.Previews;
 using osu.Game.Rulesets.UI;
 using osu.Game.Screens;
 
@@ -74,14 +75,15 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
             selectedSubsection.BindValueChanged(e =>
             {
-                if (e.NewValue is KaraokeSettingsSubsection settingsSubsection)
+                var preview = e.NewValue is KaraokeSettingsSubsection settingsSubsection
+                    ? settingsSubsection.CreatePreview()
+                    : new DefaultPreview();
+
+                previewArea.Child = new DelayedLoadWrapper(preview)
                 {
-                    previewArea.Child = new DelayedLoadWrapper(settingsSubsection.CreatePreview())
-                    {
-                        RelativeSizeAxes = Axes.Both
-                    };
-                }
-            });
+                    RelativeSizeAxes = Axes.Both
+                };
+            }, true);
         }
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
