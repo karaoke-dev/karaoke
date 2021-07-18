@@ -48,6 +48,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly KaraokeRulesetEditConfigManager editConfigManager;
 
         [Cached]
+        private readonly KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager;
+
+        [Cached]
         private readonly KaraokeRulesetEditGeneratorConfigManager generatorConfigManager;
 
         [Cached]
@@ -81,6 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             : base(ruleset)
         {
             editConfigManager = new KaraokeRulesetEditConfigManager();
+            lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();
             generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
             checkerConfigManager = new KaraokeRulesetEditCheckerConfigManager();
 
@@ -189,9 +193,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                         {
                             new EditModeMenu(editConfigManager, "Edit mode"),
                             new EditorMenuItemSpacer(),
-                            new LyricEditorModeMenu(editConfigManager, "Lyric editor mode"),
-                            new LyricEditorTextSizeMenu(editConfigManager, "Text size"),
-                            new AutoFocusToEditLyricMenu(editConfigManager, "Auto focus to edit lyric"),
+                            new LyricEditorModeMenu(lyricEditorConfigManager, "Lyric editor mode"),
+                            new LyricEditorTextSizeMenu(lyricEditorConfigManager, "Text size"),
+                            new AutoFocusToEditLyricMenu(lyricEditorConfigManager, "Auto focus to edit lyric"),
                             new EditorMenuItemSpacer(),
                             new NoteEditorPreviewMenu(editConfigManager, "Note editor"),
                         }
@@ -210,7 +214,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                         {
                             new EditorMenuItem("Lyric editor"),
                             new GeneratorConfigMenu("Generator"),
-                            new LockStateMenu(editConfigManager, "Lock"),
+                            new LockStateMenu(lyricEditorConfigManager, "Lock"),
                         }
                     }
                 };

@@ -1,23 +1,24 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Bindables;
+using osu.Framework.Configuration;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
-    public abstract class EnumMenu<T> : MenuItem
+    public abstract class EnumMenu<TSetting, T> : MenuItem where TSetting : struct, Enum
     {
         private readonly Bindable<T> bindableEnum = new Bindable<T>();
 
-        protected abstract KaraokeRulesetEditSetting Setting { get; }
+        protected abstract TSetting Setting { get; }
 
-        protected EnumMenu(KaraokeRulesetEditConfigManager config, string text)
+        protected EnumMenu(ConfigManager<TSetting> config, string text)
             : base(text)
         {
             Items = createMenuItems();

@@ -11,11 +11,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
     /// <summary>
     /// If click the lock icon in <see cref="LyricEditor"/>, will apply <see cref="LockState.Partial"/> or <see cref="LockState.Full"/>
     /// </summary>
-    public class LockStateMenu : EnumMenu<LockState>
+    public class LockStateMenu : EnumMenu<KaraokeRulesetLyricEditorSetting, LockState>
     {
-        protected override KaraokeRulesetEditSetting Setting => KaraokeRulesetEditSetting.ClickToLockLyricState;
+        protected override KaraokeRulesetLyricEditorSetting Setting => KaraokeRulesetLyricEditorSetting.ClickToLockLyricState;
 
-        public LockStateMenu(KaraokeRulesetEditConfigManager config, string text)
+        public LockStateMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
             : base(config, text)
         {
         }
