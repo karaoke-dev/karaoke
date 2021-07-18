@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public Bindable<LyricEditorMode> BindableMode { get; } = new Bindable<LyricEditorMode>();
 
         private readonly Bindable<float> bindableFontSize = new Bindable<float>();
-        private readonly Bindable<RecordingMovingCaretMode> bindableRecordingMovingCaretMode = new Bindable<RecordingMovingCaretMode>();
+        private readonly Bindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
         private readonly BindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
         private readonly GridContainer gridContainer;

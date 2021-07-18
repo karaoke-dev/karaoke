@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState, LockState.Partial);
 
             // Recording
-            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode, RecordingMovingCaretMode.None);
+            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode, MovingTimeTagCaretMode.None);
         }
     }
 

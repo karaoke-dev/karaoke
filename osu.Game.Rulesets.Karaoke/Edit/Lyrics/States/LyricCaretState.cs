@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         private ICaretPositionAlgorithm algorithm;
 
-        public void ChangePositionAlgorithm(Lyric[] lyrics, LyricEditorMode lyricEditorMode, RecordingMovingCaretMode recordingMovingCaretMode)
+        public void ChangePositionAlgorithm(Lyric[] lyrics, LyricEditorMode lyricEditorMode, MovingTimeTagCaretMode movingTimeTagCaretMode)
         {
             algorithm = getAlgorithmByMode(lyricEditorMode);
 
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                         return new TimeTagIndexCaretPositionAlgorithm(lyrics);
 
                     case LyricEditorMode.RecordTimeTag:
-                        return new TimeTagCaretPositionAlgorithm(lyrics) { Mode = recordingMovingCaretMode };
+                        return new TimeTagCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode };
 
                     case LyricEditorMode.AdjustTimeTag:
                     case LyricEditorMode.CreateNote:

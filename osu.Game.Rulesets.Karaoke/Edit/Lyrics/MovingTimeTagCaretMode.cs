@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public enum RecordingMovingCaretMode
+    public enum MovingTimeTagCaretMode
     {
         /// <summary>
         /// Move to any tag

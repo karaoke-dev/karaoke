@@ -18,12 +18,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
         {
             Children = new[]
             {
-                new LabelledDropdown<RecordingMovingCaretMode>
+                new LabelledDropdown<MovingTimeTagCaretMode>
                 {
                     Label = "Record tag",
                     Description = "Only record time with start/end time-tag while recording.",
-                    Current = lyricEditorConfigManager.GetBindable<RecordingMovingCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode),
-                    Items = EnumUtils.GetValues<RecordingMovingCaretMode>(),
+                    Current = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingMovingCaretMode),
+                    Items = EnumUtils.GetValues<MovingTimeTagCaretMode>(),
                 }
             };
         }
