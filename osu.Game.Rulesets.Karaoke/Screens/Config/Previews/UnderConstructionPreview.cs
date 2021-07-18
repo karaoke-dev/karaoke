@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews
 
         public FillFlowContainer TextContainer { get; }
 
-        public UnderConstructionPreview(string name)
+        public UnderConstructionPreview()
         {
             Size = new Vector2(0.3f);
 
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews
                     {
                         Anchor = Anchor.TopCentre,
                         Origin = Anchor.TopCentre,
-                        Text = name,
+                        Text = "Oops",
                         Colour = ThemeColor.Lighten(0.8f),
                         Font = OsuFont.GetFont(size: 36),
                     },
