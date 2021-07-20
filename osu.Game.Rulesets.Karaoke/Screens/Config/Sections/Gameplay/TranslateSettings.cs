@@ -4,6 +4,7 @@
 using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Previews;
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Gameplay
 {
     public class TranslateSettings : KaraokeSettingsSubsection
     {
-        protected override string Header => "Translate";
+        protected override LocalisableString Header => "Translate";
 
         public override SettingsSubsectionPreview CreatePreview() => new LyricPreview();
 

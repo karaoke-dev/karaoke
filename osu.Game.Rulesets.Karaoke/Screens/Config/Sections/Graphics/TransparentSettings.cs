@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
@@ -10,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
 {
     public class TransparentSettings : KaraokeSettingsSubsection
     {
-        protected override string Header => "Transparent";
+        protected override LocalisableString Header => "Transparent";
 
         [BackgroundDependencyLoader]
         private void load()

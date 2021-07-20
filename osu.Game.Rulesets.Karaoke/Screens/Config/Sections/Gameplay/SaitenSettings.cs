@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Gameplay
 {
     public class SaitenSettings : KaraokeSettingsSubsection
     {
-        protected override string Header => "Saiten";
+        protected override LocalisableString Header => "Saiten";
 
         [BackgroundDependencyLoader]
         private void load()

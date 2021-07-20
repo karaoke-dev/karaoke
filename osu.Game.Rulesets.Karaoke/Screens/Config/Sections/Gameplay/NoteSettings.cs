@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Gameplay
 {
     public class NoteSettings : KaraokeSettingsSubsection
     {
-        protected override string Header => "Note";
+        protected override LocalisableString Header => "Note";
 
         public override SettingsSubsectionPreview CreatePreview() => new NotePlayfieldPreview();
 
