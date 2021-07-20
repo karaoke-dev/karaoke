@@ -4,7 +4,6 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.UserInterface;
-using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
@@ -34,11 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 
         public NoteSelectionBlueprint(Note note)
             : base(note)
-        {
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
         {
             AddInternal(new EditBodyPiece
             {

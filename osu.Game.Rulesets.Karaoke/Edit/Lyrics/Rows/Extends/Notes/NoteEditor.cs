@@ -47,11 +47,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
                     // layers below playfield
                     Playfield = new EditorNotePlayfield(columns)
                     {
-                        // set stop clock and navigation to target time.
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
                         Clock = new StopClock(lyric.LyricStartTime)
                     },
                     // layers above playfield
-                    new EditNoteBlueprintContainer(lyric),
+                    new EditNoteBlueprintContainer(lyric)
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                    },
                 }
             };
         }
