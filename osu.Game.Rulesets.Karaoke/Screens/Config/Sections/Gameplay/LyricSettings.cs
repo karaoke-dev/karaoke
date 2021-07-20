@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Localisation;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Previews;
@@ -11,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Gameplay
 {
     public class LyricSettings : KaraokeSettingsSubsection
     {
-        protected override string Header => "Lyric";
+        protected override LocalisableString Header => "Lyric";
 
         public override SettingsSubsectionPreview CreatePreview() => new LyricPreview();
 

@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Previews;
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
 {
     public class LyricFontSettings : KaraokeSettingsSubsection
     {
-        protected override string Header => "Lyric font";
+        protected override LocalisableString Header => "Lyric font";
 
         public override SettingsSubsectionPreview CreatePreview() => new LyricPreview();
 

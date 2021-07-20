@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 
@@ -11,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
 {
     public class NoteFontSettings : KaraokeSettingsSubsection
     {
-        protected override string Header => "Note font";
+        protected override LocalisableString Header => "Note font";
 
         [BackgroundDependencyLoader]
         private void load()
