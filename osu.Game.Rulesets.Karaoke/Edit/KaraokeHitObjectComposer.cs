@@ -126,6 +126,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             editConfigManager.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
         }
 
+        private DependencyContainer dependencies;
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+            => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+
         public new KaraokePlayfield Playfield => drawableRuleset.Playfield;
 
         public IScrollingInfo ScrollingInfo => drawableRuleset.ScrollingInfo;
@@ -145,19 +150,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             var result = base.SnapScreenSpacePositionToValidTime(screenSpacePosition);
 
-            if (result.Playfield is NotePlayfield)
-            {
-                // Apply Y value because it's disappeared.
-                result.ScreenSpacePosition.Y = screenSpacePosition.Y;
-                // then disable time change by moving x
-                result.Time = null;
-            }
-
-            return result;
+            // should not affect x position and time if dragging object in note playfield.
+            return result.Playfield is EditorNotePlayfield
+                ? new SnapResult(screenSpacePosition, null, result.Playfield)
+                : result;
         }
 
         protected override DrawableRuleset<KaraokeHitObject> CreateDrawableRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
-            => drawableRuleset = new DrawableKaraokeEditorRuleset(ruleset, beatmap, mods);
+        {
+            drawableRuleset = new DrawableKaraokeEditorRuleset(ruleset, beatmap, mods);
+
+            // This is the earliest we can cache the scrolling info to ourselves, before masks are added to the hierarchy and inject it
+            dependencies.CacheAs(drawableRuleset.ScrollingInfo);
+
+            return drawableRuleset;
+        }
 
         protected override ComposeBlueprintContainer CreateBlueprintContainer()
             => new KaraokeBlueprintContainer(this);

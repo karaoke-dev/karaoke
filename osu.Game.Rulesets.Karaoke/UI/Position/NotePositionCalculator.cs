@@ -4,7 +4,6 @@
 using System;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Position
 {
@@ -25,8 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
             this.columnSpacing = columnSpacing;
             this.offset = offset;
         }
-
-        public Tone ToneAt(Vector2 screenSpacePosition) => throw new NotImplementedException();
 
         public float YPositionAt(Note note) => YPositionAt(note.Tone);
 
