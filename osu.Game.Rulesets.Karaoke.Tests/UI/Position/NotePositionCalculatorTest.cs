@@ -16,11 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI.Position
         private const float default_column_height = 20;
         private const float default_spacing = 1;
 
-        [Ignore("This feature haven't implemented.")]
-        public void TestToneAt()
-        {
-        }
-
         [TestCase(0, 0)]
         [TestCase(1, -21f)]
         [TestCase(1.5, -31.5f)]
