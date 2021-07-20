@@ -123,7 +123,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             if (!(moveEvent.Blueprint is NoteSelectionBlueprint noteSelectionBlueprint))
                 return false;
 
-            var lastTone = noteSelectionBlueprint.DrawableObject.HitObject.Tone;
+            var lastTone = noteSelectionBlueprint.HitObject.Tone;
             performColumnMovement(lastTone, moveEvent);
 
             return true;

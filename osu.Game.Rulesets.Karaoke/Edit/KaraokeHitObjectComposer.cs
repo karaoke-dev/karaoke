@@ -126,6 +126,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             editConfigManager.BindWith(KaraokeRulesetEditSetting.EditMode, bindableEditMode);
         }
 
+        private DependencyContainer dependencies;
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+            => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+
         public new KaraokePlayfield Playfield => drawableRuleset.Playfield;
 
         public IScrollingInfo ScrollingInfo => drawableRuleset.ScrollingInfo;
@@ -157,7 +162,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         }
 
         protected override DrawableRuleset<KaraokeHitObject> CreateDrawableRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
-            => drawableRuleset = new DrawableKaraokeEditorRuleset(ruleset, beatmap, mods);
+        {
+            drawableRuleset = new DrawableKaraokeEditorRuleset(ruleset, beatmap, mods);
+
+            // This is the earliest we can cache the scrolling info to ourselves, before masks are added to the hierarchy and inject it
+            dependencies.CacheAs(drawableRuleset.ScrollingInfo);
+
+            return drawableRuleset;
+        }
 
         protected override ComposeBlueprintContainer CreateBlueprintContainer()
             => new KaraokeBlueprintContainer(this);

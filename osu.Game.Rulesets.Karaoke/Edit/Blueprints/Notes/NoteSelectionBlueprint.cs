@@ -3,44 +3,73 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.UserInterface;
+using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Karaoke.UI.Position;
+using osu.Game.Rulesets.UI;
+using osu.Game.Rulesets.UI.Scrolling;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 {
     public class NoteSelectionBlueprint : KaraokeSelectionBlueprint<Note>
     {
-        public new DrawableNote DrawableObject => (DrawableNote)base.DrawableObject;
-
         [Resolved]
         private NoteManager noteManager { get; set; }
 
-        public override MenuItem[] ContextMenuItems => new MenuItem[]
-        {
-            new OsuMenuItem(HitObject.Display ? "Hide" : "Show", HitObject.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => noteManager.ChangeDisplay(HitObject, !HitObject.Display)),
-            new OsuMenuItem("Split", MenuItemType.Destructive, () => noteManager.SplitNote(HitObject)),
-        };
+        [Resolved]
+        private Playfield playfield { get; set; }
 
-        protected override void Update()
-        {
-            base.Update();
+        [Resolved]
+        private IScrollingInfo scrollingInfo { get; set; }
 
-            Size = DrawableObject.DrawSize;
-            Position = Parent.ToLocalSpace(DrawableObject.ToScreenSpace(Vector2.Zero));
-        }
+        [Resolved]
+        private INotePositionInfo notePositionInfo { get; set; }
+
+        protected ScrollingHitObjectContainer HitObjectContainer => ((KaraokePlayfield)playfield).NotePlayfield.HitObjectContainer;
 
         public NoteSelectionBlueprint(Note note)
             : base(note)
+        {
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(OsuColour colours)
         {
             AddInternal(new EditBodyPiece
             {
                 RelativeSizeAxes = Axes.Both
             });
         }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            var anchor = scrollingInfo.Direction.Value == ScrollingDirection.Left ? Anchor.TopLeft : Anchor.TopRight;
+            Anchor = Origin = anchor;
+
+            Position = Parent.ToLocalSpace(HitObjectContainer.ScreenSpacePositionAtTime(HitObject.StartTime)) - AnchorPosition;
+            Y += notePositionInfo.Calculator.YPositionAt(HitObject.Tone);
+
+            Width = HitObjectContainer.LengthAtTime(HitObject.StartTime, HitObject.EndTime);
+            Height = notePositionInfo.Calculator.ColumnHeight;
+        }
+
+        public override Quad SelectionQuad => ScreenSpaceDrawQuad;
+
+        public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.Centre;
+
+        public override MenuItem[] ContextMenuItems => new MenuItem[]
+        {
+            new OsuMenuItem(HitObject.Display ? "Hide" : "Show", HitObject.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => noteManager.ChangeDisplay(HitObject, !HitObject.Display)),
+            new OsuMenuItem("Split", MenuItemType.Destructive, () => noteManager.SplitNote(HitObject)),
+        };
     }
 }
