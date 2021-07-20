@@ -150,15 +150,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             var result = base.SnapScreenSpacePositionToValidTime(screenSpacePosition);
 
-            if (result.Playfield is NotePlayfield)
-            {
-                // Apply Y value because it's disappeared.
-                result.ScreenSpacePosition.Y = screenSpacePosition.Y;
-                // then disable time change by moving x
-                result.Time = null;
-            }
-
-            return result;
+            // should not affect x position and time if dragging object in note playfield.
+            return result.Playfield is EditorNotePlayfield
+                ? new SnapResult(screenSpacePosition, null, result.Playfield)
+                : result;
         }
 
         protected override DrawableRuleset<KaraokeHitObject> CreateDrawableRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
