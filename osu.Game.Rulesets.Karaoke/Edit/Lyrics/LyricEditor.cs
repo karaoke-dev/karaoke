@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -23,9 +22,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Rulesets.Timing;
-using osu.Game.Rulesets.UI.Scrolling;
-using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 using osuTK.Input;
@@ -46,9 +42,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Cached]
         private readonly LyricEditorColourProvider colourProvider = new LyricEditorColourProvider();
-
-        [Cached(Type = typeof(IScrollingInfo))]
-        private readonly LocalScrollingInfo scrollingInfo = new LocalScrollingInfo();
 
         [Cached]
         private readonly LyricSelectionState lyricSelectionState = new LyricSelectionState();
@@ -498,19 +491,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 default:
                     throw new IndexOutOfRangeException("Oops, seems some navigation to fix case has been missing.");
             }
-        }
-
-        private class LocalScrollingInfo : IScrollingInfo
-        {
-            public IBindable<ScrollingDirection> Direction { get; } = new Bindable<ScrollingDirection>(ScrollingDirection.Left);
-
-            public IBindable<double> TimeRange { get; } = new BindableDouble(5000)
-            {
-                MinValue = 1000,
-                MaxValue = 10000
-            };
-
-            public IScrollAlgorithm Algorithm { get; } = new SequentialScrollAlgorithm(new List<MultiplierControlPoint>());
         }
     }
 }
