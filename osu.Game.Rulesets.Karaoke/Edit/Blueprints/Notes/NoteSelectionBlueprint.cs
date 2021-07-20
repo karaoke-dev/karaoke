@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
         {
             base.Update();
 
-            var anchor = scrollingInfo.Direction.Value == ScrollingDirection.Left ? Anchor.TopLeft : Anchor.TopRight;
+            var anchor = scrollingInfo.Direction.Value == ScrollingDirection.Left ? Anchor.CentreLeft : Anchor.CentreRight;
             Anchor = Origin = anchor;
 
             Position = Parent.ToLocalSpace(HitObjectContainer.ScreenSpacePositionAtTime(HitObject.StartTime)) - AnchorPosition;
