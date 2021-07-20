@@ -20,6 +20,7 @@ using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 using osu.Game.Skinning;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
@@ -136,18 +137,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
             var calculator = notePositionInfo.Calculator;
 
-            // top position
+            // get center position
             var screenSpacePosition = moveEvent.Blueprint.ScreenSpaceSelectionPoint + moveEvent.ScreenSpaceDelta;
-            var dragHeight = NotePlayfield.ToLocalSpace(screenSpacePosition).Y;
-            var lastHeight = convertToneToHeight(lastTone);
-            var moveHeight = dragHeight - lastHeight;
+            var position = NotePlayfield.ToLocalSpace(screenSpacePosition);
+            var centerPosition = new Vector2(position.X, position.Y - NotePlayfield.Height / 2);
 
+            // get delta position
+            var lastCenterPosition = calculator.YPositionAt(lastTone);
+            var delta = centerPosition.Y - lastCenterPosition;
+
+            // get delta tone.
             var deltaTone = new Tone();
             const float trigger_height = ScrollingNotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT;
 
-            if (moveHeight > trigger_height)
+            if (delta > trigger_height)
                 deltaTone = -new Tone { Half = true };
-            else if (moveHeight < 0)
+            else if (delta < 0)
                 deltaTone = new Tone { Half = true };
 
             if (deltaTone == 0)
@@ -164,13 +169,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
                 //Change all note to visible
                 note.Display = true;
-            }
-
-            // todo : should remove this because it seems weird.
-            float convertToneToHeight(Tone tone)
-            {
-                var maxTone = calculator.MaxTone;
-                return calculator.YPositionAt(tone - maxTone);
             }
         }
     }

@@ -3,7 +3,6 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
@@ -14,7 +13,6 @@ using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 {
@@ -61,10 +59,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
             Width = HitObjectContainer.LengthAtTime(HitObject.StartTime, HitObject.EndTime);
             Height = notePositionInfo.Calculator.ColumnHeight;
         }
-
-        public override Quad SelectionQuad => ScreenSpaceDrawQuad;
-
-        public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.Centre;
 
         public override MenuItem[] ContextMenuItems => new MenuItem[]
         {
