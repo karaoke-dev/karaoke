@@ -2,9 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
+using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
@@ -22,9 +24,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
 
         private bool isSingerMatched;
 
+        private readonly Bindable<int[]> singersBindable;
+
         public LyricTimelineHitObjectBlueprint(Lyric item)
             : base(item)
         {
+            singersBindable = Item.SingersBindable.GetBoundCopy();
+
             Anchor = Anchor.CentreLeft;
             Origin = Anchor.CentreLeft;
 
@@ -62,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
         [BackgroundDependencyLoader]
         private void load(LyricManager lyricManager, SingerLyricEditor editor)
         {
-            Item.SingersBindable.BindValueChanged(e =>
+            singersBindable.BindValueChanged(e =>
             {
                 // Check is lyric contains this singer, or default singer
                 isSingerMatched = lyricManager.SingerInLyric(editor.Singer, Item);
@@ -92,7 +98,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
             // base logic hides selected blueprints when not selected, but timeline doesn't do that.
         }
 
+        // prevent selection.
         public override Vector2 ScreenSpaceSelectionPoint => isSingerMatched ? ScreenSpaceDrawQuad.TopLeft : new Vector2(int.MinValue);
+
+        // prevent single select.
+        public override Quad SelectionQuad => isSingerMatched ? base.SelectionQuad : new Quad();
 
         protected override void Update()
         {
