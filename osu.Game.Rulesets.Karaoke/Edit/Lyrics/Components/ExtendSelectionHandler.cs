@@ -13,6 +13,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
         [BackgroundDependencyLoader]
         private void load()
         {
+            // because it will still show selection box even all selected items is not in current handler.
+            // so should hide the selection box by hand.
+            // todo : this is the temp way, might remove after official fix that.
             SelectedItems.CollectionChanged += (sender, args) =>
             {
                 Scheduler.AddOnce(updateVisibility);
@@ -24,8 +27,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
         /// </summary>
         private void updateVisibility()
         {
-            // fix the case that only selected blueprint in current handler can show selection box.
-            // todo : this is the temp way, might remove after official fix that.
             bool visible = containsSelectionInCurrentBlueprintContainer();
             SelectionBox.FadeTo(visible ? 1f : 0.0f);
         }
@@ -34,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
         {
             var items = SelectedBlueprints.Select(x => x.Item);
 
-            // check any selected items that is not in current blueprint container.
+            // check any selected items that is in current blueprint container.
             return SelectedItems.Any(x => items.Contains(x));
         }
     }
