@@ -21,9 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
     public abstract class TextTagBlueprintContainer<T> : ExtendBlueprintContainer<T> where T : class, ITextTag
     {
         [Resolved]
-        private BlueprintSelectionState blueprintSelectionState { get; set; }
-
-        [Resolved]
         private EditorLyricPiece editorLyricPiece { get; set; }
 
         [Resolved]
@@ -74,11 +71,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
         protected override IEnumerable<SelectionBlueprint<T>> SortForMovement(IReadOnlyList<SelectionBlueprint<T>> blueprints)
             => blueprints.OrderBy(b => b.Item.StartIndex);
-
-        protected override void DeselectAll()
-        {
-            blueprintSelectionState.ClearSelectedTextTags();
-        }
 
         protected class TextTagSelectionHandler : ExtendSelectionHandler<T>
         {

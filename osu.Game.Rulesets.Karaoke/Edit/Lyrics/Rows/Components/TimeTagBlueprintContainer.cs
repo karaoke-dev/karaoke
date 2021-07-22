@@ -19,9 +19,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
     public class TimeTagBlueprintContainer : ExtendBlueprintContainer<TimeTag>
     {
         [Resolved]
-        private BlueprintSelectionState blueprintSelectionState { get; set; }
-
-        [Resolved]
         private LyricCaretState lyricCaretState { get; set; }
 
         [UsedImplicitly]
@@ -42,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(BlueprintSelectionState blueprintSelectionState)
         {
             SelectedItems.BindTo(blueprintSelectionState.SelectedTimeTags);
 
@@ -55,11 +52,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
         protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
             => new TimeTagSelectionBlueprint(item);
-
-        protected override void DeselectAll()
-        {
-            blueprintSelectionState.ClearSelectedTimeTags();
-        }
 
         protected class TimeTagSelectionHandler : ExtendSelectionHandler<TimeTag>
         {

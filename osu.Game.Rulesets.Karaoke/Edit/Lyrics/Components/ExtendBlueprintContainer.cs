@@ -54,6 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
         /// </summary>
         protected virtual void DeselectAll()
         {
+            SelectedItems.Clear();
         }
 
         private bool containsSelectionFromOtherBlueprintContainer()
