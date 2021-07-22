@@ -84,7 +84,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<Lyric>> selection)
             {
                 var lyrics = selection.Select(x => x.Item).ToList();
-                var contextMenu = new SingerContextMenu(lyricManager, lyrics, "");
+                var contextMenu = new SingerContextMenu(lyricManager, lyrics, "", () =>
+                {
+                    selectedLyrics.Clear();
+                });
                 return contextMenu.Items;
             }
 
@@ -95,6 +98,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
                 {
                     lyricManager.ClearAllSingersFromLyric(item);
                 }
+
+                selectedLyrics.Clear();
             }
         }
 
