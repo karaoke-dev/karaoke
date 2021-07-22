@@ -13,6 +13,7 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 using osuTK.Graphics;
 
@@ -71,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
             singersBindable.BindValueChanged(e =>
             {
                 // Check is lyric contains this singer, or default singer
-                isSingerMatched = lyricManager.SingerInLyric(editor.Singer, Item);
+                isSingerMatched = LyricUtils.ContainsSinger(Item, editor.Singer);
 
                 if (isSingerMatched)
                 {

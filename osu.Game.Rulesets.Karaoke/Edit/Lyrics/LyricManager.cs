@@ -397,21 +397,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 foreach (var singer in singers)
                 {
-                    addSingerToLyric(singer, lyric);
+                    LyricUtils.AddSinger(lyric, singer);
                 }
             }
 
             changeHandler?.EndChange();
-
-            void addSingerToLyric(Singer singer, Lyric lyric)
-            {
-                if (SingerInLyric(singer, lyric))
-                    return;
-
-                var existSingerList = lyric.Singers?.ToList() ?? new List<int>();
-                existSingerList.Add(singer.ID);
-                lyric.Singers = existSingerList.ToArray();
-            }
         }
 
         public void RemoveSingerToLyric(Singer singer, Lyric lyric) => RemoveSingersToLyrics(new List<Singer> { singer }, new List<Lyric> { lyric });
@@ -430,28 +420,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 foreach (var singer in singers)
                 {
-                    removeSingerToLyric(singer, lyric);
+                    LyricUtils.RemoveSinger(lyric, singer);
                 }
             }
 
             changeHandler?.EndChange();
-
-            void removeSingerToLyric(Singer singer, Lyric lyric)
-            {
-                if (!SingerInLyric(singer, lyric))
-                    return;
-
-                lyric.Singers = lyric.Singers?.Where(x => x != singer.ID).ToArray();
-            }
-        }
-
-        public bool SingerInLyric(Singer singer, Lyric lyric)
-        {
-            // lyric belongs to default singer if no any singer in lyric.
-            if (lyric.Singers == null || !lyric.Singers.Any())
-                return singer.ID == 0;
-
-            return (bool)lyric.Singers?.Contains(singer.ID);
         }
 
         public void ClearAllSingersFromLyric(Lyric lyric)

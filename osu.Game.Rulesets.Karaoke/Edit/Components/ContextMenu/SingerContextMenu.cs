@@ -8,6 +8,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu
 {
@@ -31,9 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu
                 postProcess?.Invoke();
             })).ToList();
 
-            bool anySingerInLyric(Singer singer) => lyrics.Any(lyric => manager.SingerInLyric(singer, lyric));
+            bool anySingerInLyric(Singer singer) => lyrics.Any(lyric => LyricUtils.ContainsSinger(lyric, singer));
 
-            bool allSingerInLyric(Singer singer) => lyrics.All(lyric => manager.SingerInLyric(singer, lyric));
+            bool allSingerInLyric(Singer singer) => lyrics.All(lyric => LyricUtils.ContainsSinger(lyric, singer));
         }
     }
 }
