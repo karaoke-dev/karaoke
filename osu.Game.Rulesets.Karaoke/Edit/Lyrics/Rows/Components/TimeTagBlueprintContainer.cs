@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         }
 
         protected override SelectionHandler<TimeTag> CreateSelectionHandler()
-            => new TimeTahSelectionHandler();
+            => new TimeTagSelectionHandler();
 
         protected override SelectionBlueprint<TimeTag> CreateBlueprintFor(TimeTag item)
             => new TimeTagSelectionBlueprint(item);
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             blueprintSelectionState.ClearSelectedTimeTags();
         }
 
-        protected class TimeTahSelectionHandler : ExtendSelectionHandler<TimeTag>
+        protected class TimeTagSelectionHandler : ExtendSelectionHandler<TimeTag>
         {
             [Resolved]
             private LyricManager lyricManager { get; set; }
