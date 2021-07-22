@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -11,6 +12,7 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
@@ -27,6 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 
         [Cached]
         private readonly EditSingerDialog editSingerDialog;
+
+        [Cached]
+        public BindableList<Lyric> SelectedLyrics { get; } = new BindableList<Lyric>();
 
         public SingerScreen()
         {

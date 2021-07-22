@@ -28,9 +28,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 {
     public class TimeTagEditorBlueprintContainer : ExtendBlueprintContainer<TimeTag>
     {
-        [Resolved]
-        private BlueprintSelectionState blueprintSelectionState { get; set; }
-
         [Resolved(CanBeNull = true)]
         private TimeTagEditor timeline { get; set; }
 
@@ -52,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(BlueprintSelectionState blueprintSelectionState)
         {
             SelectedItems.BindTo(blueprintSelectionState.SelectedTimeTags);
 
@@ -131,11 +128,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 
             editorClock.SeekSmoothlyTo(navigationTime.Time.Value);
             return true;
-        }
-
-        protected override void DeselectAll()
-        {
-            blueprintSelectionState.ClearSelectedTimeTags();
         }
 
         protected class TimeTagEditorSelectionHandler : ExtendSelectionHandler<TimeTag>

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
@@ -34,8 +35,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap)
+        private void load(EditorBeatmap beatmap, BindableList<Lyric> selectedLyrics)
         {
+            SelectedItems.BindTo(selectedLyrics);
+
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
             foreach (var lyric in lyrics)
                 AddBlueprintFor(lyric);
@@ -60,12 +63,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             [Resolved]
             private LyricManager lyricManager { get; set; }
 
-            public override bool HandleMovement(MoveSelectionEvent<Lyric> moveEvent) => false;
+            [Resolved]
+            private BindableList<Lyric> selectedLyrics { get; set; }
+
+            [BackgroundDependencyLoader]
+            private void load()
+            {
+                SelectedItems.BindTo(selectedLyrics);
+            }
+
+            protected override void OnSelectionChanged()
+            {
+                base.OnSelectionChanged();
+
+                // should hide selection box if not dragging at current row.
+                var dragging = Parent.IsDragged;
+                SelectionBox.FadeTo(dragging ? 1f : 0.0f);
+            }
 
             protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<Lyric>> selection)
             {
                 var lyrics = selection.Select(x => x.Item).ToList();
-                var contextMenu = new SingerContextMenu(lyricManager, lyrics, "");
+                var contextMenu = new SingerContextMenu(lyricManager, lyrics, "", () =>
+                {
+                    selectedLyrics.Clear();
+                });
                 return contextMenu.Items;
             }
 
@@ -76,6 +98,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
                 {
                     lyricManager.ClearAllSingersFromLyric(item);
                 }
+
+                selectedLyrics.Clear();
             }
         }
 
