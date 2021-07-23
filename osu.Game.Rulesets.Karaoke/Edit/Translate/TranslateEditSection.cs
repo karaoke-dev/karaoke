@@ -123,7 +123,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                                 {
                                                     var currentLanguage = languageDropdown.Current.Value;
 
-                                                    if (translateManager.LanguageContainsTranslateAmount(currentLanguage) > 0)
+                                                    if (translateManager.IsLanguageContainsTranslate(currentLanguage))
                                                     {
                                                         DialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage, isOk =>
                                                         {
