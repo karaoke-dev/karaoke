@@ -101,29 +101,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             return true;
         }
 
-        public bool MoveCaretToTargetPosition(ICaretPosition position)
+        public void MoveCaretToTargetPosition(ICaretPosition position)
         {
             if (position.Lyric == null)
-                return false;
+                return;
 
             if (!CaretPositionMovable(position))
-                return false;
+                return;
 
             BindableHoverCaretPosition.Value = null;
             BindableCaretPosition.Value = position;
-            return true;
         }
 
-        public bool MoveHoverCaretToTargetPosition(ICaretPosition position)
+        public void MoveHoverCaretToTargetPosition(ICaretPosition position)
         {
             if (position.Lyric == null)
-                return false;
+                return;
 
             if (!CaretPositionMovable(position))
-                return false;
+                return;
 
             BindableHoverCaretPosition.Value = position;
-            return true;
         }
 
         public void ClearHoverCaretPosition()
