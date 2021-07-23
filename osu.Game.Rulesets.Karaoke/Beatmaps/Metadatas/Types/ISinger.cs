@@ -10,6 +10,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types
     {
         int ID { get; }
 
-        Color4? Color { get; set; }
+        Color4? Color { get; }
     }
 }
