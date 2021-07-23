@@ -91,6 +91,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                     case NavigationState.Error:
                         NavigationText = "Oops, seems cause some error in here.";
                         break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(value));
                 }
             }
 

@@ -2,14 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Lists;
-using osu.Game.Beatmaps;
-using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Scoring;
@@ -17,7 +14,6 @@ using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Timing;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
@@ -93,26 +89,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             }, true);
 
             config.BindWith(KaraokeRulesetSetting.ScrollTime, scrollingInfo.TimeRange as BindableDouble);
-        }
-
-        private IBeatmap createSampleBeatmap()
-        {
-            var hitObjects = new List<HitObject>(new HitObject[100]).Select((x, i) => new Note
-            {
-                StartTime = i * 2000,
-                Duration = 1000,
-                Text = "Note",
-                HitWindows = new KaraokeHitWindows(),
-            }).OfType<HitObject>().ToList();
-
-            var controlPointInfo = new ControlPointInfo();
-            controlPointInfo.Add(0, new TimingControlPoint());
-
-            return new Beatmap
-            {
-                HitObjects = hitObjects,
-                ControlPointInfo = controlPointInfo,
-            };
         }
 
         private class LocalScrollingInfo : IScrollingInfo

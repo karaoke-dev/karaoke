@@ -32,11 +32,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         [BackgroundDependencyLoader]
         private void load()
         {
-            if (beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap)
-            {
-                Languages.AddRange(karaokeBeatmap.AvailableTranslates);
-                Languages.BindCollectionChanged((a, b) => { karaokeBeatmap.AvailableTranslates = Languages.ToArray(); });
-            }
+            if (!(beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap))
+                return;
+
+            Languages.AddRange(karaokeBeatmap.AvailableTranslates);
+            Languages.BindCollectionChanged((a, b) => { karaokeBeatmap.AvailableTranslates = Languages.ToArray(); });
         }
 
         public void AddLanguage(CultureInfo cultureInfo)

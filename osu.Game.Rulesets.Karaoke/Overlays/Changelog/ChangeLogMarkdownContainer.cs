@@ -87,11 +87,11 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                         imageLoaded = true;
                     }
 
-                    if (!widthSizeCache.IsValid)
-                    {
-                        computeImageSize();
-                        widthSizeCache.Validate();
-                    }
+                    if (widthSizeCache.IsValid)
+                        return;
+
+                    computeImageSize();
+                    widthSizeCache.Validate();
                 }
 
                 private void computeImageSize()

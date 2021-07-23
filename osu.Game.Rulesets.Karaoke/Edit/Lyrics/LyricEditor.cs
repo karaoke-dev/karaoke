@@ -274,31 +274,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             // need to check is there any lyric added or removed.
             beatmap.HitObjectAdded += e =>
             {
-                if (e is Lyric lyric)
+                if (!(e is Lyric lyric))
+                    return;
+
+                var previousLyric = bindableLyrics.LastOrDefault(x => x.Order < lyric.Order);
+
+                if (previousLyric != null)
                 {
-                    var previousLyric = bindableLyrics.LastOrDefault(x => x.Order < lyric.Order);
-
-                    if (previousLyric != null)
-                    {
-                        var insertIndex = bindableLyrics.IndexOf(previousLyric) + 1;
-                        bindableLyrics.Insert(insertIndex, lyric);
-                    }
-                    else
-                    {
-                        // insert to first.
-                        bindableLyrics.Insert(0, lyric);
-                    }
-
-                    initialCaretPositionAlgorithm();
+                    var insertIndex = bindableLyrics.IndexOf(previousLyric) + 1;
+                    bindableLyrics.Insert(insertIndex, lyric);
                 }
+                else
+                {
+                    // insert to first.
+                    bindableLyrics.Insert(0, lyric);
+                }
+
+                initialCaretPositionAlgorithm();
             };
             beatmap.HitObjectRemoved += e =>
             {
-                if (e is Lyric lyric)
-                {
-                    bindableLyrics.Remove(lyric);
-                    initialCaretPositionAlgorithm();
-                }
+                if (!(e is Lyric lyric))
+                    return;
+
+                bindableLyrics.Remove(lyric);
+                initialCaretPositionAlgorithm();
             };
 
             initialCaretPositionAlgorithm();

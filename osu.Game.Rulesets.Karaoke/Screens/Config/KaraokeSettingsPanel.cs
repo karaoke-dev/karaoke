@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
             if (SectionsContainer.FixedHeader is SeekLimitedSearchTextBox searchTextBox)
             {
-                searchTextBox.Current.ValueChanged += (term) =>
+                searchTextBox.Current.ValueChanged += term =>
                 {
                     // should clear selected sub-section if change search text.
                     selectedSubsection.Value = null;

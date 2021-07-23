@@ -124,9 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         /// <summary>
         /// Fetches and shows a specific build from a specific update stream.
         /// </summary>
-        /// <param name="build">Must contain at least <see cref="APIUpdateStream.Name"/> and
-        /// <see cref="APIChangelogBuild.Version"/>. If <see cref="APIUpdateStream.DisplayName"/> and
-        /// <see cref="APIChangelogBuild.DisplayVersion"/> are specified, the header will instantly display them.</param>
+        /// <param name="build"> Singer <see cref="APIChangelogBuild"/>.</param>
         public void ShowBuild([NotNull] APIChangelogBuild build)
         {
             if (build == null) throw new ArgumentNullException(nameof(build));

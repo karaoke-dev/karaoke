@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -73,6 +74,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                     timeTagWithNoTimePiece.Origin = Anchor.BottomRight;
                     timeTagText.Origin = Anchor.TopRight;
                     break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(item.Index.State));
             }
         }
 
@@ -171,6 +175,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                         box.Anchor = Anchor.CentreRight;
                         box.Origin = Anchor.CentreRight;
                         break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(timeTag.Index.State));
                 }
             }
         }

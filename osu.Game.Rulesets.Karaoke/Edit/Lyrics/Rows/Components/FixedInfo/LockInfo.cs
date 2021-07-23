@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Cursor;
@@ -56,6 +57,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
                         Icon = FontAwesome.Solid.Lock;
                         Colour = colours.Red;
                         return;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(value.NewValue));
                 }
             }, true);
         }
