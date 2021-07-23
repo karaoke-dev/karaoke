@@ -31,16 +31,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         [BackgroundDependencyLoader]
         private void load()
         {
-            if (beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap)
-            {
-                Singers.AddRange(karaokeBeatmap.Singers);
+            if (!(beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap))
+                return;
 
-                // should write-back if singer changed.
-                Singers.BindCollectionChanged((a, b) =>
-                {
-                    karaokeBeatmap.Singers = Singers.ToArray();
-                });
-            }
+            Singers.AddRange(karaokeBeatmap.Singers);
+
+            // should write-back if singer changed.
+            Singers.BindCollectionChanged((a, b) =>
+            {
+                karaokeBeatmap.Singers = Singers.ToArray();
+            });
         }
 
         public void ChangeOrder(Singer singer, int newIndex)

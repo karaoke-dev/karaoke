@@ -89,17 +89,17 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             foreground.ClearTransforms(false, nameof(foreground.Colour));
             foreground.Alpha = 0;
 
-            if (isHitting.NewValue)
-            {
-                foreground.Alpha = 1;
+            if (!isHitting.NewValue)
+                return;
 
-                const float animation_length = 50;
+            foreground.Alpha = 1;
 
-                // wait for the next sync point
-                double synchronisedOffset = animation_length * 2 - Time.Current % (animation_length * 2);
-                using (foreground.BeginDelayedSequence(synchronisedOffset))
-                    foreground.FadeColour(AccentColour.Value.Lighten(0.7f), animation_length).Then().FadeColour(foreground.Colour, animation_length).Loop();
-            }
+            const float animation_length = 50;
+
+            // wait for the next sync point
+            double synchronisedOffset = animation_length * 2 - Time.Current % (animation_length * 2);
+            using (foreground.BeginDelayedSequence(synchronisedOffset))
+                foreground.FadeColour(AccentColour.Value.Lighten(0.7f), animation_length).Then().FadeColour(foreground.Colour, animation_length).Loop();
         }
 
         private void applySingerStyle(ISkinSource skin, int[] singers)
