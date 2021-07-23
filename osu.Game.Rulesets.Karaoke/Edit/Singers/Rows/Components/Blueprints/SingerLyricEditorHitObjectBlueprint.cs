@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
 
             static bool lyricInCurrentSinger(Lyric lyric, Singer singer)
             {
-                if (singer == DefaultLyricPlacementColumn.DEFAULT_SINGER)
+                if (singer == DefaultLyricPlacementColumn.DefaultSinger)
                     return lyric.Singers == null || !lyric.Singers.Any();
 
                 return LyricUtils.ContainsSinger(lyric, singer);

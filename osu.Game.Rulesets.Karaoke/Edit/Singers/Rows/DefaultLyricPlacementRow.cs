@@ -9,10 +9,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 {
     public class DefaultLyricPlacementColumn : LyricPlacementColumn
     {
-        public static Singer DEFAULT_SINGER { get; } = new Singer(0) { Name = "Default" };
+        public static Singer DefaultSinger { get; } = new Singer(0) { Name = "Default" };
 
         public DefaultLyricPlacementColumn()
-            : base(DEFAULT_SINGER)
+            : base(DefaultSinger)
         {
         }
 
