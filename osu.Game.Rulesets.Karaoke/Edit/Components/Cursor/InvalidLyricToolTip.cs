@@ -102,6 +102,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                     case TimeInvalid.EndTimeInvalid:
                         invalidMessage.AddAlertParagraph("End time is smaller than maximum time tag's time.");
                         break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(timeInvalid));
                 }
             }
 
