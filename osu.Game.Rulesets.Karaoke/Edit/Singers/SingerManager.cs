@@ -4,9 +4,11 @@
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
@@ -62,6 +64,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
             // Shifting order that order is larger than current singer
             OrderUtils.ShiftingOrder(Singers.Where(x => x.Order > singer.Order).ToArray(), -1);
             Singers.Remove(singer);
+
+            // should clear removed singer ids in singer editor.
+            var lyrics = beatmap.HitObjects.OfType<Lyric>();
+            lyrics.ForEach(x =>
+            {
+                LyricUtils.RemoveSinger(x, singer);
+            });
         }
     }
 }
