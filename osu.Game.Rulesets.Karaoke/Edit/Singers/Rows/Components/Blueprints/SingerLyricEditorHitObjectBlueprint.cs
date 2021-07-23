@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -10,6 +11,7 @@ using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -72,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
             singersBindable.BindValueChanged(e =>
             {
                 // Check is lyric contains this singer, or default singer
-                isSingerMatched = LyricUtils.ContainsSinger(Item, editor.Singer);
+                isSingerMatched = lyricInCurrentSinger(Item, editor.Singer);
 
                 if (isSingerMatched)
                 {
@@ -83,6 +85,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
                     this.FadeTo(0.1f, 200);
                 }
             }, true);
+
+            static bool lyricInCurrentSinger(Lyric lyric, Singer singer)
+            {
+                if (singer == DefaultLyricPlacementColumn.DEFAULT_SINGER)
+                    return lyric.Singers == null || !lyric.Singers.Any();
+
+                return LyricUtils.ContainsSinger(lyric, singer);
+            }
         }
 
         public object TooltipContent => Item;
