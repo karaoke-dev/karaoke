@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
 {
     public class FontInfo
     {
-        public string FileName { get; }
+        public string FontName { get; }
 
         public string Family { get; }
 
@@ -15,12 +15,12 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
 
         public bool UserImport { get; }
 
-        public FontInfo(string fileName, bool userImport = false)
+        public FontInfo(string fontName, bool userImport = false)
         {
-            FileName = fileName;
+            FontName = fontName;
             UserImport = userImport;
 
-            var parts = fileName.Split('-');
+            var parts = fontName.Split('-');
 
             switch (parts.Length)
             {
@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
                     break;
 
                 default:
-                    Weight = fileName.Split('-').LastOrDefault();
+                    Weight = fontName.Split('-').LastOrDefault();
                     Family = string.Join('-', parts.Take(parts.Length - 1));
                     break;
             }
