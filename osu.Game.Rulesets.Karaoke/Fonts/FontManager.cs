@@ -24,27 +24,42 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
             Fonts.AddRange(new[]
             {
                 // From osu-framework
-                new FontInfo("OpenSans-Bold"),
-                new FontInfo("OpenSans-BoldItalic"),
                 new FontInfo("OpenSans-Regular"),
+                new FontInfo("OpenSans-Bold"),
                 new FontInfo("OpenSans-RegularItalic"),
-                new FontInfo("Roboto-Bold"),
+                new FontInfo("OpenSans-BoldItalic"),
+
                 new FontInfo("Roboto-Regular"),
-                new FontInfo("RobotoCondensed-Bold"),
+                new FontInfo("Roboto-Bold"),
                 new FontInfo("RobotoCondensed-Regular"),
+                new FontInfo("RobotoCondensed-Bold"),
                 // From osu.game
+                new FontInfo("osuFont"),
+
+                new FontInfo("Torus-Regular"),
+                new FontInfo("Torus-Light"),
+                new FontInfo("Torus-SemiBold"),
+                new FontInfo("Torus-Bold"),
+
+                new FontInfo("Inter-Regular"),
+                new FontInfo("Inter-RegularItalic"),
+                new FontInfo("Inter-Light"),
+                new FontInfo("Inter-LightItalic"),
+                new FontInfo("Inter-SemiBold"),
+                new FontInfo("Inter-SemiBoldItalic"),
+                new FontInfo("Inter-Bold"),
+                new FontInfo("Inter-BoldItalic"),
+
                 new FontInfo("Noto-Basic"),
+                new FontInfo("Noto-Hangul"),
                 new FontInfo("Noto-CJK-Basic"),
                 new FontInfo("Noto-CJK-Compatibility"),
-                new FontInfo("Noto-Hangul"),
                 new FontInfo("Noto-Thai"),
-                new FontInfo("Torus-Bold"),
-                new FontInfo("Torus-Light"),
-                new FontInfo("Torus-Regular"),
-                new FontInfo("Torus-SemiBold"),
-                new FontInfo("Venera-Black"),
-                new FontInfo("Venera-Bold"),
+
                 new FontInfo("Venera-Light"),
+                new FontInfo("Venera-Bold"),
+                new FontInfo("Venera-Black"),
+
                 new FontInfo("Compatibility"),
             });
         }
