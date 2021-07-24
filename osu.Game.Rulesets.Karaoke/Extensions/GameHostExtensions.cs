@@ -17,6 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
 
         public static GlyphStore CreateGlyphStore(this GameHost host, FontInfo fontInfo)
         {
+            if (!fontInfo.UserImport)
+                return null;
+
             var storage = host.Storage;
             if (!storage.ExistsDirectory(font_base_path))
                 return null;
