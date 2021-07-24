@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 return;
 
             // create font store if wants to import.
-            localFontStore = new FontStore(scaleAdjust: 200, minFilterMode: All.Linear);
+            localFontStore = new FontStore(minFilterMode: All.Linear);
             fontStore.AddStore(localFontStore);
 
             foreach (var path in targetImportFontPaths)
