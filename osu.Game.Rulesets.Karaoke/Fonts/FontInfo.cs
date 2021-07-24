@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Fonts
 {
-    public class FontInfo
+    public readonly struct FontInfo
     {
         public string FontName { get; }
 
@@ -26,11 +26,12 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
             {
                 case 1:
                     Family = parts[0];
+                    Weight = null;
                     break;
 
                 default:
-                    Weight = fontName.Split('-').LastOrDefault();
                     Family = string.Join('-', parts.Take(parts.Length - 1));
+                    Weight = fontName.Split('-').LastOrDefault();
                     break;
             }
         }
