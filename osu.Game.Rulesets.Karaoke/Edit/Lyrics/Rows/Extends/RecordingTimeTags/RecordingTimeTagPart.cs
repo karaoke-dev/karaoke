@@ -7,9 +7,11 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -106,13 +108,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             }
         }
 
-        private class RecordingTimeTagVisualization : CompositeDrawable, IHasCustomTooltip
+        private class RecordingTimeTagVisualization : CompositeDrawable, IHasCustomTooltip, IHasContextMenu
         {
             [Resolved]
             private EditorClock editorClock { get; set; }
 
             [Resolved]
             private LyricCaretState lyricCaretState { get; set; }
+
+            [Resolved]
+            private LyricManager lyricManager { get; set; }
 
             private readonly Bindable<double?> bindableTIme;
 
@@ -184,6 +189,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             public object TooltipContent => timeTag;
 
             public ITooltip GetCustomTooltip() => new TimeTagTooltip();
+
+            public MenuItem[] ContextMenuItems =>
+                new MenuItem[]
+                {
+                    new OsuMenuItem("Clear time", MenuItemType.Destructive, () =>
+                    {
+                        lyricManager.ClearTimeTagTime(timeTag);
+                    })
+                };
         }
     }
 }
