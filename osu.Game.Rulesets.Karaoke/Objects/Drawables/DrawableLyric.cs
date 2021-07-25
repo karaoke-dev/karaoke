@@ -81,6 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             lyricPieces.Clear();
             lyricPieces.Add(new DefaultLyricPiece(HitObject));
+            ApplySkin(CurrentSkin, false);
 
             SingersBindable.BindTo(HitObject.SingersBindable);
             LayoutIndexBindable.BindTo(HitObject.LayoutIndexBindable);
