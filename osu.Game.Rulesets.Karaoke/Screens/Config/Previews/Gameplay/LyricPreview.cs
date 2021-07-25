@@ -6,11 +6,16 @@ using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
+using osu.Framework.IO.Stores;
+using osu.Framework.Platform;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Timing;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
@@ -22,12 +27,23 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
         private readonly Bindable<bool> useTranslate = new Bindable<bool>();
         private readonly Bindable<CultureInfo> translateLanguage = new Bindable<CultureInfo>();
 
+        private readonly Bindable<FontUsage> mainFont = new Bindable<FontUsage>();
+        private readonly Bindable<FontUsage> rubyFont = new Bindable<FontUsage>();
+        private readonly Bindable<FontUsage> romajiFont = new Bindable<FontUsage>();
+        private readonly Bindable<FontUsage> translateFont = new Bindable<FontUsage>();
+
+        [Resolved]
+        private FontStore fontStore { get; set; }
+
+        private KaraokeLocalFontStore localFontStore;
+
         private readonly DrawableLyric drawableLyric;
 
         public LyricPreview()
         {
             Size = new Vector2(0.7f, 0.5f);
 
+            // todo : should add skin support.
             Child = drawableLyric = new DrawableLyric(createPreviewLyric())
             {
                 Anchor = Anchor.Centre,
@@ -52,6 +68,23 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
                 updateTranslate();
             });
 
+            mainFont.BindValueChanged(e =>
+            {
+                addFont(e.NewValue);
+            });
+            rubyFont.BindValueChanged(e =>
+            {
+                addFont(e.NewValue);
+            });
+            romajiFont.BindValueChanged(e =>
+            {
+                addFont(e.NewValue);
+            });
+            translateFont.BindValueChanged(e =>
+            {
+                addFont(e.NewValue);
+            });
+
             void updateTranslate()
             {
                 var translate = useTranslate.Value;
@@ -67,11 +100,21 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
 
                 drawableLyric.DisplayTranslateLanguage = translate ? language : null;
             }
+
+            void addFont(FontUsage fontUsage)
+            {
+                var fontInfo = FontUsageUtils.ToFontInfo(fontUsage);
+                localFontStore.AddFont(fontInfo);
+            }
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager config)
+        private void load(GameHost host, KaraokeRulesetConfigManager config)
         {
+            // create local font store and import those files
+            localFontStore = new KaraokeLocalFontStore(host);
+            fontStore.AddStore(localFontStore);
+
             // ruby and romaji
             config.BindWith(KaraokeRulesetSetting.DisplayRuby, displayRuby);
             config.BindWith(KaraokeRulesetSetting.DisplayRomaji, displayRomaji);
@@ -79,6 +122,19 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             // translate
             config.BindWith(KaraokeRulesetSetting.UseTranslate, useTranslate);
             config.BindWith(KaraokeRulesetSetting.PreferLanguage, translateLanguage);
+
+            // fonts
+            config.BindWith(KaraokeRulesetSetting.MainFont, mainFont);
+            config.BindWith(KaraokeRulesetSetting.RubyFont, rubyFont);
+            config.BindWith(KaraokeRulesetSetting.RomajiFont, romajiFont);
+            config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFont);
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            fontStore?.RemoveStore(localFontStore);
         }
 
         private Lyric createPreviewLyric()
