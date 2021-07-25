@@ -38,6 +38,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         private readonly BindableBool displayRubyBindable = new BindableBool();
         private readonly BindableBool displayRomajiBindable = new BindableBool();
 
+        private readonly Bindable<FontUsage> mainFontUsageBindable = new Bindable<FontUsage>();
+        private readonly Bindable<FontUsage> rubyFontUsageBindable = new Bindable<FontUsage>();
+        private readonly Bindable<FontUsage> romajiFontUsageBindable = new Bindable<FontUsage>();
+        private readonly Bindable<FontUsage> translateFontUsageBindable = new Bindable<FontUsage>();
+
         private readonly IBindable<int[]> singersBindable = new Bindable<int[]>();
         private readonly IBindable<int> layoutIndexBindable = new Bindable<int>();
         private readonly BindableDictionary<CultureInfo, string> translateTextBindable = new BindableDictionary<CultureInfo, string>();
@@ -100,6 +105,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             singersBindable.BindValueChanged(index => { updateFontStyle(); });
             layoutIndexBindable.BindValueChanged(index => { updateLayout(); });
             translateTextBindable.BindCollectionChanged((_, args) => { applyTranslate(); });
+
+            if (config != null)
+            {
+                config.BindWith(KaraokeRulesetSetting.MainFont, mainFontUsageBindable);
+                config.BindWith(KaraokeRulesetSetting.RubyFont, rubyFontUsageBindable);
+                config.BindWith(KaraokeRulesetSetting.RomajiFont, romajiFontUsageBindable);
+                config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFontUsageBindable);
+            }
+
+            mainFontUsageBindable.BindValueChanged(e => updateFontUsage());
+            rubyFontUsageBindable.BindValueChanged(e => updateFontUsage());
+            romajiFontUsageBindable.BindValueChanged(e => updateFontUsage());
+            translateFontUsageBindable.BindValueChanged(e => updateFontUsage());
         }
 
         protected override void OnApply()
