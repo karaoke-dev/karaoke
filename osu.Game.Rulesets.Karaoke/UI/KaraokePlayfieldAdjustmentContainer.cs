@@ -19,8 +19,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
     /// </summary>
     public class KaraokePlayfieldAdjustmentContainer : PlayfieldAdjustmentContainer
     {
-        private const string base_path = "fonts\\cached";
-
         [Resolved]
         private FontStore fontStore { get; set; }
 
