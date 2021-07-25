@@ -152,16 +152,15 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             // Apply translate font.
             translateText.Font = getFont(KaraokeRulesetSetting.TranslateFont);
 
-            FontUsage getFont(KaraokeRulesetSetting setting, FontUsage? fontUsage = null)
+            FontUsage getFont(KaraokeRulesetSetting setting, FontUsage? skinFont = null)
             {
-                // todo : should interact with skin font
                 var forceUseDefault = forceUseDefaultFont();
                 var font = config?.Get<FontUsage>(setting) ?? FontUsage.Default;
 
-                if (forceUseDefault || fontUsage == null)
+                if (forceUseDefault || skinFont == null)
                     return font;
 
-                return font.With(size: fontUsage.Value.Size);
+                return font.With(size: skinFont.Value.Size);
 
                 bool forceUseDefaultFont()
                 {
