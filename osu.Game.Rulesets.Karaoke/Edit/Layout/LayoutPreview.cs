@@ -97,7 +97,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 public PreviewDrawableLyric(Lyric hitObject)
                     : base(hitObject)
                 {
-                    DisplayTranslateLanguage = new CultureInfo("en-US");
+                    // todo: if wants to let this shit display language, should make a new config for that.
+                    // but that's not important for now.
+                    // DisplayTranslateLanguage = new CultureInfo("en-US");
                 }
 
                 /// <summary>

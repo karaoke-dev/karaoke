@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -22,11 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
 {
     public class LyricPreview : SettingsSubsectionPreview
     {
-        private readonly Bindable<bool> displayRuby = new Bindable<bool>();
-        private readonly Bindable<bool> displayRomaji = new Bindable<bool>();
-        private readonly Bindable<bool> useTranslate = new Bindable<bool>();
-        private readonly Bindable<CultureInfo> translateLanguage = new Bindable<CultureInfo>();
-
         private readonly Bindable<FontUsage> mainFont = new Bindable<FontUsage>();
         private readonly Bindable<FontUsage> rubyFont = new Bindable<FontUsage>();
         private readonly Bindable<FontUsage> romajiFont = new Bindable<FontUsage>();
@@ -51,23 +45,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
                 Clock = new StopClock(0),
             };
 
-            displayRuby.BindValueChanged(e =>
-            {
-                drawableLyric.DisplayRuby = e.NewValue;
-            }, true);
-            displayRomaji.BindValueChanged(e =>
-            {
-                drawableLyric.DisplayRomaji = e.NewValue;
-            }, true);
-            useTranslate.BindValueChanged(e =>
-            {
-                updateTranslate();
-            });
-            translateLanguage.BindValueChanged(e =>
-            {
-                updateTranslate();
-            });
-
             mainFont.BindValueChanged(e =>
             {
                 addFont(e.NewValue);
@@ -85,22 +62,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
                 addFont(e.NewValue);
             });
 
-            void updateTranslate()
-            {
-                var translate = useTranslate.Value;
-                var language = translateLanguage.Value;
-
-                if (language != null)
-                {
-                    drawableLyric.HitObject.Translates = new Dictionary<CultureInfo, string>
-                    {
-                        { language, language.DisplayName }
-                    };
-                }
-
-                drawableLyric.DisplayTranslateLanguage = translate ? language : null;
-            }
-
             void addFont(FontUsage fontUsage)
             {
                 var fontInfo = FontUsageUtils.ToFontInfo(fontUsage);
@@ -114,14 +75,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             // create local font store and import those files
             localFontStore = new KaraokeLocalFontStore(host);
             fontStore.AddStore(localFontStore);
-
-            // ruby and romaji
-            config.BindWith(KaraokeRulesetSetting.DisplayRuby, displayRuby);
-            config.BindWith(KaraokeRulesetSetting.DisplayRomaji, displayRomaji);
-
-            // translate
-            config.BindWith(KaraokeRulesetSetting.UseTranslate, useTranslate);
-            config.BindWith(KaraokeRulesetSetting.PreferLanguage, translateLanguage);
 
             // fonts
             config.BindWith(KaraokeRulesetSetting.MainFont, mainFont);

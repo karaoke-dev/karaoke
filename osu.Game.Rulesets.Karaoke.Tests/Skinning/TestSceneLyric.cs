@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -19,9 +21,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
     [TestFixture]
     public class TestSceneLyric : KaraokeSkinnableTestScene
     {
+        private static CultureInfo cultureInfo { get; } = new("en-US");
+
         public TestSceneLyric()
         {
             AddStep("Default Lyric", () => SetContents(_ => testSingle()));
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(RulesetConfigCache configCache)
+        {
+            // Cache ruleset config manager and session because karaoke input manager need it.
+            var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(Ruleset.Value.CreateInstance());
+            config.SetValue(KaraokeRulesetSetting.UseTranslate, true);
+            config.SetValue(KaraokeRulesetSetting.PreferLanguage, cultureInfo);
+
+            Dependencies.Cache(config);
         }
 
         private Drawable testSingle(double timeOffset = 0)
@@ -74,14 +89,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 },
             };
 
-            var defaultLanguage = new CultureInfo("en-US");
-            lyric.Translates.Add(defaultLanguage, "karaoke");
+            lyric.Translates.Add(cultureInfo, "karaoke");
 
             lyric.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 
             var drawable = CreateDrawableLyric(lyric);
-            drawable.DisplayTranslateLanguage = defaultLanguage;
-
             foreach (var mod in SelectedMods.Value.OfType<IApplicableToDrawableHitObject>())
                 mod.ApplyToDrawableHitObject(drawable);
 

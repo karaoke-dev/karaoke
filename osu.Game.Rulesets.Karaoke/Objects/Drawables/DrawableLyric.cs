@@ -33,6 +33,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         [Resolved(canBeNull: true)]
         private KaraokeRulesetConfigManager config { get; set; }
 
+        private readonly BindableBool useTranslateBindable = new BindableBool();
+        private readonly Bindable<CultureInfo> preferLanguageBindable = new Bindable<CultureInfo>();
+        private readonly BindableBool displayRubyBindable = new BindableBool();
+        private readonly BindableBool displayRomajiBindable = new BindableBool();
+
         private readonly IBindable<int[]> singersBindable = new Bindable<int[]>();
         private readonly IBindable<int> layoutIndexBindable = new Bindable<int>();
         private readonly BindableDictionary<CultureInfo, string> translateTextBindable = new BindableDictionary<CultureInfo, string>();
@@ -54,8 +59,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
         }
 
-        [BackgroundDependencyLoader]
-        private void load()
+        [BackgroundDependencyLoader(true)]
+        private void load([CanBeNull] KaraokeSessionStatics session)
         {
             Scale = new Vector2((float)(config?.Get<double>(KaraokeRulesetSetting.LyricScale) ?? 2));
             AutoSizeAxes = Axes.Both;
@@ -69,6 +74,28 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 Anchor = Anchor.BottomLeft,
                 Origin = Anchor.TopLeft,
             });
+
+            useTranslateBindable.BindValueChanged(e => ApplyTranslate());
+            preferLanguageBindable.BindValueChanged(e => ApplyTranslate());
+            displayRubyBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRuby = e.NewValue));
+            displayRomajiBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRomaji = e.NewValue));
+
+            if (session != null)
+            {
+                // gameplay.
+                session.BindWith(KaraokeRulesetSession.UseTranslate, useTranslateBindable);
+                session.BindWith(KaraokeRulesetSession.PreferLanguage, preferLanguageBindable);
+                session.BindWith(KaraokeRulesetSession.DisplayRuby, displayRubyBindable);
+                session.BindWith(KaraokeRulesetSession.DisplayRomaji, displayRomajiBindable);
+            }
+            else if (config != null)
+            {
+                // preview lyric effect.
+                config.BindWith(KaraokeRulesetSetting.UseTranslate, useTranslateBindable);
+                config.BindWith(KaraokeRulesetSetting.PreferLanguage, preferLanguageBindable);
+                config.BindWith(KaraokeRulesetSetting.DisplayRuby, displayRubyBindable);
+                config.BindWith(KaraokeRulesetSetting.DisplayRomaji, displayRomajiBindable);
+            }
 
             singersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
             layoutIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
@@ -99,14 +126,17 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         protected virtual void ApplyTranslate()
         {
-            if (DisplayTranslateLanguage == null)
+            var language = preferLanguageBindable.Value;
+            var needTranslate = this.useTranslateBindable.Value;
+
+            if (!needTranslate || language == null)
             {
                 translateText.Text = (string)null;
             }
             else
             {
-                translateTextBindable.TryGetValue(DisplayTranslateLanguage, out string translate);
-                translateText.Text = translate;
+                if (translateTextBindable.TryGetValue(language, out string translate))
+                    translateText.Text = translate;
             }
         }
 
@@ -248,51 +278,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             {
                 const float fade_out_time = 500;
                 this.FadeOut(fade_out_time);
-            }
-        }
-
-        private bool displayRuby = true;
-
-        public bool DisplayRuby
-        {
-            get => displayRuby;
-            set
-            {
-                if (displayRuby == value)
-                    return;
-
-                displayRuby = value;
-                Schedule(() => lyricPieces.ForEach(x => x.DisplayRuby = displayRuby));
-            }
-        }
-
-        private bool displayRomaji = true;
-
-        public bool DisplayRomaji
-        {
-            get => displayRomaji;
-            set
-            {
-                if (displayRomaji == value)
-                    return;
-
-                displayRomaji = value;
-                Schedule(() => lyricPieces.ForEach(x => x.DisplayRomaji = displayRomaji));
-            }
-        }
-
-        private CultureInfo displayTranslateLanguage;
-
-        public CultureInfo DisplayTranslateLanguage
-        {
-            get => displayTranslateLanguage;
-            set
-            {
-                if (Equals(displayTranslateLanguage, value))
-                    return;
-
-                displayTranslateLanguage = value;
-                Schedule(ApplyTranslate);
             }
         }
     }

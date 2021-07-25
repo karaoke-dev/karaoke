@@ -2,12 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Caching;
-using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -29,26 +27,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         protected WorkingBeatmap WorkingBeatmap => beatmap.Value;
 
-        private readonly BindableBool translate = new BindableBool();
-        private readonly Bindable<CultureInfo> translateLanguage = new Bindable<CultureInfo>();
-
-        private readonly BindableBool displayRuby = new BindableBool();
-        private readonly BindableBool displayRomaji = new BindableBool();
-
         private readonly BindableDouble preemptTime = new BindableDouble();
         private readonly Bindable<Lyric> nowLyric = new Bindable<Lyric>();
         private readonly Cached seekCache = new Cached();
 
         public LyricPlayfield()
         {
-            // Change need to translate
-            translate.BindValueChanged(x => updateLyricTranslate());
-            translateLanguage.BindValueChanged(x => updateLyricTranslate());
-
-            // Change display ruby/romaji or not
-            displayRuby.BindValueChanged(x => AllHitObjects.ForEach(d => d.DisplayRuby = x.NewValue));
-            displayRomaji.BindValueChanged(x => AllHitObjects.ForEach(d => d.DisplayRomaji = x.NewValue));
-
             // Switch to target time
             nowLyric.BindValueChanged(value =>
             {
@@ -70,23 +54,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
             NewResult += OnNewResult;
         }
 
-        private void updateLyricTranslate()
-        {
-            var isTranslate = translate.Value;
-            var targetLanguage = isTranslate ? translateLanguage.Value : null;
-
-            // apply target translate language
-            AllHitObjects.ForEach(x => x.DisplayTranslateLanguage = targetLanguage);
-        }
-
         protected override void OnNewDrawableHitObject(DrawableHitObject drawableHitObject)
         {
             if (drawableHitObject is DrawableLyric drawableLyric)
             {
                 // todo : not really sure should cancel binding action in here?
                 drawableLyric.OnLyricStart += OnNewResult;
-                drawableLyric.DisplayRuby = displayRuby.Value;
-                drawableLyric.DisplayRomaji = displayRomaji.Value;
             }
 
             base.OnNewDrawableHitObject(drawableHitObject);
@@ -107,14 +80,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetConfigManager rulesetConfig, KaraokeSessionStatics session)
         {
-            // Translate
-            session.BindWith(KaraokeRulesetSession.UseTranslate, translate);
-            session.BindWith(KaraokeRulesetSession.PreferLanguage, translateLanguage);
-
-            // Ruby/Romaji
-            session.BindWith(KaraokeRulesetSession.DisplayRuby, displayRuby);
-            session.BindWith(KaraokeRulesetSession.DisplayRomaji, displayRomaji);
-
             // Practice
             rulesetConfig.BindWith(KaraokeRulesetSetting.PracticePreemptTime, preemptTime);
             session.BindWith(KaraokeRulesetSession.NowLyric, nowLyric);
