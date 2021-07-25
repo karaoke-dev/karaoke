@@ -75,8 +75,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 Origin = Anchor.TopLeft,
             });
 
-            useTranslateBindable.BindValueChanged(e => ApplyTranslate());
-            preferLanguageBindable.BindValueChanged(e => ApplyTranslate());
+            useTranslateBindable.BindValueChanged(e => applyTranslate());
+            preferLanguageBindable.BindValueChanged(e => applyTranslate());
             displayRubyBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRuby = e.NewValue));
             displayRomajiBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRomaji = e.NewValue));
 
@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             singersBindable.BindValueChanged(index => { updateFontStyle(); });
             layoutIndexBindable.BindValueChanged(index => { updateLayout(); });
-            translateTextBindable.BindCollectionChanged((_, args) => { ApplyTranslate(); });
+            translateTextBindable.BindCollectionChanged((_, args) => { applyTranslate(); });
         }
 
         protected override void OnApply()
@@ -122,22 +122,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             singersBindable.UnbindFrom(HitObject.SingersBindable);
             layoutIndexBindable.UnbindFrom(HitObject.LayoutIndexBindable);
             translateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
-        }
-
-        protected virtual void ApplyTranslate()
-        {
-            var language = preferLanguageBindable.Value;
-            var needTranslate = this.useTranslateBindable.Value;
-
-            if (!needTranslate || language == null)
-            {
-                translateText.Text = (string)null;
-            }
-            else
-            {
-                if (translateTextBindable.TryGetValue(language, out string translate))
-                    translateText.Text = translate;
-            }
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)
@@ -262,6 +246,22 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 lyricPiece.RomajiSpacing = new Vector2(layout.RomajiInterval, lyricPiece.RomajiSpacing.Y);
                 lyricPiece.RomajiAlignment = layout.RomajiAlignment;
                 lyricPiece.RomajiMargin = layout.RomajiMargin;
+            }
+        }
+
+        private void applyTranslate()
+        {
+            var language = preferLanguageBindable.Value;
+            var needTranslate = this.useTranslateBindable.Value;
+
+            if (!needTranslate || language == null)
+            {
+                translateText.Text = (string)null;
+            }
+            else
+            {
+                if (translateTextBindable.TryGetValue(language, out string translate))
+                    translateText.Text = translate;
             }
         }
 
