@@ -33,9 +33,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         [Resolved(canBeNull: true)]
         private KaraokeRulesetConfigManager config { get; set; }
 
-        public readonly IBindable<int[]> SingersBindable = new Bindable<int[]>();
-        public readonly IBindable<int> LayoutIndexBindable = new Bindable<int>();
-        public readonly BindableDictionary<CultureInfo, string> TranslateTextBindable = new BindableDictionary<CultureInfo, string>();
+        private readonly IBindable<int[]> singersBindable = new Bindable<int[]>();
+        private readonly IBindable<int> layoutIndexBindable = new Bindable<int>();
+        private readonly BindableDictionary<CultureInfo, string> translateTextBindable = new BindableDictionary<CultureInfo, string>();
 
         /// <summary>
         /// Invoked when a <see cref="JudgementResult"/> has been applied by this <see cref="DrawableHitObject"/> or a nested <see cref="DrawableHitObject"/>.
@@ -70,9 +70,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 Origin = Anchor.TopLeft,
             });
 
-            SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
-            LayoutIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
-            TranslateTextBindable.BindCollectionChanged((_, args) => { ApplyTranslate(); });
+            singersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
+            layoutIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
+            translateTextBindable.BindCollectionChanged((_, args) => { ApplyTranslate(); });
         }
 
         protected override void OnApply()
@@ -83,18 +83,18 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             lyricPieces.Add(new DefaultLyricPiece(HitObject));
             ApplySkin(CurrentSkin, false);
 
-            SingersBindable.BindTo(HitObject.SingersBindable);
-            LayoutIndexBindable.BindTo(HitObject.LayoutIndexBindable);
-            TranslateTextBindable.BindTo(HitObject.TranslateTextBindable);
+            singersBindable.BindTo(HitObject.SingersBindable);
+            layoutIndexBindable.BindTo(HitObject.LayoutIndexBindable);
+            translateTextBindable.BindTo(HitObject.TranslateTextBindable);
         }
 
         protected override void OnFree()
         {
             base.OnFree();
 
-            SingersBindable.UnbindFrom(HitObject.SingersBindable);
-            LayoutIndexBindable.UnbindFrom(HitObject.LayoutIndexBindable);
-            TranslateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
+            singersBindable.UnbindFrom(HitObject.SingersBindable);
+            layoutIndexBindable.UnbindFrom(HitObject.LayoutIndexBindable);
+            translateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
         }
 
         protected virtual void ApplyTranslate()
@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             }
             else
             {
-                TranslateTextBindable.TryGetValue(DisplayTranslateLanguage, out string translate);
+                translateTextBindable.TryGetValue(DisplayTranslateLanguage, out string translate);
                 translateText.Text = translate;
             }
         }
