@@ -139,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             }
         }
 
-        public virtual void ApplyFont(LyricFont font)
+        public void ApplyFontStyle(LyricFont font)
         {
             // From text sample
             FrontTextTexture = new SolidTexture { SolidColor = Color4.Blue }; // font.FrontTextBrushInfo.TextBrush.ConvertToTextureSample();

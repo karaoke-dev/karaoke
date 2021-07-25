@@ -97,8 +97,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 config.BindWith(KaraokeRulesetSetting.DisplayRomaji, displayRomajiBindable);
             }
 
-            singersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
-            layoutIndexBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
+            singersBindable.BindValueChanged(index => { updateFontStyle(); });
+            layoutIndexBindable.BindValueChanged(index => { updateLayout(); });
             translateTextBindable.BindCollectionChanged((_, args) => { ApplyTranslate(); });
         }
 
@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             lyricPieces.Clear();
             lyricPieces.Add(new DefaultLyricPiece(HitObject));
-            ApplySkin(CurrentSkin, false);
+            updateFontStyle();
 
             singersBindable.BindTo(HitObject.SingersBindable);
             layoutIndexBindable.BindTo(HitObject.LayoutIndexBindable);
@@ -144,39 +144,49 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
             base.ApplySkin(skin, allowFallback);
 
+            updateFontStyle();
+            updateFontUsage();
+            updateLayout();
+        }
+
+        private void updateFontStyle()
+        {
             if (CurrentSkin == null)
                 return;
 
             if (HitObject == null)
                 return;
 
-            skin.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(karaokeFont =>
-            {
-                if (karaokeFont.NewValue != null)
-                    ApplyFont(karaokeFont.NewValue);
-            }, true);
+            var lyricFont = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.Value;
+            if (lyricFont == null)
+                return;
 
-            skin.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, HitObject.LayoutIndex))?.BindValueChanged(karaokeLayout =>
-            {
-                if (karaokeLayout.NewValue != null)
-                    ApplyLayout(karaokeLayout.NewValue);
-            }, true);
-        }
-
-        protected virtual void ApplyFont(LyricFont font)
-        {
             foreach (var lyricPiece in lyricPieces)
             {
-                lyricPiece.ApplyFont(font);
+                lyricPiece.ApplyFontStyle(lyricFont);
+            }
+        }
 
+        private void updateFontUsage()
+        {
+            if (CurrentSkin == null)
+                return;
+
+            if (HitObject == null)
+                return;
+
+            var lyricFont = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.Value;
+
+            foreach (var lyricPiece in lyricPieces)
+            {
                 // Apply text font info
-                var lyricFont = font.LyricTextFontInfo.LyricTextFontInfo;
-                lyricPiece.Font = getFont(KaraokeRulesetSetting.MainFont, lyricFont);
+                var mainFont = lyricFont?.LyricTextFontInfo?.LyricTextFontInfo;
+                lyricPiece.Font = getFont(KaraokeRulesetSetting.MainFont, mainFont);
 
-                var rubyFont = font.RubyTextFontInfo.LyricTextFontInfo;
+                var rubyFont = lyricFont?.RubyTextFontInfo?.LyricTextFontInfo;
                 lyricPiece.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, rubyFont);
 
-                var romajiFont = font.RomajiTextFontInfo.LyricTextFontInfo;
+                var romajiFont = lyricFont?.RomajiTextFontInfo?.LyricTextFontInfo;
                 lyricPiece.RomajiFont = getFont(KaraokeRulesetSetting.RomajiFont, romajiFont);
             }
 
@@ -212,8 +222,18 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             }
         }
 
-        protected virtual void ApplyLayout(LyricLayout layout)
+        private void updateLayout()
         {
+            if (CurrentSkin == null)
+                return;
+
+            if (HitObject == null)
+                return;
+
+            var layout = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, HitObject.LayoutIndex))?.Value;
+            if (layout == null)
+                return;
+
             // Layout relative to parent
             Anchor = layout.Alignment;
             Origin = layout.Alignment;

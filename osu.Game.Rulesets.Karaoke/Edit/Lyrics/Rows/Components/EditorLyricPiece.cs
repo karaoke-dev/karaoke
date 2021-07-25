@@ -134,7 +134,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 if (newFont == null)
                     return;
 
-                ApplyFont(karaokeFont.NewValue);
+                ApplyFontStyle(karaokeFont.NewValue);
 
                 // Apply text font info
                 var lyricFont = newFont.LyricTextFontInfo.LyricTextFontInfo;
