@@ -7,10 +7,9 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Extensions;
+using osu.Game.Rulesets.Karaoke.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.UI;
-using osuTK.Graphics.ES30;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
@@ -25,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [Resolved]
         private FontStore fontStore { get; set; }
 
-        private FontStore localFontStore;
+        private KaraokeLocalFontStore localFontStore;
 
         [BackgroundDependencyLoader]
         private void load(GameHost host, KaraokeRulesetConfigManager manager)
@@ -40,23 +39,21 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 manager.Get<FontUsage>(KaraokeRulesetSetting.NoteFont),
             };
 
-            var glyphStores = targetImportFonts
-                              .Select(x => FontUsageUtils.ToFontInfo(x))
-                              .Distinct()
-                              .Select(host.CreateGlyphStore)
-                              .Where(x => x != null)
-                              .ToArray();
+            var fontInfos = targetImportFonts
+                            .Select(x => FontUsageUtils.ToFontInfo(x))
+                            .Distinct()
+                            .ToArray();
 
-            if (!glyphStores.Any())
+            if (!fontInfos.Any())
                 return;
 
             // create local font store and import those files
-            localFontStore = new FontStore(minFilterMode: All.Linear);
+            localFontStore = new KaraokeLocalFontStore(host);
             fontStore.AddStore(localFontStore);
 
-            foreach (var glyphStore in glyphStores)
+            foreach (var fontInfo in fontInfos)
             {
-                localFontStore.AddStore(glyphStore);
+                localFontStore.AddFont(fontInfo);
             }
         }
 
