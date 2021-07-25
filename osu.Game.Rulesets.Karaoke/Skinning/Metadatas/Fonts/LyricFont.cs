@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Graphics.Sprites;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts
@@ -30,13 +31,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts
 
         public class TextFontInfo
         {
-            public FontInfo LyricTextFontInfo { get; set; }
+            public FontUsage LyricTextFontInfo { get; set; }
 
             // This property might be ignore now
-            public FontInfo NakaTextFontInfo { get; set; }
+            public FontUsage NakaTextFontInfo { get; set; }
 
             // This property might be ignore now
-            public FontInfo EnTextFontInfo { get; set; }
+            public FontUsage EnTextFontInfo { get; set; }
+
+            public float EdgeSize { get; set; }
         }
 
         public bool UseShadow { get; set; }

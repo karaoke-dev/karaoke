@@ -138,13 +138,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
                 // Apply text font info
                 var lyricFont = newFont.LyricTextFontInfo.LyricTextFontInfo;
-                Font = getFont(lyricFont.CharSize);
+                Font = getFont(lyricFont.Size);
 
                 var rubyFont = newFont.RubyTextFontInfo.LyricTextFontInfo;
-                RubyFont = getFont(rubyFont.CharSize);
+                RubyFont = getFont(rubyFont.Size);
 
                 var romajiFont = newFont.RomajiTextFontInfo.LyricTextFontInfo;
-                RomajiFont = getFont(romajiFont.CharSize);
+                RomajiFont = getFont(romajiFont.Size);
 
                 static FontUsage getFont(float? charSize = null)
                     => FontUsage.Default.With(size: charSize * 2);

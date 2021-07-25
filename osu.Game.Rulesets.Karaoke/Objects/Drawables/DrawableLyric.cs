@@ -140,28 +140,28 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
                 // Apply text font info
                 var lyricFont = font.LyricTextFontInfo.LyricTextFontInfo;
-                lyricPiece.Font = getFont(KaraokeRulesetSetting.MainFont, lyricFont.CharSize);
+                lyricPiece.Font = getFont(KaraokeRulesetSetting.MainFont, lyricFont);
 
                 var rubyFont = font.RubyTextFontInfo.LyricTextFontInfo;
-                lyricPiece.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, rubyFont.CharSize);
+                lyricPiece.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, rubyFont);
 
                 var romajiFont = font.RomajiTextFontInfo.LyricTextFontInfo;
-                lyricPiece.RomajiFont = getFont(KaraokeRulesetSetting.RomajiFont, romajiFont.CharSize);
+                lyricPiece.RomajiFont = getFont(KaraokeRulesetSetting.RomajiFont, romajiFont);
             }
 
             // Apply translate font.
             translateText.Font = getFont(KaraokeRulesetSetting.TranslateFont);
 
-            FontUsage getFont(KaraokeRulesetSetting setting, float? charSize = null)
+            FontUsage getFont(KaraokeRulesetSetting setting, FontUsage? fontUsage = null)
             {
                 // todo : should interact with skin font
                 var forceUseDefault = forceUseDefaultFont();
                 var font = config?.Get<FontUsage>(setting) ?? FontUsage.Default;
 
-                if (forceUseDefault || charSize == null)
+                if (forceUseDefault || fontUsage == null)
                     return font;
 
-                return font.With(size: charSize.Value);
+                return font.With(size: fontUsage.Value.Size);
 
                 bool forceUseDefaultFont()
                 {
