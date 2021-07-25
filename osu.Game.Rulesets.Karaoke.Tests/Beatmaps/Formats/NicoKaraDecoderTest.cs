@@ -59,11 +59,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(backTextBrushInfo.Type, BrushType.Solid);
 
                 // Test font info
-                var lyricTextFontInfo = firstFont.LyricTextFontInfo.LyricTextFontInfo;
-                Assert.AreEqual(lyricTextFontInfo.FontName, "游明朝 Demibold");
-                Assert.AreEqual(lyricTextFontInfo.Bold, true);
-                Assert.AreEqual(lyricTextFontInfo.CharSize, 40);
+                var lyricTextFontInfo = firstFont.LyricTextFontInfo;
                 Assert.AreEqual(lyricTextFontInfo.EdgeSize, 10);
+
+                // Test main text font
+                var mainTextFontInfo = lyricTextFontInfo.LyricTextFontInfo;
+                Assert.AreEqual(mainTextFontInfo.Family, "游明朝 Demibold");
+                Assert.AreEqual(mainTextFontInfo.Weight, "Bold");
+                Assert.AreEqual(mainTextFontInfo.Size, 40);
+                Assert.AreEqual(mainTextFontInfo.FixedWidth, false);
             }
         }
     }

@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
@@ -23,16 +24,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public float FontSize
         {
-            get => BindableFont.Value.LyricTextFontInfo.LyricTextFontInfo.CharSize;
+            get => BindableFont.Value.LyricTextFontInfo.LyricTextFontInfo.Size;
             set
             {
                 var textSize = Math.Max(Math.Min(value, MAX_FONT_SIZE), MIN_FONT_SIZE);
                 var changePercentage = textSize / FontSize;
-                BindableFont.Value.LyricTextFontInfo.LyricTextFontInfo.CharSize *= changePercentage;
-                BindableFont.Value.RubyTextFontInfo.LyricTextFontInfo.CharSize *= changePercentage;
-                BindableFont.Value.RomajiTextFontInfo.LyricTextFontInfo.CharSize *= changePercentage;
+
+                BindableFont.Value.LyricTextFontInfo.LyricTextFontInfo
+                    = multipleSize(BindableFont.Value.LyricTextFontInfo.LyricTextFontInfo, changePercentage);
+                BindableFont.Value.RubyTextFontInfo.LyricTextFontInfo
+                    = multipleSize(BindableFont.Value.RubyTextFontInfo.LyricTextFontInfo, changePercentage);
+                BindableFont.Value.RomajiTextFontInfo.LyricTextFontInfo
+                    = multipleSize(BindableFont.Value.RomajiTextFontInfo.LyricTextFontInfo, changePercentage);
+
                 BindableFont.Value.ShadowOffset *= changePercentage;
                 BindableFont.TriggerChange();
+
+                static FontUsage multipleSize(FontUsage origin, float percentage)
+                    => origin.With(size: origin.Size * percentage);
             }
         }
     }

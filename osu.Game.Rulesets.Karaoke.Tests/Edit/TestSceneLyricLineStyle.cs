@@ -297,14 +297,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
             fontAreaDropdown.Current.BindValueChanged(value =>
             {
                 var fontInfo = drawableLyricLine.GetFontInfo(value.NewValue);
-                boldCheckbox.Current.Value = fontInfo.Bold;
-                fontSizeSliderBar.Current.Value = fontInfo.CharSize;
-                borderSliderBar.Current.Value = fontInfo.EdgeSize;
+                //boldCheckbox.Current.Value = fontInfo.Bold;
+                //fontSizeSliderBar.Current.Value = fontInfo.CharSize;
+                //borderSliderBar.Current.Value = fontInfo.EdgeSize;
             });
 
-            boldCheckbox.Current.BindValueChanged(value => drawableLyricLine.ApplyProperty(selectedFontArea, x => x.Bold = value.NewValue));
-            fontSizeSliderBar.Current.BindValueChanged(value => drawableLyricLine.ApplyProperty(selectedFontArea, x => x.CharSize = value.NewValue));
-            borderSliderBar.Current.BindValueChanged(value => drawableLyricLine.ApplyProperty(selectedFontArea, x => x.EdgeSize = value.NewValue));
+            //boldCheckbox.Current.BindValueChanged(value => drawableLyricLine.ApplyProperty(selectedFontArea, x => x.Bold = value.NewValue));
+            //fontSizeSliderBar.Current.BindValueChanged(value => drawableLyricLine.ApplyProperty(selectedFontArea, x => x.CharSize = value.NewValue));
+            //borderSliderBar.Current.BindValueChanged(value => drawableLyricLine.ApplyProperty(selectedFontArea, x => x.EdgeSize = value.NewValue));
 
             displayShaderCheckbox.Current.BindValueChanged(value =>
             {
@@ -450,7 +450,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 }
             }
 
-            public FontInfo GetFontInfo(FontArea area)
+            public FontUsage GetFontInfo(FontArea area)
             {
                 switch (area)
                 {
@@ -480,7 +480,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                 ApplyFont(Font);
             }
 
-            public void ApplyProperty(FontArea info, Action<FontInfo> action)
+            public void ApplyProperty(FontArea info, Action<FontUsage> action)
             {
                 action.Invoke(GetFontInfo(info));
                 ApplyFont(Font);

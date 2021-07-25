@@ -152,7 +152,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             BackTextShadowTexture = font.BackTextBrushInfo.ShadowBrush.ConvertToTextureSample();
 
             // Apply text info
-            var lyricFont = font.LyricTextFontInfo.LyricTextFontInfo;
+            var lyricFont = font.LyricTextFontInfo;
             Border = lyricFont.EdgeSize > 0;
             BorderRadius = lyricFont.EdgeSize;
 

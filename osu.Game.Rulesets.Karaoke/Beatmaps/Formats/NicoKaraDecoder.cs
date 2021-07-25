@@ -19,7 +19,6 @@ using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osuTK;
 using osuTK.Graphics;
-using FontInfo = osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts.FontInfo;
 using LyricLayout = osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts.LyricLayout;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
@@ -90,12 +89,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                         LyricTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[0]),
                         NakaTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[1]),
                         EnTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[2]),
+                        EdgeSize = convertEdgeSize(nicoKaraFont.FontInfos[0]),
                     },
                     RubyTextFontInfo = new LyricFont.TextFontInfo
                     {
                         LyricTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[3]),
                         NakaTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[4]),
                         EnTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[5]),
+                        EdgeSize = convertEdgeSize(nicoKaraFont.FontInfos[3]),
                     },
                     RomajiTextFontInfo = new LyricFont.TextFontInfo
                     {
@@ -103,6 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                         LyricTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[3]),
                         NakaTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[4]),
                         EnTextFontInfo = convertFontInfo(nicoKaraFont.FontInfos[5]),
+                        EdgeSize = convertEdgeSize(nicoKaraFont.FontInfos[3]),
                     }
                 });
             }
@@ -116,15 +118,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                 return horizontalAnchor | verticalAnchor;
             }
-
-            static FontInfo convertFontInfo(NicoKaraParser.Model.Font.Font.FontInfo info) =>
-                new FontInfo
-                {
-                    FontName = info.FontName,
-                    Bold = info.FontStyle == FontStyle.Bold,
-                    CharSize = info.CharSize,
-                    EdgeSize = info.EdgeSize
-                };
 
             static BrushInfo convertBrushInfo(NicoKaraParser.Model.Font.Brush.BrushInfo info)
             {
@@ -142,6 +135,17 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                 static Color4 convertColor(Color color) => new Color4(color.R, color.G, color.B, color.A);
             }
+
+            static FontUsage convertFontInfo(FontInfo info)
+            {
+                var family = info.FontName;
+                var size = Math.Max(info.CharSize, 8);
+                var weight = info.FontStyle == FontStyle.Regular ? "Regular" : "Bold";
+                return new FontUsage(family, size, weight);
+            }
+
+            static float convertEdgeSize(FontInfo info)
+                => info.EdgeSize;
         }
     }
 }

@@ -209,55 +209,49 @@
         }
       },
       "lyric_text_font_info": {
+        "edge_size": 10,
         "lyric_text_font_info": {
-          "font_name": "游明朝 Demibold",
+          "family": "游明朝 Demibold",
           "bold": true,
-          "char_size": 40,
-          "edge_size": 10
+          "size": 40,
         },
         "naka_text_font_info": {
           "bold": true,
-          "char_size": -1,
-          "edge_size": -1
+          "size": 18,
         },
         "en_text_font_info": {
           "bold": true,
-          "char_size": -1,
-          "edge_size": -1
+          "size": 18,
         }
       },
       "ruby_text_font_info": {
+        "edge_size": 10,
         "lyric_text_font_info": {
           "bold": true,
-          "char_size": 18,
-          "edge_size": 10
+          "size": 18,
         },
         "naka_text_font_info": {
           "bold": true,
-          "char_size": -1,
-          "edge_size": -1
+          "size": 18,
         },
         "en_text_font_info": {
           "bold": true,
-          "char_size": -1,
-          "edge_size": -1
+          "size": 18,
         }
       },
       "romaji_text_font_info": {
+        "edge_size": 10,
         "lyric_text_font_info": {
           "bold": true,
-          "char_size": 18,
-          "edge_size": 10
+          "size": 18,
         },
         "naka_text_font_info": {
           "bold": true,
-          "char_size": -1,
-          "edge_size": -1
+          "size": 18,
         },
         "en_text_font_info": {
           "bold": true,
-          "char_size": -1,
-          "edge_size": -1
+          "size": 18,
         }
       },
       "use_shadow": true,
