@@ -11,7 +11,6 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
@@ -86,32 +85,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 manager.EditLayout.BindValueChanged(v =>
                 {
                     if (Child is PreviewDrawableLyric lyric)
-                        lyric.PreviewLayout = v.NewValue;
+                        lyric.HitObject.LayoutIndex = v.NewValue.ID;
                 }, true);
             }
 
             public class PreviewDrawableLyric : DrawableLyric
             {
-                private LyricLayout layout;
-
                 public PreviewDrawableLyric(Lyric hitObject)
                     : base(hitObject)
                 {
-                    DisplayTranslateLanguage = new CultureInfo("en-US");
-                }
-
-                /// <summary>
-                /// It's an tricky to force add layout into here.
-                /// Should be removed eventually.
-                /// </summary>
-                public LyricLayout PreviewLayout
-                {
-                    get => layout;
-                    set
-                    {
-                        layout = value;
-                        ApplyLayout(layout);
-                    }
+                    // todo: if wants to let this shit display language, should make a new config for that.
+                    // but that's not important for now.
+                    // DisplayTranslateLanguage = new CultureInfo("en-US");
                 }
             }
         }
