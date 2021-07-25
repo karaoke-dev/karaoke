@@ -1,16 +1,15 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.IO;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.IO.Archives;
+using osu.Game.Rulesets.Karaoke.IO.Stores;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.UI;
-using osuTK.Graphics.ES30;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
@@ -20,20 +19,14 @@ namespace osu.Game.Rulesets.Karaoke.UI
     /// </summary>
     public class KaraokePlayfieldAdjustmentContainer : PlayfieldAdjustmentContainer
     {
-        private const string base_path = "fonts\\cached";
-
         [Resolved]
         private FontStore fontStore { get; set; }
 
-        private FontStore localFontStore;
+        private KaraokeLocalFontStore localFontStore;
 
         [BackgroundDependencyLoader]
         private void load(GameHost host, KaraokeRulesetConfigManager manager)
         {
-            var storage = host.Storage;
-            if (!storage.ExistsDirectory(base_path))
-                return;
-
             // get all font usage which wants to import.
             var targetImportFonts = new[]
             {
@@ -44,26 +37,21 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 manager.Get<FontUsage>(KaraokeRulesetSetting.NoteFont),
             };
 
-            // convert to file path then import
-            var targetImportFontPaths = targetImportFonts.Select(x =>
-            {
-                var path = Path.Combine(base_path, x.FontName);
-                var pathWithExtension = Path.ChangeExtension(path, "cached");
-                return pathWithExtension;
-            }).Where(p => storage.Exists(p)).Distinct().ToArray();
-            if (!targetImportFontPaths.Any())
+            var fontInfos = targetImportFonts
+                            .Select(x => FontUsageUtils.ToFontInfo(x))
+                            .Distinct()
+                            .ToArray();
+
+            if (!fontInfos.Any())
                 return;
 
-            // create font store if wants to import.
-            localFontStore = new FontStore(scaleAdjust: 200, minFilterMode: All.Linear);
+            // create local font store and import those files
+            localFontStore = new KaraokeLocalFontStore(host);
             fontStore.AddStore(localFontStore);
 
-            foreach (var path in targetImportFontPaths)
+            foreach (var fontInfo in fontInfos)
             {
-                var fontName = Path.GetFileNameWithoutExtension(path);
-                var resources = new CachedFontArchiveReader(storage.GetStream(path), fontName);
-                var store = new GlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}", host.CreateTextureLoaderStore(resources));
-                localFontStore.AddStore(store);
+                localFontStore.AddFont(fontInfo);
             }
         }
 

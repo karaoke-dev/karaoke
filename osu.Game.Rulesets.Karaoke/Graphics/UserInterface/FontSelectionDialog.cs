@@ -8,12 +8,15 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.IO.Stores;
+using osu.Framework.Platform;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Fonts;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 using osuTK.Graphics;
@@ -32,6 +35,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
         private readonly BindableWithCurrent<FontUsage> current = new BindableWithCurrent<FontUsage>();
         private readonly BindableList<FontInfo> fonts = new BindableList<FontInfo>();
+
+        [Resolved]
+        private FontStore fontStore { get; set; }
+
+        private KaraokeLocalFontStore localFontStore;
 
         public Bindable<FontUsage> Current
         {
@@ -198,14 +206,25 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         }
 
         [BackgroundDependencyLoader]
-        private void load(FontManager fontManager)
+        private void load(FontManager fontManager, GameHost host)
         {
             fonts.BindTo(fontManager.Fonts);
+
+            // create local font store and import those files
+            localFontStore = new KaraokeLocalFontStore(host);
+            fontStore.AddStore(localFontStore);
         }
 
         private void previewChange()
         {
-            previewText.Font = generateFontUsage();
+            var fontUsage = generateFontUsage();
+
+            // add font to local font store for preview purpose.
+            var fontInfo = FontUsageUtils.ToFontInfo(fontUsage);
+            localFontStore.ClearFont();
+            localFontStore.AddFont(fontInfo);
+
+            previewText.Font = fontUsage;
         }
 
         private FontUsage generateFontUsage()
@@ -215,6 +234,13 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             var size = fontSizeProperty.Current.Value;
             var fixedWidth = fixedWidthCheckbox.Current.Value;
             return new FontUsage(family, size, weight, false, fixedWidth);
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            fontStore?.RemoveStore(localFontStore);
         }
 
         internal class TextPropertyList<T> : CompositeDrawable

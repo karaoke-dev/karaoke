@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
 {
     public class FontManager : Component
     {
-        private const string base_path = "fonts\\cached";
+        private const string base_path = @"fonts\cached";
 
         public readonly BindableList<FontInfo> Fonts = new BindableList<FontInfo>();
 
