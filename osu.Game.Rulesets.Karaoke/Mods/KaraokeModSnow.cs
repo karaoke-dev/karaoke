@@ -1,13 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Timing;
+using osu.Framework.Utils;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Screens.Play;
 using osuTK;
@@ -71,13 +71,6 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             // Texture path
             public string TexturePath { get; set; }
 
-            private readonly Random random;
-
-            public SnowContainer()
-            {
-                random = new Random();
-            }
-
             protected override void Update()
             {
                 if (!Enabled)
@@ -94,20 +87,20 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 // If can generate new snow
                 if (isCreateShow && EnableNewSnow)
                 {
-                    var currentAlpha = (float)random.Next(0, 255) / 255;
+                    var currentAlpha = (float)RNG.Next(0, 255) / 255;
                     var width = (int)DrawWidth;
                     var newFlake = new SnowSprite
                     {
                         Anchor = Anchor.TopCentre,
                         Origin = Anchor.Centre,
                         Colour = Color4.White,
-                        Position = new Vector2(random.Next(-width / 2, width / 2), -40),
+                        Position = new Vector2(RNG.Next(-width / 2, width / 2), -40),
                         Depth = 1,
                         CreateTime = currentTime,
                         Size = new Vector2(50, 50),
                         Scale = new Vector2(1, 1) * SnowSize,
                         Alpha = currentAlpha,
-                        HorizontalSpeed = random.Next(-100, 100) + WingAffection * 10
+                        HorizontalSpeed = RNG.Next(-100, 100) + WingAffection * 10
                     };
                     Add(newFlake);
                 }

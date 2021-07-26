@@ -13,6 +13,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Events;
+using osu.Framework.Utils;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
@@ -158,8 +159,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                 { "┌(┌^o^)┐", 1 },
             };
 
-            private readonly Random random = new Random();
-
             private const float moving_speed = 60;
             private const float max_text_amount = 10;
             private const float spacing_between_text = 20;
@@ -243,7 +242,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                 string getRandomText()
                 {
                     var maxNumber = words.Values.Sum();
-                    var randomNumber = random.Next(maxNumber - 1);
+                    var randomNumber = RNG.Next(maxNumber - 1);
 
                     foreach (var (key, value) in words)
                     {
@@ -258,7 +257,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
 
                 Colour4 getRandomColour()
                 {
-                    var randomNumber = random.Next(1, 359);
+                    var randomNumber = RNG.Next(1, 359);
                     return Color4Extensions.FromHSV(randomNumber, 0.2f, 0.7f);
                 }
             }
