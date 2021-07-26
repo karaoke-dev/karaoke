@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Timing;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Rulesets.Timing;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
@@ -61,9 +62,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             };
         }
 
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
+
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap)
+        private void load()
         {
+            beatmap.HitObjectAdded += addHitObject;
+            beatmap.HitObjectRemoved += removeHitObject;
+
             // add all matched notes into playfield
             var notes = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToList();
 
@@ -71,6 +78,39 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             {
                 Playfield.Add(note);
             }
+        }
+
+        private void addHitObject(HitObject hitObject)
+        {
+            if (!(hitObject is Note note))
+                return;
+
+            if (note.ParentLyric != lyric)
+                return;
+
+            Playfield.Add(note);
+        }
+
+        private void removeHitObject(HitObject hitObject)
+        {
+            if (!(hitObject is Note note))
+                return;
+
+            if (note.ParentLyric != lyric)
+                return;
+
+            Playfield.Remove(note);
+        }
+
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            if (beatmap == null)
+                return;
+
+            beatmap.HitObjectAdded -= addHitObject;
+            beatmap.HitObjectRemoved -= removeHitObject;
         }
 
         private class PreviewNotePositionInfo : INotePositionInfo
