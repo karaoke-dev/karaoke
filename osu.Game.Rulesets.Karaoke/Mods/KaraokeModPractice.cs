@@ -1,11 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Resources.Fonts;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Overlays;
@@ -13,6 +15,8 @@ using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
+using osu.Game.Scoring;
+using osu.Game.Users;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
@@ -25,6 +29,12 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public override ModType Type => ModType.Fun;
 
         private KaraokeBeatmap beatmap;
+
+        public override Score CreateReplayScore(IBeatmap beatmap, IReadOnlyList<Mod> mods) => new Score
+        {
+            ScoreInfo = new ScoreInfo { User = new User { Username = "practice master" } },
+            Replay = new KaraokeAutoGenerator(beatmap, mods).Generate(),
+        };
 
         public void ApplyToBeatmap(IBeatmap beatmap) => this.beatmap = beatmap as KaraokeBeatmap;
 
