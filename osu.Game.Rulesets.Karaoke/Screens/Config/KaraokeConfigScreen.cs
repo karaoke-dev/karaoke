@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             if (host.Dependencies.Get<FontManager>() == null)
             {
                 // because not possible to remove cache from host, so only inject once.
-                var manager = new FontManager(host.Storage);
+                var manager = new FontManager();
                 AddInternal(manager);
                 host.Dependencies.Cache(manager);
             }

@@ -16,11 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
 
         public readonly BindableList<FontInfo> Fonts = new BindableList<FontInfo>();
 
-        private readonly Storage storage;
-
-        public FontManager(Storage storage)
+        public FontManager()
         {
-            this.storage = storage;
             Fonts.AddRange(new[]
             {
                 // From osu-framework
@@ -65,8 +62,9 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(GameHost host)
         {
+            var storage = host.Storage;
             if (!storage.ExistsDirectory(base_path))
                 return;
 

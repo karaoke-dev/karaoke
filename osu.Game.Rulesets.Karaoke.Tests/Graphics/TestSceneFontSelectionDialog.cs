@@ -5,7 +5,6 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Platform;
 using osu.Framework.Testing;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Bindables;
@@ -26,13 +25,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         private FontManager fontManager;
 
         [BackgroundDependencyLoader]
-        private void load(GameHost host)
+        private void load()
         {
             base.Content.AddRange(new Drawable[]
             {
                 Content,
                 dialogOverlay = new DialogOverlay(),
-                fontManager = new FontManager(host.Storage),
+                fontManager = new FontManager(),
             });
 
             Dependencies.Cache(dialogOverlay);
