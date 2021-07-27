@@ -8,7 +8,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Platform;
 
-namespace osu.Game.Rulesets.Karaoke.Fonts
+namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 {
     public class FontManager : Component
     {

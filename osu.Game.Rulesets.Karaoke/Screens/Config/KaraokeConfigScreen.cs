@@ -12,8 +12,8 @@ using osu.Framework.Platform;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Extensions;
-using osu.Game.Rulesets.Karaoke.Fonts;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Previews;
+using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.UI;
 using osu.Game.Screens;
 

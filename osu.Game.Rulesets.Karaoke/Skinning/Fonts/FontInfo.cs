@@ -3,7 +3,7 @@
 
 using System.Linq;
 
-namespace osu.Game.Rulesets.Karaoke.Fonts
+namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 {
     public readonly struct FontInfo
     {
