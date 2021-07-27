@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Karaoke.IO.Archives;
+using osu.Game.Rulesets.Karaoke.IO.Stores;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 {
@@ -83,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             }));
         }
 
-        public GlyphStore GetGlyphStore(FontInfo fontInfo)
+        public KaraokeGlyphStore GetGlyphStore(FontInfo fontInfo)
         {
             if (!fontInfo.UserImport)
                 return null;
@@ -100,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 return null;
 
             var resources = new CachedFontArchiveReader(storage.GetStream(pathWithExtension), fontName);
-            return new GlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}", host.CreateTextureLoaderStore(resources));
+            return new KaraokeGlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}", host.CreateTextureLoaderStore(resources));
         }
     }
 }
