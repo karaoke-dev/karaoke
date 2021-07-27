@@ -22,6 +22,7 @@ using osu.Game.Rulesets.Karaoke.Edit.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Mods;
@@ -43,6 +44,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         [Cached(Type = typeof(INotePositionInfo))]
         private readonly NotePositionInfo notePositionInfo;
+
+        [Cached]
+        private readonly FontManager fontManager;
 
         [Cached]
         private readonly KaraokeRulesetEditConfigManager editConfigManager;
@@ -90,6 +94,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
             // Duplicated registration because selection handler need to use it.
             AddInternal(notePositionInfo = new NotePositionInfo());
+            AddInternal(fontManager = new FontManager());
+
             AddInternal(exportLyricManager = new ExportLyricManager());
             AddInternal(noteManager = new NoteManager());
             AddInternal(lyricManager = new LyricManager());

@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
-using osu.Framework.Platform;
-using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Stores
@@ -15,19 +13,19 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
     {
         private readonly Dictionary<FontInfo, IResourceStore<TextureUpload>> fontInfos = new Dictionary<FontInfo, IResourceStore<TextureUpload>>();
         private readonly IResourceStore<TextureUpload> store;
-        private readonly GameHost host;
+        private readonly FontManager fontManager;
 
         /// <summary>
         /// Construct a font store to be added to a parent font store via <see cref="AddFont"/>.
         /// </summary>
-        /// <param name="host"></param>
+        /// <param name="fontManager">font manager.</param>
         /// <param name="store">The texture source.</param>
         /// <param name="scaleAdjust">The raw pixel height of the font. Can be used to apply a global scale or metric to font usages.</param>
-        public KaraokeLocalFontStore(GameHost host, IResourceStore<TextureUpload> store = null, float scaleAdjust = 100)
+        public KaraokeLocalFontStore(FontManager fontManager, IResourceStore<TextureUpload> store = null, float scaleAdjust = 100)
             : base(store, scaleAdjust)
         {
             this.store = store;
-            this.host = host;
+            this.fontManager = fontManager;
         }
 
         public void AddFont(FontInfo fontInfo)
@@ -36,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             if (hasFont)
                 return;
 
-            var glyphStore = host.CreateGlyphStore(fontInfo);
+            var glyphStore = fontManager.GetGlyphStore(fontInfo);
             if (glyphStore == null)
                 return;
 
