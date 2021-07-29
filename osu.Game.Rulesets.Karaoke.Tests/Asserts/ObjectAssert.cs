@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Asserts
     {
         public static void ArePropertyEqual<T>(T expect, T actual) where T : class
         {
-            AreEqual(JsonConvert.SerializeObject(expect), JsonConvert.SerializeObject(expect));
+            AreEqual(JsonConvert.SerializeObject(expect), JsonConvert.SerializeObject(actual));
         }
     }
 }
