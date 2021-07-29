@@ -5,9 +5,9 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.IO.Stores;
-using osu.Framework.Platform;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
+using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.UI;
 
@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private KaraokeLocalFontStore localFontStore;
 
         [BackgroundDependencyLoader]
-        private void load(GameHost host, KaraokeRulesetConfigManager manager)
+        private void load(FontManager fontManager, KaraokeRulesetConfigManager manager)
         {
             // get all font usage which wants to import.
             var targetImportFonts = new[]
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 return;
 
             // create local font store and import those files
-            localFontStore = new KaraokeLocalFontStore(host);
+            localFontStore = new KaraokeLocalFontStore(fontManager);
             fontStore.AddStore(localFontStore);
 
             foreach (var fontInfo in fontInfos)

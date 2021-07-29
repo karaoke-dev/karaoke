@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
+using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.UI.Overlays;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Mods;
@@ -37,6 +38,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [Cached(Type = typeof(INotePositionInfo))]
         private readonly NotePositionInfo positionCalculator;
 
+        [Cached]
+        private readonly FontManager fontManager;
+
         public override bool AllowGameplayOverlays => Beatmap.IsScorable() && !Mods.OfType<KaraokeModPractice>().Any();
 
         protected virtual bool DisplayNotePlayfield => Beatmap.IsScorable();
@@ -45,6 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             : base(ruleset, beatmap, mods)
         {
             AddInternal(positionCalculator = new NotePositionInfo());
+            AddInternal(fontManager = new FontManager());
 
             InitialOverlay();
         }

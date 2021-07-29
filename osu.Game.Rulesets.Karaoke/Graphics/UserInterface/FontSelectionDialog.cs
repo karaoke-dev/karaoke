@@ -9,14 +9,13 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.IO.Stores;
-using osu.Framework.Platform;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Bindables;
-using osu.Game.Rulesets.Karaoke.Fonts;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
+using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 using osuTK.Graphics;
@@ -206,12 +205,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         }
 
         [BackgroundDependencyLoader]
-        private void load(FontManager fontManager, GameHost host)
+        private void load(FontManager fontManager)
         {
             fonts.BindTo(fontManager.Fonts);
 
             // create local font store and import those files
-            localFontStore = new KaraokeLocalFontStore(host);
+            localFontStore = new KaraokeLocalFontStore(fontManager);
             fontStore.AddStore(localFontStore);
         }
 

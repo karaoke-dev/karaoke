@@ -6,21 +6,26 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
+using osu.Game.Rulesets.Karaoke.IO.Archives;
+using osu.Game.Rulesets.Karaoke.IO.Stores;
 
-namespace osu.Game.Rulesets.Karaoke.Fonts
+namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 {
     public class FontManager : Component
     {
-        private const string base_path = @"fonts\cached";
+        private const string font_base_path = @"fonts\cached";
+
+        private const string font_extension = "cached";
+
+        [Resolved]
+        private GameHost host { get; set; }
 
         public readonly BindableList<FontInfo> Fonts = new BindableList<FontInfo>();
 
-        private readonly Storage storage;
-
-        public FontManager(Storage storage)
+        public FontManager()
         {
-            this.storage = storage;
             Fonts.AddRange(new[]
             {
                 // From osu-framework
@@ -67,15 +72,36 @@ namespace osu.Game.Rulesets.Karaoke.Fonts
         [BackgroundDependencyLoader]
         private void load()
         {
-            if (!storage.ExistsDirectory(base_path))
+            var storage = host.Storage;
+            if (!storage.ExistsDirectory(font_base_path))
                 return;
 
-            var fontFiles = storage.GetFiles(base_path, "*.cached").ToList();
+            var fontFiles = storage.GetFiles(font_base_path, "*.cached").ToList();
             Fonts.AddRange(fontFiles.Select(x =>
             {
                 var fontName = Path.GetFileNameWithoutExtension(x);
                 return new FontInfo(fontName, true);
             }));
+        }
+
+        public KaraokeGlyphStore GetGlyphStore(FontInfo fontInfo)
+        {
+            if (!fontInfo.UserImport)
+                return null;
+
+            var storage = host.Storage;
+            if (!storage.ExistsDirectory(font_base_path))
+                return null;
+
+            var fontName = fontInfo.FontName;
+            var path = Path.Combine(font_base_path, fontName);
+            var pathWithExtension = Path.ChangeExtension(path, font_extension);
+
+            if (!storage.Exists(pathWithExtension))
+                return null;
+
+            var resources = new CachedFontArchiveReader(storage.GetStream(pathWithExtension), fontName);
+            return new KaraokeGlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}", host.CreateTextureLoaderStore(resources));
         }
     }
 }
