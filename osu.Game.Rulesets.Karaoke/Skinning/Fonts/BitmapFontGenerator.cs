@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
 using SharpFNT;
@@ -25,73 +26,65 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             if (bitmapFont == null)
                 throw new ArgumentNullException(nameof(bitmapFont));
 
-            var characters = GenerateCharacters(chars);
+            var characters = GenerateCharacters(bitmapFont.Info, bitmapFont.Common, bitmapFont.Characters, chars);
 
             return new BitmapFont
             {
                 Info = copyObject(bitmapFont.Info),
                 Common = copyObject(bitmapFont.Common),
-                Pages = GeneratePages(characters.Values.ToArray()),
+                Pages = GeneratePages(bitmapFont.Pages, characters.Values.ToArray()),
                 Characters = characters,
-                KerningPairs = GenerateKerningPairs(chars)
+                KerningPairs = GenerateKerningPairs(bitmapFont.KerningPairs, chars)
             };
         }
 
-        internal IDictionary<int, string> GeneratePages(Character[] characters)
+        internal static IDictionary<int, string> GeneratePages([NotNull] IDictionary<int, string> originPages, Character[] characters)
         {
-            var bitmapFont = store.BitmapFont;
-            if (bitmapFont == null)
-                throw new ArgumentNullException(nameof(bitmapFont));
-
             if (characters == null || characters.Length == 0)
                 return new Dictionary<int, string>();
 
-            var maxStorePage = bitmapFont.Pages.Max(x => x.Key);
+            var maxStorePage = originPages.Max(x => x.Key);
             var maxPage = characters.Max(x => x.Page);
             if (maxPage > maxStorePage)
                 throw new ArgumentOutOfRangeException(nameof(maxPage));
 
-            return bitmapFont.Pages
-                             .Where(x => x.Key <= maxPage)
-                             .ToDictionary(x => x.Key, x => x.Value);
+            return originPages
+                   .Where(x => x.Key <= maxPage)
+                   .ToDictionary(x => x.Key, x => x.Value);
         }
 
-        internal IDictionary<int, Character> GenerateCharacters(char[] chars)
+        internal static IDictionary<int, Character> GenerateCharacters([NotNull] BitmapFontInfo originInfo, [NotNull] BitmapFontCommon originCommon, [NotNull] IDictionary<int, Character> originCharacters, char[] chars)
         {
-            var bitmapFont = store.BitmapFont;
-            if (bitmapFont == null)
-                throw new ArgumentNullException(nameof(bitmapFont));
-
             chars = chars?.Distinct().ToArray();
             if (chars == null || chars.Length < 1)
                 return new Dictionary<int, Character>();
 
             // got the characters need to be precessed.
             var charCodeList = chars.Select(x => (int)x).ToList();
-            var filteredCharacters = bitmapFont.Characters
-                                               .Where(x => charCodeList.Contains(x.Key))
-                                               .ToDictionary(x => x.Key, x => copyObject(x.Value));
+            var filteredCharacters = originCharacters
+                                     .Where(x => charCodeList.Contains(x.Key))
+                                     .ToDictionary(x => x.Key, x => copyObject(x.Value));
 
             // first, sort by character height.
-            var processingCharacters = filteredCharacters.OrderByDescending(x => x.Value.Height);
+            var processingCharacters = filteredCharacters.OrderByDescending(x => x.Value.Height).ToArray();
 
             // second, give then a suitable width and height.
             var pageSize = new
             {
-                Width = bitmapFont.Common.ScaleWidth,
-                Height = bitmapFont.Common.ScaleHeight,
+                Width = originCommon.ScaleWidth,
+                Height = originCommon.ScaleHeight,
             };
             var padding = new
             {
-                Top = bitmapFont.Info.PaddingUp,
-                Bottom = bitmapFont.Info.PaddingDown,
-                Left = bitmapFont.Info.PaddingLeft,
-                Right = bitmapFont.Info.PaddingRight,
+                Top = originInfo.PaddingUp,
+                Bottom = originInfo.PaddingDown,
+                Left = originInfo.PaddingLeft,
+                Right = originInfo.PaddingRight,
             };
             var spacing = new
             {
-                X = bitmapFont.Info.SpacingHorizontal,
-                Y = bitmapFont.Info.SpacingVertical,
+                X = originInfo.SpacingHorizontal,
+                Y = originInfo.SpacingVertical,
             };
 
             var page = 0;
@@ -135,20 +128,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 // assign next position for drawing.
                 currentTopLeftPosition = new
                 {
-                    X = currentTopLeftPosition.X + character.Width + spacing.X,
-                    Y = currentTopLeftPosition.Y,
+                    X = currentTopLeftPosition.X + character.Width + spacing.X, currentTopLeftPosition.Y,
                 };
             }
 
             return processingCharacters.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
         }
 
-        internal IDictionary<KerningPair, int> GenerateKerningPairs(char[] chars)
+        internal static IDictionary<KerningPair, int> GenerateKerningPairs([NotNull] IDictionary<KerningPair, int> originKerningPairs, char[] chars)
         {
-            var bitmapFont = store.BitmapFont;
-            if (bitmapFont == null)
-                throw new ArgumentNullException(nameof(bitmapFont));
-
             chars = chars?.Distinct().ToArray();
             if (chars == null || chars.Length < 2)
                 return new Dictionary<KerningPair, int>();
@@ -156,7 +144,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             // kerning pairs is the spacing between two chars.
             // should query all the kerning that contain chars.
             var charCodeList = chars.Select(x => (int)x).ToList();
-            var originKerningPairs = bitmapFont.KerningPairs;
             return originKerningPairs
                    .Where(x => charCodeList.Contains(x.Key.First) && charCodeList.Contains(x.Key.Second))
                    .ToDictionary(x => x.Key, x => x.Value);

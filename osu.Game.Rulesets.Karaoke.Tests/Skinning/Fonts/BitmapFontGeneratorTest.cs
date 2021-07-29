@@ -18,14 +18,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
     {
         private KaraokeGlyphStore glyphStore;
 
+        private BitmapFont font => glyphStore.BitmapFont;
+
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
             var fontResourceStore = new NamespacedResourceStore<byte[]>(TestResources.GetStore(), "Resources.Testing.Fonts.OpenSans");
-            glyphStore = new KaraokeGlyphStore(fontResourceStore, $"OpenSans-Regular");
+            glyphStore = new KaraokeGlyphStore(fontResourceStore, "OpenSans-Regular");
             glyphStore.LoadFontAsync().Wait();
 
-            // make sure that
+            // make sure glyph are loaded.
             var normalGlyph = glyphStore.Get('a');
             if (normalGlyph == null)
                 throw new ArgumentNullException(nameof(normalGlyph));
@@ -37,13 +39,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [TestCase(null, 1)]
         public void TestGenerate(string chars, int charAmount)
         {
-            var generator = createGenerator();
+            var generator = new BitmapFontGenerator(glyphStore);
             var result = generator.Generate(chars?.ToArray());
-            var originFontInfo = glyphStore.BitmapFont;
 
             // info and common should just copy.
-            ObjectAssert.ArePropertyEqual(result.Info, originFontInfo.Info);
-            ObjectAssert.ArePropertyEqual(result.Common, originFontInfo.Common);
+            ObjectAssert.ArePropertyEqual(result.Info, font.Info);
+            ObjectAssert.ArePropertyEqual(result.Common, font.Common);
 
             // should have page if have char.
             Assert.NotNull(result.Pages);
@@ -70,20 +71,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [TestCase(new[] { 0, 1 }, new[] { "OpenSans_0.png" })] // should not have the case that more then origin page number.
         public void TestGeneratePage(int[] pages, string[] pageNames)
         {
-            var generator = createGenerator();
-            var characters = pages.Select(x => new Character
-            {
-                Page = x
-            }).ToArray();
+            var characters = pages.Select(x => new Character { Page = x }).ToArray();
 
             try
             {
-                var result = generator.GeneratePages(characters);
+                var result = BitmapFontGenerator.GeneratePages(font.Pages, characters);
                 Assert.AreEqual(result.Values.ToArray(), pageNames);
             }
-            catch (Exception e)
+            catch
             {
-                var storePage = glyphStore.BitmapFont.Pages.Max(x => x.Key);
+                var storePage = font.Pages.Max(x => x.Key);
                 Assert.Greater(pageNames.Length, storePage);
             }
         }
@@ -92,15 +89,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [TestCase("ABC")]
         [TestCase("abc")]
         [TestCase("!!!!")]
-        [TestCase("カラオケ")] // should not have any text with
+        [TestCase("カラオケ")] // should not have any text if cannot get character in origin font.
         public void TestGenerateCharactersPropertyWithSingleLine(string chars)
         {
-            var generator = createGenerator();
-            var bitmapFont = glyphStore.BitmapFont;
-            var characters = bitmapFont.Characters;
-            var spacing = bitmapFont.Info.SpacingHorizontal;
+            var characters = font.Characters;
+            var spacing = font.Info.SpacingHorizontal;
+            var topPadding = font.Info.PaddingUp;
 
-            var result = generator.GenerateCharacters(chars.ToArray());
+            var result = BitmapFontGenerator.GenerateCharacters(font.Info, font.Common, font.Characters, chars.ToArray());
 
             foreach (var (c, character) in result)
             {
@@ -119,21 +115,90 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
                 if (previousChar == null)
                     return;
 
-                // all the test case can be finished in single line, so just test x position.
+                // all the test case can be finished in single line.
                 Assert.AreEqual(previousChar.X + previousChar.Width + spacing, character.X);
+                Assert.AreEqual(previousChar.Y, topPadding);
+                Assert.AreEqual(previousChar.Page, 0);
+            }
+        }
+
+        [TestCase("A")]
+        [TestCase("ABC")]
+        [TestCase("abc")]
+        [TestCase("1234567890")]
+        [TestCase("!!!!")]
+        [TestCase("カラオケ")] // should not have any text if cannot get character in origin font.
+        public void TestGenerateCharactersPropertyWithMultiLine(string chars)
+        {
+            // make sure that will change new line if print next chars.
+            var bitmapFontCommon = new BitmapFontCommon
+            {
+                ScaleWidth = 0,
+                ScaleHeight = int.MaxValue,
+            };
+            var spacing = font.Info.SpacingVertical;
+            var leftPadding = font.Info.PaddingUp;
+
+            var result = BitmapFontGenerator.GenerateCharacters(font.Info, bitmapFontCommon, font.Characters, chars.ToArray());
+
+            foreach (var (_, character) in result)
+            {
+                // test previous position should smaller the current one.
+                var previousChar = result.Values.GetPrevious(character);
+                if (previousChar == null)
+                    return;
+
+                // all the test case can be finished in different line.
+                Assert.AreEqual(previousChar.X, leftPadding);
+                Assert.AreEqual(previousChar.Y + previousChar.Height + spacing, character.Y);
+                Assert.AreEqual(previousChar.Page, 0);
+            }
+        }
+
+        [TestCase("A")]
+        [TestCase("ABC")]
+        [TestCase("abc")]
+        [TestCase("1234567890")]
+        [TestCase("!!!!")]
+        [TestCase("カラオケ")] // should not have any text if cannot get character in origin font.
+        public void TestGenerateCharactersPropertyWithMultiPage(string chars)
+        {
+            // make sure that will change new page if print next chars.
+            var bitmapFontCommon = new BitmapFontCommon
+            {
+                ScaleWidth = 0,
+                ScaleHeight = 0,
+            };
+            var page = 0;
+            var topPadding = font.Info.PaddingUp;
+            var leftPadding = font.Info.PaddingUp;
+
+            var result = BitmapFontGenerator.GenerateCharacters(font.Info, bitmapFontCommon, font.Characters, chars.ToArray());
+
+            foreach (var (_, character) in result)
+            {
+                // test previous position should smaller the current one.
+                var previousChar = result.Values.GetPrevious(character);
+                if (previousChar == null)
+                    return;
+
+                // all the test case can be finished in single line, so just test x position.
+                Assert.AreEqual(previousChar.X, leftPadding);
+                Assert.AreEqual(previousChar.Y, topPadding);
+                Assert.AreEqual(previousChar.Page, page);
+                page++;
             }
         }
 
         [Test]
-        public void TestGenerateAllCharactersPosition()
+        public void TestGenerateAllCharacters()
         {
-            var generator = createGenerator();
-            var chars = glyphStore.BitmapFont.Characters.Keys.Select(x => (char)x).ToArray();
-            var characters = glyphStore.BitmapFont.Characters;
+            var chars = font.Characters.Keys.Select(x => (char)x).ToArray();
+            var characters = font.Characters;
 
             // make sure that no characters is missing.
             // not checking position because algorithm might not save as original one.
-            var result = generator.GenerateCharacters(chars);
+            var result = BitmapFontGenerator.GenerateCharacters(font.Info, font.Common, font.Characters, chars);
             Assert.AreEqual(result.Count, characters.Count);
         }
 
@@ -142,8 +207,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [TestCase("カラオケ(karaoke)", 7)]
         public void TestGenerateCharactersIfNotExist(string chars, int amount)
         {
-            var generator = createGenerator();
-            var result = generator.GenerateCharacters(chars.ToArray());
+            var result = BitmapFontGenerator.GenerateCharacters(font.Info, font.Common, font.Characters, chars.ToArray());
             Assert.AreEqual(result.Count, amount);
         }
 
@@ -156,26 +220,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [TestCase("ABC", 3)]
         public void TestGenerateKerningPairs(string chars, int amount)
         {
-            var generator = createGenerator();
-            var result = generator.GenerateKerningPairs(chars?.ToArray());
+            var result = BitmapFontGenerator.GenerateKerningPairs(font.KerningPairs, chars?.ToArray());
             Assert.AreEqual(result.Count, amount);
         }
 
         [Test]
         public void TestGenerateKerningPairsWithAllChars()
         {
-            var generator = createGenerator();
             var chars = glyphStore.BitmapFont.Characters.Keys.Select(x => (char)x).ToArray();
-            var kerningPairs = glyphStore.BitmapFont.KerningPairs;
+            var kerningPairs = font.KerningPairs;
 
             // make sure that no kerning is missing.
-            var result = generator.GenerateKerningPairs(chars);
+            var result = BitmapFontGenerator.GenerateKerningPairs(kerningPairs, chars);
             Assert.AreEqual(result.Count, kerningPairs.Count);
-        }
-
-        private BitmapFontGenerator createGenerator()
-        {
-            return new(glyphStore);
         }
     }
 }
