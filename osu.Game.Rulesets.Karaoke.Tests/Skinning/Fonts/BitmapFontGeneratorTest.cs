@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.IO.Stores;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
@@ -88,11 +89,52 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         }
 
         [TestCase("A")]
-        public void TestGenerateCharactersPosition(string chars)
+        [TestCase("ABC")]
+        [TestCase("abc")]
+        [TestCase("!!!!")]
+        [TestCase("カラオケ")] // should not have any text with
+        public void TestGenerateCharactersPropertyWithSingleLine(string chars)
         {
-            // todo : implement is needed.
             var generator = createGenerator();
+            var bitmapFont = glyphStore.BitmapFont;
+            var characters = bitmapFont.Characters;
+            var spacing = bitmapFont.Info.SpacingHorizontal;
+
             var result = generator.GenerateCharacters(chars.ToArray());
+
+            foreach (var (c, character) in result)
+            {
+                // check some property should be same as origin character.
+                var originCharacter = characters[c];
+                Assert.IsNotNull(originCharacter);
+                Assert.AreEqual(character.Width, originCharacter.Width);
+                Assert.AreEqual(character.Height, originCharacter.Height);
+                Assert.AreEqual(character.XOffset, originCharacter.XOffset);
+                Assert.AreEqual(character.YOffset, originCharacter.YOffset);
+                Assert.AreEqual(character.XAdvance, originCharacter.XAdvance);
+                Assert.AreEqual(character.Channel, originCharacter.Channel);
+
+                // test previous position should smaller the current one.
+                var previousChar = result.Values.GetPrevious(character);
+                if (previousChar == null)
+                    return;
+
+                // all the test case can be finished in single line, so just test x position.
+                Assert.AreEqual(previousChar.X + previousChar.Width + spacing, character.X);
+            }
+        }
+
+        [Test]
+        public void TestGenerateAllCharactersPosition()
+        {
+            var generator = createGenerator();
+            var chars = glyphStore.BitmapFont.Characters.Keys.Select(x => (char)x).ToArray();
+            var characters = glyphStore.BitmapFont.Characters;
+
+            // make sure that no characters is missing.
+            // not checking position because algorithm might not save as original one.
+            var result = generator.GenerateCharacters(chars);
+            Assert.AreEqual(result.Count, characters.Count);
         }
 
         [TestCase("カラオケ", 0)]
