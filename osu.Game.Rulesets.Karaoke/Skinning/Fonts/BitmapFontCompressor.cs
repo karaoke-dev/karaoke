@@ -10,7 +10,7 @@ using SharpFNT;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 {
-    public class BitmapFontCompressor
+    public static class BitmapFontCompressor
     {
         public static BitmapFont Compress([NotNull] BitmapFont bitmapFont, char[] chars)
         {
