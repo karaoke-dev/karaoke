@@ -16,31 +16,30 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
 {
     public class BitmapFontGeneratorTest
     {
-        private KaraokeGlyphStore glyphStore;
-
-        private BitmapFont font => glyphStore.BitmapFont;
+        private BitmapFont font;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
             var fontResourceStore = new NamespacedResourceStore<byte[]>(TestResources.GetStore(), "Resources.Testing.Fonts.OpenSans");
-            glyphStore = new KaraokeGlyphStore(fontResourceStore, "OpenSans-Regular");
+            var glyphStore = new KaraokeGlyphStore(fontResourceStore, "OpenSans-Regular");
             glyphStore.LoadFontAsync().Wait();
 
             // make sure glyph are loaded.
             var normalGlyph = glyphStore.Get('a');
             if (normalGlyph == null)
                 throw new ArgumentNullException(nameof(normalGlyph));
+
+            font = glyphStore.BitmapFont;
         }
 
         [TestCase("A", 1)]
         [TestCase("a", 1)]
         [TestCase("カラオケ", 0)]
         [TestCase(null, 1)]
-        public void TestGenerate(string chars, int charAmount)
+        public void TestCompress(string chars, int charAmount)
         {
-            var generator = new BitmapFontGenerator(glyphStore);
-            var result = generator.Generate(chars?.ToArray());
+            var result = BitmapFontCompressor.Compress(font, chars?.ToArray());
 
             // info and common should just copy.
             ObjectAssert.ArePropertyEqual(result.Info, font.Info);
@@ -75,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
 
             try
             {
-                var result = BitmapFontGenerator.GeneratePages(font.Pages, characters);
+                var result = BitmapFontCompressor.GeneratePages(font.Pages, characters);
                 Assert.AreEqual(result.Values.ToArray(), pageNames);
             }
             catch
@@ -96,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
             var spacing = font.Info.SpacingHorizontal;
             var topPadding = font.Info.PaddingUp;
 
-            var result = BitmapFontGenerator.GenerateCharacters(font.Info, font.Common, font.Characters, chars.ToArray());
+            var result = BitmapFontCompressor.GenerateCharacters(font.Info, font.Common, font.Characters, chars.ToArray());
 
             foreach (var (c, character) in result)
             {
@@ -139,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
             var spacing = font.Info.SpacingVertical;
             var leftPadding = font.Info.PaddingUp;
 
-            var result = BitmapFontGenerator.GenerateCharacters(font.Info, bitmapFontCommon, font.Characters, chars.ToArray());
+            var result = BitmapFontCompressor.GenerateCharacters(font.Info, bitmapFontCommon, font.Characters, chars.ToArray());
 
             foreach (var (_, character) in result)
             {
@@ -173,7 +172,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
             var topPadding = font.Info.PaddingUp;
             var leftPadding = font.Info.PaddingUp;
 
-            var result = BitmapFontGenerator.GenerateCharacters(font.Info, bitmapFontCommon, font.Characters, chars.ToArray());
+            var result = BitmapFontCompressor.GenerateCharacters(font.Info, bitmapFontCommon, font.Characters, chars.ToArray());
 
             foreach (var (_, character) in result)
             {
@@ -198,7 +197,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
 
             // make sure that no characters is missing.
             // not checking position because algorithm might not save as original one.
-            var result = BitmapFontGenerator.GenerateCharacters(font.Info, font.Common, font.Characters, chars);
+            var result = BitmapFontCompressor.GenerateCharacters(font.Info, font.Common, font.Characters, chars);
             Assert.AreEqual(result.Count, characters.Count);
         }
 
@@ -207,7 +206,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [TestCase("カラオケ(karaoke)", 7)]
         public void TestGenerateCharactersIfNotExist(string chars, int amount)
         {
-            var result = BitmapFontGenerator.GenerateCharacters(font.Info, font.Common, font.Characters, chars.ToArray());
+            var result = BitmapFontCompressor.GenerateCharacters(font.Info, font.Common, font.Characters, chars.ToArray());
             Assert.AreEqual(result.Count, amount);
         }
 
@@ -220,18 +219,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [TestCase("ABC", 3)]
         public void TestGenerateKerningPairs(string chars, int amount)
         {
-            var result = BitmapFontGenerator.GenerateKerningPairs(font.KerningPairs, chars?.ToArray());
+            var result = BitmapFontCompressor.GenerateKerningPairs(font.KerningPairs, chars?.ToArray());
             Assert.AreEqual(result.Count, amount);
         }
 
         [Test]
         public void TestGenerateKerningPairsWithAllChars()
         {
-            var chars = glyphStore.BitmapFont.Characters.Keys.Select(x => (char)x).ToArray();
+            var chars = font.Characters.Keys.Select(x => (char)x).ToArray();
             var kerningPairs = font.KerningPairs;
 
             // make sure that no kerning is missing.
-            var result = BitmapFontGenerator.GenerateKerningPairs(kerningPairs, chars);
+            var result = BitmapFontCompressor.GenerateKerningPairs(kerningPairs, chars);
             Assert.AreEqual(result.Count, kerningPairs.Count);
         }
     }

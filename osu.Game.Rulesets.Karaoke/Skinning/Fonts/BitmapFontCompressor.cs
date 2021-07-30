@@ -6,23 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
-using osu.Game.Rulesets.Karaoke.IO.Stores;
 using SharpFNT;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 {
-    public class BitmapFontGenerator
+    public class BitmapFontCompressor
     {
-        private readonly KaraokeGlyphStore store;
-
-        public BitmapFontGenerator(KaraokeGlyphStore store)
+        public static BitmapFont Compress([NotNull] BitmapFont bitmapFont, char[] chars)
         {
-            this.store = store;
-        }
-
-        public BitmapFont Generate(char[] chars)
-        {
-            var bitmapFont = store.BitmapFont;
             if (bitmapFont == null)
                 throw new ArgumentNullException(nameof(bitmapFont));
 
