@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         public void OneTimeSetUp()
         {
             var fontResourceStore = new NamespacedResourceStore<byte[]>(TestResources.GetStore(), "Resources.Testing.Fonts.OpenSans");
-            var glyphStore = new KaraokeGlyphStore(fontResourceStore, "OpenSans-Regular");
+            var glyphStore = new FntGlyphStore(fontResourceStore, "OpenSans-Regular");
             glyphStore.LoadFontAsync().Wait();
 
             // make sure glyph are loaded.

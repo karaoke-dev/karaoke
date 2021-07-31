@@ -7,11 +7,11 @@ using SharpFNT;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Stores
 {
-    public class KaraokeGlyphStore : GlyphStore
+    public class FntGlyphStore : GlyphStore
     {
         public BitmapFont BitmapFont => Font;
 
-        public KaraokeGlyphStore(ResourceStore<byte[]> store, string assetName = null, IResourceStore<TextureUpload> textureLoader = null)
+        public FntGlyphStore(ResourceStore<byte[]> store, string assetName = null, IResourceStore<TextureUpload> textureLoader = null)
             : base(store, assetName, textureLoader)
         {
         }

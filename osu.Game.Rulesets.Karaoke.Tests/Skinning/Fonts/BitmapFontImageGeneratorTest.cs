@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
 {
     public class BitmapFontImageGeneratorTest
     {
-        private TestKaraokeGlyphStore glyphStore;
+        private TestFntGlyphStore glyphStore;
 
         private BitmapFont font => glyphStore.BitmapFont;
 
@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         public void OneTimeSetUp()
         {
             var fontResourceStore = new NamespacedResourceStore<byte[]>(TestResources.GetStore(), "Resources.Testing.Fonts.OpenSans");
-            glyphStore = new TestKaraokeGlyphStore(fontResourceStore, "OpenSans-Regular");
+            glyphStore = new TestFntGlyphStore(fontResourceStore, "OpenSans-Regular");
             glyphStore.LoadFontAsync().Wait();
 
             // make sure glyph are loaded.
@@ -66,9 +66,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
             Assert.AreEqual(resultImageData, originImageData);
         }
 
-        private class TestKaraokeGlyphStore : KaraokeGlyphStore
+        private class TestFntGlyphStore : FntGlyphStore
         {
-            public TestKaraokeGlyphStore(ResourceStore<byte[]> store, string assetName)
+            public TestFntGlyphStore(ResourceStore<byte[]> store, string assetName)
                 : base(store, assetName)
             {
             }

@@ -15,9 +15,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 {
     public class BitmapFontImageGenerator
     {
-        private readonly KaraokeGlyphStore store;
+        private readonly FntGlyphStore store;
 
-        public BitmapFontImageGenerator(KaraokeGlyphStore store)
+        public BitmapFontImageGenerator(FntGlyphStore store)
         {
             this.store = store;
         }

@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
 {
     public class KaraokeLocalFontStore : FontStore
     {
-        private readonly Dictionary<FontInfo, KaraokeGlyphStore> fontInfos = new Dictionary<FontInfo, KaraokeGlyphStore>();
+        private readonly Dictionary<FontInfo, FntGlyphStore> fontInfos = new Dictionary<FontInfo, FntGlyphStore>();
         private readonly IResourceStore<TextureUpload> store;
         private readonly FontManager fontManager;
 
