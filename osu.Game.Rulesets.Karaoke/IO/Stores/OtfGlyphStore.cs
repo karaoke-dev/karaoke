@@ -13,9 +13,6 @@ using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using osu.Framework.Text;
 using SixLabors.Fonts;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Drawing.Processing;
-using SixLabors.ImageSharp.Processing;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Stores
 {
@@ -144,29 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
         {
             LoadedGlyphCount++;
 
-            Image image = ...; // create any way you like.
-
-            // The options are optional
-            var options = new TextGraphicsOptions ()
-            {
-                ApplyKerning = true,
-                TabWidth = 8, // a tab renders as 8 spaces wide
-                WrapTextWidth = 100, // greater than zero so we will word wrap at 100 pixels wide
-                HorizontalAlignment = HorizontalAlignment.Right // right align
-            };
-
-            IBrush brush = Brushes.Horizontal(Color.Red, Color.Blue);
-            IPen pen = Pens.DashDot(Color.Green, 5);
-            string text = "sample text";
-
-            // draws a star with Horizontal red and blue hatching with a dash dot pattern outline.
-            image.Mutate(x => x.DrawText(options, text, Font, brush, pen, new PointF(100, 100));
-
             character.RenderTo(glyphRenderer, 0, Vector2.Zero, new Vector2(72), fontInstance.LineHeight);
-            glyphRenderer.
-
-            // test save image
-            img.Save("test.png");
 
             return new TextureUpload(img);
         }
