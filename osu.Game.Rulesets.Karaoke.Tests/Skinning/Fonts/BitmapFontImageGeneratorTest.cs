@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            var fontResourceStore = new NamespacedResourceStore<byte[]>(TestResources.GetStore(), "Resources.Testing.Fonts.OpenSans");
+            var fontResourceStore = new NamespacedResourceStore<byte[]>(TestResources.GetStore(), "Resources.Testing.Fonts.Fnt.OpenSans");
             glyphStore = new TestFntGlyphStore(fontResourceStore, "OpenSans-Regular");
             glyphStore.LoadFontAsync().Wait();
 
