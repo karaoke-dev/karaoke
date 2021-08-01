@@ -8,15 +8,15 @@ using osu.Game.Rulesets.Karaoke.Tests.Resources;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
 {
-    public class OtfGlyphStoreTest
+    public class TtfGlyphStoreTest
     {
-        private OtfGlyphStore glyphStore;
+        private TtfGlyphStore glyphStore;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
             var fontResourceStore = new NamespacedResourceStore<byte[]>(TestResources.GetStore(), "Resources.Testing.Fonts.Ttf");
-            glyphStore = new OtfGlyphStore(fontResourceStore, "OpenSans-Regular");
+            glyphStore = new TtfGlyphStore(fontResourceStore, "OpenSans-Regular");
             glyphStore.LoadFontAsync().Wait();
         }
 

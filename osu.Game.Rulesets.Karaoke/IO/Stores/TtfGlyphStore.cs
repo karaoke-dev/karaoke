@@ -20,7 +20,7 @@ using SixLabors.ImageSharp.Processing;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Stores
 {
-    public class OtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
+    public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
     {
         protected readonly string AssetName;
 
@@ -40,8 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
         /// </summary>
         /// <param name="store">The store to provide font resources.</param>
         /// <param name="assetName">The base name of thße font.</param>
-        /// <param name="textureLoader">An optional platform-specific store for loading textures. Should load for the store provided in <param ref="param"/>.</param>
-        public OtfGlyphStore(ResourceStore<byte[]> store, string assetName = null)
+        public TtfGlyphStore(ResourceStore<byte[]> store, string assetName = null)
         {
             Store = new ResourceStore<byte[]>(store);
 
