@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             }));
         }
 
-        public KaraokeGlyphStore GetGlyphStore(FontInfo fontInfo)
+        public FntGlyphStore GetGlyphStore(FontInfo fontInfo)
         {
             if (!fontInfo.UserImport)
                 return null;
@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 return null;
 
             var resources = new CachedFontArchiveReader(storage.GetStream(pathWithExtension), fontName);
-            return new KaraokeGlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}", host.CreateTextureLoaderStore(resources));
+            return new FntGlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}", host.CreateTextureLoaderStore(resources));
         }
     }
 }

@@ -18,6 +18,8 @@
     <PackageReference Include="ppy.osu.Game" Version="2021.731.0" />
     <PackageReference Include="LyricMaker" Version="1.1.1" />
     <PackageReference Include="NicoKaraParser" Version="1.1.0" />
+    <PackageReference Include="SixLabors.Fonts" Version="1.0.0-beta15" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
     <!--install because it might cause "Could not load file or assembly" error, might be removed eventually-->
     <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1" />
     <PackageReference Include="WanaKanaSharp" Version="0.1.1" />
