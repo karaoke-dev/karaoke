@@ -24,8 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
     {
         protected readonly string AssetName;
 
-        protected readonly IResourceStore<TextureUpload> TextureLoader;
-
         public readonly string FontName;
 
         protected readonly ResourceStore<byte[]> Store;
@@ -37,22 +35,19 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
 
         private readonly TaskCompletionSource<Font> completionSource = new TaskCompletionSource<Font>();
 
-        private readonly IGlyphRenderer glyphRenderer;
-
         /// <summary>
         /// Create a new glyph store.
         /// </summary>
         /// <param name="store">The store to provide font resources.</param>
         /// <param name="assetName">The base name of thße font.</param>
         /// <param name="textureLoader">An optional platform-specific store for loading textures. Should load for the store provided in <param ref="param"/>.</param>
-        public OtfGlyphStore(ResourceStore<byte[]> store, string assetName = null, IResourceStore<TextureUpload> textureLoader = null)
+        public OtfGlyphStore(ResourceStore<byte[]> store, string assetName = null)
         {
             Store = new ResourceStore<byte[]>(store);
 
             Store.AddExtension("ttf");
 
             AssetName = assetName;
-            TextureLoader = textureLoader;
 
             FontName = assetName?.Split('/').Last();
         }
@@ -82,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             }
         }, TaskCreationOptions.PreferFairness);
 
-        public bool HasGlyph(char c) => fontInstance?.GetGlyph(c) != null;
+        public bool HasGlyph(char c) => fontInstance?.GetGlyph(c).GlyphType != GlyphType.Fallback;
 
         public int GetBaseHeight() => fontInstance?.LineHeight ?? 0;
 
@@ -101,8 +96,9 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
                 return null;
 
             var glyphInstance = fontInstance.GetGlyph(character);
-            if (glyphInstance == null)
+            if (glyphInstance.GlyphType == GlyphType.Fallback)
                 return null;
+
             // todo : get x and y offset.
             return new CharacterGlyph(character, 0, 0, glyphInstance.AdvanceWidth, this);
         }
@@ -129,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             if (name.Length > 1 && !name.StartsWith($@"{FontName}/", StringComparison.Ordinal))
                 return null;
 
-            return LoadCharacter(name.Last());
+            return !HasGlyph(name.Last()) ? null : LoadCharacter(name.Last());
         }
 
         public virtual async Task<TextureUpload> GetAsync(string name)
@@ -148,51 +144,39 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
         {
             LoadedGlyphCount++;
 
+            // see: https://stackoverflow.com/a/53023454/4105113
+
+            const int font_size = 24;
+
+            var style = new RendererOptions(Font);
             var text = new string(new[] { c });
-            using var img = new Image<Rgba32>(1000, 1000);
-
-            img.Mutate(x => x.Fill(Color.White));
-
-            FontRectangle box = TextMeasurer.MeasureBounds(text, new RendererOptions(Font));
-            IPathCollection paths = SixLabors.ImageSharp.Drawing.TextBuilder.GenerateGlyphs(text, new RendererOptions(Font));
-
-            Rgba32 f = Color.Fuchsia;
-            f.A = 128;
-
-            img.Mutate<Rgba32>(x => x.Fill(Color.Black, paths)
-                                     .Draw(Color.Lime, 1, new RectangularPolygon(box.Location, box.Size)));
-
-            img.Save("Output/Boxed.png");
-
-            return new TextureUpload(img);
-
-            /*
-            RendererOptions style = new RendererOptions(Font, 72); // again dpi doesn't overlay matter as this code genreates a vector
+            var bounds = TextMeasurer.MeasureBounds(text, style);
+            var targetSize = new
+            {
+                Width = (int)(bounds.Width * font_size),
+                Height = (int)(bounds.Height * font_size),
+            };
 
             // this is the important line, where we render the glyphs to a vector instead of directly to the image
             // this allows further vector manipulation (scaling, translating) etc without the expensive pixel operations.
-            IPathCollection glyphs = SixLabors.Shapes.TextBuilder.GenerateGlyphs(Font, style);
+            var glyphs = SixLabors.ImageSharp.Drawing.TextBuilder.GenerateGlyphs(text, style);
 
-            var widthScale = (targetSize.Width / glyphs.Bounds.Width);
-            var heightScale = (targetSize.Height / glyphs.Bounds.Height);
+            // adjust scale
+            var widthScale = targetSize.Width / glyphs.Bounds.Width;
+            var heightScale = targetSize.Height / glyphs.Bounds.Height;
             var minScale = Math.Min(widthScale, heightScale);
 
             // scale so that it will fit exactly in image shape once rendered
             glyphs = glyphs.Scale(minScale);
 
-            // move the vectorised glyph so that it touchs top and left edges
-            // could be tweeked to center horizontaly & vertically here
+            // move the vectorised glyph so that it touch top and left edges
+            // could be tweeked to center horizontally & vertically here
             glyphs = glyphs.Translate(-glyphs.Bounds.Location);
 
-            using (Image<Rgba32> img = new Image<Rgba32>(targetSize.Width, targetSize.Height))
-            {
-                img.Mutate<Rgba32>(i => i.Fill(new GraphicsOptions(true), Rgba32.Black, glyphs));
-
-                img.Save(outputFileName);
-            }
-
+            // create image with char.
+            using var img = new Image<Rgba32>(targetSize.Width, targetSize.Height, new Rgba32(255, 255, 255, 0));
+            img.Mutate(i => i.Fill(Color.White, glyphs));
             return new TextureUpload(img);
-            */
         }
 
         public Stream GetStream(string name) => throw new NotSupportedException();
