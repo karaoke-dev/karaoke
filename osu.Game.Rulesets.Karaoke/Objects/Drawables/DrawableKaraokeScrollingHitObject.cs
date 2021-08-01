@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         private bool alwaysAlive;
 
         /// <summary>
-        /// Whether this <see cref="DrawableManiaHitObject"/> should always remain alive.
+        /// Whether this <see cref="DrawableKaraokeHitObject"/> should always remain alive.
         /// </summary>
         internal bool AlwaysAlive
         {

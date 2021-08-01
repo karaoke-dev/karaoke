@@ -110,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 // memo:
                 // x-offset = how many pixels to shift the character right (= extra blank pixels to left of character)
                 // y-offset = how many pixels to shift the character down (= extra blank pixels above character)
-                // x-advance = total width of character in pixels (so adds xadvance-xoffset-width extra blank pixels to the right of character)
+                // x-advance = total width of character in pixels (so adds x-advance x-offset-width extra blank pixels to the right of character)
                 // so we need to do in here is just change the position.
                 character.Page = page;
                 character.X = currentTopLeftPosition.X;
