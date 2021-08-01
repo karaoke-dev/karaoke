@@ -270,7 +270,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         private void applyTranslate()
         {
             var language = preferLanguageBindable.Value;
-            var needTranslate = this.useTranslateBindable.Value;
+            var needTranslate = useTranslateBindable.Value;
 
             if (!needTranslate || language == null)
             {
