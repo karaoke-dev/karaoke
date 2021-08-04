@@ -1,4 +1,4 @@
-﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
@@ -22,9 +22,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
 {
     public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
     {
+        private const float scale = 8f;
+
         protected readonly string AssetName;
 
-        public readonly string FontName;
+        public string FontName { get; }
 
         protected readonly ResourceStore<byte[]> Store;
 
@@ -76,7 +78,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             }
         }, TaskCreationOptions.PreferFairness);
 
-        public bool HasGlyph(char c) => fontInstance?.GetGlyph(c).GlyphType != GlyphType.Fallback;
+        public bool HasGlyph(char c)
+        {
+            var glyph = fontInstance?.GetGlyph(c);
+            return glyph?.GlyphType != GlyphType.Fallback;
+        }
 
         public int GetBaseHeight() => fontInstance?.LineHeight ?? 0;
 
@@ -98,8 +104,14 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             if (glyphInstance.GlyphType == GlyphType.Fallback)
                 return null;
 
-            // todo : get x and y offset.
-            return new CharacterGlyph(character, 0, 0, glyphInstance.AdvanceWidth, this);
+            var text = new string(new[] { character });
+            var style = new RendererOptions(Font);
+            var bounds = TextMeasurer.MeasureBounds(text, style);
+
+            var xOffset = bounds.X * scale;
+            var yOffset = bounds.Y * scale;
+            var advanceWidth = bounds.Width * scale;
+            return new CharacterGlyph(character, xOffset, yOffset, advanceWidth, this);
         }
 
         public int GetKerning(char left, char right)
@@ -110,7 +122,9 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             var leftGlyphInstance = fontInstance.GetGlyph(left);
             var rightGlyphInstance = fontInstance.GetGlyph(right);
 
-            return (int)fontInstance.GetOffset(leftGlyphInstance, rightGlyphInstance).X;
+            // todo : got no idea why all offset is zero.
+            var kerning = fontInstance.GetOffset(rightGlyphInstance, leftGlyphInstance).X;
+            return (int)(kerning * scale);
         }
 
         Task<CharacterGlyph> IResourceStore<CharacterGlyph>.GetAsync(string name) => Task.Run(() => ((IGlyphStore)this).Get(name[0]));
@@ -145,15 +159,13 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
 
             // see: https://stackoverflow.com/a/53023454/4105113
 
-            const int font_size = 24;
-
             var style = new RendererOptions(Font);
             var text = new string(new[] { c });
             var bounds = TextMeasurer.MeasureBounds(text, style);
             var targetSize = new
             {
-                Width = (int)(bounds.Width * font_size),
-                Height = (int)(bounds.Height * font_size),
+                Width = (int)(bounds.Width * scale),
+                Height = (int)(bounds.Height * scale),
             };
 
             // this is the important line, where we render the glyphs to a vector instead of directly to the image
@@ -173,7 +185,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             glyphs = glyphs.Translate(-glyphs.Bounds.Location);
 
             // create image with char.
-            using var img = new Image<Rgba32>(targetSize.Width, targetSize.Height, new Rgba32(255, 255, 255, 0));
+            var img = new Image<Rgba32>(targetSize.Width, targetSize.Height, new Rgba32(255, 255, 255, 0));
             img.Mutate(i => i.Fill(Color.White, glyphs));
             return new TextureUpload(img);
         }
