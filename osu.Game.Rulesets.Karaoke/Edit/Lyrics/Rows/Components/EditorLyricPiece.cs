@@ -71,13 +71,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             }
         }
 
-        public float GetTextHeight()
+        public float LineBaseHeight
         {
-            var spriteText = getSpriteText();
-            if (spriteText == null)
-                return 0;
+            get
+            {
+                var spriteText = getSpriteText();
+                if (spriteText == null)
+                    return 0;
 
-            return spriteText.GetTextHeight();
+                return spriteText.LineBaseHeight;
+            }
         }
 
         public RectangleF GetTextTagPosition(ITextTag textTag)
@@ -153,14 +156,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
         public class EditorLyricSpriteText : LyricSpriteText
         {
-            public float GetTextHeight()
-            {
-                if (string.IsNullOrEmpty(Text))
-                    return 0;
-
-                return Characters.FirstOrDefault().Height;
-            }
-
             public RectangleF GetRubyTagPosition(RubyTag rubyTag)
             {
                 var matchedRuby = Rubies.FirstOrDefault(x => propertyMatched(x, rubyTag));
