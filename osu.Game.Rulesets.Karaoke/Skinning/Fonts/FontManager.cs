@@ -97,6 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         public IGlyphStore GetGlyphStore(FontInfo fontInfo)
         {
+            // do not import if this font is system font.
             if (!fontInfo.UserImport)
                 return null;
 
