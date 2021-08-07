@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
         protected override void Apply(TextCaretPosition caret)
         {
             Position = GetPosition(caret);
-            Height = lyricPiece.GetTextHeight();
+            Height = lyricPiece.LineBaseHeight;
         }
     }
 }
