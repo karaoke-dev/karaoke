@@ -188,8 +188,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                     return default;
 
                 var charIndex = Math.Min(index.Index, Text.Length - 1);
-                var drawRectangle = Characters[charIndex].DrawRectangle;
-                return index.State == TextIndex.IndexState.Start ? drawRectangle.BottomLeft : drawRectangle.BottomRight;
+                var character = Characters[charIndex];
+                var drawRectangle = character.DrawRectangle;
+
+                var x = index.State == TextIndex.IndexState.Start ? drawRectangle.Left : drawRectangle.Right;
+                var y = drawRectangle.Top - character.YOffset + LineBaseHeight;
+                return new Vector2(x, y);
             }
 
             private int skinIndex(PositionText[] positionTexts, int endIndex)
