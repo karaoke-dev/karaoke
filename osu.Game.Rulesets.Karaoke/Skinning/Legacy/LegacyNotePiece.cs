@@ -215,38 +215,20 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 
         private static string getTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
         {
-            string suffix;
-
-            switch (lookup)
+            string suffix = lookup switch
             {
-                case LegacyKaraokeSkinConfigurationLookups.NoteBodyImage:
-                    suffix = "body";
-                    break;
+                LegacyKaraokeSkinConfigurationLookups.NoteBodyImage => "body",
+                LegacyKaraokeSkinConfigurationLookups.NoteHeadImage => "head",
+                LegacyKaraokeSkinConfigurationLookups.NoteTailImage => "tail",
+                _ => throw new ArgumentOutOfRangeException($"{nameof(lookup)} should be body, head or tail.")
+            };
 
-                case LegacyKaraokeSkinConfigurationLookups.NoteHeadImage:
-                    suffix = "head";
-                    break;
-
-                case LegacyKaraokeSkinConfigurationLookups.NoteTailImage:
-                    suffix = "tail";
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException($"{nameof(lookup)} should be body, head or tail.");
-            }
-
-            string layerSuffix = string.Empty;
-
-            switch (layer)
+            string layerSuffix = layer switch
             {
-                case LegacyKaraokeSkinNoteLayer.Border:
-                    layerSuffix = "border";
-                    break;
-
-                case LegacyKaraokeSkinNoteLayer.Background:
-                    layerSuffix = "background";
-                    break;
-            }
+                LegacyKaraokeSkinNoteLayer.Border => "border",
+                LegacyKaraokeSkinNoteLayer.Background => "background",
+                _ => string.Empty
+            };
 
             return $"karaoke-note-{layerSuffix}-{suffix}";
         }

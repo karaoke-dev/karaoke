@@ -56,24 +56,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
             previewRatioDropdown.Current.BindValueChanged(e =>
             {
-                switch (e.NewValue)
+                manager.PreviewScreenRatio.Value = e.NewValue switch
                 {
-                    case PreviewRatio.WideScreen:
-                        manager.PreviewScreenRatio.Value = new DisplayRatio
-                        {
-                            Width = 16,
-                            Height = 9
-                        };
-                        break;
-
-                    case PreviewRatio.LegacyScreen:
-                        manager.PreviewScreenRatio.Value = new DisplayRatio
-                        {
-                            Width = 4,
-                            Height = 3
-                        };
-                        break;
-                }
+                    PreviewRatio.WideScreen => new DisplayRatio { Width = 16, Height = 9 },
+                    PreviewRatio.LegacyScreen => new DisplayRatio { Width = 4, Height = 3 },
+                    _ => manager.PreviewScreenRatio.Value
+                };
             }, true);
 
             previewSampleDropdown.Current.BindValueChanged(e => { manager.PreviewLyric.Value = getLyricSampleBySelection(e.NewValue); }, true);
@@ -86,56 +74,46 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             }, true);
         }
 
-        private Lyric getLyricSampleBySelection(PreviewSample previewSample)
-        {
-            switch (previewSample)
+        private Lyric getLyricSampleBySelection(PreviewSample previewSample) =>
+            previewSample switch
             {
-                case PreviewSample.SampleSmall:
-                    return createDefaultLyric("@カラオケ",
-                        new[]
-                        {
-                            "@Ruby1=カ,か",
-                            "@Ruby2=ラ,ら",
-                            "@Ruby3=オ,お",
-                            "@Ruby4=ケ,け"
-                        },
-                        new[]
-                        {
-                            "@Romaji1=カ,ka",
-                            "@Romaji2=ラ,ra",
-                            "@Romaji3=オ,o",
-                            "@Romaji4=ケ,ke"
-                        }
-                        , "karaoke");
-
-                case PreviewSample.SampleMedium:
-                    return createDefaultLyric("@[00:18:58]た[00:18:81]だ[00:19:36]風[00:20:09]に[00:20:29]揺[00:20:49]ら[00:20:68]れ[00:20:89]て[00:20:93]",
-                        new[]
-                        {
-                            "@Ruby1=風,かぜ",
-                            "@Ruby2=揺,ゆ"
-                        },
-                        new[]
-                        {
-                            "@Romaji1=た,ta",
-                            "@Romaji2=だ,da",
-                            "@Romaji3=風,kaze",
-                            "@Romaji4=に,ni",
-                            "@Romaji5=揺,yu",
-                            "@Romaji6=ら,ra",
-                            "@Romaji7=れ,re",
-                            "@Romaji8=て,te"
-                        }
-                        , "karaoke");
-
-                case PreviewSample.SampleLarge:
-                    return createDefaultLyric("@灰色(いろ)(いろ)の景色(いろ)(いろ)さえ色づき始める",
-                        Array.Empty<string>(), Array.Empty<string>(), "karaoke");
-
-                default:
-                    return null;
-            }
-        }
+                PreviewSample.SampleSmall => createDefaultLyric("@カラオケ",
+                    new[]
+                    {
+                        "@Ruby1=カ,か",
+                        "@Ruby2=ラ,ら",
+                        "@Ruby3=オ,お",
+                        "@Ruby4=ケ,け"
+                    },
+                    new[]
+                    {
+                        "@Romaji1=カ,ka",
+                        "@Romaji2=ラ,ra",
+                        "@Romaji3=オ,o",
+                        "@Romaji4=ケ,ke"
+                    }, "karaoke"),
+                PreviewSample.SampleMedium => createDefaultLyric("@[00:18:58]た[00:18:81]だ[00:19:36]風[00:20:09]に[00:20:29]揺[00:20:49]ら[00:20:68]れ[00:20:89]て[00:20:93]",
+                    new[]
+                    {
+                        "@Ruby1=風,かぜ",
+                        "@Ruby2=揺,ゆ"
+                    },
+                    new[]
+                    {
+                        "@Romaji1=た,ta",
+                        "@Romaji2=だ,da",
+                        "@Romaji3=風,kaze",
+                        "@Romaji4=に,ni",
+                        "@Romaji5=揺,yu",
+                        "@Romaji6=ら,ra",
+                        "@Romaji7=れ,re",
+                        "@Romaji8=て,te"
+                    }, "karaoke"),
+                PreviewSample.SampleLarge => createDefaultLyric("@灰色(いろ)(いろ)の景色(いろ)(いろ)さえ色づき始める",
+                    Array.Empty<string>(),
+                    Array.Empty<string>(), "karaoke"),
+                _ => null
+            };
 
         private Lyric createDefaultLyric(string text, string[] ruby, string[] romaji, string translate)
         {

@@ -25,20 +25,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
         private static float getBaseHue(SettingsSection section)
         {
-            switch (section)
+            return section switch
             {
-                case ConfigSection _:
-                    return 200 / 360f; // Blue
-
-                case StyleSection _:
-                    return 333 / 360f; // Pink
-
-                case ScoringSection _:
-                    return 46 / 360f; // Orange
-
-                default:
-                    throw new ArgumentException($@"{section} colour scheme does not provide a hue value in {nameof(getBaseHue)}.");
-            }
+                ConfigSection _ => 200 / 360f, // Blue
+                StyleSection _ => 333 / 360f, // Pink
+                ScoringSection _ => 46 / 360f, // Orange
+                _ => throw new ArgumentException($@"{section} colour scheme does not provide a hue value in {nameof(getBaseHue)}.")
+            };
         }
     }
 }

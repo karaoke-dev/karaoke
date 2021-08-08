@@ -55,23 +55,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                 }
             }
 
-            protected override string GetInvalidMessage(RomajiTagInvalid invalid)
-            {
-                switch (invalid)
+            protected override string GetInvalidMessage(RomajiTagInvalid invalid) =>
+                invalid switch
                 {
-                    case RomajiTagInvalid.OutOfRange:
-                        return "This romaji is not in the lyric.";
-
-                    case RomajiTagInvalid.Overlapping:
-                        return "This romaji overlapping to other romaji.";
-
-                    case RomajiTagInvalid.EmptyText:
-                        return "This romaji is empty.";
-
-                    default:
-                        throw new IndexOutOfRangeException(nameof(invalid));
-                }
-            }
+                    RomajiTagInvalid.OutOfRange => "This romaji is not in the lyric.",
+                    RomajiTagInvalid.Overlapping => "This romaji overlapping to other romaji.",
+                    RomajiTagInvalid.EmptyText => "This romaji is empty.",
+                    _ => throw new IndexOutOfRangeException(nameof(invalid))
+                };
         }
     }
 }

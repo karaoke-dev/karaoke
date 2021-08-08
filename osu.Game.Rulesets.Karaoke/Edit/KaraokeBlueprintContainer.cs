@@ -18,20 +18,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
         }
 
-        public override HitObjectSelectionBlueprint CreateHitObjectBlueprintFor(HitObject hitObject)
-        {
-            switch (hitObject)
+        public override HitObjectSelectionBlueprint CreateHitObjectBlueprintFor(HitObject hitObject) =>
+            hitObject switch
             {
-                case Note note:
-                    return new NoteSelectionBlueprint(note);
-
-                case Lyric lyric:
-                    return new LyricSelectionBlueprint(lyric);
-
-                default:
-                    throw new IndexOutOfRangeException(nameof(hitObject));
-            }
-        }
+                Note note => new NoteSelectionBlueprint(note),
+                Lyric lyric => new LyricSelectionBlueprint(lyric),
+                _ => throw new IndexOutOfRangeException(nameof(hitObject))
+            };
 
         protected override SelectionHandler<HitObject> CreateSelectionHandler() => new KaraokeSelectionHandler();
     }

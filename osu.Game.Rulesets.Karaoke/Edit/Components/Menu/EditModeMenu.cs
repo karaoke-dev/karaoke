@@ -15,19 +15,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
         {
         }
 
-        protected override string GetName(EditMode selection)
-        {
-            switch (selection)
+        protected override string GetName(EditMode selection) =>
+            selection switch
             {
-                case EditMode.LyricEditor:
-                    return "Lyric";
-
-                case EditMode.Note:
-                    return "Note";
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(selection));
-            }
-        }
+                EditMode.LyricEditor => "Lyric",
+                EditMode.Note => "Note",
+                _ => throw new ArgumentOutOfRangeException(nameof(selection))
+            };
     }
 }

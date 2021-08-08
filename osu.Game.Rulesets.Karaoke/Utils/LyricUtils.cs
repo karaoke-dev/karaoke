@@ -182,17 +182,12 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             {
                 var stringIndex = TextIndexUtils.ToStringIndex(timeTag.Index);
 
-                switch (timeTag.Index.State)
+                return timeTag.Index.State switch
                 {
-                    case TextIndex.IndexState.Start:
-                        return x.StartIndex <= stringIndex && x.EndIndex > stringIndex;
-
-                    case TextIndex.IndexState.End:
-                        return x.StartIndex < stringIndex && x.EndIndex >= stringIndex;
-
-                    default:
-                        throw new IndexOutOfRangeException(nameof(timeTag.Index.State));
-                }
+                    TextIndex.IndexState.Start => x.StartIndex <= stringIndex && x.EndIndex > stringIndex,
+                    TextIndex.IndexState.End => x.StartIndex < stringIndex && x.EndIndex >= stringIndex,
+                    _ => throw new IndexOutOfRangeException(nameof(timeTag.Index.State))
+                };
             }).FirstOrDefault();
 
             if (matchRuby == null || string.IsNullOrEmpty(matchRuby.Text))
@@ -213,21 +208,12 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var subtext = timeTagsWithSameIndex.Count() == 1 ? text : text.Substring(Math.Min(text.Length - 1, index), 1);
 
             // return substring with format.
-            switch (timeTag.Index.State)
+            return timeTag.Index.State switch
             {
-                case TextIndex.IndexState.Start:
-                {
-                    return $"({subtext})-";
-                }
-
-                case TextIndex.IndexState.End:
-                {
-                    return $"-({subtext})";
-                }
-
-                default:
-                    throw new IndexOutOfRangeException(nameof(timeTag.Index.State));
-            }
+                TextIndex.IndexState.Start => $"({subtext})-",
+                TextIndex.IndexState.End => $"-({subtext})",
+                _ => throw new IndexOutOfRangeException(nameof(timeTag.Index.State))
+            };
         }
 
         #endregion

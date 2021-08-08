@@ -10,20 +10,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class TextTagsUtils
     {
-        public static T[] Sort<T>(T[] textTags, Sorting sorting = Sorting.Asc) where T : ITextTag
-        {
-            switch (sorting)
+        public static T[] Sort<T>(T[] textTags, Sorting sorting = Sorting.Asc) where T : ITextTag =>
+            sorting switch
             {
-                case Sorting.Asc:
-                    return textTags?.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray();
-
-                case Sorting.Desc:
-                    return textTags?.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray();
-
-                default:
-                    throw new InvalidOperationException(nameof(sorting));
-            }
-        }
+                Sorting.Asc => textTags?.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray(),
+                Sorting.Desc => textTags?.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray(),
+                _ => throw new InvalidOperationException(nameof(sorting))
+            };
 
         public static T[] FindOutOfRange<T>(T[] textTags, string lyric) where T : ITextTag
         {

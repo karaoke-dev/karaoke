@@ -125,18 +125,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             var startTime = GetTime(firstFrameInPath);
             var endTime = GetTime(lastFrameInPath);
 
-            float originAdjustment = 0.0f;
-
-            switch (direction.Value)
+            float originAdjustment = direction.Value switch
             {
-                case ScrollingDirection.Left:
-                    originAdjustment = path.OriginPosition.X;
-                    break;
-
-                case ScrollingDirection.Right:
-                    originAdjustment = path.DrawWidth - path.OriginPosition.X;
-                    break;
-            }
+                ScrollingDirection.Left => path.OriginPosition.X,
+                ScrollingDirection.Right => path.DrawWidth - path.OriginPosition.X,
+                _ => 0.0f
+            };
 
             path.LifetimeStart = scrollingInfo.Algorithm.GetDisplayStartTime(startTime, originAdjustment, timeRange.Value, scrollLength);
             path.LifetimeEnd = scrollingInfo.Algorithm.TimeAt(scrollLength * safe_lifetime_end_multiplier, endTime, timeRange.Value, scrollLength);

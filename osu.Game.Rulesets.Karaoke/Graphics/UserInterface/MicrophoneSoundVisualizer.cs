@@ -117,20 +117,13 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
         protected override bool Handle(UIEvent e)
         {
-            switch (e)
+            return e switch
             {
-                case MicrophoneStartPitchingEvent microphoneStartPitching:
-                    return OnMicrophoneStartSinging(microphoneStartPitching);
-
-                case MicrophoneEndPitchingEvent microphoneEndPitching:
-                    return OnMicrophoneEndSinging(microphoneEndPitching);
-
-                case MicrophonePitchingEvent microphonePitching:
-                    return OnMicrophoneSinging(microphonePitching);
-
-                default:
-                    return base.Handle(e);
-            }
+                MicrophoneStartPitchingEvent microphoneStartPitching => OnMicrophoneStartSinging(microphoneStartPitching),
+                MicrophoneEndPitchingEvent microphoneEndPitching => OnMicrophoneEndSinging(microphoneEndPitching),
+                MicrophonePitchingEvent microphonePitching => OnMicrophoneSinging(microphonePitching),
+                _ => base.Handle(e)
+            };
         }
 
         [BackgroundDependencyLoader]

@@ -14,29 +14,16 @@ namespace osu.Game.Rulesets.Karaoke.Judgements
             if (!Saitenable)
                 return 0;
 
-            switch (result)
+            return result switch
             {
-                case HitResult.Miss:
-                    return -0.125;
-
-                case HitResult.Meh:
-                    return 0.005;
-
-                case HitResult.Ok:
-                    return 0.010;
-
-                case HitResult.Good:
-                    return 0.035;
-
-                case HitResult.Great:
-                    return 0.055;
-
-                case HitResult.Perfect:
-                    return 0.065;
-
-                default:
-                    return 0;
-            }
+                HitResult.Miss => -0.125,
+                HitResult.Meh => 0.005,
+                HitResult.Ok => 0.010,
+                HitResult.Good => 0.035,
+                HitResult.Great => 0.055,
+                HitResult.Perfect => 0.065,
+                _ => 0
+            };
         }
     }
 }

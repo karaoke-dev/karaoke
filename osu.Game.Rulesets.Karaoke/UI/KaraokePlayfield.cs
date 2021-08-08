@@ -156,20 +156,13 @@ namespace osu.Game.Rulesets.Karaoke.UI
             }
         }
 
-        public override bool Remove(DrawableHitObject h)
-        {
-            switch (h)
+        public override bool Remove(DrawableHitObject h) =>
+            h switch
             {
-                case DrawableLyric _:
-                    return LyricPlayfield.Remove(h);
-
-                case DrawableNote _:
-                    return NotePlayfield.Remove(h);
-
-                default:
-                    return base.Remove(h);
-            }
-        }
+                DrawableLyric _ => LyricPlayfield.Remove(h),
+                DrawableNote _ => NotePlayfield.Remove(h),
+                _ => base.Remove(h)
+            };
 
         #endregion
 

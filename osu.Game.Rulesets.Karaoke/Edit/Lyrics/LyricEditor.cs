@@ -388,33 +388,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
         }
 
-        protected bool HandleMovingEvent(KaraokeEditAction action)
-        {
-            // moving caret action
-            switch (action)
+        protected bool HandleMovingEvent(KaraokeEditAction action) =>
+            action switch
             {
-                case KaraokeEditAction.Up:
-                    return lyricCaretState.MoveCaret(MovingCaretAction.Up);
-
-                case KaraokeEditAction.Down:
-                    return lyricCaretState.MoveCaret(MovingCaretAction.Down);
-
-                case KaraokeEditAction.Left:
-                    return lyricCaretState.MoveCaret(MovingCaretAction.Left);
-
-                case KaraokeEditAction.Right:
-                    return lyricCaretState.MoveCaret(MovingCaretAction.Right);
-
-                case KaraokeEditAction.First:
-                    return lyricCaretState.MoveCaret(MovingCaretAction.First);
-
-                case KaraokeEditAction.Last:
-                    return lyricCaretState.MoveCaret(MovingCaretAction.Last);
-
-                default:
-                    return false;
-            }
-        }
+                KaraokeEditAction.Up => lyricCaretState.MoveCaret(MovingCaretAction.Up),
+                KaraokeEditAction.Down => lyricCaretState.MoveCaret(MovingCaretAction.Down),
+                KaraokeEditAction.Left => lyricCaretState.MoveCaret(MovingCaretAction.Left),
+                KaraokeEditAction.Right => lyricCaretState.MoveCaret(MovingCaretAction.Right),
+                KaraokeEditAction.First => lyricCaretState.MoveCaret(MovingCaretAction.First),
+                KaraokeEditAction.Last => lyricCaretState.MoveCaret(MovingCaretAction.Last),
+                _ => false
+            };
 
         protected bool HandleSetTimeEvent(KaraokeEditAction action)
         {
@@ -459,17 +443,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var lyric = position.Lyric;
             var index = position.Index;
 
-            switch (action)
+            return action switch
             {
-                case KaraokeEditAction.Create:
-                    return lyricManager.AddTimeTagByPosition(lyric, index);
-
-                case KaraokeEditAction.Remove:
-                    return lyricManager.RemoveTimeTagByPosition(lyric, index);
-
-                default:
-                    return false;
-            }
+                KaraokeEditAction.Create => lyricManager.AddTimeTagByPosition(lyric, index),
+                KaraokeEditAction.Remove => lyricManager.RemoveTimeTagByPosition(lyric, index),
+                _ => false
+            };
         }
 
         public LyricEditorMode Mode

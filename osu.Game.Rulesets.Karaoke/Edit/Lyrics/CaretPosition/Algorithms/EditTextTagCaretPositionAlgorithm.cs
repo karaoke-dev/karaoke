@@ -131,20 +131,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         private ITextTag[] getRelatedTypeTextTag(Lyric lyric, EditTextTagCaretPosition sample)
             => getRelatedTypeTextTag(lyric, sample.TextTag);
 
-        private ITextTag[] getRelatedTypeTextTag(Lyric lyric, ITextTag sample)
-        {
-            switch (sample)
+        private ITextTag[] getRelatedTypeTextTag(Lyric lyric, ITextTag sample) =>
+            sample switch
             {
-                case RubyTag _:
-                    return lyric.RubyTags?.OfType<ITextTag>().ToArray();
-
-                case RomajiTag _:
-                    return lyric.RomajiTags?.OfType<ITextTag>().ToArray();
-
-                default:
-                    throw new InvalidCastException(nameof(sample));
-            }
-        }
+                RubyTag _ => lyric.RubyTags?.OfType<ITextTag>().ToArray(),
+                RomajiTag _ => lyric.RomajiTags?.OfType<ITextTag>().ToArray(),
+                _ => throw new InvalidCastException(nameof(sample))
+            };
 
         private Lyric getPreviousLyricWithTextTag(Lyric current, ITextTag textTag)
             => Lyrics.GetPreviousMatch(current, x => getRelatedTypeTextTag(x, textTag)?.Any() ?? false);

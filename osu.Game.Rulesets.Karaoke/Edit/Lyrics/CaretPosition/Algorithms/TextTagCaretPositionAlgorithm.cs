@@ -22,17 +22,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 return false;
 
             // check text tag is in lyric
-            switch (position.TextTag)
+            return position.TextTag switch
             {
-                case RubyTag rubyTag:
-                    return position.Lyric.RubyTags.Contains(rubyTag);
-
-                case RomajiTag romajiTag:
-                    return position.Lyric.RomajiTags.Contains(romajiTag);
-
-                default:
-                    throw new InvalidCastException(nameof(position.TextTag));
-            }
+                RubyTag rubyTag => position.Lyric.RubyTags.Contains(rubyTag),
+                RomajiTag romajiTag => position.Lyric.RomajiTags.Contains(romajiTag),
+                _ => throw new InvalidCastException(nameof(position.TextTag))
+            };
         }
 
         public override T MoveUp(T currentPosition)
@@ -67,23 +62,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return null;
         }
 
-        protected bool IsTextTagTypeValid(T position)
-        {
-            switch (EditArea)
+        protected bool IsTextTagTypeValid(T position) =>
+            EditArea switch
             {
-                case EditArea.Ruby:
-                    return position.TextTag is RubyTag;
-
-                case EditArea.Romaji:
-                    return position.TextTag is RomajiTag;
-
-                case EditArea.Both:
-                    return true;
-
-                default:
-                    throw new IndexOutOfRangeException(nameof(position.TextTag));
-            }
-        }
+                EditArea.Ruby => position.TextTag is RubyTag,
+                EditArea.Romaji => position.TextTag is RomajiTag,
+                EditArea.Both => true,
+                _ => throw new IndexOutOfRangeException(nameof(position.TextTag))
+            };
     }
 
     public enum EditArea

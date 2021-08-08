@@ -89,26 +89,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     if (!isLegacySkin.Value)
                         return null;
 
-                    switch (karaokeComponent.Component)
+                    return karaokeComponent.Component switch
                     {
-                        case KaraokeSkinComponents.ColumnBackground:
-                            return new LegacyColumnBackground();
-
-                        case KaraokeSkinComponents.StageBackground:
-                            return new LegacyStageBackground();
-
-                        case KaraokeSkinComponents.JudgementLine:
-                            return new LegacyJudgementLine();
-
-                        case KaraokeSkinComponents.Note:
-                            return new LegacyNotePiece();
-
-                        case KaraokeSkinComponents.HitExplosion:
-                            return new LegacyHitExplosion();
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(karaokeComponent.Component));
-                    }
+                        KaraokeSkinComponents.ColumnBackground => new LegacyColumnBackground(),
+                        KaraokeSkinComponents.StageBackground => new LegacyStageBackground(),
+                        KaraokeSkinComponents.JudgementLine => new LegacyJudgementLine(),
+                        KaraokeSkinComponents.Note => new LegacyNotePiece(),
+                        KaraokeSkinComponents.HitExplosion => new LegacyHitExplosion(),
+                        _ => throw new ArgumentOutOfRangeException(nameof(karaokeComponent.Component))
+                    };
             }
 
             return base.GetDrawableComponent(component);
@@ -130,41 +119,25 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     var config = skinLookup.Config;
                     var lookupNumber = skinLookup.Lookup;
 
-                    switch (config)
+                    return config switch
                     {
-                        case KaraokeSkinConfiguration.LyricStyle:
-                            return SkinUtils.As<TValue>(bindableFonts[lookupNumber]);
-
-                        case KaraokeSkinConfiguration.LyricLayout:
-                            return SkinUtils.As<TValue>(bindableLayouts[lookupNumber]);
-
-                        case KaraokeSkinConfiguration.NoteStyle:
-                            return SkinUtils.As<TValue>(bindableNotes[lookupNumber]);
-
-                        case KaraokeSkinConfiguration.Singer:
-                            return SkinUtils.As<TValue>(bindableSingers[lookupNumber]);
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(config));
-                    }
+                        KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(bindableFonts[lookupNumber]),
+                        KaraokeSkinConfiguration.LyricLayout => SkinUtils.As<TValue>(bindableLayouts[lookupNumber]),
+                        KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(bindableNotes[lookupNumber]),
+                        KaraokeSkinConfiguration.Singer => SkinUtils.As<TValue>(bindableSingers[lookupNumber]),
+                        _ => throw new ArgumentOutOfRangeException(nameof(config))
+                    };
                 }
 
                 // Lookup list of name by type
                 case KaraokeIndexLookup indexLookup:
-                    switch (indexLookup)
+                    return indexLookup switch
                     {
-                        case KaraokeIndexLookup.Layout:
-                            return SkinUtils.As<TValue>(bindableLayoutsLookup);
-
-                        case KaraokeIndexLookup.Style:
-                            return SkinUtils.As<TValue>(bindableFontsLookup);
-
-                        case KaraokeIndexLookup.Note:
-                            return SkinUtils.As<TValue>(bindableNotesLookup);
-
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(indexLookup));
-                    }
+                        KaraokeIndexLookup.Layout => SkinUtils.As<TValue>(bindableLayoutsLookup),
+                        KaraokeIndexLookup.Style => SkinUtils.As<TValue>(bindableFontsLookup),
+                        KaraokeIndexLookup.Note => SkinUtils.As<TValue>(bindableNotesLookup),
+                        _ => throw new ArgumentOutOfRangeException(nameof(indexLookup))
+                    };
 
                 case KaraokeSkinConfigurationLookup skinConfigurationLookup:
                     switch (skinConfigurationLookup.Lookup)

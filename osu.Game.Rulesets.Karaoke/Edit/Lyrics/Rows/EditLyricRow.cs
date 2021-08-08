@@ -469,23 +469,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                 AddInternal(blueprintContainer);
 
-                static Drawable createBlueprintContainer(LyricEditorMode mode, Lyric lyric)
-                {
-                    switch (mode)
+                static Drawable createBlueprintContainer(LyricEditorMode mode, Lyric lyric) =>
+                    mode switch
                     {
-                        case LyricEditorMode.EditRuby:
-                            return new RubyBlueprintContainer(lyric);
-
-                        case LyricEditorMode.EditRomaji:
-                            return new RomajiBlueprintContainer(lyric);
-
-                        case LyricEditorMode.AdjustTimeTag:
-                            return new TimeTagBlueprintContainer(lyric);
-
-                        default:
-                            return null;
-                    }
-                }
+                        LyricEditorMode.EditRuby => new RubyBlueprintContainer(lyric),
+                        LyricEditorMode.EditRomaji => new RomajiBlueprintContainer(lyric),
+                        LyricEditorMode.AdjustTimeTag => new TimeTagBlueprintContainer(lyric),
+                        _ => null
+                    };
             }
 
             protected void InitializeCaret(LyricEditorMode mode)

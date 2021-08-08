@@ -139,35 +139,21 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             return new TtfGlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}");
         }
 
-        private static string getPathByFontType(FontType type)
-        {
-            switch (type)
+        private static string getPathByFontType(FontType type) =>
+            type switch
             {
-                case FontType.Fnt:
-                    return $"{font_base_path}/fnt";
+                FontType.Fnt => $"{font_base_path}/fnt",
+                FontType.Ttf => $"{font_base_path}/ttf",
+                _ => throw new ArgumentOutOfRangeException(nameof(type))
+            };
 
-                case FontType.Ttf:
-                    return $"{font_base_path}/ttf";
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type));
-            }
-        }
-
-        private static string getExtensionByFontType(FontType type)
-        {
-            switch (type)
+        private static string getExtensionByFontType(FontType type) =>
+            type switch
             {
-                case FontType.Fnt:
-                    return "zipfnt";
-
-                case FontType.Ttf:
-                    return "ttf";
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type));
-            }
-        }
+                FontType.Fnt => "zipfnt",
+                FontType.Ttf => "ttf",
+                _ => throw new ArgumentOutOfRangeException(nameof(type))
+            };
     }
 
     public enum FontType

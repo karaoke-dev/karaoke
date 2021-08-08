@@ -93,25 +93,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 
         private static string getTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup)
         {
-            string suffix;
-
-            switch (lookup)
+            string suffix = lookup switch
             {
-                case LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage:
-                    suffix = "body";
-                    break;
-
-                case LegacyKaraokeSkinConfigurationLookups.JudgementLineHeadImage:
-                    suffix = "head";
-                    break;
-
-                case LegacyKaraokeSkinConfigurationLookups.JudgementLineTailImage:
-                    suffix = "tail";
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException($"{nameof(lookup)} should be body, head or tail.");
-            }
+                LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage => "body",
+                LegacyKaraokeSkinConfigurationLookups.JudgementLineHeadImage => "head",
+                LegacyKaraokeSkinConfigurationLookups.JudgementLineTailImage => "tail",
+                _ => throw new ArgumentOutOfRangeException($"{nameof(lookup)} should be body, head or tail.")
+            };
 
             return $"karaoke-judgement-line-{suffix}";
         }

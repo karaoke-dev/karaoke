@@ -134,22 +134,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         private TextIndex.IndexState suitableState(TextIndex textIndex)
             => suitableState(textIndex.State);
 
-        private TextIndex.IndexState suitableState(TextIndex.IndexState state)
-        {
-            switch (Mode)
+        private TextIndex.IndexState suitableState(TextIndex.IndexState state) =>
+            Mode switch
             {
-                case MovingTimeTagCaretMode.None:
-                    return state;
-
-                case MovingTimeTagCaretMode.OnlyStartTag:
-                    return TextIndex.IndexState.Start;
-
-                case MovingTimeTagCaretMode.OnlyEndTag:
-                    return TextIndex.IndexState.End;
-
-                default:
-                    throw new InvalidOperationException(nameof(MovingTimeTagCaretMode));
-            }
-        }
+                MovingTimeTagCaretMode.None => state,
+                MovingTimeTagCaretMode.OnlyStartTag => TextIndex.IndexState.Start,
+                MovingTimeTagCaretMode.OnlyEndTag => TextIndex.IndexState.End,
+                _ => throw new InvalidOperationException(nameof(MovingTimeTagCaretMode))
+            };
     }
 }
