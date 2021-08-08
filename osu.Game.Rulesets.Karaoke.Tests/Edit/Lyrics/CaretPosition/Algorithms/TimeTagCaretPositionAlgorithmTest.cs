@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestPositionMovable(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int timeTagIndex, bool movable)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTimeTagCaretPosition(lyrics, lyricIndex, timeTagIndex);
+            var caretPosition = createTimeTagCaretPosition(lyrics, lyricIndex, timeTagIndex);
 
             // Check is movable
             TestPositionMovable(lyrics, caretPosition, movable, algorithms => algorithms.Mode = mode);
@@ -46,8 +46,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveUp(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int newLyricIndex, int newIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTimeTagCaretPosition(lyrics, lyricIndex, index);
-            var newCaretPosition = CreateTimeTagCaretPosition(lyrics, newLyricIndex, newIndex);
+            var caretPosition = createTimeTagCaretPosition(lyrics, lyricIndex, index);
+            var newCaretPosition = createTimeTagCaretPosition(lyrics, newLyricIndex, newIndex);
 
             // Check is movable
             TestMoveUp(lyrics, caretPosition, newCaretPosition, algorithms => algorithms.Mode = mode);
@@ -65,8 +65,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveDown(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int newLyricIndex, int newIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTimeTagCaretPosition(lyrics, lyricIndex, index);
-            var newCaretPosition = CreateTimeTagCaretPosition(lyrics, newLyricIndex, newIndex);
+            var caretPosition = createTimeTagCaretPosition(lyrics, lyricIndex, index);
+            var newCaretPosition = createTimeTagCaretPosition(lyrics, newLyricIndex, newIndex);
 
             // Check is movable
             TestMoveDown(lyrics, caretPosition, newCaretPosition, algorithms => algorithms.Mode = mode);
@@ -82,8 +82,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveLeft(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int newLyricIndex, int newIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTimeTagCaretPosition(lyrics, lyricIndex, index);
-            var newCaretPosition = CreateTimeTagCaretPosition(lyrics, newLyricIndex, newIndex);
+            var caretPosition = createTimeTagCaretPosition(lyrics, lyricIndex, index);
+            var newCaretPosition = createTimeTagCaretPosition(lyrics, newLyricIndex, newIndex);
 
             // Check is movable
             TestMoveLeft(lyrics, caretPosition, newCaretPosition, algorithms => algorithms.Mode = mode);
@@ -99,8 +99,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveRight(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int newLyricIndex, int newIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTimeTagCaretPosition(lyrics, lyricIndex, index);
-            var newCaretPosition = CreateTimeTagCaretPosition(lyrics, newLyricIndex, newIndex);
+            var caretPosition = createTimeTagCaretPosition(lyrics, lyricIndex, index);
+            var newCaretPosition = createTimeTagCaretPosition(lyrics, newLyricIndex, newIndex);
 
             // Check is movable
             TestMoveRight(lyrics, caretPosition, newCaretPosition, algorithms => algorithms.Mode = mode);
@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveToFirst(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTimeTagCaretPosition(lyrics, lyricIndex, index);
+            var caretPosition = createTimeTagCaretPosition(lyrics, lyricIndex, index);
 
             // Check is movable
             TestMoveToFirst(lyrics, caretPosition, algorithms => algorithms.Mode = mode);
@@ -142,7 +142,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveToLast(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTimeTagCaretPosition(lyrics, lyricIndex, index);
+            var caretPosition = createTimeTagCaretPosition(lyrics, lyricIndex, index);
 
             // Check is movable
             TestMoveToLast(lyrics, caretPosition, algorithms => algorithms.Mode = mode);
@@ -156,7 +156,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var lyric = lyrics[lyricIndex];
-            var caretPosition = CreateTimeTagCaretPosition(lyrics, lyricIndex, index);
+            var caretPosition = createTimeTagCaretPosition(lyrics, lyricIndex, index);
 
             // Check move to target position.
             TestMoveToTarget(lyrics, lyric, caretPosition, algorithms => algorithms.Mode = mode);
@@ -175,7 +175,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         }
 
-        protected TimeTagCaretPosition CreateTimeTagCaretPosition(Lyric[] lyrics, int lyricIndex, int timeTagIndex)
+        private static TimeTagCaretPosition createTimeTagCaretPosition(Lyric[] lyrics, int lyricIndex, int timeTagIndex)
         {
             if (lyricIndex == NOT_EXIST)
                 return null;
