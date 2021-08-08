@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags.Ja
         public void TestCreateRubyTags(string text, string[] actualRuby)
         {
             var config = generatorConfig(null);
-            RunRubyCheckTest(text, actualRuby, config);
+            runRubyCheckTest(text, actualRuby, config);
         }
 
         [TestCase("花火大会", new[] { "[0,2]:ハナビ", "[2,4]:タイカイ" })]
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags.Ja
         public void TestCreateRubyTagsWithRubyAsKatakana(string text, string[] actualRuby)
         {
             var config = generatorConfig(nameof(JaRubyTagGeneratorConfig.RubyAsKatakana));
-            RunRubyCheckTest(text, actualRuby, config);
+            runRubyCheckTest(text, actualRuby, config);
         }
 
         [TestCase("はなび", new[] { "[0,2]:はな", "[2,3]:び" })]
@@ -34,12 +34,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RubyTags.Ja
         public void TestCreateRubyTagsWithEnableDuplicatedRuby(string text, string[] actualRuby)
         {
             var config = generatorConfig(nameof(JaRubyTagGeneratorConfig.EnableDuplicatedRuby));
-            RunRubyCheckTest(text, actualRuby, config);
+            runRubyCheckTest(text, actualRuby, config);
         }
 
         #region test helper
 
-        protected void RunRubyCheckTest(string text, string[] actualRuby, JaRubyTagGeneratorConfig config)
+        private static void runRubyCheckTest(string text, string[] actualRuby, JaRubyTagGeneratorConfig config)
         {
             var generator = new JaRubyTagGenerator(config);
 

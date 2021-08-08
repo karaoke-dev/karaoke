@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RomajiTags.Ja
         public void TestCreateRomajiTags(string text, string[] actualRomaji)
         {
             var config = generatorConfig(null);
-            RunRomajiCheckTest(text, actualRomaji, config);
+            runRomajiCheckTest(text, actualRomaji, config);
         }
 
         [TestCase("花火大会", new[] { "[0,2]:HANABI", "[2,4]:TAIKAI" })]
@@ -26,12 +26,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Generator.RomajiTags.Ja
         public void TestCreateRomajiTagsWithUppercase(string text, string[] actualRomaji)
         {
             var config = generatorConfig(nameof(JaRomajiTagGeneratorConfig.Uppercase));
-            RunRomajiCheckTest(text, actualRomaji, config);
+            runRomajiCheckTest(text, actualRomaji, config);
         }
 
         #region test helper
 
-        protected void RunRomajiCheckTest(string text, string[] actualRomaji, JaRomajiTagGeneratorConfig config)
+        private static void runRomajiCheckTest(string text, string[] actualRomaji, JaRomajiTagGeneratorConfig config)
         {
             var generator = new JaRomajiTagGenerator(config);
 
