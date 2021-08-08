@@ -187,7 +187,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
 
         #region source
 
-        private Lyric[] singleLyric => new[]
+        private static Lyric[] singleLyric => new[]
         {
             new Lyric
             {
@@ -203,7 +203,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         };
 
-        private Lyric[] singleLyricWithoutTimeTag => new[]
+        private static Lyric[] singleLyricWithoutTimeTag => new[]
         {
             new Lyric
             {
@@ -211,12 +211,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         };
 
-        private Lyric[] singleLyricWithNoText => new[]
+        private static Lyric[] singleLyricWithNoText => new[]
         {
             new Lyric()
         };
 
-        private Lyric[] twoLyricsWithText => new[]
+        private static Lyric[] twoLyricsWithText => new[]
         {
             new Lyric
             {
@@ -243,7 +243,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         };
 
-        private Lyric[] threeLyricsWithSpacing => new[]
+        private static Lyric[] threeLyricsWithSpacing => new[]
         {
             new Lyric
             {
