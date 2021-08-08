@@ -73,47 +73,22 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         protected virtual string GetSaitenStatusText(SaitenStatusMode statusMode)
         {
-            switch (statusMode)
+            return statusMode switch
             {
-                case SaitenStatusMode.AndroidMicrophonePermissionDeclined:
-                    return "Go to setting to open permission for lazer.";
-
-                case SaitenStatusMode.AndroidDoesNotSupported:
-                    return "Android device haven't support saiten system yet :(";
-
-                case SaitenStatusMode.IOSMicrophonePermissionDeclined:
-                    return "Go to setting to open permission for lazer.";
-
-                case SaitenStatusMode.IOSDoesNotSupported:
-                    return "iOS device haven't support saiten system yet :(";
-
-                case SaitenStatusMode.OSXMicrophonePermissionDeclined:
-                    return "Go to setting to open permission for lazer.";
-
-                case SaitenStatusMode.OSXDoesNotSupported:
-                    return "Osx device haven't support saiten system yet :(";
-
-                case SaitenStatusMode.WindowsMicrophonePermissionDeclined:
-                    return "Open lazer with admin permission to enable saiten system.";
-
-                case SaitenStatusMode.NotSaitening:
-                    return "This beatmap is not saitenable.";
-
-                case SaitenStatusMode.AutoPlay:
-                    return "Auto play mode.";
-
-                case SaitenStatusMode.Edit:
-                    return "Edit mode.";
-
-                case SaitenStatusMode.Saitening:
-                    return "Saitening...";
-
-                case SaitenStatusMode.NotInitialized:
-                    return "Seems microphone device is not ready.";
-
-                default:
-                    return "Weird... Should not goes to here either :oops:";
-            }
+                SaitenStatusMode.AndroidMicrophonePermissionDeclined => "Go to setting to open permission for lazer.",
+                SaitenStatusMode.AndroidDoesNotSupported => "Android device haven't support saiten system yet :(",
+                SaitenStatusMode.IOSMicrophonePermissionDeclined => "Go to setting to open permission for lazer.",
+                SaitenStatusMode.IOSDoesNotSupported => "iOS device haven't support saiten system yet :(",
+                SaitenStatusMode.OSXMicrophonePermissionDeclined => "Go to setting to open permission for lazer.",
+                SaitenStatusMode.OSXDoesNotSupported => "Osx device haven't support saiten system yet :(",
+                SaitenStatusMode.WindowsMicrophonePermissionDeclined => "Open lazer with admin permission to enable saiten system.",
+                SaitenStatusMode.NotSaitening => "This beatmap is not saitenable.",
+                SaitenStatusMode.AutoPlay => "Auto play mode.",
+                SaitenStatusMode.Edit => "Edit mode.",
+                SaitenStatusMode.Saitening => "Saitening...",
+                SaitenStatusMode.NotInitialized => "Seems microphone device is not ready.",
+                _ => "Weird... Should not goes to here either :oops:"
+            };
         }
     }
 

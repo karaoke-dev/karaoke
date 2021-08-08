@@ -106,20 +106,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (timeTag == null)
                 return false;
 
-            switch (Mode)
+            return Mode switch
             {
-                case MovingTimeTagCaretMode.None:
-                    return true;
-
-                case MovingTimeTagCaretMode.OnlyStartTag:
-                    return timeTag.Index.State == TextIndex.IndexState.Start;
-
-                case MovingTimeTagCaretMode.OnlyEndTag:
-                    return timeTag.Index.State == TextIndex.IndexState.End;
-
-                default:
-                    throw new InvalidOperationException(nameof(MovingTimeTagCaretMode));
-            }
+                MovingTimeTagCaretMode.None => true,
+                MovingTimeTagCaretMode.OnlyStartTag => timeTag.Index.State == TextIndex.IndexState.Start,
+                MovingTimeTagCaretMode.OnlyEndTag => timeTag.Index.State == TextIndex.IndexState.End,
+                _ => throw new InvalidOperationException(nameof(MovingTimeTagCaretMode))
+            };
         }
     }
 }

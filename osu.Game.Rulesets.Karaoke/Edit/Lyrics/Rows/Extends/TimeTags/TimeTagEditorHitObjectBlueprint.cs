@@ -200,16 +200,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                     }
                 };
 
-                switch (timeTag.Index.State)
+                triangle.Scale = timeTag.Index.State switch
                 {
-                    case TextIndex.IndexState.Start:
-                        triangle.Scale = new Vector2(1);
-                        break;
-
-                    case TextIndex.IndexState.End:
-                        triangle.Scale = new Vector2(-1, 1);
-                        break;
-                }
+                    TextIndex.IndexState.Start => new Vector2(1),
+                    TextIndex.IndexState.End => new Vector2(-1, 1),
+                    _ => triangle.Scale
+                };
             }
         }
     }

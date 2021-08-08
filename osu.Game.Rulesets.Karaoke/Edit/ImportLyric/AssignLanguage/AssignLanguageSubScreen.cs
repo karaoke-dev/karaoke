@@ -88,24 +88,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             {
                 base.UpdateState(value);
 
-                switch (value)
+                NavigationText = value switch
                 {
-                    case NavigationState.Initial:
-                        NavigationText = $"Try to select left side to mark lyric's language, or click [{auto_assign_language}] to let system auto detect lyric language.";
-                        break;
-
-                    case NavigationState.Working:
-                        NavigationText = $"Almost there, you can still click [{auto_assign_language}] to re-detect each lyric's language.";
-                        break;
-
-                    case NavigationState.Done:
-                        NavigationText = "Cool! Seems all lyric has it's own language. Go to next step to generate ruby.";
-                        break;
-
-                    case NavigationState.Error:
-                        NavigationText = "Oops, seems cause some error in here.";
-                        break;
-                }
+                    NavigationState.Initial => $"Try to select left side to mark lyric's language, or click [{auto_assign_language}] to let system auto detect lyric language.",
+                    NavigationState.Working => $"Almost there, you can still click [{auto_assign_language}] to re-detect each lyric's language.",
+                    NavigationState.Done => "Cool! Seems all lyric has it's own language. Go to next step to generate ruby.",
+                    NavigationState.Error => "Oops, seems cause some error in here.",
+                };
             }
 
             private class AssignLanguageTextFlowContainer : NavigationTextContainer

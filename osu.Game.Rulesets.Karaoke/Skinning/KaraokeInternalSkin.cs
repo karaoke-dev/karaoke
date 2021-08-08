@@ -59,20 +59,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             var config = skinLookup.Config;
 
-            switch (config)
+            return config switch
             {
-                case KaraokeSkinConfiguration.LyricStyle:
-                    return SkinUtils.As<TValue>(BindableFont);
-
-                case KaraokeSkinConfiguration.LyricLayout:
-                    return SkinUtils.As<TValue>(BindableLayout);
-
-                case KaraokeSkinConfiguration.NoteStyle:
-                    return SkinUtils.As<TValue>(BindableNote);
-
-                default:
-                    throw new NotSupportedException();
-            }
+                KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(BindableFont),
+                KaraokeSkinConfiguration.LyricLayout => SkinUtils.As<TValue>(BindableLayout),
+                KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(BindableNote),
+                _ => throw new NotSupportedException()
+            };
         }
     }
 }

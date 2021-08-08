@@ -62,37 +62,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 return false;
 
             var currentPosition = BindableCaretPosition.Value;
-            ICaretPosition position;
 
-            switch (action)
+            ICaretPosition position = action switch
             {
-                case MovingCaretAction.Up:
-                    position = algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveUp", currentPosition);
-                    break;
-
-                case MovingCaretAction.Down:
-                    position = algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveDown", currentPosition);
-                    break;
-
-                case MovingCaretAction.Left:
-                    position = algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveLeft", currentPosition);
-                    break;
-
-                case MovingCaretAction.Right:
-                    position = algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveRight", currentPosition);
-                    break;
-
-                case MovingCaretAction.First:
-                    position = algorithm.CallMethod<ICaretPosition>("MoveToFirst");
-                    break;
-
-                case MovingCaretAction.Last:
-                    position = algorithm.CallMethod<ICaretPosition>("MoveToLast");
-                    break;
-
-                default:
-                    throw new InvalidOperationException(nameof(action));
-            }
+                MovingCaretAction.Up => algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveUp", currentPosition),
+                MovingCaretAction.Down => algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveDown", currentPosition),
+                MovingCaretAction.Left => algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveLeft", currentPosition),
+                MovingCaretAction.Right => algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveRight", currentPosition),
+                MovingCaretAction.First => algorithm.CallMethod<ICaretPosition>("MoveToFirst"),
+                MovingCaretAction.Last => algorithm.CallMethod<ICaretPosition>("MoveToLast"),
+                _ => throw new InvalidOperationException(nameof(action))
+            };
 
             if (position == null)
                 return false;

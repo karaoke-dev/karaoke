@@ -51,18 +51,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public override bool Equals(object obj)
         {
-            switch (obj)
+            return obj switch
             {
-                case Tone tone:
-                    return Equals(tone);
-
-                case int intValue:
-                    return Equals(intValue);
-
-                default:
-                    // If compare object is not int or tone, then it's no need to be compared.
-                    return false;
-            }
+                Tone tone => Equals(tone),
+                int intValue => Equals(intValue),
+                _ => false
+            };
         }
 
         public override int GetHashCode() => base.GetHashCode();

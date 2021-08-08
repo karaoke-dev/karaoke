@@ -78,30 +78,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 
             styleSections.BindableStyle.BindValueChanged(e =>
             {
-                switch (e.NewValue)
+                previewContainer.Child = e.NewValue switch
                 {
-                    case Style.Lyric:
-                        previewContainer.Child = new LyricStylePreview
-                        {
-                            Name = "Lyric style preview area",
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            Size = new Vector2(0.95f),
-                            RelativeSizeAxes = Axes.Both
-                        };
-                        break;
-
-                    case Style.Note:
-                        previewContainer.Child = new NoteStylePreview
-                        {
-                            Name = "Note style preview area",
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            Size = new Vector2(0.95f),
-                            RelativeSizeAxes = Axes.Both
-                        };
-                        break;
-                }
+                    Style.Lyric => new LyricStylePreview
+                    {
+                        Name = "Lyric style preview area",
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Size = new Vector2(0.95f),
+                        RelativeSizeAxes = Axes.Both
+                    },
+                    Style.Note => new NoteStylePreview
+                    {
+                        Name = "Note style preview area",
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Size = new Vector2(0.95f),
+                        RelativeSizeAxes = Axes.Both
+                    },
+                    _ => previewContainer.Child
+                };
             }, true);
         }
 
@@ -122,25 +118,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 
                 header.BindableStyle.BindValueChanged(e =>
                 {
-                    switch (e.NewValue)
+                    Children = e.NewValue switch
                     {
-                        case Style.Lyric:
-                            Children = new StyleSection[]
-                            {
-                                new LyricColorSection(),
-                                new LyricFontSection(),
-                                new LyricShadowSection(),
-                            };
-                            break;
-
-                        case Style.Note:
-                            Children = new StyleSection[]
-                            {
-                                new NoteColorSection(),
-                                new NoteFontSection(),
-                            };
-                            break;
-                    }
+                        Style.Lyric => new StyleSection[]
+                        {
+                            new LyricColorSection(),
+                            new LyricFontSection(),
+                            new LyricShadowSection(),
+                        },
+                        Style.Note => new StyleSection[]
+                        {
+                            new NoteColorSection(),
+                            new NoteFontSection(),
+                        },
+                        _ => Children
+                    };
                 }, true);
             }
 

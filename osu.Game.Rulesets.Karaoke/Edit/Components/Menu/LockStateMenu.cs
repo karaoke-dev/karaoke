@@ -22,19 +22,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         protected override LockState[] ValidEnums => new[] { LockState.Partial, LockState.Full };
 
-        protected override string GetName(LockState selection)
-        {
-            switch (selection)
+        protected override string GetName(LockState selection) =>
+            selection switch
             {
-                case LockState.Partial:
-                    return "Partial";
-
-                case LockState.Full:
-                    return "Full";
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(selection));
-            }
-        }
+                LockState.Partial => "Partial",
+                LockState.Full => "Full",
+                _ => throw new ArgumentOutOfRangeException(nameof(selection))
+            };
     }
 }

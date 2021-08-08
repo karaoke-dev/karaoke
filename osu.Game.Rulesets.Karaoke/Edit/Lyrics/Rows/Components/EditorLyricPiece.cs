@@ -89,17 +89,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             if (spriteText == null)
                 return new RectangleF();
 
-            switch (textTag)
+            return textTag switch
             {
-                case RubyTag rubyTag:
-                    return spriteText.GetRubyTagPosition(rubyTag);
-
-                case RomajiTag romajiTag:
-                    return spriteText.GetRomajiTagPosition(romajiTag);
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(textTag));
-            }
+                RubyTag rubyTag => spriteText.GetRubyTagPosition(rubyTag),
+                RomajiTag romajiTag => spriteText.GetRomajiTagPosition(romajiTag),
+                _ => throw new ArgumentOutOfRangeException(nameof(textTag))
+            };
         }
 
         public Vector2 GetTimeTagPosition(TimeTag timeTag)

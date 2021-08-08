@@ -51,100 +51,81 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override IEnumerable<int> AvailableVariants => new[] { 1, 2 };
 
-        public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0)
-        {
-            switch (variant)
+        public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) =>
+            variant switch
             {
-                case 0:
+                0 =>
                     // Vocal
-                    return Array.Empty<KeyBinding>();
+                    Array.Empty<KeyBinding>(),
+                1 => new[]
+                {
+                    // Basic control
+                    new KeyBinding(InputKey.Number1, KaraokeAction.FirstLyric),
+                    new KeyBinding(InputKey.Left, KaraokeAction.PreviousLyric),
+                    new KeyBinding(InputKey.Right, KaraokeAction.NextLyric),
+                    new KeyBinding(InputKey.Space, KaraokeAction.PlayAndPause),
 
-                case 1:
-                    return new[]
-                    {
-                        // Basic control
-                        new KeyBinding(InputKey.Number1, KaraokeAction.FirstLyric),
-                        new KeyBinding(InputKey.Left, KaraokeAction.PreviousLyric),
-                        new KeyBinding(InputKey.Right, KaraokeAction.NextLyric),
-                        new KeyBinding(InputKey.Space, KaraokeAction.PlayAndPause),
+                    // Panel
+                    new KeyBinding(InputKey.P, KaraokeAction.OpenPanel),
 
-                        // Panel
-                        new KeyBinding(InputKey.P, KaraokeAction.OpenPanel),
+                    // Advance control
+                    new KeyBinding(InputKey.Q, KaraokeAction.IncreaseTempo),
+                    new KeyBinding(InputKey.A, KaraokeAction.DecreaseTempo),
+                    new KeyBinding(InputKey.Z, KaraokeAction.ResetTempo),
+                    new KeyBinding(InputKey.W, KaraokeAction.IncreasePitch),
+                    new KeyBinding(InputKey.S, KaraokeAction.DecreasePitch),
+                    new KeyBinding(InputKey.X, KaraokeAction.ResetPitch),
+                    new KeyBinding(InputKey.E, KaraokeAction.IncreaseVocalPitch),
+                    new KeyBinding(InputKey.D, KaraokeAction.DecreaseVocalPitch),
+                    new KeyBinding(InputKey.C, KaraokeAction.ResetVocalPitch),
+                    new KeyBinding(InputKey.R, KaraokeAction.IncreaseSaitenPitch),
+                    new KeyBinding(InputKey.F, KaraokeAction.DecreaseSaitenPitch),
+                    new KeyBinding(InputKey.V, KaraokeAction.ResetSaitenPitch),
+                },
+                2 => new[]
+                {
+                    // moving
+                    new KeyBinding(InputKey.Up, KaraokeEditAction.Up),
+                    new KeyBinding(InputKey.Down, KaraokeEditAction.Down),
+                    new KeyBinding(InputKey.Left, KaraokeEditAction.Left),
+                    new KeyBinding(InputKey.Right, KaraokeEditAction.Right),
+                    new KeyBinding(InputKey.PageUp, KaraokeEditAction.First),
+                    new KeyBinding(InputKey.PageDown, KaraokeEditAction.Last),
 
-                        // Advance control
-                        new KeyBinding(InputKey.Q, KaraokeAction.IncreaseTempo),
-                        new KeyBinding(InputKey.A, KaraokeAction.DecreaseTempo),
-                        new KeyBinding(InputKey.Z, KaraokeAction.ResetTempo),
-                        new KeyBinding(InputKey.W, KaraokeAction.IncreasePitch),
-                        new KeyBinding(InputKey.S, KaraokeAction.DecreasePitch),
-                        new KeyBinding(InputKey.X, KaraokeAction.ResetPitch),
-                        new KeyBinding(InputKey.E, KaraokeAction.IncreaseVocalPitch),
-                        new KeyBinding(InputKey.D, KaraokeAction.DecreaseVocalPitch),
-                        new KeyBinding(InputKey.C, KaraokeAction.ResetVocalPitch),
-                        new KeyBinding(InputKey.R, KaraokeAction.IncreaseSaitenPitch),
-                        new KeyBinding(InputKey.F, KaraokeAction.DecreaseSaitenPitch),
-                        new KeyBinding(InputKey.V, KaraokeAction.ResetSaitenPitch),
-                    };
+                    // edit
+                    new KeyBinding(InputKey.N, KaraokeEditAction.Create),
+                    new KeyBinding(InputKey.Delete, KaraokeEditAction.Remove),
+                    new KeyBinding(InputKey.Space, KaraokeEditAction.SetTime),
+                    new KeyBinding(InputKey.BackSpace, KaraokeEditAction.ClearTime),
+                },
+                _ => Array.Empty<KeyBinding>()
+            };
 
-                case 2:
-                    return new[]
-                    {
-                        // moving
-                        new KeyBinding(InputKey.Up, KaraokeEditAction.Up),
-                        new KeyBinding(InputKey.Down, KaraokeEditAction.Down),
-                        new KeyBinding(InputKey.Left, KaraokeEditAction.Left),
-                        new KeyBinding(InputKey.Right, KaraokeEditAction.Right),
-                        new KeyBinding(InputKey.PageUp, KaraokeEditAction.First),
-                        new KeyBinding(InputKey.PageDown, KaraokeEditAction.Last),
-
-                        // edit
-                        new KeyBinding(InputKey.N, KaraokeEditAction.Create),
-                        new KeyBinding(InputKey.Delete, KaraokeEditAction.Remove),
-                        new KeyBinding(InputKey.Space, KaraokeEditAction.SetTime),
-                        new KeyBinding(InputKey.BackSpace, KaraokeEditAction.ClearTime),
-                    };
-
-                default:
-                    return Array.Empty<KeyBinding>();
-            }
-        }
-
-        public override IEnumerable<Mod> GetModsFor(ModType type)
-        {
-            switch (type)
+        public override IEnumerable<Mod> GetModsFor(ModType type) =>
+            type switch
             {
-                case ModType.DifficultyReduction:
-                    return new Mod[]
-                    {
-                        new KaraokeModNoFail(),
-                    };
-
-                case ModType.DifficultyIncrease:
-                    return new Mod[]
-                    {
-                        new KaraokeModHiddenNote(),
-                        new KaraokeModFlashlight(),
-                        new MultiMod(new KaraokeModSuddenDeath(), new KaraokeModPerfect(), new KaraokeModWindowsUpdate()),
-                    };
-
-                case ModType.Automation:
-                    return new Mod[]
-                    {
-                        new MultiMod(new KaraokeModAutoplay(), new KaraokeModAutoplayBySinger()),
-                    };
-
-                case ModType.Fun:
-                    return new Mod[]
-                    {
-                        new KaraokeModPractice(),
-                        new KaraokeModDisableNote(),
-                        new KaraokeModSnow(),
-                    };
-
-                default:
-                    return Array.Empty<Mod>();
-            }
-        }
+                ModType.DifficultyReduction => new Mod[]
+                {
+                    new KaraokeModNoFail(),
+                },
+                ModType.DifficultyIncrease => new Mod[]
+                {
+                    new KaraokeModHiddenNote(),
+                    new KaraokeModFlashlight(),
+                    new MultiMod(new KaraokeModSuddenDeath(), new KaraokeModPerfect(), new KaraokeModWindowsUpdate()),
+                },
+                ModType.Automation => new Mod[]
+                {
+                    new MultiMod(new KaraokeModAutoplay(), new KaraokeModAutoplayBySinger()),
+                },
+                ModType.Fun => new Mod[]
+                {
+                    new KaraokeModPractice(),
+                    new KaraokeModDisableNote(),
+                    new KaraokeModSnow(),
+                },
+                _ => Array.Empty<Mod>()
+            };
 
         public override Drawable CreateIcon() => new Container
         {
@@ -210,19 +191,13 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override string GetDisplayNameForHitResult(HitResult result)
         {
-            switch (result)
+            return result switch
             {
-                case HitResult.Great:
-                    return "Great";
-
-                case HitResult.Ok:
-                    return "OK";
-
-                case HitResult.Meh:
-                    return "Meh";
-            }
-
-            return base.GetDisplayNameForHitResult(result);
+                HitResult.Great => "Great",
+                HitResult.Ok => "OK",
+                HitResult.Meh => "Meh",
+                _ => base.GetDisplayNameForHitResult(result)
+            };
         }
 
         public override StatisticRow[] CreateStatisticsForScore(ScoreInfo score, IBeatmap playableBeatmap)

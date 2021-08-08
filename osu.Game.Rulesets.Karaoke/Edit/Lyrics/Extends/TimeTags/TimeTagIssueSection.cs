@@ -180,38 +180,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
             private Color4 getInvalidColour(TimeTagInvalid invalid)
             {
-                switch (invalid)
+                return invalid switch
                 {
-                    case TimeTagInvalid.OutOfRange:
-                        return colour.Red;
-
-                    case TimeTagInvalid.Overlapping:
-                        return colour.Red;
-
-                    case TimeTagInvalid.EmptyTime:
-                        return colour.Yellow;
-
-                    default:
-                        throw new IndexOutOfRangeException(nameof(invalid));
-                }
+                    TimeTagInvalid.OutOfRange => colour.Red,
+                    TimeTagInvalid.Overlapping => colour.Red,
+                    TimeTagInvalid.EmptyTime => colour.Yellow,
+                    _ => throw new IndexOutOfRangeException(nameof(invalid))
+                };
             }
 
             private string getInvalidReason(TimeTagInvalid invalid)
             {
-                switch (invalid)
+                return invalid switch
                 {
-                    case TimeTagInvalid.OutOfRange:
-                        return "Time-tag out of range.";
-
-                    case TimeTagInvalid.Overlapping:
-                        return "Time-tag overlapping.";
-
-                    case TimeTagInvalid.EmptyTime:
-                        return "Time-tag has no time.";
-
-                    default:
-                        throw new IndexOutOfRangeException(nameof(invalid));
-                }
+                    TimeTagInvalid.OutOfRange => "Time-tag out of range.",
+                    TimeTagInvalid.Overlapping => "Time-tag overlapping.",
+                    TimeTagInvalid.EmptyTime => "Time-tag has no time.",
+                    _ => throw new IndexOutOfRangeException(nameof(invalid))
+                };
             }
 
             public class TimeTagRowBackground : RowBackground
@@ -244,23 +230,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     Action = () =>
                     {
                         // navigate to current lyric.
-                        switch (state.Mode)
+                        lyricCaretState.BindableCaretPosition.Value = state.Mode switch
                         {
-                            case LyricEditorMode.CreateTimeTag:
-                                lyricCaretState.BindableCaretPosition.Value = new TimeTagIndexCaretPosition(lyric, timeTag?.Index ?? new TextIndex());
-                                break;
-
-                            case LyricEditorMode.RecordTimeTag:
-                                lyricCaretState.BindableCaretPosition.Value = new TimeTagCaretPosition(lyric, timeTag);
-                                break;
-
-                            case LyricEditorMode.AdjustTimeTag:
-                                lyricCaretState.BindableCaretPosition.Value = new NavigateCaretPosition(lyric);
-                                break;
-
-                            default:
-                                throw new IndexOutOfRangeException(nameof(state.Mode));
-                        }
+                            LyricEditorMode.CreateTimeTag => new TimeTagIndexCaretPosition(lyric, timeTag?.Index ?? new TextIndex()),
+                            LyricEditorMode.RecordTimeTag => new TimeTagCaretPosition(lyric, timeTag),
+                            LyricEditorMode.AdjustTimeTag => new NavigateCaretPosition(lyric),
+                            _ => throw new IndexOutOfRangeException(nameof(state.Mode))
+                        };
 
                         // set current time-tag as selected.
                         selectedTimeTags.Clear();

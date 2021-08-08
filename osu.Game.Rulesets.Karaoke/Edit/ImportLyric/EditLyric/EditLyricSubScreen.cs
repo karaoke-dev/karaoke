@@ -72,19 +72,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                     case NavigationState.Done:
                         var mode = Screen.LyricEditor.Mode;
 
-                        switch (mode)
+                        NavigationText = mode switch
                         {
-                            case LyricEditorMode.Manage:
-                                NavigationText = $"Cool! Try switching to [{typing_mode}] if you wants to edit lyric.";
-                                break;
-
-                            case LyricEditorMode.Typing:
-                                NavigationText = $"Cool! Try switching to [{cutting_mode}] if you wants to cut or combine lyric.";
-                                break;
-
-                            default:
-                                throw new ArgumentOutOfRangeException(nameof(mode));
-                        }
+                            LyricEditorMode.Manage => $"Cool! Try switching to [{typing_mode}] if you wants to edit lyric.",
+                            LyricEditorMode.Typing => $"Cool! Try switching to [{cutting_mode}] if you wants to cut or combine lyric.",
+                            _ => throw new ArgumentOutOfRangeException(nameof(mode))
+                        };
 
                         break;
 

@@ -17,18 +17,14 @@ namespace osu.Game.Rulesets.Karaoke.Scoring
         public override bool IsHitResultAllowed(HitResult result)
         {
             // In karaoke ruleset, time range is not the first thing.
-            switch (result)
+            return result switch
             {
                 // Karaoke note hit result
-                case HitResult.Perfect:
-                    return true;
-
+                HitResult.Perfect => true,
                 // Lyric hit result
-                case HitResult.Meh:
-                    return true;
-            }
-
-            return false;
+                HitResult.Meh => true,
+                _ => false
+            };
         }
 
         protected override DifficultyRange[] GetRanges() => karaoke_ranges;
