@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
     [TestFixture]
     public class EditTextTagCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<EditTextTagCaretPositionAlgorithm, EditTextTagCaretPosition>
     {
-        protected const int NOT_EXIST_TAG = -1;
+        private const int not_exist_tag = -1;
 
         [TestCase(nameof(singleLyric), 0, 0, true)]
         [TestCase(nameof(singleLyric), 0, 3, true)]
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             TestPositionMovable(lyrics, caretPosition, movable);
         }
 
-        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, NOT_EXIST_TAG)]
+        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, not_exist_tag)]
         [TestCase(nameof(twoLyricsWithText), 1, 0, 0, 0)]
         [TestCase(nameof(twoLyricsWithText), 1, 1, 0, 1)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 0, 0, 0)]
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             TestMoveUp(lyrics, caretPosition, newCaretPosition);
         }
 
-        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, NOT_EXIST_TAG)]
+        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, not_exist_tag)]
         [TestCase(nameof(twoLyricsWithText), 0, 0, 1, 0)]
         [TestCase(nameof(twoLyricsWithText), 0, 3, 1, 1)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 0, 2, 0)]
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             TestMoveDown(lyrics, caretPosition, newCaretPosition);
         }
 
-        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, NOT_EXIST_TAG)]
+        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, not_exist_tag)]
         [TestCase(nameof(twoLyricsWithText), 1, 0, 0, 3)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 0, 0, 3)]
         public void TestMoveLeft(string sourceName, int lyricIndex, int index, int newLyricIndex, int newIndex)
@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             TestMoveLeft(lyrics, caretPosition, newCaretPosition);
         }
 
-        [TestCase(nameof(singleLyric), 0, 3, NOT_EXIST, NOT_EXIST_TAG)]
+        [TestCase(nameof(singleLyric), 0, 3, NOT_EXIST, not_exist_tag)]
         [TestCase(nameof(twoLyricsWithText), 0, 3, 1, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 3, 2, 0)]
         public void TestMoveRight(string sourceName, int lyricIndex, int index, int newLyricIndex, int newIndex)
@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
 
         [Ignore("Not that important for now.")]
         [TestCase(nameof(singleLyric), 0, 0)]
-        [TestCase(nameof(singleLyricWithNoText), NOT_EXIST, NOT_EXIST_TAG)]
+        [TestCase(nameof(singleLyricWithNoText), NOT_EXIST, not_exist_tag)]
         [TestCase(nameof(twoLyricsWithText), 0, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 0)]
         public void TestMoveToFirst(string sourceName, int lyricIndex, int index)
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
 
         [Ignore("Not that important for now.")]
         [TestCase(nameof(singleLyric), 0, 0)]
-        [TestCase(nameof(singleLyricWithNoText), NOT_EXIST, NOT_EXIST_TAG)]
+        [TestCase(nameof(singleLyricWithNoText), NOT_EXIST, not_exist_tag)]
         [TestCase(nameof(twoLyricsWithText), 0, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 0)]
         public void TestMoveToLast(string sourceName, int lyricIndex, int index)
