@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestPositionMovable(string sourceName, int lyricIndex, int textTagIndex, int typingCaretIndex, bool movable)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
+            var caretPosition = createTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
 
             // Check is movable
             TestPositionMovable(lyrics, caretPosition, movable);
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveUp(string sourceName, int lyricIndex, int textTagIndex, int typingCaretIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
+            var caretPosition = createTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
 
             // In this algorithm cannot move-up
             TestMoveUp(lyrics, caretPosition, null);
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveDown(string sourceName, int lyricIndex, int textTagIndex, int typingCaretIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
+            var caretPosition = createTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
 
             // In this algorithm cannot move-down
             TestMoveDown(lyrics, caretPosition, null);
@@ -57,9 +57,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveLeft(string sourceName, int lyricIndex, int textTagIndex, int typingCaretIndex, int newTypingCaretIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
+            var caretPosition = createTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
             var newCaretPosition = typingCaretIndex != newTypingCaretIndex
-                ? CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, newTypingCaretIndex)
+                ? createTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, newTypingCaretIndex)
                 : null;
 
             // In this algorithm cannot move-down
@@ -71,9 +71,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveRight(string sourceName, int lyricIndex, int textTagIndex, int typingCaretIndex, int newTypingCaretIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
+            var caretPosition = createTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, typingCaretIndex);
             var newCaretPosition = typingCaretIndex != newTypingCaretIndex
-                ? CreateTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, newTypingCaretIndex)
+                ? createTypingTextTagCaretPosition(lyrics, lyricIndex, textTagIndex, newTypingCaretIndex)
                 : null;
 
             // In this algorithm cannot move-down
@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         }
 
-        protected TypingTextTagCaretPosition CreateTypingTextTagCaretPosition(Lyric[] lyrics, int lyricIndex, int textTagIndex, int typingCaretIndex)
+        private static TypingTextTagCaretPosition createTypingTextTagCaretPosition(Lyric[] lyrics, int lyricIndex, int textTagIndex, int typingCaretIndex)
         {
             if (lyricIndex == NOT_EXIST)
                 return null;
@@ -136,7 +136,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
 
         #region source
 
-        private Lyric[] singleLyric => new[]
+        private static Lyric[] singleLyric => new[]
         {
             new Lyric
             {

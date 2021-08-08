@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestPositionMovable(string sourceName, int lyricIndex, bool movable)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateEditNoteCaretPosition(lyrics, lyricIndex);
+            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
 
             // Check is movable, will always be true in this algorithm.
             TestPositionMovable(lyrics, caretPosition, movable);
@@ -29,8 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveUp(string sourceName, int lyricIndex, int newLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateEditNoteCaretPosition(lyrics, lyricIndex);
-            var newCaretPosition = CreateEditNoteCaretPosition(lyrics, newLyricIndex);
+            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
+            var newCaretPosition = createEditNoteCaretPosition(lyrics, newLyricIndex);
 
             // Check is movable
             TestMoveUp(lyrics, caretPosition, newCaretPosition);
@@ -43,8 +43,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveDown(string sourceName, int lyricIndex, int newLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateEditNoteCaretPosition(lyrics, lyricIndex);
-            var newCaretPosition = CreateEditNoteCaretPosition(lyrics, newLyricIndex);
+            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
+            var newCaretPosition = createEditNoteCaretPosition(lyrics, newLyricIndex);
 
             // Check is movable
             TestMoveDown(lyrics, caretPosition, newCaretPosition);
@@ -57,8 +57,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveLeft(string sourceName, int lyricIndex, int newLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateEditNoteCaretPosition(lyrics, lyricIndex);
-            var newCaretPosition = CreateEditNoteCaretPosition(lyrics, newLyricIndex);
+            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
+            var newCaretPosition = createEditNoteCaretPosition(lyrics, newLyricIndex);
 
             // Check is movable
             TestMoveLeft(lyrics, caretPosition, newCaretPosition);
@@ -71,8 +71,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveRight(string sourceName, int lyricIndex, int newLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateEditNoteCaretPosition(lyrics, lyricIndex);
-            var newCaretPosition = CreateEditNoteCaretPosition(lyrics, newLyricIndex);
+            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
+            var newCaretPosition = createEditNoteCaretPosition(lyrics, newLyricIndex);
 
             // Check is movable
             TestMoveRight(lyrics, caretPosition, newCaretPosition);
@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveToFirst(string sourceName, int lyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateEditNoteCaretPosition(lyrics, lyricIndex);
+            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
 
             // Check first position
             TestMoveToFirst(lyrics, caretPosition);
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveToLast(string sourceName, int lyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateEditNoteCaretPosition(lyrics, lyricIndex);
+            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
 
             // Check last position
             TestMoveToLast(lyrics, caretPosition);
@@ -110,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var lyric = lyrics[lyricIndex];
-            var caretPosition = CreateEditNoteCaretPosition(lyrics, lyricIndex);
+            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
 
             // Check move to target position.
             TestMoveToTarget(lyrics, lyric, caretPosition);
@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         }
 
-        protected NavigateCaretPosition CreateEditNoteCaretPosition(Lyric[] lyrics, int lyricIndex)
+        private static NavigateCaretPosition createEditNoteCaretPosition(Lyric[] lyrics, int lyricIndex)
         {
             if (lyricIndex == NOT_EXIST)
                 return null;
@@ -139,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
 
         #region source
 
-        private Lyric[] singleLyric => new[]
+        private static Lyric[] singleLyric => new[]
         {
             new Lyric
             {
@@ -147,12 +147,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         };
 
-        private Lyric[] singleLyricWithNoText => new[]
+        private static Lyric[] singleLyricWithNoText => new[]
         {
             new Lyric()
         };
 
-        private Lyric[] twoLyricsWithText => new[]
+        private static Lyric[] twoLyricsWithText => new[]
         {
             new Lyric
             {
@@ -164,7 +164,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         };
 
-        private Lyric[] threeLyricsWithSpacing => new[]
+        private static Lyric[] threeLyricsWithSpacing => new[]
         {
             new Lyric
             {

@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
         protected override Container<Drawable> Content => ContentContainer;
 
-        public SettingsSectionsContainer SectionsContainer;
+        protected SettingsSectionsContainer SectionsContainer;
 
         private SeekLimitedSearchTextBox searchTextBox;
 

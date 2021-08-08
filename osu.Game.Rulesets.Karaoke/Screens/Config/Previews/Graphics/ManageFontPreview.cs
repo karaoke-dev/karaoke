@@ -255,7 +255,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics
                     return ":Bug:";
                 }
 
-                Colour4 getRandomColour()
+                static Colour4 getRandomColour()
                 {
                     var randomNumber = RNG.Next(1, 359);
                     return Color4Extensions.FromHSV(randomNumber, 0.2f, 0.7f);

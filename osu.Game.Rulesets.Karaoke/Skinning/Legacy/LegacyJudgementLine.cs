@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.Centre,
                     Name = "Judgement line head",
-                    Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineHeadImage)
+                    Texture = getTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineHeadImage)
                 },
                 judgementLineBodySprite = new Sprite
                 {
@@ -51,14 +51,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     Size = Vector2.One,
                     FillMode = FillMode.Stretch,
                     Depth = 1,
-                    Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage)
+                    Texture = getTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage)
                 },
                 new Sprite
                 {
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.Centre,
                     Name = "Judgement line tail",
-                    Texture = GetTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineTailImage)
+                    Texture = getTextureFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.JudgementLineTailImage)
                 }
             };
 
@@ -88,10 +88,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             static float getWidth(Sprite s) => s.Texture?.DisplayWidth ?? 0;
         }
 
-        protected Texture GetTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup)
-            => skin.GetTexture(GetTextureNameFromLookup(lookup));
+        private static Texture getTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup)
+            => skin.GetTexture(getTextureNameFromLookup(lookup));
 
-        public static string GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup)
+        private static string getTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup)
         {
             string suffix;
 

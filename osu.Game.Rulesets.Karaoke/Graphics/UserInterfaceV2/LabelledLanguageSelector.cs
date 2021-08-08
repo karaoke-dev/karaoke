@@ -12,9 +12,9 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
-    public class LabelledLanguageSelector : LabelledComponent<LabelledLanguageSelector.LanguageSelectionButton, CultureInfo>
+    public abstract class LabelledLanguageSelector : LabelledComponent<LabelledLanguageSelector.LanguageSelectionButton, CultureInfo>
     {
-        public LabelledLanguageSelector()
+        protected LabelledLanguageSelector()
             : base(true)
         {
         }

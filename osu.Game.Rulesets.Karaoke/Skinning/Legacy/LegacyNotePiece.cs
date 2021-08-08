@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 Name = name,
                 Children = new[]
                 {
-                    GetSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteHeadImage, layer).With(d =>
+                    getSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteHeadImage, layer).With(d =>
                     {
                         if (d == null)
                             return;
@@ -152,7 +152,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                         d.Anchor = Anchor.CentreLeft;
                         d.Origin = Anchor.Centre;
                     }),
-                    GetSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, layer).With(d =>
+                    getSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteBodyImage, layer).With(d =>
                     {
                         if (d == null)
                             return;
@@ -167,7 +167,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 
                         d.Height = d.Texture?.DisplayHeight ?? 0;
                     }),
-                    GetSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, layer).With(d =>
+                    getSpriteFromLookup(skin, LegacyKaraokeSkinConfigurationLookups.NoteTailImage, layer).With(d =>
                     {
                         if (d == null)
                             return;
@@ -180,9 +180,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             };
         }
 
-        protected Sprite GetSpriteFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
+        private static Sprite getSpriteFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
         {
-            var name = GetTextureNameFromLookup(lookup, layer);
+            var name = getTextureNameFromLookup(lookup, layer);
 
             switch (layer)
             {
@@ -192,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 
                 case LegacyKaraokeSkinNoteLayer.Foreground:
                     return getSpriteByName(name)
-                           ?? getSpriteByName(GetTextureNameFromLookup(lookup, LegacyKaraokeSkinNoteLayer.Background))
+                           ?? getSpriteByName(getTextureNameFromLookup(lookup, LegacyKaraokeSkinNoteLayer.Background))
                            ?? new Sprite();
 
                 default:
@@ -213,7 +213,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             });
         }
 
-        public static string GetTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
+        private static string getTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
         {
             string suffix;
 

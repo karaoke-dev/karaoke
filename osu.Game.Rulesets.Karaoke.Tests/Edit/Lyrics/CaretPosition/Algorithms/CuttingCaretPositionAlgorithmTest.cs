@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
     [TestFixture]
     public class CuttingCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<CuttingCaretPositionAlgorithm, TextCaretPosition>
     {
-        protected const int INDEX_EXIST_TAG = -1;
+        private const int index_exist_tag = -1;
 
         [TestCase(nameof(singleLyric), 0, 1, true)]
         [TestCase(nameof(singleLyric), 0, 3, true)]
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestPositionMovable(string sourceName, int lyricIndex, int index, bool movable)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTextCaretPosition(lyrics, lyricIndex, index);
+            var caretPosition = createTextCaretPosition(lyrics, lyricIndex, index);
 
             // Check is movable
             TestPositionMovable(lyrics, caretPosition, movable);
@@ -39,14 +39,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveUp(string sourceName, int lyricIndex, int index, int newLyricIndex, int newIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTextCaretPosition(lyrics, lyricIndex, index);
-            var newCaretPosition = CreateTextCaretPosition(lyrics, newLyricIndex, newIndex);
+            var caretPosition = createTextCaretPosition(lyrics, lyricIndex, index);
+            var newCaretPosition = createTextCaretPosition(lyrics, newLyricIndex, newIndex);
 
             // Check is movable
             TestMoveUp(lyrics, caretPosition, newCaretPosition);
         }
 
-        [TestCase(nameof(singleLyric), 0, 1, NOT_EXIST, INDEX_EXIST_TAG)] // cannot move down if at bottom index.
+        [TestCase(nameof(singleLyric), 0, 1, NOT_EXIST, index_exist_tag)] // cannot move down if at bottom index.
         [TestCase(nameof(twoLyricsWithText), 0, 1, 1, 1)]
         [TestCase(nameof(twoLyricsWithText), 0, 3, 1, 2)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 1, 2, 1)]
@@ -54,62 +54,62 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveDown(string sourceName, int lyricIndex, int index, int newLyricIndex, int newIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTextCaretPosition(lyrics, lyricIndex, index);
-            var newCaretPosition = CreateTextCaretPosition(lyrics, newLyricIndex, newIndex);
+            var caretPosition = createTextCaretPosition(lyrics, lyricIndex, index);
+            var newCaretPosition = createTextCaretPosition(lyrics, newLyricIndex, newIndex);
 
             // Check is movable
             TestMoveDown(lyrics, caretPosition, newCaretPosition);
         }
 
-        [TestCase(nameof(singleLyric), 0, 1, NOT_EXIST, INDEX_EXIST_TAG)]
+        [TestCase(nameof(singleLyric), 0, 1, NOT_EXIST, index_exist_tag)]
         [TestCase(nameof(twoLyricsWithText), 1, 1, 0, 3)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 1, 0, 3)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 3, 2, 2)]
         public void TestMoveLeft(string sourceName, int lyricIndex, int index, int newLyricIndex, int newIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTextCaretPosition(lyrics, lyricIndex, index);
-            var newCaretPosition = CreateTextCaretPosition(lyrics, newLyricIndex, newIndex);
+            var caretPosition = createTextCaretPosition(lyrics, lyricIndex, index);
+            var newCaretPosition = createTextCaretPosition(lyrics, newLyricIndex, newIndex);
 
             // Check is movable
             TestMoveLeft(lyrics, caretPosition, newCaretPosition);
         }
 
-        [TestCase(nameof(singleLyric), 0, 3, NOT_EXIST, INDEX_EXIST_TAG)]
+        [TestCase(nameof(singleLyric), 0, 3, NOT_EXIST, index_exist_tag)]
         [TestCase(nameof(twoLyricsWithText), 0, 3, 1, 1)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 3, 2, 1)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 2, 0, 3)]
         public void TestMoveRight(string sourceName, int lyricIndex, int index, int newLyricIndex, int newIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTextCaretPosition(lyrics, lyricIndex, index);
-            var newCaretPosition = CreateTextCaretPosition(lyrics, newLyricIndex, newIndex);
+            var caretPosition = createTextCaretPosition(lyrics, lyricIndex, index);
+            var newCaretPosition = createTextCaretPosition(lyrics, newLyricIndex, newIndex);
 
             // Check is movable
             TestMoveRight(lyrics, caretPosition, newCaretPosition);
         }
 
         [TestCase(nameof(singleLyric), 0, 1)]
-        [TestCase(nameof(singleLyricWithNoText), NOT_EXIST, INDEX_EXIST_TAG)]
+        [TestCase(nameof(singleLyricWithNoText), NOT_EXIST, index_exist_tag)]
         [TestCase(nameof(twoLyricsWithText), 0, 1)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 1)]
         public void TestMoveToFirst(string sourceName, int lyricIndex, int index)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTextCaretPosition(lyrics, lyricIndex, index);
+            var caretPosition = createTextCaretPosition(lyrics, lyricIndex, index);
 
             // Check first position
             TestMoveToFirst(lyrics, caretPosition);
         }
 
         [TestCase(nameof(singleLyric), 0, 3)]
-        [TestCase(nameof(singleLyricWithNoText), NOT_EXIST, INDEX_EXIST_TAG)]
+        [TestCase(nameof(singleLyricWithNoText), NOT_EXIST, index_exist_tag)]
         [TestCase(nameof(twoLyricsWithText), 1, 2)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 2)]
         public void TestMoveToLast(string sourceName, int lyricIndex, int index)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateTextCaretPosition(lyrics, lyricIndex, index);
+            var caretPosition = createTextCaretPosition(lyrics, lyricIndex, index);
 
             // Check last position
             TestMoveToLast(lyrics, caretPosition);
@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var lyric = lyrics[lyricIndex];
-            var caretPosition = CreateTextCaretPosition(lyrics, lyricIndex, 1);
+            var caretPosition = createTextCaretPosition(lyrics, lyricIndex, 1);
 
             // Check move to target position.
             TestMoveToTarget(lyrics, lyric, caretPosition);
@@ -140,7 +140,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         }
 
-        protected TextCaretPosition CreateTextCaretPosition(Lyric[] lyrics, int lyricIndex, int index)
+        private static TextCaretPosition createTextCaretPosition(Lyric[] lyrics, int lyricIndex, int index)
         {
             if (lyricIndex == NOT_EXIST)
                 return null;
@@ -151,7 +151,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
 
         #region source
 
-        private Lyric[] singleLyric => new[]
+        private static Lyric[] singleLyric => new[]
         {
             new Lyric
             {
@@ -159,12 +159,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         };
 
-        private Lyric[] singleLyricWithNoText => new[]
+        private static Lyric[] singleLyricWithNoText => new[]
         {
             new Lyric()
         };
 
-        private Lyric[] twoLyricsWithText => new[]
+        private static Lyric[] twoLyricsWithText => new[]
         {
             new Lyric
             {
@@ -176,7 +176,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         };
 
-        private Lyric[] threeLyricsWithSpacing => new[]
+        private static Lyric[] threeLyricsWithSpacing => new[]
         {
             new Lyric
             {

@@ -6,7 +6,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Screens;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
@@ -23,7 +22,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
         {
             var config = new KaraokeRulesetEditConfigManager();
             var lyricEditorConfig = new KaraokeRulesetLyricEditorConfigManager();
-            IScreen editor = null;
             Add(new Container
             {
                 Anchor = Anchor.TopCentre,
@@ -40,8 +38,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                         {
                             Items = new MenuItem[]
                             {
-                                new ImportLyricMenu(editor, "Import from text"),
-                                new ImportLyricMenu(editor, "Import from .lrc file"),
+                                new ImportLyricMenu(null, "Import from text"),
+                                new ImportLyricMenu(null, "Import from .lrc file"),
                                 new EditorMenuItemSpacer(),
                                 new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => { }),
                                 new EditorMenuItem("Export to text", MenuItemType.Standard, () => { }),
@@ -64,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit
                         {
                             Items = new MenuItem[]
                             {
-                                new ManagerMenu(editor, "Manage"),
+                                new ManagerMenu(null, "Manage"),
                                 new GeneratorMenu("Generator"),
                             }
                         },

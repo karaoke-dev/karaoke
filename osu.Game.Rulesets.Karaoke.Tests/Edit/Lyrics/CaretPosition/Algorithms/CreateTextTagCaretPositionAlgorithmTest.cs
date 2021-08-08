@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestPositionMovable(string sourceName, int lyricIndex, int startIndex, int endIndex, bool movable)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateCreateTextTagCaretPosition(lyrics, lyricIndex, startIndex, endIndex);
+            var caretPosition = createCreateTextTagCaretPosition(lyrics, lyricIndex, startIndex, endIndex);
 
             // Check is movable
             TestPositionMovable(lyrics, caretPosition, movable);
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveUp(string sourceName, int lyricIndex, int startIndex, int endIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateCreateTextTagCaretPosition(lyrics, lyricIndex, startIndex, endIndex);
+            var caretPosition = createCreateTextTagCaretPosition(lyrics, lyricIndex, startIndex, endIndex);
 
             // Anyway it's not movable.
             TestMoveUp(lyrics, caretPosition, null);
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveDown(string sourceName, int lyricIndex, int startIndex, int endIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateCreateTextTagCaretPosition(lyrics, lyricIndex, startIndex, endIndex);
+            var caretPosition = createCreateTextTagCaretPosition(lyrics, lyricIndex, startIndex, endIndex);
 
             // Anyway it's not movable.
             TestMoveDown(lyrics, caretPosition, null);
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveLeft(string sourceName, int lyricIndex, int startIndex, int endIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateCreateTextTagCaretPosition(lyrics, lyricIndex, startIndex, endIndex);
+            var caretPosition = createCreateTextTagCaretPosition(lyrics, lyricIndex, startIndex, endIndex);
 
             // Anyway it's not movable.
             TestMoveLeft(lyrics, caretPosition, null);
@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         public void TestMoveRight(string sourceName, int lyricIndex, int startIndex, int endIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = CreateCreateTextTagCaretPosition(lyrics, lyricIndex, startIndex, endIndex);
+            var caretPosition = createCreateTextTagCaretPosition(lyrics, lyricIndex, startIndex, endIndex);
 
             // Anyway it's not movable.
             TestMoveRight(lyrics, caretPosition, null);
@@ -116,7 +116,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         }
 
-        protected CreateTextTagCaretPosition CreateCreateTextTagCaretPosition(Lyric[] lyrics, int lyricIndex, int startIndex, int endIndex)
+        private static CreateTextTagCaretPosition createCreateTextTagCaretPosition(Lyric[] lyrics, int lyricIndex, int startIndex, int endIndex)
         {
             if (lyricIndex == NOT_EXIST)
                 return null;
@@ -135,7 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
 
         #region source
 
-        private Lyric[] singleLyric => new[]
+        private static Lyric[] singleLyric => new[]
         {
             new Lyric
             {
@@ -150,7 +150,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
             }
         };
 
-        private Lyric[] singleLyricWithNoText => new[]
+        private static Lyric[] singleLyricWithNoText => new[]
         {
             new Lyric()
         };
