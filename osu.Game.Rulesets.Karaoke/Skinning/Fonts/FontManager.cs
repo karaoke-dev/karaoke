@@ -159,10 +159,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             switch (type)
             {
                 case FontType.Fnt:
-                    return $"fnt";
+                    return "zipfnt";
 
                 case FontType.Ttf:
-                    return $"ttf";
+                    return "ttf";
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type));
