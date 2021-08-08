@@ -17,6 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         protected void TestPositionMovable(Lyric[] lyrics, C caret, bool movable, Action<T> invokeAlgorithm = null)
         {
             var algorithm = (T)Activator.CreateInstance(typeof(T), new object[] { lyrics });
+            Assert.IsNotNull(algorithm);
+
             invokeAlgorithm?.Invoke(algorithm);
             Assert.AreEqual(algorithm.PositionMovable(caret), movable);
         }
@@ -24,6 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         protected void TestMoveUp(Lyric[] lyrics, C caret, C actual, Action<T> invokeAlgorithm = null)
         {
             var algorithm = (T)Activator.CreateInstance(typeof(T), new object[] { lyrics });
+            Assert.IsNotNull(algorithm);
+
             invokeAlgorithm?.Invoke(algorithm);
             AssertEqual(algorithm.MoveUp(caret), actual);
         }
@@ -31,6 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         protected void TestMoveDown(Lyric[] lyrics, C caret, C actual, Action<T> invokeAlgorithm = null)
         {
             var algorithm = (T)Activator.CreateInstance(typeof(T), new object[] { lyrics });
+            Assert.IsNotNull(algorithm);
+
             invokeAlgorithm?.Invoke(algorithm);
             AssertEqual(algorithm.MoveDown(caret), actual);
         }
@@ -38,6 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         protected void TestMoveLeft(Lyric[] lyrics, C caret, C actual, Action<T> invokeAlgorithm = null)
         {
             var algorithm = (T)Activator.CreateInstance(typeof(T), new object[] { lyrics });
+            Assert.IsNotNull(algorithm);
+
             invokeAlgorithm?.Invoke(algorithm);
             AssertEqual(algorithm.MoveLeft(caret), actual);
         }
@@ -45,6 +53,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         protected void TestMoveRight(Lyric[] lyrics, C caret, C actual, Action<T> invokeAlgorithm = null)
         {
             var algorithm = (T)Activator.CreateInstance(typeof(T), new object[] { lyrics });
+            Assert.IsNotNull(algorithm);
+
             invokeAlgorithm?.Invoke(algorithm);
             AssertEqual(algorithm.MoveRight(caret), actual);
         }
@@ -52,6 +62,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         protected void TestMoveToFirst(Lyric[] lyrics, C actual, Action<T> invokeAlgorithm = null)
         {
             var algorithm = (T)Activator.CreateInstance(typeof(T), new object[] { lyrics });
+            Assert.IsNotNull(algorithm);
+
             invokeAlgorithm?.Invoke(algorithm);
             AssertEqual(algorithm.MoveToFirst(), actual);
         }
@@ -59,6 +71,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         protected void TestMoveToLast(Lyric[] lyrics, C actual, Action<T> invokeAlgorithm = null)
         {
             var algorithm = (T)Activator.CreateInstance(typeof(T), new object[] { lyrics });
+            Assert.IsNotNull(algorithm);
+
             invokeAlgorithm?.Invoke(algorithm);
             AssertEqual(algorithm.MoveToLast(), actual);
         }
@@ -66,6 +80,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Edit.Lyrics.CaretPosition.Algorithms
         protected void TestMoveToTarget(Lyric[] lyrics, Lyric lyric, C actual, Action<T> invokeAlgorithm = null)
         {
             var algorithm = (T)Activator.CreateInstance(typeof(T), new object[] { lyrics });
+            Assert.IsNotNull(algorithm);
+
             invokeAlgorithm?.Invoke(algorithm);
             AssertEqual(algorithm.MoveToTarget(lyric), actual);
         }
