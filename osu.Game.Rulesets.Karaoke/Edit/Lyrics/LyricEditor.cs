@@ -388,10 +388,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
         }
 
-        protected bool HandleMovingEvent(KaraokeEditAction action)
-        {
-            // moving caret action
-            return action switch
+        protected bool HandleMovingEvent(KaraokeEditAction action) =>
+            action switch
             {
                 KaraokeEditAction.Up => lyricCaretState.MoveCaret(MovingCaretAction.Up),
                 KaraokeEditAction.Down => lyricCaretState.MoveCaret(MovingCaretAction.Down),
@@ -401,7 +399,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 KaraokeEditAction.Last => lyricCaretState.MoveCaret(MovingCaretAction.Last),
                 _ => false
             };
-        }
 
         protected bool HandleSetTimeEvent(KaraokeEditAction action)
         {

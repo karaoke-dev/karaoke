@@ -178,27 +178,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 },
             };
 
-            private Color4 getInvalidColour(TimeTagInvalid invalid)
-            {
-                return invalid switch
+            private Color4 getInvalidColour(TimeTagInvalid invalid) =>
+                invalid switch
                 {
                     TimeTagInvalid.OutOfRange => colour.Red,
                     TimeTagInvalid.Overlapping => colour.Red,
                     TimeTagInvalid.EmptyTime => colour.Yellow,
                     _ => throw new IndexOutOfRangeException(nameof(invalid))
                 };
-            }
 
-            private string getInvalidReason(TimeTagInvalid invalid)
-            {
-                return invalid switch
+            private string getInvalidReason(TimeTagInvalid invalid) =>
+                invalid switch
                 {
                     TimeTagInvalid.OutOfRange => "Time-tag out of range.",
                     TimeTagInvalid.Overlapping => "Time-tag overlapping.",
                     TimeTagInvalid.EmptyTime => "Time-tag has no time.",
                     _ => throw new IndexOutOfRangeException(nameof(invalid))
                 };
-            }
 
             public class TimeTagRowBackground : RowBackground
             {
