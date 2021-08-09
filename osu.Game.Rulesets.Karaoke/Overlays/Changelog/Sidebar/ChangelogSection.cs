@@ -14,8 +14,8 @@ using osu.Framework.Platform;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
-using osuTK;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
+using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
