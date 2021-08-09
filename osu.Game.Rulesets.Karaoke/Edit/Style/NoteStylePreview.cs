@@ -99,7 +99,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 
         private class PreviewNotePositionInfo : INotePositionInfo
         {
-            public IBindable<NotePositionCalculator> Position { get; } = new Bindable<NotePositionCalculator>(new NotePositionCalculator(columns, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
+            public IBindable<NotePositionCalculator> Position { get; } =
+                new Bindable<NotePositionCalculator>(new NotePositionCalculator(columns, DefaultColumnBackground.COLUMN_HEIGHT, ScrollingNotePlayfield.COLUMN_SPACING));
 
             public NotePositionCalculator Calculator => Position.Value;
         }
