@@ -7,9 +7,11 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
+using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
+using FileInfo = System.IO.FileInfo;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
@@ -48,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 */
 
                 // Import and replace all the file.
-                using (var reader = new Game.IO.LineBufferedReader(stream))
+                using (var reader = new LineBufferedReader(stream))
                 {
                     var decoder = new LrcDecoder();
                     var lrcBeatmap = decoder.Decode(reader);

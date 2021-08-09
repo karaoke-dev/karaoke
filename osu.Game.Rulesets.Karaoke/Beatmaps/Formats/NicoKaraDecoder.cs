@@ -17,9 +17,9 @@ using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osuTK;
 using osuTK.Graphics;
-using LyricLayout = osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts.LyricLayout;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
