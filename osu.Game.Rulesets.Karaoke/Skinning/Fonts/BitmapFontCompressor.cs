@@ -44,7 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                    .ToDictionary(x => x.Key, x => x.Value);
         }
 
-        internal static IDictionary<int, Character> GenerateCharacters([NotNull] BitmapFontInfo originInfo, [NotNull] BitmapFontCommon originCommon, [NotNull] IDictionary<int, Character> originCharacters, char[] chars)
+        internal static IDictionary<int, Character> GenerateCharacters([NotNull] BitmapFontInfo originInfo, [NotNull] BitmapFontCommon originCommon,
+                                                                       [NotNull] IDictionary<int, Character> originCharacters, char[] chars)
         {
             chars = chars?.Distinct().ToArray();
             if (chars == null || chars.Length < 1)

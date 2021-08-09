@@ -9,6 +9,7 @@ using LyricMaker.Parser;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Utils;
+using Lyric = osu.Game.Rulesets.Karaoke.Objects.Lyric;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -16,15 +17,15 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
     {
         public string Encode(Beatmap output)
         {
-            var lyric = new Lyric
+            var lyric = new LyricMaker.Model.Lyric
             {
-                Lines = output.HitObjects.OfType<Objects.Lyric>().Select(encodeLyric).ToArray(),
+                Lines = output.HitObjects.OfType<Lyric>().Select(encodeLyric).ToArray(),
             };
             var encodeResult = new LrcParser().Encode(lyric);
             return encodeResult;
         }
 
-        private LyricLine encodeLyric(Objects.Lyric lyric) =>
+        private LyricLine encodeLyric(Lyric lyric) =>
             new LyricLine
             {
                 Text = lyric.Text,

@@ -1,4 +1,4 @@
-﻿// Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
@@ -17,6 +17,7 @@ using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using TextBuilder = SixLabors.ImageSharp.Drawing.TextBuilder;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Stores
 {
@@ -170,7 +171,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
 
             // this is the important line, where we render the glyphs to a vector instead of directly to the image
             // this allows further vector manipulation (scaling, translating) etc without the expensive pixel operations.
-            var glyphs = SixLabors.ImageSharp.Drawing.TextBuilder.GenerateGlyphs(text, style);
+            var glyphs = TextBuilder.GenerateGlyphs(text, style);
 
             // adjust scale
             var widthScale = targetSize.Width / glyphs.Bounds.Width;
