@@ -10,6 +10,8 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Graphics.Containers.Markdown;
+using osu.Game.Graphics.Sprites;
 using osuTK;
 using osuTK.Graphics;
 
@@ -23,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         private readonly SpriteIcon icon;
         private readonly MarkdownTextFlowContainer messageText;
 
-        public SpriteText CreateSpriteText() => new SpriteText();
+        public SpriteText CreateSpriteText() => new OsuSpriteText();
 
         public SaitenStatus(SaitenStatusMode statusMode)
         {
@@ -38,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
                 {
                     Size = new Vector2(size),
                 },
-                messageText = new MarkdownTextFlowContainer
+                messageText = new OsuMarkdownTextFlowContainer
                 {
                     RelativeSizeAxes = Axes.None,
                     AutoSizeAxes = Axes.Both

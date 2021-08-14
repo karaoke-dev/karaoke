@@ -6,13 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
-using Markdig;
-using Markdig.Extensions.AutoIdentifiers;
-using Markdig.Extensions.Yaml;
-using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Layout;
 using osu.Game.Graphics.Containers.Markdown;
@@ -34,19 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             }
         }
 
-        protected override void AddMarkdownComponent(IMarkdownObject markdownObject, FillFlowContainer container, int level)
-        {
-            // hide hidden message in markdown document
-            if (markdownObject is YamlFrontMatterBlock)
-                return;
-
-            base.AddMarkdownComponent(markdownObject, container, level);
-        }
-
-        /// <summary>
-        /// Override <see cref="MarkdownTextFlowContainer"/> to limit image display size
-        /// </summary>
-        /// <returns></returns>
         public override MarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
 
         /// <summary>
@@ -54,19 +36,18 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         /// </summary>
         public class ChangeLogMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer
         {
-            protected override void AddImage(LinkInline linkInline) => AddDrawable(new ChangeLogMarkdownImage(linkInline.Url));
+            protected override void AddImage(LinkInline linkInline) => AddDrawable(new ChangeLogMarkdownImage(linkInline));
 
-            public ChangeLogMarkdownTextFlowContainer()
-            {
-                TextAnchor = Anchor.BottomLeft;
-            }
-
-            public class ChangeLogMarkdownImage : MarkdownImage
+            /// <summary>
+            /// Override <see cref="OsuMarkdownImage"/> to limit image display size
+            /// </summary>
+            /// <returns></returns>
+            public class ChangeLogMarkdownImage : OsuMarkdownImage
             {
                 private readonly LayoutValue widthSizeCache = new LayoutValue(Invalidation.DrawSize);
 
-                public ChangeLogMarkdownImage(string url)
-                    : base(url)
+                public ChangeLogMarkdownImage(LinkInline linkInline)
+                    : base(linkInline)
                 {
                     AutoSizeAxes = Axes.None;
                     RelativeSizeAxes = Axes.X;
@@ -119,83 +100,77 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 if (linkInline.Url == null)
                     return;
 
-                if (githubUrls.ContainsKey(text))
-                {
-                    var baseUri = new Uri(githubUrls[text]);
-
-                    // Get hash tag with number
-                    const string issue_regex = @"#(?<issue>[0-9]+)|@(?<username>[0-9A-z]+)";
-                    var result = Regex.Matches(linkInline.Url, issue_regex, RegexOptions.IgnoreCase);
-
-                    if (!result.Any())
-                        return;
-
-                    // add issue if has user
-                    var issues = result.Select(x => x.Groups["issue"]?.Value).Where(x => !string.IsNullOrEmpty(x));
-
-                    if (issues.Any())
-                    {
-                        AddText("(");
-
-                        foreach (var issue in issues)
-                        {
-                            if (string.IsNullOrEmpty(issue))
-                                continue;
-
-                            AddDrawable(new MarkdownLinkText($"{text}{issue}", new LinkInline
-                            {
-                                Url = new Uri(baseUri, $"pull/{issue}").AbsoluteUri
-                            }));
-
-                            if (issue != issues.LastOrDefault())
-                                AddText(", ");
-                        }
-
-                        AddText(")");
-                    }
-
-                    // add use name if has user
-                    var usernames = result.Select(x => x.Groups["username"]?.Value).Where(x => !string.IsNullOrEmpty(x));
-
-                    foreach (var user in usernames)
-                    {
-                        if (string.IsNullOrEmpty(user))
-                            return;
-
-                        var textScale = new Vector2(0.7f);
-                        AddText(" by:", t =>
-                        {
-                            t.Scale = textScale;
-                            t.Padding = new MarginPadding { Bottom = 2 };
-                        });
-                        AddDrawable(new UserLinkText(user, new LinkInline
-                        {
-                            Url = $"https://github.com/{user}"
-                        })
-                        {
-                            Scale = textScale,
-                        });
-                    }
-                }
-                else
+                if (!githubUrls.ContainsKey(text))
                 {
                     base.AddLinkText(text, linkInline);
+                    return;
+                }
+
+                var baseUri = new Uri(githubUrls[text]);
+
+                // Get hash tag with number
+                const string issue_regex = @"#(?<issue>[0-9]+)|@(?<username>[0-9A-z]+)";
+                var result = Regex.Matches(linkInline.Url, issue_regex, RegexOptions.IgnoreCase);
+
+                if (!result.Any())
+                    return;
+
+                // add issue if has user
+                var issues = result.Select(x => x.Groups["issue"]?.Value).Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+                if (issues.Any())
+                {
+                    AddText("(");
+
+                    foreach (var issue in issues)
+                    {
+                        if (string.IsNullOrEmpty(issue))
+                            continue;
+
+                        AddDrawable(new OsuMarkdownLinkText($"{text}#{issue}", new LinkInline
+                        {
+                            Url = new Uri(baseUri, $"pull/{issue}").AbsoluteUri
+                        }));
+
+                        if (issue != issues.LastOrDefault())
+                            AddText(", ");
+                    }
+
+                    AddText(")");
+                }
+
+                // add use name if has user
+                var usernames = result.Select(x => x.Groups["username"]?.Value).Where(x => !string.IsNullOrEmpty(x));
+
+                foreach (var user in usernames)
+                {
+                    if (string.IsNullOrEmpty(user))
+                        return;
+
+                    var textScale = new Vector2(0.7f);
+                    AddText(" by:", t =>
+                    {
+                        t.Scale = textScale;
+                        t.Padding = new MarginPadding { Top = 6 };
+                    });
+                    AddDrawable(new UserLinkText(user, new LinkInline
+                    {
+                        Url = $"https://github.com/{user}"
+                    })
+                    {
+                        Scale = textScale,
+                        Anchor = Anchor.BottomLeft,
+                    });
                 }
             }
-        }
 
-        protected override MarkdownPipeline CreateBuilder()
-            => new MarkdownPipelineBuilder().UseAutoIdentifiers(AutoIdentifierOptions.GitHub)
-                                            .UseYamlFrontMatter()
-                                            .UseEmojiAndSmiley()
-                                            .UseAdvancedExtensions().Build();
-
-        protected class UserLinkText : MarkdownLinkText
-        {
-            public UserLinkText(string text, LinkInline linkInline)
-                : base(text, linkInline)
+            private class UserLinkText : OsuMarkdownLinkText
             {
-                Padding = new MarginPadding { Bottom = 2 };
+                public UserLinkText(string text, LinkInline linkInline)
+                    : base(text, linkInline)
+                {
+                    Padding = new MarginPadding { Top = 6 };
+                }
             }
         }
     }
