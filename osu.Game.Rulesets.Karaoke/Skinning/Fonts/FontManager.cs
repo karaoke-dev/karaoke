@@ -7,6 +7,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.IO.Archives;
@@ -95,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             }
         }
 
-        public IGlyphStore GetGlyphStore(FontInfo fontInfo)
+        public IResourceStore<TextureUpload> GetGlyphStore(FontInfo fontInfo)
         {
             // do not import if this font is system font.
             if (!fontInfo.UserImport)
