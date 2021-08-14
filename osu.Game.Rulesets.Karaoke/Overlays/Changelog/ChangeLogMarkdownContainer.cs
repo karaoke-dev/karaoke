@@ -50,11 +50,6 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         {
             protected override void AddImage(LinkInline linkInline) => AddDrawable(new ChangeLogMarkdownImage(linkInline));
 
-            public ChangeLogMarkdownTextFlowContainer()
-            {
-                TextAnchor = Anchor.BottomLeft;
-            }
-
             /// <summary>
             /// Override <see cref="OsuMarkdownImage"/> to limit image display size
             /// </summary>
@@ -168,7 +163,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                     AddText(" by:", t =>
                     {
                         t.Scale = textScale;
-                        t.Padding = new MarginPadding { Bottom = 2 };
+                        t.Padding = new MarginPadding { Top = 6 };
                     });
                     AddDrawable(new UserLinkText(user, new LinkInline
                     {
@@ -176,17 +171,18 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                     })
                     {
                         Scale = textScale,
+                        Anchor = Anchor.BottomLeft,
                     });
                 }
             }
-        }
 
-        private class UserLinkText : OsuMarkdownLinkText
-        {
-            public UserLinkText(string text, LinkInline linkInline)
-                : base(text, linkInline)
+            private class UserLinkText : OsuMarkdownLinkText
             {
-                Padding = new MarginPadding { Bottom = 2 };
+                public UserLinkText(string text, LinkInline linkInline)
+                    : base(text, linkInline)
+                {
+                    Padding = new MarginPadding { Top = 6 };
+                }
             }
         }
     }
