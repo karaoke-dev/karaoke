@@ -38,9 +38,8 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             if (glyphStore == null)
                 return;
 
-            // it's the temp way, will be removed eventually.
-            AddStore(glyphStore as FntGlyphStore);
-            fontInfos.Add(fontInfo, glyphStore);
+            AddStore(glyphStore);
+            fontInfos.Add(fontInfo, glyphStore as IGlyphStore);
         }
 
         public void RemoveFont(FontInfo fontInfo)
