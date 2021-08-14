@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
-using Markdig;
-using Markdig.Extensions.AutoIdentifiers;
 using Markdig.Extensions.Yaml;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
@@ -183,12 +181,6 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 }
             }
         }
-
-        protected override MarkdownPipeline CreateBuilder()
-            => new MarkdownPipelineBuilder().UseAutoIdentifiers(AutoIdentifierOptions.GitHub)
-                                            .UseYamlFrontMatter()
-                                            .UseEmojiAndSmiley()
-                                            .UseAdvancedExtensions().Build();
 
         protected class UserLinkText : MarkdownLinkText
         {
