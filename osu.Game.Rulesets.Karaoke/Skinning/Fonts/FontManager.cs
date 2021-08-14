@@ -10,7 +10,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
-using osu.Game.IO.Archives;
 using osu.Game.Rulesets.Karaoke.IO.Archives;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -112,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             if (fntGlyphStore != null)
                 return fntGlyphStore;
 
-            // todo : might be able to check the font type.
+            // todo : might be able to check the font type, or where did the font from.
             return getTtfGlyphStore(storage, fontName);
         }
 
@@ -136,7 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             if (!storage.Exists(pathWithExtension))
                 return null;
 
-            var resources = new LegacyFileArchiveReader(pathWithExtension);
+            var resources = new StorageBackedResourceStore(storage.GetStorageForDirectory(getPathByFontType(FontType.Ttf)));
             return new TtfGlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}");
         }
 
