@@ -6,11 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
-using Markdig.Extensions.Yaml;
-using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Layout;
 using osu.Game.Graphics.Containers.Markdown;
@@ -30,15 +27,6 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             {
                 Text = httpClient.GetStringAsync(build.ReadmeDownloadUrl).Result;
             }
-        }
-
-        protected override void AddMarkdownComponent(IMarkdownObject markdownObject, FillFlowContainer container, int level)
-        {
-            // hide hidden message in markdown document
-            if (markdownObject is YamlFrontMatterBlock)
-                return;
-
-            base.AddMarkdownComponent(markdownObject, container, level);
         }
 
         public override MarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
