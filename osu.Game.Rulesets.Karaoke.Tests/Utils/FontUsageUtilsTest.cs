@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
@@ -16,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestToFontInfo(string family, string weight, bool italics, string fontName)
         {
             var fontUsage = new FontUsage(fontName);
-            var fontInfo = FontUsageUtils.ToFontInfo(fontUsage);
+            var fontInfo = FontUsageUtils.ToFontInfo(fontUsage, FontFormat.Internal);
             Assert.AreEqual(fontInfo.FontName, fontName);
             Assert.AreEqual(fontInfo.Family, family);
 
