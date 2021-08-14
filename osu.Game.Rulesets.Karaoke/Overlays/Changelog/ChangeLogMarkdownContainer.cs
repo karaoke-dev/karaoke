@@ -41,10 +41,6 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             base.AddMarkdownComponent(markdownObject, container, level);
         }
 
-        /// <summary>
-        /// Override <see cref="OsuMarkdownTextFlowContainer"/> to limit image display size
-        /// </summary>
-        /// <returns></returns>
         public override MarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
 
         /// <summary>
@@ -59,6 +55,10 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 TextAnchor = Anchor.BottomLeft;
             }
 
+            /// <summary>
+            /// Override <see cref="OsuMarkdownImage"/> to limit image display size
+            /// </summary>
+            /// <returns></returns>
             public class ChangeLogMarkdownImage : OsuMarkdownImage
             {
                 private readonly LayoutValue widthSizeCache = new LayoutValue(Invalidation.DrawSize);
@@ -117,72 +117,71 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 if (linkInline.Url == null)
                     return;
 
-                if (githubUrls.ContainsKey(text))
-                {
-                    var baseUri = new Uri(githubUrls[text]);
-
-                    // Get hash tag with number
-                    const string issue_regex = @"#(?<issue>[0-9]+)|@(?<username>[0-9A-z]+)";
-                    var result = Regex.Matches(linkInline.Url, issue_regex, RegexOptions.IgnoreCase);
-
-                    if (!result.Any())
-                        return;
-
-                    // add issue if has user
-                    var issues = result.Select(x => x.Groups["issue"]?.Value).Where(x => !string.IsNullOrEmpty(x));
-
-                    if (issues.Any())
-                    {
-                        AddText("(");
-
-                        foreach (var issue in issues)
-                        {
-                            if (string.IsNullOrEmpty(issue))
-                                continue;
-
-                            AddDrawable(new OsuMarkdownLinkText($"{text}#{issue}", new LinkInline
-                            {
-                                Url = new Uri(baseUri, $"pull/{issue}").AbsoluteUri
-                            }));
-
-                            if (issue != issues.LastOrDefault())
-                                AddText(", ");
-                        }
-
-                        AddText(")");
-                    }
-
-                    // add use name if has user
-                    var usernames = result.Select(x => x.Groups["username"]?.Value).Where(x => !string.IsNullOrEmpty(x));
-
-                    foreach (var user in usernames)
-                    {
-                        if (string.IsNullOrEmpty(user))
-                            return;
-
-                        var textScale = new Vector2(0.7f);
-                        AddText(" by:", t =>
-                        {
-                            t.Scale = textScale;
-                            t.Padding = new MarginPadding { Bottom = 2 };
-                        });
-                        AddDrawable(new UserLinkText(user, new LinkInline
-                        {
-                            Url = $"https://github.com/{user}"
-                        })
-                        {
-                            Scale = textScale,
-                        });
-                    }
-                }
-                else
+                if (!githubUrls.ContainsKey(text))
                 {
                     base.AddLinkText(text, linkInline);
+                    return;
+                }
+
+                var baseUri = new Uri(githubUrls[text]);
+
+                // Get hash tag with number
+                const string issue_regex = @"#(?<issue>[0-9]+)|@(?<username>[0-9A-z]+)";
+                var result = Regex.Matches(linkInline.Url, issue_regex, RegexOptions.IgnoreCase);
+
+                if (!result.Any())
+                    return;
+
+                // add issue if has user
+                var issues = result.Select(x => x.Groups["issue"]?.Value).Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+                if (issues.Any())
+                {
+                    AddText("(");
+
+                    foreach (var issue in issues)
+                    {
+                        if (string.IsNullOrEmpty(issue))
+                            continue;
+
+                        AddDrawable(new OsuMarkdownLinkText($"{text}#{issue}", new LinkInline
+                        {
+                            Url = new Uri(baseUri, $"pull/{issue}").AbsoluteUri
+                        }));
+
+                        if (issue != issues.LastOrDefault())
+                            AddText(", ");
+                    }
+
+                    AddText(")");
+                }
+
+                // add use name if has user
+                var usernames = result.Select(x => x.Groups["username"]?.Value).Where(x => !string.IsNullOrEmpty(x));
+
+                foreach (var user in usernames)
+                {
+                    if (string.IsNullOrEmpty(user))
+                        return;
+
+                    var textScale = new Vector2(0.7f);
+                    AddText(" by:", t =>
+                    {
+                        t.Scale = textScale;
+                        t.Padding = new MarginPadding { Bottom = 2 };
+                    });
+                    AddDrawable(new UserLinkText(user, new LinkInline
+                    {
+                        Url = $"https://github.com/{user}"
+                    })
+                    {
+                        Scale = textScale,
+                    });
                 }
             }
         }
 
-        protected class UserLinkText : OsuMarkdownLinkText
+        private class UserLinkText : OsuMarkdownLinkText
         {
             public UserLinkText(string text, LinkInline linkInline)
                 : base(text, linkInline)
