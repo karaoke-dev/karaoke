@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         }
 
         /// <summary>
-        /// Override <see cref="MarkdownTextFlowContainer"/> to limit image display size
+        /// Override <see cref="OsuMarkdownTextFlowContainer"/> to limit image display size
         /// </summary>
         /// <returns></returns>
         public override MarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
@@ -52,19 +52,19 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         /// </summary>
         public class ChangeLogMarkdownTextFlowContainer : OsuMarkdownTextFlowContainer
         {
-            protected override void AddImage(LinkInline linkInline) => AddDrawable(new ChangeLogMarkdownImage(linkInline.Url));
+            protected override void AddImage(LinkInline linkInline) => AddDrawable(new ChangeLogMarkdownImage(linkInline));
 
             public ChangeLogMarkdownTextFlowContainer()
             {
                 TextAnchor = Anchor.BottomLeft;
             }
 
-            public class ChangeLogMarkdownImage : MarkdownImage
+            public class ChangeLogMarkdownImage : OsuMarkdownImage
             {
                 private readonly LayoutValue widthSizeCache = new LayoutValue(Invalidation.DrawSize);
 
-                public ChangeLogMarkdownImage(string url)
-                    : base(url)
+                public ChangeLogMarkdownImage(LinkInline linkInline)
+                    : base(linkInline)
                 {
                     AutoSizeAxes = Axes.None;
                     RelativeSizeAxes = Axes.X;
@@ -140,7 +140,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                             if (string.IsNullOrEmpty(issue))
                                 continue;
 
-                            AddDrawable(new MarkdownLinkText($"{text}{issue}", new LinkInline
+                            AddDrawable(new OsuMarkdownLinkText($"{text}#{issue}", new LinkInline
                             {
                                 Url = new Uri(baseUri, $"pull/{issue}").AbsoluteUri
                             }));
@@ -182,7 +182,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             }
         }
 
-        protected class UserLinkText : MarkdownLinkText
+        protected class UserLinkText : OsuMarkdownLinkText
         {
             public UserLinkText(string text, LinkInline linkInline)
                 : base(text, linkInline)
