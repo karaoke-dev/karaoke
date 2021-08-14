@@ -14,7 +14,6 @@ using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.Timing;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
@@ -63,10 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             });
 
             void addFont(FontUsage fontUsage)
-            {
-                var fontInfo = FontUsageUtils.ToFontInfo(fontUsage);
-                localFontStore.AddFont(fontInfo);
-            }
+                => localFontStore.AddFont(fontUsage);
         }
 
         [BackgroundDependencyLoader]

@@ -3,15 +3,17 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Stores
 {
     public class KaraokeLocalFontStore : FontStore
     {
-        private readonly Dictionary<FontInfo, IGlyphStore> fontInfos = new Dictionary<FontInfo, IGlyphStore>();
+        private readonly Dictionary<FontInfo, IResourceStore<TextureUpload>> fontInfos = new Dictionary<FontInfo, IResourceStore<TextureUpload>>();
         private readonly IResourceStore<TextureUpload> store;
         private readonly FontManager fontManager;
 
@@ -28,7 +30,17 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             this.fontManager = fontManager;
         }
 
-        public void AddFont(FontInfo fontInfo)
+        public void AddFont(FontUsage fontUsage)
+        {
+            var fontFormat = fontManager.CheckFontFormat(fontUsage);
+            if (fontFormat == null)
+                return;
+
+            var fontInfo = FontUsageUtils.ToFontInfo(fontUsage, fontFormat.Value);
+            addFont(fontInfo);
+        }
+
+        private void addFont(FontInfo fontInfo)
         {
             var hasFont = fontInfos.Keys.Contains(fontInfo);
             if (hasFont)
@@ -39,16 +51,15 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
                 return;
 
             AddStore(glyphStore);
-            fontInfos.Add(fontInfo, glyphStore as IGlyphStore);
+            fontInfos.Add(fontInfo, glyphStore);
         }
 
-        public void RemoveFont(FontInfo fontInfo)
+        private void removeFont(FontInfo fontInfo)
         {
-            var glyphStore = fontInfos[fontInfo];
-            if (glyphStore == null)
+            if (!fontInfos.TryGetValue(fontInfo, out var glyphStore))
                 return;
 
-            RemoveStore(store);
+            RemoveStore(glyphStore);
             fontInfos.Remove(fontInfo);
         }
 
@@ -56,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
         {
             foreach (var (fontInfo, _) in fontInfos)
             {
-                RemoveFont(fontInfo);
+                removeFont(fontInfo);
             }
         }
     }

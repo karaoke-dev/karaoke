@@ -8,7 +8,6 @@ using osu.Framework.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Karaoke.UI
@@ -38,7 +37,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
             };
 
             var fontInfos = targetImportFonts
-                            .Select(x => FontUsageUtils.ToFontInfo(x))
                             .Distinct()
                             .ToArray();
 

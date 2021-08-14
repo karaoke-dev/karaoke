@@ -7,6 +7,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
@@ -90,6 +91,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                     return new FontInfo(fontName, fontFormat);
                 }));
             }
+        }
+
+        public FontFormat? CheckFontFormat(FontUsage fontUsage)
+        {
+            var fontName = fontUsage.FontName;
+            if (Fonts.All(x => x.FontName != fontName))
+                return null;
+
+            return Fonts.FirstOrDefault(x => x.FontName == fontName).FontFormat;
         }
 
         public IResourceStore<TextureUpload> GetGlyphStore(FontInfo fontInfo)

@@ -219,9 +219,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             var fontUsage = generateFontUsage();
 
             // add font to local font store for preview purpose.
-            var fontInfo = FontUsageUtils.ToFontInfo(fontUsage);
             localFontStore.ClearFont();
-            localFontStore.AddFont(fontInfo);
+            localFontStore.AddFont(fontUsage);
 
             previewText.Font = fontUsage;
         }
