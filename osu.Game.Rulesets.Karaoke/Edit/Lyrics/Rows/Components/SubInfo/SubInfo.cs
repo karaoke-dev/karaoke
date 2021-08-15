@@ -35,10 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
                 {
                     Margin = new MarginPadding
                     {
-                        Left = 5,
-                        Right = 5,
-                        Top = 2,
-                        Bottom = 2
+                        Vertical = 2,
+                        Horizontal = 5
                     },
                     Text = "Badge"
                 }
