@@ -18,16 +18,16 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
     /// <summary>
     /// Implement most feature for searchable text container.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class RearrangeableTextListContainer<T> : OsuRearrangeableListContainer<T>
+    /// <typeparam name="TModel"></typeparam>
+    public class RearrangeableTextFlowListContainer<TModel> : OsuRearrangeableListContainer<TModel>
     {
-        public readonly Bindable<T> SelectedSet = new Bindable<T>();
+        public readonly Bindable<TModel> SelectedSet = new Bindable<TModel>();
 
-        public Action<T> RequestSelection;
+        public Action<TModel> RequestSelection;
 
-        private SearchContainer<RearrangeableListItem<T>> searchContainer;
+        private SearchContainer<RearrangeableListItem<TModel>> searchContainer;
 
-        protected override FillFlowContainer<RearrangeableListItem<T>> CreateListFillFlowContainer() => searchContainer = new SearchContainer<RearrangeableListItem<T>>
+        protected sealed override FillFlowContainer<RearrangeableListItem<TModel>> CreateListFillFlowContainer() => searchContainer = new SearchContainer<RearrangeableListItem<TModel>>
         {
             Spacing = new Vector2(0, 3),
             LayoutDuration = 200,
@@ -39,24 +39,27 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             searchContainer.SearchTerm = text;
         }
 
-        protected override OsuRearrangeableListItem<T> CreateOsuDrawable(T item)
-            => new DrawableTextListItem(item)
+        protected sealed override OsuRearrangeableListItem<TModel> CreateOsuDrawable(TModel item)
+            => CreateDrawable(item).With(d =>
             {
-                SelectedSet = { BindTarget = SelectedSet },
-                RequestSelection = set => RequestSelection?.Invoke(set)
-            };
+                d.SelectedSet.BindTarget = SelectedSet;
+                d.RequestSelection = set => RequestSelection?.Invoke(set);
+            });
 
-        public class DrawableTextListItem : OsuRearrangeableListItem<T>, IFilterable
+        protected new virtual DrawableTextListItem CreateDrawable(TModel item)
+            => new DrawableTextListItem(item);
+
+        public class DrawableTextListItem : OsuRearrangeableListItem<TModel>, IFilterable
         {
-            public readonly Bindable<T> SelectedSet = new Bindable<T>();
+            public readonly Bindable<TModel> SelectedSet = new Bindable<TModel>();
 
-            public Action<T> RequestSelection;
+            public Action<TModel> RequestSelection;
 
             private TextFlowContainer text;
 
             private Color4 selectedColour;
 
-            public DrawableTextListItem(T item)
+            public DrawableTextListItem(TModel item)
                 : base(item)
             {
                 Padding = new MarginPadding { Left = 5 };
@@ -83,12 +86,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 }, true);
             }
 
-            protected override Drawable CreateContent() => text = new OsuTextFlowContainer
+            protected sealed override Drawable CreateContent() => text = new OsuTextFlowContainer
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
-                Text = GetDisplayText(Model),
-            };
+            }.With(x => CreateDisplayContent(x, Model));
 
             protected override bool OnClick(ClickEvent e)
             {
@@ -101,7 +103,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 Model.ToString()
             };
 
-            protected virtual string GetDisplayText(T model) => model.ToString();
+            protected virtual void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, TModel model)
+                => textFlowContainer.AddText(model.ToString());
 
             private bool matchingFilter = true;
 

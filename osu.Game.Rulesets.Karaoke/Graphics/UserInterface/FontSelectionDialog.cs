@@ -1,15 +1,19 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.IO.Stores;
 using osu.Game.Graphics;
+using osu.Game.Graphics.Containers;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
@@ -27,9 +31,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         protected override string Title => "Select font";
 
         private readonly SpriteText previewText;
-        private readonly TextPropertyList<string> familyProperty;
-        private readonly TextPropertyList<string> weightProperty;
-        private readonly TextPropertyList<float> fontSizeProperty;
+        private readonly FontFamilyPropertyList familyProperty;
+        private readonly FontPropertyList<string> weightProperty;
+        private readonly FontPropertyList<float> fontSizeProperty;
         private readonly OsuCheckbox fixedWidthCheckbox;
 
         private readonly BindableWithCurrent<FontUsage> current = new BindableWithCurrent<FontUsage>();
@@ -104,12 +108,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                 {
                                     new Drawable[]
                                     {
-                                        familyProperty = new TextPropertyList<string>
+                                        familyProperty = new FontFamilyPropertyList
                                         {
                                             Name = "Font family selection area",
                                             RelativeSizeAxes = Axes.Both
                                         },
-                                        weightProperty = new TextPropertyList<string>
+                                        weightProperty = new FontPropertyList<string>
                                         {
                                             Name = "Font widget selection area",
                                             RelativeSizeAxes = Axes.Both
@@ -127,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                             {
                                                 new Drawable[]
                                                 {
-                                                    fontSizeProperty = new TextPropertyList<float>
+                                                    fontSizeProperty = new FontPropertyList<float>
                                                     {
                                                         Name = "Font size selection area",
                                                         RelativeSizeAxes = Axes.Both,
@@ -241,11 +245,101 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             fontStore?.RemoveStore(localFontStore);
         }
 
-        internal class TextPropertyList<T> : CompositeDrawable
+        internal class FontFamilyPropertyList : FontPropertyList<string>
+        {
+            protected override RearrangeableTextFlowListContainer<string> CreateRearrangeableListContainer()
+                => new RearrangeableFontFamilyListContainer();
+
+            private class RearrangeableFontFamilyListContainer : RearrangeableTextFlowListContainer<string>
+            {
+                protected override DrawableTextListItem CreateDrawable(string item)
+                    => new DrawableFontFamilyListItem(item);
+
+                private class DrawableFontFamilyListItem : DrawableTextListItem
+                {
+                    [Resolved]
+                    private FontManager fontManager { get; set; }
+
+                    public DrawableFontFamilyListItem(string item)
+                        : base(item)
+                    {
+                    }
+
+                    protected override void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, string model)
+                    {
+                        textFlowContainer.TextAnchor = Anchor.BottomLeft;
+                        Schedule(() =>
+                        {
+                            textFlowContainer.AddText(model);
+
+                            var matchedFormat = fontManager.Fonts
+                                                           .Where(x => x.Family == Model).Select(x => x.FontFormat)
+                                                           .Distinct()
+                                                           .ToArray();
+
+                            foreach (var format in matchedFormat)
+                            {
+                                textFlowContainer.AddText(" ");
+                                textFlowContainer.AddArbitraryDrawable(new FontFormatBadge(format));
+                            }
+                        });
+                    }
+                }
+            }
+
+            private class FontFormatBadge : Container
+            {
+                private readonly FontFormat fontFormat;
+                private readonly Box box;
+                private readonly OsuSpriteText badgeText;
+
+                public FontFormatBadge(FontFormat fontFormat)
+                {
+                    this.fontFormat = fontFormat;
+
+                    AutoSizeAxes = Axes.Both;
+                    Masking = true;
+                    CornerRadius = 3;
+                    Children = new Drawable[]
+                    {
+                        box = new Box
+                        {
+                            RelativeSizeAxes = Axes.Both
+                        },
+                        badgeText = new OsuSpriteText
+                        {
+                            Font = OsuFont.Default.With(size: 10),
+                            Margin = new MarginPadding
+                            {
+                                Vertical = 1,
+                                Horizontal = 3
+                            },
+                        }
+                    };
+                }
+
+                [BackgroundDependencyLoader]
+                private void load(OsuColour colour)
+                {
+                    box.Colour = fontFormat switch
+                    {
+                        FontFormat.Internal => colour.Gray7,
+                        FontFormat.Fnt => colour.Pink,
+                        FontFormat.Ttf => colour.Blue,
+                        _ => throw new IndexOutOfRangeException(nameof(fontFormat))
+                    };
+
+                    // todo : might apply translate.
+                    badgeText.Text = fontFormat.ToString();
+                }
+            }
+        }
+
+        internal class FontPropertyList<T> : CompositeDrawable
         {
             private readonly CornerBackground background;
             private readonly TextPropertySearchTextBox filter;
-            private readonly RearrangeableTextListContainer<T> propertyList;
+            private readonly RearrangeableTextFlowListContainer<T> propertyFlowList;
 
             private readonly BindableWithCurrent<T> current = new BindableWithCurrent<T>();
 
@@ -255,9 +349,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 set => current.Current = value;
             }
 
-            public BindableList<T> Items => propertyList.Items;
+            public BindableList<T> Items => propertyFlowList.Items;
 
-            public TextPropertyList()
+            public FontPropertyList()
             {
                 InternalChild = new Container
                 {
@@ -288,23 +382,26 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                 },
                                 new Drawable[]
                                 {
-                                    propertyList = new RearrangeableTextListContainer<T>
+                                    propertyFlowList = CreateRearrangeableListContainer().With(x =>
                                     {
-                                        RelativeSizeAxes = Axes.Both,
-                                        RequestSelection = item =>
+                                        x.RelativeSizeAxes = Axes.Both;
+                                        x.RequestSelection = item =>
                                         {
                                             Current.Value = item;
-                                        },
-                                    }
+                                        };
+                                    })
                                 }
                             }
                         }
                     }
                 };
 
-                filter.Current.BindValueChanged(e => propertyList.Filter(e.NewValue));
-                Current.BindValueChanged(e => propertyList.SelectedSet.Value = e.NewValue);
+                filter.Current.BindValueChanged(e => propertyFlowList.Filter(e.NewValue));
+                Current.BindValueChanged(e => propertyFlowList.SelectedSet.Value = e.NewValue);
             }
+
+            protected virtual RearrangeableTextFlowListContainer<T> CreateRearrangeableListContainer()
+                => new RearrangeableTextFlowListContainer<T>();
 
             [BackgroundDependencyLoader]
             private void load(OsuColour colours)
