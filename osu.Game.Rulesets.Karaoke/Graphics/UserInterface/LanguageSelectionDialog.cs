@@ -85,12 +85,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
         private class RearrangeableLanguageListContainer : RearrangeableTextFlowListContainer<CultureInfo>
         {
-            protected override OsuRearrangeableListItem<CultureInfo> CreateOsuDrawable(CultureInfo item)
-                => new DrawableLanguageListItem(item)
-                {
-                    SelectedSet = { BindTarget = SelectedSet },
-                    RequestSelection = set => RequestSelection?.Invoke(set)
-                };
+            protected override DrawableTextListItem CreateDrawable(CultureInfo item)
+                => new DrawableLanguageListItem(item);
 
             private class DrawableLanguageListItem : DrawableTextListItem
             {
