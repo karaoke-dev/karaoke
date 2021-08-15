@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         protected override string Title => "Select language";
 
         private readonly LanguageSelectionSearchTextBox filter;
-        private readonly DrawableLanguageFlowList languageList;
+        private readonly RearrangeableLanguageListContainer languageList;
 
         private readonly BindableWithCurrent<CultureInfo> current = new BindableWithCurrent<CultureInfo>();
 
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     },
                     new Drawable[]
                     {
-                        languageList = new DrawableLanguageFlowList
+                        languageList = new RearrangeableLanguageListContainer
                         {
                             RelativeSizeAxes = Axes.Both,
                             RequestSelection = item =>
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             }
         }
 
-        private class DrawableLanguageFlowList : RearrangeableTextFlowListContainer<CultureInfo>
+        private class RearrangeableLanguageListContainer : RearrangeableTextFlowListContainer<CultureInfo>
         {
             protected override OsuRearrangeableListItem<CultureInfo> CreateOsuDrawable(CultureInfo item)
                 => new DrawableLanguageListItem(item)
