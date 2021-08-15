@@ -27,9 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         protected override string Title => "Select font";
 
         private readonly SpriteText previewText;
-        private readonly TextPropertyList<string> familyProperty;
-        private readonly TextPropertyList<string> weightProperty;
-        private readonly TextPropertyList<float> fontSizeProperty;
+        private readonly FontPropertyList<string> familyProperty;
+        private readonly FontPropertyList<string> weightProperty;
+        private readonly FontPropertyList<float> fontSizeProperty;
         private readonly OsuCheckbox fixedWidthCheckbox;
 
         private readonly BindableWithCurrent<FontUsage> current = new BindableWithCurrent<FontUsage>();
@@ -104,12 +104,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                 {
                                     new Drawable[]
                                     {
-                                        familyProperty = new TextPropertyList<string>
+                                        familyProperty = new FontPropertyList<string>
                                         {
                                             Name = "Font family selection area",
                                             RelativeSizeAxes = Axes.Both
                                         },
-                                        weightProperty = new TextPropertyList<string>
+                                        weightProperty = new FontPropertyList<string>
                                         {
                                             Name = "Font widget selection area",
                                             RelativeSizeAxes = Axes.Both
@@ -127,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                             {
                                                 new Drawable[]
                                                 {
-                                                    fontSizeProperty = new TextPropertyList<float>
+                                                    fontSizeProperty = new FontPropertyList<float>
                                                     {
                                                         Name = "Font size selection area",
                                                         RelativeSizeAxes = Axes.Both,
@@ -241,11 +241,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             fontStore?.RemoveStore(localFontStore);
         }
 
-        internal class TextPropertyList<T> : CompositeDrawable
+        internal class FontPropertyList<T> : CompositeDrawable
         {
             private readonly CornerBackground background;
             private readonly TextPropertySearchTextBox filter;
-            private readonly RearrangeableTextListContainer<T> propertyList;
+            private readonly RearrangeableTextFlowListContainer<T> propertyFlowList;
 
             private readonly BindableWithCurrent<T> current = new BindableWithCurrent<T>();
 
@@ -255,9 +255,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 set => current.Current = value;
             }
 
-            public BindableList<T> Items => propertyList.Items;
+            public BindableList<T> Items => propertyFlowList.Items;
 
-            public TextPropertyList()
+            public FontPropertyList()
             {
                 InternalChild = new Container
                 {
@@ -302,8 +302,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     }
                 };
 
-                filter.Current.BindValueChanged(e => propertyList.Filter(e.NewValue));
-                Current.BindValueChanged(e => propertyList.SelectedSet.Value = e.NewValue);
+                filter.Current.BindValueChanged(e => propertyFlowList.Filter(e.NewValue));
+                Current.BindValueChanged(e => propertyFlowList.SelectedSet.Value = e.NewValue);
             }
 
             [BackgroundDependencyLoader]
