@@ -13,12 +13,12 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         public string Weight { get; }
 
-        public bool UserImport { get; }
+        public FontFormat FontFormat { get; }
 
-        public FontInfo(string fontName, bool userImport = false)
+        public FontInfo(string fontName, FontFormat fontFormat)
         {
             FontName = fontName;
-            UserImport = userImport;
+            FontFormat = fontFormat;
 
             var parts = fontName.Split('-');
 
@@ -35,5 +35,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                     break;
             }
         }
+    }
+
+    public enum FontFormat
+    {
+        Internal,
+
+        Fnt,
+
+        Ttf,
     }
 }

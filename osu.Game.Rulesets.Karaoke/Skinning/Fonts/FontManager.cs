@@ -7,12 +7,12 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Karaoke.IO.Archives;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 {
@@ -30,58 +30,56 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             Fonts.AddRange(new[]
             {
                 // From osu-framework
-                new FontInfo("OpenSans-Regular"),
-                new FontInfo("OpenSans-Bold"),
-                new FontInfo("OpenSans-RegularItalic"),
-                new FontInfo("OpenSans-BoldItalic"),
+                new FontInfo("OpenSans-Regular", FontFormat.Internal),
+                new FontInfo("OpenSans-Bold", FontFormat.Internal),
+                new FontInfo("OpenSans-RegularItalic", FontFormat.Internal),
+                new FontInfo("OpenSans-BoldItalic", FontFormat.Internal),
 
-                new FontInfo("Roboto-Regular"),
-                new FontInfo("Roboto-Bold"),
-                new FontInfo("RobotoCondensed-Regular"),
-                new FontInfo("RobotoCondensed-Bold"),
+                new FontInfo("Roboto-Regular", FontFormat.Internal),
+                new FontInfo("Roboto-Bold", FontFormat.Internal),
+                new FontInfo("RobotoCondensed-Regular", FontFormat.Internal),
+                new FontInfo("RobotoCondensed-Bold", FontFormat.Internal),
                 // From osu.game
-                new FontInfo("osuFont"),
+                new FontInfo("osuFont", FontFormat.Internal),
 
-                new FontInfo("Torus-Regular"),
-                new FontInfo("Torus-Light"),
-                new FontInfo("Torus-SemiBold"),
-                new FontInfo("Torus-Bold"),
+                new FontInfo("Torus-Regular", FontFormat.Internal),
+                new FontInfo("Torus-Light", FontFormat.Internal),
+                new FontInfo("Torus-SemiBold", FontFormat.Internal),
+                new FontInfo("Torus-Bold", FontFormat.Internal),
 
-                new FontInfo("Inter-Regular"),
-                new FontInfo("Inter-RegularItalic"),
-                new FontInfo("Inter-Light"),
-                new FontInfo("Inter-LightItalic"),
-                new FontInfo("Inter-SemiBold"),
-                new FontInfo("Inter-SemiBoldItalic"),
-                new FontInfo("Inter-Bold"),
-                new FontInfo("Inter-BoldItalic"),
+                new FontInfo("Inter-Regular", FontFormat.Internal),
+                new FontInfo("Inter-RegularItalic", FontFormat.Internal),
+                new FontInfo("Inter-Light", FontFormat.Internal),
+                new FontInfo("Inter-LightItalic", FontFormat.Internal),
+                new FontInfo("Inter-SemiBold", FontFormat.Internal),
+                new FontInfo("Inter-SemiBoldItalic", FontFormat.Internal),
+                new FontInfo("Inter-Bold", FontFormat.Internal),
+                new FontInfo("Inter-BoldItalic", FontFormat.Internal),
 
-                new FontInfo("Noto-Basic"),
-                new FontInfo("Noto-Hangul"),
-                new FontInfo("Noto-CJK-Basic"),
-                new FontInfo("Noto-CJK-Compatibility"),
-                new FontInfo("Noto-Thai"),
+                new FontInfo("Noto-Basic", FontFormat.Internal),
+                new FontInfo("Noto-Hangul", FontFormat.Internal),
+                new FontInfo("Noto-CJK-Basic", FontFormat.Internal),
+                new FontInfo("Noto-CJK-Compatibility", FontFormat.Internal),
+                new FontInfo("Noto-Thai", FontFormat.Internal),
 
-                new FontInfo("Venera-Light"),
-                new FontInfo("Venera-Bold"),
-                new FontInfo("Venera-Black"),
+                new FontInfo("Venera-Light", FontFormat.Internal),
+                new FontInfo("Venera-Bold", FontFormat.Internal),
+                new FontInfo("Venera-Black", FontFormat.Internal),
 
-                new FontInfo("Compatibility"),
+                new FontInfo("Compatibility", FontFormat.Internal),
             });
         }
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            foreach (var fontType in EnumUtils.GetValues<FontType>())
-            {
-                var path = getPathByFontType(fontType);
-                var extension = getExtensionByFontType(fontType);
-                loadFontList(path, extension);
-            }
+            var supportedFormat = new[] { FontFormat.Fnt, FontFormat.Ttf };
 
-            void loadFontList(string path, string extension)
+            foreach (var fontFormat in supportedFormat)
             {
+                // check if dictionary is exist.
+                var path = getPathByFontType(fontFormat);
+                var extension = getExtensionByFontType(fontFormat);
                 var storage = host.Storage;
                 if (!storage.ExistsDirectory(path))
                     return;
@@ -90,15 +88,25 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 Fonts.AddRange(fontFiles.Select(x =>
                 {
                     var fontName = Path.GetFileNameWithoutExtension(x);
-                    return new FontInfo(fontName, true);
+                    return new FontInfo(fontName, fontFormat);
                 }));
             }
+        }
+
+        public FontFormat? CheckFontFormat(FontUsage fontUsage)
+        {
+            var fontName = fontUsage.FontName;
+            if (Fonts.All(x => x.FontName != fontName))
+                return null;
+
+            return Fonts.FirstOrDefault(x => x.FontName == fontName).FontFormat;
         }
 
         public IResourceStore<TextureUpload> GetGlyphStore(FontInfo fontInfo)
         {
             // do not import if this font is system font.
-            if (!fontInfo.UserImport)
+            var fontFormat = fontInfo.FontFormat;
+            if (fontFormat == FontFormat.Internal)
                 return null;
 
             var storage = host.Storage;
@@ -106,19 +114,18 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 return null;
 
             var fontName = fontInfo.FontName;
-
-            var fntGlyphStore = getFntGlyphStore(storage, fontName);
-            if (fntGlyphStore != null)
-                return fntGlyphStore;
-
-            // todo : might be able to check the font type, or where did the font from.
-            return getTtfGlyphStore(storage, fontName);
+            return fontInfo.FontFormat switch
+            {
+                FontFormat.Fnt => getFntGlyphStore(storage, fontName),
+                FontFormat.Ttf => getTtfGlyphStore(storage, fontName),
+                _ => throw new ArgumentOutOfRangeException(nameof(fontFormat))
+            };
         }
 
         private FntGlyphStore getFntGlyphStore(Storage storage, string fontName)
         {
-            var path = Path.Combine(getPathByFontType(FontType.Fnt), fontName);
-            var pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontType.Fnt));
+            var path = Path.Combine(getPathByFontType(FontFormat.Fnt), fontName);
+            var pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontFormat.Fnt));
 
             if (!storage.Exists(pathWithExtension))
                 return null;
@@ -129,37 +136,30 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         private TtfGlyphStore getTtfGlyphStore(Storage storage, string fontName)
         {
-            var path = Path.Combine(getPathByFontType(FontType.Ttf), fontName);
-            var pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontType.Ttf));
+            var path = Path.Combine(getPathByFontType(FontFormat.Ttf), fontName);
+            var pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontFormat.Ttf));
 
             if (!storage.Exists(pathWithExtension))
                 return null;
 
-            var resources = new StorageBackedResourceStore(storage.GetStorageForDirectory(getPathByFontType(FontType.Ttf)));
+            var resources = new StorageBackedResourceStore(storage.GetStorageForDirectory(getPathByFontType(FontFormat.Ttf)));
             return new TtfGlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}");
         }
 
-        private static string getPathByFontType(FontType type) =>
+        private static string getPathByFontType(FontFormat type) =>
             type switch
             {
-                FontType.Fnt => $"{font_base_path}/fnt",
-                FontType.Ttf => $"{font_base_path}/ttf",
+                FontFormat.Fnt => $"{font_base_path}/fnt",
+                FontFormat.Ttf => $"{font_base_path}/ttf",
                 _ => throw new ArgumentOutOfRangeException(nameof(type))
             };
 
-        private static string getExtensionByFontType(FontType type) =>
+        private static string getExtensionByFontType(FontFormat type) =>
             type switch
             {
-                FontType.Fnt => "zipfnt",
-                FontType.Ttf => "ttf",
+                FontFormat.Fnt => "zipfnt",
+                FontFormat.Ttf => "ttf",
                 _ => throw new ArgumentOutOfRangeException(nameof(type))
             };
-    }
-
-    public enum FontType
-    {
-        Fnt,
-
-        Ttf,
     }
 }
