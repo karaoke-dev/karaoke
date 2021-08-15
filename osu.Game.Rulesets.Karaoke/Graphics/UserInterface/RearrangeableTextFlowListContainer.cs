@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
     /// Implement most feature for searchable text container.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class RearrangeableTextListContainer<T> : OsuRearrangeableListContainer<T>
+    public class RearrangeableTextFlowListContainer<T> : OsuRearrangeableListContainer<T>
     {
         public readonly Bindable<T> SelectedSet = new Bindable<T>();
 
@@ -83,12 +83,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 }, true);
             }
 
-            protected override Drawable CreateContent() => text = new OsuTextFlowContainer
+            protected sealed override Drawable CreateContent() => text = new OsuTextFlowContainer
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
-                Text = GetDisplayText(Model),
-            };
+            }.With(x => CreateDisplayContent(x, Model));
 
             protected override bool OnClick(ClickEvent e)
             {
@@ -101,7 +100,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 Model.ToString()
             };
 
-            protected virtual string GetDisplayText(T model) => model.ToString();
+            protected virtual void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, T model)
+                => textFlowContainer.AddText(model.ToString());
 
             private bool matchingFilter = true;
 

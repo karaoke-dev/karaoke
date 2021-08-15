@@ -288,7 +288,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                 },
                                 new Drawable[]
                                 {
-                                    propertyList = new RearrangeableTextListContainer<T>
+                                    propertyFlowList = new RearrangeableTextFlowListContainer<T>
                                     {
                                         RelativeSizeAxes = Axes.Both,
                                         RequestSelection = item =>
