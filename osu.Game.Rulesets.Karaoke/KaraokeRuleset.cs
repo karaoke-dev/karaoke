@@ -101,6 +101,14 @@ namespace osu.Game.Rulesets.Karaoke
                 _ => Array.Empty<KeyBinding>()
             };
 
+        public override string GetVariantName(int variant)
+            => variant switch
+            {
+                1 => "Gameplay",
+                2 => "Composer",
+                _ => throw new ArgumentNullException(nameof(variant)),
+            };
+
         public override IEnumerable<Mod> GetModsFor(ModType type) =>
             type switch
             {
