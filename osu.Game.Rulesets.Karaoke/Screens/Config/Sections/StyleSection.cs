@@ -3,13 +3,14 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections
 {
     public class StyleSection : KaraokeSettingsSection
     {
-        public override string Header => "Style";
+        public override LocalisableString Header => "Style";
 
         public override Drawable CreateIcon() => new SpriteIcon
         {
