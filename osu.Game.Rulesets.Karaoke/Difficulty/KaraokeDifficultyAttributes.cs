@@ -7,6 +7,6 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
 {
     public class KaraokeDifficultyAttributes : DifficultyAttributes
     {
-        public double GreatHitWindow;
+        public double GreatHitWindow { get; set; }
     }
 }
