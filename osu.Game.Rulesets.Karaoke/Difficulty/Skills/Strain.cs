@@ -6,6 +6,7 @@ using osu.Framework.Utils;
 using osu.Game.Rulesets.Difficulty.Preprocessing;
 using osu.Game.Rulesets.Difficulty.Skills;
 using osu.Game.Rulesets.Karaoke.Difficulty.Preprocessing;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Mods;
 
 namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
@@ -27,8 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
         public Strain(Mod[] mods, int totalColumns)
             : base(mods)
         {
-            holdEndTimes = new double[totalColumns];
-            individualStrains = new double[totalColumns];
+            holdEndTimes = new double[totalColumns * 2 - 1];
+            individualStrains = new double[totalColumns * 2 - 1];
             overallStrain = 1;
         }
 
@@ -36,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
         {
             var maniaCurrent = (KaraokeDifficultyHitObject)current;
             var endTime = maniaCurrent.EndTime;
-            var column = maniaCurrent.BaseObject.Tone.Scale;
+            var column = getColumnIndex(maniaCurrent.BaseObject.Tone);
 
             double holdFactor = 1.0; // Factor to all additional strains in case something else is held
             double holdAddition = 0; // Addition to the current note in case it's a hold and has to be released awkwardly
@@ -69,6 +70,9 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
             overallStrain = applyDecay(overallStrain, current.DeltaTime, overall_decay_base) + (1 + holdAddition) * holdFactor;
 
             return individualStrain + overallStrain - CurrentStrain;
+
+            // todo : implementation.
+            static int getColumnIndex(Tone tone) => 0;
         }
 
         protected override double CalculateInitialStrain(double offset)
