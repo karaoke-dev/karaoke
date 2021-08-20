@@ -44,13 +44,13 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                 return;
 
             var beatmapDifficulty = difficultyCache.GetBindableDifficulty(beatmap.BeatmapInfo).Value;
-            LoadComponentAsync(new BeatmapInfoWedge(workingBeatmap.Value, mods.Value, beatmapDifficulty ?? new StarDifficulty()), Add);
+            LoadComponentAsync(new BeatmapInfoWedge(workingBeatmap.Value, mods.Value), Add);
         }
 
         public class BeatmapInfoWedge : WedgeInfoText
         {
-            public BeatmapInfoWedge(WorkingBeatmap beatmap, IReadOnlyList<Mod> mods, StarDifficulty difficulty)
-                : base(beatmap, new KaraokeRuleset().RulesetInfo, mods, difficulty)
+            public BeatmapInfoWedge(WorkingBeatmap beatmap, IReadOnlyList<Mod> mods)
+                : base(beatmap, new KaraokeRuleset().RulesetInfo, mods)
             {
             }
 

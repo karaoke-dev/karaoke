@@ -1,12 +1,14 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Difficulty;
 using osu.Game.Rulesets.Difficulty.Preprocessing;
 using osu.Game.Rulesets.Difficulty.Skills;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Difficulty.Preprocessing;
 using osu.Game.Rulesets.Karaoke.Difficulty.Skills;
 using osu.Game.Rulesets.Karaoke.Mods;
@@ -19,11 +21,16 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
 {
     public class KaraokeDifficultyCalculator : DifficultyCalculator
     {
-        private const double star_scaling_factor = 0.05;
+        private const double star_scaling_factor = 0.018;
+
+        private readonly bool isForCurrentRuleset;
+        private readonly double originalOverallDifficulty;
 
         public KaraokeDifficultyCalculator(Ruleset ruleset, WorkingBeatmap beatmap)
             : base(ruleset, beatmap)
         {
+            isForCurrentRuleset = beatmap.BeatmapInfo.Ruleset.Equals(ruleset.RulesetInfo);
+            originalOverallDifficulty = beatmap.BeatmapInfo.BaseDifficulty.OverallDifficulty;
         }
 
         protected override DifficultyAttributes CreateDifficultyAttributes(IBeatmap beatmap, Mod[] mods, Skill[] skills, double clockRate)
@@ -39,45 +46,60 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
                 StarRating = skills[0].DifficultyValue() * star_scaling_factor,
                 Mods = mods,
                 // Todo: This int cast is temporary to achieve 1:1 results with osu!stable, and should be removed in the future
-                GreatHitWindow = (int)hitWindows.WindowFor(HitResult.Great) / clockRate,
+                GreatHitWindow = (int)Math.Ceiling(getHitWindow300(mods) / clockRate),
+                MaxCombo = beatmap.HitObjects.Sum(h => h is Note ? 2 : 1),
                 Skills = skills
             };
         }
 
         protected override IEnumerable<DifficultyHitObject> CreateDifficultyHitObjects(IBeatmap beatmap, double clockRate)
         {
-            // Only karaoke note can be apply in difficulty calculation
-            var notes = beatmap.HitObjects.OfType<Note>().ToList();
+            var sortedObjects = beatmap.HitObjects.OfType<Note>().ToArray();
 
-            for (int i = 1; i < notes.Count; i++)
-                yield return new KaraokeDifficultyHitObject(notes[i], notes[i - 1], clockRate);
+            // todo : might have a sort.
+            // LegacySortHelper<HitObject>.Sort(sortedObjects, Comparer<HitObject>.Create((a, b) => (int)Math.Round(a.StartTime) - (int)Math.Round(b.StartTime)));
+
+            for (int i = 1; i < sortedObjects.Length; i++)
+                yield return new KaraokeDifficultyHitObject(sortedObjects[i], sortedObjects[i - 1], clockRate);
         }
 
-        protected override Skill[] CreateSkills(IBeatmap beatmap, Mod[] mods, double clockRate)
+        // Sorting is done in CreateDifficultyHitObjects, since the full list of hitobjects is required.
+        protected override IEnumerable<DifficultyHitObject> SortObjects(IEnumerable<DifficultyHitObject> input) => input;
+
+        protected override Skill[] CreateSkills(IBeatmap beatmap, Mod[] mods, double clockRate) => new Skill[]
         {
-            // Only karaoke note can be apply in difficulty calculation
-            var notes = beatmap.HitObjects.OfType<Note>().ToList();
-            if (!notes.Any())
-                return new Skill[] { };
-
-            // TODO : need to get real value in the future
-            var maxNoteColumn = notes.Max(x => x.Tone);
-            var minNoteColumn = notes.Min(x => x.Tone);
-
-            int columnCount = maxNoteColumn.Scale - minNoteColumn.Scale + 1;
-
-            var skills = new List<Skill> { new Overall(columnCount, minNoteColumn.Scale, mods) };
-
-            for (int i = 0; i < columnCount; i++)
-                skills.Add(new Individual(i, columnCount, minNoteColumn.Scale, mods));
-
-            return skills.ToArray();
-        }
+            new Strain(mods, ((KaraokeBeatmap)beatmap).TotalColumns)
+        };
 
         protected override Mod[] DifficultyAdjustmentMods =>
             new Mod[]
             {
-                new KaraokeModPractice(),
+                new KaraokeModDisableNote(),
+                new KaraokeModHiddenNote(),
             };
+
+        private int getHitWindow300(Mod[] mods)
+        {
+            if (isForCurrentRuleset)
+            {
+                double od = Math.Min(10.0, Math.Max(0, 10.0 - originalOverallDifficulty));
+                return applyModAdjustments(34 + 3 * od, mods);
+            }
+
+            if (Math.Round(originalOverallDifficulty) > 4)
+                return applyModAdjustments(34, mods);
+
+            return applyModAdjustments(47, mods);
+
+            static int applyModAdjustments(double value, Mod[] mods)
+            {
+                if (mods.Any(m => m is KaraokeModDisableNote))
+                    value /= 1.4;
+                else if (mods.Any(m => m is KaraokeModHiddenNote))
+                    value *= 1.4;
+
+                return (int)value;
+            }
+        }
     }
 }

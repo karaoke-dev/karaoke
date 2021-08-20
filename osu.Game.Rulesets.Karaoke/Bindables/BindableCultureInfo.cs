@@ -41,6 +41,8 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             }
         }
 
+        protected override Bindable<CultureInfo> CreateInstance() => new BindableCultureInfo();
+
         public override string ToString() => Value?.Name;
     }
 }
