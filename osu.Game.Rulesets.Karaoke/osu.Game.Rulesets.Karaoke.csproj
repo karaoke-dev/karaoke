@@ -53,6 +53,8 @@
       <InputAssemblies Include="NWaves.dll" />
       <InputAssemblies Include="LyricMaker.dll" />
       <InputAssemblies Include="NicoKaraParser.dll" />
+      <InputAssemblies Include="SixLabors.ImageSharp.dll" />
+      <InputAssemblies Include="SixLabors.ImageSharp.Drawing.dll" />
       <InputAssemblies Include="WanaKanaSharp.dll" />
       <InputAssemblies Include="Zipangu.dll" />
     </ItemGroup>
