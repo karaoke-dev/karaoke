@@ -17,6 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         public Singer[] Singers { get; set; } = { };
 
+        public int TotalColumns { get; set; } = 9;
+
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {
             int singers = Singers.Length;
