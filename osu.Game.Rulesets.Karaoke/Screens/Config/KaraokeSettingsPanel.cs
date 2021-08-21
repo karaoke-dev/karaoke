@@ -12,6 +12,7 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Overlays.Settings;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Sections;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config
@@ -19,6 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     public class KaraokeSettingsPanel : SettingsPanel
     {
         public new const float WIDTH = 300;
+
+        private Box hoverBackground;
 
         public new SettingsSectionsContainer SectionsContainer => base.SectionsContainer;
 
@@ -53,43 +56,47 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
         [BackgroundDependencyLoader]
         private void load(ConfigColourProvider colourProvider, Bindable<SettingsSection> selectedSection, Bindable<SettingsSubsection> selectedSubsection)
         {
-            ContentContainer.Width = WIDTH;
-
-            selectedSection.BindValueChanged(x =>
-            {
-                var background = ContentContainer.Children.OfType<Box>().FirstOrDefault();
-                if (background == null)
-                    return;
-
-                var colour = colourProvider.GetBackground3Colour(x.NewValue);
-                background.Delay(200).Then().FadeColour(colour, 500);
-            });
-
-            if (SectionsContainer.FixedHeader is SeekLimitedSearchTextBox searchTextBox)
-            {
-                searchTextBox.Current.ValueChanged += term =>
-                {
-                    // should clear selected sub-section if change search text.
-                    selectedSubsection.Value = null;
-                };
-            }
+            initialContentContainer();
+            initialSearchTextBox();
+            initialBackground();
 
             Show();
-        }
 
-        public class KaraokeSettingsSectionsContainer : SettingsSectionsContainer
-        {
-            private UserTrackingScrollContainer scrollContainer;
-            private Box background;
-
-            protected override UserTrackingScrollContainer CreateScrollContainer()
-                => scrollContainer = base.CreateScrollContainer();
-
-            [BackgroundDependencyLoader]
-            private void load(ConfigColourProvider colourProvider, Bindable<SettingsSection> selectedSection, Bindable<SettingsSubsection> selectedSubsection)
+            void initialContentContainer()
             {
+                ContentContainer.Width = WIDTH;
+
+                selectedSection.BindValueChanged(x =>
+                {
+                    var background = ContentContainer.Children.OfType<Box>().FirstOrDefault();
+                    if (background == null)
+                        return;
+
+                    var colour = colourProvider.GetBackground3Colour(x.NewValue);
+                    background.Delay(200).Then().FadeColour(colour, 500);
+                });
+            }
+
+            void initialSearchTextBox()
+            {
+                if (SectionsContainer.FixedHeader is SeekLimitedSearchTextBox searchTextBox)
+                {
+                    searchTextBox.Current.ValueChanged += term =>
+                    {
+                        // should clear selected sub-section if change search text.
+                        selectedSubsection.Value = null;
+                    };
+                }
+            }
+
+            void initialBackground()
+            {
+                var scrollContainer = SectionsContainer.GetInternalChildren()?.OfType<UserTrackingScrollContainer>().FirstOrDefault();
+                if (scrollContainer == null)
+                    return;
+
                 // create hove background.
-                scrollContainer.Add(background = new Box
+                scrollContainer.Add(hoverBackground = new Box
                 {
                     RelativeSizeAxes = Axes.X,
                     Depth = 1,
@@ -99,31 +106,23 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 selectedSection.BindValueChanged(x =>
                 {
                     var colour = colourProvider.GetBackgroundColour(x.NewValue);
-                    background.Delay(200).Then().FadeColour(colour, 500);
+                    hoverBackground.Delay(200).Then().FadeColour(colour, 500);
                 });
 
                 // move background to target sub-section if user hover to it.
                 selectedSubsection.BindValueChanged(x =>
                 {
                     var alpha = x.NewValue != null ? 0.6f : 0f;
-                    background.FadeTo(alpha, 200);
+                    hoverBackground.FadeTo(alpha, 200);
 
                     if (x.NewValue == null)
                         return;
 
                     const int offset = 20;
                     var position = scrollContainer.GetChildPosInContent(x.NewValue);
-                    background.MoveToY(position + offset, 50);
-                    background.ResizeHeightTo(x.NewValue.DrawHeight, 100);
+                    hoverBackground.MoveToY(position + offset, 50);
+                    hoverBackground.ResizeHeightTo(x.NewValue.DrawHeight, 100);
                 });
-            }
-
-            public new void ScrollTo(Drawable section)
-            {
-                base.ScrollTo(section);
-
-                // re-scroll to target place, not with weird spacing.
-                scrollContainer.ScrollTo(scrollContainer.GetChildPosInContent(section) - (FixedHeader?.BoundingBox.Height ?? 0));
             }
         }
     }
