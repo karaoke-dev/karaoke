@@ -74,6 +74,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             });
         }
 
+        private FileSystemWatcher watcher;
+
         [BackgroundDependencyLoader]
         private void load()
         {
@@ -85,12 +87,83 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
                 var fontFiles = storage.GetStorageForDirectory(path)
                                        .GetFiles("", $"*.{extension}").ToList();
-                Fonts.AddRange(fontFiles.Select(x =>
+
+                foreach (var fontFile in fontFiles)
                 {
-                    var fontName = Path.GetFileNameWithoutExtension(x);
-                    return new FontInfo(fontName, fontFormat);
-                }));
+                    addFontToList(fontFile, fontFormat);
+                }
             }
+
+            watcher = new FileSystemWatcher(storage.GetFullPath(""))
+            {
+                EnableRaisingEvents = true,
+                IncludeSubdirectories = true,
+                NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName,
+            };
+
+            watcher.Renamed += onChange;
+            watcher.Deleted += onChange;
+            watcher.Created += onChange;
+
+            void onChange(object sender, FileSystemEventArgs args)
+            {
+                // check is valid format.
+                var extension = Path.GetExtension(args.FullPath);
+                var validFormat = supportedFormat.Any(x => $".{getPathByFontType(x)}" == extension);
+                if (!validFormat)
+                    return;
+
+                // then doing action by type.
+                switch (args.ChangeType)
+                {
+                    case WatcherChangeTypes.Created:
+                        addFontToList(args.FullPath);
+                        return;
+
+                    case WatcherChangeTypes.Deleted:
+                        removeFontFromList(args.FullPath);
+                        return;
+
+                    case WatcherChangeTypes.Renamed:
+                        if (!(args is RenamedEventArgs renamedEventArgs))
+                            throw new InvalidCastException(nameof(args));
+
+                        removeFontFromList(renamedEventArgs.OldFullPath);
+                        addFontToList(renamedEventArgs.FullPath);
+
+                        return;
+                }
+            }
+        }
+
+        private void addFontToList(string path)
+        {
+            var fontFormat = getFontTypeByExtension(Path.GetExtension(path));
+            addFontToList(path, fontFormat);
+        }
+
+        private void removeFontFromList(string path)
+        {
+            var fontFormat = getFontTypeByExtension(Path.GetExtension(path));
+            removeFontFromList(path, fontFormat);
+        }
+
+        private void addFontToList(string path, FontFormat fontFormat)
+        {
+            var fontName = Path.GetFileNameWithoutExtension(path);
+            var fontInfo = new FontInfo(fontName, fontFormat);
+            Fonts.Add(fontInfo);
+        }
+
+        private void removeFontFromList(string path, FontFormat fontFormat)
+        {
+            var fontName = Path.GetFileNameWithoutExtension(path);
+            var matchedFont = Fonts.FirstOrDefault(x => x.FontName == fontName && x.FontFormat == fontFormat);
+
+            if (!Fonts.Contains(matchedFont))
+                return;
+
+            Fonts.Remove(matchedFont);
         }
 
         public FontFormat? CheckFontFormat(FontUsage fontUsage)
@@ -157,5 +230,20 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 FontFormat.Ttf => "ttf",
                 _ => throw new ArgumentOutOfRangeException(nameof(type))
             };
+
+        private static FontFormat getFontTypeByExtension(string extension) =>
+            extension switch
+            {
+                ".zipfnt" => FontFormat.Fnt,
+                ".ttf" => FontFormat.Ttf,
+                _ => throw new FormatException(nameof(extension)),
+            };
+
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            watcher?.Dispose();
+        }
     }
 }
