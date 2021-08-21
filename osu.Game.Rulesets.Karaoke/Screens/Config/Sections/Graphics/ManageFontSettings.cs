@@ -4,9 +4,11 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Localisation;
+using osu.Framework.Platform;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Previews;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics;
+using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
 {
@@ -17,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
         public override SettingsSubsectionPreview CreatePreview() => new ManageFontPreview();
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(Storage storage)
         {
             Children = new Drawable[]
             {
@@ -25,11 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
                 {
                     Text = "Open import text folder",
                     TooltipText = "After open the folder, you can drag the font file to the folder you wants to import",
-                    Action = () =>
-                    {
-                        // todo : open the folder.
-                        // todo : or should change the button to call file selector to import the file?
-                    }
+                    Action = () => storage.GetStorageForDirectory(FontManager.FONT_BASE_PATH).OpenInNativeExplorer(),
                 },
                 new SettingsButton
                 {

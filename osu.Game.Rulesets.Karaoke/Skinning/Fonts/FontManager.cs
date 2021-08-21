@@ -18,10 +18,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 {
     public class FontManager : Component
     {
-        private const string font_base_path = @"fonts";
+        public const string FONT_BASE_PATH = @"fonts";
 
         [Resolved]
         private GameHost host { get; set; }
+
+        private Storage storage => host.Storage.GetStorageForDirectory(FONT_BASE_PATH);
+
+        private readonly FontFormat[] supportedFormat = { FontFormat.Fnt, FontFormat.Ttf };
 
         public readonly BindableList<FontInfo> Fonts = new BindableList<FontInfo>();
 
@@ -70,27 +74,96 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             });
         }
 
+        private FileSystemWatcher watcher;
+
         [BackgroundDependencyLoader]
         private void load()
         {
-            var supportedFormat = new[] { FontFormat.Fnt, FontFormat.Ttf };
-
             foreach (var fontFormat in supportedFormat)
             {
-                // check if dictionary is exist.
+                // will create folder if not exist.
                 var path = getPathByFontType(fontFormat);
                 var extension = getExtensionByFontType(fontFormat);
-                var storage = host.Storage;
-                if (!storage.ExistsDirectory(path))
+
+                var fontFiles = storage.GetStorageForDirectory(path)
+                                       .GetFiles("", $"*.{extension}").ToList();
+
+                foreach (var fontFile in fontFiles)
+                {
+                    addFontToList(fontFile, fontFormat);
+                }
+            }
+
+            watcher = new FileSystemWatcher(storage.GetFullPath(""))
+            {
+                EnableRaisingEvents = true,
+                IncludeSubdirectories = true,
+                NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.FileName,
+            };
+
+            watcher.Renamed += onChange;
+            watcher.Deleted += onChange;
+            watcher.Created += onChange;
+
+            void onChange(object sender, FileSystemEventArgs args)
+            {
+                // check is valid format.
+                var extension = Path.GetExtension(args.FullPath);
+                var validFormat = supportedFormat.Any(x => $".{getPathByFontType(x)}" == extension);
+                if (!validFormat)
                     return;
 
-                var fontFiles = storage.GetFiles(path, $"*.{extension}").ToList();
-                Fonts.AddRange(fontFiles.Select(x =>
+                // then doing action by type.
+                switch (args.ChangeType)
                 {
-                    var fontName = Path.GetFileNameWithoutExtension(x);
-                    return new FontInfo(fontName, fontFormat);
-                }));
+                    case WatcherChangeTypes.Created:
+                        addFontToList(args.FullPath);
+                        return;
+
+                    case WatcherChangeTypes.Deleted:
+                        removeFontFromList(args.FullPath);
+                        return;
+
+                    case WatcherChangeTypes.Renamed:
+                        if (!(args is RenamedEventArgs renamedEventArgs))
+                            throw new InvalidCastException(nameof(args));
+
+                        removeFontFromList(renamedEventArgs.OldFullPath);
+                        addFontToList(renamedEventArgs.FullPath);
+
+                        return;
+                }
             }
+        }
+
+        private void addFontToList(string path)
+        {
+            var fontFormat = getFontTypeByExtension(Path.GetExtension(path));
+            addFontToList(path, fontFormat);
+        }
+
+        private void removeFontFromList(string path)
+        {
+            var fontFormat = getFontTypeByExtension(Path.GetExtension(path));
+            removeFontFromList(path, fontFormat);
+        }
+
+        private void addFontToList(string path, FontFormat fontFormat)
+        {
+            var fontName = Path.GetFileNameWithoutExtension(path);
+            var fontInfo = new FontInfo(fontName, fontFormat);
+            Fonts.Add(fontInfo);
+        }
+
+        private void removeFontFromList(string path, FontFormat fontFormat)
+        {
+            var fontName = Path.GetFileNameWithoutExtension(path);
+            var matchedFont = Fonts.FirstOrDefault(x => x.FontName == fontName && x.FontFormat == fontFormat);
+
+            if (!Fonts.Contains(matchedFont))
+                return;
+
+            Fonts.Remove(matchedFont);
         }
 
         public FontFormat? CheckFontFormat(FontUsage fontUsage)
@@ -107,10 +180,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             // do not import if this font is system font.
             var fontFormat = fontInfo.FontFormat;
             if (fontFormat == FontFormat.Internal)
-                return null;
-
-            var storage = host.Storage;
-            if (!storage.ExistsDirectory(font_base_path))
                 return null;
 
             var fontName = fontInfo.FontName;
@@ -149,8 +218,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
         private static string getPathByFontType(FontFormat type) =>
             type switch
             {
-                FontFormat.Fnt => $"{font_base_path}/fnt",
-                FontFormat.Ttf => $"{font_base_path}/ttf",
+                FontFormat.Fnt => $"fnt",
+                FontFormat.Ttf => $"ttf",
                 _ => throw new ArgumentOutOfRangeException(nameof(type))
             };
 
@@ -161,5 +230,20 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 FontFormat.Ttf => "ttf",
                 _ => throw new ArgumentOutOfRangeException(nameof(type))
             };
+
+        private static FontFormat getFontTypeByExtension(string extension) =>
+            extension switch
+            {
+                ".zipfnt" => FontFormat.Fnt,
+                ".ttf" => FontFormat.Ttf,
+                _ => throw new FormatException(nameof(extension)),
+            };
+
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            watcher?.Dispose();
+        }
     }
 }
