@@ -23,8 +23,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
         private Box hoverBackground;
 
-        public new SettingsSectionsContainer SectionsContainer => base.SectionsContainer;
-
         protected override IEnumerable<SettingsSection> CreateSections() => new SettingsSection[]
         {
             new ConfigSection(),
@@ -63,14 +61,23 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             scrollContainer?.ScrollTo(scrollContainer.GetChildPosInContent(settingsSection) - (SectionsContainer.FixedHeader?.BoundingBox.Height ?? 0));
         }
 
+        public IReadOnlyList<SettingsSection> Sections => SectionsContainer.Children;
+
         [BackgroundDependencyLoader]
         private void load(ConfigColourProvider colourProvider, Bindable<SettingsSection> selectedSection, Bindable<SettingsSubsection> selectedSubsection)
         {
+            initialSelectionContainer();
             initialContentContainer();
             initialSearchTextBox();
             initialBackground();
 
             Show();
+
+            void initialSelectionContainer() =>
+                SectionsContainer.SelectedSection.ValueChanged += section =>
+                {
+                    selectedSection.Value = section.NewValue;
+                };
 
             void initialContentContainer()
             {
