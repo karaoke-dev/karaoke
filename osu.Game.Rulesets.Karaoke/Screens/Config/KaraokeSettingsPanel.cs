@@ -32,8 +32,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             new ScoringSection()
         };
 
-        //protected override SettingsSectionsContainer CreateSettingsSections() => new KaraokeSettingsSectionsContainer();
-
         protected override Drawable CreateFooter() => new Container
         {
             Height = 130,
