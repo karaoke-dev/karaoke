@@ -179,8 +179,30 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             fonts.BindCollectionChanged((a, b) =>
             {
                 // re-calculate if source changed.
-                familyProperty.Items.Clear();
-                familyProperty.Items.AddRange(fonts.Select(x => x.Family).Distinct());
+                Schedule(() =>
+                {
+                    var oldFamilies = b.OldItems?.OfType<FontInfo>().Select(x => x.Family).Distinct().ToArray();
+                    var newFamilies = b.NewItems?.OfType<FontInfo>().Select(x => x.Family).Distinct().ToArray();
+
+                    if (oldFamilies != null)
+                    {
+                        familyProperty.Items.RemoveAll(x => oldFamilies.Contains(x));
+                    }
+
+                    if (newFamilies != null)
+                    {
+                        familyProperty.Items.AddRange(newFamilies);
+                    }
+
+                    // should reset family selection if user select the font that will be removed or added.
+                    var currentFamily = familyProperty.Current.Value;
+                    var resetFamily = oldFamilies?.Contains(currentFamily) ?? false;
+
+                    if (resetFamily)
+                    {
+                        familyProperty.Current.Value = familyProperty.Items.FirstOrDefault();
+                    }
+                });
             });
 
             familyProperty.Current.BindValueChanged(x =>
