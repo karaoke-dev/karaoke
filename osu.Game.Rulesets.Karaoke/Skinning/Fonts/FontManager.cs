@@ -18,10 +18,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 {
     public class FontManager : Component
     {
-        private const string font_base_path = @"fonts";
+        public const string FONT_BASE_PATH = @"fonts";
 
         [Resolved]
         private GameHost host { get; set; }
+
+        private Storage storage => host.Storage.GetStorageForDirectory(FONT_BASE_PATH);
+
+        private readonly FontFormat[] supportedFormat = { FontFormat.Fnt, FontFormat.Ttf };
 
         public readonly BindableList<FontInfo> Fonts = new BindableList<FontInfo>();
 
@@ -73,18 +77,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
         [BackgroundDependencyLoader]
         private void load()
         {
-            var supportedFormat = new[] { FontFormat.Fnt, FontFormat.Ttf };
-
             foreach (var fontFormat in supportedFormat)
             {
-                // check if dictionary is exist.
+                // will create folder if not exist.
                 var path = getPathByFontType(fontFormat);
                 var extension = getExtensionByFontType(fontFormat);
-                var storage = host.Storage;
-                if (!storage.ExistsDirectory(path))
-                    return;
 
-                var fontFiles = storage.GetFiles(path, $"*.{extension}").ToList();
+                var fontFiles = storage.GetStorageForDirectory(path)
+                                       .GetFiles("", $"*.{extension}").ToList();
                 Fonts.AddRange(fontFiles.Select(x =>
                 {
                     var fontName = Path.GetFileNameWithoutExtension(x);
@@ -107,10 +107,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             // do not import if this font is system font.
             var fontFormat = fontInfo.FontFormat;
             if (fontFormat == FontFormat.Internal)
-                return null;
-
-            var storage = host.Storage;
-            if (!storage.ExistsDirectory(font_base_path))
                 return null;
 
             var fontName = fontInfo.FontName;
@@ -149,8 +145,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
         private static string getPathByFontType(FontFormat type) =>
             type switch
             {
-                FontFormat.Fnt => $"{font_base_path}/fnt",
-                FontFormat.Ttf => $"{font_base_path}/ttf",
+                FontFormat.Fnt => $"fnt",
+                FontFormat.Ttf => $"ttf",
                 _ => throw new ArgumentOutOfRangeException(nameof(type))
             };
 
