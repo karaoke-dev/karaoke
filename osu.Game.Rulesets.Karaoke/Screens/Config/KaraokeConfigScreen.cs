@@ -76,9 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 var newSection = e.NewValue;
                 background.Delay(200).Then().FadeColour(colourProvider.GetBackgroundColour(newSection), 500);
 
-                // prevent trigger scroll by config section.
-                if (settingsPanel.SectionsContainer.SelectedSection.Value != newSection)
-                    settingsPanel.SectionsContainer.ScrollTo(newSection);
+                settingsPanel.ScrollToSection(newSection);
             });
 
             selectedSubsection.BindValueChanged(e =>

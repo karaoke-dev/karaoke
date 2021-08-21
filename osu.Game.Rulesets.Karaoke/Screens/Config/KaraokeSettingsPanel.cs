@@ -53,6 +53,18 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
         // prevent hide the overlay.
         public override void Hide() { }
 
+        public void ScrollToSection(SettingsSection settingsSection)
+        {
+            // prevent trigger scroll by config section.
+            if (SectionsContainer.SelectedSection.Value == settingsSection)
+                return;
+
+            // instead of base scroll to method, using customized method to prevent weird spacing.
+            // SectionsContainer.ScrollTo(settingsSection);
+            var scrollContainer = SectionsContainer.GetInternalChildren()?.OfType<UserTrackingScrollContainer>().FirstOrDefault();
+            scrollContainer?.ScrollTo(scrollContainer.GetChildPosInContent(settingsSection) - (SectionsContainer.FixedHeader?.BoundingBox.Height ?? 0));
+        }
+
         [BackgroundDependencyLoader]
         private void load(ConfigColourProvider colourProvider, Bindable<SettingsSection> selectedSection, Bindable<SettingsSubsection> selectedSubsection)
         {
