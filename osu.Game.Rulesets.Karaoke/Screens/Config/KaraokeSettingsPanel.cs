@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -9,6 +10,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Screens.Config.Sections;
 
@@ -16,7 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 {
     public class KaraokeSettingsPanel : SettingsPanel
     {
-        public new KaraokeSettingsSectionsContainer SectionsContainer => (KaraokeSettingsSectionsContainer)base.SectionsContainer;
+        public new const float WIDTH = 300;
+
+        public new SettingsSectionsContainer SectionsContainer => base.SectionsContainer;
 
         protected override IEnumerable<SettingsSection> CreateSections() => new SettingsSection[]
         {
@@ -25,20 +29,40 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             new ScoringSection()
         };
 
-        protected override SettingsSectionsContainer CreateSettingsSections() => new KaraokeSettingsSectionsContainer();
+        //protected override SettingsSectionsContainer CreateSettingsSections() => new KaraokeSettingsSectionsContainer();
 
         protected override Drawable CreateFooter() => new Container
         {
             Height = 130,
         };
 
+        public KaraokeSettingsPanel()
+            : base(false)
+        {
+        }
+
+        // prevent click outside to hide the overlay
+        protected override bool BlockPositionalInput => false;
+
+        // prevent let main content darker.
+        protected override bool DimMainContent => false;
+
+        // prevent hide the overlay.
+        public override void Hide() { }
+
         [BackgroundDependencyLoader]
         private void load(ConfigColourProvider colourProvider, Bindable<SettingsSection> selectedSection, Bindable<SettingsSubsection> selectedSubsection)
         {
+            ContentContainer.Width = WIDTH;
+
             selectedSection.BindValueChanged(x =>
             {
+                var background = ContentContainer.Children.OfType<Box>().FirstOrDefault();
+                if (background == null)
+                    return;
+
                 var colour = colourProvider.GetBackground3Colour(x.NewValue);
-                Background.Delay(200).Then().FadeColour(colour, 500);
+                background.Delay(200).Then().FadeColour(colour, 500);
             });
 
             if (SectionsContainer.FixedHeader is SeekLimitedSearchTextBox searchTextBox)
@@ -49,6 +73,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     selectedSubsection.Value = null;
                 };
             }
+
+            Show();
         }
 
         public class KaraokeSettingsSectionsContainer : SettingsSectionsContainer

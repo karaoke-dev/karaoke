@@ -53,12 +53,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     settingsPanel = new KaraokeSettingsPanel(),
                     header = new Header
                     {
-                        Padding = new MarginPadding { Left = SettingsPanel.WIDTH },
+                        Padding = new MarginPadding { Left = KaraokeSettingsPanel.WIDTH },
                     },
                     previewArea = new Container
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Padding = new MarginPadding { Top = Header.HEIGHT, Left = SettingsPanel.WIDTH }
+                        Padding = new MarginPadding { Top = Header.HEIGHT, Left = KaraokeSettingsPanel.WIDTH }
                     }
                 }
             };
