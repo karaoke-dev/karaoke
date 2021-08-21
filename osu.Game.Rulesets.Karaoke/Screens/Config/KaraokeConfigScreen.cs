@@ -67,9 +67,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             // todo : should have a better way to do this.
             Scheduler.AddDelayed(() =>
             {
-                header.TabItems = settingsPanel.SectionsContainer.Children;
+                header.TabItems = settingsPanel.Sections;
                 header.SelectedSection = selectedSection;
-            }, 1000);
+            }, 2000);
 
             selectedSection.BindValueChanged(e =>
             {
@@ -110,11 +110,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 AddInternal(manager);
                 host.Dependencies.Cache(manager);
             }
-
-            settingsPanel.SectionsContainer.SelectedSection.ValueChanged += section =>
-            {
-                selectedSection.Value = section.NewValue;
-            };
         }
 
         protected override void LoadComplete()
