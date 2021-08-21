@@ -63,6 +63,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 }
             };
 
+            // wait for a period until all children loaded.
+            // todo : should have a better way to do this.
+            Scheduler.AddDelayed(() =>
+            {
+                header.TabItems = settingsPanel.SectionsContainer.Children;
+                header.SelectedSection = selectedSection;
+            }, 1000);
+
             selectedSection.BindValueChanged(e =>
             {
                 var newSection = e.NewValue;
@@ -105,7 +113,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 host.Dependencies.Cache(manager);
             }
 
-            header.TabItems = settingsPanel.SectionsContainer.Children;
             settingsPanel.SectionsContainer.SelectedSection.ValueChanged += section =>
             {
                 selectedSection.Value = section.NewValue;
