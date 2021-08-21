@@ -53,24 +53,30 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     settingsPanel = new KaraokeSettingsPanel(),
                     header = new Header
                     {
-                        Padding = new MarginPadding { Left = SettingsPanel.WIDTH },
+                        Padding = new MarginPadding { Left = KaraokeSettingsPanel.WIDTH },
                     },
                     previewArea = new Container
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Padding = new MarginPadding { Top = Header.HEIGHT, Left = SettingsPanel.WIDTH }
+                        Padding = new MarginPadding { Top = Header.HEIGHT, Left = KaraokeSettingsPanel.WIDTH }
                     }
                 }
             };
+
+            // wait for a period until all children loaded.
+            // todo : should have a better way to do this.
+            Scheduler.AddDelayed(() =>
+            {
+                header.TabItems = settingsPanel.SectionsContainer.Children;
+                header.SelectedSection = selectedSection;
+            }, 1000);
 
             selectedSection.BindValueChanged(e =>
             {
                 var newSection = e.NewValue;
                 background.Delay(200).Then().FadeColour(colourProvider.GetBackgroundColour(newSection), 500);
 
-                // prevent trigger scroll by config section.
-                if (settingsPanel.SectionsContainer.SelectedSection.Value != newSection)
-                    settingsPanel.SectionsContainer.ScrollTo(newSection);
+                settingsPanel.ScrollToSection(newSection);
             });
 
             selectedSubsection.BindValueChanged(e =>
@@ -105,7 +111,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 host.Dependencies.Cache(manager);
             }
 
-            header.TabItems = settingsPanel.SectionsContainer.Children;
             settingsPanel.SectionsContainer.SelectedSection.ValueChanged += section =>
             {
                 selectedSection.Value = section.NewValue;

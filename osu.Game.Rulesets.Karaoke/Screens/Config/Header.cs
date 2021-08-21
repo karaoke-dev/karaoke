@@ -80,10 +80,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             set => tabs.Items = value;
         }
 
-        [BackgroundDependencyLoader]
-        private void load(Bindable<SettingsSection> selectedSection)
+        public Bindable<SettingsSection> SelectedSection
         {
-            tabs.Current.BindTo(selectedSection);
+            get => tabs.Current;
+            set => tabs.Current = value;
         }
 
         private class KaraokeConfigHeaderTitle : CompositeDrawable
