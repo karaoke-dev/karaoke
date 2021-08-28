@@ -192,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                 var tcs = new TaskCompletionSource<bool>();
 
                 var client = new GitHubClient(new ProductHeaderValue(organizationName));
-                var reposAscending = await client.Repository.Content.GetAllContentsByRef(organizationName, projectName, "content/changelog", branchName);
+                var reposAscending = await client.Repository.Content.GetAllContentsByRef(organizationName, projectName, "content/changelog", branchName).ConfigureAwait(false);
 
                 if (reposAscending.Any())
                 {
@@ -217,7 +217,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                     tcs.SetResult(false);
                 }
 
-                await tcs.Task;
+                await tcs.Task.ConfigureAwait(false);
             });
 
             static DateTimeOffset getPublishDateFromName(string name)

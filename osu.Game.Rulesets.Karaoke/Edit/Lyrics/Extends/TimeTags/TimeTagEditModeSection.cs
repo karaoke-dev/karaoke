@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 LyricEditorMode.CreateTimeTag => active ? colour.Blue : colour.BlueDarker,
                 LyricEditorMode.RecordTimeTag => active ? colour.Red : colour.RedDarker,
                 LyricEditorMode.AdjustTimeTag => active ? colour.Yellow : colour.YellowDarker,
-                _ => throw new IndexOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
         }
     }

@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
                 {
                     Task.Factory.StartNew(async () =>
                     {
-                        await Import(path);
+                        await Import(path).ConfigureAwait(false);
                     }, TaskCreationOptions.LongRunning);
                 }
             };

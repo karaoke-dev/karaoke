@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             {
                 Note note => new NoteSelectionBlueprint(note),
                 Lyric lyric => new LyricSelectionBlueprint(lyric),
-                _ => throw new IndexOutOfRangeException(nameof(hitObject))
+                _ => throw new ArgumentOutOfRangeException(nameof(hitObject))
             };
 
         protected override SelectionHandler<HitObject> CreateSelectionHandler() => new KaraokeSelectionHandler();

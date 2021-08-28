@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     RubyTagInvalid.OutOfRange => "This ruby is not in the lyric.",
                     RubyTagInvalid.Overlapping => "This ruby overlapping to other ruby.",
                     RubyTagInvalid.EmptyText => "This ruby is empty.",
-                    _ => throw new IndexOutOfRangeException(nameof(invalid))
+                    _ => throw new ArgumentOutOfRangeException(nameof(invalid))
                 };
         }
     }

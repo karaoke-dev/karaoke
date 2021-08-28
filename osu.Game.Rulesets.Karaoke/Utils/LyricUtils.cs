@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 }
 
                 default:
-                    throw new IndexOutOfRangeException(nameof(index.State));
+                    throw new ArgumentOutOfRangeException(nameof(index.State));
             }
         }
 
@@ -186,7 +186,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 {
                     TextIndex.IndexState.Start => x.StartIndex <= stringIndex && x.EndIndex > stringIndex,
                     TextIndex.IndexState.End => x.StartIndex < stringIndex && x.EndIndex >= stringIndex,
-                    _ => throw new IndexOutOfRangeException(nameof(timeTag.Index.State))
+                    _ => throw new ArgumentOutOfRangeException(nameof(timeTag.Index.State))
                 };
             }).FirstOrDefault();
 
@@ -212,7 +212,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             {
                 TextIndex.IndexState.Start => $"({subtext})-",
                 TextIndex.IndexState.End => $"-({subtext})",
-                _ => throw new IndexOutOfRangeException(nameof(timeTag.Index.State))
+                _ => throw new ArgumentOutOfRangeException(nameof(timeTag.Index.State))
             };
         }
 

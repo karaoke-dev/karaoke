@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
             {
                 LanguageEditMode.Generate => active ? colour.Blue : colour.BlueDarker,
                 LanguageEditMode.Verify => active ? colour.Yellow : colour.YellowDarker,
-                _ => throw new IndexOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
 
         protected override void UpdateEditMode(LanguageEditMode mode)

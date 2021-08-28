@@ -78,11 +78,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
                 SelectedSet.BindValueChanged(set =>
                 {
-                    if (set.OldValue?.Equals(Model) != true && set.NewValue?.Equals(Model) != true)
+                    var oldValueMatched = EqualityComparer<TModel>.Default.Equals(set.OldValue, Model);
+                    var newValueMatched = EqualityComparer<TModel>.Default.Equals(set.NewValue, Model);
+                    if (!oldValueMatched && !newValueMatched)
                         return;
 
-                    var equal = Equals(set.NewValue, Model);
-                    text.FadeColour(equal ? selectedColour : Color4.White, FADE_DURATION);
+                    text.FadeColour(newValueMatched ? selectedColour : Color4.White, FADE_DURATION);
                 }, true);
             }
 

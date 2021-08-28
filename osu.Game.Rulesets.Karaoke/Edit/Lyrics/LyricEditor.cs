@@ -199,7 +199,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     break;
 
                 default:
-                    throw new IndexOutOfRangeException(nameof(extendArea.Direction));
+                    throw new ArgumentOutOfRangeException(nameof(extendArea.Direction));
             }
 
             EditExtend getExtendArea()
@@ -380,7 +380,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return false;
 
                 default:
-                    throw new IndexOutOfRangeException(nameof(Mode));
+                    throw new ArgumentOutOfRangeException(nameof(Mode));
             }
         }
 
@@ -468,7 +468,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     break;
 
                 default:
-                    throw new IndexOutOfRangeException("Oops, seems some navigation to fix case has been missing.");
+                    throw new ArgumentOutOfRangeException("Oops, seems some navigation to fix case has been missing.");
             }
         }
     }

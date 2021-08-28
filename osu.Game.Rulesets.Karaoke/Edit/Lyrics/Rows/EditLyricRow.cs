@@ -234,7 +234,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                             return new SingerInfo(Lyric);
 
                         default:
-                            throw new IndexOutOfRangeException(nameof(mode));
+                            throw new ArgumentOutOfRangeException(nameof(mode));
                     }
                 }
             }
@@ -531,7 +531,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                             return null;
 
                         default:
-                            throw new IndexOutOfRangeException(nameof(mode));
+                            throw new ArgumentOutOfRangeException(nameof(mode));
                     }
                 }
             }

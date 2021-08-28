@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -108,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             singers.AddRangeWithNullCheck(firstLyric.Singers);
             singers.AddRangeWithNullCheck(secondLyric.Singers);
 
-            var sameLanguage = firstLyric.Language?.Equals(secondLyric.Language) ?? false;
+            var sameLanguage = EqualityComparer<CultureInfo>.Default.Equals(firstLyric?.Language, secondLyric.Language);
             var language = sameLanguage ? firstLyric.Language : null;
 
             return new Lyric

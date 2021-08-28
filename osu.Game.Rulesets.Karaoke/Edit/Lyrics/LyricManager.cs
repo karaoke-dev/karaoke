@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public bool SetLanguage(Lyric lyric, CultureInfo language)
         {
-            if (lyric.Language.Equals(language))
+            if (EqualityComparer<CultureInfo>.Default.Equals(language, lyric.Language))
                 return false;
 
             changeHandler?.BeginChange();

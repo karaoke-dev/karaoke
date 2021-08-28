@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 EditArea.Ruby => position.TextTag is RubyTag,
                 EditArea.Romaji => position.TextTag is RomajiTag,
                 EditArea.Both => true,
-                _ => throw new IndexOutOfRangeException(nameof(position.TextTag))
+                _ => throw new ArgumentOutOfRangeException(nameof(position.TextTag))
             };
     }
 

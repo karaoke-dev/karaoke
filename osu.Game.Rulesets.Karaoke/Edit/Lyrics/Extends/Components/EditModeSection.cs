@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             // update button style.
             foreach (var child in buttons)
             {
-                var highLight = Equals(child.Mode, mode);
+                var highLight = EqualityComparer<T>.Default.Equals(child.Mode, mode);
                 child.Alpha = highLight ? 0.8f : 0.4f;
                 child.BackgroundColour = GetColour(colour, child.Mode, highLight);
 

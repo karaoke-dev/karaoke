@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                         break;
 
                     default:
-                        throw new IndexOutOfRangeException("Oops, seems some navigation to fix case has been missing in lyric editor.");
+                        throw new ArgumentOutOfRangeException("Oops, seems some navigation to fix case has been missing in lyric editor.");
                 }
             }
         }

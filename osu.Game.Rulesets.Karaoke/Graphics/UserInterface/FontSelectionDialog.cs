@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 {
                     new Drawable[]
                     {
-                        previewText = new SpriteText
+                        previewText = new OsuSpriteText
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
@@ -348,7 +348,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                         FontFormat.Internal => colour.Gray7,
                         FontFormat.Fnt => colour.Pink,
                         FontFormat.Ttf => colour.Blue,
-                        _ => throw new IndexOutOfRangeException(nameof(fontFormat))
+                        _ => throw new ArgumentOutOfRangeException(nameof(fontFormat))
                     };
 
                     // todo : might apply translate.
