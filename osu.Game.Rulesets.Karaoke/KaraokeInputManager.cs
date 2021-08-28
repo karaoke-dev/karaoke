@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke
 
                 // Find index by selection id
                 var deviceIndex = microphoneList.IndexOf(selectedDevice);
-                AddHandler(new OsuTKMicrophoneHandler(deviceIndex));
+                AddHandler(new MicrophoneHandler(deviceIndex));
 
                 session.SetValue(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.Saitening);
             }
