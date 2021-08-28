@@ -4,7 +4,7 @@
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Resources.Fonts
+namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
     public static class KaraokeIcon
     {

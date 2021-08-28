@@ -2,8 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Resources.Fonts;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects;
 
