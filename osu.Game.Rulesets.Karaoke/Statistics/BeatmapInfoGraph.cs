@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
@@ -9,7 +8,6 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Mods;
 using static osu.Game.Screens.Select.BeatmapInfoWedge;
 
 namespace osu.Game.Rulesets.Karaoke.Statistics
@@ -18,9 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
     {
         [Resolved(CanBeNull = true)]
         private OsuGame game { get; set; }
-
-        [Resolved]
-        private IBindable<IReadOnlyList<Mod>> mods { get; set; }
 
         private readonly IBeatmap beatmap;
 
@@ -44,13 +39,13 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                 return;
 
             var beatmapDifficulty = difficultyCache.GetBindableDifficulty(beatmap.BeatmapInfo).Value;
-            LoadComponentAsync(new BeatmapInfoWedge(workingBeatmap.Value, mods.Value), Add);
+            LoadComponentAsync(new BeatmapInfoWedge(workingBeatmap.Value), Add);
         }
 
         public class BeatmapInfoWedge : WedgeInfoText
         {
-            public BeatmapInfoWedge(WorkingBeatmap beatmap, IReadOnlyList<Mod> mods)
-                : base(beatmap, new KaraokeRuleset().RulesetInfo, mods)
+            public BeatmapInfoWedge(WorkingBeatmap beatmap)
+                : base(beatmap, new KaraokeRuleset().RulesetInfo)
             {
             }
 
