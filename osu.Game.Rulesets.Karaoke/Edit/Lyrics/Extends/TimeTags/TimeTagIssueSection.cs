@@ -184,7 +184,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     TimeTagInvalid.OutOfRange => colour.Red,
                     TimeTagInvalid.Overlapping => colour.Red,
                     TimeTagInvalid.EmptyTime => colour.Yellow,
-                    _ => throw new IndexOutOfRangeException(nameof(invalid))
+                    _ => throw new ArgumentOutOfRangeException(nameof(invalid))
                 };
 
             private string getInvalidReason(TimeTagInvalid invalid) =>
@@ -193,7 +193,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     TimeTagInvalid.OutOfRange => "Time-tag out of range.",
                     TimeTagInvalid.Overlapping => "Time-tag overlapping.",
                     TimeTagInvalid.EmptyTime => "Time-tag has no time.",
-                    _ => throw new IndexOutOfRangeException(nameof(invalid))
+                    _ => throw new ArgumentOutOfRangeException(nameof(invalid))
                 };
 
             public class TimeTagRowBackground : RowBackground
@@ -231,7 +231,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                             LyricEditorMode.CreateTimeTag => new TimeTagIndexCaretPosition(lyric, timeTag?.Index ?? new TextIndex()),
                             LyricEditorMode.RecordTimeTag => new TimeTagCaretPosition(lyric, timeTag),
                             LyricEditorMode.AdjustTimeTag => new NavigateCaretPosition(lyric),
-                            _ => throw new IndexOutOfRangeException(nameof(state.Mode))
+                            _ => throw new ArgumentOutOfRangeException(nameof(state.Mode))
                         };
 
                         // set current time-tag as selected.

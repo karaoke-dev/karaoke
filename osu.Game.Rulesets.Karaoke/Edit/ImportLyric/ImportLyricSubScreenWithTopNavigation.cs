@@ -164,7 +164,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                         break;
 
                     default:
-                        throw new IndexOutOfRangeException("Should not goes to here");
+                        throw new ArgumentOutOfRangeException("Should not goes to here");
                 }
 
                 // Force change style if this step is able to go to next step.

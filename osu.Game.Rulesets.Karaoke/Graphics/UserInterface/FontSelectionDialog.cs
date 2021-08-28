@@ -348,7 +348,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                         FontFormat.Internal => colour.Gray7,
                         FontFormat.Fnt => colour.Pink,
                         FontFormat.Ttf => colour.Blue,
-                        _ => throw new IndexOutOfRangeException(nameof(fontFormat))
+                        _ => throw new ArgumentOutOfRangeException(nameof(fontFormat))
                     };
 
                     // todo : might apply translate.

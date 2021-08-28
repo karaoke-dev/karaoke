@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                 TextTagEditMode.Generate => active ? colour.Blue : colour.BlueDarker,
                 TextTagEditMode.Edit => active ? colour.Red : colour.RedDarker,
                 TextTagEditMode.Verify => active ? colour.Yellow : colour.YellowDarker,
-                _ => throw new IndexOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
 
         protected override void UpdateEditMode(TextTagEditMode mode)

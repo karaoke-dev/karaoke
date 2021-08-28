@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     RomajiTagInvalid.OutOfRange => "This romaji is not in the lyric.",
                     RomajiTagInvalid.Overlapping => "This romaji overlapping to other romaji.",
                     RomajiTagInvalid.EmptyText => "This romaji is empty.",
-                    _ => throw new IndexOutOfRangeException(nameof(invalid))
+                    _ => throw new ArgumentOutOfRangeException(nameof(invalid))
                 };
         }
     }

@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts
                     return;
 
                 default:
-                    throw new IndexOutOfRangeException(nameof(layout));
+                    throw new ArgumentOutOfRangeException(nameof(layout));
             }
         }
 

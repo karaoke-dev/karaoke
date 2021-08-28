@@ -156,7 +156,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 var matchedRuby = Rubies.FirstOrDefault(x => propertyMatched(x, rubyTag));
                 var rubyIndex = Rubies.IndexOf(matchedRuby);
                 if (rubyIndex < 0)
-                    throw new IndexOutOfRangeException(nameof(rubyIndex));
+                    throw new ArgumentOutOfRangeException(nameof(rubyIndex));
 
                 var startCharacterIndex = Text.Length + skinIndex(Rubies, rubyIndex);
                 var count = matchedRuby.Text.Length;
@@ -169,7 +169,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 var matchedRomaji = Romajies.FirstOrDefault(x => propertyMatched(x, romajiTag));
                 var romajiIndex = Romajies.IndexOf(matchedRomaji);
                 if (romajiIndex < 0)
-                    throw new IndexOutOfRangeException(nameof(romajiIndex));
+                    throw new ArgumentOutOfRangeException(nameof(romajiIndex));
 
                 var startCharacterIndex = Text.Length + skinIndex(Rubies, Rubies.Length) + skinIndex(Romajies, romajiIndex);
                 var count = matchedRomaji.Text.Length;

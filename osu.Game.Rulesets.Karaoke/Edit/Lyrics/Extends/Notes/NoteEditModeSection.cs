@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 LyricEditorMode.CreateNote => active ? colour.Blue : colour.BlueDarker,
                 LyricEditorMode.CreateNotePosition => active ? colour.Red : colour.RedDarker,
                 LyricEditorMode.AdjustNote => active ? colour.Yellow : colour.YellowDarker,
-                _ => throw new IndexOutOfRangeException(nameof(mode))
+                _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
     }
 }
