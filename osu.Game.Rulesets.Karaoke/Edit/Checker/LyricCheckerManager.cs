@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
                 throw new ArgumentNullException(nameof(lyrics));
 
             if (lyricVerifier == null)
-                throw new NullReferenceException(nameof(lyricVerifier));
+                throw new NullDependencyException(nameof(lyricVerifier));
 
             var fakeBeatmap = new Beatmap
             {

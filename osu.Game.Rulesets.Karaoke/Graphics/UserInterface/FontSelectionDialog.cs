@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 {
                     new Drawable[]
                     {
-                        previewText = new SpriteText
+                        previewText = new OsuSpriteText
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
