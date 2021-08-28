@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using osu.Game.Beatmaps;
@@ -23,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             var useTranslate = getValue<bool>(KaraokeRulesetSetting.UseTranslate);
             var preferLanguage = getValue<CultureInfo>(KaraokeRulesetSetting.PreferLanguage);
             var availableTranslate = beatmap?.AvailableTranslates();
-            var selectedLanguage = availableTranslate?.FirstOrDefault(t => Equals(t, preferLanguage)) ?? availableTranslate?.FirstOrDefault();
+            var selectedLanguage = availableTranslate?.FirstOrDefault(t => EqualityComparer<CultureInfo>.Default.Equals(t, preferLanguage)) ?? availableTranslate?.FirstOrDefault();
             SetDefault(KaraokeRulesetSession.UseTranslate, useTranslate);
             SetDefault(KaraokeRulesetSession.PreferLanguage, selectedLanguage);
 

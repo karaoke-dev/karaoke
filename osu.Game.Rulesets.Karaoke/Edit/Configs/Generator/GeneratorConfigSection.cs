@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -35,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
             current.BindValueChanged(e =>
             {
                 var currentValue = getConfigValue<TValue>(e.NewValue, propertyName);
-                if (bindable.Value?.Equals(currentValue) ?? false)
+                if (bindable.Value != null && EqualityComparer<TValue>.Default.Equals(currentValue, bindable.Value))
                     return;
 
                 bindable.Value = currentValue;

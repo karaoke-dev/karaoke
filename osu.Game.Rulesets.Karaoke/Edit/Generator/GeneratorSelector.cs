@@ -25,6 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator
         }
 
         public bool Generatable(Lyric lyric)
-            => Generator.Keys.Any(k => k.Equals(lyric.Language));
+            => Generator.Keys.Any(k => EqualityComparer<CultureInfo>.Default.Equals(k, lyric.Language));
     }
 }
