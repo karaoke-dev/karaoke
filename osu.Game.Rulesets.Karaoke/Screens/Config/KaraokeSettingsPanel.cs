@@ -10,6 +10,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -42,6 +43,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
         // prevent click outside to hide the overlay
         protected override bool BlockPositionalInput => false;
+
+        // prevent handle back key event every time, should call onPressed() only once.
+        protected override bool BlockNonPositionalInput => false;
+
+        // on press should return false to prevent handle the back key action.
+        public override bool OnPressed(GlobalAction action)
+            => false;
 
         // prevent let main content darker.
         protected override bool DimMainContent => false;
