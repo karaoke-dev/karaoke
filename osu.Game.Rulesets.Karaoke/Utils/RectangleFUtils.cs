@@ -9,7 +9,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
     public static class RectangleFUtils
     {
         /// <summary>Creates the smallest possible third rectangle that can contain both of multi rectangles that form a union.</summary>
-        /// <returns>A third <see cref="rectangles"/> structure that contains both of the multi rectangles that form the union.</returns>
+        /// <returns>A third <see cref="RectangleF"/> structure that contains both of the multi rectangles that form the union.</returns>
+        /// <param name="rectangles">All the rectangles to union.</param>
         /// <filterpriority>1</filterpriority>
         public static RectangleF Union(RectangleF[] rectangles)
         {

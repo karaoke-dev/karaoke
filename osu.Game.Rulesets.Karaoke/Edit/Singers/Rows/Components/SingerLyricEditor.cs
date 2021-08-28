@@ -118,6 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
             return true;
 
+            /*
             float getCurrentPosition()
             {
                 // params
@@ -133,6 +134,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
                 return targetOffset;
             }
+            */
         }
 
         protected override void LoadComplete()
