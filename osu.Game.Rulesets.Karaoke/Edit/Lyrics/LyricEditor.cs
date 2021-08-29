@@ -466,7 +466,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException("Oops, seems some navigation to fix case has been missing.");
+                    throw new ArgumentOutOfRangeException(nameof(mode));
             }
         }
     }
