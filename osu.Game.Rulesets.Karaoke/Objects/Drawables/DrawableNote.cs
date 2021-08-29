@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         public IBindable<bool> IsHitting => isHitting;
 
-        private readonly Bindable<bool> isHitting = new Bindable<bool>();
+        private readonly Bindable<bool> isHitting = new();
 
         private readonly IBindable<NotePositionCalculator> positionBindable = new Bindable<NotePositionCalculator>();
 

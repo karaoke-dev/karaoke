@@ -12,9 +12,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
         /// </summary>
         public bool Uppercase { get; set; }
 
-        public JaRomajiTagGeneratorConfig CreateDefaultConfig()
-        {
-            return new JaRomajiTagGeneratorConfig();
-        }
+        public JaRomajiTagGeneratorConfig CreateDefaultConfig() => new();
     }
 }

@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             => bindableEditMode.Value;
 
         protected override Dictionary<TextTagEditMode, EditModeSelectionItem> CreateSelections()
-            => new Dictionary<TextTagEditMode, EditModeSelectionItem>
+            => new()
             {
                 {
                     TextTagEditMode.Generate, new EditModeSelectionItem("Generate", "Auto-generate ruby/romaji tag.")

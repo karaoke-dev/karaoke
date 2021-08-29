@@ -16,11 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
     public class SingerManager : Component
     {
-        public readonly BindableFloat BindableZoom = new BindableFloat();
+        public readonly BindableFloat BindableZoom = new();
 
-        public readonly BindableFloat BindableCurrent = new BindableFloat();
+        public readonly BindableFloat BindableCurrent = new();
 
-        public readonly BindableList<Singer> Singers = new BindableList<Singer>();
+        public readonly BindableList<Singer> Singers = new();
 
         [Resolved(CanBeNull = true)]
         private IEditorChangeHandler changeHandler { get; set; }

@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
         public override bool IsPresent => base.IsPresent || Scheduler.HasPendingTasks;
 
         [Cached]
-        public readonly Bindable<APIChangelogBuild> Current = new Bindable<APIChangelogBuild>();
+        public readonly Bindable<APIChangelogBuild> Current = new();
 
         private readonly Container sidebarContainer;
         private readonly ChangelogSidebar sidebar;
@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
             sidebarContainer.Y = Math.Clamp(ScrollFlow.Current - Header.DrawHeight, 0, Math.Max(ScrollFlow.ScrollContent.DrawHeight - DrawHeight - Header.DrawHeight, 0));
         }
 
-        protected override ChangelogHeader CreateHeader() => new ChangelogHeader
+        protected override ChangelogHeader CreateHeader() => new()
         {
             ListingSelected = ShowListing,
         };

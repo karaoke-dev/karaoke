@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
         public override float ExtendWidth => 300;
 
         [Cached]
-        private readonly Bindable<LanguageEditMode> editMode = new Bindable<LanguageEditMode>();
+        private readonly Bindable<LanguageEditMode> editMode = new();
 
         public LanguageExtend()
         {

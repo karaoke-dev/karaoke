@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
     public class CheckTranslate : ICheck
     {
-        public CheckMetadata Metadata => new CheckMetadata(CheckCategory.HitObjects, "Unfinished translate language.");
+        public CheckMetadata Metadata => new(CheckCategory.HitObjects, "Unfinished translate language.");
 
         public IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
@@ -26,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context)
         {
-            var languages = availableTranslateInBeatmap(context.Beatmap) ?? new CultureInfo[] { };
+            var languages = availableTranslateInBeatmap(context.Beatmap) ?? Array.Empty<CultureInfo>();
 
             var lyrics = context.Beatmap.HitObjects.OfType<Lyric>().ToList();
             if (lyrics.Count == 0)
@@ -79,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(IEnumerable<HitObject> hitObjects, CultureInfo cultureInfo)
-                => new Issue(hitObjects, this, cultureInfo);
+                => new(hitObjects, this, cultureInfo);
         }
 
         public class IssueTemplateMissingPartialTranslate : IssueTemplate
@@ -90,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(IEnumerable<HitObject> hitObjects, CultureInfo cultureInfo)
-                => new Issue(hitObjects, this, cultureInfo);
+                => new(hitObjects, this, cultureInfo);
         }
 
         public class IssueTemplateContainsNotListedLanguage : IssueTemplate
@@ -101,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(IEnumerable<HitObject> hitObjects, CultureInfo cultureInfo)
-                => new Issue(hitObjects, this, cultureInfo);
+                => new(hitObjects, this, cultureInfo);
         }
     }
 }

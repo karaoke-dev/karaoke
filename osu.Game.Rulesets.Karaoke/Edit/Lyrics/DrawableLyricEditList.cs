@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class DrawableLyricEditList : OrderRearrangeableListContainer<Lyric>
     {
-        protected override Vector2 Spacing => new Vector2(0, 2);
+        protected override Vector2 Spacing => new(0, 2);
 
         protected override OsuRearrangeableListItem<Lyric> CreateOsuDrawable(Lyric item)
             => new DrawableLyricEditListItem(item);

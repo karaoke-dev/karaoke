@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             private readonly OsuSpriteText timeRange;
             private readonly Container subInfoContainer;
 
-            private readonly Bindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+            private readonly Bindable<LyricEditorMode> bindableMode = new();
 
             [Resolved(canBeNull: true)]
             private DialogOverlay dialogOverlay { get; set; }

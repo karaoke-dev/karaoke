@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             [Resolved(canBeNull: true)]
             protected OsuGame Game { get; private set; }
 
-            private readonly BindableWithCurrent<CultureInfo> current = new BindableWithCurrent<CultureInfo>();
+            private readonly BindableWithCurrent<CultureInfo> current = new();
 
             public Bindable<CultureInfo> Current
             {

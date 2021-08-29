@@ -25,11 +25,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
     public class LegacyNotePiece : LegacyKaraokeColumnElement
     {
-        protected readonly Bindable<Color4> AccentColour = new Bindable<Color4>();
-        protected readonly Bindable<Color4> HitColour = new Bindable<Color4>();
+        protected readonly Bindable<Color4> AccentColour = new();
+        protected readonly Bindable<Color4> HitColour = new();
 
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
-        private readonly LayoutValue subtractionCache = new LayoutValue(Invalidation.DrawSize);
+        private readonly LayoutValue subtractionCache = new(Invalidation.DrawSize);
         private readonly IBindable<bool> isHitting = new Bindable<bool>();
         private readonly IBindable<bool> display = new Bindable<bool>();
         private readonly IBindable<int[]> singer = new Bindable<int[]>();
@@ -137,7 +137,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 
         private LayerContainer createLayer(string name, ISkin skin, LegacyKaraokeSkinNoteLayer layer)
         {
-            return new LayerContainer
+            return new()
             {
                 RelativeSizeAxes = Axes.Both,
                 Name = name,

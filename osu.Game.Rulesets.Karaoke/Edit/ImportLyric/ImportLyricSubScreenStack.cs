@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     public class ImportLyricSubScreenStack : OsuScreenStack
     {
-        private readonly Stack<IImportLyricSubScreen> stack = new Stack<IImportLyricSubScreen>();
+        private readonly Stack<IImportLyricSubScreen> stack = new();
 
         public void Push(ImportLyricStep step)
         {

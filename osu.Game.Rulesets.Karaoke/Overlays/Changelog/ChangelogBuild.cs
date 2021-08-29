@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             };
         }
 
-        protected virtual FillFlowContainer CreateHeader() => new FillFlowContainer
+        protected virtual FillFlowContainer CreateHeader() => new()
         {
             Anchor = Anchor.TopCentre,
             Origin = Anchor.TopCentre,

@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         private readonly FontFormat[] supportedFormat = { FontFormat.Fnt, FontFormat.Ttf };
 
-        public readonly BindableList<FontInfo> Fonts = new BindableList<FontInfo>();
+        public readonly BindableList<FontInfo> Fonts = new();
 
         public FontManager()
         {
@@ -183,7 +183,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 return null;
 
             var fontName = fontInfo.FontName;
-            return fontInfo.FontFormat switch
+            return fontFormat switch
             {
                 FontFormat.Fnt => getFntGlyphStore(storage, fontName),
                 FontFormat.Ttf => getTtfGlyphStore(storage, fontName),

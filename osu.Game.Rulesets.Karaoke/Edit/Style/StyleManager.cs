@@ -13,9 +13,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
     public class StyleManager : Component
     {
-        public readonly Bindable<LyricFont> EditStyle = new Bindable<LyricFont>();
+        public readonly Bindable<LyricFont> EditStyle = new();
 
-        public readonly Bindable<NoteSkin> EditNoteStyle = new Bindable<NoteSkin>();
+        public readonly Bindable<NoteSkin> EditNoteStyle = new();
 
         [Resolved]
         private ISkinSource source { get; set; }

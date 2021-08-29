@@ -41,23 +41,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager { get; set; }
 
         [Cached]
-        private readonly LyricEditorColourProvider colourProvider = new LyricEditorColourProvider();
+        private readonly LyricEditorColourProvider colourProvider = new();
 
         [Cached]
-        private readonly LyricSelectionState lyricSelectionState = new LyricSelectionState();
+        private readonly LyricSelectionState lyricSelectionState = new();
 
         [Cached]
-        private readonly LyricCaretState lyricCaretState = new LyricCaretState();
+        private readonly LyricCaretState lyricCaretState = new();
 
         [Cached]
-        private readonly BlueprintSelectionState blueprintSelectionState = new BlueprintSelectionState();
+        private readonly BlueprintSelectionState blueprintSelectionState = new();
 
-        public Bindable<LyricEditorMode> BindableMode { get; } = new Bindable<LyricEditorMode>();
+        public Bindable<LyricEditorMode> BindableMode { get; } = new();
 
-        private readonly Bindable<float> bindableFontSize = new Bindable<float>();
-        private readonly Bindable<MovingTimeTagCaretMode> bindableCreateMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
-        private readonly Bindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
-        private readonly BindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
+        private readonly Bindable<float> bindableFontSize = new();
+        private readonly Bindable<MovingTimeTagCaretMode> bindableCreateMovingCaretMode = new();
+        private readonly Bindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new();
+        private readonly BindableList<Lyric> bindableLyrics = new();
 
         private readonly GridContainer gridContainer;
         private readonly GridContainer lyricEditorGridContainer;
@@ -98,9 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                         }
                                     },
                                 },
-                                new Drawable[]
-                                {
-                                },
+                                Array.Empty<Drawable>(),
                                 new Drawable[]
                                 {
                                     new ApplySelectingArea(),
@@ -468,7 +466,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException("Oops, seems some navigation to fix case has been missing.");
+                    throw new ArgumentOutOfRangeException(nameof(mode));
             }
         }
     }

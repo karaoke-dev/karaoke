@@ -19,9 +19,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
     /// </summary>
     public class TranslateManager : Component
     {
-        public readonly BindableList<CultureInfo> Languages = new BindableList<CultureInfo>();
+        public readonly BindableList<CultureInfo> Languages = new();
 
-        public readonly Bindable<CultureInfo> CurrentLanguage = new Bindable<CultureInfo>();
+        public readonly Bindable<CultureInfo> CurrentLanguage = new();
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }

@@ -27,9 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         protected WorkingBeatmap WorkingBeatmap => beatmap.Value;
 
-        private readonly BindableDouble preemptTime = new BindableDouble();
-        private readonly Bindable<Lyric> nowLyric = new Bindable<Lyric>();
-        private readonly Cached seekCache = new Cached();
+        private readonly BindableDouble preemptTime = new();
+        private readonly Bindable<Lyric> nowLyric = new();
+        private readonly Cached seekCache = new();
 
         public LyricPlayfield()
         {

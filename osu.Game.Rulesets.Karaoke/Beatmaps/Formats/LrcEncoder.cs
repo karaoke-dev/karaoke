@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         }
 
         private LyricLine encodeLyric(Lyric lyric) =>
-            new LyricLine
+            new()
             {
                 Text = lyric.Text,
                 // Note : save to lyric will lost some tags with no value.

@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             [Resolved(canBeNull: true)]
             protected OsuGame Game { get; private set; }
 
-            private readonly BindableWithCurrent<FontUsage> current = new BindableWithCurrent<FontUsage>();
+            private readonly BindableWithCurrent<FontUsage> current = new();
             private BindableFontUsage bindableFontUsage;
 
             private readonly GridContainer grid;

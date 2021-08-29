@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Timing
 
         public double FramesPerSecond => 0;
 
-        public FrameTimeInfo TimeInfo => new FrameTimeInfo { Current = CurrentTime, Elapsed = ElapsedFrameTime };
+        public FrameTimeInfo TimeInfo => new() { Current = CurrentTime, Elapsed = ElapsedFrameTime };
 
         public double CurrentTime { get; }
 

@@ -17,9 +17,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja
         /// </summary>
         public bool EnableDuplicatedRuby { get; set; }
 
-        public JaRubyTagGeneratorConfig CreateDefaultConfig()
-        {
-            return new JaRubyTagGeneratorConfig();
-        }
+        public JaRubyTagGeneratorConfig CreateDefaultConfig() => new();
     }
 }

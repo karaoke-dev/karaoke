@@ -50,9 +50,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
 
         public class ControlLayer : CompositeDrawable, IKeyBindingHandler<KaraokeAction>
         {
-            private readonly BindableInt bindablePitch = new BindableInt();
-            private readonly BindableInt bindableVocalPitch = new BindableInt();
-            private readonly BindableInt bindableSaitenPitch = new BindableInt();
+            private readonly BindableInt bindablePitch = new();
+            private readonly BindableInt bindableVocalPitch = new();
+            private readonly BindableInt bindableSaitenPitch = new();
 
             private readonly FillFlowContainer<SettingButton> triggerButtons;
 

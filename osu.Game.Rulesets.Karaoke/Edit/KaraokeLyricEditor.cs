@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeLyricEditor : CompositeDrawable
     {
-        private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new Bindable<LyricEditorMode>();
+        private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new();
 
         private readonly LyricEditor lyricEditor;
 

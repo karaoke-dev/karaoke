@@ -17,10 +17,10 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
     public class ChangelogSidebar : CompositeDrawable
     {
         [Cached]
-        public readonly Bindable<APIChangelogSidebar> Metadata = new Bindable<APIChangelogSidebar>();
+        public readonly Bindable<APIChangelogSidebar> Metadata = new();
 
         [Cached]
-        public readonly Bindable<int> Year = new Bindable<int>();
+        public readonly Bindable<int> Year = new();
 
         private FillFlowContainer<ChangelogSection> changelogsFlow;
 

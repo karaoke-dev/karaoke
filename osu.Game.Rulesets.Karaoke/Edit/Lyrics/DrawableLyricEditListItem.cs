@@ -29,9 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved]
         private LyricEditorColourProvider colourProvider { get; set; }
 
-        private readonly Bindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-        private readonly Bindable<ICaretPosition> bindableHoverCaretPosition = new Bindable<ICaretPosition>();
-        private readonly Bindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
+        private readonly Bindable<LyricEditorMode> bindableMode = new();
+        private readonly Bindable<ICaretPosition> bindableHoverCaretPosition = new();
+        private readonly Bindable<ICaretPosition> bindableCaretPosition = new();
 
         public DrawableLyricEditListItem(Lyric item)
             : base(item)

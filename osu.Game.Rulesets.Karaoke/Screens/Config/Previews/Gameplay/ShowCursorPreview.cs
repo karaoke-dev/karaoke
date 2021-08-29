@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
 {
     public class ShowCursorPreview : SettingsSubsectionPreview
     {
-        private readonly Bindable<bool> bindableShowCursor = new Bindable<bool>();
+        private readonly Bindable<bool> bindableShowCursor = new();
         private readonly MenuCursor.Cursor cursor;
 
         public ShowCursorPreview()

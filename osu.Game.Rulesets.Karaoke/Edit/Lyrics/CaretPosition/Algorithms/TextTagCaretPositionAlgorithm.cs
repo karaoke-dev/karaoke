@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.ComponentModel;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -68,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 EditArea.Ruby => position.TextTag is RubyTag,
                 EditArea.Romaji => position.TextTag is RomajiTag,
                 EditArea.Both => true,
-                _ => throw new ArgumentOutOfRangeException(nameof(position.TextTag))
+                _ => throw new InvalidEnumArgumentException(nameof(EditArea))
             };
     }
 

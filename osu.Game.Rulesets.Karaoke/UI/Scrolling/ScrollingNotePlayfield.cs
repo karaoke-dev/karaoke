@@ -135,7 +135,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
                                                       new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.JudgementAresPercentage, 0))
                                                   ?.Value ?? 0.4f;
 
-                switch (dir.NewValue)
+                var newDirection = dir.NewValue;
+
+                switch (newDirection)
                 {
                     case ScrollingDirection.Left:
                         OnDirectionChanged(KaraokeScrollingDirection.Left, judgementAreaPercentage);
@@ -146,7 +148,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(dir.NewValue));
+                        throw new ArgumentOutOfRangeException(nameof(newDirection));
                 }
             });
 

@@ -220,7 +220,7 @@ namespace osu.Game.Rulesets.Karaoke
             // Always display song info
             var statistic = new List<StatisticRow>
             {
-                new StatisticRow
+                new()
                 {
                     Columns = new[]
                     {

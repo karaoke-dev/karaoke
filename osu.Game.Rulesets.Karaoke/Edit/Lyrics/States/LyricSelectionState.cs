@@ -9,11 +9,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
     public class LyricSelectionState
     {
-        public BindableBool Selecting { get; } = new BindableBool();
+        public BindableBool Selecting { get; } = new();
 
-        public BindableDictionary<Lyric, string> DisableSelectingLyric { get; } = new BindableDictionary<Lyric, string>();
+        public BindableDictionary<Lyric, string> DisableSelectingLyric { get; } = new();
 
-        public BindableList<Lyric> SelectedLyrics { get; } = new BindableList<Lyric>();
+        public BindableList<Lyric> SelectedLyrics { get; } = new();
 
         public Action<LyricEditorSelectingAction> Action { get; set; }
 

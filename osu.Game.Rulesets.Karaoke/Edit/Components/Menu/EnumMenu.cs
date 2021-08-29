@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
     public abstract class EnumMenu<TSetting, T> : MenuItem where TSetting : struct, Enum
     {
-        private readonly Bindable<T> bindableEnum = new Bindable<T>();
+        private readonly Bindable<T> bindableEnum = new();
 
         protected abstract TSetting Setting { get; }
 

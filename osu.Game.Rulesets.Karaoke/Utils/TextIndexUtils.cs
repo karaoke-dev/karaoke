@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static TextIndex ShiftingIndex(TextIndex originIndex, int shifting)
         {
-            return new TextIndex(originIndex.Index + shifting, originIndex.State);
+            return new(originIndex.Index + shifting, originIndex.State);
         }
 
         public static bool OutOfRange(TextIndex index, string lyric)

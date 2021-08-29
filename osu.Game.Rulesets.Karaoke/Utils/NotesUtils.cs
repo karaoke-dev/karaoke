@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static Tuple<Note, Note> SplitNote(Note note, double percentage = 0.5)
         {
             if (percentage < 0 || percentage > 1)
-                throw new ArgumentOutOfRangeException(nameof(Note));
+                throw new ArgumentOutOfRangeException(nameof(note));
 
             if (percentage == 0 || percentage == 1)
                 throw new InvalidOperationException($"{nameof(percentage)} cannot be {0} or {1}.");

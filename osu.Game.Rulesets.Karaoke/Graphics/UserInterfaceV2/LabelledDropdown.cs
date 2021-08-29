@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
         }
 
         protected override SettingsDropdown<T> CreateComponent()
-            => new SettingsDropdown<T>
+            => new()
             {
                 RelativeSizeAxes = Axes.X,
             };

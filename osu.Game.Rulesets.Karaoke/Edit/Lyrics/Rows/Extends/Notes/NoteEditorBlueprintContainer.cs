@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
     internal class EditNoteBlueprintContainer : ExtendBlueprintContainer<Note>
     {
         [UsedImplicitly]
-        private readonly Bindable<Note[]> notes = new Bindable<Note[]>();
+        private readonly Bindable<Note[]> notes = new();
 
         private readonly Lyric lyric;
 

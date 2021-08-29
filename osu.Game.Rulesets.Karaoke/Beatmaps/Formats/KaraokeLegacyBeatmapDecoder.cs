@@ -214,7 +214,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     }
 
                     if (!int.TryParse(tone, out int scale))
-                        throw new ArgumentOutOfRangeException($"{tone} does not support in {nameof(KaraokeLegacyBeatmapDecoder)}");
+                        throw new InvalidCastException($"{tone} does not support in {nameof(KaraokeLegacyBeatmapDecoder)}");
 
                     return new Tone
                     {

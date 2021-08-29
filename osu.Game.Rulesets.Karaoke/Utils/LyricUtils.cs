@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.Internal;
 using osu.Framework.Graphics.Sprites;
@@ -160,7 +161,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 }
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(index.State));
+                    throw new InvalidEnumArgumentException(nameof(index.State));
             }
         }
 
@@ -177,16 +178,18 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (timeTag == null)
                 throw new ArgumentNullException(nameof(timeTag));
 
+            var state = timeTag.Index.State;
+
             // should check has ruby in target lyric with target index.
             var matchRuby = lyric?.RubyTags.Where(x =>
             {
                 var stringIndex = TextIndexUtils.ToStringIndex(timeTag.Index);
 
-                return timeTag.Index.State switch
+                return state switch
                 {
                     TextIndex.IndexState.Start => x.StartIndex <= stringIndex && x.EndIndex > stringIndex,
                     TextIndex.IndexState.End => x.StartIndex < stringIndex && x.EndIndex >= stringIndex,
-                    _ => throw new ArgumentOutOfRangeException(nameof(timeTag.Index.State))
+                    _ => throw new InvalidEnumArgumentException(nameof(state))
                 };
             }).FirstOrDefault();
 
@@ -208,11 +211,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var subtext = timeTagsWithSameIndex.Count() == 1 ? text : text.Substring(Math.Min(text.Length - 1, index), 1);
 
             // return substring with format.
-            return timeTag.Index.State switch
+            return state switch
             {
                 TextIndex.IndexState.Start => $"({subtext})-",
                 TextIndex.IndexState.End => $"-({subtext})",
-                _ => throw new ArgumentOutOfRangeException(nameof(timeTag.Index.State))
+                _ => throw new InvalidEnumArgumentException(nameof(state))
             };
         }
 

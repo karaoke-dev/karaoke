@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         /// </summary>
         private Container triangleContainer;
 
-        private readonly Bindable<bool> major = new Bindable<bool>();
+        private readonly Bindable<bool> major = new();
 
         public DrawableBarLine()
             : this(null)

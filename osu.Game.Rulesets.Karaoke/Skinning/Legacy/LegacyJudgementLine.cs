@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
     public class LegacyJudgementLine : LegacyKaraokeElement
     {
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
-        private readonly LayoutValue subtractionCache = new LayoutValue(Invalidation.DrawSize);
+        private readonly LayoutValue subtractionCache = new(Invalidation.DrawSize);
 
         public LegacyJudgementLine()
         {

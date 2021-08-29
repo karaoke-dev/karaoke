@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             overlay.Add(CreateSnowContainer);
         }
 
-        protected virtual SnowContainer CreateSnowContainer => new SnowContainer
+        protected virtual SnowContainer CreateSnowContainer => new()
         {
             SnowGenerateParSecond = 1,
             EnableNewSnow = true,

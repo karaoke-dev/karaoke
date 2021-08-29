@@ -20,10 +20,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
 {
     public class LyricPreview : SettingsSubsectionPreview
     {
-        private readonly Bindable<FontUsage> mainFont = new Bindable<FontUsage>();
-        private readonly Bindable<FontUsage> rubyFont = new Bindable<FontUsage>();
-        private readonly Bindable<FontUsage> romajiFont = new Bindable<FontUsage>();
-        private readonly Bindable<FontUsage> translateFont = new Bindable<FontUsage>();
+        private readonly Bindable<FontUsage> mainFont = new();
+        private readonly Bindable<FontUsage> rubyFont = new();
+        private readonly Bindable<FontUsage> romajiFont = new();
+        private readonly Bindable<FontUsage> translateFont = new();
 
         [Resolved]
         private FontStore fontStore { get; set; }
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
         }
 
         private Lyric createPreviewLyric()
-            => new Lyric
+            => new()
             {
                 Text = "カラオケ",
                 RubyTags = new[]

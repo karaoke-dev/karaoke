@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -18,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
     {
         private const float section_scale = 0.75f;
 
-        private readonly Bindable<T> bindableConfig = new Bindable<T>();
+        private readonly Bindable<T> bindableConfig = new();
 
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
@@ -52,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
                         RelativeSizeAxes = Axes.Both,
                         Scale = new Vector2(section_scale),
                         Size = new Vector2(1 / section_scale),
-                        Children = CreateConfigSection(bindableConfig) ?? new GeneratorConfigSection[] { }
+                        Children = CreateConfigSection(bindableConfig) ?? Array.Empty<GeneratorConfigSection>()
                     }
                 }
             };

@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
     public static class KaraokeIcon
     {
-        public static IconUsage Get(int icon) => new IconUsage((char)icon, "osuFont");
+        public static IconUsage Get(int icon) => new((char)icon, "osuFont");
 
         // ruleset icons in circles
         public static IconUsage RulesetKaraoke => FontAwesome.Solid.PlayCircle;

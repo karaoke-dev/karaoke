@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// </summary>
         public TextIndex Index { get; }
 
-        public readonly Bindable<double?> TimeBindable = new Bindable<double?>();
+        public readonly Bindable<double?> TimeBindable = new();
 
         /// <summary>
         /// Time

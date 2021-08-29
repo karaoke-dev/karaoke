@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         protected new KaraokeRulesetConfigManager Config => (KaraokeRulesetConfigManager)base.Config;
 
-        private readonly Bindable<KaraokeScrollingDirection> configDirection = new Bindable<KaraokeScrollingDirection>();
+        private readonly Bindable<KaraokeScrollingDirection> configDirection = new();
 
         [Cached(Type = typeof(INotePositionInfo))]
         private readonly NotePositionInfo positionCalculator;

@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.ComponentModel;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
@@ -71,13 +72,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                         break;
 
                     // print normal message
-                    case Issue _:
+                    case Issue:
                         invalidMessage.AddAlertParagraph(issue.Template.GetMessage());
                         break;
 
                     // Should throw exception because every issue message should be printed.
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(issue));
+                        throw new InvalidEnumArgumentException(nameof(issue));
                 }
             }
 
@@ -104,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(timeInvalid));
+                        throw new InvalidEnumArgumentException(nameof(timeInvalid));
                 }
             }
 
@@ -125,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(invalid));
+                        throw new InvalidEnumArgumentException(nameof(invalid));
                 }
 
                 displayInvalidTag(timeTags, tag => invalidMessage.AddHighlightText(TextIndexUtils.PositionFormattedString(tag.Index)));
@@ -148,7 +149,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(invalid));
+                        throw new InvalidEnumArgumentException(nameof(invalid));
                 }
 
                 displayInvalidTag(rubyTags, tag => invalidMessage.AddHighlightText(TextTagUtils.PositionFormattedString(tag)));
@@ -171,7 +172,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(invalid));
+                        throw new InvalidEnumArgumentException(nameof(invalid));
                 }
 
                 displayInvalidTag(romajiTags, tag => invalidMessage.AddHighlightText(TextTagUtils.PositionFormattedString(tag)));

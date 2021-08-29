@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator
 {
     public abstract class GeneratorSelector<TGenerator, TConfig> where TGenerator : class
     {
-        protected Dictionary<CultureInfo, Lazy<TGenerator>> Generator { get; } = new Dictionary<CultureInfo, Lazy<TGenerator>>();
+        protected Dictionary<CultureInfo, Lazy<TGenerator>> Generator { get; } = new();
 
         protected void RegisterGenerator<T, Tc>(CultureInfo info) where T : TGenerator where Tc : TConfig, new()
         {

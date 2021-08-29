@@ -11,9 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
 
         public bool Checkっ { get; set; }
 
-        public JaTimeTagGeneratorConfig CreateDefaultConfig()
-        {
-            return new JaTimeTagGeneratorConfig
+        public JaTimeTagGeneratorConfig CreateDefaultConfig() =>
+            new()
             {
                 Checkん = true,
                 CheckLineEnd = true,
@@ -21,6 +20,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
                 CheckWhiteSpace = true,
                 CheckWhiteSpaceKeyUp = true,
             };
-        }
     }
 }

@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
         public ExpansionMode ExpansionMode = ExpansionMode.ExpandOnHover;
 
-        private readonly Bindable<IReadOnlyList<Singer>> current = new Bindable<IReadOnlyList<Singer>>();
+        private readonly Bindable<IReadOnlyList<Singer>> current = new();
 
         public Bindable<IReadOnlyList<Singer>> Current
         {

@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
             var currentTextTag = currentPosition.TextTag;
 
-            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition) ?? new ITextTag[] { }).ToArray();
+            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition) ?? Array.Empty<ITextTag>()).ToArray();
             var previousTextTag = textTags.GetPrevious(currentTextTag);
 
             var currentLyric = currentPosition.Lyric;
@@ -91,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
             var currentTextTag = currentPosition.TextTag;
 
-            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition) ?? new ITextTag[] { }).ToArray();
+            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition) ?? Array.Empty<ITextTag>()).ToArray();
             var nextTextTag = textTags.GetNext(currentTextTag);
 
             var currentLyric = currentPosition.Lyric;
@@ -134,8 +134,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         private ITextTag[] getRelatedTypeTextTag(Lyric lyric, ITextTag sample) =>
             sample switch
             {
-                RubyTag _ => lyric.RubyTags?.OfType<ITextTag>().ToArray(),
-                RomajiTag _ => lyric.RomajiTags?.OfType<ITextTag>().ToArray(),
+                RubyTag => lyric.RubyTags?.OfType<ITextTag>().ToArray(),
+                RomajiTag => lyric.RomajiTags?.OfType<ITextTag>().ToArray(),
                 _ => throw new InvalidCastException(nameof(sample))
             };
 

@@ -15,6 +15,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
         protected override string FontName => "OpenSans-Regular";
 
         protected override TtfGlyphStore CreateFontStore(ResourceStore<byte[]> store, string assetName)
-            => new TtfGlyphStore(store, assetName);
+            => new(store, assetName);
     }
 }

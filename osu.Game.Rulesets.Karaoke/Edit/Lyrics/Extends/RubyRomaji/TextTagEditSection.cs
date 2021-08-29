@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
     public abstract class TextTagEditSection<T> : Section where T : ITextTag
     {
-        protected readonly Bindable<T[]> TextTags = new Bindable<T[]>();
+        protected readonly Bindable<T[]> TextTags = new();
 
         protected Lyric Lyric { get; set; }
 

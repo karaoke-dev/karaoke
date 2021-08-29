@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
         [Resolved]
         private OsuColour colours { get; set; }
 
-        protected readonly BindableList<T> SelectedTextTag = new BindableList<T>();
+        protected readonly BindableList<T> SelectedTextTag = new();
 
         private readonly T textTag;
 

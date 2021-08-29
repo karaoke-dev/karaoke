@@ -7,9 +7,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh
 {
     public class ZhTimeTagGeneratorConfig : TimeTagGeneratorConfig, IHasConfig<ZhTimeTagGeneratorConfig>
     {
-        public ZhTimeTagGeneratorConfig CreateDefaultConfig()
-        {
-            return new ZhTimeTagGeneratorConfig();
-        }
+        public ZhTimeTagGeneratorConfig CreateDefaultConfig() => new();
     }
 }

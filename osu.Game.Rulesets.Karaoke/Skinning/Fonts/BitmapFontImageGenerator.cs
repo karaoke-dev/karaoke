@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                                       => x.ToDictionary(v => v.Key, v => v.Value));
 
             if (pages == null || !pages.Any())
-                return new TextureUpload[] { };
+                return Array.Empty<TextureUpload>();
 
             return pages.Select(x => GeneratePage(bitmapFont.Info, bitmapFont.Common, x.Value)).ToArray();
         }

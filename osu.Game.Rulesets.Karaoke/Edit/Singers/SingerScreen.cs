@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         private readonly EditSingerDialog editSingerDialog;
 
         [Cached]
-        public BindableList<Lyric> SelectedLyrics { get; } = new BindableList<Lyric>();
+        public BindableList<Lyric> SelectedLyrics { get; } = new();
 
         public SingerScreen()
         {

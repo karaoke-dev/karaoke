@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
     /// </summary>
     public class LyricCheckerManager : Component
     {
-        public BindableDictionary<Lyric, Issue[]> BindableReports = new BindableDictionary<Lyric, Issue[]>();
+        public BindableDictionary<Lyric, Issue[]> BindableReports = new();
 
         private LyricVerifier lyricVerifier;
 

@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
         [Resolved]
         private LyricManager lyricManager { get; set; }
 
-        private readonly Bindable<CultureInfo> languageBindable = new Bindable<CultureInfo>();
+        private readonly Bindable<CultureInfo> languageBindable = new();
 
         public LanguageInfo(Lyric lyric)
             : base(lyric)
@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
                 var language = value.NewValue;
                 lyricManager?.SetLanguage(lyric, language);
 
-                BadgeText = language == null ? "None" : language.DisplayName;
+                BadgeText = language?.DisplayName ?? "None";
             }, true);
             languageBindable.BindTo(lyric.LanguageBindable);
         }

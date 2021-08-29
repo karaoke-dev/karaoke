@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             => OverlayColourScheme.Blue;
 
         protected override Dictionary<LyricEditorMode, EditModeSelectionItem> CreateSelections()
-            => new Dictionary<LyricEditorMode, EditModeSelectionItem>
+            => new()
             {
                 {
                     LyricEditorMode.CreateNote, new EditModeSelectionItem("Create", "Using time-tag to create default notes.")

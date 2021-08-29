@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
     public class Note : KaraokeHitObject, IHasDuration, IHasText
     {
         [JsonIgnore]
-        public readonly Bindable<string> TextBindable = new Bindable<string>();
+        public readonly Bindable<string> TextBindable = new();
 
         /// <summary>
         /// Text display on the note
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<string> AlternativeTextBindable = new Bindable<string>();
+        public readonly Bindable<string> AlternativeTextBindable = new();
 
         /// <summary>
         /// Will be display if <see cref="KaraokeRulesetSetting.DisplayAlternativeText"/> is true
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<bool> DisplayBindable = new Bindable<bool>();
+        public readonly Bindable<bool> DisplayBindable = new();
 
         /// <summary>
         /// Display this note
@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<Tone> ToneBindable = new Bindable<Tone>();
+        public readonly Bindable<Tone> ToneBindable = new();
 
         /// <summary>
         /// Tone of this note
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public int EndIndex { get; set; }
 
         [JsonIgnore]
-        public readonly Bindable<Lyric> ParentLyricBindable = new Bindable<Lyric>();
+        public readonly Bindable<Lyric> ParentLyricBindable = new();
 
         /// <summary>
         /// Relative lyric.
