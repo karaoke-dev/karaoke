@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -235,7 +236,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        throw new InvalidEnumArgumentException(nameof(timeTag.State));
                 }
 
                 // fix previous or next value to apply
@@ -254,7 +255,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                         break;
 
                     default:
-                        throw new InvalidOperationException(nameof(other));
+                        throw new InvalidEnumArgumentException(nameof(other));
                 }
             }
 

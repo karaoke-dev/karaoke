@@ -1,7 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
+using System.ComponentModel;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 MovingCaretAction.Right => algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveRight", currentPosition),
                 MovingCaretAction.First => algorithm.CallMethod<ICaretPosition>("MoveToFirst"),
                 MovingCaretAction.Last => algorithm.CallMethod<ICaretPosition>("MoveToLast"),
-                _ => throw new ArgumentOutOfRangeException(nameof(action))
+                _ => throw new InvalidEnumArgumentException(nameof(action))
             };
 
             if (position == null)

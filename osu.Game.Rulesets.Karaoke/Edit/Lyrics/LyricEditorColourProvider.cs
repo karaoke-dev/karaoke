@@ -1,7 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
+using System.ComponentModel;
 using osuTK;
 using osuTK.Graphics;
 
@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return 271 / 360f; // purple
 
                 default:
-                    throw new ArgumentOutOfRangeException($@"{mode} colour scheme does not provide a hue value in {nameof(getBaseHue)}.");
+                    throw new InvalidEnumArgumentException($@"{mode} colour scheme does not provide a hue value in {nameof(getBaseHue)}.");
             }
         }
     }
