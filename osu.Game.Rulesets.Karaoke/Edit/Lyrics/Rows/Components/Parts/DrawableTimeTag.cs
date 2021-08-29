@@ -57,13 +57,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
             bindableMode = state.BindableMode.GetBoundCopy();
             bindableRecordingMovingCaretMode = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode).GetBoundCopy();
 
-            bindableMode.BindValueChanged(x =>
+            bindableMode.BindValueChanged(_ =>
             {
                 // should wait until caret position algorithm loaded.
                 Schedule(updateStyle);
             });
 
-            bindableRecordingMovingCaretMode.BindValueChanged(x =>
+            bindableRecordingMovingCaretMode.BindValueChanged(_ =>
             {
                 // should wait until caret position algorithm loaded.
                 Schedule(updateStyle);

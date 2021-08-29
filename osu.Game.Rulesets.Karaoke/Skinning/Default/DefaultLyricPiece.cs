@@ -53,9 +53,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             {
                 foreach (var obj in addItems)
                 {
-                    obj.StartIndexBindable.BindValueChanged(x => applyRuby(RubyTagsBindable.Value));
-                    obj.EndIndexBindable.BindValueChanged(x => applyRuby(RubyTagsBindable.Value));
-                    obj.TextBindable.BindValueChanged(x => applyRuby(RubyTagsBindable.Value));
+                    obj.StartIndexBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable.Value));
+                    obj.EndIndexBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable.Value));
+                    obj.TextBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable.Value));
                 }
             }, removedItems =>
             {
@@ -71,9 +71,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             {
                 foreach (var obj in addItems)
                 {
-                    obj.StartIndexBindable.BindValueChanged(x => applyRomaji(RomajiTagsBindable.Value));
-                    obj.EndIndexBindable.BindValueChanged(x => applyRomaji(RomajiTagsBindable.Value));
-                    obj.TextBindable.BindValueChanged(x => applyRomaji(RomajiTagsBindable.Value));
+                    obj.StartIndexBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable.Value));
+                    obj.EndIndexBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable.Value));
+                    obj.TextBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable.Value));
                 }
             }, removedItems =>
             {

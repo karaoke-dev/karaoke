@@ -44,8 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
             bindableColumnHeight.BindTo(columnHeight);
             bindableColumnSpacing.BindTo(columnSpacing);
 
-            bindableColumnHeight.BindValueChanged(e => updatePositionCalculator());
-            bindableColumnSpacing.BindValueChanged(e => updatePositionCalculator());
+            bindableColumnHeight.BindValueChanged(_ => updatePositionCalculator());
+            bindableColumnSpacing.BindValueChanged(_ => updatePositionCalculator());
         }
 
         private void updatePositionCalculator()

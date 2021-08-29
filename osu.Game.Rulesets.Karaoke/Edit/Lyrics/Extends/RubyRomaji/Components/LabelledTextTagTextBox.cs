@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
             };
 
             // change style if focus.
-            SelectedTextTag.BindCollectionChanged((e, a) =>
+            SelectedTextTag.BindCollectionChanged((_, _) =>
             {
                 var highLight = SelectedTextTag.Contains(textTag);
 

@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
 
         public SingerEditSection()
         {
-            singerIndexes.BindValueChanged(e =>
+            singerIndexes.BindValueChanged(_ =>
             {
                 foreach (var singerLabel in Content.OfType<LabelledSingerSwitchButton>())
                 {

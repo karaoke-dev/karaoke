@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
         public TimeTagInfo(Lyric lyric)
             : base(lyric)
         {
-            lyric.TimeTagsBindable.BindValueChanged(value =>
+            lyric.TimeTagsBindable.BindValueChanged(_ =>
             {
                 BadgeText = LyricUtils.TimeTagTimeFormattedString(Lyric);
             }, true);

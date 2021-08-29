@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
             };
 
             bindableReports = lyricCheckerManager.BindableReports.GetBoundCopy();
-            bindableReports.BindCollectionChanged((a, b) =>
+            bindableReports.BindCollectionChanged((_, _) =>
             {
                 var issues = bindableReports.Values.SelectMany(x => x);
                 table.Issues = issues.Where(x => x.Template is CheckInvalidPropertyLyrics.IssueTemplateNotFillLanguage);

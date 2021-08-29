@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                     updateSingerInfo(e.NewValue);
                 }, true);
 
-                singer.OrderBindable.BindValueChanged(x =>
+                singer.OrderBindable.BindValueChanged(_ =>
                 {
                     updateSingerName(singer);
                 });

@@ -31,9 +31,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints
         private void load()
         {
             UpdatePositionAndSize();
-            text.BindValueChanged(e => UpdatePositionAndSize());
-            startIndex.BindValueChanged(e => UpdatePositionAndSize());
-            endIndex.BindValueChanged(e => UpdatePositionAndSize());
+            text.BindValueChanged(_ => UpdatePositionAndSize());
+            startIndex.BindValueChanged(_ => UpdatePositionAndSize());
+            endIndex.BindValueChanged(_ => UpdatePositionAndSize());
         }
     }
 }

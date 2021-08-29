@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 return;
 
             Languages.AddRange(karaokeBeatmap.AvailableTranslates);
-            Languages.BindCollectionChanged((a, b) => { karaokeBeatmap.AvailableTranslates = Languages.ToArray(); });
+            Languages.BindCollectionChanged((_, _) => { karaokeBeatmap.AvailableTranslates = Languages.ToArray(); });
         }
 
         public void AddLanguage(CultureInfo cultureInfo)

@@ -106,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
 
                 // should update background if mode changed.
-                mode.BindValueChanged(e =>
+                mode.BindValueChanged(_ =>
                 {
                     background.Colour = colourProvider.Dark2(state.Mode);
                     selectedCheckbox.AccentColour = colourProvider.Colour2(state.Mode);
@@ -126,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 }, true);
 
                 // get bindable and update bindable if check / uncheck.
-                selectedLyrics.BindCollectionChanged((a, b) =>
+                selectedLyrics.BindCollectionChanged((_, _) =>
                 {
                     if (selectedCheckbox.Current.Disabled)
                         return;
@@ -136,7 +136,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 }, true);
 
                 // should disable selection if current lyric is disabled.
-                disableSelectingLyrics.BindCollectionChanged((a, b) =>
+                disableSelectingLyrics.BindCollectionChanged((_, _) =>
                 {
                     var disabled = disableSelectingLyrics.Keys.Contains(lyric);
                     selectedCheckbox.Current.Disabled = disabled;

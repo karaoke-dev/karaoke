@@ -328,7 +328,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     }
                 };
 
-                lyricPiece.TimeTagsBindable.BindValueChanged(e =>
+                lyricPiece.TimeTagsBindable.BindValueChanged(_ =>
                 {
                     ScheduleAfterChildren(UpdateTimeTags);
                 }, true);

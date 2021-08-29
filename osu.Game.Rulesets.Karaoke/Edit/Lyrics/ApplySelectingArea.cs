@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             // get bindable and update bindable if select or not select all.
             selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
 
-            selectedLyrics.BindCollectionChanged((a, b) =>
+            selectedLyrics.BindCollectionChanged((_, _) =>
             {
                 var selectAny = selectedLyrics.Any();
                 applyButton.Enabled.Value = selectAny;
@@ -172,14 +172,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
 
                 // should update background if mode changed.
-                mode.BindValueChanged(e =>
+                mode.BindValueChanged(_ =>
                 {
                     background.Colour = colourProvider.Dark2(state.Mode);
                     allSelectedCheckbox.AccentColour = colourProvider.Colour2(state.Mode);
                 }, true);
 
                 // should disable selection if current lyric is disabled.
-                disableSelectingLyrics.BindCollectionChanged((a, b) =>
+                disableSelectingLyrics.BindCollectionChanged((_, _) =>
                 {
                     var disabledLyricNumber = lyricSelectionState.DisableSelectingLyric.Count;
                     var totalLyrics = beatmap.HitObjects.OfType<Lyric>().Count();
@@ -190,7 +190,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 });
 
                 // get bindable and update bindable if select or not select all.
-                selectedLyrics.BindCollectionChanged((a, b) =>
+                selectedLyrics.BindCollectionChanged((_, _) =>
                 {
                     if (checkboxClicking)
                         return;

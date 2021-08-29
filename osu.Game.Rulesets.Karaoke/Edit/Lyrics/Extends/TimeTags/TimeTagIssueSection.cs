@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
             };
 
             bindableReports = lyricCheckerManager.BindableReports.GetBoundCopy();
-            bindableReports.BindCollectionChanged((a, b) =>
+            bindableReports.BindCollectionChanged((_, _) =>
             {
                 // todo : might have filter in here.
                 var issues = bindableReports.Values.SelectMany(x => x);
@@ -217,7 +217,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 {
                     // update selected state by bindable.
                     selectedTimeTags = blueprintSelectionState.SelectedTimeTags.GetBoundCopy();
-                    selectedTimeTags.BindCollectionChanged((a, b) =>
+                    selectedTimeTags.BindCollectionChanged((_, _) =>
                     {
                         var selected = selectedTimeTags.Contains(timeTag);
                         UpdateState(selected);
