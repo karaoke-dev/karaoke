@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu
             Items = EnumUtils.GetValues<LockState>().Select(l => new OsuMenuItem(l.ToString(), anyLyricInLockState(l) ? MenuItemType.Highlighted : MenuItemType.Standard, () =>
             {
                 // change all selected lyric state.
-                lyrics.ForEach(lyric => manager.LockLyrics(lyrics, l));
+                manager.LockLyrics(lyrics, l);
             })).ToList();
 
             bool anyLyricInLockState(LockState lockState) => lyrics.Any(lyric => lyric.Lock == lockState);

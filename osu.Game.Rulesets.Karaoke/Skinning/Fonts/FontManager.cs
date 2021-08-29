@@ -187,7 +187,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             {
                 FontFormat.Fnt => getFntGlyphStore(storage, fontName),
                 FontFormat.Ttf => getTtfGlyphStore(storage, fontName),
-                _ => throw new ArgumentOutOfRangeException(nameof(fontFormat))
+                FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(fontFormat))
             };
         }
 
@@ -218,9 +218,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
         private static string getPathByFontType(FontFormat type) =>
             type switch
             {
-                FontFormat.Fnt => $"fnt",
-                FontFormat.Ttf => $"ttf",
-                _ => throw new ArgumentOutOfRangeException(nameof(type))
+                FontFormat.Fnt => "fnt",
+                FontFormat.Ttf => "ttf",
+                FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(type))
             };
 
         private static string getExtensionByFontType(FontFormat type) =>
@@ -228,7 +228,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             {
                 FontFormat.Fnt => "zipfnt",
                 FontFormat.Ttf => "ttf",
-                _ => throw new ArgumentOutOfRangeException(nameof(type))
+                FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(type))
             };
 
         private static FontFormat getFontTypeByExtension(string extension) =>

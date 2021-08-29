@@ -32,13 +32,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             config.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, bindableAutoFocusToEditLyricSkipRows);
 
             // mark disable as selected option.
-            bindableAutoFocusToEditLyric.BindValueChanged(e =>
+            bindableAutoFocusToEditLyric.BindValueChanged(_ =>
             {
                 updateSelectionState();
             }, true);
 
             // mark line as selected option.
-            bindableAutoFocusToEditLyricSkipRows.BindValueChanged(e =>
+            bindableAutoFocusToEditLyricSkipRows.BindValueChanged(_ =>
             {
                 updateSelectionState();
             }, true);

@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             => new AssignLanguageNavigation(this);
 
         protected override Drawable CreateContent()
-            => base.CreateContent().With(x =>
+            => base.CreateContent().With(_ =>
             {
                 LyricEditor.Mode = LyricEditorMode.Language;
             });

@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
             {
                 foreach (var obj in addItems)
                 {
-                    obj.TimeBindable.BindValueChanged(e =>
+                    obj.TimeBindable.BindValueChanged(_ =>
                     {
                         updateTimeRange();
                     });

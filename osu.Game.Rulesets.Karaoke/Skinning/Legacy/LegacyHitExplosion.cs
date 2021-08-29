@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             // This animation is discarded and re-queried with the appropriate frame length afterwards.
             var tmp = skin.GetAnimation(imageName, true, false);
             double frameLength = 0;
-            if (tmp is IFramedAnimation tmpAnimation && tmpAnimation.FrameCount > 0)
+            if (tmp is IFramedAnimation { FrameCount: > 0 } tmpAnimation)
                 frameLength = Math.Max(1000 / 60.0, 170.0 / tmpAnimation.FrameCount);
 
             explosion = skin.GetAnimation(imageName, true, false, frameLength: frameLength).With(d =>

@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
             => new EditLyricNavigation(this);
 
         protected override Drawable CreateContent()
-            => base.CreateContent().With(x =>
+            => base.CreateContent().With(_ =>
             {
                 LyricEditor.Mode = LyricEditorMode.Manage;
             });

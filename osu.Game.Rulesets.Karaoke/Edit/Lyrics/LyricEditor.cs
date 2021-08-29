@@ -142,21 +142,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 skin.FontSize = e.NewValue;
             });
 
-            bindableCreateMovingCaretMode.BindValueChanged(e =>
+            bindableCreateMovingCaretMode.BindValueChanged(_ =>
             {
                 initialCaretPositionAlgorithm();
 
                 lyricCaretState.ResetPosition(Mode);
             });
 
-            bindableRecordingMovingCaretMode.BindValueChanged(e =>
+            bindableRecordingMovingCaretMode.BindValueChanged(_ =>
             {
                 initialCaretPositionAlgorithm();
 
                 lyricCaretState.ResetPosition(Mode);
             });
 
-            lyricSelectionState.Selecting.BindValueChanged(e =>
+            lyricSelectionState.Selecting.BindValueChanged(_ =>
             {
                 initializeApplySelectingArea();
             }, true);

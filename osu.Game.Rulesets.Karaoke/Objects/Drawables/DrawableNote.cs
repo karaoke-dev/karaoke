@@ -71,12 +71,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
             positionBindable.BindTo(notePositionInfo.Position);
 
-            positionBindable.BindValueChanged(e => updateNotePositionAndHeight());
+            positionBindable.BindValueChanged(_ => updateNotePositionAndHeight());
             TextBindable.BindValueChanged(_ => { changeText(HitObject); });
             AlternativeTextBindable.BindValueChanged(_ => { changeText(HitObject); });
-            SingersBindable.BindValueChanged(index => { ApplySkin(CurrentSkin, false); });
+            SingersBindable.BindValueChanged(_ => { ApplySkin(CurrentSkin, false); });
             DisplayBindable.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue; });
-            ToneBindable.BindValueChanged(e => updateNotePositionAndHeight());
+            ToneBindable.BindValueChanged(_ => updateNotePositionAndHeight());
 
             void updateNotePositionAndHeight()
             {

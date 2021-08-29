@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
             };
 
             bindableReports = lyricCheckerManager.BindableReports.GetBoundCopy();
-            bindableReports.BindCollectionChanged((a, b) =>
+            bindableReports.BindCollectionChanged((_, _) =>
             {
                 var issues = bindableReports.Values.SelectMany(x => x);
                 table.Issues = issues.Where(x => x.Template is CheckInvalidPropertyLyrics.IssueTemplateNotFillLanguage);
@@ -60,13 +60,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
                     if (value == null)
                         return;
 
-                    Content = value.Select((g, i) =>
+                    Content = value.Select((g, _) =>
                     {
                         var lyric = g.HitObjects.FirstOrDefault() as Lyric;
                         return createContent(lyric);
                     }).ToArray().ToRectangular();
 
-                    BackgroundFlow.Children = value.Select((g, i) =>
+                    BackgroundFlow.Children = value.Select((g, _) =>
                     {
                         var lyric = g.HitObjects.FirstOrDefault() as Lyric;
                         return new LyricLanguageRowBackground(lyric);

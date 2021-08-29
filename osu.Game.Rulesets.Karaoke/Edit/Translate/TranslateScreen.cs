@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
             // ask only once if contains no language after switch to translate editor.
             bool alreadyAsked;
-            TranslateManager.Languages.BindCollectionChanged((a, b) =>
+            TranslateManager.Languages.BindCollectionChanged((_, _) =>
             {
                 alreadyAsked = true;
 

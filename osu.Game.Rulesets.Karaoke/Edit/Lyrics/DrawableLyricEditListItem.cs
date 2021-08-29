@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 removeExtend();
             }, true);
 
-            bindableHoverCaretPosition.BindValueChanged(e =>
+            bindableHoverCaretPosition.BindValueChanged(_ =>
             {
                 updateBackgroundColour();
             });

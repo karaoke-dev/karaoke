@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, LyricCheckerManager lyricCheckerManager)
         {
-            lyricCheckerManager.BindableReports.BindCollectionChanged((i, args) =>
+            lyricCheckerManager.BindableReports.BindCollectionChanged((_, args) =>
             {
                 // Ignore remove case
                 if (args.NewItems == null)

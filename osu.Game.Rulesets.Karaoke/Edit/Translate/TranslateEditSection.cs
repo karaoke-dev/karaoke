@@ -215,7 +215,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             timeSectionBackground.Colour = colours.ContextMenuGray;
             lyricSectionBackground.Colour = colours.Gray9;
 
-            translateGrid.RowDimensions = translateManager.Lyrics.Select(x => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
+            translateGrid.RowDimensions = translateManager.Lyrics.Select(_ => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
             translateGrid.Content = createContent(languageDropdown.Current);
         }
 

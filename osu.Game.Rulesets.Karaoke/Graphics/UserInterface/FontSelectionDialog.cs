@@ -176,7 +176,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 }
             };
 
-            fonts.BindCollectionChanged((a, b) =>
+            fonts.BindCollectionChanged((_, b) =>
             {
                 // re-calculate if source changed.
                 Schedule(() =>
@@ -217,9 +217,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 // set to first or empty if change new family.
                 weightProperty.Current.Value = weight.FirstOrDefault();
             });
-            weightProperty.Current.BindValueChanged(x => previewChange());
-            fontSizeProperty.Current.BindValueChanged(x => previewChange());
-            fixedWidthCheckbox.Current.BindValueChanged(x => previewChange());
+            weightProperty.Current.BindValueChanged(_ => previewChange());
+            fontSizeProperty.Current.BindValueChanged(_ => previewChange());
+            fixedWidthCheckbox.Current.BindValueChanged(_ => previewChange());
             Current.BindValueChanged(e =>
             {
                 var newFont = e.NewValue;

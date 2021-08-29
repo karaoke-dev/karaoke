@@ -103,13 +103,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
         private void load(GameHost host)
         {
             // todo : not really sure how to clean-up cached manager
-            if (host.Dependencies.Get<FontManager>() == null)
-            {
-                // because not possible to remove cache from host, so only inject once.
-                var manager = new FontManager();
-                AddInternal(manager);
-                host.Dependencies.Cache(manager);
-            }
+            if (host.Dependencies.Get<FontManager>() != null)
+                return;
+
+            // because not possible to remove cache from host, so only inject once.
+            var manager = new FontManager();
+            AddInternal(manager);
+            host.Dependencies.Cache(manager);
         }
 
         protected override void LoadComplete()

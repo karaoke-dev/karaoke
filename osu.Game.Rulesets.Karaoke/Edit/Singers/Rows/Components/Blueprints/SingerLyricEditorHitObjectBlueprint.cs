@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
         [BackgroundDependencyLoader]
         private void load(LyricManager lyricManager, SingerLyricEditor editor)
         {
-            singersBindable.BindValueChanged(e =>
+            singersBindable.BindValueChanged(_ =>
             {
                 // Check is lyric contains this singer, or default singer
                 isSingerMatched = lyricInCurrentSinger(Item, editor.Singer);

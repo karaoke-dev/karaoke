@@ -37,13 +37,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
             Component.Text = textTag.Text;
 
             // should change preview text box if selected ruby/romaji changed.
-            OnCommit += (sender, newText) =>
+            OnCommit += (sender, _) =>
             {
                 textTag.Text = sender.Text;
             };
 
             // change style if focus.
-            SelectedTextTag.BindCollectionChanged((e, a) =>
+            SelectedTextTag.BindCollectionChanged((_, _) =>
             {
                 var highLight = SelectedTextTag.Contains(textTag);
 

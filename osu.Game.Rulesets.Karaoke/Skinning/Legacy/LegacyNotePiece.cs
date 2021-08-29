@@ -127,11 +127,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         {
             if (direction.NewValue == ScrollingDirection.Left)
             {
-                InternalChildren.ForEach(x => Scale = Vector2.One);
+                InternalChildren.ForEach(x => x.Scale = Vector2.One);
             }
             else
             {
-                InternalChildren.ForEach(x => Scale = new Vector2(-1, 1));
+                InternalChildren.ForEach(x => x.Scale = new Vector2(-1, 1));
             }
         }
 

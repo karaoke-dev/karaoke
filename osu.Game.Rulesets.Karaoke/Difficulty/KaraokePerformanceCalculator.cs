@@ -45,9 +45,8 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
 
             IEnumerable<Mod> scoreIncreaseMods = Ruleset.GetModsFor(ModType.DifficultyIncrease);
 
-            double scoreMultiplier = 1.0;
-            foreach (var m in mods.Where(m => !scoreIncreaseMods.Contains(m)))
-                scoreMultiplier *= m.ScoreMultiplier;
+            double scoreMultiplier = mods.Where(m => !scoreIncreaseMods.Contains(m))
+                                         .Aggregate(1.0, (current, m) => current * m.ScoreMultiplier);
 
             // Scale score up, so it's comparable to other keymods
             scaledScore *= 1.0 / scoreMultiplier;

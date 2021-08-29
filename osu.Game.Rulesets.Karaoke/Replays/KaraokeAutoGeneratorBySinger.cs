@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
                     lengthSum += length;
 
                     // usually sample 1 is vocal
-                    var channel0Sample = sampleBuffer.Where((x, i) => i % 2 == 0).ToArray();
+                    var channel0Sample = sampleBuffer.Where((_, i) => i % 2 == 0).ToArray();
                     //var channel1Sample = sampleBuffer.Where((x, i) => i % 2 != 0).ToArray();
 
                     // Convert buffer to pitch data

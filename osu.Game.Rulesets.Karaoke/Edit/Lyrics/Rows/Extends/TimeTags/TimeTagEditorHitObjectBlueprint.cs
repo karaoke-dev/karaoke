@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             timeTagText.Text = LyricUtils.GetTimeTagDisplayRubyText(timeline.HitObject, Item);
             timeTagPiece.Colour = colours.BlueLight;
             timeTagWithNoTimePiece.Colour = colours.Red;
-            startTime.BindValueChanged(e =>
+            startTime.BindValueChanged(_ =>
             {
                 var hasValue = hasTime();
 

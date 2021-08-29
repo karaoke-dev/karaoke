@@ -80,8 +80,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 Origin = Anchor.TopLeft,
             });
 
-            useTranslateBindable.BindValueChanged(e => applyTranslate());
-            preferLanguageBindable.BindValueChanged(e => applyTranslate());
+            useTranslateBindable.BindValueChanged(_ => applyTranslate());
+            preferLanguageBindable.BindValueChanged(_ => applyTranslate());
             displayRubyBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRuby = e.NewValue));
             displayRomajiBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRomaji = e.NewValue));
 
@@ -102,9 +102,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 config.BindWith(KaraokeRulesetSetting.DisplayRomaji, displayRomajiBindable);
             }
 
-            singersBindable.BindValueChanged(index => { updateFontStyle(); });
-            layoutIndexBindable.BindValueChanged(index => { updateLayout(); });
-            translateTextBindable.BindCollectionChanged((_, args) => { applyTranslate(); });
+            singersBindable.BindValueChanged(_ => { updateFontStyle(); });
+            layoutIndexBindable.BindValueChanged(_ => { updateLayout(); });
+            translateTextBindable.BindCollectionChanged((_, _) => { applyTranslate(); });
 
             if (config != null)
             {
@@ -114,10 +114,10 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFontUsageBindable);
             }
 
-            mainFontUsageBindable.BindValueChanged(e => updateFontUsage());
-            rubyFontUsageBindable.BindValueChanged(e => updateFontUsage());
-            romajiFontUsageBindable.BindValueChanged(e => updateFontUsage());
-            translateFontUsageBindable.BindValueChanged(e => updateFontUsage());
+            mainFontUsageBindable.BindValueChanged(_ => updateFontUsage());
+            rubyFontUsageBindable.BindValueChanged(_ => updateFontUsage());
+            romajiFontUsageBindable.BindValueChanged(_ => updateFontUsage());
+            translateFontUsageBindable.BindValueChanged(_ => updateFontUsage());
         }
 
         protected override void OnApply()

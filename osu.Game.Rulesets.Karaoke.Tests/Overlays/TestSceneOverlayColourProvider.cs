@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Allocation;
@@ -64,6 +65,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 
             Schedule(() =>
             {
+                var columns = colourName.Select(c => new TitleTableColumn(c)).OfType<TableColumn>().ToArray();
+                var content = providers.Select(provider =>
+                {
+                    if (provider == null)
+                        throw new ArgumentNullException(nameof(provider));
+
+                    return colourName.Select(c =>
+                    {
+                        var value = provider.GetType().GetProperty(c)?.GetValue(provider);
+                        if (value == null)
+                            throw new ArgumentNullException(nameof(value));
+
+                        var colour = (Color4)value;
+                        return new PreviewColourDrawable(colour);
+                    }).OfType<Drawable>();
+                }).To2DArray();
+
                 Child = new OsuScrollContainer(Direction.Horizontal)
                 {
                     RelativeSizeAxes = Axes.Both,
@@ -71,15 +89,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
                     {
                         RelativeSizeAxes = Axes.Y,
                         AutoSizeAxes = Axes.X,
-                        Columns = colourName.Select(c => new TitleTableColumn(c)).ToArray(),
-                        Content = providers.Select(p =>
-                        {
-                            return colourName.Select(c =>
-                            {
-                                var colour = (Color4)p.GetType().GetProperty(c).GetValue(p);
-                                return new PreviewColourDrawable(colour);
-                            });
-                        }).To2DArray(),
+                        Columns = columns,
+                        Content = content,
                     }
                 };
             });
