@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     if (value == null)
                         return;
 
-                    Content = value.Select((g, i) =>
+                    Content = value.Select((g, _) =>
                     {
                         var lyric = g.HitObjects.FirstOrDefault() as Lyric;
 
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         return rows;
                     }).SelectMany(x => x).ToArray().ToRectangular();
 
-                    BackgroundFlow.Children = value.Select((g, i) =>
+                    BackgroundFlow.Children = value.Select((g, _) =>
                     {
                         var lyric = g.HitObjects.FirstOrDefault() as Lyric;
 

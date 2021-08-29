@@ -192,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             }
 
             private int skinIndex(PositionText[] positionTexts, int endIndex)
-                => positionTexts.Where((x, i) => i < endIndex).Sum(x => x.Text.Length);
+                => positionTexts.Where((_, i) => i < endIndex).Sum(x => x.Text.Length);
 
             private bool propertyMatched(PositionText positionText, ITextTag textTag)
                 => positionText.StartIndex == textTag.StartIndex && positionText.EndIndex == textTag.EndIndex && positionText.Text == textTag.Text;

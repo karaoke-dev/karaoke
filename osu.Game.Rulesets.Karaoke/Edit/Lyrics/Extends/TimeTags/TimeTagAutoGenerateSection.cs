@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
         protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(Lyric[] lyrics)
             => lyrics.Where(x => x.Language == null)
-                     .ToDictionary(k => k, i => "Before generate time-tag, need to assign language first.");
+                     .ToDictionary(k => k, _ => "Before generate time-tag, need to assign language first.");
 
         protected override void Apply(Lyric[] lyrics)
             => lyricManager.AutoGenerateTimeTags(lyrics);
