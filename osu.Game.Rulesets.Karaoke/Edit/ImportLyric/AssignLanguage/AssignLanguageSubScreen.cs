@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
                     NavigationState.Working => $"Almost there, you can still click [{auto_assign_language}] to re-detect each lyric's language.",
                     NavigationState.Done => "Cool! Seems all lyric has it's own language. Go to next step to generate ruby.",
                     NavigationState.Error => "Oops, seems cause some error in here.",
-                    _ => throw new ArgumentOutOfRangeException(nameof(value), value, null)
+                    _ => throw new ArgumentOutOfRangeException(nameof(value))
                 };
             }
 

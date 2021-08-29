@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using osu.Framework.Audio.Sample;
@@ -55,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         public virtual IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
         {
             if (!(lookup is KaraokeSkinLookup skinLookup))
-                throw new NotSupportedException();
+                throw new InvalidCastException();
 
             var config = skinLookup.Config;
 
@@ -64,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(BindableFont),
                 KaraokeSkinConfiguration.LyricLayout => SkinUtils.As<TValue>(BindableLayout),
                 KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(BindableNote),
-                _ => throw new NotSupportedException()
+                _ => throw new InvalidEnumArgumentException(nameof(config))
             };
         }
     }

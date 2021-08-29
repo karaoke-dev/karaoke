@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using osu.Framework.Bindables;
@@ -96,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                         KaraokeSkinComponents.JudgementLine => new LegacyJudgementLine(),
                         KaraokeSkinComponents.Note => new LegacyNotePiece(),
                         KaraokeSkinComponents.HitExplosion => new LegacyHitExplosion(),
-                        _ => throw new ArgumentOutOfRangeException(nameof(karaokeComponent.Component))
+                        _ => throw new InvalidEnumArgumentException(nameof(karaokeComponent.Component))
                     };
             }
 
@@ -125,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                         KaraokeSkinConfiguration.LyricLayout => SkinUtils.As<TValue>(bindableLayouts[lookupNumber]),
                         KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(bindableNotes[lookupNumber]),
                         KaraokeSkinConfiguration.Singer => SkinUtils.As<TValue>(bindableSingers[lookupNumber]),
-                        _ => throw new ArgumentOutOfRangeException(nameof(config))
+                        _ => throw new InvalidEnumArgumentException(nameof(config))
                     };
                 }
 
@@ -136,7 +137,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                         KaraokeIndexLookup.Layout => SkinUtils.As<TValue>(bindableLayoutsLookup),
                         KaraokeIndexLookup.Style => SkinUtils.As<TValue>(bindableFontsLookup),
                         KaraokeIndexLookup.Note => SkinUtils.As<TValue>(bindableNotesLookup),
-                        _ => throw new ArgumentOutOfRangeException(nameof(indexLookup))
+                        _ => throw new InvalidEnumArgumentException(nameof(indexLookup))
                     };
 
                 case KaraokeSkinConfigurationLookup skinConfigurationLookup:

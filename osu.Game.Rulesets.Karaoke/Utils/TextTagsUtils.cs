@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
@@ -15,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             {
                 Sorting.Asc => textTags?.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray(),
                 Sorting.Desc => textTags?.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray(),
-                _ => throw new ArgumentOutOfRangeException(nameof(sorting))
+                _ => throw new InvalidEnumArgumentException(nameof(sorting))
             };
 
         public static T[] FindOutOfRange<T>(T[] textTags, string lyric) where T : ITextTag
@@ -58,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(sorting));
+                        throw new InvalidEnumArgumentException(nameof(sorting));
                 }
             }
 
@@ -81,13 +83,19 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 throw new ArgumentNullException(nameof(textTags));
 
             var sortingValue = Sort(textTags);
-            if (sortingValue == null)
-                throw new ArgumentNullException(nameof(sortingValue));
+            var firstValue = sortingValue.FirstOrDefault();
+            var lastValue = sortingValue.LastOrDefault();
+
+            if (firstValue == null)
+                throw new NoNullAllowedException(nameof(firstValue));
+
+            if (lastValue == null)
+                throw new NoNullAllowedException(nameof(lastValue));
 
             return new T
             {
-                StartIndex = sortingValue.FirstOrDefault().StartIndex,
-                EndIndex = sortingValue.LastOrDefault().EndIndex,
+                StartIndex = firstValue.StartIndex,
+                EndIndex = lastValue.EndIndex,
                 Text = string.Join("", sortingValue.Select(x => x.Text))
             };
         }

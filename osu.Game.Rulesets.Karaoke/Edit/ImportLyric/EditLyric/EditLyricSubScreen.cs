@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.ComponentModel;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
@@ -76,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                         {
                             LyricEditorMode.Manage => $"Cool! Try switching to [{typing_mode}] if you wants to edit lyric.",
                             LyricEditorMode.Typing => $"Cool! Try switching to [{cutting_mode}] if you wants to cut or combine lyric.",
-                            _ => throw new ArgumentOutOfRangeException(nameof(mode))
+                            _ => throw new InvalidEnumArgumentException(nameof(mode))
                         };
 
                         break;
@@ -86,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(value));
+                        throw new InvalidEnumArgumentException(nameof(value));
                 }
             }
 
