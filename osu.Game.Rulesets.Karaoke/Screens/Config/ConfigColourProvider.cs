@@ -27,9 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
         {
             return section switch
             {
-                ConfigSection _ => 200 / 360f, // Blue
-                StyleSection _ => 333 / 360f, // Pink
-                ScoringSection _ => 46 / 360f, // Orange
+                ConfigSection => 200 / 360f, // Blue
+                StyleSection => 333 / 360f, // Pink
+                ScoringSection => 46 / 360f, // Orange
                 _ => throw new ArgumentException($@"{section} colour scheme does not provide a hue value in {nameof(getBaseHue)}.")
             };
         }

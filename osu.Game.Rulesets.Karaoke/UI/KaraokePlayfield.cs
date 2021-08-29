@@ -102,12 +102,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             switch (h)
             {
-                case Lyric _:
+                case Lyric:
                     LyricPlayfield.Add(h);
                     break;
 
-                case Note _:
-                case BarLine _:
+                case Note:
+                case BarLine:
                     NotePlayfield.Add(h);
 
                     break;
@@ -121,11 +121,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             switch (h)
             {
-                case Lyric _:
+                case Lyric:
                     return LyricPlayfield.Remove(h);
 
-                case Note _:
-                case BarLine _:
+                case Note:
+                case BarLine:
                     return NotePlayfield.Remove(h);
 
                 default:
@@ -141,11 +141,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             switch (h)
             {
-                case DrawableLyric _:
+                case DrawableLyric:
                     LyricPlayfield.Add(h);
                     break;
 
-                case DrawableNote _:
+                case DrawableNote:
                     NotePlayfield.Add(h);
 
                     break;
@@ -159,8 +159,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public override bool Remove(DrawableHitObject h) =>
             h switch
             {
-                DrawableLyric _ => LyricPlayfield.Remove(h),
-                DrawableNote _ => NotePlayfield.Remove(h),
+                DrawableLyric => LyricPlayfield.Remove(h),
+                DrawableNote => NotePlayfield.Remove(h),
                 _ => base.Remove(h)
             };
 

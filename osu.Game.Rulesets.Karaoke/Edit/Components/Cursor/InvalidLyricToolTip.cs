@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                         break;
 
                     // print normal message
-                    case Issue _:
+                    case Issue:
                         invalidMessage.AddAlertParagraph(issue.Template.GetMessage());
                         break;
 

@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
                     {
                         switch (ex)
                         {
-                            case FileNotFoundException _:
+                            case FileNotFoundException:
                                 DialogOverlay.Push(createFileNotFoundDialog());
                                 break;
 

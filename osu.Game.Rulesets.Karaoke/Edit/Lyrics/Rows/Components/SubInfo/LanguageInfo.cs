@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
                 var language = value.NewValue;
                 lyricManager?.SetLanguage(lyric, language);
 
-                BadgeText = language == null ? "None" : language.DisplayName;
+                BadgeText = language?.DisplayName ?? "None";
             }, true);
             languageBindable.BindTo(lyric.LanguageBindable);
         }

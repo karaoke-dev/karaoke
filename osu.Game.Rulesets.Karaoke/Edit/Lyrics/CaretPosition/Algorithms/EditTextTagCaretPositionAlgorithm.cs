@@ -134,8 +134,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         private ITextTag[] getRelatedTypeTextTag(Lyric lyric, ITextTag sample) =>
             sample switch
             {
-                RubyTag _ => lyric.RubyTags?.OfType<ITextTag>().ToArray(),
-                RomajiTag _ => lyric.RomajiTags?.OfType<ITextTag>().ToArray(),
+                RubyTag => lyric.RubyTags?.OfType<ITextTag>().ToArray(),
+                RomajiTag => lyric.RomajiTags?.OfType<ITextTag>().ToArray(),
                 _ => throw new InvalidCastException(nameof(sample))
             };
 
