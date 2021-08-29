@@ -147,15 +147,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             var delta = centerPosition.Y - lastCenterPosition;
 
             // get delta tone.
-            var deltaTone = new Tone();
             const float trigger_height = ScrollingNotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT;
+            var deltaTone = delta switch
+            {
+                > trigger_height => -new Tone { Half = true },
+                < 0 => new Tone { Half = true },
+                _ => default
+            };
 
-            if (delta > trigger_height)
-                deltaTone = -new Tone { Half = true };
-            else if (delta < 0)
-                deltaTone = new Tone { Half = true };
-
-            if (deltaTone == 0)
+            if (deltaTone == default(Tone))
                 return;
 
             foreach (var note in EditorBeatmap.SelectedHitObjects.OfType<Note>())
