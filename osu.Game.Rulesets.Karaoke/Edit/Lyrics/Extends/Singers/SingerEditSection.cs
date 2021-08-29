@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
 {
     public class SingerEditSection : Section
     {
-        private readonly Bindable<int[]> singerIndexes = new Bindable<int[]>();
+        private readonly Bindable<int[]> singerIndexes = new();
         protected override string Title => "Singer";
 
         public SingerEditSection()

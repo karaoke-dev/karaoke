@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
     public class CheckInvalidPropertyLyrics : ICheck
     {
-        public CheckMetadata Metadata => new CheckMetadata(CheckCategory.HitObjects, "Lyrics with invalid property.");
+        public CheckMetadata Metadata => new(CheckCategory.HitObjects, "Lyrics with invalid property.");
 
         public IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Lyric lyric)
-                => new Issue(lyric, this);
+                => new(lyric, this);
         }
 
         public class IssueTemplateNoText : IssueTemplate
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Lyric lyric)
-                => new Issue(lyric, this);
+                => new(lyric, this);
         }
 
         public class IssueTemplateNoSinger : IssueTemplate
@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Lyric lyric)
-                => new Issue(lyric, this);
+                => new(lyric, this);
         }
     }
 }

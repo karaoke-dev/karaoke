@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
 
         private IFontInstance fontInstance => Font?.Instance;
 
-        private readonly TaskCompletionSource<Font> completionSource = new TaskCompletionSource<Font>();
+        private readonly TaskCompletionSource<Font> completionSource = new();
 
         /// <summary>
         /// Create a new glyph store.

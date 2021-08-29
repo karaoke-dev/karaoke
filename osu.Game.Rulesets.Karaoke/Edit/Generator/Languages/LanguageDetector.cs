@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
 {
     public class LanguageDetector
     {
-        private readonly LanguageDetection.LanguageDetector detector = new LanguageDetection.LanguageDetector();
+        private readonly LanguageDetection.LanguageDetector detector = new();
 
         public LanguageDetector(LanguageDetectorConfig config)
         {

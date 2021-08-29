@@ -15,8 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
     {
         private const int disable_selection_index = -1;
 
-        private readonly BindableBool bindableAutoFocusToEditLyric = new BindableBool();
-        private readonly BindableInt bindableAutoFocusToEditLyricSkipRows = new BindableInt();
+        private readonly BindableBool bindableAutoFocusToEditLyric = new();
+        private readonly BindableInt bindableAutoFocusToEditLyricSkipRows = new();
 
         public AutoFocusToEditLyricMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
             : base(text)

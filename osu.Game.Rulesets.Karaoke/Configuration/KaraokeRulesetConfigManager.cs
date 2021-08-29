@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             return bindableFontUsage;
         }
 
-        public override TrackedSettings CreateTrackedSettings() => new TrackedSettings
+        public override TrackedSettings CreateTrackedSettings() => new()
         {
             new TrackedSetting<double>(KaraokeRulesetSetting.ScrollTime, v => new SettingDescription(v, "Scroll Time", $"{v}ms"))
         };

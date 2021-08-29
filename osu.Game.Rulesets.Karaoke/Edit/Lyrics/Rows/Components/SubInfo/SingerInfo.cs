@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
                 {
                     singerDisplay.Current.Value = new List<Singer>
                     {
-                        new Singer
+                        new()
                         {
                             Name = "No singer"
                         }

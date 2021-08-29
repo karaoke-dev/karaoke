@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             /// <returns></returns>
             public class ChangeLogMarkdownImage : OsuMarkdownImage
             {
-                private readonly LayoutValue widthSizeCache = new LayoutValue(Invalidation.DrawSize);
+                private readonly LayoutValue widthSizeCache = new(Invalidation.DrawSize);
 
                 public ChangeLogMarkdownImage(LinkInline linkInline)
                     : base(linkInline)

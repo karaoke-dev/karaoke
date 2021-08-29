@@ -31,14 +31,14 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public ScrollingNotePlayfield NotePlayfield { get; }
 
-        public BindableBool DisplayCursor { get; set; } = new BindableBool();
+        public BindableBool DisplayCursor { get; set; } = new();
         public override bool ReceivePositionalInputAt(Vector2 screenSpacePos) => !DisplayCursor.Value && base.ReceivePositionalInputAt(screenSpacePos);
 
-        private readonly BindableInt bindablePitch = new BindableInt();
-        private readonly BindableInt bindableVocalPitch = new BindableInt();
-        private readonly BindableInt bindablePlayback = new BindableInt();
-        private readonly BindableDouble notePlayfieldAlpha = new BindableDouble();
-        private readonly BindableDouble lyricPlayfieldAlpha = new BindableDouble();
+        private readonly BindableInt bindablePitch = new();
+        private readonly BindableInt bindableVocalPitch = new();
+        private readonly BindableInt bindablePlayback = new();
+        private readonly BindableDouble notePlayfieldAlpha = new();
+        private readonly BindableDouble lyricPlayfieldAlpha = new();
 
         public KaraokePlayfield()
         {

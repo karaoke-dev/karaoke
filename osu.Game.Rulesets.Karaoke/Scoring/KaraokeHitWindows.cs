@@ -9,9 +9,9 @@ namespace osu.Game.Rulesets.Karaoke.Scoring
     {
         private static readonly DifficultyRange[] karaoke_ranges =
         {
-            new DifficultyRange(HitResult.Perfect, 80, 50, 20),
-            new DifficultyRange(HitResult.Meh, 80, 50, 20),
-            new DifficultyRange(HitResult.Miss, 2000, 1500, 1000),
+            new(HitResult.Perfect, 80, 50, 20),
+            new(HitResult.Meh, 80, 50, 20),
+            new(HitResult.Miss, 2000, 1500, 1000),
         };
 
         public override bool IsHitResultAllowed(HitResult result)

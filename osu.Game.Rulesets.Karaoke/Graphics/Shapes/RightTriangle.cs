@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Shapes
 
         public override RectangleF BoundingBox => toTriangle(ToParentSpace(LayoutRectangle)).AABBFloat;
 
-        private static Triangle toTriangle(Quad q) => new Triangle(
+        private static Triangle toTriangle(Quad q) => new(
             q.TopLeft,
             q.BottomLeft,
             q.BottomRight);

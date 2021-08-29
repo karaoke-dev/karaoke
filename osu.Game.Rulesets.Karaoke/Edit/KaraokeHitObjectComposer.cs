@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeHitObjectComposer : HitObjectComposer<KaraokeHitObject>
     {
-        private readonly Bindable<EditMode> bindableEditMode = new Bindable<EditMode>();
+        private readonly Bindable<EditMode> bindableEditMode = new();
 
         private DrawableKaraokeEditorRuleset drawableRuleset;
 

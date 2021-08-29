@@ -129,17 +129,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             /// <summary>
             /// The text which this <see cref="EditModeButton"/> displays.
             /// </summary>
-            public readonly Bindable<LocalisableString> Text = new Bindable<LocalisableString>(string.Empty);
+            public readonly Bindable<LocalisableString> Text = new(string.Empty);
 
             /// <summary>
             /// The description which this <see cref="EditModeButton"/> displays.
             /// </summary>
-            public readonly Bindable<LocalisableString> Description = new Bindable<LocalisableString>(string.Empty);
+            public readonly Bindable<LocalisableString> Description = new(string.Empty);
 
             /// <summary>
             /// The alert number which this <see cref="EditModeButton"/> displays.
             /// </summary>
-            public readonly Bindable<int> Alert = new Bindable<int>();
+            public readonly Bindable<int> Alert = new();
 
             public EditModeSelectionItem(LocalisableString text, LocalisableString description)
             {

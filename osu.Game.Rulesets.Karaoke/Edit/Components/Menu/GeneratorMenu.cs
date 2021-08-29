@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private EditorMenuItem createMenuItem(string name)
         {
-            return new EditorMenuItem(name, MenuItemType.Standard, () =>
+            return new(name, MenuItemType.Standard, () =>
             {
                 // todo : implementation
             });

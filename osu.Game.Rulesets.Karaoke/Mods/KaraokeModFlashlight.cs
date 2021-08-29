@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         internal class KaraokeFlashlight : Flashlight
         {
-            private readonly LayoutValue flashlightProperties = new LayoutValue(Invalidation.DrawSize);
+            private readonly LayoutValue flashlightProperties = new(Invalidation.DrawSize);
 
             private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
             private readonly IBindable<double> timeRange = new Bindable<double>();

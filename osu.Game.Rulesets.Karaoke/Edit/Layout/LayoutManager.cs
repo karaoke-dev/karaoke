@@ -16,19 +16,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
     public class LayoutManager : Component
     {
-        public readonly BindableList<LyricLayout> Layouts = new BindableList<LyricLayout>();
+        public readonly BindableList<LyricLayout> Layouts = new();
 
-        public readonly Bindable<LyricLayout> LoadedLayout = new Bindable<LyricLayout>();
+        public readonly Bindable<LyricLayout> LoadedLayout = new();
 
-        public readonly Bindable<LyricLayout> EditLayout = new Bindable<LyricLayout>();
+        public readonly Bindable<LyricLayout> EditLayout = new();
 
         public readonly IDictionary<int, string> PreviewFontSelections = new Dictionary<int, string>();
 
-        public readonly Bindable<Lyric> PreviewLyric = new Bindable<Lyric>();
+        public readonly Bindable<Lyric> PreviewLyric = new();
 
-        public readonly Bindable<DisplayRatio> PreviewScreenRatio = new Bindable<DisplayRatio>();
+        public readonly Bindable<DisplayRatio> PreviewScreenRatio = new();
 
-        public readonly Bindable<int[]> PreviewSingers = new Bindable<int[]>();
+        public readonly Bindable<int[]> PreviewSingers = new();
 
         [Resolved]
         private ISkinSource source { get; set; }

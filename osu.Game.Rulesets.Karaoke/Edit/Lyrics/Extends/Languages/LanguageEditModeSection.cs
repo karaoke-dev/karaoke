@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
             => bindableEditMode.Value;
 
         protected override Dictionary<LanguageEditMode, EditModeSelectionItem> CreateSelections()
-            => new Dictionary<LanguageEditMode, EditModeSelectionItem>
+            => new()
             {
                 {
                     LanguageEditMode.Generate, new EditModeSelectionItem("Generate", "Auto-generate language with just a click.")

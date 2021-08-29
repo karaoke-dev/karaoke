@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 });
             }
 
-            static Vector2 convertShadowSlide(ShadowSlide side) => new Vector2(side.X, side.Y);
+            static Vector2 convertShadowSlide(ShadowSlide side) => new(side.X, side.Y);
 
             static Anchor convertAnchor(HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment)
             {
@@ -133,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     BrushGradients = brushGradient
                 };
 
-                static Color4 convertColor(Color color) => new Color4(color.R, color.G, color.B, color.A);
+                static Color4 convertColor(Color color) => new(color.R, color.G, color.B, color.A);
             }
 
             static FontUsage convertFontInfo(FontInfo info)

@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         private readonly LanguageDropdown languageDropdown;
         private readonly GridContainer translateGrid;
 
-        public readonly Bindable<CultureInfo> NewLanguage = new Bindable<CultureInfo>();
+        public readonly Bindable<CultureInfo> NewLanguage = new();
 
         [Resolved]
         private TranslateManager translateManager { get; set; }

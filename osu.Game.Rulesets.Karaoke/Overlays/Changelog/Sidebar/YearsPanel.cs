@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
 {
     public class YearsPanel : CompositeDrawable
     {
-        private readonly Bindable<APIChangelogSidebar> metadata = new Bindable<APIChangelogSidebar>();
+        private readonly Bindable<APIChangelogSidebar> metadata = new();
 
         private FillFlowContainer yearsFlow;
 

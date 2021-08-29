@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         private Stream trackData;
 
-        public override Score CreateReplayScore(IBeatmap beatmap, IReadOnlyList<Mod> mods) => new Score
+        public override Score CreateReplayScore(IBeatmap beatmap, IReadOnlyList<Mod> mods) => new()
         {
             ScoreInfo = new ScoreInfo { User = new User { Username = "karaoke!singer" } },
             Replay = new KaraokeAutoGeneratorBySinger((KaraokeBeatmap)beatmap, trackData).Generate(),

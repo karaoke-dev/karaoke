@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
     {
         protected override string Title => "Accept languages";
 
-        private readonly Bindable<CultureInfo[]> bindableCultureInfo = new Bindable<CultureInfo[]>();
+        private readonly Bindable<CultureInfo[]> bindableCultureInfo = new();
 
         public AcceptLanguagesSection(Bindable<LanguageDetectorConfig> current)
             : base(current)
@@ -127,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
             [Resolved]
             protected LanguageSelectionDialog LanguageSelectionDialog { get; private set; }
 
-            private readonly Bindable<CultureInfo> current = new Bindable<CultureInfo>();
+            private readonly Bindable<CultureInfo> current = new();
 
             public Action<CultureInfo> LanguageSelected;
 

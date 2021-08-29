@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
         [Resolved]
         private LyricManager lyricManager { get; set; }
 
-        private readonly Bindable<CultureInfo> languageBindable = new Bindable<CultureInfo>();
+        private readonly Bindable<CultureInfo> languageBindable = new();
 
         public LanguageInfo(Lyric lyric)
             : base(lyric)

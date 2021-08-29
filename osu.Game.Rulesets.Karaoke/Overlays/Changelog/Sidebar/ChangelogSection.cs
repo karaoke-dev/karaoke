@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
     {
         private const int animation_duration = 250;
 
-        public readonly BindableBool Expanded = new BindableBool(true);
+        public readonly BindableBool Expanded = new(true);
 
         public ChangelogSection(int year, IEnumerable<APIChangelogBuild> posts)
         {
@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
 
         private class PostsContainer : Container
         {
-            public readonly BindableBool Expanded = new BindableBool();
+            public readonly BindableBool Expanded = new();
 
             protected override Container<Drawable> Content { get; }
 

@@ -20,14 +20,14 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
         }
 
         protected override LanguageSelectionButton CreateComponent()
-            => new LanguageSelectionButton();
+            => new();
 
         public class LanguageSelectionButton : OsuButton, IHasCurrentValue<CultureInfo>
         {
             [Resolved]
             protected LanguageSelectionDialog LanguageSelectionDialog { get; private set; }
 
-            private readonly BindableWithCurrent<CultureInfo> current = new BindableWithCurrent<CultureInfo>();
+            private readonly BindableWithCurrent<CultureInfo> current = new();
 
             public Bindable<CultureInfo> Current
             {

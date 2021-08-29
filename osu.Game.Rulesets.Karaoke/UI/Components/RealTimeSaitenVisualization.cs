@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
     public class RealTimeSaitenVisualization : VoiceVisualization<KeyValuePair<double, KaraokeSaitenAction>>
     {
-        private readonly Cached addStateCache = new Cached();
+        private readonly Cached addStateCache = new();
 
         protected override float PathRadius => 2.5f;
 

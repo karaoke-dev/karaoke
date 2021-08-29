@@ -36,8 +36,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         private readonly FontPropertyList<float> fontSizeProperty;
         private readonly OsuCheckbox fixedWidthCheckbox;
 
-        private readonly BindableWithCurrent<FontUsage> current = new BindableWithCurrent<FontUsage>();
-        private readonly BindableList<FontInfo> fonts = new BindableList<FontInfo>();
+        private readonly BindableWithCurrent<FontUsage> current = new();
+        private readonly BindableList<FontInfo> fonts = new();
 
         [Resolved]
         private FontStore fontStore { get; set; }
@@ -363,7 +363,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             private readonly TextPropertySearchTextBox filter;
             private readonly RearrangeableTextFlowListContainer<T> propertyFlowList;
 
-            private readonly BindableWithCurrent<T> current = new BindableWithCurrent<T>();
+            private readonly BindableWithCurrent<T> current = new();
 
             public Bindable<T> Current
             {
@@ -423,7 +423,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             }
 
             protected virtual RearrangeableTextFlowListContainer<T> CreateRearrangeableListContainer()
-                => new RearrangeableTextFlowListContainer<T>();
+                => new();
 
             [BackgroundDependencyLoader]
             private void load(OsuColour colours)

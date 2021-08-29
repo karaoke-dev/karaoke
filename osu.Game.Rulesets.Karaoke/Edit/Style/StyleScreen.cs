@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
 
             internal class StyleScreenHeader : OverlayHeader
             {
-                public Bindable<Style> BindableStyle = new Bindable<Style>();
+                public Bindable<Style> BindableStyle = new();
 
                 protected override OverlayTitle CreateTitle() => new LayoutScreenTitle();
 

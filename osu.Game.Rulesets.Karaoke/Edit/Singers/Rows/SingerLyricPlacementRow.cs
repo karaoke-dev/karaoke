@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
             private readonly OsuSpriteText romajiName;
             private readonly OsuSpriteText englishName;
 
-            private readonly Bindable<Singer> bindableSinger = new Bindable<Singer>();
+            private readonly Bindable<Singer> bindableSinger = new();
 
             public DrawableSingerInfo(Singer singer)
             {

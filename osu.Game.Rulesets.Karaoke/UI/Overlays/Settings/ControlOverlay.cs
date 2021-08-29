@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
                 Add(new TranslateSettings(beatmap.AvailableTranslates()) { Expanded = false });
         }
 
-        public override SettingButton CreateToggleButton() => new SettingButton
+        public override SettingButton CreateToggleButton() => new()
         {
             Name = "Toggle setting button",
             Text = "Settings",

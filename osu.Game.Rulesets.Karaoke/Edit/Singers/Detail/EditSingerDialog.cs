@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Detail
         private const float section_scale = 0.75f;
 
         [Cached]
-        private readonly BindableClassWithCurrent<Singer> current = new BindableClassWithCurrent<Singer>();
+        private readonly BindableClassWithCurrent<Singer> current = new();
 
         public Bindable<Singer> Current
         {

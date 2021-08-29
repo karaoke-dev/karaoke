@@ -12,9 +12,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
     public class LyricCaretState
     {
-        public Bindable<ICaretPosition> BindableHoverCaretPosition { get; } = new Bindable<ICaretPosition>();
+        public Bindable<ICaretPosition> BindableHoverCaretPosition { get; } = new();
 
-        public Bindable<ICaretPosition> BindableCaretPosition { get; } = new Bindable<ICaretPosition>();
+        public Bindable<ICaretPosition> BindableCaretPosition { get; } = new();
 
         private ICaretPositionAlgorithm algorithm;
 

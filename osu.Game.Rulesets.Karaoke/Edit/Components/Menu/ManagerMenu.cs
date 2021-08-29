@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private EditorMenuItem createMenuItem<T>(string name) where T : EditorSubScreen, new()
         {
-            return new EditorMenuItem(name, MenuItemType.Standard, () =>
+            return new(name, MenuItemType.Standard, () =>
             {
                 if (screen == null)
                     return;

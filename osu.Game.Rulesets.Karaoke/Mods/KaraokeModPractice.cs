@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         private KaraokeBeatmap beatmap;
 
-        public override Score CreateReplayScore(IBeatmap beatmap, IReadOnlyList<Mod> mods) => new Score
+        public override Score CreateReplayScore(IBeatmap beatmap, IReadOnlyList<Mod> mods) => new()
         {
             ScoreInfo = new ScoreInfo { User = new User { Username = "practice master" } },
             Replay = new KaraokeAutoGenerator(beatmap, mods).Generate(),
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 });
             }
 
-            public override SettingButton CreateToggleButton() => new SettingButton
+            public override SettingButton CreateToggleButton() => new()
             {
                 Name = "Toggle Practice",
                 Text = "Practice",

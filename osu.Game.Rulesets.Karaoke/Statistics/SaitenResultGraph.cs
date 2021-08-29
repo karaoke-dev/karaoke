@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                 }
 
                 protected override PreviewLyricSpriteText CreateLyric(Lyric lyric)
-                    => new PreviewLyricSpriteText(lyric)
+                    => new(lyric)
                     {
                         Font = new FontUsage(size: 15),
                         RubyFont = new FontUsage(size: 7),

@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 {
     public class KaraokeAutoGeneratorBySinger : AutoGenerator
     {
-        private readonly CancellationTokenSource cancelSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource cancelSource = new();
         private readonly Task<Dictionary<double, float?>> readTask;
 
         /// <summary>

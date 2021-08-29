@@ -25,14 +25,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
         private const int columns = 9;
 
         [Cached(Type = typeof(INotePositionInfo))]
-        private readonly PreviewNotePositionInfo notePositionInfo = new PreviewNotePositionInfo();
+        private readonly PreviewNotePositionInfo notePositionInfo = new();
 
         [Cached(Type = typeof(IScrollingInfo))]
-        private readonly LocalScrollingInfo scrollingInfo = new LocalScrollingInfo();
+        private readonly LocalScrollingInfo scrollingInfo = new();
 
         private readonly Lyric lyric;
 
-        public BindableList<Note> SelectedNotes { get; } = new BindableList<Note>();
+        public BindableList<Note> SelectedNotes { get; } = new();
 
         public EditorNotePlayfield Playfield { get; }
 

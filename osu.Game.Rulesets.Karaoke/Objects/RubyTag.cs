@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
     public class RubyTag : ITextTag
     {
         [JsonIgnore]
-        public readonly Bindable<string> TextBindable = new Bindable<string>();
+        public readonly Bindable<string> TextBindable = new();
 
         /// <summary>
         /// If kanji Matched, then apply ruby
@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly BindableInt StartIndexBindable = new BindableInt();
+        public readonly BindableInt StartIndexBindable = new();
 
         /// <summary>
         /// Start index
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly BindableInt EndIndexBindable = new BindableInt();
+        public readonly BindableInt EndIndexBindable = new();
 
         /// <summary>
         /// End index

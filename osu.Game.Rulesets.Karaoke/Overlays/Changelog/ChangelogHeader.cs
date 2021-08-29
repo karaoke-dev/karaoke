@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
     /// </summary>
     public class ChangelogHeader : BreadcrumbControlOverlayHeader
     {
-        public readonly Bindable<APIChangelogBuild> Build = new Bindable<APIChangelogBuild>();
+        public readonly Bindable<APIChangelogBuild> Build = new();
 
         public Action ListingSelected;
 

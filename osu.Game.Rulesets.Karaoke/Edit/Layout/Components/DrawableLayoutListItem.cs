@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
         /// </summary>
         public IBindable<bool> IsCreated => isCreated;
 
-        private readonly Bindable<bool> isCreated = new Bindable<bool>();
+        private readonly Bindable<bool> isCreated = new();
 
         /// <summary>
         /// Creates a new <see cref="LyricLayout"/>.
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
         /// </summary>
         private class ItemContent : CircularContainer
         {
-            public readonly Bindable<bool> IsCreated = new Bindable<bool>();
+            public readonly Bindable<bool> IsCreated = new();
 
             private readonly LyricLayout layout;
 

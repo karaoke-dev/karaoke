@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
     {
         public bool MicrophoneEnabled => false;
 
-        public override Score CreateReplayScore(IBeatmap beatmap, IReadOnlyList<Mod> mods) => new Score
+        public override Score CreateReplayScore(IBeatmap beatmap, IReadOnlyList<Mod> mods) => new()
         {
             ScoreInfo = new ScoreInfo { User = new User { Username = "osu!7pupu" } },
             Replay = new KaraokeAutoGenerator(beatmap, mods).Generate(),

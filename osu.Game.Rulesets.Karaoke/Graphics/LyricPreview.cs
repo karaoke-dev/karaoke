@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
 {
     public class LyricPreview : CompositeDrawable
     {
-        public Bindable<Lyric> SelectedLyric { get; } = new Bindable<Lyric>();
+        public Bindable<Lyric> SelectedLyric { get; } = new();
 
         private readonly FillFlowContainer<ClickableLyric> lyricTable;
 
@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
             set => lyricTable.Spacing = value;
         }
 
-        protected virtual ClickableLyric CreateLyricContainer(Lyric lyric) => new ClickableLyric(lyric);
+        protected virtual ClickableLyric CreateLyricContainer(Lyric lyric) => new(lyric);
 
         public class ClickableLyric : ClickableContainer
         {
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics
                 };
             }
 
-            protected virtual PreviewLyricSpriteText CreateLyric(Lyric lyric) => new PreviewLyricSpriteText(lyric)
+            protected virtual PreviewLyricSpriteText CreateLyric(Lyric lyric) => new(lyric)
             {
                 Font = new FontUsage(size: 25),
                 RubyFont = new FontUsage(size: 10),

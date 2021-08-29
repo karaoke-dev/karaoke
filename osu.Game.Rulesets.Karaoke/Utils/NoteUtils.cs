@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static Note CopyByTime(Note originNote, double startTime, double duration)
         {
-            return new Note
+            return new()
             {
                 StartTime = startTime,
                 Duration = duration,

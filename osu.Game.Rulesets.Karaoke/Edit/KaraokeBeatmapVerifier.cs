@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeBeatmapVerifier : IBeatmapVerifier
     {
-        private readonly List<ICheck> checks = new List<ICheck>
+        private readonly List<ICheck> checks = new()
         {
             new CheckInvalidPropertyLyrics(),
             new CheckInvalidRubyRomajiLyrics(new LyricCheckerConfig().CreateDefaultConfig()), // todo : implement config apply.

@@ -21,10 +21,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
     {
         public const float CORNER_RADIUS = 5;
 
-        protected readonly Bindable<Color4> AccentColour = new Bindable<Color4>();
-        protected readonly Bindable<Color4> HitColour = new Bindable<Color4>();
+        protected readonly Bindable<Color4> AccentColour = new();
+        protected readonly Bindable<Color4> HitColour = new();
 
-        private readonly LayoutValue subtractionCache = new LayoutValue(Invalidation.DrawSize);
+        private readonly LayoutValue subtractionCache = new(Invalidation.DrawSize);
         private readonly IBindable<bool> isHitting = new Bindable<bool>();
         private readonly IBindable<bool> display = new Bindable<bool>();
         private readonly IBindable<int[]> singer = new Bindable<int[]>();

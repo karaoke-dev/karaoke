@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
     public class CheckTranslate : ICheck
     {
-        public CheckMetadata Metadata => new CheckMetadata(CheckCategory.HitObjects, "Unfinished translate language.");
+        public CheckMetadata Metadata => new(CheckCategory.HitObjects, "Unfinished translate language.");
 
         public IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(IEnumerable<HitObject> hitObjects, CultureInfo cultureInfo)
-                => new Issue(hitObjects, this, cultureInfo);
+                => new(hitObjects, this, cultureInfo);
         }
 
         public class IssueTemplateMissingPartialTranslate : IssueTemplate
@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(IEnumerable<HitObject> hitObjects, CultureInfo cultureInfo)
-                => new Issue(hitObjects, this, cultureInfo);
+                => new(hitObjects, this, cultureInfo);
         }
 
         public class IssueTemplateContainsNotListedLanguage : IssueTemplate
@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(IEnumerable<HitObject> hitObjects, CultureInfo cultureInfo)
-                => new Issue(hitObjects, this, cultureInfo);
+                => new(hitObjects, this, cultureInfo);
         }
     }
 }

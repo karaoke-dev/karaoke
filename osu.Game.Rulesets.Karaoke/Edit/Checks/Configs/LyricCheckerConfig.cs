@@ -15,15 +15,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks.Configs
 
         public TextTagsUtils.Sorting RomajiPositionSorting { get; set; }
 
-        public LyricCheckerConfig CreateDefaultConfig()
-        {
-            return new LyricCheckerConfig
+        public LyricCheckerConfig CreateDefaultConfig() =>
+            new()
             {
                 TimeTagTimeGroupCheck = GroupCheck.Asc,
                 TimeTagTimeSelfCheck = SelfCheck.BasedOnStart,
                 RubyPositionSorting = TextTagsUtils.Sorting.Asc,
                 RomajiPositionSorting = TextTagsUtils.Sorting.Asc,
             };
-        }
     }
 }

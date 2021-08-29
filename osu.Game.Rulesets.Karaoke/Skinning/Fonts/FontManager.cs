@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         private readonly FontFormat[] supportedFormat = { FontFormat.Fnt, FontFormat.Ttf };
 
-        public readonly BindableList<FontInfo> Fonts = new BindableList<FontInfo>();
+        public readonly BindableList<FontInfo> Fonts = new();
 
         public FontManager()
         {

@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
     public class LyricEditorTextSizeMenu : MenuItem
     {
-        private readonly Bindable<float> bindableFontSize = new Bindable<float>();
+        private readonly Bindable<float> bindableFontSize = new();
 
         public LyricEditorTextSizeMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
             : base(text)

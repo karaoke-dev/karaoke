@@ -26,11 +26,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
         }
 
         protected override ColourSelectorDisplay CreateComponent()
-            => new ColourSelectorDisplay();
+            => new();
 
         public class ColourSelectorDisplay : CompositeDrawable, IHasCurrentValue<Colour4>, IHasPopover
         {
-            private readonly BindableWithCurrent<Colour4> current = new BindableWithCurrent<Colour4>();
+            private readonly BindableWithCurrent<Colour4> current = new();
 
             private Box fill;
             private OsuSpriteText colourHexCode;

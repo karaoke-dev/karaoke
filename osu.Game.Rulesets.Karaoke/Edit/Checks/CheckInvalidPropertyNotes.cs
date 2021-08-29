@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 {
     public class CheckInvalidPropertyNotes : ICheck
     {
-        public CheckMetadata Metadata => new CheckMetadata(CheckCategory.HitObjects, "Notes with invalid property.");
+        public CheckMetadata Metadata => new(CheckCategory.HitObjects, "Notes with invalid property.");
 
         public IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {
@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
 
             public Issue Create(Note note)
-                => new Issue(note, this);
+                => new(note, this);
         }
     }
 }

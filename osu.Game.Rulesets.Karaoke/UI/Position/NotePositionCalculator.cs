@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 
         public float ColumnHeight { get; }
 
-        public NotePositionCalculator(int columns, float columnHeight, float columnSpacing, Tone offset = new Tone())
+        public NotePositionCalculator(int columns, float columnHeight, float columnSpacing, Tone offset = new())
         {
             ColumnHeight = columnHeight;
 
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
         public float YPositionAt(float scale) => -(columnSpacing + ColumnHeight) * Math.Clamp(scale, toFloat(MinTone), toFloat(MaxTone));
 
         public Tone MaxTone =>
-            new Tone
+            new()
             {
                 Scale = columns / 2
             };

@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
                 PressedActions = CurrentFrame?.Sound ?? false
                     ? new List<KaraokeSaitenAction>
                     {
-                        new KaraokeSaitenAction
+                        new()
                         {
                             Scale = CurrentFrame.Scale
                         }

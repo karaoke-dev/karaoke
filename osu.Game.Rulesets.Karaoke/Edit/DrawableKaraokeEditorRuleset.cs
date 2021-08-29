@@ -17,9 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class DrawableKaraokeEditorRuleset : DrawableKaraokeRuleset
     {
-        private readonly Bindable<bool> bindableDisplayRubyToggle = new Bindable<bool>();
-        private readonly Bindable<bool> bindableDisplayRomajiToggle = new Bindable<bool>();
-        private readonly Bindable<bool> bindableDisplayTranslateToggle = new Bindable<bool>();
+        private readonly Bindable<bool> bindableDisplayRubyToggle = new();
+        private readonly Bindable<bool> bindableDisplayRomajiToggle = new();
+        private readonly Bindable<bool> bindableDisplayTranslateToggle = new();
 
         public new IScrollingInfo ScrollingInfo => base.ScrollingInfo;
 

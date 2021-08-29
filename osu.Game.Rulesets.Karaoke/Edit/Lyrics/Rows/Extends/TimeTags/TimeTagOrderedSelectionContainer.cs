@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             unbindAllStartTimes();
         }
 
-        private readonly Dictionary<SelectionBlueprint<TimeTag>, IBindable> startTimeMap = new Dictionary<SelectionBlueprint<TimeTag>, IBindable>();
+        private readonly Dictionary<SelectionBlueprint<TimeTag>, IBindable> startTimeMap = new();
 
         private void bindStartTime(SelectionBlueprint<TimeTag> blueprint)
         {

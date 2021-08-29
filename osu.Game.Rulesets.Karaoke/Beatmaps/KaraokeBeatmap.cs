@@ -26,13 +26,13 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
             var defaultStatistic = new List<BeatmapStatistic>
             {
-                new BeatmapStatistic
+                new()
                 {
                     Name = @"Singer",
                     Content = singers.ToString(),
                     CreateIcon = () => new SpriteIcon { Icon = FontAwesome.Solid.User }
                 },
-                new BeatmapStatistic
+                new()
                 {
                     Name = @"Lyric",
                     Content = lyrics.ToString(),

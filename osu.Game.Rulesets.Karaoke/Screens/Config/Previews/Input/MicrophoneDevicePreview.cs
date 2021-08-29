@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Input
 {
     public class MicrophoneDevicePreview : SettingsSubsectionPreview
     {
-        private readonly Bindable<string> bindableMicrophoneDeviceName = new Bindable<string>();
+        private readonly Bindable<string> bindableMicrophoneDeviceName = new();
 
         public MicrophoneDevicePreview()
         {

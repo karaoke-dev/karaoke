@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
     public class SingerRearrangeableList : OrderRearrangeableListContainer<Singer>
     {
-        protected override Vector2 Spacing => new Vector2(0, 5);
+        protected override Vector2 Spacing => new(0, 5);
 
         public SingerRearrangeableList()
         {

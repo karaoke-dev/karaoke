@@ -22,10 +22,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         private const int columns = 9;
 
         [Cached(Type = typeof(IScrollingInfo))]
-        private readonly PreviewScrollingInfo scrollingInfo = new PreviewScrollingInfo();
+        private readonly PreviewScrollingInfo scrollingInfo = new();
 
         [Cached(Type = typeof(INotePositionInfo))]
-        private readonly PreviewNotePositionInfo positionCalculator = new PreviewNotePositionInfo();
+        private readonly PreviewNotePositionInfo positionCalculator = new();
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {

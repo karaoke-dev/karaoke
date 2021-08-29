@@ -9,9 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts
     {
         public double NewLyricLineTime { get; set; }
 
-        public LayoutGeneratorConfig CreateDefaultConfig()
-        {
-            return new LayoutGeneratorConfig();
-        }
+        public LayoutGeneratorConfig CreateDefaultConfig() => new();
     }
 }

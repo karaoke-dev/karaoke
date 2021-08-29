@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<KaraokeSaitenAction>
     {
-        private readonly BindableInt saitenPitch = new BindableInt();
+        private readonly BindableInt saitenPitch = new();
 
         private readonly CenterLine centerLine;
 

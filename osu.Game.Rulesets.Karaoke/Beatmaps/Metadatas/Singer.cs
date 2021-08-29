@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
         public int ID { get; }
 
         [JsonIgnore]
-        public readonly Bindable<int> OrderBindable = new Bindable<int>();
+        public readonly Bindable<int> OrderBindable = new();
 
         /// <summary>
         /// Order

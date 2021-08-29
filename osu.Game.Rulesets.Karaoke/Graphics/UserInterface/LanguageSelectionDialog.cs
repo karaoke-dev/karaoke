@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         private readonly LanguageSelectionSearchTextBox filter;
         private readonly RearrangeableLanguageListContainer languageList;
 
-        private readonly BindableWithCurrent<CultureInfo> current = new BindableWithCurrent<CultureInfo>();
+        private readonly BindableWithCurrent<CultureInfo> current = new();
 
         public Bindable<CultureInfo> Current
         {

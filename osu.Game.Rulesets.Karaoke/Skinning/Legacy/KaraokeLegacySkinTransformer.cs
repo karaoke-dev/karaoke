@@ -32,13 +32,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         private readonly IDictionary<int, Bindable<NoteSkin>> bindableNotes = new Dictionary<int, Bindable<NoteSkin>>();
         private readonly IDictionary<int, Bindable<Singer>> bindableSingers = new Dictionary<int, Bindable<Singer>>();
 
-        private readonly Bindable<IDictionary<int, string>> bindableFontsLookup = new Bindable<IDictionary<int, string>>();
-        private readonly Bindable<IDictionary<int, string>> bindableLayoutsLookup = new Bindable<IDictionary<int, string>>();
-        private readonly Bindable<IDictionary<int, string>> bindableNotesLookup = new Bindable<IDictionary<int, string>>();
-        private readonly Bindable<IDictionary<int, string>> bindableSingersLookup = new Bindable<IDictionary<int, string>>();
+        private readonly Bindable<IDictionary<int, string>> bindableFontsLookup = new();
+        private readonly Bindable<IDictionary<int, string>> bindableLayoutsLookup = new();
+        private readonly Bindable<IDictionary<int, string>> bindableNotesLookup = new();
+        private readonly Bindable<IDictionary<int, string>> bindableSingersLookup = new();
 
-        private readonly Bindable<float> bindableColumnHeight = new Bindable<float>(DefaultColumnBackground.COLUMN_HEIGHT);
-        private readonly Bindable<float> bindableColumnSpacing = new Bindable<float>(ScrollingNotePlayfield.COLUMN_SPACING);
+        private readonly Bindable<float> bindableColumnHeight = new(DefaultColumnBackground.COLUMN_HEIGHT);
+        private readonly Bindable<float> bindableColumnSpacing = new(ScrollingNotePlayfield.COLUMN_SPACING);
 
         public KaraokeLegacySkinTransformer(ISkin source, IBeatmap beatmap)
             : base(source)

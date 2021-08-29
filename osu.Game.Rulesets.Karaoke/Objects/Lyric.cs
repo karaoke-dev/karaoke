@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
     public class Lyric : KaraokeHitObject, IHasDuration, IHasSingers, IHasOrder, IHasLock
     {
         [JsonIgnore]
-        public readonly Bindable<string> TextBindable = new Bindable<string>();
+        public readonly Bindable<string> TextBindable = new();
 
         /// <summary>
         /// Text of the lyric
@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<TimeTag[]> TimeTagsBindable = new Bindable<TimeTag[]>();
+        public readonly Bindable<TimeTag[]> TimeTagsBindable = new();
 
         /// <summary>
         /// Time tags
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public double LyricDuration => LyricEndTime - LyricStartTime;
 
         [JsonIgnore]
-        public readonly Bindable<RubyTag[]> RubyTagsBindable = new Bindable<RubyTag[]>();
+        public readonly Bindable<RubyTag[]> RubyTagsBindable = new();
 
         /// <summary>
         /// List of ruby tags
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<RomajiTag[]> RomajiTagsBindable = new Bindable<RomajiTag[]>();
+        public readonly Bindable<RomajiTag[]> RomajiTagsBindable = new();
 
         /// <summary>
         /// List of ruby tags
@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public double EndTime => StartTime + Duration;
 
         [JsonIgnore]
-        public readonly Bindable<int[]> SingersBindable = new Bindable<int[]>();
+        public readonly Bindable<int[]> SingersBindable = new();
 
         /// <summary>
         /// Singers
@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<int> LayoutIndexBindable = new Bindable<int>();
+        public readonly Bindable<int> LayoutIndexBindable = new();
 
         /// <summary>
         /// Layout index
@@ -126,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly BindableDictionary<CultureInfo, string> TranslateTextBindable = new BindableDictionary<CultureInfo, string>();
+        public readonly BindableDictionary<CultureInfo, string> TranslateTextBindable = new();
 
         /// <summary>
         /// Translates
@@ -142,7 +142,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<CultureInfo> LanguageBindable = new Bindable<CultureInfo>();
+        public readonly Bindable<CultureInfo> LanguageBindable = new();
 
         /// <summary>
         /// Language
@@ -154,7 +154,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<int> OrderBindable = new Bindable<int>();
+        public readonly Bindable<int> OrderBindable = new();
 
         /// <summary>
         /// Order
@@ -166,7 +166,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<LockState> LockBindable = new Bindable<LockState>();
+        public readonly Bindable<LockState> LockBindable = new();
 
         /// <summary>
         /// Lock

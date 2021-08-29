@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
     {
         private const float section_scale = 0.75f;
 
-        private readonly Bindable<T> bindableConfig = new Bindable<T>();
+        private readonly Bindable<T> bindableConfig = new();
 
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;

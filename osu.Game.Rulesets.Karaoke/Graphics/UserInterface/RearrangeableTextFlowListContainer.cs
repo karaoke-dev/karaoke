@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
     /// <typeparam name="TModel"></typeparam>
     public class RearrangeableTextFlowListContainer<TModel> : OsuRearrangeableListContainer<TModel>
     {
-        public readonly Bindable<TModel> SelectedSet = new Bindable<TModel>();
+        public readonly Bindable<TModel> SelectedSet = new();
 
         public Action<TModel> RequestSelection;
 
@@ -47,11 +47,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             });
 
         protected new virtual DrawableTextListItem CreateDrawable(TModel item)
-            => new DrawableTextListItem(item);
+            => new(item);
 
         public class DrawableTextListItem : OsuRearrangeableListItem<TModel>, IFilterable
         {
-            public readonly Bindable<TModel> SelectedSet = new Bindable<TModel>();
+            public readonly Bindable<TModel> SelectedSet = new();
 
             public Action<TModel> RequestSelection;
 

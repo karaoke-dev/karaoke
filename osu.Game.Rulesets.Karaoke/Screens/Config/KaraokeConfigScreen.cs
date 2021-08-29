@@ -22,13 +22,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     public class KaraokeConfigScreen : OsuScreen
     {
         [Cached]
-        private ConfigColourProvider colourProvider = new ConfigColourProvider();
+        private ConfigColourProvider colourProvider = new();
 
         [Cached]
-        private Bindable<SettingsSection> selectedSection = new Bindable<SettingsSection>();
+        private Bindable<SettingsSection> selectedSection = new();
 
         [Cached]
-        private Bindable<SettingsSubsection> selectedSubsection = new Bindable<SettingsSubsection>();
+        private Bindable<SettingsSubsection> selectedSubsection = new();
 
         private readonly KaraokeConfigWaveContainer waves;
         private readonly Box background;

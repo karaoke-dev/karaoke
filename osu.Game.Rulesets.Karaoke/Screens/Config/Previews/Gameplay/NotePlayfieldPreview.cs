@@ -26,10 +26,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
         private const int columns = 9;
 
         [Cached(Type = typeof(IScrollingInfo))]
-        private readonly LocalScrollingInfo scrollingInfo = new LocalScrollingInfo();
+        private readonly LocalScrollingInfo scrollingInfo = new();
 
         [Cached(Type = typeof(INotePositionInfo))]
-        private readonly PreviewNotePositionInfo notePositionInfo = new PreviewNotePositionInfo();
+        private readonly PreviewNotePositionInfo notePositionInfo = new();
 
         private readonly NotePlayfield notePlayfield;
 
@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             });
         }
 
-        private readonly Bindable<KaraokeScrollingDirection> configDirection = new Bindable<KaraokeScrollingDirection>();
+        private readonly Bindable<KaraokeScrollingDirection> configDirection = new();
 
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetConfigManager config)

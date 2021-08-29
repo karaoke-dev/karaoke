@@ -8,11 +8,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
     public class BlueprintSelectionState
     {
-        public BindableList<TimeTag> SelectedTimeTags { get; } = new BindableList<TimeTag>();
+        public BindableList<TimeTag> SelectedTimeTags { get; } = new();
 
-        public BindableList<RubyTag> SelectedRubyTags { get; } = new BindableList<RubyTag>();
+        public BindableList<RubyTag> SelectedRubyTags { get; } = new();
 
-        public BindableList<RomajiTag> SelectedRomajiTags { get; } = new BindableList<RomajiTag>();
+        public BindableList<RomajiTag> SelectedRomajiTags { get; } = new();
 
         public void ClearSelectedTimeTags()
         {

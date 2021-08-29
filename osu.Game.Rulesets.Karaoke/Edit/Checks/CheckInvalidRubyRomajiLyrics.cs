@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
     {
         private readonly LyricCheckerConfig config;
 
-        public CheckMetadata Metadata => new CheckMetadata(CheckCategory.HitObjects, "Lyrics with invalid ruby/romaji.");
+        public CheckMetadata Metadata => new(CheckCategory.HitObjects, "Lyrics with invalid ruby/romaji.");
 
         public IEnumerable<IssueTemplate> PossibleTemplates => new IssueTemplate[]
         {

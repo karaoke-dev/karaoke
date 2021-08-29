@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
         {
             private const float selection_size = (240 - layout_setting_horizontal_padding * 2 - SECTION_SPACING) / 2;
 
-            private readonly Bindable<int> selectedLayoutIndex = new Bindable<int>();
+            private readonly Bindable<int> selectedLayoutIndex = new();
 
             private readonly DrawableLayoutPreview drawableLayoutPreview;
 

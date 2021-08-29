@@ -33,19 +33,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         [Resolved(canBeNull: true)]
         private KaraokeRulesetConfigManager config { get; set; }
 
-        private readonly BindableBool useTranslateBindable = new BindableBool();
-        private readonly Bindable<CultureInfo> preferLanguageBindable = new Bindable<CultureInfo>();
-        private readonly BindableBool displayRubyBindable = new BindableBool();
-        private readonly BindableBool displayRomajiBindable = new BindableBool();
+        private readonly BindableBool useTranslateBindable = new();
+        private readonly Bindable<CultureInfo> preferLanguageBindable = new();
+        private readonly BindableBool displayRubyBindable = new();
+        private readonly BindableBool displayRomajiBindable = new();
 
-        private readonly Bindable<FontUsage> mainFontUsageBindable = new Bindable<FontUsage>();
-        private readonly Bindable<FontUsage> rubyFontUsageBindable = new Bindable<FontUsage>();
-        private readonly Bindable<FontUsage> romajiFontUsageBindable = new Bindable<FontUsage>();
-        private readonly Bindable<FontUsage> translateFontUsageBindable = new Bindable<FontUsage>();
+        private readonly Bindable<FontUsage> mainFontUsageBindable = new();
+        private readonly Bindable<FontUsage> rubyFontUsageBindable = new();
+        private readonly Bindable<FontUsage> romajiFontUsageBindable = new();
+        private readonly Bindable<FontUsage> translateFontUsageBindable = new();
 
         private readonly IBindable<int[]> singersBindable = new Bindable<int[]>();
         private readonly IBindable<int> layoutIndexBindable = new Bindable<int>();
-        private readonly BindableDictionary<CultureInfo, string> translateTextBindable = new BindableDictionary<CultureInfo, string>();
+        private readonly BindableDictionary<CultureInfo, string> translateTextBindable = new();
 
         /// <summary>
         /// Invoked when a <see cref="JudgementResult"/> has been applied by this <see cref="DrawableHitObject"/> or a nested <see cref="DrawableHitObject"/>.
