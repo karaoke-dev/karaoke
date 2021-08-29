@@ -23,20 +23,15 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             var font = new FontUsage(size: default_text_size);
 
-            foreach (var property in properties)
+            return properties.Aggregate(font, (current, property) => property.Name switch
             {
-                font = property.Name switch
-                {
-                    "family" => font.With(property.Value.ToObject<string>()),
-                    "weight" => font.With(weight: property.Value.ToObject<string>()),
-                    "size" => font.With(size: property.Value.ToObject<float>()),
-                    "italics" => font.With(italics: property.Value.ToObject<bool>()),
-                    "fixedWidth" => font.With(fixedWidth: property.Value.ToObject<bool>()),
-                    _ => font
-                };
-            }
-
-            return font;
+                "family" => current.With(property.Value.ToObject<string>()),
+                "weight" => current.With(weight: property.Value.ToObject<string>()),
+                "size" => current.With(size: property.Value.ToObject<float>()),
+                "italics" => current.With(italics: property.Value.ToObject<bool>()),
+                "fixedWidth" => current.With(fixedWidth: property.Value.ToObject<bool>()),
+                _ => current
+            });
         }
 
         public override void WriteJson(JsonWriter writer, FontUsage value, JsonSerializer serializer)
