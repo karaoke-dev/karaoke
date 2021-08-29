@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
     {
         public static void Register()
         {
-            AddDecoder<KaraokeSkin>("<?xml version=", m => new NicoKaraDecoder());
+            AddDecoder<KaraokeSkin>("<?xml version=", _ => new NicoKaraDecoder());
         }
 
         protected override void ParseStreamInto(LineBufferedReader stream, KaraokeSkin output)

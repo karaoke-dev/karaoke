@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         public static void Register()
         {
             // Lrc decoder looks like [mm:ss:__]
-            AddDecoder<Beatmap>("[", m => new LrcDecoder());
+            AddDecoder<Beatmap>("[", _ => new LrcDecoder());
         }
 
         protected override void ParseStreamInto(LineBufferedReader stream, Beatmap output)

@@ -174,7 +174,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
             };
 
         private PopupDialog createCompleteDialog()
-            => new OkPopupDialog(ok => { Complete(); })
+            => new OkPopupDialog(_ => { Complete(); })
             {
                 Icon = FontAwesome.Regular.CheckCircle,
                 HeaderText = @"Import success",
