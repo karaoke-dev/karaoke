@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return 271 / 360f; // purple
 
                 default:
-                    throw new ArgumentException($@"{mode} colour scheme does not provide a hue value in {nameof(getBaseHue)}.");
+                    throw new ArgumentOutOfRangeException($@"{mode} colour scheme does not provide a hue value in {nameof(getBaseHue)}.");
             }
         }
     }

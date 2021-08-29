@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 MovingCaretAction.Right => algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveRight", currentPosition),
                 MovingCaretAction.First => algorithm.CallMethod<ICaretPosition>("MoveToFirst"),
                 MovingCaretAction.Last => algorithm.CallMethod<ICaretPosition>("MoveToLast"),
-                _ => throw new InvalidOperationException(nameof(action))
+                _ => throw new ArgumentOutOfRangeException(nameof(action))
             };
 
             if (position == null)

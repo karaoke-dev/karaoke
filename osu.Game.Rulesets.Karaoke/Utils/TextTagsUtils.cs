@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             {
                 Sorting.Asc => textTags?.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray(),
                 Sorting.Desc => textTags?.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray(),
-                _ => throw new InvalidOperationException(nameof(sorting))
+                _ => throw new ArgumentOutOfRangeException(nameof(sorting))
             };
 
         public static T[] FindOutOfRange<T>(T[] textTags, string lyric) where T : ITextTag
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                         break;
 
                     default:
-                        throw new InvalidOperationException(nameof(sorting));
+                        throw new ArgumentOutOfRangeException(nameof(sorting));
                 }
             }
 
