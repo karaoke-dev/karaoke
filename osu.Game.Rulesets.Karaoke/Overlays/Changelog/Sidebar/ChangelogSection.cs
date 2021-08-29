@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -28,7 +29,13 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
 
         public ChangelogSection(int year, IEnumerable<APIChangelogBuild> posts)
         {
-            Debug.Assert(posts.All(p => p.PublishedAt.Year == year));
+            Debug.Assert(posts.All(p =>
+            {
+                if (p == null)
+                    throw new ArgumentNullException(nameof(p));
+
+                return p.PublishedAt.Year == year;
+            }));
 
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
