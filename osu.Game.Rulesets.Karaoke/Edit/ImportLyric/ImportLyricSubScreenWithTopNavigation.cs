@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     {
                         Navigation = CreateNavigation(),
                     },
-                    new Drawable[] { },
+                    Array.Empty<Drawable>(),
                     new[]
                     {
                         CreateContent(),

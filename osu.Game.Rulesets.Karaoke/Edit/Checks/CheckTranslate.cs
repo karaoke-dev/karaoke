@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context)
         {
-            var languages = availableTranslateInBeatmap(context.Beatmap) ?? new CultureInfo[] { };
+            var languages = availableTranslateInBeatmap(context.Beatmap) ?? Array.Empty<CultureInfo>();
 
             var lyrics = context.Beatmap.HitObjects.OfType<Lyric>().ToList();
             if (lyrics.Count == 0)

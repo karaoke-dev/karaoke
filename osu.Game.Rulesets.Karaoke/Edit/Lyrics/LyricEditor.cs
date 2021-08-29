@@ -98,9 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                         }
                                     },
                                 },
-                                new Drawable[]
-                                {
-                                },
+                                Array.Empty<Drawable>(),
                                 new Drawable[]
                                 {
                                     new ApplySelectingArea(),

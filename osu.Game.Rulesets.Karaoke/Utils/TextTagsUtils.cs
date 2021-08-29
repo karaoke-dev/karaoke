@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         {
             // check is null or empty
             if (textTags == null || textTags.Length == 0)
-                return new T[] { };
+                return Array.Empty<T>();
 
             // todo : need to make sure is need to sort in here?
             var sortedTextTags = Sort(textTags, sorting);
