@@ -147,8 +147,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
         protected virtual bool OnMicrophoneSinging(MicrophonePitchingEvent e)
         {
-            var loudness = e.CurrentState.Microphone.Loudness;
-            var pitch = e.CurrentState.Microphone.Pitch;
+            var voice = e.CurrentState.Microphone.Voice;
+            var loudness = voice.Loudness;
+            var pitch = voice.Pitch;
 
             // todo : should convert to better value.
             loudnessVisualizer.Loudness = loudness;
