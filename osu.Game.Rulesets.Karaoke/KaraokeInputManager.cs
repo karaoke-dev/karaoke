@@ -102,18 +102,20 @@ namespace osu.Game.Rulesets.Karaoke
                         KeyBindingContainer.TriggerPressed(action);
                 }
             }
-            else if (inputStateChange is MicrophoneSoundChangeEvent microphoneSoundChange)
+            else if (inputStateChange is MicrophoneVoiceChangeEvent microphoneSoundChange)
             {
                 // Deal with realtime microphone event
-                var inputState = microphoneSoundChange.State as IMicrophoneInputState;
-                var lastState = microphoneSoundChange.LastState;
-                var state = inputState?.Microphone;
+                if (!(microphoneSoundChange.State is IMicrophoneInputState inputState))
+                    throw new NotMicrophoneInputStateException();
 
-                if (state == null)
-                    throw new ArgumentNullException($"{nameof(state)} cannot be null.");
+                var lastVoice = microphoneSoundChange.LastVoice;
+                var voice = inputState.Microphone.Voice;
+
+                if (voice == null)
+                    throw new ArgumentNullException($"{nameof(voice)} cannot be null.");
 
                 // Convert beatmap's pitch to scale setting.
-                var scale = beatmap.PitchToScale(state.HasSound ? state.Pitch : lastState.Pitch);
+                var scale = beatmap.PitchToScale(voice.HasVoice ? voice.Pitch : lastVoice.Pitch);
 
                 // TODO : adjust scale by
                 scale += 5;
@@ -123,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke
                     Scale = scale
                 };
 
-                if (lastState.HasSound && !state.HasSound)
+                if (lastVoice.HasVoice && !voice.HasVoice)
                     KeyBindingContainer.TriggerReleased(action);
                 else
                     KeyBindingContainer.TriggerPressed(action);
