@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
+using ManagedBass;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -22,9 +23,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Input
             {
                 // Find index by selection id
                 var microphoneList = new MicrophoneManager().MicrophoneDeviceNames.ToList();
-                var deviceName = x.NewValue;
                 var deviceIndex = microphoneList.IndexOf(x.NewValue);
-                var hasDevice = !string.IsNullOrEmpty(x.NewValue);
+
+                var hasDevice = microphoneList.Any();
+                var deviceName = deviceIndex == Bass.DefaultDevice ? "Default microphone device" : x.NewValue;
 
                 Child = new MicrophoneInputManager(deviceIndex)
                 {
@@ -33,8 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Input
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        DeviceName = deviceName,
                         HasDevice = hasDevice,
+                        DeviceName = deviceName,
                     }
                 };
             }, true);
