@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         private Storage storage => host.Storage.GetStorageForDirectory(FONT_BASE_PATH);
 
-        private readonly FontFormat[] supportedFormat = { FontFormat.Fnt, FontFormat.Ttf };
+        private readonly FontFormat[] supportedFormat = { FontFormat.Fnt, FontFormat.Ttf, FontFormat.Ttc };
 
         public readonly BindableList<FontInfo> Fonts = new();
 
@@ -188,6 +188,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             {
                 FontFormat.Fnt => getFntGlyphStore(fontName),
                 FontFormat.Ttf => getTtfGlyphStore(fontName),
+                FontFormat.Ttc => getTtcGlyphStore(fontName),
                 FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(fontFormat))
             };
         }
@@ -216,11 +217,25 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             return new TtfGlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}");
         }
 
+        private TtfGlyphStore? getTtcGlyphStore(string fontName)
+        {
+            string path = Path.Combine(getPathByFontType(FontFormat.Ttc), fontName);
+            string? pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontFormat.Ttc));
+
+            if (!storage.Exists(pathWithExtension))
+                return null;
+
+            // because ttc is just a collection of ttf file, so we can use TtfGlyphStore to read it.
+            var resources = new StorageBackedResourceStore(storage.GetStorageForDirectory(getPathByFontType(FontFormat.Ttc)));
+            return new TtfGlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}");
+        }
+
         private static string getPathByFontType(FontFormat type) =>
             type switch
             {
                 FontFormat.Fnt => "fnt",
                 FontFormat.Ttf => "ttf",
+                FontFormat.Ttc => "ttc",
                 FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(type))
             };
 
@@ -229,6 +244,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             {
                 FontFormat.Fnt => "zipfnt",
                 FontFormat.Ttf => "ttf",
+                FontFormat.Ttc => "ttc",
                 FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(type))
             };
 
@@ -237,6 +253,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             {
                 ".zipfnt" => FontFormat.Fnt,
                 ".ttf" => FontFormat.Ttf,
+                ".ttc" => FontFormat.Ttc,
                 _ => throw new FormatException(nameof(extension)),
             };
 

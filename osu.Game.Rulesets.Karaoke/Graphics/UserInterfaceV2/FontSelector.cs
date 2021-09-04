@@ -326,6 +326,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                         FontFormat.Internal => colour.Gray7,
                         FontFormat.Fnt => colour.Pink,
                         FontFormat.Ttf => colour.Blue,
+                        FontFormat.Ttc => colour.BlueDark,
                         _ => throw new ArgumentOutOfRangeException(nameof(fontFormat))
                     };
 
