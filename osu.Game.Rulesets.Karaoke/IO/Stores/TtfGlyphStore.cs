@@ -56,6 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             Store = new ResourceStore<byte[]>(store);
 
             Store.AddExtension("ttf");
+            Store.AddExtension("ttc");
 
             AssetName = assetName;
 
@@ -73,8 +74,8 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
                 using (var s = Store.GetStream($@"{AssetName}"))
                 {
                     var fonts = new FontCollection();
-                    var fontFamily = fonts.Add(s);
-                    font = new Font(fontFamily, 1);
+                    var fontFamily = fonts.AddCollection(s, out var description).ToArray();
+                    font = new Font(fontFamily[0], 1);
                 }
 
                 completionSource.SetResult(font);
