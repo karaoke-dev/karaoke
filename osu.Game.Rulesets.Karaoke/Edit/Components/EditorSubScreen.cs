@@ -10,6 +10,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components
         protected EditorSubScreen()
             : base(EditorScreenMode.Compose)
         {
+            // todo : this is a temp fix and might be broken in next release.
+            // See : https://github.com/ppy/osu/pull/14554/files
+            Show();
         }
     }
 }
