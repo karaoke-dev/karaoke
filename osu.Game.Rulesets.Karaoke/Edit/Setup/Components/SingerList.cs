@@ -43,9 +43,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
             }
         }
 
-        private FillFlowContainer palette;
+        private FillFlowContainer singers;
 
-        private IEnumerable<SingerDisplay> singerDisplays => palette.OfType<SingerDisplay>();
+        private IEnumerable<SingerDisplay> singerDisplays => singers.OfType<SingerDisplay>();
 
         [BackgroundDependencyLoader]
         private void load()
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
             AutoSizeDuration = fade_duration;
             AutoSizeEasing = Easing.OutQuint;
 
-            InternalChild = palette = new FillFlowContainer
+            InternalChild = singers = new FillFlowContainer
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
@@ -71,16 +71,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
             Singers.BindCollectionChanged((_, args) =>
             {
                 if (args.Action != NotifyCollectionChangedAction.Replace)
-                    updatePalette();
+                    updateSingers();
             }, true);
             FinishTransforms(true);
         }
 
         private const int fade_duration = 200;
 
-        private void updatePalette()
+        private void updateSingers()
         {
-            palette.Clear();
+            singers.Clear();
 
             for (int i = 0; i < Singers.Count; ++i)
             {
@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
                 int singerIndex = i;
                 SingerDisplay display;
 
-                palette.Add(display = new SingerDisplay
+                singers.Add(display = new SingerDisplay
                 {
                     Current = { Value = Singers[singerIndex] }
                 });
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
                 display.DeleteRequested += singerDeletionRequested;
             }
 
-            palette.Add(new AddSingerButton
+            singers.Add(new AddSingerButton
             {
                 // todo : use better way to create singer with right id.
                 Action = () => Singers.Add(new Singer())
@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
         }
 
         // todo : might have dialog to ask should delete singer or not if contains lyric.
-        private void singerDeletionRequested(SingerDisplay display) => Singers.RemoveAt(palette.IndexOf(display));
+        private void singerDeletionRequested(SingerDisplay display) => Singers.RemoveAt(singers.IndexOf(display));
 
         private void reindexItems()
         {

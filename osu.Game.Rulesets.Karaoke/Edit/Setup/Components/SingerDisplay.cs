@@ -67,6 +67,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
                     }
                 }
             };
+
+            Current.BindValueChanged(singer => singerName.Text = singer.NewValue?.Name, true);
         }
 
         private class SingerCircle : OsuClickableContainer, IHasContextMenu, IHasCustomTooltip<Singer>
