@@ -17,12 +17,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 {
     public class MicrophoneSoundVisualizer : CompositeDrawable
     {
-        private const float max_loudness = 100;
+        private const float max_decibel = 100;
         private const float max_pitch = 60;
 
         private readonly Box background;
         private readonly MicrophoneInfo microphoneInfo;
-        private readonly LoudnessVisualizer loudnessVisualizer;
+        private readonly DecibelVisualizer decibelVisualizer;
         private readonly PitchVisualizer pitchVisualizer;
 
         public MicrophoneSoundVisualizer()
@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                         },
                         new Drawable[]
                         {
-                            loudnessVisualizer = new LoudnessVisualizer
+                            decibelVisualizer = new DecibelVisualizer
                             {
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
@@ -139,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
         protected virtual bool OnMicrophoneEndSinging(MicrophoneEndPitchingEvent e)
         {
-            loudnessVisualizer.Loudness = 0;
+            decibelVisualizer.Decibel = 0;
             pitchVisualizer.Pitch = 0;
 
             return false;
@@ -148,11 +148,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         protected virtual bool OnMicrophoneSinging(MicrophonePitchingEvent e)
         {
             var voice = e.CurrentState.Microphone.Voice;
-            var loudness = voice.Loudness;
+            var decibel = voice.Decibel;
             var pitch = voice.Pitch;
 
             // todo : should convert to better value.
-            loudnessVisualizer.Loudness = loudness;
+            decibelVisualizer.Decibel = decibel;
             pitchVisualizer.Pitch = pitch / 8;
 
             return false;
@@ -225,16 +225,16 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             }
         }
 
-        internal class LoudnessVisualizer : CompositeDrawable
+        internal class DecibelVisualizer : CompositeDrawable
         {
             private const float var_width = 294;
 
             private readonly Box background;
-            private readonly Box loudnessMarker;
-            private readonly Box loudnessRippleMarker;
-            private readonly Box maxLoudnessMarker;
+            private readonly Box decibelMarker;
+            private readonly Box decibelRippleMarker;
+            private readonly Box maxDecibelMarker;
 
-            public LoudnessVisualizer()
+            public DecibelVisualizer()
             {
                 Width = var_width;
                 Height = 8;
@@ -244,15 +244,15 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
-                    loudnessMarker = new Box
+                    decibelMarker = new Box
                     {
                         RelativeSizeAxes = Axes.Y,
                     },
-                    loudnessRippleMarker = new Box
+                    decibelRippleMarker = new Box
                     {
                         RelativeSizeAxes = Axes.Y,
                     },
-                    maxLoudnessMarker = new Box
+                    maxDecibelMarker = new Box
                     {
                         RelativeSizeAxes = Axes.Y,
                         Width = 5,
@@ -260,60 +260,60 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 };
             }
 
-            private float loudness;
+            private float decibel;
 
-            private float maxLoudness;
+            private float maxDecibel;
 
-            public float Loudness
+            public float Decibel
             {
-                get => loudness;
+                get => decibel;
                 set
                 {
-                    if (loudness == value)
+                    if (decibel == value)
                         return;
 
-                    loudness = value;
-                    if (loudness > maxLoudness)
-                        maxLoudness = loudness;
+                    decibel = value;
+                    if (decibel > maxDecibel)
+                        maxDecibel = decibel;
 
-                    if (loudness > rippleLoudness)
-                        rippleLoudness = value;
+                    if (decibel > rippleDecibel)
+                        rippleDecibel = value;
 
-                    loudnessMarker.Width = calculatePosition(Loudness);
-                    maxLoudnessMarker.X = calculatePosition(maxLoudness);
+                    decibelMarker.Width = calculatePosition(Decibel);
+                    maxDecibelMarker.X = calculatePosition(maxDecibel);
                 }
             }
 
-            private float rippleLoudness;
+            private float rippleDecibel;
 
             protected override void Update()
             {
                 base.Update();
 
-                if (rippleLoudness <= 0)
+                if (rippleDecibel <= 0)
                     return;
 
                 //1% of extra bar length to make it a little faster when bar is almost at it's minimum
-                rippleLoudness *= 0.99f;
+                rippleDecibel *= 0.99f;
 
                 // just make value to 0 if too small;
-                if (rippleLoudness < 0.5)
-                    rippleLoudness = 0;
+                if (rippleDecibel < 0.5)
+                    rippleDecibel = 0;
 
-                loudnessRippleMarker.Width = rippleLoudness;
+                decibelRippleMarker.Width = rippleDecibel;
             }
 
             [BackgroundDependencyLoader]
             private void load(OsuColour colours)
             {
                 background.Colour = colours.Gray5;
-                loudnessMarker.Colour = colours.GrayD;
-                loudnessRippleMarker.Colour = colours.GrayA;
-                maxLoudnessMarker.Colour = colours.Red;
+                decibelMarker.Colour = colours.GrayD;
+                decibelRippleMarker.Colour = colours.GrayA;
+                maxDecibelMarker.Colour = colours.Red;
             }
 
-            private float calculatePosition(float loudness)
-                => loudness / max_loudness * var_width;
+            private float calculatePosition(float decibel)
+                => decibel / max_decibel * var_width;
         }
 
         internal class PitchVisualizer : CompositeDrawable

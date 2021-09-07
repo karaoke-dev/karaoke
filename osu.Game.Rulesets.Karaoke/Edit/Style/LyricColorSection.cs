@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Utils;

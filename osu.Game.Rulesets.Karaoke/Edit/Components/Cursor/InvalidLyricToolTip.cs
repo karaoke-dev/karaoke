@@ -17,7 +17,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 {
-    public class InvalidLyricToolTip : BackgroundToolTip
+    public class InvalidLyricToolTip : BackgroundToolTip<Issue[]>
     {
         private readonly MessageContainer invalidMessage;
 
@@ -33,11 +33,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             };
         }
 
-        public override bool SetContent(object content)
+        public override void SetContent(Issue[] issues)
         {
-            if (!(content is Issue[] issues))
-                return false;
-
             // clear exist warning.
             invalidMessage.Clear();
 
@@ -85,8 +82,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             // show no problem message
             if (issues.Length == 0)
                 invalidMessage.AddSuccessParagraph("Seems no issue in this lyric.");
-
-            return true;
 
             void createTimeInvalidMessage(TimeInvalid timeInvalid)
             {

@@ -11,7 +11,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
-    public abstract class BackgroundToolTip : VisibilityContainer, ITooltip
+    public abstract class BackgroundToolTip<T> : VisibilityContainer, ITooltip<T>
     {
         protected const int BORDER = 5;
 
@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             background.Colour = colours.Gray3;
         }
 
-        public abstract bool SetContent(object content);
+        public abstract void SetContent(T content);
 
         protected virtual Drawable SetBackground() => new Box();
 

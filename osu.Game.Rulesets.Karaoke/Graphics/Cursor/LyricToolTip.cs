@@ -7,13 +7,10 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
-    public class LyricTooltip : BackgroundToolTip
+    public class LyricTooltip : BackgroundToolTip<Lyric>
     {
-        public override bool SetContent(object content)
+        public override void SetContent(Lyric lyric)
         {
-            if (!(content is Lyric lyric))
-                return false;
-
             Child = new PreviewLyricSpriteText(lyric)
             {
                 Margin = new MarginPadding(10),
@@ -21,8 +18,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                 RubyFont = new FontUsage(size: 12),
                 RomajiFont = new FontUsage(size: 12)
             };
-
-            return true;
         }
     }
 }

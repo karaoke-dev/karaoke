@@ -14,7 +14,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
-    public class SingerToolTip : BackgroundToolTip
+    public class SingerToolTip : BackgroundToolTip<Singer>
     {
         private readonly DrawableSingerAvatar avatar;
         private readonly OsuSpriteText singerName;
@@ -76,18 +76,13 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             };
         }
 
-        public override bool SetContent(object content)
+        public override void SetContent(Singer singer)
         {
-            if (!(content is Singer singer))
-                return false;
-
             avatar.Singer = singer;
             singerName.Text = singer.Name;
             singerEnglishName.Text = singer.EnglishName != null ? $"({singer.EnglishName})" : "";
             singerRomajiName.Text = singer.RomajiName;
             singerDescription.Text = singer.Description ?? "<No description>";
-
-            return true;
         }
     }
 }
