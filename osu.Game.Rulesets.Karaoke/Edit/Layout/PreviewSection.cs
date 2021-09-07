@@ -12,11 +12,10 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.IO;
-using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -183,19 +182,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 
         private class StyleLabelledDropdown : LabelledDropdown<KeyValuePair<int, string>>
         {
-            protected override SettingsDropdown<KeyValuePair<int, string>> CreateComponent()
+            protected override OsuDropdown<KeyValuePair<int, string>> CreateDropdown()
                 => new StyleDropdown
                 {
                     RelativeSizeAxes = Axes.X,
                 };
 
-            private class StyleDropdown : SettingsDropdown<KeyValuePair<int, string>>
+            private class StyleDropdown : OsuDropdown<KeyValuePair<int, string>>
             {
-                private class StyleDropdownControl : DropdownControl
-                {
-                    protected override LocalisableString GenerateItemText(KeyValuePair<int, string> item)
-                        => item.Value ?? $"Style{item.Key}";
-                }
+                protected override LocalisableString GenerateItemText(KeyValuePair<int, string> item)
+                    => item.Value ?? $"Style{item.Key}";
             }
         }
     }
