@@ -7,8 +7,8 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
+using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
@@ -16,7 +16,6 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
 {
@@ -77,8 +76,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
 
             public Action DeleteRequested { get; set; }
 
-            private readonly Box fill;
-            private readonly DrawableCircleSingerAvatar singerAvatar;
+            private readonly DrawableSingerAvatar singerAvatar;
+
+            [Resolved]
+            private OsuColour colours { get; set; }
 
             public SingerCircle()
             {
@@ -86,6 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
                 Height = 100;
                 CornerRadius = 50;
                 Masking = true;
+                BorderThickness = 5;
                 Action = () =>
                 {
                     // todo: show edit singer dialog.
@@ -93,14 +95,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
 
                 Children = new Drawable[]
                 {
-                    fill = new Box
-                    {
-                        RelativeSizeAxes = Axes.Both
-                    },
-                    singerAvatar = new DrawableCircleSingerAvatar
+                    singerAvatar = new DrawableSingerAvatar
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
+                        RelativeSizeAxes = Axes.Both,
                     }
                 };
             }
@@ -114,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
 
             private void updateSinger()
             {
-                fill.Colour = Current.Value?.Color ?? Color4.Black;
+                BorderColour = Current.Value?.Color ?? colours.BlueDarker;
                 singerAvatar.Singer = Current.Value;
             }
 
