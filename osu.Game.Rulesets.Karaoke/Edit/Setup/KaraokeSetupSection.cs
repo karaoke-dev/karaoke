@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Setup.Components;
 using osu.Game.Screens.Edit.Setup;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Setup
@@ -14,6 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup
         private KaraokeBeatmap karaokeBeatmap => Beatmap.PlayableBeatmap as KaraokeBeatmap;
 
         private LabelledSwitchButton saitenable;
+        private LabelledSingerList singerList;
 
         public KaraokeSetupSection()
             : base(new KaraokeRuleset().RulesetInfo)
@@ -30,6 +32,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup
                     Label = "Saitenable",
                     Description = "Will not show saiten playfield in uncheck this.",
                     Current = { Value = true }
+                },
+                singerList = new LabelledSingerList
+                {
+                    Label = "Singer list",
+                    Description = "All the singers in beatmap.",
+                    FixedLabelWidth = LABEL_WIDTH,
+                    SingerNamePrefix = "#"
                 }
             };
         }
