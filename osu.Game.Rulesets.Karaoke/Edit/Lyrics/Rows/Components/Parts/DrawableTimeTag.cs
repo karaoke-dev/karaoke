@@ -18,7 +18,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
 {
-    public class DrawableTimeTag : CompositeDrawable, IHasCustomTooltip
+    public class DrawableTimeTag : CompositeDrawable, IHasCustomTooltip<TimeTag>
     {
         /// <summary>
         /// Height of major bar line triangles.
@@ -88,8 +88,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
             }
         }
 
-        public object TooltipContent => timeTag;
+        public ITooltip<TimeTag> GetCustomTooltip() => new TimeTagTooltip();
 
-        public ITooltip GetCustomTooltip() => new TimeTagTooltip();
+        public TimeTag TooltipContent => timeTag;
     }
 }

@@ -15,12 +15,10 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
 {
-    public class InvalidInfo : SpriteIcon, IHasContextMenu, IHasCustomTooltip
+    public class InvalidInfo : SpriteIcon, IHasContextMenu, IHasCustomTooltip<Issue[]>
     {
         // todo : might able to have auto-fix option by right-click
         public MenuItem[] ContextMenuItems => null;
-
-        public object TooltipContent => report;
 
         private readonly Lyric lyric;
 
@@ -63,7 +61,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
             }, true);
         }
 
-        public ITooltip GetCustomTooltip()
+        public ITooltip<Issue[]> GetCustomTooltip()
             => new InvalidLyricToolTip();
+
+        public Issue[] TooltipContent => report;
     }
 }

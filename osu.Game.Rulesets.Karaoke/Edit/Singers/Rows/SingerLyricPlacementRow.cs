@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
             };
         }
 
-        internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip, IHasContextMenu
+        internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip<Singer>, IHasContextMenu
         {
             [Resolved]
             private SingerManager singerManager { get; set; }
@@ -151,9 +151,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                 singerName.Text = $"#{singer.Order} {singer.Name}";
             }
 
-            public object TooltipContent => bindableSinger.Value;
+            public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
 
-            public ITooltip GetCustomTooltip() => new SingerToolTip();
+            public Singer TooltipContent => bindableSinger.Value;
 
             public MenuItem[] ContextMenuItems => new MenuItem[]
             {

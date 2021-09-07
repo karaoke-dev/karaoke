@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             }
         }
 
-        private class RecordingTimeTagVisualization : CompositeDrawable, IHasCustomTooltip, IHasContextMenu
+        private class RecordingTimeTagVisualization : CompositeDrawable, IHasCustomTooltip<TimeTag>, IHasContextMenu
         {
             [Resolved]
             private EditorClock editorClock { get; set; }
@@ -186,9 +186,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 return base.OnClick(e);
             }
 
-            public object TooltipContent => timeTag;
+            public ITooltip<TimeTag> GetCustomTooltip() => new TimeTagTooltip();
 
-            public ITooltip GetCustomTooltip() => new TimeTagTooltip();
+            public TimeTag TooltipContent => timeTag;
 
             public MenuItem[] ContextMenuItems =>
                 new MenuItem[]

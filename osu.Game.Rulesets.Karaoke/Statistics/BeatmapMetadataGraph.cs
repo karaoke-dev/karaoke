@@ -189,12 +189,10 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                 }
             }
 
-            private class SingerSpriteText : CompositeDrawable, IHasCustomTooltip
+            private class SingerSpriteText : CompositeDrawable, IHasCustomTooltip<Singer>
             {
                 private Singer singer;
                 private readonly OsuSpriteText osuSpriteText;
-
-                public object TooltipContent => Singer;
 
                 public SingerSpriteText()
                 {
@@ -218,7 +216,9 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                     }
                 }
 
-                public ITooltip GetCustomTooltip() => new SingerToolTip();
+                public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
+
+                public Singer TooltipContent => Singer;
             }
         }
     }

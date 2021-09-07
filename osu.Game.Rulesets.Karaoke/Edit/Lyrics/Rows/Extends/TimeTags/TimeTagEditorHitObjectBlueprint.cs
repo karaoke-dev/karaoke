@@ -22,7 +22,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 {
-    public class TimeTagEditorHitObjectBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip
+    public class TimeTagEditorHitObjectBlueprint : SelectionBlueprint<TimeTag>, IHasCustomTooltip<TimeTag>
     {
         [UsedImplicitly]
         private readonly Bindable<double?> startTime;
@@ -131,9 +131,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 
         public override Vector2 ScreenSpaceSelectionPoint => ScreenSpaceDrawQuad.TopLeft;
 
-        public object TooltipContent => Item;
+        public ITooltip<TimeTag> GetCustomTooltip() => new TimeTagTooltip();
 
-        public ITooltip GetCustomTooltip() => new TimeTagTooltip();
+        public TimeTag TooltipContent => Item;
 
         private bool hasTime() => startTime.Value.HasValue;
 
