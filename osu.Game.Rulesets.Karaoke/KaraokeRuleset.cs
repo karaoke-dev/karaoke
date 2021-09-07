@@ -22,6 +22,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Difficulty;
 using osu.Game.Rulesets.Karaoke.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Setup;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Scoring;
@@ -33,6 +34,7 @@ using osu.Game.Rulesets.Replays.Types;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI;
 using osu.Game.Scoring;
+using osu.Game.Screens.Edit.Setup;
 using osu.Game.Screens.Ranking.Statistics;
 using osu.Game.Skinning;
 using osuTK;
@@ -273,6 +275,8 @@ namespace osu.Game.Rulesets.Karaoke
 
             return statistic.ToArray();
         }
+
+        public override RulesetSetupSection CreateEditorSetupSection() => new KaraokeSetupSection();
 
         public KaraokeRuleset()
         {
