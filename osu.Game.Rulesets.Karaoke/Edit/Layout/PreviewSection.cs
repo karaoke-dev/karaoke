@@ -12,6 +12,7 @@ using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
+using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.IO;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
