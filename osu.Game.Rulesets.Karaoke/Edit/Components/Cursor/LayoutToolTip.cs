@@ -12,7 +12,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 {
-    public class LayoutToolTip : BackgroundToolTip
+    public class LayoutToolTip : BackgroundToolTip<Lyric>
     {
         private const float scale = 0.4f;
 
@@ -29,11 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             };
         }
 
-        public override bool SetContent(object content)
+        public override void SetContent(Lyric lyric)
         {
-            if (!(content is Lyric lyric))
-                return false;
-
             // Get layout
             var layoutIndex = lyric.LayoutIndex;
             var layout = skinSource?.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, layoutIndex)).Value;
@@ -41,8 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             // Display in content\
             preview.Layout = layout;
             preview.Lyric = lyric;
-
-            return true;
         }
     }
 }

@@ -15,7 +15,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 {
-    public class TimeTagTooltip : BackgroundToolTip
+    public class TimeTagTooltip : BackgroundToolTip<TimeTag>
     {
         private const int time_display_height = 25;
 
@@ -83,16 +83,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             };
         }
 
-        public override bool SetContent(object content)
+        public override void SetContent(TimeTag timeTag)
         {
-            if (!(content is TimeTag timeTag))
-                return false;
-
             trackTimer.Text = TimeTagUtils.FormattedString(timeTag);
             index.Text = $"Position: {timeTag.Index.Index}";
             indexState.Text = timeTag.Index.State == TextIndex.IndexState.Start ? "Start" : "End";
-
-            return true;
         }
 
         [BackgroundDependencyLoader]
