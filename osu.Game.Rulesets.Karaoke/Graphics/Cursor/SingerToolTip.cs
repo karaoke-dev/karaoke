@@ -5,7 +5,6 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
-using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
@@ -20,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
         private readonly OsuSpriteText singerName;
         private readonly OsuSpriteText singerEnglishName;
         private readonly OsuSpriteText singerRomajiName;
-        private readonly OsuTextFlowContainer singerDescription;
+        private readonly OsuSpriteText singerDescription;
 
         public SingerToolTip()
         {
@@ -65,11 +64,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                     {
                         Name = "Romaji name"
                     },
-                    singerDescription = new OsuTextFlowContainer(s => s.Font = s.Font.With(size: 14))
+                    singerDescription = new OsuSpriteText
                     {
                         RelativeSizeAxes = Axes.X,
-                        AutoSizeAxes = Axes.Y,
+                        AllowMultiline = true,
                         Colour = Color4.White.Opacity(0.75f),
+                        Font = OsuFont.Default.With(size: 14),
                         Name = "Description",
                     }
                 }
