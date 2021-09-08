@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
         /// </summary>
         public event Action<SingerDisplay> DeleteRequested;
 
-        private readonly BindableWithCurrent<Singer> current = new BindableWithCurrent<Singer>();
+        private readonly BindableWithCurrent<Singer> current = new();
 
         private OsuSpriteText singerName;
 

@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
         {
         }
 
-        public BindableList<Singer> Colours => Component.Singers;
+        public BindableList<Singer> Singers => Component.Singers;
 
         public string SingerNamePrefix
         {

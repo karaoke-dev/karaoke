@@ -101,7 +101,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
             singers.Add(new AddSingerButton
             {
                 // todo : use better way to create singer with right id.
-                Action = () => Singers.Add(new Singer())
+                Action = () => Singers.Add(new Singer()
+                {
+                    Name = "New singer"
+                })
             });
 
             reindexItems();
