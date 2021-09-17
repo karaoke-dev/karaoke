@@ -5,6 +5,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
+using osu.Framework.Input.Events;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -45,9 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
             };
         }
 
-        public bool OnPressed(KaraokeAction action)
+        public bool OnPressed(KeyBindingPressEvent<KaraokeAction> e)
         {
-            switch (action)
+            switch (e.Action)
             {
                 case KaraokeAction.FirstLyric:
                     // TODO : switch to first lyric
@@ -72,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
             return true;
         }
 
-        public void OnReleased(KaraokeAction action)
+        public void OnReleased(KeyBindingReleaseEvent<KaraokeAction> e)
         {
         }
 

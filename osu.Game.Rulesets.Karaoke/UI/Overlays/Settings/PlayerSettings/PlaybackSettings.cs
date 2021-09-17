@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Screens.Play.PlayerSettings;
@@ -27,9 +28,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
             };
         }
 
-        public bool OnPressed(KaraokeAction action)
+        public bool OnPressed(KeyBindingPressEvent<KaraokeAction> e)
         {
-            switch (action)
+            switch (e.Action)
             {
                 case KaraokeAction.IncreaseTempo:
                     playBackSliderBar.TriggerIncrease();
@@ -50,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
             return true;
         }
 
-        public void OnReleased(KaraokeAction action)
+        public void OnReleased(KeyBindingReleaseEvent<KaraokeAction> e)
         {
         }
 

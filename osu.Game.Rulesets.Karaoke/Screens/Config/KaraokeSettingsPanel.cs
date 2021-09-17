@@ -8,6 +8,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Input.Bindings;
@@ -48,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
         protected override bool BlockNonPositionalInput => false;
 
         // on press should return false to prevent handle the back key action.
-        public override bool OnPressed(GlobalAction action)
+        public override bool OnPressed(KeyBindingPressEvent<GlobalAction> e)
             => false;
 
         // prevent let main content darker.

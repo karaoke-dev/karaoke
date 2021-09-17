@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -219,19 +220,19 @@ namespace osu.Game.Rulesets.Karaoke.UI
             session?.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
         }
 
-        public bool OnPressed(KaraokeSaitenAction action)
+        public bool OnPressed(KeyBindingPressEvent<KaraokeSaitenAction> e)
         {
             // TODO : appear marker and move position with delay time
-            saitenMarker.Y = notePositionInfo.Calculator.YPositionAt(action);
+            saitenMarker.Y = notePositionInfo.Calculator.YPositionAt(e.Action);
             saitenMarker.Alpha = 1;
 
             // Mark as singing
-            realTimeSaitenVisualization.AddAction(action);
+            realTimeSaitenVisualization.AddAction(e.Action);
 
             return true;
         }
 
-        public void OnReleased(KaraokeSaitenAction action)
+        public void OnReleased(KeyBindingReleaseEvent<KaraokeSaitenAction> action)
         {
             // TODO : disappear marker
             saitenMarker.Alpha = 0;
