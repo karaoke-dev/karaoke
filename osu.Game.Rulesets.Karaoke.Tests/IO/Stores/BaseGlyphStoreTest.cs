@@ -62,8 +62,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
         [Test]
         public void CompareGetBaseHeightWithOrigin()
         {
-            var baseHeight = CustomizeGlyphStore.GetBaseHeight();
-            var actual = GlyphStore.GetBaseHeight();
+            var baseHeight = CustomizeGlyphStore.Baseline;
+            var actual = GlyphStore.Baseline;
 
             Assert.AreEqual(baseHeight, actual);
         }
