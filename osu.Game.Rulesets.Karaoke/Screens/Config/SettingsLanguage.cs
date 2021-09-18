@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                 {
                     try
                     {
-                        var displayContainer = Game.GetDisplayContainer();
+                        var displayContainer = Game.GetDialogPlacementContainer();
                         if (displayContainer == null)
                             return;
 

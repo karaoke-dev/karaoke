@@ -4,6 +4,7 @@
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Testing;
 using osu.Game.Overlays;
 using osu.Game.Screens;
 
@@ -20,13 +21,19 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
             return (KaraokeRuleset)rulesets.FirstOrDefault(r => r is KaraokeRuleset);
         }
 
-        public static Container GetDisplayContainer(this OsuGame game)
-            => game?.Children[7] as Container;
+        private static Container getBasePlacementContainer(this OsuGame game)
+            => game?.Children[4] as Container;
+
+        public static Container GetChangelogPlacementContainer(this OsuGame game)
+            => game.getBasePlacementContainer().Children[0] as Container;
+
+        public static Container GetDialogPlacementContainer(this OsuGame game)
+            => game.getBasePlacementContainer().Children[0] as Container;
+
+        public static SettingsOverlay GetSettingsOverlay(this OsuGame game)
+            => game.getBasePlacementContainer()?.ChildrenOfType<SettingsOverlay>().FirstOrDefault();
 
         public static OsuScreenStack GetScreenStack(this OsuGame game)
             => ((game?.Children[3] as Container)?.Child as Container)?.Children.OfType<OsuScreenStack>().FirstOrDefault();
-
-        public static SettingsOverlay GetSettingsOverlay(this OsuGame game)
-            => (game?.Children[6] as Container)?.Children.OfType<SettingsOverlay>().FirstOrDefault();
     }
 }
