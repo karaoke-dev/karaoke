@@ -342,11 +342,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        public bool OnPressed(KaraokeEditAction action)
+        public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
         {
             if (lyricManager == null)
                 return false;
 
+            var action = e.Action;
             var isMoving = HandleMovingEvent(action);
             if (isMoving)
                 return true;
@@ -382,7 +383,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        public void OnReleased(KaraokeEditAction action)
+        public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
         {
         }
 

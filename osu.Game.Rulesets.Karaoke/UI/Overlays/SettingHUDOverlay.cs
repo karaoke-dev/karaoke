@@ -8,6 +8,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
+using osu.Framework.Input.Events;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -78,9 +79,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
 
             public void ToggleGameplaySettingsOverlay() => gameplaySettingsOverlay.ToggleVisibility();
 
-            public virtual bool OnPressed(KaraokeAction action)
+            public virtual bool OnPressed(KeyBindingPressEvent<KaraokeAction> e)
             {
-                switch (action)
+                switch (e.Action)
                 {
                     // Open adjustment overlay
                     case KaraokeAction.OpenPanel:
@@ -133,7 +134,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Overlays
                 return true;
             }
 
-            public virtual void OnReleased(KaraokeAction action)
+            public virtual void OnReleased(KeyBindingReleaseEvent<KaraokeAction> e)
             {
             }
 

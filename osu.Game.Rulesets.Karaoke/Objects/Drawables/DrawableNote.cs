@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
@@ -186,7 +187,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             ApplyResult(r => r.Type = result);
         }
 
-        public bool OnPressed(KaraokeSaitenAction action)
+        public bool OnPressed(KeyBindingPressEvent<KaraokeSaitenAction> e)
         {
             // Make sure the action happened within the body of the hold note
             if (Time.Current < HitObject.StartTime && holdStartTime == null || Time.Current > HitObject.EndTime && holdStartTime == null)
@@ -200,13 +201,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             else if (Time.Current > HitObject.EndTime || Time.Current < HitObject.StartTime)
             {
                 // User stop singing this note
-                OnReleased(action);
+                EndSing();
             }
 
             return false;
         }
 
-        public void OnReleased(KaraokeSaitenAction action)
+        public void OnReleased(KeyBindingReleaseEvent<KaraokeSaitenAction> e)
         {
             // Make sure that the user started holding the key during the hold note
             if (!holdStartTime.HasValue)

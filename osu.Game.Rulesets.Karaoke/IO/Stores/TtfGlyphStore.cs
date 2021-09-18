@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
         protected readonly string AssetName;
 
         public string FontName { get; }
+
+        public float? Baseline => fontInstance?.LineHeight;
 
         protected readonly ResourceStore<byte[]> Store;
 
@@ -85,13 +88,13 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             return glyph?.GlyphType != GlyphType.Fallback;
         }
 
-        public int GetBaseHeight() => fontInstance?.LineHeight ?? 0;
-
         [CanBeNull]
         public CharacterGlyph Get(char character)
         {
             if (fontInstance == null)
                 return null;
+
+            Debug.Assert(Baseline != null);
 
             var glyphInstance = fontInstance.GetGlyph(character);
             if (glyphInstance.GlyphType == GlyphType.Fallback)
@@ -105,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             var yOffset = bounds.Top * dpi;
 
             var advanceWidth2 = glyphInstance.AdvanceWidth * dpi / glyphInstance.SizeOfEm;
-            return new CharacterGlyph(character, xOffset, yOffset, advanceWidth2, this);
+            return new CharacterGlyph(character, xOffset, yOffset, advanceWidth2, Baseline.Value, this);
         }
 
         public int GetKerning(char left, char right)
