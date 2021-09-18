@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                     {
                         try
                         {
-                            var displayContainer = Game.GetDisplayContainer();
+                            var displayContainer = Game.GetChangelogPlacementContainer();
                             var settingOverlay = Game.GetSettingsOverlay();
                             if (displayContainer == null)
                                 return;
