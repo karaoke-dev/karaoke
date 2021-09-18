@@ -13,18 +13,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         public DeleteLanguagePopupDialog(CultureInfo currentLanguage, Action<bool> okAction = null)
         {
             Icon = FontAwesome.Regular.TrashAlt;
-            HeaderText = "Confirm delete language?";
-            BodyText = $"Are you really sure you wants to delete language '{currentLanguage.Name}'?";
+            HeaderText = "Confirm deletion of";
+            BodyText = $"{currentLanguage.Name}";
             Buttons = new PopupDialogButton[]
             {
                 new PopupDialogOkButton
                 {
-                    Text = @"Sure",
+                    Text = @"Yes. Go for it.",
                     Action = () => okAction?.Invoke(true),
                 },
                 new PopupDialogCancelButton
                 {
-                    Text = @"Let me think about it",
+                    Text = @"No! Abort mission!",
                     Action = () => okAction?.Invoke(false),
                 },
             };

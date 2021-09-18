@@ -386,10 +386,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public void AddSingersToLyrics(List<Singer> singers, List<Lyric> lyrics)
         {
             if (!(singers?.Any() ?? false))
-                throw new ArgumentNullException($"{nameof(singers)} cannot be numm or empty.");
+                throw new ArgumentNullException($"{nameof(singers)} cannot be null or empty.");
 
             if (!(lyrics?.Any() ?? false))
-                throw new ArgumentNullException($"{nameof(lyrics)} cannot be numm or empty.");
+                throw new ArgumentNullException($"{nameof(lyrics)} cannot be null or empty.");
 
             changeHandler?.BeginChange();
 
@@ -409,10 +409,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public void RemoveSingersToLyrics(List<Singer> singers, List<Lyric> lyrics)
         {
             if (!(singers?.Any() ?? false))
-                throw new ArgumentNullException($"{nameof(singers)} cannot be numm or empty.");
+                throw new ArgumentNullException($"{nameof(singers)} cannot be null or empty.");
 
             if (!(lyrics?.Any() ?? false))
-                throw new ArgumentNullException($"{nameof(lyrics)} cannot be numm or empty.");
+                throw new ArgumentNullException($"{nameof(lyrics)} cannot be null or empty.");
 
             changeHandler?.BeginChange();
 

@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup
                 saitenable = new LabelledSwitchButton
                 {
                     Label = "Saitenable",
-                    Description = "Will not show saiten playfield in uncheck this.",
+                    Description = "Will not show saiten playfield if the option is unchecked.",
                     Current = { Value = true }
                 },
                 singerList = new LabelledSingerList

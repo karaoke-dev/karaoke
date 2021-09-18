@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         private LabelledDropdown<PreviewSample> previewSampleDropdown;
         private StyleLabelledDropdown previewStyleDropdown;
 
-        protected override string Title => "Preview(Won't be saved)";
+        protected override string Title => "Preview (Won't be saved)";
 
         [BackgroundDependencyLoader]
         private void load(LayoutManager manager)

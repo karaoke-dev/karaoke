@@ -12,18 +12,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public DeleteLyricDialog(Action<bool> okAction = null)
         {
             Icon = FontAwesome.Solid.Globe;
-            HeaderText = "Delete lyric";
-            BodyText = "Would you really wants to delete lyric?";
+            HeaderText = "Confirm deletion of";
+            BodyText = "lyric";
             Buttons = new PopupDialogButton[]
             {
                 new PopupDialogOkButton
                 {
-                    Text = @"OK",
+                    Text = @"Yes. Go for it.",
                     Action = () => okAction?.Invoke(true),
                 },
                 new PopupDialogCancelButton
                 {
-                    Text = @"Cancel",
+                    Text = @"No! Abort mission!",
                     Action = () => okAction?.Invoke(false),
                 },
             };
