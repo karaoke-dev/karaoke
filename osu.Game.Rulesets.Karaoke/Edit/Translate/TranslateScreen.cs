@@ -91,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 public TranslateScreenTitle()
                 {
                     Title = "translate";
-                    Description = "create translate of your beatmap";
+                    Description = "create translation of your beatmap";
                     IconTexture = "Icons/Hexacons/social";
                 }
             }

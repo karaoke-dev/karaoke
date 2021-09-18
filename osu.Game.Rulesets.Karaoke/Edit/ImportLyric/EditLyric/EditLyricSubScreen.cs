@@ -74,8 +74,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 
                         NavigationText = mode switch
                         {
-                            LyricEditorMode.Manage => $"Cool! Try switching to [{typing_mode}] if you wants to edit lyric.",
-                            LyricEditorMode.Typing => $"Cool! Try switching to [{cutting_mode}] if you wants to cut or combine lyric.",
+                            LyricEditorMode.Manage => $"Cool! Try switching to [{typing_mode}] if you want to edit lyric.",
+                            LyricEditorMode.Typing => $"Cool! Try switching to [{cutting_mode}] if you want to cut or combine lyric.",
                             _ => throw new InvalidEnumArgumentException(nameof(mode))
                         };
 

@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
                 new SettingsCheckbox
                 {
                     LabelText = "Force use default note font.",
-                    TooltipText = "Force use default font even has customize font in skin or beatmap.",
+                    TooltipText = "Override any custom font in skin or beatmap.",
                     Current = Config.GetBindable<bool>(KaraokeRulesetSetting.ForceUseDefaultNoteFont)
                 }
             };

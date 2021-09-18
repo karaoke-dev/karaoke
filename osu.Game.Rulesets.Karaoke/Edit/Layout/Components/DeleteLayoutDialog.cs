@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
         public DeleteLayoutDialog(LyricLayout layout, Action deleteAction)
         {
             HeaderText = "Confirm deletion of";
-            BodyText = $"Are you sure you want to delete layout {layout.Name}?";
+            BodyText = $"{layout.Name}";
 
             Icon = FontAwesome.Regular.TrashAlt;
 

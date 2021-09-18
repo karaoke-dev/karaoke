@@ -12,18 +12,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         public DeleteSingerDialog(Action<bool> okAction = null)
         {
             Icon = FontAwesome.Solid.Globe;
-            HeaderText = "Select singer";
-            BodyText = "Would you really wants to delete singer?";
+            HeaderText = "Confirm deletion of";
+            BodyText = "singer"; //should change to singer name later
             Buttons = new PopupDialogButton[]
             {
                 new PopupDialogOkButton
                 {
-                    Text = @"OK",
+                    Text = @"Yes. Go for it.",
                     Action = () => okAction?.Invoke(true),
                 },
                 new PopupDialogCancelButton
                 {
-                    Text = @"Cancel",
+                    Text = @"No! Abort mission!",
                     Action = () => okAction?.Invoke(false),
                 },
             };

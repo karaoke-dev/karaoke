@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public class IssueTemplateMissingTranslate : IssueTemplate
         {
             public IssueTemplateMissingTranslate(ICheck check)
-                : base(check, IssueType.Problem, "This language does not have any translate in lyric.")
+                : base(check, IssueType.Problem, "There are no lyric translations for this language.")
             {
             }
 
@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
         public class IssueTemplateMissingPartialTranslate : IssueTemplate
         {
             public IssueTemplateMissingPartialTranslate(ICheck check)
-                : base(check, IssueType.Problem, "This language does missing translate in some lyric.")
+                : base(check, IssueType.Problem, "Some lyrics in this language are missing translations.")
             {
             }
 

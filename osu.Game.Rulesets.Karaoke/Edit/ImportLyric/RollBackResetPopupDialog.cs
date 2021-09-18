@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         {
             Icon = screen.Icon;
             HeaderText = "Really sure?";
-            BodyText = $"Are you really sure you wants to roll-back to step '{screen.Title}'? you might lost every change you made.";
+            BodyText = $"Are you really sure you want to roll-back to step '{screen.Title}'? You might lost every change you made.";
             Buttons = new PopupDialogButton[]
             {
                 new PopupDialogOkButton

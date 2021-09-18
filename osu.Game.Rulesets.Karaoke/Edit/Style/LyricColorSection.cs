@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                 colorAreaDropdown = new LabelledDropdown<ColorArea>
                 {
                     Label = "Color area",
-                    Description = "Select which area wants to be adjust",
+                    Description = "Select the area you wish to adjust.",
                     Items = EnumUtils.GetValues<ColorArea>()
                 },
                 brushTypeDropdown = new LabelledDropdown<BrushType>
