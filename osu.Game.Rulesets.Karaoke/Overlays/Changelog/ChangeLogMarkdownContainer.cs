@@ -88,11 +88,12 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
             private readonly IDictionary<string, string> githubUrls = new Dictionary<string, string>
             {
                 { "karaoke", "https://github.com/karaoke-dev/karaoke/" },
-                { "edge", "https://github.com/karaoke-dev/karaoke" },
-                { "github.io", "https://github.com/karaoke-dev/karaoke-dev.github.io" },
-                { "launcher", "https://github.com/karaoke-dev/launcher" },
-                { "sample", "https://github.com/karaoke-dev/sample-beatmap" },
-                { "karaoke-microphone", "https://github.com/karaoke-dev/osu-framework-microphone" },
+                { "edge", "https://github.com/karaoke-dev/karaoke/" },
+                { "github.io", "https://github.com/karaoke-dev/karaoke-dev.github.io/" },
+                { "launcher", "https://github.com/karaoke-dev/launcher/" },
+                { "sample", "https://github.com/karaoke-dev/sample-beatmap/" },
+                { "microphone-package", "https://github.com/karaoke-dev/osu-framework-microphone/" },
+                { "font-package", "https://github.com/karaoke-dev/osu-framework-font/" }
             };
 
             protected override void AddLinkText(string text, LinkInline linkInline)
