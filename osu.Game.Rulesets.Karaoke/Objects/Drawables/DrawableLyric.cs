@@ -40,7 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         private readonly Bindable<FontUsage> mainFontUsageBindable = new();
         private readonly Bindable<FontUsage> rubyFontUsageBindable = new();
+        private readonly Bindable<int> rubyMarginBindable = new();
         private readonly Bindable<FontUsage> romajiFontUsageBindable = new();
+        private readonly Bindable<int> romajiMarginBindable = new();
         private readonly Bindable<FontUsage> translateFontUsageBindable = new();
 
         private readonly IBindable<int[]> singersBindable = new Bindable<int[]>();
@@ -80,11 +82,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 Origin = Anchor.TopLeft,
             });
 
-            useTranslateBindable.BindValueChanged(_ => applyTranslate());
-            preferLanguageBindable.BindValueChanged(_ => applyTranslate());
-            displayRubyBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRuby = e.NewValue));
-            displayRomajiBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRomaji = e.NewValue));
-
             if (session != null)
             {
                 // gameplay.
@@ -102,22 +99,32 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 config.BindWith(KaraokeRulesetSetting.DisplayRomaji, displayRomajiBindable);
             }
 
-            singersBindable.BindValueChanged(_ => { updateFontStyle(); });
-            layoutIndexBindable.BindValueChanged(_ => { updateLayout(); });
-            translateTextBindable.BindCollectionChanged((_, _) => { applyTranslate(); });
+            useTranslateBindable.BindValueChanged(_ => applyTranslate(), true);
+            preferLanguageBindable.BindValueChanged(_ => applyTranslate(), true);
+            displayRubyBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRuby = e.NewValue));
+            displayRomajiBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRomaji = e.NewValue));
 
             if (config != null)
             {
                 config.BindWith(KaraokeRulesetSetting.MainFont, mainFontUsageBindable);
                 config.BindWith(KaraokeRulesetSetting.RubyFont, rubyFontUsageBindable);
+                config.BindWith(KaraokeRulesetSetting.RubyMargin, rubyMarginBindable);
                 config.BindWith(KaraokeRulesetSetting.RomajiFont, romajiFontUsageBindable);
+                config.BindWith(KaraokeRulesetSetting.RomajiMargin, romajiMarginBindable);
                 config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFontUsageBindable);
             }
 
             mainFontUsageBindable.BindValueChanged(_ => updateFontUsage());
             rubyFontUsageBindable.BindValueChanged(_ => updateFontUsage());
+            rubyMarginBindable.BindValueChanged(_ => updateFontUsage());
             romajiFontUsageBindable.BindValueChanged(_ => updateFontUsage());
+            romajiMarginBindable.BindValueChanged(_ => updateFontUsage());
             translateFontUsageBindable.BindValueChanged(_ => updateFontUsage());
+
+            // property in hitobject.
+            singersBindable.BindValueChanged(_ => { updateFontStyle(); });
+            layoutIndexBindable.BindValueChanged(_ => { updateLayout(); });
+            translateTextBindable.BindCollectionChanged((_, _) => { applyTranslate(); });
         }
 
         protected override void OnApply()
@@ -186,10 +193,14 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 lyricPiece.Font = getFont(KaraokeRulesetSetting.MainFont, mainFont);
 
                 var rubyFont = lyricFont?.RubyTextFontInfo?.LyricTextFontInfo;
+                lyricPiece.DisplayRuby = displayRubyBindable.Value;
                 lyricPiece.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, rubyFont);
+                lyricPiece.RubyMargin = rubyMarginBindable.Value;
 
                 var romajiFont = lyricFont?.RomajiTextFontInfo?.LyricTextFontInfo;
+                lyricPiece.DisplayRomaji = displayRomajiBindable.Value;
                 lyricPiece.RomajiFont = getFont(KaraokeRulesetSetting.RomajiFont, romajiFont);
+                lyricPiece.RomajiMargin = romajiMarginBindable.Value;
             }
 
             // Apply translate font.

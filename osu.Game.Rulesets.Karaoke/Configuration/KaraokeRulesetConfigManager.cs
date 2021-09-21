@@ -61,7 +61,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetSetting.LyricScale, 2, 1, 4, 0.01);
             SetDefault(KaraokeRulesetSetting.MainFont, new FontUsage("Torus", 48, "Bold"), 48f, 48f);
             SetDefault(KaraokeRulesetSetting.RubyFont, new FontUsage("Torus", 20, "Bold"), 8f, 48f);
+            SetDefault(KaraokeRulesetSetting.RubyMargin, 5, 0, 20);
             SetDefault(KaraokeRulesetSetting.RomajiFont, new FontUsage("Torus", 20, "Bold"), 8f, 48f);
+            SetDefault(KaraokeRulesetSetting.RomajiMargin, 0, 0, 20);
             SetDefault(KaraokeRulesetSetting.ForceUseDefaultFont, false);
             SetDefault(KaraokeRulesetSetting.TranslateFont, new FontUsage("Torus", 18, "Bold"), 10f, 48f);
             SetDefault(KaraokeRulesetSetting.ForceUseDefaultTranslateFont, false);
@@ -154,7 +156,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         LyricScale,
         MainFont,
         RubyFont,
+        RubyMargin,
         RomajiFont,
+        RomajiMargin,
         ForceUseDefaultFont,
         TranslateFont,
         ForceUseDefaultTranslateFont,
