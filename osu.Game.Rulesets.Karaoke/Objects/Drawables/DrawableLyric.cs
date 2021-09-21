@@ -82,11 +82,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 Origin = Anchor.TopLeft,
             });
 
-            useTranslateBindable.BindValueChanged(_ => applyTranslate());
-            preferLanguageBindable.BindValueChanged(_ => applyTranslate());
-            displayRubyBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRuby = e.NewValue));
-            displayRomajiBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRomaji = e.NewValue));
-
             if (session != null)
             {
                 // gameplay.
@@ -104,9 +99,10 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 config.BindWith(KaraokeRulesetSetting.DisplayRomaji, displayRomajiBindable);
             }
 
-            singersBindable.BindValueChanged(_ => { updateFontStyle(); });
-            layoutIndexBindable.BindValueChanged(_ => { updateLayout(); });
-            translateTextBindable.BindCollectionChanged((_, _) => { applyTranslate(); });
+            useTranslateBindable.BindValueChanged(_ => applyTranslate(), true);
+            preferLanguageBindable.BindValueChanged(_ => applyTranslate(), true);
+            displayRubyBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRuby = e.NewValue));
+            displayRomajiBindable.BindValueChanged(e => lyricPieces.ForEach(x => x.DisplayRomaji = e.NewValue));
 
             if (config != null)
             {
@@ -124,6 +120,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             romajiFontUsageBindable.BindValueChanged(_ => updateFontUsage());
             romajiMarginBindable.BindValueChanged(_ => updateFontUsage());
             translateFontUsageBindable.BindValueChanged(_ => updateFontUsage());
+
+            // property in hitobject.
+            singersBindable.BindValueChanged(_ => { updateFontStyle(); });
+            layoutIndexBindable.BindValueChanged(_ => { updateLayout(); });
+            translateTextBindable.BindCollectionChanged((_, _) => { applyTranslate(); });
         }
 
         protected override void OnApply()
