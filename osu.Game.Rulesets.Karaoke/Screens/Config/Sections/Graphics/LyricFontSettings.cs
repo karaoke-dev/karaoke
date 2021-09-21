@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
             {
                 new SettingsSlider<double>
                 {
-                    LabelText = "Font scale",
+                    LabelText = "Overall scale",
                     Current = Config.GetBindable<double>(KaraokeRulesetSetting.LyricScale),
                     KeyboardStep = 0.01f,
                     DisplayAsPercentage = true
@@ -40,10 +40,22 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
                     LabelText = "Default ruby font",
                     Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.RubyFont)
                 },
+                new SettingsSlider<int>
+                {
+                    LabelText = "Ruby margin",
+                    Current = Config.GetBindable<int>(KaraokeRulesetSetting.RubyMargin),
+                    KeyboardStep = 1,
+                },
                 new SettingsFont
                 {
                     LabelText = "Default romaji font",
                     Current = Config.GetBindable<FontUsage>(KaraokeRulesetSetting.RomajiFont)
+                },
+                new SettingsSlider<int>
+                {
+                    LabelText = "Romaji margin",
+                    Current = Config.GetBindable<int>(KaraokeRulesetSetting.RomajiMargin),
+                    KeyboardStep = 1,
                 },
                 new SettingsCheckbox
                 {

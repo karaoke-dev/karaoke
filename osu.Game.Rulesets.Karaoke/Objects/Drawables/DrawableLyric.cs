@@ -40,7 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         private readonly Bindable<FontUsage> mainFontUsageBindable = new();
         private readonly Bindable<FontUsage> rubyFontUsageBindable = new();
+        private readonly Bindable<int> rubyMarginBindable = new();
         private readonly Bindable<FontUsage> romajiFontUsageBindable = new();
+        private readonly Bindable<int> romajiMarginBindable = new();
         private readonly Bindable<FontUsage> translateFontUsageBindable = new();
 
         private readonly IBindable<int[]> singersBindable = new Bindable<int[]>();
@@ -110,13 +112,17 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             {
                 config.BindWith(KaraokeRulesetSetting.MainFont, mainFontUsageBindable);
                 config.BindWith(KaraokeRulesetSetting.RubyFont, rubyFontUsageBindable);
+                config.BindWith(KaraokeRulesetSetting.RubyMargin, rubyMarginBindable);
                 config.BindWith(KaraokeRulesetSetting.RomajiFont, romajiFontUsageBindable);
+                config.BindWith(KaraokeRulesetSetting.RomajiMargin, romajiMarginBindable);
                 config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFontUsageBindable);
             }
 
             mainFontUsageBindable.BindValueChanged(_ => updateFontUsage());
             rubyFontUsageBindable.BindValueChanged(_ => updateFontUsage());
+            rubyMarginBindable.BindValueChanged(_ => updateFontUsage());
             romajiFontUsageBindable.BindValueChanged(_ => updateFontUsage());
+            romajiMarginBindable.BindValueChanged(_ => updateFontUsage());
             translateFontUsageBindable.BindValueChanged(_ => updateFontUsage());
         }
 
@@ -187,9 +193,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
                 var rubyFont = lyricFont?.RubyTextFontInfo?.LyricTextFontInfo;
                 lyricPiece.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, rubyFont);
+                lyricPiece.RubyMargin = rubyMarginBindable.Value;
 
                 var romajiFont = lyricFont?.RomajiTextFontInfo?.LyricTextFontInfo;
                 lyricPiece.RomajiFont = getFont(KaraokeRulesetSetting.RomajiFont, romajiFont);
+                lyricPiece.RomajiMargin = romajiMarginBindable.Value;
             }
 
             // Apply translate font.
