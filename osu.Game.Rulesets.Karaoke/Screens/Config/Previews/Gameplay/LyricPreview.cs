@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -24,6 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
         private readonly Bindable<FontUsage> rubyFont = new();
         private readonly Bindable<FontUsage> romajiFont = new();
         private readonly Bindable<FontUsage> translateFont = new();
+        private readonly Bindable<CultureInfo> preferLanguage = new();
 
         [Resolved]
         private FontStore fontStore { get; set; }
@@ -60,6 +62,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             {
                 addFont(e.NewValue);
             });
+            preferLanguage.BindValueChanged(e =>
+            {
+                drawableLyric.HitObject.Translates = createPreviewTranslate(e.NewValue);
+            });
 
             void addFont(FontUsage fontUsage)
                 => localFontStore.AddFont(fontUsage);
@@ -77,6 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
             config.BindWith(KaraokeRulesetSetting.RubyFont, rubyFont);
             config.BindWith(KaraokeRulesetSetting.RomajiFont, romajiFont);
             config.BindWith(KaraokeRulesetSetting.TranslateFont, translateFont);
+            config.BindWith(KaraokeRulesetSetting.PreferLanguage, preferLanguage);
         }
 
         protected override void Dispose(bool isDisposing)
@@ -114,11 +121,22 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Gameplay
                         Text = "karaoke"
                     },
                 },
-                Translates =
-                {
-                    { new CultureInfo("Ja-JP"), "からおけ" },
-                },
                 HitWindows = new KaraokeHitWindows(),
             };
+
+        private IDictionary<CultureInfo, string> createPreviewTranslate(CultureInfo cultureInfo)
+        {
+            var translate = cultureInfo.Name switch
+            {
+                "ja" or "Ja-jp" => "カラオケ",
+                "zh-Hant" or "zh-TW" => "卡拉OK",
+                _ => "karaoke"
+            };
+
+            return new Dictionary<CultureInfo, string>
+            {
+                { cultureInfo, translate },
+            };
+        }
     }
 }
