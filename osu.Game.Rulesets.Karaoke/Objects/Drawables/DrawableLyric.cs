@@ -193,10 +193,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 lyricPiece.Font = getFont(KaraokeRulesetSetting.MainFont, mainFont);
 
                 var rubyFont = lyricFont?.RubyTextFontInfo?.LyricTextFontInfo;
+                lyricPiece.DisplayRuby = displayRubyBindable.Value;
                 lyricPiece.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, rubyFont);
                 lyricPiece.RubyMargin = rubyMarginBindable.Value;
 
                 var romajiFont = lyricFont?.RomajiTextFontInfo?.LyricTextFontInfo;
+                lyricPiece.DisplayRomaji = displayRomajiBindable.Value;
                 lyricPiece.RomajiFont = getFont(KaraokeRulesetSetting.RomajiFont, romajiFont);
                 lyricPiece.RomajiMargin = romajiMarginBindable.Value;
             }
