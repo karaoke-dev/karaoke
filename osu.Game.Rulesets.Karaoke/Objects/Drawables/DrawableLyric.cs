@@ -13,11 +13,13 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Graphics.Shaders;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
+using osu.Game.Rulesets.Karaoke.Skinning.Tools;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
@@ -32,6 +34,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         [Resolved(canBeNull: true)]
         private KaraokeRulesetConfigManager config { get; set; }
+
+        [Resolved]
+        private LocalShaderManager shaderManager { get; set; }
 
         private readonly BindableBool useTranslateBindable = new();
         private readonly Bindable<CultureInfo> preferLanguageBindable = new();
@@ -172,7 +177,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             foreach (var lyricPiece in lyricPieces)
             {
-                lyricPiece.ApplyFontStyle(lyricFont);
+                // Apply shader.
+                lyricPiece.LeftLyricTextShaders = SkinConvertorTool.ConvertLeftSideShader(shaderManager, lyricFont);
+                lyricPiece.RightLyricTextShaders = SkinConvertorTool.ConvertRightSideShader(shaderManager, lyricFont);
             }
         }
 

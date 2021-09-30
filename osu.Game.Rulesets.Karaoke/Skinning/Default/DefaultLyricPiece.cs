@@ -7,9 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Default
 {
@@ -137,28 +135,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             {
                 throw new NotImplementedException("Chunk lyric will be available until V2");
             }
-        }
-
-        public void ApplyFontStyle(LyricFont font)
-        {
-            // From text sample
-            FrontTextTexture = new SolidTexture { SolidColor = Color4.Blue }; // font.FrontTextBrushInfo.TextBrush.ConvertToTextureSample();
-            FrontBorderTexture = font.FrontTextBrushInfo.BorderBrush.ConvertToTextureSample();
-            FrontTextShadowTexture = font.FrontTextBrushInfo.ShadowBrush.ConvertToTextureSample();
-
-            // Back text sample
-            BackTextTexture = font.BackTextBrushInfo.TextBrush.ConvertToTextureSample();
-            BackBorderTexture = font.BackTextBrushInfo.BorderBrush.ConvertToTextureSample();
-            BackTextShadowTexture = font.BackTextBrushInfo.ShadowBrush.ConvertToTextureSample();
-
-            // Apply text info
-            var lyricFont = font.LyricTextFontInfo;
-            Border = lyricFont.EdgeSize > 0;
-            BorderRadius = lyricFont.EdgeSize;
-
-            // Apply shadow
-            Shadow = font.UseShadow;
-            ShadowOffset = font.ShadowOffset;
         }
 
         private bool displayRuby = true;
