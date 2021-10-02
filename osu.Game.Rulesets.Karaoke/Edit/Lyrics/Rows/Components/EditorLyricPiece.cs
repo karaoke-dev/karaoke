@@ -6,6 +6,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
+using osu.Framework.Graphics.Shaders;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -13,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Tools;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
 using osuTK;
@@ -123,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             => (InternalChildren.FirstOrDefault() as Container)?.Child as EditorLyricSpriteText;
 
         [BackgroundDependencyLoader(true)]
-        private void load(ISkinSource skin)
+        private void load(ISkinSource skin, ShaderManager shaderManager)
         {
             // this is a temp way to apply font.
             skin.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(karaokeFont =>
@@ -132,7 +134,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 if (newFont == null)
                     return;
 
-                ApplyFontStyle(karaokeFont.NewValue);
+                LeftLyricTextShaders = SkinConvertorTool.ConvertLeftSideShader(shaderManager, newFont);
+                RightLyricTextShaders = SkinConvertorTool.ConvertRightSideShader(shaderManager, newFont);
 
                 // Apply text font info
                 var lyricFont = newFont.LyricTextFontInfo.LyricTextFontInfo;
