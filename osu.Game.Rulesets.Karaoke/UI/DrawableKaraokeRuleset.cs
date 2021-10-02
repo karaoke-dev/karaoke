@@ -11,7 +11,6 @@ using osu.Game.Input.Handlers;
 using osu.Game.Replays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Graphics.Shaders;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
@@ -70,9 +69,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
             dependencies.Cache(Session = new KaraokeSessionStatics(Config, Beatmap));
-
-            var resourceStore = dependencies.Get<Framework.Game>().Resources;
-            dependencies.Cache(new LocalShaderManager(resourceStore));
             return dependencies;
         }
 

@@ -6,9 +6,9 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
+using osu.Framework.Graphics.Shaders;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
-using osu.Game.Rulesets.Karaoke.Graphics.Shaders;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Skinning;
@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             => (InternalChildren.FirstOrDefault() as Container)?.Child as EditorLyricSpriteText;
 
         [BackgroundDependencyLoader(true)]
-        private void load(ISkinSource skin, LocalShaderManager shaderManager)
+        private void load(ISkinSource skin, ShaderManager shaderManager)
         {
             // this is a temp way to apply font.
             skin.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(karaokeFont =>

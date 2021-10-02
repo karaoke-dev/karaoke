@@ -163,12 +163,25 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override IResourceStore<byte[]> CreateResourceStore()
         {
-            var store = base.CreateResourceStore();
-            if (store.GetAvailableResources().Any())
-                return store;
+            var store = new ResourceStore<byte[]>();
 
-            // IRMerge might change the assembly name, which will cause resource not found.
-            return new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Game.Rulesets.Karaoke.dll"), @"Resources");
+            // add ruleset store
+            store.AddStore(getRulesetStore());
+
+            // add shader resource from font package.
+            store.AddStore(new NamespacedResourceStore<byte[]>(new FontResourceStore(), "Resources"));
+
+            return store;
+
+            IResourceStore<byte[]> getRulesetStore()
+            {
+                var rulesetStore = base.CreateResourceStore();
+                if (rulesetStore.GetAvailableResources().Any())
+                    return rulesetStore;
+
+                // IRMerge might change the assembly name, which will cause resource not found.
+                return new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Game.Rulesets.Karaoke.dll"), @"Resources");
+            }
         }
 
         public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new KaraokeDifficultyCalculator(this, beatmap);

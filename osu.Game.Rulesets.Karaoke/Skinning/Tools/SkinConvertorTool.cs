@@ -3,7 +3,6 @@
 
 using osu.Framework.Graphics.Shaders;
 using osu.Game.Rulesets.Karaoke.Extensions;
-using osu.Game.Rulesets.Karaoke.Graphics.Shaders;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osuTK.Graphics;
 
@@ -12,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
     // it's the temp logic to collect logic.
     public static class SkinConvertorTool
     {
-        public static IShader[] ConvertLeftSideShader(LocalShaderManager shaderManager, LyricFont lyricFont)
+        public static IShader[] ConvertLeftSideShader(ShaderManager shaderManager, LyricFont lyricFont)
         {
             if (shaderManager == null)
                 return null;
@@ -30,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
             };
         }
 
-        public static IShader[] ConvertRightSideShader(LocalShaderManager shaderManager, LyricFont lyricFont)
+        public static IShader[] ConvertRightSideShader(ShaderManager shaderManager, LyricFont lyricFont)
         {
             if (shaderManager == null)
                 return null;
