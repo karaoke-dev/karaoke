@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
                 CoverUrl = "https://osu.ppy.sh/images/headers/profile-covers/c3.jpg",
             };
 
-            Beatmap = new TestKaraokeBeatmap(ruleset).BeatmapInfo;
+            BeatmapInfo = new TestKaraokeBeatmap(ruleset).BeatmapInfo;
             Ruleset = ruleset;
             RulesetID = ruleset.ID ?? 0;
             Mods = new Mod[] { new KaraokeModFlashlight(), new KaraokeModSnow() };

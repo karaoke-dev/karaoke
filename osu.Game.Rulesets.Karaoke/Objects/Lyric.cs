@@ -179,7 +179,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public override Judgement CreateJudgement() => new KaraokeLyricJudgement();
 
-        protected override void ApplyDefaultsToSelf(ControlPointInfo controlPointInfo, BeatmapDifficulty difficulty)
+        protected override void ApplyDefaultsToSelf(ControlPointInfo controlPointInfo, IBeatmapDifficultyInfo difficulty)
         {
             base.ApplyDefaultsToSelf(controlPointInfo, difficulty);
 
