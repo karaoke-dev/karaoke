@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             else if (line.StartsWith("@", StringComparison.Ordinal))
             {
                 // Remove @ in time tag and add into lrc queue
-                lrcLines.Add(line.Substring(1));
+                lrcLines.Add(line[1..]);
             }
             else if (line.ToLower() == "end")
             {

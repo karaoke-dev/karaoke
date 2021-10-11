@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             var firstLyric = new Lyric
             {
-                Text = lyric.Text?.Substring(0, splitIndex),
+                Text = lyric.Text?[..splitIndex],
                 TimeTags = firstTimeTag?.ToArray(),
                 RubyTags = lyric.RubyTags?.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray(),
                 RomajiTags = lyric.RomajiTags?.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray(),
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             var secondLyric = new Lyric
             {
-                Text = lyric.Text?.Substring(splitIndex),
+                Text = lyric.Text?[splitIndex..],
                 TimeTags = shiftingTimeTag(secondTimeTag?.ToArray(), -splitIndex),
                 RubyTags = shiftingRubyTag(lyric.RubyTags?.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), -splitIndex),
                 RomajiTags = shiftingRomajiTag(lyric.RomajiTags?.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), -splitIndex),
