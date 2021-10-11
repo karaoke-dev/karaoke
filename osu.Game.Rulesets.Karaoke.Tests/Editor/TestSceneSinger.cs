@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         public TestSceneSinger()
         {
             var beatmap = new TestKaraokeBeatmap(null);
-            if (!(new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() is KaraokeBeatmap karaokeBeatmap))
+            if (new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
                 throw new ArgumentNullException(nameof(karaokeBeatmap));
 
             // todo : insert singers

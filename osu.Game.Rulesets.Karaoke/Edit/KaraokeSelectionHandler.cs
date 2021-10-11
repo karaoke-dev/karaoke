@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         public override bool HandleMovement(MoveSelectionEvent<HitObject> moveEvent)
         {
             // Only note can be moved.
-            if (!(moveEvent.Blueprint is NoteSelectionBlueprint noteSelectionBlueprint))
+            if (moveEvent.Blueprint is not NoteSelectionBlueprint noteSelectionBlueprint)
                 return false;
 
             var lastTone = noteSelectionBlueprint.HitObject.Tone;
@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         private void performColumnMovement(Tone lastTone, MoveSelectionEvent<HitObject> moveEvent)
         {
-            if (!(moveEvent.Blueprint is NoteSelectionBlueprint))
+            if (moveEvent.Blueprint is not NoteSelectionBlueprint)
                 return;
 
             var calculator = notePositionInfo.Calculator;

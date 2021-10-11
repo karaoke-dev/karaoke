@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                 Component.BorderThickness = highLight ? 3 : 0;
             });
 
-            if (!(InternalChildren[1] is FillFlowContainer fillFlowContainer))
+            if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
                 return;
 
             // change padding to place delete button.

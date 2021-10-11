@@ -303,7 +303,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
         {
-            if (!(Result.Judgement is KaraokeLyricJudgement judgement))
+            if (Result.Judgement is not KaraokeLyricJudgement judgement)
                 return;
 
             var lyricStartOffset = timeOffset + HitObject.LyricDuration;

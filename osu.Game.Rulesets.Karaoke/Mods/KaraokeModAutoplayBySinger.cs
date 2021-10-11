@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         public override void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
         {
-            if (!(drawableRuleset.Playfield is KaraokePlayfield karaokePlayfield))
+            if (drawableRuleset.Playfield is not KaraokePlayfield karaokePlayfield)
                 return;
 
             var workingBeatmap = karaokePlayfield.WorkingBeatmap;

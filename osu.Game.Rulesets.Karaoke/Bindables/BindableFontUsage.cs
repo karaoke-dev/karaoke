@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
 
         public override void Parse(object input)
         {
-            if (!(input is string str) || string.IsNullOrEmpty(str))
+            if (input is not string str || string.IsNullOrEmpty(str))
             {
                 Value = default;
                 return;

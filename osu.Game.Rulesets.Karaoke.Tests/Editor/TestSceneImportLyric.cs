@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         {
             public TestImportLyricScreen(FileInfo fileInfo)
             {
-                if (!(ScreenStack.CurrentScreen is DragFileSubScreen dragFileSubScreen))
+                if (ScreenStack.CurrentScreen is not DragFileSubScreen dragFileSubScreen)
                     throw new ScreenStack.ScreenNotInStackException($"{nameof(DragFileSubScreen)} does not in the screen.");
 
                 dragFileSubScreen.ImportLyricFile(fileInfo);
@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
             public void GoToStep(ImportLyricStep step)
             {
-                if (!(ScreenStack.CurrentScreen is IImportLyricSubScreen lyricSubScreen))
+                if (ScreenStack.CurrentScreen is not IImportLyricSubScreen lyricSubScreen)
                     return;
 
                 if (step == lyricSubScreen.Step)

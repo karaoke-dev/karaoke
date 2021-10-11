@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
         [BackgroundDependencyLoader]
         private void load(IScrollingInfo scrollingInfo)
         {
-            if (!(scrollingInfo.TimeRange is BindableDouble bindableDouble))
+            if (scrollingInfo.TimeRange is not BindableDouble bindableDouble)
                 return;
 
             Children = new[]

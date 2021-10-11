@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
 
             public RemovableLabelledLanguageSelector()
             {
-                if (!(InternalChildren[1] is FillFlowContainer fillFlowContainer))
+                if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
                     return;
 
                 // change padding to place delete button.

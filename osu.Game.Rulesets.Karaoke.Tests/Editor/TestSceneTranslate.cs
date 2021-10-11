@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         public TestSceneTranslate()
         {
             var beatmap = new TestKaraokeBeatmap(null);
-            if (!(new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() is KaraokeBeatmap karaokeBeatmap))
+            if (new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
                 throw new ArgumentNullException(nameof(karaokeBeatmap));
 
             karaokeBeatmap.AvailableTranslates = new[]

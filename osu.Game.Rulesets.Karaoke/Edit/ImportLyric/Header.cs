@@ -145,10 +145,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 if (tab.Value == Current.Value)
                     return;
 
-                if (!(Current.Value is IImportLyricSubScreen currentScreen))
+                if (Current.Value is not IImportLyricSubScreen currentScreen)
                     return;
 
-                if (!(tab.Value is IImportLyricSubScreen targetScreen))
+                if (tab.Value is not IImportLyricSubScreen targetScreen)
                     return;
 
                 currentScreen.CanRollBack(targetScreen, enabled =>

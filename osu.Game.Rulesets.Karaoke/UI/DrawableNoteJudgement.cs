@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         protected override void ApplyMissAnimations()
         {
-            if (!(JudgementBody.Drawable is DefaultKaraokeJudgementPiece))
+            if (JudgementBody.Drawable is not DefaultKaraokeJudgementPiece)
             {
                 // this is temporary logic until mania's skin transformer returns IAnimatableJudgements
                 JudgementBody.ScaleTo(1.6f);

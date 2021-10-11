@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                         return;
 
                     case WatcherChangeTypes.Renamed:
-                        if (!(args is RenamedEventArgs renamedEventArgs))
+                        if (args is not RenamedEventArgs renamedEventArgs)
                             throw new InvalidCastException(nameof(args));
 
                         removeFontFromList(renamedEventArgs.OldFullPath);

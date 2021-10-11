@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             if (drawableRuleset is DrawableKaraokeEditorRuleset)
                 return;
 
-            if (!(drawableRuleset.Playfield is KaraokePlayfield karaokePlayfield))
+            if (drawableRuleset.Playfield is not KaraokePlayfield karaokePlayfield)
                 return;
 
             // todo : add replay visualization into note playfield from here?

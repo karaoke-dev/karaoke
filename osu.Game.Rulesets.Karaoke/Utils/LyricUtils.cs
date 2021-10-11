@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             lyric.TimeTags = processTimeTags(lyric.TimeTags, position, count);
 
             // deal with text
-            var newLyric = lyric.Text.Substring(0, position) + lyric.Text[(position + count)..];
+            var newLyric = lyric.Text[..position] + lyric.Text[(position + count)..];
             lyric.Text = newLyric;
 
             static T[] processTags<T>(T[] tags, int position, int count) where T : class, ITextTag
@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             lyric.TimeTags = processTimeTags(lyric.TimeTags, position, shiftingLength);
 
             // deal with text
-            var newLyric = lyric.Text?.Substring(0, position) + text + lyric.Text?[position..];
+            var newLyric = lyric.Text?[..position] + text + lyric.Text?[position..];
             lyric.Text = newLyric;
 
             static T[] processTags<T>(T[] tags, int position, int shiftingLength) where T : ITextTag =>

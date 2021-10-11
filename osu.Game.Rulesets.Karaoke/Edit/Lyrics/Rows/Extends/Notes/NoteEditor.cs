@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 
         private void addHitObject(HitObject hitObject)
         {
-            if (!(hitObject is Note note))
+            if (hitObject is not Note note)
                 return;
 
             if (note.ParentLyric != lyric)
@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 
         private void removeHitObject(HitObject hitObject)
         {
-            if (!(hitObject is Note note))
+            if (hitObject is not Note note)
                 return;
 
             if (note.ParentLyric != lyric)

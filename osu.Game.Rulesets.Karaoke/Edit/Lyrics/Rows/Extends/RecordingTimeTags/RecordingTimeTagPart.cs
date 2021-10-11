@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 position = lyricCaretState.BindableCaretPosition.GetBoundCopy();
                 position.BindValueChanged(e =>
                 {
-                    if (!(e.NewValue is TimeTagCaretPosition timeTagCaretPosition))
+                    if (e.NewValue is not TimeTagCaretPosition timeTagCaretPosition)
                         return;
 
                     if (timeTagCaretPosition.Lyric != lyric)
