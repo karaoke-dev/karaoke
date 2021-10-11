@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         [BackgroundDependencyLoader]
         private void load()
         {
-            if (!(beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap))
+            if (beatmap?.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
                 return;
 
             Languages.AddRange(karaokeBeatmap.AvailableTranslates);

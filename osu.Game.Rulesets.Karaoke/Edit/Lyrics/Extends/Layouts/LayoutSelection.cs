@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
                 Vertical = SECTION_PADDING,
             };
 
-            if (!(Content is FillFlowContainer fillFlowContainer))
+            if (Content is not FillFlowContainer fillFlowContainer)
                 return;
 
             // use lazy way to initialize fill flow container in section.

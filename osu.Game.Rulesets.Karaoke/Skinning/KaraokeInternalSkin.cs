@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         public virtual IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
         {
-            if (!(lookup is KaraokeSkinLookup skinLookup))
+            if (lookup is not KaraokeSkinLookup skinLookup)
                 throw new InvalidCastException();
 
             var config = skinLookup.Config;

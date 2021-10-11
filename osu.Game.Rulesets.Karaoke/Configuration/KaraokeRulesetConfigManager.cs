@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // Should not use base.setDefault's value because it will return Bindable<FontUsage>, not BindableFontUsage
             var bindable = GetOriginalBindable<FontUsage>(setting);
-            if (!(bindable is BindableFontUsage bindableFontUsage))
+            if (bindable is not BindableFontUsage bindableFontUsage)
                 throw new InvalidCastException(nameof(bindable));
 
             // Assign size restriction in here.

@@ -184,7 +184,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             if (!judgedObject.DisplayResult || !DisplayJudgements.Value)
                 return;
 
-            if (!(judgedObject is DrawableNote note))
+            if (judgedObject is not DrawableNote note)
                 return;
 
             judgements.Clear();

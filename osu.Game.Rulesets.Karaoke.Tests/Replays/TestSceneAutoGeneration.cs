@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
 
         private static bool checkMatching(ReplayFrame frame, Tone? tone)
         {
-            if (!(frame is KaraokeReplayFrame karaokeReplayFrame))
+            if (frame is not KaraokeReplayFrame karaokeReplayFrame)
                 throw new InvalidCastException($"{nameof(frame)} is not karaoke replay frame.");
 
             if (!karaokeReplayFrame.Sound)

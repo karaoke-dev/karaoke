@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         protected override void ApplyIncreasedVisibilityState(DrawableHitObject hitObject, ArmedState state)
         {
             // todo : not really sure what this do so just copy the code in below.
-            if (!(hitObject is DrawableNote note))
+            if (hitObject is not DrawableNote note)
                 return;
 
             var h = note.HitObject;
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         protected override void ApplyNormalVisibilityState(DrawableHitObject hitObject, ArmedState state)
         {
-            if (!(hitObject is DrawableNote note))
+            if (hitObject is not DrawableNote note)
                 return;
 
             var h = note.HitObject;

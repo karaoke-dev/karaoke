@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke
             else if (inputStateChange is MicrophoneVoiceChangeEvent microphoneSoundChange)
             {
                 // Deal with realtime microphone event
-                if (!(microphoneSoundChange.State is IMicrophoneInputState inputState))
+                if (microphoneSoundChange.State is not IMicrophoneInputState inputState)
                     throw new NotMicrophoneInputStateException();
 
                 var lastVoice = microphoneSoundChange.LastVoice;

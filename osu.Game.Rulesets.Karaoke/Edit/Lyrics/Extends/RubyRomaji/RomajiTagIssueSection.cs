@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         {
             protected override IEnumerable<Tuple<RomajiTag, RomajiTagInvalid>> GetInvalidByIssue(Issue issue)
             {
-                if (!(issue is RomajiTagIssue romajiTagIssue))
+                if (issue is not RomajiTagIssue romajiTagIssue)
                     yield break;
 
                 foreach (var (invalidReason, romajiTags) in romajiTagIssue.InvalidRomajiTags)

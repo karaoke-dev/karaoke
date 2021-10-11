@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
         {
             lyric.SingersBindable.BindValueChanged(value =>
             {
-                if (!(beatmap.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap))
+                if (beatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
                     return;
 
                 var singers = karaokeBeatmap.Singers?.Where(x => value.NewValue?.Contains(x.ID) ?? false).ToList();

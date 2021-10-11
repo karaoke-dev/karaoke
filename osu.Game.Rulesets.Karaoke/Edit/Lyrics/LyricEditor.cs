@@ -272,7 +272,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             // need to check is there any lyric added or removed.
             beatmap.HitObjectAdded += e =>
             {
-                if (!(e is Lyric lyric))
+                if (e is not Lyric lyric)
                     return;
 
                 var previousLyric = bindableLyrics.LastOrDefault(x => x.Order < lyric.Order);
@@ -292,7 +292,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             };
             beatmap.HitObjectRemoved += e =>
             {
-                if (!(e is Lyric lyric))
+                if (e is not Lyric lyric)
                     return;
 
                 bindableLyrics.Remove(lyric);
@@ -322,7 +322,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             var caretPosition = lyricCaretState.BindableCaretPosition.Value;
-            if (!(caretPosition is TextCaretPosition textCaretPosition))
+            if (caretPosition is not TextCaretPosition textCaretPosition)
                 throw new NotSupportedException(nameof(caretPosition));
 
             var lyric = textCaretPosition.Lyric;
@@ -405,7 +405,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return false;
 
             var caretPosition = lyricCaretState.BindableCaretPosition.Value;
-            if (!(caretPosition is TimeTagCaretPosition timeTagCaretPosition))
+            if (caretPosition is not TimeTagCaretPosition timeTagCaretPosition)
                 throw new NotSupportedException(nameof(caretPosition));
 
             var currentTimeTag = timeTagCaretPosition.TimeTag;
@@ -436,7 +436,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (lyricManager == null)
                 return false;
 
-            if (!(lyricCaretState.BindableCaretPosition.Value is TimeTagIndexCaretPosition position))
+            if (lyricCaretState.BindableCaretPosition.Value is not TimeTagIndexCaretPosition position)
                 throw new NotSupportedException(nameof(position));
 
             var lyric = position.Lyric;

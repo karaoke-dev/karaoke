@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             if (propertyDictionary == null)
                 return beatmap;
 
-            if (!(beatmap is KaraokeBeatmap karaokeBeatmap))
+            if (beatmap is not KaraokeBeatmap karaokeBeatmap)
                 throw new InvalidCastException(nameof(beatmap));
 
             karaokeBeatmap.AvailableTranslates = propertyDictionary.AvailableTranslates;

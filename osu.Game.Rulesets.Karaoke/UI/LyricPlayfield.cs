@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         internal void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)
         {
-            if (!(result.Judgement is KaraokeLyricJudgement karaokeLyricJudgement))
+            if (result.Judgement is not KaraokeLyricJudgement karaokeLyricJudgement)
                 return;
 
             // Update now lyric

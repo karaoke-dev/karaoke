@@ -63,10 +63,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         private CultureInfo[] availableTranslateInBeatmap(IBeatmap beatmap)
         {
-            if (!(beatmap is EditorBeatmap editorBeatmap))
+            if (beatmap is not EditorBeatmap editorBeatmap)
                 return null;
 
-            if (!(editorBeatmap.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap))
+            if (editorBeatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
                 return null;
 
             return karaokeBeatmap.AvailableTranslates;

@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         [BackgroundDependencyLoader]
         private void load()
         {
-            if (!(beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap))
+            if (beatmap?.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
                 return;
 
             Singers.AddRange(karaokeBeatmap.Singers);
