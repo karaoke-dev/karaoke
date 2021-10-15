@@ -17,6 +17,7 @@ using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
 using osu.Game.Rulesets.Karaoke.UI.Components;
+using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
@@ -83,6 +84,22 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         {
             switch (component)
             {
+                case SkinnableTargetComponent targetComponent:
+                    switch (targetComponent.Target)
+                    {
+                        case SkinnableTarget.MainHUDComponents:
+                            var components = base.GetDrawableComponent(component) as SkinnableTargetComponentsContainer ?? getTargetComponentsContainerFromOtherPlace();
+                            components.Add(new SettingButtonsDisplay
+                            {
+                                Anchor = Anchor.CentreRight,
+                                Origin = Anchor.CentreRight,
+                            });
+                            return components;
+
+                        default:
+                            return base.GetDrawableComponent(component);
+                    }
+
                 case GameplaySkinComponent<HitResult> resultComponent:
                     return getResult(resultComponent.Component);
 
@@ -99,9 +116,22 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                         KaraokeSkinComponents.HitExplosion => new LegacyHitExplosion(),
                         _ => throw new InvalidEnumArgumentException(nameof(karaokeComponent.Component))
                     };
+
+                default:
+                    return base.GetDrawableComponent(component);
             }
 
-            return base.GetDrawableComponent(component);
+            SkinnableTargetComponentsContainer getTargetComponentsContainerFromOtherPlace()
+            {
+                switch (Skin)
+                {
+                    case LegacyBeatmapSkin legacyBeatmapSkin:
+                        return new TempLegacySkin(legacyBeatmapSkin.SkinInfo).GetDrawableComponent(component) as SkinnableTargetComponentsContainer;
+
+                    default:
+                        throw new InvalidCastException();
+                }
+            }
         }
 
         private Drawable getResult(HitResult result)
@@ -156,6 +186,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             }
 
             return base.GetConfig<TLookup, TValue>(lookup);
+        }
+
+        // it's a temp class for just getting SkinnableTarget.MainHUDComponents
+        private class TempLegacySkin : LegacySkin
+        {
+            public TempLegacySkin(SkinInfo skin)
+                : base(skin, null, null, null)
+            {
+            }
         }
     }
 }
