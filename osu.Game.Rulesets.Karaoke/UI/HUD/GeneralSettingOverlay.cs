@@ -8,9 +8,9 @@ using osu.Game.Screens.Play.PlayerSettings;
 
 namespace osu.Game.Rulesets.Karaoke.UI.HUD
 {
-    public class ControlOverlay : RightSideOverlay
+    public class GeneralSettingOverlay : RightSideOverlay
     {
-        public ControlOverlay(IBeatmap beatmap)
+        public GeneralSettingOverlay(IBeatmap beatmap)
         {
             // Add common group
             Add(new VisualSettings { Expanded = false });

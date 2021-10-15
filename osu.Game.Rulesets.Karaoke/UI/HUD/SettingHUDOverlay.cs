@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
             private readonly FillFlowContainer<SettingButton> triggerButtons;
 
-            private readonly ControlOverlay gameplaySettingsOverlay;
+            private readonly GeneralSettingOverlay gameplaySettingsOverlay;
 
             public ControlLayer(IBeatmap beatmap)
             {
@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                     }
                 };
 
-                AddExtraOverlay(gameplaySettingsOverlay = new ControlOverlay(beatmap));
+                AddExtraOverlay(gameplaySettingsOverlay = new GeneralSettingOverlay(beatmap));
             }
 
             public void ToggleGameplaySettingsOverlay() => gameplaySettingsOverlay.ToggleVisibility();
