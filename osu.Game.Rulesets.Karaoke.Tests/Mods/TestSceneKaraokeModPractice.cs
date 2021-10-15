@@ -5,8 +5,8 @@ using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
-using osu.Game.Rulesets.Karaoke.UI.Overlays;
-using static osu.Game.Rulesets.Karaoke.UI.Overlays.SettingHUDOverlay;
+using osu.Game.Rulesets.Karaoke.UI.HUD;
+using static osu.Game.Rulesets.Karaoke.UI.HUD.SettingHUDOverlay;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {

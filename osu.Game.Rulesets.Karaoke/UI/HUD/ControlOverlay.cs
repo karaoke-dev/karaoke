@@ -3,10 +3,10 @@
 
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings;
+using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
 using osu.Game.Screens.Play.PlayerSettings;
 
-namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
+namespace osu.Game.Rulesets.Karaoke.UI.HUD
 {
     public class ControlOverlay : RightSideOverlay
     {

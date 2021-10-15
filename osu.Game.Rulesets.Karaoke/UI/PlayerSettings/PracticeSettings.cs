@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Play.PlayerSettings;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
+namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
     public class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
     {

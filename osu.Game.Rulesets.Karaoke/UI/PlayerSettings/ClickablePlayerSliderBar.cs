@@ -10,7 +10,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings.PlayerSettings
+namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
     public class ClickablePlayerSliderBar : SettingsSlider<int>
     {

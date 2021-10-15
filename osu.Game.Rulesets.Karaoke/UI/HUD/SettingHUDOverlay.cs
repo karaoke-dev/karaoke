@@ -13,12 +13,11 @@ using osu.Framework.Timing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Mods;
-using osu.Game.Rulesets.Karaoke.UI.Overlays.Settings;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Screens.Play.PlayerSettings;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.UI.Overlays
+namespace osu.Game.Rulesets.Karaoke.UI.HUD
 {
     public class SettingHUDOverlay : Container
     {

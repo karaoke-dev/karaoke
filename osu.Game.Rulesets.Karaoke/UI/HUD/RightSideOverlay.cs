@@ -11,7 +11,7 @@ using osu.Game.Overlays;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.UI.Overlays.Settings
+namespace osu.Game.Rulesets.Karaoke.UI.HUD
 {
     /// <summary>
     /// Present setting at right side
