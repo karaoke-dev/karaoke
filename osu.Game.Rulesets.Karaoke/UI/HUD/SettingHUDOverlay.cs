@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -11,7 +10,6 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Framework.Timing;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Screens.Play.PlayerSettings;
@@ -50,10 +48,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
         public class ControlLayer : CompositeDrawable, IKeyBindingHandler<KaraokeAction>
         {
-            private readonly BindableInt bindablePitch = new();
-            private readonly BindableInt bindableVocalPitch = new();
-            private readonly BindableInt bindableSaitenPitch = new();
-
             private readonly FillFlowContainer<SettingButton> triggerButtons;
 
             private readonly GeneralSettingOverlay gameplaySettingsOverlay;
@@ -85,52 +79,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                     // Open adjustment overlay
                     case KaraokeAction.OpenPanel:
                         ToggleGameplaySettingsOverlay();
-                        break;
-
-                    // Pitch
-                    case KaraokeAction.IncreasePitch:
-                        bindablePitch.TriggerIncrease();
-                        break;
-
-                    case KaraokeAction.DecreasePitch:
-                        bindablePitch.TriggerDecrease();
-                        break;
-
-                    case KaraokeAction.ResetPitch:
-                        bindablePitch.SetDefault();
-                        break;
-
-                    // Vocal pitch
-                    case KaraokeAction.IncreaseVocalPitch:
-                        bindableVocalPitch.TriggerIncrease();
-                        break;
-
-                    case KaraokeAction.DecreaseVocalPitch:
-                        bindableVocalPitch.TriggerDecrease();
-                        break;
-
-                    case KaraokeAction.ResetVocalPitch:
-                        bindableVocalPitch.SetDefault();
-                        break;
-
-                    // Saiten pitch
-                    case KaraokeAction.IncreaseSaitenPitch:
-                        bindableSaitenPitch.TriggerIncrease();
-                        break;
-
-                    case KaraokeAction.DecreaseSaitenPitch:
-                        bindableSaitenPitch.TriggerDecrease();
-                        break;
-
-                    case KaraokeAction.ResetSaitenPitch:
-                        bindableSaitenPitch.SetDefault();
-                        break;
+                        return true;
 
                     default:
                         return false;
                 }
-
-                return true;
             }
 
             public virtual void OnReleased(KeyBindingReleaseEvent<KaraokeAction> e)
@@ -146,14 +99,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             {
                 AddInternal(container);
                 triggerButtons.Add(container.CreateToggleButton());
-            }
-
-            [BackgroundDependencyLoader]
-            private void load(KaraokeSessionStatics session)
-            {
-                session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
-                session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
-                session.BindWith(KaraokeRulesetSession.SaitenPitch, bindableSaitenPitch);
             }
         }
     }
