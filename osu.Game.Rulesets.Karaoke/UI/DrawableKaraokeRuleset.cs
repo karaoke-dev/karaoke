@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHitObject>
     {
-        protected KaraokeSessionStatics Session { get; private set; }
+        public KaraokeSessionStatics Session { get; private set; }
         public new KaraokePlayfield Playfield => (KaraokePlayfield)base.Playfield;
 
         protected new KaraokeRulesetConfigManager Config => (KaraokeRulesetConfigManager)base.Config;

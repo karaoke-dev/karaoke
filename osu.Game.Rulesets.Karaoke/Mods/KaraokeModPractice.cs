@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             }
         }
 
-        public void ApplyToOverlay(SettingHUDOverlay overlay)
+        public void ApplyToOverlay(ISettingHUDOverlay overlay)
         {
             // Add practice overlay
             overlay.AddExtraOverlay(new PracticeOverlay(beatmap));

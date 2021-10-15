@@ -6,7 +6,6 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
-using static osu.Game.Rulesets.Karaoke.UI.HUD.SettingHUDOverlay;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Mods
 {
@@ -21,11 +20,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
             PassCondition = () =>
             {
                 var overlays = Player.DrawableRuleset.Overlays;
-                var settingHUDOverlay = overlays.OfType<SettingHUDOverlay>().FirstOrDefault();
-                var actionContainer = settingHUDOverlay?.OfType<KaraokeControlInputManager>().FirstOrDefault();
+                var controlLayer = overlays.OfType<SettingOverlayContainer>().FirstOrDefault();
 
                 // todo : test overlays is exist.
-                return actionContainer?.Child is ControlLayer;
+                return controlLayer != null;
             }
         });
     }

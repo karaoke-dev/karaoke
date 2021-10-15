@@ -7,13 +7,13 @@ using osu.Game.Rulesets.Mods;
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
     /// <summary>
-    /// An interface for mods that apply changes to the <see cref="SettingHUDOverlay"/>.
+    /// An interface for mods that apply changes to the <see cref="ISettingHUDOverlay"/>.
     /// </summary>
     public interface IApplicableToSettingHUDOverlay : IApplicableMod
     {
         /// <summary>
-        /// Provide a <see cref="SettingHUDOverlay"/>. Called once on initialisation of a play instance.
+        /// Provide a <see cref="ISettingHUDOverlay"/>. Called once on initialisation of a play instance.
         /// </summary>
-        void ApplyToOverlay(SettingHUDOverlay overlay);
+        void ApplyToOverlay(ISettingHUDOverlay overlay);
     }
 }

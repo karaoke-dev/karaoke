@@ -6,15 +6,15 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Tests.Visual;
-using static osu.Game.Rulesets.Karaoke.UI.HUD.SettingHUDOverlay;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.UI
 {
     [TestFixture]
     public class TestSceneControlLayer : OsuTestScene
     {
-        public ControlLayer ControlLayer { get; set; }
+        public SettingOverlayContainer SettingOverlayContainer { get; set; }
 
         [BackgroundDependencyLoader]
         private void load(RulesetConfigCache configCache)
@@ -26,13 +26,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
             Add(new Container
             {
                 RelativeSizeAxes = Axes.Both,
-                Child = ControlLayer = new ControlLayer(null)
+                Child = SettingOverlayContainer = new SettingOverlayContainer
                 {
                     RelativeSizeAxes = Axes.Both,
                 }
             });
 
-            AddStep("Toggle setting", ControlLayer.ToggleGameplaySettingsOverlay);
+            AddStep("Toggle setting", SettingOverlayContainer.ToggleGameplaySettingsOverlay);
         }
     }
 }
