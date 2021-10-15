@@ -33,10 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             bindableDisplayTranslateToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.UseTranslate, x.NewValue); });
         }
 
-        protected override void InitialOverlay()
-        {
-        }
-
         public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h) => null;
 
         protected override Playfield CreatePlayfield() => new KaraokeEditorPlayfield();

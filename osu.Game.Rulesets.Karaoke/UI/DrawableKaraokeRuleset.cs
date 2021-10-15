@@ -15,7 +15,6 @@ using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
-using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects;
@@ -50,14 +49,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             AddInternal(positionCalculator = new NotePositionInfo());
             AddInternal(fontManager = new FontManager());
-
-            InitialOverlay();
-        }
-
-        protected virtual void InitialOverlay()
-        {
-            // create setting overlay
-            Overlays.Add(new SettingHUDOverlay(this, Mods));
         }
 
         protected override Playfield CreatePlayfield() => new KaraokePlayfield();
