@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public KaraokeSessionStatics Session { get; private set; }
         public new KaraokePlayfield Playfield => (KaraokePlayfield)base.Playfield;
 
-        protected new KaraokeRulesetConfigManager Config => (KaraokeRulesetConfigManager)base.Config;
+        public new KaraokeRulesetConfigManager Config => (KaraokeRulesetConfigManager)base.Config;
 
         private readonly Bindable<KaraokeScrollingDirection> configDirection = new();
 
