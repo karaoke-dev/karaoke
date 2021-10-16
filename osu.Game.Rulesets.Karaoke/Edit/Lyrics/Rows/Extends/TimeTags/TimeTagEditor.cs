@@ -10,6 +10,7 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 using osuTK;
@@ -111,14 +112,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         private float getPositionFromTime(double time)
             => (float)(time / editorClock.TrackLength) * Content.DrawWidth;
 
-        public float GetBeatSnapDistanceAt(double referenceTime) => throw new NotImplementedException();
+        public float GetBeatSnapDistanceAt(HitObject referenceObject) => throw new NotImplementedException();
 
-        public float DurationToDistance(double referenceTime, double duration) => throw new NotImplementedException();
+        public float DurationToDistance(HitObject referenceObject, double duration) => throw new NotImplementedException();
 
-        public double DistanceToDuration(double referenceTime, float distance) => throw new NotImplementedException();
+        public double DistanceToDuration(HitObject referenceObject, float distance) => throw new NotImplementedException();
 
-        public double GetSnappedDurationFromDistance(double referenceTime, float distance) => throw new NotImplementedException();
+        public double GetSnappedDurationFromDistance(HitObject referenceObject, float distance) => throw new NotImplementedException();
 
-        public float GetSnappedDistanceFromDistance(double referenceTime, float distance) => throw new NotImplementedException();
+        public float GetSnappedDistanceFromDistance(HitObject referenceObject, float distance) => throw new NotImplementedException();
     }
 }
