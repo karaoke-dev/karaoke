@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                 mod.ApplyToOverlay(this);
         }
 
-        public void ToggleGameplaySettingsOverlay() => generalSettingsOverlay.ToggleVisibility();
+        public void ToggleGeneralSettingsOverlay() => generalSettingsOverlay.ToggleVisibility();
 
         public virtual bool OnPressed(KeyBindingPressEvent<KaraokeAction> e)
         {
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             {
                 // Open adjustment overlay
                 case KaraokeAction.OpenPanel:
-                    ToggleGameplaySettingsOverlay();
+                    ToggleGeneralSettingsOverlay();
                     return true;
 
                 default:

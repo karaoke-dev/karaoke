@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
                 }
             });
 
-            AddStep("Toggle setting", SettingOverlayContainer.ToggleGameplaySettingsOverlay);
+            AddStep("Toggle setting", SettingOverlayContainer.ToggleGeneralSettingsOverlay);
         }
     }
 }
