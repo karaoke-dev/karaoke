@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
@@ -19,7 +20,7 @@ using osu.Game.Users;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
-    public class KaraokeModPractice : ModAutoplay, IApplicableToDrawableRuleset<KaraokeHitObject>, IApplicableToSettingHUDOverlay, IApplicableToBeatmap
+    public class KaraokeModPractice : ModAutoplay, IApplicableToDrawableRuleset<KaraokeHitObject>, IApplicableToSettingHUDOverlay
     {
         public override string Name => "Practice";
         public override string Acronym => "Practice";
@@ -34,8 +35,6 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             ScoreInfo = new ScoreInfo { User = new User { Username = "practice master" } },
             Replay = new KaraokeAutoGenerator(beatmap, mods).Generate(),
         };
-
-        public void ApplyToBeatmap(IBeatmap beatmap) => this.beatmap = beatmap as KaraokeBeatmap;
 
         public void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
         {
@@ -53,6 +52,9 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         public void ApplyToOverlay(ISettingHUDOverlay overlay)
         {
+            if (beatmap == null)
+                throw new ArgumentNullException(nameof(beatmap));
+
             // Add practice overlay
             overlay.AddExtraOverlay(new PracticeOverlay(beatmap));
 
