@@ -7,7 +7,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.UserInterface;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
@@ -22,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             RelativeSizeAxes = Axes.X,
         };
 
-        internal class LanguageSelectionButton : TriangleButton, IHasCurrentValue<CultureInfo>
+        internal class LanguageSelectionButton : SettingsButton, IHasCurrentValue<CultureInfo>
         {
             [Resolved(canBeNull: true)]
             protected OsuGame Game { get; private set; }
