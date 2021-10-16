@@ -6,6 +6,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Beatmaps;
+using osu.Game.Input.Bindings;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
@@ -29,9 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             // Add translate group if this beatmap has translate
             if (beatmap.AnyTranslate())
                 Add(new TranslateSettings(beatmap.AvailableTranslates()) { Expanded = false });
-
-            // should always present for getting key binding event.
-            AlwaysPresent = true;
         }
 
         public override SettingButton CreateToggleButton() => new()
@@ -47,6 +45,10 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
         // should get key event even it's hide.
         public override bool PropagateNonPositionalInputSubTree => true;
+
+        // on press should return false to prevent handle the back key action.
+        public override bool OnPressed(KeyBindingPressEvent<GlobalAction> e)
+            => false;
 
         public virtual bool OnPressed(KeyBindingPressEvent<KaraokeAction> e)
         {

@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
@@ -35,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                 mod.ApplyToOverlay(this);
         }
 
-        public void ToggleGameplaySettingsOverlay() => generalSettingsOverlay.ToggleVisibility();
+        public void ToggleGeneralSettingsOverlay() => generalSettingsOverlay.ToggleVisibility();
 
         public virtual bool OnPressed(KeyBindingPressEvent<KaraokeAction> e)
         {
@@ -43,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             {
                 // Open adjustment overlay
                 case KaraokeAction.OpenPanel:
-                    ToggleGameplaySettingsOverlay();
+                    ToggleGeneralSettingsOverlay();
                     return true;
 
                 default:
@@ -76,22 +75,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                 dependencies.CacheAs(drawableKaraokeRuleset.Session);
 
             return dependencies;
-        }
-    }
-
-    /// <summary>
-    /// Will move into framework layer
-    /// </summary>
-    public static class BindableNumberExtension
-    {
-        public static void TriggerIncrease(this BindableInt bindableInt)
-        {
-            bindableInt.Value += bindableInt.Precision;
-        }
-
-        public static void TriggerDecrease(this BindableInt bindableInt)
-        {
-            bindableInt.Value -= bindableInt.Precision;
         }
     }
 }
