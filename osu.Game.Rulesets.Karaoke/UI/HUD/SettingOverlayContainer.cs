@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             var beatmap = player?.Beatmap?.Value.Beatmap;
             AddExtraOverlay(generalSettingsOverlay = new GeneralSettingOverlay(beatmap));
 
-            var mods = player?.Mods.Value;
+            var mods = player?.GameplayState.Mods;
             if (mods == null)
                 return;
 
@@ -71,8 +71,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
             // use tricky way to get session from karaoke ruleset.
             var drawableRuleset = dependencies.Get(typeof(DrawableRuleset));
-            if (drawableRuleset is DrawableKaraokeRuleset drawableKaraokeRuleset)
-                dependencies.CacheAs(drawableKaraokeRuleset.Session);
+
+            if (drawableRuleset is not DrawableKaraokeRuleset drawableKaraokeRuleset)
+                return dependencies;
+
+            dependencies.CacheAs(drawableKaraokeRuleset.Config);
+            dependencies.CacheAs(drawableKaraokeRuleset.Session);
 
             return dependencies;
         }
