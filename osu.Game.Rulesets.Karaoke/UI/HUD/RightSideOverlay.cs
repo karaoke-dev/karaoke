@@ -64,6 +64,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
         {
             base.LoadComplete();
 
+            // todo : fix the case that should not affect by other overlay.
+            OverlayActivationMode.UnbindAll();
+
             // Use lazy way to force open overlay
             // Will create ruleset own overlay eventually.
             ((Bindable<OverlayActivation>)OverlayActivationMode).Value = OverlayActivation.All;
