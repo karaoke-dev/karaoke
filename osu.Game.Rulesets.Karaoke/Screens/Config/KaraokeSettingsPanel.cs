@@ -144,7 +144,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     if (x.NewValue == null)
                         return;
 
-                    const int offset = 20;
+                    const int offset = 8;
                     var position = scrollContainer.GetChildPosInContent(x.NewValue);
                     hoverBackground.MoveToY(position + offset, 50);
                     hoverBackground.ResizeHeightTo(x.NewValue.DrawHeight, 100);
