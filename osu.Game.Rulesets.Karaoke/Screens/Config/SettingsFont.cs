@@ -8,7 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -36,9 +36,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
             private BindableFontUsage bindableFontUsage;
 
             private readonly GridContainer grid;
-            private readonly TriangleButton fontButton;
-            private readonly TriangleButton decreaseFontSizeButton;
-            private readonly TriangleButton increaseFontSizeButton;
+            private readonly SettingsButton fontButton;
+            private readonly SettingsButton decreaseFontSizeButton;
+            private readonly SettingsButton increaseFontSizeButton;
 
             private float[] availableSizes = FontUtils.DefaultFontSize();
 
@@ -86,9 +86,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                     {
                         new[]
                         {
-                            fontButton = new TriangleButton
+                            fontButton = new SettingsButton
                             {
                                 RelativeSizeAxes = Axes.X,
+                                Padding = new MarginPadding { Left = SettingsPanel.CONTENT_MARGINS },
                                 Height = height,
                                 Action = () =>
                                 {
@@ -117,9 +118,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                                 }
                             },
                             null,
-                            decreaseFontSizeButton = new TriangleButton
+                            decreaseFontSizeButton = new SettingsButton
                             {
                                 RelativeSizeAxes = Axes.X,
+                                Padding = new MarginPadding(),
                                 Height = height,
                                 Text = "-",
                                 Action = () =>
@@ -133,9 +135,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
                                 }
                             },
                             null,
-                            increaseFontSizeButton = new TriangleButton
+                            increaseFontSizeButton = new SettingsButton
                             {
                                 RelativeSizeAxes = Axes.X,
+                                Padding = new MarginPadding(),
                                 Height = height,
                                 Text = "+",
                                 Action = () =>
