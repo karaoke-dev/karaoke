@@ -30,9 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             // Add translate group if this beatmap has translate
             if (beatmap.AnyTranslate())
                 Add(new TranslateSettings(beatmap.AvailableTranslates()) { Expanded = false });
-
-            // should always present for getting key binding event.
-            AlwaysPresent = true;
         }
 
         public override SettingButton CreateToggleButton() => new()
