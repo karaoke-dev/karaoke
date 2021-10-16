@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             var beatmap = player?.Beatmap?.Value.Beatmap;
             AddExtraOverlay(generalSettingsOverlay = new GeneralSettingOverlay(beatmap));
 
-            var mods = player?.Mods.Value;
+            var mods = player?.GameplayState.Mods;
             if (mods == null)
                 return;
 
