@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Input;
@@ -11,11 +10,9 @@ using osu.Game.Input.Handlers;
 using osu.Game.Replays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
-using osu.Game.Rulesets.Karaoke.UI.Overlays;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Objects;
@@ -28,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class DrawableKaraokeRuleset : DrawableScrollingRuleset<KaraokeHitObject>
     {
-        protected KaraokeSessionStatics Session { get; private set; }
+        public KaraokeSessionStatics Session { get; private set; }
         public new KaraokePlayfield Playfield => (KaraokePlayfield)base.Playfield;
 
         protected new KaraokeRulesetConfigManager Config => (KaraokeRulesetConfigManager)base.Config;
@@ -41,8 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [Cached]
         private readonly FontManager fontManager;
 
-        public override bool AllowGameplayOverlays => Beatmap.IsScorable() && !Mods.OfType<KaraokeModPractice>().Any();
-
         protected virtual bool DisplayNotePlayfield => Beatmap.IsScorable();
 
         public DrawableKaraokeRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
@@ -50,14 +45,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             AddInternal(positionCalculator = new NotePositionInfo());
             AddInternal(fontManager = new FontManager());
-
-            InitialOverlay();
-        }
-
-        protected virtual void InitialOverlay()
-        {
-            // create setting overlay
-            Overlays.Add(new SettingHUDOverlay(this, Mods));
         }
 
         protected override Playfield CreatePlayfield() => new KaraokePlayfield();
