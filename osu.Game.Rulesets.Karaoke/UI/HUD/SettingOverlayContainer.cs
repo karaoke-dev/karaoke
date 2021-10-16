@@ -21,13 +21,16 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
         public Action<RightSideOverlay> OnNewOverlayAdded;
 
-        [BackgroundDependencyLoader]
-        private void load(HUDOverlay hud, Player player)
+        [BackgroundDependencyLoader(true)]
+        private void load(Player player)
         {
-            var beatmap = player.Beatmap.Value.Beatmap;
+            var beatmap = player?.Beatmap?.Value.Beatmap;
             AddExtraOverlay(generalSettingsOverlay = new GeneralSettingOverlay(beatmap));
 
-            var mods = player.Mods.Value;
+            var mods = player?.Mods.Value;
+            if (mods == null)
+                return;
+
             foreach (var mod in mods.OfType<IApplicableToSettingHUDOverlay>())
                 mod.ApplyToOverlay(this);
         }
