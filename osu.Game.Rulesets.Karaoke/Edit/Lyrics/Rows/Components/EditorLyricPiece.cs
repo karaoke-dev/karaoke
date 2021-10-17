@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             {
                 var spriteText = getSpriteText();
                 if (spriteText == null)
-                    return 0;
+                    throw new ArgumentNullException(nameof(spriteText));
 
                 return spriteText.LineBaseHeight;
             }
@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         {
             var spriteText = getSpriteText();
             if (spriteText == null)
-                return new RectangleF();
+                throw new ArgumentNullException(nameof(spriteText));
 
             return textTag switch
             {
@@ -118,7 +118,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         public Vector2 GetTextIndexPosition(TextIndex index)
         {
             var spriteText = getSpriteText();
-            return spriteText?.GetTimeTagPosition(index) ?? new Vector2();
+            if (spriteText == null)
+                throw new ArgumentNullException(nameof(spriteText));
+
+            return spriteText.GetTimeTagPosition(index);
         }
 
         private EditorLyricSpriteText getSpriteText()
