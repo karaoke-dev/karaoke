@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         }
 
         private EditorLyricSpriteText getSpriteText()
-            => (InternalChildren.FirstOrDefault() as Container)?.Child as EditorLyricSpriteText;
+            => (InternalChildren.FirstOrDefault() as MaskingContainer<EditorLyricSpriteText>)?.Child;
 
         [BackgroundDependencyLoader(true)]
         private void load(ISkinSource skin, ShaderManager shaderManager)
