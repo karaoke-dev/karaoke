@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
     /// <summary>
     /// Present setting at right side
     /// </summary>
-    public abstract class RightSideOverlay : OsuFocusedOverlayContainer
+    public abstract class SettingOverlay : OsuFocusedOverlayContainer
     {
         public const float SETTING_MARGIN = 20;
         public const float SETTING_SPACING = 20;
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
         public abstract SettingButton CreateToggleButton();
 
-        protected RightSideOverlay()
+        protected SettingOverlay()
         {
             RelativeSizeAxes = Axes.Y;
             Anchor = Anchor.CentreRight;

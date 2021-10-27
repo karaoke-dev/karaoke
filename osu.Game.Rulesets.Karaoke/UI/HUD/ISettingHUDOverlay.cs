@@ -9,6 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
     {
         void AddSettingsGroup(PlayerSettingsGroup group);
 
-        void AddExtraOverlay(RightSideOverlay container);
+        void AddExtraOverlay(SettingOverlay container);
     }
 }

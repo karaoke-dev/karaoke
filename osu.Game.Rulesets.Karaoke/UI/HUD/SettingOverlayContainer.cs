@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
     {
         private GeneralSettingOverlay generalSettingsOverlay;
 
-        public Action<RightSideOverlay> OnNewOverlayAdded;
+        public Action<SettingOverlay> OnNewOverlayAdded;
 
         [BackgroundDependencyLoader(true)]
         private void load(Player player)
@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             generalSettingsOverlay.Add(group);
         }
 
-        public void AddExtraOverlay(RightSideOverlay overlay)
+        public void AddExtraOverlay(SettingOverlay overlay)
         {
             AddInternal(overlay);
             OnNewOverlayAdded?.Invoke(overlay);
