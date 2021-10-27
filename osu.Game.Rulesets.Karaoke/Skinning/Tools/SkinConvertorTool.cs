@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
             var frontColor = Color4.Blue; // todo: use real colour.
             return new IShader[]
             {
-                shaderManager.LocalCustomizedShader<OutlineShader>()
+                shaderManager.LocalInternalShader<OutlineShader>()
                              .With(x =>
                              {
                                  x.Radius = edgeSize;
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
             var backColor = Color4.DarkGreen; // todo: use real colour.
             return new IShader[]
             {
-                shaderManager.LocalCustomizedShader<OutlineShader>()
+                shaderManager.LocalInternalShader<OutlineShader>()
                              .With(x =>
                              {
                                  x.Radius = edgeSize;

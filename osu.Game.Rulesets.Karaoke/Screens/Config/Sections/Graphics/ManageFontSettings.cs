@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Graphics
                 {
                     Text = "Open import text folder",
                     TooltipText = "After open the folder, you can drag the font file to the folder you wants to import",
-                    Action = () => storage.GetStorageForDirectory(FontManager.FONT_BASE_PATH).OpenInNativeExplorer(),
+                    Action = storage.GetStorageForDirectory(FontManager.FONT_BASE_PATH).PresentExternally,
                 },
                 new SettingsButton
                 {

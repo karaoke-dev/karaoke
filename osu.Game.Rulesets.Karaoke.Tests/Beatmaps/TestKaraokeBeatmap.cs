@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
+using osu.Game.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
@@ -24,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
             BeatmapInfo.Ruleset = ruleset;
             BeatmapInfo.BeatmapSet.Metadata = BeatmapInfo.Metadata;
             BeatmapInfo.BeatmapSet.Beatmaps = new List<BeatmapInfo> { BeatmapInfo };
-            BeatmapInfo.BeatmapSet.OnlineInfo = new BeatmapSetOnlineInfo
+            BeatmapInfo.BeatmapSet.OnlineInfo = new APIBeatmapSet
             {
                 Status = BeatmapSetOnlineStatus.Ranked,
                 Covers = new BeatmapSetOnlineCovers

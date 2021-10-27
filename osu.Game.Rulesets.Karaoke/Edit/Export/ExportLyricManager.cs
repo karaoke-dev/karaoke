@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
                 }));
             }
 
-            exportStorage.OpenInNativeExplorer();
+            exportStorage.PresentExternally();
         }
 
         public void ExportToText()
@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
                 }));
             }
 
-            exportStorage.OpenInNativeExplorer();
+            exportStorage.PresentExternally();
         }
 
         public void ExportToJson()
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
                 }));
             }
 
-            exportStorage.OpenInNativeExplorer();
+            exportStorage.PresentExternally();
         }
     }
 }
