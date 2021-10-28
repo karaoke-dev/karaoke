@@ -112,7 +112,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
                                    * strainValue
                                    * Math.Pow(Math.Max(0.0, scaledScore - 960000) / 40000, 1.1);
 
-            // Bonus for many hitcircles - it's harder to keep good accuracy up for longer
+            // Bonus for many hit circles - it's harder to keep good accuracy up for longer
             // accuracyValue *= Math.Min(1.15, Math.Pow(totalHits / 1500.0, 0.3));
 
             return accuracyValue;
