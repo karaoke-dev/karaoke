@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Layout;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Screens.Play;
@@ -38,6 +39,36 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                     Direction = FillDirection.Vertical,
                 },
             };
+        }
+
+        // seems it's impossible to get the anchor change.
+        public new Anchor Anchor
+        {
+            get => base.Anchor;
+            set
+            {
+                if (base.Anchor == value) return;
+
+                base.Anchor = value;
+                // todo: do something in here.
+            }
+        }
+
+        public override Anchor Origin
+        {
+            get => base.Origin;
+            set => base.Origin = value;
+        }
+
+        protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
+        {
+            // trying to change relative position in here.
+            if ((invalidation & Invalidation.MiscGeometry) != 0)
+            {
+
+            }
+
+            return base.OnInvalidate(invalidation, source);
         }
 
         [BackgroundDependencyLoader]
