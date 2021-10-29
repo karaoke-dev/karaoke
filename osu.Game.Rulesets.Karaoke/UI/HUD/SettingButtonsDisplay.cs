@@ -41,35 +41,19 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             };
         }
 
-        // seems it's impossible to get the anchor change.
-        public new Anchor Anchor
-        {
-            get => base.Anchor;
-            set
-            {
-                if (base.Anchor == value) return;
-
-                base.Anchor = value;
-                // todo: do something in here.
-            }
-        }
-
-        public override Anchor Origin
-        {
-            get => base.Origin;
-            set => base.Origin = value;
-        }
-
         protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
         {
             // trying to change relative position in here.
             if ((invalidation & Invalidation.MiscGeometry) != 0)
             {
-
+                var overlayDirection = Anchor.HasFlag(Anchor.x0) ? OverlayDirection.Left : OverlayDirection.Right;
+                settingOverlayContainer?.ChangeOverlayDirection(overlayDirection);
             }
 
             return base.OnInvalidate(invalidation, source);
         }
+
+        private SettingOverlayContainer settingOverlayContainer;
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, HUDOverlay hud, Player player)
@@ -82,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                 hud.Add(new KaraokeControlInputManager(rulesetInfo)
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Child = new SettingOverlayContainer
+                    Child = settingOverlayContainer = new SettingOverlayContainer
                     {
                         RelativeSizeAxes = Axes.Both,
                         OnNewOverlayAdded = overlay =>

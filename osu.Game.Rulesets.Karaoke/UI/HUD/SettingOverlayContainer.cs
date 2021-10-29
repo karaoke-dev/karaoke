@@ -65,6 +65,14 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             OnNewOverlayAdded?.Invoke(overlay);
         }
 
+        public void ChangeOverlayDirection(OverlayDirection direction)
+        {
+            foreach (var settingOverlay in InternalChildren.OfType<SettingOverlay>())
+            {
+                settingOverlay.Direction = direction;
+            }
+        }
+
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
             var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
