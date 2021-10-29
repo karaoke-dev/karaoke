@@ -23,8 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
         public void ExportToLrc()
         {
             var exportStorage = storage.GetStorageForDirectory("lrc");
+            var filename = $"{beatmap.Name}.lrc";
 
-            using (var outputStream = exportStorage.GetStream($"{beatmap.Name}.lrc", FileAccess.Write, FileMode.Create))
+            using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
             using (var sw = new StreamWriter(outputStream))
             {
                 var encoder = new LrcEncoder();
@@ -34,14 +35,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
                 }));
             }
 
-            exportStorage.PresentExternally();
+            exportStorage.PresentFileExternally(filename);
         }
 
         public void ExportToText()
         {
             var exportStorage = storage.GetStorageForDirectory("text");
+            var filename = $"{beatmap.Name}.txt";
 
-            using (var outputStream = exportStorage.GetStream($"{beatmap.Name}.txt", FileAccess.Write, FileMode.Create))
+            using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
             using (var sw = new StreamWriter(outputStream))
             {
                 var encoder = new LyricTextEncoder();
@@ -51,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
                 }));
             }
 
-            exportStorage.PresentExternally();
+            exportStorage.PresentFileExternally(filename);
         }
 
         public void ExportToJson()
@@ -59,8 +61,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
             // note : this is for develop testing purpose.
             // will be removed eventually
             var exportStorage = storage.GetStorageForDirectory("json");
+            var filename = $"{beatmap.Name}.json";
 
-            using (var outputStream = exportStorage.GetStream($"{beatmap.Name}.json", FileAccess.Write, FileMode.Create))
+            using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
             using (var sw = new StreamWriter(outputStream))
             {
                 var encoder = new KaraokeJsonBeatmapEncoder();
@@ -70,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
                 }));
             }
 
-            exportStorage.PresentExternally();
+            exportStorage.PresentFileExternally(filename);
         }
     }
 }
