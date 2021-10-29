@@ -88,9 +88,15 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             public void TriggerIncrease() => increaseButton.Action?.Invoke();
         }
 
-        private class ToolTipButton : TriangleButton, IHasTooltip
+        private class ToolTipButton : OsuButton, IHasTooltip
         {
             public LocalisableString TooltipText { get; set; }
+
+            [BackgroundDependencyLoader]
+            private void load(OsuColour colours)
+            {
+                BackgroundColour = colours.Blue;
+            }
         }
     }
 }
