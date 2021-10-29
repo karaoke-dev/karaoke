@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Layout;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Screens.Play;
@@ -40,6 +41,20 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             };
         }
 
+        protected override bool OnInvalidate(Invalidation invalidation, InvalidationSource source)
+        {
+            // trying to change relative position in here.
+            if ((invalidation & Invalidation.MiscGeometry) != 0)
+            {
+                var overlayDirection = Anchor.HasFlag(Anchor.x0) ? OverlayDirection.Left : OverlayDirection.Right;
+                settingOverlayContainer?.ChangeOverlayDirection(overlayDirection);
+            }
+
+            return base.OnInvalidate(invalidation, source);
+        }
+
+        private SettingOverlayContainer settingOverlayContainer;
+
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, HUDOverlay hud, Player player)
         {
@@ -51,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                 hud.Add(new KaraokeControlInputManager(rulesetInfo)
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Child = new SettingOverlayContainer
+                    Child = settingOverlayContainer = new SettingOverlayContainer
                     {
                         RelativeSizeAxes = Axes.Both,
                         OnNewOverlayAdded = overlay =>

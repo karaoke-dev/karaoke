@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -16,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
     /// <summary>
     /// Present setting at right side
     /// </summary>
-    public abstract class RightSideOverlay : OsuFocusedOverlayContainer
+    public abstract class SettingOverlay : OsuFocusedOverlayContainer
     {
         public const float SETTING_MARGIN = 20;
         public const float SETTING_SPACING = 20;
@@ -30,11 +31,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
         public abstract SettingButton CreateToggleButton();
 
-        protected RightSideOverlay()
+        protected SettingOverlay()
         {
             RelativeSizeAxes = Axes.Y;
-            Anchor = Anchor.CentreRight;
-            Origin = Anchor.CentreRight;
 
             InternalChildren = new Drawable[]
             {
@@ -58,6 +57,41 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                     }
                 }
             };
+        }
+
+        private OverlayDirection direction;
+
+        public OverlayDirection Direction
+        {
+            get => direction;
+            set
+            {
+                if (direction == value)
+                    return;
+
+                direction = value;
+
+                switch (direction)
+                {
+                    case OverlayDirection.Left:
+                        Anchor = Anchor.CentreLeft;
+                        Origin = Anchor.CentreLeft;
+                        break;
+
+                    case OverlayDirection.Right:
+                        Anchor = Anchor.CentreRight;
+                        Origin = Anchor.CentreRight;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                if (State.Value == Visibility.Hidden)
+                {
+                    X = getHideXPosition();
+                }
+            }
         }
 
         protected override void LoadComplete()
@@ -90,9 +124,24 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
         {
             base.PopOut();
 
-            var width = DrawWidth;
+            var width = getHideXPosition();
             this.MoveToX(width, TRANSITION_LENGTH, Easing.OutQuint);
             this.FadeTo(0, TRANSITION_LENGTH, Easing.OutQuint);
         }
+
+        private float getHideXPosition() =>
+            direction switch
+            {
+                OverlayDirection.Left => -DrawWidth,
+                OverlayDirection.Right => DrawWidth,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+    }
+
+    public enum OverlayDirection
+    {
+        Left,
+
+        Right
     }
 }
