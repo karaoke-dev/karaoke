@@ -3,7 +3,10 @@
 
 using System;
 using osu.Framework.Bindables;
+using osu.Framework.Localisation;
+using osu.Game.Localisation;
 using osu.Game.Overlays;
+using osu.Game.Resources.Localisation.Web;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
@@ -17,15 +20,15 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
         public Action ListingSelected;
 
-        private const string listing_string = "listing";
+        public static LocalisableString ListingString => LayoutStrings.HeaderChangelogIndex;
 
         public ChangelogHeader()
         {
-            TabControl.AddItem(listing_string);
+            TabControl.AddItem(ListingString);
 
             Current.ValueChanged += e =>
             {
-                if (e.NewValue == listing_string)
+                if (e.NewValue == ListingString)
                     ListingSelected?.Invoke();
             };
 
@@ -41,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 }
                 else
                 {
-                    Current.Value = listing_string;
+                    Current.Value = ListingString;
                 }
             });
         }
@@ -52,7 +55,8 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         {
             public ChangelogHeaderTitle()
             {
-                Title = "changelog";
+                Title = PageTitleStrings.MainChangelogControllerDefault;
+                Description = NamedOverlayComponentStrings.ChangelogDescription;
                 IconTexture = "Icons/Hexacons/devtools";
             }
         }

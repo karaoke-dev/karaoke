@@ -24,6 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
     public class ChangelogSection : CompositeDrawable
     {
         private const int animation_duration = 250;
+        private const float font_size = 16;
 
         public readonly BindableBool Expanded = new(true);
 
@@ -70,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
 
                 RelativeSizeAxes = Axes.X;
                 AutoSizeAxes = Axes.Y;
-                Child = text = new TextFlowContainer(t => t.Font = OsuFont.GetFont(size: 12))
+                Child = text = new TextFlowContainer(t => t.Font = OsuFont.GetFont(size: font_size))
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
@@ -92,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
                     // update font.
                     text.OfType<SpriteText>().ForEach(f =>
                     {
-                        f.Font = OsuFont.GetFont(size: 12, weight: isCurrent ? FontWeight.SemiBold : FontWeight.Medium);
+                        f.Font = OsuFont.GetFont(size: font_size, weight: isCurrent ? FontWeight.SemiBold : FontWeight.Medium);
                     });
                 }, true);
 

@@ -17,7 +17,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     {
         protected override Drawable CreateControl() => new LanguageSelectionButton
         {
-            Padding = new MarginPadding { Top = 5 },
             RelativeSizeAxes = Axes.X,
         };
 
@@ -36,6 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
 
             public LanguageSelectionButton()
             {
+                Height = 30;
                 Action = () =>
                 {
                     try

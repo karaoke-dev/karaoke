@@ -7,7 +7,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using Markdig.Syntax.Inlines;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
@@ -36,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
         public override SpriteText CreateSpriteText() => base.CreateSpriteText().With(s =>
         {
-            s.Font = OsuFont.GetFont(Typeface.Torus, size: 14, weight: FontWeight.Regular);
+            s.Font = OsuFont.GetFont(size: 16, weight: FontWeight.Regular);
         });
 
         /// <summary>
