@@ -7,9 +7,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using Markdig.Syntax.Inlines;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers.Markdown;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Layout;
+using osu.Game.Graphics;
 using osu.Game.Graphics.Containers.Markdown;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osuTK;
@@ -30,6 +33,11 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         }
 
         public override MarkdownTextFlowContainer CreateTextFlow() => new ChangeLogMarkdownTextFlowContainer();
+
+        public override SpriteText CreateSpriteText() => base.CreateSpriteText().With(s =>
+        {
+            s.Font = OsuFont.GetFont(Typeface.Torus, size: 14, weight: FontWeight.Regular);
+        });
 
         /// <summary>
         /// Re-calculate image size by changelog width.
