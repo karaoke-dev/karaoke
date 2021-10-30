@@ -149,7 +149,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                         return;
 
                     var textScale = new Vector2(0.7f);
-                    AddText(" by:", t =>
+                    AddText("    by ", t =>
                     {
                         t.Scale = textScale;
                         t.Padding = new MarginPadding { Top = 6 };
