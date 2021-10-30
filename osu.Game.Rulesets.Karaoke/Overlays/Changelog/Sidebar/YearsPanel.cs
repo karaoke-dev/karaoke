@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
                     HoverColour = isCurrent ? Color4.White : colourProvider.Light1;
 
                     // update font.
-                    yearText.Font = OsuFont.GetFont(size: 12, weight: isCurrent ? FontWeight.SemiBold : FontWeight.Medium);
+                    yearText.Font = OsuFont.GetFont(size: 16, weight: isCurrent ? FontWeight.SemiBold : FontWeight.Medium);
                 }, true);
 
                 Action = () =>
