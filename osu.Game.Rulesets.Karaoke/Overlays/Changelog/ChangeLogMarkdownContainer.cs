@@ -38,53 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
         {
             protected override void AddImage(LinkInline linkInline) => AddDrawable(new ChangeLogMarkdownImage(linkInline));
 
-            /// <summary>
-            /// Override <see cref="OsuMarkdownImage"/> to limit image display size
-            /// </summary>
-            /// <returns></returns>
-            public class ChangeLogMarkdownImage : OsuMarkdownImage
-            {
-                private readonly LayoutValue widthSizeCache = new(Invalidation.DrawSize);
-
-                public ChangeLogMarkdownImage(LinkInline linkInline)
-                    : base(linkInline)
-                {
-                    AutoSizeAxes = Axes.None;
-                    RelativeSizeAxes = Axes.X;
-
-                    AddLayout(widthSizeCache);
-                }
-
-                private bool imageLoaded;
-
-                protected override void Update()
-                {
-                    base.Update();
-
-                    // unable to get texture size on OnLoadComplete event, so use this way.
-                    if (!imageLoaded && InternalChild.Width != 0)
-                    {
-                        computeImageSize();
-                        imageLoaded = true;
-                    }
-
-                    if (widthSizeCache.IsValid)
-                        return;
-
-                    computeImageSize();
-                    widthSizeCache.Validate();
-                }
-
-                private void computeImageSize()
-                {
-                    // if image is larger then parent size, then adjust image scale
-                    var scale = Math.Min(1, DrawWidth / InternalChild.Width);
-
-                    InternalChild.Scale = new Vector2(scale);
-                    Height = InternalChild.Height * scale;
-                }
-            }
-
             private readonly IDictionary<string, string> githubUrls = new Dictionary<string, string>
             {
                 { "karaoke", "https://github.com/karaoke-dev/karaoke/" },
@@ -162,6 +115,53 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                         Scale = textScale,
                         Anchor = Anchor.BottomLeft,
                     });
+                }
+            }
+
+            /// <summary>
+            /// Override <see cref="OsuMarkdownImage"/> to limit image display size
+            /// </summary>
+            /// <returns></returns>
+            private class ChangeLogMarkdownImage : OsuMarkdownImage
+            {
+                private readonly LayoutValue widthSizeCache = new(Invalidation.DrawSize);
+
+                public ChangeLogMarkdownImage(LinkInline linkInline)
+                    : base(linkInline)
+                {
+                    AutoSizeAxes = Axes.None;
+                    RelativeSizeAxes = Axes.X;
+
+                    AddLayout(widthSizeCache);
+                }
+
+                private bool imageLoaded;
+
+                protected override void Update()
+                {
+                    base.Update();
+
+                    // unable to get texture size on OnLoadComplete event, so use this way.
+                    if (!imageLoaded && InternalChild.Width != 0)
+                    {
+                        computeImageSize();
+                        imageLoaded = true;
+                    }
+
+                    if (widthSizeCache.IsValid)
+                        return;
+
+                    computeImageSize();
+                    widthSizeCache.Validate();
+                }
+
+                private void computeImageSize()
+                {
+                    // if image is larger then parent size, then adjust image scale
+                    var scale = Math.Min(1, DrawWidth / InternalChild.Width);
+
+                    InternalChild.Scale = new Vector2(scale);
+                    Height = InternalChild.Height * scale;
                 }
             }
 
