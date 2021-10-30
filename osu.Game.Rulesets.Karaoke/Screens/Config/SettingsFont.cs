@@ -21,7 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config
     {
         protected override Drawable CreateControl() => new FontSelectionButton
         {
-            Margin = new MarginPadding { Top = 5 },
             RelativeSizeAxes = Axes.X,
         };
 
