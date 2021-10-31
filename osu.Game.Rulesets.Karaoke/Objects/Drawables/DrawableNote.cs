@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
 using osu.Game.Rulesets.Karaoke.UI.Position;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Skinning;
@@ -152,7 +153,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         private void changeText(Note note)
         {
-            textPiece.Text = note.AlternativeText ?? note.Text;
+            // todo: should apply the setting.
+            textPiece.Text = NoteUtils.DisplayText(note, true);
         }
 
         protected void BeginSing()
