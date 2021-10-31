@@ -23,8 +23,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
                     {
                         new LabelledTextBox
                         {
+                            Label = "Text",
+                            Description = "The text display on the note.",
+                            Current = note.TextBindable
+                        },
+                        new LabelledTextBox
+                        {
                             Label = "Alternative text",
-                            Description = "Will show this text if have.",
+                            Description = "Should placing something like ruby, 拼音 or ふりがな.",
                             Current = note.AlternativeTextBindable
                         },
                         new LabelledSwitchButton
