@@ -3,12 +3,16 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -21,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
     /// <summary>
     /// Copy from <see cref="NoteSelectionBlueprint"/>
     /// </summary>
-    public class NoteEditorHitObjectBlueprint : SelectionBlueprint<Note>
+    public class NoteEditorHitObjectBlueprint : SelectionBlueprint<Note>, IHasPopover
     {
         private readonly IBindable<double> timeRange = new BindableDouble();
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
@@ -100,5 +104,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             new OsuMenuItem(Item.Display ? "Hide" : "Show", Item.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => noteManager.ChangeDisplay(Item, !Item.Display)),
             new OsuMenuItem("Split", MenuItemType.Destructive, () => noteManager.SplitNote(Item)),
         };
+
+        public Popover GetPopover() => new NoteEditPopover(Item);
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            this.ShowPopover();
+            return base.OnClick(e);
+        }
     }
 }

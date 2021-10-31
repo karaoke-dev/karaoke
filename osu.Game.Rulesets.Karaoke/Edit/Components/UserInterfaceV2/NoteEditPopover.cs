@@ -23,12 +23,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
                     {
                         new LabelledTextBox
                         {
-                            Label = "Display text",
+                            Label = "Alternative text",
+                            Description = "Will show this text if have.",
                             Current = note.AlternativeTextBindable
                         },
                         new LabelledSwitchButton
                         {
                             Label = "Display",
+                            Description = "This note will be hidden and not scorable if not display.",
                             Current = note.DisplayBindable,
                         }
                     }
