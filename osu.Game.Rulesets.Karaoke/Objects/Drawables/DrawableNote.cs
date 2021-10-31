@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         private readonly IBindable<NotePositionCalculator> positionBindable = new Bindable<NotePositionCalculator>();
 
         public readonly IBindable<string> TextBindable = new Bindable<string>();
-        public readonly IBindable<string> AlternativeTextBindable = new Bindable<string>();
+        public readonly IBindable<string> RubyTextBindable = new Bindable<string>();
         public readonly IBindable<int[]> SingersBindable = new Bindable<int[]>();
         public readonly IBindable<bool> DisplayBindable = new Bindable<bool>();
         public readonly IBindable<Tone> ToneBindable = new Bindable<Tone>();
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             positionBindable.BindValueChanged(_ => updateNotePositionAndHeight());
             TextBindable.BindValueChanged(_ => { changeText(HitObject); });
-            AlternativeTextBindable.BindValueChanged(_ => { changeText(HitObject); });
+            RubyTextBindable.BindValueChanged(_ => { changeText(HitObject); });
             SingersBindable.BindValueChanged(_ => { ApplySkin(CurrentSkin, false); });
             DisplayBindable.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue; });
             ToneBindable.BindValueChanged(_ => updateNotePositionAndHeight());
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             base.OnApply();
 
             TextBindable.BindTo(HitObject.TextBindable);
-            AlternativeTextBindable.BindTo(HitObject.AlternativeTextBindable);
+            RubyTextBindable.BindTo(HitObject.RubyTextBindable);
             DisplayBindable.BindTo(HitObject.DisplayBindable);
             ToneBindable.BindTo(HitObject.ToneBindable);
 
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             base.OnFree();
 
             TextBindable.UnbindFrom(HitObject.TextBindable);
-            AlternativeTextBindable.UnbindFrom(HitObject.AlternativeTextBindable);
+            RubyTextBindable.UnbindFrom(HitObject.RubyTextBindable);
             DisplayBindable.UnbindFrom(HitObject.DisplayBindable);
             ToneBindable.UnbindFrom(HitObject.ToneBindable);
 

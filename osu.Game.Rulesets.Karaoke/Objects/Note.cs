@@ -29,20 +29,20 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<string> AlternativeTextBindable = new();
+        public readonly Bindable<string> RubyTextBindable = new();
 
         /// <summary>
-        /// Alternative text.
+        /// Ruby text.
         /// Should placing something like ruby, 拼音 or ふりがな.
-        /// Will be display only if <see cref="KaraokeRulesetSetting.DisplayAlternativeText"/> is true.
+        /// Will be display only if <see cref="KaraokeRulesetSetting.DisplayRubyText"/> is true.
         /// </summary>
         /// <example>
         /// はな
         /// </example>
-        public string AlternativeText
+        public string RubyText
         {
-            get => AlternativeTextBindable.Value;
-            set => AlternativeTextBindable.Value = value;
+            get => RubyTextBindable.Value;
+            set => RubyTextBindable.Value = value;
         }
 
         [JsonIgnore]

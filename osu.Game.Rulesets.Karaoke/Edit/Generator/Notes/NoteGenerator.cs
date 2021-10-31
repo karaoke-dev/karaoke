@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
                         StartIndex = startIndex,
                         EndIndex = endIndex,
                         Text = text,
-                        AlternativeText = ruby,
+                        RubyText = ruby,
                         ParentLyric = lyric
                     });
                 }

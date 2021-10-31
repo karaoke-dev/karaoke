@@ -38,14 +38,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// Get the display text while gameplay or in editor.
         /// </summary>
         /// <param name="note">Note</param>
-        /// <param name="useAlternativeTextIfHave">Should use alternative text first if have.</param>
+        /// <param name="useRubyTextIfHave">Should use ruby text first if have.</param>
         /// <returns>Text should be display.</returns>
-        public static string DisplayText(Note note, bool useAlternativeTextIfHave = false)
+        public static string DisplayText(Note note, bool useRubyTextIfHave = false)
         {
-            if (!useAlternativeTextIfHave)
+            if (!useRubyTextIfHave)
                 return note.Text;
 
-            return string.IsNullOrEmpty(note.AlternativeText) ? note.Text : note.AlternativeText;
+            return string.IsNullOrEmpty(note.RubyText) ? note.Text : note.RubyText;
         }
     }
 }

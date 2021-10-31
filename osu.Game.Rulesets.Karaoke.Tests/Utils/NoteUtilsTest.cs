@@ -43,15 +43,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("karaoke", "ka- ra- o- ke-", true, "ka- ra- o- ke-")]
         [TestCase("", "ka- ra- o- ke-", true, "ka- ra- o- ke-")]
         [TestCase(null, "ka- ra- o- ke-", true, "ka- ra- o- ke-")]
-        public void TestDisplayText(string text, string alternativeText, bool useAlternativeTextIfHave, string actual)
+        public void TestDisplayText(string text, string rubyText, bool useRubyTextIfHave, string actual)
         {
             var note = new Note
             {
                 Text = text,
-                AlternativeText = alternativeText
+                RubyText = rubyText
             };
 
-            var result = NoteUtils.DisplayText(note, useAlternativeTextIfHave);
+            var result = NoteUtils.DisplayText(note, useRubyTextIfHave);
             Assert.AreEqual(result, actual);
         }
     }

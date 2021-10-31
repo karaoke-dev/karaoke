@@ -29,9 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
                         },
                         new LabelledTextBox
                         {
-                            Label = "Alternative text",
+                            Label = "Ruby text",
                             Description = "Should placing something like ruby, 拼音 or ふりがな.",
-                            Current = note.AlternativeTextBindable
+                            Current = note.RubyTextBindable
                         },
                         new LabelledSwitchButton
                         {

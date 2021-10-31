@@ -36,8 +36,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Config.Sections.Gameplay
                 },
                 new SettingsCheckbox
                 {
-                    LabelText = "Display alternative text",
-                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayAlternativeText)
+                    LabelText = "Display ruby text",
+                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.DisplayRubyText)
                 },
             };
         }
