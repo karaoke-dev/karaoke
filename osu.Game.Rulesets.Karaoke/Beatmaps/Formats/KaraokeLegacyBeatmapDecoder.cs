@@ -147,7 +147,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                             string tone;
                             float percentage = (float)Math.Round((float)1 / rubyNotes.Length, 2, MidpointRounding.AwayFromZero);
-                            string ruby = defaultNote.AlternativeText?.ElementAtOrDefault(j).ToString();
+                            string ruby = defaultNote.RubyText?.ElementAtOrDefault(j).ToString();
 
                             // Format like [1;0.5;か]
                             if (note.StartsWith("[", StringComparison.Ordinal) && note.EndsWith("]", StringComparison.Ordinal))

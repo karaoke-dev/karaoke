@@ -10,7 +10,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osuTK;
 

@@ -18,15 +18,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return textTag;
         }
 
-        public static T Shifting<T>(T textTag, int shifting) where T : ITextTag, new()
-        {
-            return new()
+        public static T Shifting<T>(T textTag, int shifting) where T : ITextTag, new() =>
+            new()
             {
                 StartIndex = textTag.StartIndex + shifting,
                 EndIndex = textTag.EndIndex + shifting,
                 Text = textTag.Text
             };
-        }
 
         public static bool OutOfRange<T>(T textTag, string lyric) where T : ITextTag
         {

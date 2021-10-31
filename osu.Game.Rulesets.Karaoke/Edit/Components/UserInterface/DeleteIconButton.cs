@@ -8,7 +8,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterface
 {
     public class DeleteIconButton : IconButton
     {

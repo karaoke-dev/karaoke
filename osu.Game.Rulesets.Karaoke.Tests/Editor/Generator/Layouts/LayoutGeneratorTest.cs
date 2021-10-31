@@ -38,12 +38,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Layouts
             Assert.AreEqual(lyrics.Select(x => $"[{x.StartTime},{x.EndTime}]").ToArray(), actualTimes);
         }
 
-        private static LayoutGeneratorConfig generatorConfig()
-        {
-            return new()
+        private static LayoutGeneratorConfig generatorConfig() =>
+            new()
             {
                 NewLyricLineTime = 15000,
             };
-        }
     }
 }
