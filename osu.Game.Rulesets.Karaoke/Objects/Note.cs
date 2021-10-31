@@ -17,8 +17,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public readonly Bindable<string> TextBindable = new();
 
         /// <summary>
-        /// Text display on the note
+        /// Text display on the note.
         /// </summary>
+        /// <example>
+        /// 花
+        /// </example>
         public string Text
         {
             get => TextBindable.Value;
@@ -29,8 +32,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public readonly Bindable<string> AlternativeTextBindable = new();
 
         /// <summary>
-        /// Will be display if <see cref="KaraokeRulesetSetting.DisplayAlternativeText"/> is true
+        /// Alternative text.
+        /// Should placing something like ruby, 拼音 or ふりがな.
+        /// Will be display only if <see cref="KaraokeRulesetSetting.DisplayAlternativeText"/> is true.
         /// </summary>
+        /// <example>
+        /// はな
+        /// </example>
         public string AlternativeText
         {
             get => AlternativeTextBindable.Value;

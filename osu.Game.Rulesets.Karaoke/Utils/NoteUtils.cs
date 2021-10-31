@@ -33,5 +33,19 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 ParentLyric = originNote.ParentLyric
             };
         }
+
+        /// <summary>
+        /// Get the display text while gameplay or in editor.
+        /// </summary>
+        /// <param name="note">Note</param>
+        /// <param name="useAlternativeTextIfHave">Should use alternative text first if have.</param>
+        /// <returns>Text should be display.</returns>
+        public static string DisplayText(Note note, bool useAlternativeTextIfHave = false)
+        {
+            if (!useAlternativeTextIfHave)
+                return note.Text;
+
+            return string.IsNullOrEmpty(note.AlternativeText) ? note.Text : note.AlternativeText;
+        }
     }
 }

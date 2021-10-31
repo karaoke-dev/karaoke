@@ -33,5 +33,26 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 Assert.IsNull(actualTime);
             }
         }
+
+        [TestCase("karaoke", "", false, "karaoke")]
+        [TestCase("karaoke", "ka- ra- o- ke-", false, "karaoke")]
+        [TestCase("", "ka- ra- o- ke-", false, "")]
+        [TestCase(null, "ka- ra- o- ke-", false, null)]
+        [TestCase("karaoke", "", true, "karaoke")]
+        [TestCase("karaoke", null, true, "karaoke")]
+        [TestCase("karaoke", "ka- ra- o- ke-", true, "ka- ra- o- ke-")]
+        [TestCase("", "ka- ra- o- ke-", true, "ka- ra- o- ke-")]
+        [TestCase(null, "ka- ra- o- ke-", true, "ka- ra- o- ke-")]
+        public void TestDisplayText(string text, string alternativeText, bool useAlternativeTextIfHave, string actual)
+        {
+            var note = new Note
+            {
+                Text = text,
+                AlternativeText = alternativeText
+            };
+
+            var result = NoteUtils.DisplayText(note, useAlternativeTextIfHave);
+            Assert.AreEqual(result, actual);
+        }
     }
 }
