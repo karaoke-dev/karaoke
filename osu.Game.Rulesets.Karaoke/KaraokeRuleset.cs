@@ -169,7 +169,7 @@ namespace osu.Game.Rulesets.Karaoke
             store.AddStore(getRulesetStore());
 
             // add shader resource from font package.
-            store.AddStore(new NamespacedResourceStore<byte[]>(new FontResourceStore(), "Resources"));
+            store.AddStore(new NamespacedResourceStore<byte[]>(new ShaderResourceStore(), "Resources"));
 
             return store;
 

@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         private void load()
         {
             // add shader resource from font package.
-            Resources.AddStore(new NamespacedResourceStore<byte[]>(new FontResourceStore(), "Resources"));
+            Resources.AddStore(new NamespacedResourceStore<byte[]>(new ShaderResourceStore(), "Resources"));
         }
     }
 }
