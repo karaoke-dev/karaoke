@@ -166,7 +166,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
                 var startCharacterIndex = Text.Length + skinIndex(Rubies, rubyIndex);
                 var count = matchedRuby.Text.Length;
-                var rectangles = Characters.GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
+                var rectangles = Characters.ToList().GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
                 return RectangleFUtils.Union(rectangles);
             }
 
@@ -179,7 +179,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
                 var startCharacterIndex = Text.Length + skinIndex(Rubies, Rubies.Length) + skinIndex(Romajies, romajiIndex);
                 var count = matchedRomaji.Text.Length;
-                var rectangles = Characters.GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
+                var rectangles = Characters.ToList().GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
                 return RectangleFUtils.Union(rectangles);
             }
 
