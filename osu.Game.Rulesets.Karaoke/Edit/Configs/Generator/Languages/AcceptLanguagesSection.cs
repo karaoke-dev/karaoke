@@ -10,7 +10,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
