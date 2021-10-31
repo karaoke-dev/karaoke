@@ -135,9 +135,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             }
         }
 
-        private LayerContainer createLayer(string name, ISkin skin, LegacyKaraokeSkinNoteLayer layer)
-        {
-            return new()
+        private LayerContainer createLayer(string name, ISkin skin, LegacyKaraokeSkinNoteLayer layer) =>
+            new()
             {
                 RelativeSizeAxes = Axes.Both,
                 Name = name,
@@ -178,7 +177,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     }),
                 }
             };
-        }
 
         private static Sprite getSpriteFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
         {
