@@ -38,6 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                         Children = new Drawable[]
                         {
                             new NoteEditModeSection(),
+                            new NoteEditPropertyModeSection(),
                             new NoteEditPropertySection(),
                         };
                         break;

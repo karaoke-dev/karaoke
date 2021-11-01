@@ -99,12 +99,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 => note.RubyText = value;
         }
 
-        private class LabelledNoteDisplaySwitchButton : LabelledSwitchButton
+        private class LabelledNoteDisplaySwitchButton : LabelledObjectFieldSwitchButton<Note>
         {
             public LabelledNoteDisplaySwitchButton(Note item)
+                : base(item)
             {
-                // todo: implement the feature.
             }
+
+            protected override bool GetFieldValue(Note note)
+                => note.Display;
+
+            protected override void ApplyValue(Note note, bool value)
+                => note.Display = value;
         }
     }
 }
