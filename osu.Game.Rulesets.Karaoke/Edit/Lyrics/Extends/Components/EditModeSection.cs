@@ -4,13 +4,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Markdig.Syntax;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Containers.Markdown;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers.Markdown;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
@@ -18,7 +22,8 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
-    public abstract class EditModeSection<T> : Section where T : Enum
+    [Cached(Type = typeof(IMarkdownTextComponent))]
+    public abstract class EditModeSection<T> : Section, IMarkdownTextComponent where T : Enum
     {
         protected sealed override string Title => "Edit mode";
 
@@ -29,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         private OsuColour colour { get; set; }
 
         private readonly EditModeButton[] buttons;
-        private readonly OsuMarkdownContainer description;
+        private readonly OsuMarkdownTextFlowContainer description;
 
         protected EditModeSection()
         {
@@ -54,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                         }).ToArray(),
                     }
                 },
-                description = new OsuMarkdownContainer
+                description = new OsuMarkdownTextFlowContainer
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
@@ -67,6 +72,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 UpdateEditMode(DefaultMode());
             });
         }
+
+        public SpriteText CreateSpriteText() => new OsuSpriteText
+        {
+            Font = OsuFont.GetFont(size: 14, weight: FontWeight.Regular)
+        };
 
         protected virtual void UpdateEditMode(T mode)
         {
@@ -82,7 +92,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
                 // update description text.
                 var item = child.Item;
-                description.Text = item.Description.Value.ToString();
+                var markdownText = item.Description.Value.ToString();
+                var parsed = Markdig.Markdown.Parse(markdownText);
+
+                if (parsed.FirstOrDefault() is ParagraphBlock paragraphBlock)
+                {
+                    Schedule(() =>
+                    {
+                        description.AddInlineText(paragraphBlock.Inline);
+                    });
+                }
             }
         }
 
