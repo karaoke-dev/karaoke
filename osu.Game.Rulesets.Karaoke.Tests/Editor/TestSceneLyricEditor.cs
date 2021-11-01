@@ -15,7 +15,6 @@ using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
 using osuTK;
@@ -104,10 +103,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                             Spacing = new Vector2(10),
                             Children = new Drawable[]
                             {
-                                new OsuDropdown<LyricEditorMode>
+                                new OsuEnumDropdown<LyricEditorMode>
                                 {
                                     Width = 150,
-                                    Items = EnumUtils.GetValues<LyricEditorMode>(),
                                 }.With(x =>
                                 {
                                     x.Current.BindValueChanged(mode =>
