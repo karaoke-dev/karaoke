@@ -15,6 +15,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         private Bindable<LyricEditorMode> bindableMode;
 
+        [Cached]
+        private readonly Bindable<NoteEditPropertyMode> noteEditPropertyMode = new();
+
         [BackgroundDependencyLoader]
         private void load(ILyricEditorState state)
         {
@@ -35,6 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                         Children = new Drawable[]
                         {
                             new NoteEditModeSection(),
+                            new NoteEditPropertySection(),
                         };
                         break;
 
