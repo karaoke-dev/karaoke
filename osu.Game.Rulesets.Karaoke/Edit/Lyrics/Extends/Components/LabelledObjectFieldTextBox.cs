@@ -5,6 +5,7 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
@@ -42,6 +43,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 Component.BorderColour = highLight ? colours.Yellow : colours.Blue;
                 Component.BorderThickness = highLight ? 3 : 0;
             });
+
+            if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
+                return;
+
+            // change padding to place delete button.
+            fillFlowContainer.Padding = new MarginPadding
+            {
+                Horizontal = CONTENT_PADDING_HORIZONTAL,
+                Vertical = CONTENT_PADDING_VERTICAL,
+                Right = CONTENT_PADDING_HORIZONTAL + CONTENT_PADDING_HORIZONTAL,
+            };
         }
 
         protected abstract string GetFieldValue(T item);
