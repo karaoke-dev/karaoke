@@ -6,14 +6,13 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
     internal class LyricColorSection : StyleSection
     {
-        private LabelledDropdown<ColorArea> colorAreaDropdown;
-        private LabelledDropdown<BrushType> brushTypeDropdown;
+        private LabelledEnumDropdown<ColorArea> colorAreaDropdown;
+        private LabelledEnumDropdown<BrushType> brushTypeDropdown;
         private LabelledColourSelector colorPicker;
 
         protected override string Title => "Color";
@@ -23,17 +22,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         {
             Children = new Drawable[]
             {
-                colorAreaDropdown = new LabelledDropdown<ColorArea>
+                colorAreaDropdown = new LabelledEnumDropdown<ColorArea>
                 {
                     Label = "Color area",
                     Description = "Select the area you wish to adjust.",
-                    Items = EnumUtils.GetValues<ColorArea>()
                 },
-                brushTypeDropdown = new LabelledDropdown<BrushType>
+                brushTypeDropdown = new LabelledEnumDropdown<BrushType>
                 {
                     Label = "Brush type",
                     Description = "Select brush type",
-                    Items = EnumUtils.GetValues<BrushType>()
                 },
                 colorPicker = new LabelledColourSelector
                 {

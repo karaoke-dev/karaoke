@@ -7,16 +7,15 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
     internal class PositionSection : LayoutSection
     {
-        private LabelledDropdown<Anchor> alignmentDropdown;
+        private LabelledEnumDropdown<Anchor> alignmentDropdown;
         private LabelledRealTimeSliderBar<int> horizontalMarginSliderBar;
         private LabelledRealTimeSliderBar<int> verticalMarginSliderBar;
-        private LabelledDropdown<KaraokeTextSmartHorizon> smartHorizonDropdown;
+        private LabelledEnumDropdown<KaraokeTextSmartHorizon> smartHorizonDropdown;
 
         protected override string Title => "Position";
 
@@ -25,11 +24,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         {
             Children = new Drawable[]
             {
-                alignmentDropdown = new LabelledDropdown<Anchor>
+                alignmentDropdown = new LabelledEnumDropdown<Anchor>
                 {
                     Label = "Anchor",
                     Description = "Anchor section",
-                    Items = EnumUtils.GetValues<Anchor>()
                 },
                 horizontalMarginSliderBar = new LabelledRealTimeSliderBar<int>
                 {
@@ -55,11 +53,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                         Default = 30
                     }
                 },
-                smartHorizonDropdown = new LabelledDropdown<KaraokeTextSmartHorizon>
+                smartHorizonDropdown = new LabelledEnumDropdown<KaraokeTextSmartHorizon>
                 {
                     Label = "Smart horizon",
                     Description = "Smart horizon section",
-                    Items = EnumUtils.GetValues<KaraokeTextSmartHorizon>()
                 }
             };
 
