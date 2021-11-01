@@ -6,14 +6,13 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
     internal class LyricFontSection : StyleSection
     {
-        private LabelledDropdown<Font> fontDropdown;
+        private LabelledEnumDropdown<Font> fontDropdown;
         private LabelledSwitchButton boldSwitchButton;
         private LabelledRealTimeSliderBar<float> fontSizeSliderBar;
         private LabelledRealTimeSliderBar<int> borderSliderBar;
@@ -25,11 +24,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         {
             Children = new Drawable[]
             {
-                fontDropdown = new LabelledDropdown<Font>
+                fontDropdown = new LabelledEnumDropdown<Font>
                 {
                     Label = "Font",
                     Description = "Select display font.",
-                    Items = EnumUtils.GetValues<Font>()
                 },
                 boldSwitchButton = new LabelledSwitchButton
                 {

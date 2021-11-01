@@ -6,7 +6,6 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 {
@@ -19,12 +18,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
         {
             Children = new Drawable[]
             {
-                new LabelledDropdown<MovingTimeTagCaretMode>
+                new LabelledEnumDropdown<MovingTimeTagCaretMode>
                 {
                     Label = "Record tag mode",
                     Description = "Only record time with start/end time-tag while recording.",
                     Current = lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode),
-                    Items = EnumUtils.GetValues<MovingTimeTagCaretMode>(),
                 },
                 new LabelledSwitchButton
                 {

@@ -23,8 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
     internal class PreviewSection : LayoutSection
     {
-        private LabelledDropdown<PreviewRatio> previewRatioDropdown;
-        private LabelledDropdown<PreviewSample> previewSampleDropdown;
+        private LabelledEnumDropdown<PreviewRatio> previewRatioDropdown;
+        private LabelledEnumDropdown<PreviewSample> previewSampleDropdown;
         private StyleLabelledDropdown previewStyleDropdown;
 
         protected override string Title => "Preview (Won't be saved)";
@@ -34,17 +34,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         {
             Children = new Drawable[]
             {
-                previewRatioDropdown = new LabelledDropdown<PreviewRatio>
+                previewRatioDropdown = new LabelledEnumDropdown<PreviewRatio>
                 {
                     Label = "Ratio",
                     Description = "Adjust to see different preview ratio.",
-                    Items = EnumUtils.GetValues<PreviewRatio>(),
                 },
-                previewSampleDropdown = new LabelledDropdown<PreviewSample>
+                previewSampleDropdown = new LabelledEnumDropdown<PreviewSample>
                 {
                     Label = "Lyric",
                     Description = "Select different lyric to check layout is valid.",
-                    Items = EnumUtils.GetValues<PreviewSample>(),
                 },
                 previewStyleDropdown = new StyleLabelledDropdown
                 {

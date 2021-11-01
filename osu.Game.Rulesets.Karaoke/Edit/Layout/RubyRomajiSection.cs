@@ -7,14 +7,13 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
     internal class RubyRomajiSection : LayoutSection
     {
-        private LabelledDropdown<LyricTextAlignment> rubyAlignmentDropdown;
-        private LabelledDropdown<LyricTextAlignment> romajiAlignmentDropdown;
+        private LabelledEnumDropdown<LyricTextAlignment> rubyAlignmentDropdown;
+        private LabelledEnumDropdown<LyricTextAlignment> romajiAlignmentDropdown;
         private LabelledRealTimeSliderBar<int> rubyMarginSliderBar;
         private LabelledRealTimeSliderBar<int> romajiMarginSliderBar;
 
@@ -25,17 +24,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         {
             Children = new Drawable[]
             {
-                rubyAlignmentDropdown = new LabelledDropdown<LyricTextAlignment>
+                rubyAlignmentDropdown = new LabelledEnumDropdown<LyricTextAlignment>
                 {
                     Label = "Ruby alignment",
                     Description = "Ruby alignment section",
-                    Items = EnumUtils.GetValues<LyricTextAlignment>()
                 },
-                romajiAlignmentDropdown = new LabelledDropdown<LyricTextAlignment>
+                romajiAlignmentDropdown = new LabelledEnumDropdown<LyricTextAlignment>
                 {
                     Label = "Romaji alignment",
                     Description = "Romaji alignment section",
-                    Items = EnumUtils.GetValues<LyricTextAlignment>()
                 },
                 rubyMarginSliderBar = new LabelledRealTimeSliderBar<int>
                 {
