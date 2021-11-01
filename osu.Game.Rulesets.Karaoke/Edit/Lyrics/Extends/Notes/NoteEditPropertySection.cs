@@ -83,6 +83,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
             protected override void ApplyValue(Note note, string value)
                 => note.Text = value;
+
+            [BackgroundDependencyLoader]
+            private void load(BlueprintSelectionState blueprintSelectionState)
+            {
+                blueprintSelectionState.SelectedNotes.BindTo(SelectedItems);
+            }
         }
 
         private class LabelledNoteRubyTextTextBox : LabelledObjectFieldTextBox<Note>
@@ -97,6 +103,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
             protected override void ApplyValue(Note note, string value)
                 => note.RubyText = value;
+
+            [BackgroundDependencyLoader]
+            private void load(BlueprintSelectionState blueprintSelectionState)
+            {
+                blueprintSelectionState.SelectedNotes.BindTo(SelectedItems);
+            }
         }
 
         private class LabelledNoteDisplaySwitchButton : LabelledObjectFieldSwitchButton<Note>
@@ -111,6 +123,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
             protected override void ApplyValue(Note note, bool value)
                 => note.Display = value;
+
+            [BackgroundDependencyLoader]
+            private void load(BlueprintSelectionState blueprintSelectionState)
+            {
+                blueprintSelectionState.SelectedNotes.BindTo(SelectedItems);
+            }
         }
     }
 }
