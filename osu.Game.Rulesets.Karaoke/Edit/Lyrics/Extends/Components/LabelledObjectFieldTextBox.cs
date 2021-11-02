@@ -5,12 +5,12 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 base.OnFocusLost(e);
             }
 
-            private SRGBColour standardBorderColour;
+            private Color4 standardBorderColour;
 
             [BackgroundDependencyLoader]
             private void load()
