@@ -20,17 +20,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
     {
         protected override string Title => "Properties";
 
-        private readonly Bindable<Note[]> bindableNotes = new();
+        private readonly Bindable<Note[]> notes = new();
 
         [BackgroundDependencyLoader]
         private void load(EditorBeatmap beatmap, LyricCaretState lyricCaretState, Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode)
         {
             bindableNoteEditPropertyMode.BindValueChanged(e =>
             {
+                // todo: use better way not to trigger bindable in disposed object.
+                // this only happened in here.
+                if (IsDisposed)
+                    return;
+
                 reCreateEditComponents();
             });
 
-            bindableNotes.BindValueChanged(e =>
+            notes.BindValueChanged(e =>
             {
                 reCreateEditComponents();
             });
@@ -38,17 +43,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
             {
                 var lyric = e.NewValue?.Lyric;
-                var notes = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToList();
-                bindableNotes.Value = notes.ToArray();
+                notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray();
             }, true);
 
             void reCreateEditComponents()
             {
                 RemoveAll(x => x is LabelledObjectFieldTextBox<Note>);
                 RemoveAll(x => x is LabelledSwitchButton);
-                AddRange(bindableNotes.Value?.Select(x =>
+                AddRange(notes.Value?.Select(x =>
                 {
-                    var index = bindableNotes.Value.IndexOf(x);
+                    var index = notes.Value.IndexOf(x);
                     return bindableNoteEditPropertyMode.Value switch
                     {
                         NoteEditPropertyMode.Text => new LabelledNoteTextTextBox(x)
