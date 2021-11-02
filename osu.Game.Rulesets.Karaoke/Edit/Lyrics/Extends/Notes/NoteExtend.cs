@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
         private readonly Bindable<NoteEditPropertyMode> noteEditPropertyMode = new();
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        private void load()
         {
             bindableMode.BindValueChanged(e =>
             {
