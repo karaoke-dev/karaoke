@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
     /// <summary>
-    /// In <see cref="LyricEditorMode.CreateNote"/> mode, able to let user generate notes by <see cref="TimeTag"/>
+    /// In <see cref="NoteEditMode.Generate"/> mode, able to let user generate notes by <see cref="TimeTag"/>
     /// But need to make sure that lyric should not have any <see cref="TimeTagIssue"/>
     /// If found any issue, will navigate to target lyric.
     /// </summary>

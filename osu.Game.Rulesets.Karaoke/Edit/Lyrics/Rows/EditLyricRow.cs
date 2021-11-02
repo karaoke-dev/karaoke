@@ -222,9 +222,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.AdjustTimeTag:
                             return new TimeTagInfo(Lyric);
 
-                        case LyricEditorMode.CreateNote:
-                        case LyricEditorMode.CreateNotePosition:
-                        case LyricEditorMode.AdjustNote:
+                        case LyricEditorMode.EditNote:
                             return null;
 
                         case LyricEditorMode.Layout:
@@ -381,9 +379,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         break;
 
                     case LyricEditorMode.AdjustTimeTag:
-                    case LyricEditorMode.CreateNote:
-                    case LyricEditorMode.CreateNotePosition:
-                    case LyricEditorMode.AdjustNote:
+                    case LyricEditorMode.EditNote:
                     case LyricEditorMode.Layout:
                     case LyricEditorMode.Singer:
                         lyricCaretState.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
@@ -523,9 +519,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                             return new DrawableTimeTagRecordCaret(isPreview);
 
                         case LyricEditorMode.AdjustTimeTag:
-                        case LyricEditorMode.CreateNote:
-                        case LyricEditorMode.CreateNotePosition:
-                        case LyricEditorMode.AdjustNote:
+                        case LyricEditorMode.EditNote:
                         case LyricEditorMode.Layout:
                         case LyricEditorMode.Singer:
                             return null;

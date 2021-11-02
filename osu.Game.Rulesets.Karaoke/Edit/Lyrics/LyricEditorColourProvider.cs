@@ -58,9 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.AdjustTimeTag:
                     return 33 / 360f; // orange
 
-                case LyricEditorMode.CreateNote:
-                case LyricEditorMode.CreateNotePosition:
-                case LyricEditorMode.AdjustNote:
+                case LyricEditorMode.EditNote:
                     return 203 / 360f; // blue
 
                 case LyricEditorMode.Layout:
