@@ -14,6 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public BindableList<RomajiTag> SelectedRomajiTags { get; } = new();
 
+        public BindableList<Note> SelectedNotes { get; } = new();
+
         public void ClearSelectedTimeTags()
         {
             SelectedTimeTags.Clear();

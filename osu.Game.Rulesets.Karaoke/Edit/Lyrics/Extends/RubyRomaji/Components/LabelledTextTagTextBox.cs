@@ -2,55 +2,25 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
-using osu.Game.Graphics;
-using osu.Game.Graphics.UserInterface;
-using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterface;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
 {
-    public abstract class LabelledTextTagTextBox<T> : LabelledTextBox where T : ITextTag
+    public abstract class LabelledTextTagTextBox<T> : LabelledObjectFieldTextBox<T> where T : class, ITextTag
     {
         protected const float DELETE_BUTTON_SIZE = 20f;
-
-        [Resolved]
-        private OsuColour colours { get; set; }
-
-        protected readonly BindableList<T> SelectedTextTag = new();
-
-        private readonly T textTag;
 
         public Action OnDeleteButtonClick;
 
         protected LabelledTextTagTextBox(T textTag)
+            : base(textTag)
         {
-            this.textTag = textTag;
-
-            // apply current text from text-tag.
-            Component.Text = textTag.Text;
-
-            // should change preview text box if selected ruby/romaji changed.
-            OnCommit += (sender, _) =>
-            {
-                textTag.Text = sender.Text;
-            };
-
-            // change style if focus.
-            SelectedTextTag.BindCollectionChanged((_, _) =>
-            {
-                var highLight = SelectedTextTag.Contains(textTag);
-
-                Component.BorderColour = highLight ? colours.Yellow : colours.Blue;
-                Component.BorderThickness = highLight ? 3 : 0;
-            });
-
             if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
                 return;
 
@@ -83,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                         if (hover)
                         {
                             // trigger selected if hover on delete button.
-                            SelectedTextTag.Add(textTag);
+                            SelectedItems.Add(textTag);
                         }
                         else
                         {
@@ -91,12 +61,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                             if (Component.HasFocus)
                                 return;
 
-                            SelectedTextTag.Remove(textTag);
+                            SelectedItems.Remove(textTag);
                         }
                     }
                 }
             });
         }
+
+        protected override string GetFieldValue(T textTag)
+            => textTag.Text;
+
+        protected override void ApplyValue(T textTag, string value)
+            => textTag.Text = value;
 
         protected override void OnFocus(FocusEvent e)
         {
@@ -106,36 +82,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                 return;
 
             base.OnFocus(e);
-        }
-
-        protected override OsuTextBox CreateTextBox() => new TextTagTextBox
-        {
-            CommitOnFocusLost = true,
-            Anchor = Anchor.Centre,
-            Origin = Anchor.Centre,
-            RelativeSizeAxes = Axes.X,
-            CornerRadius = CORNER_RADIUS,
-            Selected = () =>
-            {
-                // not trigger again if already focus.
-                if (SelectedTextTag.Contains(textTag) && SelectedTextTag.Count == 1)
-                    return;
-
-                // trigger selected.
-                SelectedTextTag.Clear();
-                SelectedTextTag.Add(textTag);
-            }
-        };
-
-        internal class TextTagTextBox : OsuTextBox
-        {
-            public Action Selected;
-
-            protected override void OnFocus(FocusEvent e)
-            {
-                Selected?.Invoke();
-                base.OnFocus(e);
-            }
         }
     }
 }

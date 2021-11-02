@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             [BackgroundDependencyLoader]
             private void load(BlueprintSelectionState blueprintSelectionState)
             {
-                blueprintSelectionState.SelectedRomajiTags.BindTo(SelectedTextTag);
+                blueprintSelectionState.SelectedRomajiTags.BindTo(SelectedItems);
             }
         }
     }

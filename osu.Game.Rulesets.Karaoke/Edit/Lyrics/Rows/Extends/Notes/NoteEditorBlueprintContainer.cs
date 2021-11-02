@@ -8,6 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components;
@@ -32,9 +33,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
         protected override SelectionHandler<Note> CreateSelectionHandler() => new NoteEditorSelectionHandler();
 
         [BackgroundDependencyLoader]
-        private void load(NoteEditor noteEditor, EditorBeatmap beatmap)
+        private void load(BlueprintSelectionState blueprintSelectionState, EditorBeatmap beatmap)
         {
-            SelectedItems.BindTo(noteEditor.SelectedNotes);
+            SelectedItems.BindTo(blueprintSelectionState.SelectedNotes);
 
             // todo : might deal with the cause if create or delete notes.
             notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray();
@@ -45,6 +46,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 
         protected class NoteEditorSelectionHandler : ExtendSelectionHandler<Note>
         {
+            [BackgroundDependencyLoader]
+            private void load(BlueprintSelectionState blueprintSelectionState)
+            {
+                SelectedItems.BindTo(blueprintSelectionState.SelectedNotes);
+            }
+
             protected override void DeleteItems(IEnumerable<Note> items)
             {
                 // todo : delete notes

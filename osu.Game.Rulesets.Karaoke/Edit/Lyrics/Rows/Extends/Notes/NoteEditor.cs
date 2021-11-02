@@ -32,8 +32,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 
         private readonly Lyric lyric;
 
-        public BindableList<Note> SelectedNotes { get; } = new();
-
         public EditorNotePlayfield Playfield { get; }
 
         public NoteEditor(Lyric lyric)

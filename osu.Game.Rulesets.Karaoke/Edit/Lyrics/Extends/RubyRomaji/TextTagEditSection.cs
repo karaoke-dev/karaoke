@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
-    public abstract class TextTagEditSection<T> : Section where T : ITextTag
+    public abstract class TextTagEditSection<T> : Section where T : class, ITextTag
     {
         protected readonly Bindable<T[]> TextTags = new();
 
