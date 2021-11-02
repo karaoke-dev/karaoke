@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             : base(source)
         {
             this.beatmap = (KaraokeBeatmap)beatmap;
-            isLegacySkin = new Lazy<bool>(() => GetConfig<LegacySkinConfiguration.LegacySetting, decimal>(LegacySkinConfiguration.LegacySetting.Version) != null);
+            isLegacySkin = new Lazy<bool>(() => GetConfig<SkinConfiguration.LegacySetting, decimal>(SkinConfiguration.LegacySetting.Version) != null);
 
             // TODO : need a better way to load resource
             var assembly = Assembly.GetExecutingAssembly();
@@ -192,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         private class TempLegacySkin : LegacySkin
         {
             public TempLegacySkin(SkinInfo skin)
-                : base(skin, null, null, null)
+                : base(skin, null, null, default(string))
             {
             }
         }
