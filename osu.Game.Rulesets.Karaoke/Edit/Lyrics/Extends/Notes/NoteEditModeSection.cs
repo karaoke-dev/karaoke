@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
@@ -10,32 +12,45 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
-    public class NoteEditModeSection : LyricEditorEditModeSection
+    public class NoteEditModeSection : EditModeSection<NoteEditMode>
     {
+        [Resolved]
+        private Bindable<NoteEditMode> bindableEditMode { get; set; }
+
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Blue;
 
-        protected override Dictionary<LyricEditorMode, EditModeSelectionItem> CreateSelections()
+        protected override NoteEditMode DefaultMode()
+            => bindableEditMode.Value;
+
+        protected override Dictionary<NoteEditMode, EditModeSelectionItem> CreateSelections()
             => new()
             {
                 {
-                    LyricEditorMode.CreateNote, new EditModeSelectionItem("Create", "Using time-tag to create default notes.")
+                    NoteEditMode.Generate, new EditModeSelectionItem("Generate", "Using time-tag to create default notes.")
                 },
                 {
-                    LyricEditorMode.CreateNotePosition, new EditModeSelectionItem("Position", "Using singer voice data to adjust note position.")
+                    NoteEditMode.Edit, new EditModeSelectionItem("Edit", "Batch edit note property in here.")
                 },
                 {
-                    LyricEditorMode.AdjustNote, new EditModeSelectionItem("Adjust", "If you are note satisfied this result, you can adjust this by hands.")
+                    NoteEditMode.Verify, new EditModeSelectionItem("Verify", "Check invalid notes in here.")
                 }
             };
 
-        protected override Color4 GetColour(OsuColour colour, LyricEditorMode mode, bool active) =>
+        protected override Color4 GetColour(OsuColour colour, NoteEditMode mode, bool active) =>
             mode switch
             {
-                LyricEditorMode.CreateNote => active ? colour.Blue : colour.BlueDarker,
-                LyricEditorMode.CreateNotePosition => active ? colour.Red : colour.RedDarker,
-                LyricEditorMode.AdjustNote => active ? colour.Yellow : colour.YellowDarker,
+                NoteEditMode.Generate => active ? colour.Blue : colour.BlueDarker,
+                NoteEditMode.Edit => active ? colour.Red : colour.RedDarker,
+                NoteEditMode.Verify => active ? colour.Yellow : colour.YellowDarker,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
+
+        protected override void UpdateEditMode(NoteEditMode mode)
+        {
+            bindableEditMode.Value = mode;
+
+            base.UpdateEditMode(mode);
+        }
     }
 }
