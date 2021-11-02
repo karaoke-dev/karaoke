@@ -2,22 +2,23 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
+using osu.Game.Overlays;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
     public abstract class LabelledObjectFieldSwitchButton<T> : LabelledSwitchButton where T : class
     {
-        [Resolved]
-        private OsuColour colours { get; set; }
-
         protected readonly BindableList<T> SelectedItems = new();
+
+        protected new ObjectFieldSwitchButton Component => (ObjectFieldSwitchButton)base.Component;
 
         private readonly T item;
 
@@ -25,36 +26,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         {
             this.item = item;
 
-            if (Component is ObjectFieldSwitchButton objectFieldSwitchButton)
-            {
-                // apply current text from text-tag.
-                objectFieldSwitchButton.Current.Value = GetFieldValue(item);
+            // apply current text from text-tag.
+            Component.Value = GetFieldValue(item);
 
-                // should change preview text box if selected ruby/romaji changed.
-                objectFieldSwitchButton.OnCommit += (sender, value) =>
-                {
-                    ApplyValue(item, value);
-                };
-            }
+            // should change preview text box if selected ruby/romaji changed.
+            Component.OnCommit += (sender, value) =>
+            {
+                ApplyValue(item, value);
+            };
 
             // change style if focus.
             SelectedItems.BindCollectionChanged((_, _) =>
             {
                 var highLight = SelectedItems.Contains(item);
-
-                Component.BorderColour = highLight ? colours.Yellow : colours.Blue;
+                Component.HighLight = highLight;
             });
-
-            if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
-                return;
-
-            // change padding to place delete button.
-            fillFlowContainer.Padding = new MarginPadding
-            {
-                Horizontal = CONTENT_PADDING_HORIZONTAL,
-                Vertical = CONTENT_PADDING_VERTICAL,
-                Right = CONTENT_PADDING_HORIZONTAL + CONTENT_PADDING_HORIZONTAL,
-            };
         }
 
         protected abstract bool GetFieldValue(T item);
@@ -85,8 +71,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             }
         };
 
-        private class ObjectFieldSwitchButton : SwitchButton
+        protected class ObjectFieldSwitchButton : SwitchButton
         {
+            [Resolved]
+            private OsuColour colours { get; set; }
+
             public Action Selected;
 
             public Action<SwitchButton, bool> OnCommit;
@@ -101,6 +90,36 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             {
                 base.OnUserChange(value);
                 OnCommit?.Invoke(this, value);
+            }
+
+            private Color4 enabledColour;
+
+            [BackgroundDependencyLoader(true)]
+            private void load(OverlayColourProvider colourProvider, OsuColour colours)
+            {
+                // copied from SwitchButton
+                enabledColour = colourProvider?.Highlight1 ?? colours.BlueDark;
+            }
+
+            public bool Value
+            {
+                set => Current.Value = value;
+            }
+
+            public bool HighLight
+            {
+                set
+                {
+                    if (InternalChild is not CircularContainer circularContainer)
+                        throw new ArgumentNullException(nameof(circularContainer));
+
+                    var switchContainer = circularContainer.Children.OfType<Container>().LastOrDefault()?.Child;
+                    if (switchContainer == null)
+                        throw new ArgumentNullException(nameof(switchContainer));
+
+                    // only change dot colour because border colour should consider off case.
+                    switchContainer.Colour = value ? colours.Yellow : enabledColour;
+                }
             }
         }
     }

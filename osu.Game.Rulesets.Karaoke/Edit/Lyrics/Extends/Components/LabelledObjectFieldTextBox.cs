@@ -5,6 +5,7 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
@@ -15,10 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
     public abstract class LabelledObjectFieldTextBox<T> : LabelledTextBox where T : class
     {
-        [Resolved]
-        private OsuColour colours { get; set; }
-
         protected readonly BindableList<T> SelectedItems = new();
+
+        protected new ObjectFieldTextBox Component => (ObjectFieldTextBox)base.Component;
 
         private readonly T item;
 
@@ -39,9 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             SelectedItems.BindCollectionChanged((_, _) =>
             {
                 var highLight = SelectedItems.Contains(item);
-
-                Component.BorderColour = highLight ? colours.Yellow : colours.Blue;
-                Component.BorderThickness = highLight ? 3 : 0;
+                Component.HighLight = highLight;
             });
 
             if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
@@ -79,14 +77,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             }
         };
 
-        private class ObjectFieldTextBox : OsuTextBox
+        protected class ObjectFieldTextBox : OsuTextBox
         {
+            [Resolved]
+            private OsuColour colours { get; set; }
+
             public Action Selected;
 
             protected override void OnFocus(FocusEvent e)
             {
                 Selected?.Invoke();
                 base.OnFocus(e);
+            }
+
+            private SRGBColour standardBorderColour;
+
+            [BackgroundDependencyLoader]
+            private void load()
+            {
+                standardBorderColour = BorderColour;
+            }
+
+            public bool HighLight
+            {
+                set
+                {
+                    BorderColour = value ? colours.Yellow : standardBorderColour;
+                    BorderThickness = value ? 3 : 0;
+                }
             }
         }
     }
