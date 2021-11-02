@@ -65,15 +65,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             Origin = Anchor.Centre,
             RelativeSizeAxes = Axes.X,
             CornerRadius = CORNER_RADIUS,
-            Selected = () =>
+            Selected = (selected) =>
             {
-                // not trigger again if already focus.
-                if (SelectedItems.Contains(item) && SelectedItems.Count == 1)
-                    return;
+                if (selected)
+                {
+                    // not trigger again if already focus.
+                    if (SelectedItems.Contains(item) && SelectedItems.Count == 1)
+                        return;
 
-                // trigger selected.
-                SelectedItems.Clear();
-                SelectedItems.Add(item);
+                    // trigger selected.
+                    SelectedItems.Clear();
+                    SelectedItems.Add(item);
+                }
+                else
+                {
+                    SelectedItems.Remove(item);
+                }
             }
         };
 
@@ -82,12 +89,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             [Resolved]
             private OsuColour colours { get; set; }
 
-            public Action Selected;
+            public Action<bool> Selected;
 
             protected override void OnFocus(FocusEvent e)
             {
-                Selected?.Invoke();
+                Selected?.Invoke(true);
                 base.OnFocus(e);
+            }
+
+            protected override void OnFocusLost(FocusLostEvent e)
+            {
+                Selected?.Invoke(false);
+                base.OnFocusLost(e);
             }
 
             private SRGBColour standardBorderColour;

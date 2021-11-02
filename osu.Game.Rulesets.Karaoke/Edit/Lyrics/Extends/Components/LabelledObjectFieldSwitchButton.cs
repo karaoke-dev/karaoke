@@ -59,15 +59,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected override SwitchButton CreateComponent() => new ObjectFieldSwitchButton
         {
-            Selected = () =>
+            Selected = (selected) =>
             {
-                // not trigger again if already focus.
-                if (SelectedItems.Contains(item) && SelectedItems.Count == 1)
-                    return;
+                if (selected)
+                {
+                    // not trigger again if already focus.
+                    if (SelectedItems.Contains(item) && SelectedItems.Count == 1)
+                        return;
 
-                // trigger selected.
-                SelectedItems.Clear();
-                SelectedItems.Add(item);
+                    // trigger selected.
+                    SelectedItems.Clear();
+                    SelectedItems.Add(item);
+                }
+                else
+                {
+                    SelectedItems.Remove(item);
+                }
             }
         };
 
@@ -76,14 +83,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             [Resolved]
             private OsuColour colours { get; set; }
 
-            public Action Selected;
+            public Action<bool> Selected;
 
             public Action<SwitchButton, bool> OnCommit;
 
             protected override bool OnHover(HoverEvent e)
             {
-                Selected?.Invoke();
+                Selected?.Invoke(true);
                 return base.OnHover(e);
+            }
+
+            protected override void OnHoverLost(HoverLostEvent e)
+            {
+                Selected?.Invoke(false);
+                base.OnHoverLost(e);
             }
 
             protected override void OnUserChange(bool value)
