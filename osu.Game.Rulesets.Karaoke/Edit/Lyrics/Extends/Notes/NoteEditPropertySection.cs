@@ -20,35 +20,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
     {
         protected override string Title => "Properties";
 
-        private readonly Bindable<Note[]> bindableNotes = new();
+        private readonly Bindable<Note[]> notes = new();
+        private readonly Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode = new();
 
-        [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, LyricCaretState lyricCaretState, Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode)
+        public NoteEditPropertySection()
         {
             bindableNoteEditPropertyMode.BindValueChanged(e =>
             {
                 reCreateEditComponents();
             });
 
-            bindableNotes.BindValueChanged(e =>
+            notes.BindValueChanged(e =>
             {
                 reCreateEditComponents();
             });
-
-            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
-            {
-                var lyric = e.NewValue?.Lyric;
-                var notes = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToList();
-                bindableNotes.Value = notes.ToArray();
-            }, true);
 
             void reCreateEditComponents()
             {
                 RemoveAll(x => x is LabelledObjectFieldTextBox<Note>);
                 RemoveAll(x => x is LabelledSwitchButton);
-                AddRange(bindableNotes.Value?.Select(x =>
+
+                if (notes.Value == null)
+                    return;
+
+                AddRange(notes.Value.Select(x =>
                 {
-                    var index = bindableNotes.Value.IndexOf(x);
+                    var index = notes.Value.IndexOf(x);
                     return bindableNoteEditPropertyMode.Value switch
                     {
                         NoteEditPropertyMode.Text => new LabelledNoteTextTextBox(x)
@@ -69,6 +66,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                     };
                 }));
             }
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(EditorBeatmap beatmap, LyricCaretState lyricCaretState, Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode)
+        {
+            this.bindableNoteEditPropertyMode.BindTo(bindableNoteEditPropertyMode);
+            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
+            {
+                var lyric = e.NewValue?.Lyric;
+                notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray();
+            }, true);
         }
 
         private class LabelledNoteTextTextBox : LabelledObjectFieldTextBox<Note>

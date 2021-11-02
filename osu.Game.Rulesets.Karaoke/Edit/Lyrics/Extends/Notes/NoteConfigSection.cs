@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
     public class NoteConfigSection : Section
     {
-        protected override string Title => "Edit mode";
+        protected override string Title => "Config";
 
         [BackgroundDependencyLoader]
         private void load(IScrollingInfo scrollingInfo)

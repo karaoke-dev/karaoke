@@ -13,28 +13,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         public override float ExtendWidth => 300;
 
-        private Bindable<LyricEditorMode> bindableMode;
+        [Cached]
+        private Bindable<NoteEditMode> bindableMode = new();
 
         [Cached]
         private readonly Bindable<NoteEditPropertyMode> noteEditPropertyMode = new();
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        private void load()
         {
-            bindableMode = state.BindableMode.GetBoundCopy();
             bindableMode.BindValueChanged(e =>
             {
                 switch (e.NewValue)
                 {
-                    case LyricEditorMode.CreateNote:
+                    case NoteEditMode.Generate:
                         Children = new Drawable[]
                         {
                             new NoteEditModeSection(),
+                            new NoteConfigSection(),
                             new NoteAutoGenerateSection(),
                         };
                         break;
 
-                    case LyricEditorMode.CreateNotePosition:
+                    case NoteEditMode.Edit:
                         Children = new Drawable[]
                         {
                             new NoteEditModeSection(),
@@ -43,11 +44,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                         };
                         break;
 
-                    case LyricEditorMode.AdjustNote:
+                    case NoteEditMode.Verify:
                         Children = new Drawable[]
                         {
                             new NoteEditModeSection(),
-                            new NoteConfigSection(),
                             new NoteIssueSection()
                         };
                         break;
