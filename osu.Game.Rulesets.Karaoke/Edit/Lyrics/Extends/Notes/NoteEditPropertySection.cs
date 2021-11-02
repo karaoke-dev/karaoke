@@ -21,17 +21,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
         protected override string Title => "Properties";
 
         private readonly Bindable<Note[]> notes = new();
+        private readonly Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode = new();
 
-        [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, LyricCaretState lyricCaretState, Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode)
+        public NoteEditPropertySection()
         {
             bindableNoteEditPropertyMode.BindValueChanged(e =>
             {
-                // todo: use better way not to trigger bindable in disposed object.
-                // this only happened in here.
-                if (IsDisposed)
-                    return;
-
                 reCreateEditComponents();
             });
 
@@ -40,17 +35,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 reCreateEditComponents();
             });
 
-            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
-            {
-                var lyric = e.NewValue?.Lyric;
-                notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray();
-            }, true);
-
             void reCreateEditComponents()
             {
                 RemoveAll(x => x is LabelledObjectFieldTextBox<Note>);
                 RemoveAll(x => x is LabelledSwitchButton);
-                AddRange(notes.Value?.Select(x =>
+
+                if (notes.Value == null)
+                    return;
+
+                AddRange(notes.Value.Select(x =>
                 {
                     var index = notes.Value.IndexOf(x);
                     return bindableNoteEditPropertyMode.Value switch
@@ -73,6 +66,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                     };
                 }));
             }
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(EditorBeatmap beatmap, LyricCaretState lyricCaretState, Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode)
+        {
+            this.bindableNoteEditPropertyMode.BindTo(bindableNoteEditPropertyMode);
+            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
+            {
+                var lyric = e.NewValue?.Lyric;
+                notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray();
+            }, true);
         }
 
         private class LabelledNoteTextTextBox : LabelledObjectFieldTextBox<Note>
