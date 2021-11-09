@@ -2,12 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using osu.Game.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Scoring;
-using osu.Game.Users;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 {
@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
         {
             var ruleset = new KaraokeRuleset().RulesetInfo;
 
-            User = new User
+            User = new APIUser
             {
                 Id = 1030492,
                 Username = "andy840119",
