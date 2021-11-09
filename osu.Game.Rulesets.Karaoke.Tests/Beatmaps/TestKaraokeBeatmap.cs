@@ -25,16 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
             BeatmapInfo.Ruleset = ruleset;
             BeatmapInfo.BeatmapSet.Metadata = BeatmapInfo.Metadata;
             BeatmapInfo.BeatmapSet.Beatmaps = new List<BeatmapInfo> { BeatmapInfo };
-            BeatmapInfo.BeatmapSet.OnlineInfo = new APIBeatmapSet
-            {
-                Status = BeatmapSetOnlineStatus.Ranked,
-                Covers = new BeatmapSetOnlineCovers
-                {
-                    Cover = "https://assets.ppy.sh/beatmaps/163112/covers/cover.jpg",
-                    Card = "https://assets.ppy.sh/beatmaps/163112/covers/card.jpg",
-                    List = "https://assets.ppy.sh/beatmaps/163112/covers/list.jpg"
-                }
-            };
             BeatmapInfo.BeatmapSet.Files = new List<BeatmapSetFileInfo>();
         }
 
