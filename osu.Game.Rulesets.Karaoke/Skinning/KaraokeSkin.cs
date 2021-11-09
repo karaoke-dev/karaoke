@@ -19,6 +19,10 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
 {
+    /// <summary>
+    /// It's the skin for karaoke ruleset.
+    /// todo: should inherit ruleset skin if have.
+    /// </summary>
     public class KaraokeSkin : Skin
     {
         protected readonly IDictionary<int, Bindable<LyricFont>> bindableFonts = new Dictionary<int, Bindable<LyricFont>>();
