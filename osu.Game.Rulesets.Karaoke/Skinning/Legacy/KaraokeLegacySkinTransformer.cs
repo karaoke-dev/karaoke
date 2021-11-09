@@ -12,7 +12,6 @@ using osu.Game.Beatmaps;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
@@ -32,12 +31,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         private readonly IDictionary<int, Bindable<LyricFont>> bindableFonts = new Dictionary<int, Bindable<LyricFont>>();
         private readonly IDictionary<int, Bindable<LyricLayout>> bindableLayouts = new Dictionary<int, Bindable<LyricLayout>>();
         private readonly IDictionary<int, Bindable<NoteSkin>> bindableNotes = new Dictionary<int, Bindable<NoteSkin>>();
-        private readonly IDictionary<int, Bindable<Singer>> bindableSingers = new Dictionary<int, Bindable<Singer>>();
 
         private readonly Bindable<IDictionary<int, string>> bindableFontsLookup = new();
         private readonly Bindable<IDictionary<int, string>> bindableLayoutsLookup = new();
         private readonly Bindable<IDictionary<int, string>> bindableNotesLookup = new();
-        private readonly Bindable<IDictionary<int, string>> bindableSingersLookup = new();
 
         private readonly Bindable<float> bindableColumnHeight = new(DefaultColumnBackground.COLUMN_HEIGHT);
         private readonly Bindable<float> bindableColumnSpacing = new(ScrollingNotePlayfield.COLUMN_SPACING);
@@ -70,14 +67,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 bindableLayoutsLookup.Value = skin.Layouts.ToDictionary(k => skin.Layouts.IndexOf(k), y => y.Name);
                 bindableNotesLookup.Value = skin.NoteSkins.ToDictionary(k => skin.NoteSkins.IndexOf(k), y => y.Name);
             }
-
-            if (this.beatmap == null)
-                return;
-
-            for (int i = 0; i < this.beatmap.Singers.Length; i++)
-                bindableSingers.Add(i, new Bindable<Singer>(this.beatmap.Singers[i]));
-
-            bindableSingersLookup.Value = this.beatmap.Singers.ToDictionary(k => this.beatmap.Singers.ToList().IndexOf(k), y => y.Name);
         }
 
         public override Drawable GetDrawableComponent(ISkinComponent component)
@@ -155,7 +144,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                         KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(bindableFonts[lookupNumber]),
                         KaraokeSkinConfiguration.LyricLayout => SkinUtils.As<TValue>(bindableLayouts[lookupNumber]),
                         KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(bindableNotes[lookupNumber]),
-                        KaraokeSkinConfiguration.Singer => SkinUtils.As<TValue>(bindableSingers[lookupNumber]),
                         _ => throw new InvalidEnumArgumentException(nameof(config))
                     };
                 }
