@@ -25,13 +25,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     /// </summary>
     public class KaraokeSkin : Skin
     {
-        protected readonly IDictionary<int, Bindable<LyricFont>> bindableFonts = new Dictionary<int, Bindable<LyricFont>>();
-        protected readonly IDictionary<int, Bindable<LyricLayout>> bindableLayouts = new Dictionary<int, Bindable<LyricLayout>>();
-        protected readonly IDictionary<int, Bindable<NoteSkin>> bindableNotes = new Dictionary<int, Bindable<NoteSkin>>();
+        protected readonly IDictionary<int, Bindable<LyricFont>> BindableFonts = new Dictionary<int, Bindable<LyricFont>>();
+        protected readonly IDictionary<int, Bindable<LyricLayout>> BindableLayouts = new Dictionary<int, Bindable<LyricLayout>>();
+        protected readonly IDictionary<int, Bindable<NoteSkin>> BindableNotes = new Dictionary<int, Bindable<NoteSkin>>();
 
-        protected readonly Bindable<IDictionary<int, string>> bindableFontsLookup = new();
-        protected readonly Bindable<IDictionary<int, string>> bindableLayoutsLookup = new();
-        protected readonly Bindable<IDictionary<int, string>> bindableNotesLookup = new();
+        protected readonly Bindable<IDictionary<int, string>> BindableFontsLookup = new();
+        protected readonly Bindable<IDictionary<int, string>> BindableLayoutsLookup = new();
+        protected readonly Bindable<IDictionary<int, string>> BindableNotesLookup = new();
 
         private readonly Bindable<float> bindableColumnHeight = new(DefaultColumnBackground.COLUMN_HEIGHT);
         private readonly Bindable<float> bindableColumnSpacing = new(ScrollingNotePlayfield.COLUMN_SPACING);
@@ -71,9 +71,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                     return config switch
                     {
-                        KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(bindableFonts[lookupNumber]),
-                        KaraokeSkinConfiguration.LyricLayout => SkinUtils.As<TValue>(bindableLayouts[lookupNumber]),
-                        KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(bindableNotes[lookupNumber]),
+                        KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(BindableFonts[lookupNumber]),
+                        KaraokeSkinConfiguration.LyricLayout => SkinUtils.As<TValue>(BindableLayouts[lookupNumber]),
+                        KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(BindableNotes[lookupNumber]),
                         _ => throw new InvalidEnumArgumentException(nameof(config))
                     };
                 }
@@ -82,9 +82,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 case KaraokeIndexLookup indexLookup:
                     return indexLookup switch
                     {
-                        KaraokeIndexLookup.Layout => SkinUtils.As<TValue>(bindableLayoutsLookup),
-                        KaraokeIndexLookup.Style => SkinUtils.As<TValue>(bindableFontsLookup),
-                        KaraokeIndexLookup.Note => SkinUtils.As<TValue>(bindableNotesLookup),
+                        KaraokeIndexLookup.Layout => SkinUtils.As<TValue>(BindableLayoutsLookup),
+                        KaraokeIndexLookup.Style => SkinUtils.As<TValue>(BindableFontsLookup),
+                        KaraokeIndexLookup.Note => SkinUtils.As<TValue>(BindableNotesLookup),
                         _ => throw new InvalidEnumArgumentException(nameof(indexLookup))
                     };
 

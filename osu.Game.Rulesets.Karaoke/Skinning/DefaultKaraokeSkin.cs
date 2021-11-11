@@ -30,16 +30,16 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                 // Create bindable
                 for (int i = 0; i < karaokeSkin.Fonts.Count; i++)
-                    bindableFonts.Add(i, new Bindable<LyricFont>(karaokeSkin.Fonts[i]));
+                    BindableFonts.Add(i, new Bindable<LyricFont>(karaokeSkin.Fonts[i]));
                 for (int i = 0; i < karaokeSkin.Layouts.Count; i++)
-                    bindableLayouts.Add(i, new Bindable<LyricLayout>(karaokeSkin.Layouts[i]));
+                    BindableLayouts.Add(i, new Bindable<LyricLayout>(karaokeSkin.Layouts[i]));
                 for (int i = 0; i < karaokeSkin.NoteSkins.Count; i++)
-                    bindableNotes.Add(i, new Bindable<NoteSkin>(karaokeSkin.NoteSkins[i]));
+                    BindableNotes.Add(i, new Bindable<NoteSkin>(karaokeSkin.NoteSkins[i]));
 
                 // Create lookups
-                bindableFontsLookup.Value = karaokeSkin.Fonts.ToDictionary(k => karaokeSkin.Fonts.IndexOf(k), y => y.Name);
-                bindableLayoutsLookup.Value = karaokeSkin.Layouts.ToDictionary(k => karaokeSkin.Layouts.IndexOf(k), y => y.Name);
-                bindableNotesLookup.Value = karaokeSkin.NoteSkins.ToDictionary(k => karaokeSkin.NoteSkins.IndexOf(k), y => y.Name);
+                BindableFontsLookup.Value = karaokeSkin.Fonts.ToDictionary(k => karaokeSkin.Fonts.IndexOf(k), y => y.Name);
+                BindableLayoutsLookup.Value = karaokeSkin.Layouts.ToDictionary(k => karaokeSkin.Layouts.IndexOf(k), y => y.Name);
+                BindableNotesLookup.Value = karaokeSkin.NoteSkins.ToDictionary(k => karaokeSkin.NoteSkins.IndexOf(k), y => y.Name);
             }
         }
     }
