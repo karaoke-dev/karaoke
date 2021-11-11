@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using osu.Framework.Bindables;
@@ -25,8 +24,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public const int MIN_FONT_SIZE = 10;
         public const int MAX_FONT_SIZE = 45;
 
-        public KaraokeLyricEditorSkin(SkinInfo skin, IStorageResourceProvider resources, Stream configurationStream = null)
-            : base(skin, resources, configurationStream)
+        internal const int DEFAULT_SKIN = 0;
+
+        public static SkinInfo Default { get; } = new()
+        {
+            ID = DEFAULT_SKIN,
+            Name = "karaoke! (default editor skin)",
+            Creator = "team karaoke!",
+        };
+
+        public KaraokeLyricEditorSkin(IStorageResourceProvider resources)
+            : this(Default, resources)
+        {
+        }
+
+        public KaraokeLyricEditorSkin(SkinInfo skin, IStorageResourceProvider resources)
+            : base(skin, resources)
         {
             // TODO : need a better way to load resource
             var assembly = Assembly.GetExecutingAssembly();

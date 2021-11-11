@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                             {
                                 new Drawable[]
                                 {
-                                    new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin())
+                                    new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin(null))
                                     {
                                         RelativeSizeAxes = Axes.Both,
                                         Child = container = new DrawableLyricEditList
