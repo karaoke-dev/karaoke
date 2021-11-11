@@ -16,13 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
     public class KaraokeLegacySkinTransformer : LegacySkinTransformer
     {
-        private readonly KaraokeBeatmap beatmap;
         private readonly Lazy<bool> isLegacySkin;
 
         public KaraokeLegacySkinTransformer(ISkin source, IBeatmap beatmap)
             : base(generateDefaultKaraokeSkin(source))
         {
-            this.beatmap = (KaraokeBeatmap)beatmap;
             isLegacySkin = new Lazy<bool>(() => GetConfig<SkinConfiguration.LegacySetting, decimal>(SkinConfiguration.LegacySetting.Version) != null);
         }
 
