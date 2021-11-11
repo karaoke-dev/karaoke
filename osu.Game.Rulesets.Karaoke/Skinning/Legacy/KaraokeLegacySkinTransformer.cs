@@ -28,13 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 
         private static DefaultKaraokeSkin generateDefaultKaraokeSkin(ISkin skin)
         {
-            var skinInfo = new SkinInfo
-            {
-                Name = "karaoke! (default skin)",
-                Creator = "team karaoke!",
-            };
             var resources = getStorageResourceProvider(skin);
-            return new DefaultKaraokeSkin(skinInfo, resources);
+            return new DefaultKaraokeSkin(resources);
 
             static IStorageResourceProvider getStorageResourceProvider(ISkin skin)
             {
