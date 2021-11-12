@@ -4,10 +4,10 @@
 using System;
 using System.ComponentModel;
 using System.Reflection;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
 using osu.Game.IO;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
@@ -16,28 +16,30 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
     public class KaraokeLegacySkinTransformer : LegacySkinTransformer
     {
-        private readonly KaraokeBeatmap beatmap;
         private readonly Lazy<bool> isLegacySkin;
+        private readonly DefaultKaraokeSkin defaultKaraokeSkin;
 
         public KaraokeLegacySkinTransformer(ISkin source, IBeatmap beatmap)
-            : base(generateDefaultKaraokeSkin(source))
+            : base(source)
         {
-            this.beatmap = (KaraokeBeatmap)beatmap;
+            // we should get config by default karaoke skin.
+            // if has resource or texture, then try to get from legacy skin.
+            defaultKaraokeSkin = generateDefaultKaraokeSkin(source);
             isLegacySkin = new Lazy<bool>(() => GetConfig<SkinConfiguration.LegacySetting, decimal>(SkinConfiguration.LegacySetting.Version) != null);
-        }
 
-        private static DefaultKaraokeSkin generateDefaultKaraokeSkin(ISkin skin)
-        {
-            var resources = getStorageResourceProvider(skin);
-            return new DefaultKaraokeSkin(resources);
-
-            static IStorageResourceProvider getStorageResourceProvider(ISkin skin)
+            static DefaultKaraokeSkin generateDefaultKaraokeSkin(ISkin skin)
             {
-                if (skin is not LegacySkin legacySkin)
-                    return null;
+                var resources = getStorageResourceProvider(skin);
+                return new DefaultKaraokeSkin(resources);
 
-                var property = typeof(Skin).GetField("resources", BindingFlags.Instance | BindingFlags.NonPublic);
-                return property?.GetValue(legacySkin) as IStorageResourceProvider;
+                static IStorageResourceProvider getStorageResourceProvider(ISkin skin)
+                {
+                    if (skin is not LegacySkin legacySkin)
+                        return null;
+
+                    var property = typeof(Skin).GetField("resources", BindingFlags.Instance | BindingFlags.NonPublic);
+                    return property?.GetValue(legacySkin) as IStorageResourceProvider;
+                }
             }
         }
 
@@ -86,8 +88,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             {
                 switch (Skin)
                 {
-                    case DefaultKaraokeSkin defaultKaraokeSkin:
-                        return new TempLegacySkin(defaultKaraokeSkin.SkinInfo).GetDrawableComponent(component) as SkinnableTargetComponentsContainer;
+                    case LegacySkin legacySkin:
+                        return new TempLegacySkin(legacySkin.SkinInfo).GetDrawableComponent(component) as SkinnableTargetComponentsContainer;
 
                     default:
                         throw new InvalidCastException();
@@ -99,6 +101,12 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         {
             // todo : get real component
             return null;
+        }
+
+        public override IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
+        {
+            var config = defaultKaraokeSkin.GetConfig<TLookup, TValue>(lookup);
+            return config ?? base.GetConfig<TLookup, TValue>(lookup);
         }
 
         // it's a temp class for just getting SkinnableTarget.MainHUDComponents

@@ -41,14 +41,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Resources
 
         public static Track OpenTrackInfo(AudioManager audioManager, string name) => audioManager.GetTrackStore(GetStore()).Get($"Resources/Testing/Track/{name}.mp3");
 
-        public static KaraokeLegacySkinTransformer GetKaraokeLegacySkinTransformer(string skinName)
-        {
-            var store = new NamespacedResourceStore<byte[]>(GetStore(), $"Resources/{skinName}");
-            var rawSkin = new TestLegacySkin(new SkinInfo { Name = skinName }, store);
-            var skinSource = new SkinProvidingContainer(rawSkin);
-            return new KaraokeLegacySkinTransformer(skinSource, null);
-        }
-
         internal class TestLegacySkin : LegacySkin
         {
             public TestLegacySkin(SkinInfo skin, IResourceStore<byte[]> storage)
