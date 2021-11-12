@@ -11,16 +11,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
     public class FontUsageConvertorTest : BaseSingleConverterTest<FontUsageConvertor>
     {
         [TestCase("", 20, "", false, false, "{}")]
-        [TestCase("OpenSans", 20, "", false, false, "{\"family\": \"OpenSans\"}")]
-        [TestCase("OpenSans", 30, "", false, false, "{\"family\": \"OpenSans\",\"size\": 30.0}")]
-        [TestCase("OpenSans", 30, "RegularItalic", false, false, "{\"family\": \"OpenSans\",\"weight\": \"RegularItalic\",\"size\": 30.0}")]
-        [TestCase("OpenSans", 30, "RegularItalic", true, false, "{\"family\": \"OpenSans\",\"weight\": \"RegularItalic\",\"size\": 30.0,\"italics\": true}")]
-        [TestCase("OpenSans", 30, "RegularItalic", true, true, "{\"family\": \"OpenSans\",\"weight\": \"RegularItalic\",\"size\": 30.0,\"italics\": true,\"fixedWidth\": true}")]
+        [TestCase("OpenSans", 20, "", false, false, "{\"family\":\"OpenSans\"}")]
+        [TestCase("OpenSans", 30, "", false, false, "{\"family\":\"OpenSans\",\"size\":30.0}")]
+        [TestCase("OpenSans", 30, "RegularItalic", false, false, "{\"family\":\"OpenSans\",\"weight\":\"RegularItalic\",\"size\":30.0}")]
+        [TestCase("OpenSans", 30, "RegularItalic", true, false, "{\"family\":\"OpenSans\",\"weight\":\"RegularItalic\",\"size\":30.0,\"italics\":true}")]
+        [TestCase("OpenSans", 30, "RegularItalic", true, true, "{\"family\":\"OpenSans\",\"weight\":\"RegularItalic\",\"size\":30.0,\"italics\":true,\"fixedWidth\":true}")]
         public void TestSerialize(string family, float size, string weight, bool italics, bool fixedWidth, string json)
         {
             var font = new FontUsage(family, size, weight, italics, fixedWidth);
             var result = JsonConvert.SerializeObject(font, CreateSettings());
-            result = result.Replace("\r\n  ", "").Replace("\r\n", "");
             Assert.AreEqual(result, json);
         }
 
