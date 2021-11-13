@@ -9,7 +9,6 @@ using NUnit.Framework;
 using osu.Game.IO;
 using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
@@ -35,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             Assert.That(encoded.Serialize(), Is.EqualTo(decoded.Serialize()));
         }
 
-        private static KaraokeSkin decode(string filename, out KaraokeSkin encoded)
+        private static NicoKaraSkin decode(string filename, out NicoKaraSkin encoded)
         {
             using (var stream = TestResources.OpenSkinResource(filename))
             using (var sr = new LineBufferedReader(stream))

@@ -8,7 +8,6 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osuTK.Graphics;
@@ -30,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             using (var resStream = TestResources.OpenNicoKaraResource("default"))
             using (var stream = new LineBufferedReader(resStream))
             {
-                var decoder = Decoder.GetDecoder<KaraokeSkin>(stream);
+                var decoder = Decoder.GetDecoder<NicoKaraSkin>(stream);
                 var skin = decoder.Decode(stream);
 
                 // Testing layout
