@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                         {
                             new TextMetadataSection("Description")
                             {
-                                Text = beatmapInfo?.Version
+                                Text = beatmapInfo?.DifficultyName
                             },
                             new TextMetadataSection("Source")
                             {

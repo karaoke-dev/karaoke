@@ -11,6 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         protected JsonSerializerSettings CreateSettings()
         {
             var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
+            globalSetting.Formatting = Formatting.None; // do not change new line in testing.
             globalSetting.Converters = new JsonConverter[] { new TConverter() };
             return globalSetting;
         }
