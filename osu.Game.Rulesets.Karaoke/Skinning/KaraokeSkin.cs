@@ -10,7 +10,7 @@ using osu.Framework.Graphics.OpenGL.Textures;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Audio;
 using osu.Game.IO;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
 using osu.Game.Rulesets.Karaoke.UI.Components;
@@ -25,13 +25,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     /// </summary>
     public class KaraokeSkin : Skin
     {
-        protected readonly IDictionary<int, Bindable<LyricFont>> BindableFonts = new Dictionary<int, Bindable<LyricFont>>();
-        protected readonly IDictionary<int, Bindable<LyricLayout>> BindableLayouts = new Dictionary<int, Bindable<LyricLayout>>();
-        protected readonly IDictionary<int, Bindable<NoteSkin>> BindableNotes = new Dictionary<int, Bindable<NoteSkin>>();
+        public readonly IDictionary<int, Bindable<LyricStyle>> BindableFonts = new Dictionary<int, Bindable<LyricStyle>>();
+        public readonly IDictionary<int, Bindable<LyricLayout>> BindableLayouts = new Dictionary<int, Bindable<LyricLayout>>();
+        public readonly IDictionary<int, Bindable<LayoutGroup>> BindableLayoutGroups = new Dictionary<int, Bindable<LayoutGroup>>();
+        public readonly IDictionary<int, Bindable<NoteSkin>> BindableNotes = new Dictionary<int, Bindable<NoteSkin>>();
 
-        protected readonly Bindable<IDictionary<int, string>> BindableFontsLookup = new();
-        protected readonly Bindable<IDictionary<int, string>> BindableLayoutsLookup = new();
-        protected readonly Bindable<IDictionary<int, string>> BindableNotesLookup = new();
+        public readonly Bindable<IDictionary<int, string>> BindableFontsLookup = new();
+        public readonly Bindable<IDictionary<int, string>> BindableLayoutsLookup = new();
+        public readonly Bindable<IDictionary<int, string>> BindableNotesLookup = new();
 
         private readonly Bindable<float> bindableColumnHeight = new(DefaultColumnBackground.COLUMN_HEIGHT);
         private readonly Bindable<float> bindableColumnSpacing = new(ScrollingNotePlayfield.COLUMN_SPACING);
