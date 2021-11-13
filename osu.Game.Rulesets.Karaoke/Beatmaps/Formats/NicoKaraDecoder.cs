@@ -15,7 +15,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osuTK;
@@ -23,14 +22,14 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
-    public class NicoKaraDecoder : Decoder<KaraokeSkin>
+    public class NicoKaraDecoder : Decoder<NicoKaraSkin>
     {
         public static void Register()
         {
-            AddDecoder<KaraokeSkin>("<?xml version=", _ => new NicoKaraDecoder());
+            AddDecoder<NicoKaraSkin>("<?xml version=", _ => new NicoKaraDecoder());
         }
 
-        protected override void ParseStreamInto(LineBufferedReader stream, KaraokeSkin output)
+        protected override void ParseStreamInto(LineBufferedReader stream, NicoKaraSkin output)
         {
             Project nicoKaraProject;
 
