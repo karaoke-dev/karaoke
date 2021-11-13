@@ -4,9 +4,9 @@
 using System.Collections.Generic;
 using osu.Framework.Graphics.Shaders;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts
+namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
 {
-    public class LyricFont
+    public class LyricStyle
     {
         public string Name { get; set; }
 
