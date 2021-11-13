@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var skin = decoder.Decode(stream);
 
                 // Checking font decode result
-                var firstDecodedFont = skin.Fonts.FirstOrDefault();
+                var firstDecodedFont = skin.Styles.FirstOrDefault();
                 Assert.IsNotNull(firstDecodedFont);
                 Assert.AreEqual(firstDecodedFont.Name, "標準配色");
 

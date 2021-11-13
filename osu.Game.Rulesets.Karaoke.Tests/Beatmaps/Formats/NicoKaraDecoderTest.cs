@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(firstLayout.RubyMargin, 4);
 
                 // Testing style
-                var firstFont = skin.Fonts.FirstOrDefault();
+                var firstFont = skin.Styles.FirstOrDefault();
                 Assert.IsNotNull(firstFont);
                 Assert.AreEqual(firstFont.Name, "標準配色");
 

@@ -44,15 +44,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 var karaokeSkin = new KaraokeSkinDecoder().Decode(reader);
 
                 // Create bindable
-                for (int i = 0; i < karaokeSkin.Fonts.Count; i++)
-                    BindableFonts.Add(i, new Bindable<LyricFont>(karaokeSkin.Fonts[i]));
+                for (int i = 0; i < karaokeSkin.Styles.Count; i++)
+                    BindableFonts.Add(i, new Bindable<LyricFont>(karaokeSkin.Styles[i]));
                 for (int i = 0; i < karaokeSkin.Layouts.Count; i++)
                     BindableLayouts.Add(i, new Bindable<LyricLayout>(karaokeSkin.Layouts[i]));
                 for (int i = 0; i < karaokeSkin.NoteSkins.Count; i++)
                     BindableNotes.Add(i, new Bindable<NoteSkin>(karaokeSkin.NoteSkins[i]));
 
                 // Create lookups
-                BindableFontsLookup.Value = karaokeSkin.Fonts.ToDictionary(k => karaokeSkin.Fonts.IndexOf(k), y => y.Name);
+                BindableFontsLookup.Value = karaokeSkin.Styles.ToDictionary(k => karaokeSkin.Styles.IndexOf(k), y => y.Name);
                 BindableLayoutsLookup.Value = karaokeSkin.Layouts.ToDictionary(k => karaokeSkin.Layouts.IndexOf(k), y => y.Name);
                 BindableNotesLookup.Value = karaokeSkin.NoteSkins.ToDictionary(k => karaokeSkin.NoteSkins.IndexOf(k), y => y.Name);
             }
