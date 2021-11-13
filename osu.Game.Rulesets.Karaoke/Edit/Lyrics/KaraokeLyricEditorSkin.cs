@@ -51,15 +51,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 var karaokeSkin = new KaraokeSkinDecoder().Decode(reader);
 
                 // Create bindable
-                for (int i = 0; i < karaokeSkin.Fonts.Count; i++)
-                    BindableFonts.Add(i, new Bindable<LyricStyle>(karaokeSkin.Fonts[i]));
+                for (int i = 0; i < karaokeSkin.Styles.Count; i++)
+                    BindableFonts.Add(i, new Bindable<LyricStyle>(karaokeSkin.Styles[i]));
                 for (int i = 0; i < karaokeSkin.Layouts.Count; i++)
                     BindableLayouts.Add(i, new Bindable<LyricLayout>(karaokeSkin.Layouts[i]));
                 for (int i = 0; i < karaokeSkin.NoteSkins.Count; i++)
                     BindableNotes.Add(i, new Bindable<NoteSkin>(karaokeSkin.NoteSkins[i]));
 
                 // Create lookups
-                BindableFontsLookup.Value = karaokeSkin.Fonts.ToDictionary(k => karaokeSkin.Fonts.IndexOf(k), y => y.Name);
+                BindableFontsLookup.Value = karaokeSkin.Styles.ToDictionary(k => karaokeSkin.Styles.IndexOf(k), y => y.Name);
                 BindableLayoutsLookup.Value = karaokeSkin.Layouts.ToDictionary(k => karaokeSkin.Layouts.IndexOf(k), y => y.Name);
                 BindableNotesLookup.Value = karaokeSkin.NoteSkins.ToDictionary(k => karaokeSkin.NoteSkins.IndexOf(k), y => y.Name);
             }
@@ -71,20 +71,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public float FontSize
         {
-            get => BindableFont.Value.LyricTextFontInfo.LyricTextFontInfo.Size;
+            get => BindableFont.Value.MainTextFont.Size;
             set
             {
                 var textSize = Math.Max(Math.Min(value, MAX_FONT_SIZE), MIN_FONT_SIZE);
                 var changePercentage = textSize / FontSize;
 
-                BindableFont.Value.LyricTextFontInfo.LyricTextFontInfo
-                    = multipleSize(BindableFont.Value.LyricTextFontInfo.LyricTextFontInfo, changePercentage);
-                BindableFont.Value.RubyTextFontInfo.LyricTextFontInfo
-                    = multipleSize(BindableFont.Value.RubyTextFontInfo.LyricTextFontInfo, changePercentage);
-                BindableFont.Value.RomajiTextFontInfo.LyricTextFontInfo
-                    = multipleSize(BindableFont.Value.RomajiTextFontInfo.LyricTextFontInfo, changePercentage);
+                BindableFont.Value.MainTextFont
+                    = multipleSize(BindableFont.Value.MainTextFont, changePercentage);
+                BindableFont.Value.RubyTextFont
+                    = multipleSize(BindableFont.Value.RubyTextFont, changePercentage);
+                BindableFont.Value.RomajiTextFont
+                    = multipleSize(BindableFont.Value.RomajiTextFont, changePercentage);
 
-                BindableFont.Value.ShadowOffset *= changePercentage;
                 BindableFont.TriggerChange();
 
                 static FontUsage multipleSize(FontUsage origin, float percentage)
