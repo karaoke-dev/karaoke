@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 // Create bindable
                 for (int i = 0; i < karaokeSkin.Styles.Count; i++)
-                    BindableFonts.Add(i, new Bindable<LyricStyle>(karaokeSkin.Styles[i]));
+                    BindableStyles.Add(i, new Bindable<LyricStyle>(karaokeSkin.Styles[i]));
                 for (int i = 0; i < karaokeSkin.Layouts.Count; i++)
                     BindableLayouts.Add(i, new Bindable<LyricLayout>(karaokeSkin.Layouts[i]));
                 for (int i = 0; i < karaokeSkin.NoteSkins.Count; i++)
@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             FontSize = 26;
         }
 
-        protected Bindable<LyricStyle> BindableFont => BindableFonts.Values.FirstOrDefault();
+        protected Bindable<LyricStyle> BindableFont => BindableStyles.Values.FirstOrDefault();
 
         public float FontSize
         {

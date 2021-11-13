@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 using osu.Framework.Bindables;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
 using osu.Game.Skinning;
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                 // Create bindable
                 for (int i = 0; i < karaokeSkin.Styles.Count; i++)
-                    BindableFonts.Add(i, new Bindable<LyricFont>(karaokeSkin.Styles[i]));
+                    BindableStyles.Add(i, new Bindable<LyricStyle>(karaokeSkin.Styles[i]));
                 for (int i = 0; i < karaokeSkin.Layouts.Count; i++)
                     BindableLayouts.Add(i, new Bindable<LyricLayout>(karaokeSkin.Layouts[i]));
                 for (int i = 0; i < karaokeSkin.NoteSkins.Count; i++)

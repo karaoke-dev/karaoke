@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     /// </summary>
     public class KaraokeSkin : Skin
     {
-        public readonly IDictionary<int, Bindable<LyricStyle>> BindableFonts = new Dictionary<int, Bindable<LyricStyle>>();
+        public readonly IDictionary<int, Bindable<LyricStyle>> BindableStyles = new Dictionary<int, Bindable<LyricStyle>>();
         public readonly IDictionary<int, Bindable<LyricLayout>> BindableLayouts = new Dictionary<int, Bindable<LyricLayout>>();
         public readonly IDictionary<int, Bindable<LayoutGroup>> BindableLayoutGroups = new Dictionary<int, Bindable<LayoutGroup>>();
         public readonly IDictionary<int, Bindable<NoteSkin>> BindableNotes = new Dictionary<int, Bindable<NoteSkin>>();
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                     return config switch
                     {
-                        KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(BindableFonts[lookupNumber]),
+                        KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(BindableStyles[lookupNumber]),
                         KaraokeSkinConfiguration.LyricLayout => SkinUtils.As<TValue>(BindableLayouts[lookupNumber]),
                         KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(BindableNotes[lookupNumber]),
                         _ => throw new InvalidEnumArgumentException(nameof(config))
