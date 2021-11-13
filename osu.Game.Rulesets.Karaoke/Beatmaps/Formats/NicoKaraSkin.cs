@@ -1,4 +1,4 @@
-﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
@@ -6,9 +6,9 @@ using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
+namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
-    public class KaraokeSkin
+    public class NicoKaraSkin
     {
         public List<LayoutGroup> LayoutGroups { get; set; }
 

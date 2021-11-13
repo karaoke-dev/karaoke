@@ -2,12 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.IO.Serialization;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
+    // todo: should remove this encoder eventually
     public class KaraokeSkinEncoder
     {
-        public string Encode(KaraokeSkin output) => output.Serialize();
+        public string Encode(NicoKaraSkin output) => output.Serialize();
     }
 }

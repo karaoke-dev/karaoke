@@ -6,19 +6,19 @@ using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
 using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
-    public class KaraokeSkinDecoder : Decoder<KaraokeSkin>
+    // todo: should remove this decider eventually
+    public class KaraokeSkinDecoder : Decoder<NicoKaraSkin>
     {
-        protected override void ParseStreamInto(LineBufferedReader stream, KaraokeSkin output)
+        protected override void ParseStreamInto(LineBufferedReader stream, NicoKaraSkin output)
         {
             var settings = JsonSerializableExtensions.CreateGlobalSettings();
             settings.Converters.Add(new FontUsageConvertor());
 
             var skinText = stream.ReadToEnd();
-            var result = JsonConvert.DeserializeObject<KaraokeSkin>(skinText, settings);
+            var result = JsonConvert.DeserializeObject<NicoKaraSkin>(skinText, settings);
 
             if (result == null)
                 return;
