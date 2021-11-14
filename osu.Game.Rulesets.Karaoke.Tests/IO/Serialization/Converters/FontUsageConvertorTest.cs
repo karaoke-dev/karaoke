@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase("{\"family\": \"OpenSans\",\"weight\": \"RegularItalic\",\"size\": 30.0}", "OpenSans", 30, "RegularItalic", false, false)]
         [TestCase("{\"family\": \"OpenSans\",\"weight\": \"RegularItalic\",\"size\": 30.0,\"italics\": true}", "OpenSans", 30, "RegularItalic", true, false)]
         [TestCase("{\"family\": \"OpenSans\",\"weight\": \"RegularItalic\",\"size\": 30.0,\"italics\": true,\"fixedWidth\": true}", "OpenSans", 30, "RegularItalic", true, true)]
-        public void TestTestDeserialize(string json, string family, float size, string weight, bool italics, bool fixedWidth)
+        public void TestDeserialize(string json, string family, float size, string weight, bool italics, bool fixedWidth)
         {
             var result = JsonConvert.DeserializeObject<FontUsage>(json, CreateSettings());
             var actual = new FontUsage(family, size, weight, italics, fixedWidth);
