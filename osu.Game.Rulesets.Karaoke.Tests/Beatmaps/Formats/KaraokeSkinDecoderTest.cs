@@ -4,11 +4,12 @@
 using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Shaders;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
+using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
@@ -30,22 +31,26 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.IsNotNull(firstDecodedFont);
                 Assert.AreEqual(firstDecodedFont.Name, "標準配色");
 
-                // Test back text brush
-                var backTextBrushInfo = firstDecodedFont.BackTextBrushInfo.TextBrush;
-                Assert.AreEqual(backTextBrushInfo.BrushGradients.Count, 3);
-                Assert.AreEqual(backTextBrushInfo.SolidColor, new Color4(255, 255, 255, 255));
-                Assert.AreEqual(backTextBrushInfo.Type, BrushType.Solid);
+                // TestShader
+                var shaders = firstDecodedFont.LeftLyricTextShaders;
+                Assert.NotNull(shaders);
 
-                // Test font info
-                var lyricTextFontInfo = firstDecodedFont.LyricTextFontInfo;
-                Assert.AreEqual(lyricTextFontInfo.EdgeSize, 10);
+                // Test step shader.
+                var stepShader = shaders.FirstOrDefault() as StepShader;
+                Assert.NotNull(stepShader);
+                Assert.AreEqual(stepShader.Name, "HelloShader");
+                Assert.AreEqual(stepShader.StepShaders.Count, 2);
 
-                // Test main text font
-                var mainTextFontInfo = lyricTextFontInfo.LyricTextFontInfo;
-                Assert.AreEqual(mainTextFontInfo.Family, "游明朝 Demibold");
-                Assert.AreEqual(mainTextFontInfo.Weight, null);
-                Assert.AreEqual(mainTextFontInfo.Size, 40);
-                Assert.AreEqual(mainTextFontInfo.FixedWidth, false);
+                // Test outline shader.
+                var outlineShader = stepShader.StepShaders.FirstOrDefault() as OutlineShader;
+                Assert.NotNull(outlineShader);
+                Assert.AreEqual(outlineShader.OutlineColour, new Color4(255, 255, 255, 255));
+                Assert.AreEqual(outlineShader.Radius, 10);
+
+                // Test shader convert result.
+                var shadowShader = stepShader.StepShaders.LastOrDefault() as ShadowShader;
+                Assert.NotNull(shadowShader);
+                Assert.AreEqual(shadowShader.ShadowOffset, new Vector2(3));
 
                 // Checking layout decode result
                 var firstDecodedLayout = skin.Layouts.FirstOrDefault();
