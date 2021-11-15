@@ -17,7 +17,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
 using osu.Game.Rulesets.Karaoke.Skinning.Tools;
 using osu.Game.Rulesets.Objects.Drawables;
@@ -171,7 +171,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (HitObject == null)
                 return;
 
-            var lyricFont = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.Value;
+            var lyricFont = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricStyle>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.Value;
             if (lyricFont == null)
                 return;
 
@@ -191,20 +191,20 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (HitObject == null)
                 return;
 
-            var lyricFont = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.Value;
+            var lyricStyle = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricStyle>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.Value;
 
             foreach (var lyricPiece in lyricPieces)
             {
                 // Apply text font info
-                var mainFont = lyricFont?.LyricTextFontInfo?.LyricTextFontInfo;
+                var mainFont = lyricStyle?.MainTextFont;
                 lyricPiece.Font = getFont(KaraokeRulesetSetting.MainFont, mainFont);
 
-                var rubyFont = lyricFont?.RubyTextFontInfo?.LyricTextFontInfo;
+                var rubyFont = lyricStyle?.RubyTextFont;
                 lyricPiece.DisplayRuby = displayRubyBindable.Value;
                 lyricPiece.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, rubyFont);
                 lyricPiece.RubyMargin = rubyMarginBindable.Value;
 
-                var romajiFont = lyricFont?.RomajiTextFontInfo?.LyricTextFontInfo;
+                var romajiFont = lyricStyle?.RomajiTextFont;
                 lyricPiece.DisplayRomaji = displayRomajiBindable.Value;
                 lyricPiece.RomajiFont = getFont(KaraokeRulesetSetting.RomajiFont, romajiFont);
                 lyricPiece.RomajiMargin = romajiMarginBindable.Value;

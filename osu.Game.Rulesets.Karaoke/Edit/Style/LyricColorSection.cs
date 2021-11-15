@@ -5,14 +5,12 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Style
 {
     internal class LyricColorSection : StyleSection
     {
         private LabelledEnumDropdown<ColorArea> colorAreaDropdown;
-        private LabelledEnumDropdown<BrushType> brushTypeDropdown;
         private LabelledColourSelector colorPicker;
 
         protected override string Title => "Color";
@@ -26,11 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
                 {
                     Label = "Color area",
                     Description = "Select the area you wish to adjust.",
-                },
-                brushTypeDropdown = new LabelledEnumDropdown<BrushType>
-                {
-                    Label = "Brush type",
-                    Description = "Select brush type",
                 },
                 colorPicker = new LabelledColourSelector
                 {

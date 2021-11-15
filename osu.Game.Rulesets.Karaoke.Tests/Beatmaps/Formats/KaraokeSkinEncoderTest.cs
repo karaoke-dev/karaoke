@@ -7,8 +7,8 @@ using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.IO;
-using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
@@ -26,12 +26,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             var decoded = decode(name, out var encoded);
 
             // Check each property's number.
-            Assert.That(decoded.Fonts.Count, Is.EqualTo(encoded.Fonts.Count));
+            Assert.That(decoded.Styles.Count, Is.EqualTo(encoded.Styles.Count));
             Assert.That(decoded.Layouts.Count, Is.EqualTo(encoded.Layouts.Count));
             Assert.That(decoded.NoteSkins.Count, Is.EqualTo(encoded.NoteSkins.Count));
 
             // Check each property's value.
-            Assert.That(encoded.Serialize(), Is.EqualTo(decoded.Serialize()));
+            ObjectAssert.ArePropertyEqual(encoded, decoded);
         }
 
         private static NicoKaraSkin decode(string filename, out NicoKaraSkin encoded)
