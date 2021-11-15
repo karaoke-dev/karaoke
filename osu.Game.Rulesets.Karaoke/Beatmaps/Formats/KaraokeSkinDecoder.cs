@@ -15,6 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         protected override void ParseStreamInto(LineBufferedReader stream, NicoKaraSkin output)
         {
             var settings = JsonSerializableExtensions.CreateGlobalSettings();
+            settings.Converters.Add(new ShaderConvertor());
             settings.Converters.Add(new FontUsageConvertor());
 
             var skinText = stream.ReadToEnd();
