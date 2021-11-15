@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
             if (RuntimeInfo.OS != RuntimeInfo.Platform.Windows)
                 return null;
 
-            var shaders = lyricStyle.LeftLyricTextShaders.ToArray();
+            var shaders = lyricStyle.LeftLyricTextShaders?.ToArray() ?? new IShader[] { };
             attachShaders(shaderManager, shaders);
 
             return shaders;
@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
             if (RuntimeInfo.OS != RuntimeInfo.Platform.Windows)
                 return null;
 
-            var shaders = lyricStyle.RightLyricTextShaders.ToArray();
+            var shaders = lyricStyle.RightLyricTextShaders?.ToArray() ?? new IShader[] { };
             attachShaders(shaderManager, shaders);
 
             return shaders;
