@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework;
 using osu.Framework.Graphics.Shaders;
@@ -45,12 +46,21 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
 
         private static void attachShaders(ShaderManager shaderManager, IShader[] shaders)
         {
-            var internalShaders = shaders.OfType<InternalShader>().ToArray();
-
-            foreach (var internalShader in internalShaders)
+            foreach (var shader in shaders)
             {
-                var shader = shaderManager.Load(VertexShaderDescriptor.TEXTURE_2, internalShader.ShaderName);
-                internalShader.AttachOriginShader(shader);
+                switch (shader)
+                {
+                    case InternalShader internalShader:
+                        internalShader.AttachOriginShader(shaderManager.Load(VertexShaderDescriptor.TEXTURE_2, internalShader.ShaderName));
+                        break;
+
+                    case StepShader stepShader:
+                        attachShaders(shaderManager, stepShader.StepShaders.ToArray());
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(shader));
+                }
             }
         }
     }
