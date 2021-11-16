@@ -6,7 +6,6 @@ using NUnit.Framework;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Track;
 using osu.Framework.IO.Stores;
-using osu.Game.Rulesets.Karaoke.Skinning.Legacy;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Resources
