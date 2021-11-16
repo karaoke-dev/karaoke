@@ -21,10 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         {
             var settings = JsonSerializableExtensions.CreateGlobalSettings();
             settings.ContractResolver = new WritablePropertiesOnlyResolver();
-            settings.Converters = settings.Converters.Concat(new JsonConverter[]
-            {
-                new ColourConvertor(),
-            }).ToArray();
+            settings.Converters.Add(new ColourConvertor());
             localSerializer = JsonSerializer.Create(settings);
         }
 

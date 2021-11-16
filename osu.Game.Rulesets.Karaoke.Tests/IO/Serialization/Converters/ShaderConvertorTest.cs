@@ -14,11 +14,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
     public class ShaderConvertorTest : BaseSingleConverterTest<ShaderConvertor>
     {
-        protected override JsonConverter[] CreateDefaultConverts()
-            => base.CreateDefaultConverts().Concat(new JsonConverter[]
+        protected override JsonConverter[] CreateExtraConverts()
+            => new JsonConverter[]
             {
                 new ColourConvertor(),
-            }).ToArray();
+            };
 
         [Test]
         public void TestSerializer()

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
@@ -15,18 +14,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
     {
         protected override void ParseStreamInto(LineBufferedReader stream, Beatmap output)
         {
-            var convertor = new List<JsonConverter>
-            {
-                new CultureInfoConverter(),
-                new RomajiTagConverter(),
-                new RubyTagConverter(),
-                new TimeTagConverter(),
-                new ToneConverter(),
-            };
-
             var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
-            convertor.AddRange(globalSetting.Converters);
-            globalSetting.Converters = convertor.ToArray();
+            globalSetting.Converters.Add(new CultureInfoConverter());
+            globalSetting.Converters.Add(new RomajiTagConverter());
+            globalSetting.Converters.Add(new RubyTagConverter());
+            globalSetting.Converters.Add(new TimeTagConverter());
+            globalSetting.Converters.Add(new ToneConverter());
 
             // create id if object is by reference.
             globalSetting.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
