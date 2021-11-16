@@ -44,7 +44,7 @@ Parts of the lyrics editor in this ruleset were inspired by them.
 
 - [ニコカラメーカー](http://shinta0806be.ldblog.jp/tag/%E3%83%8B%E3%82%B3%E3%82%AB%E3%83%A9%E3%83%A1%E3%83%BC%E3%82%AB%E3%83%BC), a software to convert `.lrc` files into karaoke video with beautiful text effects.
 
-- [Jetbrain](https://www.jetbrains.com/?from=osu-karaoke), for contributing a free [rider](https://www.jetbrains.com/rider/) license used to clean-up the code.
+- [Jetbrain](https://www.jetbrains.com/?from=osu-karaoke), for contributing a free [rider](https://www.jetbrains.com/rider/) license used to developing.
 
 - [Appveyor](https://www.appveyor.com/), [CodeFactor](https://www.codefactor.io/) and [Github action](https://github.com/features/actions) for providing free `CI`/`CD` service.
 

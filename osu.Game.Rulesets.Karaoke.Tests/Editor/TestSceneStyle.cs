@@ -7,9 +7,8 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Style;
-using osu.Game.Rulesets.Karaoke.Skinning.Legacy;
+using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
@@ -19,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
     [TestFixture]
     public class TestSceneStyle : EditorClockTestScene
     {
-        private readonly KaraokeLegacySkinTransformer skin = TestResources.GetKaraokeLegacySkinTransformer("special-skin");
+        private readonly ISkin skin = new DefaultKaraokeSkin(null);
 
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]

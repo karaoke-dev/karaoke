@@ -1,264 +1,66 @@
 {
-  "fonts": [
+  "styles": [
     {
       "name": "標準配色",
-      "front_text_brush_info": {
-        "text_brush": {
-          "type": 1,
-          "solid_color": {
-            "b": 1.0,
-            "a": 1.0
-          },
-          "brush_gradients": [
+      "left_lyric_text_shaders": [
+        {
+          "$type":"StepShader",
+          "Name":"HelloShader",
+          "Draw":true,
+          "StepShaders":[
             {
-              "color": {
-                "r": 0.5019608,
-                "g": 0.5019608,
-                "b": 0.5019608,
-                "a": 1.0
-              }
+              "$type":"OutlineShader",
+              "Radius":10,
+              "OutlineColour":"#CCA532"
             },
             {
-              "x_position": 0.40697673,
-              "color": {
-                "b": 1.0,
-                "a": 1.0
-              }
-            },
-            {
-              "x_position": 1.0,
-              "color": {
-                "b": 1.0,
-                "a": 1.0
-              }
-            }
-          ]
-        },
-        "border_brush": {
-          "solid_color": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "brush_gradients": [
-            {
-              "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0,
-                "a": 1.0
-              }
-            },
-            {
-              "x_position": 0.5,
-              "color": {
-                "r": 0.5019608,
-                "g": 0.5019608,
-                "b": 0.5019608,
-                "a": 1.0
-              }
-            },
-            {
-              "x_position": 1.0,
-              "color": {
-                "r": 0.5019608,
-                "g": 0.5019608,
-                "b": 0.5019608,
-                "a": 1.0
-              }
-            }
-          ]
-        },
-        "shadow_brush": {
-          "solid_color": {
-            "r": 1.0,
-            "g": 0.60784316,
-            "b": 0.60784316,
-            "a": 1.0
-          },
-          "brush_gradients": [
-            {
-              "color": {
-                "r": 0.5019608,
-                "g": 0.5019608,
-                "b": 0.5019608,
-                "a": 1.0
-              }
-            },
-            {
-              "x_position": 0.5,
-              "color": {
-                "r": 1.0,
-                "g": 0.60784316,
-                "b": 0.60784316,
-                "a": 1.0
-              }
-            },
-            {
-              "x_position": 1.0,
-              "color": {
-                "r": 1.0,
-                "g": 0.60784316,
-                "b": 0.60784316,
-                "a": 1.0
-              }
+              "$type":"ShadowShader",
+              "ShadowOffset": {
+                "x":3.0,
+                "y":3.0
+              },
+              "ShadowColour": "#6B5B2D"
             }
           ]
         }
-      },
-      "back_text_brush_info": {
-        "text_brush": {
-          "solid_color": {
-            "r": 1.0,
-            "g": 1.0,
-            "b": 1.0,
-            "a": 1.0
-          },
-          "brush_gradients": [
+      ],
+      "right_lyric_text_shaders": [
+        {
+          "$type":"StepShader",
+          "Name":"HelloShader",
+          "Draw":true,
+          "StepShaders":[
             {
-              "color": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0,
-                "a": 1.0
-              }
+              "$type":"OutlineShader",
+              "Radius":10,
+              "OutlineColour":"#5932CC"
             },
             {
-              "x_position": 0.5,
-              "color": {
-                "r": 0.5019608,
-                "g": 0.5019608,
-                "b": 0.5019608,
-                "a": 1.0
-              }
-            },
-            {
-              "x_position": 1.0,
-              "color": {
-                "r": 0.5019608,
-                "g": 0.5019608,
-                "b": 0.5019608,
-                "a": 1.0
-              }
-            }
-          ]
-        },
-        "border_brush": {
-          "solid_color": {
-            "a": 1.0
-          },
-          "brush_gradients": [
-            {
-              "color": {
-                "r": 0.6627451,
-                "g": 0.6627451,
-                "b": 0.6627451,
-                "a": 1.0
-              }
-            },
-            {
-              "x_position": 0.5,
-              "color": {
-                "a": 1.0
-              }
-            },
-            {
-              "x_position": 1.0,
-              "color": {
-                "a": 1.0
-              }
-            }
-          ]
-        },
-        "shadow_brush": {
-          "solid_color": {
-            "r": 1.0,
-            "g": 0.60784316,
-            "b": 0.60784316,
-            "a": 1.0
-          },
-          "brush_gradients": [
-            {
-              "color": {
-                "r": 0.5019608,
-                "g": 0.5019608,
-                "b": 0.5019608,
-                "a": 1.0
-              }
-            },
-            {
-              "x_position": 0.5,
-              "color": {
-                "r": 1.0,
-                "g": 0.60784316,
-                "b": 0.60784316,
-                "a": 1.0
-              }
-            },
-            {
-              "x_position": 1.0,
-              "color": {
-                "r": 1.0,
-                "g": 0.60784316,
-                "b": 0.60784316,
-                "a": 1.0
-              }
+              "$type":"ShadowShader",
+              "ShadowOffset": {
+                "x":3.0,
+                "y":3.0
+              },
+              "ShadowColour": "#3D2D6B"
             }
           ]
         }
+      ],
+      "main_text_font": {
+        "family": "Torus",
+        "weight": "Bold",
+        "size":48.0,
       },
-      "lyric_text_font_info": {
-        "edge_size": 10,
-        "lyric_text_font_info": {
-          "family": "游明朝 Demibold",
-          "bold": true,
-          "size": 40,
-        },
-        "naka_text_font_info": {
-          "bold": true,
-          "size": 18,
-        },
-        "en_text_font_info": {
-          "bold": true,
-          "size": 18,
-        }
+      "ruby_text_font": {
+        "family": "Torus",
+        "weight": "Bold",
+        "size":20.0,
       },
-      "ruby_text_font_info": {
-        "edge_size": 10,
-        "lyric_text_font_info": {
-          "bold": true,
-          "size": 18,
-        },
-        "naka_text_font_info": {
-          "bold": true,
-          "size": 18,
-        },
-        "en_text_font_info": {
-          "bold": true,
-          "size": 18,
-        }
+      "romaji_text_font": {
+        "family": "Torus",
+        "weight": "Bold",
+        "size":20.0,
       },
-      "romaji_text_font_info": {
-        "edge_size": 10,
-        "lyric_text_font_info": {
-          "bold": true,
-          "size": 18,
-        },
-        "naka_text_font_info": {
-          "bold": true,
-          "size": 18,
-        },
-        "en_text_font_info": {
-          "bold": true,
-          "size": 18,
-        }
-      },
-      "use_shadow": true,
-      "shadow_offset": {
-        "x": 3.0,
-        "y": 3.0
-      }
     }
   ],
   "layouts": [

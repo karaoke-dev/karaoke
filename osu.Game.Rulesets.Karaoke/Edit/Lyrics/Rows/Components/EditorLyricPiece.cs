@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Fonts;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.Skinning.Tools;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
@@ -130,24 +130,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         [BackgroundDependencyLoader(true)]
         private void load(ISkinSource skin, ShaderManager shaderManager)
         {
-            // this is a temp way to apply font.
-            skin.GetConfig<KaraokeSkinLookup, LyricFont>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(karaokeFont =>
+            // this is a temp way to apply style.
+            skin.GetConfig<KaraokeSkinLookup, LyricStyle>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(lyricStyle =>
             {
-                var newFont = karaokeFont.NewValue;
-                if (newFont == null)
+                var newStyle = lyricStyle.NewValue;
+                if (newStyle == null)
                     return;
 
-                LeftLyricTextShaders = SkinConvertorTool.ConvertLeftSideShader(shaderManager, newFont);
-                RightLyricTextShaders = SkinConvertorTool.ConvertRightSideShader(shaderManager, newFont);
+                LeftLyricTextShaders = SkinConvertorTool.ConvertLeftSideShader(shaderManager, newStyle);
+                RightLyricTextShaders = SkinConvertorTool.ConvertRightSideShader(shaderManager, newStyle);
 
                 // Apply text font info
-                var lyricFont = newFont.LyricTextFontInfo.LyricTextFontInfo;
+                var lyricFont = newStyle.MainTextFont;
+                var rubyFont = newStyle.RubyTextFont;
+                var romajiFont = newStyle.RomajiTextFont;
+
                 Font = getFont(lyricFont.Size);
-
-                var rubyFont = newFont.RubyTextFontInfo.LyricTextFontInfo;
                 RubyFont = getFont(rubyFont.Size);
-
-                var romajiFont = newFont.RomajiTextFontInfo.LyricTextFontInfo;
                 RomajiFont = getFont(romajiFont.Size);
 
                 static FontUsage getFont(float? charSize = null)

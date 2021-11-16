@@ -6,7 +6,6 @@ using NUnit.Framework;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Track;
 using osu.Framework.IO.Stores;
-using osu.Game.Rulesets.Karaoke.Skinning.Legacy;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Resources
@@ -40,14 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Resources
         public static Stream OpenTrackResource(string name) => OpenResource($"Testing/Track/{name}.mp3");
 
         public static Track OpenTrackInfo(AudioManager audioManager, string name) => audioManager.GetTrackStore(GetStore()).Get($"Resources/Testing/Track/{name}.mp3");
-
-        public static KaraokeLegacySkinTransformer GetKaraokeLegacySkinTransformer(string skinName)
-        {
-            var store = new NamespacedResourceStore<byte[]>(GetStore(), $"Resources/{skinName}");
-            var rawSkin = new TestLegacySkin(new SkinInfo { Name = skinName }, store);
-            var skinSource = new SkinProvidingContainer(rawSkin);
-            return new KaraokeLegacySkinTransformer(skinSource, null);
-        }
 
         internal class TestLegacySkin : LegacySkin
         {
