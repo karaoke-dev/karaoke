@@ -5,21 +5,21 @@
       "left_lyric_text_shaders": [
         {
           "$type":"StepShader",
-          "Name":"HelloShader",
-          "Draw":true,
-          "StepShaders":[
+          "name":"HelloShader",
+          "draw":true,
+          "step_shaders":[
             {
               "$type":"OutlineShader",
-              "Radius":10,
-              "OutlineColour":"#CCA532"
+              "radius":10,
+              "outline_colour":"#CCA532"
             },
             {
               "$type":"ShadowShader",
-              "ShadowOffset": {
+              "shadow_offset": {
                 "x":3.0,
                 "y":3.0
               },
-              "ShadowColour": "#6B5B2D"
+              "shadow_colour": "#6B5B2D"
             }
           ]
         }
@@ -27,21 +27,21 @@
       "right_lyric_text_shaders": [
         {
           "$type":"StepShader",
-          "Name":"HelloShader",
-          "Draw":true,
-          "StepShaders":[
+          "name":"HelloShader",
+          "draw":true,
+          "step_shaders":[
             {
               "$type":"OutlineShader",
-              "Radius":10,
-              "OutlineColour":"#5932CC"
+              "radius":10,
+              "outline_colour":"#5932CC"
             },
             {
               "$type":"ShadowShader",
-              "ShadowOffset": {
+              "shadow_offset": {
                 "x":3.0,
                 "y":3.0
               },
-              "ShadowColour": "#3D2D6B"
+              "shadow_colour": "#3D2D6B"
             }
           ]
         }

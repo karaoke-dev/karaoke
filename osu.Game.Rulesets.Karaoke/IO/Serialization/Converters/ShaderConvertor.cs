@@ -40,8 +40,8 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             if (childShaders != null)
             {
                 // remove value in this field, but not remove the property.
-                jObject.Remove("StepShaders");
-                jObject.Add("StepShaders", new JArray());
+                jObject.Remove("step_shaders");
+                jObject.Add("step_shaders", new JArray());
             }
 
             // should create new reader because old reader cannot reset read position.
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             static IShader[] getShadersFromProperties(JProperty[] properties, JsonSerializer serializer)
             {
                 // deserialize step shaders if process step shaders.
-                var stepShaders = properties.FirstOrDefault(x => x.Name == "StepShaders");
+                var stepShaders = properties.FirstOrDefault(x => x.Name == "step_shaders");
 
                 if (stepShaders == null)
                     return null;
@@ -85,8 +85,8 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             if (childShader != null)
             {
-                jObject.Remove("StepShaders");
-                jObject.Add("StepShaders", childShader);
+                jObject.Remove("step_shaders");
+                jObject.Add("step_shaders", childShader);
             }
 
             jObject.WriteTo(writer);
@@ -110,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         private static string getNameByType(Type type)
             => type.Name;
 
-        private class WritablePropertiesOnlyResolver : DefaultContractResolver
+        private class WritablePropertiesOnlyResolver : SnakeCaseKeyContractResolver
         {
             // we only wants to save properties that only writable.
             protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
