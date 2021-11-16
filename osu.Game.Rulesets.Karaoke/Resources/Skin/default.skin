@@ -1,66 +1,64 @@
 {
   "styles": [
     {
-      "name": "標準配色",
       "left_lyric_text_shaders": [
         {
-          "$type":"StepShader",
-          "name":"HelloShader",
-          "draw":true,
-          "step_shaders":[
+          "$type": "StepShader",
+          "name": "HelloShader",
+          "draw": true,
+          "step_shaders": [
             {
-              "$type":"OutlineShader",
-              "radius":10,
-              "outline_colour":"#CCA532"
+              "$type": "OutlineShader",
+              "radius": 10,
+              "outline_colour": "#CCA532"
             },
             {
-              "$type":"ShadowShader",
+              "$type": "ShadowShader",
+              "shadow_colour": "#6B5B2D",
               "shadow_offset": {
-                "x":3.0,
-                "y":3.0
-              },
-              "shadow_colour": "#6B5B2D"
+                "x": 3.0,
+                "y": 3.0
+              }
             }
           ]
         }
       ],
       "right_lyric_text_shaders": [
         {
-          "$type":"StepShader",
-          "name":"HelloShader",
-          "draw":true,
-          "step_shaders":[
+          "$type": "StepShader",
+          "name": "HelloShader",
+          "draw": true,
+          "step_shaders": [
             {
-              "$type":"OutlineShader",
-              "radius":10,
-              "outline_colour":"#5932CC"
+              "$type": "OutlineShader",
+              "radius": 10,
+              "outline_colour": "#5932CC"
             },
             {
-              "$type":"ShadowShader",
+              "$type": "ShadowShader",
+              "shadow_colour": "#3D2D6B",
               "shadow_offset": {
-                "x":3.0,
-                "y":3.0
-              },
-              "shadow_colour": "#3D2D6B"
+                "x": 3.0,
+                "y": 3.0
+              }
             }
           ]
         }
       ],
+      "name": "標準配色",
       "main_text_font": {
         "family": "Torus",
         "weight": "Bold",
-        "size":48.0,
+        "size": 48.0
       },
       "ruby_text_font": {
         "family": "Torus",
-        "weight": "Bold",
-        "size":20.0,
+        "weight": "Bold"
       },
       "romaji_text_font": {
         "family": "Torus",
-        "weight": "Bold",
-        "size":20.0,
-      },
+        "weight": "Bold"
+      }
     }
   ],
   "layout_groups": [
@@ -237,25 +235,10 @@
   "note_skins": [
     {
       "name": "Note-1",
-      "note_color" : {
-        "r": 0.26666668,
-        "g": 0.6666667,
-        "b": 0.8666667,
-        "a": 1.0
-      },
-      "blink_color" : {
-        "r": 1.0,
-        "g": 0.4,
-        "b": 0.6666667,
-        "a": 1.0
-      },
-      "text_color" : {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0,
-        "a": 1.0
-      },
-      "bold_text" : "true"
+      "note_color": "#44AADD",
+      "blink_color": "#FF66AA",
+      "text_color": "#FFFFFF",
+      "bold_text": true
     }
   ],
   "singers": [
