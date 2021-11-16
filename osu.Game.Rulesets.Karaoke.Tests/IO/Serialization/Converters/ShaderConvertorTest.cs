@@ -29,13 +29,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 ShadowColour = new Color4(0.5f, 0.5f, 0.5f, 0.5f),
             };
             var result = JsonConvert.SerializeObject(shader, CreateSettings());
-            Assert.AreEqual(result, "{\"$type\":\"ShadowShader\",\"ShadowColour\":\"#7F7F7F7F\",\"ShadowOffset\":{\"x\":10.0,\"y\":10.0}}");
+            Assert.AreEqual(result, "{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}");
         }
 
         [Test]
         public void TestDeserialize()
         {
-            const string json = "{\"$type\":\"ShadowShader\",\"ShadowColour\":\"#7F7F7F7F\",\"ShadowOffset\":{\"x\":10.0,\"y\":10.0}}";
+            const string json = "{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}";
             var result = JsonConvert.DeserializeObject<IShader>(json, CreateSettings()) as ShadowShader;
             var actual = new ShadowShader
             {
@@ -63,13 +63,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 }
             };
             var result = JsonConvert.SerializeObject(shader, CreateSettings());
-            Assert.AreEqual(result, "{\"$type\":\"StepShader\",\"Name\":\"HelloShader\",\"Draw\":true,\"StepShaders\":[{\"$type\":\"ShadowShader\",\"ShadowColour\":\"#7F7F7F7F\",\"ShadowOffset\":{\"x\":10.0,\"y\":10.0}}]}");
+            Assert.AreEqual(result, "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}]}");
         }
 
         [Test]
         public void TestDeserializListItems()
         {
-            const string json = "{\"$type\":\"StepShader\",\"Name\":\"HelloShader\",\"Draw\":true,\"StepShaders\":[{\"$type\":\"ShadowShader\",\"ShadowColour\":\"#7F7F7F7F\",\"ShadowOffset\":{\"x\":10.0,\"y\":10.0}}]}";
+            const string json = "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}]}";
             var result = JsonConvert.DeserializeObject<IShader>(json, CreateSettings()) as StepShader;
             var actual = new StepShader
             {
