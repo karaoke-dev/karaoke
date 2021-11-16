@@ -3,6 +3,7 @@
 
 using System.Linq;
 using NUnit.Framework;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shaders;
 using osu.Framework.Graphics.Sprites;
@@ -44,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 // Test outline shader.
                 var outlineShader = stepShader.StepShaders.FirstOrDefault() as OutlineShader;
                 Assert.NotNull(outlineShader);
-                Assert.AreEqual(outlineShader.OutlineColour, new Color4(255, 255, 255, 255));
+                Assert.AreEqual(outlineShader.OutlineColour.ToHex(), "#CCA532");
                 Assert.AreEqual(outlineShader.Radius, 10);
 
                 // Test shader convert result.
