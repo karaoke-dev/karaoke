@@ -15,6 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             var settings = JsonSerializableExtensions.CreateGlobalSettings();
             settings.Converters.Add(new ShaderConvertor());
             settings.Converters.Add(new FontUsageConvertor());
+            settings.Converters.Add(new ColourConvertor());
 
             return JsonConvert.SerializeObject(output, settings);
         }
