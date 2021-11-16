@@ -11,14 +11,15 @@
             {
               "$type":"OutlineShader",
               "Radius":10,
-              "OutlineColour":"#FFFFFF"
+              "OutlineColour":"#CCA532"
             },
             {
               "$type":"ShadowShader",
               "ShadowOffset": {
                 "x":3.0,
                 "y":3.0
-              }
+              },
+              "ShadowColour": "#6B5B2D"
             }
           ]
         }
@@ -32,14 +33,15 @@
             {
               "$type":"OutlineShader",
               "Radius":10,
-              "OutlineColour":"#FFFFFF"
+              "OutlineColour":"#5932CC"
             },
             {
               "$type":"ShadowShader",
               "ShadowOffset": {
                 "x":3.0,
                 "y":3.0
-              }
+              },
+              "ShadowColour": "#3D2D6B"
             }
           ]
         }
