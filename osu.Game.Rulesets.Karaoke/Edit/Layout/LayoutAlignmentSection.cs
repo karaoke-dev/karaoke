@@ -4,20 +4,18 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Layout
 {
-    internal class PositionSection : LayoutSection
+    internal class LayoutAlignmentSection : LayoutSection
     {
         private LabelledEnumDropdown<Anchor> alignmentDropdown;
         private LabelledRealTimeSliderBar<int> horizontalMarginSliderBar;
         private LabelledRealTimeSliderBar<int> verticalMarginSliderBar;
-        private LabelledEnumDropdown<KaraokeTextSmartHorizon> smartHorizonDropdown;
 
-        protected override string Title => "Position";
+        protected override string Title => "Layout";
 
         [BackgroundDependencyLoader]
         private void load(LayoutManager manager)
@@ -53,11 +51,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                         Default = 30
                     }
                 },
-                smartHorizonDropdown = new LabelledEnumDropdown<KaraokeTextSmartHorizon>
-                {
-                    Label = "Smart horizon",
-                    Description = "Smart horizon section",
-                }
             };
 
             manager.LoadedLayout.BindValueChanged(e =>
@@ -66,7 +59,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 applyCurrent(alignmentDropdown.Current, layout.Alignment);
                 applyCurrent(horizontalMarginSliderBar.Current, layout.HorizontalMargin);
                 applyCurrent(verticalMarginSliderBar.Current, layout.VerticalMargin);
-                applyCurrent(smartHorizonDropdown.Current, layout.SmartHorizon);
 
                 static void applyCurrent<T>(Bindable<T> bindable, T value)
                     => bindable.Value = bindable.Default = value;
@@ -75,7 +67,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
             alignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.Alignment = x.NewValue));
             horizontalMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.HorizontalMargin = x.NewValue));
             verticalMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.VerticalMargin = x.NewValue));
-            smartHorizonDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.SmartHorizon = x.NewValue));
         }
     }
 }

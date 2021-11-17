@@ -139,11 +139,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
                 LeftLyricTextShaders = SkinConvertorTool.ConvertLeftSideShader(shaderManager, newStyle);
                 RightLyricTextShaders = SkinConvertorTool.ConvertRightSideShader(shaderManager, newStyle);
+            }, true);
+
+            skin.GetConfig<KaraokeSkinLookup, LyricConfig>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricConfig, HitObject.Singers))?.BindValueChanged(lyricConfig =>
+            {
+                var newConfig = lyricConfig.NewValue;
+                if (newConfig == null)
+                    return;
 
                 // Apply text font info
-                var lyricFont = newStyle.MainTextFont;
-                var rubyFont = newStyle.RubyTextFont;
-                var romajiFont = newStyle.RomajiTextFont;
+                var lyricFont = newConfig.MainTextFont;
+                var rubyFont = newConfig.RubyTextFont;
+                var romajiFont = newConfig.RomajiTextFont;
 
                 Font = getFont(lyricFont.Size);
                 RubyFont = getFont(rubyFont.Size);

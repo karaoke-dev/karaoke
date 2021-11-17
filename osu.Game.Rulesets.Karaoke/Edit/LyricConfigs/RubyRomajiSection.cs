@@ -8,9 +8,9 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Layout
+namespace osu.Game.Rulesets.Karaoke.Edit.LyricConfigs
 {
-    internal class RubyRomajiSection : LayoutSection
+    internal class RubyRomajiSection : LyricConfigSection
     {
         private LabelledEnumDropdown<LyricTextAlignment> rubyAlignmentDropdown;
         private LabelledEnumDropdown<LyricTextAlignment> romajiAlignmentDropdown;
@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         protected override string Title => "Ruby/Romaji";
 
         [BackgroundDependencyLoader]
-        private void load(LayoutManager manager)
+        private void load(LyricConfigManager manager)
         {
             Children = new Drawable[]
             {
@@ -60,22 +60,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 }
             };
 
-            manager.LoadedLayout.BindValueChanged(e =>
+            manager.LoadedLyricConfig.BindValueChanged(e =>
             {
-                var layout = e.NewValue;
-                applyCurrent(rubyAlignmentDropdown.Current, layout.RubyAlignment);
-                applyCurrent(romajiAlignmentDropdown.Current, layout.RomajiAlignment);
-                applyCurrent(rubyMarginSliderBar.Current, layout.RubyMargin);
-                applyCurrent(romajiMarginSliderBar.Current, layout.RomajiMargin);
+                var lyricConfig = e.NewValue;
+                applyCurrent(rubyAlignmentDropdown.Current, lyricConfig.RubyAlignment);
+                applyCurrent(romajiAlignmentDropdown.Current, lyricConfig.RomajiAlignment);
+                applyCurrent(rubyMarginSliderBar.Current, lyricConfig.RubyMargin);
+                applyCurrent(romajiMarginSliderBar.Current, lyricConfig.RomajiMargin);
 
                 static void applyCurrent<T>(Bindable<T> bindable, T value)
                     => bindable.Value = bindable.Default = value;
             }, true);
 
-            rubyAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.RubyAlignment = x.NewValue));
-            romajiAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.RomajiAlignment = x.NewValue));
-            rubyMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.RubyMargin = x.NewValue));
-            romajiMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.RomajiMargin = x.NewValue));
+            rubyAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RubyAlignment = x.NewValue));
+            romajiAlignmentDropdown.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RomajiAlignment = x.NewValue));
+            rubyMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RubyMargin = x.NewValue));
+            romajiMarginSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RomajiMargin = x.NewValue));
         }
     }
 }

@@ -65,9 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                                     Size = new Vector2(1 / section_scale),
                                     Children = new LayoutSection[]
                                     {
-                                        new PositionSection(),
-                                        new IntervalSection(),
-                                        new RubyRomajiSection(),
+                                        new LayoutAlignmentSection(),
                                         new PreviewSection(),
                                     }
                                 }

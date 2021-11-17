@@ -1,4 +1,23 @@
 {
+  "default_lyric_config": {
+    "smart_horizon": 2,
+    "lyrics_interval": 4,
+    "ruby_interval": 2,
+    "ruby_margin": 4,
+    "main_text_font": {
+      "family": "Torus",
+      "weight": "Bold",
+      "size": 48.0
+    },
+    "ruby_text_font": {
+      "family": "Torus",
+      "weight": "Bold"
+    },
+    "romaji_text_font": {
+      "family": "Torus",
+      "weight": "Bold"
+    }
+  },
   "styles": [
     {
       "left_lyric_text_shaders": [
@@ -46,19 +65,6 @@
         }
       ],
       "name": "標準配色",
-      "main_text_font": {
-        "family": "Torus",
-        "weight": "Bold",
-        "size": 48.0
-      },
-      "ruby_text_font": {
-        "family": "Torus",
-        "weight": "Bold"
-      },
-      "romaji_text_font": {
-        "family": "Torus",
-        "weight": "Bold"
-      }
     }
   ],
   "layouts": [
@@ -67,10 +73,6 @@
       "alignment": 36,
       "horizontal_margin": 30,
       "vertical_margin": 45,
-      "smart_horizon": 2,
-      "lyrics_interval": 4,
-      "ruby_interval": 2,
-      "ruby_margin": 4
     }
   ],
   "note_skins": [

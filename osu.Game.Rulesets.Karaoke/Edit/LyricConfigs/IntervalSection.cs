@@ -5,9 +5,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Layout
+namespace osu.Game.Rulesets.Karaoke.Edit.LyricConfigs
 {
-    internal class IntervalSection : LayoutSection
+    internal class IntervalSection : LyricConfigSection
     {
         private LabelledRealTimeSliderBar<int> lyricIntervalSliderBar;
         private LabelledRealTimeSliderBar<int> rubyIntervalSliderBar;
@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         protected override string Title => "Interval";
 
         [BackgroundDependencyLoader]
-        private void load(LayoutManager manager)
+        private void load(LyricConfigManager manager)
         {
             Children = new[]
             {
@@ -58,20 +58,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
                 }
             };
 
-            manager.LoadedLayout.BindValueChanged(e =>
+            manager.LoadedLyricConfig.BindValueChanged(e =>
             {
-                var layout = e.NewValue;
-                applyCurrent(lyricIntervalSliderBar.Current, layout.LyricsInterval);
-                applyCurrent(rubyIntervalSliderBar.Current, layout.RubyInterval);
-                applyCurrent(romajiIntervalSliderBar.Current, layout.RomajiInterval);
+                var lyricConfig = e.NewValue;
+                applyCurrent(lyricIntervalSliderBar.Current, lyricConfig.LyricsInterval);
+                applyCurrent(rubyIntervalSliderBar.Current, lyricConfig.RubyInterval);
+                applyCurrent(romajiIntervalSliderBar.Current, lyricConfig.RomajiInterval);
 
                 static void applyCurrent<T>(Bindable<T> bindable, T value)
                     => bindable.Value = bindable.Default = value;
             }, true);
 
-            lyricIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.LyricsInterval = x.NewValue));
-            rubyIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.RubyInterval = x.NewValue));
-            romajiIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLayoutChange(l => l.RomajiInterval = x.NewValue));
+            lyricIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.LyricsInterval = x.NewValue));
+            rubyIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RubyInterval = x.NewValue));
+            romajiIntervalSliderBar.Current.BindValueChanged(x => manager.ApplyCurrentLyricConfigChange(l => l.RomajiInterval = x.NewValue));
         }
     }
 }

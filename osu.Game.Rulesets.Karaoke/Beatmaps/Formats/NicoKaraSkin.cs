@@ -10,6 +10,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
     public class NicoKaraSkin
     {
+        public LyricConfig DefaultLyricConfig { get; set; }
+
         public List<LayoutGroup> LayoutGroups { get; set; }
 
         public List<LyricStyle> Styles { get; set; }
