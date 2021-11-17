@@ -8,8 +8,6 @@ using osu.Framework.Bindables;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
