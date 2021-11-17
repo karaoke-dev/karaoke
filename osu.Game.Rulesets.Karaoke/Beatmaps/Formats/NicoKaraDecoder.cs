@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using NicoKaraParser;
 using NicoKaraParser.Model;
 using NicoKaraParser.Model.Font.Font;
@@ -43,9 +44,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
             foreach (var karaokeLayout in nicoKaraProject.KaraokeLayouts)
             {
-                Enum.TryParse(karaokeLayout.SmartHorizon.ToString(), out KaraokeTextSmartHorizon smartHorizon);
-                Enum.TryParse(karaokeLayout.RubyAlignment.ToString(), out LyricTextAlignment rubyAlignment);
-
                 output.Layouts.Add(new LyricLayout
                 {
                     Name = karaokeLayout.Name,
@@ -53,11 +51,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     HorizontalMargin = karaokeLayout.HorizontalMargin,
                     VerticalMargin = karaokeLayout.VerticalMargin,
                     Continuous = karaokeLayout.Continuous,
-                    SmartHorizon = smartHorizon,
-                    LyricsInterval = karaokeLayout.LyricsInterval,
-                    RubyInterval = karaokeLayout.RubyInterval,
-                    RubyAlignment = rubyAlignment,
-                    RubyMargin = karaokeLayout.RubyMargin
                 });
             }
 
@@ -71,107 +64,126 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     Name = nicoKaraFont.Name,
                     LeftLyricTextShaders = createShaders(nicoKaraFont, ApplyShaderPart.Left),
                     RightLyricTextShaders = createShaders(nicoKaraFont, ApplyShaderPart.Right),
-                    MainTextFont = convertFontInfo(nicoKaraFont.FontInfos[0]),
-                    RubyTextFont = convertFontInfo(nicoKaraFont.FontInfos[3]),
-                    RomajiTextFont = convertFontInfo(nicoKaraFont.FontInfos[3]),
                 });
             }
 
-            static Anchor convertAnchor(HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment)
-            {
-                Enum.TryParse((1 << ((int)horizontalAlignment + 3)).ToString(), out Anchor horizontalAnchor);
-                Enum.TryParse((1 << (int)verticalAlignment).ToString(), out Anchor verticalAnchor);
+            // assign default lyric config
+            var firstLayout = nicoKaraProject.KaraokeLayouts?.FirstOrDefault();
+            var firstFont = nicoKaraProject.KaraokeFonts?.FirstOrDefault();
 
-                return horizontalAnchor | verticalAnchor;
+            if (firstLayout == null || firstFont == null)
+                return;
+
+            Enum.TryParse(firstLayout.SmartHorizon.ToString(), out KaraokeTextSmartHorizon smartHorizon);
+            Enum.TryParse(firstLayout.RubyAlignment.ToString(), out LyricTextAlignment rubyAlignment);
+
+            output.DefaultLyricConfig = new LyricConfig
+            {
+                SmartHorizon = smartHorizon,
+                LyricsInterval = firstLayout.LyricsInterval,
+                RubyInterval = firstLayout.RubyInterval,
+                RubyAlignment = rubyAlignment,
+                RubyMargin = firstLayout.RubyMargin,
+                MainTextFont = convertFontInfo(firstFont.FontInfos[0]),
+                RubyTextFont = convertFontInfo(firstFont.FontInfos[3]),
+                RomajiTextFont = convertFontInfo(firstFont.FontInfos[3]),
+            };
+        }
+
+        private static Anchor convertAnchor(HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment)
+        {
+            Enum.TryParse((1 << ((int)horizontalAlignment + 3)).ToString(), out Anchor horizontalAnchor);
+            Enum.TryParse((1 << (int)verticalAlignment).ToString(), out Anchor verticalAnchor);
+
+            return horizontalAnchor | verticalAnchor;
+        }
+
+        private static List<IShader> createShaders(NicoKaraParser.Model.Font.KaraokeFont font, ApplyShaderPart part)
+        {
+            var fontInfo = font.FontInfos[0];
+            var brushInfos = getBrusnInfos(font, part);
+            var fontBrushInfo = brushInfos[0];
+            var borderBrushInfo = brushInfos[1];
+            var shaderBrushInfo = brushInfos[2];
+
+            var shaders = new List<IShader>();
+
+            // todo: implement change font color.
+            shaders.Add(createOutlineShader(borderBrushInfo, fontInfo));
+
+            var hasShadow = font.UseShadow;
+
+            if (hasShadow)
+            {
+                shaders.Add(createShadowShader(shaderBrushInfo, font.ShadowSlide));
             }
 
-            static List<IShader> createShaders(NicoKaraParser.Model.Font.KaraokeFont font, ApplyShaderPart part)
+            return shaders;
+        }
+
+        private static NicoKaraParser.Model.Font.Brush.BrushInfo[] getBrusnInfos(NicoKaraParser.Model.Font.KaraokeFont font, ApplyShaderPart part) =>
+            part switch
             {
-                var fontInfo = font.FontInfos[0];
-                var brushInfos = getBrusnInfos(font, part);
-                var fontBrushInfo = brushInfos[0];
-                var borderBrushInfo = brushInfos[1];
-                var shaderBrushInfo = brushInfos[2];
+                ApplyShaderPart.Left => font.BrushInfos.GetRange(0, 3).ToArray(),
+                ApplyShaderPart.Right => font.BrushInfos.GetRange(3, 3).ToArray(),
+                _ => throw new ArgumentOutOfRangeException(nameof(part))
+            };
 
-                var shaders = new List<IShader>();
+        private static OutlineShader createOutlineShader(NicoKaraParser.Model.Font.Brush.BrushInfo info, FontInfo fontInfo)
+        {
+            var color = convertColor(info);
+            var radius = convertEdgeSize(fontInfo);
 
-                // todo: implement change font color.
-                shaders.Add(createOutlineShader(borderBrushInfo, fontInfo));
-
-                var hasShadow = font.UseShadow;
-
-                if (hasShadow)
-                {
-                    shaders.Add(createShadowShader(shaderBrushInfo, font.ShadowSlide));
-                }
-
-                return shaders;
-            }
-
-            static NicoKaraParser.Model.Font.Brush.BrushInfo[] getBrusnInfos(NicoKaraParser.Model.Font.KaraokeFont font, ApplyShaderPart part) =>
-                part switch
-                {
-                    ApplyShaderPart.Left => font.BrushInfos.GetRange(0, 3).ToArray(),
-                    ApplyShaderPart.Right => font.BrushInfos.GetRange(3, 3).ToArray(),
-                    _ => throw new ArgumentOutOfRangeException(nameof(part))
-                };
-
-            static OutlineShader createOutlineShader(NicoKaraParser.Model.Font.Brush.BrushInfo info, FontInfo fontInfo)
+            return new OutlineShader
             {
-                var color = convertColor(info);
-                var radius = convertEdgeSize(fontInfo);
+                OutlineColour = color,
+                Radius = (int)radius,
+            };
 
-                return new OutlineShader
-                {
-                    OutlineColour = color,
-                    Radius = (int)radius,
-                };
+            static float convertEdgeSize(FontInfo info) => info.EdgeSize;
+        }
 
-                static float convertEdgeSize(FontInfo info) => info.EdgeSize;
-            }
+        private static ShadowShader createShadowShader(NicoKaraParser.Model.Font.Brush.BrushInfo info, ShadowSlide slide)
+        {
+            var color = convertColor(info);
+            var shadowOffset = convertShadowSlide(slide);
 
-            static ShadowShader createShadowShader(NicoKaraParser.Model.Font.Brush.BrushInfo info, ShadowSlide slide)
+            return new ShadowShader
             {
-                var color = convertColor(info);
-                var shadowOffset = convertShadowSlide(slide);
+                ShadowColour = color,
+                ShadowOffset = shadowOffset,
+            };
 
-                return new ShadowShader
-                {
-                    ShadowColour = color,
-                    ShadowOffset = shadowOffset,
-                };
+            static Vector2 convertShadowSlide(ShadowSlide side) => new(side.X, side.Y);
+        }
 
-                static Vector2 convertShadowSlide(ShadowSlide side) => new(side.X, side.Y);
-            }
+        private static Color4 convertColor(NicoKaraParser.Model.Font.Brush.BrushInfo info)
+        {
+            // todo: we only support pure colour conversion.
+            return convertSolidColor(info.SolidColor);
+            /*
+            Enum.TryParse(info.Type.ToString(), out BrushType type);
 
-            static Color4 convertColor(NicoKaraParser.Model.Font.Brush.BrushInfo info)
+            // Convert BrushGradient
+            var brushGradient = info.GradientPositions.Select((t, i) => new BrushInfo.BrushGradient { XPosition = t, Color = convertColor(info.GradientColors[i]) }).ToList();
+
+            return new BrushInfo
             {
-                // todo: we only support pure colour conversion.
-                return convertColor(info.SolidColor);
-                /*
-                Enum.TryParse(info.Type.ToString(), out BrushType type);
+                Type = type,
+                SolidColor = convertColor(info.SolidColor),
+                BrushGradients = brushGradient
+            };
+            */
 
-                // Convert BrushGradient
-                var brushGradient = info.GradientPositions.Select((t, i) => new BrushInfo.BrushGradient { XPosition = t, Color = convertColor(info.GradientColors[i]) }).ToList();
+            static Color4 convertSolidColor(Color color) => new(color.R, color.G, color.B, color.A);
+        }
 
-                return new BrushInfo
-                {
-                    Type = type,
-                    SolidColor = convertColor(info.SolidColor),
-                    BrushGradients = brushGradient
-                };
-                */
-
-                static Color4 convertColor(Color color) => new(color.R, color.G, color.B, color.A);
-            }
-
-            static FontUsage convertFontInfo(FontInfo info)
-            {
-                var family = info.FontName;
-                var size = Math.Max(info.CharSize, 8);
-                var weight = info.FontStyle == FontStyle.Regular ? "Regular" : "Bold";
-                return new FontUsage(family, size, weight);
-            }
+        private static FontUsage convertFontInfo(FontInfo info)
+        {
+            var family = info.FontName;
+            var size = Math.Max(info.CharSize, 8);
+            var weight = info.FontStyle == FontStyle.Regular ? "Regular" : "Bold";
+            return new FontUsage(family, size, weight);
         }
 
         private enum ApplyShaderPart
