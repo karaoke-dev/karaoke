@@ -26,8 +26,16 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         public KaraokeSkinLookup(KaraokeSkinConfiguration config, int[] singers)
             : this(config, SingerUtils.GetShiftingStyleIndex(singers))
         {
-            if (config != KaraokeSkinConfiguration.LyricStyle && config != KaraokeSkinConfiguration.NoteStyle)
-                throw new InvalidEnumArgumentException($"Only {KaraokeSkinConfiguration.LyricStyle} and {KaraokeSkinConfiguration.NoteStyle} can call this ctor.");
+            switch (config)
+            {
+                case KaraokeSkinConfiguration.LyricStyle:
+                case KaraokeSkinConfiguration.LyricConfig:
+                case KaraokeSkinConfiguration.NoteStyle:
+                    return;
+
+                default:
+                    throw new InvalidEnumArgumentException($"Cannot call lookup with {config}");
+            }
         }
 
         public KaraokeSkinLookup(KaraokeSkinConfiguration config, int lookup)

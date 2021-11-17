@@ -9,6 +9,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         LyricLayout,
 
+        LyricConfig,
+
         NoteStyle,
     }
 }
