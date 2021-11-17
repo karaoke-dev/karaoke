@@ -50,6 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     BindableLayouts.Add(i, new Bindable<LyricLayout>(karaokeSkin.Layouts[i]));
                 for (int i = 0; i < karaokeSkin.NoteSkins.Count; i++)
                     BindableNotes.Add(i, new Bindable<NoteSkin>(karaokeSkin.NoteSkins[i]));
+                BindableDefaultLyricConfig.Value = karaokeSkin.DefaultLyricConfig;
 
                 // Create lookups
                 BindableFontsLookup.Value = karaokeSkin.Styles.ToDictionary(k => karaokeSkin.Styles.IndexOf(k), y => y.Name);
