@@ -61,13 +61,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(firstDecodedLayout.HorizontalMargin, 30);
                 Assert.AreEqual(firstDecodedLayout.VerticalMargin, 45);
                 Assert.AreEqual(firstDecodedLayout.Continuous, false);
-                Assert.AreEqual(firstDecodedLayout.SmartHorizon, KaraokeTextSmartHorizon.Multi);
-                Assert.AreEqual(firstDecodedLayout.LyricsInterval, 4);
-                Assert.AreEqual(firstDecodedLayout.RubyInterval, 2);
-                Assert.AreEqual(firstDecodedLayout.RubyAlignment, LyricTextAlignment.Auto);
-                Assert.AreEqual(firstDecodedLayout.RomajiAlignment, LyricTextAlignment.Auto);
-                Assert.AreEqual(firstDecodedLayout.RubyMargin, 4);
-                Assert.AreEqual(firstDecodedLayout.RomajiMargin, 0);
+
+                // Test default lyric config test.
+                var defaultLyricConfig = skin.DefaultLyricConfig;
+                Assert.NotNull(defaultLyricConfig);
+                Assert.AreEqual(defaultLyricConfig.SmartHorizon, KaraokeTextSmartHorizon.Multi);
+                Assert.AreEqual(defaultLyricConfig.LyricsInterval, 4);
+                Assert.AreEqual(defaultLyricConfig.RubyInterval, 2);
+                Assert.AreEqual(defaultLyricConfig.RubyAlignment, LyricTextAlignment.Auto);
+                Assert.AreEqual(defaultLyricConfig.RomajiAlignment, LyricTextAlignment.Auto);
+                Assert.AreEqual(defaultLyricConfig.RubyMargin, 4);
+                Assert.AreEqual(defaultLyricConfig.RomajiMargin, 0);
 
                 // Checking note decode result
                 var firstDecodedNoteSkin = skin.NoteSkins.FirstOrDefault();

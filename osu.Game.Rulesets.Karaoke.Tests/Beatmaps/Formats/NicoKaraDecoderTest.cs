@@ -41,11 +41,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(firstLayout.HorizontalMargin, 30);
                 Assert.AreEqual(firstLayout.VerticalMargin, 45);
                 Assert.AreEqual(firstLayout.Continuous, false);
-                Assert.AreEqual(firstLayout.SmartHorizon, KaraokeTextSmartHorizon.Multi);
-                Assert.AreEqual(firstLayout.LyricsInterval, 4);
-                Assert.AreEqual(firstLayout.RubyInterval, 2);
-                Assert.AreEqual(firstLayout.RubyAlignment, LyricTextAlignment.Auto);
-                Assert.AreEqual(firstLayout.RubyMargin, 4);
 
                 // Testing style
                 var firstFont = skin.Styles.FirstOrDefault();
@@ -67,8 +62,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.NotNull(shadowShader);
                 Assert.AreEqual(shadowShader.ShadowOffset, new Vector2(3));
 
+                // test lyric config
+                var defaultLyricConfig = skin.DefaultLyricConfig;
+                Assert.NotNull(defaultLyricConfig);
+                Assert.AreEqual(defaultLyricConfig.SmartHorizon, KaraokeTextSmartHorizon.Multi);
+                Assert.AreEqual(defaultLyricConfig.LyricsInterval, 4);
+                Assert.AreEqual(defaultLyricConfig.RubyInterval, 2);
+                Assert.AreEqual(defaultLyricConfig.RubyAlignment, LyricTextAlignment.Auto);
+                Assert.AreEqual(defaultLyricConfig.RubyMargin, 4);
+
                 // Test main text font
-                var mainTextFontInfo = firstFont.MainTextFont;
+                var mainTextFontInfo = defaultLyricConfig.MainTextFont;
                 Assert.AreEqual(mainTextFontInfo.Family, "游明朝 Demibold");
                 Assert.AreEqual(mainTextFontInfo.Weight, "Bold");
                 Assert.AreEqual(mainTextFontInfo.Size, 40);
