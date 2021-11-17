@@ -3,8 +3,6 @@
 
 using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Layouts;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas.Notes;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
