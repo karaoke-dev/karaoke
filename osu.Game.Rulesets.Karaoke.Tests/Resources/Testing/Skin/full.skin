@@ -1,5 +1,6 @@
 {
   "default_lyric_config": {
+    "name": "default",
     "smart_horizon": 2,
     "lyrics_interval": 4,
     "ruby_interval": 2,
