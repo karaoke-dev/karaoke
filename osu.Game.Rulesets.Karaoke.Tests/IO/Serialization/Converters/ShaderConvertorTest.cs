@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         }
 
         [Test]
-        public void TestDeserializListItems()
+        public void TestDeserializeListItems()
         {
             const string json = "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}]}";
             var result = JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings()) as StepShader;
