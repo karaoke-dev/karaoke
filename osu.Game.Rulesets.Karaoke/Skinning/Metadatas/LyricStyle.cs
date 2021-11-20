@@ -13,11 +13,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
         /// <summary>
         ///  todo: should use <see cref="ICustomizedShader"/> instead because we should save <see cref="StepShader"/> also.
         /// </summary>
-        public List<IShader> LeftLyricTextShaders = new();
+        public List<ICustomizedShader> LeftLyricTextShaders = new();
 
         /// <summary>
         ///  todo: should use <see cref="ICustomizedShader"/> instead because we should save <see cref="StepShader"/> also.
         /// </summary>
-        public List<IShader> RightLyricTextShaders = new();
+        public List<ICustomizedShader> RightLyricTextShaders = new();
     }
 }

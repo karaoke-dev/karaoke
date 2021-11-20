@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             return horizontalAnchor | verticalAnchor;
         }
 
-        private static List<IShader> createShaders(NicoKaraParser.Model.Font.KaraokeFont font, ApplyShaderPart part)
+        private static List<ICustomizedShader> createShaders(NicoKaraParser.Model.Font.KaraokeFont font, ApplyShaderPart part)
         {
             var fontInfo = font.FontInfos[0];
             var brushInfos = getBrusnInfos(font, part);
@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             var borderBrushInfo = brushInfos[1];
             var shaderBrushInfo = brushInfos[2];
 
-            var shaders = new List<IShader>();
+            var shaders = new List<ICustomizedShader>();
 
             // todo: implement change font color.
             shaders.Add(createOutlineShader(borderBrushInfo, fontInfo));
