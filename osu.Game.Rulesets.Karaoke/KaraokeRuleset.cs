@@ -184,7 +184,7 @@ namespace osu.Game.Rulesets.Karaoke
             }
         }
 
-        public override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new KaraokeDifficultyCalculator(this, beatmap);
+        public override DifficultyCalculator CreateDifficultyCalculator(IWorkingBeatmap beatmap) => new KaraokeDifficultyCalculator(RulesetInfo, beatmap);
 
         public override HitObjectComposer CreateHitObjectComposer() => new KaraokeHitObjectComposer(this);
 
