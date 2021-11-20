@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using osu.Framework;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics.Shaders;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 
@@ -51,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
                 switch (shader)
                 {
                     case InternalShader internalShader:
-                        internalShader.AttachOriginShader(shaderManager.Load(VertexShaderDescriptor.TEXTURE_2, internalShader.ShaderName));
+                        shaderManager.AttachShader(internalShader);
                         break;
 
                     case StepShader stepShader:

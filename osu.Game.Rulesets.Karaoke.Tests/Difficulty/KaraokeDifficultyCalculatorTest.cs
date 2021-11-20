@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Difficulty
         public void Test(double expected, string name)
             => base.Test(expected, name);
 
-        protected override DifficultyCalculator CreateDifficultyCalculator(WorkingBeatmap beatmap) => new KaraokeDifficultyCalculator(new KaraokeRuleset(), beatmap);
+        protected override DifficultyCalculator CreateDifficultyCalculator(IWorkingBeatmap beatmap) => new KaraokeDifficultyCalculator(new KaraokeRuleset().RulesetInfo, beatmap);
 
         protected override Ruleset CreateRuleset() => new KaraokeRuleset();
     }

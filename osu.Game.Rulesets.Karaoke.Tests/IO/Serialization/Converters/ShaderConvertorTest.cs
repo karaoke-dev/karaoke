@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         public void TestDeserialize()
         {
             const string json = "{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}";
-            var result = JsonConvert.DeserializeObject<IShader>(json, CreateSettings()) as ShadowShader;
+            var result = JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings()) as ShadowShader;
             var actual = new ShadowShader
             {
                 ShadowOffset = new Vector2(10),
@@ -67,10 +67,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         }
 
         [Test]
-        public void TestDeserializListItems()
+        public void TestDeserializeListItems()
         {
             const string json = "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}]}";
-            var result = JsonConvert.DeserializeObject<IShader>(json, CreateSettings()) as StepShader;
+            var result = JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings()) as StepShader;
             var actual = new StepShader
             {
                 Name = "HelloShader",
