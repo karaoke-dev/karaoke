@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
     // it's the temp logic to collect logic.
     public static class SkinConvertorTool
     {
-        public static IShader[] ConvertLeftSideShader(ShaderManager shaderManager, LyricStyle lyricStyle)
+        public static ICustomizedShader[] ConvertLeftSideShader(ShaderManager shaderManager, LyricStyle lyricStyle)
         {
             if (shaderManager == null)
                 return null;
@@ -23,13 +23,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
             if (RuntimeInfo.OS != RuntimeInfo.Platform.Windows)
                 return null;
 
-            var shaders = lyricStyle.LeftLyricTextShaders?.ToArray() ?? new IShader[] { };
+            var shaders = lyricStyle.LeftLyricTextShaders?.ToArray() ?? Array.Empty<ICustomizedShader>();
             attachShaders(shaderManager, shaders);
 
             return shaders;
         }
 
-        public static IShader[] ConvertRightSideShader(ShaderManager shaderManager, LyricStyle lyricStyle)
+        public static ICustomizedShader[] ConvertRightSideShader(ShaderManager shaderManager, LyricStyle lyricStyle)
         {
             if (shaderManager == null)
                 return null;
@@ -39,13 +39,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
             if (RuntimeInfo.OS != RuntimeInfo.Platform.Windows)
                 return null;
 
-            var shaders = lyricStyle.RightLyricTextShaders?.ToArray() ?? new IShader[] { };
+            var shaders = lyricStyle.RightLyricTextShaders?.ToArray() ?? Array.Empty<ICustomizedShader>();
             attachShaders(shaderManager, shaders);
 
             return shaders;
         }
 
-        private static void attachShaders(ShaderManager shaderManager, IShader[] shaders)
+        private static void attachShaders(ShaderManager shaderManager, ICustomizedShader[] shaders)
         {
             foreach (var shader in shaders)
             {
