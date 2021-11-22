@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
         protected override DifficultyAttributes CreateDifficultyAttributes(IBeatmap beatmap, Mod[] mods, Skill[] skills, double clockRate)
         {
             if (beatmap.HitObjects.Count == 0)
-                return new KaraokeDifficultyAttributes { Mods = mods, Skills = skills };
+                return new KaraokeDifficultyAttributes { Mods = mods };
 
             HitWindows hitWindows = new KaraokeHitWindows();
             hitWindows.SetDifficulty(beatmap.BeatmapInfo.BaseDifficulty.OverallDifficulty);
@@ -49,7 +49,6 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
                 // Todo: This int cast is temporary to achieve 1:1 results with osu!stable, and should be removed in the future
                 GreatHitWindow = (int)Math.Ceiling(getHitWindow300(mods) / clockRate),
                 MaxCombo = beatmap.HitObjects.Sum(h => h is Note ? 2 : 1),
-                Skills = skills
             };
         }
 
