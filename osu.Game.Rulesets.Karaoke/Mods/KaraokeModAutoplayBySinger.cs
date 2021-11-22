@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
+using osu.Game.Extensions;
 using osu.Game.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
@@ -54,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
             return beatmapSetInfo.Files
                                  .FirstOrDefault(f => string.Equals(f.Filename, audioFile, StringComparison.OrdinalIgnoreCase))
-                                 ?.FileInfo.StoragePath;
+                                 ?.FileInfo.GetStoragePath();
         }
     }
 }
