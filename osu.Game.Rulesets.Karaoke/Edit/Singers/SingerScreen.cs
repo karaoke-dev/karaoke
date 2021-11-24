@@ -36,9 +36,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         public SingerScreen()
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Purple);
-            Content.Add(SingerManager = new SingerManager());
-            Content.Add(LyricManager = new LyricManager());
-            Content.Add(editSingerDialog = new EditSingerDialog
+            AddInternal(SingerManager = new SingerManager());
+            AddInternal(LyricManager = new LyricManager());
+            AddInternal(editSingerDialog = new EditSingerDialog
             {
                 Depth = -1,
             });
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            Add(new Container
+            AddInternal(new Container
             {
                 RelativeSizeAxes = Axes.Both,
                 Padding = new MarginPadding(50),

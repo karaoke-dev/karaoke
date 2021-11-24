@@ -30,51 +30,55 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Style
         public StyleScreen()
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Pink);
-            Content.Add(StyleManager = new StyleManager());
+            AddInternal(StyleManager = new StyleManager());
         }
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            Padding = new MarginPadding(50);
-            Child = new GridContainer
+            AddInternal(new Container
             {
                 RelativeSizeAxes = Axes.Both,
-                ColumnDimensions = new[]
+                Padding = new MarginPadding(50),
+                Child = new GridContainer
                 {
-                    new Dimension(GridSizeMode.Relative, 0.3f),
-                    new Dimension()
-                },
-                Content = new[]
-                {
-                    new Drawable[]
+                    RelativeSizeAxes = Axes.Both,
+                    ColumnDimensions = new[]
                     {
-                        new Container
+                        new Dimension(GridSizeMode.Relative, 0.3f),
+                        new Dimension()
+                    },
+                    Content = new[]
+                    {
+                        new Drawable[]
                         {
-                            Name = "Layout adjustment area",
-                            RelativeSizeAxes = Axes.Both,
-                            Masking = true,
-                            CornerRadius = 10,
-                            Children = new Drawable[]
+                            new Container
                             {
-                                new Box
+                                Name = "Layout adjustment area",
+                                RelativeSizeAxes = Axes.Both,
+                                Masking = true,
+                                CornerRadius = 10,
+                                Children = new Drawable[]
                                 {
-                                    Colour = ColourProvider.Background2,
-                                    RelativeSizeAxes = Axes.Both,
-                                },
-                                styleSections = new StyleSectionsContainer
-                                {
-                                    RelativeSizeAxes = Axes.Both,
+                                    new Box
+                                    {
+                                        Colour = ColourProvider.Background2,
+                                        RelativeSizeAxes = Axes.Both,
+                                    },
+                                    styleSections = new StyleSectionsContainer
+                                    {
+                                        RelativeSizeAxes = Axes.Both,
+                                    }
                                 }
+                            },
+                            previewContainer = new Container
+                            {
+                                RelativeSizeAxes = Axes.Both,
                             }
-                        },
-                        previewContainer = new Container
-                        {
-                            RelativeSizeAxes = Axes.Both,
                         }
-                    }
-                },
-            };
+                    },
+                }
+            });
 
             styleSections.BindableStyle.BindValueChanged(e =>
             {

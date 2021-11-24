@@ -21,12 +21,11 @@ using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
-using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
-    public class TestSceneImportLyric : EditorClockTestScene
+    public class TestSceneImportLyric : EditorSubScreenTestScene<TestSceneImportLyric.TestImportLyricScreen>
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
@@ -37,9 +36,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
+        protected override TestImportLyricScreen CreateEditor()
+        {
+            var temp = TestResources.GetTestLrcForImport("light");
+            return new TestImportLyricScreen(new FileInfo(temp));
+        }
+
         private DialogOverlay dialogOverlay;
         private LanguageSelectionDialog languageSelectionDialog;
-        private TestImportLyricScreen screen;
         private ImportLyricManager importManager;
         private LyricCheckerManager lyricCheckerManager;
 
@@ -69,23 +73,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             Dependencies.Cache(languageSelectionDialog);
             Dependencies.Cache(importManager);
             Dependencies.Cache(lyricCheckerManager);
+
+            Dependencies.Cache(new EditorClock());
         }
 
         [Test]
-        public void TestGoToStep() => Schedule(() =>
+        public void TestGoToStep()
         {
-            var temp = TestResources.GetTestLrcForImport("light");
-            Child = screen = new TestImportLyricScreen(new FileInfo(temp));
-
             var steps = EnumUtils.GetValues<ImportLyricStep>();
 
             foreach (var step in steps)
             {
-                AddStep($"go to step {Enum.GetName(typeof(ImportLyricStep), step)}", () => { screen.GoToStep(step); });
+                AddStep($"go to step {Enum.GetName(typeof(ImportLyricStep), step)}", () => { Editor.GoToStep(step); });
             }
-        });
+        }
 
-        private class TestImportLyricScreen : ImportLyricScreen
+        public class TestImportLyricScreen : ImportLyricScreen
         {
             public TestImportLyricScreen(FileInfo fileInfo)
             {

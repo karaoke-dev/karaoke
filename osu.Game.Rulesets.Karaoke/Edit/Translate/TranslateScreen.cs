@@ -24,13 +24,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         public TranslateScreen()
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
-            Content.Add(TranslateManager = new TranslateManager());
+            AddInternal(TranslateManager = new TranslateManager());
         }
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, DialogOverlay dialogOverlay, LanguageSelectionDialog languageSelectionDialog)
         {
-            Child = new Container
+            AddInternal(new Container
             {
                 RelativeSizeAxes = Axes.Both,
                 Padding = new MarginPadding(50),
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                         },
                     }
                 }
-            };
+            });
 
             // ask only once if contains no language after switch to translate editor.
             bool alreadyAsked;

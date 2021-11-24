@@ -14,19 +14,20 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
-using osu.Game.Tests.Visual;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
-    public class TestSceneSinger : OsuManualInputManagerTestScene
+    public class TestSceneSinger : EditorSubScreenTestScene<SingerScreen>
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
         private readonly EditorBeatmap editorBeatmap;
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
+
+        protected override SingerScreen CreateEditor() => new();
 
         private DialogOverlay dialogOverlay;
 
@@ -96,17 +97,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             Dependencies.Cache(dialogOverlay);
         }
 
-        [SetUp]
-        public void SetUp() => Schedule(() =>
-        {
-            Child = new SingerScreen();
-        });
-
         [Test]
         public void HoverToSingerArea()
         {
             // todo : add this step because description is not showing.
-            AddStep("Move mouse to singer area", () => InputManager.MoveMouseTo(Child, new Vector2(-450, -90)));
+            AddStep("Move mouse to singer area", () => InputManager.MoveMouseTo(Editor, new Vector2(-450, -90)));
         }
     }
 }
