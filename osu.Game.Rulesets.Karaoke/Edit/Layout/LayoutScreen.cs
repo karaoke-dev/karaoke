@@ -25,63 +25,67 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Layout
         public LayoutScreen()
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
-            Content.Add(LayoutManager = new LayoutManager());
+            AddInternal(LayoutManager = new LayoutManager());
         }
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            Padding = new MarginPadding(50);
-            Child = new GridContainer
+            AddInternal(new Container
             {
                 RelativeSizeAxes = Axes.Both,
-                ColumnDimensions = new[]
+                Padding = new MarginPadding(50),
+                Child = new GridContainer
                 {
-                    new Dimension(GridSizeMode.Relative, 0.3f),
-                    new Dimension()
-                },
-                Content = new[]
-                {
-                    new Drawable[]
+                    RelativeSizeAxes = Axes.Both,
+                    ColumnDimensions = new[]
                     {
-                        new Container
+                        new Dimension(GridSizeMode.Relative, 0.3f),
+                        new Dimension()
+                    },
+                    Content = new[]
+                    {
+                        new Drawable[]
                         {
-                            Name = "Layout adjustment area",
-                            RelativeSizeAxes = Axes.Both,
-                            Masking = true,
-                            CornerRadius = 10,
-                            Children = new Drawable[]
+                            new Container
                             {
-                                new Box
+                                Name = "Layout adjustment area",
+                                RelativeSizeAxes = Axes.Both,
+                                Masking = true,
+                                CornerRadius = 10,
+                                Children = new Drawable[]
                                 {
-                                    Colour = ColourProvider.Background2,
-                                    RelativeSizeAxes = Axes.Both,
-                                },
-                                new SectionsContainer<LayoutSection>
-                                {
-                                    FixedHeader = new LayoutScreenHeader(),
-                                    RelativeSizeAxes = Axes.Both,
-                                    Scale = new Vector2(section_scale),
-                                    Size = new Vector2(1 / section_scale),
-                                    Children = new LayoutSection[]
+                                    new Box
                                     {
-                                        new LayoutAlignmentSection(),
-                                        new PreviewSection(),
+                                        Colour = ColourProvider.Background2,
+                                        RelativeSizeAxes = Axes.Both,
+                                    },
+                                    new SectionsContainer<LayoutSection>
+                                    {
+                                        FixedHeader = new LayoutScreenHeader(),
+                                        RelativeSizeAxes = Axes.Both,
+                                        Scale = new Vector2(section_scale),
+                                        Size = new Vector2(1 / section_scale),
+                                        Children = new LayoutSection[]
+                                        {
+                                            new LayoutAlignmentSection(),
+                                            new PreviewSection(),
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        new LayoutPreview
-                        {
-                            Name = "Layout preview area",
-                            Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
-                            Size = new Vector2(0.95f),
-                            RelativeSizeAxes = Axes.Both
-                        },
-                    }
-                },
-            };
+                            },
+                            new LayoutPreview
+                            {
+                                Name = "Layout preview area",
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                                Size = new Vector2(0.95f),
+                                RelativeSizeAxes = Axes.Both
+                            },
+                        }
+                    },
+                }
+            });
         }
 
         internal class LayoutScreenHeader : OverlayHeader
