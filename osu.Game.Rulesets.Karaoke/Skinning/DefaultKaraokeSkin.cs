@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using osu.Framework.Bindables;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Skinning;
 
@@ -21,6 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             ID = DEFAULT_SKIN,
             Name = "karaoke! (default skin)",
             Creator = "team karaoke!",
+            InstantiationInfo = typeof(DefaultKaraokeSkin).GetInvariantInstantiationInfo()
         };
 
         public DefaultKaraokeSkin(IStorageResourceProvider resources)
