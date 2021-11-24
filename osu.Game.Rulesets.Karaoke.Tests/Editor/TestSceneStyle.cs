@@ -3,7 +3,6 @@
 
 using NUnit.Framework;
 using osu.Framework.Allocation;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Style;
@@ -11,14 +10,13 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
-using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
-    public class TestSceneStyle : EditorClockTestScene
+    public class TestSceneStyle : EditorSubScreenTestScene<StyleScreen>
     {
-        private readonly ISkin skin = new DefaultKaraokeSkin(null);
+        protected override StyleScreen CreateEditor() => new();
 
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
@@ -32,14 +30,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(SkinManager skinManager)
         {
             Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
-            Child = new SkinProvidingContainer(skin)
-            {
-                RelativeSizeAxes = Axes.Both,
-                Child = new StyleScreen(),
-            };
+
+            // because skin is compared by id, so should change id to let skin manager info knows that skin has been changed.
+            var defaultSkin = DefaultKaraokeSkin.Default;
+            defaultSkin.ID = 100;
+            skinManager.CurrentSkinInfo.Value = defaultSkin;
         }
     }
 }
