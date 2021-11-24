@@ -14,18 +14,19 @@ using osu.Game.Rulesets.Karaoke.Edit.Translate;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
-using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
-    public class TestSceneTranslate : EditorClockTestScene
+    public class TestSceneTranslate : EditorSubScreenTestScene<TranslateScreen>
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
         private readonly EditorBeatmap editorBeatmap;
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
+
+        protected override TranslateScreen CreateEditor() => new();
 
         private DialogOverlay dialogOverlay;
         private LanguageSelectionDialog languageSelectionDialog;
@@ -60,8 +61,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
             Dependencies.Cache(dialogOverlay);
             Dependencies.Cache(languageSelectionDialog);
-
-            Child = new TranslateScreen();
         }
     }
 }
