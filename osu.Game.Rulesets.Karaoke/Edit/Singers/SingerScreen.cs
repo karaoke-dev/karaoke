@@ -9,14 +9,13 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
-    public class SingerScreen : EditorSubScreen
+    public class SingerScreen : KaraokeEditorScreen
     {
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
@@ -34,6 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         public BindableList<Lyric> SelectedLyrics { get; } = new();
 
         public SingerScreen()
+            : base(KaraokeEditorScreenMode.Singer)
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Purple);
             AddInternal(SingerManager = new SingerManager());
