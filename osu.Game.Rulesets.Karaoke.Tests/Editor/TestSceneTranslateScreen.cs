@@ -18,7 +18,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
-    public class TestSceneTranslate : EditorSubScreenTestScene<TranslateScreen>
+    public class TestSceneTranslateScreen : KaraokeEditorScreenTestScene<TranslateScreen>
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
@@ -26,12 +26,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
-        protected override TranslateScreen CreateEditor() => new();
+        protected override TranslateScreen CreateEditorScreen() => new();
 
         private DialogOverlay dialogOverlay;
         private LanguageSelectionDialog languageSelectionDialog;
 
-        public TestSceneTranslate()
+        public TestSceneTranslateScreen()
         {
             var beatmap = new TestKaraokeBeatmap(null);
             if (new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
