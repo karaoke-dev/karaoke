@@ -50,7 +50,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                         {
                             Items = new MenuItem[]
                             {
-                                new EditModeMenu(config, "Edit mode"),
                                 new EditorMenuItemSpacer(),
                                 new LyricEditorModeMenu(lyricEditorConfig, "Lyric editor mode"),
                                 new LyricEditorTextSizeMenu(lyricEditorConfig, "Text size"),

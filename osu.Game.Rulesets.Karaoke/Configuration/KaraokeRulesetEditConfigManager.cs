@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
 {
@@ -11,9 +10,6 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         protected override void InitialiseDefaults()
         {
             base.InitialiseDefaults();
-
-            // Edit mode
-            SetDefault(KaraokeRulesetEditSetting.EditMode, EditMode.LyricEditor);
 
             // Note editor
             SetDefault(KaraokeRulesetEditSetting.DisplayRuby, true);
@@ -24,9 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
     public enum KaraokeRulesetEditSetting
     {
-        // Edit mode
-        EditMode,
-
         // Note editor
         DisplayRuby,
         DisplayRomaji,
