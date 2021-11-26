@@ -59,6 +59,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(Type = typeof(IScrollingInfo))]
         private readonly LocalScrollingInfo scrollingInfo = new();
 
+        [Cached]
+        private readonly BindableBeatDivisor beatDivisor = new();
+
         public Bindable<LyricEditorMode> BindableMode { get; } = new();
 
         private readonly Bindable<float> bindableFontSize = new();
@@ -269,6 +272,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, bindableCreateMovingCaretMode);
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, bindableRecordingMovingCaretMode);
+
+            // set-up divisor.
+            beatDivisor.Value = beatmap.BeatmapInfo.BeatDivisor;
 
             // load lyric in here
             var lyrics = OrderUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
