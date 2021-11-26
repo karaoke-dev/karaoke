@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             Height = HEIGHT;
 
             HeaderBreadcrumbControl breadcrumbs;
-            ImportLyricHeaderTitle title;
+            LyricImporterHeaderTitle title;
 
             Children = new Drawable[]
             {
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     Padding = new MarginPadding { Left = WaveOverlayContainer.WIDTH_PADDING + OsuScreen.HORIZONTAL_OVERFLOW_PADDING },
                     Children = new Drawable[]
                     {
-                        title = new ImportLyricHeaderTitle
+                        title = new LyricImporterHeaderTitle
                         {
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.BottomLeft,
@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             breadcrumbs.Current.TriggerChange();
         }
 
-        private class ImportLyricHeaderTitle : CompositeDrawable
+        private class LyricImporterHeaderTitle : CompositeDrawable
         {
             private const float spacing = 6;
 
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 set => pageTitle.Text = value.ShortTitle;
             }
 
-            public ImportLyricHeaderTitle()
+            public LyricImporterHeaderTitle()
             {
                 AutoSizeAxes = Axes.Both;
 
