@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     public interface IImportLyricSubScreen : IScreen
     {
-        ImportLyricStep Step { get; }
+        LyricImporterStep Step { get; }
 
         string Title { get; }
 

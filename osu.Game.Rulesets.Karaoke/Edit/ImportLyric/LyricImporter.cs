@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 }
             };
 
-            ScreenStack.Push(ImportLyricStep.ImportLyric);
+            ScreenStack.Push(LyricImporterStep.ImportLyric);
 
             AddInternal(importManager = new ImportLyricManager());
         }

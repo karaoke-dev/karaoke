@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.Success
 
         public override string ShortTitle => "Success";
 
-        public override ImportLyricStep Step => ImportLyricStep.GenerateTimeTag;
+        public override LyricImporterStep Step => LyricImporterStep.GenerateTimeTag;
 
         public override IconUsage Icon => FontAwesome.Regular.CheckCircle;
 

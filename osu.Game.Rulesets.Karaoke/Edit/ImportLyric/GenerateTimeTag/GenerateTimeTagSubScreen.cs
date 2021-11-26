@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
         public override string ShortTitle => "Generate time tag";
 
-        public override ImportLyricStep Step => ImportLyricStep.GenerateTimeTag;
+        public override LyricImporterStep Step => LyricImporterStep.GenerateTimeTag;
 
         public override IconUsage Icon => FontAwesome.Solid.Tag;
 
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
         public override void Complete()
         {
-            ScreenStack.Push(ImportLyricStep.Success);
+            ScreenStack.Push(LyricImporterStep.Success);
         }
 
         internal void AskForAutoGenerateTimeTag()

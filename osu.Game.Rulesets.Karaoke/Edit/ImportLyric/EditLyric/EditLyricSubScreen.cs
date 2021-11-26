@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 
         public override string ShortTitle => "Edit";
 
-        public override ImportLyricStep Step => ImportLyricStep.EditLyric;
+        public override LyricImporterStep Step => LyricImporterStep.EditLyric;
 
         public override IconUsage Icon => FontAwesome.Solid.Globe;
 
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 
         public override void Complete()
         {
-            ScreenStack.Push(ImportLyricStep.AssignLanguage);
+            ScreenStack.Push(LyricImporterStep.AssignLanguage);
         }
 
         internal void SwitchLyricEditorMode(LyricEditorMode mode)

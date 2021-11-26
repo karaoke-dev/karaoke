@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         public abstract string ShortTitle { get; }
 
-        public abstract ImportLyricStep Step { get; }
+        public abstract LyricImporterStep Step { get; }
 
         public abstract IconUsage Icon { get; }
 
@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         {
             DialogOverlay.Push(new RollBackPopupDialog(rollBackScreen, ok =>
             {
-                if (ok && rollBackScreen.Step == ImportLyricStep.ImportLyric)
+                if (ok && rollBackScreen.Step == LyricImporterStep.ImportLyric)
                     DialogOverlay.Push(new RollBackResetPopupDialog(rollBackScreen, callBack));
                 else
                     callBack?.Invoke(ok);

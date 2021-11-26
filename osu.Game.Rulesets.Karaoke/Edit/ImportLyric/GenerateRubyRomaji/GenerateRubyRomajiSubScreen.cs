@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 
         public override string ShortTitle => "Generate ruby";
 
-        public override ImportLyricStep Step => ImportLyricStep.GenerateRuby;
+        public override LyricImporterStep Step => LyricImporterStep.GenerateRuby;
 
         public override IconUsage Icon => FontAwesome.Solid.Gem;
 
@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 
         public override void Complete()
         {
-            ScreenStack.Push(ImportLyricStep.GenerateTimeTag);
+            ScreenStack.Push(LyricImporterStep.GenerateTimeTag);
         }
 
         internal void AskForAutoGenerateRuby()

@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 
         public override string ShortTitle => "Language";
 
-        public override ImportLyricStep Step => ImportLyricStep.AssignLanguage;
+        public override LyricImporterStep Step => LyricImporterStep.AssignLanguage;
 
         public override IconUsage Icon => FontAwesome.Solid.Globe;
 
@@ -53,11 +53,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             // Check is need to go to generate ruby/romaji step or just skip.
             if (RubyRomajiManager.CanAutoGenerateRuby() || RubyRomajiManager.CanAutoGenerateRomaji())
             {
-                ScreenStack.Push(ImportLyricStep.GenerateRuby);
+                ScreenStack.Push(LyricImporterStep.GenerateRuby);
             }
             else
             {
-                ScreenStack.Push(ImportLyricStep.GenerateTimeTag);
+                ScreenStack.Push(LyricImporterStep.GenerateTimeTag);
             }
         }
 

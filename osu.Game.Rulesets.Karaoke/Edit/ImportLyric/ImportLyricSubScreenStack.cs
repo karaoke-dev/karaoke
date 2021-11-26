@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
     {
         private readonly Stack<IImportLyricSubScreen> stack = new();
 
-        public void Push(ImportLyricStep step)
+        public void Push(LyricImporterStep step)
         {
             if (CurrentScreen is IImportLyricSubScreen lyricSubScreen)
             {
@@ -28,33 +28,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 if (step <= lyricSubScreen.Step)
                     throw new ScreenNotCurrentException("Cannot push previous then current screen.");
 
-                if (step != ImportLyricStep.GenerateRuby && step - lyricSubScreen.Step > 1)
+                if (step != LyricImporterStep.GenerateRuby && step - lyricSubScreen.Step > 1)
                     throw new ScreenNotCurrentException("Only generate ruby step can be skipped.");
             }
 
             switch (step)
             {
-                case ImportLyricStep.ImportLyric:
+                case LyricImporterStep.ImportLyric:
                     Push(new DragFileSubScreen());
                     return;
 
-                case ImportLyricStep.EditLyric:
+                case LyricImporterStep.EditLyric:
                     Push(new EditLyricSubScreen());
                     return;
 
-                case ImportLyricStep.AssignLanguage:
+                case LyricImporterStep.AssignLanguage:
                     Push(new AssignLanguageSubScreen());
                     return;
 
-                case ImportLyricStep.GenerateRuby:
+                case LyricImporterStep.GenerateRuby:
                     Push(new GenerateRubyRomajiSubScreen());
                     return;
 
-                case ImportLyricStep.GenerateTimeTag:
+                case LyricImporterStep.GenerateTimeTag:
                     Push(new GenerateTimeTagSubScreen());
                     return;
 
-                case ImportLyricStep.Success:
+                case LyricImporterStep.Success:
                     Push(new SuccessSubScreen());
                     return;
 
@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             Push(screen as IScreen);
         }
 
-        public void Pop(ImportLyricStep step)
+        public void Pop(LyricImporterStep step)
         {
             var screen = stack.FirstOrDefault(x => x.Step == step);
             if (screen == null)

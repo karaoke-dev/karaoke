@@ -36,15 +36,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 switch (mode)
                 {
                     case LyricEditorMode.Typing:
-                        screenStack.Pop(ImportLyricStep.EditLyric);
+                        screenStack.Pop(LyricImporterStep.EditLyric);
                         break;
 
                     case LyricEditorMode.Language:
-                        screenStack.Pop(ImportLyricStep.AssignLanguage);
+                        screenStack.Pop(LyricImporterStep.AssignLanguage);
                         break;
 
                     case LyricEditorMode.AdjustTimeTag:
-                        screenStack.Pop(ImportLyricStep.GenerateTimeTag);
+                        screenStack.Pop(LyricImporterStep.GenerateTimeTag);
                         break;
 
                     default:
