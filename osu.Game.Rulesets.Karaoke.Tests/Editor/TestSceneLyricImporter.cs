@@ -25,7 +25,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
-    public class TestSceneImportLyric : EditorSubScreenTestScene<TestSceneImportLyric.TestLyricImporter>
+    public class TestSceneLyricImporter : EditorSubScreenTestScene<TestSceneLyricImporter.TestLyricImporter>
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         private LanguageSelectionDialog languageSelectionDialog;
         private LyricCheckerManager lyricCheckerManager;
 
-        public TestSceneImportLyric()
+        public TestSceneLyricImporter()
         {
             var beatmap = new TestKaraokeBeatmap(null);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
