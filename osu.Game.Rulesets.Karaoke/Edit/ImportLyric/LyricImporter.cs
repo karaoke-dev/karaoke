@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
     [Cached]
     public class LyricImporter : EditorSubScreen
     {
-        private readonly ImportLyricWaveContainer waves;
+        private readonly LyricImporterWaveContainer waves;
 
         [Cached]
         protected LyricImporterSubScreenStack ScreenStack { get; private set; }
@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         {
             var backgroundColour = Color4Extensions.FromHex(@"3e3a44");
 
-            InternalChild = waves = new ImportLyricWaveContainer
+            InternalChild = waves = new LyricImporterWaveContainer
             {
                 RelativeSizeAxes = Axes.Both,
                 Children = new Drawable[]
@@ -56,11 +56,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             waves.Show();
         }
 
-        private class ImportLyricWaveContainer : WaveContainer
+        private class LyricImporterWaveContainer : WaveContainer
         {
             protected override bool StartHidden => true;
 
-            public ImportLyricWaveContainer()
+            public LyricImporterWaveContainer()
             {
                 FirstWaveColour = Color4Extensions.FromHex(@"654d8c");
                 SecondWaveColour = Color4Extensions.FromHex(@"554075");
