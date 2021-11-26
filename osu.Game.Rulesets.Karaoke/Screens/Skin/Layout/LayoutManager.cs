@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Layout
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
     public class LayoutManager : Component
     {

@@ -5,13 +5,14 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.Layout;
+using osu.Game.Rulesets.Karaoke.Screens.Skin.Layout;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Tests.Editor;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens
 {
     [TestFixture]
     public class TestSceneLayout : EditorSubScreenTestScene<LayoutScreen>

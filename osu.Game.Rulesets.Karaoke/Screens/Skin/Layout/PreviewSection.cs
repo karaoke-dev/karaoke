@@ -19,7 +19,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Layout
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
     internal class PreviewSection : LayoutSection
     {

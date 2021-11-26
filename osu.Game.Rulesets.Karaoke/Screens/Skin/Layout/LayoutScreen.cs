@@ -10,7 +10,7 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Layout
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
     public class LayoutScreen : EditorSubScreen
     {

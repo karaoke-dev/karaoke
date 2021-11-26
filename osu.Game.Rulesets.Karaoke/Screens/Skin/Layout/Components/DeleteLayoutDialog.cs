@@ -6,7 +6,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays.Dialog;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout.Components
 {
     public class DeleteLayoutDialog : PopupDialog
     {

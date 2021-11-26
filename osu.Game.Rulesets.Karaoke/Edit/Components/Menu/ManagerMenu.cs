@@ -4,8 +4,8 @@
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Screens;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Edit.Layout;
 using osu.Game.Rulesets.Karaoke.Edit.Style;
+using osu.Game.Rulesets.Karaoke.Screens.Skin.Layout;
 using osu.Game.Screens.Edit.Components.Menus;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu

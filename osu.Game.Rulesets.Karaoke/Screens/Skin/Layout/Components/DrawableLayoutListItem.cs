@@ -18,7 +18,7 @@ using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Layout.Components
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout.Components
 {
     public class DrawableLayoutListItem : OsuRearrangeableListItem<LyricLayout>
     {

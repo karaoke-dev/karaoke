@@ -8,13 +8,13 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Testing;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.Layout;
-using osu.Game.Rulesets.Karaoke.Edit.Layout.Components;
+using osu.Game.Rulesets.Karaoke.Screens.Skin.Layout;
+using osu.Game.Rulesets.Karaoke.Screens.Skin.Layout.Components;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor
+namespace osu.Game.Rulesets.Karaoke.Tests.Screens
 {
     [Ignore("Will fix after need this dialog.")]
     public class TestSceneManageLanguagesDialog : OsuManualInputManagerTestScene
