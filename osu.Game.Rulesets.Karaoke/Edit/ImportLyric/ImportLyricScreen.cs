@@ -17,6 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         [Cached]
         protected ImportLyricSubScreenStack ScreenStack { get; private set; }
 
+        [Cached]
+        private readonly ImportLyricManager importManager;
+
         public ImportLyricScreen()
         {
             var backgroundColour = Color4Extensions.FromHex(@"3e3a44");
@@ -42,6 +45,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             };
 
             ScreenStack.Push(ImportLyricStep.ImportLyric);
+
+            AddInternal(importManager = new ImportLyricManager());
         }
 
         protected override void LoadComplete()
