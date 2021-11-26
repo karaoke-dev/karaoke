@@ -12,7 +12,7 @@ using osu.Game.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    public abstract class ImportLyricSubScreen : OsuScreen, IImportLyricSubScreen
+    public abstract class LyricImporterStepScreen : OsuScreen, ILyricImporterStepScreen
     {
         public const float X_SHIFT = 200;
         public const double X_MOVE_DURATION = 800;
@@ -21,18 +21,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         public const double DISAPPEAR_DURATION = 500;
 
         [Resolved]
-        protected ImportLyricSubScreenStack ScreenStack { get; private set; }
+        protected LyricImporterSubScreenStack ScreenStack { get; private set; }
 
         [Resolved]
         protected DialogOverlay DialogOverlay { get; private set; }
 
         public abstract string ShortTitle { get; }
 
-        public abstract ImportLyricStep Step { get; }
+        public abstract LyricImporterStep Step { get; }
 
         public abstract IconUsage Icon { get; }
 
-        protected ImportLyricSubScreen()
+        protected LyricImporterStepScreen()
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
@@ -80,11 +80,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         public abstract void Complete();
 
-        public virtual void CanRollBack(IImportLyricSubScreen rollBackScreen, Action<bool> callBack)
+        public virtual void CanRollBack(ILyricImporterStepScreen rollBackScreen, Action<bool> callBack)
         {
             DialogOverlay.Push(new RollBackPopupDialog(rollBackScreen, ok =>
             {
-                if (ok && rollBackScreen.Step == ImportLyricStep.ImportLyric)
+                if (ok && rollBackScreen.Step == LyricImporterStep.ImportLyric)
                     DialogOverlay.Push(new RollBackResetPopupDialog(rollBackScreen, callBack));
                 else
                     callBack?.Invoke(ok);

@@ -11,21 +11,21 @@ using osu.Game.Rulesets.Karaoke.Edit.Components;
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     [Cached]
-    public class ImportLyricScreen : EditorSubScreen
+    public class LyricImporter : EditorSubScreen
     {
-        private readonly ImportLyricWaveContainer waves;
+        private readonly LyricImporterWaveContainer waves;
 
         [Cached]
-        protected ImportLyricSubScreenStack ScreenStack { get; private set; }
+        protected LyricImporterSubScreenStack ScreenStack { get; private set; }
 
         [Cached]
         private readonly ImportLyricManager importManager;
 
-        public ImportLyricScreen()
+        public LyricImporter()
         {
             var backgroundColour = Color4Extensions.FromHex(@"3e3a44");
 
-            InternalChild = waves = new ImportLyricWaveContainer
+            InternalChild = waves = new LyricImporterWaveContainer
             {
                 RelativeSizeAxes = Axes.Both,
                 Children = new Drawable[]
@@ -39,13 +39,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     {
                         RelativeSizeAxes = Axes.Both,
                         Padding = new MarginPadding { Top = Header.HEIGHT },
-                        Child = ScreenStack = new ImportLyricSubScreenStack { RelativeSizeAxes = Axes.Both }
+                        Child = ScreenStack = new LyricImporterSubScreenStack { RelativeSizeAxes = Axes.Both }
                     },
                     new Header(ScreenStack),
                 }
             };
 
-            ScreenStack.Push(ImportLyricStep.ImportLyric);
+            ScreenStack.Push(LyricImporterStep.ImportLyric);
 
             AddInternal(importManager = new ImportLyricManager());
         }
@@ -56,11 +56,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             waves.Show();
         }
 
-        private class ImportLyricWaveContainer : WaveContainer
+        private class LyricImporterWaveContainer : WaveContainer
         {
             protected override bool StartHidden => true;
 
-            public ImportLyricWaveContainer()
+            public LyricImporterWaveContainer()
             {
                 FirstWaveColour = Color4Extensions.FromHex(@"654d8c");
                 SecondWaveColour = Color4Extensions.FromHex(@"554075");

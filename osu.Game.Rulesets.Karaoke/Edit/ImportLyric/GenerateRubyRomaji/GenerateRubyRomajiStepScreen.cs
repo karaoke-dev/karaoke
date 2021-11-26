@@ -10,20 +10,20 @@ using osu.Game.Rulesets.Karaoke.Edit.RubyRomaji;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 {
-    public class GenerateRubyRomajiSubScreen : ImportLyricSubScreenWithLyricEditor
+    public class GenerateRubyRomajiStepScreen : LyricImporterStepScreenWithLyricEditor
     {
         public override string Title => "Generate ruby";
 
         public override string ShortTitle => "Generate ruby";
 
-        public override ImportLyricStep Step => ImportLyricStep.GenerateRuby;
+        public override LyricImporterStep Step => LyricImporterStep.GenerateRuby;
 
         public override IconUsage Icon => FontAwesome.Solid.Gem;
 
         [Cached]
         protected readonly RubyRomajiManager RubyRomajiManager;
 
-        public GenerateRubyRomajiSubScreen()
+        public GenerateRubyRomajiStepScreen()
         {
             AddInternal(RubyRomajiManager = new RubyRomajiManager());
         }
@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 
         public override void Complete()
         {
-            ScreenStack.Push(ImportLyricStep.GenerateTimeTag);
+            ScreenStack.Push(LyricImporterStep.GenerateTimeTag);
         }
 
         internal void AskForAutoGenerateRuby()
@@ -82,12 +82,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
             }));
         }
 
-        public class GenerateRubyNavigation : TopNavigation<GenerateRubyRomajiSubScreen>
+        public class GenerateRubyNavigation : TopNavigation<GenerateRubyRomajiStepScreen>
         {
             private const string auto_generate_ruby = "AUTO_GENERATE_RUBY";
             private const string auto_generate_romaji = "AUTO_GENERATE_ROMAJI";
 
-            public GenerateRubyNavigation(GenerateRubyRomajiSubScreen screen)
+            public GenerateRubyNavigation(GenerateRubyRomajiStepScreen screen)
                 : base(screen)
             {
             }
@@ -124,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 
             private class GenerateRubyTextFlowContainer : NavigationTextContainer
             {
-                public GenerateRubyTextFlowContainer(GenerateRubyRomajiSubScreen screen)
+                public GenerateRubyTextFlowContainer(GenerateRubyRomajiStepScreen screen)
                 {
                     AddLinkFactory(auto_generate_ruby, "auto generate ruby", screen.AskForAutoGenerateRuby);
                     AddLinkFactory(auto_generate_romaji, "auto generate romaji", screen.AskForAutoGenerateRomaji);

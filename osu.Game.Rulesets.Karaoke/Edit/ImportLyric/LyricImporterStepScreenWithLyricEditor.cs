@@ -8,14 +8,14 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    public abstract class ImportLyricSubScreenWithLyricEditor : ImportLyricSubScreenWithTopNavigation
+    public abstract class LyricImporterStepScreenWithLyricEditor : LyricImporterStepScreenWithTopNavigation
     {
         protected LyricEditor LyricEditor { get; private set; }
 
         [Cached]
         protected readonly LyricManager LyricManager;
 
-        protected ImportLyricSubScreenWithLyricEditor()
+        protected LyricImporterStepScreenWithLyricEditor()
         {
             AddInternal(LyricManager = new LyricManager());
         }
@@ -29,22 +29,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         private class ImportLyricEditor : LyricEditor
         {
             [Resolved]
-            private ImportLyricSubScreenStack screenStack { get; set; }
+            private LyricImporterSubScreenStack screenStack { get; set; }
 
             public override void NavigateToFix(LyricEditorMode mode)
             {
                 switch (mode)
                 {
                     case LyricEditorMode.Typing:
-                        screenStack.Pop(ImportLyricStep.EditLyric);
+                        screenStack.Pop(LyricImporterStep.EditLyric);
                         break;
 
                     case LyricEditorMode.Language:
-                        screenStack.Pop(ImportLyricStep.AssignLanguage);
+                        screenStack.Pop(LyricImporterStep.AssignLanguage);
                         break;
 
                     case LyricEditorMode.AdjustTimeTag:
-                        screenStack.Pop(ImportLyricStep.GenerateTimeTag);
+                        screenStack.Pop(LyricImporterStep.GenerateTimeTag);
                         break;
 
                     default:

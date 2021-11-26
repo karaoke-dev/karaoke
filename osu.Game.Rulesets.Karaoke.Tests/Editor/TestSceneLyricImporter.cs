@@ -25,7 +25,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
-    public class TestSceneImportLyric : EditorSubScreenTestScene<TestSceneImportLyric.TestImportLyricScreen>
+    public class TestSceneLyricImporter : EditorSubScreenTestScene<TestSceneLyricImporter.TestLyricImporter>
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
@@ -36,17 +36,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
-        protected override TestImportLyricScreen CreateEditor()
+        protected override TestLyricImporter CreateEditor()
         {
             var temp = TestResources.GetTestLrcForImport("light");
-            return new TestImportLyricScreen(new FileInfo(temp));
+            return new TestLyricImporter(new FileInfo(temp));
         }
 
         private DialogOverlay dialogOverlay;
         private LanguageSelectionDialog languageSelectionDialog;
         private LyricCheckerManager lyricCheckerManager;
 
-        public TestSceneImportLyric()
+        public TestSceneLyricImporter()
         {
             var beatmap = new TestKaraokeBeatmap(null);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
@@ -77,27 +77,27 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         [Test]
         public void TestGoToStep()
         {
-            var steps = EnumUtils.GetValues<ImportLyricStep>();
+            var steps = EnumUtils.GetValues<LyricImporterStep>();
 
             foreach (var step in steps)
             {
-                AddStep($"go to step {Enum.GetName(typeof(ImportLyricStep), step)}", () => { Editor.GoToStep(step); });
+                AddStep($"go to step {Enum.GetName(typeof(LyricImporterStep), step)}", () => { Editor.GoToStep(step); });
             }
         }
 
-        public class TestImportLyricScreen : ImportLyricScreen
+        public class TestLyricImporter : LyricImporter
         {
-            public TestImportLyricScreen(FileInfo fileInfo)
+            public TestLyricImporter(FileInfo fileInfo)
             {
-                if (ScreenStack.CurrentScreen is not DragFileSubScreen dragFileSubScreen)
-                    throw new ScreenStack.ScreenNotInStackException($"{nameof(DragFileSubScreen)} does not in the screen.");
+                if (ScreenStack.CurrentScreen is not DragFileStepScreen dragFileSubScreen)
+                    throw new ScreenStack.ScreenNotInStackException($"{nameof(DragFileStepScreen)} does not in the screen.");
 
                 dragFileSubScreen.ImportLyricFile(fileInfo);
             }
 
-            public void GoToStep(ImportLyricStep step)
+            public void GoToStep(LyricImporterStep step)
             {
-                if (ScreenStack.CurrentScreen is not IImportLyricSubScreen lyricSubScreen)
+                if (ScreenStack.CurrentScreen is not ILyricImporterStepScreen lyricSubScreen)
                     return;
 
                 if (step == lyricSubScreen.Step)
@@ -106,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 if (step <= lyricSubScreen.Step)
                     return;
 
-                var totalSteps = EnumUtils.GetValues<ImportLyricStep>().Where(x => x > lyricSubScreen.Step && x <= step);
+                var totalSteps = EnumUtils.GetValues<LyricImporterStep>().Where(x => x > lyricSubScreen.Step && x <= step);
 
                 foreach (var gotoStep in totalSteps)
                 {

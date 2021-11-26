@@ -7,9 +7,9 @@ using osu.Framework.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    public interface IImportLyricSubScreen : IScreen
+    public interface ILyricImporterStepScreen : IScreen
     {
-        ImportLyricStep Step { get; }
+        LyricImporterStep Step { get; }
 
         string Title { get; }
 
@@ -17,6 +17,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         IconUsage Icon { get; }
 
-        void CanRollBack(IImportLyricSubScreen rollBackScreen, Action<bool> callBack);
+        void CanRollBack(ILyricImporterStepScreen rollBackScreen, Action<bool> callBack);
     }
 }

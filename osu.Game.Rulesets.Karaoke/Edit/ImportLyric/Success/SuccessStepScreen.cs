@@ -7,18 +7,18 @@ using osu.Framework.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.Success
 {
-    public class SuccessSubScreen : ImportLyricSubScreen
+    public class SuccessStepScreen : LyricImporterStepScreen
     {
         public override string Title => "Success";
 
         public override string ShortTitle => "Success";
 
-        public override ImportLyricStep Step => ImportLyricStep.GenerateTimeTag;
+        public override LyricImporterStep Step => LyricImporterStep.GenerateTimeTag;
 
         public override IconUsage Icon => FontAwesome.Regular.CheckCircle;
 
         [Resolved]
-        private ImportLyricScreen lyricImporter { get; set; }
+        private LyricImporter lyricImporter { get; set; }
 
         public override void Complete()
         {

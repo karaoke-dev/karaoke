@@ -11,13 +11,13 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 {
-    public class AssignLanguageSubScreen : ImportLyricSubScreenWithLyricEditor
+    public class AssignLanguageStepScreen : LyricImporterStepScreenWithLyricEditor
     {
         public override string Title => "Language";
 
         public override string ShortTitle => "Language";
 
-        public override ImportLyricStep Step => ImportLyricStep.AssignLanguage;
+        public override LyricImporterStep Step => LyricImporterStep.AssignLanguage;
 
         public override IconUsage Icon => FontAwesome.Solid.Globe;
 
@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
-        public AssignLanguageSubScreen()
+        public AssignLanguageStepScreen()
         {
             AddInternal(RubyRomajiManager = new RubyRomajiManager());
         }
@@ -53,11 +53,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             // Check is need to go to generate ruby/romaji step or just skip.
             if (RubyRomajiManager.CanAutoGenerateRuby() || RubyRomajiManager.CanAutoGenerateRomaji())
             {
-                ScreenStack.Push(ImportLyricStep.GenerateRuby);
+                ScreenStack.Push(LyricImporterStep.GenerateRuby);
             }
             else
             {
-                ScreenStack.Push(ImportLyricStep.GenerateTimeTag);
+                ScreenStack.Push(LyricImporterStep.GenerateTimeTag);
             }
         }
 
@@ -73,11 +73,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             }));
         }
 
-        public class AssignLanguageNavigation : TopNavigation<AssignLanguageSubScreen>
+        public class AssignLanguageNavigation : TopNavigation<AssignLanguageStepScreen>
         {
             private const string auto_assign_language = "AUTO_ASSIGN_LANGUAGE";
 
-            public AssignLanguageNavigation(AssignLanguageSubScreen screen)
+            public AssignLanguageNavigation(AssignLanguageStepScreen screen)
                 : base(screen)
             {
             }
@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 
             private class AssignLanguageTextFlowContainer : NavigationTextContainer
             {
-                public AssignLanguageTextFlowContainer(AssignLanguageSubScreen screen)
+                public AssignLanguageTextFlowContainer(AssignLanguageStepScreen screen)
                 {
                     AddLinkFactory(auto_assign_language, "language detector", screen.AskForAutoAssignLanguage);
                 }

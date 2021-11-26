@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    public enum ImportLyricStep
+    public enum LyricImporterStep
     {
         ImportLyric,
 

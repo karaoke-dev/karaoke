@@ -15,11 +15,11 @@ using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    public abstract class ImportLyricSubScreenWithTopNavigation : ImportLyricSubScreen
+    public abstract class LyricImporterStepScreenWithTopNavigation : LyricImporterStepScreen
     {
         protected TopNavigation Navigation { get; }
 
-        protected ImportLyricSubScreenWithTopNavigation()
+        protected LyricImporterStepScreenWithTopNavigation()
         {
             Padding = new MarginPadding(10);
             InternalChild = new GridContainer
@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         protected abstract Drawable CreateContent();
 
-        public abstract class TopNavigation<T> : TopNavigation where T : ImportLyricSubScreenWithTopNavigation
+        public abstract class TopNavigation<T> : TopNavigation where T : LyricImporterStepScreenWithTopNavigation
         {
             protected new T Screen => base.Screen as T;
 
@@ -65,13 +65,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             [Resolved]
             protected OsuColour Colours { get; private set; }
 
-            protected ImportLyricSubScreen Screen { get; }
+            protected LyricImporterStepScreen Screen { get; }
 
             private readonly CornerBackground background;
             private readonly NavigationTextContainer text;
             private readonly IconButton button;
 
-            protected TopNavigation(ImportLyricSubScreen screen)
+            protected TopNavigation(LyricImporterStepScreen screen)
             {
                 Screen = screen;
 

@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             Height = HEIGHT;
 
             HeaderBreadcrumbControl breadcrumbs;
-            ImportLyricHeaderTitle title;
+            LyricImporterHeaderTitle title;
 
             Children = new Drawable[]
             {
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     Padding = new MarginPadding { Left = WaveOverlayContainer.WIDTH_PADDING + OsuScreen.HORIZONTAL_OVERFLOW_PADDING },
                     Children = new Drawable[]
                     {
-                        title = new ImportLyricHeaderTitle
+                        title = new LyricImporterHeaderTitle
                         {
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.BottomLeft,
@@ -61,26 +61,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
             breadcrumbs.Current.ValueChanged += screen =>
             {
-                if (screen.NewValue is IImportLyricSubScreen multiScreen)
+                if (screen.NewValue is ILyricImporterStepScreen multiScreen)
                     title.Screen = multiScreen;
             };
 
             breadcrumbs.Current.TriggerChange();
         }
 
-        private class ImportLyricHeaderTitle : CompositeDrawable
+        private class LyricImporterHeaderTitle : CompositeDrawable
         {
             private const float spacing = 6;
 
             private readonly OsuSpriteText dot;
             private readonly OsuSpriteText pageTitle;
 
-            public IImportLyricSubScreen Screen
+            public ILyricImporterStepScreen Screen
             {
                 set => pageTitle.Text = value.ShortTitle;
             }
 
-            public ImportLyricHeaderTitle()
+            public LyricImporterHeaderTitle()
             {
                 AutoSizeAxes = Axes.Both;
 
@@ -145,10 +145,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 if (tab.Value == Current.Value)
                     return;
 
-                if (Current.Value is not IImportLyricSubScreen currentScreen)
+                if (Current.Value is not ILyricImporterStepScreen currentScreen)
                     return;
 
-                if (tab.Value is not IImportLyricSubScreen targetScreen)
+                if (tab.Value is not ILyricImporterStepScreen targetScreen)
                     return;
 
                 currentScreen.CanRollBack(targetScreen, enabled =>
