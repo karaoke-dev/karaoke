@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components;
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     [Cached]
-    public class ImportLyricScreen : EditorSubScreen
+    public class LyricImporter : EditorSubScreen
     {
         private readonly ImportLyricWaveContainer waves;
 
@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         [Cached]
         private readonly ImportLyricManager importManager;
 
-        public ImportLyricScreen()
+        public LyricImporter()
         {
             var backgroundColour = Color4Extensions.FromHex(@"3e3a44");
 

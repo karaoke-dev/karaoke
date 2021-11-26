@@ -25,7 +25,7 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
-    public class TestSceneImportLyric : EditorSubScreenTestScene<TestSceneImportLyric.TestImportLyricScreen>
+    public class TestSceneImportLyric : EditorSubScreenTestScene<TestSceneImportLyric.TestLyricImporter>
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
@@ -36,10 +36,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
-        protected override TestImportLyricScreen CreateEditor()
+        protected override TestLyricImporter CreateEditor()
         {
             var temp = TestResources.GetTestLrcForImport("light");
-            return new TestImportLyricScreen(new FileInfo(temp));
+            return new TestLyricImporter(new FileInfo(temp));
         }
 
         private DialogOverlay dialogOverlay;
@@ -85,9 +85,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             }
         }
 
-        public class TestImportLyricScreen : ImportLyricScreen
+        public class TestLyricImporter : LyricImporter
         {
-            public TestImportLyricScreen(FileInfo fileInfo)
+            public TestLyricImporter(FileInfo fileInfo)
             {
                 if (ScreenStack.CurrentScreen is not DragFileSubScreen dragFileSubScreen)
                     throw new ScreenStack.ScreenNotInStackException($"{nameof(DragFileSubScreen)} does not in the screen.");

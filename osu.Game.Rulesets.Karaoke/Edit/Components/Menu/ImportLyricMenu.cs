@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private static void openImportScreen(IScreen screen)
         {
-            screen?.Push(new ImportLyricScreen());
+            screen?.Push(new LyricImporter());
         }
     }
 }

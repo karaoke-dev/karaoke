@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.Success
         public override IconUsage Icon => FontAwesome.Regular.CheckCircle;
 
         [Resolved]
-        private ImportLyricScreen lyricImporter { get; set; }
+        private LyricImporter lyricImporter { get; set; }
 
         public override void Complete()
         {
