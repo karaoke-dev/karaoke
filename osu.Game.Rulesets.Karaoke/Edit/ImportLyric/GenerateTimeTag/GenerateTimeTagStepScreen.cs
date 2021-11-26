@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 {
-    public class GenerateTimeTagSubScreen : ImportLyricSubScreenWithLyricEditor
+    public class GenerateTimeTagStepScreen : LyricImporterStepScreenWithLyricEditor
     {
         public override string Title => "Generate time tag";
 
@@ -62,11 +62,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
             }
         }
 
-        public class GenerateTimeTagNavigation : TopNavigation<GenerateTimeTagSubScreen>
+        public class GenerateTimeTagNavigation : TopNavigation<GenerateTimeTagStepScreen>
         {
             private const string auto_generate_time_tag = "AUTO_GENERATE_TIME_TAG";
 
-            public GenerateTimeTagNavigation(GenerateTimeTagSubScreen screen)
+            public GenerateTimeTagNavigation(GenerateTimeTagStepScreen screen)
                 : base(screen)
             {
             }
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
             private class GenerateTimeTagTextFlowContainer : NavigationTextContainer
             {
-                public GenerateTimeTagTextFlowContainer(GenerateTimeTagSubScreen screen)
+                public GenerateTimeTagTextFlowContainer(GenerateTimeTagStepScreen screen)
                 {
                     AddLinkFactory(auto_generate_time_tag, "auto generate time tag", screen.AskForAutoGenerateTimeTag);
                 }

@@ -7,7 +7,7 @@ using osu.Framework.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.Success
 {
-    public class SuccessSubScreen : ImportLyricSubScreen
+    public class SuccessStepScreen : LyricImporterStepScreen
     {
         public override string Title => "Success";
 

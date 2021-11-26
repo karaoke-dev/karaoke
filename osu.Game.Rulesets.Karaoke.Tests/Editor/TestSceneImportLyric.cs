@@ -89,15 +89,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         {
             public TestLyricImporter(FileInfo fileInfo)
             {
-                if (ScreenStack.CurrentScreen is not DragFileSubScreen dragFileSubScreen)
-                    throw new ScreenStack.ScreenNotInStackException($"{nameof(DragFileSubScreen)} does not in the screen.");
+                if (ScreenStack.CurrentScreen is not DragFileStepScreen dragFileSubScreen)
+                    throw new ScreenStack.ScreenNotInStackException($"{nameof(DragFileStepScreen)} does not in the screen.");
 
                 dragFileSubScreen.ImportLyricFile(fileInfo);
             }
 
             public void GoToStep(LyricImporterStep step)
             {
-                if (ScreenStack.CurrentScreen is not IImportLyricSubScreen lyricSubScreen)
+                if (ScreenStack.CurrentScreen is not ILyricImporterStepScreen lyricSubScreen)
                     return;
 
                 if (step == lyricSubScreen.Step)

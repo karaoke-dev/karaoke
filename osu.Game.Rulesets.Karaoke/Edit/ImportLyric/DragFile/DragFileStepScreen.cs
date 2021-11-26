@@ -17,7 +17,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.Overlays.Dialog;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
 {
-    public class DragFileSubScreen : ImportLyricSubScreen, ICanAcceptFiles
+    public class DragFileStepScreen : LyricImporterStepScreen, ICanAcceptFiles
     {
         public override string Title => "Import";
         public override string ShortTitle => "Import";
@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
         [Resolved]
         private OsuGameBase game { get; set; }
 
-        public DragFileSubScreen()
+        public DragFileStepScreen()
         {
             InternalChild = new DrawableDragFile
             {

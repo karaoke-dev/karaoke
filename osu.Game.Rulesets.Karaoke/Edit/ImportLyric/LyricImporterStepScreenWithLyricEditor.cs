@@ -8,14 +8,14 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    public abstract class ImportLyricSubScreenWithLyricEditor : ImportLyricSubScreenWithTopNavigation
+    public abstract class LyricImporterStepScreenWithLyricEditor : LyricImporterStepScreenWithTopNavigation
     {
         protected LyricEditor LyricEditor { get; private set; }
 
         [Cached]
         protected readonly LyricManager LyricManager;
 
-        protected ImportLyricSubScreenWithLyricEditor()
+        protected LyricImporterStepScreenWithLyricEditor()
         {
             AddInternal(LyricManager = new LyricManager());
         }

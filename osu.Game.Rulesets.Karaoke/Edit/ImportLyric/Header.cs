@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
             breadcrumbs.Current.ValueChanged += screen =>
             {
-                if (screen.NewValue is IImportLyricSubScreen multiScreen)
+                if (screen.NewValue is ILyricImporterStepScreen multiScreen)
                     title.Screen = multiScreen;
             };
 
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             private readonly OsuSpriteText dot;
             private readonly OsuSpriteText pageTitle;
 
-            public IImportLyricSubScreen Screen
+            public ILyricImporterStepScreen Screen
             {
                 set => pageTitle.Text = value.ShortTitle;
             }
@@ -145,10 +145,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 if (tab.Value == Current.Value)
                     return;
 
-                if (Current.Value is not IImportLyricSubScreen currentScreen)
+                if (Current.Value is not ILyricImporterStepScreen currentScreen)
                     return;
 
-                if (tab.Value is not IImportLyricSubScreen targetScreen)
+                if (tab.Value is not ILyricImporterStepScreen targetScreen)
                     return;
 
                 currentScreen.CanRollBack(targetScreen, enabled =>

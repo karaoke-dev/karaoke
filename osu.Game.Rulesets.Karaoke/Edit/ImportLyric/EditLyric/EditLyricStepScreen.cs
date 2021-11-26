@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 {
-    public class EditLyricSubScreen : ImportLyricSubScreenWithLyricEditor
+    public class EditLyricStepScreen : LyricImporterStepScreenWithLyricEditor
     {
         public override string Title => "Edit lyric";
 
@@ -45,12 +45,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
             Navigation.State = NavigationState.Working;
         }
 
-        public class EditLyricNavigation : TopNavigation<EditLyricSubScreen>
+        public class EditLyricNavigation : TopNavigation<EditLyricStepScreen>
         {
             private const string cutting_mode = "CUTTING_MODE";
             private const string typing_mode = "TYPING_MODE";
 
-            public EditLyricNavigation(EditLyricSubScreen screen)
+            public EditLyricNavigation(EditLyricStepScreen screen)
                 : base(screen)
             {
             }
@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 
             private class EditLyricTextFlowContainer : NavigationTextContainer
             {
-                public EditLyricTextFlowContainer(EditLyricSubScreen screen)
+                public EditLyricTextFlowContainer(EditLyricStepScreen screen)
                 {
                     AddLinkFactory(cutting_mode, "cutting mode", () => screen.SwitchLyricEditorMode(LyricEditorMode.Manage));
                     AddLinkFactory(typing_mode, "typing mode", () => screen.SwitchLyricEditorMode(LyricEditorMode.Typing));

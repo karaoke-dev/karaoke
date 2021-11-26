@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     public class RollBackPopupDialog : PopupDialog
     {
-        public RollBackPopupDialog(IImportLyricSubScreen screen, Action<bool> okAction = null)
+        public RollBackPopupDialog(ILyricImporterStepScreen screen, Action<bool> okAction = null)
         {
             Icon = screen.Icon;
             HeaderText = screen.ShortTitle;

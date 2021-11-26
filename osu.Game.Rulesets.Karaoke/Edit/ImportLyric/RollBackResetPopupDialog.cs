@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     public class RollBackResetPopupDialog : PopupDialog
     {
-        public RollBackResetPopupDialog(IImportLyricSubScreen screen, Action<bool> okAction = null)
+        public RollBackResetPopupDialog(ILyricImporterStepScreen screen, Action<bool> okAction = null)
         {
             Icon = screen.Icon;
             HeaderText = "Really sure?";

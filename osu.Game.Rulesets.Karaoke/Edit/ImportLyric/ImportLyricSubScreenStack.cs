@@ -16,11 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     public class ImportLyricSubScreenStack : OsuScreenStack
     {
-        private readonly Stack<IImportLyricSubScreen> stack = new();
+        private readonly Stack<ILyricImporterStepScreen> stack = new();
 
         public void Push(LyricImporterStep step)
         {
-            if (CurrentScreen is IImportLyricSubScreen lyricSubScreen)
+            if (CurrentScreen is ILyricImporterStepScreen lyricSubScreen)
             {
                 if (step == lyricSubScreen.Step)
                     throw new ScreenNotCurrentException("Cannot push same screen.");
@@ -35,27 +35,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             switch (step)
             {
                 case LyricImporterStep.ImportLyric:
-                    Push(new DragFileSubScreen());
+                    Push(new DragFileStepScreen());
                     return;
 
                 case LyricImporterStep.EditLyric:
-                    Push(new EditLyricSubScreen());
+                    Push(new EditLyricStepScreen());
                     return;
 
                 case LyricImporterStep.AssignLanguage:
-                    Push(new AssignLanguageSubScreen());
+                    Push(new AssignLanguageStepScreen());
                     return;
 
                 case LyricImporterStep.GenerateRuby:
-                    Push(new GenerateRubyRomajiSubScreen());
+                    Push(new GenerateRubyRomajiStepScreen());
                     return;
 
                 case LyricImporterStep.GenerateTimeTag:
-                    Push(new GenerateTimeTagSubScreen());
+                    Push(new GenerateTimeTagStepScreen());
                     return;
 
                 case LyricImporterStep.Success:
-                    Push(new SuccessSubScreen());
+                    Push(new SuccessStepScreen());
                     return;
 
                 default:
@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             }
         }
 
-        public void Push(IImportLyricSubScreen screen)
+        public void Push(ILyricImporterStepScreen screen)
         {
             stack.Push(screen);
             Push(screen as IScreen);

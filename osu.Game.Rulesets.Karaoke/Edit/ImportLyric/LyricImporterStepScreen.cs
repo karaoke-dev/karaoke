@@ -12,7 +12,7 @@ using osu.Game.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    public abstract class ImportLyricSubScreen : OsuScreen, IImportLyricSubScreen
+    public abstract class LyricImporterStepScreen : OsuScreen, ILyricImporterStepScreen
     {
         public const float X_SHIFT = 200;
         public const double X_MOVE_DURATION = 800;
@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         public abstract IconUsage Icon { get; }
 
-        protected ImportLyricSubScreen()
+        protected LyricImporterStepScreen()
         {
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         public abstract void Complete();
 
-        public virtual void CanRollBack(IImportLyricSubScreen rollBackScreen, Action<bool> callBack)
+        public virtual void CanRollBack(ILyricImporterStepScreen rollBackScreen, Action<bool> callBack)
         {
             DialogOverlay.Push(new RollBackPopupDialog(rollBackScreen, ok =>
             {
