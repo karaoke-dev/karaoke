@@ -16,7 +16,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI.Position;
-using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
 using osuTK;
 
@@ -36,9 +35,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 
         [Resolved]
         private NoteManager noteManager { get; set; }
-
-        [Resolved]
-        private Playfield playfield { get; set; }
 
         [Resolved]
         private IScrollingInfo scrollingInfo { get; set; }
