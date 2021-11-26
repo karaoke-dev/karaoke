@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         public const double DISAPPEAR_DURATION = 500;
 
         [Resolved]
-        protected ImportLyricSubScreenStack ScreenStack { get; private set; }
+        protected LyricImporterSubScreenStack ScreenStack { get; private set; }
 
         [Resolved]
         protected DialogOverlay DialogOverlay { get; private set; }

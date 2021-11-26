@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         private readonly ImportLyricWaveContainer waves;
 
         [Cached]
-        protected ImportLyricSubScreenStack ScreenStack { get; private set; }
+        protected LyricImporterSubScreenStack ScreenStack { get; private set; }
 
         [Cached]
         private readonly ImportLyricManager importManager;
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     {
                         RelativeSizeAxes = Axes.Both,
                         Padding = new MarginPadding { Top = Header.HEIGHT },
-                        Child = ScreenStack = new ImportLyricSubScreenStack { RelativeSizeAxes = Axes.Both }
+                        Child = ScreenStack = new LyricImporterSubScreenStack { RelativeSizeAxes = Axes.Both }
                     },
                     new Header(ScreenStack),
                 }

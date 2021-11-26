@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         private class ImportLyricEditor : LyricEditor
         {
             [Resolved]
-            private ImportLyricSubScreenStack screenStack { get; set; }
+            private LyricImporterSubScreenStack screenStack { get; set; }
 
             public override void NavigateToFix(LyricEditorMode mode)
             {

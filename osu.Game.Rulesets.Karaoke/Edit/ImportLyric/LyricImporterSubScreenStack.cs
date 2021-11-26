@@ -14,7 +14,7 @@ using osu.Game.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    public class ImportLyricSubScreenStack : OsuScreenStack
+    public class LyricImporterSubScreenStack : OsuScreenStack
     {
         private readonly Stack<ILyricImporterStepScreen> stack = new();
 
