@@ -5,9 +5,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Screens;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Layout;
-using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Style;
-using osu.Game.Rulesets.Karaoke.Edit.Translate;
 using osu.Game.Screens.Edit.Components.Menus;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
@@ -22,8 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             this.screen = screen;
             Items = new MenuItem[]
             {
-                createMenuItem<SingerScreen>("Singer"),
-                createMenuItem<TranslateScreen>("Translate"),
+                // createMenuItem<SingerScreen>("Singer"),
+                // createMenuItem<TranslateScreen>("Translate"),
                 createMenuItem<LayoutScreen>("Layout"),
                 createMenuItem<StyleScreen>("Style"),
             };

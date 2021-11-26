@@ -8,12 +8,11 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
-    public class TranslateScreen : EditorSubScreen
+    public class TranslateScreen : KaraokeEditorScreen
     {
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
@@ -22,6 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         protected readonly TranslateManager TranslateManager;
 
         public TranslateScreen()
+            : base(KaraokeEditorScreenMode.Translate)
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
             AddInternal(TranslateManager = new TranslateManager());

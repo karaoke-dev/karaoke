@@ -1,26 +1,25 @@
-﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
-    public class KaraokeLyricEditor : CompositeDrawable
+    public class LyricEditorScreen : KaraokeEditorScreen
     {
         private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new();
 
-        private readonly LyricEditor lyricEditor;
-
-        public KaraokeLyricEditor(Ruleset ruleset)
+        public LyricEditorScreen()
+            : base(KaraokeEditorScreenMode.Lyric)
         {
-            AddInternal(new KaraokeEditInputManager(ruleset.RulesetInfo)
+            LyricEditor lyricEditor;
+            AddInternal(new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
             {
                 RelativeSizeAxes = Axes.Both,
+                Padding = new MarginPadding(10),
                 Child = lyricEditor = new LyricEditor
                 {
                     RelativeSizeAxes = Axes.Both,

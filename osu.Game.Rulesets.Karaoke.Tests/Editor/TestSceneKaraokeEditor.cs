@@ -1,50 +1,42 @@
-﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
-using System.Globalization;
-using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Edit.Translate;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
-    [TestFixture]
-    public class TestSceneTranslate : EditorSubScreenTestScene<TranslateScreen>
+    public class TestSceneKaraokeEditor : EditorSubScreenTestScene<KaraokeEditor>
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
         private readonly EditorBeatmap editorBeatmap;
 
+        [Cached]
+        private readonly KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager;
+
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
-        protected override TranslateScreen CreateEditor() => new();
+        protected override KaraokeEditor CreateEditor() => new();
 
         private DialogOverlay dialogOverlay;
-        private LanguageSelectionDialog languageSelectionDialog;
+        private LyricCheckerManager lyricCheckerManager;
 
-        public TestSceneTranslate()
+        public TestSceneKaraokeEditor()
         {
             var beatmap = new TestKaraokeBeatmap(null);
-            if (new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
-                throw new ArgumentNullException(nameof(karaokeBeatmap));
-
-            karaokeBeatmap.AvailableTranslates = new[]
-            {
-                new CultureInfo("zh-TW"),
-                new CultureInfo("en-US"),
-                new CultureInfo("ja-JP")
-            };
-
+            var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
             editorBeatmap = new EditorBeatmap(karaokeBeatmap);
+            lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();
         }
 
         [BackgroundDependencyLoader]
@@ -56,11 +48,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             {
                 Content,
                 dialogOverlay = new DialogOverlay(),
-                languageSelectionDialog = new LanguageSelectionDialog()
+                lyricCheckerManager = new LyricCheckerManager()
             });
 
             Dependencies.Cache(dialogOverlay);
-            Dependencies.Cache(languageSelectionDialog);
+            Dependencies.Cache(lyricCheckerManager);
+
+            Dependencies.Cache(new EditorClock());
+            Dependencies.CacheAs<IEditorChangeHandler>(new EditorChangeHandler(editorBeatmap));
         }
     }
 }

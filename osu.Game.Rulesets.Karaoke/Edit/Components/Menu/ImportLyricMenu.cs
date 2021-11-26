@@ -3,6 +3,7 @@
 
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Screens;
+using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
@@ -15,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private static void openImportScreen(IScreen screen)
         {
-            // screen?.Push(new ImportLyricScreen());
+            screen?.Push(new ImportLyricScreen());
         }
     }
 }
