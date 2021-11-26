@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components;
 using osuTK;
 using Container = osu.Framework.Graphics.Containers.Container;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Style
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
     public class StyleScreen : EditorSubScreen
     {

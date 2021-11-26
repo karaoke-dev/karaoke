@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Style
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
     internal class LyricStylePreview : Container
     {

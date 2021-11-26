@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Style
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
     public class NoteStylePreview : Container
     {

@@ -6,7 +6,7 @@ using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Style
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
     internal class NoteColorSection : StyleSection
     {
