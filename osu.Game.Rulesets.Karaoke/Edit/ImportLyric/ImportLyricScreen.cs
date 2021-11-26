@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
+    [Cached]
     public class ImportLyricScreen : EditorSubScreen
     {
         private readonly ImportLyricWaveContainer waves;
