@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using NicoKaraParser;
 using NicoKaraParser.Model;
+using NicoKaraParser.Model.Font;
+using NicoKaraParser.Model.Font.Brush;
 using NicoKaraParser.Model.Font.Font;
 using NicoKaraParser.Model.Font.Shadow;
 using NicoKaraParser.Model.Layout;
@@ -97,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             return horizontalAnchor | verticalAnchor;
         }
 
-        private static List<ICustomizedShader> createShaders(NicoKaraParser.Model.Font.KaraokeFont font, ApplyShaderPart part)
+        private static List<ICustomizedShader> createShaders(KaraokeFont font, ApplyShaderPart part)
         {
             var fontInfo = font.FontInfos[0];
             var brushInfos = getBrusnInfos(font, part);
@@ -120,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             return shaders;
         }
 
-        private static NicoKaraParser.Model.Font.Brush.BrushInfo[] getBrusnInfos(NicoKaraParser.Model.Font.KaraokeFont font, ApplyShaderPart part) =>
+        private static BrushInfo[] getBrusnInfos(KaraokeFont font, ApplyShaderPart part) =>
             part switch
             {
                 ApplyShaderPart.Left => font.BrushInfos.GetRange(0, 3).ToArray(),
@@ -128,7 +130,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 _ => throw new ArgumentOutOfRangeException(nameof(part))
             };
 
-        private static OutlineShader createOutlineShader(NicoKaraParser.Model.Font.Brush.BrushInfo info, FontInfo fontInfo)
+        private static OutlineShader createOutlineShader(BrushInfo info, FontInfo fontInfo)
         {
             var color = convertColor(info);
             var radius = convertEdgeSize(fontInfo);
@@ -142,7 +144,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             static float convertEdgeSize(FontInfo info) => info.EdgeSize;
         }
 
-        private static ShadowShader createShadowShader(NicoKaraParser.Model.Font.Brush.BrushInfo info, ShadowSlide slide)
+        private static ShadowShader createShadowShader(BrushInfo info, ShadowSlide slide)
         {
             var color = convertColor(info);
             var shadowOffset = convertShadowSlide(slide);
@@ -156,7 +158,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             static Vector2 convertShadowSlide(ShadowSlide side) => new(side.X, side.Y);
         }
 
-        private static Color4 convertColor(NicoKaraParser.Model.Font.Brush.BrushInfo info)
+        private static Color4 convertColor(BrushInfo info)
         {
             // todo: we only support pure colour conversion.
             return convertSolidColor(info.SolidColor);

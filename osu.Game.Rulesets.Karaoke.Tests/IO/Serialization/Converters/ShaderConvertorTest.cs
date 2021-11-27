@@ -63,13 +63,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 }
             };
             var result = JsonConvert.SerializeObject(shader, CreateSettings());
-            Assert.AreEqual(result, "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}]}");
+            Assert.AreEqual(result,
+                "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}]}");
         }
 
         [Test]
         public void TestDeserializeListItems()
         {
-            const string json = "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}]}";
+            const string json =
+                "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}]}";
             var result = JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings()) as StepShader;
             var actual = new StepShader
             {

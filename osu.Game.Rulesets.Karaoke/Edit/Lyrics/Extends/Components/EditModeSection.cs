@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Markdig;
 using Markdig.Syntax;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -93,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 // update description text.
                 var item = child.Item;
                 var markdownText = item.Description.Value.ToString();
-                var parsed = Markdig.Markdown.Parse(markdownText);
+                var parsed = Markdown.Parse(markdownText);
 
                 if (parsed.FirstOrDefault() is ParagraphBlock paragraphBlock)
                 {
