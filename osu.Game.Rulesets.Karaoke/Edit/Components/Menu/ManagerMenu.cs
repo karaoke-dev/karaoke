@@ -5,6 +5,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Screens;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Screens.Edit.Components.Menus;
+using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 {
@@ -25,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             };
         }
 
-        private EditorMenuItem createMenuItem<T>(string name) where T : EditorSubScreen, new()
+        private EditorMenuItem createMenuItem<T>(string name) where T : ScreenWithBeatmapBackground, new()
         {
             return new(name, MenuItemType.Standard, () =>
             {

@@ -14,16 +14,16 @@ using osu.Framework.Screens;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Cursor;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Edit.Components;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Menus;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components;
 using osu.Game.Screens.Edit.Components.Menus;
 using osu.Game.Screens.Edit.Components.Timelines.Summary;
+using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit
 {
-    public abstract class GenericEditor<TScreenMode> : EditorSubScreen where TScreenMode : Enum
+    public abstract class GenericEditor<TScreenMode> : ScreenWithBeatmapBackground where TScreenMode : Enum
     {
         public override float BackgroundParallaxAmount => 0.1f;
 

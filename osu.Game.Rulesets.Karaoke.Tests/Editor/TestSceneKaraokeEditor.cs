@@ -11,11 +11,12 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Tests.Screens;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
-    public class TestSceneKaraokeEditor : EditorSubScreenTestScene<KaraokeEditor>
+    public class TestSceneKaraokeEditor : ScreenTestScene<KaraokeEditor>
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]

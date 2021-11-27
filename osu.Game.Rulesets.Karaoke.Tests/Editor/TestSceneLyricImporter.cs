@@ -19,13 +19,14 @@ using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
+using osu.Game.Rulesets.Karaoke.Tests.Screens;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
-    public class TestSceneLyricImporter : EditorSubScreenTestScene<TestSceneLyricImporter.TestLyricImporter>
+    public class TestSceneLyricImporter : ScreenTestScene<TestSceneLyricImporter.TestLyricImporter>
     {
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
