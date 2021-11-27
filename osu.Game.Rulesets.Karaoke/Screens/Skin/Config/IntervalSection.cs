@@ -5,7 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.LyricConfigs
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
 {
     internal class IntervalSection : LyricConfigSection
     {

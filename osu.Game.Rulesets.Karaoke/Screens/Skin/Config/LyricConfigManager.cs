@@ -6,7 +6,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.LyricConfigs
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
 {
     public class LyricConfigManager : Component
     {

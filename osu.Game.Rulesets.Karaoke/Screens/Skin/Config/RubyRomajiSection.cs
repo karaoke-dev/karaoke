@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.LyricConfigs
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
 {
     internal class RubyRomajiSection : LyricConfigSection
     {
