@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                 // createMenuItem<SingerScreen>("Singer"),
                 // createMenuItem<TranslateScreen>("Translate"),
                 createMenuItem<LayoutScreen>("Layout"),
-                createMenuItem<StyleScreen>("Style"),
+                // createMenuItem<StyleScreen>("Style"),
             };
         }
 

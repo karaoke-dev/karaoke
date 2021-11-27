@@ -10,13 +10,12 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit.Components;
 using osuTK;
 using Container = osu.Framework.Graphics.Containers.Container;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
-    public class StyleScreen : EditorSubScreen
+    public class StyleScreen : KaraokeSkinEditorScreen
     {
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
@@ -28,6 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
         private Container previewContainer;
 
         public StyleScreen()
+            : base(KaraokeSkinEditorScreenMode.Style)
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Pink);
             AddInternal(StyleManager = new StyleManager());
