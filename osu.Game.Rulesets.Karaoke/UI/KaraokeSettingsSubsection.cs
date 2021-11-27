@@ -11,7 +11,7 @@ using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Overlays;
-using osu.Game.Rulesets.Karaoke.Screens.Config;
+using osu.Game.Rulesets.Karaoke.Screens.Settings;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
@@ -72,15 +72,15 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 },
                 new DangerousSettingsButton
                 {
-                    Text = "Open config",
-                    TooltipText = "Hello config",
+                    Text = "Open ruleset settings",
+                    TooltipText = "Open ruleset settings for adjusting more configs.",
                     Action = () =>
                     {
                         try
                         {
                             var screenStake = Game.GetScreenStack();
                             var settingOverlay = Game.GetSettingsOverlay();
-                            screenStake?.Push(new KaraokeConfigScreen());
+                            screenStake?.Push(new KaraokeSettings());
                             settingOverlay?.Hide();
                         }
                         catch
