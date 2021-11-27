@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
         public const float HEIGHT = 75;
 
         [Resolved]
-        private ConfigColourProvider colourProvider { get; set; }
+        private KaraokeSettingsColourProvider colourProvider { get; set; }
 
         private readonly Box background;
         private readonly KaraokeConfigHeaderTitle title;
@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             }
 
             [BackgroundDependencyLoader]
-            private void load(ConfigColourProvider colourProvider, Bindable<SettingsSection> selectedSection)
+            private void load(KaraokeSettingsColourProvider colourProvider, Bindable<SettingsSection> selectedSection)
             {
                 selectedSection.BindValueChanged(x =>
                 {

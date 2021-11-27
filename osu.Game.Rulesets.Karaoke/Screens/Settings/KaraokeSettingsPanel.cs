@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
         public IReadOnlyList<SettingsSection> Sections => SectionsContainer.Children;
 
         [BackgroundDependencyLoader]
-        private void load(ConfigColourProvider colourProvider, Bindable<SettingsSection> selectedSection, Bindable<SettingsSubsection> selectedSubsection)
+        private void load(KaraokeSettingsColourProvider colourProvider, Bindable<SettingsSection> selectedSection, Bindable<SettingsSubsection> selectedSubsection)
         {
             initialSelectionContainer();
             initialContentContainer();

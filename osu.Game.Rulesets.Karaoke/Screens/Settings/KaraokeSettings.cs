@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
     public class KaraokeSettings : OsuScreen
     {
         [Cached]
-        private ConfigColourProvider colourProvider = new();
+        private KaraokeSettingsColourProvider colourProvider = new();
 
         [Cached]
         private Bindable<SettingsSection> selectedSection = new();

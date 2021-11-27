@@ -9,7 +9,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
 {
-    public class ConfigColourProvider
+    public class KaraokeSettingsColourProvider
     {
         public Color4 GetContentColour(SettingsSection section) => getColour(section, 0.4f, 0.6f);
 

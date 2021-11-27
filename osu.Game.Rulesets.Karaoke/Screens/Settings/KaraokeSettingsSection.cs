@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
         }
 
         [BackgroundDependencyLoader]
-        private void load(ConfigColourProvider colourProvider)
+        private void load(KaraokeSettingsColourProvider colourProvider)
         {
             var colour = colourProvider.GetContentColour(this);
 
