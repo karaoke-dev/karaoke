@@ -4,7 +4,6 @@
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Skin;
-using osu.Game.Rulesets.Karaoke.Tests.Editor;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens
