@@ -61,8 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                         {
                             Items = new MenuItem[]
                             {
-                                new ManagerMenu(null, "Manage"),
-                                new GeneratorMenu("Generator"),
+                                // todo: maybe place menu item for navigate to skin editor.
                             }
                         },
                         new MenuItem("Config")
