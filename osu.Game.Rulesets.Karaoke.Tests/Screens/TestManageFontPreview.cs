@@ -8,7 +8,7 @@ using osu.Framework.IO.Stores;
 using osu.Framework.Platform;
 using osu.Framework.Timing;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Screens.Config.Previews.Graphics;
+using osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens

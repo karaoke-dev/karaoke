@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
-        protected override TestLyricImporter CreateEditor()
+        protected override TestLyricImporter CreateScreen()
         {
             var temp = TestResources.GetTestLrcForImport("light");
             return new TestLyricImporter(new FileInfo(temp));
@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
             foreach (var step in steps)
             {
-                AddStep($"go to step {Enum.GetName(typeof(LyricImporterStep), step)}", () => { Editor.GoToStep(step); });
+                AddStep($"go to step {Enum.GetName(typeof(LyricImporterStep), step)}", () => { Screen.GoToStep(step); });
             }
         }
 
