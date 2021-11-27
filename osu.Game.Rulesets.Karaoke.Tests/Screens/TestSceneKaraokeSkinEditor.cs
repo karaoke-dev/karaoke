@@ -9,7 +9,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens
 {
-    public class TestSceneKaraokeSkinEditor : EditorSubScreenTestScene<KaraokeSkinEditor>
+    public class TestSceneKaraokeSkinEditor : ScreenTestScene<KaraokeSkinEditor>
     {
         // todo: karaoke skin editor might not need editor beatmap, or at least it will be optional.
         [Cached(typeof(EditorBeatmap))]
