@@ -1,41 +1,28 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Globalization;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Translate;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     [TestFixture]
     public class TestSceneTranslateScreen : KaraokeEditorScreenTestScene<TranslateScreen>
     {
-        [Cached(typeof(EditorBeatmap))]
-        [Cached(typeof(IBeatSnapProvider))]
-        private readonly EditorBeatmap editorBeatmap;
-
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
         protected override TranslateScreen CreateEditorScreen() => new();
 
-        private DialogOverlay dialogOverlay;
-        private LanguageSelectionDialog languageSelectionDialog;
-
-        public TestSceneTranslateScreen()
+        protected override KaraokeBeatmap CreateBeatmap()
         {
-            var beatmap = new TestKaraokeBeatmap(null);
-            if (new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
-                throw new ArgumentNullException(nameof(karaokeBeatmap));
+            var karaokeBeatmap = base.CreateBeatmap();
 
             karaokeBeatmap.AvailableTranslates = new[]
             {
@@ -44,14 +31,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 new CultureInfo("ja-JP")
             };
 
-            editorBeatmap = new EditorBeatmap(karaokeBeatmap);
+            return karaokeBeatmap;
         }
+
+        private DialogOverlay dialogOverlay;
+        private LanguageSelectionDialog languageSelectionDialog;
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
-
             base.Content.AddRange(new Drawable[]
             {
                 Content,
