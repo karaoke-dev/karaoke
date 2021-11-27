@@ -3,18 +3,12 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Screens.Settings;
-using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens
 {
     [TestFixture]
-    public class TestSceneKaraokeSettings : ScreenTestScene
+    public class TestSceneKaraokeSettings : ScreenTestScene<KaraokeSettings>
     {
-        public TestSceneKaraokeSettings()
-        {
-            var screen = new KaraokeSettings();
-            AddStep("show", () => LoadScreen(screen));
-            AddUntilStep("wait for loaded", () => screen.IsLoaded);
-        }
+        protected override KaraokeSettings CreateScreen() => new();
     }
 }

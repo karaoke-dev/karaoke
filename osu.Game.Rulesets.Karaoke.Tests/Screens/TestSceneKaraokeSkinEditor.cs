@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens
         [Cached(typeof(EditorBeatmap))]
         private readonly EditorBeatmap editorBeatmap = new(new KaraokeBeatmap());
 
-        protected override KaraokeSkinEditor CreateEditor() => new();
+        protected override KaraokeSkinEditor CreateScreen() => new();
 
         [BackgroundDependencyLoader]
         private void load()

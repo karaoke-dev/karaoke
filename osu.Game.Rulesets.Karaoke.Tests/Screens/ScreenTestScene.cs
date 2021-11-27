@@ -1,28 +1,28 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Game.Screens.Play;
+using osu.Game.Screens;
 using osu.Game.Tests.Visual;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens
 {
-    public abstract class ScreenTestScene<T> : ScreenTestScene where T : ScreenWithBeatmapBackground
+    public abstract class ScreenTestScene<T> : ScreenTestScene where T : OsuScreen
     {
-        protected T Editor { get; private set; }
+        protected T Screen { get; private set; }
 
         public override void SetUpSteps()
         {
             base.SetUpSteps();
 
-            AddStep("load editor", LoadEditor);
-            AddUntilStep("wait for editor to load", () => Editor.IsLoaded);
+            AddStep("load screen", LoadScreen);
+            AddUntilStep("wait for loaded", () => Screen.IsLoaded);
         }
 
-        protected virtual void LoadEditor()
+        protected virtual void LoadScreen()
         {
-            LoadScreen(Editor = CreateEditor());
+            LoadScreen(Screen = CreateScreen());
         }
 
-        protected abstract T CreateEditor();
+        protected abstract T CreateScreen();
     }
 }
