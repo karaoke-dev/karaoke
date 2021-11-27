@@ -6,12 +6,12 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.Components;
+using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     [Cached]
-    public class LyricImporter : EditorSubScreen
+    public class LyricImporter : ScreenWithBeatmapBackground
     {
         private readonly LyricImporterWaveContainer waves;
 
