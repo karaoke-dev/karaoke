@@ -53,8 +53,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
         protected override SelectionHandler<Lyric> CreateSelectionHandler()
             => new SingerLyricSelectionHandler();
 
-        protected override SelectionBlueprint<Lyric> CreateBlueprintFor(Lyric hitObject)
-            => new LyricTimelineHitObjectBlueprint(hitObject);
+        protected override SelectionBlueprint<Lyric> CreateBlueprintFor(Lyric item)
+            => new LyricTimelineHitObjectBlueprint(item);
 
         protected override DragBox CreateDragBox(Action<RectangleF> performSelect) => new SingerLyricDragBox(performSelect);
 
