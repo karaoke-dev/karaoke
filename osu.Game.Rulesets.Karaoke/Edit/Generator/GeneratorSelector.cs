@@ -9,22 +9,22 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator
 {
-    public abstract class GeneratorSelector<TGenerator, TConfig> where TGenerator : class
+    public abstract class GeneratorSelector<TBaseGenerator, TBaseConfig> where TBaseGenerator : class
     {
-        protected Dictionary<CultureInfo, Lazy<TGenerator>> Generator { get; } = new();
+        protected Dictionary<CultureInfo, Lazy<TBaseGenerator>> Generator { get; } = new();
 
-        protected void RegisterGenerator<T, Tc>(CultureInfo info) where T : TGenerator where Tc : TConfig, new()
+        protected void RegisterGenerator<TGenerator, TConfig>(CultureInfo info) where TGenerator : TBaseGenerator where TConfig : TBaseConfig, new()
         {
-            Generator.Add(info, new Lazy<TGenerator>(() =>
+            Generator.Add(info, new Lazy<TBaseGenerator>(() =>
             {
                 // todo : get config from setting.
-                var config = new Tc();
-                var generator = Activator.CreateInstance(typeof(T), config) as TGenerator;
+                var config = new TConfig();
+                var generator = Activator.CreateInstance(typeof(TGenerator), config) as TBaseGenerator;
                 return generator;
             }));
         }
 
-        public bool Generatable(Lyric lyric)
+        public bool CanGenerate(Lyric lyric)
             => Generator.Keys.Any(k => EqualityComparer<CultureInfo>.Default.Equals(k, lyric.Language));
     }
 }
