@@ -26,9 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             Masking = true;
         }
 
-        protected override double GetTime(KeyValuePair<double, KaraokeSaitenAction> action) => action.Key;
+        protected override double GetTime(KeyValuePair<double, KaraokeSaitenAction> frame) => frame.Key;
 
-        protected override float GetPosition(KeyValuePair<double, KaraokeSaitenAction> action) => notePositionInfo.Calculator.YPositionAt(action.Value);
+        protected override float GetPosition(KeyValuePair<double, KaraokeSaitenAction> frame) => notePositionInfo.Calculator.YPositionAt(frame.Value);
 
         private bool createNew = true;
 

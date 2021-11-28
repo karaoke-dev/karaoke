@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Helper
@@ -32,15 +33,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             if (!result.Success)
                 throw new RegexMatchTimeoutException(nameof(str));
 
-            var startIndex = int.Parse(result.Groups["start"].Value);
-            var endIndex = int.Parse(result.Groups["end"].Value);
-            var text = result.Groups["ruby"].Value;
-
             return new RubyTag
             {
-                StartIndex = startIndex,
-                EndIndex = endIndex,
-                Text = text
+                StartIndex = result.GetGroupValue<int>("start"),
+                EndIndex = result.GetGroupValue<int>("end"),
+                Text = result.GetGroupValue<string>("ruby")
             };
         }
 
@@ -62,15 +59,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             if (!result.Success)
                 throw new RegexMatchTimeoutException(nameof(str));
 
-            var startIndex = int.Parse(result.Groups["start"].Value);
-            var endIndex = int.Parse(result.Groups["end"].Value);
-            var text = result.Groups["romaji"].Value;
-
             return new RomajiTag
             {
-                StartIndex = startIndex,
-                EndIndex = endIndex,
-                Text = text
+                StartIndex = result.GetGroupValue<int>("start"),
+                EndIndex = result.GetGroupValue<int>("end"),
+                Text = result.GetGroupValue<string>("romaji")
             };
         }
 
@@ -92,10 +85,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             if (!result.Success)
                 throw new RegexMatchTimeoutException(nameof(str));
 
-            var index = int.Parse(result.Groups["index"].Value);
-            var state = result.Groups["state"].Value == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
-            var timeStr = result.Groups["time"].Value;
-            var time = timeStr == "" ? default(int?) : int.Parse(timeStr);
+            var index = result.GetGroupValue<int>("index");
+            var state = result.GetGroupValue<string>("state") == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
+            var time = result.GetGroupValue<int?>("time");
 
             return new TimeTag(new TextIndex(index, state), time);
         }
@@ -118,8 +110,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             if (!result.Success)
                 throw new RegexMatchTimeoutException(nameof(str));
 
-            var index = int.Parse(result.Groups["index"].Value);
-            var state = result.Groups["state"].Value == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
+            var index = result.GetGroupValue<int>("index");
+            var state = result.GetGroupValue<string>("state") == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
 
             return new TextIndex(index, state);
         }
@@ -142,9 +134,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             if (!result.Success)
                 throw new RegexMatchTimeoutException(nameof(str));
 
-            var startTime = double.Parse(result.Groups["startTime"].Value);
-            var endTime = double.Parse(result.Groups["endTime"].Value);
-            var text = result.Groups["lyric"].Value;
+            var startTime = result.GetGroupValue<double>("startTime");
+            var endTime = result.GetGroupValue<double>("endTime");
+            var text = result.GetGroupValue<string>("lyric");
 
             return new Lyric
             {
@@ -154,7 +146,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
                 TimeTags = new[]
                 {
                     new TimeTag(new TextIndex(0), startTime),
-                    new TimeTag(new TextIndex((int)text?.Length - 1, TextIndex.IndexState.End), endTime)
+                    new TimeTag(new TextIndex((text?.Length ?? 0) - 1, TextIndex.IndexState.End), endTime)
                 }
             };
         }
@@ -208,7 +200,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
                 throw new RegexMatchTimeoutException(nameof(str));
 
             // todo : implementation
-            var id = int.Parse(result.Groups["id"].Value);
+            var id = result.GetGroupValue<int>("id");
 
             return new Singer(id);
         }

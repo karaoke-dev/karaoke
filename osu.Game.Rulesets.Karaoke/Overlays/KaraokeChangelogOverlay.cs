@@ -19,6 +19,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Overlays.Changelog;
 using osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar;
@@ -228,9 +229,9 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                 if (!result.Success)
                     return DateTimeOffset.MaxValue;
 
-                var year = int.Parse(result.Groups["year"].Value);
-                var month = int.Parse(result.Groups["month"].Value);
-                var day = int.Parse(result.Groups["day"].Value);
+                var year = result.GetGroupValue<int>("year");
+                var month = result.GetGroupValue<int>("month");
+                var day = result.GetGroupValue<int>("day");
 
                 return new DateTimeOffset(new DateTime(year, month, day));
             }

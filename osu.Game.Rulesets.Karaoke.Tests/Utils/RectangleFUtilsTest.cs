@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using osu.Framework.Graphics.Primitives;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
@@ -35,10 +36,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             if (!result.Success)
                 throw new ArgumentException(null, nameof(str));
 
-            var x = float.Parse(result.Groups["x"].Value);
-            var y = float.Parse(result.Groups["y"].Value);
-            var width = float.Parse(result.Groups["width"].Value);
-            var height = float.Parse(result.Groups["height"].Value);
+            var x = result.GetGroupValue<float>("x");
+            var y = result.GetGroupValue<float>("y");
+            var width = result.GetGroupValue<float>("width");
+            var height = result.GetGroupValue<float>("height");
             return new RectangleF(x, y, width, height);
         }
     }

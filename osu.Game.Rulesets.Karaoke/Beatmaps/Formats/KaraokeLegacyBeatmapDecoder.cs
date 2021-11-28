@@ -277,7 +277,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 availableTranslates.Add(cultureInfo);
             }
 
-            var dictionary = new LegacyPropertyDictionary
+            var dictionary = new LegacyProperties
             {
                 AvailableTranslates = availableTranslates.ToArray()
             };

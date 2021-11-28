@@ -5,6 +5,7 @@ using System;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
@@ -24,15 +25,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             if (!result.Success)
                 return new RubyTag();
 
-            var startIndex = int.Parse(result.Groups["start"]?.Value);
-            var endIndex = int.Parse(result.Groups["end"]?.Value);
-            var text = result.Groups["ruby"]?.Value;
-
             return new RubyTag
             {
-                StartIndex = startIndex,
-                EndIndex = endIndex,
-                Text = text
+                StartIndex = result.GetGroupValue<int>("start"),
+                EndIndex = result.GetGroupValue<int>("end"),
+                Text = result.GetGroupValue<string>("ruby")
             };
         }
 

@@ -68,11 +68,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
             });
         }
 
-        protected override string GetFieldValue(T textTag)
-            => textTag.Text;
+        protected override string GetFieldValue(T item)
+            => item.Text;
 
-        protected override void ApplyValue(T textTag, string value)
-            => textTag.Text = value;
+        protected override void ApplyValue(T item, string value)
+            => item.Text = value;
 
         protected override void OnFocus(FocusEvent e)
         {

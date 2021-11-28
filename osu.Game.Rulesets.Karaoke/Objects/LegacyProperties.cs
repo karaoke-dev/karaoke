@@ -7,7 +7,8 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class LegacyPropertyDictionary : KaraokeHitObject
+    // todo: this function is used for legacy karaoke beatmap, will be removed eventually.
+    public class LegacyProperties : KaraokeHitObject
     {
         public CultureInfo[] AvailableTranslates { get; set; }
 

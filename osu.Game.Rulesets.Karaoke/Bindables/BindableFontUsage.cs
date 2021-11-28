@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Extensions;
 
 namespace osu.Game.Rulesets.Karaoke.Bindables
 {
@@ -53,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             // because FontUsage.ToString() will have "," symbol.
             str = str.Replace(",", "");
             var regex = new Regex(@"\b(?<key>font|family|weight|size|italics|fixedWidth)(?<op>[=]+)(?<value>("".*"")|(\S*))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            var dictionary = regex.Matches(str).ToDictionary(k => k.Groups["key"].Value, v => v.Groups["value"].Value);
+            var dictionary = regex.Matches(str).ToDictionary(k => k.GetGroupValue<string>("key"), v => v.GetGroupValue<string>("value"));
 
             if (dictionary.ContainsKey("Font"))
             {

@@ -13,6 +13,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Layout;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers.Markdown;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osuTK;
 
@@ -77,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                     return;
 
                 // add issue if has user
-                var issues = result.Select(x => x.Groups["issue"]?.Value).Where(x => !string.IsNullOrEmpty(x)).ToArray();
+                var issues = result.Select(x => x.GetGroupValue<string>("issue")).Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
                 if (issues.Any())
                 {
@@ -101,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 }
 
                 // add use name if has user
-                var usernames = result.Select(x => x.Groups["username"]?.Value).Where(x => !string.IsNullOrEmpty(x));
+                var usernames = result.Select(x => x.GetGroupValue<string>("username")).Where(x => !string.IsNullOrEmpty(x));
 
                 foreach (var user in usernames)
                 {

@@ -196,7 +196,7 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override string PlayingVerb => "Singing karaoke";
 
-        public override ISkin CreateLegacySkinProvider(ISkin source, IBeatmap beatmap) => new KaraokeLegacySkinTransformer(source, beatmap);
+        public override ISkin CreateLegacySkinProvider(ISkin skin, IBeatmap beatmap) => new KaraokeLegacySkinTransformer(skin, beatmap);
 
         public override IConvertibleReplayFrame CreateConvertibleReplayFrame() => new KaraokeReplayFrame();
 

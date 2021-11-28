@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 LegacyKaraokeSkinConfigurationLookups.JudgementLineBodyImage => "body",
                 LegacyKaraokeSkinConfigurationLookups.JudgementLineHeadImage => "head",
                 LegacyKaraokeSkinConfigurationLookups.JudgementLineTailImage => "tail",
-                _ => throw new ArgumentOutOfRangeException($"{nameof(lookup)} should be body, head or tail.")
+                _ => throw new ArgumentOutOfRangeException(nameof(lookup))
             };
 
             return $"karaoke-judgement-line-{suffix}";

@@ -5,19 +5,19 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
 {
     public static class ObjectExtension
     {
-        public static T CallMethod<T>(this object obj, string methodName)
+        public static TType CallMethod<TType>(this object obj, string methodName)
         {
-            return (T)obj.GetType().GetMethod(methodName)?.Invoke(obj, null);
+            return (TType)obj.GetType().GetMethod(methodName)?.Invoke(obj, null);
         }
 
-        public static T CallMethod<T, P>(this object obj, string methodName, P param)
+        public static TType CallMethod<TType, TProperty>(this object obj, string methodName, TProperty param)
         {
-            return obj.CallMethod<T>(methodName, new object[] { param });
+            return obj.CallMethod<TType>(methodName, new object[] { param });
         }
 
-        public static T CallMethod<T>(this object obj, string methodName, object[] @params)
+        public static TType CallMethod<TType>(this object obj, string methodName, object[] @params)
         {
-            return (T)obj.GetType().GetMethod(methodName)?.Invoke(obj, @params);
+            return (TType)obj.GetType().GetMethod(methodName)?.Invoke(obj, @params);
         }
     }
 }

@@ -71,14 +71,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.RubyRomaji
         {
             var selector = new RubyTagGeneratorSelector();
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-            return lyrics.Any(lyric => selector.Generatable(lyric));
+            return lyrics.Any(lyric => selector.CanGenerate(lyric));
         }
 
         public bool CanAutoGenerateRomaji()
         {
             var selector = new RomajiTagGeneratorSelector();
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-            return lyrics.Any(lyric => selector.Generatable(lyric));
+            return lyrics.Any(lyric => selector.CanGenerate(lyric));
         }
     }
 }

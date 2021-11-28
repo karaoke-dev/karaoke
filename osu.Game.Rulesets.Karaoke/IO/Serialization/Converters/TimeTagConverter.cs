@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
@@ -25,10 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             if (!result.Success)
                 return new TimeTag(new TextIndex());
 
-            var index = int.Parse(result.Groups["index"]?.Value);
-            var state = result.Groups["state"]?.Value == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
-            var timeStr = result.Groups["time"]?.Value;
-            var time = timeStr == "" ? default(int?) : int.Parse(timeStr);
+            var index = result.GetGroupValue<int>("index");
+            var state = result.GetGroupValue<string>("state") == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
+            var time = result.GetGroupValue<int?>("time");
 
             return new TimeTag(new TextIndex(index, state), time);
         }

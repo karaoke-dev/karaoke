@@ -19,15 +19,16 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static Tuple<Lyric, Lyric> SplitLyric(Lyric lyric, int splitIndex)
         {
             if (lyric == null)
-                throw new ArgumentNullException($"{nameof(lyric)} cannot be null.");
+                throw new ArgumentNullException(nameof(lyric));
 
-            if (string.IsNullOrEmpty(lyric.Text))
-                throw new ArgumentNullException($"{nameof(lyric.Text)} cannot be null.");
+            var lyricText = lyric.Text;
+            if (string.IsNullOrEmpty(lyricText))
+                throw new ArgumentNullException(nameof(lyricText));
 
-            if (splitIndex < 0 || splitIndex > lyric.Text.Length)
+            if (splitIndex < 0 || splitIndex > lyricText.Length)
                 throw new ArgumentOutOfRangeException(nameof(splitIndex));
 
-            if (splitIndex == 0 || splitIndex == lyric.Text.Length)
+            if (splitIndex == 0 || splitIndex == lyricText.Length)
                 throw new InvalidOperationException($"{nameof(splitIndex)} cannot cut at first or last index.");
 
             var firstTimeTag = lyric.TimeTags?.Where(x => x.Index.Index < splitIndex).ToList();
@@ -85,8 +86,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static Lyric CombineLyric(Lyric firstLyric, Lyric secondLyric)
         {
-            if (firstLyric == null || secondLyric == null)
-                throw new ArgumentNullException($"{nameof(firstLyric)} or {nameof(secondLyric)} cannot be null.");
+            if (firstLyric == null)
+                throw new ArgumentNullException(nameof(firstLyric));
+
+            if (secondLyric == null)
+                throw new ArgumentNullException(nameof(secondLyric));
 
             var shiftingIndex = firstLyric.Text?.Length ?? 0;
 

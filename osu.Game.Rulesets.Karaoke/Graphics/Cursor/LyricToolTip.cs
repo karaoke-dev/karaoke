@@ -9,9 +9,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
     public class LyricTooltip : BackgroundToolTip<Lyric>
     {
-        public override void SetContent(Lyric lyric)
+        public override void SetContent(Lyric content)
         {
-            Child = new PreviewLyricSpriteText(lyric)
+            Child = new PreviewLyricSpriteText(content)
             {
                 Margin = new MarginPadding(10),
                 Font = new FontUsage(size: 32),

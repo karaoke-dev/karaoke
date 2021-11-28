@@ -54,9 +54,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             timeRange.ValueChanged += _ => initialStateCache.Invalidate();
         }
 
-        protected abstract double GetTime(T point);
+        protected abstract double GetTime(T frame);
 
-        protected abstract float GetPosition(T point);
+        protected abstract float GetPosition(T frame);
 
         protected void CreateNew(T point)
         {

@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (lyric == null)
                 return null;
 
-            var textLength = lyric?.Text.Length ?? 0;
+            var textLength = lyric.Text?.Length ?? 0;
             var index = new TextIndex(textLength - 1, suitableState(TextIndex.IndexState.End));
             return new TimeTagIndexCaretPosition(lyric, index);
         }

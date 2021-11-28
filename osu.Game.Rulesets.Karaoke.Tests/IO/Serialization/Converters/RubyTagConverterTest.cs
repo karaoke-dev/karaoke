@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase("[1,1]:ルビ", 1, 1, "ルビ")]
         [TestCase("[-1,-2]:ルビ", -1, -2, "ルビ")] // Should not check ruby is out of range in here.
         [TestCase("[1,2]:::[][]", 1, 2, "::[][]")]
-        [TestCase("[1,2]:", 1, 2, "")]
+        [TestCase("[1,2]:", 1, 2, null)]
         [TestCase("[1,2]:null", 1, 2, "null")]
         [TestCase("", 0, 0, null)] // Test deal with format is not right below.
         [TestCase("[1,2]", 0, 0, null)]

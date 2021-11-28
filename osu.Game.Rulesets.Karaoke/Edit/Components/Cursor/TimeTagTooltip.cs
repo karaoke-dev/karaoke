@@ -83,11 +83,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             };
         }
 
-        public override void SetContent(TimeTag timeTag)
+        public override void SetContent(TimeTag content)
         {
-            trackTimer.Text = TimeTagUtils.FormattedString(timeTag);
-            index.Text = $"Position: {timeTag.Index.Index}";
-            indexState.Text = timeTag.Index.State == TextIndex.IndexState.Start ? "Start" : "End";
+            trackTimer.Text = TimeTagUtils.FormattedString(content);
+            index.Text = $"Position: {content.Index.Index}";
+            indexState.Text = content.Index.State == TextIndex.IndexState.Start ? "Start" : "End";
         }
 
         [BackgroundDependencyLoader]

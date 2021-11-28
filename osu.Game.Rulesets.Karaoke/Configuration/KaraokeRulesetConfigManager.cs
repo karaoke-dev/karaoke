@@ -10,6 +10,7 @@ using osu.Game.Configuration;
 using osu.Game.Rulesets.Configuration;
 using osu.Game.Rulesets.Karaoke.Bindables;
 using osu.Game.Rulesets.Karaoke.UI;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
 {
@@ -85,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
                 case KaraokeRulesetSetting.RomajiFont:
                 case KaraokeRulesetSetting.TranslateFont:
                 case KaraokeRulesetSetting.NoteFont:
-                    base.AddBindable(lookup, new BindableFontUsage((FontUsage)Convert.ChangeType(bindable.Value, typeof(FontUsage))));
+                    base.AddBindable(lookup, new BindableFontUsage(TypeUtils.ChangeType<FontUsage>(bindable.Value)));
                     break;
 
                 default:

@@ -48,9 +48,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         public class SingerVoiceVisualization : VoiceVisualization<KeyValuePair<double, float?>>
         {
-            protected override double GetTime(KeyValuePair<double, float?> point) => point.Key;
+            protected override double GetTime(KeyValuePair<double, float?> frame) => frame.Key;
 
-            protected override float GetPosition(KeyValuePair<double, float?> point) => point.Value ?? 0;
+            protected override float GetPosition(KeyValuePair<double, float?> frame) => frame.Value ?? 0;
 
             private bool createNew = true;
 
