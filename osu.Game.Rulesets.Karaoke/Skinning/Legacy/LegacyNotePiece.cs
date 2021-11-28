@@ -218,7 +218,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 LegacyKaraokeSkinConfigurationLookups.NoteBodyImage => "body",
                 LegacyKaraokeSkinConfigurationLookups.NoteHeadImage => "head",
                 LegacyKaraokeSkinConfigurationLookups.NoteTailImage => "tail",
-                _ => throw new ArgumentOutOfRangeException($"{nameof(lookup)} should be body, head or tail.")
+                _ => throw new ArgumentOutOfRangeException(nameof(lookup))
             };
 
             string layerSuffix = layer switch

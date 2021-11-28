@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentOutOfRangeException(nameof(direction));
                 }
 
                 if (State.Value == Visibility.Hidden)

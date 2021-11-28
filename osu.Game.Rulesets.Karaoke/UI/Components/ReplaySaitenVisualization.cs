@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             // Start time should be largest and cannot be removed.
             var startTime = frame.Time;
             if (startTime <= minAvailableTime)
-                throw new ArgumentOutOfRangeException($"{nameof(startTime)} out of range.");
+                throw new ArgumentOutOfRangeException(nameof(startTime));
 
             minAvailableTime = startTime;
 

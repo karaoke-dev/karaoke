@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static void RemoveText(Lyric lyric, int position, int count = 1)
         {
             if (lyric == null)
-                throw new ArgumentNullException($"{nameof(lyric)} cannot be null.");
+                throw new ArgumentNullException(nameof(lyric));
 
             var textLength = lyric.Text.Length;
             if (textLength == 0)
@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static void AddText(Lyric lyric, int position, string text)
         {
             if (lyric == null)
-                throw new ArgumentNullException($"{nameof(lyric)} cannot be null.");
+                throw new ArgumentNullException(nameof(lyric));
 
             // make position is at the range.
             position = Math.Min(Math.Max(0, position), text.Length);
