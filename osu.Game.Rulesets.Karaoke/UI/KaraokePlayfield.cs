@@ -98,38 +98,38 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         #region Pooling support
 
-        public override void Add(HitObject h)
+        public override void Add(HitObject hitObject)
         {
-            switch (h)
+            switch (hitObject)
             {
                 case Lyric:
-                    LyricPlayfield.Add(h);
+                    LyricPlayfield.Add(hitObject);
                     break;
 
                 case Note:
                 case BarLine:
-                    NotePlayfield.Add(h);
+                    NotePlayfield.Add(hitObject);
 
                     break;
 
                 default:
-                    throw new ArgumentException($"Unsupported {nameof(HitObject)} type: {h.GetType()}");
+                    throw new ArgumentException($"Unsupported {nameof(HitObject)} type: {hitObject.GetType()}");
             }
         }
 
-        public override bool Remove(HitObject h)
+        public override bool Remove(HitObject hitObject)
         {
-            switch (h)
+            switch (hitObject)
             {
                 case Lyric:
-                    return LyricPlayfield.Remove(h);
+                    return LyricPlayfield.Remove(hitObject);
 
                 case Note:
                 case BarLine:
-                    return NotePlayfield.Remove(h);
+                    return NotePlayfield.Remove(hitObject);
 
                 default:
-                    throw new ArgumentException($"Unsupported {nameof(HitObject)} type: {h.GetType()}");
+                    throw new ArgumentException($"Unsupported {nameof(HitObject)} type: {hitObject.GetType()}");
             }
         }
 

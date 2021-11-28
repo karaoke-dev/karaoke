@@ -232,7 +232,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             return true;
         }
 
-        public void OnReleased(KeyBindingReleaseEvent<KaraokeSaitenAction> action)
+        public void OnReleased(KeyBindingReleaseEvent<KaraokeSaitenAction> e)
         {
             // TODO : disappear marker
             saitenMarker.Alpha = 0;
