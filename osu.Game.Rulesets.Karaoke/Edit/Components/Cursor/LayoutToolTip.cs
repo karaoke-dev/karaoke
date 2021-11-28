@@ -29,15 +29,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             };
         }
 
-        public override void SetContent(Lyric lyric)
+        public override void SetContent(Lyric content)
         {
             // Get layout
-            var layoutIndex = lyric.LayoutIndex;
+            var layoutIndex = content.LayoutIndex;
             var layout = skinSource?.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, layoutIndex)).Value;
 
             // Display in content\
             preview.Layout = layout;
-            preview.Lyric = lyric;
+            preview.Lyric = content;
         }
     }
 }
