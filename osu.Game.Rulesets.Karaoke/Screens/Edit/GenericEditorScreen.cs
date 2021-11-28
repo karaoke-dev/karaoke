@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit
 
         #region Clipboard operations
 
-        public BindableBool CanCut { get; } = new BindableBool();
+        public BindableBool CanCut { get; } = new();
 
         /// <summary>
         /// Performs a "cut to clipboard" operation appropriate for the given screen.
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit
                 PerformCut();
         }
 
-        public BindableBool CanCopy { get; } = new BindableBool();
+        public BindableBool CanCopy { get; } = new();
 
         /// <summary>
         /// Performs a "copy to clipboard" operation appropriate for the given screen.
@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit
                 PerformCopy();
         }
 
-        public BindableBool CanPaste { get; } = new BindableBool();
+        public BindableBool CanPaste { get; } = new();
 
         /// <summary>
         /// Performs a "paste from clipboard" operation appropriate for the given screen.
