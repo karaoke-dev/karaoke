@@ -4,103 +4,41 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
-using osu.Game.Graphics.Containers;
-using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Skinning;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
     public class LayoutScreen : KaraokeSkinEditorScreen
     {
-        private const float section_scale = 0.75f;
-
-        [Cached]
-        protected readonly OverlayColourProvider ColourProvider;
-
         [Cached]
         protected readonly LayoutManager LayoutManager;
 
-        public LayoutScreen()
-            : base(KaraokeSkinEditorScreenMode.Layout)
+        public LayoutScreen(KaraokeSkin skin)
+            : base(skin, KaraokeSkinEditorScreenMode.Layout)
         {
-            ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
             AddInternal(LayoutManager = new LayoutManager());
         }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
-            AddInternal(new Container
-            {
-                RelativeSizeAxes = Axes.Both,
-                Padding = new MarginPadding(50),
-                Child = new GridContainer
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    ColumnDimensions = new[]
-                    {
-                        new Dimension(GridSizeMode.Relative, 0.3f),
-                        new Dimension()
-                    },
-                    Content = new[]
-                    {
-                        new Drawable[]
-                        {
-                            new Container
-                            {
-                                Name = "Layout adjustment area",
-                                RelativeSizeAxes = Axes.Both,
-                                Masking = true,
-                                CornerRadius = 10,
-                                Children = new Drawable[]
-                                {
-                                    new Box
-                                    {
-                                        Colour = ColourProvider.Background2,
-                                        RelativeSizeAxes = Axes.Both,
-                                    },
-                                    new SectionsContainer<LayoutSection>
-                                    {
-                                        FixedHeader = new LayoutScreenHeader(),
-                                        RelativeSizeAxes = Axes.Both,
-                                        Scale = new Vector2(section_scale),
-                                        Size = new Vector2(1 / section_scale),
-                                        Children = new LayoutSection[]
-                                        {
-                                            new LayoutAlignmentSection(),
-                                            new PreviewSection(),
-                                        }
-                                    }
-                                }
-                            },
-                            new LayoutPreview
-                            {
-                                Name = "Layout preview area",
-                                Anchor = Anchor.Centre,
-                                Origin = Anchor.Centre,
-                                Size = new Vector2(0.95f),
-                                RelativeSizeAxes = Axes.Both
-                            },
-                        }
-                    },
-                }
-            });
-        }
+        protected override Section[] CreateSelectionContainer()
+            => new Section[] { };
 
-        internal class LayoutScreenHeader : OverlayHeader
-        {
-            protected override OverlayTitle CreateTitle() => new LayoutScreenTitle();
-
-            private class LayoutScreenTitle : OverlayTitle
+        protected override Section[] CreatePropertiesContainer()
+            => new Section[]
             {
-                public LayoutScreenTitle()
-                {
-                    Title = "layout";
-                    Description = "create layout of your beatmap";
-                    IconTexture = "Icons/Hexacons/social";
-                }
-            }
-        }
+                new LayoutAlignmentSection(),
+                new PreviewSection(),
+            };
+
+        protected override Container CreatePreviewArea()
+            => new LayoutPreview
+            {
+                Name = "Layout preview area",
+                Anchor = Anchor.Centre,
+                Origin = Anchor.Centre,
+                Size = new Vector2(0.95f),
+                RelativeSizeAxes = Axes.Both
+            };
     }
 }
