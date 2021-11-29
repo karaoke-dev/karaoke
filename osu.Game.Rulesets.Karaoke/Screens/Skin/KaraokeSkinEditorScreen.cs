@@ -5,9 +5,9 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin
 {
-    public class KaraokeSkinEditorScreen : GenericEditorScreen<KaraokeSkinEditorScreenMode>
+    public abstract class KaraokeSkinEditorScreen : GenericEditorScreen<KaraokeSkinEditorScreenMode>
     {
-        public KaraokeSkinEditorScreen(KaraokeSkinEditorScreenMode type)
+        protected KaraokeSkinEditorScreen(KaraokeSkinEditorScreenMode type)
             : base(type)
         {
         }

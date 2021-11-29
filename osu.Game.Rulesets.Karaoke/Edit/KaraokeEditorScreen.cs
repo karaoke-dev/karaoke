@@ -5,12 +5,9 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    /// <summary>
-    /// TODO: eventually make this inherit Screen and add a local screen stack inside the Editor.
-    /// </summary>
-    public class KaraokeEditorScreen : GenericEditorScreen<KaraokeEditorScreenMode>
+    public abstract class KaraokeEditorScreen : GenericEditorScreen<KaraokeEditorScreenMode>
     {
-        public KaraokeEditorScreen(KaraokeEditorScreenMode type)
+        protected KaraokeEditorScreen(KaraokeEditorScreenMode type)
             : base(type)
         {
         }
