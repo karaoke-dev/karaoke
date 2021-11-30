@@ -4,7 +4,9 @@
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Screens.Skin;
+using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Screens.Edit;
+using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Screens
 {
@@ -14,13 +16,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens
         [Cached(typeof(EditorBeatmap))]
         private readonly EditorBeatmap editorBeatmap = new(new KaraokeBeatmap());
 
-        protected override KaraokeSkinEditor CreateScreen() => new();
+        private KaraokeSkin karaokeSkin;
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(SkinManager skinManager)
         {
             // todo: karaoke skin editor might not need editor click eventually?
             Dependencies.Cache(new EditorClock());
+
+            // because skin is compared by id, so should change id to let skin manager info knows that skin has been changed.
+            var defaultSkin = DefaultKaraokeSkin.Default;
+            defaultSkin.ID = 100;
+            skinManager.CurrentSkinInfo.Value = defaultSkin;
+
+            karaokeSkin = skinManager.CurrentSkin.Value as KaraokeSkin;
         }
+
+        protected override KaraokeSkinEditor CreateScreen() => new(karaokeSkin);
     }
 }
