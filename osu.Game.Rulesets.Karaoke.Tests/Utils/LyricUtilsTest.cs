@@ -5,6 +5,7 @@ using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -307,6 +308,32 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         #endregion
 
+        #region Layout
+
+        [TestCase(1, 1)]
+        [TestCase(0, 0)] // Id should be ok with 0
+        [TestCase(-1, null)]
+        public void TestAssignLayout(int layoutIndex, int? actual)
+        {
+            var lyric = new Lyric();
+            var layout = new LyricLayout
+            {
+                ID = layoutIndex
+            };
+
+            try
+            {
+                LyricUtils.AssignLayout(lyric, layout);
+                Assert.AreEqual(lyric.LayoutIndex, actual);
+            }
+            catch
+            {
+                Assert.IsNull(actual);
+            }
+        }
+
+        #endregion
+
         #region Singer
 
         [TestCase(null, "[1]name:Singer1", true, new[] { 1 })]
@@ -356,6 +383,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             {
                 Assert.IsNull(actualSingers);
             }
+        }
+
+        [TestCase(new[] { "[1]name:Singer1" }, true)]
+        [TestCase(new string[] { }, false)] // singer list will stay as empty.
+        [TestCase(null, true)]
+        public void ClearSinger(string[] existSingers, bool isNull)
+        {
+            var lyric = new Lyric
+            {
+                Singers = TestCaseTagHelper.ParseSingers(existSingers)?.Select(x => x.ID).ToArray()
+            };
+            LyricUtils.ClearSinger(lyric);
+
+            Assert.AreEqual(lyric.Singers == null, isNull);
         }
 
         [TestCase(new[] { "[1]name:Singer1" }, "[1]name:Singer1", true)]
