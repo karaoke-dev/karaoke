@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages
 {
-    public class LanguagesChangeHandler : BeatmapChangeHandler<CultureInfo>
+    public class LanguagesChangeHandler : BeatmapChangeHandler<CultureInfo>, ILanguagesChangeHandler
     {
         private readonly BindableList<CultureInfo> languages = new();
 

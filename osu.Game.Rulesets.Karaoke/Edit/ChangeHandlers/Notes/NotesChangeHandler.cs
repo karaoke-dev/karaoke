@@ -11,7 +11,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 {
-    public class NotesChangeHandler : HitObjectChangeHandler<Note>
+    public class NotesChangeHandler : HitObjectChangeHandler<Note>, INotesChangeHandler
     {
         [Resolved]
         private EditorBeatmap beatmap { get; set; }

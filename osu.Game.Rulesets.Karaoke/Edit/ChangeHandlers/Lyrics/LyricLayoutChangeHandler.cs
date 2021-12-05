@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricLayoutChangeHandler : HitObjectChangeHandler<Lyric>
+    public class LyricLayoutChangeHandler : HitObjectChangeHandler<Lyric>, ILyricLayoutChangeHandler
     {
         public void ChangeLayout(LyricLayout layout)
         {

@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricTranslateChangeHandler : HitObjectChangeHandler<Lyric>
+    public class LyricTranslateChangeHandler : HitObjectChangeHandler<Lyric>, ILyricTranslateChangeHandler
     {
         public void UpdateTranslate(CultureInfo cultureInfo, string translate)
         {

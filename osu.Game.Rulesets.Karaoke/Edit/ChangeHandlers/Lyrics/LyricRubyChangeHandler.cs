@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricRubyChangeHandler : HitObjectChangeHandler<Lyric>
+    public class LyricRubyChangeHandler : HitObjectChangeHandler<Lyric>, ILyricRubyChangeHandler
     {
         public void AutoGenerate()
         {
