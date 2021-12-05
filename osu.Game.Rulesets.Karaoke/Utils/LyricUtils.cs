@@ -11,6 +11,7 @@ using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
@@ -275,6 +276,24 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         #endregion
 
+        #region Layout
+
+        public static void AssignLayout(Lyric lyric, LyricLayout layout)
+        {
+            if (lyric == null)
+                throw new ArgumentNullException(nameof(lyric));
+
+            if (layout == null)
+                throw new ArgumentNullException(nameof(layout));
+
+            if (layout.ID < 0)
+                throw new InvalidOperationException($"{nameof(layout.ID)} cannot be negative");
+
+            lyric.LayoutIndex = layout.ID;
+        }
+
+        #endregion
+
         #region Singer
 
         public static bool AddSinger(Lyric lyric, Singer singer)
@@ -317,6 +336,18 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var newSingerIds = lyric.Singers.Where(x => x != singer.ID).ToArray();
             lyric.Singers = newSingerIds;
 
+            return true;
+        }
+
+        public static bool ClearSinger(Lyric lyric)
+        {
+            if (lyric == null)
+                throw new ArgumentNullException(nameof(lyric));
+
+            if (lyric.Singers == null || lyric.Singers.Length == 0)
+                return false;
+
+            lyric.Singers = null;
             return true;
         }
 
