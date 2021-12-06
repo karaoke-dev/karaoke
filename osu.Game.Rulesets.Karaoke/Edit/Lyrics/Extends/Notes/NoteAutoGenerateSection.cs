@@ -4,10 +4,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
     public class NoteAutoGenerateSection : AutoGenerateSection
     {
         [Resolved]
-        private NoteManager noteManager { get; set; }
+        private INotesChangeHandler notesChangeHandler { get; set; }
 
         [Resolved]
         private LyricCheckerManager lyricCheckerManager { get; set; }
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                                   .ToDictionary(k => k.Key, _ => "Before generate time-tag, need to assign language first.");
 
         protected override void Apply(Lyric[] lyrics)
-            => noteManager.AutoGenerateNotes(lyrics);
+            => notesChangeHandler.AutoGenerate();
 
         protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
             => new InvalidLyricTimeTagAlertTextContainer();
