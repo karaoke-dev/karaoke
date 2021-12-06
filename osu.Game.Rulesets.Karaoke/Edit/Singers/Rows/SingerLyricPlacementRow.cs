@@ -13,6 +13,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
@@ -41,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
         internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip<Singer>, IHasContextMenu
         {
             [Resolved]
-            private SingerManager singerManager { get; set; }
+            private ISingersChangeHandler singersChangeHandler { get; set; }
 
             [Resolved]
             private DialogOverlay dialogOverlay { get; set; }
@@ -167,7 +168,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                     dialogOverlay.Push(new DeleteSingerDialog(isOk =>
                     {
                         if (isOk)
-                            singerManager.DeleteSinger(bindableSinger.Value);
+                            singersChangeHandler.Remove(bindableSinger.Value);
                     }));
                 }),
             };

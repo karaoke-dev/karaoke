@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
         private Container mainContent;
 
         [BackgroundDependencyLoader]
-        private void load(SingerManager singerManager, OsuColour colour)
+        private void load(ISingerScreenScrollingInfoProvider scrollingInfoProvider, OsuColour colour)
         {
             AddInternal(background = new Box
             {
@@ -82,8 +82,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             MinZoom = getZoomLevelForVisibleMilliseconds(20000);
             Zoom = getZoomLevelForVisibleMilliseconds(5000);
 
-            bindableZoom = singerManager.BindableZoom.GetBoundCopy();
-            bindableCurrent = singerManager.BindableCurrent.GetBoundCopy();
+            bindableZoom = scrollingInfoProvider.BindableZoom.GetBoundCopy();
+            bindableCurrent = scrollingInfoProvider.BindableCurrent.GetBoundCopy();
 
             bindableZoom.BindValueChanged(e =>
             {

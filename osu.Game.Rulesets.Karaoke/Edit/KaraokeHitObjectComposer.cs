@@ -12,6 +12,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Notes;
@@ -53,8 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly RubyRomajiManager rubyRomajiManager;
 
-        [Cached]
-        private readonly SingerManager singerManager;
+        [Cached(typeof(ISingersChangeHandler))]
+        private readonly SingersChangeHandler singersChangeHandler;
 
         [Resolved]
         private Editor editor { get; set; }
@@ -71,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(noteManager = new NoteManager());
             AddInternal(lyricManager = new LyricManager());
             AddInternal(rubyRomajiManager = new RubyRomajiManager());
-            AddInternal(singerManager = new SingerManager());
+            AddInternal(singersChangeHandler = new SingersChangeHandler());
         }
 
         [BackgroundDependencyLoader]

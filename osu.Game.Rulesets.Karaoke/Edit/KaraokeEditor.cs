@@ -7,6 +7,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
 using osu.Game.Rulesets.Karaoke.Edit.Export;
@@ -66,9 +67,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly LyricCheckerManager lyricCheckerManager;
 
         [Cached]
-        private readonly SingerManager singerManager;
-
-        [Cached]
         private LanguageSelectionDialog languageSelectionDialog;
 
         [Resolved]
@@ -90,7 +88,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(lyricManager = new LyricManager());
             AddInternal(rubyRomajiManager = new RubyRomajiManager());
             AddInternal(lyricCheckerManager = new LyricCheckerManager());
-            AddInternal(singerManager = new SingerManager());
             AddInternal(languageSelectionDialog = new LanguageSelectionDialog());
         }
 
