@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -13,6 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages
     public class LanguagesChangeHandler : BeatmapChangeHandler<CultureInfo>, ILanguagesChangeHandler
     {
         public BindableList<CultureInfo> Languages { get; } = new();
+
+        private IEnumerable<Lyric> lyrics => Beatmap.HitObjects.OfType<Lyric>();
 
         [BackgroundDependencyLoader]
         private void load()
@@ -43,13 +46,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages
                 Languages.Remove(cultureInfo);
 
                 // Delete from lyric also.
-                var lyrics = Beatmap.HitObjects.OfType<Lyric>().ToList();
-
                 foreach (var lyric in lyrics.Where(lyric => lyric.Translates.ContainsKey(cultureInfo)))
                 {
                     lyric.Translates.Remove(cultureInfo);
                 }
             });
         }
+
+        public bool IsLanguageContainsTranslate(CultureInfo cultureInfo)
+            => lyrics.Any(x => x.Translates.ContainsKey(cultureInfo));
     }
 }

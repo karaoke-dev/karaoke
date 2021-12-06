@@ -13,5 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages
         void Add(CultureInfo culture);
 
         void Remove(CultureInfo culture);
+
+        bool IsLanguageContainsTranslate(CultureInfo cultureInfo);
     }
 }
