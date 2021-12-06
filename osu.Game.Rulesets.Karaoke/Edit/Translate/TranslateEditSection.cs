@@ -12,6 +12,8 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Translate.Components;
 using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
@@ -35,7 +37,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         public readonly Bindable<CultureInfo> NewLanguage = new();
 
         [Resolved]
-        private TranslateManager translateManager { get; set; }
+        private ITranslateInfoProvider translateInfoProvider { get; set; }
+
+        [Resolved]
+        private ILanguagesChangeHandler languagesChangeHandler { get; set; }
+
+        [Resolved]
+        private ILyricTranslateChangeHandler lyricTranslateChangeHandler { get; set; }
 
         [Resolved]
         protected DialogOverlay DialogOverlay { get; private set; }
@@ -123,17 +131,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                                 {
                                                     var currentLanguage = languageDropdown.Current.Value;
 
-                                                    if (translateManager.IsLanguageContainsTranslate(currentLanguage))
+                                                    if (languagesChangeHandler.IsLanguageContainsTranslate(currentLanguage))
                                                     {
                                                         DialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage, isOk =>
                                                         {
                                                             if (isOk)
-                                                                translateManager.RemoveLanguage(currentLanguage);
+                                                                languagesChangeHandler.Remove(currentLanguage);
                                                         }));
                                                     }
                                                     else
                                                     {
-                                                        translateManager.RemoveLanguage(currentLanguage);
+                                                        languagesChangeHandler.Remove(currentLanguage);
                                                     }
                                                 }
                                             },
@@ -201,21 +209,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
             NewLanguage.BindValueChanged(e =>
             {
-                translateManager.AddLanguage(e.NewValue);
+                languagesChangeHandler.Add(e.NewValue);
             });
         }
 
         [BackgroundDependencyLoader]
-        private void load(TranslateManager translateManager, OsuColour colours)
+        private void load(OsuColour colours)
         {
             LanguageSelectionDialog.Current = NewLanguage;
 
-            languageDropdown.ItemSource = translateManager.Languages;
+            languageDropdown.ItemSource = languagesChangeHandler.Languages;
 
             timeSectionBackground.Colour = colours.ContextMenuGray;
             lyricSectionBackground.Colour = colours.Gray9;
 
-            translateGrid.RowDimensions = translateManager.Lyrics.Select(_ => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
+            translateGrid.RowDimensions = translateInfoProvider.TranslatableLyrics.Select(_ => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
             translateGrid.Content = createContent(languageDropdown.Current);
         }
 
@@ -227,7 +235,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
         private Drawable[][] createContent(Bindable<CultureInfo> bindable)
         {
-            var lyrics = translateManager.Lyrics;
+            var lyrics = translateInfoProvider.TranslatableLyrics;
             return lyrics.Select(x =>
             {
                 return new[]
@@ -281,7 +289,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 var hasCultureInfo = v.NewValue != null;
 
                 // disable and clear text box if contains no language in language list.
-                textBox.Text = hasCultureInfo ? translateManager.GetTranslate(lyric, v.NewValue) : null;
+                textBox.Text = hasCultureInfo ? translateInfoProvider.GetLyricTranslate(lyric, v.NewValue) : null;
                 ScheduleAfterChildren(() =>
                 {
                     textBox.Current.Disabled = !hasCultureInfo;
@@ -294,7 +302,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                     return;
 
                 var translateText = textBoxValue.NewValue;
-                translateManager.SaveTranslate(lyric, cultureInfo, translateText);
+                lyricTranslateChangeHandler.UpdateTranslate(cultureInfo, translateText);
             });
             return textBox;
         }

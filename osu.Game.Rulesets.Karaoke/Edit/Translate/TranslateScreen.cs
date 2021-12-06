@@ -1,6 +1,10 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -8,23 +12,35 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
-    public class TranslateScreen : KaraokeEditorScreen
+    [Cached(typeof(ITranslateInfoProvider))]
+    public class TranslateScreen : KaraokeEditorScreen, ITranslateInfoProvider
     {
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
+
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
 
-        [Cached]
-        protected readonly TranslateManager TranslateManager;
+        [Cached(typeof(ILanguagesChangeHandler))]
+        private readonly LanguagesChangeHandler languagesChangeHandler;
+
+        [Cached(typeof(ILyricTranslateChangeHandler))]
+        private readonly LyricTranslateChangeHandler lyricTranslateChangeHandler;
 
         public TranslateScreen()
             : base(KaraokeEditorScreenMode.Translate)
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
-            AddInternal(TranslateManager = new TranslateManager());
+            AddInternal(languagesChangeHandler = new LanguagesChangeHandler());
+            AddInternal(lyricTranslateChangeHandler = new LyricTranslateChangeHandler());
         }
 
         [BackgroundDependencyLoader]
@@ -65,11 +81,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
             // ask only once if contains no language after switch to translate editor.
             bool alreadyAsked;
-            TranslateManager.Languages.BindCollectionChanged((_, _) =>
+            languagesChangeHandler.Languages.BindCollectionChanged((_, _) =>
             {
                 alreadyAsked = true;
 
-                if (TranslateManager.Languages.Count == 0 && !alreadyAsked)
+                if (languagesChangeHandler.Languages.Count == 0 && !alreadyAsked)
                 {
                     dialogOverlay.Push(new CreateNewLanguagePopupDialog(isOk =>
                     {
@@ -81,6 +97,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 }
             }, true);
         }
+
+        public string GetLyricTranslate(Lyric lyric, CultureInfo cultureInfo)
+        {
+            if (cultureInfo == null)
+                throw new ArgumentNullException(nameof(cultureInfo));
+
+            return lyric.Translates.TryGetValue(cultureInfo, out string translate) ? translate : null;
+        }
+
+        public IEnumerable<Lyric> TranslatableLyrics => beatmap.HitObjects.OfType<Lyric>();
 
         internal class TranslateScreenHeader : OverlayHeader
         {
