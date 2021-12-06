@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, DialogOverlay dialogOverlay, LanguageSelectionDialog languageSelectionDialog)
         {
-            AddInternal(new Container
+            Add(new Container
             {
                 RelativeSizeAxes = Axes.Both,
                 Padding = new MarginPadding(50),

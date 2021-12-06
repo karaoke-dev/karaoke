@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             AddInternal(notesChangeHandler = new NotesChangeHandler());
 
             LyricEditor lyricEditor;
-            AddInternal(new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
+            Add(new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
             {
                 RelativeSizeAxes = Axes.Both,
                 Padding = new MarginPadding(10),

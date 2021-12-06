@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Purple);
             AddInternal(singersChangeHandler = new SingersChangeHandler());
             AddInternal(LyricManager = new LyricManager());
-            AddInternal(editSingerDialog = new EditSingerDialog
+            Add(editSingerDialog = new EditSingerDialog
             {
                 Depth = -1,
             });
