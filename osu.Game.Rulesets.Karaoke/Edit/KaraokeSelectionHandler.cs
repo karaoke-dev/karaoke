@@ -9,9 +9,9 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.UI.Components;
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private HitObjectComposer composer { get; set; }
 
         [Resolved]
-        private NoteManager noteManager { get; set; }
+        private INotesChangeHandler notesChangeHandler { get; set; }
 
         [Resolved]
         private LyricManager lyricManager { get; set; }
@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 // Combine multi note if they has same start and end index.
                 var firstObject = selectedObject.FirstOrDefault();
                 if (firstObject != null && selectedObject.All(x => x.StartIndex == firstObject.StartIndex && x.EndIndex == firstObject.EndIndex))
-                    menu.Add(createCombineNoteMenuItem(selectedObject));
+                    menu.Add(createCombineNoteMenuItem());
 
                 return menu;
             }
@@ -82,16 +82,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             return new OsuMenuItem($"{displayText} {selectedObject.Count()} notes.", display ? MenuItemType.Destructive : MenuItemType.Standard,
                 () =>
                 {
-                    var selectedNotes = SelectedBlueprints.Select(x => x.Item).OfType<Note>().ToList();
-                    noteManager.ChangeDisplay(selectedNotes, !display);
+                    notesChangeHandler.ChangeDisplay(!display);
                 });
         }
 
-        private MenuItem createCombineNoteMenuItem(IEnumerable<Note> selectedObject)
+        private MenuItem createCombineNoteMenuItem()
         {
             return new OsuMenuItem("Combine", MenuItemType.Standard, () =>
             {
-                noteManager.CombineNote(selectedObject.ToList());
+                notesChangeHandler.Combine();
             });
         }
 

@@ -9,8 +9,8 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Edit.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
     public class NoteSelectionBlueprint : KaraokeSelectionBlueprint<Note>, IHasPopover
     {
         [Resolved]
-        private NoteManager noteManager { get; set; }
+        private INotesChangeHandler notesChangeHandler { get; set; }
 
         [Resolved]
         private Playfield playfield { get; set; }
@@ -60,8 +60,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 
         public override MenuItem[] ContextMenuItems => new MenuItem[]
         {
-            new OsuMenuItem(HitObject.Display ? "Hide" : "Show", HitObject.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => noteManager.ChangeDisplay(HitObject, !HitObject.Display)),
-            new OsuMenuItem("Split", MenuItemType.Destructive, () => noteManager.SplitNote(HitObject)),
+            new OsuMenuItem(HitObject.Display ? "Hide" : "Show", HitObject.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => notesChangeHandler.ChangeDisplay(!HitObject.Display)),
+            new OsuMenuItem("Split", MenuItemType.Destructive, () => notesChangeHandler.Split()),
         };
 
         public Popover GetPopover() => new NoteEditPopover(HitObject);

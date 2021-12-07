@@ -9,19 +9,21 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
-    public class SingerScreen : KaraokeEditorScreen
+    [Cached(typeof(ISingerScreenScrollingInfoProvider))]
+    public class SingerScreen : KaraokeEditorScreen, ISingerScreenScrollingInfoProvider
     {
         [Cached]
         protected readonly OverlayColourProvider ColourProvider;
 
-        [Cached]
-        protected readonly SingerManager SingerManager;
+        [Cached(typeof(ISingersChangeHandler))]
+        private readonly SingersChangeHandler singersChangeHandler;
 
         [Cached]
         protected readonly LyricManager LyricManager;
@@ -32,13 +34,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         [Cached]
         public BindableList<Lyric> SelectedLyrics { get; } = new();
 
+        public BindableFloat BindableZoom { get; } = new();
+
+        public BindableFloat BindableCurrent { get; } = new();
+
         public SingerScreen()
             : base(KaraokeEditorScreenMode.Singer)
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Purple);
-            AddInternal(SingerManager = new SingerManager());
+            AddInternal(singersChangeHandler = new SingersChangeHandler());
             AddInternal(LyricManager = new LyricManager());
-            AddInternal(editSingerDialog = new EditSingerDialog
+            Add(editSingerDialog = new EditSingerDialog
             {
                 Depth = -1,
             });

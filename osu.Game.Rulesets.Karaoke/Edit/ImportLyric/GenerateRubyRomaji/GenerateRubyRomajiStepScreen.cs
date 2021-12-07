@@ -5,8 +5,8 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.RubyRomaji;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 {
@@ -20,12 +20,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 
         public override IconUsage Icon => FontAwesome.Solid.Gem;
 
-        [Cached]
-        protected readonly RubyRomajiManager RubyRomajiManager;
+        [Cached(typeof(ILyricRubyChangeHandler))]
+        private readonly LyricRubyChangeHandler lyricRubyChangeHandler;
+
+        [Cached(typeof(ILyricRomajiChangeHandler))]
+        private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
 
         public GenerateRubyRomajiStepScreen()
         {
-            AddInternal(RubyRomajiManager = new RubyRomajiManager());
+            AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
+            AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
         }
 
         protected override TopNavigation CreateNavigation()
@@ -43,9 +47,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
             Navigation.State = NavigationState.Initial;
 
             // Asking auto-generate ruby or romaji.
-            if (RubyRomajiManager.CanAutoGenerateRuby())
+            if (lyricRubyChangeHandler.CanGenerate())
                 AskForAutoGenerateRuby();
-            else
+            else if (lyricRomajiChangeHandler.CanGenerate())
                 AskForAutoGenerateRomaji();
         }
 
@@ -63,7 +67,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
                 if (!ok)
                     return;
 
-                RubyRomajiManager.AutoGenerateLyricRuby();
+                // todo: select all lyrics or switch to select mode.
+
+                lyricRubyChangeHandler.AutoGenerate();
                 Navigation.State = NavigationState.Done;
             }));
         }
@@ -77,7 +83,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
                 if (!ok)
                     return;
 
-                RubyRomajiManager.AutoGenerateLyricRomaji();
+                // todo: select all lyrics or switch to select mode.
+
+                lyricRomajiChangeHandler.AutoGenerate();
                 Navigation.State = NavigationState.Done;
             }));
         }

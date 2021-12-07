@@ -12,11 +12,11 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Notes;
-using osu.Game.Rulesets.Karaoke.Edit.RubyRomaji;
-using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.UI;
@@ -44,17 +44,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly FontManager fontManager;
 
-        [Cached]
-        private readonly NoteManager noteManager;
+        [Cached(typeof(INotesChangeHandler))]
+        private readonly NotesChangeHandler notesChangeHandler;
+
+        [Cached(typeof(ILyricRubyChangeHandler))]
+        private readonly LyricRubyChangeHandler lyricRubyChangeHandler;
+
+        [Cached(typeof(ILyricRomajiChangeHandler))]
+        private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
 
         [Cached]
         private readonly LyricManager lyricManager;
 
-        [Cached]
-        private readonly RubyRomajiManager rubyRomajiManager;
-
-        [Cached]
-        private readonly SingerManager singerManager;
+        [Cached(typeof(ISingersChangeHandler))]
+        private readonly SingersChangeHandler singersChangeHandler;
 
         [Resolved]
         private Editor editor { get; set; }
@@ -68,10 +71,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(notePositionInfo = new NotePositionInfo());
             AddInternal(fontManager = new FontManager());
 
-            AddInternal(noteManager = new NoteManager());
+            AddInternal(notesChangeHandler = new NotesChangeHandler());
+            AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
+            AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
             AddInternal(lyricManager = new LyricManager());
-            AddInternal(rubyRomajiManager = new RubyRomajiManager());
-            AddInternal(singerManager = new SingerManager());
+            AddInternal(singersChangeHandler = new SingersChangeHandler());
         }
 
         [BackgroundDependencyLoader]

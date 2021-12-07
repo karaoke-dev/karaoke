@@ -5,8 +5,8 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.RubyRomaji;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
@@ -21,15 +21,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 
         public override IconUsage Icon => FontAwesome.Solid.Globe;
 
-        [Cached]
-        protected readonly RubyRomajiManager RubyRomajiManager;
+        [Cached(typeof(ILyricRubyChangeHandler))]
+        private readonly LyricRubyChangeHandler lyricRubyChangeHandler;
+
+        [Cached(typeof(ILyricRomajiChangeHandler))]
+        private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
         public AssignLanguageStepScreen()
         {
-            AddInternal(RubyRomajiManager = new RubyRomajiManager());
+            AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
+            AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
         }
 
         protected override TopNavigation CreateNavigation()
@@ -51,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         public override void Complete()
         {
             // Check is need to go to generate ruby/romaji step or just skip.
-            if (RubyRomajiManager.CanAutoGenerateRuby() || RubyRomajiManager.CanAutoGenerateRomaji())
+            if (lyricRubyChangeHandler.CanGenerate() || lyricRomajiChangeHandler.CanGenerate())
             {
                 ScreenStack.Push(LyricImporterStep.GenerateRuby);
             }

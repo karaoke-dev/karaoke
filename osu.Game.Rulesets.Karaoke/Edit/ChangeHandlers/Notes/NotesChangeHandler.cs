@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
             PerformOnSelection(lyric =>
             {
                 // clear exist notes if from those
-                var matchedNotes = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray();
+                var matchedNotes = HitObjects.Where(x => x.ParentLyric == lyric).ToArray();
                 RemoveRange(matchedNotes);
 
                 var notes = generator.CreateNotes(lyric);
@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
             });
         }
 
-        protected void PerformOnSelection(Action<Lyric> action) => beatmap.PerformOnSelection((h) =>
+        protected void PerformOnSelection(Action<Lyric> action) => beatmap.PerformOnSelection(h =>
         {
             if (h is Lyric lyric)
                 action.Invoke(lyric);

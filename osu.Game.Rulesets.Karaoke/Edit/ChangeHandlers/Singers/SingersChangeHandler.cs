@@ -13,17 +13,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
 {
     public class SingersChangeHandler : BeatmapChangeHandler<Singer>, ISingersChangeHandler
     {
-        private readonly BindableList<Singer> singers = new();
+        public BindableList<Singer> Singers { get; } = new();
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            singers.AddRange(Beatmap.Singers);
+            Singers.AddRange(Beatmap.Singers);
 
             // should write-back if singer changed.
-            singers.BindCollectionChanged((_, _) =>
+            Singers.BindCollectionChanged((_, _) =>
             {
-                Beatmap.Singers = singers.ToArray();
+                Beatmap.Singers = Singers.ToArray();
             });
         }
 
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
             {
                 var oldOrder = s.Order;
                 var newOrder = newIndex + 1; // order is start from 1
-                OrderUtils.ChangeOrder(singers.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
+                OrderUtils.ChangeOrder(Singers.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
                 {
                     // todo : not really sure should call update?
                 });
@@ -44,8 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
         {
             PerformObjectChanged(item, singer =>
             {
-                singer.Order = OrderUtils.GetMaxOrderNumber(singers.ToArray()) + 1;
-                singers.Add(singer);
+                singer.Order = OrderUtils.GetMaxOrderNumber(Singers.ToArray()) + 1;
+                Singers.Add(singer);
             });
         }
 
@@ -54,8 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
             PerformObjectChanged(item, singer =>
             {
                 // Shifting order that order is larger than current singer
-                OrderUtils.ShiftingOrder(singers.Where(x => x.Order > singer.Order).ToArray(), -1);
-                singers.Remove(singer);
+                OrderUtils.ShiftingOrder(Singers.Where(x => x.Order > singer.Order).ToArray(), -1);
+                Singers.Remove(singer);
 
                 // should clear removed singer ids in singer editor.
                 var lyrics = Beatmap.HitObjects.OfType<Lyric>();

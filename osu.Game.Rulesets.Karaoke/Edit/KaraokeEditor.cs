@@ -11,14 +11,11 @@ using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
 using osu.Game.Rulesets.Karaoke.Edit.Export;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Notes;
-using osu.Game.Rulesets.Karaoke.Edit.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Translate;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Screens.Edit;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
-using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Menus;
@@ -44,9 +41,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly KaraokeRulesetEditCheckerConfigManager checkerConfigManager;
 
-        [Cached(Type = typeof(INotePositionInfo))]
-        private readonly NotePositionInfo notePositionInfo;
-
         [Cached]
         private readonly FontManager fontManager;
 
@@ -54,19 +48,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly ExportLyricManager exportLyricManager;
 
         [Cached]
-        private readonly NoteManager noteManager;
-
-        [Cached]
         private readonly LyricManager lyricManager;
 
         [Cached]
-        private readonly RubyRomajiManager rubyRomajiManager;
-
-        [Cached]
         private readonly LyricCheckerManager lyricCheckerManager;
-
-        [Cached]
-        private readonly SingerManager singerManager;
 
         [Cached]
         private LanguageSelectionDialog languageSelectionDialog;
@@ -82,15 +67,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             checkerConfigManager = new KaraokeRulesetEditCheckerConfigManager();
 
             // Duplicated registration because selection handler need to use it.
-            AddInternal(notePositionInfo = new NotePositionInfo());
             AddInternal(fontManager = new FontManager());
 
             AddInternal(exportLyricManager = new ExportLyricManager());
-            AddInternal(noteManager = new NoteManager());
             AddInternal(lyricManager = new LyricManager());
-            AddInternal(rubyRomajiManager = new RubyRomajiManager());
             AddInternal(lyricCheckerManager = new LyricCheckerManager());
-            AddInternal(singerManager = new SingerManager());
             AddInternal(languageSelectionDialog = new LanguageSelectionDialog());
         }
 
