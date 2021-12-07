@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -15,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 {
     public class DefaultKaraokeSkin : KaraokeSkin
     {
-        internal const int DEFAULT_SKIN = 0;
+        internal static readonly Guid DEFAULT_SKIN = new("FEC5A291-5709-11EC-9F10-0800200C9A66");
 
         public static SkinInfo Default { get; } = new()
         {

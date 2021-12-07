@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 switch (Skin)
                 {
                     case LegacySkin legacySkin:
-                        return new TempLegacySkin(legacySkin.SkinInfo).GetDrawableComponent(component) as SkinnableTargetComponentsContainer;
+                        return new TempLegacySkin(legacySkin.SkinInfo.Value).GetDrawableComponent(component) as SkinnableTargetComponentsContainer;
 
                     default:
                         throw new InvalidCastException();

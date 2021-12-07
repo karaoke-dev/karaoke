@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public const int MIN_FONT_SIZE = 10;
         public const int MAX_FONT_SIZE = 45;
 
-        internal const int DEFAULT_SKIN = 0;
+        internal static readonly Guid DEFAULT_SKIN = new("FEC5A290-5709-11EC-9F10-0800200C9A66");
 
         public static SkinInfo Default { get; } = new()
         {
