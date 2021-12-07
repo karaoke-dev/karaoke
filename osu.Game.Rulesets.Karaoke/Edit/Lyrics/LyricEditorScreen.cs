@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 
@@ -20,11 +21,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(INotesChangeHandler))]
         private readonly NotesChangeHandler notesChangeHandler;
 
+        [Cached(typeof(ILyricRubyChangeHandler))]
+        private readonly LyricRubyChangeHandler lyricRubyChangeHandler;
+
+        [Cached(typeof(ILyricRomajiChangeHandler))]
+        private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
+
         public LyricEditorScreen()
             : base(KaraokeEditorScreenMode.Lyric)
         {
             AddInternal(notePositionInfo = new NotePositionInfo());
+
             AddInternal(notesChangeHandler = new NotesChangeHandler());
+            AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
+            AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
 
             LyricEditor lyricEditor;
             Add(new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
