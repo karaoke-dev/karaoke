@@ -9,9 +9,9 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricsChangeHandler : HitObjectChangeHandler<Lyric>
+    public class LyricsChangeHandler : HitObjectChangeHandler<Lyric>, ILyricsChangeHandler
     {
-        public void SplitLyric(int index)
+        public void Split(int index)
         {
             PerformOnSelection(lyric =>
             {
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void CombineLyric()
+        public void Combine()
         {
             PerformOnSelection(lyric =>
             {
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void CreateLyricAtPosition(int? nextToOrder = null)
+        public void CreateAtPosition(int? nextToOrder = null)
         {
             PerformOnSelection(lyric =>
             {
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void CreateLyricAtLast()
+        public void CreateAtLast()
         {
             var order = OrderUtils.GetMaxOrderNumber(HitObjects.ToArray());
 
@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void DeleteLyric()
+        public void Remove()
         {
             PerformOnSelection(lyric =>
             {
