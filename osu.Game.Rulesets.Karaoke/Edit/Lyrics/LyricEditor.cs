@@ -273,6 +273,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, bindableCreateMovingCaretMode);
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, bindableRecordingMovingCaretMode);
 
+            // if caret position changed, should add into editor beatmap selected hit objects.
+            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
+            {
+                beatmap.SelectedHitObjects.Clear();
+
+                var lyric = e.NewValue?.Lyric;
+
+                if (lyric != null)
+                    beatmap.SelectedHitObjects.Add(lyric);
+            });
+
             // set-up divisor.
             beatDivisor.Value = beatmap.BeatmapInfo.BeatDivisor;
 
