@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
         protected override bool OnMouseDown(MouseDownEvent e)
         {
-            lyricCaretState.MoveCaretToTargetPosition(new NavigateCaretPosition(Lyric));
+            lyricCaretState.MoveCaretToTargetPosition(Lyric);
             return base.OnMouseDown(e);
         }
 
