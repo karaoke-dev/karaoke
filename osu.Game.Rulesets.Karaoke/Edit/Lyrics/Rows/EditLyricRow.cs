@@ -15,6 +15,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets;
@@ -82,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             private DialogOverlay dialogOverlay { get; set; }
 
             [Resolved]
-            private LyricManager lyricManager { get; set; }
+            private ILyricsChangeHandler lyricsChangeHandler { get; set; }
 
             public Lyric Lyric { get; }
 
@@ -250,7 +251,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         {
                             // add new lyric with below of current lyric.
                             var targetOrder = Lyric.Order;
-                            lyricManager.CreateLyric(targetOrder);
+                            lyricsChangeHandler.CreateAtPosition(targetOrder);
                         })
                     };
 
@@ -259,7 +260,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     {
                         menuItems.Add(new OsuMenuItem("Combine with previous lyric", MenuItemType.Standard, () =>
                         {
-                            lyricManager.CombineWithPreviousLyric(Lyric);
+                            lyricsChangeHandler.Combine();
                         }));
                     }
 
@@ -268,14 +269,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         if (dialogOverlay == null)
                         {
                             // todo : remove lyric directly in test case because pop-up dialog is not registered.
-                            lyricManager.DeleteLyric(Lyric);
+                            lyricsChangeHandler.Remove();
                         }
                         else
                         {
                             dialogOverlay.Push(new DeleteLyricDialog(isOk =>
                             {
                                 if (isOk)
-                                    lyricManager.DeleteLyric(Lyric);
+                                    lyricsChangeHandler.Remove();
                             }));
                         }
                     }));
@@ -293,8 +294,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             private readonly Container timeTagContainer;
             private readonly Container<DrawableCaret> caretContainer;
 
-            [Resolved(canBeNull: true)]
-            private LyricManager lyricManager { get; set; }
+            [Resolved]
+            private ILyricsChangeHandler lyricsChangeHandler { get; set; }
 
             [Resolved]
             private ILyricEditorState state { get; set; }
@@ -334,9 +335,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
             protected override bool OnMouseMove(MouseMoveEvent e)
             {
-                if (lyricManager == null)
-                    return false;
-
                 if (!lyricCaretState.CaretEnabled)
                     return false;
 
@@ -425,7 +423,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 {
                     case TextCaretPosition textCaretPosition:
                         if (state.Mode == LyricEditorMode.Manage)
-                            lyricManager?.SplitLyric(Lyric, textCaretPosition.Index);
+                            lyricsChangeHandler.Split(textCaretPosition.Index);
                         return true;
 
                     case TimeTagCaretPosition timeTagCaretPosition:

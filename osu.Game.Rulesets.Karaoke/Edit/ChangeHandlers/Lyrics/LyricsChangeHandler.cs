@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         protected override void Add(Lyric hitObject)
         {
-            var index = HitObjects.ToList().FindIndex(x => x.Order == hitObject.Order - 1);
+            var index = HitObjects.ToList().FindIndex(x => x.Order == hitObject.Order - 1) + 1;
             Insert(index, hitObject);
         }
     }
