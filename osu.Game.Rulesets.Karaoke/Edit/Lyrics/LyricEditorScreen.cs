@@ -18,26 +18,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(Type = typeof(ILyricsChangeHandler))]
         private readonly LyricsChangeHandler lyricsChangeHandler;
 
-        [Cached(Type = typeof(INotePositionInfo))]
-        private readonly NotePositionInfo notePositionInfo;
-
-        [Cached(typeof(INotesChangeHandler))]
-        private readonly NotesChangeHandler notesChangeHandler;
-
         [Cached(typeof(ILyricRubyChangeHandler))]
         private readonly LyricRubyChangeHandler lyricRubyChangeHandler;
 
         [Cached(typeof(ILyricRomajiChangeHandler))]
         private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
 
+        [Cached(typeof(ILyricTimeTagsChangeHandler))]
+        private readonly LyricTimeTagsChangeHandler lyricTimeTagsChangeHandler;
+
+        [Cached(Type = typeof(INotePositionInfo))]
+        private readonly NotePositionInfo notePositionInfo;
+
+        [Cached(typeof(INotesChangeHandler))]
+        private readonly NotesChangeHandler notesChangeHandler;
+
         public LyricEditorScreen()
             : base(KaraokeEditorScreenMode.Lyric)
         {
             AddInternal(lyricsChangeHandler = new LyricsChangeHandler());
-            AddInternal(notePositionInfo = new NotePositionInfo());
-            AddInternal(notesChangeHandler = new NotesChangeHandler());
             AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
             AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
+            AddInternal(lyricTimeTagsChangeHandler = new LyricTimeTagsChangeHandler());
+            AddInternal(notePositionInfo = new NotePositionInfo());
+            AddInternal(notesChangeHandler = new NotesChangeHandler());
 
             LyricEditor lyricEditor;
             Add(new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)

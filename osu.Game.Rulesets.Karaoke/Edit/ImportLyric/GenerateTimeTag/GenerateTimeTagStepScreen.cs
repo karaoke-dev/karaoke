@@ -2,9 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 {
@@ -17,6 +22,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
         public override LyricImporterStep Step => LyricImporterStep.GenerateTimeTag;
 
         public override IconUsage Icon => FontAwesome.Solid.Tag;
+
+        [Cached(Type = typeof(ILyricTimeTagsChangeHandler))]
+        private readonly LyricTimeTagsChangeHandler lyricTimeTagsChangeHandler;
+
+        public GenerateTimeTagStepScreen()
+        {
+            AddInternal(lyricTimeTagsChangeHandler = new LyricTimeTagsChangeHandler());
+        }
 
         protected override TopNavigation CreateNavigation()
             => new GenerateTimeTagNavigation(this);
@@ -41,7 +54,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
         internal void AskForAutoGenerateTimeTag()
         {
-            if (LyricManager.HasTimedTimeTags())
+            var lyrics = Beatmap.Value.Beatmap.HitObjects.OfType<Lyric>().ToList();
+
+            if (LyricsUtils.HasTimedTimeTags(lyrics))
             {
                 // do not touch user's lyric if already contains valid time-tag with time.
                 DialogOverlay.Push(new AlreadyContainTimeTagPopupDialog(ok =>
@@ -56,7 +71,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
                     if (!ok)
                         return;
 
-                    LyricManager.AutoGenerateTimeTags();
+                    // todo: select all lyrics or switch to select mode.
+
+                    lyricTimeTagsChangeHandler.AutoGenerate();
                     Navigation.State = NavigationState.Done;
                 }));
             }
