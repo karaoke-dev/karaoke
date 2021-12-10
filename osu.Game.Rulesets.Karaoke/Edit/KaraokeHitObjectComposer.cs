@@ -38,20 +38,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly KaraokeRulesetEditConfigManager editConfigManager;
 
-        [Cached(Type = typeof(INotePositionInfo))]
-        private readonly NotePositionInfo notePositionInfo;
-
         [Cached]
         private readonly FontManager fontManager;
-
-        [Cached(typeof(INotesChangeHandler))]
-        private readonly NotesChangeHandler notesChangeHandler;
 
         [Cached(typeof(ILyricRubyChangeHandler))]
         private readonly LyricRubyChangeHandler lyricRubyChangeHandler;
 
         [Cached(typeof(ILyricRomajiChangeHandler))]
         private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
+
+        [Cached(Type = typeof(INotePositionInfo))]
+        private readonly NotePositionInfo notePositionInfo;
+
+        [Cached(typeof(INotesChangeHandler))]
+        private readonly NotesChangeHandler notesChangeHandler;
+
+        [Cached(typeof(ILyricSingerChangeHandler))]
+        private readonly LyricSingerChangeHandler lyricSingerChangeHandler;
 
         [Cached]
         private readonly LyricManager lyricManager;
@@ -68,12 +71,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             editConfigManager = new KaraokeRulesetEditConfigManager();
 
             // Duplicated registration because selection handler need to use it.
-            AddInternal(notePositionInfo = new NotePositionInfo());
             AddInternal(fontManager = new FontManager());
 
-            AddInternal(notesChangeHandler = new NotesChangeHandler());
             AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
             AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
+            AddInternal(notePositionInfo = new NotePositionInfo());
+            AddInternal(notesChangeHandler = new NotesChangeHandler());
+            AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
             AddInternal(lyricManager = new LyricManager());
             AddInternal(singersChangeHandler = new SingersChangeHandler());
         }

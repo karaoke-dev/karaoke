@@ -9,8 +9,8 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -25,8 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         [Cached(typeof(ISingersChangeHandler))]
         private readonly SingersChangeHandler singersChangeHandler;
 
-        [Cached]
-        protected readonly LyricManager LyricManager;
+        [Cached(typeof(ILyricSingerChangeHandler))]
+        private readonly LyricSingerChangeHandler lyricSingerChangeHandler;
 
         [Cached]
         private readonly EditSingerDialog editSingerDialog;
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         {
             ColourProvider = new OverlayColourProvider(OverlayColourScheme.Purple);
             AddInternal(singersChangeHandler = new SingersChangeHandler());
-            AddInternal(LyricManager = new LyricManager());
+            AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
             Add(editSingerDialog = new EditSingerDialog
             {
                 Depth = -1,

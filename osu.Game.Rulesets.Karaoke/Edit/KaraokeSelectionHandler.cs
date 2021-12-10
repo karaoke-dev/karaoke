@@ -9,6 +9,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
@@ -18,6 +19,7 @@ using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects;
+using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components;
 using osu.Game.Skinning;
 using osuTK;
@@ -26,6 +28,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeSelectionHandler : EditorSelectionHandler
     {
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
+
         [Resolved]
         private INotePositionInfo notePositionInfo { get; set; }
 
@@ -41,6 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Resolved]
         private LyricManager lyricManager { get; set; }
 
+        [Resolved]
+        private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
+
         protected ScrollingNotePlayfield NotePlayfield => ((KaraokeHitObjectComposer)composer).Playfield.NotePlayfield;
 
         protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<HitObject>> selection)
@@ -51,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 return new[]
                 {
                     createLayoutMenuItem(selectedObject),
-                    createSingerMenuItem(selectedObject)
+                    createSingerMenuItem()
                 };
             }
 
@@ -112,9 +120,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             };
         }
 
-        private MenuItem createSingerMenuItem(List<Lyric> lyrics)
+        private MenuItem createSingerMenuItem()
         {
-            return new SingerContextMenu(lyricManager, lyrics, "Singer");
+            return new SingerContextMenu(beatmap, lyricSingerChangeHandler, "Singer");
         }
 
         public override bool HandleMovement(MoveSelectionEvent<HitObject> moveEvent)

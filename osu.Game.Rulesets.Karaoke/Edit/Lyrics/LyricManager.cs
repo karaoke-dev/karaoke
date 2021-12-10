@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -121,65 +120,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 // todo : not really sure should call update?
             });
-        }
-
-        #endregion
-
-        #region Singer
-
-        public void AddSingerToLyric(Singer singer, Lyric lyric) => AddSingersToLyrics(new List<Singer> { singer }, new List<Lyric> { lyric });
-
-        public void AddSingersToLyrics(List<Singer> singers, List<Lyric> lyrics)
-        {
-            if (!(singers?.Any() ?? false))
-                throw new ArgumentNullException($"{nameof(singers)} cannot be null or empty.");
-
-            if (!(lyrics?.Any() ?? false))
-                throw new ArgumentNullException($"{nameof(lyrics)} cannot be null or empty.");
-
-            changeHandler?.BeginChange();
-
-            foreach (var lyric in lyrics)
-            {
-                foreach (var singer in singers)
-                {
-                    LyricUtils.AddSinger(lyric, singer);
-                }
-            }
-
-            changeHandler?.EndChange();
-        }
-
-        public void RemoveSingerToLyric(Singer singer, Lyric lyric) => RemoveSingersToLyrics(new List<Singer> { singer }, new List<Lyric> { lyric });
-
-        public void RemoveSingersToLyrics(List<Singer> singers, List<Lyric> lyrics)
-        {
-            if (!(singers?.Any() ?? false))
-                throw new ArgumentNullException($"{nameof(singers)} cannot be null or empty.");
-
-            if (!(lyrics?.Any() ?? false))
-                throw new ArgumentNullException($"{nameof(lyrics)} cannot be null or empty.");
-
-            changeHandler?.BeginChange();
-
-            foreach (var lyric in lyrics)
-            {
-                foreach (var singer in singers)
-                {
-                    LyricUtils.RemoveSinger(lyric, singer);
-                }
-            }
-
-            changeHandler?.EndChange();
-        }
-
-        public void ClearAllSingersFromLyric(Lyric lyric)
-        {
-            if (!lyric.Singers.Any())
-                return;
-
-            var matchedSingers = Singers.Where(x => lyric.Singers.Contains(x.ID)).ToList();
-            RemoveSingersToLyrics(matchedSingers, new List<Lyric> { lyric });
         }
 
         #endregion
