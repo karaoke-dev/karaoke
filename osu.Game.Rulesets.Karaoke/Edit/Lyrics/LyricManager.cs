@@ -73,19 +73,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         #endregion
 
-        #region Layout
-
-        public void ChangeLayout(List<Lyric> lyrics, int layout)
-        {
-            changeHandler?.BeginChange();
-
-            lyrics.ForEach(l => l.LayoutIndex = layout);
-
-            changeHandler?.EndChange();
-        }
-
-        #endregion
-
         #region Text
 
         public bool DeleteLyricText(Lyric lyric, int index)
