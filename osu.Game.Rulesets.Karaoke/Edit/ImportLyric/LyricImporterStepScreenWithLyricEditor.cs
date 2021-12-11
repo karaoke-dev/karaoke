@@ -4,6 +4,7 @@
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
@@ -15,9 +16,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         [Cached]
         protected readonly LyricManager LyricManager;
 
+        [Cached(typeof(ILockChangeHandler))]
+        private readonly LockChangeHandler lockChangeHandler;
+
         protected LyricImporterStepScreenWithLyricEditor()
         {
             AddInternal(LyricManager = new LyricManager());
+            AddInternal(lockChangeHandler = new LockChangeHandler());
         }
 
         protected override Drawable CreateContent()

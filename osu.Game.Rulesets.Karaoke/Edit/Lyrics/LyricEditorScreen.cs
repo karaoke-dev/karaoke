@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -45,6 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(ILyricSingerChangeHandler))]
         private readonly LyricSingerChangeHandler lyricSingerChangeHandler;
 
+        [Cached(typeof(ILockChangeHandler))]
+        private readonly LockChangeHandler lockChangeHandler;
+
         public LyricEditorScreen()
             : base(KaraokeEditorScreenMode.Lyric)
         {
@@ -58,6 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             AddInternal(notesChangeHandler = new NotesChangeHandler());
             AddInternal(lyricLayoutChangeHandler = new LyricLayoutChangeHandler());
             AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
+            AddInternal(lockChangeHandler = new LockChangeHandler());
 
             LyricEditor lyricEditor;
             Add(new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
