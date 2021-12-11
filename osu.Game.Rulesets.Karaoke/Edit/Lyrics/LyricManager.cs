@@ -2,13 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -27,51 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         protected IEnumerable<Lyric> Lyrics => beatmap.HitObjects.OfType<Lyric>().OrderBy(x => x.Order);
 
         public IEnumerable<Singer> Singers => (beatmap.PlayableBeatmap as KaraokeBeatmap)?.Singers;
-
-        #region Language
-
-        public void AutoDetectLyricLanguage()
-        {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
-
-            AutoDetectLyricLanguage(lyrics);
-        }
-
-        public void AutoDetectLyricLanguage(Lyric[] lyrics)
-        {
-            if (!lyrics.Any())
-                return;
-
-            // todo : should get the config from setting.
-            var config = new LanguageDetectorConfig();
-            var detector = new LanguageDetector(config);
-
-            changeHandler?.BeginChange();
-
-            foreach (var lyric in lyrics)
-            {
-                var detectedLanguage = detector.DetectLanguage(lyric);
-                lyric.Language = detectedLanguage;
-            }
-
-            changeHandler?.EndChange();
-        }
-
-        public bool SetLanguage(Lyric lyric, CultureInfo language)
-        {
-            if (EqualityComparer<CultureInfo>.Default.Equals(language, lyric.Language))
-                return false;
-
-            changeHandler?.BeginChange();
-
-            lyric.Language = language;
-
-            changeHandler?.EndChange();
-
-            return true;
-        }
-
-        #endregion
 
         #region Text
 
