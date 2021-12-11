@@ -32,7 +32,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         private DialogOverlay dialogOverlay;
         private LanguageSelectionDialog languageSelectionDialog;
         private ImportLyricManager importManager;
-        private LyricManager lyricManager;
         private LyricCheckerManager lyricCheckManager;
 
         private LyricEditor editor;
@@ -68,14 +67,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 dialogOverlay = new DialogOverlay(),
                 languageSelectionDialog = new LanguageSelectionDialog(),
                 importManager = new ImportLyricManager(),
-                lyricManager = new LyricManager(),
                 lyricCheckManager = new LyricCheckerManager(),
             });
 
             Dependencies.Cache(dialogOverlay);
             Dependencies.Cache(languageSelectionDialog);
             Dependencies.Cache(importManager);
-            Dependencies.Cache(lyricManager);
             Dependencies.Cache(lyricCheckManager);
         }
 

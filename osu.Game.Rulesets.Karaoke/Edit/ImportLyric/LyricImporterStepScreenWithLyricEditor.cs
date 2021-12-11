@@ -13,15 +13,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
     {
         protected LyricEditor LyricEditor { get; private set; }
 
-        [Cached]
-        protected readonly LyricManager LyricManager;
-
         [Cached(typeof(ILockChangeHandler))]
         private readonly LockChangeHandler lockChangeHandler;
 
         protected LyricImporterStepScreenWithLyricEditor()
         {
-            AddInternal(LyricManager = new LyricManager());
             AddInternal(lockChangeHandler = new LockChangeHandler());
         }
 

@@ -74,9 +74,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         protected class TextTagSelectionHandler : ExtendSelectionHandler<T>
         {
             [Resolved]
-            private LyricManager lyricManager { get; set; }
-
-            [Resolved]
             private EditorLyricPiece editorLyricPiece { get; set; }
 
             // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation

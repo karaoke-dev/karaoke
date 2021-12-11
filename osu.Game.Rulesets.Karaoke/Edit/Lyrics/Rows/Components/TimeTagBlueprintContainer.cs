@@ -54,9 +54,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
         protected class TimeTagSelectionHandler : ExtendSelectionHandler<TimeTag>
         {
-            [Resolved]
-            private LyricManager lyricManager { get; set; }
-
             [BackgroundDependencyLoader]
             private void load(BlueprintSelectionState blueprintSelectionState)
             {

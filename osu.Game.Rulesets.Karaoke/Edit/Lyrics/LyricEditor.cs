@@ -37,9 +37,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     public class LyricEditor : Container, ILyricEditorState, IKeyBindingHandler<KaraokeEditAction>
     {
         [Resolved(canBeNull: true)]
-        private LyricManager lyricManager { get; set; }
-
-        [Resolved(canBeNull: true)]
         private ILyricsChangeHandler lyricsChangeHandler { get; set; }
 
         [Resolved(canBeNull: true)]
@@ -380,9 +377,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
         {
-            if (lyricManager == null)
-                return false;
-
             var action = e.Action;
             var isMoving = HandleMovingEvent(action);
             if (isMoving)
