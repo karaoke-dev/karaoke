@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -26,21 +25,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             editorBeatmap = new EditorBeatmap(CreateBeatmap());
         }
 
-        [Test]
-        public void TestKaraoke() => runForRuleset(new KaraokeRuleset().RulesetInfo);
-
-        private void runForRuleset(RulesetInfo rulesetInfo)
+        protected override void LoadComplete()
         {
-            AddStep("create screen", () =>
+            editorBeatmap.BeatmapInfo.Ruleset = new KaraokeRuleset().RulesetInfo;
+
+            Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
+
+            Child = CreateEditorScreen().With(x =>
             {
-                editorBeatmap.BeatmapInfo.Ruleset = rulesetInfo;
-
-                Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
-
-                Child = CreateEditorScreen().With(x =>
-                {
-                    x.State.Value = Visibility.Visible;
-                });
+                x.State.Value = Visibility.Visible;
             });
         }
 

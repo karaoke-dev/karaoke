@@ -1,7 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -29,17 +28,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens
             karaokeSkin = skinManager.CurrentSkin.Value as KaraokeSkin;
         }
 
-        [Test]
-        public void TestKaraoke() => runForRuleset(new KaraokeRuleset().RulesetInfo);
-
-        private void runForRuleset(RulesetInfo rulesetInfo)
+        protected override void LoadComplete()
         {
-            AddStep("create screen", () =>
+            Child = CreateEditorScreen(karaokeSkin).With(x =>
             {
-                Child = CreateEditorScreen(karaokeSkin).With(x =>
-                {
-                    x.State.Value = Visibility.Visible;
-                });
+                x.State.Value = Visibility.Visible;
             });
         }
 
