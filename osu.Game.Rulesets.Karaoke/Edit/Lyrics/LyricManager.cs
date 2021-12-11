@@ -9,7 +9,6 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
@@ -25,21 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         protected IEnumerable<Lyric> Lyrics => beatmap.HitObjects.OfType<Lyric>().OrderBy(x => x.Order);
 
         public IEnumerable<Singer> Singers => (beatmap.PlayableBeatmap as KaraokeBeatmap)?.Singers;
-
-
-        #region Order
-
-        public void ChangeLyricOrder(Lyric lyric, int newIndex)
-        {
-            var oldOrder = lyric.Order;
-            var newOrder = newIndex + 1; // order is start from 1
-            OrderUtils.ChangeOrder(Lyrics.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
-            {
-                // todo : not really sure should call update?
-            });
-        }
-
-        #endregion
 
         #region Lock
 

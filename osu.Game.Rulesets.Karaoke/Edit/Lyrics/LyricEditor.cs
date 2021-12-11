@@ -40,6 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private LyricManager lyricManager { get; set; }
 
         [Resolved(canBeNull: true)]
+        private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+
+        [Resolved(canBeNull: true)]
         private ILyricTextChangeHandler lyricTextChangeHandler { get; set; }
 
         [Resolved(canBeNull: true)]
@@ -132,8 +135,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             };
 
             container.Items.BindTo(bindableLyrics);
-            if (lyricManager != null)
-                container.OnOrderChanged += lyricManager.ChangeLyricOrder;
+            container.OnOrderChanged += (x, nowOrder) =>
+            {
+                lyricsChangeHandler?.ChangeOrder(nowOrder);
+            };
 
             lyricCaretState.MoveCaret(MovingCaretAction.First);
 
