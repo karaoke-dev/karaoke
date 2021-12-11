@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -12,14 +13,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
     public class LanguageAutoGenerateSection : AutoGenerateSection
     {
         [Resolved]
-        private LyricManager lyricManager { get; set; }
+        private ILyricLanguageChangeHandler lyricLanguageChangeHandler { get; set; }
 
         protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(Lyric[] lyrics)
             => lyrics.Where(x => string.IsNullOrEmpty(x.Text))
                      .ToDictionary(k => k, _ => "Should have text in lyric.");
 
         protected override void Apply(Lyric[] lyrics)
-            => lyricManager.AutoDetectLyricLanguage(lyrics);
+            => lyricLanguageChangeHandler.AutoGenerate();
 
         protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
             => new InvalidLyricTextAlertTextContainer();

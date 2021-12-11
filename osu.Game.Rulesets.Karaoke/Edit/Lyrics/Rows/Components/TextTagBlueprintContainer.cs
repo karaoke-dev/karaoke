@@ -7,7 +7,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -74,9 +73,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
         protected class TextTagSelectionHandler : ExtendSelectionHandler<T>
         {
-            [Resolved]
-            private LyricManager lyricManager { get; set; }
-
             [Resolved]
             private EditorLyricPiece editorLyricPiece { get; set; }
 

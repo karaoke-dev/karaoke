@@ -15,8 +15,8 @@ using osu.Framework.Input.Events;
 using osu.Framework.Utils;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
@@ -61,7 +61,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
         protected class SingerLyricSelectionHandler : SelectionHandler<Lyric>
         {
             [Resolved]
-            private LyricManager lyricManager { get; set; }
+            private EditorBeatmap beatmap { get; set; }
+
+            [Resolved]
+            private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
 
             [Resolved]
             private BindableList<Lyric> selectedLyrics { get; set; }
@@ -83,8 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
             protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<Lyric>> selection)
             {
-                var lyrics = selection.Select(x => x.Item).ToList();
-                var contextMenu = new SingerContextMenu(lyricManager, lyrics, "", () =>
+                var contextMenu = new SingerContextMenu(beatmap, lyricSingerChangeHandler, "", () =>
                 {
                     selectedLyrics.Clear();
                 });
@@ -96,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
                 // todo : remove all in the same time.
                 foreach (var item in items)
                 {
-                    lyricManager.ClearAllSingersFromLyric(item);
+                    lyricSingerChangeHandler.Clear();
                 }
 
                 selectedLyrics.Clear();

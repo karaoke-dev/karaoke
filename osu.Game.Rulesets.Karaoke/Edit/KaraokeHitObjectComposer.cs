@@ -16,7 +16,6 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.UI;
@@ -38,14 +37,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly KaraokeRulesetEditConfigManager editConfigManager;
 
-        [Cached(Type = typeof(INotePositionInfo))]
-        private readonly NotePositionInfo notePositionInfo;
-
         [Cached]
         private readonly FontManager fontManager;
-
-        [Cached(typeof(INotesChangeHandler))]
-        private readonly NotesChangeHandler notesChangeHandler;
 
         [Cached(typeof(ILyricRubyChangeHandler))]
         private readonly LyricRubyChangeHandler lyricRubyChangeHandler;
@@ -53,8 +46,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached(typeof(ILyricRomajiChangeHandler))]
         private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
 
-        [Cached]
-        private readonly LyricManager lyricManager;
+        [Cached(Type = typeof(INotePositionInfo))]
+        private readonly NotePositionInfo notePositionInfo;
+
+        [Cached(typeof(INotesChangeHandler))]
+        private readonly NotesChangeHandler notesChangeHandler;
+
+        [Cached(typeof(ILyricSingerChangeHandler))]
+        private readonly LyricSingerChangeHandler lyricSingerChangeHandler;
+
+        [Cached(typeof(ILyricLayoutChangeHandler))]
+        private readonly LyricLayoutChangeHandler lyricLayoutChangeHandler;
 
         [Cached(typeof(ISingersChangeHandler))]
         private readonly SingersChangeHandler singersChangeHandler;
@@ -68,13 +70,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             editConfigManager = new KaraokeRulesetEditConfigManager();
 
             // Duplicated registration because selection handler need to use it.
-            AddInternal(notePositionInfo = new NotePositionInfo());
             AddInternal(fontManager = new FontManager());
 
-            AddInternal(notesChangeHandler = new NotesChangeHandler());
             AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
             AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
-            AddInternal(lyricManager = new LyricManager());
+            AddInternal(notePositionInfo = new NotePositionInfo());
+            AddInternal(notesChangeHandler = new NotesChangeHandler());
+            AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
+            AddInternal(lyricLayoutChangeHandler = new LyricLayoutChangeHandler());
             AddInternal(singersChangeHandler = new SingersChangeHandler());
         }
 

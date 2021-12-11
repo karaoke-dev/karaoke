@@ -12,7 +12,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -69,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
         }
 
         [BackgroundDependencyLoader]
-        private void load(LyricManager lyricManager, SingerLyricEditor editor)
+        private void load(SingerLyricEditor editor)
         {
             singersBindable.BindValueChanged(_ =>
             {

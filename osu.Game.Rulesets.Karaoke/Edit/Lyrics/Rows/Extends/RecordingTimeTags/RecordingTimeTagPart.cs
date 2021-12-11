@@ -12,6 +12,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -117,7 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             private LyricCaretState lyricCaretState { get; set; }
 
             [Resolved]
-            private LyricManager lyricManager { get; set; }
+            private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
             private readonly Bindable<double?> bindableTIme;
 
@@ -195,7 +196,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 {
                     new OsuMenuItem("Clear time", MenuItemType.Destructive, () =>
                     {
-                        lyricManager.ClearTimeTagTime(timeTag);
+                        lyricTimeTagsChangeHandler.ClearTimeTagTime(timeTag);
                     })
                 };
         }

@@ -7,7 +7,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -55,9 +54,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
         protected class TimeTagSelectionHandler : ExtendSelectionHandler<TimeTag>
         {
-            [Resolved]
-            private LyricManager lyricManager { get; set; }
-
             [BackgroundDependencyLoader]
             private void load(BlueprintSelectionState blueprintSelectionState)
             {

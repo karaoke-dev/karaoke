@@ -17,6 +17,7 @@ using osu.Framework.Input.Events;
 using osu.Framework.Utils;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -35,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         private EditorClock editorClock { get; set; }
 
         [Resolved]
-        private LyricManager lyricManager { get; set; }
+        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
         [UsedImplicitly]
         private readonly Bindable<TimeTag[]> timeTags;
@@ -98,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             foreach (var timeTag in processedTimeTags)
             {
                 if (timeTag.Time.HasValue)
-                    lyricManager.SetTimeTagTime(timeTag, timeTag.Time.Value);
+                    lyricTimeTagsChangeHandler.SetTimeTagTime(timeTag, timeTag.Time.Value);
             }
         }
 
@@ -133,7 +134,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         protected class TimeTagEditorSelectionHandler : ExtendSelectionHandler<TimeTag>
         {
             [Resolved]
-            private LyricManager lyricManager { get; set; }
+            private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
             [BackgroundDependencyLoader]
             private void load(BlueprintSelectionState blueprintSelectionState)
@@ -149,7 +150,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                 // todo : delete time-line
                 foreach (var item in items)
                 {
-                    lyricManager.RemoveTimeTag(item);
+                    lyricTimeTagsChangeHandler.Remove(item);
                 }
             }
 

@@ -48,9 +48,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly ExportLyricManager exportLyricManager;
 
         [Cached]
-        private readonly LyricManager lyricManager;
-
-        [Cached]
         private readonly LyricCheckerManager lyricCheckerManager;
 
         [Cached]
@@ -70,7 +67,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(fontManager = new FontManager());
 
             AddInternal(exportLyricManager = new ExportLyricManager());
-            AddInternal(lyricManager = new LyricManager());
             AddInternal(lyricCheckerManager = new LyricCheckerManager());
             AddInternal(languageSelectionDialog = new LanguageSelectionDialog());
         }

@@ -2,8 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.ComponentModel;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
@@ -17,6 +19,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         public override LyricImporterStep Step => LyricImporterStep.EditLyric;
 
         public override IconUsage Icon => FontAwesome.Solid.Globe;
+
+        [Cached(Type = typeof(ILyricsChangeHandler))]
+        private readonly LyricsChangeHandler lyricsChangeHandler;
+
+        public EditLyricStepScreen()
+        {
+            AddInternal(lyricsChangeHandler = new LyricsChangeHandler());
+        }
 
         protected override TopNavigation CreateNavigation()
             => new EditLyricNavigation(this);

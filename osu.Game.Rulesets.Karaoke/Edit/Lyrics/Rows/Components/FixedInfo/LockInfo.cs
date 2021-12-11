@@ -10,6 +10,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -20,12 +21,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
     public class LockInfo : SpriteIcon, IHasContextMenu
     {
         [Resolved]
-        private LyricManager lyricManager { get; set; }
+        private ILockChangeHandler lockChangeHandler { get; set; }
 
         [Resolved]
         private KaraokeRulesetLyricEditorConfigManager configManager { get; set; }
 
-        public MenuItem[] ContextMenuItems => new LyricLockContextMenu(lyricManager, lyric, "Lock").Items.ToArray();
+        public MenuItem[] ContextMenuItems => new LyricLockContextMenu(lockChangeHandler, lyric, "Lock").Items.ToArray();
 
         private readonly Lyric lyric;
 
@@ -70,11 +71,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
             {
                 // change the state by config.
                 var newLockState = configManager.Get<LockState>(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState);
-                lyricManager.LockLyric(lyric, newLockState);
+                lockChangeHandler.Lock(newLockState);
             }
             else
             {
-                lyricManager.UnlockLyric(lyric);
+                lockChangeHandler.Unlock();
             }
 
             return base.OnClick(e);

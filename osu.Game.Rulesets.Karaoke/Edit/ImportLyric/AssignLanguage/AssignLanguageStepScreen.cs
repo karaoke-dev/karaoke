@@ -7,7 +7,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 {
@@ -21,17 +20,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 
         public override IconUsage Icon => FontAwesome.Solid.Globe;
 
+        [Cached(typeof(ILyricLanguageChangeHandler))]
+        private readonly LyricLanguageChangeHandler lyricLanguageChangeHandler;
+
         [Cached(typeof(ILyricRubyChangeHandler))]
         private readonly LyricRubyChangeHandler lyricRubyChangeHandler;
 
         [Cached(typeof(ILyricRomajiChangeHandler))]
         private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
 
-        [Resolved]
-        private EditorBeatmap beatmap { get; set; }
-
         public AssignLanguageStepScreen()
         {
+            AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());
             AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
             AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
         }
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
                 if (!ok)
                     return;
 
-                LyricManager.AutoDetectLyricLanguage();
+                lyricLanguageChangeHandler.AutoGenerate();
                 Navigation.State = NavigationState.Done;
             }));
         }

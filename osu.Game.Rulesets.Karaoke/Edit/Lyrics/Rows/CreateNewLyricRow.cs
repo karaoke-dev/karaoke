@@ -6,6 +6,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
@@ -14,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
     public class CreateNewLyricRow : LyricEditorRow
     {
         [Resolved]
-        private LyricManager lyricManager { get; set; }
+        private ILyricsChangeHandler lyricsChangeHandler { get; set; }
 
         public CreateNewLyricRow()
             : base(new Lyric { Text = "New lyric" })
@@ -35,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     TooltipText = "Click to add new lyric",
                     Action = () =>
                     {
-                        lyricManager.CreateLyric();
+                        lyricsChangeHandler.CreateAtLast();
                     }
                 }
             };

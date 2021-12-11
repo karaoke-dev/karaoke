@@ -9,15 +9,17 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
 using osu.Game.Rulesets.Objects;
+using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components;
 using osu.Game.Skinning;
 using osuTK;
@@ -26,6 +28,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 {
     public class KaraokeSelectionHandler : EditorSelectionHandler
     {
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
+
         [Resolved]
         private INotePositionInfo notePositionInfo { get; set; }
 
@@ -39,7 +44,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private INotesChangeHandler notesChangeHandler { get; set; }
 
         [Resolved]
-        private LyricManager lyricManager { get; set; }
+        private ILyricLayoutChangeHandler lyricLayoutChangeHandler { get; set; }
+
+        [Resolved]
+        private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
 
         protected ScrollingNotePlayfield NotePlayfield => ((KaraokeHitObjectComposer)composer).Playfield.NotePlayfield;
 
@@ -47,11 +55,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             if (selection.All(x => x is LyricSelectionBlueprint))
             {
-                var selectedObject = EditorBeatmap.SelectedHitObjects.Cast<Lyric>().OrderBy(x => x.StartTime).ToList();
                 return new[]
                 {
-                    createLayoutMenuItem(selectedObject),
-                    createSingerMenuItem(selectedObject)
+                    createLayoutMenuItem(),
+                    createSingerMenuItem()
                 };
             }
 
@@ -94,8 +101,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             });
         }
 
-        private MenuItem createLayoutMenuItem(List<Lyric> lyrics)
+        private MenuItem createLayoutMenuItem()
         {
+            var lyrics = EditorBeatmap.SelectedHitObjects.Cast<Lyric>();
             var layoutDictionary = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
             var selectedLayoutIndexes = lyrics.Select(x => x.LayoutIndex).Distinct().ToList();
             var selectedLayoutIndex = selectedLayoutIndexes.Count == 1 ? selectedLayoutIndexes.FirstOrDefault() : -1;
@@ -107,14 +115,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     if (state != TernaryState.True)
                         return;
 
-                    lyricManager.ChangeLayout(lyrics, x.Key);
+                    var layoutIndex = x.Key;
+                    var layout = source.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, layoutIndex)).Value;
+                    lyricLayoutChangeHandler.ChangeLayout(layout);
                 })).ToArray()
             };
         }
 
-        private MenuItem createSingerMenuItem(List<Lyric> lyrics)
+        private MenuItem createSingerMenuItem()
         {
-            return new SingerContextMenu(lyricManager, lyrics, "Singer");
+            return new SingerContextMenu(beatmap, lyricSingerChangeHandler, "Singer");
         }
 
         public override bool HandleMovement(MoveSelectionEvent<HitObject> moveEvent)
