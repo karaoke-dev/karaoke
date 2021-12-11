@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.ComponentModel;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
@@ -77,6 +78,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             MoveCaretToTargetPosition(position);
             return true;
+        }
+
+        public void MoveCaretToTargetPosition(Lyric lyric)
+        {
+            if (lyric == null)
+                throw new ArgumentNullException(nameof(lyric));
+
+            if (algorithm == null)
+                throw new InvalidOperationException($"{nameof(algorithm)} cannot be null.");
+
+            BindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
+            BindableHoverCaretPosition.Value = null;
         }
 
         public void MoveCaretToTargetPosition(ICaretPosition position)
