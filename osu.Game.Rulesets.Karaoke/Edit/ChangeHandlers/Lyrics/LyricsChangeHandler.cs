@@ -94,6 +94,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
+        public void ChangeOrder(int newOrder)
+        {
+            PerformOnSelection(lyric =>
+            {
+                var oldOrder = lyric.Order;
+                OrderUtils.ChangeOrder(HitObjects.ToArray(), oldOrder, newOrder + 1, (switchSinger, oldOrder, newOrder) =>
+                {
+                    // todo : not really sure should call update?
+                });
+            });
+        }
+
         protected override void Add(Lyric hitObject)
         {
             var index = HitObjects.ToList().FindIndex(x => x.Order == hitObject.Order - 1);

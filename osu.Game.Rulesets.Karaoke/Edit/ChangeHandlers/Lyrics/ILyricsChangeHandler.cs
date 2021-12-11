@@ -14,5 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         void CreateAtLast();
 
         void Remove();
+
+        void ChangeOrder(int newOrder);
     }
 }
