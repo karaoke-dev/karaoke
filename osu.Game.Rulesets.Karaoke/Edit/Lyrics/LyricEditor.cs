@@ -40,6 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private LyricManager lyricManager { get; set; }
 
         [Resolved(canBeNull: true)]
+        private ILyricTextChangeHandler lyricTextChangeHandler { get; set; }
+
+        [Resolved(canBeNull: true)]
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
         [Resolved]
@@ -341,7 +344,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         protected override bool OnKeyDown(KeyDownEvent e)
         {
-            if (lyricManager == null)
+            if (lyricTextChangeHandler == null)
                 return false;
 
             if (Mode != LyricEditorMode.Typing)
@@ -357,11 +360,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             switch (e.Key)
             {
                 case Key.BackSpace:
+                    if (!string.IsNullOrEmpty(lyric.Text))
+                        return false;
+
                     // delete single character.
-                    var deletedSuccess = lyricManager.DeleteLyricText(lyric, index);
-                    if (deletedSuccess)
-                        lyricCaretState.MoveCaret(MovingCaretAction.Left);
-                    return deletedSuccess;
+                    lyricTextChangeHandler.DeleteLyricText(index);
+                    lyricCaretState.MoveCaret(MovingCaretAction.Left);
+                    return true;
 
                 default:
                     return false;

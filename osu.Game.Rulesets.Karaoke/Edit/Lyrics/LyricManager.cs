@@ -26,29 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public IEnumerable<Singer> Singers => (beatmap.PlayableBeatmap as KaraokeBeatmap)?.Singers;
 
-        #region Text
-
-        public bool DeleteLyricText(Lyric lyric, int index)
-        {
-            if (index <= 0)
-                return false;
-
-            changeHandler?.BeginChange();
-
-            LyricUtils.RemoveText(lyric, index - 1);
-
-            if (string.IsNullOrEmpty(lyric.Text))
-            {
-                OrderUtils.ShiftingOrder(Lyrics.Where(x => x.Order > lyric.Order).ToArray(), -1);
-                beatmap.Remove(lyric);
-            }
-
-            changeHandler?.EndChange();
-
-            return true;
-        }
-
-        #endregion
 
         #region Order
 

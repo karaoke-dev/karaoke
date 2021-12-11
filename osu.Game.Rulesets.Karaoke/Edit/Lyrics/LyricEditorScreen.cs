@@ -18,6 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(ILyricsChangeHandler))]
         private readonly LyricsChangeHandler lyricsChangeHandler;
 
+        [Cached(typeof(ILyricTextChangeHandler))]
+        private readonly LyricTextChangeHandler lyricTextChangeHandler;
+
         [Cached(typeof(ILyricLanguageChangeHandler))]
         private readonly LyricLanguageChangeHandler lyricLanguageChangeHandler;
 
@@ -46,6 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             : base(KaraokeEditorScreenMode.Lyric)
         {
             AddInternal(lyricsChangeHandler = new LyricsChangeHandler());
+            AddInternal(lyricTextChangeHandler = new LyricTextChangeHandler());
             AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());
             AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
             AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
