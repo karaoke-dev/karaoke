@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 return tags.Where(x => x.StartIndex < x.EndIndex).ToArray();
             }
 
-            static TimeTag[] processTimeTags(TimeTag[] timeTags, int position, int count)
+            static TimeTag[] processTimeTags(IEnumerable<TimeTag> timeTags, int position, int count)
             {
                 int endPosition = position + count;
                 return timeTags?.Where(x => !(x.Index.Index >= position && x.Index.Index < endPosition))
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             string newLyric = lyric.Text?[..position] + text + lyric.Text?[position..];
             lyric.Text = newLyric;
 
-            static T[] processTags<T>(T[] tags, int position, int shiftingLength) where T : ITextTag =>
+            static T[] processTags<T>(IEnumerable<T> tags, int position, int shiftingLength) where T : ITextTag =>
                 tags?.Select(x =>
                     {
                         if (x.StartIndex >= position)
@@ -114,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     })
                     .ToArray();
 
-            static TimeTag[] processTimeTags(TimeTag[] timeTags, int startPosition, int shifting)
+            static TimeTag[] processTimeTags(IEnumerable<TimeTag> timeTags, int startPosition, int shifting)
                 => timeTags?.Select(t => t.Index.Index >= startPosition ? TimeTagUtils.ShiftingTimeTag(t, shifting) : t).ToArray();
         }
 
