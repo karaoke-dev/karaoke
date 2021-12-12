@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
         internal void AskForAutoGenerateTimeTag()
         {
-            var lyrics = Beatmap.Value.Beatmap.HitObjects.OfType<Lyric>().ToList();
+            var lyrics = Beatmap.Value.Beatmap.HitObjects.OfType<Lyric>();
 
             if (LyricsUtils.HasTimedTimeTags(lyrics))
             {

@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns>A third <see cref="RectangleF"/> structure that contains both of the multi rectangles that form the union.</returns>
         /// <param name="rectangles">All the rectangles to union.</param>
         /// <filterpriority>1</filterpriority>
-        public static RectangleF Union(RectangleF[] rectangles)
+        public static RectangleF Union(params RectangleF[] rectangles)
         {
             if (rectangles == null || rectangles.Length == 0)
                 return new RectangleF();

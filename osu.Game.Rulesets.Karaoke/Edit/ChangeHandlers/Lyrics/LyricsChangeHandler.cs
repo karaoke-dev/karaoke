@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             {
                 // Shifting order that order is larger than current lyric.
                 int lyricOrder = lyric.Order;
-                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > lyricOrder).ToArray(), 1);
+                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > lyricOrder), 1);
 
                 // Split lyric
                 var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, index);
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
                 // Shifting order that order is larger than current lyric.
                 int lyricOrder = previousLyric.Order;
-                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > lyricOrder).ToArray(), -1);
+                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > lyricOrder), -1);
 
                 var newLyric = LyricsUtils.CombineLyric(previousLyric, lyric);
                 newLyric.Order = lyricOrder;
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 int order = lyric.Order;
 
                 // Shifting order that order is larger than current lyric.
-                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > order).ToArray(), 1);
+                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > order), 1);
 
                 // Add new lyric to target order.
                 var createLyric = new Lyric
@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             PerformOnSelection(lyric =>
             {
                 // Shifting order that order is larger than current lyric.
-                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > lyric.Order).ToArray(), -1);
+                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > lyric.Order), -1);
                 Remove(lyric);
             });
         }

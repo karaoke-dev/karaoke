@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             firstBindableList.CollectionChanged += (_, args) =>
             {
-                var newItems = args.NewItems?.OfType<T2>().Except(secondBindableList);
+                var newItems = args.NewItems?.OfType<T2>().Except(secondBindableList).ToArray();
                 var oldItems = args.OldItems;
 
                 if (newItems != null && newItems.Any())

@@ -130,20 +130,20 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             };
         }
 
-        private static TimeTag[] shiftingTimeTag(TimeTag[] timeTags, int shifting)
+        private static TimeTag[] shiftingTimeTag(IEnumerable<TimeTag> timeTags, int shifting)
             => timeTags?.Select(t => TimeTagUtils.ShiftingTimeTag(t, shifting)).ToArray();
 
-        private static RubyTag[] shiftingRubyTag(RubyTag[] rubyTags, int shifting)
+        private static RubyTag[] shiftingRubyTag(IEnumerable<RubyTag> rubyTags, int shifting)
             => rubyTags?.Select(t => TextTagUtils.Shifting(t, shifting)).ToArray();
 
-        private static RomajiTag[] shiftingRomajiTag(RomajiTag[] romajiTags, int shifting)
+        private static RomajiTag[] shiftingRomajiTag(IEnumerable<RomajiTag> romajiTags, int shifting)
             => romajiTags?.Select(t => TextTagUtils.Shifting(t, shifting)).ToArray();
 
         #endregion
 
         #region Time tags
 
-        public static bool HasTimedTimeTags(List<Lyric> lyrics)
+        public static bool HasTimedTimeTags(IEnumerable<Lyric> lyrics)
             => lyrics?.Any(LyricUtils.HasTimedTimeTags) ?? false;
 
         #endregion

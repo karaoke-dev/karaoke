@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -31,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags.Ja
 
         #region test helper
 
-        private static void runRomajiCheckTest(string text, string[] actualRomaji, JaRomajiTagGeneratorConfig config)
+        private static void runRomajiCheckTest(string text, IEnumerable<string> actualRomaji, JaRomajiTagGeneratorConfig config)
         {
             var generator = new JaRomajiTagGenerator(config);
 

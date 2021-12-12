@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -53,13 +54,13 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             return shader;
 
-            static Type getTypeByProperties(JProperty[] properties)
+            static Type getTypeByProperties(IEnumerable<JProperty> properties)
             {
                 string typeString = properties.FirstOrDefault(x => x.Name == "$type")?.Value.ToObject<string>();
                 return getTypeByName(typeString);
             }
 
-            static ICustomizedShader[] getShadersFromProperties(JProperty[] properties, JsonSerializer serializer)
+            static ICustomizedShader[] getShadersFromProperties(IEnumerable<JProperty> properties, JsonSerializer serializer)
             {
                 // deserialize step shaders if process step shaders.
                 var stepShaders = properties.FirstOrDefault(x => x.Name == "step_shaders");
@@ -104,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             return assembly?.GetType($"osu.Framework.Graphics.Shaders.{name}");
         }
 
-        private static string getNameByType(Type type)
+        private static string getNameByType(MemberInfo type)
             => type.Name;
 
         private class WritablePropertiesOnlyResolver : SnakeCaseKeyContractResolver

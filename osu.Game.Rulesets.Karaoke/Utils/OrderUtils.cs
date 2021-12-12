@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <typeparam name="T"></typeparam>
         /// <param name="objects"></param>
         /// <param name="shifting"></param>
-        public static void ShiftingOrder<T>(T[] objects, int shifting) where T : class, IHasOrder
+        public static void ShiftingOrder<T>(IEnumerable<T> objects, int shifting) where T : class, IHasOrder
         {
             foreach (var processObject in objects)
             {

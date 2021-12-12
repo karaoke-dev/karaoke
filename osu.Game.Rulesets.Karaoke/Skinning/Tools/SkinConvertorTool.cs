@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework;
 using osu.Framework.Extensions;
@@ -45,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
             return shaders;
         }
 
-        private static void attachShaders(ShaderManager shaderManager, ICustomizedShader[] shaders)
+        private static void attachShaders(ShaderManager shaderManager, IEnumerable<ICustomizedShader> shaders)
         {
             foreach (var shader in shaders)
             {

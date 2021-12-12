@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             if (result.Time == null)
                 return false;
 
-            var timeTagBlueprints = blueprints.OfType<TimeTagEditorHitObjectBlueprint>();
+            var timeTagBlueprints = blueprints.OfType<TimeTagEditorHitObjectBlueprint>().ToArray();
             var firstDragBlueprint = timeTagBlueprints.FirstOrDefault();
             if (firstDragBlueprint == null)
                 return false;
@@ -156,7 +156,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 
             protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<TimeTag>> selection)
             {
-                var timeTags = selection.Select(x => x.Item);
+                var timeTags = selection.Select(x => x.Item).ToArray();
 
                 if (timeTags.Any(x => x.Time != null))
                 {

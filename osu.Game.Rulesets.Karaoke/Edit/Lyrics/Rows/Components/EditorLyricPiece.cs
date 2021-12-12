@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
@@ -105,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             float extraPosition = extraSpacing(TimeTagsBindable.Value, timeTag);
             return basePosition + new Vector2(extraPosition);
 
-            static float extraSpacing(TimeTag[] timeTagsInLyric, TimeTag timeTag)
+            static float extraSpacing(IEnumerable<TimeTag> timeTagsInLyric, TimeTag timeTag)
             {
                 bool isStart = timeTag.Index.State == TextIndex.IndexState.Start;
                 var timeTags = isStart ? timeTagsInLyric.Reverse() : timeTagsInLyric;
@@ -203,7 +204,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 return new Vector2(x, y);
             }
 
-            private int skinIndex(PositionText[] positionTexts, int endIndex)
+            private int skinIndex(IEnumerable<PositionText> positionTexts, int endIndex)
                 => positionTexts.Where((_, i) => i < endIndex).Sum(x => x.Text.Length);
 
             private bool propertyMatched(PositionText positionText, ITextTag textTag)

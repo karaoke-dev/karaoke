@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -71,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             singer.BindValueChanged(value => applySingerStyle(skin, value.NewValue), true);
         }
 
-        private void applySingerStyle(ISkinSource skin, int[] singers)
+        private void applySingerStyle(ISkinSource skin, IEnumerable<int> singers)
         {
             var noteSkin = skin?.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, singers))?.Value;
             if (noteSkin == null)

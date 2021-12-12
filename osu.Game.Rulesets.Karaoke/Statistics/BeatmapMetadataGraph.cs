@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -169,7 +170,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                 }
             }
 
-            private void setSingerAsync(Singer[] singers)
+            private void setSingerAsync(IEnumerable<Singer> singers)
             {
                 textFlow?.Expire();
                 TextContainer.Add(textFlow = new FillFlowContainer<SingerSpriteText>

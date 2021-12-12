@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
         public IEnumerable<Issue> Run(BeatmapVerifierContext context)
         {
-            var lyrics = context.Beatmap.HitObjects.OfType<Lyric>();
+            var lyrics = context.Beatmap.HitObjects.OfType<Lyric>().ToArray();
 
             foreach (var note in context.Beatmap.HitObjects.OfType<Note>())
             {

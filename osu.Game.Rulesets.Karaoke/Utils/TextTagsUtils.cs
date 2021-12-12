@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class TextTagsUtils
     {
-        public static T[] Sort<T>(T[] textTags, Sorting sorting = Sorting.Asc) where T : ITextTag =>
+        public static T[] Sort<T>(IEnumerable<T> textTags, Sorting sorting = Sorting.Asc) where T : ITextTag =>
             sorting switch
             {
                 Sorting.Asc => textTags?.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray(),
@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 _ => throw new InvalidEnumArgumentException(nameof(sorting))
             };
 
-        public static T[] FindOutOfRange<T>(T[] textTags, string lyric) where T : ITextTag
+        public static T[] FindOutOfRange<T>(IEnumerable<T> textTags, string lyric) where T : ITextTag
         {
             return textTags?.Where(x => TextTagUtils.OutOfRange(x, lyric)).ToArray();
         }
@@ -64,10 +64,10 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 }
             }
 
-            return Sort(invalidList.Distinct().ToArray());
+            return Sort(invalidList.Distinct());
         }
 
-        public static T[] FindEmptyText<T>(T[] textTags) where T : ITextTag
+        public static T[] FindEmptyText<T>(IEnumerable<T> textTags) where T : ITextTag
         {
             return textTags?.Where(TextTagUtils.EmptyText).ToArray();
         }

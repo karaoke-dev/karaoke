@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -205,19 +206,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             return new Singer(id);
         }
 
-        public static RubyTag[] ParseRubyTags(string[] strings)
+        public static RubyTag[] ParseRubyTags(IEnumerable<string> strings)
             => strings?.Select(ParseRubyTag).ToArray();
 
-        public static RomajiTag[] ParseRomajiTags(string[] strings)
+        public static RomajiTag[] ParseRomajiTags(IEnumerable<string> strings)
             => strings?.Select(ParseRomajiTag).ToArray();
 
-        public static TimeTag[] ParseTimeTags(string[] strings)
+        public static TimeTag[] ParseTimeTags(IEnumerable<string> strings)
             => strings?.Select(ParseTimeTag).ToArray();
 
-        public static Lyric[] ParseLyrics(string[] strings)
+        public static Lyric[] ParseLyrics(IEnumerable<string> strings)
             => strings?.Select(ParseLyric).ToArray();
 
-        public static Singer[] ParseSingers(string[] strings)
+        public static Singer[] ParseSingers(IEnumerable<string> strings)
             => strings?.Select(ParseSinger).ToArray();
     }
 }

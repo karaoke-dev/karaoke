@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="timeTags">Time tags</param>
         /// <returns>Sorted time tags</returns>
-        public static TimeTag[] Sort(TimeTag[] timeTags)
+        public static TimeTag[] Sort(IEnumerable<TimeTag> timeTags)
         {
             return timeTags?.OrderBy(x => x.Index)
                            .ThenBy(x => x.Time).ToArray();
@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="timeTags"></param>
         /// <param name="lyric"></param>
         /// <returns></returns>
-        public static TimeTag[] FindOutOfRange(TimeTag[] timeTags, string lyric)
+        public static TimeTag[] FindOutOfRange(IEnumerable<TimeTag> timeTags, string lyric)
         {
             return timeTags?.Where(x => x.Index.Index < 0 || x.Index.Index >= lyric.Length).ToArray();
         }
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="timeTags"></param>
         /// <returns></returns>
-        public static TimeTag[] FindNoneTime(TimeTag[] timeTags)
+        public static TimeTag[] FindNoneTime(IEnumerable<TimeTag> timeTags)
             => timeTags?.Where(x => x.Time == null).ToArray();
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="timeTags"></param>
         /// <param name="lyric"></param>
-        public static bool HasStartTimeTagInLyric(TimeTag[] timeTags, string lyric)
+        public static bool HasStartTimeTagInLyric(IEnumerable<TimeTag> timeTags, string lyric)
             => !string.IsNullOrEmpty(lyric) && timeTags != null && timeTags.Any(x => x.Index.State == TextIndex.IndexState.Start && x.Index.Index == 0);
 
         /// <summary>
@@ -99,8 +99,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="timeTags"></param>
         /// <param name="lyric"></param>
-        public static bool HasEndTimeTagInLyric(TimeTag[] timeTags, string lyric)
-            => timeTags.Any(x => x.Index.State == TextIndex.IndexState.End && x.Index.Index == lyric.Length - 1);
+        public static bool HasEndTimeTagInLyric(IEnumerable<TimeTag> timeTags, string lyric)
+            => timeTags != null && timeTags.Any(x => x.Index.State == TextIndex.IndexState.End && x.Index.Index == lyric.Length - 1);
 
         /// <summary>
         /// Find overlapping time tags.
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="other">Check way</param>
         /// <param name="self">Check way</param>
         /// <returns>List of overlapping time tags</returns>
-        public static TimeTag[] FindOverlapping(TimeTag[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
+        public static TimeTag[] FindOverlapping(IEnumerable<TimeTag> timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
             if (timeTags == null)
                 return null;
@@ -183,7 +183,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 }
             }
 
-            return Sort(overlappingTimeTagList.Distinct().ToArray());
+            return Sort(overlappingTimeTagList.Distinct());
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 return timeTags;
 
             var sortedTimeTags = Sort(timeTags);
-            var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Index.Index);
+            var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Index.Index).ToArray();
 
             var overlappingTimeTags = FindOverlapping(timeTags, other, self);
             var validTimeTags = sortedTimeTags.Except(overlappingTimeTags);
@@ -210,14 +210,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 var timeTag = overlappingTimeTag.Index;
 
                 // fix self-overlapping
-                var groupedTimeTag = groupedTimeTags.FirstOrDefault(x => x.Key == timeTag.Index).ToList();
-                var startTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.Start && x.Time != null);
-                var endTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.End && x.Time != null);
+                var groupedTimeTag = groupedTimeTags.FirstOrDefault(x => x.Key == timeTag.Index)?.ToList();
+                var startTimeGroup = groupedTimeTag?.Where(x => x.Index.State == TextIndex.IndexState.Start && x.Time != null);
+                var endTimeGroup = groupedTimeTag?.Where(x => x.Index.State == TextIndex.IndexState.End && x.Time != null);
 
                 switch (timeTag.State)
                 {
                     case TextIndex.IndexState.Start:
-                        double? minEndTime = endTimeGroup.Min(x => x.Time);
+                        double? minEndTime = endTimeGroup?.Min(x => x.Time);
 
                         if (minEndTime != null && minEndTime < overlappingTimeTag.Time)
                         {
@@ -228,7 +228,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                         break;
 
                     case TextIndex.IndexState.End:
-                        double? maxStartTime = startTimeGroup.Max(x => x.Time);
+                        double? maxStartTime = startTimeGroup?.Max(x => x.Time);
 
                         if (maxStartTime != null && maxStartTime > overlappingTimeTag.Time)
                         {
