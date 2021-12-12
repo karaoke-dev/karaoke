@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             if (layouts == null)
                 return;
 
-            foreach (var (key, value) in layouts)
+            foreach ((int key, string value) in layouts)
             {
                 setTooltip($"Test lyric with layout {value}", lyric => { lyric.LayoutIndex = key; });
             }

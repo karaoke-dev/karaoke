@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase('1', false)]
         public void TestIsKana(char c, bool match)
         {
-            var isKana = CharUtils.IsKana(c);
+            bool isKana = CharUtils.IsKana(c);
             Assert.AreEqual(isKana, match);
         }
 
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase('文', false)]
         public void TestIsLatin(char c, bool match)
         {
-            var isLatin = CharUtils.IsLatin(c);
+            bool isLatin = CharUtils.IsLatin(c);
             Assert.AreEqual(isLatin, match);
         }
 
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase('A', false)]
         public void TestIsAsciiSymbol(char c, bool match)
         {
-            var isAsciiSymbol = CharUtils.IsAsciiSymbol(c);
+            bool isAsciiSymbol = CharUtils.IsAsciiSymbol(c);
             Assert.AreEqual(isAsciiSymbol, match);
         }
 
@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase('ハ', false)]
         public void TestIsChinese(char c, bool result)
         {
-            var isChinese = CharUtils.IsChinese(c);
+            bool isChinese = CharUtils.IsChinese(c);
             Assert.AreEqual(isChinese, result);
         }
     }

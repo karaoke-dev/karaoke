@@ -41,8 +41,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
         [Test]
         public void CompareFontNameWithOrigin()
         {
-            var fontName = CustomizeGlyphStore.FontName;
-            var actual = GlyphStore.FontName;
+            string fontName = CustomizeGlyphStore.FontName;
+            string actual = GlyphStore.FontName;
 
             Assert.AreEqual(fontName, actual);
         }
@@ -53,8 +53,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
         [TestCase('あ')] // should not have those texts in store.
         public void CompareHasGlyphWithOrigin(char c)
         {
-            var hasGlyph = CustomizeGlyphStore.HasGlyph(c);
-            var actual = GlyphStore.HasGlyph(c);
+            bool hasGlyph = CustomizeGlyphStore.HasGlyph(c);
+            bool actual = GlyphStore.HasGlyph(c);
 
             Assert.AreEqual(hasGlyph, actual);
         }
@@ -62,8 +62,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
         [Test]
         public void CompareGetBaseHeightWithOrigin()
         {
-            var baseHeight = CustomizeGlyphStore.Baseline;
-            var actual = GlyphStore.Baseline;
+            float? baseHeight = CustomizeGlyphStore.Baseline;
+            float? actual = GlyphStore.Baseline;
 
             Assert.AreEqual(baseHeight, actual);
         }
@@ -97,8 +97,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
         [TestCase('a', 'あ')]
         public void CompareGetKerningWithOrigin(char left, char right)
         {
-            var kerning = CustomizeGlyphStore.GetKerning(left, right);
-            var actual = GlyphStore.GetKerning(left, right);
+            int kerning = CustomizeGlyphStore.GetKerning(left, right);
+            int actual = GlyphStore.GetKerning(left, right);
 
             Assert.AreEqual(kerning, actual);
         }

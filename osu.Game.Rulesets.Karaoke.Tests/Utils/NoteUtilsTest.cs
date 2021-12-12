@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RubyText = rubyText
             };
 
-            var result = NoteUtils.DisplayText(note, useRubyTextIfHave);
+            string result = NoteUtils.DisplayText(note, useRubyTextIfHave);
             Assert.AreEqual(result, actual);
         }
     }

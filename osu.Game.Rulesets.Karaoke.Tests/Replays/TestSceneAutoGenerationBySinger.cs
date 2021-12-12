@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
                 if (!compareFrame[i].Sound)
                     continue;
 
-                var convertedScale = beatmap.PitchToScale(compareFrame[i].Pitch);
+                float convertedScale = beatmap.PitchToScale(compareFrame[i].Pitch);
                 Assert.AreEqual(karaokeFrames[i].Scale, convertedScale);
             }
         }

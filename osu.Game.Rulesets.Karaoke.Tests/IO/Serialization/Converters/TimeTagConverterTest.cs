@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         {
             var timeTag = new TimeTag(new TextIndex(index, state), time);
 
-            var result = JsonConvert.SerializeObject(timeTag, CreateSettings());
+            string result = JsonConvert.SerializeObject(timeTag, CreateSettings());
             Assert.AreEqual(result, $"\"{json}\"");
         }
 

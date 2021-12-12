@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         protected override TestLyricImporter CreateScreen()
         {
-            var temp = TestResources.GetTestLrcForImport("light");
+            string temp = TestResources.GetTestLrcForImport("light");
             return new TestLyricImporter(new FileInfo(temp));
         }
 

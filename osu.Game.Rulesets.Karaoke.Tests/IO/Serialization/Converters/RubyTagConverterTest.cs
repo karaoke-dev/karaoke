@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 Text = text
             };
 
-            var result = JsonConvert.SerializeObject(rubyTag, CreateSettings());
+            string result = JsonConvert.SerializeObject(rubyTag, CreateSettings());
             Assert.AreEqual(result, $"\"{json}\"");
         }
 

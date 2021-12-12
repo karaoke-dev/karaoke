@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
         private Drawable testSingle(double timeOffset = 0)
         {
-            var startTime = Time.Current + 1000 + timeOffset;
+            double startTime = Time.Current + 1000 + timeOffset;
             const double duration = 2500;
 
             var lyric = new Lyric

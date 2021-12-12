@@ -18,8 +18,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Asserts
             var settings = JsonSerializableExtensions.CreateGlobalSettings();
             settings.ContractResolver = new WritablePropertiesOnlyResolver();
 
-            var expectJsonString = JsonConvert.SerializeObject(expect, settings);
-            var actualJsonString = JsonConvert.SerializeObject(actual, settings);
+            string expectJsonString = JsonConvert.SerializeObject(expect, settings);
+            string actualJsonString = JsonConvert.SerializeObject(actual, settings);
 
             AreEqual(expectJsonString, actualJsonString);
         }
@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Asserts
             // we only wants to save properties that only writable.
             protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
             {
-                IList<JsonProperty> props = base.CreateProperties(type, memberSerialization);
+                var props = base.CreateProperties(type, memberSerialization);
                 return props.Where(p => p.Writable).ToList();
             }
         }

@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 Text = text
             };
 
-            var result = JsonConvert.SerializeObject(romajiTag, CreateSettings());
+            string result = JsonConvert.SerializeObject(romajiTag, CreateSettings());
             Assert.AreEqual(result, $"\"{json}\"");
         }
 

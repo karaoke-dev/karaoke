@@ -36,10 +36,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             if (!result.Success)
                 throw new ArgumentException(null, nameof(str));
 
-            var x = result.GetGroupValue<float>("x");
-            var y = result.GetGroupValue<float>("y");
-            var width = result.GetGroupValue<float>("width");
-            var height = result.GetGroupValue<float>("height");
+            float x = result.GetGroupValue<float>("x");
+            float y = result.GetGroupValue<float>("y");
+            float width = result.GetGroupValue<float>("width");
+            float height = result.GetGroupValue<float>("height");
             return new RectangleF(x, y, width, height);
         }
     }

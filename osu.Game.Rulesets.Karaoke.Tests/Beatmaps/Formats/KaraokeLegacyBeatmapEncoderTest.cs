@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             using (var sw = new StreamWriter(ms))
             {
                 var encoder = new KaraokeLegacyBeatmapEncoder();
-                var encodeResult = encoder.Encode(beatmap);
+                string encodeResult = encoder.Encode(beatmap);
                 sw.WriteLine(encodeResult);
             }
         }
