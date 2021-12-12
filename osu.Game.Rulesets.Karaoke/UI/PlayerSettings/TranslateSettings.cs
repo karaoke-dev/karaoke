@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -17,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
         private readonly OsuSpriteText translateText;
         private readonly OsuDropdown<CultureInfo> translateDropDown;
 
-        public TranslateSettings(CultureInfo[] translates)
+        public TranslateSettings(IEnumerable<CultureInfo> translates)
             : base("Translate")
         {
             Children = new Drawable[]
