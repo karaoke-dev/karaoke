@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             }
         }
 
-        private static IBeatmap createTestingBeatmap(CultureInfo[] translateLanguage, Lyric[] lyrics)
+        private static IBeatmap createTestingBeatmap(CultureInfo[] translateLanguage, IEnumerable<Lyric> lyrics)
         {
             var karaokeBeatmap = new KaraokeBeatmap
             {
