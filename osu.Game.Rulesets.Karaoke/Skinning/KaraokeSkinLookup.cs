@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -23,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         /// </summary>
         /// <param name="config"></param>
         /// <param name="singers"></param>
-        public KaraokeSkinLookup(KaraokeSkinConfiguration config, int[] singers)
+        public KaraokeSkinLookup(KaraokeSkinConfiguration config, IEnumerable<int> singers)
             : this(config, SingerUtils.GetShiftingStyleIndex(singers))
         {
             switch (config)

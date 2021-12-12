@@ -2,13 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class SingerUtils
     {
-        public static int GetShiftingStyleIndex(int[] singerIds)
+        public static int GetShiftingStyleIndex(IEnumerable<int> singerIds)
             => singerIds?.Sum(x => (int)Math.Pow(2, x - 1)) ?? 0;
 
         public static int[] GetSingersIndex(int styleIndex)
