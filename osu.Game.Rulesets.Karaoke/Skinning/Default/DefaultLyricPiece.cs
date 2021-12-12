@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
@@ -113,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             }
         }
 
-        private void applyRuby(RubyTag[] rubyTags)
+        private void applyRuby(IEnumerable<RubyTag> rubyTags)
         {
             if (chunkIndex == whole_chunk_index)
             {
@@ -125,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             }
         }
 
-        private void applyRomaji(RomajiTag[] romajiTags)
+        private void applyRomaji(IEnumerable<RomajiTag> romajiTags)
         {
             if (chunkIndex == whole_chunk_index)
             {

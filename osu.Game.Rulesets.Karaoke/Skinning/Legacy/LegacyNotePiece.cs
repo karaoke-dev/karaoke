@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 foreground.FadeColour(AccentColour.Value.Lighten(0.7f), animation_length).Then().FadeColour(foreground.Colour, animation_length).Loop();
         }
 
-        private void applySingerStyle(ISkinSource skin, int[] singers)
+        private void applySingerStyle(ISkinSource skin, IEnumerable<int> singers)
         {
             var noteSkin = skin?.GetConfig<KaraokeSkinLookup, NoteSkin>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, singers))?.Value;
             if (noteSkin == null)
