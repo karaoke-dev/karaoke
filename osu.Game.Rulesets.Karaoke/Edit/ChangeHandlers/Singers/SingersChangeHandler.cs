@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
             PerformObjectChanged(item, singer =>
             {
                 // Shifting order that order is larger than current singer
-                OrderUtils.ShiftingOrder(Singers.Where(x => x.Order > singer.Order).ToArray(), -1);
+                OrderUtils.ShiftingOrder(Singers.Where(x => x.Order > singer.Order), -1);
                 Singers.Remove(singer);
 
                 // should clear removed singer ids in singer editor.

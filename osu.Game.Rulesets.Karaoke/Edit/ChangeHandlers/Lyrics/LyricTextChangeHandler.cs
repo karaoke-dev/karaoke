@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 if (!string.IsNullOrEmpty(lyric.Text))
                     return;
 
-                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > lyric.Order).ToArray(), -1);
+                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > lyric.Order), -1);
                 Remove(lyric);
             });
         }
