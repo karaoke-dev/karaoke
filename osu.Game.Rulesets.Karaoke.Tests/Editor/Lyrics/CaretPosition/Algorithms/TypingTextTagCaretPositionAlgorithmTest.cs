@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
@@ -122,7 +123,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             }
         }
 
-        private static TypingTextTagCaretPosition createTypingTextTagCaretPosition(Lyric[] lyrics, int lyricIndex, int textTagIndex, int typingCaretIndex)
+        private static TypingTextTagCaretPosition createTypingTextTagCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int textTagIndex, int typingCaretIndex)
         {
             if (lyricIndex == NOT_EXIST)
                 return null;
