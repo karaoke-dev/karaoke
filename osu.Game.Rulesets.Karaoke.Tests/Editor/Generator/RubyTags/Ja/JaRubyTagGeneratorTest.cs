@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -39,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RubyTags.Ja
 
         #region test helper
 
-        private static void runRubyCheckTest(string text, string[] actualRuby, JaRubyTagGeneratorConfig config)
+        private static void runRubyCheckTest(string text, IEnumerable<string> actualRuby, JaRubyTagGeneratorConfig config)
         {
             var generator = new JaRubyTagGenerator(config);
 
