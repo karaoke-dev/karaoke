@@ -219,7 +219,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     selectedTimeTags = blueprintSelectionState.SelectedTimeTags.GetBoundCopy();
                     selectedTimeTags.BindCollectionChanged((_, _) =>
                     {
-                        var selected = selectedTimeTags.Contains(timeTag);
+                        bool selected = selectedTimeTags.Contains(timeTag);
                         UpdateState(selected);
                     });
 

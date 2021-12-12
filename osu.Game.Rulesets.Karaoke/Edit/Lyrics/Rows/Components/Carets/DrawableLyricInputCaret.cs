@@ -45,8 +45,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             Height = lyricPiece.LineBaseHeight;
             var position = GetPosition(caret);
 
-            var displayAnimation = Alpha > 0;
-            var time = displayAnimation ? 60 : 0;
+            bool displayAnimation = Alpha > 0;
+            int time = displayAnimation ? 60 : 0;
 
             this.MoveTo(new Vector2(position.X - caret_width / 2, position.Y), time, Easing.Out);
             this.ResizeWidthTo(caret_width, caret_move_time, Easing.Out);

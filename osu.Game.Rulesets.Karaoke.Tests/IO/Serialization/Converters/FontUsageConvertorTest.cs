@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         public void TestSerialize(string family, float size, string weight, bool italics, bool fixedWidth, string json)
         {
             var font = new FontUsage(family, size, weight, italics, fixedWidth);
-            var result = JsonConvert.SerializeObject(font, CreateSettings());
+            string result = JsonConvert.SerializeObject(font, CreateSettings());
             Assert.AreEqual(result, json);
         }
 

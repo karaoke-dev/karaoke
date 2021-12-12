@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
         protected override bool OnScroll(ScrollEvent e)
         {
-            var zoneChanged = base.OnScroll(e);
+            bool zoneChanged = base.OnScroll(e);
             if (!zoneChanged)
                 return false;
 
@@ -147,7 +147,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             if (firstLyric == null)
                 return;
 
-            var position = getPositionFromTime(firstLyric.LyricStartTime - preempt_time);
+            float position = getPositionFromTime(firstLyric.LyricStartTime - preempt_time);
             ScrollTo(position, false);
         }
 

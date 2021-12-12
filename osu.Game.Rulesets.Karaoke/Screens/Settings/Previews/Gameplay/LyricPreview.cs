@@ -126,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
 
         private IDictionary<CultureInfo, string> createPreviewTranslate(CultureInfo cultureInfo)
         {
-            var translate = cultureInfo.Name switch
+            string translate = cultureInfo.Name switch
             {
                 "ja" or "Ja-jp" => "カラオケ",
                 "zh-Hant" or "zh-TW" => "卡拉OK",

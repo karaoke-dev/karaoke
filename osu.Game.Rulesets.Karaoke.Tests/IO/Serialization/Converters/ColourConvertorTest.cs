@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         public void TestSerialize(string hex, string json)
         {
             var colour = Color4Extensions.FromHex(hex);
-            var result = JsonConvert.SerializeObject(colour, CreateSettings());
+            string result = JsonConvert.SerializeObject(colour, CreateSettings());
             Assert.AreEqual(result, $"\"{json}\"");
         }
 

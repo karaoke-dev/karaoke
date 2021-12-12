@@ -34,8 +34,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             if (characters == null || characters.Length == 0)
                 return new Dictionary<int, string>();
 
-            var maxStorePage = originPages.Max(x => x.Key);
-            var maxPage = characters.Max(x => x.Page);
+            int maxStorePage = originPages.Max(x => x.Key);
+            int maxPage = characters.Max(x => x.Page);
             if (maxPage > maxStorePage)
                 throw new ArgumentOutOfRangeException(nameof(maxPage));
 
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 Y = originInfo.SpacingVertical,
             };
 
-            var page = 0;
+            int page = 0;
             var currentTopLeftPosition = new
             {
                 X = padding.Left,
@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         private static T copyObject<T>(T obj)
         {
-            var str = JsonConvert.SerializeObject(obj);
+            string str = JsonConvert.SerializeObject(obj);
             return JsonConvert.DeserializeObject<T>(str);
         }
     }

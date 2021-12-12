@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
             }
             catch
             {
-                var storePage = font.Pages.Max(x => x.Key);
+                int storePage = font.Pages.Max(x => x.Key);
                 Assert.Greater(pageNames.Length, storePage);
             }
         }
@@ -92,12 +92,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         public void TestGenerateCharactersPropertyWithSingleLine(string chars)
         {
             var characters = font.Characters;
-            var spacing = font.Info.SpacingHorizontal;
-            var topPadding = font.Info.PaddingUp;
+            int spacing = font.Info.SpacingHorizontal;
+            int topPadding = font.Info.PaddingUp;
 
             var result = BitmapFontCompressor.GenerateCharacters(font.Info, font.Common, font.Characters, chars.ToArray());
 
-            foreach (var (c, character) in result)
+            foreach ((int c, var character) in result)
             {
                 // check some property should be same as origin character.
                 var originCharacter = characters[c];
@@ -135,8 +135,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
                 ScaleWidth = 0,
                 ScaleHeight = int.MaxValue,
             };
-            var spacing = font.Info.SpacingVertical;
-            var leftPadding = font.Info.PaddingUp;
+            int spacing = font.Info.SpacingVertical;
+            int leftPadding = font.Info.PaddingUp;
 
             var result = BitmapFontCompressor.GenerateCharacters(font.Info, bitmapFontCommon, font.Characters, chars.ToArray());
 
@@ -168,9 +168,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
                 ScaleWidth = 0,
                 ScaleHeight = 0,
             };
-            var page = 0;
-            var topPadding = font.Info.PaddingUp;
-            var leftPadding = font.Info.PaddingUp;
+            int page = 0;
+            int topPadding = font.Info.PaddingUp;
+            int leftPadding = font.Info.PaddingUp;
 
             var result = BitmapFontCompressor.GenerateCharacters(font.Info, bitmapFontCommon, font.Characters, chars.ToArray());
 
@@ -192,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [Test]
         public void TestGenerateAllCharacters()
         {
-            var chars = font.Characters.Keys.Select(x => (char)x).ToArray();
+            char[] chars = font.Characters.Keys.Select(x => (char)x).ToArray();
             var characters = font.Characters;
 
             // make sure that no characters is missing.
@@ -226,7 +226,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [Test]
         public void TestGenerateKerningPairsWithAllChars()
         {
-            var chars = font.Characters.Keys.Select(x => (char)x).ToArray();
+            char[] chars = font.Characters.Keys.Select(x => (char)x).ToArray();
             var kerningPairs = font.KerningPairs;
 
             // make sure that no kerning is missing.

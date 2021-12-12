@@ -82,13 +82,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             foreach (var fontFormat in supportedFormat)
             {
                 // will create folder if not exist.
-                var path = getPathByFontType(fontFormat);
-                var extension = getExtensionByFontType(fontFormat);
+                string path = getPathByFontType(fontFormat);
+                string extension = getExtensionByFontType(fontFormat);
 
                 var fontFiles = storage.GetStorageForDirectory(path)
                                        .GetFiles("", $"*.{extension}").ToList();
 
-                foreach (var fontFile in fontFiles)
+                foreach (string fontFile in fontFiles)
                 {
                     addFontToList(fontFile, fontFormat);
                 }
@@ -108,8 +108,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             void onChange(object sender, FileSystemEventArgs args)
             {
                 // check is valid format.
-                var extension = Path.GetExtension(args.FullPath);
-                var validFormat = supportedFormat.Any(x => $".{getPathByFontType(x)}" == extension);
+                string extension = Path.GetExtension(args.FullPath);
+                bool validFormat = supportedFormat.Any(x => $".{getPathByFontType(x)}" == extension);
                 if (!validFormat)
                     return;
 
@@ -150,14 +150,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         private void addFontToList(string path, FontFormat fontFormat)
         {
-            var fontName = Path.GetFileNameWithoutExtension(path);
+            string fontName = Path.GetFileNameWithoutExtension(path);
             var fontInfo = new FontInfo(fontName, fontFormat);
             Fonts.Add(fontInfo);
         }
 
         private void removeFontFromList(string path, FontFormat fontFormat)
         {
-            var fontName = Path.GetFileNameWithoutExtension(path);
+            string fontName = Path.GetFileNameWithoutExtension(path);
             var matchedFont = Fonts.FirstOrDefault(x => x.FontName == fontName && x.FontFormat == fontFormat);
 
             if (!Fonts.Contains(matchedFont))
@@ -168,7 +168,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         public FontFormat? CheckFontFormat(FontUsage fontUsage)
         {
-            var fontName = fontUsage.FontName;
+            string fontName = fontUsage.FontName;
             if (Fonts.All(x => x.FontName != fontName))
                 return null;
 
@@ -182,7 +182,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             if (fontFormat == FontFormat.Internal)
                 return null;
 
-            var fontName = fontInfo.FontName;
+            string fontName = fontInfo.FontName;
             return fontFormat switch
             {
                 FontFormat.Fnt => getFntGlyphStore(storage, fontName),
@@ -193,8 +193,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         private FntGlyphStore getFntGlyphStore(Storage storage, string fontName)
         {
-            var path = Path.Combine(getPathByFontType(FontFormat.Fnt), fontName);
-            var pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontFormat.Fnt));
+            string path = Path.Combine(getPathByFontType(FontFormat.Fnt), fontName);
+            string pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontFormat.Fnt));
 
             if (!storage.Exists(pathWithExtension))
                 return null;
@@ -205,8 +205,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         private TtfGlyphStore getTtfGlyphStore(Storage storage, string fontName)
         {
-            var path = Path.Combine(getPathByFontType(FontFormat.Ttf), fontName);
-            var pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontFormat.Ttf));
+            string path = Path.Combine(getPathByFontType(FontFormat.Ttf), fontName);
+            string pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontFormat.Ttf));
 
             if (!storage.Exists(pathWithExtension))
                 return null;

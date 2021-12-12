@@ -10,8 +10,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
     {
         public static Tone NumberToTone(double tone)
         {
-            var half = Math.Abs(tone) % 1 == 0.5;
-            var scale = tone < 0 ? (int)tone - (half ? 1 : 0) : (int)tone;
+            bool half = Math.Abs(tone) % 1 == 0.5;
+            int scale = tone < 0 ? (int)tone - (half ? 1 : 0) : (int)tone;
             return new Tone(scale, half);
         }
     }

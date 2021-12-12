@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             // Clear all hitobjects
             output.HitObjects.Clear();
 
-            var lyricText = stream.ReadToEnd();
+            string lyricText = stream.ReadToEnd();
             var result = new LrcParser().Decode(lyricText);
 
             // Convert line
@@ -44,13 +44,13 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     var lrcTimeTag = line.TimeTags;
                     var timeTags = line.TimeTags.Where(x => x.Check).ToDictionary(k =>
                     {
-                        var index = (Array.IndexOf(lrcTimeTag, k) - 1) / 2;
+                        int index = (Array.IndexOf(lrcTimeTag, k) - 1) / 2;
                         var state = (Array.IndexOf(lrcTimeTag, k) - 1) % 2 == 0 ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
                         return new TextIndex(index, state);
                     }, v => (double)v.Time);
 
-                    var startTime = timeTags.FirstOrDefault(x => x.Value > 0).Value;
-                    var duration = timeTags.LastOrDefault(x => x.Value > 0).Value - startTime;
+                    double startTime = timeTags.FirstOrDefault(x => x.Value > 0).Value;
+                    double duration = timeTags.LastOrDefault(x => x.Value > 0).Value - startTime;
 
                     var lyric = new Lyric
                     {
@@ -72,9 +72,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 }
                 catch (Exception ex)
                 {
-                    var message = $"Parsing lyric '{line.Text}' got error in line:{i}" +
-                                  "Please check time tag should be ordered and not duplicated." +
-                                  "Then re-import again.";
+                    string message = $"Parsing lyric '{line.Text}' got error in line:{i}" +
+                                     "Please check time tag should be ordered and not duplicated." +
+                                     "Then re-import again.";
                     throw new FormatException(message, ex);
                 }
             }

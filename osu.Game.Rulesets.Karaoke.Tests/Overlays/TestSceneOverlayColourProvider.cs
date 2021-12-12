@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
                 OverlayColourProvider.Purple,
                 OverlayColourProvider.Blue
             };
-            var colourName = new[]
+            string[] colourName = new[]
             {
                 "Colour1",
                 "Colour2",

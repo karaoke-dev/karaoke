@@ -168,7 +168,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                 {
                     Current.TriggerChange();
 
-                    var years = builds.Select(x => x.PublishedAt.Year).Distinct().ToArray();
+                    int[] years = builds.Select(x => x.PublishedAt.Year).Distinct().ToArray();
                     sidebar.Year.Value = years.Max();
                     sidebar.Metadata.Value = new APIChangelogSidebar
                     {
@@ -229,9 +229,9 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                 if (!result.Success)
                     return DateTimeOffset.MaxValue;
 
-                var year = result.GetGroupValue<int>("year");
-                var month = result.GetGroupValue<int>("month");
-                var day = result.GetGroupValue<int>("day");
+                int year = result.GetGroupValue<int>("year");
+                int month = result.GetGroupValue<int>("month");
+                int day = result.GetGroupValue<int>("day");
 
                 return new DateTimeOffset(new DateTime(year, month, day));
             }

@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             if (firstDragBlueprint == null)
                 return false;
 
-            var offset = result.Time.Value - timeline.GetPreviewTime(firstDragBlueprint.Item);
+            double offset = result.Time.Value - timeline.GetPreviewTime(firstDragBlueprint.Item);
             if (offset == 0)
                 return false;
 

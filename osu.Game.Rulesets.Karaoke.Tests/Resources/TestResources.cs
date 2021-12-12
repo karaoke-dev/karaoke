@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Resources
 
         public static string GetTestLrcForImport(string name)
         {
-            var tempPath = Path.GetTempFileName() + ".lrc";
+            string tempPath = Path.GetTempFileName() + ".lrc";
 
             using (var stream = OpenLrcResource(name))
             using (var newFile = File.Create(tempPath))

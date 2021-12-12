@@ -31,8 +31,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
         {
             PerformObjectChanged(singer, s =>
             {
-                var oldOrder = s.Order;
-                var newOrder = newIndex + 1; // order is start from 1
+                int oldOrder = s.Order;
+                int newOrder = newIndex + 1; // order is start from 1
                 OrderUtils.ChangeOrder(Singers.ToArray(), oldOrder, newOrder, (switchSinger, oldOrder, newOrder) =>
                 {
                     // todo : not really sure should call update?

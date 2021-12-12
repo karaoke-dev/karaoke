@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             {
                 iconsContainer.Clear();
 
-                foreach (Singer singer in singers.NewValue)
+                foreach (var singer in singers.NewValue)
                 {
                     iconsContainer.Add(new DrawableCircleSingerAvatar
                     {

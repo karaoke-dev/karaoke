@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             // change style if focus.
             SelectedItems.BindCollectionChanged((_, _) =>
             {
-                var highLight = SelectedItems.Contains(item);
+                bool highLight = SelectedItems.Contains(item);
                 Component.HighLight = highLight;
             });
         }

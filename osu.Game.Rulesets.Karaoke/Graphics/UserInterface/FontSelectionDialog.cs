@@ -181,8 +181,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 // re-calculate if source changed.
                 Schedule(() =>
                 {
-                    var oldFamilies = b.OldItems?.OfType<FontInfo>().Select(x => x.Family).Distinct().ToArray();
-                    var newFamilies = b.NewItems?.OfType<FontInfo>().Select(x => x.Family).Distinct().ToArray();
+                    string[] oldFamilies = b.OldItems?.OfType<FontInfo>().Select(x => x.Family).Distinct().ToArray();
+                    string[] newFamilies = b.NewItems?.OfType<FontInfo>().Select(x => x.Family).Distinct().ToArray();
 
                     if (oldFamilies != null)
                     {
@@ -195,8 +195,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     }
 
                     // should reset family selection if user select the font that will be removed or added.
-                    var currentFamily = familyProperty.Current.Value;
-                    var resetFamily = oldFamilies?.Contains(currentFamily) ?? false;
+                    string currentFamily = familyProperty.Current.Value;
+                    bool resetFamily = oldFamilies?.Contains(currentFamily) ?? false;
 
                     if (resetFamily)
                     {
@@ -253,10 +253,10 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
         private FontUsage generateFontUsage()
         {
-            var family = familyProperty.Current.Value;
-            var weight = weightProperty.Current.Value;
-            var size = fontSizeProperty.Current.Value;
-            var fixedWidth = fixedWidthCheckbox.Current.Value;
+            string family = familyProperty.Current.Value;
+            string weight = weightProperty.Current.Value;
+            float size = fontSizeProperty.Current.Value;
+            bool fixedWidth = fixedWidthCheckbox.Current.Value;
             return new FontUsage(family, size, weight, false, fixedWidth);
         }
 

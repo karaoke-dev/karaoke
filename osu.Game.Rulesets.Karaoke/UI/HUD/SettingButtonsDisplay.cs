@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Layout;
@@ -46,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             // trying to change relative position in here.
             if ((invalidation & Invalidation.MiscGeometry) != 0)
             {
-                var overlayDirection = Anchor.HasFlag(Anchor.x0) ? OverlayDirection.Left : OverlayDirection.Right;
+                var overlayDirection = Anchor.HasFlagFast(Anchor.x0) ? OverlayDirection.Left : OverlayDirection.Right;
                 settingOverlayContainer?.ChangeOverlayDirection(overlayDirection);
             }
 

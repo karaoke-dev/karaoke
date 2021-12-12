@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
                 base.OnSelectionChanged();
 
                 // should hide selection box if not dragging at current row.
-                var dragging = Parent.IsDragged;
+                bool dragging = Parent.IsDragged;
                 SelectionBox.FadeTo(dragging ? 1f : 0.0f);
             }
 

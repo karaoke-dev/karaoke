@@ -85,9 +85,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             if (!result.Success)
                 throw new RegexMatchTimeoutException(nameof(str));
 
-            var index = result.GetGroupValue<int>("index");
+            int index = result.GetGroupValue<int>("index");
             var state = result.GetGroupValue<string>("state") == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
-            var time = result.GetGroupValue<int?>("time");
+            int? time = result.GetGroupValue<int?>("time");
 
             return new TimeTag(new TextIndex(index, state), time);
         }
@@ -110,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             if (!result.Success)
                 throw new RegexMatchTimeoutException(nameof(str));
 
-            var index = result.GetGroupValue<int>("index");
+            int index = result.GetGroupValue<int>("index");
             var state = result.GetGroupValue<string>("state") == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
 
             return new TextIndex(index, state);
@@ -134,9 +134,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
             if (!result.Success)
                 throw new RegexMatchTimeoutException(nameof(str));
 
-            var startTime = result.GetGroupValue<double>("startTime");
-            var endTime = result.GetGroupValue<double>("endTime");
-            var text = result.GetGroupValue<string>("lyric");
+            double startTime = result.GetGroupValue<double>("startTime");
+            double endTime = result.GetGroupValue<double>("endTime");
+            string text = result.GetGroupValue<string>("lyric");
 
             return new Lyric
             {
@@ -200,7 +200,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
                 throw new RegexMatchTimeoutException(nameof(str));
 
             // todo : implementation
-            var id = result.GetGroupValue<int>("id");
+            int id = result.GetGroupValue<int>("id");
 
             return new Singer(id);
         }

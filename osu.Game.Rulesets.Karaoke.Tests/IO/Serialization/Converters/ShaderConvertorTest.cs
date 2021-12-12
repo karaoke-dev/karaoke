@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 ShadowOffset = new Vector2(10),
                 ShadowColour = new Color4(0.5f, 0.5f, 0.5f, 0.5f),
             };
-            var result = JsonConvert.SerializeObject(shader, CreateSettings());
+            string result = JsonConvert.SerializeObject(shader, CreateSettings());
             Assert.AreEqual(result, "{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}");
         }
 
@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                     }
                 }
             };
-            var result = JsonConvert.SerializeObject(shader, CreateSettings());
+            string result = JsonConvert.SerializeObject(shader, CreateSettings());
             Assert.AreEqual(result,
                 "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}]}");
         }

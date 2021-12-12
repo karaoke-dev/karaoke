@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
-            var lyricText = lyric.Text;
+            string lyricText = lyric.Text;
             if (string.IsNullOrEmpty(lyricText))
                 throw new ArgumentNullException(nameof(lyricText));
 
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (secondLyric == null)
                 throw new ArgumentNullException(nameof(secondLyric));
 
-            var shiftingIndex = firstLyric.Text?.Length ?? 0;
+            int shiftingIndex = firstLyric.Text?.Length ?? 0;
 
             var timeTags = new List<TimeTag>();
             timeTags.AddRangeWithNullCheck(firstLyric.TimeTags);
@@ -106,14 +106,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             romajiTags.AddRangeWithNullCheck(firstLyric.RomajiTags);
             romajiTags.AddRangeWithNullCheck(shiftingRomajiTag(secondLyric.RomajiTags, shiftingIndex));
 
-            var startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
-            var endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
+            double startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
+            double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
 
             var singers = new List<int>();
             singers.AddRangeWithNullCheck(firstLyric.Singers);
             singers.AddRangeWithNullCheck(secondLyric.Singers);
 
-            var sameLanguage = EqualityComparer<CultureInfo>.Default.Equals(firstLyric?.Language, secondLyric.Language);
+            bool sameLanguage = EqualityComparer<CultureInfo>.Default.Equals(firstLyric?.Language, secondLyric.Language);
             var language = sameLanguage ? firstLyric.Language : null;
 
             return new Lyric

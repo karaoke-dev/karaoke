@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             settings.Converters.Add(new FontUsageConvertor());
             settings.Converters.Add(new ColourConvertor());
 
-            var skinText = stream.ReadToEnd();
+            string skinText = stream.ReadToEnd();
             var result = JsonConvert.DeserializeObject<NicoKaraSkin>(skinText, settings);
 
             if (result == null)

@@ -73,8 +73,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             get => BindableFont.Value.MainTextFont.Size;
             set
             {
-                var textSize = Math.Max(Math.Min(value, MAX_FONT_SIZE), MIN_FONT_SIZE);
-                var changePercentage = textSize / FontSize;
+                float textSize = Math.Max(Math.Min(value, MAX_FONT_SIZE), MIN_FONT_SIZE);
+                float changePercentage = textSize / FontSize;
 
                 BindableFont.Value.MainTextFont
                     = multipleSize(BindableFont.Value.MainTextFont, changePercentage);

@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         public override RomajiTag ReadJson(JsonReader reader, Type objectType, RomajiTag existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JToken.Load(reader);
-            var value = obj.Value<string>();
+            string value = obj.Value<string>();
 
             if (string.IsNullOrEmpty(value))
                 return new RomajiTag();
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
         public override void WriteJson(JsonWriter writer, RomajiTag value, JsonSerializer serializer)
         {
-            var str = $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
+            string str = $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
             writer.WriteValue(str);
         }
     }

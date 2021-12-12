@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 using (var sr2 = new LineBufferedReader(ms))
                 {
                     // Then encode file to stream
-                    var encodeResult = new LrcEncoder().Encode(legacyDecoded);
+                    string encodeResult = new LrcEncoder().Encode(legacyDecoded);
                     sw.WriteLine(encodeResult);
                     sw.Flush();
 

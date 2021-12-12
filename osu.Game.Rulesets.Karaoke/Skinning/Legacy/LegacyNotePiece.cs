@@ -180,7 +180,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 
         private static Sprite getSpriteFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
         {
-            var name = getTextureNameFromLookup(lookup, layer);
+            string name = getTextureNameFromLookup(lookup, layer);
 
             switch (layer)
             {

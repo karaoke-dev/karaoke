@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 var noteGroup = g.ToList().GroupBy(n => n.StartIndex);
 
                 // Convert to group format
-                var noteGroupStr = string.Join(",", noteGroup.Select(x =>
+                string noteGroupStr = string.Join(",", noteGroup.Select(x =>
                 {
                     if (x.Count() == 1)
                         return convertNote(x.FirstOrDefault());
@@ -64,11 +64,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         {
             var lyrics = output.HitObjects.OfType<Lyric>().ToList();
 
-            for (var i = 0; i < lyrics.Count; i++)
+            for (int i = 0; i < lyrics.Count; i++)
             {
                 var lyric = lyrics[i];
-                var layoutIndex = lyric.LayoutIndex;
-                var styleIndex = SingerUtils.GetShiftingStyleIndex(lyric.Singers);
+                int layoutIndex = lyric.LayoutIndex;
+                int styleIndex = SingerUtils.GetShiftingStyleIndex(lyric.Singers);
                 yield return $"@style{i}={layoutIndex},{styleIndex}";
             }
         }
@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             {
                 foreach (var lyric in lyrics)
                 {
-                    var translateString = lyric.Translates.TryGetValue(translate, out string value) ? value : "";
+                    string translateString = lyric.Translates.TryGetValue(translate, out string value) ? value : "";
                     yield return $"@tr[{translate.Name}]={translateString}";
                 }
             }

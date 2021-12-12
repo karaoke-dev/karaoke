@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Internal;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -45,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
                 AddRange(notes.Value.Select(x =>
                 {
-                    var index = notes.Value.IndexOf(x);
+                    int index = Array.IndexOf(notes.Value, x);
                     return bindableNoteEditPropertyMode.Value switch
                     {
                         NoteEditPropertyMode.Text => new LabelledNoteTextTextBox(x)

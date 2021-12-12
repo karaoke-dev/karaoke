@@ -3,7 +3,6 @@
 
 using System;
 using osu.Framework;
-using osu.Framework.Platform;
 
 namespace osu.Game.Rulesets.Karaoke.Tests
 {
@@ -12,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         [STAThread]
         public static int Main(string[] args)
         {
-            using (DesktopGameHost host = Host.GetSuitableHost(@"karaoke-visual-test-runner", true))
+            using (var host = Host.GetSuitableHost(@"karaoke-visual-test-runner", true))
             {
                 host.Run(new KaraokeTestBrowser());
                 return 0;

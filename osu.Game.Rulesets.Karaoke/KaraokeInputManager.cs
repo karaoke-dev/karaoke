@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke
 
             this.beatmap = beatmap.Value.Beatmap;
 
-            var disableMicrophoneDeviceByMod = mods.Value.OfType<IApplicableToMicrophone>().Any(x => !x.MicrophoneEnabled);
+            bool disableMicrophoneDeviceByMod = mods.Value.OfType<IApplicableToMicrophone>().Any(x => !x.MicrophoneEnabled);
 
             if (disableMicrophoneDeviceByMod)
             {
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke
                 return;
             }
 
-            var beatmapSaitenable = beatmap.Value.Beatmap.IsScorable();
+            bool beatmapSaitenable = beatmap.Value.Beatmap.IsScorable();
 
             if (!beatmapSaitenable)
             {
@@ -63,11 +63,11 @@ namespace osu.Game.Rulesets.Karaoke
 
             try
             {
-                var selectedDevice = config.Get<string>(KaraokeRulesetSetting.MicrophoneDevice);
+                string selectedDevice = config.Get<string>(KaraokeRulesetSetting.MicrophoneDevice);
                 var microphoneList = new MicrophoneManager().MicrophoneDeviceNames.ToList();
 
                 // Find index by selection id
-                var deviceIndex = microphoneList.IndexOf(selectedDevice);
+                int deviceIndex = microphoneList.IndexOf(selectedDevice);
                 AddHandler(new MicrophoneHandler(deviceIndex));
 
                 session.SetValue(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.Saitening);
@@ -115,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke
                     throw new ArgumentNullException(nameof(voice));
 
                 // Convert beatmap's pitch to scale setting.
-                var scale = beatmap.PitchToScale(voice.HasVoice ? voice.Pitch : lastVoice.Pitch);
+                float scale = beatmap.PitchToScale(voice.HasVoice ? voice.Pitch : lastVoice.Pitch);
 
                 // TODO : adjust scale by
                 scale += 5;

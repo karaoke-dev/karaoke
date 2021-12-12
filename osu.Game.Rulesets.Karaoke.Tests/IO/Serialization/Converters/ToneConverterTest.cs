@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 Half = half,
             };
 
-            var result = JsonConvert.SerializeObject(tone, CreateSettings());
+            string result = JsonConvert.SerializeObject(tone, CreateSettings());
             Assert.AreEqual(result, $"{json}");
         }
 

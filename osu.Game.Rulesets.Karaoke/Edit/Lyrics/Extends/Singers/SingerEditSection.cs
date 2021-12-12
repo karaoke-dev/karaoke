@@ -29,8 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
                 foreach (var singerLabel in Content.OfType<LabelledSingerSwitchButton>())
                 {
                     // should mark singer as selected/unselected.
-                    var singerId = singerLabel.Singer.ID;
-                    var selected = singerIndexes.Value?.Contains(singerId) ?? false;
+                    int singerId = singerLabel.Singer.ID;
+                    bool selected = singerIndexes.Value?.Contains(singerId) ?? false;
 
                     // update singer label selection.
                     singerLabel.Current.Value = selected;
@@ -47,8 +47,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
                 var singers = karaokeBeatmap.Singers;
                 Content.AddRange(singers.Select(x =>
                 {
-                    var singerName = x.Name;
-                    var description = x.Description;
+                    string singerName = x.Name;
+                    string description = x.Description;
                     return new LabelledSingerSwitchButton(x)
                     {
                         Label = singerName,

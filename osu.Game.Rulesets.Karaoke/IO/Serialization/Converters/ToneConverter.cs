@@ -13,10 +13,10 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         public override Tone ReadJson(JsonReader reader, Type objectType, Tone existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JToken.Load(reader);
-            var value = obj.Value<double>();
+            double value = obj.Value<double>();
 
-            var half = Math.Abs(value) % 1 == 0.5;
-            var scale = (int)value - (value < 0 && half ? 1 : 0);
+            bool half = Math.Abs(value) % 1 == 0.5;
+            int scale = (int)value - (value < 0 && half ? 1 : 0);
 
             return new Tone
             {
@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
         public override void WriteJson(JsonWriter writer, Tone value, JsonSerializer serializer)
         {
-            var scale = value.Scale + (value.Half ? 0.5 : 0);
+            double scale = value.Scale + (value.Half ? 0.5 : 0);
             writer.WriteValue(scale);
         }
     }

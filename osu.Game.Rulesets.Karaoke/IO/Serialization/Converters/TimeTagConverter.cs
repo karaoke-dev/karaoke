@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         public override TimeTag ReadJson(JsonReader reader, Type objectType, TimeTag existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JToken.Load(reader);
-            var value = obj.Value<string>();
+            string value = obj.Value<string>();
 
             if (string.IsNullOrEmpty(value))
                 return new TimeTag(new TextIndex());
@@ -26,9 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             if (!result.Success)
                 return new TimeTag(new TextIndex());
 
-            var index = result.GetGroupValue<int>("index");
+            int index = result.GetGroupValue<int>("index");
             var state = result.GetGroupValue<string>("state") == "start" ? TextIndex.IndexState.Start : TextIndex.IndexState.End;
-            var time = result.GetGroupValue<int?>("time");
+            int? time = result.GetGroupValue<int?>("time");
 
             return new TimeTag(new TextIndex(index, state), time);
         }
@@ -36,10 +36,10 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         public override void WriteJson(JsonWriter writer, TimeTag value, JsonSerializer serializer)
         {
             var tag = value.Index;
-            var state = tag.State == TextIndex.IndexState.Start ? "start" : "end";
-            var time = value.Time;
+            string state = tag.State == TextIndex.IndexState.Start ? "start" : "end";
+            double? time = value.Time;
 
-            var str = $"[{tag.Index},{state}]:{time}";
+            string str = $"[{tag.Index},{state}]:{time}";
             writer.WriteValue(str);
         }
     }

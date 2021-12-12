@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 return false;
 
             // check cursor in in the range
-            var text = position.TextTag.Text;
+            string text = position.TextTag.Text;
             if (text == null)
                 return false;
 
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         public override TypingTextTagCaretPosition MoveLeft(TypingTextTagCaretPosition currentPosition)
         {
             // only move cursor position in text tag.
-            var newIndex = Math.Max(currentPosition.TypingCaretIndex - 1, 0);
+            int newIndex = Math.Max(currentPosition.TypingCaretIndex - 1, 0);
             if (newIndex == currentPosition.TypingCaretIndex)
                 return null;
 
@@ -54,8 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         public override TypingTextTagCaretPosition MoveRight(TypingTextTagCaretPosition currentPosition)
         {
             // only move cursor position in text tag.
-            var text = currentPosition.TextTag.Text;
-            var newIndex = Math.Min(currentPosition.TypingCaretIndex + 1, text.Length);
+            string text = currentPosition.TextTag.Text;
+            int newIndex = Math.Min(currentPosition.TypingCaretIndex + 1, text.Length);
             if (newIndex == currentPosition.TypingCaretIndex)
                 return null;
 

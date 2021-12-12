@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
 
             lastCreateSampleTime = Time.Current;
 
-            var startTime = Time.Current + 3000;
+            double startTime = Time.Current + 3000;
             notePlayfield.Add(new Note
             {
                 StartTime = startTime,

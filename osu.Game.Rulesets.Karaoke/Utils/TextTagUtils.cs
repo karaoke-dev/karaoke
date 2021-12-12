@@ -10,8 +10,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
     {
         public static T FixTimeTagPosition<T>(T textTag) where T : ITextTag
         {
-            var startIndex = Math.Min(textTag.StartIndex, textTag.EndIndex);
-            var endIndex = Math.Max(textTag.StartIndex, textTag.EndIndex);
+            int startIndex = Math.Min(textTag.StartIndex, textTag.EndIndex);
+            int endIndex = Math.Max(textTag.StartIndex, textTag.EndIndex);
 
             textTag.StartIndex = startIndex;
             textTag.EndIndex = endIndex;
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static string PositionFormattedString<T>(T textTag) where T : ITextTag
         {
             var fixedTag = FixTimeTagPosition(textTag);
-            var text = string.IsNullOrWhiteSpace(fixedTag.Text) ? "empty" : fixedTag.Text;
+            string text = string.IsNullOrWhiteSpace(fixedTag.Text) ? "empty" : fixedTag.Text;
             return $"{text}({fixedTag.StartIndex} ~ {fixedTag.EndIndex})";
         }
 
@@ -63,8 +63,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 return null;
 
             var fixedTextTag = FixTimeTagPosition(textTag);
-            var startIndex = Math.Max(0, fixedTextTag.StartIndex);
-            var endIndex = Math.Min(lyric.Length, fixedTextTag.EndIndex);
+            int startIndex = Math.Max(0, fixedTextTag.StartIndex);
+            int endIndex = Math.Min(lyric.Length, fixedTextTag.EndIndex);
             return lyric.Substring(startIndex, endIndex - startIndex);
         }
     }

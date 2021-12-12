@@ -67,10 +67,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private void updateSelectionState()
         {
-            var selection = bindableAutoFocusToEditLyric.Value ? bindableAutoFocusToEditLyricSkipRows.Value : disable_selection_index;
+            int selection = bindableAutoFocusToEditLyric.Value ? bindableAutoFocusToEditLyricSkipRows.Value : disable_selection_index;
             Items.OfType<ToggleMenuItem>().ForEach(x =>
             {
-                var match = x.Text.Value == getName(selection);
+                bool match = x.Text.Value == getName(selection);
                 x.State.Value = match;
             });
         }

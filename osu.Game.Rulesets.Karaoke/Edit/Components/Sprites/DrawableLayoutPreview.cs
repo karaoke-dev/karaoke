@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -106,14 +107,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Sprites
 
                 // Set margin
                 const float padding = 30 * scale;
-                var horizontalMargin = layout.HorizontalMargin * scale + padding;
-                var verticalMargin = layout.VerticalMargin * scale + padding;
+                float horizontalMargin = layout.HorizontalMargin * scale + padding;
+                float verticalMargin = layout.VerticalMargin * scale + padding;
                 previewLyric.Margin = new MarginPadding
                 {
-                    Left = layout.Alignment.HasFlag(Anchor.x0) ? horizontalMargin : 0,
-                    Right = layout.Alignment.HasFlag(Anchor.x2) ? horizontalMargin : 0,
-                    Top = layout.Alignment.HasFlag(Anchor.y0) ? verticalMargin : 0,
-                    Bottom = layout.Alignment.HasFlag(Anchor.y2) ? verticalMargin : 0
+                    Left = layout.Alignment.HasFlagFast(Anchor.x0) ? horizontalMargin : 0,
+                    Right = layout.Alignment.HasFlagFast(Anchor.x2) ? horizontalMargin : 0,
+                    Top = layout.Alignment.HasFlagFast(Anchor.y0) ? verticalMargin : 0,
+                    Bottom = layout.Alignment.HasFlagFast(Anchor.y2) ? verticalMargin : 0
                 };
             }
         }

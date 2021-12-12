@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
             {
                 current.BindValueChanged(e =>
                 {
-                    var isCurrent = post == e.NewValue;
+                    bool isCurrent = post == e.NewValue;
 
                     // update hover color.
                     Colour = isCurrent ? Color4.White : overlayColours.Light2;

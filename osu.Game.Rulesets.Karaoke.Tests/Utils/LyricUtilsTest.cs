@@ -260,7 +260,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RomajiTags = TestCaseTagHelper.ParseRomajiTags(textTags)
             };
 
-            var fromIndex = textTags?.IndexOf(removeTextTag) ?? -1;
+            int fromIndex = textTags?.IndexOf(removeTextTag) ?? -1;
 
             // test ruby and romaji at the same test.
             var removeRubyTag = fromIndex >= 0 ? lyric.RubyTags[fromIndex] : TestCaseTagHelper.ParseRubyTag(removeTextTag);

@@ -58,21 +58,21 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
 
             if (dictionary.ContainsKey("Font"))
             {
-                var font = dictionary["Font"];
-                var family = font.Contains('-') ? font.Split('-').FirstOrDefault() : font;
-                var weight = font.Contains('-') ? font.Split('-').LastOrDefault() : "";
-                var size = float.Parse(dictionary["Size"]);
-                var italics = dictionary["Italics"].ToLower() == "true";
-                var fixedWidth = dictionary["FixedWidth"].ToLower() == "true";
+                string font = dictionary["Font"];
+                string family = font.Contains('-') ? font.Split('-').FirstOrDefault() : font;
+                string weight = font.Contains('-') ? font.Split('-').LastOrDefault() : "";
+                float size = float.Parse(dictionary["Size"]);
+                bool italics = dictionary["Italics"].ToLower() == "true";
+                bool fixedWidth = dictionary["FixedWidth"].ToLower() == "true";
                 Value = new FontUsage(family, size, weight, italics, fixedWidth);
             }
             else
             {
-                var family = dictionary["family"];
-                var weight = dictionary["weight"];
-                var size = float.Parse(dictionary["size"]);
-                var italics = dictionary["italics"].ToLower() == "true";
-                var fixedWidth = dictionary["fixedWidth"].ToLower() == "true";
+                string family = dictionary["family"];
+                string weight = dictionary["weight"];
+                float size = float.Parse(dictionary["size"]);
+                bool italics = dictionary["italics"].ToLower() == "true";
+                bool fixedWidth = dictionary["fixedWidth"].ToLower() == "true";
                 Value = new FontUsage(family, size, weight, italics, fixedWidth);
             }
         }

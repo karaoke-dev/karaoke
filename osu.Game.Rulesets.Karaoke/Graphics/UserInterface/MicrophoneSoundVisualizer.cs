@@ -148,8 +148,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         protected virtual bool OnMicrophoneSinging(MicrophonePitchingEvent e)
         {
             var voice = e.CurrentState.Microphone.Voice;
-            var decibel = voice.Decibel;
-            var pitch = voice.Pitch;
+            float decibel = voice.Decibel;
+            float pitch = voice.Pitch;
 
             // todo : should convert to better value.
             decibelVisualizer.Decibel = decibel;
@@ -370,7 +370,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     currentDot.X = calculateDotPosition((int)pitch);
 
                     // adjust show / hide.
-                    var showPitch = pitch != 0;
+                    bool showPitch = pitch != 0;
                     if (this.showPitch == showPitch)
                         return;
 
@@ -391,7 +391,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             {
                 const float start_v = 0.4f;
                 const float end_v = 0.7f;
-                var v = (end_v - start_v) / dot_amount * index + start_v;
+                float v = (end_v - start_v) / dot_amount * index + start_v;
                 return Color4Extensions.FromHSV(0, s, v);
             }
 

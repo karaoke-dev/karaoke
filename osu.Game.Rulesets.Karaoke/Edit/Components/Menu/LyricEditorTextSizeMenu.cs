@@ -23,10 +23,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
             config.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
             bindableFontSize.BindValueChanged(e =>
             {
-                var newSelection = e.NewValue;
+                float newSelection = e.NewValue;
                 Items.OfType<ToggleMenuItem>().ForEach(x =>
                 {
-                    var match = x.Text.Value == FontUtils.GetText(newSelection);
+                    bool match = x.Text.Value == FontUtils.GetText(newSelection);
                     x.State.Value = match;
                 });
             }, true);
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
 
         private ToggleMenuItem[] createMenuItems()
         {
-            var sizes = FontUtils.DefaultPreviewFontSize();
+            float[] sizes = FontUtils.DefaultPreviewFontSize();
             return sizes.Select(e =>
             {
                 var item = new ToggleMenuItem(FontUtils.GetText(e), MenuItemType.Standard, _ => updateMode(e));

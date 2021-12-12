@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         protected override bool FailCondition(HealthProcessor healthProcessor, JudgementResult result)
         {
-            var displayWindowsUpdateScreen = base.FailCondition(healthProcessor, result);
+            bool displayWindowsUpdateScreen = base.FailCondition(healthProcessor, result);
 
             if (displayWindowsUpdateScreen && windowsUpdateContainer == null)
             {

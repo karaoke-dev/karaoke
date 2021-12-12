@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             {
                 HitObjects = TestCaseTagHelper.ParseLyrics(lyrics).OfType<KaraokeHitObject>().ToList()
             };
-            var result = encoder.Encode(beatmap);
+            string result = encoder.Encode(beatmap);
             Assert.AreEqual(result, actual);
         }
     }

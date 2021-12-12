@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             PerformOnSelection(lyric =>
             {
                 // Shifting order that order is larger than current lyric.
-                var lyricOrder = lyric.Order;
+                int lyricOrder = lyric.Order;
                 OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > lyricOrder).ToArray(), 1);
 
                 // Split lyric
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     throw new ArgumentNullException(nameof(previousLyric));
 
                 // Shifting order that order is larger than current lyric.
-                var lyricOrder = previousLyric.Order;
+                int lyricOrder = previousLyric.Order;
                 OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > lyricOrder).ToArray(), -1);
 
                 var newLyric = LyricsUtils.CombineLyric(previousLyric, lyric);
@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                var order = lyric.Order;
+                int order = lyric.Order;
 
                 // Shifting order that order is larger than current lyric.
                 OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > order).ToArray(), 1);
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void CreateAtLast()
         {
-            var order = OrderUtils.GetMaxOrderNumber(HitObjects.ToArray());
+            int order = OrderUtils.GetMaxOrderNumber(HitObjects.ToArray());
 
             // Add new lyric to target order.
             Add(new Lyric
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                var oldOrder = lyric.Order;
+                int oldOrder = lyric.Order;
                 OrderUtils.ChangeOrder(HitObjects.ToArray(), oldOrder, newOrder + 1, (switchSinger, oldOrder, newOrder) =>
                 {
                     // todo : not really sure should call update?
@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         protected override void Add(Lyric hitObject)
         {
-            var index = HitObjects.ToList().FindIndex(x => x.Order == hitObject.Order - 1) + 1;
+            int index = HitObjects.ToList().FindIndex(x => x.Order == hitObject.Order - 1) + 1;
             Insert(index, hitObject);
         }
     }

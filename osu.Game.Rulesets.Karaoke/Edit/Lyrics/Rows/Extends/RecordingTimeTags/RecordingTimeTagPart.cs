@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                     }
 
                     var timeTag = timeTagCaretPosition.TimeTag;
-                    var start = timeTag.Index.State == TextIndex.IndexState.Start;
+                    bool start = timeTag.Index.State == TextIndex.IndexState.Start;
 
                     Origin = start ? Anchor.BottomLeft : Anchor.BottomRight;
                     InternalChild.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             {
                 this.lyric = lyric;
                 this.timeTag = timeTag;
-                var start = timeTag.Index.State == TextIndex.IndexState.Start;
+                bool start = timeTag.Index.State == TextIndex.IndexState.Start;
 
                 Anchor = Anchor.CentreLeft;
                 Origin = start ? Anchor.CentreLeft : Anchor.CentreRight;
@@ -165,7 +165,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
                 bindableTIme.BindValueChanged(e =>
                 {
-                    var hasValue = e.NewValue.HasValue;
+                    bool hasValue = e.NewValue.HasValue;
                     Alpha = hasValue ? 1 : 0;
 
                     if (!hasValue)
@@ -178,7 +178,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             protected override bool OnClick(ClickEvent e)
             {
                 // navigation to target time
-                var time = timeTag.Time;
+                double? time = timeTag.Time;
                 if (time != null)
                     editorClock.SeekSmoothlyTo(time.Value);
 

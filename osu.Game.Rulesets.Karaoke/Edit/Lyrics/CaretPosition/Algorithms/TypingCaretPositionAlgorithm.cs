@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (lyric == null)
                 return null;
 
-            var index = Math.Clamp(currentPosition.Index, GetMinIndex(lyric.Text), GetMaxIndex(lyric.Text));
+            int index = Math.Clamp(currentPosition.Index, GetMinIndex(lyric.Text), GetMaxIndex(lyric.Text));
 
             return new TextCaretPosition(lyric, index);
         }
@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (lyric == null)
                 return null;
 
-            var index = Math.Clamp(currentPosition.Index, GetMinIndex(lyric.Text), GetMaxIndex(lyric.Text));
+            int index = Math.Clamp(currentPosition.Index, GetMinIndex(lyric.Text), GetMaxIndex(lyric.Text));
 
             return new TextCaretPosition(lyric, index);
         }
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
             // get previous caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
-            var previousIndex = currentPosition.Index - 1;
+            int previousIndex = currentPosition.Index - 1;
 
             if (!indexInTextRange(previousIndex, lyric))
                 return MoveUp(new TextCaretPosition(currentPosition.Lyric, int.MaxValue));
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
             // get next caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
-            var nextIndex = currentPosition.Index + 1;
+            int nextIndex = currentPosition.Index + 1;
 
             if (!indexInTextRange(nextIndex, lyric))
                 return MoveDown(new TextCaretPosition(currentPosition.Lyric, int.MinValue));
@@ -88,13 +88,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         private bool lyricMovable(Lyric lyric)
         {
-            var minIndex = GetMinIndex(lyric.Text);
+            int minIndex = GetMinIndex(lyric.Text);
             return indexInTextRange(minIndex, lyric);
         }
 
         private bool indexInTextRange(int index, Lyric lyric)
         {
-            var text = lyric.Text;
+            string text = lyric.Text;
             if (string.IsNullOrEmpty(text))
                 return index == 0;
 

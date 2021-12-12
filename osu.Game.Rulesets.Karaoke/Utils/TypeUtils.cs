@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (value == null)
                 return default;
 
-            Type type = typeof(TType);
+            var type = typeof(TType);
             return (TType)Convert.ChangeType(value, Nullable.GetUnderlyingType(type) ?? type);
         }
     }

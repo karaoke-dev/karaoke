@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             bool left = direction == KaraokeScrollingDirection.Left;
 
             //TODO : will apply in skin
-            var judgementPadding = 10;
+            int judgementPadding = 10;
 
             judgementArea.Size = new Vector2(judgementAreaPercentage, 1);
             judgementArea.X = left ? 0 : 1 - judgementAreaPercentage;
@@ -156,11 +156,11 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             saitenPitch.BindValueChanged(value =>
             {
-                var newValue = value.NewValue;
+                int newValue = value.NewValue;
                 var targetTone = new Tone((newValue < 0 ? newValue - 1 : newValue) / 2, newValue % 2 != 0);
-                var targetY = notePositionInfo.Calculator.YPositionAt(targetTone);
-                var targetHeight = targetTone.Half ? 5 : DefaultColumnBackground.COLUMN_HEIGHT;
-                var alpha = targetTone.Half ? 0.6f : 0.2f;
+                float targetY = notePositionInfo.Calculator.YPositionAt(targetTone);
+                float targetHeight = targetTone.Half ? 5 : DefaultColumnBackground.COLUMN_HEIGHT;
+                float alpha = targetTone.Half ? 0.6f : 0.2f;
 
                 centerLine.MoveToY(targetY, 100);
                 centerLine.ResizeHeightTo(targetHeight, 100);

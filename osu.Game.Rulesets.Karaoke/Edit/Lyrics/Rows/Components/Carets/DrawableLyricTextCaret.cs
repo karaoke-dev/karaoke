@@ -20,8 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 
         protected Vector2 GetPosition(TextCaretPosition caret)
         {
-            var textHeight = lyricPiece.LineBaseHeight;
-            var end = caret.Index == caret.Lyric?.Text?.Length;
+            float textHeight = lyricPiece.LineBaseHeight;
+            bool end = caret.Index == caret.Lyric?.Text?.Length;
             var originPosition = lyricPiece.GetTextIndexPosition(TextIndexUtils.FromStringIndex(caret.Index, end));
             return new Vector2(originPosition.X, originPosition.Y - textHeight);
         }

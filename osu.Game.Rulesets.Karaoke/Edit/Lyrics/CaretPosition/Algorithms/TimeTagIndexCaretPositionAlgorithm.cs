@@ -37,8 +37,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (lyric == null)
                 return null;
 
-            var lyricTextLength = lyric.Text?.Length ?? 0;
-            var index = Math.Clamp(currentPosition.Index.Index, 0, lyricTextLength - 1);
+            int lyricTextLength = lyric.Text?.Length ?? 0;
+            int index = Math.Clamp(currentPosition.Index.Index, 0, lyricTextLength - 1);
             var state = suitableState(currentPosition.Index);
 
             return new TimeTagIndexCaretPosition(lyric, new TextIndex(index, state));
@@ -50,8 +50,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (lyric == null)
                 return null;
 
-            var lyricTextLength = lyric.Text?.Length ?? 0;
-            var index = Math.Clamp(currentPosition.Index.Index, 0, lyricTextLength - 1);
+            int lyricTextLength = lyric.Text?.Length ?? 0;
+            int index = Math.Clamp(currentPosition.Index.Index, 0, lyricTextLength - 1);
             var state = suitableState(currentPosition.Index);
 
             return new TimeTagIndexCaretPosition(lyric, new TextIndex(index, state));
@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
             static TextIndex getPreviousIndex(TextIndex currentIndex)
             {
-                var previousIndex = TextIndexUtils.ToStringIndex(currentIndex) - 1;
+                int previousIndex = TextIndexUtils.ToStringIndex(currentIndex) - 1;
                 var previousState = TextIndexUtils.ReverseState(currentIndex.State);
                 return new TextIndex(previousIndex, previousState);
             }
@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
             static TextIndex getNextIndex(TextIndex currentIndex)
             {
-                var nextIndex = TextIndexUtils.ToStringIndex(currentIndex);
+                int nextIndex = TextIndexUtils.ToStringIndex(currentIndex);
                 var nextState = TextIndexUtils.ReverseState(currentIndex.State);
                 return new TextIndex(nextIndex, nextState);
             }
@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (lyric == null)
                 return null;
 
-            var textLength = lyric.Text?.Length ?? 0;
+            int textLength = lyric.Text?.Length ?? 0;
             var index = new TextIndex(textLength - 1, suitableState(TextIndex.IndexState.End));
             return new TimeTagIndexCaretPosition(lyric, index);
         }

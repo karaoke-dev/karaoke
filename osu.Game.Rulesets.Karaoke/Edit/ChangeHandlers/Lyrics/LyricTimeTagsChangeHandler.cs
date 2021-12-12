@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                var containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
+                bool containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
                 if (containsInLyric == false)
                     throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                var containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
+                bool containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
                 if (containsInLyric == false)
                     throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
@@ -56,12 +56,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                var containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
+                bool containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
                 if (containsInLyric == false)
                     throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
                 var timeTags = lyric.TimeTags.ToList();
-                var targetIndex = timeTags.IndexOf(timeTag);
+                int targetIndex = timeTags.IndexOf(timeTag);
                 if (targetIndex < 0)
                     throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
@@ -91,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 if (targetTimeTag == null)
                     throw new InvalidOperationException($"{nameof(targetTimeTag)} is not in the lyric");
 
-                var insertIndex = timeTags.IndexOf(targetTimeTag);
+                int insertIndex = timeTags.IndexOf(targetTimeTag);
                 timeTags.Insert(insertIndex, new TimeTag(index));
                 lyric.TimeTags = timeTags.ToArray();
             });

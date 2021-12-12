@@ -16,11 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (percentage == 0 || percentage == 1)
                 throw new InvalidOperationException($"{nameof(percentage)} cannot be {0} or {1}.");
 
-            var firstNoteStartTime = note.StartTime;
-            var firstNoteDuration = note.Duration * percentage;
+            double firstNoteStartTime = note.StartTime;
+            double firstNoteDuration = note.Duration * percentage;
 
-            var secondNoteStartTime = firstNoteStartTime + firstNoteDuration;
-            var secondNoteDuration = note.Duration * (1 - percentage);
+            double secondNoteStartTime = firstNoteStartTime + firstNoteDuration;
+            double secondNoteDuration = note.Duration * (1 - percentage);
 
             var firstNote = NoteUtils.CopyByTime(note, firstNoteStartTime, firstNoteDuration);
             var secondNote = NoteUtils.CopyByTime(note, secondNoteStartTime, secondNoteDuration);
@@ -39,8 +39,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (firstLyric.EndIndex != secondLyric.EndIndex)
                 throw new InvalidOperationException($"{nameof(firstLyric.EndIndex)} and {nameof(secondLyric.EndIndex)} should be same.");
 
-            var startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
-            var endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
+            double startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
+            double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
 
             return NoteUtils.CopyByTime(firstLyric, startTime, endTime - startTime);
         }

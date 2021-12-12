@@ -93,13 +93,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 
         public double GetPreviewTime(TimeTag timeTag)
         {
-            var time = timeTag.Time;
+            double? time = timeTag.Time;
 
             if (time != null)
                 return time.Value;
 
             var timeTags = HitObject.TimeTags;
-            var index = timeTags.IndexOf(timeTag);
+            int index = timeTags.IndexOf(timeTag);
 
             const float preempt_time = 200;
             var previousTimeTagWithTime = timeTags.GetPreviousMatch(timeTag, x => x.Time.HasValue);
@@ -107,13 +107,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 
             if (previousTimeTagWithTime?.Time != null)
             {
-                var diffIndex = timeTags.IndexOf(previousTimeTagWithTime) - index;
+                int diffIndex = timeTags.IndexOf(previousTimeTagWithTime) - index;
                 return previousTimeTagWithTime.Time.Value - preempt_time * diffIndex;
             }
 
             if (nextTimeTagWithTime?.Time != null)
             {
-                var diffIndex = timeTags.IndexOf(nextTimeTagWithTime) - index;
+                int diffIndex = timeTags.IndexOf(nextTimeTagWithTime) - index;
                 return nextTimeTagWithTime.Time.Value - preempt_time * diffIndex;
             }
 

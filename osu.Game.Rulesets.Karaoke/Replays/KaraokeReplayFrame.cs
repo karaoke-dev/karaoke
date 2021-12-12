@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
         public LegacyReplayFrame ToLegacy(IBeatmap beatmap)
         {
-            var mouseYPosition = Sound ? Scale : default(float?);
+            float? mouseYPosition = Sound ? Scale : default(float?);
             return new LegacyReplayFrame(Time, null, mouseYPosition, ReplayButtonState.None);
         }
     }

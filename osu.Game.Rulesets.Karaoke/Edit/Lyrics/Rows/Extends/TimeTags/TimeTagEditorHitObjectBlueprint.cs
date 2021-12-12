@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             timeTagWithNoTimePiece.Colour = colours.Red;
             startTime.BindValueChanged(_ =>
             {
-                var hasValue = hasTime();
+                bool hasValue = hasTime();
 
                 // update show time-tag style.
                 switch (hasValue)

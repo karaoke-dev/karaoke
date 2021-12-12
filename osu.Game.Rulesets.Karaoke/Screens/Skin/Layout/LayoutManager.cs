@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
             if (skinLookups == null)
                 return;
 
-            foreach (var (key, value) in skinLookups)
+            foreach ((int key, string value) in skinLookups)
             {
                 PreviewFontSelections.Add(key, value);
             }

@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         public void Add(KaraokeReplayFrame frame)
         {
             // Start time should be largest and cannot be removed.
-            var startTime = frame.Time;
+            double startTime = frame.Time;
             if (startTime <= minAvailableTime)
                 throw new ArgumentOutOfRangeException(nameof(startTime));
 

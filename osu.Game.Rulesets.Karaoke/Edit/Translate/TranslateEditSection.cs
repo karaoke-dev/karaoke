@@ -286,7 +286,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             };
             languageDropdown.Current.BindValueChanged(v =>
             {
-                var hasCultureInfo = v.NewValue != null;
+                bool hasCultureInfo = v.NewValue != null;
 
                 // disable and clear text box if contains no language in language list.
                 textBox.Text = hasCultureInfo ? translateInfoProvider.GetLyricTranslate(lyric, v.NewValue) : null;
@@ -301,7 +301,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 if (cultureInfo == null)
                     return;
 
-                var translateText = textBoxValue.NewValue;
+                string translateText = textBoxValue.NewValue;
                 lyricTranslateChangeHandler.UpdateTranslate(cultureInfo, translateText);
             });
             return textBox;

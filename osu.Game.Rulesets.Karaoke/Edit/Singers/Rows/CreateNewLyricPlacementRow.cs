@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                     TooltipText = "Click to add new singer",
                     Action = () =>
                     {
-                        var singerId = singersChangeHandler.Singers.Count + 1;
+                        int singerId = singersChangeHandler.Singers.Count + 1;
                         singersChangeHandler.Add(new Singer(singerId)
                         {
                             Name = "New singer"

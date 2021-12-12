@@ -6,6 +6,7 @@ using System.Globalization;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -232,7 +233,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             FontUsage getFont(KaraokeRulesetSetting setting, FontUsage? skinFont = null)
             {
-                var forceUseDefault = forceUseDefaultFont();
+                bool forceUseDefault = forceUseDefaultFont();
                 var font = config?.Get<FontUsage>(setting) ?? FontUsage.Default;
 
                 if (forceUseDefault || skinFont == null)
@@ -276,10 +277,10 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             Origin = layout.Alignment;
             Margin = new MarginPadding
             {
-                Left = layout.Alignment.HasFlag(Anchor.x0) ? layout.HorizontalMargin : 0,
-                Right = layout.Alignment.HasFlag(Anchor.x2) ? layout.HorizontalMargin : 0,
-                Top = layout.Alignment.HasFlag(Anchor.y0) ? layout.VerticalMargin : 0,
-                Bottom = layout.Alignment.HasFlag(Anchor.y2) ? layout.VerticalMargin : 0
+                Left = layout.Alignment.HasFlagFast(Anchor.x0) ? layout.HorizontalMargin : 0,
+                Right = layout.Alignment.HasFlagFast(Anchor.x2) ? layout.HorizontalMargin : 0,
+                Top = layout.Alignment.HasFlagFast(Anchor.y0) ? layout.VerticalMargin : 0,
+                Bottom = layout.Alignment.HasFlagFast(Anchor.y2) ? layout.VerticalMargin : 0
             };
             Padding = new MarginPadding(30);
 
@@ -293,7 +294,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         private void applyTranslate()
         {
             var language = preferLanguageBindable.Value;
-            var needTranslate = useTranslateBindable.Value;
+            bool needTranslate = useTranslateBindable.Value;
 
             if (!needTranslate || language == null)
             {
@@ -311,7 +312,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (Result.Judgement is not KaraokeLyricJudgement judgement)
                 return;
 
-            var lyricStartOffset = timeOffset + HitObject.LyricDuration;
+            double lyricStartOffset = timeOffset + HitObject.LyricDuration;
 
             if (lyricStartOffset < 0)
             {

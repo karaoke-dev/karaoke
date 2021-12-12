@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator
             {
                 bindable.BindValueChanged(e =>
                 {
-                    var enabled = e.NewValue;
+                    bool enabled = e.NewValue;
 
                     foreach (var control in triggeredControl)
                     {

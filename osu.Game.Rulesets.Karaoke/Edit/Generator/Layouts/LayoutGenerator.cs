@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts
             lyrics.ForEach(h => h.InitialWorkingTime());
 
             // Apply start time
-            var numberOfLine = layouts.Length;
+            int numberOfLine = layouts.Length;
 
             for (int i = 0; i < lyrics.Count; i++)
             {
@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts
                     continue;
 
                 // Adjust start time and end time
-                var lyricEndTime = lyric.EndTime;
+                double lyricEndTime = lyric.EndTime;
                 lyric.StartTime = lastLyric.EndTime + 1000;
 
                 // Should re-assign duration here

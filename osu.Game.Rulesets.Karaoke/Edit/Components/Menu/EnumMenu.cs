@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
                 var newSelection = e.NewValue;
                 Items.OfType<ToggleMenuItem>().ForEach(x =>
                 {
-                    var match = x.Text.Value == GetName(newSelection);
+                    bool match = x.Text.Value == GetName(newSelection);
                     x.State.Value = match;
                 });
             }, true);

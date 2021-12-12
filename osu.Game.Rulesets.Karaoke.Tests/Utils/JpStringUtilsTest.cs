@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("花火大会", "花火大会")]
         public void TestToHiragana(string text, string actual)
         {
-            var katakana = JpStringUtils.ToHiragana(text);
+            string katakana = JpStringUtils.ToHiragana(text);
             Assert.AreEqual(katakana, actual);
         }
 
@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("花火大会", "花火大会")]
         public void TestToKatakana(string text, string actual)
         {
-            var katakana = JpStringUtils.ToKatakana(text);
+            string katakana = JpStringUtils.ToKatakana(text);
             Assert.AreEqual(katakana, actual);
         }
 
@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("タイカイ ー☆", "taikai -☆")] // it's converted by package, let's skip this checking.
         public void TestToRomaji(string text, string actual)
         {
-            var romaji = JpStringUtils.ToRomaji(text);
+            string romaji = JpStringUtils.ToRomaji(text);
             Assert.AreEqual(romaji, actual);
         }
     }

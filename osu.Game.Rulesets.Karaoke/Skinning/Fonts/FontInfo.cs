@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             FontName = fontName;
             FontFormat = fontFormat;
 
-            var parts = fontName.Split('-');
+            string[] parts = fontName.Split('-');
 
             switch (parts.Length)
             {

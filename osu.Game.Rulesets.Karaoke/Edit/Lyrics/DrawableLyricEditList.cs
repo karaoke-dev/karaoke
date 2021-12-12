@@ -65,11 +65,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return;
 
                 // move to target position if auto focus.
-                var autoFocus = lyricEditorConfigManager.Get<bool>(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric);
+                bool autoFocus = lyricEditorConfigManager.Get<bool>(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric);
                 if (!autoFocus)
                     return;
 
-                var skippingRows = lyricEditorConfigManager.Get<int>(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows);
+                int skippingRows = lyricEditorConfigManager.Get<int>(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows);
                 moveItemToTargetPosition(newLyric, oldLyric, skippingRows);
             });
         }
@@ -83,17 +83,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (newItem == null)
                 return false;
 
-            var spacing = newItem.Height * skippingRows;
+            float spacing = newItem.Height * skippingRows;
 
             // do not scroll if position is smaller then spacing.
-            var scrollPosition = ScrollContainer.GetChildPosInContent(newItem);
+            float scrollPosition = ScrollContainer.GetChildPosInContent(newItem);
             if (scrollPosition < spacing)
                 return false;
 
             // do not scroll if position is too large and not able to move to target position.
-            var itemHeight = newItem.Height + newItem.ExtendHeight;
-            var contentHeight = ScrollContainer.ScrollContent.Height;
-            var containerHeight = ScrollContainer.DrawHeight;
+            float itemHeight = newItem.Height + newItem.ExtendHeight;
+            float contentHeight = ScrollContainer.ScrollContent.Height;
+            float containerHeight = ScrollContainer.DrawHeight;
             if (contentHeight - scrollPosition + itemHeight < containerHeight - spacing)
                 return false;
 
@@ -108,8 +108,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (oldItem == null)
                     return 0;
 
-                var newItemPosition = ScrollContainer.GetChildPosInContent(newItem);
-                var oldItemPosition = ScrollContainer.GetChildPosInContent(oldItem);
+                float newItemPosition = ScrollContainer.GetChildPosInContent(newItem);
+                float oldItemPosition = ScrollContainer.GetChildPosInContent(oldItem);
                 if (oldItemPosition > scrollPosition)
                     return 0;
 

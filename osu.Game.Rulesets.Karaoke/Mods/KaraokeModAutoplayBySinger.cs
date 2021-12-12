@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 return;
 
             var workingBeatmap = karaokePlayfield.WorkingBeatmap;
-            var path = getPathForFile(workingBeatmap.BeatmapInfo);
+            string path = getPathForFile(workingBeatmap.BeatmapInfo);
             trackData = workingBeatmap.GetStream(path);
 
             base.ApplyToDrawableRuleset(drawableRuleset);
@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         private string getPathForFile(BeatmapInfo beatmapInfo)
         {
             var beatmapSetInfo = beatmapInfo.BeatmapSet;
-            var audioFile = beatmapInfo.Metadata.AudioFile;
+            string audioFile = beatmapInfo.Metadata.AudioFile;
 
             return beatmapSetInfo.Files
                                  .FirstOrDefault(f => string.Equals(f.Filename, audioFile, StringComparison.OrdinalIgnoreCase))

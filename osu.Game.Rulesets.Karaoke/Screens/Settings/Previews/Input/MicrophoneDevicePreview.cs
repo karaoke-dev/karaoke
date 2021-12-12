@@ -23,10 +23,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Input
             {
                 // Find index by selection id
                 var microphoneList = new MicrophoneManager().MicrophoneDeviceNames.ToList();
-                var deviceIndex = microphoneList.IndexOf(x.NewValue);
+                int deviceIndex = microphoneList.IndexOf(x.NewValue);
 
-                var hasDevice = microphoneList.Any();
-                var deviceName = deviceIndex == Bass.DefaultDevice ? "Default microphone device" : x.NewValue;
+                bool hasDevice = microphoneList.Any();
+                string deviceName = deviceIndex == Bass.DefaultDevice ? "Default microphone device" : x.NewValue;
 
                 Child = new MicrophoneInputManager(deviceIndex)
                 {

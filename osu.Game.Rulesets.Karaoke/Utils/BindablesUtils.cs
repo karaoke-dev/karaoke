@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Internal;
 using osu.Framework.Bindables;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
@@ -32,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     secondBindableList.AddRange(newItems);
                 }
 
-                if (oldItems != null && oldItems.Any())
+                if (oldItems != null && oldItems.Count > 0)
                 {
                     // remove objects from second list if exist items has been removed.
                     secondBindableList.RemoveAll(x => args.OldItems.Contains(x));

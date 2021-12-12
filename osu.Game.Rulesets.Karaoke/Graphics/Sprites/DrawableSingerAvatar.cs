@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
                 throw new ArgumentNullException(nameof(textures));
 
             // todo : get real texture from beatmap
-            Texture texture = textures.Get(@"Online/avatar-guest");
+            var texture = textures.Get(@"Online/avatar-guest");
 
             Add(new Sprite
             {

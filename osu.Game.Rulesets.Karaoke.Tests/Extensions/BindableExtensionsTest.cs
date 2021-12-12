@@ -20,8 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Extensions
             // initial default value.
             var bindableArray = new Bindable<int[]> { Value = oldValues };
 
-            var addCount = 0;
-            var removedCount = 0;
+            int addCount = 0;
+            int removedCount = 0;
 
             bindableArray.BindArrayChanged(n =>
             {
@@ -55,8 +55,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Extensions
             // apply changes
             bindableArray.Value = newValues;
 
-            var addCount = 0;
-            var removedCount = 0;
+            int addCount = 0;
+            int removedCount = 0;
 
             bindableArray.BindArrayChanged(n =>
             {

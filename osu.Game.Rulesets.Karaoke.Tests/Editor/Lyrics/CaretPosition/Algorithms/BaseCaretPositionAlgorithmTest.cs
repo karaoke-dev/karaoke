@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
         protected Lyric[] GetLyricsByMethodName(string methodName)
         {
-            Type thisType = GetType();
+            var thisType = GetType();
             var theMethod = thisType.GetProperty(methodName, BindingFlags.NonPublic | BindingFlags.Static);
             if (theMethod == null)
                 throw new MissingMethodException("Test method is not exist.");

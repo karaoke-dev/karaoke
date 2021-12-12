@@ -17,9 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Zh
 
         protected override void TimeTagLogic(Lyric lyric, List<TimeTag> timeTags)
         {
-            var text = lyric.Text;
+            string text = lyric.Text;
 
-            for (var i = 1; i < text.Length; i++)
+            for (int i = 1; i < text.Length; i++)
             {
                 if (CharUtils.IsChinese(text[i]))
                 {

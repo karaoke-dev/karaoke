@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             base.LoadComplete();
 
             const float preempt_time = 200;
-            var position = getPositionFromTime(HitObject.LyricStartTime - preempt_time);
+            float position = getPositionFromTime(HitObject.LyricStartTime - preempt_time);
             ScrollTo(position, false);
         }
 
@@ -80,15 +80,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         {
             base.UpdateAfterChildren();
 
-            var position = getPositionFromTime(editorClock.CurrentTime);
+            float position = getPositionFromTime(editorClock.CurrentTime);
             currentTimeMarker.MoveToX(position);
         }
 
         protected override void OnUserScroll(float value, bool animated = true, double? distanceDecay = null)
         {
             const float preempt_time = 1000;
-            var zoomMillionSecond = editorClock.TrackLength / CurrentZoom;
-            var position = getTimeFromPosition(new Vector2(value));
+            double zoomMillionSecond = editorClock.TrackLength / CurrentZoom;
+            double position = getTimeFromPosition(new Vector2(value));
 
             // should prevent dragging or moving is out of time-tag range.
             if (position < StartTime - preempt_time)

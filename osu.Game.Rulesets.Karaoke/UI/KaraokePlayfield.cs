@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             bindablePitch.BindValueChanged(value =>
             {
                 // Convert between -10 and 10 into 0.5 and 1.5
-                var newValue = 1.0f + (float)value.NewValue / 40;
+                float newValue = 1.0f + (float)value.NewValue / 40;
                 WorkingBeatmap.Track.Frequency.Value = newValue;
             });
 
@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             bindablePlayback.BindValueChanged(value =>
             {
                 // Convert between -10 and 10 into 0.5 and 1.5
-                var newValue = 1.0f + (float)value.NewValue / 40;
+                float newValue = 1.0f + (float)value.NewValue / 40;
                 WorkingBeatmap.Track.Tempo.Value = newValue;
             });
 
@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             notePlayfieldAlpha.BindValueChanged(x =>
             {
                 // todo : how to check is there any notes in this playfield?
-                var alpha = WorkingBeatmap.Beatmap.IsScorable() ? x.NewValue : 0;
+                double alpha = WorkingBeatmap.Beatmap.IsScorable() ? x.NewValue : 0;
                 NotePlayfield.Alpha = (float)alpha;
             });
             lyricPlayfieldAlpha.BindValueChanged(x => LyricPlayfield.Alpha = (float)x.NewValue);

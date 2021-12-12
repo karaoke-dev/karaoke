@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestHasStartTimeTagInLyric(string text, string[] timeTagTexts, bool actual)
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
-            var missing = TimeTagsUtils.HasStartTimeTagInLyric(timeTags, text);
+            bool missing = TimeTagsUtils.HasStartTimeTagInLyric(timeTags, text);
             Assert.AreEqual(missing, actual);
         }
 
@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestHasEndTimeTagInLyric(string text, string[] timeTagTexts, bool actual)
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
-            var missing = TimeTagsUtils.HasEndTimeTagInLyric(timeTags, text);
+            bool missing = TimeTagsUtils.HasEndTimeTagInLyric(timeTags, text);
             Assert.AreEqual(missing, actual);
         }
 
@@ -120,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             // run all and find overlapping indexes.
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
             var overlappingTimeTags = TimeTagsUtils.FindOverlapping(timeTags, other, self);
-            var overlappingTimeTagIndexed = overlappingTimeTags.Select(v => timeTags.IndexOf(v)).ToArray();
+            int[] overlappingTimeTagIndexed = overlappingTimeTags.Select(v => timeTags.IndexOf(v)).ToArray();
             Assert.AreEqual(overlappingTimeTagIndexed, errorIndex);
         }
 
@@ -173,7 +173,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestGetStartTime(string[] timeTagTexts, double? actualStartTime)
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
-            var startTime = TimeTagsUtils.GetStartTime(timeTags);
+            double? startTime = TimeTagsUtils.GetStartTime(timeTags);
             Assert.AreEqual(startTime, actualStartTime);
         }
 
@@ -183,7 +183,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestGetEndTime(string[] timeTagTexts, double? actualEndTime)
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
-            var endTime = TimeTagsUtils.GetEndTime(timeTags);
+            double? endTime = TimeTagsUtils.GetEndTime(timeTags);
             Assert.AreEqual(endTime, actualEndTime);
         }
     }

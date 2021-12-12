@@ -90,14 +90,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="changeOrderAction">has call-back if order has been changed.</param>
         public static void ResortOrder<T>(T[] objects, int startFrom = 1, Action<T, int, int> changeOrderAction = null) where T : IHasOrder
         {
-            var minOrderNumber = GetMinOrderNumber(objects.ToArray());
-            var maxOrderNumber = GetMaxOrderNumber(objects.ToArray());
+            int minOrderNumber = GetMinOrderNumber(objects.ToArray());
+            int maxOrderNumber = GetMaxOrderNumber(objects.ToArray());
 
             // todo : should deal with the case if new start order is between min and max order number
-            var orderByAsc = startFrom <= minOrderNumber;
+            bool orderByAsc = startFrom <= minOrderNumber;
             var processObjects = orderByAsc ? objects.OrderBy(x => x.Order) : objects.OrderByDescending(x => x.Order);
 
-            var targetOrder = orderByAsc ? startFrom : startFrom - minOrderNumber + objects.Length;
+            int targetOrder = orderByAsc ? startFrom : startFrom - minOrderNumber + objects.Length;
 
             foreach (var processObject in processObjects)
             {
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             void changeOrder(T obj, int newOrder)
             {
-                var oldOrder = obj.Order;
+                int oldOrder = obj.Order;
                 obj.Order = newOrder;
 
                 // call invoke for outside updating.
@@ -139,12 +139,12 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 throw new ArgumentOutOfRangeException(nameof(newOrder), $"new order number {newOrder} is not in the range of {nameof(objects)}.");
 
             // get objects that will need to change order
-            var minAffectOrder = Math.Min(oldOrder, newOrder);
-            var maxAffectOrder = Math.Max(oldOrder, newOrder);
+            int minAffectOrder = Math.Min(oldOrder, newOrder);
+            int maxAffectOrder = Math.Max(oldOrder, newOrder);
             var affectObjects = objects.Where(x => x.Order >= minAffectOrder && x.Order <= maxAffectOrder);
 
             // get shifting order
-            var shiftingOrder = newOrder > oldOrder ? -1 : 1;
+            int shiftingOrder = newOrder > oldOrder ? -1 : 1;
 
             // get order order object info
             const int old_order_temp_id = -1;
@@ -161,7 +161,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 if (affectObject.Order == old_order_temp_id)
                     continue;
 
-                var affectObjectNewOrder = affectObject.Order + shiftingOrder;
+                int affectObjectNewOrder = affectObject.Order + shiftingOrder;
                 changeOrder(affectObject, affectObjectNewOrder);
             }
 
@@ -173,7 +173,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             void changeOrder(T obj, int n)
             {
-                var o = obj.Order;
+                int o = obj.Order;
                 obj.Order = n;
 
                 // call invoke for outside updating.

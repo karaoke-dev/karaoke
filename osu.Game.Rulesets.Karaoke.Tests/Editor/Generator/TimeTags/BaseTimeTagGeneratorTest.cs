@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
             if (properties == null)
                 return config;
 
-            foreach (var propertyName in properties)
+            foreach (string propertyName in properties)
             {
                 if (propertyName == null)
                     continue;

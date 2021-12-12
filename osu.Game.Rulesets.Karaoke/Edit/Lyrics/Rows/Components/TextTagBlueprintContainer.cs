@@ -48,16 +48,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             if (!items.Any())
                 return false;
 
-            var leftPosition = ToLocalSpace(result.ScreenSpacePosition).X;
-            var startIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(leftPosition));
-            var diff = startIndex - items.First().StartIndex;
+            float leftPosition = ToLocalSpace(result.ScreenSpacePosition).X;
+            int startIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(leftPosition));
+            int diff = startIndex - items.First().StartIndex;
             if (diff == 0)
                 return false;
 
             foreach (var item in items)
             {
-                var newStartIndex = item.StartIndex + diff;
-                var newEndIndex = item.EndIndex + diff;
+                int newStartIndex = item.StartIndex + diff;
+                int newEndIndex = item.EndIndex + diff;
                 if (!LyricUtils.AbleToInsertTextTagAtIndex(Lyric, newStartIndex) || !LyricUtils.AbleToInsertTextTagAtIndex(Lyric, newEndIndex))
                     continue;
 
@@ -107,8 +107,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 switch (anchor)
                 {
                     case Anchor.CentreLeft:
-                        var leftPosition = rect.Left + deltaPosition;
-                        var startIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(leftPosition));
+                        float leftPosition = rect.Left + deltaPosition;
+                        int startIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(leftPosition));
                         if (startIndex >= selectedTextTag.EndIndex)
                             return false;
 
@@ -116,8 +116,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                         return true;
 
                     case Anchor.CentreRight:
-                        var rightPosition = rect.Right + deltaPosition;
-                        var endIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(rightPosition));
+                        float rightPosition = rect.Right + deltaPosition;
+                        int endIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(rightPosition));
                         if (endIndex <= selectedTextTag.StartIndex)
                             return false;
 
