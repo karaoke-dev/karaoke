@@ -4,10 +4,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using Newtonsoft.Json;
-using NuGet.Packaging;
 using osu.Framework.Bindables;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
+using osu.Game.Extensions;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Judgements;

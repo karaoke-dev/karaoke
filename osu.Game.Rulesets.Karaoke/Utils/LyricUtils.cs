@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Internal;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
@@ -204,12 +203,12 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     return false;
 
                 return x.Index.State != TextIndex.IndexState.Start || x.Index.Index != matchRuby.EndIndex;
-            });
+            }).ToList();
 
             // get ruby text and should notice exceed case if time-tag is more than ruby text.
             var index = timeTagsWithSameIndex.IndexOf(timeTag);
             var text = matchRuby.Text;
-            var subtext = timeTagsWithSameIndex.Count() == 1 ? text : text.Substring(Math.Min(text.Length - 1, index), 1);
+            var subtext = timeTagsWithSameIndex.Count == 1 ? text : text.Substring(Math.Min(text.Length - 1, index), 1);
 
             // return substring with format.
             return state switch
