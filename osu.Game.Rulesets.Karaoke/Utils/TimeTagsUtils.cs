@@ -199,7 +199,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 return timeTags;
 
             var sortedTimeTags = Sort(timeTags);
-            var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Index.Index);
+            var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Index.Index).ToArray();
 
             var overlappingTimeTags = FindOverlapping(timeTags, other, self);
             var validTimeTags = sortedTimeTags.Except(overlappingTimeTags);
@@ -210,14 +210,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 var timeTag = overlappingTimeTag.Index;
 
                 // fix self-overlapping
-                var groupedTimeTag = groupedTimeTags.FirstOrDefault(x => x.Key == timeTag.Index).ToList();
-                var startTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.Start && x.Time != null);
-                var endTimeGroup = groupedTimeTag.Where(x => x.Index.State == TextIndex.IndexState.End && x.Time != null);
+                var groupedTimeTag = groupedTimeTags.FirstOrDefault(x => x.Key == timeTag.Index)?.ToList();
+                var startTimeGroup = groupedTimeTag?.Where(x => x.Index.State == TextIndex.IndexState.Start && x.Time != null);
+                var endTimeGroup = groupedTimeTag?.Where(x => x.Index.State == TextIndex.IndexState.End && x.Time != null);
 
                 switch (timeTag.State)
                 {
                     case TextIndex.IndexState.Start:
-                        double? minEndTime = endTimeGroup.Min(x => x.Time);
+                        double? minEndTime = endTimeGroup?.Min(x => x.Time);
 
                         if (minEndTime != null && minEndTime < overlappingTimeTag.Time)
                         {
@@ -228,7 +228,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                         break;
 
                     case TextIndex.IndexState.End:
-                        double? maxStartTime = startTimeGroup.Max(x => x.Time);
+                        double? maxStartTime = startTimeGroup?.Max(x => x.Time);
 
                         if (maxStartTime != null && maxStartTime > overlappingTimeTag.Time)
                         {

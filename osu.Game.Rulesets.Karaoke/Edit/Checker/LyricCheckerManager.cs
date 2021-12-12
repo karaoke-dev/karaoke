@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checker
             {
                 HitObjects = lyrics
             };
-            var result = lyricVerifier.Run(new BeatmapVerifierContext(fakeBeatmap, null));
+            var result = lyricVerifier.Run(new BeatmapVerifierContext(fakeBeatmap, null)).ToArray();
 
             // re-calculate and add
             foreach (var lyric in lyrics.OfType<Lyric>())

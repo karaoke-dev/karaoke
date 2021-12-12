@@ -264,7 +264,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
-            var availableTimeTags = lyric.TimeTags?.Where(x => x.Time != null);
+            var availableTimeTags = lyric.TimeTags?.Where(x => x.Time != null).ToArray();
             var minTimeTag = availableTimeTags?.OrderBy(x => x.Time).FirstOrDefault();
             var maxTimeTag = availableTimeTags?.OrderByDescending(x => x.Time).FirstOrDefault();
 

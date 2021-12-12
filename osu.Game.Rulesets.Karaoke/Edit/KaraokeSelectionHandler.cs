@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 && EditorBeatmap.SelectedHitObjects.Count > 1)
             {
                 var menu = new List<MenuItem>();
-                var selectedObject = EditorBeatmap.SelectedHitObjects.Cast<Note>().OrderBy(x => x.StartTime);
+                var selectedObject = EditorBeatmap.SelectedHitObjects.Cast<Note>().OrderBy(x => x.StartTime).ToArray();
 
                 // Set multi note display property
                 menu.Add(createMultiNoteDisplayPropertyMenuItem(selectedObject));
@@ -82,11 +82,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             return new List<MenuItem>();
         }
 
-        private MenuItem createMultiNoteDisplayPropertyMenuItem(IEnumerable<Note> selectedObject)
+        private MenuItem createMultiNoteDisplayPropertyMenuItem(IReadOnlyCollection<Note> selectedObject)
         {
             bool display = selectedObject.Count(x => x.Display) >= selectedObject.Count(x => !x.Display);
             string displayText = display ? "Hide" : "Show";
-            return new OsuMenuItem($"{displayText} {selectedObject.Count()} notes.", display ? MenuItemType.Destructive : MenuItemType.Standard,
+            return new OsuMenuItem($"{displayText} {selectedObject.Count} notes.", display ? MenuItemType.Destructive : MenuItemType.Standard,
                 () =>
                 {
                     notesChangeHandler.ChangeDisplay(!display);
