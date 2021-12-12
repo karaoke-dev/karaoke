@@ -45,12 +45,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
             if (string.IsNullOrEmpty(text))
                 return timeTags;
 
-            for (var i = 1; i < text.Length; i++)
+            for (int i = 1; i < text.Length; i++)
             {
                 var timeTag = new TimeTag(new TextIndex(i));
 
-                var c = text[i];
-                var pc = text[i - 1];
+                char c = text[i];
+                char pc = text[i - 1];
 
                 if (char.IsWhiteSpace(c) && Config.CheckWhiteSpace)
                 {

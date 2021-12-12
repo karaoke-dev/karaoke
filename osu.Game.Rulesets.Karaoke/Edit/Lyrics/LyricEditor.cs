@@ -191,7 +191,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             rightSideExtendArea.Clear();
 
             var direction = extendArea?.Direction;
-            var width = extendArea?.ExtendWidth ?? 0;
+            float width = extendArea?.ExtendWidth ?? 0;
 
             gridContainer.ColumnDimensions = new[]
             {
@@ -266,7 +266,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private void initializeApplySelectingArea()
         {
-            var show = lyricSelectionState.Selecting.Value;
+            bool show = lyricSelectionState.Selecting.Value;
             lyricEditorGridContainer.RowDimensions = new[]
             {
                 new Dimension(),
@@ -310,7 +310,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 if (previousLyric != null)
                 {
-                    var insertIndex = bindableLyrics.IndexOf(previousLyric) + 1;
+                    int insertIndex = bindableLyrics.IndexOf(previousLyric) + 1;
                     bindableLyrics.Insert(insertIndex, lyric);
                 }
                 else
@@ -357,7 +357,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 throw new NotSupportedException(nameof(caretPosition));
 
             var lyric = textCaretPosition.Lyric;
-            var index = textCaretPosition.Index;
+            int index = textCaretPosition.Index;
 
             switch (e.Key)
             {
@@ -378,7 +378,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
         {
             var action = e.Action;
-            var isMoving = HandleMovingEvent(action);
+            bool isMoving = HandleMovingEvent(action);
             if (isMoving)
                 return true;
 
@@ -445,7 +445,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return true;
 
                 case KaraokeEditAction.SetTime:
-                    var currentTime = editorClock.CurrentTime;
+                    double currentTime = editorClock.CurrentTime;
                     lyricTimeTagsChangeHandler.SetTimeTagTime(currentTimeTag, currentTime);
 
                     if (lyricEditorConfigManager.Get<bool>(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag))

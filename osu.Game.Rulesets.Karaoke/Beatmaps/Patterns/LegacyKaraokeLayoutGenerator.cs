@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
                     continue;
 
                 // Adjust start time and end time
-                var lyricEndTime = lyric.EndTime;
+                double lyricEndTime = lyric.EndTime;
                 lyric.StartTime = lastLyric.EndTime + 1000;
 
                 // Should re-assign duration here

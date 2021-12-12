@@ -131,14 +131,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     if (selectedCheckbox.Current.Disabled)
                         return;
 
-                    var selected = selectedLyrics.Contains(lyric);
+                    bool selected = selectedLyrics.Contains(lyric);
                     selectedCheckbox.Current.Value = selected;
                 }, true);
 
                 // should disable selection if current lyric is disabled.
                 disableSelectingLyrics.BindCollectionChanged((_, _) =>
                 {
-                    var disabled = disableSelectingLyrics.Keys.Contains(lyric);
+                    bool disabled = disableSelectingLyrics.Keys.Contains(lyric);
                     selectedCheckbox.Current.Disabled = disabled;
                     selectedCheckbox.TooltipText = disabled ? disableSelectingLyrics[lyric] : null;
                 });

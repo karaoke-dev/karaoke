@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
         public virtual TimeTag[] CreateTimeTags(Lyric lyric)
         {
             var timeTags = new List<TimeTag>();
-            var text = lyric.Text;
+            string text = lyric.Text;
 
             if (text.Length == 0)
                 return timeTags.ToArray();

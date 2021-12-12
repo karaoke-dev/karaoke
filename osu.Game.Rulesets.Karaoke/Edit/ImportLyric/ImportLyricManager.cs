@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             if (!info.Exists)
                 throw new FileNotFoundException("Lyric file does not found!");
 
-            var isFormatMatch = LyricFormatExtensions.Contains(info.Extension);
+            bool isFormatMatch = LyricFormatExtensions.Contains(info.Extension);
             if (!isFormatMatch)
                 throw new FileLoadException("Only .lrc or .kar karaoke file is supported now");
 

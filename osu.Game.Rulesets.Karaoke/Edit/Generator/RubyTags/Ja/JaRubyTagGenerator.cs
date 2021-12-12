@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja
 
         public override RubyTag[] CreateRubyTags(Lyric lyric)
         {
-            var text = lyric.Text;
+            string text = lyric.Text;
             var tags = new List<RubyTag>();
 
             // Tokenize the text
@@ -47,17 +47,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja
                 tokenStream.IncrementToken();
 
                 // Get parsed result, result is Katakana.
-                var katakana = result.ToString();
+                string katakana = result.ToString();
                 if (string.IsNullOrEmpty(katakana))
                     break;
 
                 // Convert to Hiragana as default.
-                var hiragana = JpStringUtils.ToHiragana(katakana);
+                string hiragana = JpStringUtils.ToHiragana(katakana);
 
                 if (!Config.EnableDuplicatedRuby)
                 {
                     // Not add duplicated ruby if same as parent.
-                    var parentText = text[offsetAtt.StartOffset..offsetAtt.EndOffset];
+                    string parentText = text[offsetAtt.StartOffset..offsetAtt.EndOffset];
                     if (parentText == katakana || parentText == hiragana)
                         continue;
                 }

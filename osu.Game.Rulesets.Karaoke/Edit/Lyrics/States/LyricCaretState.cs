@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             var currentPosition = BindableCaretPosition.Value;
 
-            ICaretPosition position = action switch
+            var position = action switch
             {
                 MovingCaretAction.Up => algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveUp", currentPosition),
                 MovingCaretAction.Down => algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveDown", currentPosition),

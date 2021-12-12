@@ -107,8 +107,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Sprites
 
                 // Set margin
                 const float padding = 30 * scale;
-                var horizontalMargin = layout.HorizontalMargin * scale + padding;
-                var verticalMargin = layout.VerticalMargin * scale + padding;
+                float horizontalMargin = layout.HorizontalMargin * scale + padding;
+                float verticalMargin = layout.VerticalMargin * scale + padding;
                 previewLyric.Margin = new MarginPadding
                 {
                     Left = layout.Alignment.HasFlagFast(Anchor.x0) ? horizontalMargin : 0,

@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
         public void ExportToLrc()
         {
             var exportStorage = storage.GetStorageForDirectory("lrc");
-            var filename = $"{beatmap.Name}.lrc";
+            string filename = $"{beatmap.Name}.lrc";
 
             using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
             using (var sw = new StreamWriter(outputStream))
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
         public void ExportToText()
         {
             var exportStorage = storage.GetStorageForDirectory("text");
-            var filename = $"{beatmap.Name}.txt";
+            string filename = $"{beatmap.Name}.txt";
 
             using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
             using (var sw = new StreamWriter(outputStream))
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
             // note : this is for develop testing purpose.
             // will be removed eventually
             var exportStorage = storage.GetStorageForDirectory("json");
-            var filename = $"{beatmap.Name}.json";
+            string filename = $"{beatmap.Name}.json";
 
             using (var outputStream = exportStorage.GetStream(filename, FileAccess.Write, FileMode.Create))
             using (var sw = new StreamWriter(outputStream))

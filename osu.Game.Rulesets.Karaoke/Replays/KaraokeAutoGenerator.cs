@@ -29,13 +29,13 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
         private IEnumerable<ReplayFrame> getReplayFrames(Note note, Note next)
         {
-            var startTime = note.StartTime;
-            var endTime = note.EndTime;
+            double startTime = note.StartTime;
+            double endTime = note.EndTime;
 
             // Generate frame each 100ms
-            for (var i = startTime; i < endTime; i += 100)
+            for (double i = startTime; i < endTime; i += 100)
             {
-                var scale = note.Tone.Scale + (note.Tone.Half ? 0.5f : 0);
+                float scale = note.Tone.Scale + (note.Tone.Half ? 0.5f : 0);
                 yield return new KaraokeReplayFrame(i, scale);
             }
 

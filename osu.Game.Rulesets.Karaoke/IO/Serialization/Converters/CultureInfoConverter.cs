@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         public override CultureInfo ReadJson(JsonReader reader, Type objectType, CultureInfo existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JToken.Load(reader);
-            var value = obj.Value<int?>();
+            int? value = obj.Value<int?>();
 
             if (value == null)
                 return null;

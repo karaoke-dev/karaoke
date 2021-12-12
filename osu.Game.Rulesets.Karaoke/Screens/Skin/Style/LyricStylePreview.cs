@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 
         private Lyric createDefaultLyricLine()
         {
-            var startTime = Time.Current;
+            double startTime = Time.Current;
             const double duration = 1000000;
 
             return new Lyric

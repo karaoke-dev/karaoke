@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
 
                 selectedLayoutIndex.BindValueChanged(e =>
                 {
-                    var selected = layout.ID == e.NewValue;
+                    bool selected = layout.ID == e.NewValue;
                     cornerContainer.BorderThickness = selected ? 3 : 0;
                 }, true);
             }

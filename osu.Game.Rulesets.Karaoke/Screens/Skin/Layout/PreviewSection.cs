@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
             previewStyleDropdown.Current.BindValueChanged(e =>
             {
                 // todo : might use dropdown to assign singer, not style.
-                var singer = SingerUtils.GetSingersIndex(e.NewValue.Key);
+                int[] singer = SingerUtils.GetSingersIndex(e.NewValue.Key);
                 manager.ChangePreviewSinger(singer);
             }, true);
         }
@@ -115,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 
         private Lyric createDefaultLyric(string text, string[] ruby, string[] romaji, string translate)
         {
-            var startTime = Time.Current;
+            double startTime = Time.Current;
             const double duration = 1000000;
 
             using (var stream = new MemoryStream())

@@ -12,11 +12,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         public static Color4 GetTimeTagColour(this OsuColour colours, TimeTag timeTag)
         {
-            var hasTime = timeTag.Time.HasValue;
+            bool hasTime = timeTag.Time.HasValue;
             if (!hasTime)
                 return colours.Gray7;
 
-            var start = timeTag.Index.State == TextIndex.IndexState.Start;
+            bool start = timeTag.Index.State == TextIndex.IndexState.Start;
             return start ? colours.Yellow : colours.YellowDarker;
         }
 

@@ -13,8 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (startPercentage < 0 || startPercentage + durationPercentage > 1)
                 throw new ArgumentOutOfRangeException($"{nameof(Note)} cannot assign split range of start from {startPercentage} and duration {durationPercentage}");
 
-            var startTime = note.StartTime + note.Duration * startPercentage;
-            var duration = note.Duration * durationPercentage;
+            double startTime = note.StartTime + note.Duration * startPercentage;
+            double duration = note.Duration * durationPercentage;
 
             return CopyByTime(note, startTime, duration);
         }

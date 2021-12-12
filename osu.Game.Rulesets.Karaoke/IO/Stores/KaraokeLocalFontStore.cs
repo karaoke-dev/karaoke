@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
 
         private void addFont(FontInfo fontInfo)
         {
-            var hasFont = fontInfos.Keys.Contains(fontInfo);
+            bool hasFont = fontInfos.Keys.Contains(fontInfo);
             if (hasFont)
                 return;
 

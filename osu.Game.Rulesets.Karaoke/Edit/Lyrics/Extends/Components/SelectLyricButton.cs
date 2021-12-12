@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             selecting = lyricSelectionState.Selecting.GetBoundCopy();
             selecting.BindValueChanged(e =>
             {
-                var isSelecting = e.NewValue;
+                bool isSelecting = e.NewValue;
                 BackgroundColour = isSelecting ? colour.Blue : colour.Purple;
                 Text = isSelecting ? SelectingText : StandardText;
             }, true);
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
                     if (disableLyrics != null)
                     {
-                        foreach (var (lyric, reason) in disableLyrics)
+                        foreach ((var lyric, string reason) in disableLyrics)
                         {
                             lyricSelectionState.DisableSelectingLyric.Add(lyric, reason);
                         }

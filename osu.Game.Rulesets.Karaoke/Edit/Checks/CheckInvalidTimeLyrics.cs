@@ -38,8 +38,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                     yield return new IssueTemplateInvalidLyricTime(this).Create(lyric, invalidLyricTime);
 
                 var invalidTimeTags = checkInvalidTimeTags(lyric);
-                var missingStartTimeTag = checkMissingStartTimeTag(lyric);
-                var missingEndTimeTag = checkMissingEndTimeTag(lyric);
+                bool missingStartTimeTag = checkMissingStartTimeTag(lyric);
+                bool missingEndTimeTag = checkMissingEndTimeTag(lyric);
                 if (invalidTimeTags.Any() || missingStartTimeTag || missingEndTimeTag)
                     yield return new IssueTemplateInvalidTimeTag(this).Create(lyric, invalidTimeTags, missingStartTimeTag, missingEndTimeTag);
             }

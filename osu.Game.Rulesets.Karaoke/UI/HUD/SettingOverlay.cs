@@ -124,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
         {
             base.PopOut();
 
-            var width = getHideXPosition();
+            float width = getHideXPosition();
             this.MoveToX(width, TRANSITION_LENGTH, Easing.OutQuint);
             this.FadeTo(0, TRANSITION_LENGTH, Easing.OutQuint);
         }

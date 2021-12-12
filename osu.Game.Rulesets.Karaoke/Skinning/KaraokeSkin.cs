@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 case KaraokeSkinLookup skinLookup:
                 {
                     var config = skinLookup.Config;
-                    var lookupNumber = skinLookup.Lookup;
+                    int lookupNumber = skinLookup.Lookup;
 
                     return config switch
                     {

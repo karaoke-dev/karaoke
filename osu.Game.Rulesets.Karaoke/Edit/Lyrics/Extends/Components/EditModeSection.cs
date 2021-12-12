@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             // update button style.
             foreach (var child in buttons)
             {
-                var highLight = EqualityComparer<T>.Default.Equals(child.Mode, mode);
+                bool highLight = EqualityComparer<T>.Default.Equals(child.Mode, mode);
                 child.Alpha = highLight ? 0.8f : 0.4f;
                 child.BackgroundColour = GetColour(colour, child.Mode, highLight);
 
@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
                 // update description text.
                 var item = child.Item;
-                var markdownText = item.Description.Value.ToString();
+                string markdownText = item.Description.Value.ToString();
                 var parsed = Markdown.Parse(markdownText);
 
                 if (parsed.FirstOrDefault() is ParagraphBlock paragraphBlock)

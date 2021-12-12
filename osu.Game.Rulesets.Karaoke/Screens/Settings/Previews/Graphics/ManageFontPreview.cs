@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics
             {
                 row.ClickedText += text =>
                 {
-                    var (textureName, scale, yOffset) = getTexture(text);
+                    (string textureName, float scale, float yOffset) = getTexture(text);
                     if (string.IsNullOrEmpty(textureName))
                         return;
 
@@ -200,7 +200,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics
                 static bool isAllTextPartAppear(Drawable text, GenerateDirection direction)
                 {
                     bool startFromLeft = direction == GenerateDirection.LeftToRight;
-                    var textEndPositionX = text.X + text.DrawWidth / 2 * (startFromLeft ? -1 : 1);
+                    float textEndPositionX = text.X + text.DrawWidth / 2 * (startFromLeft ? -1 : 1);
                     return startFromLeft ? textEndPositionX > spacing_between_text : textEndPositionX < -spacing_between_text;
                 }
             }
@@ -230,21 +230,21 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics
                 Add(text);
 
                 // set start position
-                var fontWidth = text.DrawWidth;
+                float fontWidth = text.DrawWidth;
                 text.X = fontWidth * (startFromLeft ? -0.5f : 0.5f);
 
                 // set moving transform.
-                var moveLength = DrawWidth + fontWidth + spacing_between_text;
-                var movePosition = startFromLeft ? moveLength : -moveLength;
-                var duration = moveLength / moving_speed * 1000;
+                float moveLength = DrawWidth + fontWidth + spacing_between_text;
+                float movePosition = startFromLeft ? moveLength : -moveLength;
+                float duration = moveLength / moving_speed * 1000;
                 text.MoveToOffset(new Vector2(movePosition, 0), duration).Then().Expire();
 
                 string getRandomText()
                 {
-                    var maxNumber = words.Values.Sum();
-                    var randomNumber = RNG.Next(maxNumber - 1);
+                    int maxNumber = words.Values.Sum();
+                    int randomNumber = RNG.Next(maxNumber - 1);
 
-                    foreach (var (key, value) in words)
+                    foreach ((string key, int value) in words)
                     {
                         if (value >= randomNumber)
                             return key;
@@ -257,7 +257,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics
 
                 static Colour4 getRandomColour()
                 {
-                    var randomNumber = RNG.Next(1, 359);
+                    int randomNumber = RNG.Next(1, 359);
                     return Color4Extensions.FromHSV(randomNumber, 0.2f, 0.7f);
                 }
             }
@@ -287,8 +287,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics
                 Add(drawableEgg);
 
                 // moving around the corner.
-                var width = DrawWidth;
-                var height = DrawHeight;
+                float width = DrawWidth;
+                float height = DrawHeight;
                 const int speed = 100;
                 drawableEgg.MoveToOffset(new Vector2(width, 0), width / speed * 1000).Then()
                            .RotateTo(90, 300, Easing.In).MoveToOffset(new Vector2(0, height), height / speed * 1000).Then()

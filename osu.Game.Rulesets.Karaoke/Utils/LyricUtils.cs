@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
-            var textLength = lyric.Text.Length;
+            int textLength = lyric.Text.Length;
             if (textLength == 0)
                 return;
 
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             lyric.TimeTags = processTimeTags(lyric.TimeTags, position, count);
 
             // deal with text
-            var newLyric = lyric.Text[..position] + lyric.Text[(position + count)..];
+            string newLyric = lyric.Text[..position] + lyric.Text[(position + count)..];
             lyric.Text = newLyric;
 
             static T[] processTags<T>(T[] tags, int position, int count) where T : class, ITextTag
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             static TimeTag[] processTimeTags(TimeTag[] timeTags, int position, int count)
             {
-                var endPosition = position + count;
+                int endPosition = position + count;
                 return timeTags?.Where(x => !(x.Index.Index >= position && x.Index.Index < endPosition))
                                .Select(t => t.Index.Index > position ? TimeTagUtils.ShiftingTimeTag(t, -count) : t)
                                .ToArray();
@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             // make position is at the range.
             position = Math.Min(Math.Max(0, position), text.Length);
 
-            var shiftingLength = text?.Length ?? 0;
+            int shiftingLength = text?.Length ?? 0;
             if (shiftingLength == 0)
                 return;
 
@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             lyric.TimeTags = processTimeTags(lyric.TimeTags, position, shiftingLength);
 
             // deal with text
-            var newLyric = lyric.Text?[..position] + text + lyric.Text?[position..];
+            string newLyric = lyric.Text?[..position] + text + lyric.Text?[position..];
             lyric.Text = newLyric;
 
             static T[] processTags<T>(T[] tags, int position, int shiftingLength) where T : ITextTag =>
@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
-            var text = lyric.Text;
+            string text = lyric.Text;
             if (string.IsNullOrEmpty(text))
                 throw new ArgumentNullException(nameof(text));
 
@@ -147,16 +147,16 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 case TextIndex.IndexState.Start:
                 {
                     var nextTimeTag = timeTags.FirstOrDefault(x => x.Index > index);
-                    var startIndex = index.Index;
-                    var endIndex = TextIndexUtils.ToStringIndex(nextTimeTag?.Index ?? new TextIndex(text.Length));
+                    int startIndex = index.Index;
+                    int endIndex = TextIndexUtils.ToStringIndex(nextTimeTag?.Index ?? new TextIndex(text.Length));
                     return $"{text.Substring(startIndex, endIndex - startIndex)}-";
                 }
 
                 case TextIndex.IndexState.End:
                 {
                     var previousTimeTag = timeTags.Reverse().FirstOrDefault(x => x.Index < index);
-                    var startIndex = previousTimeTag?.Index.Index ?? 0;
-                    var endIndex = index.Index + 1;
+                    int startIndex = previousTimeTag?.Index.Index ?? 0;
+                    int endIndex = index.Index + 1;
                     return $"-{text.Substring(startIndex, endIndex - startIndex)}";
                 }
 
@@ -183,7 +183,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             // should check has ruby in target lyric with target index.
             var matchRuby = lyric?.RubyTags.Where(x =>
             {
-                var stringIndex = TextIndexUtils.ToStringIndex(timeTag.Index);
+                int stringIndex = TextIndexUtils.ToStringIndex(timeTag.Index);
 
                 return state switch
                 {
@@ -206,9 +206,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             }).ToList();
 
             // get ruby text and should notice exceed case if time-tag is more than ruby text.
-            var index = timeTagsWithSameIndex.IndexOf(timeTag);
-            var text = matchRuby.Text;
-            var subtext = timeTagsWithSameIndex.Count == 1 ? text : text.Substring(Math.Min(text.Length - 1, index), 1);
+            int index = timeTagsWithSameIndex.IndexOf(timeTag);
+            string text = matchRuby.Text;
+            string subtext = timeTagsWithSameIndex.Count == 1 ? text : text.Substring(Math.Min(text.Length - 1, index), 1);
 
             // return substring with format.
             return state switch
@@ -231,12 +231,12 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             switch (textTag)
             {
                 case RubyTag rubyTag:
-                    var containRuby = lyric.RubyTags?.Contains(rubyTag) ?? false;
+                    bool containRuby = lyric.RubyTags?.Contains(rubyTag) ?? false;
                     lyric.RubyTags = lyric.RubyTags?.Where(x => x != rubyTag).ToArray();
                     return containRuby;
 
                 case RomajiTag romajiTag:
-                    var containRomaji = lyric.RomajiTags?.Contains(romajiTag) ?? false;
+                    bool containRomaji = lyric.RomajiTags?.Contains(romajiTag) ?? false;
                     lyric.RomajiTags = lyric.RomajiTags?.Where(x => x != romajiTag).ToArray();
                     return containRomaji;
 
@@ -254,8 +254,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
-            var startTime = lyric.StartTime.ToEditorFormattedString();
-            var endTime = lyric.EndTime.ToEditorFormattedString();
+            string startTime = lyric.StartTime.ToEditorFormattedString();
+            string endTime = lyric.EndTime.ToEditorFormattedString();
             return $"{startTime} - {endTime}";
         }
 
@@ -268,8 +268,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var minTimeTag = availableTimeTags?.OrderBy(x => x.Time).FirstOrDefault();
             var maxTimeTag = availableTimeTags?.OrderByDescending(x => x.Time).FirstOrDefault();
 
-            var startTime = TimeTagUtils.FormattedString(minTimeTag);
-            var endTime = TimeTagUtils.FormattedString(maxTimeTag);
+            string startTime = TimeTagUtils.FormattedString(minTimeTag);
+            string endTime = TimeTagUtils.FormattedString(maxTimeTag);
             return $"{startTime} - {endTime}";
         }
 
@@ -332,7 +332,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (!ContainsSinger(lyric, singer))
                 return false;
 
-            var newSingerIds = lyric.Singers.Where(x => x != singer.ID).ToArray();
+            int[] newSingerIds = lyric.Singers.Where(x => x != singer.ID).ToArray();
             lyric.Singers = newSingerIds;
 
             return true;

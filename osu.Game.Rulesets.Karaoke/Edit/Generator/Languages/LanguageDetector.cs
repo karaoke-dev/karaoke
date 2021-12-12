@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
         public CultureInfo DetectLanguage(Lyric lyric)
         {
             var result = detector.DetectAll(lyric.Text);
-            var languageCode = result.FirstOrDefault()?.Language;
+            string languageCode = result.FirstOrDefault()?.Language;
 
             return languageCode == null ? null : new CultureInfo(languageCode);
         }

@@ -21,34 +21,34 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             rulesetConfigManager = config;
 
             // Translate
-            var useTranslate = getValue<bool>(KaraokeRulesetSetting.UseTranslate);
+            bool useTranslate = getValue<bool>(KaraokeRulesetSetting.UseTranslate);
             var preferLanguage = getValue<CultureInfo>(KaraokeRulesetSetting.PreferLanguage);
             var availableTranslate = beatmap?.AvailableTranslates();
             var selectedLanguage = availableTranslate?.FirstOrDefault(t => EqualityComparer<CultureInfo>.Default.Equals(t, preferLanguage)) ?? availableTranslate?.FirstOrDefault();
             SetDefault(KaraokeRulesetSession.UseTranslate, useTranslate);
             SetDefault(KaraokeRulesetSession.PreferLanguage, selectedLanguage);
 
-            var displayRuby = getValue<bool>(KaraokeRulesetSetting.DisplayRuby);
-            var displayRomaji = getValue<bool>(KaraokeRulesetSetting.DisplayRomaji);
+            bool displayRuby = getValue<bool>(KaraokeRulesetSetting.DisplayRuby);
+            bool displayRomaji = getValue<bool>(KaraokeRulesetSetting.DisplayRomaji);
             SetDefault(KaraokeRulesetSession.DisplayRuby, displayRuby);
             SetDefault(KaraokeRulesetSession.DisplayRomaji, displayRomaji);
 
             // Pitch
-            var overridePitch = getValue<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay);
-            var pitchValue = getValue<int>(KaraokeRulesetSetting.Pitch);
+            bool overridePitch = getValue<bool>(KaraokeRulesetSetting.OverridePitchAtGameplay);
+            int pitchValue = getValue<int>(KaraokeRulesetSetting.Pitch);
             SetDefault(KaraokeRulesetSession.Pitch, overridePitch ? pitchValue : 0, -10, 10);
 
-            var overrideVocalPitch = getValue<bool>(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay);
-            var vocalPitchValue = getValue<int>(KaraokeRulesetSetting.VocalPitch);
+            bool overrideVocalPitch = getValue<bool>(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay);
+            int vocalPitchValue = getValue<int>(KaraokeRulesetSetting.VocalPitch);
             SetDefault(KaraokeRulesetSession.VocalPitch, overrideVocalPitch ? vocalPitchValue : 0, -10, 10);
 
-            var overrideSaitenPitch = getValue<bool>(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay);
-            var saitenPitchValue = getValue<int>(KaraokeRulesetSetting.SaitenPitch);
+            bool overrideSaitenPitch = getValue<bool>(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay);
+            int saitenPitchValue = getValue<int>(KaraokeRulesetSetting.SaitenPitch);
             SetDefault(KaraokeRulesetSession.SaitenPitch, overrideSaitenPitch ? saitenPitchValue : 0, -8, 8);
 
             // Playback
-            var overridePlaybackSpeed = getValue<bool>(KaraokeRulesetSetting.OverridePlaybackSpeedAtGameplay);
-            var playbackSpeedValue = getValue<int>(KaraokeRulesetSetting.PlaybackSpeed);
+            bool overridePlaybackSpeed = getValue<bool>(KaraokeRulesetSetting.OverridePlaybackSpeedAtGameplay);
+            int playbackSpeedValue = getValue<int>(KaraokeRulesetSetting.PlaybackSpeed);
             SetDefault(KaraokeRulesetSession.PlaybackSpeed, overridePlaybackSpeed ? playbackSpeedValue : 0, -10, 10);
 
             // Practice

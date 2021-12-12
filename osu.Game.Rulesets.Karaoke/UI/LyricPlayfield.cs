@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 if (!seekCache.IsValid || value.NewValue == null)
                     return;
 
-                var lyricStartTime = value.NewValue.LyricStartTime - preemptTime.Value;
+                double lyricStartTime = value.NewValue.LyricStartTime - preemptTime.Value;
 
                 WorkingBeatmap.Track.Seek(lyricStartTime);
             });

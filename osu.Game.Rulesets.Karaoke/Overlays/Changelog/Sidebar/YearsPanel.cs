@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
                 return;
             }
 
-            foreach (var y in metadata.Value.Years)
+            foreach (int y in metadata.Value.Years)
                 yearsFlow.Add(new YearButton(y));
 
             Show();
@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
             {
                 year.BindValueChanged(e =>
                 {
-                    var isCurrent = this.year == e.NewValue;
+                    bool isCurrent = this.year == e.NewValue;
 
                     // update hover color.
                     Colour = isCurrent ? Color4.White : colourProvider.Light2;

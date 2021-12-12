@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
         public TextIndex GetHoverIndex(float position)
         {
-            var text = Text;
+            string text = Text;
             if (string.IsNullOrEmpty(text))
                 return new TextIndex();
 
@@ -62,9 +62,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             // todo : might have a better way to call GetTextIndexPosition just once.
             float getTriggerPositionByTimeIndex(TextIndex textIndex)
             {
-                var charIndex = textIndex.Index;
-                var startPosition = GetTextIndexPosition(new TextIndex(charIndex)).X;
-                var endPosition = GetTextIndexPosition(new TextIndex(charIndex, TextIndex.IndexState.End)).X;
+                int charIndex = textIndex.Index;
+                float startPosition = GetTextIndexPosition(new TextIndex(charIndex)).X;
+                float endPosition = GetTextIndexPosition(new TextIndex(charIndex, TextIndex.IndexState.End)).X;
 
                 if (textIndex.State == TextIndex.IndexState.Start)
                     return startPosition + (endPosition - startPosition) / 2;
@@ -102,15 +102,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         public Vector2 GetTimeTagPosition(TimeTag timeTag)
         {
             var basePosition = GetTextIndexPosition(timeTag.Index);
-            var extraPosition = extraSpacing(TimeTagsBindable.Value, timeTag);
+            float extraPosition = extraSpacing(TimeTagsBindable.Value, timeTag);
             return basePosition + new Vector2(extraPosition);
 
             static float extraSpacing(TimeTag[] timeTagsInLyric, TimeTag timeTag)
             {
-                var isStart = timeTag.Index.State == TextIndex.IndexState.Start;
+                bool isStart = timeTag.Index.State == TextIndex.IndexState.Start;
                 var timeTags = isStart ? timeTagsInLyric.Reverse() : timeTagsInLyric;
-                var duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == timeTag.Index) - 1;
-                var spacing = duplicatedTagAmount * time_tag_spacing * (isStart ? 1 : -1);
+                int duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == timeTag.Index) - 1;
+                int spacing = duplicatedTagAmount * time_tag_spacing * (isStart ? 1 : -1);
                 return spacing;
             }
         }
@@ -166,12 +166,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             public RectangleF GetRubyTagPosition(RubyTag rubyTag)
             {
                 var matchedRuby = Rubies.FirstOrDefault(x => propertyMatched(x, rubyTag));
-                var rubyIndex = Rubies.IndexOf(matchedRuby);
+                int rubyIndex = Rubies.IndexOf(matchedRuby);
                 if (rubyIndex < 0)
                     throw new ArgumentOutOfRangeException(nameof(rubyIndex));
 
-                var startCharacterIndex = Text.Length + skinIndex(Rubies, rubyIndex);
-                var count = matchedRuby.Text.Length;
+                int startCharacterIndex = Text.Length + skinIndex(Rubies, rubyIndex);
+                int count = matchedRuby.Text.Length;
                 var rectangles = Characters.ToList().GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
                 return RectangleFUtils.Union(rectangles);
             }
@@ -179,12 +179,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             public RectangleF GetRomajiTagPosition(RomajiTag romajiTag)
             {
                 var matchedRomaji = Romajies.FirstOrDefault(x => propertyMatched(x, romajiTag));
-                var romajiIndex = Romajies.IndexOf(matchedRomaji);
+                int romajiIndex = Romajies.IndexOf(matchedRomaji);
                 if (romajiIndex < 0)
                     throw new ArgumentOutOfRangeException(nameof(romajiIndex));
 
-                var startCharacterIndex = Text.Length + skinIndex(Rubies, Rubies.Length) + skinIndex(Romajies, romajiIndex);
-                var count = matchedRomaji.Text.Length;
+                int startCharacterIndex = Text.Length + skinIndex(Rubies, Rubies.Length) + skinIndex(Romajies, romajiIndex);
+                int count = matchedRomaji.Text.Length;
                 var rectangles = Characters.ToList().GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
                 return RectangleFUtils.Union(rectangles);
             }
@@ -194,12 +194,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 if (string.IsNullOrEmpty(Text))
                     return default;
 
-                var charIndex = Math.Min(index.Index, Text.Length - 1);
+                int charIndex = Math.Min(index.Index, Text.Length - 1);
                 var character = Characters[charIndex];
                 var drawRectangle = character.DrawRectangle;
 
-                var x = index.State == TextIndex.IndexState.Start ? drawRectangle.Left : drawRectangle.Right;
-                var y = drawRectangle.Top - character.YOffset + LineBaseHeight;
+                float x = index.State == TextIndex.IndexState.Start ? drawRectangle.Left : drawRectangle.Right;
+                float y = drawRectangle.Top - character.YOffset + LineBaseHeight;
                 return new Vector2(x, y);
             }
 

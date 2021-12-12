@@ -25,18 +25,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
 
             foreach (var timeTag in timeTags)
             {
-                var (key, endTime) = timeTags.GetNext(timeTag);
+                (var key, double endTime) = timeTags.GetNext(timeTag);
 
                 if (key.Index <= 0)
                     continue;
 
-                var startTime = timeTag.Value;
+                double startTime = timeTag.Value;
 
                 int startIndex = timeTag.Key.Index;
                 int endIndex = TextIndexUtils.ToStringIndex(key);
 
-                var text = lyric.Text[startIndex..endIndex];
-                var ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
+                string text = lyric.Text[startIndex..endIndex];
+                string ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
 
                 if (!string.IsNullOrEmpty(text))
                 {

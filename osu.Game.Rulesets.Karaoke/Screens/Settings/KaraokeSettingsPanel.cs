@@ -138,14 +138,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
                 // move background to target sub-section if user hover to it.
                 selectedSubsection.BindValueChanged(x =>
                 {
-                    var alpha = x.NewValue != null ? 0.6f : 0f;
+                    float alpha = x.NewValue != null ? 0.6f : 0f;
                     hoverBackground.FadeTo(alpha, 200);
 
                     if (x.NewValue == null)
                         return;
 
                     const int offset = 8;
-                    var position = scrollContainer.GetChildPosInContent(x.NewValue);
+                    float position = scrollContainer.GetChildPosInContent(x.NewValue);
                     hoverBackground.MoveToY(position + offset, 50);
                     hoverBackground.ResizeHeightTo(x.NewValue.DrawHeight, 100);
                 });

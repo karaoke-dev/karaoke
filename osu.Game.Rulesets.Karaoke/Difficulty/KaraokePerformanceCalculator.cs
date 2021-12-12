@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
             countMeh = Score.Statistics.GetValueOrDefault(HitResult.Meh);
             countMiss = Score.Statistics.GetValueOrDefault(HitResult.Miss);
 
-            IEnumerable<Mod> scoreIncreaseMods = Ruleset.GetModsFor(ModType.DifficultyIncrease);
+            var scoreIncreaseMods = Ruleset.GetModsFor(ModType.DifficultyIncrease);
 
             double scoreMultiplier = mods.Where(m => !scoreIncreaseMods.Contains(m))
                                          .Aggregate(1.0, (current, m) => current * m.ScoreMultiplier);

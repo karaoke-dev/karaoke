@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
                 AddRange(notes.Value.Select(x =>
                 {
-                    var index = Array.IndexOf(notes.Value, x);
+                    int index = Array.IndexOf(notes.Value, x);
                     return bindableNoteEditPropertyMode.Value switch
                     {
                         NoteEditPropertyMode.Text => new LabelledNoteTextTextBox(x)

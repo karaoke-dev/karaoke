@@ -84,8 +84,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         private MenuItem createMultiNoteDisplayPropertyMenuItem(IEnumerable<Note> selectedObject)
         {
-            var display = selectedObject.Count(x => x.Display) >= selectedObject.Count(x => !x.Display);
-            var displayText = display ? "Hide" : "Show";
+            bool display = selectedObject.Count(x => x.Display) >= selectedObject.Count(x => !x.Display);
+            string displayText = display ? "Hide" : "Show";
             return new OsuMenuItem($"{displayText} {selectedObject.Count()} notes.", display ? MenuItemType.Destructive : MenuItemType.Standard,
                 () =>
                 {
@@ -106,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             var lyrics = EditorBeatmap.SelectedHitObjects.Cast<Lyric>();
             var layoutDictionary = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
             var selectedLayoutIndexes = lyrics.Select(x => x.LayoutIndex).Distinct().ToList();
-            var selectedLayoutIndex = selectedLayoutIndexes.Count == 1 ? selectedLayoutIndexes.FirstOrDefault() : -1;
+            int selectedLayoutIndex = selectedLayoutIndexes.Count == 1 ? selectedLayoutIndexes.FirstOrDefault() : -1;
 
             return new OsuMenuItem("Layout")
             {
@@ -115,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     if (state != TernaryState.True)
                         return;
 
-                    var layoutIndex = x.Key;
+                    int layoutIndex = x.Key;
                     var layout = source.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, layoutIndex)).Value;
                     lyricLayoutChangeHandler.ChangeLayout(layout);
                 })).ToArray()
@@ -152,8 +152,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             var centerPosition = new Vector2(position.X, position.Y - NotePlayfield.Height / 2);
 
             // get delta position
-            var lastCenterPosition = calculator.YPositionAt(lastTone);
-            var delta = centerPosition.Y - lastCenterPosition;
+            float lastCenterPosition = calculator.YPositionAt(lastTone);
+            float delta = centerPosition.Y - lastCenterPosition;
 
             // get delta tone.
             const float trigger_height = ScrollingNotePlayfield.COLUMN_SPACING + DefaultColumnBackground.COLUMN_HEIGHT;

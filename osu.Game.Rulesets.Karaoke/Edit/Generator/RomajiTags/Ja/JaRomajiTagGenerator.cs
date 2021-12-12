@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
 
         public override RomajiTag[] CreateRomajiTags(Lyric lyric)
         {
-            var text = lyric.Text;
+            string text = lyric.Text;
             var processingTags = new List<RomajiTagGeneratorParameter>();
 
             // Tokenize the text
@@ -48,15 +48,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
                 tokenStream.IncrementToken();
 
                 // Get parsed result, result is Katakana.
-                var katakana = result.ToString();
+                string katakana = result.ToString();
                 if (string.IsNullOrEmpty(katakana))
                     break;
 
-                var parentText = text[offsetAtt.StartOffset..offsetAtt.EndOffset];
-                var fromKanji = JpStringUtils.ToKatakana(katakana) != JpStringUtils.ToKatakana(parentText);
+                string parentText = text[offsetAtt.StartOffset..offsetAtt.EndOffset];
+                bool fromKanji = JpStringUtils.ToKatakana(katakana) != JpStringUtils.ToKatakana(parentText);
 
                 // Convert to romaji.
-                var romaji = JpStringUtils.ToRomaji(katakana);
+                string romaji = JpStringUtils.ToRomaji(katakana);
                 if (Config.Uppercase)
                     romaji = romaji.ToUpper();
 
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
             {
                 // combine romajies of they are not from kanji.
                 var previousProcessingTag = processingTags.GetPrevious(processingTag);
-                var fromKanji = processingTag.FromKanji;
+                bool fromKanji = processingTag.FromKanji;
 
                 if (previousProcessingTag != null && !fromKanji)
                 {

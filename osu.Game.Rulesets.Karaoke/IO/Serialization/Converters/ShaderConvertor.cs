@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             static Type getTypeByProperties(JProperty[] properties)
             {
-                var typeString = properties.FirstOrDefault(x => x.Name == "$type")?.Value.ToObject<string>();
+                string typeString = properties.FirstOrDefault(x => x.Name == "$type")?.Value.ToObject<string>();
                 return getTypeByName(typeString);
             }
 
@@ -112,7 +112,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             // we only wants to save properties that only writable.
             protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
             {
-                IList<JsonProperty> props = base.CreateProperties(type, memberSerialization);
+                var props = base.CreateProperties(type, memberSerialization);
                 return props.Where(p => p.Writable).ToList();
             }
         }

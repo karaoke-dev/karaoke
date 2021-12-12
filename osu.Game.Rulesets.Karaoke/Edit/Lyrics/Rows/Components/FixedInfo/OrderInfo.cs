@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
         {
             lyric.OrderBindable.BindValueChanged(value =>
             {
-                var order = value.NewValue;
+                int order = value.NewValue;
                 Text = $"#{order}";
             }, true);
         }

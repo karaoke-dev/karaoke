@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
         public override void SetContent(Lyric content)
         {
             // Get layout
-            var layoutIndex = content.LayoutIndex;
+            int layoutIndex = content.LayoutIndex;
             var layout = skinSource?.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, layoutIndex)).Value;
 
             // Display in content\

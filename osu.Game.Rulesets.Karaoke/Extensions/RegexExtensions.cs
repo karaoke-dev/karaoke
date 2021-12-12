@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
     {
         public static TType GetGroupValue<TType>(this Match match, string key, bool useDefaultValueIfEmpty = true)
         {
-            var value = match.Groups[key]?.Value;
+            string value = match.Groups[key]?.Value;
 
             // if got empty value, should change to null.
             return TypeUtils.ChangeType<TType>(string.IsNullOrEmpty(value) ? null : value);

@@ -44,8 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         protected override Drawable CreateLyricInfo(Lyric lyric)
         {
             // todo : need to refactor this part.
-            var isContinuous = lyric.LayoutIndex == -1;
-            var continuousSpacing = isContinuous ? continuous_spacing : 0;
+            bool isContinuous = lyric.LayoutIndex == -1;
+            int continuousSpacing = isContinuous ? continuous_spacing : 0;
 
             return new InfoControl(lyric)
             {
@@ -250,7 +250,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         new OsuMenuItem("Create new lyric", MenuItemType.Standard, () =>
                         {
                             // add new lyric with below of current lyric.
-                            var targetOrder = Lyric.Order;
+                            int targetOrder = Lyric.Order;
                             lyricsChangeHandler.CreateAtPosition(targetOrder);
                         })
                     };
@@ -338,7 +338,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 if (!lyricCaretState.CaretEnabled)
                     return false;
 
-                var position = ToLocalSpace(e.ScreenSpaceMousePosition).X;
+                float position = ToLocalSpace(e.ScreenSpaceMousePosition).X;
 
                 switch (state.Mode)
                 {
@@ -346,12 +346,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         break;
 
                     case LyricEditorMode.Manage:
-                        var cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position)), 0, Lyric.Text.Length - 1);
+                        int cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position)), 0, Lyric.Text.Length - 1);
                         lyricCaretState.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, cuttingLyricStringIndex));
                         break;
 
                     case LyricEditorMode.Typing:
-                        var typingStringIndex = TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position));
+                        int typingStringIndex = TextIndexUtils.ToStringIndex(lyricPiece.GetHoverIndex(position));
                         lyricCaretState.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, typingStringIndex));
                         break;
 
@@ -427,7 +427,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         return true;
 
                     case TimeTagCaretPosition timeTagCaretPosition:
-                        var timeTagTime = timeTagCaretPosition.TimeTag.Time;
+                        double? timeTagTime = timeTagCaretPosition.TimeTag.Time;
                         if (timeTagTime.HasValue)
                             editorClock.SeekSmoothlyTo(timeTagTime.Value);
                         return true;

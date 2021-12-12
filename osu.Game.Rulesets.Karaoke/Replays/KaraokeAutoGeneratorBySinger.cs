@@ -42,18 +42,18 @@ namespace osu.Game.Rulesets.Karaoke.Replays
                     decodeStream = Bass.CreateStream(StreamSystem.NoBuffer, BassFlags.Decode | BassFlags.Float, fileCallbacks.Callbacks, fileCallbacks.Handle);
                 }
 
-                Bass.ChannelGetInfo(decodeStream, out ChannelInfo info);
+                Bass.ChannelGetInfo(decodeStream, out var info);
 
-                var totalLength = Bass.ChannelGetLength(decodeStream);
+                long totalLength = Bass.ChannelGetLength(decodeStream);
                 double trackLength = Bass.ChannelBytes2Seconds(decodeStream, totalLength) * 1000;
-                var length = totalLength;
+                long length = totalLength;
                 long lengthSum = 0;
 
                 // Microphone at period 10
-                var bytesPerIteration = 3276 * info.Channels * TrackBass.BYTES_PER_SAMPLE;
+                int bytesPerIteration = 3276 * info.Channels * TrackBass.BYTES_PER_SAMPLE;
 
                 var pitches = new Dictionary<double, float?>();
-                var sampleBuffer = new float[bytesPerIteration / TrackBass.BYTES_PER_SAMPLE];
+                float[] sampleBuffer = new float[bytesPerIteration / TrackBass.BYTES_PER_SAMPLE];
 
                 // Read sample data
                 while (length > 0)
@@ -62,12 +62,12 @@ namespace osu.Game.Rulesets.Karaoke.Replays
                     lengthSum += length;
 
                     // usually sample 1 is vocal
-                    var channel0Sample = sampleBuffer.Where((_, i) => i % 2 == 0).ToArray();
+                    float[] channel0Sample = sampleBuffer.Where((_, i) => i % 2 == 0).ToArray();
                     //var channel1Sample = sampleBuffer.Where((x, i) => i % 2 != 0).ToArray();
 
                     // Convert buffer to pitch data
-                    var time = lengthSum * trackLength / totalLength;
-                    var pitch = Pitch.FromYin(channel0Sample, info.Frequency, low: 40, high: 1000);
+                    double time = lengthSum * trackLength / totalLength;
+                    float pitch = Pitch.FromYin(channel0Sample, info.Frequency, low: 40, high: 1000);
                     pitches.Add(time, pitch == 0 ? default(float?) : pitch);
                 }
 
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
             {
                 if (pitch.Value != null)
                 {
-                    var scale = Beatmap.PitchToScale(pitch.Value ?? 0);
+                    float scale = Beatmap.PitchToScale(pitch.Value ?? 0);
                     yield return new KaraokeReplayFrame(pitch.Key, scale);
                 }
                 else if (lastPitch.Value != null)

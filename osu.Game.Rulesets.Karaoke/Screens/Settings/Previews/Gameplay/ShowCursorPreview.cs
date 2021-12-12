@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
 
             bindableShowCursor.BindValueChanged(e =>
             {
-                var showCursor = e.NewValue;
+                bool showCursor = e.NewValue;
 
                 if (showCursor)
                 {

@@ -112,7 +112,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             // todo: implement change font color.
             shaders.Add(createOutlineShader(borderBrushInfo, fontInfo));
 
-            var hasShadow = font.UseShadow;
+            bool hasShadow = font.UseShadow;
 
             if (hasShadow)
             {
@@ -133,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         private static OutlineShader createOutlineShader(BrushInfo info, FontInfo fontInfo)
         {
             var color = convertColor(info);
-            var radius = convertEdgeSize(fontInfo);
+            float radius = convertEdgeSize(fontInfo);
 
             return new OutlineShader
             {
@@ -181,9 +181,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private static FontUsage convertFontInfo(FontInfo info)
         {
-            var family = info.FontName;
-            var size = Math.Max(info.CharSize, 8);
-            var weight = info.FontStyle == FontStyle.Regular ? "Regular" : "Bold";
+            string family = info.FontName;
+            int size = Math.Max(info.CharSize, 8);
+            string weight = info.FontStyle == FontStyle.Regular ? "Regular" : "Bold";
             return new FontUsage(family, size, weight);
         }
 

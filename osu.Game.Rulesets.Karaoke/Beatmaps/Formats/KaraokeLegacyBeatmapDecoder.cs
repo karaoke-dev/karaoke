@@ -110,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             for (int l = 0; l < lyrics.Count; l++)
             {
                 var lyric = lyrics[l];
-                var line = lines.ElementAtOrDefault(l)?.Split('=').Last();
+                string line = lines.ElementAtOrDefault(l)?.Split('=').Last();
 
                 // Create default note if not exist
                 if (string.IsNullOrEmpty(line))
@@ -119,14 +119,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     continue;
                 }
 
-                var notes = line.Split(',');
+                string[] notes = line.Split(',');
                 var defaultNotes = noteGenerator.CreateNotes(lyric).ToList();
-                var minNoteNumber = Math.Min(notes.Length, defaultNotes.Count);
+                int minNoteNumber = Math.Min(notes.Length, defaultNotes.Count);
 
                 // Process each note
                 for (int i = 0; i < minNoteNumber; i++)
                 {
-                    var note = notes[i];
+                    string note = notes[i];
                     var defaultNote = defaultNotes[i];
 
                     // Support multi note in one time tag, format like ([1;0.5;か]|1#|...)
@@ -139,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     else
                     {
                         float startPercentage = 0;
-                        var rubyNotes = note.Replace("(", "").Replace(")", "").Split('|');
+                        string[] rubyNotes = note.Replace("(", "").Replace(")", "").Split('|');
 
                         for (int j = 0; j < rubyNotes.Length; j++)
                         {
@@ -152,7 +152,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                             // Format like [1;0.5;か]
                             if (note.StartsWith("[", StringComparison.Ordinal) && note.EndsWith("]", StringComparison.Ordinal))
                             {
-                                var rubyNoteProperty = note.Replace("[", "").Replace("]", "").Split(';');
+                                string[] rubyNoteProperty = note.Replace("[", "").Replace("]", "").Split(';');
 
                                 // Copy tome property
                                 tone = rubyNoteProperty[0];
@@ -203,7 +203,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 //Support format : 1  1.  1.5  1+  1#
                 static Tone convertTone(string tone)
                 {
-                    var half = false;
+                    bool half = false;
 
                     if (tone.Contains(".") || tone.Contains("#"))
                     {
@@ -232,14 +232,14 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             for (int l = 0; l < lyrics.Count; l++)
             {
                 var lyric = lyrics[l];
-                var line = styleLines.ElementAtOrDefault(l)?.Split('=').Last();
+                string line = styleLines.ElementAtOrDefault(l)?.Split('=').Last();
 
                 // TODO : maybe create default layer and style index here?
                 if (string.IsNullOrEmpty(line))
                     return;
 
-                var layoutIndexStr = line.Split(',').FirstOrDefault();
-                var styleIndexStr = line.Split(',').ElementAtOrDefault(1);
+                string layoutIndexStr = line.Split(',').FirstOrDefault();
+                string styleIndexStr = line.Split(',').ElementAtOrDefault(1);
 
                 if (int.TryParse(layoutIndexStr, out int layoutIndex))
                     lyric.LayoutIndex = layoutIndex;
@@ -263,11 +263,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             foreach (var singleLanguage in translates)
             {
                 // get culture and translate
-                var languageCode = singleLanguage.Key;
+                string languageCode = singleLanguage.Key;
                 var cultureInfo = new CultureInfo(languageCode);
                 var values = singleLanguage.ToList();
 
-                var size = Math.Min(lyrics.Count, singleLanguage.Count());
+                int size = Math.Min(lyrics.Count, singleLanguage.Count());
 
                 for (int j = 0; j < size; j++)
                 {

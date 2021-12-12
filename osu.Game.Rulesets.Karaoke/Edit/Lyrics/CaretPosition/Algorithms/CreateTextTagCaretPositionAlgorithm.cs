@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 return false;
 
             // need to check is start and end index in the range
-            var text = position.Lyric.Text;
+            string text = position.Lyric.Text;
             if (string.IsNullOrEmpty(text))
                 return false;
 

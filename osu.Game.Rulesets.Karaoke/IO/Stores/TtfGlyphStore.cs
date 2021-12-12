@@ -100,14 +100,14 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             if (glyphInstance.GlyphType == GlyphType.Fallback)
                 return null;
 
-            var text = new string(new[] { character });
+            string text = new string(new[] { character });
             var style = new RendererOptions(Font, dpi);
             var bounds = TextMeasurer.MeasureBounds(text, style);
 
-            var xOffset = bounds.Left * dpi;
-            var yOffset = bounds.Top * dpi;
+            float xOffset = bounds.Left * dpi;
+            float yOffset = bounds.Top * dpi;
 
-            var advanceWidth2 = glyphInstance.AdvanceWidth * dpi / glyphInstance.SizeOfEm;
+            int advanceWidth2 = glyphInstance.AdvanceWidth * dpi / glyphInstance.SizeOfEm;
             return new CharacterGlyph(character, xOffset, yOffset, advanceWidth2, Baseline.Value, this);
         }
 
@@ -120,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             var rightGlyphInstance = fontInstance.GetGlyph(right);
 
             // todo : got no idea why all offset is zero.
-            var kerning = fontInstance.GetOffset(rightGlyphInstance, leftGlyphInstance).X;
+            float kerning = fontInstance.GetOffset(rightGlyphInstance, leftGlyphInstance).X;
             return (int)kerning;
         }
 
@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             // see: https://stackoverflow.com/a/53023454/4105113
             const float texture_scale = dpi;
             var style = new RendererOptions(Font, dpi);
-            var text = new string(new[] { c });
+            string text = new string(new[] { c });
             var bounds = TextMeasurer.MeasureBounds(text, style);
             var targetSize = new
             {
@@ -173,9 +173,9 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             var glyphs = TextBuilder.GenerateGlyphs(text, style);
 
             // should calculate this because it will cut the border if width and height scale is not the same.
-            var widthScale = targetSize.Width / glyphs.Bounds.Width;
-            var heightScale = targetSize.Height / glyphs.Bounds.Height;
-            var minScale = Math.Min(widthScale, heightScale);
+            float widthScale = targetSize.Width / glyphs.Bounds.Width;
+            float heightScale = targetSize.Height / glyphs.Bounds.Height;
+            float minScale = Math.Min(widthScale, heightScale);
 
             // scale so that it will fit exactly in image shape once rendered
             glyphs = glyphs.Scale(minScale);

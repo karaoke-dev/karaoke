@@ -131,9 +131,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
 
             Direction.BindValueChanged(dir =>
             {
-                var judgementAreaPercentage = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(
-                                                      new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.JudgementAresPercentage, 0))
-                                                  ?.Value ?? 0.4f;
+                float judgementAreaPercentage = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(
+                                                        new KaraokeSkinConfigurationLookup(Columns, LegacyKaraokeSkinConfigurationLookups.JudgementAresPercentage, 0))
+                                                    ?.Value ?? 0.4f;
 
                 var newDirection = dir.NewValue;
 
@@ -155,7 +155,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Scrolling
             calculator.BindTo(notePositionInfo.Position);
             calculator.BindValueChanged(e =>
             {
-                var columnHeight = e.NewValue.ColumnHeight;
+                float columnHeight = e.NewValue.ColumnHeight;
 
                 for (int i = 0; i < Columns; i++)
                 {

@@ -53,12 +53,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
                         ? FontUtils.DefaultFontSize(bindableFontUsage.MinFontSize, bindableFontUsage.MaxFontSize)
                         : FontUtils.DefaultFontSize();
 
-                    var showSizeButton = availableSizes.Length > 1;
+                    bool showSizeButton = availableSizes.Length > 1;
                     decreaseFontSizeButton.Alpha = showSizeButton ? 1 : 0;
                     increaseFontSizeButton.Alpha = showSizeButton ? 1 : 0;
 
-                    var spacing = showSizeButton ? 5 : 0;
-                    var buttonWidth = showSizeButton ? height : 0;
+                    int spacing = showSizeButton ? 5 : 0;
+                    float buttonWidth = showSizeButton ? height : 0;
                     grid.ColumnDimensions = new[]
                     {
                         new Dimension(),
@@ -125,8 +125,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
                                 Text = "-",
                                 Action = () =>
                                 {
-                                    var currentSize = current.Value.Size;
-                                    var nextSize = availableSizes.Reverse().FirstOrDefault(x => x < currentSize);
+                                    float currentSize = current.Value.Size;
+                                    float nextSize = availableSizes.Reverse().FirstOrDefault(x => x < currentSize);
                                     if (nextSize == 0)
                                         return;
 
@@ -142,8 +142,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
                                 Text = "+",
                                 Action = () =>
                                 {
-                                    var currentSize = current.Value.Size;
-                                    var nextSize = availableSizes.FirstOrDefault(x => x > currentSize);
+                                    float currentSize = current.Value.Size;
+                                    float nextSize = availableSizes.FirstOrDefault(x => x > currentSize);
                                     if (nextSize == 0)
                                         return;
 
@@ -157,10 +157,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
                 Current.BindValueChanged(e =>
                 {
                     var font = e.NewValue;
-                    var fontName = font.FontName;
-                    var size = FontUtils.GetText(font.Size);
-                    var fixedWidthText = font.FixedWidth ? "(fixed width)" : "";
-                    var displayText = $"{fontName}, {size} {fixedWidthText}";
+                    string fontName = font.FontName;
+                    string size = FontUtils.GetText(font.Size);
+                    string fixedWidthText = font.FixedWidth ? "(fixed width)" : "";
+                    string displayText = $"{fontName}, {size} {fixedWidthText}";
                     fontButton.Text = displayText;
                 });
             }

@@ -122,8 +122,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             if (firstFrameInPath == null || lastFrameInPath == null)
                 return;
 
-            var startTime = GetTime(firstFrameInPath);
-            var endTime = GetTime(lastFrameInPath);
+            double startTime = GetTime(firstFrameInPath);
+            double endTime = GetTime(lastFrameInPath);
 
             float originAdjustment = direction.Value switch
             {
@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             if (firstFrameInPath == null)
                 return;
 
-            var startTime = GetTime(firstFrameInPath);
+            double startTime = GetTime(firstFrameInPath);
             if (pathInitialStateCache[path].IsValid)
                 return;
 
@@ -161,7 +161,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
             foreach (var frame in frameList)
             {
-                var x = scrollingInfo.Algorithm.GetLength(startTime, GetTime(frame), timeRange.Value, scrollLength);
+                float x = scrollingInfo.Algorithm.GetLength(startTime, GetTime(frame), timeRange.Value, scrollLength);
                 path.AddVertex(new Vector2(left ? x : -x, GetPosition(frame)));
             }
         });
@@ -192,9 +192,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             if (firstFrameInPath == null)
                 return;
 
-            var startTime = GetTime(firstFrameInPath);
-            var multiple = direction.Value == ScrollingDirection.Left ? 1 : -1;
-            var x = scrollingInfo.Algorithm.PositionAt(startTime, currentTime, timeRange.Value, scrollLength);
+            double startTime = GetTime(firstFrameInPath);
+            int multiple = direction.Value == ScrollingDirection.Left ? 1 : -1;
+            float x = scrollingInfo.Algorithm.PositionAt(startTime, currentTime, timeRange.Value, scrollLength);
             path.X = (x + Offset) * multiple;
         }
 

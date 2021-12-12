@@ -233,7 +233,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             FontUsage getFont(KaraokeRulesetSetting setting, FontUsage? skinFont = null)
             {
-                var forceUseDefault = forceUseDefaultFont();
+                bool forceUseDefault = forceUseDefaultFont();
                 var font = config?.Get<FontUsage>(setting) ?? FontUsage.Default;
 
                 if (forceUseDefault || skinFont == null)
@@ -294,7 +294,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         private void applyTranslate()
         {
             var language = preferLanguageBindable.Value;
-            var needTranslate = useTranslateBindable.Value;
+            bool needTranslate = useTranslateBindable.Value;
 
             if (!needTranslate || language == null)
             {
@@ -312,7 +312,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (Result.Judgement is not KaraokeLyricJudgement judgement)
                 return;
 
-            var lyricStartOffset = timeOffset + HitObject.LyricDuration;
+            double lyricStartOffset = timeOffset + HitObject.LyricDuration;
 
             if (lyricStartOffset < 0)
             {

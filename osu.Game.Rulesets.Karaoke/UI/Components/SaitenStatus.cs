@@ -59,11 +59,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
                 Schedule(() =>
                 {
-                    var saitenable = statusMode == SaitenStatusMode.Saitening;
+                    bool saitenable = statusMode == SaitenStatusMode.Saitening;
                     icon.Icon = saitenable ? FontAwesome.Regular.DotCircle : FontAwesome.Regular.PauseCircle;
                     icon.Colour = saitenable ? Color4.Red : Color4.LightGray;
 
-                    var text = GetSaitenStatusText(statusMode);
+                    string text = GetSaitenStatusText(statusMode);
                     var block = Markdown.Parse(text).OfType<ParagraphBlock>().FirstOrDefault();
 
                     messageText.Clear();

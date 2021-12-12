@@ -36,8 +36,8 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty.Skills
         protected override double StrainValueOf(DifficultyHitObject current)
         {
             var maniaCurrent = (KaraokeDifficultyHitObject)current;
-            var endTime = maniaCurrent.EndTime;
-            var column = getColumnIndex(maniaCurrent.BaseObject.Tone);
+            double endTime = maniaCurrent.EndTime;
+            int column = getColumnIndex(maniaCurrent.BaseObject.Tone);
 
             double holdFactor = 1.0; // Factor to all additional strains in case something else is held
             double holdAddition = 0; // Addition to the current note in case it's a hold and has to be released awkwardly

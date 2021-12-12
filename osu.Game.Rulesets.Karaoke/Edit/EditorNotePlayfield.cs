@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             public void Add(KeyValuePair<double, float?> point)
             {
                 // Start time should be largest and cannot be removed.
-                var startTime = point.Key;
+                double startTime = point.Key;
                 if (startTime <= minAvailableTime)
                     throw new ArgumentOutOfRangeException($"{nameof(startTime)} out of range.");
 

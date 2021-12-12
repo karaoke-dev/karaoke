@@ -37,15 +37,15 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (startTimeTag.Time == null || endTimeTag.Time == null)
                 return new TimeTag(index);
 
-            var diffFromStartToEnd = getTimeCalculationIndex(endTimeTag.Index) - getTimeCalculationIndex(startTimeTag.Index);
-            var diffFromStartToNow = getTimeCalculationIndex(index) - getTimeCalculationIndex(startTimeTag.Index);
+            int diffFromStartToEnd = getTimeCalculationIndex(endTimeTag.Index) - getTimeCalculationIndex(startTimeTag.Index);
+            int diffFromStartToNow = getTimeCalculationIndex(index) - getTimeCalculationIndex(startTimeTag.Index);
             if (diffFromStartToEnd == 0 || diffFromStartToNow == 0)
                 return new TimeTag(index, startTimeTag.Time);
 
-            var time = startTimeTag.Time +
-                       (endTimeTag.Time - startTimeTag.Time)
-                       / diffFromStartToEnd
-                       * diffFromStartToNow;
+            double? time = startTimeTag.Time +
+                           (endTimeTag.Time - startTimeTag.Time)
+                           / diffFromStartToEnd
+                           * diffFromStartToNow;
 
             return new TimeTag(index, time);
 
@@ -140,7 +140,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     {
                         case GroupCheck.Asc:
                             // mark next is overlapping if smaller then self
-                            var groupMaxTime = groupedTimeTag.Max(x => x.Time);
+                            double? groupMaxTime = groupedTimeTag.Max(x => x.Time);
                             if (groupMaxTime == null)
                                 return null;
 
@@ -148,7 +148,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
                         case GroupCheck.Desc:
                             // mark previous is overlapping if larger then self
-                            var groupMinTime = groupedTimeTag.Min(x => x.Time);
+                            double? groupMinTime = groupedTimeTag.Min(x => x.Time);
                             if (groupMinTime == null)
                                 return null;
 
@@ -164,14 +164,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     switch (self)
                     {
                         case SelfCheck.BasedOnStart:
-                            var maxStartTime = startTimeGroup.Max(x => x.Time);
+                            double? maxStartTime = startTimeGroup.Max(x => x.Time);
                             if (maxStartTime == null)
                                 return null;
 
                             return endTimeGroup.Where(x => x.Time != null && x.Time.Value < maxStartTime.Value).ToList();
 
                         case SelfCheck.BasedOnEnd:
-                            var minEndTime = endTimeGroup.Min(x => x.Time);
+                            double? minEndTime = endTimeGroup.Min(x => x.Time);
                             if (minEndTime == null)
                                 return null;
 
@@ -206,7 +206,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             foreach (var overlappingTimeTag in overlappingTimeTags)
             {
-                var listIndex = sortedTimeTags.IndexOf(overlappingTimeTag);
+                int listIndex = sortedTimeTags.IndexOf(overlappingTimeTag);
                 var timeTag = overlappingTimeTag.Index;
 
                 // fix self-overlapping
@@ -217,7 +217,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 switch (timeTag.State)
                 {
                     case TextIndex.IndexState.Start:
-                        var minEndTime = endTimeGroup.Min(x => x.Time);
+                        double? minEndTime = endTimeGroup.Min(x => x.Time);
 
                         if (minEndTime != null && minEndTime < overlappingTimeTag.Time)
                         {
@@ -228,7 +228,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                         break;
 
                     case TextIndex.IndexState.End:
-                        var maxStartTime = startTimeGroup.Max(x => x.Time);
+                        double? maxStartTime = startTimeGroup.Max(x => x.Time);
 
                         if (maxStartTime != null && maxStartTime > overlappingTimeTag.Time)
                         {
@@ -247,13 +247,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 {
                     case GroupCheck.Asc:
                         // find previous value to apply.
-                        var previousValidValue = sortedTimeTags.Reverse().FirstOrDefault(x => x.Index.Index < timeTag.Index && x.Time != null)?.Time;
+                        double? previousValidValue = sortedTimeTags.Reverse().FirstOrDefault(x => x.Index.Index < timeTag.Index && x.Time != null)?.Time;
                         sortedTimeTags[listIndex] = new TimeTag(timeTag, previousValidValue);
                         break;
 
                     case GroupCheck.Desc:
                         // find next value to apply.
-                        var nextValidValue = sortedTimeTags.FirstOrDefault(x => x.Index.Index > timeTag.Index && x.Time != null)?.Time;
+                        double? nextValidValue = sortedTimeTags.FirstOrDefault(x => x.Index.Index > timeTag.Index && x.Time != null)?.Time;
                         sortedTimeTags[listIndex] = new TimeTag(timeTag, nextValidValue);
                         break;
 

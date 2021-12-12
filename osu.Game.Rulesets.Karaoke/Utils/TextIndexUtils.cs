@@ -49,8 +49,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static string PositionFormattedString(TextIndex textIndex)
         {
-            var index = textIndex.Index;
-            var state = textIndex.State == TextIndex.IndexState.End ? "(end)" : "";
+            int index = textIndex.Index;
+            string state = textIndex.State == TextIndex.IndexState.End ? "(end)" : "";
             return $"{index}{state}";
         }
     }

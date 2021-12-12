@@ -78,8 +78,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
                 SelectedSet.BindValueChanged(set =>
                 {
-                    var oldValueMatched = EqualityComparer<TModel>.Default.Equals(set.OldValue, Model);
-                    var newValueMatched = EqualityComparer<TModel>.Default.Equals(set.NewValue, Model);
+                    bool oldValueMatched = EqualityComparer<TModel>.Default.Equals(set.OldValue, Model);
+                    bool newValueMatched = EqualityComparer<TModel>.Default.Equals(set.NewValue, Model);
                     if (!oldValueMatched && !newValueMatched)
                         return;
 

@@ -124,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             selectedLyrics.BindCollectionChanged((_, _) =>
             {
-                var selectAny = selectedLyrics.Any();
+                bool selectAny = selectedLyrics.Any();
                 applyButton.Enabled.Value = selectAny;
             }, true);
         }
@@ -181,9 +181,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // should disable selection if current lyric is disabled.
                 disableSelectingLyrics.BindCollectionChanged((_, _) =>
                 {
-                    var disabledLyricNumber = lyricSelectionState.DisableSelectingLyric.Count;
-                    var totalLyrics = beatmap.HitObjects.OfType<Lyric>().Count();
-                    var disabled = disabledLyricNumber == totalLyrics;
+                    int disabledLyricNumber = lyricSelectionState.DisableSelectingLyric.Count;
+                    int totalLyrics = beatmap.HitObjects.OfType<Lyric>().Count();
+                    bool disabled = disabledLyricNumber == totalLyrics;
 
                     allSelectedCheckbox.Current.Disabled = disabled;
                     allSelectedCheckbox.TooltipText = disabled ? "Seems all selection are disabled" : null;
@@ -199,7 +199,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                     var lyrics = beatmap.HitObjects.OfType<Lyric>();
 
-                    var selectAll = lyrics.All(x => selectedLyrics.Contains(x));
+                    bool selectAll = lyrics.All(x => selectedLyrics.Contains(x));
                     allSelectedCheckbox.Current.Value = selectAll;
 
                     selectedLyricsTriggering = false;

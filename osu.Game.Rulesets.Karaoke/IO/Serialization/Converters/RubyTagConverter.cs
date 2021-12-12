@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         public override RubyTag ReadJson(JsonReader reader, Type objectType, RubyTag existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JToken.Load(reader);
-            var value = obj.Value<string>();
+            string value = obj.Value<string>();
 
             if (string.IsNullOrEmpty(value))
                 return new RubyTag();
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
         public override void WriteJson(JsonWriter writer, RubyTag value, JsonSerializer serializer)
         {
-            var str = $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
+            string str = $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
             writer.WriteValue(str);
         }
     }

@@ -78,13 +78,13 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                     return;
 
                 // add issue if has user
-                var issues = result.Select(x => x.GetGroupValue<string>("issue")).Where(x => !string.IsNullOrEmpty(x)).ToArray();
+                string[] issues = result.Select(x => x.GetGroupValue<string>("issue")).Where(x => !string.IsNullOrEmpty(x)).ToArray();
 
                 if (issues.Any())
                 {
                     AddText("(");
 
-                    foreach (var issue in issues)
+                    foreach (string issue in issues)
                     {
                         if (string.IsNullOrEmpty(issue))
                             continue;
@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 // add use name if has user
                 var usernames = result.Select(x => x.GetGroupValue<string>("username")).Where(x => !string.IsNullOrEmpty(x));
 
-                foreach (var user in usernames)
+                foreach (string user in usernames)
                 {
                     if (string.IsNullOrEmpty(user))
                         return;
@@ -166,7 +166,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                 private void computeImageSize()
                 {
                     // if image is larger then parent size, then adjust image scale
-                    var scale = Math.Min(1, DrawWidth / InternalChild.Width);
+                    float scale = Math.Min(1, DrawWidth / InternalChild.Width);
 
                     InternalChild.Scale = new Vector2(scale);
                     Height = InternalChild.Height * scale;

@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
                 // should get the event if user change the position.
                 case NotifyCollectionChangedAction.Move:
                     var item = (TModel)e.NewItems[0];
-                    var newIndex = e.NewStartingIndex;
+                    int newIndex = e.NewStartingIndex;
                     OnOrderChanged?.Invoke(item, newIndex);
                     break;
             }

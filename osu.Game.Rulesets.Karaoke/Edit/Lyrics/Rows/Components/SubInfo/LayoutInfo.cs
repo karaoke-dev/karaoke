@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
         {
             lyric.LayoutIndexBindable.BindValueChanged(value =>
             {
-                var newLayoutIndex = value.NewValue;
+                int newLayoutIndex = value.NewValue;
                 BadgeText = $"Layout : {newLayoutIndex}";
             }, true);
         }

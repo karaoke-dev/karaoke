@@ -147,7 +147,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
             base.OnTimeRangeChanged(e);
 
-            var paddingSize = 5 + 7 * 1000 / (float)e.NewValue;
+            float paddingSize = 5 + 7 * 1000 / (float)e.NewValue;
             textPiece.Padding = new MarginPadding { Left = paddingSize, Right = paddingSize };
         }
 

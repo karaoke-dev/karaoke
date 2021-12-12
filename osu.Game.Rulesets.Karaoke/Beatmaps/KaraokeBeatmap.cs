@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                 },
             };
 
-            var scorable = this.IsScorable();
+            bool scorable = this.IsScorable();
 
             if (scorable)
             {

@@ -78,17 +78,17 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
                 base.Update();
 
-                var currentTime = Time.Current;
+                double currentTime = Time.Current;
 
-                var isCreateShow = !Children.Any() ||
-                                   (Children.LastOrDefault() as SnowSprite)?.CreateTime
-                                   + 1000 / SnowGenerateParSecond < currentTime;
+                bool isCreateShow = !Children.Any() ||
+                                    (Children.LastOrDefault() as SnowSprite)?.CreateTime
+                                    + 1000 / SnowGenerateParSecond < currentTime;
 
                 // If can generate new snow
                 if (isCreateShow && EnableNewSnow)
                 {
-                    var currentAlpha = (float)RNG.Next(0, 255) / 255;
-                    var width = (int)DrawWidth;
+                    float currentAlpha = (float)RNG.Next(0, 255) / 255;
+                    int width = (int)DrawWidth;
                     var newFlake = new SnowSprite
                     {
                         Anchor = Anchor.TopCentre,

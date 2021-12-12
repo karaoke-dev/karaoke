@@ -41,11 +41,11 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
             var h = note.HitObject;
 
-            var fadeOutStartTime = h.StartTime - h.TimePreempt + h.TimeFadeIn;
-            var fadeOutDuration = h.TimePreempt * fade_out_duration_multiplier;
+            double fadeOutStartTime = h.StartTime - h.TimePreempt + h.TimeFadeIn;
+            double fadeOutDuration = h.TimePreempt * fade_out_duration_multiplier;
 
             // new duration from completed fade in to end (before fading out)
-            var longFadeDuration = h.EndTime - fadeOutStartTime;
+            double longFadeDuration = h.EndTime - fadeOutStartTime;
 
             // Apply duration
             using (note.BeginAbsoluteSequence(fadeOutStartTime))
@@ -63,11 +63,11 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
             var h = note.HitObject;
 
-            var fadeOutStartTime = h.StartTime - h.TimePreempt + h.TimeFadeIn;
-            var fadeOutDuration = h.TimePreempt * fade_out_duration_multiplier;
+            double fadeOutStartTime = h.StartTime - h.TimePreempt + h.TimeFadeIn;
+            double fadeOutDuration = h.TimePreempt * fade_out_duration_multiplier;
 
             // new duration from completed fade in to end (before fading out)
-            var longFadeDuration = h.EndTime - fadeOutStartTime;
+            double longFadeDuration = h.EndTime - fadeOutStartTime;
 
             // Apply duration
             using (note.BeginAbsoluteSequence(fadeOutStartTime))
