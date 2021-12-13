@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Screens.Edit;
 using osu.Game.Rulesets.Karaoke.Screens.Skin.Config;
 using osu.Game.Rulesets.Karaoke.Screens.Skin.Layout;
 using osu.Game.Rulesets.Karaoke.Screens.Skin.Style;
-using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin
 {
@@ -18,9 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin
         [Cached]
         private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Pink);
 
-        private readonly KaraokeSkin skin;
+        private readonly ISkin skin;
 
-        public KaraokeSkinEditor(KaraokeSkin skin)
+        public KaraokeSkinEditor(ISkin skin)
         {
             this.skin = skin;
         }

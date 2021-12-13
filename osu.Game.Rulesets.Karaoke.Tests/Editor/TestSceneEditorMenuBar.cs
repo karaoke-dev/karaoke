@@ -8,7 +8,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Screens.Edit.Components.Menus;
 using osu.Game.Tests.Visual;
 
@@ -20,7 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         [BackgroundDependencyLoader]
         private void load()
         {
-            var config = new KaraokeRulesetEditConfigManager();
             var lyricEditorConfig = new KaraokeRulesetLyricEditorConfigManager();
             Add(new Container
             {
@@ -46,22 +45,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                                 new EditorMenuItem("Export to json", MenuItemType.Destructive, () => { }),
                             }
                         },
+                        new LyricEditorModeMenu(lyricEditorConfig, "Mode"),
                         new MenuItem("View")
                         {
                             Items = new MenuItem[]
                             {
-                                new EditorMenuItemSpacer(),
-                                new LyricEditorModeMenu(lyricEditorConfig, "Lyric editor mode"),
                                 new LyricEditorTextSizeMenu(lyricEditorConfig, "Text size"),
-                                new EditorMenuItemSpacer(),
-                                new NoteEditorPreviewMenu(config, "Note editor"),
-                            }
-                        },
-                        new MenuItem("Tools")
-                        {
-                            Items = new MenuItem[]
-                            {
-                                // todo: maybe place menu item for navigate to skin editor.
+                                new AutoFocusToEditLyricMenu(lyricEditorConfig, "Auto focus to edit lyric"),
                             }
                         },
                         new MenuItem("Config")
@@ -69,9 +59,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                             Items = new MenuItem[]
                             {
                                 new EditorMenuItem("Lyric editor"),
-                                new GeneratorConfigMenu("Generator"),
+                                new GeneratorConfigMenu("Auto-generator"),
+                                new LockStateMenu(lyricEditorConfig, "Lock"),
                             }
-                        }
+                        },
+                        new MenuItem("Tools")
+                        {
+                            Items = new MenuItem[]
+                            {
+                                new KaraokeSkinEditorMenu(null, null, "Skin editor"),
+                            }
+                        },
                     }
                 }
             });

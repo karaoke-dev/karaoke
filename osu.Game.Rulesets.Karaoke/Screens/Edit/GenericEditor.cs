@@ -171,6 +171,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit
                 {
                     Items = new[]
                     {
+                        new EditorMenuItem("Save"),
                         new EditorMenuItem("Back", MenuItemType.Standard, this.Exit),
                     }
                 },

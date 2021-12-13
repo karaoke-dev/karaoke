@@ -6,16 +6,14 @@ using System.Collections.Generic;
 using System.Reflection;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Screens;
 using osu.Game.Beatmaps;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Menu;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.UI;
@@ -145,14 +143,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     {
                         Items = new MenuItem[]
                         {
-                            new EditorMenuItem("Lyric editor"),
-                            new GeneratorConfigMenu("Generator"),
-                            new EditorMenuItem("open Karaoke editor", MenuItemType.Standard, () =>
-                            {
-                                editor.Push(new KaraokeEditor());
-                            }),
+                            new NoteEditorPreviewMenu(editConfigManager, "Note editor"),
                         }
                     },
+                    new("Tools")
+                    {
+                        Items = new MenuItem[]
+                        {
+                            new KaraokeSkinEditorMenu(editor, null, "Skin editor"),
+                            new KaraokeEditorMenu(editor, "Karaoke editor")
+                        }
+                    }
                 };
             });
         }

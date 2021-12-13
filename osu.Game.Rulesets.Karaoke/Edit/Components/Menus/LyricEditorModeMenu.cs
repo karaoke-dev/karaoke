@@ -5,7 +5,7 @@ using System;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 {
     public class LyricEditorModeMenu : EnumMenu<KaraokeRulesetLyricEditorSetting, LyricEditorMode>
     {

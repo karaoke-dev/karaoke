@@ -9,7 +9,6 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Screens.Edit;
-using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Skinning;
 using osuTK;
 
@@ -21,9 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin
         private const float left_column_width = 200;
         private const float right_column_width = 300;
 
-        private readonly KaraokeSkin skin;
+        private readonly ISkin skin;
 
-        protected KaraokeSkinEditorScreen(KaraokeSkin skin, KaraokeSkinEditorScreenMode type)
+        protected KaraokeSkinEditorScreen(ISkin skin, KaraokeSkinEditorScreenMode type)
             : base(type)
         {
             this.skin = skin;

@@ -3,7 +3,7 @@
 
 using osu.Framework.Graphics.UserInterface;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 {
     public class GeneratorConfigMenu : MenuItem
     {
