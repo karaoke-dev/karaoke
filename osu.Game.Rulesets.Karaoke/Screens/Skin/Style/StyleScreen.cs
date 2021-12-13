@@ -5,7 +5,7 @@ using System.ComponentModel;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
-using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Skinning;
 using osuTK;
 using Container = osu.Framework.Graphics.Containers.Container;
 
@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
         [Cached]
         protected readonly StyleManager StyleManager;
 
-        public StyleScreen(KaraokeSkin skin)
+        public StyleScreen(ISkin skin)
             : base(skin, KaraokeSkinEditorScreenMode.Style)
         {
             AddInternal(StyleManager = new StyleManager());

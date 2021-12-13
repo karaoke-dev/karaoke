@@ -4,7 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
-using osu.Game.Rulesets.Karaoke.Skinning;
+using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
 {
@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
         [Cached]
         protected readonly LyricConfigManager ConfigManager;
 
-        public ConfigScreen(KaraokeSkin skin)
+        public ConfigScreen(ISkin skin)
             : base(skin, KaraokeSkinEditorScreenMode.Config)
         {
             AddInternal(ConfigManager = new LyricConfigManager());
