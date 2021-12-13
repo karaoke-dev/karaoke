@@ -113,22 +113,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                                 new EditorMenuItem("Export to json", MenuItemType.Destructive, () => exportLyricManager.ExportToJson()),
                             }
                         },
+                        new LyricEditorModeMenu(lyricEditorConfigManager, "Mode"),
                         new("View")
                         {
                             Items = new MenuItem[]
                             {
-                                new LyricEditorModeMenu(lyricEditorConfigManager, "Lyric editor mode"),
                                 new LyricEditorTextSizeMenu(lyricEditorConfigManager, "Text size"),
                                 new AutoFocusToEditLyricMenu(lyricEditorConfigManager, "Auto focus to edit lyric"),
-                                new EditorMenuItemSpacer(),
-                                new NoteEditorPreviewMenu(editConfigManager, "Note editor"),
-                            }
-                        },
-                        new("Tools")
-                        {
-                            Items = new MenuItem[]
-                            {
-                                // todo: maybe place menu item for navigate to skin editor.
                             }
                         },
                         new("Config")
@@ -136,10 +127,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                             Items = new MenuItem[]
                             {
                                 new EditorMenuItem("Lyric editor"),
-                                new GeneratorConfigMenu("Generator"),
+                                new GeneratorConfigMenu("Auto-generator"),
                                 new LockStateMenu(lyricEditorConfigManager, "Lock"),
                             }
-                        }
+                        },
+                        new("Tools")
+                        {
+                            Items = new MenuItem[]
+                            {
+                                new KaraokeSkinEditorMenu(this, null, "Skin editor"),
+                            }
+                        },
                     };
 
                 default:
