@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
         [Resolved]
         private ILyricLanguageChangeHandler lyricLanguageChangeHandler { get; set; }
 
-        protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(Lyric[] lyrics)
+        protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(IEnumerable<Lyric> lyrics)
             => lyrics.Where(x => string.IsNullOrEmpty(x.Text))
                      .ToDictionary(k => k, _ => "Should have text in lyric.");
 

@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         {
             Schedule(() =>
             {
-                var disableSelectingLyrics = GetDisableSelectingLyrics(beatmap.HitObjects.OfType<Lyric>().ToArray());
+                var disableSelectingLyrics = GetDisableSelectingLyrics(beatmap.HitObjects.OfType<Lyric>());
 
                 Children = new Drawable[]
                 {
@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             };
         }
 
-        protected abstract Dictionary<Lyric, string> GetDisableSelectingLyrics(Lyric[] lyrics);
+        protected abstract Dictionary<Lyric, string> GetDisableSelectingLyrics(IEnumerable<Lyric> lyrics);
 
         protected abstract void Apply();
 
