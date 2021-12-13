@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu
         public SingerContextMenu(EditorBeatmap beatmap, ILyricSingerChangeHandler lyricSingerChangeHandler, string name, Action postProcess = null)
             : base(name)
         {
-            var lyrics = beatmap.SelectedHitObjects.OfType<Lyric>();
+            var lyrics = beatmap.SelectedHitObjects.OfType<Lyric>().ToArray();
             var singers = (beatmap.PlayableBeatmap as KaraokeBeatmap)?.Singers;
 
             Items = singers?.Select(singer => new OsuMenuItem(singer.Name, anySingerInLyric(singer) ? MenuItemType.Highlighted : MenuItemType.Standard, () =>
