@@ -3,20 +3,19 @@
 
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Screens;
-using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 {
-    public class ImportLyricMenu : MenuItem
+    public class KaraokeEditorMenu : MenuItem
     {
-        public ImportLyricMenu(IScreen screen, string text)
-            : base(text, () => openLyricImporter(screen))
+        public KaraokeEditorMenu(IScreen screen, string text)
+            : base(text, () => openKaraokeEditor(screen))
         {
         }
 
-        private static void openLyricImporter(IScreen screen)
+        private static void openKaraokeEditor(IScreen screen)
         {
-            screen?.Push(new LyricImporter());
+            screen?.Push(new KaraokeEditor());
         }
     }
 }
