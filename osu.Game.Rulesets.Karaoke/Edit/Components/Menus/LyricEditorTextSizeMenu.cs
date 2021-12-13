@@ -9,7 +9,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menu
+namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 {
     public class LyricEditorTextSizeMenu : MenuItem
     {
