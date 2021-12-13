@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
             => lyrics.Where(x => string.IsNullOrEmpty(x.Text))
                      .ToDictionary(k => k, _ => "Should have text in lyric.");
 
-        protected override void Apply(Lyric[] lyrics)
+        protected override void Apply()
             => lyricLanguageChangeHandler.AutoGenerate();
 
         protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()

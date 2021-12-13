@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             => lyrics.Where(x => x.Language == null)
                      .ToDictionary(k => k, _ => "Before generate ruby-tag, need to assign language first.");
 
-        protected override void Apply(Lyric[] lyrics)
+        protected override void Apply()
             => rubyChangeHandler.AutoGenerate();
     }
 }

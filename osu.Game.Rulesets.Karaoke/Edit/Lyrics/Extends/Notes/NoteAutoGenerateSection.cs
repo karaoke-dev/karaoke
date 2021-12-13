@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             => lyricCheckerManager.BindableReports.Where(x => x.Value.OfType<TimeTagIssue>().Any())
                                   .ToDictionary(k => k.Key, _ => "Before generate time-tag, need to assign language first.");
 
-        protected override void Apply(Lyric[] lyrics)
+        protected override void Apply()
             => notesChangeHandler.AutoGenerate();
 
         protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()

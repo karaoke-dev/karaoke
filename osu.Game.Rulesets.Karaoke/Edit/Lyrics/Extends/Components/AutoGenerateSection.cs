@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 beatmap.SelectedHitObjects.Clear();
                 beatmap.SelectedHitObjects.AddRange(selectedLyrics);
 
-                Apply(selectedLyrics);
+                Apply();
 
                 // after being applied, should clear the selection.
                 beatmap.SelectedHitObjects.Clear();
@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected abstract Dictionary<Lyric, string> GetDisableSelectingLyrics(Lyric[] lyrics);
 
-        protected abstract void Apply(Lyric[] lyrics);
+        protected abstract void Apply();
 
         protected abstract InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer();
 
