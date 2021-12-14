@@ -26,20 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
-        public LyricCaretState()
-        {
-            // if caret position changed, should add into editor beatmap selected hit objects.
-            BindableCaretPosition.BindValueChanged(e =>
-            {
-                beatmap.SelectedHitObjects.Clear();
-
-                var lyric = e.NewValue?.Lyric;
-
-                if (lyric != null)
-                    beatmap.SelectedHitObjects.Add(lyric);
-            });
-        }
-
         public void ChangePositionAlgorithm(LyricEditorMode lyricEditorMode, MovingTimeTagCaretMode movingTimeTagCaretMode)
         {
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
@@ -92,19 +78,47 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
-            if (algorithm == null)
-                throw new InvalidOperationException($"{nameof(algorithm)} cannot be null.");
+            bool hasAlgorithm = algorithm != null;
+            var caretPosition = algorithm?.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
 
-            BindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
+            if (hasAlgorithm && caretPosition == null)
+                return;
+
+            // remain state:
+            // 1. has no caret position because has no algorithm.
+            // 2. has caret position.
+            // should update beatmap selected object in both cases.
+            updateEditorBeatmapSelectedHitObject(lyric);
+
+            if (caretPosition == null)
+                return;
+
             BindableHoverCaretPosition.Value = null;
+            BindableCaretPosition.Value = caretPosition;
         }
 
         public void MoveCaretToTargetPosition(ICaretPosition position)
         {
+            if (position == null)
+                throw new ArgumentNullException(nameof(position));
+
             if (position.Lyric == null)
                 return;
 
-            if (!CaretPositionMovable(position))
+            bool hasAlgorithm = algorithm != null;
+            bool movable = hasAlgorithm && CaretPositionMovable(position);
+
+            // stop moving the caret if forbidden by algorithm calculation.
+            if (hasAlgorithm && !movable)
+                return;
+
+            // remain state:
+            // 1. cannot move because has no algorithm.
+            // 2. can move the caret.
+            // should update beatmap selected object in both cases.
+            updateEditorBeatmapSelectedHitObject(position.Lyric);
+
+            if (!movable)
                 return;
 
             BindableHoverCaretPosition.Value = null;
@@ -113,6 +127,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public void MoveHoverCaretToTargetPosition(ICaretPosition position)
         {
+            if (position == null)
+                throw new ArgumentNullException(nameof(position));
+
             if (position.Lyric == null)
                 return;
 
@@ -149,6 +166,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 BindableCaretPosition.Value = null;
                 BindableHoverCaretPosition.Value = null;
             }
+
+            updateEditorBeatmapSelectedHitObject(lyric);
         }
 
         public bool CaretPositionMovable(ICaretPosition position)
@@ -157,5 +176,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         }
 
         public bool CaretEnabled => algorithm != null;
+
+        private void updateEditorBeatmapSelectedHitObject(Lyric lyric)
+        {
+            beatmap.SelectedHitObjects.Clear();
+
+            if (lyric != null)
+                beatmap.SelectedHitObjects.Add(lyric);
+        }
     }
 }
