@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         protected sealed override string Title => "Auto generate";
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, LyricSelectionState lyricSelectionState, OsuColour colours)
+        private void load(EditorBeatmap beatmap, ILyricSelectionState lyricSelectionState, OsuColour colours)
         {
             Schedule(() =>
             {

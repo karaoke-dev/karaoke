@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
         protected override SelectionHandler<Note> CreateSelectionHandler() => new NoteEditorSelectionHandler();
 
         [BackgroundDependencyLoader]
-        private void load(BlueprintSelectionState blueprintSelectionState, EditorBeatmap beatmap)
+        private void load(IBlueprintSelectionState blueprintSelectionState, EditorBeatmap beatmap)
         {
             SelectedItems.BindTo(blueprintSelectionState.SelectedNotes);
 

@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state, LyricCaretState lyricCaretState)
+        private void load(ILyricEditorState state, ILyricCaretState lyricCaretState)
         {
             bindableMode.BindTo(state.BindableMode);
             bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);

@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         }
 
         [BackgroundDependencyLoader]
-        private void load(BlueprintSelectionState blueprintSelectionState)
+        private void load(IBlueprintSelectionState blueprintSelectionState)
         {
             SelectedItems.BindTo(blueprintSelectionState.SelectedTimeTags);
 
@@ -137,7 +137,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
             [BackgroundDependencyLoader]
-            private void load(BlueprintSelectionState blueprintSelectionState)
+            private void load(IBlueprintSelectionState blueprintSelectionState)
             {
                 SelectedItems.BindTo(blueprintSelectionState.SelectedTimeTags);
             }

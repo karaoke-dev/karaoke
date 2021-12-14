@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, ILyricEditorState state, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, LyricCaretState lyricCaretState)
+        private void load(OsuColour colours, ILyricEditorState state, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ILyricCaretState lyricCaretState)
         {
             InternalChild.Colour = colours.GetTimeTagColour(timeTag);
 

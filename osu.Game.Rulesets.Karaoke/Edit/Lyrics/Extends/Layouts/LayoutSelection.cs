@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
         }
 
         [BackgroundDependencyLoader]
-        private void load(ISkinSource skinSource, LyricCaretState lyricCaretState)
+        private void load(ISkinSource skinSource, ILyricCaretState lyricCaretState)
         {
             var layoutDictionary = skinSource.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
             if (layoutDictionary == null)

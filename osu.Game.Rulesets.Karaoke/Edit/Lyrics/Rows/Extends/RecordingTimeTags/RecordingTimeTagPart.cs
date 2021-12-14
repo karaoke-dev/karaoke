@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             }
 
             [BackgroundDependencyLoader]
-            private void load(OsuColour colours, RecordingTimeTagEditor timeline, LyricCaretState lyricCaretState)
+            private void load(OsuColour colours, RecordingTimeTagEditor timeline, ILyricCaretState lyricCaretState)
             {
                 position = lyricCaretState.BindableCaretPosition.GetBoundCopy();
                 position.BindValueChanged(e =>
@@ -115,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             private EditorClock editorClock { get; set; }
 
             [Resolved]
-            private LyricCaretState lyricCaretState { get; set; }
+            private ILyricCaretState lyricCaretState { get; set; }
 
             [Resolved]
             private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }

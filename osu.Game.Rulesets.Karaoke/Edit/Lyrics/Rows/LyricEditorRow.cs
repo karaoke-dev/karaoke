@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             }
 
             [BackgroundDependencyLoader]
-            private void load(ILyricEditorState state, LyricSelectionState lyricSelectionState, LyricEditorColourProvider colourProvider)
+            private void load(ILyricEditorState state, ILyricSelectionState lyricSelectionState, LyricEditorColourProvider colourProvider)
             {
                 mode = state.BindableMode.GetBoundCopy();
                 selecting = lyricSelectionState.Selecting.GetBoundCopy();
