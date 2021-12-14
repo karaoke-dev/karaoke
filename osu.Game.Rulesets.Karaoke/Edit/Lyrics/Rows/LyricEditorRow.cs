@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         public class SelectArea : CompositeDrawable
         {
             private Bindable<LyricEditorMode> mode;
-            private Bindable<bool> selecting;
+            private IBindable<bool> selecting;
             private BindableDictionary<Lyric, string> disableSelectingLyrics;
             private BindableList<Lyric> selectedLyrics;
 
