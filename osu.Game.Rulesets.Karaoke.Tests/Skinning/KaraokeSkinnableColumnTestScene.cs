@@ -27,10 +27,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
 
         protected const int COLUMNS = 9;
 
-        [Cached(Type = typeof(IScrollingInfo))]
+        [Cached(typeof(IScrollingInfo))]
         private readonly TestScrollingInfo scrollingInfo = new();
 
-        [Cached(Type = typeof(INotePositionInfo))]
+        [Cached(typeof(INotePositionInfo))]
         private readonly PreviewNotePositionInfo notePositionInfo = new();
 
         protected override Ruleset CreateRulesetForSkinProvider() => new KaraokeRuleset();

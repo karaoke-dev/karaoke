@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         private readonly Bindable<KaraokeScrollingDirection> configDirection = new();
 
-        [Cached(Type = typeof(INotePositionInfo))]
+        [Cached(typeof(INotePositionInfo))]
         private readonly NotePositionInfo positionCalculator;
 
         [Cached]

@@ -23,7 +23,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
-    [Cached(Type = typeof(IMarkdownTextComponent))]
+    [Cached(typeof(IMarkdownTextComponent))]
     public abstract class EditModeSection<T> : Section, IMarkdownTextComponent where T : Enum
     {
         protected sealed override string Title => "Edit mode";

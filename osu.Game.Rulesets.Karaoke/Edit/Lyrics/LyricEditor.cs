@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(IBlueprintSelectionState))]
         private readonly BlueprintSelectionState blueprintSelectionState;
 
-        [Cached(Type = typeof(IScrollingInfo))]
+        [Cached(typeof(IScrollingInfo))]
         private readonly LocalScrollingInfo scrollingInfo = new();
 
         [Cached]

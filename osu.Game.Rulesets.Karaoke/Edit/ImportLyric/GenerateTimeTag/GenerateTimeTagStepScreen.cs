@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
         public override IconUsage Icon => FontAwesome.Solid.Tag;
 
-        [Cached(Type = typeof(ILyricTimeTagsChangeHandler))]
+        [Cached(typeof(ILyricTimeTagsChangeHandler))]
         private readonly LyricTimeTagsChangeHandler lyricTimeTagsChangeHandler;
 
         public GenerateTimeTagStepScreen()

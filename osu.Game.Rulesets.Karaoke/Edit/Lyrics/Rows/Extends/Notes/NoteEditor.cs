@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
     {
         private const int columns = 9;
 
-        [Cached(Type = typeof(INotePositionInfo))]
+        [Cached(typeof(INotePositionInfo))]
         private readonly PreviewNotePositionInfo notePositionInfo = new();
 
         private readonly Lyric lyric;

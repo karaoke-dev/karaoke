@@ -25,10 +25,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
     {
         private const int columns = 9;
 
-        [Cached(Type = typeof(IScrollingInfo))]
+        [Cached(typeof(IScrollingInfo))]
         private readonly LocalScrollingInfo scrollingInfo = new();
 
-        [Cached(Type = typeof(INotePositionInfo))]
+        [Cached(typeof(INotePositionInfo))]
         private readonly PreviewNotePositionInfo notePositionInfo = new();
 
         private readonly NotePlayfield notePlayfield;

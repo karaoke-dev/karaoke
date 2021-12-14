@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached(typeof(ILyricRomajiChangeHandler))]
         private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
 
-        [Cached(Type = typeof(INotePositionInfo))]
+        [Cached(typeof(INotePositionInfo))]
         private readonly NotePositionInfo notePositionInfo;
 
         [Cached(typeof(INotesChangeHandler))]
