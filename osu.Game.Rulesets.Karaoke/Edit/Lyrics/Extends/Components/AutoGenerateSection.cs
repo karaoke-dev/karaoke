@@ -83,15 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 if (e != LyricEditorSelectingAction.Apply)
                     return;
 
-                // should sync selection to editor beatmap because auto-generate will be apply to those lyric that being selected.
-                var selectedLyrics = lyricSelectionState.SelectedLyrics.ToArray();
-                beatmap.SelectedHitObjects.Clear();
-                beatmap.SelectedHitObjects.AddRange(selectedLyrics);
-
                 Apply();
-
-                // after being applied, should clear the selection.
-                beatmap.SelectedHitObjects.Clear();
             };
         }
 
