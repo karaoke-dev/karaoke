@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             if (glyphInstance.GlyphType == GlyphType.Fallback)
                 return null;
 
-            string text = new string(new[] { character });
+            string text = new(new[] { character });
             var style = new RendererOptions(Font, dpi);
             var bounds = TextMeasurer.MeasureBounds(text, style);
 
@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             // see: https://stackoverflow.com/a/53023454/4105113
             const float texture_scale = dpi;
             var style = new RendererOptions(Font, dpi);
-            string text = new string(new[] { c });
+            string text = new(new[] { c });
             var bounds = TextMeasurer.MeasureBounds(text, style);
             var targetSize = new
             {
