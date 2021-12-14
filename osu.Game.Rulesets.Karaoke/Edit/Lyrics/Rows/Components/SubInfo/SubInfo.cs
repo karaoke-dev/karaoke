@@ -1,12 +1,15 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
@@ -17,6 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
         private readonly OsuSpriteText badgeText;
 
         protected Lyric Lyric { get; }
+
+        [Resolved]
+        private ILyricCaretState lyricCaretState { get; set; }
 
         protected SubInfo(Lyric lyric)
         {
@@ -53,6 +59,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
         {
             get => box.Colour;
             set => box.Colour = value;
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            lyricCaretState.MoveCaretToTargetPosition(Lyric);
+            return base.OnClick(e);
         }
     }
 }
