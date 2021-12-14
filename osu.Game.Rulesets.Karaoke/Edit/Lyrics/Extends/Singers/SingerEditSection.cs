@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, LyricCaretState lyricCaretState)
+        private void load(EditorBeatmap beatmap, ILyricCaretState lyricCaretState)
         {
             // update singer
             if (beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap)

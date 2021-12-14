@@ -14,11 +14,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         [Resolved]
         private ILyricRubyChangeHandler rubyChangeHandler { get; set; }
 
-        protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(Lyric[] lyrics)
+        protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(IEnumerable<Lyric> lyrics)
             => lyrics.Where(x => x.Language == null)
                      .ToDictionary(k => k, _ => "Before generate ruby-tag, need to assign language first.");
 
-        protected override void Apply(Lyric[] lyrics)
+        protected override void Apply()
             => rubyChangeHandler.AutoGenerate();
     }
 }

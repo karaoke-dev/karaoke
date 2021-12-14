@@ -3,15 +3,19 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Edit;
+using Component = osu.Framework.Graphics.Component;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
-    public class LyricCaretState
+    public class LyricCaretState : Component, ILyricCaretState
     {
         public Bindable<ICaretPosition> BindableHoverCaretPosition { get; } = new();
 
@@ -19,40 +23,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         private ICaretPositionAlgorithm algorithm;
 
-        public void ChangePositionAlgorithm(Lyric[] lyrics, LyricEditorMode lyricEditorMode, MovingTimeTagCaretMode movingTimeTagCaretMode)
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
+
+        public void ChangePositionAlgorithm(LyricEditorMode lyricEditorMode, MovingTimeTagCaretMode movingTimeTagCaretMode)
         {
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
             algorithm = getAlgorithmByMode(lyricEditorMode);
 
-            ICaretPositionAlgorithm getAlgorithmByMode(LyricEditorMode mode)
-            {
-                switch (mode)
+            ICaretPositionAlgorithm getAlgorithmByMode(LyricEditorMode mode) =>
+                mode switch
                 {
-                    case LyricEditorMode.Manage:
-                        return new CuttingCaretPositionAlgorithm(lyrics);
-
-                    case LyricEditorMode.Typing:
-                        return new TypingCaretPositionAlgorithm(lyrics);
-
-                    case LyricEditorMode.EditRuby:
-                    case LyricEditorMode.EditRomaji:
-                        return new NavigateCaretPositionAlgorithm(lyrics);
-
-                    case LyricEditorMode.CreateTimeTag:
-                        return new TimeTagIndexCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode };
-
-                    case LyricEditorMode.RecordTimeTag:
-                        return new TimeTagCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode };
-
-                    case LyricEditorMode.AdjustTimeTag:
-                    case LyricEditorMode.EditNote:
-                    case LyricEditorMode.Layout:
-                    case LyricEditorMode.Singer:
-                        return new NavigateCaretPositionAlgorithm(lyrics);
-
-                    default:
-                        return null;
-                }
-            }
+                    LyricEditorMode.Manage => new CuttingCaretPositionAlgorithm(lyrics),
+                    LyricEditorMode.Typing => new TypingCaretPositionAlgorithm(lyrics),
+                    LyricEditorMode.EditRuby => new NavigateCaretPositionAlgorithm(lyrics),
+                    LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
+                    LyricEditorMode.CreateTimeTag => new TimeTagIndexCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode },
+                    LyricEditorMode.RecordTimeTag => new TimeTagCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode },
+                    LyricEditorMode.AdjustTimeTag => new NavigateCaretPositionAlgorithm(lyrics),
+                    LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
+                    LyricEditorMode.Layout => new NavigateCaretPositionAlgorithm(lyrics),
+                    LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
+                    _ => null
+                };
         }
 
         public bool MoveCaret(MovingCaretAction action)
@@ -85,19 +78,47 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
-            if (algorithm == null)
-                throw new InvalidOperationException($"{nameof(algorithm)} cannot be null.");
+            bool hasAlgorithm = algorithm != null;
+            var caretPosition = algorithm?.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
 
-            BindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
+            if (hasAlgorithm && caretPosition == null)
+                return;
+
+            // remain state:
+            // 1. has no caret position because has no algorithm.
+            // 2. has caret position.
+            // should update beatmap selected object in both cases.
+            updateEditorBeatmapSelectedHitObject(lyric);
+
+            if (caretPosition == null)
+                return;
+
             BindableHoverCaretPosition.Value = null;
+            BindableCaretPosition.Value = caretPosition;
         }
 
         public void MoveCaretToTargetPosition(ICaretPosition position)
         {
+            if (position == null)
+                throw new ArgumentNullException(nameof(position));
+
             if (position.Lyric == null)
                 return;
 
-            if (!CaretPositionMovable(position))
+            bool hasAlgorithm = algorithm != null;
+            bool movable = hasAlgorithm && CaretPositionMovable(position);
+
+            // stop moving the caret if forbidden by algorithm calculation.
+            if (hasAlgorithm && !movable)
+                return;
+
+            // remain state:
+            // 1. cannot move because has no algorithm.
+            // 2. can move the caret.
+            // should update beatmap selected object in both cases.
+            updateEditorBeatmapSelectedHitObject(position.Lyric);
+
+            if (!movable)
                 return;
 
             BindableHoverCaretPosition.Value = null;
@@ -106,6 +127,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public void MoveHoverCaretToTargetPosition(ICaretPosition position)
         {
+            if (position == null)
+                throw new ArgumentNullException(nameof(position));
+
             if (position.Lyric == null)
                 return;
 
@@ -142,6 +166,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 BindableCaretPosition.Value = null;
                 BindableHoverCaretPosition.Value = null;
             }
+
+            updateEditorBeatmapSelectedHitObject(lyric);
         }
 
         public bool CaretPositionMovable(ICaretPosition position)
@@ -150,5 +176,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         }
 
         public bool CaretEnabled => algorithm != null;
+
+        private void updateEditorBeatmapSelectedHitObject(Lyric lyric)
+        {
+            beatmap.SelectedHitObjects.Clear();
+
+            if (lyric != null)
+                beatmap.SelectedHitObjects.Add(lyric);
+        }
     }
 }

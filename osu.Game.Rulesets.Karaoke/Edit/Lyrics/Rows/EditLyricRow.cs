@@ -85,6 +85,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             [Resolved]
             private ILyricsChangeHandler lyricsChangeHandler { get; set; }
 
+            [Resolved]
+            private ILyricCaretState lyricCaretState { get; set; }
+
             public Lyric Lyric { get; }
 
             public InfoControl(Lyric lyric)
@@ -245,6 +248,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     if (bindableMode.Value != LyricEditorMode.Manage)
                         return null;
 
+                    // should select lyric if trying to interact with context menu.
+                    lyricCaretState.MoveCaretToTargetPosition(Lyric);
+
                     var menuItems = new List<MenuItem>
                     {
                         new OsuMenuItem("Create new lyric", MenuItemType.Standard, () =>
@@ -304,7 +310,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             private EditorClock editorClock { get; set; }
 
             [Resolved]
-            private LyricCaretState lyricCaretState { get; set; }
+            private ILyricCaretState lyricCaretState { get; set; }
 
             public Lyric Lyric { get; }
 

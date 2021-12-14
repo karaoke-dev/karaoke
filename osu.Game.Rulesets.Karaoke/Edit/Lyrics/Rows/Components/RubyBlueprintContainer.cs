@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(BlueprintSelectionState blueprintSelectionState)
+        private void load(IBlueprintSelectionState blueprintSelectionState)
         {
             // Add ruby tag into blueprint container
             SelectedItems.BindTo(blueprintSelectionState.SelectedRubyTags);
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         protected class RubyTagSelectionHandler : TextTagSelectionHandler
         {
             [BackgroundDependencyLoader]
-            private void load(BlueprintSelectionState blueprintSelectionState)
+            private void load(IBlueprintSelectionState blueprintSelectionState)
             {
                 SelectedItems.BindTo(blueprintSelectionState.SelectedRubyTags);
             }

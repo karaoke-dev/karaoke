@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(ILyricTimeTagsChangeHandler))]
         private readonly LyricTimeTagsChangeHandler lyricTimeTagsChangeHandler;
 
-        [Cached(Type = typeof(INotePositionInfo))]
+        [Cached(typeof(INotePositionInfo))]
         private readonly NotePositionInfo notePositionInfo;
 
         [Cached(typeof(INotesChangeHandler))]

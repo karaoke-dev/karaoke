@@ -10,8 +10,6 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components;
 
@@ -35,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
         protected override SelectionHandler<Note> CreateSelectionHandler() => new NoteEditorSelectionHandler();
 
         [BackgroundDependencyLoader]
-        private void load(BlueprintSelectionState blueprintSelectionState, EditorBeatmap beatmap)
+        private void load(IBlueprintSelectionState blueprintSelectionState, EditorBeatmap beatmap)
         {
             SelectedItems.BindTo(blueprintSelectionState.SelectedNotes);
 
@@ -48,17 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 
         protected class NoteEditorSelectionHandler : ExtendSelectionHandler<Note>
         {
-            private readonly BindableList<HitObject> selectedHitObjects = new();
-
-            public NoteEditorSelectionHandler()
-            {
-                BindablesUtils.Sync(SelectedItems, selectedHitObjects);
-            }
-
             [BackgroundDependencyLoader]
-            private void load(EditorBeatmap editorBeatmap, BlueprintSelectionState blueprintSelectionState)
+            private void load(IBlueprintSelectionState blueprintSelectionState)
             {
-                selectedHitObjects.BindTo(editorBeatmap.SelectedHitObjects);
                 SelectedItems.BindTo(blueprintSelectionState.SelectedNotes);
             }
 

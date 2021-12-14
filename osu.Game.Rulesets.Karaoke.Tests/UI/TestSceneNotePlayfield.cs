@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
         [Cached(typeof(IReadOnlyList<Mod>))]
         private IReadOnlyList<Mod> mods { get; set; } = Array.Empty<Mod>();
 
-        [Cached(Type = typeof(INotePositionInfo))]
+        [Cached(typeof(INotePositionInfo))]
         private readonly PreviewNotePositionInfo notePositionInfo = new();
 
         private readonly List<NotePlayfield> notePlayfields = new();

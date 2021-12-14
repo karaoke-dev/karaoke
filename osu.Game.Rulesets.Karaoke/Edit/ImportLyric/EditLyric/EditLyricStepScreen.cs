@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 
         public override IconUsage Icon => FontAwesome.Solid.Globe;
 
-        [Cached(Type = typeof(ILyricsChangeHandler))]
+        [Cached(typeof(ILyricsChangeHandler))]
         private readonly LyricsChangeHandler lyricsChangeHandler;
 
         public EditLyricStepScreen()

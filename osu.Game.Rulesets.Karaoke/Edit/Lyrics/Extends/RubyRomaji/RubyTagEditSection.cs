@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         protected override string Title => "Ruby";
 
         [BackgroundDependencyLoader]
-        private void load(LyricCaretState lyricCaretState)
+        private void load(ILyricCaretState lyricCaretState)
         {
             lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
             {
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             }
 
             [BackgroundDependencyLoader]
-            private void load(BlueprintSelectionState blueprintSelectionState)
+            private void load(IBlueprintSelectionState blueprintSelectionState)
             {
                 blueprintSelectionState.SelectedRubyTags.BindTo(SelectedItems);
             }

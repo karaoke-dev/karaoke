@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(BlueprintSelectionState blueprintSelectionState)
+        private void load(IBlueprintSelectionState blueprintSelectionState)
         {
             // Add romaji tag into blueprint container
             SelectedItems.BindTo(blueprintSelectionState.SelectedRomajiTags);
@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         protected class RomajiTagSelectionHandler : TextTagSelectionHandler
         {
             [BackgroundDependencyLoader]
-            private void load(BlueprintSelectionState blueprintSelectionState)
+            private void load(IBlueprintSelectionState blueprintSelectionState)
             {
                 SelectedItems.BindTo(blueprintSelectionState.SelectedRomajiTags);
             }

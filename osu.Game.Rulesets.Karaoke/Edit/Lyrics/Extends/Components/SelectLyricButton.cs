@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour, LyricSelectionState lyricSelectionState)
+        private void load(OsuColour colour, ILyricSelectionState lyricSelectionState)
         {
             selecting = lyricSelectionState.Selecting.GetBoundCopy();
             selecting.BindValueChanged(e =>

@@ -25,11 +25,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         protected sealed override string Title => "Auto generate";
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, LyricSelectionState lyricSelectionState, OsuColour colours)
+        private void load(EditorBeatmap beatmap, ILyricSelectionState lyricSelectionState, OsuColour colours)
         {
             Schedule(() =>
             {
-                var disableSelectingLyrics = GetDisableSelectingLyrics(beatmap.HitObjects.OfType<Lyric>().ToArray());
+                var disableSelectingLyrics = GetDisableSelectingLyrics(beatmap.HitObjects.OfType<Lyric>());
 
                 Children = new Drawable[]
                 {
@@ -83,21 +83,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 if (e != LyricEditorSelectingAction.Apply)
                     return;
 
-                // should sync selection to editor beatmap because auto-generate will be apply to those lyric that being selected.
-                var selectedLyrics = lyricSelectionState.SelectedLyrics.ToArray();
-                beatmap.SelectedHitObjects.Clear();
-                beatmap.SelectedHitObjects.AddRange(selectedLyrics);
-
-                Apply(selectedLyrics);
-
-                // after being applied, should clear the selection.
-                beatmap.SelectedHitObjects.Clear();
+                Apply();
             };
         }
 
-        protected abstract Dictionary<Lyric, string> GetDisableSelectingLyrics(Lyric[] lyrics);
+        protected abstract Dictionary<Lyric, string> GetDisableSelectingLyrics(IEnumerable<Lyric> lyrics);
 
-        protected abstract void Apply(Lyric[] lyrics);
+        protected abstract void Apply();
 
         protected abstract InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer();
 

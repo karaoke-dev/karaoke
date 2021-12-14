@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private ActionButton applyButton;
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, LyricSelectionState lyricSelectionState)
+        private void load(OsuColour colours, ILyricSelectionState lyricSelectionState)
         {
             RelativeSizeAxes = Axes.X;
             Height = 45;
@@ -165,7 +165,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             private bool checkboxClicking;
 
             [BackgroundDependencyLoader]
-            private void load(ILyricEditorState state, LyricSelectionState lyricSelectionState, LyricEditorColourProvider colourProvider, EditorBeatmap beatmap)
+            private void load(ILyricEditorState state, ILyricSelectionState lyricSelectionState, LyricEditorColourProvider colourProvider, EditorBeatmap beatmap)
             {
                 mode = state.BindableMode.GetBoundCopy();
                 disableSelectingLyrics = lyricSelectionState.DisableSelectingLyric.GetBoundCopy();

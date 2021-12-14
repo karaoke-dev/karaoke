@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         private EditorLyricPiece editorLyricPiece { get; set; }
 
         [Resolved]
-        private LyricCaretState lyricCaretState { get; set; }
+        private ILyricCaretState lyricCaretState { get; set; }
 
         protected readonly Lyric Lyric;
 

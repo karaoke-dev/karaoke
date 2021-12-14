@@ -54,16 +54,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached]
         private readonly LyricEditorColourProvider colourProvider = new();
 
-        [Cached]
-        private readonly LyricSelectionState lyricSelectionState = new();
+        [Cached(typeof(ILyricSelectionState))]
+        private readonly LyricSelectionState lyricSelectionState;
 
-        [Cached]
-        private readonly LyricCaretState lyricCaretState = new();
+        [Cached(typeof(ILyricCaretState))]
+        private readonly LyricCaretState lyricCaretState;
 
-        [Cached]
-        private readonly BlueprintSelectionState blueprintSelectionState = new();
+        [Cached(typeof(IBlueprintSelectionState))]
+        private readonly BlueprintSelectionState blueprintSelectionState;
 
-        [Cached(Type = typeof(IScrollingInfo))]
+        [Cached(typeof(IScrollingInfo))]
         private readonly LocalScrollingInfo scrollingInfo = new();
 
         [Cached]
@@ -87,7 +87,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public LyricEditor()
         {
-            Child = gridContainer = new GridContainer
+            AddInternal(lyricSelectionState = new LyricSelectionState());
+            AddInternal(lyricCaretState = new LyricCaretState());
+            AddInternal(blueprintSelectionState = new BlueprintSelectionState());
+
+            Add(gridContainer = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
                 Content = new[]
@@ -129,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         },
                     }
                 }
-            };
+            });
 
             container.Items.BindTo(bindableLyrics);
             container.OnOrderChanged += (x, nowOrder) =>
@@ -141,13 +145,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             BindableMode.BindValueChanged(e =>
             {
-                initialCaretPositionAlgorithm();
+                // should wait until beatmap has been loaded.
+                Schedule(() =>
+                {
+                    initialCaretPositionAlgorithm();
+                    lyricCaretState.ResetPosition(e.NewValue);
+                });
 
                 // display add new lyric only with edit mode.
                 container.DisplayBottomDrawable = e.NewValue == LyricEditorMode.Manage;
-
-                // should wait until beatmap has been loaded.
-                Schedule(() => lyricCaretState.ResetPosition(e.NewValue));
 
                 // should control grid container spacing and place some component.
                 initializeExtendArea();
@@ -282,17 +288,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, bindableCreateMovingCaretMode);
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, bindableRecordingMovingCaretMode);
 
-            // if caret position changed, should add into editor beatmap selected hit objects.
-            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
-            {
-                beatmap.SelectedHitObjects.Clear();
-
-                var lyric = e.NewValue?.Lyric;
-
-                if (lyric != null)
-                    beatmap.SelectedHitObjects.Add(lyric);
-            });
-
             // set-up divisor.
             beatDivisor.Value = beatmap.BeatmapInfo.BeatDivisor;
 
@@ -335,13 +330,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private void initialCaretPositionAlgorithm()
         {
-            var lyrics = bindableLyrics.ToArray();
             var state = Mode;
             var recordingMovingCaretMode = Mode == LyricEditorMode.RecordTimeTag
                 ? bindableRecordingMovingCaretMode.Value
                 : bindableCreateMovingCaretMode.Value;
 
-            lyricCaretState.ChangePositionAlgorithm(lyrics, state, recordingMovingCaretMode);
+            lyricCaretState.ChangePositionAlgorithm(state, recordingMovingCaretMode);
         }
 
         protected override bool OnKeyDown(KeyDownEvent e)

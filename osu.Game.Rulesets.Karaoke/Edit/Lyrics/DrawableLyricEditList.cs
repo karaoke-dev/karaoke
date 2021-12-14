@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, LyricCaretState lyricCaretState)
+        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ILyricCaretState lyricCaretState)
         {
             // update selected style to child
             lyricCaretState.BindableCaretPosition.BindValueChanged(e =>

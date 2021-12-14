@@ -17,7 +17,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    [Cached(Type = typeof(IMarkdownTextComponent))]
+    [Cached(typeof(IMarkdownTextComponent))]
     public class SaitenStatus : FillFlowContainer, IMarkdownTextComponent
     {
         private const float size = 22;

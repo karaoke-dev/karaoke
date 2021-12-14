@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
         }
 
         [BackgroundDependencyLoader]
-        private void load(LyricCaretState lyricCaretState, EditorLyricPiece lyricPiece)
+        private void load(ILyricCaretState lyricCaretState, EditorLyricPiece lyricPiece)
         {
             caretPosition = Preview ? lyricCaretState.BindableHoverCaretPosition.GetBoundCopy() : lyricCaretState.BindableCaretPosition.GetBoundCopy();
             caretPosition.BindValueChanged(e =>

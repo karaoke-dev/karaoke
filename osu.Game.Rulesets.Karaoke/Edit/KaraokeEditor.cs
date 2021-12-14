@@ -23,7 +23,7 @@ using osu.Game.Screens.Edit.Compose;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    [Cached(Type = typeof(IPlacementHandler))]
+    [Cached(typeof(IPlacementHandler))]
     public class KaraokeEditor : GenericEditor<KaraokeEditorScreenMode>, IPlacementHandler
     {
         [Cached]

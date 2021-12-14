@@ -21,10 +21,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
     {
         private const int columns = 9;
 
-        [Cached(Type = typeof(IScrollingInfo))]
+        [Cached(typeof(IScrollingInfo))]
         private readonly PreviewScrollingInfo scrollingInfo = new();
 
-        [Cached(Type = typeof(INotePositionInfo))]
+        [Cached(typeof(INotePositionInfo))]
         private readonly PreviewNotePositionInfo positionCalculator = new();
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)

@@ -12,6 +12,7 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osuTK;
@@ -22,6 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
     {
         [Resolved]
         private ILockChangeHandler lockChangeHandler { get; set; }
+
+        [Resolved]
+        private ILyricCaretState lyricCaretState { get; set; }
 
         [Resolved]
         private KaraokeRulesetLyricEditorConfigManager configManager { get; set; }
@@ -69,6 +73,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
         {
             if (lyric.Lock == LockState.None)
             {
+                // should mark lyric as selected for able to apply the lock state.
+                lyricCaretState.MoveCaretToTargetPosition(lyric);
+
                 // change the state by config.
                 var newLockState = configManager.Get<LockState>(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState);
                 lockChangeHandler.Lock(newLockState);

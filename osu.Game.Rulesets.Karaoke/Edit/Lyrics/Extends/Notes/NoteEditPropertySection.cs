@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, LyricCaretState lyricCaretState, Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode)
+        private void load(EditorBeatmap beatmap, ILyricCaretState lyricCaretState, Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode)
         {
             this.bindableNoteEditPropertyMode.BindTo(bindableNoteEditPropertyMode);
             lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 => note.Text = value;
 
             [BackgroundDependencyLoader]
-            private void load(BlueprintSelectionState blueprintSelectionState)
+            private void load(IBlueprintSelectionState blueprintSelectionState)
             {
                 blueprintSelectionState.SelectedNotes.BindTo(SelectedItems);
             }
@@ -112,7 +112,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 => note.RubyText = value;
 
             [BackgroundDependencyLoader]
-            private void load(BlueprintSelectionState blueprintSelectionState)
+            private void load(IBlueprintSelectionState blueprintSelectionState)
             {
                 blueprintSelectionState.SelectedNotes.BindTo(SelectedItems);
             }
@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 => note.Display = value;
 
             [BackgroundDependencyLoader]
-            private void load(BlueprintSelectionState blueprintSelectionState)
+            private void load(IBlueprintSelectionState blueprintSelectionState)
             {
                 blueprintSelectionState.SelectedNotes.BindTo(SelectedItems);
             }
