@@ -75,23 +75,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 editExtend.Show();
             });
 
-            static EditRowExtend createExtend(LyricEditorMode mode, Lyric lyric)
-            {
-                switch (mode)
+            static EditRowExtend createExtend(LyricEditorMode mode, Lyric lyric) =>
+                mode switch
                 {
-                    case LyricEditorMode.RecordTimeTag:
-                        return new RecordingTimeTagRowExtend(lyric);
-
-                    case LyricEditorMode.AdjustTimeTag:
-                        return new TimeTagRowExtend(lyric);
-
-                    case LyricEditorMode.EditNote:
-                        return new NoteRowExtend(lyric);
-
-                    default:
-                        return null;
-                }
-            }
+                    LyricEditorMode.RecordTimeTag => new RecordingTimeTagRowExtend(lyric),
+                    LyricEditorMode.AdjustTimeTag => new TimeTagRowExtend(lyric),
+                    LyricEditorMode.EditNote => new NoteRowExtend(lyric),
+                    _ => null
+                };
 
             void removeExtend()
             {
