@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
     public interface ILyricSelectionState
     {
-        BindableBool Selecting { get; }
+        IBindable<bool> Selecting { get; }
 
         BindableDictionary<Lyric, string> DisableSelectingLyric { get; }
 

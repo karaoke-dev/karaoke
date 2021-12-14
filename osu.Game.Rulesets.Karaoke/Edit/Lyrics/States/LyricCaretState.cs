@@ -17,9 +17,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
     public class LyricCaretState : Component, ILyricCaretState
     {
-        public Bindable<ICaretPosition> BindableHoverCaretPosition { get; } = new();
+        public IBindable<ICaretPosition> BindableHoverCaretPosition => bindableHoverCaretPosition;
 
-        public Bindable<ICaretPosition> BindableCaretPosition { get; } = new();
+        public IBindable<ICaretPosition> BindableCaretPosition => bindableCaretPosition;
+
+        private readonly Bindable<ICaretPosition> bindableHoverCaretPosition = new();
+
+        private readonly Bindable<ICaretPosition> bindableCaretPosition = new();
 
         private ICaretPositionAlgorithm algorithm;
 
@@ -53,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (algorithm == null)
                 return false;
 
-            var currentPosition = BindableCaretPosition.Value;
+            var currentPosition = bindableCaretPosition.Value;
 
             var position = action switch
             {
@@ -93,8 +97,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (caretPosition == null)
                 return;
 
-            BindableHoverCaretPosition.Value = null;
-            BindableCaretPosition.Value = caretPosition;
+            bindableHoverCaretPosition.Value = null;
+            bindableCaretPosition.Value = caretPosition;
         }
 
         public void MoveCaretToTargetPosition(ICaretPosition position)
@@ -121,8 +125,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (!movable)
                 return;
 
-            BindableHoverCaretPosition.Value = null;
-            BindableCaretPosition.Value = position;
+            bindableHoverCaretPosition.Value = null;
+            bindableCaretPosition.Value = position;
         }
 
         public void MoveHoverCaretToTargetPosition(ICaretPosition position)
@@ -136,35 +140,35 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (!CaretPositionMovable(position))
                 return;
 
-            BindableHoverCaretPosition.Value = position;
+            bindableHoverCaretPosition.Value = position;
         }
 
         public void ClearHoverCaretPosition()
         {
-            BindableHoverCaretPosition.Value = null;
+            bindableHoverCaretPosition.Value = null;
         }
 
         public void ResetPosition(LyricEditorMode mode)
         {
-            var lyric = BindableCaretPosition.Value?.Lyric;
+            var lyric = bindableCaretPosition.Value?.Lyric;
 
             if (algorithm != null)
             {
                 if (lyric != null)
                 {
-                    BindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
-                    BindableHoverCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
+                    bindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
+                    bindableHoverCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
                 }
                 else
                 {
-                    BindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition>("MoveToFirst");
-                    BindableHoverCaretPosition.Value = algorithm.CallMethod<ICaretPosition>("MoveToFirst");
+                    bindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition>("MoveToFirst");
+                    bindableHoverCaretPosition.Value = algorithm.CallMethod<ICaretPosition>("MoveToFirst");
                 }
             }
             else
             {
-                BindableCaretPosition.Value = null;
-                BindableHoverCaretPosition.Value = null;
+                bindableCaretPosition.Value = null;
+                bindableHoverCaretPosition.Value = null;
             }
 
             updateEditorBeatmapSelectedHitObject(lyric);

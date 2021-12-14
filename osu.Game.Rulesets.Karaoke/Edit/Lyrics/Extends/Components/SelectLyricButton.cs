@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
     public class SelectLyricButton : OsuButton
     {
-        private Bindable<bool> selecting;
+        private IBindable<bool> selecting;
 
         protected virtual string StandardText => "Select lyric";
 

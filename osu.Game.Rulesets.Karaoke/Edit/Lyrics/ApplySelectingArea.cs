@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private const float spacing = 10;
         private const float button_width = 100;
 
-        private Bindable<bool> selecting;
+        private IBindable<bool> selecting;
         private BindableList<Lyric> selectedLyrics;
 
         private ActionButton applyButton;

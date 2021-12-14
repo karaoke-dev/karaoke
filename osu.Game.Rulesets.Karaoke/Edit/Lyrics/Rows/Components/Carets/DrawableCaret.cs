@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 {
     public abstract class DrawableCaret<TCaret> : DrawableCaret where TCaret : class, ICaretPosition
     {
-        private Bindable<ICaretPosition> caretPosition;
+        private IBindable<ICaretPosition> caretPosition;
 
         protected DrawableCaret(bool preview)
             : base(preview)

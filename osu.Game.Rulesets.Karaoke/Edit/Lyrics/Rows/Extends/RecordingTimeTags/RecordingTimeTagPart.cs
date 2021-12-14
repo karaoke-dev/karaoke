@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
         private class CurrentRecordingTimeTagVisualization : CompositeDrawable
         {
-            private Bindable<ICaretPosition> position;
+            private IBindable<ICaretPosition> position;
 
             private readonly Lyric lyric;
 

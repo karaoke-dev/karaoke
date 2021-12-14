@@ -226,13 +226,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     Action = () =>
                     {
                         // navigate to current lyric.
-                        lyricCaretState.BindableCaretPosition.Value = state.Mode switch
+                        ICaretPosition caretPosition = state.Mode switch
                         {
                             LyricEditorMode.CreateTimeTag => new TimeTagIndexCaretPosition(lyric, timeTag?.Index ?? new TextIndex()),
                             LyricEditorMode.RecordTimeTag => new TimeTagCaretPosition(lyric, timeTag),
                             LyricEditorMode.AdjustTimeTag => new NavigateCaretPosition(lyric),
                             _ => throw new ArgumentOutOfRangeException(nameof(state.Mode))
                         };
+
+                        lyricCaretState.MoveCaretToTargetPosition(caretPosition);
 
                         // set current time-tag as selected.
                         selectedTimeTags.Clear();
