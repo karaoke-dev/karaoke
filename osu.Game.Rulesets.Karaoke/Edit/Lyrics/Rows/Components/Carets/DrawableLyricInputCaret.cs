@@ -4,7 +4,6 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
-using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osuTK;
 using osuTK.Graphics;
@@ -15,9 +14,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
     {
         private const float caret_move_time = 60;
         private const float caret_width = 3;
-
-        [Resolved]
-        private OsuColour colours { get; set; }
 
         [Resolved]
         private EditorLyricPiece lyricPiece { get; set; }
