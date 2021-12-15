@@ -25,23 +25,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin
             this.skin = skin;
         }
 
-        protected override GenericEditorScreen<KaraokeSkinEditorScreenMode> GenerateScreen(KaraokeSkinEditorScreenMode screenMode)
-        {
-            switch (screenMode)
+        protected override GenericEditorScreen<KaraokeSkinEditorScreenMode> GenerateScreen(KaraokeSkinEditorScreenMode screenMode) =>
+            screenMode switch
             {
-                case KaraokeSkinEditorScreenMode.Config:
-                    return new ConfigScreen(skin);
-
-                case KaraokeSkinEditorScreenMode.Layout:
-                    return new LayoutScreen(skin);
-
-                case KaraokeSkinEditorScreenMode.Style:
-                    return new StyleScreen(skin);
-
-                default:
-                    throw new InvalidOperationException("Editor menu bar switched to an unsupported mode");
-            }
-        }
+                KaraokeSkinEditorScreenMode.Config => new ConfigScreen(skin),
+                KaraokeSkinEditorScreenMode.Layout => new LayoutScreen(skin),
+                KaraokeSkinEditorScreenMode.Style => new StyleScreen(skin),
+                _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode")
+            };
 
         protected override MenuItem[] GenerateMenuItems(KaraokeSkinEditorScreenMode screenMode)
         {

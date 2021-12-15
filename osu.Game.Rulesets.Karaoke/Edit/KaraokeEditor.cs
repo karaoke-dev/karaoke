@@ -76,73 +76,49 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
         }
 
-        protected override GenericEditorScreen<KaraokeEditorScreenMode> GenerateScreen(KaraokeEditorScreenMode screenMode)
-        {
-            switch (screenMode)
+        protected override GenericEditorScreen<KaraokeEditorScreenMode> GenerateScreen(KaraokeEditorScreenMode screenMode) =>
+            screenMode switch
             {
-                case KaraokeEditorScreenMode.Lyric:
-                    return new LyricEditorScreen();
-
-                case KaraokeEditorScreenMode.Singer:
-                    return new SingerScreen();
-
-                case KaraokeEditorScreenMode.Translate:
-                    return new TranslateScreen();
-
-                default:
-                    throw new InvalidOperationException("Editor menu bar switched to an unsupported mode");
-            }
-        }
+                KaraokeEditorScreenMode.Lyric => new LyricEditorScreen(),
+                KaraokeEditorScreenMode.Singer => new SingerScreen(),
+                KaraokeEditorScreenMode.Translate => new TranslateScreen(),
+                _ => throw new InvalidOperationException("Editor menu bar switched to an unsupported mode")
+            };
 
         protected override MenuItem[] GenerateMenuItems(KaraokeEditorScreenMode screenMode)
         {
-            switch (screenMode)
+            return screenMode switch
             {
-                case KaraokeEditorScreenMode.Lyric:
-                    return new MenuItem[]
+                KaraokeEditorScreenMode.Lyric => new MenuItem[]
+                {
+                    new("File")
                     {
-                        new("File")
+                        Items = new MenuItem[]
                         {
-                            Items = new MenuItem[]
-                            {
-                                new ImportLyricMenu(this, "Import from text"),
-                                new ImportLyricMenu(this, "Import from .lrc file"),
-                                new EditorMenuItemSpacer(),
-                                new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => exportLyricManager.ExportToLrc()),
-                                new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),
-                                new EditorMenuItem("Export to json", MenuItemType.Destructive, () => exportLyricManager.ExportToJson()),
-                            }
-                        },
-                        new LyricEditorModeMenu(lyricEditorConfigManager, "Mode"),
-                        new("View")
+                            new ImportLyricMenu(this, "Import from text"),
+                            new ImportLyricMenu(this, "Import from .lrc file"),
+                            new EditorMenuItemSpacer(),
+                            new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => exportLyricManager.ExportToLrc()),
+                            new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),
+                            new EditorMenuItem("Export to json", MenuItemType.Destructive, () => exportLyricManager.ExportToJson()),
+                        }
+                    },
+                    new LyricEditorModeMenu(lyricEditorConfigManager, "Mode"),
+                    new("View")
+                    {
+                        Items = new MenuItem[]
                         {
-                            Items = new MenuItem[]
-                            {
-                                new LyricEditorTextSizeMenu(lyricEditorConfigManager, "Text size"),
-                                new AutoFocusToEditLyricMenu(lyricEditorConfigManager, "Auto focus to edit lyric"),
-                            }
-                        },
-                        new("Config")
-                        {
-                            Items = new MenuItem[]
-                            {
-                                new EditorMenuItem("Lyric editor"),
-                                new GeneratorConfigMenu("Auto-generator"),
-                                new LockStateMenu(lyricEditorConfigManager, "Lock"),
-                            }
-                        },
-                        new("Tools")
-                        {
-                            Items = new MenuItem[]
-                            {
-                                new KaraokeSkinEditorMenu(this, null, "Skin editor"),
-                            }
-                        },
-                    };
-
-                default:
-                    return null;
-            }
+                            new LyricEditorTextSizeMenu(lyricEditorConfigManager, "Text size"), new AutoFocusToEditLyricMenu(lyricEditorConfigManager, "Auto focus to edit lyric"),
+                        }
+                    },
+                    new("Config")
+                    {
+                        Items = new MenuItem[] { new EditorMenuItem("Lyric editor"), new GeneratorConfigMenu("Auto-generator"), new LockStateMenu(lyricEditorConfigManager, "Lock"), }
+                    },
+                    new("Tools") { Items = new MenuItem[] { new KaraokeSkinEditorMenu(this, null, "Skin editor"), } },
+                },
+                _ => null
+            };
         }
 
         #region IPlacementHandler

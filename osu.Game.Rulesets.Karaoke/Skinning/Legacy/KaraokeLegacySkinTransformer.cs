@@ -84,17 +84,12 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     return base.GetDrawableComponent(component);
             }
 
-            SkinnableTargetComponentsContainer getTargetComponentsContainerFromOtherPlace()
-            {
-                switch (Skin)
+            SkinnableTargetComponentsContainer getTargetComponentsContainerFromOtherPlace() =>
+                Skin switch
                 {
-                    case LegacySkin legacySkin:
-                        return new TempLegacySkin(legacySkin.SkinInfo.Value).GetDrawableComponent(component) as SkinnableTargetComponentsContainer;
-
-                    default:
-                        throw new InvalidCastException();
-                }
-            }
+                    LegacySkin legacySkin => new TempLegacySkin(legacySkin.SkinInfo.Value).GetDrawableComponent(component) as SkinnableTargetComponentsContainer,
+                    _ => throw new InvalidCastException()
+                };
         }
 
         private Drawable getResult(HitResult result)

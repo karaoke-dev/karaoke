@@ -6,7 +6,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
-using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
@@ -15,9 +14,6 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
         public readonly Bindable<LyricStyle> EditStyle = new();
 
         public readonly Bindable<NoteSkin> EditNoteStyle = new();
-
-        [Resolved]
-        private ISkinSource source { get; set; }
 
         [BackgroundDependencyLoader]
         private void load()
