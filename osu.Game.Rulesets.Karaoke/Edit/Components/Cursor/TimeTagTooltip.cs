@@ -85,16 +85,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 
         private TimeTag lastTimeTag;
 
-        public override void SetContent(TimeTag content)
+        public override void SetContent(TimeTag timeTag)
         {
-            if (content == lastTimeTag)
+            if (timeTag == lastTimeTag)
                 return;
 
-            lastTimeTag = content;
+            lastTimeTag = timeTag;
 
-            trackTimer.Text = TimeTagUtils.FormattedString(content);
-            index.Text = $"Position: {content.Index.Index}";
-            indexState.Text = content.Index.State == TextIndex.IndexState.Start ? "Start" : "End";
+            trackTimer.Text = TimeTagUtils.FormattedString(timeTag);
+            index.Text = $"Position: {timeTag.Index.Index}";
+            indexState.Text = timeTag.Index.State == TextIndex.IndexState.Start ? "Start" : "End";
         }
 
         [BackgroundDependencyLoader]

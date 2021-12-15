@@ -78,18 +78,18 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
         private Singer lastSinger;
 
-        public override void SetContent(Singer content)
+        public override void SetContent(Singer singer)
         {
-            if (content == lastSinger)
+            if (singer == lastSinger)
                 return;
 
-            lastSinger = content;
+            lastSinger = singer;
 
-            avatar.Singer = content;
-            singerName.Text = content.Name;
-            singerEnglishName.Text = content.EnglishName != null ? $"({content.EnglishName})" : "";
-            singerRomajiName.Text = content.RomajiName;
-            singerDescription.Text = content.Description ?? "<No description>";
+            avatar.Singer = singer;
+            singerName.Text = singer.Name;
+            singerEnglishName.Text = singer.EnglishName != null ? $"({singer.EnglishName})" : "";
+            singerRomajiName.Text = singer.RomajiName;
+            singerDescription.Text = singer.Description ?? "<No description>";
         }
     }
 }

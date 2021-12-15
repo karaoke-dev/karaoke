@@ -11,14 +11,14 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
     {
         private Lyric lastLyric;
 
-        public override void SetContent(Lyric content)
+        public override void SetContent(Lyric lyric)
         {
-            if (content == lastLyric)
+            if (lyric == lastLyric)
                 return;
 
-            lastLyric = content;
+            lastLyric = lyric;
 
-            Child = new PreviewLyricSpriteText(content)
+            Child = new PreviewLyricSpriteText(lyric)
             {
                 Margin = new MarginPadding(10),
                 Font = new FontUsage(size: 32),

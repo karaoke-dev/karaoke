@@ -35,17 +35,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
 
         private Issue[] lastIssues;
 
-        public override void SetContent(Issue[] content)
+        public override void SetContent(Issue[] issues)
         {
-            if (content == lastIssues)
+            if (issues == lastIssues)
                 return;
 
-            lastIssues = content;
+            lastIssues = issues;
 
             // clear exist warning.
             invalidMessage.Clear();
 
-            foreach (var issue in content)
+            foreach (var issue in issues)
             {
                 switch (issue)
                 {
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             }
 
             // show no problem message
-            if (content.Length == 0)
+            if (issues.Length == 0)
                 invalidMessage.AddSuccessParagraph("Seems no issue in this lyric.");
 
             void createTimeInvalidMessage(TimeInvalid timeInvalid)
