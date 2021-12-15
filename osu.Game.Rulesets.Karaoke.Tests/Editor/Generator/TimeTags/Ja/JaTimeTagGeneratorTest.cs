@@ -118,7 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags.Ja
                 }
             };
 
-            string[] actualTimeTags = new[]
+            string[] actualTimeTags =
             {
                 "[0,start]:",
                 "[0,start]:",
