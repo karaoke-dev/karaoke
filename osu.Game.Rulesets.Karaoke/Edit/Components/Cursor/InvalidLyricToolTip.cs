@@ -33,8 +33,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
             };
         }
 
+        private Issue[] lastIssues;
+
         public override void SetContent(Issue[] content)
         {
+            if (content == lastIssues)
+                return;
+
+            lastIssues = content;
+
             // clear exist warning.
             invalidMessage.Clear();
 

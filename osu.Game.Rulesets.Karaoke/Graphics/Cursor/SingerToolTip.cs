@@ -76,8 +76,15 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             };
         }
 
+        private Singer lastSinger;
+
         public override void SetContent(Singer content)
         {
+            if (content == lastSinger)
+                return;
+
+            lastSinger = content;
+
             avatar.Singer = content;
             singerName.Text = content.Name;
             singerEnglishName.Text = content.EnglishName != null ? $"({content.EnglishName})" : "";
