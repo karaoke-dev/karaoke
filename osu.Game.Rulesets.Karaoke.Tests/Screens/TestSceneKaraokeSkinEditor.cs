@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens
             // todo: karaoke skin editor might not need editor click eventually?
             Dependencies.Cache(new EditorClock());
 
-            skinManager.CurrentSkinInfo.Value = DefaultKaraokeSkin.Default.ToLive();
+            skinManager.CurrentSkinInfo.Value = DefaultKaraokeSkin.CreateInfo().ToLiveUnmanaged();
 
             karaokeSkin = skinManager.CurrentSkin.Value as KaraokeSkin;
         }
