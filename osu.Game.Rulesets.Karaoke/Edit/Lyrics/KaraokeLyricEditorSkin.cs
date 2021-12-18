@@ -4,10 +4,12 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Skinning;
@@ -24,18 +26,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         internal static readonly Guid DEFAULT_SKIN = new("FEC5A290-5709-11EC-9F10-0800200C9A66");
 
-        public static SkinInfo Default { get; } = new()
+        public static SkinInfo CreateInfo() => new()
         {
             ID = DEFAULT_SKIN,
             Name = "karaoke! (default editor skin)",
             Creator = "team karaoke!",
+            Protected = true,
+            InstantiationInfo = typeof(DefaultKaraokeSkin).GetInvariantInstantiationInfo(),
         };
 
         public KaraokeLyricEditorSkin(IStorageResourceProvider resources)
-            : this(Default, resources)
+            : this(CreateInfo(), resources)
         {
         }
 
+        [UsedImplicitly(ImplicitUseKindFlags.InstantiatedWithFixedConstructorSignature)]
         public KaraokeLyricEditorSkin(SkinInfo skin, IStorageResourceProvider resources)
             : base(skin, resources)
         {

@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens
         [BackgroundDependencyLoader]
         private void load(SkinManager skinManager)
         {
-            skinManager.CurrentSkinInfo.Value = DefaultKaraokeSkin.Default.ToLive();
+            skinManager.CurrentSkinInfo.Value = DefaultKaraokeSkin.CreateInfo().ToLiveUnmanaged();
 
             karaokeSkin = skinManager.CurrentSkin.Value as KaraokeSkin;
         }
