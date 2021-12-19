@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         public readonly IDictionary<int, Bindable<LyricStyle>> BindableStyles = new Dictionary<int, Bindable<LyricStyle>>();
         public readonly IDictionary<int, Bindable<LyricLayout>> BindableLayouts = new Dictionary<int, Bindable<LyricLayout>>();
         public readonly IDictionary<int, Bindable<LayoutGroup>> BindableLayoutGroups = new Dictionary<int, Bindable<LayoutGroup>>();
-        public readonly IDictionary<int, Bindable<NoteSkin>> BindableNotes = new Dictionary<int, Bindable<NoteSkin>>();
+        public readonly IDictionary<int, Bindable<NoteStyle>> BindableNotes = new Dictionary<int, Bindable<NoteStyle>>();
         public readonly Bindable<LyricConfig> BindableDefaultLyricConfig = new();
 
         public readonly Bindable<IDictionary<int, string>> BindableFontsLookup = new();

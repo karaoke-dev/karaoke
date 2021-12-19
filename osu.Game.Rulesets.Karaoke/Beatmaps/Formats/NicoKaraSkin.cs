@@ -16,6 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         public List<LyricLayout> Layouts { get; set; }
 
-        public List<NoteSkin> NoteSkins { get; set; }
+        public List<NoteStyle> NoteSkins { get; set; }
     }
 }

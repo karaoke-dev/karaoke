@@ -5,7 +5,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
 {
-    public class NoteSkin
+    public class NoteStyle
     {
         public string Name { get; set; }
 
