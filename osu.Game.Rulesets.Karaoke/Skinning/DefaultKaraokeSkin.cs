@@ -45,6 +45,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             {
                 var karaokeSkin = new KaraokeSkinDecoder().Decode(reader);
 
+                // Default values
+                BindableDefaultLyricConfig.Value = karaokeSkin.DefaultLyricConfig;
+                BindableDefaultLyricStyle.Value = karaokeSkin.DefaultLyricStyle;
+                BindableDefaultNoteStyle.Value = karaokeSkin.DefaultNoteStyle;
+
                 // Create bindable
                 for (int i = 0; i < karaokeSkin.Layouts.Count; i++)
                     BindableLayouts.Add(i, new Bindable<LyricLayout>(karaokeSkin.Layouts[i]));
@@ -52,7 +57,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     BindableLyricStyles.Add(i, new Bindable<LyricStyle>(karaokeSkin.LyricStyles[i]));
                 for (int i = 0; i < karaokeSkin.NoteStyles.Count; i++)
                     BindableNoteStyles.Add(i, new Bindable<NoteStyle>(karaokeSkin.NoteStyles[i]));
-                BindableDefaultLyricConfig.Value = karaokeSkin.DefaultLyricConfig;
 
                 // Create lookups
                 BindableFontsLookup.Value = karaokeSkin.LyricStyles.ToDictionary(k => karaokeSkin.LyricStyles.IndexOf(k), y => y.Name);

@@ -10,6 +10,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
     {
         public LyricConfig DefaultLyricConfig { get; set; }
 
+        public LyricStyle DefaultLyricStyle { get; set; }
+
+        public NoteStyle DefaultNoteStyle { get; set; }
+
         public List<LayoutGroup> LayoutGroups { get; set; }
 
         public List<LyricLayout> Layouts { get; set; }

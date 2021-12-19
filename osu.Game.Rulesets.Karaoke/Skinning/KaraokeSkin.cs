@@ -23,11 +23,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     /// </summary>
     public class KaraokeSkin : Skin
     {
+        public readonly Bindable<LyricConfig> BindableDefaultLyricConfig = new();
+        public readonly Bindable<LyricStyle> BindableDefaultLyricStyle = new();
+        public readonly Bindable<NoteStyle> BindableDefaultNoteStyle = new();
+
+        // todo: those properties should only appear in karaoke beatmap skin.
         public readonly IDictionary<int, Bindable<LyricLayout>> BindableLayouts = new Dictionary<int, Bindable<LyricLayout>>();
         public readonly IDictionary<int, Bindable<LayoutGroup>> BindableLayoutGroups = new Dictionary<int, Bindable<LayoutGroup>>();
         public readonly IDictionary<int, Bindable<LyricStyle>> BindableLyricStyles = new Dictionary<int, Bindable<LyricStyle>>();
         public readonly IDictionary<int, Bindable<NoteStyle>> BindableNoteStyles = new Dictionary<int, Bindable<NoteStyle>>();
-        public readonly Bindable<LyricConfig> BindableDefaultLyricConfig = new();
 
         public readonly Bindable<IDictionary<int, string>> BindableFontsLookup = new();
         public readonly Bindable<IDictionary<int, string>> BindableLayoutsLookup = new();
