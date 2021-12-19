@@ -10,6 +10,7 @@ using osu.Framework.Graphics.OpenGL.Textures;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Audio;
 using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.Skinning.Mappings;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
@@ -32,6 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         public readonly IDictionary<int, Bindable<LayoutGroup>> BindableLayoutGroups = new Dictionary<int, Bindable<LayoutGroup>>();
         public readonly IDictionary<int, Bindable<LyricStyle>> BindableLyricStyles = new Dictionary<int, Bindable<LyricStyle>>();
         public readonly IDictionary<int, Bindable<NoteStyle>> BindableNoteStyles = new Dictionary<int, Bindable<NoteStyle>>();
+        public readonly HashSet<IStyleMappingRole> BindableStyleMappingRoles = new();
 
         public readonly Bindable<IDictionary<int, string>> BindableFontsLookup = new();
         public readonly Bindable<IDictionary<int, string>> BindableLayoutsLookup = new();
