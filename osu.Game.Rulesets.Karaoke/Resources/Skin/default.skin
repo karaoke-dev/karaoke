@@ -19,7 +19,7 @@
       "weight": "Bold"
     }
   },
-  "styles": [
+  "lyric_styles": [
     {
       "left_lyric_text_shaders": [
         {
@@ -190,7 +190,7 @@
       "vertical_margin": 45
     }
   ],
-  "note_skins": [
+  "note_styles": [
     {
       "name": "Note-1",
       "note_color": "#44AADD",

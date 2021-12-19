@@ -12,10 +12,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         public List<LayoutGroup> LayoutGroups { get; set; }
 
-        public List<LyricStyle> Styles { get; set; }
-
         public List<LyricLayout> Layouts { get; set; }
 
-        public List<NoteStyle> NoteSkins { get; set; }
+        public List<LyricStyle> LyricStyles { get; set; }
+
+        public List<NoteStyle> NoteStyles { get; set; }
     }
 }
