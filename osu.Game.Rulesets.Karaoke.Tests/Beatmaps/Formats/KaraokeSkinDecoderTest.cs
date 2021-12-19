@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var skin = decoder.Decode(stream);
 
                 // Checking font decode result
-                var firstDecodedFont = skin.Styles.FirstOrDefault();
+                var firstDecodedFont = skin.LyricStyles.FirstOrDefault();
                 Assert.IsNotNull(firstDecodedFont);
                 Assert.AreEqual(firstDecodedFont.Name, "標準配色");
 
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(defaultLyricConfig.RomajiMargin, 0);
 
                 // Checking note decode result
-                var firstDecodedNoteSkin = skin.NoteSkins.FirstOrDefault();
+                var firstDecodedNoteSkin = skin.NoteStyles.FirstOrDefault();
                 Assert.NotNull(firstDecodedNoteSkin);
                 Assert.AreEqual(firstDecodedNoteSkin.Name, "Note-1");
                 Assert.AreEqual(firstDecodedNoteSkin.NoteColor, new Color4(68, 170, 221, 255));

@@ -45,19 +45,23 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             {
                 var karaokeSkin = new KaraokeSkinDecoder().Decode(reader);
 
+                // Default values
+                BindableDefaultLyricConfig.Value = karaokeSkin.DefaultLyricConfig;
+                BindableDefaultLyricStyle.Value = karaokeSkin.DefaultLyricStyle;
+                BindableDefaultNoteStyle.Value = karaokeSkin.DefaultNoteStyle;
+
                 // Create bindable
-                for (int i = 0; i < karaokeSkin.Styles.Count; i++)
-                    BindableStyles.Add(i, new Bindable<LyricStyle>(karaokeSkin.Styles[i]));
                 for (int i = 0; i < karaokeSkin.Layouts.Count; i++)
                     BindableLayouts.Add(i, new Bindable<LyricLayout>(karaokeSkin.Layouts[i]));
-                for (int i = 0; i < karaokeSkin.NoteSkins.Count; i++)
-                    BindableNotes.Add(i, new Bindable<NoteSkin>(karaokeSkin.NoteSkins[i]));
-                BindableDefaultLyricConfig.Value = karaokeSkin.DefaultLyricConfig;
+                for (int i = 0; i < karaokeSkin.LyricStyles.Count; i++)
+                    BindableLyricStyles.Add(i, new Bindable<LyricStyle>(karaokeSkin.LyricStyles[i]));
+                for (int i = 0; i < karaokeSkin.NoteStyles.Count; i++)
+                    BindableNoteStyles.Add(i, new Bindable<NoteStyle>(karaokeSkin.NoteStyles[i]));
 
                 // Create lookups
-                BindableFontsLookup.Value = karaokeSkin.Styles.ToDictionary(k => karaokeSkin.Styles.IndexOf(k), y => y.Name);
+                BindableFontsLookup.Value = karaokeSkin.LyricStyles.ToDictionary(k => karaokeSkin.LyricStyles.IndexOf(k), y => y.Name);
                 BindableLayoutsLookup.Value = karaokeSkin.Layouts.ToDictionary(k => karaokeSkin.Layouts.IndexOf(k), y => y.Name);
-                BindableNotesLookup.Value = karaokeSkin.NoteSkins.ToDictionary(k => karaokeSkin.NoteSkins.IndexOf(k), y => y.Name);
+                BindableNotesLookup.Value = karaokeSkin.NoteStyles.ToDictionary(k => karaokeSkin.NoteStyles.IndexOf(k), y => y.Name);
             }
         }
     }

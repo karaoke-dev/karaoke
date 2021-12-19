@@ -56,11 +56,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             }
 
             // Clean-up style
-            output.Styles = new List<LyricStyle>();
+            output.LyricStyles = new List<LyricStyle>();
 
             foreach (var nicoKaraFont in nicoKaraProject.KaraokeFonts)
             {
-                output.Styles.Add(new LyricStyle
+                output.LyricStyles.Add(new LyricStyle
                 {
                     Name = nicoKaraFont.Name,
                     LeftLyricTextShaders = createShaders(nicoKaraFont, ApplyShaderPart.Left),

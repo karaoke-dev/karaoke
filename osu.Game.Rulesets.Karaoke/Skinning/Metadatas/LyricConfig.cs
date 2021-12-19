@@ -7,6 +7,22 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
 {
     public class LyricConfig
     {
+        public static readonly LyricConfig DEFAULT = new()
+        {
+            Name = "Default",
+            SmartHorizon = KaraokeTextSmartHorizon.Multi,
+            LyricsInterval = 4,
+            RubyInterval = 2,
+            RomajiInterval = 2,
+            RubyAlignment = LyricTextAlignment.EqualSpace,
+            RomajiAlignment = LyricTextAlignment.EqualSpace,
+            RubyMargin = 4,
+            RomajiMargin = 4,
+            MainTextFont = new FontUsage("Torus", 48, "Bold"),
+            RubyTextFont = new FontUsage("Torus", 20, "Bold"),
+            RomajiTextFont = new FontUsage("Torus", 20, "Bold")
+        };
+
         public string Name { get; set; }
 
         /// <summary>
