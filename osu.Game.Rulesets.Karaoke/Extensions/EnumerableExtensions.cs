@@ -68,5 +68,10 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
         /// <returns></returns>
         public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source)
             => source ?? Enumerable.Empty<T>();
+
+        public static int IndexOf<T>(this IEnumerable<T> array, T value)
+        {
+            return array.ToList().IndexOf(value);
+        }
     }
 }
