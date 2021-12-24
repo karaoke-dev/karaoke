@@ -184,7 +184,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 if (romajiIndex < 0)
                     throw new ArgumentOutOfRangeException(nameof(romajiIndex));
 
-                int startCharacterIndex = Text.Length + skinIndex(Rubies, Rubies.Length) + skinIndex(Romajies, romajiIndex);
+                int startCharacterIndex = Text.Length + skinIndex(Rubies, Rubies.Count) + skinIndex(Romajies, romajiIndex);
                 int count = matchedRomaji.Text.Length;
                 var rectangles = Characters.ToList().GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
                 return RectangleFUtils.Union(rectangles);
