@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
         private readonly List<NotePlayfield> notePlayfields = new();
 
         [BackgroundDependencyLoader]
-        private void load(RulesetConfigCache configCache)
+        private void load(IRulesetConfigCache configCache)
         {
             var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(Ruleset.Value.CreateInstance());
             Dependencies.Cache(new KaraokeSessionStatics(config, null));
