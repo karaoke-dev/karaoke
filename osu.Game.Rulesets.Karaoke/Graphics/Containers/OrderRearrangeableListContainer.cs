@@ -58,11 +58,11 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
                     if (bottomDrawable == null)
                         return;
 
-                    bottomDrawable.Y = Spacing.Y;
-                    bottomDrawable.Anchor = Anchor.y2;
-                    bottomDrawable.Origin = Anchor.y0;
+                    bottomDrawable.Anchor |= Anchor.y2;
+                    bottomDrawable.Origin |= Anchor.y2;
 
-                    ScrollContainer.Padding = new MarginPadding { Bottom = bottomDrawable.Height + Spacing.Y * 2 };
+                    // because scroll container only follow list container size, so change the margin to let content bigger.
+                    ListContainer.Margin = new MarginPadding { Bottom = bottomDrawable.Height + Spacing.Y * 2 };
                     ScrollContainer.Add(bottomDrawable);
                 }
                 else
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
                     if (bottomDrawable == null)
                         return;
 
-                    ScrollContainer.Padding = new MarginPadding();
+                    ListContainer.Margin = new MarginPadding();
                     ScrollContainer.Remove(bottomDrawable);
                 }
             }

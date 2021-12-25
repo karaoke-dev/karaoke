@@ -15,6 +15,7 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
@@ -32,12 +33,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
         protected override float SingerInfoSize => 178;
 
         protected override Drawable CreateSingerInfo(Singer singer)
-        {
-            return new DrawableSingerInfo(singer)
-            {
-                RelativeSizeAxes = Axes.Both,
-            };
-        }
+            => new DrawableSingerInfo(singer);
+
+        protected override Drawable CreateTimeLinePart(Singer singer)
+            => new SingerLyricEditor(singer);
 
         internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip<Singer>, IHasContextMenu
         {

@@ -47,6 +47,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
             };
         }
 
-        protected override Drawable CreateTimeLinePart(KaraokeHitObjectComposer composer) => new Container();
+        protected override Drawable CreateTimeLinePart(Singer singer) => new Container();
     }
 }

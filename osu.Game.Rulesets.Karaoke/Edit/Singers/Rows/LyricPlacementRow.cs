@@ -8,13 +8,11 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 {
     public abstract class LyricPlacementColumn : CompositeDrawable
     {
-        private Box background;
         private readonly Singer singer;
 
         protected LyricPlacementColumn(Singer singer)
@@ -27,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
         {
             InternalChildren = new Drawable[]
             {
-                background = new Box
+                new Box
                 {
                     RelativeSizeAxes = Axes.Both,
                     Alpha = 0.3f,
@@ -53,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                                 RelativeSizeAxes = Axes.Both,
                                 Colour = colourProvider.Dark1,
                             },
-                            CreateTimeLinePart(composer)
+                            CreateTimeLinePart(singer).With(x => { x.RelativeSizeAxes = Axes.Both; }),
                         }
                     }
                 }
@@ -64,12 +62,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 
         protected abstract Drawable CreateSingerInfo(Singer singer);
 
-        protected virtual Drawable CreateTimeLinePart(KaraokeHitObjectComposer composer)
-        {
-            return new SingerLyricEditor(singer)
-            {
-                RelativeSizeAxes = Axes.Both,
-            };
-        }
+        protected abstract Drawable CreateTimeLinePart(Singer singer);
     }
 }
