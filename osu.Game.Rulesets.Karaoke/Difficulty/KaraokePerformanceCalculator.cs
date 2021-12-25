@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
         {
         }
 
-        public override double Calculate(Dictionary<string, double> categoryDifficulty = null)
+        public override PerformanceAttributes Calculate()
         {
             mods = Score.Mods;
             scaledScore = Score.TotalScore;
@@ -68,13 +68,12 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
                     Math.Pow(accValue, 1.1), 1.0 / 1.1
                 ) * multiplier;
 
-            if (categoryDifficulty != null)
+            return new KaraokePerformanceAttributes
             {
-                categoryDifficulty["Strain"] = strainValue;
-                categoryDifficulty["Accuracy"] = accValue;
-            }
-
-            return totalValue;
+                Accuracy = accValue,
+                ScaledScore = scaledScore,
+                Total = totalValue
+            };
         }
 
         private double computeStrainValue()
