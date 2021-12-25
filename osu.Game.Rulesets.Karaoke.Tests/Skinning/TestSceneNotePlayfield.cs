@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
     public class TestSceneNotePlayfield : KaraokeSkinnableColumnTestScene
     {
         [BackgroundDependencyLoader]
-        private void load(RulesetConfigCache configCache)
+        private void load(IRulesetConfigCache configCache)
         {
             SetContents(_ => new KaraokeInputManager(new KaraokeRuleset().RulesetInfo)
             {
