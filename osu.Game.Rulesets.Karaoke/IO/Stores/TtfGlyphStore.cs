@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using osu.Framework.Graphics.Textures;
@@ -124,7 +125,8 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             return (int)kerning;
         }
 
-        Task<CharacterGlyph> IResourceStore<CharacterGlyph>.GetAsync(string name) => Task.Run(() => ((IGlyphStore)this).Get(name[0]));
+        Task<CharacterGlyph> IResourceStore<CharacterGlyph>.GetAsync(string name, CancellationToken cancellationToken) =>
+            Task.Run(() => ((IGlyphStore)this).Get(name[0]), cancellationToken);
 
         CharacterGlyph IResourceStore<CharacterGlyph>.Get(string name) => Get(name[0]);
 
@@ -138,7 +140,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             return !HasGlyph(name.Last()) ? null : LoadCharacter(name.Last());
         }
 
-        public virtual async Task<TextureUpload> GetAsync(string name)
+        public virtual async Task<TextureUpload> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             if (name.Length > 1 && !name.StartsWith($@"{FontName}/", StringComparison.Ordinal))
                 return null;
