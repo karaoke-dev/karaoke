@@ -4,12 +4,15 @@
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 {
     public class DefaultLyricPlacementColumn : LyricPlacementColumn
     {
         public static Singer DefaultSinger { get; } = new(0) { Name = "Default" };
+
+        private SingerLyricEditor singerLyricEditor;
 
         public DefaultLyricPlacementColumn()
             : base(DefaultSinger)
@@ -20,5 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 
         // todo : might display song info?
         protected override Drawable CreateSingerInfo(Singer singer) => new Container();
+        protected override Drawable CreateTimeLinePart(Singer singer)
+            => singerLyricEditor = new SingerLyricEditor(singer);
+
     }
 }
