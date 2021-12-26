@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using osu.Framework.Graphics.Shaders;
 using osu.Game.IO.Serialization;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
@@ -101,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         private static Type getTypeByName(string name)
         {
             // only get name from font
-            var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.Contains("osu.Framework.KaraokeFont"));
+            var assembly = AssemblyUtils.GetAssemblyByName("osu.Framework.KaraokeFont");
             return assembly?.GetType($"osu.Framework.Graphics.Shaders.{name}");
         }
 
