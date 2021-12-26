@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(shader));
+                        throw new InvalidCastException($"{shader?.GetType()} cannot attach shader.");
                 }
             }
         }
