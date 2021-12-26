@@ -5,13 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -56,14 +61,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                                     StartSelecting = () => disableSelectingLyrics
                                 },
                                 null,
-                                new IconButton
+                                CreateConfigButton().With(x =>
                                 {
-                                    Anchor = Anchor.Centre,
-                                    Origin = Anchor.Centre,
-                                    Size = new Vector2(36),
-                                    Icon = FontAwesome.Solid.Cog,
-                                    Action = OpenConfigSetting,
-                                },
+                                    x.Anchor = Anchor.Centre;
+                                    x.Origin = Anchor.Centre;
+                                    x.Size = new Vector2(36);
+                                })
                             }
                         },
                     },
@@ -93,16 +96,79 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected abstract InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer();
 
-        protected virtual void OpenConfigSetting()
-        {
-            // todo : change to abstract class and force to implement.
-        }
+        protected abstract ConfigButton CreateConfigButton();
 
         private class AutoGenerateButton : SelectLyricButton
         {
             protected override string StandardText => "Generate";
 
             protected override string SelectingText => "Cancel generate";
+        }
+
+        protected abstract class ConfigButton : IconButton, IHasPopover
+        {
+            protected ConfigButton()
+            {
+                Icon = FontAwesome.Solid.Cog;
+                Action = openConfigSetting;
+
+                void openConfigSetting()
+                    => this.ShowPopover();
+            }
+
+            public abstract Popover GetPopover();
+        }
+
+        protected abstract class MultiConfigButton : ConfigButton
+        {
+            private KaraokeRulesetEditGeneratorSetting? selectedSetting;
+
+            protected MultiConfigButton()
+            {
+                Action = this.ShowPopover;
+            }
+
+            public override Popover GetPopover()
+            {
+                if (selectedSetting == null)
+                    return createSelectionPopover();
+
+                return GetPopoverBySettingType(selectedSetting.Value);
+            }
+
+            protected abstract IEnumerable<KaraokeRulesetEditGeneratorSetting> AvailableSettings { get; }
+
+            protected abstract string GetDisplayName(KaraokeRulesetEditGeneratorSetting setting);
+
+            protected abstract Popover GetPopoverBySettingType(KaraokeRulesetEditGeneratorSetting setting);
+
+            private Popover createSelectionPopover()
+                => new OsuPopover
+                {
+                    Child = new FillFlowContainer<OsuButton>
+                    {
+                        AutoSizeAxes = Axes.Both,
+                        Direction = FillDirection.Vertical,
+                        Spacing = new Vector2(10),
+                        Children = AvailableSettings.Select(x =>
+                        {
+                            string name = GetDisplayName(x);
+                            return new OsuButton
+                            {
+                                Text = name,
+                                Width = 150,
+                                Action = () =>
+                                {
+                                    selectedSetting = x;
+                                    this.ShowPopover();
+
+                                    // after show config pop-over, should make the state back for able to show this dialog next time.
+                                    selectedSetting = null;
+                                },
+                            };
+                        }).ToList()
+                    }
+                };
         }
 
         protected abstract class InvalidLyricAlertTextContainer : CustomizableTextContainer
