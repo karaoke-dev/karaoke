@@ -27,6 +27,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
             // Copy property
             output.DefaultLyricConfig = result.DefaultLyricConfig;
+            output.DefaultLyricStyle = result.DefaultLyricStyle;
+            output.DefaultNoteStyle = result.DefaultNoteStyle;
             output.LyricStyles = result.LyricStyles;
             output.Layouts = result.Layouts;
             output.NoteStyles = result.NoteStyles;
