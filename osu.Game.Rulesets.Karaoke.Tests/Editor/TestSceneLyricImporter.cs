@@ -10,7 +10,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
@@ -28,10 +27,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
     [TestFixture]
     public class TestSceneLyricImporter : ScreenTestScene<TestSceneLyricImporter.TestLyricImporter>
     {
-        [Cached(typeof(EditorBeatmap))]
-        [Cached(typeof(IBeatSnapProvider))]
-        private readonly EditorBeatmap editorBeatmap;
-
         [Cached]
         private readonly KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager;
 
@@ -51,15 +46,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         {
             var beatmap = new TestKaraokeBeatmap(null);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
-            editorBeatmap = new EditorBeatmap(karaokeBeatmap);
             lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();
         }
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
-
             base.Content.AddRange(new Drawable[]
             {
                 Content,
