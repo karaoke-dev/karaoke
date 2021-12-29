@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Play;
 
@@ -27,6 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         private ImportLyricEditorChangeHandler changeHandler;
 
         private ImportLyricManager importManager;
+
+        private LyricCheckerManager lyricCheckerManager;
 
         private DependencyContainer dependencies;
 
@@ -81,7 +84,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             dependencies.CacheAs<IEditorChangeHandler>(changeHandler);
 
             AddInternal(importManager = new ImportLyricManager());
-            dependencies.CacheAs(importManager);
+            dependencies.Cache(importManager);
+
+            AddInternal(lyricCheckerManager = new LyricCheckerManager());
+            dependencies.Cache(lyricCheckerManager);
         }
 
         private class LyricImporterWaveContainer : WaveContainer

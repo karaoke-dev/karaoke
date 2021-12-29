@@ -12,7 +12,6 @@ using osu.Framework.Screens;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
@@ -40,7 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         private DialogOverlay dialogOverlay;
         private LanguageSelectionDialog languageSelectionDialog;
-        private LyricCheckerManager lyricCheckerManager;
 
         public TestSceneLyricImporter()
         {
@@ -57,12 +55,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 Content,
                 dialogOverlay = new DialogOverlay(),
                 languageSelectionDialog = new LanguageSelectionDialog(),
-                lyricCheckerManager = new LyricCheckerManager()
             });
 
             Dependencies.Cache(dialogOverlay);
             Dependencies.Cache(languageSelectionDialog);
-            Dependencies.Cache(lyricCheckerManager);
 
             Dependencies.Cache(new EditorClock());
         }
