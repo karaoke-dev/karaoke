@@ -1,11 +1,14 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Screens.Edit;
 using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
@@ -18,8 +21,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         [Cached]
         protected LyricImporterSubScreenStack ScreenStack { get; private set; }
 
-        [Cached]
-        private readonly ImportLyricManager importManager;
+        private readonly BindableBeatDivisor beatDivisor = new();
+
+        private EditorBeatmap editorBeatmap;
+        private ImportLyricEditorChangeHandler changeHandler;
+
+        private ImportLyricManager importManager;
+
+        private DependencyContainer dependencies;
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+            => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
         public LyricImporter()
         {
@@ -46,14 +58,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             };
 
             ScreenStack.Push(LyricImporterStep.ImportLyric);
-
-            AddInternal(importManager = new ImportLyricManager());
         }
 
         protected override void LoadComplete()
         {
             base.LoadComplete();
             waves.Show();
+        }
+
+        [BackgroundDependencyLoader]
+        private void load()
+        {
+            // todo: remove caching of this and consume via editorBeatmap?
+            // follow how editor.cs do.
+            dependencies.Cache(beatDivisor);
+
+            // inject local editor beatmap handler because should not affect global beatmap data.
+            var playableBeatmap = new KaraokeBeatmap();
+            AddInternal(editorBeatmap = new EditorBeatmap(playableBeatmap));
+            dependencies.CacheAs(editorBeatmap);
+            changeHandler = new ImportLyricEditorChangeHandler(editorBeatmap);
+            dependencies.CacheAs<IEditorChangeHandler>(changeHandler);
+
+            AddInternal(importManager = new ImportLyricManager());
+            dependencies.CacheAs(importManager);
         }
 
         private class LyricImporterWaveContainer : WaveContainer
@@ -66,6 +94,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 SecondWaveColour = Color4Extensions.FromHex(@"554075");
                 ThirdWaveColour = Color4Extensions.FromHex(@"44325e");
                 FourthWaveColour = Color4Extensions.FromHex(@"392850");
+            }
+        }
+
+        /// <summary>
+        /// Use this class as temp class until <see cref="EditorChangeHandler"/> support customized beatmap.
+        /// </summary>
+        private class ImportLyricEditorChangeHandler : TransactionalCommitComponent, IEditorChangeHandler
+        {
+            public event Action OnStateChange;
+
+            public ImportLyricEditorChangeHandler(EditorBeatmap editorBeatmap)
+            {
+            }
+
+            protected override void UpdateState()
+            {
+                // do nothing.
+                OnStateChange?.Invoke();
             }
         }
     }
