@@ -10,10 +10,8 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
@@ -28,10 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
     [TestFixture]
     public class TestSceneLyricImporter : ScreenTestScene<TestSceneLyricImporter.TestLyricImporter>
     {
-        [Cached(typeof(EditorBeatmap))]
-        [Cached(typeof(IBeatSnapProvider))]
-        private readonly EditorBeatmap editorBeatmap;
-
         [Cached]
         private readonly KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager;
 
@@ -45,32 +39,26 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         private DialogOverlay dialogOverlay;
         private LanguageSelectionDialog languageSelectionDialog;
-        private LyricCheckerManager lyricCheckerManager;
 
         public TestSceneLyricImporter()
         {
             var beatmap = new TestKaraokeBeatmap(null);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
-            editorBeatmap = new EditorBeatmap(karaokeBeatmap);
             lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();
         }
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            Beatmap.Value = CreateWorkingBeatmap(editorBeatmap.PlayableBeatmap);
-
             base.Content.AddRange(new Drawable[]
             {
                 Content,
                 dialogOverlay = new DialogOverlay(),
                 languageSelectionDialog = new LanguageSelectionDialog(),
-                lyricCheckerManager = new LyricCheckerManager()
             });
 
             Dependencies.Cache(dialogOverlay);
             Dependencies.Cache(languageSelectionDialog);
-            Dependencies.Cache(lyricCheckerManager);
 
             Dependencies.Cache(new EditorClock());
         }

@@ -2,8 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.UserInterface;
+using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -56,6 +58,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Resolved]
         private EditorBeatmap editorBeatmap { get; set; }
 
+        [Resolved]
+        private IEditorChangeHandler changeHandler { get; set; }
+
         public KaraokeEditor()
         {
             editConfigManager = new KaraokeRulesetEditConfigManager();
@@ -95,8 +100,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     {
                         Items = new MenuItem[]
                         {
-                            new ImportLyricMenu(this, "Import from text"),
-                            new ImportLyricMenu(this, "Import from .lrc file"),
+                            new ImportLyricMenu(this, "Import from text", importLyric),
+                            new ImportLyricMenu(this, "Import from .lrc file", importLyric),
                             new EditorMenuItemSpacer(),
                             new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => exportLyricManager.ExportToLrc()),
                             new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),
@@ -141,5 +146,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         public void Delete(HitObject hitObject) => editorBeatmap.Remove(hitObject);
 
         #endregion
+
+        private void importLyric(IBeatmap beatmap)
+        {
+            changeHandler.BeginChange();
+
+            editorBeatmap.Clear();
+
+            if (beatmap.HitObjects.Any())
+                editorBeatmap.AddRange(beatmap.HitObjects);
+
+            changeHandler.EndChange();
+        }
     }
 }

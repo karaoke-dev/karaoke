@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 if (step <= lyricSubScreen.Step)
                     throw new ScreenNotCurrentException("Cannot push previous then current screen.");
 
-                if (step != LyricImporterStep.GenerateRuby && step - lyricSubScreen.Step > 1)
+                if (lyricSubScreen.Step == LyricImporterStep.AssignLanguage && step > LyricImporterStep.GenerateTimeTag)
                     throw new ScreenNotCurrentException("Only generate ruby step can be skipped.");
             }
 
