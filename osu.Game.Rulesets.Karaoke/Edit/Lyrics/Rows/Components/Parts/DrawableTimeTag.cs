@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
         /// </summary>
         private const float triangle_width = 6;
 
-        private Bindable<LyricEditorMode> bindableMode;
+        private IBindable<LyricEditorMode> bindableMode;
         private Bindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode;
 
         private readonly Lyric lyric;

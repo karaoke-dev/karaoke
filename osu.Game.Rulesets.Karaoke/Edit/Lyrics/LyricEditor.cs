@@ -69,7 +69,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached]
         private readonly BindableBeatDivisor beatDivisor = new();
 
-        public Bindable<LyricEditorMode> BindableMode { get; } = new();
+        private readonly Bindable<LyricEditorMode> bindableMode = new();
+
+        public IBindable<LyricEditorMode> BindableMode => bindableMode;
 
         private readonly Bindable<float> bindableFontSize = new();
         private readonly Bindable<MovingTimeTagCaretMode> bindableCreateMovingCaretMode = new();
@@ -479,8 +481,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public LyricEditorMode Mode
         {
-            get => BindableMode.Value;
-            set => BindableMode.Value = value;
+            get => bindableMode.Value;
+            set => bindableMode.Value = value;
         }
 
         public virtual void NavigateToFix(LyricEditorMode mode)

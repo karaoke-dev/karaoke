@@ -82,17 +82,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         protected virtual void UpdateEditMode(T mode)
         {
             // update button style.
-            foreach (var child in buttons)
+            foreach (var button in buttons)
             {
-                bool highLight = EqualityComparer<T>.Default.Equals(child.Mode, mode);
-                child.Alpha = highLight ? 0.8f : 0.4f;
-                child.BackgroundColour = GetColour(colour, child.Mode, highLight);
+                bool highLight = EqualityComparer<T>.Default.Equals(button.Mode, mode);
+                button.Alpha = highLight ? 0.8f : 0.4f;
+                button.BackgroundColour = GetColour(colour, button.Mode, highLight);
 
                 if (!highLight)
                     continue;
 
                 // update description text.
-                var item = child.Item;
+                var item = button.Item;
                 string markdownText = item.Description.Value.ToString();
                 var parsed = Markdown.Parse(markdownText);
 
@@ -100,6 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 {
                     Schedule(() =>
                     {
+                        description.Clear();
                         description.AddInlineText(paragraphBlock.Inline);
                     });
                 }
@@ -140,7 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                     // todo : show / hide alert.
                 }, true);
 
-                base.Action = () => Action.Invoke(mode);
+                base.Action = () => Action?.Invoke(mode);
             }
         }
 

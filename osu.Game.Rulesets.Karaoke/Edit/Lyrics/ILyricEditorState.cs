@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public interface ILyricEditorState
     {
-        Bindable<LyricEditorMode> BindableMode { get; }
+        IBindable<LyricEditorMode> BindableMode { get; }
 
         LyricEditorMode Mode { get; set; }
 

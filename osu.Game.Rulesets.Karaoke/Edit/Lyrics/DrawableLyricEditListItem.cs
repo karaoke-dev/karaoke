@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved]
         private LyricEditorColourProvider colourProvider { get; set; }
 
-        private readonly Bindable<LyricEditorMode> bindableMode = new();
+        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<ICaretPosition> bindableHoverCaretPosition = new Bindable<ICaretPosition>();
         private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
 
