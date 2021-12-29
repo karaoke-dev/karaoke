@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public class SelectArea : CompositeDrawable
         {
-            private Bindable<LyricEditorMode> mode;
+            private IBindable<LyricEditorMode> bindableMode;
             private BindableDictionary<Lyric, string> disableSelectingLyrics;
             private BindableList<Lyric> selectedLyrics;
 
@@ -167,12 +167,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             [BackgroundDependencyLoader]
             private void load(ILyricEditorState state, ILyricSelectionState lyricSelectionState, LyricEditorColourProvider colourProvider, EditorBeatmap beatmap)
             {
-                mode = state.BindableMode.GetBoundCopy();
+                bindableMode = state.BindableMode.GetBoundCopy();
                 disableSelectingLyrics = lyricSelectionState.DisableSelectingLyric.GetBoundCopy();
                 selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
 
                 // should update background if mode changed.
-                mode.BindValueChanged(_ =>
+                bindableMode.BindValueChanged(_ =>
                 {
                     background.Colour = colourProvider.Dark2(state.Mode);
                     allSelectedCheckbox.AccentColour = colourProvider.Colour2(state.Mode);
