@@ -6,6 +6,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Screens;
+using osu.Game.Beatmaps;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
@@ -14,8 +16,8 @@ using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
-    [Cached]
-    public class LyricImporter : ScreenWithBeatmapBackground
+    [Cached(typeof(IImportStateResolver))]
+    public class LyricImporter : ScreenWithBeatmapBackground, IImportStateResolver
     {
         private readonly LyricImporterWaveContainer waves;
 
@@ -35,6 +37,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
             => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+
+        public event Action<IBeatmap> OnImportFinished;
 
         public LyricImporter()
         {
@@ -88,6 +92,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
             AddInternal(lyricCheckerManager = new LyricCheckerManager());
             dependencies.Cache(lyricCheckerManager);
+        }
+
+        public void Cancel()
+        {
+            this.Exit();
+        }
+
+        public void Finish()
+        {
+            this.Exit();
+            OnImportFinished?.Invoke(editorBeatmap);
         }
 
         private class LyricImporterWaveContainer : WaveContainer

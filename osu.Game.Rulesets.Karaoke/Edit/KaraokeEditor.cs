@@ -4,6 +4,7 @@
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.UserInterface;
+using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -95,8 +96,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     {
                         Items = new MenuItem[]
                         {
-                            new ImportLyricMenu(this, "Import from text"),
-                            new ImportLyricMenu(this, "Import from .lrc file"),
+                            new ImportLyricMenu(this, "Import from text", importLyric),
+                            new ImportLyricMenu(this, "Import from .lrc file", importLyric),
                             new EditorMenuItemSpacer(),
                             new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => exportLyricManager.ExportToLrc()),
                             new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),
@@ -141,5 +142,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         public void Delete(HitObject hitObject) => editorBeatmap.Remove(hitObject);
 
         #endregion
+
+        private void importLyric(IBeatmap beatmap)
+        {
+            // todo: do something.
+        }
     }
 }

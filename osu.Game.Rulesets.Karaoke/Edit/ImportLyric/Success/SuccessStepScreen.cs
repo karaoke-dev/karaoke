@@ -3,7 +3,6 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Screens;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.Success
 {
@@ -18,11 +17,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.Success
         public override IconUsage Icon => FontAwesome.Regular.CheckCircle;
 
         [Resolved]
-        private LyricImporter lyricImporter { get; set; }
+        private IImportStateResolver importStateResolver { get; set; }
 
         public override void Complete()
         {
-            lyricImporter.Exit();
+            importStateResolver.Finish();
         }
     }
 }
