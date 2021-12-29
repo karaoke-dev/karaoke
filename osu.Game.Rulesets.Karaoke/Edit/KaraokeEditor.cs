@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Beatmaps;
@@ -56,6 +57,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         [Resolved]
         private EditorBeatmap editorBeatmap { get; set; }
+
+        [Resolved]
+        private IEditorChangeHandler changeHandler { get; set; }
 
         public KaraokeEditor()
         {
@@ -145,7 +149,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         private void importLyric(IBeatmap beatmap)
         {
-            // todo: do something.
+            changeHandler.BeginChange();
+
+            editorBeatmap.Clear();
+
+            if (beatmap.HitObjects.Any())
+                editorBeatmap.AddRange(beatmap.HitObjects);
+
+            changeHandler.EndChange();
         }
     }
 }
