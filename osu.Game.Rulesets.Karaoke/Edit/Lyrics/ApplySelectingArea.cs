@@ -107,6 +107,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             };
 
             selecting.BindTo(lyricSelectionState.Selecting);
+            selectedLyrics.BindTo(lyricSelectionState.SelectedLyrics);
+
             selecting.BindValueChanged(e =>
             {
                 if (e.NewValue)
@@ -118,9 +120,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     Hide();
                 }
             }, true);
-
-            // get bindable and update bindable if select or not select all.
-            selectedLyrics.BindTo(lyricSelectionState.SelectedLyrics);
 
             selectedLyrics.BindCollectionChanged((_, _) =>
             {
