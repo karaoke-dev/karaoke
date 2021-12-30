@@ -61,10 +61,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
         public class SelectArea : CompositeDrawable
         {
-            private IBindable<LyricEditorMode> bindableMode;
-            private IBindable<bool> selecting;
-            private IBindableDictionary<Lyric, string> disableSelectingLyrics;
-            private IBindableList<Lyric> selectedLyrics;
+            private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+            private readonly IBindable<bool> selecting = new Bindable<bool>();
+            private readonly IBindableDictionary<Lyric, string> disableSelectingLyrics = new BindableDictionary<Lyric, string>();
+            private readonly IBindableList<Lyric> selectedLyrics = new BindableList<Lyric>();
 
             private readonly Box background;
             private readonly CircleCheckbox selectedCheckbox;
@@ -101,10 +101,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             [BackgroundDependencyLoader]
             private void load(ILyricEditorState state, ILyricSelectionState lyricSelectionState, LyricEditorColourProvider colourProvider)
             {
-                bindableMode = state.BindableMode.GetBoundCopy();
-                selecting = lyricSelectionState.Selecting.GetBoundCopy();
-                disableSelectingLyrics = lyricSelectionState.DisableSelectingLyric.GetBoundCopy();
-                selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
+                bindableMode.BindTo(state.BindableMode);
+                selecting.BindTo(lyricSelectionState.Selecting);
+                disableSelectingLyrics.BindTo(lyricSelectionState.DisableSelectingLyric);
+                selectedLyrics.BindTo(lyricSelectionState.SelectedLyrics);
 
                 // should update background if mode changed.
                 bindableMode.BindValueChanged(_ =>
