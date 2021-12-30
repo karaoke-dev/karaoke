@@ -23,8 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private const float spacing = 10;
         private const float button_width = 100;
 
-        private IBindable<bool> selecting;
-        private BindableList<Lyric> selectedLyrics;
+        private readonly IBindable<bool> selecting = new Bindable<bool>();
+        private readonly IBindableList<Lyric> selectedLyrics = new BindableList<Lyric>();
 
         private ActionButton applyButton;
 
@@ -106,7 +106,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             };
 
-            selecting = lyricSelectionState.Selecting.GetBoundCopy();
+            selecting.BindTo(lyricSelectionState.Selecting);
+            selectedLyrics.BindTo(lyricSelectionState.SelectedLyrics);
+
             selecting.BindValueChanged(e =>
             {
                 if (e.NewValue)
@@ -119,9 +121,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             }, true);
 
-            // get bindable and update bindable if select or not select all.
-            selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
-
             selectedLyrics.BindCollectionChanged((_, _) =>
             {
                 bool selectAny = selectedLyrics.Any();
@@ -131,9 +130,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public class SelectArea : CompositeDrawable
         {
-            private IBindable<LyricEditorMode> bindableMode;
-            private BindableDictionary<Lyric, string> disableSelectingLyrics;
-            private BindableList<Lyric> selectedLyrics;
+            private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+            private readonly IBindableDictionary<Lyric, string> disableSelectingLyrics = new BindableDictionary<Lyric, string>();
+            private readonly IBindableList<Lyric> selectedLyrics = new BindableList<Lyric>();
 
             private readonly Box background;
             private readonly CircleCheckbox allSelectedCheckbox;
@@ -167,9 +166,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             [BackgroundDependencyLoader]
             private void load(ILyricEditorState state, ILyricSelectionState lyricSelectionState, LyricEditorColourProvider colourProvider, EditorBeatmap beatmap)
             {
-                bindableMode = state.BindableMode.GetBoundCopy();
-                disableSelectingLyrics = lyricSelectionState.DisableSelectingLyric.GetBoundCopy();
-                selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
+                bindableMode.BindTo(state.BindableMode);
+                disableSelectingLyrics.BindTo(lyricSelectionState.DisableSelectingLyric);
+                selectedLyrics.BindTo(lyricSelectionState.SelectedLyrics);
 
                 // should update background if mode changed.
                 bindableMode.BindValueChanged(_ =>
@@ -212,14 +211,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                     checkboxClicking = true;
 
-                    selectedLyrics.Clear();
-
                     if (e.NewValue)
-                    {
-                        var disableSelectingLyrics = lyricSelectionState.DisableSelectingLyric.Keys;
-                        var lyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => !disableSelectingLyrics.Contains(x));
-                        selectedLyrics.AddRange(lyrics);
-                    }
+                        lyricSelectionState.SelectAll();
+                    else
+                        lyricSelectionState.UnSelectAll();
 
                     checkboxClicking = false;
                 });

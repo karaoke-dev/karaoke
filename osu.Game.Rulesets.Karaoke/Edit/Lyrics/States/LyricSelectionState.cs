@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -15,9 +16,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
     {
         public IBindable<bool> Selecting => selecting;
 
-        public BindableDictionary<Lyric, string> DisableSelectingLyric { get; } = new();
+        private readonly BindableDictionary<Lyric, string> bindableDisableSelectingLyric = new();
+        private readonly BindableList<Lyric> bindableSelectedLyrics = new();
 
-        public BindableList<Lyric> SelectedLyrics { get; } = new();
+        public IBindableDictionary<Lyric, string> DisableSelectingLyric => bindableDisableSelectingLyric;
+
+        public IBindableList<Lyric> SelectedLyrics => bindableSelectedLyrics;
 
         public Action<LyricEditorSelectingAction> Action { get; set; }
 
@@ -28,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public void StartSelecting()
         {
-            SelectedLyrics.Clear();
+            bindableSelectedLyrics.Clear();
             selecting.Value = true;
         }
 
@@ -40,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 return;
 
             // should sync selection to editor beatmap because auto-generate will be apply to those lyric that being selected.
-            var selectedLyrics = SelectedLyrics.ToArray();
+            var selectedLyrics = this.bindableSelectedLyrics.ToArray();
             beatmap.SelectedHitObjects.Clear();
             beatmap.SelectedHitObjects.AddRange(selectedLyrics);
 
@@ -48,6 +52,46 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             // after being applied, should clear the selection.
             beatmap.SelectedHitObjects.Clear();
+        }
+
+        public void Select(Lyric lyric)
+        {
+            if (bindableSelectedLyrics.Contains(lyric))
+                return;
+
+            bindableSelectedLyrics.Add(lyric);
+        }
+
+        public void UnSelect(Lyric lyric)
+        {
+            bindableSelectedLyrics.Remove(lyric);
+        }
+
+        public void SelectAll()
+        {
+            var disableSelectingLyrics = bindableDisableSelectingLyric.Keys;
+            var lyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => !disableSelectingLyrics.Contains(x));
+
+            foreach (var lyric in lyrics)
+            {
+                Select(lyric);
+            }
+        }
+
+        public void UnSelectAll()
+        {
+            bindableSelectedLyrics.Clear();
+        }
+
+        public void UpdateDisableLyricList(IDictionary<Lyric, string> disableLyrics)
+        {
+            bindableDisableSelectingLyric.Clear();
+
+            if (disableLyrics == null)
+                return;
+
+            foreach ((var lyric, string reason) in disableLyrics)
+                bindableDisableSelectingLyric.Add(lyric, reason);
         }
     }
 }

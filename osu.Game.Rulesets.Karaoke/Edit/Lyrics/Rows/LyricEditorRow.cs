@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -60,10 +61,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
         public class SelectArea : CompositeDrawable
         {
-            private IBindable<LyricEditorMode> bindableMode;
-            private IBindable<bool> selecting;
-            private BindableDictionary<Lyric, string> disableSelectingLyrics;
-            private BindableList<Lyric> selectedLyrics;
+            private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+            private readonly IBindable<bool> selecting = new Bindable<bool>();
+            private readonly IBindableDictionary<Lyric, string> disableSelectingLyrics = new BindableDictionary<Lyric, string>();
+            private readonly IBindableList<Lyric> selectedLyrics = new BindableList<Lyric>();
 
             private readonly Box background;
             private readonly CircleCheckbox selectedCheckbox;
@@ -100,10 +101,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             [BackgroundDependencyLoader]
             private void load(ILyricEditorState state, ILyricSelectionState lyricSelectionState, LyricEditorColourProvider colourProvider)
             {
-                bindableMode = state.BindableMode.GetBoundCopy();
-                selecting = lyricSelectionState.Selecting.GetBoundCopy();
-                disableSelectingLyrics = lyricSelectionState.DisableSelectingLyric.GetBoundCopy();
-                selectedLyrics = lyricSelectionState.SelectedLyrics.GetBoundCopy();
+                bindableMode.BindTo(state.BindableMode);
+                selecting.BindTo(lyricSelectionState.Selecting);
+                disableSelectingLyrics.BindTo(lyricSelectionState.DisableSelectingLyric);
+                selectedLyrics.BindTo(lyricSelectionState.SelectedLyrics);
 
                 // should update background if mode changed.
                 bindableMode.BindValueChanged(_ =>
@@ -147,12 +148,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 {
                     if (e.NewValue)
                     {
-                        if (!selectedLyrics.Contains(lyric))
-                            selectedLyrics.Add(lyric);
+                        lyricSelectionState.Select(lyric);
                     }
                     else
                     {
-                        selectedLyrics.Remove(lyric);
+                        lyricSelectionState.UnSelect(lyric);
                     }
                 });
             }
