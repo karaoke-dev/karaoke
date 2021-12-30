@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -62,8 +63,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         {
             private IBindable<LyricEditorMode> bindableMode;
             private IBindable<bool> selecting;
-            private BindableDictionary<Lyric, string> disableSelectingLyrics;
-            private BindableList<Lyric> selectedLyrics;
+            private IBindableDictionary<Lyric, string> disableSelectingLyrics;
+            private IBindableList<Lyric> selectedLyrics;
 
             private readonly Box background;
             private readonly CircleCheckbox selectedCheckbox;
@@ -147,12 +148,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 {
                     if (e.NewValue)
                     {
-                        if (!selectedLyrics.Contains(lyric))
-                            selectedLyrics.Add(lyric);
+                        lyricSelectionState.Select(lyric);
                     }
                     else
                     {
-                        selectedLyrics.Remove(lyric);
+                        lyricSelectionState.UnSelect(lyric);
                     }
                 });
             }

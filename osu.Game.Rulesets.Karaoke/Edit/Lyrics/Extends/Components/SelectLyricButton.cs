@@ -48,18 +48,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 }
                 else
                 {
-                    lyricSelectionState.DisableSelectingLyric.Clear();
-
+                    // update disabled lyrics list.
                     var disableLyrics = StartSelecting?.Invoke();
+                    lyricSelectionState.UpdateDisableLyricList(disableLyrics);
 
-                    if (disableLyrics != null)
-                    {
-                        foreach ((var lyric, string reason) in disableLyrics)
-                        {
-                            lyricSelectionState.DisableSelectingLyric.Add(lyric, reason);
-                        }
-                    }
-
+                    // then start selecting.
                     lyricSelectionState.StartSelecting();
                 }
             };

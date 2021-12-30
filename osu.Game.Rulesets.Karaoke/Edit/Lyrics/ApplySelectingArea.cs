@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private const float button_width = 100;
 
         private IBindable<bool> selecting;
-        private BindableList<Lyric> selectedLyrics;
+        private IBindableList<Lyric> selectedLyrics;
 
         private ActionButton applyButton;
 
@@ -132,8 +132,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public class SelectArea : CompositeDrawable
         {
             private IBindable<LyricEditorMode> bindableMode;
-            private BindableDictionary<Lyric, string> disableSelectingLyrics;
-            private BindableList<Lyric> selectedLyrics;
+            private IBindableDictionary<Lyric, string> disableSelectingLyrics;
+            private IBindableList<Lyric> selectedLyrics;
 
             private readonly Box background;
             private readonly CircleCheckbox allSelectedCheckbox;
@@ -212,14 +212,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                     checkboxClicking = true;
 
-                    selectedLyrics.Clear();
-
                     if (e.NewValue)
-                    {
-                        var disableSelectingLyrics = lyricSelectionState.DisableSelectingLyric.Keys;
-                        var lyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => !disableSelectingLyrics.Contains(x));
-                        selectedLyrics.AddRange(lyrics);
-                    }
+                        lyricSelectionState.SelectAll();
+                    else
+                        lyricSelectionState.UnSelectAll();
 
                     checkboxClicking = false;
                 });
