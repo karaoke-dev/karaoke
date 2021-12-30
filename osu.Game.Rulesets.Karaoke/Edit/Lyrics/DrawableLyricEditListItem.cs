@@ -29,6 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved]
         private LyricEditorColourProvider colourProvider { get; set; }
 
+        [Resolved]
+        private ILyricCaretState lyricCaretState { get; set; }
+
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<ICaretPosition> bindableHoverCaretPosition = new Bindable<ICaretPosition>();
         private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
@@ -134,7 +137,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state, ILyricCaretState lyricCaretState)
+        private void load(ILyricEditorState state)
         {
             bindableMode.BindTo(state.BindableMode);
             bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
@@ -152,6 +155,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             isDragging = true;
             updateBackgroundColour();
+
+            // should mark object as selecting while dragging.
+            lyricCaretState.MoveCaretToTargetPosition(Model);
 
             return true;
         }
