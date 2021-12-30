@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -11,14 +12,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
     {
         IBindable<bool> Selecting { get; }
 
-        BindableDictionary<Lyric, string> DisableSelectingLyric { get; }
+        IBindableDictionary<Lyric, string> DisableSelectingLyric { get; }
 
-        BindableList<Lyric> SelectedLyrics { get; }
+        IBindableList<Lyric> SelectedLyrics { get; }
 
         Action<LyricEditorSelectingAction> Action { get; set; }
 
         void StartSelecting();
 
         void EndSelecting(LyricEditorSelectingAction action);
+
+        void Select(Lyric lyric);
+
+        void UnSelect(Lyric lyric);
+
+        void SelectAll();
+
+        void UnSelectAll();
+
+        void UpdateDisableLyricList(IDictionary<Lyric, string> disableLyrics);
     }
 }
