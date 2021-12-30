@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ILyricCaretState lyricCaretState)
+        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ILyricCaretState lyricCaretState, ILyricEditorState state)
         {
             // update selected style to child
             lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
@@ -62,6 +62,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 var oldLyric = e.OldValue?.Lyric;
                 var newLyric = e.NewValue?.Lyric;
                 if (newLyric == null)
+                    return;
+
+                // should not move the position in manage lyric mode.
+                if (state.Mode == LyricEditorMode.Manage)
                     return;
 
                 // move to target position if auto focus.
