@@ -82,6 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         }
 
         [TestCase("kake", 2, "rao", "karaoke")]
+        [TestCase("karaoke", 7, "-", "karaoke-")]
         [TestCase("オケ", 0, "カラ", "カラオケ")]
         [TestCase("オケ", -1, "カラ", "カラオケ")] // test start position not in the range, but it's valid.
         [TestCase("カラ", 4, "オケ", "カラオケ")] // test start position not in the range, but it's valid.
