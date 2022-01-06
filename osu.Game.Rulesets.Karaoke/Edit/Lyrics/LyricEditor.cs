@@ -29,7 +29,6 @@ using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
-using osuTK.Input;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -338,37 +337,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 : bindableCreateMovingCaretMode.Value;
 
             lyricCaretState.ChangePositionAlgorithm(state, recordingMovingCaretMode);
-        }
-
-        protected override bool OnKeyDown(KeyDownEvent e)
-        {
-            if (lyricTextChangeHandler == null)
-                return false;
-
-            if (Mode != LyricEditorMode.Typing)
-                return false;
-
-            var caretPosition = lyricCaretState.BindableCaretPosition.Value;
-            if (caretPosition is not TextCaretPosition textCaretPosition)
-                throw new NotSupportedException(nameof(caretPosition));
-
-            var lyric = textCaretPosition.Lyric;
-            int index = textCaretPosition.Index;
-
-            switch (e.Key)
-            {
-                case Key.BackSpace:
-                    if (!string.IsNullOrEmpty(lyric.Text))
-                        return false;
-
-                    // delete single character.
-                    lyricTextChangeHandler.DeleteLyricText(index);
-                    lyricCaretState.MoveCaret(MovingCaretAction.Left);
-                    return true;
-
-                default:
-                    return false;
-            }
         }
 
         public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
