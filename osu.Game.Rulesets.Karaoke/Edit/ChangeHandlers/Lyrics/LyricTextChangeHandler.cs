@@ -11,7 +11,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
     {
         public void InsertText(int index, string text)
         {
-            // todo: implement. also should consider IME issue.
+            PerformOnSelection(lyric =>
+            {
+                LyricUtils.AddText(lyric, index, text);
+            });
         }
 
         public void DeleteLyricText(int index)

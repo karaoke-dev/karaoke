@@ -88,7 +88,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 throw new ArgumentNullException(nameof(lyric));
 
             // make position is at the range.
-            position = Math.Min(Math.Max(0, position), text.Length);
+            string lyricText = lyric.Text;
+            int lyricTextLength = lyricText?.Length ?? 0;
+            position = Math.Clamp(position, 0, lyricTextLength);
 
             int shiftingLength = text?.Length ?? 0;
             if (shiftingLength == 0)
@@ -100,8 +102,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             lyric.TimeTags = processTimeTags(lyric.TimeTags, position, shiftingLength);
 
             // deal with text
-            string newLyric = lyric.Text?[..position] + text + lyric.Text?[position..];
-            lyric.Text = newLyric;
+            string newLyricText = lyricText?[..position] + text + lyricText?[position..];
+            lyric.Text = newLyricText;
 
             static T[] processTags<T>(IEnumerable<T> tags, int position, int shiftingLength) where T : ITextTag =>
                 tags?.Select(x =>
