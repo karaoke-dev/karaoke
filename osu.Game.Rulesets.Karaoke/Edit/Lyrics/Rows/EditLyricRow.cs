@@ -300,11 +300,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             private readonly Container timeTagContainer;
             private readonly Container<DrawableCaret> caretContainer;
 
-            [Resolved]
-            private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+            private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
             [Resolved]
-            private ILyricEditorState state { get; set; }
+            private ILyricsChangeHandler lyricsChangeHandler { get; set; }
 
             [Resolved]
             private EditorClock editorClock { get; set; }
@@ -337,6 +336,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 {
                     ScheduleAfterChildren(UpdateTimeTags);
                 }, true);
+
+                bindableMode.BindValueChanged(e =>
+                {
+                    // initial default caret.
+                    InitializeCaret(e.NewValue);
+
+                    // Initial blueprint container.
+                    InitializeBlueprint(e.NewValue);
+                });
             }
 
             protected override bool OnMouseMove(MouseMoveEvent e)
@@ -344,9 +352,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 if (!lyricCaretState.CaretEnabled)
                     return false;
 
+                var mode = bindableMode.Value;
                 float position = ToLocalSpace(e.ScreenSpaceMousePosition).X;
 
-                switch (state.Mode)
+                switch (mode)
                 {
                     case LyricEditorMode.View:
                         break;
@@ -390,7 +399,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         break;
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(state.Mode));
+                        throw new ArgumentOutOfRangeException(nameof(mode));
                 }
 
                 return base.OnMouseMove(e);
@@ -423,12 +432,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
             protected override bool OnDoubleClick(DoubleClickEvent e)
             {
+                var mode = bindableMode.Value;
                 var position = lyricCaretState.BindableCaretPosition.Value;
 
                 switch (position)
                 {
                     case TextCaretPosition textCaretPosition:
-                        if (state.Mode == LyricEditorMode.Manage)
+                        if (mode == LyricEditorMode.Manage)
                             lyricsChangeHandler.Split(textCaretPosition.Index);
                         return true;
 
@@ -444,17 +454,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             }
 
             [BackgroundDependencyLoader]
-            private void load(EditorClock clock)
+            private void load(EditorClock clock, ILyricEditorState state)
             {
                 lyricPiece.Clock = clock;
-                state.BindableMode.BindValueChanged(e =>
-                {
-                    // initial default caret.
-                    InitializeCaret(e.NewValue);
-
-                    // Initial blueprint container.
-                    InitializeBlueprint(e.NewValue);
-                }, true);
+                bindableMode.BindTo(state.BindableMode);
             }
 
             protected void InitializeBlueprint(LyricEditorMode mode)
