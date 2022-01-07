@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 return;
 
             // should sync selection to editor beatmap because auto-generate will be apply to those lyric that being selected.
-            var selectedLyrics = this.bindableSelectedLyrics.ToArray();
+            var selectedLyrics = bindableSelectedLyrics.ToArray();
             beatmap.SelectedHitObjects.Clear();
             beatmap.SelectedHitObjects.AddRange(selectedLyrics);
 
