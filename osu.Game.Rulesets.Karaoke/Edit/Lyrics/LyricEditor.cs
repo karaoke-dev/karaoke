@@ -226,37 +226,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     throw new ArgumentOutOfRangeException(nameof(extendArea.Direction));
             }
 
-            EditExtend getExtendArea()
-            {
-                switch (Mode)
+            EditExtend getExtendArea() =>
+                Mode switch
                 {
-                    case LyricEditorMode.Language:
-                        return new LanguageExtend();
-
-                    case LyricEditorMode.EditRuby:
-                        return new RubyTagExtend();
-
-                    case LyricEditorMode.EditRomaji:
-                        return new RomajiTagExtend();
-
-                    case LyricEditorMode.CreateTimeTag:
-                    case LyricEditorMode.RecordTimeTag:
-                    case LyricEditorMode.AdjustTimeTag:
-                        return new TimeTagExtend();
-
-                    case LyricEditorMode.EditNote:
-                        return new NoteExtend();
-
-                    case LyricEditorMode.Singer:
-                        return new SingerExtend();
-
-                    case LyricEditorMode.Layout:
-                        return new LayoutExtend();
-
-                    default:
-                        return null;
-                }
-            }
+                    LyricEditorMode.Language => new LanguageExtend(),
+                    LyricEditorMode.EditRuby => new RubyTagExtend(),
+                    LyricEditorMode.EditRomaji => new RomajiTagExtend(),
+                    LyricEditorMode.CreateTimeTag => new TimeTagExtend(),
+                    LyricEditorMode.RecordTimeTag => new TimeTagExtend(),
+                    LyricEditorMode.AdjustTimeTag => new TimeTagExtend(),
+                    LyricEditorMode.EditNote => new NoteExtend(),
+                    LyricEditorMode.Singer => new SingerExtend(),
+                    LyricEditorMode.Layout => new LayoutExtend(),
+                    _ => null
+                };
 
             bool checkDuplicatedWithExistExtend(EditExtend extend)
             {
