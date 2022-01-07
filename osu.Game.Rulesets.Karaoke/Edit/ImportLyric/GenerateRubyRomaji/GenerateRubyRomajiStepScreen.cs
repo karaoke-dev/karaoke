@@ -20,15 +20,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 
         public override IconUsage Icon => FontAwesome.Solid.Gem;
 
-        [Cached(typeof(ILyricRubyChangeHandler))]
-        private readonly LyricRubyChangeHandler lyricRubyChangeHandler;
+        [Cached(typeof(ILyricRubyTagsChangeHandler))]
+        private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
 
         [Cached(typeof(ILyricRomajiChangeHandler))]
         private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
 
         public GenerateRubyRomajiStepScreen()
         {
-            AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
+            AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
             AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
         }
 
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
             Navigation.State = NavigationState.Initial;
 
             // Asking auto-generate ruby or romaji.
-            if (lyricRubyChangeHandler.CanGenerate())
+            if (lyricRubyTagsChangeHandler.CanGenerate())
                 AskForAutoGenerateRuby();
             else if (lyricRomajiChangeHandler.CanGenerate())
                 AskForAutoGenerateRomaji();
@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 
                 // todo: select all lyrics or switch to select mode.
 
-                lyricRubyChangeHandler.AutoGenerate();
+                lyricRubyTagsChangeHandler.AutoGenerate();
                 Navigation.State = NavigationState.Done;
             }));
         }

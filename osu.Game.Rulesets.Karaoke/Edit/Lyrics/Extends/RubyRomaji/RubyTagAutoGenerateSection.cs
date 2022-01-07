@@ -16,14 +16,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
     public class RubyTagAutoGenerateSection : TextTagAutoGenerateSection
     {
         [Resolved]
-        private ILyricRubyChangeHandler rubyChangeHandler { get; set; }
+        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
 
         protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(IEnumerable<Lyric> lyrics)
             => lyrics.Where(x => x.Language == null)
                      .ToDictionary(k => k, _ => "Before generate ruby-tag, need to assign language first.");
 
         protected override void Apply()
-            => rubyChangeHandler.AutoGenerate();
+            => rubyTagsChangeHandler.AutoGenerate();
 
         protected override ConfigButton CreateConfigButton()
             => new RubyTagAutoGenerateConfigButton();
