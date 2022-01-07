@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public interface ILyricRomajiChangeHandler : IAutoGenerateChangeHandler
+    public interface ILyricRomajiTagsChangeHandler : IAutoGenerateChangeHandler
     {
         bool CanGenerate();
     }

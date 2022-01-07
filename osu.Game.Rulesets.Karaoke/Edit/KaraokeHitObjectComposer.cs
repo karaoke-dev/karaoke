@@ -41,8 +41,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached(typeof(ILyricRubyTagsChangeHandler))]
         private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
 
-        [Cached(typeof(ILyricRomajiChangeHandler))]
-        private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
+        [Cached(typeof(ILyricRomajiTagsChangeHandler))]
+        private readonly LyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler;
 
         [Cached(typeof(INotePositionInfo))]
         private readonly NotePositionInfo notePositionInfo;
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(fontManager = new FontManager());
 
             AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
-            AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
+            AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
             AddInternal(notePositionInfo = new NotePositionInfo());
             AddInternal(notesChangeHandler = new NotesChangeHandler());
             AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
