@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -14,6 +15,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 {
     public class RomajiBlueprintContainer : TextTagBlueprintContainer<RomajiTag>
     {
+        [Resolved]
+        private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }
+
         [UsedImplicitly]
         private readonly Bindable<RomajiTag[]> romajiTags;
 
@@ -37,13 +41,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         protected override SelectionBlueprint<RomajiTag> CreateBlueprintFor(RomajiTag item)
             => new RomajiTagSelectionBlueprint(item);
 
+        protected override void SetTextTagPosition(RomajiTag textTag, int startPosition, int endPosition)
+            => romajiTagsChangeHandler.SetPosition(textTag, startPosition, endPosition);
+
         protected class RomajiTagSelectionHandler : TextTagSelectionHandler
         {
+            [Resolved]
+            private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }
+
             [BackgroundDependencyLoader]
             private void load(IBlueprintSelectionState blueprintSelectionState)
             {
                 SelectedItems.BindTo(blueprintSelectionState.SelectedRomajiTags);
             }
+
+            protected override void SetTextTagPosition(RomajiTag textTag, int? startPosition, int? endPosition)
+                => romajiTagsChangeHandler.SetPosition(textTag, startPosition, endPosition);
         }
     }
 }
