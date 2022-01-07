@@ -23,17 +23,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         [Cached(typeof(ILyricLanguageChangeHandler))]
         private readonly LyricLanguageChangeHandler lyricLanguageChangeHandler;
 
-        [Cached(typeof(ILyricRubyChangeHandler))]
-        private readonly LyricRubyChangeHandler lyricRubyChangeHandler;
+        [Cached(typeof(ILyricRubyTagsChangeHandler))]
+        private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
 
-        [Cached(typeof(ILyricRomajiChangeHandler))]
-        private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
+        [Cached(typeof(ILyricRomajiTagsChangeHandler))]
+        private readonly LyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler;
 
         public AssignLanguageStepScreen()
         {
             AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());
-            AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
-            AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
+            AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
+            AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
         }
 
         protected override TopNavigation CreateNavigation()
@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         public override void Complete()
         {
             // Check is need to go to generate ruby/romaji step or just skip.
-            if (lyricRubyChangeHandler.CanGenerate() || lyricRomajiChangeHandler.CanGenerate())
+            if (lyricRubyTagsChangeHandler.CanGenerate() || lyricRomajiTagsChangeHandler.CanGenerate())
             {
                 ScreenStack.Push(LyricImporterStep.GenerateRuby);
             }

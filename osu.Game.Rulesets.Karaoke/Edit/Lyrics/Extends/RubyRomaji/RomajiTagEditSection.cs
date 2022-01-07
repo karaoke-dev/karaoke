@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -36,9 +37,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
         protected class LabelledRomajiTagTextBox : LabelledTextTagTextBox<RomajiTag>
         {
+            [Resolved]
+            private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }
+
             public LabelledRomajiTagTextBox(RomajiTag textTag)
                 : base(textTag)
             {
+            }
+
+            protected override void SetText(RomajiTag item, string value)
+            {
+                romajiTagsChangeHandler.SetText(item, value);
             }
 
             [BackgroundDependencyLoader]

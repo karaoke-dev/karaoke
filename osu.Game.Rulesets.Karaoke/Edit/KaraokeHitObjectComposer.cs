@@ -38,11 +38,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly FontManager fontManager;
 
-        [Cached(typeof(ILyricRubyChangeHandler))]
-        private readonly LyricRubyChangeHandler lyricRubyChangeHandler;
+        [Cached(typeof(ILyricRubyTagsChangeHandler))]
+        private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
 
-        [Cached(typeof(ILyricRomajiChangeHandler))]
-        private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
+        [Cached(typeof(ILyricRomajiTagsChangeHandler))]
+        private readonly LyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler;
 
         [Cached(typeof(INotePositionInfo))]
         private readonly NotePositionInfo notePositionInfo;
@@ -70,8 +70,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             // Duplicated registration because selection handler need to use it.
             AddInternal(fontManager = new FontManager());
 
-            AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
-            AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
+            AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
+            AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
             AddInternal(notePositionInfo = new NotePositionInfo());
             AddInternal(notesChangeHandler = new NotesChangeHandler());
             AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());

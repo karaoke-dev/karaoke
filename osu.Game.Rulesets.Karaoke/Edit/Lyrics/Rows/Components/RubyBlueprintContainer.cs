@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -14,6 +15,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 {
     public class RubyBlueprintContainer : TextTagBlueprintContainer<RubyTag>
     {
+        [Resolved]
+        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
+
         [UsedImplicitly]
         private readonly Bindable<RubyTag[]> rubyTags;
 
@@ -37,13 +41,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         protected override SelectionBlueprint<RubyTag> CreateBlueprintFor(RubyTag item)
             => new RubyTagSelectionBlueprint(item);
 
+        protected override void SetTextTagPosition(RubyTag textTag, int startPosition, int endPosition)
+            => rubyTagsChangeHandler.SetPosition(textTag, startPosition, endPosition);
+
         protected class RubyTagSelectionHandler : TextTagSelectionHandler
         {
+            [Resolved]
+            private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
+
             [BackgroundDependencyLoader]
             private void load(IBlueprintSelectionState blueprintSelectionState)
             {
                 SelectedItems.BindTo(blueprintSelectionState.SelectedRubyTags);
             }
+
+            protected override void SetTextTagPosition(RubyTag textTag, int? startPosition, int? endPosition)
+                => rubyTagsChangeHandler.SetPosition(textTag, startPosition, endPosition);
         }
     }
 }

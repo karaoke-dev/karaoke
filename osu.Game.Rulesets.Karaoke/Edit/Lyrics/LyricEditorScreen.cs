@@ -25,11 +25,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(ILyricLanguageChangeHandler))]
         private readonly LyricLanguageChangeHandler lyricLanguageChangeHandler;
 
-        [Cached(typeof(ILyricRubyChangeHandler))]
-        private readonly LyricRubyChangeHandler lyricRubyChangeHandler;
+        [Cached(typeof(ILyricRubyTagsChangeHandler))]
+        private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
 
-        [Cached(typeof(ILyricRomajiChangeHandler))]
-        private readonly LyricRomajiChangeHandler lyricRomajiChangeHandler;
+        [Cached(typeof(ILyricRomajiTagsChangeHandler))]
+        private readonly LyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler;
 
         [Cached(typeof(ILyricTimeTagsChangeHandler))]
         private readonly LyricTimeTagsChangeHandler lyricTimeTagsChangeHandler;
@@ -55,8 +55,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             AddInternal(lyricsChangeHandler = new LyricsChangeHandler());
             AddInternal(lyricTextChangeHandler = new LyricTextChangeHandler());
             AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());
-            AddInternal(lyricRubyChangeHandler = new LyricRubyChangeHandler());
-            AddInternal(lyricRomajiChangeHandler = new LyricRomajiChangeHandler());
+            AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
+            AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
             AddInternal(lyricTimeTagsChangeHandler = new LyricTimeTagsChangeHandler());
             AddInternal(notePositionInfo = new NotePositionInfo());
             AddInternal(notesChangeHandler = new NotesChangeHandler());

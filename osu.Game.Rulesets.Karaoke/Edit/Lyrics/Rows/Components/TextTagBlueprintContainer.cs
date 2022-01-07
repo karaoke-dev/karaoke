@@ -61,17 +61,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 if (!LyricUtils.AbleToInsertTextTagAtIndex(Lyric, newStartIndex) || !LyricUtils.AbleToInsertTextTagAtIndex(Lyric, newEndIndex))
                     continue;
 
-                item.StartIndex = newStartIndex;
-                item.EndIndex = newEndIndex;
+                SetTextTagPosition(item, newStartIndex, newEndIndex);
             }
 
             return true;
         }
 
+        protected abstract void SetTextTagPosition(T textTag, int startPosition, int endPosition);
+
         protected override IEnumerable<SelectionBlueprint<T>> SortForMovement(IReadOnlyList<SelectionBlueprint<T>> blueprints)
             => blueprints.OrderBy(b => b.Item.StartIndex);
 
-        protected class TextTagSelectionHandler : ExtendSelectionHandler<T>
+        protected abstract class TextTagSelectionHandler : ExtendSelectionHandler<T>
         {
             [Resolved]
             private EditorLyricPiece editorLyricPiece { get; set; }
@@ -112,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                         if (startIndex >= selectedTextTag.EndIndex)
                             return false;
 
-                        selectedTextTag.StartIndex = startIndex;
+                        SetTextTagPosition(selectedTextTag, startIndex, null);
                         return true;
 
                     case Anchor.CentreRight:
@@ -121,13 +122,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                         if (endIndex <= selectedTextTag.StartIndex)
                             return false;
 
-                        selectedTextTag.EndIndex = endIndex;
+                        SetTextTagPosition(selectedTextTag, null, endIndex);
                         return true;
 
                     default:
                         return false;
                 }
             }
+
+            protected abstract void SetTextTagPosition(T textTag, int? startPosition, int? endPosition);
 
             protected override void OnSelectionChanged()
             {
