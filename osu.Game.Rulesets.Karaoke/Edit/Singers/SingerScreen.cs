@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                     {
                         new Box
                         {
-                            Colour = colours.GreySeafoamDark,
+                            Colour = colours.GreySeaFoamDark,
                             RelativeSizeAxes = Axes.Both,
                         },
                         new FixedSectionsContainer<Drawable>

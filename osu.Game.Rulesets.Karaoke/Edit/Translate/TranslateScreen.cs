@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                     {
                         new Box
                         {
-                            Colour = colours.GreySeafoamDark,
+                            Colour = colours.GreySeaFoamDark,
                             RelativeSizeAxes = Axes.Both,
                         },
                         new SectionsContainer<Container>

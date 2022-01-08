@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile.Components
             {
                 new Box
                 {
-                    Colour = colours.GreySeafoamDark,
+                    Colour = colours.GreySeaFoamDark,
                     RelativeSizeAxes = Axes.Both,
                 },
                 fileSelector = new OsuFileSelector(validFileExtensions: ImportLyricManager.LyricFormatExtensions)
@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile.Components
                     {
                         new Box
                         {
-                            Colour = colours.GreySeafoamDarker,
+                            Colour = colours.GreySeaFoamDarker,
                             RelativeSizeAxes = Axes.Both
                         },
                         new Container
