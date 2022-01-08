@@ -5,6 +5,7 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Screens;
 using osu.Game.Beatmaps;
@@ -47,20 +48,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             InternalChild = waves = new LyricImporterWaveContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                Children = new Drawable[]
+                Child = new PopoverContainer
                 {
-                    new Box
+                    RelativeSizeAxes = Axes.Both,
+                    Children = new Drawable[]
                     {
-                        RelativeSizeAxes = Axes.Both,
-                        Colour = backgroundColour,
-                    },
-                    new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Padding = new MarginPadding { Top = Header.HEIGHT },
-                        Child = ScreenStack = new LyricImporterSubScreenStack { RelativeSizeAxes = Axes.Both }
-                    },
-                    new Header(ScreenStack),
+                        new Box
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Colour = backgroundColour,
+                        },
+                        new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Padding = new MarginPadding { Top = Header.HEIGHT },
+                            Child = ScreenStack = new LyricImporterSubScreenStack { RelativeSizeAxes = Axes.Both }
+                        },
+                        new Header(ScreenStack),
+                    }
                 }
             };
 
