@@ -13,8 +13,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         IBindable<ICaretPosition> BindableCaretPosition { get; }
 
-        void ChangePositionAlgorithm(LyricEditorMode lyricEditorMode, MovingTimeTagCaretMode movingTimeTagCaretMode);
-
         bool MoveCaret(MovingCaretAction action);
 
         void MoveCaretToTargetPosition(Lyric lyric);
@@ -24,8 +22,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         void MoveHoverCaretToTargetPosition(ICaretPosition position);
 
         void ClearHoverCaretPosition();
-
-        void ResetPosition(LyricEditorMode mode);
 
         bool CaretPositionMovable(ICaretPosition position);
 
