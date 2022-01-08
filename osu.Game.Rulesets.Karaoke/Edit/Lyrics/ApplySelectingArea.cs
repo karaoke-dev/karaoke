@@ -171,10 +171,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 selectedLyrics.BindTo(lyricSelectionState.SelectedLyrics);
 
                 // should update background if mode changed.
-                bindableMode.BindValueChanged(_ =>
+                bindableMode.BindValueChanged(e =>
                 {
-                    background.Colour = colourProvider.Dark2(state.Mode);
-                    allSelectedCheckbox.AccentColour = colourProvider.Colour2(state.Mode);
+                    background.Colour = colourProvider.Dark2(e.NewValue);
+                    allSelectedCheckbox.AccentColour = colourProvider.Colour2(e.NewValue);
                 }, true);
 
                 // should disable selection if current lyric is disabled.

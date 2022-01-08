@@ -6,10 +6,12 @@ using System.ComponentModel;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 using Component = osu.Framework.Graphics.Component;
 
@@ -18,25 +20,80 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
     public class LyricCaretState : Component, ILyricCaretState
     {
         public IBindable<ICaretPosition> BindableHoverCaretPosition => bindableHoverCaretPosition;
-
         public IBindable<ICaretPosition> BindableCaretPosition => bindableCaretPosition;
 
         private readonly Bindable<ICaretPosition> bindableHoverCaretPosition = new();
-
         private readonly Bindable<ICaretPosition> bindableCaretPosition = new();
 
         private ICaretPositionAlgorithm algorithm;
 
-        [Resolved]
-        private EditorBeatmap beatmap { get; set; }
+        private readonly BindableList<HitObject> selectedHitObjects = new();
+        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+        private readonly IBindable<MovingTimeTagCaretMode> bindableCreateMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
+        private readonly IBindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
 
-        public void ChangePositionAlgorithm(LyricEditorMode lyricEditorMode, MovingTimeTagCaretMode movingTimeTagCaretMode)
+        private readonly IBindableList<Lyric> lyrics;
+
+        public LyricCaretState(IBindableList<Lyric> lyrics)
         {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
-            algorithm = getAlgorithmByMode(lyricEditorMode);
+            this.lyrics = lyrics;
+            this.lyrics.BindCollectionChanged((a, b) =>
+            {
+                // should reset caret position if not in the list.
+                var caretLyric = BindableCaretPosition.Value?.Lyric;
 
-            ICaretPositionAlgorithm getAlgorithmByMode(LyricEditorMode mode) =>
-                mode switch
+                // should adjust hover lyric if lyric has been deleted.
+                if (caretLyric != null && !lyrics.Contains(caretLyric))
+                {
+                    // if delete the current lyric, most of cases should move up.
+                    MoveCaret(MovingCaretAction.Up);
+                }
+
+                refreshAlgorithmAndCaretPosition();
+            });
+
+            bindableMode.BindValueChanged(e =>
+            {
+                // Should refresh algorithm until all component loaded.
+                Schedule(refreshAlgorithmAndCaretPosition);
+            });
+
+            bindableCreateMovingCaretMode.BindValueChanged(_ =>
+            {
+                refreshAlgorithmAndCaretPosition();
+            });
+
+            bindableRecordingMovingCaretMode.BindValueChanged(_ =>
+            {
+                refreshAlgorithmAndCaretPosition();
+            });
+
+            refreshAlgorithmAndCaretPosition();
+
+            // should move the caret to first.
+            MoveCaret(MovingCaretAction.First);
+        }
+
+        private void refreshAlgorithmAndCaretPosition()
+        {
+            var mode = bindableMode.Value;
+            var recordingMovingCaretMode = mode == LyricEditorMode.RecordTimeTag
+                ? bindableRecordingMovingCaretMode.Value
+                : bindableCreateMovingCaretMode.Value;
+
+            // refresh algorithm
+            algorithm = getAlgorithmByMode(lyrics.ToArray(), mode, recordingMovingCaretMode);
+
+            // refresh caret position
+            var lyric = bindableCaretPosition.Value?.Lyric;
+            bindableCaretPosition.Value = getCaretPosition(algorithm, lyric);
+            bindableHoverCaretPosition.Value = getCaretPosition(algorithm, lyric);
+
+            // should update selection if selected lyric changed.
+            updateEditorBeatmapSelectedHitObject(bindableCaretPosition.Value?.Lyric);
+
+            static ICaretPositionAlgorithm getAlgorithmByMode(Lyric[] lyrics, LyricEditorMode lyricEditorMode, MovingTimeTagCaretMode movingTimeTagCaretMode) =>
+                lyricEditorMode switch
                 {
                     LyricEditorMode.Manage => new CuttingCaretPositionAlgorithm(lyrics),
                     LyricEditorMode.Typing => new TypingCaretPositionAlgorithm(lyrics),
@@ -50,6 +107,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                     LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
                     _ => null
                 };
+
+            static ICaretPosition getCaretPosition(ICaretPositionAlgorithm algorithm, Lyric lyric)
+            {
+                if (algorithm == null)
+                    return null;
+
+                if (lyric == null)
+                    return algorithm.CallMethod<ICaretPosition>("MoveToFirst");
+
+                return algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
+            }
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(EditorBeatmap beatmap, ILyricEditorState state, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+        {
+            selectedHitObjects.BindTo(beatmap.SelectedHitObjects);
+            bindableMode.BindTo(state.BindableMode);
+
+            bindableCreateMovingCaretMode.BindTo(lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode));
+            bindableRecordingMovingCaretMode.BindTo(lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode));
         }
 
         public bool MoveCaret(MovingCaretAction action)
@@ -148,32 +226,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             bindableHoverCaretPosition.Value = null;
         }
 
-        public void ResetPosition(LyricEditorMode mode)
-        {
-            var lyric = bindableCaretPosition.Value?.Lyric;
-
-            if (algorithm != null)
-            {
-                if (lyric != null)
-                {
-                    bindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
-                    bindableHoverCaretPosition.Value = algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
-                }
-                else
-                {
-                    bindableCaretPosition.Value = algorithm.CallMethod<ICaretPosition>("MoveToFirst");
-                    bindableHoverCaretPosition.Value = algorithm.CallMethod<ICaretPosition>("MoveToFirst");
-                }
-            }
-            else
-            {
-                bindableCaretPosition.Value = null;
-                bindableHoverCaretPosition.Value = null;
-            }
-
-            updateEditorBeatmapSelectedHitObject(lyric);
-        }
-
         public bool CaretPositionMovable(ICaretPosition position)
         {
             return algorithm?.CallMethod<bool, ICaretPosition>("PositionMovable", position) ?? false;
@@ -181,12 +233,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public bool CaretEnabled => algorithm != null;
 
-        private void updateEditorBeatmapSelectedHitObject(Lyric lyric)
+        private void updateEditorBeatmapSelectedHitObject(HitObject hitObject)
         {
-            beatmap.SelectedHitObjects.Clear();
+            selectedHitObjects.Clear();
 
-            if (lyric != null)
-                beatmap.SelectedHitObjects.Add(lyric);
+            if (hitObject != null)
+                selectedHitObjects.Add(hitObject);
         }
     }
 }
