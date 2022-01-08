@@ -23,9 +23,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         [Cached(typeof(ILyricsChangeHandler))]
         private readonly LyricsChangeHandler lyricsChangeHandler;
 
+        [Cached(typeof(ILyricTextChangeHandler))]
+        private readonly LyricTextChangeHandler lyricTextChangeHandler;
+
         public EditLyricStepScreen()
         {
             AddInternal(lyricsChangeHandler = new LyricsChangeHandler());
+            AddInternal(lyricTextChangeHandler = new LyricTextChangeHandler());
         }
 
         protected override TopNavigation CreateNavigation()
