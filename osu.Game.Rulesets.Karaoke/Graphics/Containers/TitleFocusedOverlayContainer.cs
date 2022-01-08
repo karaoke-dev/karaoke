@@ -102,9 +102,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            background.Colour = colours.GreySeafoamDark;
-            closeButton.Colour = colours.GreySeafoamDarker;
-            contentBackground.Colour = colours.GreySeafoamDarker;
+            background.Colour = colours.GreySeaFoamDark;
+            closeButton.Colour = colours.GreySeaFoamDarker;
+            contentBackground.Colour = colours.GreySeaFoamDarker;
         }
     }
 }
