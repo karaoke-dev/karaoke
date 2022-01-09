@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
     public abstract class TopNavigation : CompositeDrawable
     {
         [Resolved]
-        protected OsuColour Colours { get; private set; }
+        private OsuColour colours { get; set; }
 
         protected LyricImporterStepScreen Screen { get; }
 
@@ -101,30 +101,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             switch (value)
             {
                 case NavigationState.Initial:
-                    background.Colour = Colours.Gray2;
-                    text.Colour = Colours.GrayF;
-                    button.Colour = Colours.Gray6;
+                    background.Colour = colours.Gray2;
+                    text.Colour = colours.GrayF;
+                    button.Colour = colours.Gray6;
                     button.Icon = FontAwesome.Regular.QuestionCircle;
                     break;
 
                 case NavigationState.Working:
-                    background.Colour = Colours.Gray2;
-                    text.Colour = Colours.GrayF;
-                    button.Colour = Colours.Gray6;
+                    background.Colour = colours.Gray2;
+                    text.Colour = colours.GrayF;
+                    button.Colour = colours.Gray6;
                     button.Icon = FontAwesome.Solid.InfoCircle;
                     break;
 
                 case NavigationState.Done:
-                    background.Colour = Colours.Gray6;
-                    text.Colour = Colours.GrayF;
-                    button.Colour = Colours.Yellow;
+                    background.Colour = colours.Gray6;
+                    text.Colour = colours.GrayF;
+                    button.Colour = colours.Yellow;
                     button.Icon = FontAwesome.Regular.ArrowAltCircleRight;
                     break;
 
                 case NavigationState.Error:
-                    background.Colour = Colours.Gray2;
-                    text.Colour = Colours.GrayF;
-                    button.Colour = Colours.Yellow;
+                    background.Colour = colours.Gray2;
+                    text.Colour = colours.GrayF;
+                    button.Colour = colours.Yellow;
                     button.Icon = FontAwesome.Solid.ExclamationTriangle;
                     break;
 
