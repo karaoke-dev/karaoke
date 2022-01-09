@@ -6,6 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
@@ -43,9 +44,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             [Resolved]
             private LyricImporterSubScreenStack screenStack { get; set; }
 
+            private ILyricSelectionState lyricSelectionState { get; set; }
+
             public void PrepareAutoGenerate()
             {
-                // todo: open the selection
+                lyricSelectionState.StartSelecting();
+                lyricSelectionState.SelectAll();
+            }
+
+            protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+            {
+                var dependencies = base.CreateChildDependencies(parent);
+                lyricSelectionState = dependencies.Get<ILyricSelectionState>();
+                return dependencies;
             }
 
             public override void NavigateToFix(LyricEditorMode mode)
