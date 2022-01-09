@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
         }
 
         protected override bool AbleToNextStep(NavigationState value)
-            => value == NavigationState.Initial || value == NavigationState.Working || value == NavigationState.Done;
+            => value is NavigationState.Initial or NavigationState.Working or NavigationState.Done;
 
         private class GenerateRubyTextFlowContainer : NavigationTextContainer
         {

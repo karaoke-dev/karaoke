@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
         }
 
         protected override bool AbleToNextStep(NavigationState value)
-            => value == NavigationState.Working || value == NavigationState.Done;
+            => value is NavigationState.Working or NavigationState.Done;
 
         private class GenerateTimeTagTextFlowContainer : NavigationTextContainer
         {

@@ -139,7 +139,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             }
         }
 
-        protected virtual bool AbleToNextStep(NavigationState value) => value == NavigationState.Done;
+        protected virtual bool AbleToNextStep(NavigationState value)
+            => value == NavigationState.Done;
 
         protected virtual void CompleteClicked() => Screen.Complete();
 
