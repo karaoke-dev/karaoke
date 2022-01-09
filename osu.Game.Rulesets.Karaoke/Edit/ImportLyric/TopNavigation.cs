@@ -78,13 +78,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         [BackgroundDependencyLoader]
         private void load(EditorBeatmap editorBeatmap)
         {
-            editorBeatmap.HitObjectUpdated += h =>
-            {
-                if (h is not Lyric)
-                    return;
-
-                updateState();
-            };
+            // use transaction ended for some reason.
+            // 1. seems customized beatmap cannot get hit object updated event(not really sure why).
+            // 2. object updated event will trigger hit object updated event lots of time.
+            editorBeatmap.TransactionEnded += updateState;
 
             updateState();
 
