@@ -47,7 +47,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         protected override void LoadComplete()
         {
             base.LoadComplete();
-            Navigation.State = NavigationState.Initial;
             AskForAutoAssignLanguage();
         }
 

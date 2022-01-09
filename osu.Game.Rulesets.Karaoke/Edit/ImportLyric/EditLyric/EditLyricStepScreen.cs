@@ -40,12 +40,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
                 LyricEditor.Mode = LyricEditorMode.Manage;
             });
 
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-            Navigation.State = NavigationState.Initial;
-        }
-
         public override void Complete()
         {
             ScreenStack.Push(LyricImporterStep.AssignLanguage);

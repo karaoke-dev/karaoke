@@ -42,7 +42,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
         protected override void LoadComplete()
         {
             base.LoadComplete();
-            Navigation.State = NavigationState.Initial;
             AskForAutoGenerateTimeTag();
         }
 

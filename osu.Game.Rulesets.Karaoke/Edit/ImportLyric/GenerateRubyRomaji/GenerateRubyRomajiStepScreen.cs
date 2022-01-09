@@ -43,7 +43,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
         protected override void LoadComplete()
         {
             base.LoadComplete();
-            Navigation.State = NavigationState.Initial;
 
             // Asking auto-generate ruby or romaji.
             if (lyricRubyTagsChangeHandler.CanGenerate())
