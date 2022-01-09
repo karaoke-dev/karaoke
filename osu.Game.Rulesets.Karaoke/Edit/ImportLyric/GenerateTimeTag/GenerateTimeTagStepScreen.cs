@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
         protected override Drawable CreateContent()
             => base.CreateContent().With(_ =>
             {
-                LyricEditor.Mode = LyricEditorMode.CreateTimeTag;
+                LyricEditorMode = LyricEditorMode.CreateTimeTag;
             });
 
         protected override void LoadComplete()
@@ -69,9 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
                     if (!ok)
                         return;
 
-                    // todo: select all lyrics or switch to select mode.
-
-                    lyricTimeTagsChangeHandler.AutoGenerate();
+                    PrepareAutoGenerate();
                 }));
             }
         }

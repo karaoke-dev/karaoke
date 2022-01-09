@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         protected override Drawable CreateContent()
             => base.CreateContent().With(_ =>
             {
-                LyricEditor.Mode = LyricEditorMode.Manage;
+                LyricEditorMode = LyricEditorMode.Manage;
             });
 
         public override void Complete()
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         internal void SwitchLyricEditorMode(LyricEditorMode mode)
         {
             // todo : will cause text update because has ScheduleAfterChildren in lyric editor.
-            LyricEditor.Mode = mode;
+            LyricEditorMode = mode;
         }
     }
 }

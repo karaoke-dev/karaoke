@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 
                 case NavigationState.Working:
                 case NavigationState.Done:
-                    var mode = Screen.LyricEditor.Mode;
+                    var mode = Screen.LyricEditorMode;
 
                     return mode switch
                     {

@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     public abstract class LyricImporterStepScreenWithLyricEditor : LyricImporterStepScreenWithTopNavigation
     {
-        public LyricEditor LyricEditor { get; private set; }
+        private ImportLyricEditor lyricEditor { get; set; }
 
         [Cached(typeof(ILockChangeHandler))]
         private readonly LockChangeHandler lockChangeHandler;
@@ -22,15 +22,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         }
 
         protected override Drawable CreateContent()
-            => LyricEditor = new ImportLyricEditor
+            => lyricEditor = new ImportLyricEditor
             {
                 RelativeSizeAxes = Axes.Both,
             };
+
+        public LyricEditorMode LyricEditorMode
+        {
+            get => lyricEditor.Mode;
+            protected set => lyricEditor.Mode = value;
+        }
+
+        protected void PrepareAutoGenerate()
+        {
+            lyricEditor.PrepareAutoGenerate();
+        }
 
         private class ImportLyricEditor : LyricEditor
         {
             [Resolved]
             private LyricImporterSubScreenStack screenStack { get; set; }
+
+            public void PrepareAutoGenerate()
+            {
+                // todo: open the selection
+            }
 
             public override void NavigateToFix(LyricEditorMode mode)
             {
