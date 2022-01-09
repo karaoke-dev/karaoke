@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             }
         }
 
-        public abstract class TopNavigation : Container
+        public abstract class TopNavigation : CompositeDrawable
         {
             [Resolved]
             protected OsuColour Colours { get; private set; }
