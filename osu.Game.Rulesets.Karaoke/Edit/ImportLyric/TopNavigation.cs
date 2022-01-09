@@ -8,7 +8,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
-using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
@@ -85,26 +84,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     return;
 
                 state = GetState(editorBeatmap.HitObjects.OfType<Lyric>().ToArray());
-                UpdateState(state);
+                updateState(state);
             };
         }
 
-        protected abstract NavigationTextContainer CreateTextContainer();
-
-        protected abstract NavigationState GetState(Lyric[] lyrics);
-
-        protected string NavigationText
-        {
-            set => text.Text = value;
-        }
-
-        protected LocalisableString TooltipText
-        {
-            get => button.TooltipText;
-            set => button.TooltipText = value;
-        }
-
-        protected virtual void UpdateState(NavigationState value)
+        private void updateState(NavigationState value)
         {
             switch (value)
             {
@@ -145,7 +129,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             {
                 button.Icon = FontAwesome.Regular.ArrowAltCircleRight;
             }
+
+            text.Text = GetNavigationText(value);
         }
+
+        protected abstract NavigationTextContainer CreateTextContainer();
+
+        protected abstract NavigationState GetState(Lyric[] lyrics);
+
+        protected abstract string GetNavigationText(NavigationState value);
 
         protected virtual bool AbleToNextStep(NavigationState value)
             => value == NavigationState.Done;

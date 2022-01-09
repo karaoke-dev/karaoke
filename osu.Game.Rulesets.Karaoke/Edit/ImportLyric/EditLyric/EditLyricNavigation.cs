@@ -23,32 +23,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         protected override NavigationState GetState(Lyric[] lyrics)
             => NavigationState.Working;
 
-        protected override void UpdateState(NavigationState value)
+        protected override string GetNavigationText(NavigationState value)
         {
-            base.UpdateState(value);
-
             switch (value)
             {
                 case NavigationState.Initial:
-                    NavigationText = $"Does something looks weird? Try switching [{cutting_mode}] or [{typing_mode}] to edit your lyric.";
-                    break;
+                    return $"Does something looks weird? Try switching [{cutting_mode}] or [{typing_mode}] to edit your lyric.";
 
                 case NavigationState.Working:
                 case NavigationState.Done:
                     var mode = Screen.LyricEditor.Mode;
 
-                    NavigationText = mode switch
+                    return mode switch
                     {
                         LyricEditorMode.Manage => $"Cool! Try switching to [{typing_mode}] if you want to edit lyric.",
                         LyricEditorMode.Typing => $"Cool! Try switching to [{cutting_mode}] if you want to cut or combine lyric.",
                         _ => throw new InvalidEnumArgumentException(nameof(mode))
                     };
 
-                    break;
-
                 case NavigationState.Error:
-                    NavigationText = "Oops, seems cause some error in here.";
-                    break;
+                    return "Oops, seems cause some error in here.";
 
                 default:
                     throw new InvalidEnumArgumentException(nameof(value));

@@ -30,11 +30,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             return NavigationState.Initial;
         }
 
-        protected override void UpdateState(NavigationState value)
-        {
-            base.UpdateState(value);
-
-            NavigationText = value switch
+        protected override string GetNavigationText(NavigationState value) =>
+            value switch
             {
                 NavigationState.Initial => $"Try to select left side to mark lyric's language, or click [{auto_assign_language}] to let system auto detect lyric language.",
                 NavigationState.Working => $"Almost there, you can still click [{auto_assign_language}] to re-detect each lyric's language.",
@@ -42,7 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
                 NavigationState.Error => "Oops, seems cause some error in here.",
                 _ => throw new ArgumentOutOfRangeException(nameof(value))
             };
-        }
 
         private class AssignLanguageTextFlowContainer : NavigationTextContainer
         {

@@ -39,29 +39,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
                 => lyric.RubyTags != null && lyric.RubyTags.Any();
         }
 
-        protected override void UpdateState(NavigationState value)
-        {
-            base.UpdateState(value);
-
-            switch (value)
+        protected override string GetNavigationText(NavigationState value) =>
+            value switch
             {
-                case NavigationState.Initial:
-                    NavigationText = $"Lazy to typing ruby? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] to auto-generate ruby and romaji. It's very easy.";
-                    break;
-
-                case NavigationState.Working:
-                case NavigationState.Done:
-                    NavigationText = $"Go to next step to generate time-tag. Messing around? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] again.";
-                    break;
-
-                case NavigationState.Error:
-                    NavigationText = "Oops, seems cause some error in here.";
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(value));
-            }
-        }
+                NavigationState.Initial => $"Lazy to typing ruby? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] to auto-generate ruby and romaji. It's very easy.",
+                NavigationState.Working => $"Go to next step to generate time-tag. Messing around? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] again.",
+                NavigationState.Done => $"Go to next step to generate time-tag. Messing around? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] again.",
+                NavigationState.Error => "Oops, seems cause some error in here.",
+                _ => throw new ArgumentOutOfRangeException(nameof(value))
+            };
 
         protected override bool AbleToNextStep(NavigationState value)
             => value is NavigationState.Initial or NavigationState.Working or NavigationState.Done;

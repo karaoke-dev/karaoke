@@ -33,29 +33,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
                 => lyric.TimeTags != null && lyric.TimeTags.Any();
         }
 
-        protected override void UpdateState(NavigationState value)
-        {
-            base.UpdateState(value);
-
-            switch (value)
+        protected override string GetNavigationText(NavigationState value) =>
+            value switch
             {
-                case NavigationState.Initial:
-                    NavigationText = $"Press [{auto_generate_time_tag}] to auto-generate time tag. It's very easy.";
-                    break;
-
-                case NavigationState.Working:
-                case NavigationState.Done:
-                    NavigationText = $"Cool, you can reset your time-tag by pressing [{auto_generate_time_tag}]";
-                    break;
-
-                case NavigationState.Error:
-                    NavigationText = "Oops, seems cause some error in here.";
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(value));
-            }
-        }
+                NavigationState.Initial => $"Press [{auto_generate_time_tag}] to auto-generate time tag. It's very easy.",
+                NavigationState.Working => $"Cool, you can reset your time-tag by pressing [{auto_generate_time_tag}]",
+                NavigationState.Done => $"Cool, you can reset your time-tag by pressing [{auto_generate_time_tag}]",
+                NavigationState.Error => "Oops, seems cause some error in here.",
+                _ => throw new ArgumentOutOfRangeException(nameof(value))
+            };
 
         protected override bool AbleToNextStep(NavigationState value)
             => value is NavigationState.Working or NavigationState.Done;
