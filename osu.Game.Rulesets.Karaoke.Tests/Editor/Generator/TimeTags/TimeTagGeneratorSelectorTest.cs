@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
 {
-    public class TimeTagGeneratorSelectorTest
+    public class TimeTagGeneratorSelectorTest : BaseGeneratorSelectorTest<TimeTagGeneratorSelector>
     {
         [TestCase(17, "か", new[] { "[0,start]:" })] // Japanese
         [TestCase(1041, "か", new[] { "[0,start]:" })] // Japanese
@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
                 Language = new CultureInfo(lcid),
                 Text = text,
             };
-            var selector = new TimeTagGeneratorSelector();
+            var selector = CreateSelector();
             var generatedTimeTags = selector.GenerateTimeTags(lyric);
             TimeTagAssert.ArePropertyEqual(generatedTimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTag));
         }
