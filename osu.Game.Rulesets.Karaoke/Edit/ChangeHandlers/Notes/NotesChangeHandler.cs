@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -16,10 +17,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
+        [Resolved]
+        private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
+
         public void AutoGenerate()
         {
-            // todo : should get the config from setting.
-            var config = new NoteGeneratorConfig();
+            var config = generatorConfigManager.Get<NoteGeneratorConfig>(KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig);
             var generator = new NoteGenerator(config);
 
             PerformOnSelection(lyric =>
