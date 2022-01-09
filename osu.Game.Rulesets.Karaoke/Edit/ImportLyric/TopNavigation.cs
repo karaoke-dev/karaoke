@@ -83,12 +83,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 if (h is not Lyric)
                     return;
 
-                state = GetState(editorBeatmap.HitObjects.OfType<Lyric>().ToArray());
-                updateState(state);
+                updateState();
             };
+
+            updateState();
+
+            void updateState()
+            {
+                state = GetState(editorBeatmap.HitObjects.OfType<Lyric>().ToArray());
+                updateNavigationDisplayInfo(state);
+            }
         }
 
-        private void updateState(NavigationState value)
+        private void updateNavigationDisplayInfo(NavigationState value)
         {
             switch (value)
             {
