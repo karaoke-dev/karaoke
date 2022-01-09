@@ -9,8 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     public abstract class LyricImporterStepScreenWithTopNavigation : LyricImporterStepScreen
     {
-        protected TopNavigation Navigation { get; }
-
         protected LyricImporterStepScreenWithTopNavigation()
         {
             Padding = new MarginPadding(10);
@@ -27,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 {
                     new Drawable[]
                     {
-                        Navigation = CreateNavigation(),
+                        CreateNavigation(),
                     },
                     Array.Empty<Drawable>(),
                     new[]
