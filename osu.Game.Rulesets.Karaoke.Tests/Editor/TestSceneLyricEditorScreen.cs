@@ -40,6 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             Dependencies.Cache(languageSelectionDialog);
             Dependencies.Cache(lyricCheckManager);
             Dependencies.Cache(lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager());
+            Dependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
         }
 
         [TestCase(LyricEditorMode.View)]
