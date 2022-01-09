@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     public abstract class LyricImporterStepScreenWithLyricEditor : LyricImporterStepScreenWithTopNavigation
     {
-        protected LyricEditor LyricEditor { get; private set; }
+        public LyricEditor LyricEditor { get; private set; }
 
         [Cached(typeof(ILockChangeHandler))]
         private readonly LockChangeHandler lockChangeHandler;
