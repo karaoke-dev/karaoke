@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags
 {
-    public class RomajiTagGeneratorSelectorTest
+    public class RomajiTagGeneratorSelectorTest : BaseGeneratorSelectorTest<RomajiTagGeneratorSelector>
     {
         [TestCase(17, "花火大会", new[] { "[0,2]:hanabi", "[2,4]:taikai" })] // Japanese
         [TestCase(1041, "はなび", new[] { "[0,3]:hanabi" })] // Japanese
@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags
                 Language = new CultureInfo(lcid),
                 Text = text,
             };
-            var selector = new RomajiTagGeneratorSelector();
+            var selector = CreateSelector();
             var generatedRomaji = selector.GenerateRomajiTags(lyric);
             TextTagAssert.ArePropertyEqual(generatedRomaji, TestCaseTagHelper.ParseRomajiTags(actualRomaji));
         }

@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 using System.Globalization;
+using osu.Framework.Allocation;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -10,10 +12,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
     public class LyricLanguageChangeHandler : HitObjectChangeHandler<Lyric>, ILyricLanguageChangeHandler
     {
+        [Resolved]
+        private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
+
         public void AutoGenerate()
         {
-            // todo : should get the config from setting.
-            var config = new LanguageDetectorConfig();
+            var config = generatorConfigManager.Get<LanguageDetectorConfig>(KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig);
             var detector = new LanguageDetector(config);
 
             PerformOnSelection(lyric =>

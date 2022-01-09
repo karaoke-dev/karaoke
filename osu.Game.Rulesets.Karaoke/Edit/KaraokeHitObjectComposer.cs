@@ -36,6 +36,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private readonly KaraokeRulesetEditConfigManager editConfigManager;
 
         [Cached]
+        private readonly KaraokeRulesetEditGeneratorConfigManager generatorConfigManager;
+
+        [Cached]
         private readonly FontManager fontManager;
 
         [Cached(typeof(ILyricRubyTagsChangeHandler))]
@@ -66,6 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             : base(ruleset)
         {
             editConfigManager = new KaraokeRulesetEditConfigManager();
+            generatorConfigManager = new KaraokeRulesetEditGeneratorConfigManager();
 
             // Duplicated registration because selection handler need to use it.
             AddInternal(fontManager = new FontManager());

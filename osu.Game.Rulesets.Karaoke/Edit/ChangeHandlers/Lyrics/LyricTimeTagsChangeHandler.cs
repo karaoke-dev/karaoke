@@ -3,7 +3,9 @@
 
 using System;
 using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -12,10 +14,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
     public class LyricTimeTagsChangeHandler : HitObjectChangeHandler<Lyric>, ILyricTimeTagsChangeHandler
     {
+        private TimeTagGeneratorSelector selector;
+
+        [BackgroundDependencyLoader]
+        private void load(KaraokeRulesetEditGeneratorConfigManager config)
+        {
+            selector = new TimeTagGeneratorSelector(config);
+        }
+
         public void AutoGenerate()
         {
-            var selector = new TimeTagGeneratorSelector();
-
             PerformOnSelection(lyric =>
             {
                 var timeTags = selector.GenerateTimeTags(lyric);
