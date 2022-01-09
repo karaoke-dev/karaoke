@@ -3,6 +3,7 @@
 
 using System.ComponentModel;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 {
@@ -18,6 +19,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 
         protected override NavigationTextContainer CreateTextContainer()
             => new EditLyricTextFlowContainer(Screen);
+
+        protected override NavigationState GetState(Lyric[] lyrics)
+            => NavigationState.Working;
 
         protected override void UpdateState(NavigationState value)
         {

@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 {
@@ -16,6 +18,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
 
         protected override NavigationTextContainer CreateTextContainer()
             => new GenerateTimeTagTextFlowContainer(Screen);
+
+        protected override NavigationState GetState(Lyric[] lyrics)
+        {
+            if (lyrics.All(hasTimeTag))
+                return NavigationState.Done;
+
+            if (lyrics.Any(hasTimeTag))
+                return NavigationState.Working;
+
+            return NavigationState.Initial;
+
+            static bool hasTimeTag(Lyric lyric)
+                => lyric.TimeTags != null && lyric.TimeTags.Any();
+        }
 
         protected override void UpdateState(NavigationState value)
         {

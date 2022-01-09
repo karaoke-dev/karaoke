@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 {
@@ -17,6 +19,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
 
         protected override NavigationTextContainer CreateTextContainer()
             => new GenerateRubyTextFlowContainer(Screen);
+
+        protected override NavigationState GetState(Lyric[] lyrics)
+        {
+            // technically, all non-english lyric should have romaji.
+            if (lyrics.All(hasRomaji))
+                return NavigationState.Done;
+
+            // not all (japanese) lyric contains ruby, so it's ok with that.
+            if (lyrics.Any(hasRuby) || lyrics.Any(hasRomaji))
+                return NavigationState.Working;
+
+            return NavigationState.Initial;
+
+            static bool hasRuby(Lyric lyric)
+                => lyric.RubyTags != null && lyric.RubyTags.Any();
+
+            static bool hasRomaji(Lyric lyric)
+                => lyric.RubyTags != null && lyric.RubyTags.Any();
+        }
 
         protected override void UpdateState(NavigationState value)
         {

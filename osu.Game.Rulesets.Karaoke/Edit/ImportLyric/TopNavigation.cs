@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -12,6 +13,8 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
@@ -35,6 +38,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         private readonly CornerBackground background;
         private readonly NavigationTextContainer text;
         private readonly IconButton button;
+
+        private NavigationState state;
 
         protected TopNavigation(LyricImporterStepScreen screen)
         {
@@ -62,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     Margin = new MarginPadding { Right = 5 },
                     Action = () =>
                     {
-                        if (AbleToNextStep(State))
+                        if (AbleToNextStep(state))
                         {
                             CompleteClicked();
                         }
@@ -71,7 +76,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             };
         }
 
+        [BackgroundDependencyLoader]
+        private void load(EditorBeatmap editorBeatmap)
+        {
+            editorBeatmap.HitObjectUpdated += h =>
+            {
+                if (h is not Lyric)
+                    return;
+
+                state = GetState(editorBeatmap.HitObjects.OfType<Lyric>().ToArray());
+                UpdateState(state);
+            };
+        }
+
         protected abstract NavigationTextContainer CreateTextContainer();
+
+        protected abstract NavigationState GetState(Lyric[] lyrics);
 
         protected string NavigationText
         {
@@ -82,18 +102,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         {
             get => button.TooltipText;
             set => button.TooltipText = value;
-        }
-
-        private NavigationState state;
-
-        public NavigationState State
-        {
-            get => state;
-            set
-            {
-                state = value;
-                UpdateState(State);
-            }
         }
 
         protected virtual void UpdateState(NavigationState value)

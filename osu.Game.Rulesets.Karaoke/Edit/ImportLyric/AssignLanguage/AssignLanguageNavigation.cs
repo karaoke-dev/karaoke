@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 {
@@ -16,6 +18,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 
         protected override NavigationTextContainer CreateTextContainer()
             => new AssignLanguageTextFlowContainer(Screen);
+
+        protected override NavigationState GetState(Lyric[] lyrics)
+        {
+            if (lyrics.All(x => x.Language != null))
+                return NavigationState.Done;
+
+            if (lyrics.Any(x => x.Language != null))
+                return NavigationState.Working;
+
+            return NavigationState.Initial;
+        }
 
         protected override void UpdateState(NavigationState value)
         {
