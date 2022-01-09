@@ -49,7 +49,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         {
             // todo : will cause text update because has ScheduleAfterChildren in lyric editor.
             LyricEditor.Mode = mode;
-            Navigation.State = NavigationState.Working;
         }
     }
 }

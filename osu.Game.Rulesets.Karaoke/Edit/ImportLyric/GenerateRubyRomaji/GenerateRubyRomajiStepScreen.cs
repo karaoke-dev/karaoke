@@ -68,7 +68,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
                 // todo: select all lyrics or switch to select mode.
 
                 lyricRubyTagsChangeHandler.AutoGenerate();
-                Navigation.State = NavigationState.Done;
             }));
         }
 
@@ -84,7 +83,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
                 // todo: select all lyrics or switch to select mode.
 
                 lyricRomajiTagsChangeHandler.AutoGenerate();
-                Navigation.State = NavigationState.Done;
             }));
         }
     }

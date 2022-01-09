@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
                 // do not touch user's lyric if already contains valid time-tag with time.
                 DialogOverlay.Push(new AlreadyContainTimeTagPopupDialog(ok =>
                 {
-                    Navigation.State = NavigationState.Done;
+                    // do nothing if already contains valid tags.
                 }));
             }
             else
@@ -72,7 +72,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
                     // todo: select all lyrics or switch to select mode.
 
                     lyricTimeTagsChangeHandler.AutoGenerate();
-                    Navigation.State = NavigationState.Done;
                 }));
             }
         }

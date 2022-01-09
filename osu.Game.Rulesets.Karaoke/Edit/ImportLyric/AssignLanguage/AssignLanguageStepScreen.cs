@@ -71,7 +71,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
                     return;
 
                 lyricLanguageChangeHandler.AutoGenerate();
-                Navigation.State = NavigationState.Done;
             }));
         }
     }
