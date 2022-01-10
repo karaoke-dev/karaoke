@@ -12,6 +12,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
     public abstract class LyricImporterStepScreenWithLyricEditor : LyricImporterStepScreenWithTopNavigation
     {
+        // it's a tricky way to let navigation bar able to get the lyric state.
+        // not a good solution, but have no better way now.
+        [Cached(typeof(ILyricEditorState))]
         private ImportLyricEditor lyricEditor { get; set; }
 
         [Cached(typeof(ILockChangeHandler))]
