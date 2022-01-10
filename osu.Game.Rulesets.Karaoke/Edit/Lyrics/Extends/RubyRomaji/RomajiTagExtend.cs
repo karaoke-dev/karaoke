@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     case TextTagEditMode.Generate:
                         Children = new Drawable[]
                         {
-                            new TextTagEditModeSection(),
+                            new RomajiTagEditModeSection(),
                             new RomajiTagAutoGenerateSection(),
                         };
                         break;
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     case TextTagEditMode.Edit:
                         Children = new Drawable[]
                         {
-                            new TextTagEditModeSection(),
+                            new RomajiTagEditModeSection(),
                             new RomajiTagEditSection(),
                         };
                         break;
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     case TextTagEditMode.Verify:
                         Children = new Drawable[]
                         {
-                            new TextTagEditModeSection(),
+                            new RomajiTagEditModeSection(),
                             new RomajiTagIssueSection(),
                         };
                         break;
