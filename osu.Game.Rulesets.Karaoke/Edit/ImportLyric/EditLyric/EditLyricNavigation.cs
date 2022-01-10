@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.ComponentModel;
+using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -12,9 +14,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         private const string cutting_mode = "CUTTING_MODE";
         private const string typing_mode = "TYPING_MODE";
 
+        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+
         public EditLyricNavigation(EditLyricStepScreen screen)
             : base(screen)
         {
+            bindableMode.BindValueChanged(_ =>
+            {
+                // should update the display text in navigation bar if mode change.
+                TriggerStateChange();
+            });
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricEditorState state)
+        {
+            bindableMode.BindTo(state.BindableMode);
         }
 
         protected override NavigationTextContainer CreateTextContainer()
