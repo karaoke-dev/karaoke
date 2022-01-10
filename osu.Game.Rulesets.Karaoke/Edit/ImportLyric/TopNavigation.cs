@@ -32,6 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         [Resolved]
         private OsuColour colours { get; set; }
 
+        [Resolved]
+        private EditorBeatmap editorBeatmap { get; set; }
+
         protected LyricImporterStepScreen Screen { get; }
 
         private readonly CornerBackground background;
@@ -81,15 +84,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             // use transaction ended for some reason.
             // 1. seems customized beatmap cannot get hit object updated event(not really sure why).
             // 2. object updated event will trigger hit object updated event lots of time.
-            editorBeatmap.TransactionEnded += updateState;
+            editorBeatmap.TransactionEnded += TriggerStateChange;
 
-            updateState();
+            TriggerStateChange();
+        }
 
-            void updateState()
-            {
-                state = GetState(editorBeatmap.HitObjects.OfType<Lyric>().ToArray());
-                updateNavigationDisplayInfo(state);
-            }
+        protected void TriggerStateChange()
+        {
+            state = GetState(editorBeatmap.HitObjects.OfType<Lyric>().ToArray());
+            updateNavigationDisplayInfo(state);
         }
 
         private void updateNavigationDisplayInfo(NavigationState value)
