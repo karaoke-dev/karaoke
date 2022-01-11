@@ -6,6 +6,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
@@ -49,8 +51,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
             private ILyricSelectionState lyricSelectionState { get; set; }
 
+            private ILyricEditorExtendAreaState lyricEditorExtendAreaState { get; set; }
+
             public void PrepareAutoGenerate()
             {
+                // for some mode, we need to switch to generate section.
+                lyricEditorExtendAreaState.ChangeLanguageEditMode(LanguageEditMode.Generate);
+                lyricEditorExtendAreaState.ChangeRubyTagEditMode(TextTagEditMode.Generate);
+                lyricEditorExtendAreaState.ChangeRomajiTagEditMode(TextTagEditMode.Generate);
+
+                // then open the selecting mode and select all lyrics.
                 lyricSelectionState.StartSelecting();
                 lyricSelectionState.SelectAll();
             }
@@ -59,6 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             {
                 var dependencies = base.CreateChildDependencies(parent);
                 lyricSelectionState = dependencies.Get<ILyricSelectionState>();
+                lyricEditorExtendAreaState = dependencies.Get<ILyricEditorExtendAreaState>();
                 return dependencies;
             }
 
