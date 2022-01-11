@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
@@ -15,13 +15,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
     public class NoteEditModeSection : EditModeSection<NoteEditMode>
     {
         [Resolved]
-        private Bindable<NoteEditMode> bindableEditMode { get; set; }
+        private ILyricEditorExtendAreaState lyricEditorExtendAreaState { get; set; }
 
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Blue;
 
         protected override NoteEditMode DefaultMode()
-            => bindableEditMode.Value;
+            => lyricEditorExtendAreaState.NoteEditMode;
 
         protected override Dictionary<NoteEditMode, EditModeSelectionItem> CreateSelections()
             => new()
@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         protected override void UpdateEditMode(NoteEditMode mode)
         {
-            bindableEditMode.Value = mode;
+            lyricEditorExtendAreaState.ChangeNoteEditMode(mode);
 
             base.UpdateEditMode(mode);
         }
