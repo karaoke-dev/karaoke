@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
@@ -13,14 +14,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         public override float ExtendWidth => 300;
 
-        [Cached]
-        private Bindable<NoteEditMode> bindableMode = new();
+        private readonly IBindable<NoteEditMode> bindableMode = new Bindable<NoteEditMode>();
 
         [Cached]
         private readonly Bindable<NoteEditPropertyMode> noteEditPropertyMode = new();
 
-        [BackgroundDependencyLoader]
-        private void load()
+        public NoteExtend()
         {
             bindableMode.BindValueChanged(e =>
             {
@@ -56,6 +55,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                         return;
                 }
             }, true);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricEditorExtendAreaState lyricEditorExtendAreaState)
+        {
+            bindableMode.BindTo(lyricEditorExtendAreaState.BindableNoteEditMode);
         }
     }
 }

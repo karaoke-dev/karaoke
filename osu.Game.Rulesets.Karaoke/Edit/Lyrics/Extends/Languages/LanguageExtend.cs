@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 {
@@ -13,12 +14,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 
         public override float ExtendWidth => 300;
 
-        [Cached]
-        private readonly Bindable<LanguageEditMode> editMode = new();
+        private readonly IBindable<LanguageEditMode> bindableMode = new Bindable<LanguageEditMode>();
 
         public LanguageExtend()
         {
-            editMode.BindValueChanged(e =>
+            bindableMode.BindValueChanged(e =>
             {
                 switch (e.NewValue)
                 {
@@ -42,6 +42,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
                         return;
                 }
             }, true);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricEditorExtendAreaState lyricEditorExtendAreaState)
+        {
+            bindableMode.BindTo(lyricEditorExtendAreaState.BindableLanguageEditMode);
         }
     }
 }

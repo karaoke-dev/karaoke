@@ -3,13 +3,13 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
     public class RomajiTagExtend : TextTagExtend
     {
-        [BackgroundDependencyLoader]
-        private void load()
+        public RomajiTagExtend()
         {
             EditMode.BindValueChanged(e =>
             {
@@ -43,6 +43,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                         return;
                 }
             }, true);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricEditorExtendAreaState lyricEditorExtendAreaState)
+        {
+            EditMode.BindTo(lyricEditorExtendAreaState.BindableRomajiTagEditMode);
         }
     }
 }
