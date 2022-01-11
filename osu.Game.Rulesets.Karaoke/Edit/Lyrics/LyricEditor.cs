@@ -62,6 +62,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(IBlueprintSelectionState))]
         private readonly BlueprintSelectionState blueprintSelectionState;
 
+        [Cached(typeof(ILyricEditorExtendAreaState))]
+        private readonly LyricEditorExtendAreaState lyricEditorExtendAreaState;
+
         [Cached(typeof(IScrollingInfo))]
         private readonly LocalScrollingInfo scrollingInfo = new();
 
@@ -89,6 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             AddInternal(lyricSelectionState = new LyricSelectionState());
             AddInternal(lyricCaretState = new LyricCaretState(bindableLyrics));
             AddInternal(blueprintSelectionState = new BlueprintSelectionState());
+            AddInternal(lyricEditorExtendAreaState = new LyricEditorExtendAreaState());
 
             Add(gridContainer = new GridContainer
             {
