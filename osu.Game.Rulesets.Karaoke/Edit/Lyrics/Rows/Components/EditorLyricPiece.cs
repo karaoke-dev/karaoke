@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         {
             var basePosition = GetTextIndexPosition(timeTag.Index);
             float extraPosition = extraSpacing(TimeTagsBindable.Value, timeTag);
-            return basePosition + new Vector2(extraPosition);
+            return basePosition + new Vector2(extraPosition, 0);
 
             static float extraSpacing(IEnumerable<TimeTag> timeTagsInLyric, TimeTag timeTag)
             {
