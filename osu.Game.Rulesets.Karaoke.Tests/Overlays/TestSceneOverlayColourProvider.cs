@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 
                     return colourName.Select(c =>
                     {
-                        var value = provider.GetType().GetProperty(c)?.GetValue(provider);
+                        object value = provider.GetType().GetProperty(c)?.GetValue(provider);
                         if (value == null)
                             throw new ArgumentNullException(nameof(value));
 

@@ -463,7 +463,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             protected void InitializeBlueprint(LyricEditorMode mode)
             {
                 // remove all exist blueprint container
-                RemoveAll(x => x is RubyBlueprintContainer || x is RomajiBlueprintContainer || x is TimeTagBlueprintContainer);
+                RemoveAll(x => x is RubyBlueprintContainer or RomajiBlueprintContainer or TimeTagBlueprintContainer);
 
                 // create preview and real caret
                 var blueprintContainer = createBlueprintContainer(mode, Lyric);

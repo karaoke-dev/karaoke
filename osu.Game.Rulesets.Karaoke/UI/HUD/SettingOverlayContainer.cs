@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
             // use tricky way to get session from karaoke ruleset.
-            var drawableRuleset = dependencies.Get(typeof(DrawableRuleset));
+            object drawableRuleset = dependencies.Get(typeof(DrawableRuleset));
 
             if (drawableRuleset is not DrawableKaraokeRuleset drawableKaraokeRuleset)
                 return dependencies;
