@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
 {
-    public interface IPatternGenerator<TObject> where TObject : KaraokeHitObject
+    public interface IPatternGenerator<in TObject> where TObject : KaraokeHitObject
     {
         void Generate(IEnumerable<TObject> hitObjects);
     }
