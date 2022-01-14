@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 {
     public abstract class TimeTagZoomableScrollContainer : ZoomableScrollContainer
     {
-        protected readonly IBindable<TimeTag[]> TimeTagsBindable = new Bindable<TimeTag[]>();
+        protected readonly IBindableList<TimeTag> TimeTagsBindable = new BindableList<TimeTag>();
 
         protected readonly IBindable<WorkingBeatmap> Beatmap = new Bindable<WorkingBeatmap>();
 
@@ -39,18 +39,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
             ZoomEasing = Easing.OutQuint;
             ScrollbarVisible = false;
 
-            TimeTagsBindable.BindArrayChanged(addItems =>
+            TimeTagsBindable.BindCollectionChanged((_, args) =>
             {
-                foreach (var obj in addItems)
+                foreach (var obj in args.NewItems.OfType<TimeTag>())
                 {
                     obj.TimeBindable.BindValueChanged(_ =>
                     {
                         updateTimeRange();
                     });
                 }
-            }, removedItems =>
-            {
-                foreach (var obj in removedItems)
+
+                foreach (var obj in args.OldItems.OfType<TimeTag>())
                 {
                     obj.TimeBindable.UnbindEvents();
                 }
@@ -63,8 +62,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 
         private void updateTimeRange()
         {
-            var fistTimeTag = TimeTagsBindable.Value.FirstOrDefault();
-            var lastTimeTag = TimeTagsBindable.Value.LastOrDefault();
+            var fistTimeTag = TimeTagsBindable.FirstOrDefault();
+            var lastTimeTag = TimeTagsBindable.LastOrDefault();
 
             if (fistTimeTag != null && lastTimeTag != null)
             {
