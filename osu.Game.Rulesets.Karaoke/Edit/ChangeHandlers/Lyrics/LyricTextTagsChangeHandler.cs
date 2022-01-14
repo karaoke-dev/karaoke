@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
@@ -33,7 +35,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void SetPosition(TTextTag textTag, int? startIndex, int? endIndex)
+        public void RemoveAll(IEnumerable<TTextTag> textTags)
+        {
+            PerformOnSelection(lyric =>
+            {
+                // should convert to array because enumerable might change while deleting.
+                foreach (var textTag in textTags.ToArray())
+                {
+                    bool containsInLyric = ContainsInLyric(lyric, textTag);
+                    if (containsInLyric == false)
+                        throw new InvalidOperationException($"{nameof(textTag)} is not in the lyric");
+
+                    RemoveFromLyric(lyric, textTag);
+                }
+            });
+        }
+
+        public void SetIndex(TTextTag textTag, int? startIndex, int? endIndex)
         {
             PerformOnSelection(lyric =>
             {

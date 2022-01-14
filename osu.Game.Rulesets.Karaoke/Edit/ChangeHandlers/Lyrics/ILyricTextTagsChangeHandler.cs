@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
@@ -11,7 +12,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         void Remove(TTextTag textTag);
 
-        void SetPosition(TTextTag textTag, int? startIndex, int? endIndex);
+        void RemoveAll(IEnumerable<TTextTag> textTags);
+
+        void SetIndex(TTextTag textTag, int? startIndex, int? endIndex);
 
         void SetText(TTextTag textTag, string text);
     }

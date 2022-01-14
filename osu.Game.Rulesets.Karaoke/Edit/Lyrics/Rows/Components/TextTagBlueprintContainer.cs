@@ -80,11 +80,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
             public override bool HandleMovement(MoveSelectionEvent<T> moveEvent) => true;
 
-            protected override void DeleteItems(IEnumerable<T> items)
-            {
-                // todo : delete ruby or romaji
-            }
-
             private float deltaPosition;
 
             protected override void OnOperationBegan()
@@ -113,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                         if (startIndex >= selectedTextTag.EndIndex)
                             return false;
 
-                        SetTextTagPosition(selectedTextTag, startIndex, null);
+                        SetTextTagIndex(selectedTextTag, startIndex, null);
                         return true;
 
                     case Anchor.CentreRight:
@@ -122,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                         if (endIndex <= selectedTextTag.StartIndex)
                             return false;
 
-                        SetTextTagPosition(selectedTextTag, null, endIndex);
+                        SetTextTagIndex(selectedTextTag, null, endIndex);
                         return true;
 
                     default:
@@ -130,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 }
             }
 
-            protected abstract void SetTextTagPosition(T textTag, int? startPosition, int? endPosition);
+            protected abstract void SetTextTagIndex(T textTag, int? startPosition, int? endPosition);
 
             protected override void OnSelectionChanged()
             {

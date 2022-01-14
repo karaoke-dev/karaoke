@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -42,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             => new RomajiTagSelectionBlueprint(item);
 
         protected override void SetTextTagPosition(RomajiTag textTag, int startPosition, int endPosition)
-            => romajiTagsChangeHandler.SetPosition(textTag, startPosition, endPosition);
+            => romajiTagsChangeHandler.SetIndex(textTag, startPosition, endPosition);
 
         protected class RomajiTagSelectionHandler : TextTagSelectionHandler
         {
@@ -55,8 +56,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 SelectedItems.BindTo(blueprintSelectionState.SelectedRomajiTags);
             }
 
-            protected override void SetTextTagPosition(RomajiTag textTag, int? startPosition, int? endPosition)
-                => romajiTagsChangeHandler.SetPosition(textTag, startPosition, endPosition);
+            protected override void DeleteItems(IEnumerable<RomajiTag> items)
+                => romajiTagsChangeHandler.RemoveAll(items);
+
+            protected override void SetTextTagIndex(RomajiTag textTag, int? startPosition, int? endPosition)
+                => romajiTagsChangeHandler.SetIndex(textTag, startPosition, endPosition);
         }
     }
 }
