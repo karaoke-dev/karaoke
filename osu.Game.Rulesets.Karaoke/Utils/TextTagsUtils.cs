@@ -25,10 +25,10 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return textTags?.Where(x => TextTagUtils.OutOfRange(x, lyric)).ToArray();
         }
 
-        public static T[] FindOverlapping<T>(T[] textTags, Sorting sorting = Sorting.Asc) where T : ITextTag
+        public static T[] FindOverlapping<T>(IList<T> textTags, Sorting sorting = Sorting.Asc) where T : ITextTag
         {
             // check is null or empty
-            if (textTags == null || textTags.Length == 0)
+            if (textTags == null || !textTags.Any())
                 return Array.Empty<T>();
 
             // todo : need to make sure is need to sort in here?

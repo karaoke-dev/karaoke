@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             string newLyric = lyric.Text[..position] + lyric.Text[(position + count)..];
             lyric.Text = newLyric;
 
-            static T[] processTags<T>(T[] tags, int position, int count) where T : class, ITextTag
+            static IList<T> processTags<T>(IList<T> tags, int position, int count) where T : class, ITextTag
             {
                 if (tags == null)
                     return null;
@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 return tags.Where(x => x.StartIndex < x.EndIndex).ToArray();
             }
 
-            static TimeTag[] processTimeTags(IEnumerable<TimeTag> timeTags, int position, int count)
+            static IList<TimeTag> processTimeTags(IEnumerable<TimeTag> timeTags, int position, int count)
             {
                 int endPosition = position + count;
                 return timeTags?.Where(x => !(x.Index.Index >= position && x.Index.Index < endPosition))
