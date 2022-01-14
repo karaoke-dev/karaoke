@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             protected override void DeleteItems(IEnumerable<RomajiTag> items)
                 => romajiTagsChangeHandler.RemoveAll(items);
 
-            protected override void SetTextTagPosition(RomajiTag textTag, int? startPosition, int? endPosition)
+            protected override void SetTextTagIndex(RomajiTag textTag, int? startPosition, int? endPosition)
                 => romajiTagsChangeHandler.SetIndex(textTag, startPosition, endPosition);
         }
     }
