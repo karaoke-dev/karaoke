@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             => new RomajiTagSelectionBlueprint(item);
 
         protected override void SetTextTagPosition(RomajiTag textTag, int startPosition, int endPosition)
-            => romajiTagsChangeHandler.SetPosition(textTag, startPosition, endPosition);
+            => romajiTagsChangeHandler.SetIndex(textTag, startPosition, endPosition);
 
         protected class RomajiTagSelectionHandler : TextTagSelectionHandler
         {
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 => romajiTagsChangeHandler.RemoveAll(items);
 
             protected override void SetTextTagPosition(RomajiTag textTag, int? startPosition, int? endPosition)
-                => romajiTagsChangeHandler.SetPosition(textTag, startPosition, endPosition);
+                => romajiTagsChangeHandler.SetIndex(textTag, startPosition, endPosition);
         }
     }
 }

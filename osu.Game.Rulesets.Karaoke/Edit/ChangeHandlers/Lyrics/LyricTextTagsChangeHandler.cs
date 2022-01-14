@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void SetPosition(TTextTag textTag, int? startIndex, int? endIndex)
+        public void SetIndex(TTextTag textTag, int? startIndex, int? endIndex)
         {
             PerformOnSelection(lyric =>
             {

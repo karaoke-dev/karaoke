@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         void RemoveAll(IEnumerable<TTextTag> textTags);
 
-        void SetPosition(TTextTag textTag, int? startIndex, int? endIndex);
+        void SetIndex(TTextTag textTag, int? startIndex, int? endIndex);
 
         void SetText(TTextTag textTag, string text);
     }

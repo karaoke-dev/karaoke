@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             => new RubyTagSelectionBlueprint(item);
 
         protected override void SetTextTagPosition(RubyTag textTag, int startPosition, int endPosition)
-            => rubyTagsChangeHandler.SetPosition(textTag, startPosition, endPosition);
+            => rubyTagsChangeHandler.SetIndex(textTag, startPosition, endPosition);
 
         protected class RubyTagSelectionHandler : TextTagSelectionHandler
         {
@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 => rubyTagsChangeHandler.RemoveAll(items);
 
             protected override void SetTextTagPosition(RubyTag textTag, int? startPosition, int? endPosition)
-                => rubyTagsChangeHandler.SetPosition(textTag, startPosition, endPosition);
+                => rubyTagsChangeHandler.SetIndex(textTag, startPosition, endPosition);
         }
     }
 }
