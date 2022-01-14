@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         public readonly IBindable<string> TextBindable = new Bindable<string>();
         public readonly IBindable<string> RubyTextBindable = new Bindable<string>();
-        public readonly IBindable<int[]> SingersBindable = new Bindable<int[]>();
+        public readonly IBindableList<int> SingersBindable = new BindableList<int>();
         public readonly IBindable<bool> DisplayBindable = new Bindable<bool>();
         public readonly IBindable<Tone> ToneBindable = new Bindable<Tone>();
 
@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             positionBindable.BindValueChanged(_ => updateNotePositionAndHeight());
             TextBindable.BindValueChanged(_ => { changeText(HitObject); });
             RubyTextBindable.BindValueChanged(_ => { changeText(HitObject); });
-            SingersBindable.BindValueChanged(_ => { ApplySkin(CurrentSkin, false); });
+            SingersBindable.BindCollectionChanged((_, _) => { ApplySkin(CurrentSkin, false); });
             DisplayBindable.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue; });
             ToneBindable.BindValueChanged(_ => updateNotePositionAndHeight());
 
