@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
     internal class EditNoteBlueprintContainer : ExtendBlueprintContainer<Note>
     {
         [UsedImplicitly]
-        private readonly Bindable<Note[]> notes = new();
+        private readonly BindableList<Note> notes = new();
 
         private readonly Lyric lyric;
 
@@ -38,7 +38,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             SelectedItems.BindTo(blueprintSelectionState.SelectedNotes);
 
             // todo : might deal with the cause if create or delete notes.
-            notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray();
+            notes.Clear();
+            notes.AddRange(beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray());
 
             // Add time-tag into blueprint container
             RegisterBindable(notes);

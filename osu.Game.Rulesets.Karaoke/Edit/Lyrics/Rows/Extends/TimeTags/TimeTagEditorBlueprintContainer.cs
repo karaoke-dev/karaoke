@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
         [UsedImplicitly]
-        private readonly Bindable<TimeTag[]> timeTags;
+        private readonly BindableList<TimeTag> timeTags;
 
         protected readonly Lyric Lyric;
 

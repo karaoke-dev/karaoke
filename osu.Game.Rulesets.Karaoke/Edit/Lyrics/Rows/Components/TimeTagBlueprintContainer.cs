@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         private ILyricCaretState lyricCaretState { get; set; }
 
         [UsedImplicitly]
-        private readonly Bindable<TimeTag[]> timeTags;
+        private readonly BindableList<TimeTag> timeTags;
 
         protected readonly Lyric Lyric;
 
