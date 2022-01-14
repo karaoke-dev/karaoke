@@ -69,12 +69,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 Language = lyric.Language,
             };
 
+            string secondLyricText = lyric.Text?[splitIndex..];
             var secondLyric = new Lyric
             {
-                Text = lyric.Text?[splitIndex..],
+                Text = secondLyricText,
                 TimeTags = shiftingTimeTag(secondTimeTag?.ToArray(), -splitIndex),
-                RubyTags = shiftingRubyTag(lyric.RubyTags?.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), -splitIndex),
-                RomajiTags = shiftingRomajiTag(lyric.RomajiTags?.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), -splitIndex),
+                RubyTags = shiftingTextTag(lyric.RubyTags?.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), secondLyricText, -splitIndex),
+                RomajiTags = shiftingTextTag(lyric.RomajiTags?.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), secondLyricText, -splitIndex),
                 // todo : should implement time and duration
                 Singers = lyric.Singers,
                 LayoutIndex = lyric.LayoutIndex,
@@ -93,6 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 throw new ArgumentNullException(nameof(secondLyric));
 
             int shiftingIndex = firstLyric.Text?.Length ?? 0;
+            string lyricText = firstLyric.Text + secondLyric.Text;
 
             var timeTags = new List<TimeTag>();
             timeTags.AddRangeWithNullCheck(firstLyric.TimeTags);
@@ -100,11 +102,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             var rubyTags = new List<RubyTag>();
             rubyTags.AddRangeWithNullCheck(firstLyric.RubyTags);
-            rubyTags.AddRangeWithNullCheck(shiftingRubyTag(secondLyric.RubyTags, shiftingIndex));
+            rubyTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RubyTags, lyricText, shiftingIndex));
 
             var romajiTags = new List<RomajiTag>();
             romajiTags.AddRangeWithNullCheck(firstLyric.RomajiTags);
-            romajiTags.AddRangeWithNullCheck(shiftingRomajiTag(secondLyric.RomajiTags, shiftingIndex));
+            romajiTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RomajiTags, lyricText, shiftingIndex));
 
             double startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
             double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
@@ -118,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             return new Lyric
             {
-                Text = firstLyric.Text + secondLyric.Text,
+                Text = lyricText,
                 TimeTags = timeTags.ToArray(),
                 RubyTags = rubyTags.ToArray(),
                 RomajiTags = romajiTags.ToArray(),
@@ -133,11 +135,17 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         private static TimeTag[] shiftingTimeTag(IEnumerable<TimeTag> timeTags, int shifting)
             => timeTags?.Select(t => TimeTagUtils.ShiftingTimeTag(t, shifting)).ToArray();
 
-        private static RubyTag[] shiftingRubyTag(IEnumerable<RubyTag> rubyTags, int shifting)
-            => rubyTags?.Select(t => TextTagUtils.Shifting(t, shifting)).ToArray();
-
-        private static RomajiTag[] shiftingRomajiTag(IEnumerable<RomajiTag> romajiTags, int shifting)
-            => romajiTags?.Select(t => TextTagUtils.Shifting(t, shifting)).ToArray();
+        private static T[] shiftingTextTag<T>(IEnumerable<T> textTags, string lyric, int shifting) where T : ITextTag, new()
+            => textTags?.Select(t =>
+            {
+                (int startIndex, int endIndex) = TextTagUtils.GetShiftingIndex(t, lyric, shifting);
+                return new T
+                {
+                    Text = t.Text,
+                    StartIndex = startIndex,
+                    EndIndex = endIndex
+                };
+            }).ToArray();
 
         #endregion
 

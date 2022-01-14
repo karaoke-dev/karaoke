@@ -18,13 +18,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return textTag;
         }
 
-        public static T Shifting<T>(T textTag, int shifting) where T : ITextTag, new() =>
-            new()
-            {
-                StartIndex = textTag.StartIndex + shifting,
-                EndIndex = textTag.EndIndex + shifting,
-                Text = textTag.Text
-            };
+        public static Tuple<int, int> GetShiftingIndex<T>(T textTag, string lyric, int shifting) where T : ITextTag
+        {
+            int lyricLength = lyric?.Length ?? 0;
+            int newStartIndex = Math.Clamp(textTag.StartIndex + shifting, 0, lyricLength);
+            int newEndIndex = Math.Clamp(textTag.EndIndex + shifting, 0, lyricLength);
+            return new Tuple<int, int>(newStartIndex, newEndIndex);
+        }
 
         public static bool OutOfRange<T>(T textTag, string lyric) where T : ITextTag
         {

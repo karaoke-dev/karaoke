@@ -1,7 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using NUnit.Framework;
+using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -30,21 +32,35 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             TextTagAssert.ArePropertyEqual(TextTagUtils.FixTimeTagPosition(romajiTag), actualRomaji);
         }
 
-        [TestCase("[0,1]:ka", 1, "[1,2]:ka")]
-        [TestCase("[0,1]:", 1, "[1,2]:")]
-        [TestCase("[0,1]:ka", -1, "[-1,0]:ka")] // do not check out of range in here.
-        [TestCase("[1,0]:ka", 1, "[2,1]:ka")] // do not check order in here.
-        public void TestShifting(string textTag, int shifting, string actualTag)
+        [TestCase("[0,1]:ka", "karaoke", 1, "[1,2]:ka")]
+        [TestCase("[0,1]:", "karaoke", 1, "[1,2]:")]
+        [TestCase("[0,1]:ka", "karaoke", -1, "[0,0]:ka")]
+        [TestCase("[0,1]:ka", "", -1, "[0,0]:ka")]
+        [TestCase("[0,1]:ka", null, -1, "[0,0]:ka")]
+        [TestCase("[0,1]:ka", null, 1, "[0,0]:ka")]
+        [TestCase("[1,0]:ka", "karaoke", 1, "[2,1]:ka")] // do not check order in here.
+        public void TestGetShiftingIndex(string textTag, string lyric, int shifting, string actualTag)
         {
             // test ruby tag.
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
             var actualRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
-            TextTagAssert.ArePropertyEqual(TextTagUtils.Shifting(rubyTag, shifting), actualRubyTag);
+            TextTagAssert.ArePropertyEqual(generateShiftingTag(rubyTag, lyric, shifting), actualRubyTag);
 
             // test romaji tag.
             var romajiTag = TestCaseTagHelper.ParseRubyTag(textTag);
             var actualRomaji = TestCaseTagHelper.ParseRubyTag(actualTag);
-            TextTagAssert.ArePropertyEqual(TextTagUtils.Shifting(romajiTag, shifting), actualRomaji);
+            TextTagAssert.ArePropertyEqual(generateShiftingTag(romajiTag, lyric, shifting), actualRomaji);
+
+            static T generateShiftingTag<T>(T textTag, string lyric, int shifting) where T : ITextTag, new()
+            {
+                (int startIndex, int endIndex) = TextTagUtils.GetShiftingIndex(textTag, lyric, shifting);
+                return new T
+                {
+                    Text = textTag.Text,
+                    StartIndex = startIndex,
+                    EndIndex = endIndex
+                };
+            }
         }
 
         [TestCase("[0,1]:ka", "karaoke", false)]
