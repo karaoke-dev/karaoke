@@ -80,11 +80,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
             public override bool HandleMovement(MoveSelectionEvent<T> moveEvent) => true;
 
-            protected override void DeleteItems(IEnumerable<T> items)
-            {
-                // todo : delete ruby or romaji
-            }
-
             private float deltaPosition;
 
             protected override void OnOperationBegan()

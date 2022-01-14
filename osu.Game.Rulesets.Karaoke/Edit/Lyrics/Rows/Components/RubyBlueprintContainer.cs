@@ -1,6 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -54,6 +56,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             {
                 SelectedItems.BindTo(blueprintSelectionState.SelectedRubyTags);
             }
+
+            protected override void DeleteItems(IEnumerable<RubyTag> items)
+                => rubyTagsChangeHandler.RemoveAll(items);
 
             protected override void SetTextTagPosition(RubyTag textTag, int? startPosition, int? endPosition)
                 => rubyTagsChangeHandler.SetPosition(textTag, startPosition, endPosition);
