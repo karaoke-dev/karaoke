@@ -345,7 +345,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
-            if (lyric.Singers == null || lyric.Singers.Length == 0)
+            if (lyric.Singers == null || !lyric.Singers.Any())
                 return false;
 
             lyric.Singers = null;
@@ -393,7 +393,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static bool CheckIsStartTimeInvalid(Lyric lyric)
         {
-            if (lyric.TimeTags == null || lyric.TimeTags.Length == 0)
+            if (lyric.TimeTags == null || !lyric.TimeTags.Any())
                 return false;
 
             return lyric.StartTime > TimeTagsUtils.GetStartTime(lyric.TimeTags);
@@ -406,7 +406,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static bool CheckIsEndTimeInvalid(Lyric lyric)
         {
-            if (lyric.TimeTags == null || lyric.TimeTags.Length == 0)
+            if (lyric.TimeTags == null || !lyric.TimeTags.Any())
                 return false;
 
             return lyric.EndTime < TimeTagsUtils.GetEndTime(lyric.TimeTags);
