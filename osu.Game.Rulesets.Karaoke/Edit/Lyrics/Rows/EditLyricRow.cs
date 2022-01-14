@@ -540,7 +540,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             protected void UpdateTimeTags()
             {
                 timeTagContainer.Clear();
-                var timeTags = lyricPiece.TimeTagsBindable.Value;
+                var timeTags = lyricPiece.TimeTagsBindable;
                 if (timeTags == null)
                     return;
 
