@@ -74,8 +74,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 {
                     var firstTimeTag = selectedTextTags.OrderBy(x => x.StartIndex).FirstOrDefault();
                     int newStartIndex = calculateNewIndex(firstTimeTag, deltaXPosition, Anchor.CentreLeft);
-                    int shifting = newStartIndex - firstTimeTag!.StartIndex;
-                    if (shifting == 0)
+                    int offset = newStartIndex - firstTimeTag!.StartIndex;
+                    if (offset == 0)
                         return false;
 
                     SetTextTagShifting(selectedTextTags, -1);
@@ -84,8 +84,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 {
                     var lastTimeTag = selectedTextTags.OrderBy(x => x.EndIndex).LastOrDefault();
                     int newEndIndex = calculateNewIndex(lastTimeTag, deltaXPosition, Anchor.CentreRight);
-                    int shifting = newEndIndex - lastTimeTag!.EndIndex;
-                    if (shifting == 0)
+                    int offset = newEndIndex - lastTimeTag!.EndIndex;
+                    if (offset == 0)
                         return false;
 
                     SetTextTagShifting(selectedTextTags, 1);

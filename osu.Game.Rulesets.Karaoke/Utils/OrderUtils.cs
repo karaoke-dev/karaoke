@@ -144,7 +144,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var affectObjects = objects.Where(x => x.Order >= minAffectOrder && x.Order <= maxAffectOrder);
 
             // get shifting order
-            int shiftingOrder = newOrder > oldOrder ? -1 : 1;
+            int orderOffset = newOrder > oldOrder ? -1 : 1;
 
             // get order order object info
             const int old_order_temp_id = -1;
@@ -154,14 +154,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             changeOrder(oldOrderObject, old_order_temp_id);
 
             // switching order
-            affectObjects = shiftingOrder > 0 ? affectObjects.OrderByDescending(x => x.Order) : affectObjects.OrderBy(x => x.Order);
+            affectObjects = orderOffset > 0 ? affectObjects.OrderByDescending(x => x.Order) : affectObjects.OrderBy(x => x.Order);
 
             foreach (var affectObject in affectObjects)
             {
                 if (affectObject.Order == old_order_temp_id)
                     continue;
 
-                int affectObjectNewOrder = affectObject.Order + shiftingOrder;
+                int affectObjectNewOrder = affectObject.Order + orderOffset;
                 changeOrder(affectObject, affectObjectNewOrder);
             }
 

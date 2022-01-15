@@ -93,20 +93,20 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (secondLyric == null)
                 throw new ArgumentNullException(nameof(secondLyric));
 
-            int shiftingIndex = firstLyric.Text?.Length ?? 0;
+            int offsetIndexForSecondLyric = firstLyric.Text?.Length ?? 0;
             string lyricText = firstLyric.Text + secondLyric.Text;
 
             var timeTags = new List<TimeTag>();
             timeTags.AddRangeWithNullCheck(firstLyric.TimeTags);
-            timeTags.AddRangeWithNullCheck(shiftingTimeTag(secondLyric.TimeTags, shiftingIndex));
+            timeTags.AddRangeWithNullCheck(shiftingTimeTag(secondLyric.TimeTags, offsetIndexForSecondLyric));
 
             var rubyTags = new List<RubyTag>();
             rubyTags.AddRangeWithNullCheck(firstLyric.RubyTags);
-            rubyTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RubyTags, lyricText, shiftingIndex));
+            rubyTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RubyTags, lyricText, offsetIndexForSecondLyric));
 
             var romajiTags = new List<RomajiTag>();
             romajiTags.AddRangeWithNullCheck(firstLyric.RomajiTags);
-            romajiTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RomajiTags, lyricText, shiftingIndex));
+            romajiTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RomajiTags, lyricText, offsetIndexForSecondLyric));
 
             double startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
             double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
