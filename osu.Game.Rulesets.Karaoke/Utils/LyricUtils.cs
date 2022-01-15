@@ -348,7 +348,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (lyric.Singers == null || !lyric.Singers.Any())
                 return false;
 
-            lyric.Singers = null;
+            lyric.Singers = new List<int>();
             return true;
         }
 

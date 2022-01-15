@@ -146,7 +146,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, true)]
         [TestCase(new string[] { }, false)]
-        [TestCase(null, false)]
         public void TestHasTimedTimeTags(string[] timeTags, bool hasTimedTimeTag)
         {
             var lyric = new Lyric
@@ -251,7 +250,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, "[0,4]:karaoke", false)]
         [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, null, false)]
         [TestCase(new string[] { }, "[0,4]:karaoke", false)]
-        [TestCase(null, "[0,4]:karaoke", false)]
         public void TestRemoveTextTag(string[] textTags, string removeTextTag, bool actual)
         {
             var lyric = new Lyric
@@ -296,7 +294,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[3,start]:4000", "[2,start]:3000", "[1,start]:2000", "[0,start]:1000" }, "00:01:000 - 00:04:000")] // should display right-time even it's not being ordered.
         [TestCase(new[] { "[0,start]:1000" }, "00:01:000 - 00:01:000")]
         [TestCase(new string[] { }, "--:--:--- - --:--:---")]
-        [TestCase(null, "--:--:--- - --:--:---")]
         public void TestTimeTagTimeFormattedString(string[] timeTags, string format)
         {
             var lyric = new Lyric
@@ -337,11 +334,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         #region Singer
 
-        [TestCase(null, "[1]name:Singer1", true, new[] { 1 })]
+        [TestCase(new string[] { }, "[1]name:Singer1", true, new[] { 1 })]
         [TestCase(new[] { "[1]name:Singer1" }, "[1]name:Singer1", false, new[] { 1 })]
         [TestCase(new[] { "[1]name:Singer1" }, "[2]name:Singer2", true, new[] { 1, 2 })]
-        [TestCase(null, "[0]name:Singer0", false, null)] // should not add invalid singer.
-        [TestCase(new[] { "[1]name:Singer1" }, "[0]name:Singer0", false, null)] // should not add invalid singer.
         public void TestAddSinger(string[] existSingers, string addSinger, bool isAdded, int[] actualSingers)
         {
             var singer = TestCaseTagHelper.ParseSinger(addSinger);
@@ -364,8 +359,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[1]name:Singer1" }, "[1]name:Singer1", true, new int[] { })]
         [TestCase(new[] { "[1]name:Singer1" }, "[2]name:Singer2", false, new[] { 1 })]
         [TestCase(new string[] { }, "[1]name:Singer1", false, new int[] { })]
-        [TestCase(null, "[1]name:Singer1", false, null)] // null singer index will not be initialize if remove singer.
-        [TestCase(null, "[0]name:Singer0", false, null)] // should not remove invalid singer.
         [TestCase(new[] { "[1]name:Singer1" }, "[0]name:Singer0", false, null)] // should not remove invalid singer.
         public void TestRemoveSinger(string[] existSingers, string removeSinger, bool isAdded, int[] actualSingers)
         {
@@ -388,7 +381,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         [TestCase(new[] { "[1]name:Singer1" }, true)]
         [TestCase(new string[] { }, false)] // singer list will stay as empty.
-        [TestCase(null, true)]
         public void ClearSinger(string[] existSingers, bool isNull)
         {
             var lyric = new Lyric
@@ -403,7 +395,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[1]name:Singer1" }, "[1]name:Singer1", true)]
         [TestCase(new[] { "[1]name:Singer1" }, "[2]name:Singer2", false)]
         [TestCase(new string[] { }, "[1]name:Singer1", false)]
-        [TestCase(null, "[1]name:Singer1", false)]
         public void TestContainsSinger(string[] existSingers, string compareSinger, bool isContain)
         {
             var singer = TestCaseTagHelper.ParseSinger(compareSinger);
@@ -418,7 +409,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[1]name:Singer1" }, new[] { "[1]name:Singer1" }, true)]
         [TestCase(new[] { "[1]name:Singer1" }, new[] { "[2]name:Singer2" }, false)]
         [TestCase(new string[] { }, new[] { "[1]name:Singer1" }, true)]
-        [TestCase(null, new[] { "[1]name:Singer1" }, true)]
         public void TestOnlyContainsSingers(string[] existSingers, string[] compareSingers, bool isContain)
         {
             var singers = TestCaseTagHelper.ParseSingers(compareSingers).ToList();
