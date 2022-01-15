@@ -24,8 +24,15 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (string.IsNullOrEmpty(lyric))
                 return true;
 
-            var fixedTextTag = FixTimeTagPosition(textTag);
-            return fixedTextTag.StartIndex < 0 || fixedTextTag.EndIndex > lyric.Length;
+            return outOfRange(lyric, textTag.StartIndex) || outOfRange(lyric, textTag.EndIndex);
+
+            static bool outOfRange(string lyric, int index)
+            {
+                const int min_index = 0;
+                int maxIndex = lyric.Length;
+
+                return index < min_index || index > maxIndex;
+            }
         }
 
         public static bool EmptyText<T>(T textTag) where T : ITextTag
@@ -45,9 +52,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static string PositionFormattedString<T>(T textTag) where T : ITextTag
         {
-            var fixedTag = FixTimeTagPosition(textTag);
-            string text = string.IsNullOrWhiteSpace(fixedTag.Text) ? "empty" : fixedTag.Text;
-            return $"{text}({fixedTag.StartIndex} ~ {fixedTag.EndIndex})";
+            string text = string.IsNullOrWhiteSpace(textTag.Text) ? "empty" : textTag.Text;
+            return $"{text}({textTag.StartIndex} ~ {textTag.EndIndex})";
         }
 
         public static string GetTextFromLyric<T>(T textTag, string lyric) where T : ITextTag
@@ -55,9 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (textTag == null || lyric == null)
                 return null;
 
-            var fixedTextTag = FixTimeTagPosition(textTag);
-            int startIndex = Math.Max(0, fixedTextTag.StartIndex);
-            int endIndex = Math.Min(lyric.Length, fixedTextTag.EndIndex);
+            (int startIndex, int endIndex) = GetFixedIndex(textTag, lyric);
             return lyric.Substring(startIndex, endIndex - startIndex);
         }
     }

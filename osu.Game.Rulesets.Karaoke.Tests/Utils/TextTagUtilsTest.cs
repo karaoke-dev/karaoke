@@ -79,6 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[0,1]:ka", "", true)]
         [TestCase("[0,1]:ka", null, true)]
         [TestCase("[0,-1]:ka", "karaoke", true)]
+        [TestCase("[1,0]:ka", "karaoke", false)] // should not be counted as out of range if index is not ordered.
         [TestCase("[0,0]:ka", "", true)] // should be counted as out of range if lyric is empty
         [TestCase("[0,0]:ka", null, true)] // should be counted as out of range if lyric is null
         public void TestOutOfRange(string textTag, string lyric, bool outOfRange)
@@ -99,8 +100,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[0,1]:", "empty(0 ~ 1)")]
         [TestCase("[-1,1]:ka", "ka(-1 ~ 1)")]
         [TestCase("[-1,-1]:ka", "ka(-1 ~ -1)")]
-        [TestCase("[-1,-2]:ka", "ka(-2 ~ -1)")]
-        [TestCase("[2,1]:ka", "ka(1 ~ 2)")]
+        [TestCase("[-1,-2]:ka", "ka(-1 ~ -2)")] // will not fix the order in display.
+        [TestCase("[2,1]:ka", "ka(2 ~ 1)")] // will not fix the order in display.
         public void TestPositionFormattedString(string textTag, string actual)
         {
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
