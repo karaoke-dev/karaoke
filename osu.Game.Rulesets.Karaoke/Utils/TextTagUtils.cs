@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             int lyricLength = lyric?.Length ?? 0;
             int newStartIndex = Math.Clamp(textTag.StartIndex + shifting, 0, lyricLength);
             int newEndIndex = Math.Clamp(textTag.EndIndex + shifting, 0, lyricLength);
-            return new Tuple<int, int>(newStartIndex, newEndIndex);
+            return new Tuple<int, int>(Math.Min(newStartIndex, newEndIndex), Math.Max(newStartIndex, newEndIndex));
         }
 
         public static bool OutOfRange<T>(T textTag, string lyric) where T : ITextTag

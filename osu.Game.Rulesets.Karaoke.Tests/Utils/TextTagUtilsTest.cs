@@ -38,7 +38,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[0,1]:ka", "", -1, "[0,0]:ka")]
         [TestCase("[0,1]:ka", null, -1, "[0,0]:ka")]
         [TestCase("[0,1]:ka", null, 1, "[0,0]:ka")]
-        [TestCase("[1,0]:ka", "karaoke", 1, "[2,1]:ka")] // do not check order in here.
+        [TestCase("[1,0]:ka", "karaoke", 0, "[0,1]:ka")] // will auto fix the position
+        [TestCase("[1,0]:ka", "karaoke", 1, "[1,2]:ka")]
         public void TestGetShiftingIndex(string textTag, string lyric, int shifting, string actualTag)
         {
             // test ruby tag.
