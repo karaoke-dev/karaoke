@@ -379,9 +379,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             }
         }
 
-        [TestCase(new[] { "[1]name:Singer1" }, true)]
-        [TestCase(new string[] { }, false)] // singer list will stay as empty.
-        public void ClearSinger(string[] existSingers, bool isNull)
+        [TestCase(new[] { "[1]name:Singer1" }, false)]
+        [TestCase(new string[] { }, false)]
+        public void ClearSinger(string[] existSingers, bool stillContainsSinger)
         {
             var lyric = new Lyric
             {
@@ -389,7 +389,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             };
             LyricUtils.ClearSinger(lyric);
 
-            Assert.AreEqual(lyric.Singers == null, isNull);
+            Assert.AreEqual(lyric.Singers!.Any(), stillContainsSinger);
         }
 
         [TestCase(new[] { "[1]name:Singer1" }, "[1]name:Singer1", true)]
