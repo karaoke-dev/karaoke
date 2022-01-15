@@ -93,20 +93,20 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (secondLyric == null)
                 throw new ArgumentNullException(nameof(secondLyric));
 
-            int shiftingIndex = firstLyric.Text?.Length ?? 0;
+            int offsetIndexForSecondLyric = firstLyric.Text?.Length ?? 0;
             string lyricText = firstLyric.Text + secondLyric.Text;
 
             var timeTags = new List<TimeTag>();
             timeTags.AddRangeWithNullCheck(firstLyric.TimeTags);
-            timeTags.AddRangeWithNullCheck(shiftingTimeTag(secondLyric.TimeTags, shiftingIndex));
+            timeTags.AddRangeWithNullCheck(shiftingTimeTag(secondLyric.TimeTags, offsetIndexForSecondLyric));
 
             var rubyTags = new List<RubyTag>();
             rubyTags.AddRangeWithNullCheck(firstLyric.RubyTags);
-            rubyTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RubyTags, lyricText, shiftingIndex));
+            rubyTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RubyTags, lyricText, offsetIndexForSecondLyric));
 
             var romajiTags = new List<RomajiTag>();
             romajiTags.AddRangeWithNullCheck(firstLyric.RomajiTags);
-            romajiTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RomajiTags, lyricText, shiftingIndex));
+            romajiTags.AddRangeWithNullCheck(shiftingTextTag(secondLyric.RomajiTags, lyricText, offsetIndexForSecondLyric));
 
             double startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
             double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
@@ -132,13 +132,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             };
         }
 
-        private static TimeTag[] shiftingTimeTag(IEnumerable<TimeTag> timeTags, int shifting)
-            => timeTags?.Select(t => TimeTagUtils.ShiftingTimeTag(t, shifting)).ToArray();
+        private static TimeTag[] shiftingTimeTag(IEnumerable<TimeTag> timeTags, int offset)
+            => timeTags?.Select(t => TimeTagUtils.ShiftingTimeTag(t, offset)).ToArray();
 
-        private static T[] shiftingTextTag<T>(IEnumerable<T> textTags, string lyric, int shifting) where T : ITextTag, new()
+        private static T[] shiftingTextTag<T>(IEnumerable<T> textTags, string lyric, int offset) where T : ITextTag, new()
             => textTags?.Select(t =>
             {
-                (int startIndex, int endIndex) = TextTagUtils.GetShiftingIndex(t, lyric, shifting);
+                (int startIndex, int endIndex) = TextTagUtils.GetShiftingIndex(t, lyric, offset);
                 return new T
                 {
                     Text = t.Text,

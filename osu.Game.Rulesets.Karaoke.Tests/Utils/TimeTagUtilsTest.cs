@@ -15,11 +15,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[1,end]:", 2, "[3,end]:")]
         [TestCase("[1,start]:1000", -2, "[-1,start]:1000")]
         [TestCase("[1,end]:1000", -2, "[-1,end]:1000")]
-        public void TestShiftingTimeTag(string shiftingTag, int shifting, string actualTag)
+        public void TestShiftingTimeTag(string shiftingTag, int offset, string actualTag)
         {
             var timeTag = TestCaseTagHelper.ParseTimeTag(shiftingTag);
 
-            var shiftingTimeTag = TimeTagUtils.ShiftingTimeTag(timeTag, shifting);
+            var shiftingTimeTag = TimeTagUtils.ShiftingTimeTag(timeTag, offset);
             var actualTimeTag = TestCaseTagHelper.ParseTimeTag(actualTag);
 
             Assert.AreEqual(shiftingTimeTag.Index, actualTimeTag.Index);

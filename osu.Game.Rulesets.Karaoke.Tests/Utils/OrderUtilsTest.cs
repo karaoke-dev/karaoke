@@ -61,10 +61,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 1, 2, 3, 4 }, -1, new[] { 0, 1, 2, 3 })]
         [TestCase(new[] { 1, 1, 1, 1 }, 1, new[] { 2, 2, 2, 2 })]
         [TestCase(new[] { 4, 3, 2, 1 }, 1, new[] { 5, 4, 3, 2 })] // Not care order in objects and just doing shifting job.
-        public void TestShiftingOrder(int[] orders, int shifting, int[] newOrder)
+        public void TestShiftingOrder(int[] orders, int offset, int[] newOrder)
         {
             var objects = orders?.Select(x => new TestOrderObject { Order = x }).ToArray();
-            OrderUtils.ShiftingOrder(objects, shifting);
+            OrderUtils.ShiftingOrder(objects, offset);
 
             // convert order result.
             int[] result = objects?.Select(x => x.Order).ToArray();

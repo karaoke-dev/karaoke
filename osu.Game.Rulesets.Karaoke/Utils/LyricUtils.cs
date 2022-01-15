@@ -92,32 +92,32 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             int lyricTextLength = lyricText?.Length ?? 0;
             position = Math.Clamp(position, 0, lyricTextLength);
 
-            int shiftingLength = text?.Length ?? 0;
-            if (shiftingLength == 0)
+            int offset = text?.Length ?? 0;
+            if (offset == 0)
                 return;
 
             // deal with ruby and romaji with shifting.
-            lyric.RubyTags = processTags(lyric.RubyTags, position, shiftingLength);
-            lyric.RomajiTags = processTags(lyric.RomajiTags, position, shiftingLength);
-            lyric.TimeTags = processTimeTags(lyric.TimeTags, position, shiftingLength);
+            lyric.RubyTags = processTags(lyric.RubyTags, position, offset);
+            lyric.RomajiTags = processTags(lyric.RomajiTags, position, offset);
+            lyric.TimeTags = processTimeTags(lyric.TimeTags, position, offset);
 
             // deal with text
             string newLyricText = lyricText?[..position] + text + lyricText?[position..];
             lyric.Text = newLyricText;
 
-            static T[] processTags<T>(IEnumerable<T> tags, int position, int shiftingLength) where T : ITextTag =>
+            static T[] processTags<T>(IEnumerable<T> tags, int position, int offset) where T : ITextTag =>
                 tags?.Select(x =>
                     {
                         if (x.StartIndex >= position)
-                            x.StartIndex += shiftingLength;
+                            x.StartIndex += offset;
                         if (x.EndIndex > position)
-                            x.EndIndex += shiftingLength;
+                            x.EndIndex += offset;
                         return x;
                     })
                     .ToArray();
 
-            static TimeTag[] processTimeTags(IEnumerable<TimeTag> timeTags, int startPosition, int shifting)
-                => timeTags?.Select(t => t.Index.Index >= startPosition ? TimeTagUtils.ShiftingTimeTag(t, shifting) : t).ToArray();
+            static TimeTag[] processTimeTags(IEnumerable<TimeTag> timeTags, int startPosition, int offset)
+                => timeTags?.Select(t => t.Index.Index >= startPosition ? TimeTagUtils.ShiftingTimeTag(t, offset) : t).ToArray();
         }
 
         #endregion

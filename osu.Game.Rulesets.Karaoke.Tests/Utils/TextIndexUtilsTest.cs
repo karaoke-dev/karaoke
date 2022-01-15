@@ -40,11 +40,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(0, TextIndex.IndexState.End, 1, 1, TextIndex.IndexState.End)]
         [TestCase(0, TextIndex.IndexState.Start, -1, -1, TextIndex.IndexState.Start)]
         [TestCase(0, TextIndex.IndexState.End, -1, -1, TextIndex.IndexState.End)]
-        public void TestShiftingIndex(int index, TextIndex.IndexState state, int shifting, int actualIndex, TextIndex.IndexState actualState)
+        public void TestShiftingIndex(int index, TextIndex.IndexState state, int offset, int actualIndex, TextIndex.IndexState actualState)
         {
             var textIndex = new TextIndex(index, state);
             var actualTextIndex = new TextIndex(actualIndex, actualState);
-            Assert.AreEqual(TextIndexUtils.ShiftingIndex(textIndex, shifting), actualTextIndex);
+            Assert.AreEqual(TextIndexUtils.ShiftingIndex(textIndex, offset), actualTextIndex);
         }
 
         [TestCase(0, TextIndex.IndexState.Start, "karaoke", false)]

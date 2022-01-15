@@ -51,21 +51,21 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[0,1]:ka", null, 1, "[0,0]:ka")]
         [TestCase("[1,0]:ka", "karaoke", 0, "[0,1]:ka")] // will auto fix the position
         [TestCase("[1,0]:ka", "karaoke", 1, "[1,2]:ka")]
-        public void TestGetShiftingIndex(string textTag, string lyric, int shifting, string actualTag)
+        public void TestGetShiftingIndex(string textTag, string lyric, int offset, string actualTag)
         {
             // test ruby tag.
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
             var actualRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
-            TextTagAssert.ArePropertyEqual(generateShiftingTag(rubyTag, lyric, shifting), actualRubyTag);
+            TextTagAssert.ArePropertyEqual(generateShiftingTag(rubyTag, lyric, offset), actualRubyTag);
 
             // test romaji tag.
             var romajiTag = TestCaseTagHelper.ParseRubyTag(textTag);
             var actualRomaji = TestCaseTagHelper.ParseRubyTag(actualTag);
-            TextTagAssert.ArePropertyEqual(generateShiftingTag(romajiTag, lyric, shifting), actualRomaji);
+            TextTagAssert.ArePropertyEqual(generateShiftingTag(romajiTag, lyric, offset), actualRomaji);
 
-            static T generateShiftingTag<T>(T textTag, string lyric, int shifting) where T : ITextTag, new()
+            static T generateShiftingTag<T>(T textTag, string lyric, int offset) where T : ITextTag, new()
             {
-                (int startIndex, int endIndex) = TextTagUtils.GetShiftingIndex(textTag, lyric, shifting);
+                (int startIndex, int endIndex) = TextTagUtils.GetShiftingIndex(textTag, lyric, offset);
                 return new T
                 {
                     Text = textTag.Text,
