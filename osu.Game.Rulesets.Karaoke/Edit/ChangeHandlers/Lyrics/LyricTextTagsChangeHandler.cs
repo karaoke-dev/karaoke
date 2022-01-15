@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void OffsetIndex(IEnumerable<TTextTag> textTags, int offset)
+        public void ShiftingIndex(IEnumerable<TTextTag> textTags, int offset)
         {
             // note: it's ok not sort the text tag by index.
             PerformOnSelection(lyric =>

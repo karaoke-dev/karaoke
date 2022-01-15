@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         void SetIndex(TTextTag textTag, int? startIndex, int? endIndex);
 
-        void OffsetIndex(IEnumerable<TTextTag> textTags, int offset);
+        void ShiftingIndex(IEnumerable<TTextTag> textTags, int offset);
 
         void SetText(TTextTag textTag, string text);
     }
