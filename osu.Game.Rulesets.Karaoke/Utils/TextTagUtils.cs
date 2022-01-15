@@ -8,15 +8,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class TextTagUtils
     {
-        public static T FixTimeTagPosition<T>(T textTag) where T : ITextTag
-        {
-            int startIndex = Math.Min(textTag.StartIndex, textTag.EndIndex);
-            int endIndex = Math.Max(textTag.StartIndex, textTag.EndIndex);
-
-            textTag.StartIndex = startIndex;
-            textTag.EndIndex = endIndex;
-            return textTag;
-        }
+        public static Tuple<int, int> GetFixedIndex<T>(T textTag, string lyric) where T : ITextTag
+            => GetShiftingIndex(textTag, lyric, 0);
 
         public static Tuple<int, int> GetShiftingIndex<T>(T textTag, string lyric, int shifting) where T : ITextTag
         {

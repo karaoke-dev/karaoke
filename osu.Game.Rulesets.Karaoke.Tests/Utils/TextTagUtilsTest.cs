@@ -13,23 +13,34 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
     [TestFixture]
     public class TextTagUtilsTest
     {
-        [TestCase("[0,1]:ka", "[0,1]:ka")]
-        [TestCase("[0,1]:", "[0,1]:")]
-        [TestCase("[0,0]:ka", "[0,0]:ka")] // ignore at same index
-        [TestCase("[-1,1]:ka", "[-1,1]:ka")] // ignore negative index
-        [TestCase("[3,1]:ka", "[1,3]:ka")]
-        [TestCase("[3,-1]:ka", "[-1,3]:ka")] // fix but ignore negative index.
-        public void TestFixTimeTagPosition(string textTag, string actualTag)
+        [TestCase("[0,1]:ka", "karaoke", "[0,1]:ka")]
+        [TestCase("[0,1]:", "karaoke", "[0,1]:")]
+        [TestCase("[0,0]:ka", "karaoke", "[0,0]:ka")] // ignore at same index
+        [TestCase("[-1,1]:ka", "karaoke", "[0,1]:ka")]
+        [TestCase("[3,1]:ka", "karaoke", "[1,3]:ka")]
+        [TestCase("[3,-1]:ka", "karaoke", "[0,3]:ka")]
+        public void TestGetFixedIndex(string textTag, string lyric, string actualTag)
         {
             // test ruby tag.
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
             var actualRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
-            TextTagAssert.ArePropertyEqual(TextTagUtils.FixTimeTagPosition(rubyTag), actualRubyTag);
+            TextTagAssert.ArePropertyEqual(generateFixedTag(rubyTag, lyric), actualRubyTag);
 
             // test romaji tag.
             var romajiTag = TestCaseTagHelper.ParseRubyTag(textTag);
             var actualRomaji = TestCaseTagHelper.ParseRubyTag(actualTag);
-            TextTagAssert.ArePropertyEqual(TextTagUtils.FixTimeTagPosition(romajiTag), actualRomaji);
+            TextTagAssert.ArePropertyEqual(generateFixedTag(romajiTag, lyric), actualRomaji);
+
+            static T generateFixedTag<T>(T textTag, string lyric) where T : ITextTag, new()
+            {
+                (int startIndex, int endIndex) = TextTagUtils.GetFixedIndex(textTag, lyric);
+                return new T
+                {
+                    Text = textTag.Text,
+                    StartIndex = startIndex,
+                    EndIndex = endIndex
+                };
+            }
         }
 
         [TestCase("[0,1]:ka", "karaoke", 1, "[1,2]:ka")]
