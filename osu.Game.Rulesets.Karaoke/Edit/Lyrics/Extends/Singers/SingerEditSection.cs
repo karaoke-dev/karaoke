@@ -19,18 +19,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
 {
     public class SingerEditSection : Section
     {
-        private readonly Bindable<int[]> singerIndexes = new();
+        private readonly BindableList<int> singerIndexes = new();
         protected override string Title => "Singer";
 
         public SingerEditSection()
         {
-            singerIndexes.BindValueChanged(_ =>
+            singerIndexes.BindCollectionChanged((_, _) =>
             {
                 foreach (var singerLabel in Content.OfType<LabelledSingerSwitchButton>())
                 {
                     // should mark singer as selected/unselected.
                     int singerId = singerLabel.Singer.ID;
-                    bool selected = singerIndexes.Value?.Contains(singerId) ?? false;
+                    bool selected = singerIndexes?.Contains(singerId) ?? false;
 
                     // update singer label selection.
                     singerLabel.Current.Value = selected;

@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }
 
         [UsedImplicitly]
-        private readonly Bindable<RomajiTag[]> romajiTags;
+        private readonly BindableList<RomajiTag> romajiTags;
 
         public RomajiBlueprintContainer(Lyric lyric)
             : base(lyric)

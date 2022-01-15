@@ -65,7 +65,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("カラオケ", new[] { "[2,2]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
         [TestCase("カラオケ", new[] { "[0,4]:からおけ" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
         [TestCase("カラオケ", new string[] { }, 2, new string[] { }, new string[] { })]
-        [TestCase("カラオケ", null, 2, null, null)]
         public void TestSeparateLyricRubyTag(string text, string[] rubyTags, int splitIndex, string[] firstRubyTags, string[] secondRubyTags)
         {
             var lyric = new Lyric
@@ -87,7 +86,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("カラオケ", new[] { "[2,2]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
         [TestCase("カラオケ", new[] { "[0,4]:karaoke" }, 2, new string[] { }, new string[] { })] // tag won't be assign to lyric if not fully in the range of the text.
         [TestCase("カラオケ", new string[] { }, 2, new string[] { }, new string[] { })]
-        [TestCase("カラオケ", null, 2, null, null)]
         public void TestSeparateLyricRomajiTag(string text, string[] romajiTags, int splitIndex, string[] firstRomajiTags, string[] secondRomajiTags)
         {
             var lyric = new Lyric
@@ -118,7 +116,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 1 }, new[] { 1 }, new[] { 1 })]
         [TestCase(new[] { -1 }, new[] { -1 }, new[] { -1 })] // copy singer index even it's invalid.
         [TestCase(new int[] { }, new int[] { }, new int[] { })]
-        [TestCase(null, null, null)]
         public void TestSeparateLyricSinger(int[] singerIndexes, int[] firstSingerIndexes, int[] secondSingerIndexes)
         {
             const int split_index = 2;
@@ -220,7 +217,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
             var timeTags = combineLyric.TimeTags;
 
-            for (int i = 0; i < timeTags.Length; i++)
+            for (int i = 0; i < timeTags.Count; i++)
             {
                 var actualTimeTag = TestCaseTagHelper.ParseTimeTag(actualTimeTags[i]);
                 Assert.AreEqual(timeTags[i].Index, actualTimeTag.Index);
@@ -303,9 +300,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 1 }, new[] { 2 }, new[] { 1, 2 })]
         [TestCase(new[] { 1 }, new[] { 1 }, new[] { 1 })] // deal with duplicated case.
         [TestCase(new[] { 1 }, new[] { -2 }, new[] { 1, -2 })] // deal with id not right case.
-        [TestCase(null, new[] { 2 }, new[] { 2 })] // deal with null case.
-        [TestCase(new[] { 1 }, null, new[] { 1 })] // deal with null case.
-        [TestCase(null, null, new int[] { })] // deal with null case.
         public void TestCombineLyricSinger(int[] firstSingerIndexes, int[] secondSingerIndexes, int[] actualSingerIndexes)
         {
             var lyric1 = new Lyric { Singers = firstSingerIndexes };

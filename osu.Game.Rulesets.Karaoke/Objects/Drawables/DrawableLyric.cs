@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         private readonly Bindable<int> romajiMarginBindable = new();
         private readonly Bindable<FontUsage> translateFontUsageBindable = new();
 
-        private readonly IBindable<int[]> singersBindable = new Bindable<int[]>();
+        private readonly IBindableList<int> singersBindable = new BindableList<int>();
         private readonly IBindable<int> layoutIndexBindable = new Bindable<int>();
         private readonly BindableDictionary<CultureInfo, string> translateTextBindable = new();
 
@@ -127,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             translateFontUsageBindable.BindValueChanged(_ => updateLyricConfig());
 
             // property in hitobject.
-            singersBindable.BindValueChanged(_ => { updateFontStyle(); });
+            singersBindable.BindCollectionChanged((_, _) => { updateFontStyle(); });
             layoutIndexBindable.BindValueChanged(_ => { updateLayout(); });
             translateTextBindable.BindCollectionChanged((_, _) => { applyTranslate(); });
         }

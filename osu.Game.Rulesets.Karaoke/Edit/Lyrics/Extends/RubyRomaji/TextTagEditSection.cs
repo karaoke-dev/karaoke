@@ -16,17 +16,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
     public abstract class TextTagEditSection<T> : Section where T : class, ITextTag
     {
-        protected readonly Bindable<T[]> TextTags = new();
+        protected readonly BindableList<T> TextTags = new();
 
         protected Lyric Lyric { get; set; }
 
         protected TextTagEditSection()
         {
             // create list of text-tag text-box if bindable changed.
-            TextTags.BindValueChanged(e =>
+            TextTags.BindCollectionChanged((_, _) =>
             {
                 RemoveAll(x => x is LabelledTextTagTextBox<T>);
-                AddRange(e.NewValue?.Select(x =>
+                AddRange(TextTags.Select(x =>
                 {
                     string relativeToLyricText = TextTagUtils.GetTextFromLyric(x, Lyric?.Text);
                     string range = TextTagUtils.PositionFormattedString(x);

@@ -32,19 +32,22 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<TimeTag[]> TimeTagsBindable = new();
+        public readonly BindableList<TimeTag> TimeTagsBindable = new();
 
         /// <summary>
         /// Time tags
         /// </summary>
-        public TimeTag[] TimeTags
+        public IList<TimeTag> TimeTags
         {
-            get => TimeTagsBindable.Value;
+            get => TimeTagsBindable;
             set
             {
-                TimeTagsBindable.Value = value;
-                LyricStartTime = TimeTagsUtils.GetStartTime(TimeTags) ?? StartTime;
-                LyricEndTime = TimeTagsUtils.GetEndTime(TimeTags) ?? EndTime;
+                TimeTagsBindable.Clear();
+                TimeTagsBindable.AddRange(value);
+
+                // todo: it might not a good idea to set the time in here.
+                LyricStartTime = TimeTagsUtils.GetStartTime(value) ?? StartTime;
+                LyricEndTime = TimeTagsUtils.GetEndTime(value) ?? EndTime;
             }
         }
 
@@ -58,27 +61,35 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public double LyricDuration => LyricEndTime - LyricStartTime;
 
         [JsonIgnore]
-        public readonly Bindable<RubyTag[]> RubyTagsBindable = new();
+        public readonly BindableList<RubyTag> RubyTagsBindable = new();
 
         /// <summary>
         /// List of ruby tags
         /// </summary>
-        public RubyTag[] RubyTags
+        public IList<RubyTag> RubyTags
         {
-            get => RubyTagsBindable.Value;
-            set => RubyTagsBindable.Value = value;
+            get => RubyTagsBindable;
+            set
+            {
+                RubyTagsBindable.Clear();
+                RubyTagsBindable.AddRange(value);
+            }
         }
 
         [JsonIgnore]
-        public readonly Bindable<RomajiTag[]> RomajiTagsBindable = new();
+        public readonly BindableList<RomajiTag> RomajiTagsBindable = new();
 
         /// <summary>
         /// List of ruby tags
         /// </summary>
-        public RomajiTag[] RomajiTags
+        public IList<RomajiTag> RomajiTags
         {
-            get => RomajiTagsBindable.Value;
-            set => RomajiTagsBindable.Value = value;
+            get => RomajiTagsBindable;
+            set
+            {
+                RomajiTagsBindable.Clear();
+                RomajiTagsBindable.AddRange(value);
+            }
         }
 
         /// <summary>
@@ -101,15 +112,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public double EndTime => StartTime + Duration;
 
         [JsonIgnore]
-        public readonly Bindable<int[]> SingersBindable = new();
+        public readonly BindableList<int> SingersBindable = new();
 
         /// <summary>
         /// Singers
         /// </summary>
-        public int[] Singers
+        public IList<int> Singers
         {
-            get => SingersBindable.Value;
-            set => SingersBindable.Value = value;
+            get => SingersBindable;
+            set
+            {
+                SingersBindable.Clear();
+                SingersBindable.AddRange(value);
+            }
         }
 
         [JsonIgnore]

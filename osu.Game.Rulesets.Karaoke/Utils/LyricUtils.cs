@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             string newLyric = lyric.Text[..position] + lyric.Text[(position + count)..];
             lyric.Text = newLyric;
 
-            static T[] processTags<T>(T[] tags, int position, int count) where T : class, ITextTag
+            static IList<T> processTags<T>(IList<T> tags, int position, int count) where T : class, ITextTag
             {
                 if (tags == null)
                     return null;
@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 return tags.Where(x => x.StartIndex < x.EndIndex).ToArray();
             }
 
-            static TimeTag[] processTimeTags(IEnumerable<TimeTag> timeTags, int position, int count)
+            static IList<TimeTag> processTimeTags(IEnumerable<TimeTag> timeTags, int position, int count)
             {
                 int endPosition = position + count;
                 return timeTags?.Where(x => !(x.Index.Index >= position && x.Index.Index < endPosition))
@@ -345,10 +345,10 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
-            if (lyric.Singers == null || lyric.Singers.Length == 0)
+            if (lyric.Singers == null || !lyric.Singers.Any())
                 return false;
 
-            lyric.Singers = null;
+            lyric.Singers = new List<int>();
             return true;
         }
 
@@ -393,7 +393,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static bool CheckIsStartTimeInvalid(Lyric lyric)
         {
-            if (lyric.TimeTags == null || lyric.TimeTags.Length == 0)
+            if (lyric.TimeTags == null || !lyric.TimeTags.Any())
                 return false;
 
             return lyric.StartTime > TimeTagsUtils.GetStartTime(lyric.TimeTags);
@@ -406,7 +406,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static bool CheckIsEndTimeInvalid(Lyric lyric)
         {
-            if (lyric.TimeTags == null || lyric.TimeTags.Length == 0)
+            if (lyric.TimeTags == null || !lyric.TimeTags.Any())
                 return false;
 
             return lyric.EndTime < TimeTagsUtils.GetEndTime(lyric.TimeTags);

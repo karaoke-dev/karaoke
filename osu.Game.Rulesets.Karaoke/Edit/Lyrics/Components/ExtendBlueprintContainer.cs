@@ -1,27 +1,36 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Specialized;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Input.Events;
-using osu.Game.Rulesets.Karaoke.Extensions;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
 {
     public abstract class ExtendBlueprintContainer<T> : BlueprintContainer<T> where T : class
     {
-        protected void RegisterBindable<TItem>(Bindable<TItem[]> bindable) where TItem : T
+        protected void RegisterBindable<TItem>(BindableList<TItem> bindable) where TItem : T
         {
             // Add time-tag into blueprint container
-            bindable.BindArrayChanged(addItems =>
+            bindable.BindCollectionChanged((_, args) =>
             {
-                foreach (var obj in addItems)
-                    AddBlueprintFor(obj);
-            }, removedItems =>
-            {
-                foreach (var obj in removedItems)
-                    RemoveBlueprintFor(obj);
+                switch (args.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+                        foreach (var obj in args.NewItems.OfType<TItem>())
+                            AddBlueprintFor(obj);
+
+                        break;
+
+                    case NotifyCollectionChangedAction.Remove:
+                        foreach (var obj in args.OldItems.OfType<TItem>())
+                            RemoveBlueprintFor(obj);
+
+                        break;
+                }
             }, true);
         }
 

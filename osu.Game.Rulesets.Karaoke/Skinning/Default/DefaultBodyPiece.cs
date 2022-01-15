@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
         private readonly LayoutValue subtractionCache = new(Invalidation.DrawSize);
         private readonly IBindable<bool> isHitting = new Bindable<bool>();
         private readonly IBindable<bool> display = new Bindable<bool>();
-        private readonly IBindable<int[]> singer = new Bindable<int[]>();
+        private readonly IBindableList<int> singer = new BindableList<int>();
 
         protected Drawable Background { get; private set; }
         protected Drawable Foreground { get; private set; }
@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             HitColour.BindValueChanged(onAccentChanged);
             isHitting.BindValueChanged(_ => onAccentChanged(), true);
             display.BindValueChanged(_ => onAccentChanged(), true);
-            singer.BindValueChanged(value => applySingerStyle(skin, value.NewValue), true);
+            singer.BindCollectionChanged((_, _) => applySingerStyle(skin, singer), true);
         }
 
         private void applySingerStyle(ISkinSource skin, IEnumerable<int> singers)

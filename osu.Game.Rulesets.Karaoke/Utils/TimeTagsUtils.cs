@@ -193,9 +193,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="other">Fix way</param>
         /// <param name="self">Fix way</param>
         /// <returns>Fixed time tags.</returns>
-        public static TimeTag[] FixOverlapping(TimeTag[] timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
+        public static IList<TimeTag> FixOverlapping(IList<TimeTag> timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
-            if (timeTags == null || timeTags.Length == 0)
+            if (timeTags == null || !timeTags.Any())
                 return timeTags;
 
             var sortedTimeTags = Sort(timeTags);
@@ -273,7 +273,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="other">Fix way</param>
         /// <param name="self">Fix way</param>
         /// <returns>Time tags with dictionary format.</returns>
-        public static IReadOnlyDictionary<TextIndex, double> ToDictionary(TimeTag[] timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
+        public static IReadOnlyDictionary<TextIndex, double> ToDictionary(IList<TimeTag> timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
                                                                           SelfCheck self = SelfCheck.BasedOnStart)
         {
             if (timeTags == null)
@@ -306,7 +306,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="timeTags">Time tags</param>
         /// <returns>Start time</returns>
-        public static double? GetStartTime(TimeTag[] timeTags)
+        public static double? GetStartTime(IList<TimeTag> timeTags)
         {
             return ToDictionary(timeTags).FirstOrDefault().Value;
         }
@@ -316,7 +316,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="timeTags">Time tags</param>
         /// <returns>End time</returns>
-        public static double? GetEndTime(TimeTag[] timeTags)
+        public static double? GetEndTime(IList<TimeTag> timeTags)
         {
             return ToDictionary(timeTags).LastOrDefault().Value;
         }

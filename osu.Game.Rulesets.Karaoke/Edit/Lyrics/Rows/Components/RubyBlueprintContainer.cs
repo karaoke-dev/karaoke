@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -21,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
 
         [UsedImplicitly]
-        private readonly Bindable<RubyTag[]> rubyTags;
+        private readonly BindableList<RubyTag> rubyTags;
 
         public RubyBlueprintContainer(Lyric lyric)
             : base(lyric)

@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Asserts
 {
     public class TextTagAssert : Assert
     {
-        public static void ArePropertyEqual<T>(IReadOnlyList<T> expect, IReadOnlyList<T> actually) where T : ITextTag
+        public static void ArePropertyEqual<T>(IList<T> expect, IList<T> actually) where T : ITextTag
         {
             AreEqual(expect?.Count, actually?.Count);
             if (expect == null || actually == null)

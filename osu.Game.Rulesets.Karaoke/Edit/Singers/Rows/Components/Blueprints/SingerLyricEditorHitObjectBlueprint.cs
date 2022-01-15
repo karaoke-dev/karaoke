@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
 
         private bool isSingerMatched;
 
-        private readonly Bindable<int[]> singersBindable;
+        private readonly IBindableList<int> singersBindable;
 
         public LyricTimelineHitObjectBlueprint(Lyric item)
             : base(item)
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
         [BackgroundDependencyLoader]
         private void load(SingerLyricEditor editor)
         {
-            singersBindable.BindValueChanged(_ =>
+            singersBindable.BindCollectionChanged((_, _) =>
             {
                 // Check is lyric contains this singer, or default singer
                 isSingerMatched = lyricInCurrentSinger(Item, editor.Singer);
