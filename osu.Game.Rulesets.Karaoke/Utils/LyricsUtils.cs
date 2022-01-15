@@ -132,13 +132,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             };
         }
 
-        private static TimeTag[] shiftingTimeTag(IEnumerable<TimeTag> timeTags, int shifting)
-            => timeTags?.Select(t => TimeTagUtils.ShiftingTimeTag(t, shifting)).ToArray();
+        private static TimeTag[] shiftingTimeTag(IEnumerable<TimeTag> timeTags, int offset)
+            => timeTags?.Select(t => TimeTagUtils.ShiftingTimeTag(t, offset)).ToArray();
 
-        private static T[] shiftingTextTag<T>(IEnumerable<T> textTags, string lyric, int shifting) where T : ITextTag, new()
+        private static T[] shiftingTextTag<T>(IEnumerable<T> textTags, string lyric, int offset) where T : ITextTag, new()
             => textTags?.Select(t =>
             {
-                (int startIndex, int endIndex) = TextTagUtils.GetShiftingIndex(t, lyric, shifting);
+                (int startIndex, int endIndex) = TextTagUtils.GetShiftingIndex(t, lyric, offset);
                 return new T
                 {
                     Text = t.Text,

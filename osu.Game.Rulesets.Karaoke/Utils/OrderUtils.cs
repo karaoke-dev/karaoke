@@ -68,12 +68,12 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="objects"></param>
-        /// <param name="shifting"></param>
-        public static void ShiftingOrder<T>(IEnumerable<T> objects, int shifting) where T : class, IHasOrder
+        /// <param name="offset"></param>
+        public static void ShiftingOrder<T>(IEnumerable<T> objects, int offset) where T : class, IHasOrder
         {
             foreach (var processObject in objects)
             {
-                processObject.Order += shifting;
+                processObject.Order += offset;
             }
         }
 

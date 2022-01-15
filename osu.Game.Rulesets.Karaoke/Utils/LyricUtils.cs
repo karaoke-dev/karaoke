@@ -116,8 +116,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     })
                     .ToArray();
 
-            static TimeTag[] processTimeTags(IEnumerable<TimeTag> timeTags, int startPosition, int shifting)
-                => timeTags?.Select(t => t.Index.Index >= startPosition ? TimeTagUtils.ShiftingTimeTag(t, shifting) : t).ToArray();
+            static TimeTag[] processTimeTags(IEnumerable<TimeTag> timeTags, int startPosition, int offset)
+                => timeTags?.Select(t => t.Index.Index >= startPosition ? TimeTagUtils.ShiftingTimeTag(t, offset) : t).ToArray();
         }
 
         #endregion

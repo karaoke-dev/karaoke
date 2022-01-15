@@ -11,11 +11,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static Tuple<int, int> GetFixedIndex<T>(T textTag, string lyric) where T : ITextTag
             => GetShiftingIndex(textTag, lyric, 0);
 
-        public static Tuple<int, int> GetShiftingIndex<T>(T textTag, string lyric, int shifting) where T : ITextTag
+        public static Tuple<int, int> GetShiftingIndex<T>(T textTag, string lyric, int offset) where T : ITextTag
         {
             int lyricLength = lyric?.Length ?? 0;
-            int newStartIndex = Math.Clamp(textTag.StartIndex + shifting, 0, lyricLength);
-            int newEndIndex = Math.Clamp(textTag.EndIndex + shifting, 0, lyricLength);
+            int newStartIndex = Math.Clamp(textTag.StartIndex + offset, 0, lyricLength);
+            int newEndIndex = Math.Clamp(textTag.EndIndex + offset, 0, lyricLength);
             return new Tuple<int, int>(Math.Min(newStartIndex, newEndIndex), Math.Max(newStartIndex, newEndIndex));
         }
 

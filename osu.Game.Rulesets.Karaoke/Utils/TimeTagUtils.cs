@@ -12,11 +12,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// Shifting time-tag.
         /// </summary>
         /// <param name="timeTag"></param>
-        /// <param name="shifting"></param>
+        /// <param name="offset"></param>
         /// <returns></returns>
-        public static TimeTag ShiftingTimeTag(TimeTag timeTag, int shifting)
+        public static TimeTag ShiftingTimeTag(TimeTag timeTag, int offset)
         {
-            var index = TextIndexUtils.ShiftingIndex(timeTag.Index, shifting);
+            var index = TextIndexUtils.ShiftingIndex(timeTag.Index, offset);
             double? time = timeTag.Time;
             return new TimeTag(index, time);
         }
