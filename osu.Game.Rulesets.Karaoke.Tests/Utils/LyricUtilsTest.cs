@@ -246,29 +246,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(LyricUtils.AbleToInsertTextTagAtIndex(lyric, index), actual);
         }
 
-        [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, "[3,4]:ke", true)]
-        [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, "[0,4]:karaoke", false)]
-        [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, null, false)]
-        [TestCase(new string[] { }, "[0,4]:karaoke", false)]
-        public void TestRemoveTextTag(string[] textTags, string removeTextTag, bool actual)
-        {
-            var lyric = new Lyric
-            {
-                Text = "からおけ",
-                RubyTags = TestCaseTagHelper.ParseRubyTags(textTags),
-                RomajiTags = TestCaseTagHelper.ParseRomajiTags(textTags)
-            };
-
-            int fromIndex = textTags?.IndexOf(removeTextTag) ?? -1;
-
-            // test ruby and romaji at the same test.
-            var removeRubyTag = fromIndex >= 0 ? lyric.RubyTags[fromIndex] : TestCaseTagHelper.ParseRubyTag(removeTextTag);
-            var removeRomajiTag = fromIndex >= 0 ? lyric.RomajiTags[fromIndex] : TestCaseTagHelper.ParseRomajiTag(removeTextTag);
-
-            Assert.AreEqual(LyricUtils.RemoveTextTag(lyric, removeRubyTag), actual);
-            Assert.AreEqual(LyricUtils.RemoveTextTag(lyric, removeRomajiTag), actual);
-        }
-
         #endregion
 
         #region Time display

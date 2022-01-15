@@ -6,7 +6,6 @@ using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
@@ -38,19 +37,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             => lyric.RubyTags.Contains(textTag);
 
         protected override void AddToLyric(Lyric lyric, RubyTag textTag)
-        {
-            var rubyTags = lyric.RubyTags.ToList();
-            rubyTags.Add(textTag);
-
-            lyric.RubyTags = TextTagsUtils.Sort(rubyTags);
-        }
+            => lyric.RubyTags.Add(textTag);
 
         protected override void RemoveFromLyric(Lyric lyric, RubyTag textTag)
-        {
-            var rubyTags = lyric.RubyTags.ToList();
-            rubyTags.Remove(textTag);
-
-            lyric.RubyTags = rubyTags.ToArray();
-        }
+            => lyric.RubyTags.Remove(textTag);
     }
 }

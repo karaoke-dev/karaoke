@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                         t.Description = range;
                         t.OnDeleteButtonClick = () =>
                         {
-                            LyricUtils.RemoveTextTag(Lyric, x);
+                            RemoveTextTag(x);
                         };
                         t.TabbableContentContainer = this;
                     });
@@ -49,6 +49,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         }
 
         protected abstract LabelledTextTagTextBox<T> CreateLabelledTextTagTextBox(T textTag);
+
+        protected abstract void RemoveTextTag(T textTag);
 
         protected void AddCreateButton()
         {
