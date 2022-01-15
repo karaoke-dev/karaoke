@@ -16,9 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 {
     public class RomajiBlueprintContainer : TextTagBlueprintContainer<RomajiTag>
     {
-        [Resolved]
-        private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }
-
         [UsedImplicitly]
         private readonly BindableList<RomajiTag> romajiTags;
 
@@ -42,9 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         protected override SelectionBlueprint<RomajiTag> CreateBlueprintFor(RomajiTag item)
             => new RomajiTagSelectionBlueprint(item);
 
-        protected override void SetTextTagPosition(RomajiTag textTag, int startPosition, int endPosition)
-            => romajiTagsChangeHandler.SetIndex(textTag, startPosition, endPosition);
-
         protected class RomajiTagSelectionHandler : TextTagSelectionHandler
         {
             [Resolved]
@@ -58,6 +52,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
             protected override void DeleteItems(IEnumerable<RomajiTag> items)
                 => romajiTagsChangeHandler.RemoveAll(items);
+
+            protected override void SetTextTagShifting(IEnumerable<RomajiTag> textTags, int offset)
+                => romajiTagsChangeHandler.ShiftingIndex(textTags, offset);
 
             protected override void SetTextTagIndex(RomajiTag textTag, int? startPosition, int? endPosition)
                 => romajiTagsChangeHandler.SetIndex(textTag, startPosition, endPosition);

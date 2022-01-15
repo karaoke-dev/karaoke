@@ -16,9 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 {
     public class RubyBlueprintContainer : TextTagBlueprintContainer<RubyTag>
     {
-        [Resolved]
-        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
-
         [UsedImplicitly]
         private readonly BindableList<RubyTag> rubyTags;
 
@@ -42,9 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         protected override SelectionBlueprint<RubyTag> CreateBlueprintFor(RubyTag item)
             => new RubyTagSelectionBlueprint(item);
 
-        protected override void SetTextTagPosition(RubyTag textTag, int startPosition, int endPosition)
-            => rubyTagsChangeHandler.SetIndex(textTag, startPosition, endPosition);
-
         protected class RubyTagSelectionHandler : TextTagSelectionHandler
         {
             [Resolved]
@@ -58,6 +52,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
             protected override void DeleteItems(IEnumerable<RubyTag> items)
                 => rubyTagsChangeHandler.RemoveAll(items);
+
+            protected override void SetTextTagShifting(IEnumerable<RubyTag> textTags, int offset)
+                => rubyTagsChangeHandler.ShiftingIndex(textTags, offset);
 
             protected override void SetTextTagIndex(RubyTag textTag, int? startPosition, int? endPosition)
                 => rubyTagsChangeHandler.SetIndex(textTag, startPosition, endPosition);
