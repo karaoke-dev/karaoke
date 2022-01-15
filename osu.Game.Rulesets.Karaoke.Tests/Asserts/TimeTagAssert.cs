@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Asserts
 {
     public class TimeTagAssert : Assert
     {
-        public static void ArePropertyEqual(IReadOnlyList<TimeTag> expect, IReadOnlyList<TimeTag> actually)
+        public static void ArePropertyEqual(IList<TimeTag> expect, IList<TimeTag> actually)
         {
             AreEqual(expect?.Count, actually?.Count);
             if (expect == null || actually == null)

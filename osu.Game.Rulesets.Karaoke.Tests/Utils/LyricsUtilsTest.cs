@@ -220,7 +220,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
             var timeTags = combineLyric.TimeTags;
 
-            for (int i = 0; i < timeTags.Length; i++)
+            for (int i = 0; i < timeTags.Count; i++)
             {
                 var actualTimeTag = TestCaseTagHelper.ParseTimeTag(actualTimeTags[i]);
                 Assert.AreEqual(timeTags[i].Index, actualTimeTag.Index);
