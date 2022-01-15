@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -33,9 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
         private const int whole_chunk_index = -1;
 
         public readonly IBindable<string> TextBindable = new Bindable<string>();
-        public readonly IBindable<TimeTag[]> TimeTagsBindable = new Bindable<TimeTag[]>();
-        public readonly IBindable<RubyTag[]> RubyTagsBindable = new Bindable<RubyTag[]>();
-        public readonly IBindable<RomajiTag[]> RomajiTagsBindable = new Bindable<RomajiTag[]>();
+        public readonly IBindableList<TimeTag> TimeTagsBindable = new BindableList<TimeTag>();
+        public readonly IBindableList<RubyTag> RubyTagsBindable = new BindableList<RubyTag>();
+        public readonly IBindableList<RomajiTag> RomajiTagsBindable = new BindableList<RomajiTag>();
 
         private readonly Lyric hitObject;
         private readonly int chunkIndex;
@@ -46,42 +45,42 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             this.chunkIndex = chunkIndex;
 
             TextBindable.BindValueChanged(text => applyText(text.NewValue));
-            TimeTagsBindable.BindValueChanged(timeTags => applyTimeTag(timeTags.NewValue));
-            RubyTagsBindable.BindValueChanged(rubyTags => applyRuby(rubyTags.NewValue));
-            RubyTagsBindable.BindArrayChanged(addItems =>
+            TimeTagsBindable.BindCollectionChanged((_, _) => applyTimeTag(TimeTagsBindable));
+            RubyTagsBindable.BindCollectionChanged((_, args) =>
             {
-                foreach (var obj in addItems)
+                foreach (var obj in args.NewItems.OfType<RubyTag>())
                 {
-                    obj.StartIndexBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable.Value));
-                    obj.EndIndexBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable.Value));
-                    obj.TextBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable.Value));
+                    obj.StartIndexBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable));
+                    obj.EndIndexBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable));
+                    obj.TextBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable));
                 }
-            }, removedItems =>
-            {
-                foreach (var obj in removedItems)
+
+                foreach (var obj in args.OldItems.OfType<RubyTag>())
                 {
                     obj.StartIndexBindable.UnbindEvents();
                     obj.EndIndexBindable.UnbindEvents();
                     obj.TextBindable.UnbindEvents();
                 }
+
+                applyRuby(RubyTagsBindable);
             });
-            RomajiTagsBindable.BindValueChanged(romajiTags => applyRomaji(romajiTags.NewValue));
-            RomajiTagsBindable.BindArrayChanged(addItems =>
+            RomajiTagsBindable.BindCollectionChanged((_, args) =>
             {
-                foreach (var obj in addItems)
+                foreach (var obj in args.NewItems.OfType<RomajiTag>())
                 {
-                    obj.StartIndexBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable.Value));
-                    obj.EndIndexBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable.Value));
-                    obj.TextBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable.Value));
+                    obj.StartIndexBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable));
+                    obj.EndIndexBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable));
+                    obj.TextBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable));
                 }
-            }, removedItems =>
-            {
-                foreach (var obj in removedItems)
+
+                foreach (var obj in args.OldItems.OfType<RomajiTag>())
                 {
                     obj.StartIndexBindable.UnbindEvents();
                     obj.EndIndexBindable.UnbindEvents();
                     obj.TextBindable.UnbindEvents();
                 }
+
+                applyRomaji(RomajiTagsBindable);
             });
 
             TextBindable.BindTo(hitObject.TextBindable);
@@ -102,11 +101,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             }
         }
 
-        private void applyTimeTag(TimeTag[] timeTags)
+        private void applyTimeTag(IEnumerable<TimeTag> timeTags)
         {
             if (chunkIndex == whole_chunk_index)
             {
-                TimeTags = TimeTagsUtils.ToDictionary(timeTags);
+                TimeTags = TimeTagsUtils.ToDictionary(timeTags.ToList());
             }
             else
             {
