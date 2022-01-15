@@ -228,25 +228,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static bool AbleToInsertTextTagAtIndex(Lyric lyric, int index)
             => index >= 0 && index <= (lyric.Text?.Length ?? 0);
 
-        public static bool RemoveTextTag<T>(Lyric lyric, T textTag) where T : ITextTag
-        {
-            switch (textTag)
-            {
-                case RubyTag rubyTag:
-                    bool containRuby = lyric.RubyTags?.Contains(rubyTag) ?? false;
-                    lyric.RubyTags = lyric.RubyTags?.Where(x => x != rubyTag).ToArray();
-                    return containRuby;
-
-                case RomajiTag romajiTag:
-                    bool containRomaji = lyric.RomajiTags?.Contains(romajiTag) ?? false;
-                    lyric.RomajiTags = lyric.RomajiTags?.Where(x => x != romajiTag).ToArray();
-                    return containRomaji;
-
-                default:
-                    throw new InvalidCastException(nameof(textTag));
-            }
-        }
-
         #endregion
 
         #region Time display
