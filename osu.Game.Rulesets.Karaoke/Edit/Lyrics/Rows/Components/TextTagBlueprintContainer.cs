@@ -20,9 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
     public abstract class TextTagBlueprintContainer<T> : ExtendBlueprintContainer<T> where T : class, ITextTag
     {
         [Resolved]
-        private EditorLyricPiece editorLyricPiece { get; set; }
-
-        [Resolved]
         private ILyricCaretState lyricCaretState { get; set; }
 
         protected readonly Lyric Lyric;
@@ -37,37 +34,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             lyricCaretState.MoveCaretToTargetPosition(Lyric);
             return base.OnMouseDown(e);
         }
-
-        protected override bool ApplySnapResult(SelectionBlueprint<T>[] blueprints, SnapResult result)
-        {
-            if (!base.ApplySnapResult(blueprints, result))
-                return false;
-
-            // handle lots of ruby / romaji drag position changed.
-            var items = blueprints.Select(x => x.Item).ToArray();
-            if (!items.Any())
-                return false;
-
-            float leftPosition = ToLocalSpace(result.ScreenSpacePosition).X;
-            int startIndex = TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(leftPosition));
-            int diff = startIndex - items.First().StartIndex;
-            if (diff == 0)
-                return false;
-
-            foreach (var item in items)
-            {
-                int newStartIndex = item.StartIndex + diff;
-                int newEndIndex = item.EndIndex + diff;
-                if (!LyricUtils.AbleToInsertTextTagAtIndex(Lyric, newStartIndex) || !LyricUtils.AbleToInsertTextTagAtIndex(Lyric, newEndIndex))
-                    continue;
-
-                SetTextTagPosition(item, newStartIndex, newEndIndex);
-            }
-
-            return true;
-        }
-
-        protected abstract void SetTextTagPosition(T textTag, int startPosition, int endPosition);
 
         protected override IEnumerable<SelectionBlueprint<T>> SortForMovement(IReadOnlyList<SelectionBlueprint<T>> blueprints)
             => blueprints.OrderBy(b => b.Item.StartIndex);
