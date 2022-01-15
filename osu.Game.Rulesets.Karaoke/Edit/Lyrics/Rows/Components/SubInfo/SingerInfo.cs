@@ -35,12 +35,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
         [BackgroundDependencyLoader]
         private void load(EditorBeatmap beatmap)
         {
-            lyric.SingersBindable.BindValueChanged(value =>
+            lyric.SingersBindable.BindCollectionChanged((_, _) =>
             {
                 if (beatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
                     return;
 
-                var singers = karaokeBeatmap.Singers?.Where(x => value.NewValue?.Contains(x.ID) ?? false).ToList();
+                var singers = karaokeBeatmap.Singers?.Where(x => lyric.SingersBindable?.Contains(x.ID) ?? false).ToList();
 
                 if (singers?.Any() ?? false)
                 {
