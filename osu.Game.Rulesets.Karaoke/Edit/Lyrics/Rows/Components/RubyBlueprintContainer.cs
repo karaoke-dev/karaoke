@@ -53,6 +53,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             protected override void DeleteItems(IEnumerable<RubyTag> items)
                 => rubyTagsChangeHandler.RemoveAll(items);
 
+            protected override void SetTextTagShifting(IEnumerable<RubyTag> textTags, int offset)
+                => rubyTagsChangeHandler.ShiftingIndex(textTags, offset);
+
             protected override void SetTextTagIndex(RubyTag textTag, int? startPosition, int? endPosition)
                 => rubyTagsChangeHandler.SetIndex(textTag, startPosition, endPosition);
         }
