@@ -1,9 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Specialized;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Input.Events;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
@@ -15,10 +17,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components
             // Add time-tag into blueprint container
             bindable.BindCollectionChanged((_, args) =>
             {
-                foreach (var obj in args.NewItems.OfType<TItem>())
-                    AddBlueprintFor(obj);
-                foreach (var obj in args.OldItems.OfType<TItem>())
-                    RemoveBlueprintFor(obj);
+                switch (args.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+                        foreach (var obj in args.NewItems.OfType<TItem>())
+                            AddBlueprintFor(obj);
+
+                        break;
+
+                    case NotifyCollectionChangedAction.Remove:
+                        foreach (var obj in args.OldItems.OfType<TItem>())
+                            RemoveBlueprintFor(obj);
+
+                        break;
+                }
             }, true);
         }
 

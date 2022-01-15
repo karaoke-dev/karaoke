@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
@@ -48,36 +49,54 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
             TimeTagsBindable.BindCollectionChanged((_, _) => applyTimeTag(TimeTagsBindable));
             RubyTagsBindable.BindCollectionChanged((_, args) =>
             {
-                foreach (var obj in args.NewItems.OfType<RubyTag>())
+                switch (args.Action)
                 {
-                    obj.StartIndexBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable));
-                    obj.EndIndexBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable));
-                    obj.TextBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable));
-                }
+                    case NotifyCollectionChangedAction.Add:
+                        foreach (var obj in args.NewItems.OfType<RubyTag>())
+                        {
+                            obj.StartIndexBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable));
+                            obj.EndIndexBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable));
+                            obj.TextBindable.BindValueChanged(_ => applyRuby(RubyTagsBindable));
+                        }
 
-                foreach (var obj in args.OldItems.OfType<RubyTag>())
-                {
-                    obj.StartIndexBindable.UnbindEvents();
-                    obj.EndIndexBindable.UnbindEvents();
-                    obj.TextBindable.UnbindEvents();
+                        break;
+
+                    case NotifyCollectionChangedAction.Remove:
+                        foreach (var obj in args.OldItems.OfType<RubyTag>())
+                        {
+                            obj.StartIndexBindable.UnbindEvents();
+                            obj.EndIndexBindable.UnbindEvents();
+                            obj.TextBindable.UnbindEvents();
+                        }
+
+                        break;
                 }
 
                 applyRuby(RubyTagsBindable);
             });
             RomajiTagsBindable.BindCollectionChanged((_, args) =>
             {
-                foreach (var obj in args.NewItems.OfType<RomajiTag>())
+                switch (args.Action)
                 {
-                    obj.StartIndexBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable));
-                    obj.EndIndexBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable));
-                    obj.TextBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable));
-                }
+                    case NotifyCollectionChangedAction.Add:
+                        foreach (var obj in args.NewItems.OfType<RomajiTag>())
+                        {
+                            obj.StartIndexBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable));
+                            obj.EndIndexBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable));
+                            obj.TextBindable.BindValueChanged(_ => applyRomaji(RomajiTagsBindable));
+                        }
 
-                foreach (var obj in args.OldItems.OfType<RomajiTag>())
-                {
-                    obj.StartIndexBindable.UnbindEvents();
-                    obj.EndIndexBindable.UnbindEvents();
-                    obj.TextBindable.UnbindEvents();
+                        break;
+
+                    case NotifyCollectionChangedAction.Remove:
+                        foreach (var obj in args.OldItems.OfType<RomajiTag>())
+                        {
+                            obj.StartIndexBindable.UnbindEvents();
+                            obj.EndIndexBindable.UnbindEvents();
+                            obj.TextBindable.UnbindEvents();
+                        }
+
+                        break;
                 }
 
                 applyRomaji(RomajiTagsBindable);

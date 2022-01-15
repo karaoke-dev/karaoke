@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Specialized;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -41,17 +42,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 
             TimeTagsBindable.BindCollectionChanged((_, args) =>
             {
-                foreach (var obj in args.NewItems.OfType<TimeTag>())
+                switch (args.Action)
                 {
-                    obj.TimeBindable.BindValueChanged(_ =>
-                    {
-                        updateTimeRange();
-                    });
-                }
+                    case NotifyCollectionChangedAction.Add:
+                        foreach (var obj in args.NewItems.OfType<TimeTag>())
+                        {
+                            obj.TimeBindable.BindValueChanged(_ =>
+                            {
+                                updateTimeRange();
+                            });
+                        }
 
-                foreach (var obj in args.OldItems.OfType<TimeTag>())
-                {
-                    obj.TimeBindable.UnbindEvents();
+                        break;
+
+                    case NotifyCollectionChangedAction.Remove:
+                        foreach (var obj in args.OldItems.OfType<TimeTag>())
+                        {
+                            obj.TimeBindable.UnbindEvents();
+                        }
+
+                        break;
                 }
             });
 
