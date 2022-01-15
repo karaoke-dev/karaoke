@@ -6,7 +6,6 @@ using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
@@ -38,19 +37,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             => lyric.RomajiTags.Contains(textTag);
 
         protected override void AddToLyric(Lyric lyric, RomajiTag textTag)
-        {
-            var romajiTags = lyric.RomajiTags.ToList();
-            romajiTags.Add(textTag);
-
-            lyric.RomajiTags = TextTagsUtils.Sort(romajiTags);
-        }
+            => lyric.RomajiTags.Add(textTag);
 
         protected override void RemoveFromLyric(Lyric lyric, RomajiTag textTag)
-        {
-            var romajiTags = lyric.RomajiTags.ToList();
-            romajiTags.Remove(textTag);
-
-            lyric.RomajiTags = romajiTags.ToArray();
-        }
+            => lyric.RomajiTags.Remove(textTag);
     }
 }
