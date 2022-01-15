@@ -13,6 +13,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
     {
         protected override string Title => "Ruby";
 
+        [Resolved]
+        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
+
         [BackgroundDependencyLoader]
         private void load(ILyricCaretState lyricCaretState)
         {
@@ -34,6 +37,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
         protected override LabelledTextTagTextBox<RubyTag> CreateLabelledTextTagTextBox(RubyTag textTag)
             => new LabelledRubyTagTextBox(textTag);
+
+        protected override void RemoveTextTag(RubyTag textTag)
+            => rubyTagsChangeHandler.Remove(textTag);
 
         protected class LabelledRubyTagTextBox : LabelledTextTagTextBox<RubyTag>
         {
