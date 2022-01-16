@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
             // should clear removed singer ids in singer editor.
             Lyrics.ForEach(x =>
             {
-                LyricUtils.RemoveSinger(x, item);
+                x.Singers.Remove(item.ID);
             });
         }
     }

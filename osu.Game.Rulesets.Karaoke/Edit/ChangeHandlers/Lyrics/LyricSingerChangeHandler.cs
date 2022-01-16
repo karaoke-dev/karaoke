@@ -3,7 +3,6 @@
 
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
@@ -13,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                LyricUtils.AddSinger(lyric, singer);
+                lyric.Singers.Add(singer.ID);
             });
         }
 
@@ -21,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                LyricUtils.RemoveSinger(lyric, singer);
+                lyric.Singers.Remove(singer.ID);
             });
         }
 
@@ -29,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                LyricUtils.ClearSinger(lyric);
+                lyric.Singers.Clear();
             });
         }
     }
