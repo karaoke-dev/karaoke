@@ -76,11 +76,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(languageSelectionDialog = new LanguageSelectionDialog());
         }
 
-        [BackgroundDependencyLoader(true)]
-        private void load()
-        {
-        }
-
         protected override GenericEditorScreen<KaraokeEditorScreenMode> GenerateScreen(KaraokeEditorScreenMode screenMode) =>
             screenMode switch
             {
