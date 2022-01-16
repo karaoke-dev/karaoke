@@ -278,61 +278,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         #region Singer
 
-        public static bool AddSinger(Lyric lyric, Singer singer)
-        {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
-
-            if (singer == null)
-                throw new ArgumentNullException(nameof(singer));
-
-            if (singer.ID <= 0)
-                throw new ArgumentOutOfRangeException(nameof(singer.ID));
-
-            // do nothing if already contains singer index.
-            if (ContainsSinger(lyric, singer))
-                return false;
-
-            var newSingerList = lyric.Singers?.ToList() ?? new List<int>();
-            newSingerList.Add(singer.ID);
-            lyric.Singers = newSingerList.ToArray();
-
-            return true;
-        }
-
-        public static bool RemoveSinger(Lyric lyric, Singer singer)
-        {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
-
-            if (singer == null)
-                throw new ArgumentNullException(nameof(singer));
-
-            if (singer.ID <= 0)
-                throw new ArgumentOutOfRangeException(nameof(singer.ID));
-
-            // do nothing if not contains singer index.
-            if (!ContainsSinger(lyric, singer))
-                return false;
-
-            int[] newSingerIds = lyric.Singers.Where(x => x != singer.ID).ToArray();
-            lyric.Singers = newSingerIds;
-
-            return true;
-        }
-
-        public static bool ClearSinger(Lyric lyric)
-        {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
-
-            if (lyric.Singers == null || !lyric.Singers.Any())
-                return false;
-
-            lyric.Singers = new List<int>();
-            return true;
-        }
-
         public static bool ContainsSinger(Lyric lyric, Singer singer)
         {
             if (lyric == null)
