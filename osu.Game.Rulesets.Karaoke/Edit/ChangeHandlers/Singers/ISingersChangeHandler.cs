@@ -8,6 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
 {
     public interface ISingersChangeHandler
     {
+        // todo: should use IBindableList eventually, but cannot do that because it's bind to selection item.
         BindableList<Singer> Singers { get; }
 
         void ChangeOrder(Singer singer, int newIndex);
