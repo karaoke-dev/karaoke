@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             {
                 alreadyAsked = true;
 
-                if (languagesChangeHandler.Languages.Count == 0 && !alreadyAsked)
+                if (!languagesChangeHandler.Languages.Any() && !alreadyAsked)
                 {
                     dialogOverlay.Push(new CreateNewLanguagePopupDialog(isOk =>
                     {
