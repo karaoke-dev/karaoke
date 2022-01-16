@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages
 {
     public interface ILanguagesChangeHandler
     {
-        BindableList<CultureInfo> Languages { get; }
+        IBindableList<CultureInfo> Languages { get; }
 
         void Add(CultureInfo culture);
 

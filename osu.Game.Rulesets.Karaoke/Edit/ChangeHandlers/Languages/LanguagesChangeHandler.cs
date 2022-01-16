@@ -13,37 +13,39 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages
 {
     public class LanguagesChangeHandler : BeatmapChangeHandler<CultureInfo>, ILanguagesChangeHandler
     {
-        public BindableList<CultureInfo> Languages { get; } = new();
+        private readonly BindableList<CultureInfo> bindableLanguages = new();
+
+        public IBindableList<CultureInfo> Languages => bindableLanguages;
 
         private IEnumerable<Lyric> lyrics => Beatmap.HitObjects.OfType<Lyric>();
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            Languages.AddRange(Beatmap.AvailableTranslates);
-            Languages.BindCollectionChanged((_, _) => { Beatmap.AvailableTranslates = Languages.ToList(); });
+            bindableLanguages.AddRange(Beatmap.AvailableTranslates);
+            bindableLanguages.BindCollectionChanged((_, _) => { Beatmap.AvailableTranslates = Languages.ToList(); });
         }
 
         public override void Add(CultureInfo item)
         {
-            if (Languages.Contains(item))
+            if (bindableLanguages.Contains(item))
                 return;
 
             PerformObjectChanged(item, cultureInfo =>
             {
-                Languages.Add(cultureInfo);
+                bindableLanguages.Add(cultureInfo);
             });
         }
 
         public override void Remove(CultureInfo item)
         {
-            if (!Languages.Contains(item))
+            if (!bindableLanguages.Contains(item))
                 throw new InvalidOperationException($"{nameof(item)} is not in the list");
 
             PerformObjectChanged(item, cultureInfo =>
             {
                 // Delete from list.
-                Languages.Remove(cultureInfo);
+                bindableLanguages.Remove(cultureInfo);
 
                 // Delete from lyric also.
                 foreach (var lyric in lyrics.Where(lyric => lyric.Translates.ContainsKey(cultureInfo)))
