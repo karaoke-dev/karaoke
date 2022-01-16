@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages
         private void load()
         {
             Languages.AddRange(Beatmap.AvailableTranslates);
-            Languages.BindCollectionChanged((_, _) => { Beatmap.AvailableTranslates = Languages.ToArray(); });
+            Languages.BindCollectionChanged((_, _) => { Beatmap.AvailableTranslates = Languages.ToList(); });
         }
 
         public override void Add(CultureInfo item)

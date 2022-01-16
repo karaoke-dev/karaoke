@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -26,9 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             var karaokeBeatmap = base.CreateBeatmap();
 
             // todo : insert singers
-            karaokeBeatmap.Singers = new[]
+            karaokeBeatmap.Singers = new List<Singer>
             {
-                new Singer(1)
+                new(1)
                 {
                     Order = 1,
                     Name = "初音ミク",
@@ -37,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                     Description = "International superstar vocaloid Hatsune Miku.",
                     Color = Colour4.AliceBlue
                 },
-                new Singer(2)
+                new(2)
                 {
                     Order = 2,
                     Name = "ハク",
@@ -46,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                     Description = "Creator of this ruleset.",
                     Color = Colour4.Yellow
                 },
-                new Singer(3)
+                new(3)
                 {
                     Order = 3,
                     Name = "ゴミパソコン",

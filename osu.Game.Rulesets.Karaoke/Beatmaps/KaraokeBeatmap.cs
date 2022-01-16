@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -14,15 +13,15 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
     public class KaraokeBeatmap : Beatmap<KaraokeHitObject>
     {
-        public CultureInfo[] AvailableTranslates { get; set; } = Array.Empty<CultureInfo>();
+        public List<CultureInfo> AvailableTranslates { get; set; } = new ();
 
-        public Singer[] Singers { get; set; } = Array.Empty<Singer>();
+        public List<Singer> Singers { get; set; } = new();
 
         public int TotalColumns { get; set; } = 9;
 
         public override IEnumerable<BeatmapStatistic> GetStatistics()
         {
-            int singers = Singers.Length;
+            int singers = Singers.Count;
             int lyrics = HitObjects.Count(s => s is Lyric);
 
             var defaultStatistic = new List<BeatmapStatistic>

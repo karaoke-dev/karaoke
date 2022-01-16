@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
             // should write-back if singer changed.
             Singers.BindCollectionChanged((_, _) =>
             {
-                Beatmap.Singers = Singers.ToArray();
+                Beatmap.Singers = Singers.ToList();
             });
         }
 

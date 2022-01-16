@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
     // todo: this function is used for legacy karaoke beatmap, will be removed eventually.
     public class LegacyProperties : KaraokeHitObject
     {
-        public CultureInfo[] AvailableTranslates { get; set; }
+        public List<CultureInfo> AvailableTranslates { get; set; }
 
         public IDictionary<int, Singer> Singers { get; set; } = new Dictionary<int, Singer>();
     }

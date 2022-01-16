@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -50,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
             };
         });
 
-        private static Singer[] createDefaultSinger()
+        private static List<Singer> createDefaultSinger()
         {
             var metadata = new List<Singer>();
 
@@ -64,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
                 });
             }
 
-            return metadata.ToArray();
+            return metadata.ToList();
         }
     }
 }

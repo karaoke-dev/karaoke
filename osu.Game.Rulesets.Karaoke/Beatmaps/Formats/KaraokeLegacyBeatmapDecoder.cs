@@ -279,7 +279,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
             var dictionary = new LegacyProperties
             {
-                AvailableTranslates = availableTranslates.ToArray()
+                AvailableTranslates = availableTranslates
             };
 
             beatmap.HitObjects.Add(dictionary);
