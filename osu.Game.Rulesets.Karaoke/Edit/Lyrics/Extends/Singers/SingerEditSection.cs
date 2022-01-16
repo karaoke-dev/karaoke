@@ -7,23 +7,34 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
-using osu.Game.Screens.Edit;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
 {
     public class SingerEditSection : Section
     {
+        private readonly IBindableList<Singer> bindableSingers = new BindableList<Singer>();
         private readonly BindableList<int> singerIndexes = new();
         protected override string Title => "Singer";
 
+        [Resolved]
+        private ISingersChangeHandler singersChangeHandler { get; set; }
+
         public SingerEditSection()
         {
+            // update singer list.
+            bindableSingers.BindCollectionChanged((_, args) =>
+            {
+                Content.Clear();
+                Content.AddRange(bindableSingers.Select(x => new LabelledSingerSwitchButton(x)));
+            });
+
+            // update selection.
             singerIndexes.BindCollectionChanged((_, _) =>
             {
                 foreach (var singerLabel in Content.OfType<LabelledSingerSwitchButton>())
@@ -39,23 +50,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, ILyricCaretState lyricCaretState)
+        private void load(ILyricCaretState lyricCaretState)
         {
             // update singer
-            if (beatmap?.PlayableBeatmap is KaraokeBeatmap karaokeBeatmap)
-            {
-                var singers = karaokeBeatmap.Singers;
-                Content.AddRange(singers.Select(x =>
-                {
-                    string singerName = x.Name;
-                    string description = x.Description;
-                    return new LabelledSingerSwitchButton(x)
-                    {
-                        Label = singerName,
-                        Description = description,
-                    };
-                }));
-            }
+            bindableSingers.BindTo(singersChangeHandler.Singers);
 
             // update lyric.
             lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
@@ -65,15 +63,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
             });
         }
 
-        private class LabelledSingerSwitchButton : LabelledSwitchButton
+        public class LabelledSingerSwitchButton : LabelledSwitchButton
         {
             private const float avatar_size = 40f;
 
-            public ISinger Singer { get; }
+            public Singer Singer { get; }
 
-            public LabelledSingerSwitchButton(ISinger singer)
+            public LabelledSingerSwitchButton(Singer singer)
             {
                 Singer = singer;
+
+                Label = singer.Name;
+                Description = singer.Description;
 
                 if (InternalChildren[1] is FillFlowContainer fillFlowContainer)
                 {

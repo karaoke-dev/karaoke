@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         public void TestNoLyricButHaveLanguage()
         {
             // test no lyric and have language. (should not show alert)
-            var translateLanguages = new[] { new CultureInfo("Ja-jp") };
+            var translateLanguages = new List<CultureInfo> { new("Ja-jp") };
             var beatmap = createTestingBeatmap(translateLanguages, null);
             var result = check.Run(getContext(beatmap));
             Assert.AreEqual(result.Count(), 0);
@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         public void TestHaveLyricAndLanguage()
         {
             // no lyric with translate string. (should have issue)
-            var translateLanguages = new[] { new CultureInfo("Ja-jp") };
+            var translateLanguages = new List<CultureInfo> { new("Ja-jp") };
             var beatmap = createTestingBeatmap(translateLanguages, new[]
             {
                 createLyric(),
@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             }
         }
 
-        private static IBeatmap createTestingBeatmap(CultureInfo[] translateLanguage, IEnumerable<Lyric> lyrics)
+        private static IBeatmap createTestingBeatmap(List<CultureInfo> translateLanguage, IEnumerable<Lyric> lyrics)
         {
             var karaokeBeatmap = new KaraokeBeatmap
             {

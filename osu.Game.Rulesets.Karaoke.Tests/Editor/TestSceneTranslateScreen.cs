@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Globalization;
 using NUnit.Framework;
 using osu.Framework.Allocation;
@@ -24,11 +25,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         {
             var karaokeBeatmap = base.CreateBeatmap();
 
-            karaokeBeatmap.AvailableTranslates = new[]
+            karaokeBeatmap.AvailableTranslates = new List<CultureInfo>
             {
-                new CultureInfo("zh-TW"),
-                new CultureInfo("en-US"),
-                new CultureInfo("ja-JP")
+                new("zh-TW"),
+                new("en-US"),
+                new("ja-JP")
             };
 
             return karaokeBeatmap;
