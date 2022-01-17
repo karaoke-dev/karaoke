@@ -5,7 +5,7 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
-using osuTK.Graphics;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
             set
             {
                 base.Singer = value;
-                BorderColour = Singer.Color ?? Color4.White;
+                BorderColour = SingerUtils.GetContentColour(Singer);
             }
         }
     }
