@@ -7,13 +7,14 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
-    public class SingerToolTip : BackgroundToolTip<Singer>
+    public class SingerToolTip : BackgroundToolTip<ISinger>
     {
         private readonly DrawableSingerAvatar avatar;
         private readonly OsuSpriteText singerName;
@@ -76,20 +77,24 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             };
         }
 
-        private Singer lastSinger;
+        private ISinger lastSinger;
 
-        public override void SetContent(Singer singer)
+        public override void SetContent(ISinger singer)
         {
             if (singer == lastSinger)
                 return;
 
             lastSinger = singer;
 
-            avatar.Singer = singer;
-            singerName.Text = singer.Name;
-            singerEnglishName.Text = singer.EnglishName != null ? $"({singer.EnglishName})" : "";
-            singerRomajiName.Text = singer.RomajiName;
-            singerDescription.Text = singer.Description ?? "<No description>";
+            if (singer is not Singer s)
+                return;
+
+            // todo: other type of singer(e.g: sub-singer) might display different info.
+            avatar.Singer = s;
+            singerName.Text = s.Name;
+            singerEnglishName.Text = s.EnglishName != null ? $"({s.EnglishName})" : "";
+            singerRomajiName.Text = s.RomajiName;
+            singerDescription.Text = s.Description ?? "<No description>";
         }
     }
 }

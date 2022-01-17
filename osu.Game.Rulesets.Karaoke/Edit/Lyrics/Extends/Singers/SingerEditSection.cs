@@ -6,6 +6,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -13,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
 
@@ -93,12 +95,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
             bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
         }
 
-        public class LabelledSingerSwitchButton : LabelledSwitchButton
+        public class LabelledSingerSwitchButton : LabelledSwitchButton, IHasCustomTooltip<Singer>
         {
             private const float avatar_size = 40f;
 
             public LabelledSingerSwitchButton(Singer singer)
             {
+                TooltipContent = singer;
+
                 Label = singer.Name;
                 Description = singer.Description;
 
@@ -125,6 +129,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
                     }
                 });
             }
+
+            public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
+
+            public Singer TooltipContent { get; }
         }
     }
 }

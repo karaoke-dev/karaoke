@@ -6,10 +6,13 @@ using System.Collections.Generic;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
+using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osuTK;
 
@@ -38,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             }
         }
 
-        private readonly FillFlowContainer<DrawableCircleSingerAvatar> iconsContainer;
+        private readonly FillFlowContainer<DrawableSinger> iconsContainer;
 
         public SingerDisplay()
         {
@@ -52,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 Direction = FillDirection.Vertical,
                 Children = new Drawable[]
                 {
-                    iconsContainer = new ReverseChildIDFillFlowContainer<DrawableCircleSingerAvatar>
+                    iconsContainer = new ReverseChildIDFillFlowContainer<DrawableSinger>
                     {
                         Anchor = Anchor.TopCentre,
                         Origin = Anchor.TopCentre,
@@ -68,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
                 foreach (var singer in singers.NewValue)
                 {
-                    iconsContainer.Add(new DrawableCircleSingerAvatar
+                    iconsContainer.Add(new DrawableSinger
                     {
                         Singer = singer,
                         Name = "Avatar",
@@ -125,6 +128,13 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
         {
             contract();
             base.OnHoverLost(e);
+        }
+
+        private class DrawableSinger : DrawableCircleSingerAvatar, IHasCustomTooltip<ISinger>
+        {
+            public ITooltip<ISinger> GetCustomTooltip() => new SingerToolTip();
+
+            public ISinger TooltipContent => Singer;
         }
     }
 
