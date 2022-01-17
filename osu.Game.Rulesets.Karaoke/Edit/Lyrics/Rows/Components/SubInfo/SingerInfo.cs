@@ -16,19 +16,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
 {
     public class SingerInfo : Container
     {
-        private readonly SingerDisplay singerDisplay;
-
         private readonly IBindableList<int> singerIndexesBindable = new BindableList<int>();
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
-        private readonly Lyric lyric;
-
         public SingerInfo(Lyric lyric)
         {
-            this.lyric = lyric;
             AutoSizeAxes = Axes.Both;
+            SingerDisplay singerDisplay;
 
             Child = singerDisplay = new SingerDisplay
             {
