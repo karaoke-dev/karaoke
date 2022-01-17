@@ -14,6 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 {
     public class DefaultLyricPlacementColumn : LyricPlacementColumn
     {
+        protected const int LEFT_MARGIN = 22;
+
         public static Singer DefaultSinger { get; } = new(0) { Name = "Default" };
 
         private SingerLyricEditor singerLyricEditor;
@@ -23,7 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
         {
         }
 
-        protected override float SingerInfoSize => 200;
+        // should add extra width because this component is not draggable, which will have extra spacing.
+        protected override float SingerInfoSize => INFO_SIZE + LEFT_MARGIN;
 
         // todo : might display song info?
         protected override Drawable CreateSingerInfo(Singer singer) => new Container
