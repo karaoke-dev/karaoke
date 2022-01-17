@@ -13,6 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 {
     public abstract class LyricPlacementColumn : CompositeDrawable
     {
+        protected const int INFO_SIZE = 178;
+
         private readonly Singer singer;
 
         protected LyricPlacementColumn(Singer singer)
@@ -58,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
             };
         }
 
-        protected abstract float SingerInfoSize { get; }
+        protected virtual float SingerInfoSize => INFO_SIZE;
 
         protected abstract Drawable CreateSingerInfo(Singer singer);
 

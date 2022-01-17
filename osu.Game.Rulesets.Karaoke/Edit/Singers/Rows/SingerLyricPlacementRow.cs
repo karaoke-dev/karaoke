@@ -30,8 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
         {
         }
 
-        protected override float SingerInfoSize => 178;
-
         protected override Drawable CreateSingerInfo(Singer singer)
             => new DrawableSingerInfo(singer);
 
@@ -90,6 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                                 {
                                     Name = "Singer name",
                                     RelativeSizeAxes = Axes.X,
+                                    AutoSizeAxes = Axes.Y,
                                     Direction = FillDirection.Vertical,
                                     Spacing = new Vector2(1),
                                     Padding = new MarginPadding { Left = 5 },

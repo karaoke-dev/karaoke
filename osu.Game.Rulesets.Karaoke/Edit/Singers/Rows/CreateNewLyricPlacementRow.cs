@@ -22,8 +22,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
         {
         }
 
-        protected override float SingerInfoSize => 178;
-
         protected override Drawable CreateSingerInfo(Singer singer)
         {
             return new Container

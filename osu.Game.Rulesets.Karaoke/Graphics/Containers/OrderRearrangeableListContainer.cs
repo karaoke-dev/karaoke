@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
                     bottomDrawable.Origin |= Anchor.y2;
 
                     // because scroll container only follow list container size, so change the margin to let content bigger.
-                    ListContainer.Margin = new MarginPadding { Bottom = bottomDrawable.Height + Spacing.Y * 2 };
+                    ListContainer.Margin = new MarginPadding { Bottom = bottomDrawable.Height + Spacing.Y };
                     ScrollContainer.Add(bottomDrawable);
                 }
                 else
