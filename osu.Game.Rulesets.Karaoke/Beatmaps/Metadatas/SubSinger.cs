@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 {
@@ -12,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 
         public int ID { get; private set; }
 
-        public Color4? Color { get; set; }
+        public int Hue { get; set; }
 
         public int Parent { get; set; }
 

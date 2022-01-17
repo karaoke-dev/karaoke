@@ -4,7 +4,6 @@
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 {
@@ -39,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 
         public string EnglishName { get; set; }
 
-        public Color4? Color { get; set; }
+        public int Hue { get; set; }
 
         public string Avatar { get; set; }
 
