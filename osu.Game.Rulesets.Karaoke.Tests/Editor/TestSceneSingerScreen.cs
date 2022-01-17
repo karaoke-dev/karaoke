@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                     RomajiName = "Hatsune Miku",
                     EnglishName = "Miku",
                     Description = "International superstar vocaloid Hatsune Miku.",
-                    Color = Colour4.AliceBlue
+                    Hue = 189,
                 },
                 new(2)
                 {
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                     RomajiName = "haku",
                     EnglishName = "andy840119",
                     Description = "Creator of this ruleset.",
-                    Color = Colour4.Yellow
+                    Hue = 46
                 },
                 new(3)
                 {
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                     RomajiName = "gomi-pasokonn",
                     EnglishName = "garbage desktop",
                     Description = "My fucking slow desktop.",
-                    Color = Colour4.Brown
+                    Hue = 290,
                 }
             };
 

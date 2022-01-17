@@ -258,7 +258,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Graphics
                 static Colour4 getRandomColour()
                 {
                     int randomNumber = RNG.Next(1, 359);
-                    return Color4Extensions.FromHSV(randomNumber, 0.2f, 0.7f);
+                    float randomS = (float)RNG.Next(1, 359) / 360;
+                    return Color4Extensions.FromHSV(randomNumber, randomS, 0.7f);
                 }
             }
         }

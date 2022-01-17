@@ -18,8 +18,8 @@ using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 {
@@ -134,8 +134,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                     return;
 
                 // background
-                background.Colour = singer.Color ?? new Color4();
-                background.Alpha = singer.Color != null ? 0.3f : 0;
+                background.Colour = SingerUtils.GetBackgroundColour(singer);
 
                 // avatar
                 avatar.Singer = singer;

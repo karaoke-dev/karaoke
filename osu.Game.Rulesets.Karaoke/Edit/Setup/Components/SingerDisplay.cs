@@ -15,6 +15,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
@@ -113,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup.Components
 
             private void updateSinger()
             {
-                BorderColour = Current.Value?.Color ?? colours.BlueDarker;
+                BorderColour = SingerUtils.GetContentColour(Current.Value);
                 singerAvatar.Singer = Current.Value;
             }
 
