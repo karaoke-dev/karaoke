@@ -284,6 +284,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 Origin = Anchor.CentreLeft,
                 RelativeSizeAxes = Axes.X,
                 TabbableContentContainer = this,
+                CommitOnFocusLost = true,
             };
 
         private class LyricTranslateTextBox : OsuTextBox
@@ -344,7 +345,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             protected override void OnFocusLost(FocusLostEvent e)
             {
                 base.OnFocusLost(e);
-                beatmap.SelectedHitObjects.Remove(lyric);
+                Schedule(() =>
+                {
+                    // should remove lyric until commit finished.
+                    beatmap.SelectedHitObjects.Remove(lyric);
+                });
             }
         }
     }
