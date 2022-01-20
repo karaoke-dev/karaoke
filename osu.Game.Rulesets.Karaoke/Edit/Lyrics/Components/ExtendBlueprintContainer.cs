@@ -5,7 +5,6 @@ using System.Collections.Specialized;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Input.Events;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components

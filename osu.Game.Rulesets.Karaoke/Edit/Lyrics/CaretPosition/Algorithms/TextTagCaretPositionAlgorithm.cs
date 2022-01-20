@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
