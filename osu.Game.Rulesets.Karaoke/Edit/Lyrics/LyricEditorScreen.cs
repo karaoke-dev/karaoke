@@ -9,6 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
@@ -53,6 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(ILockChangeHandler))]
         private readonly LockChangeHandler lockChangeHandler;
 
+        private readonly FullScreenLyricEditor lyricEditor;
+
         public LyricEditorScreen()
             : base(KaraokeEditorScreenMode.Lyric)
         {
@@ -69,12 +72,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             AddInternal(singersChangeHandler = new SingersChangeHandler());
             AddInternal(lockChangeHandler = new LockChangeHandler());
 
-            LyricEditor lyricEditor;
             Add(new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
             {
                 RelativeSizeAxes = Axes.Both,
                 Padding = new MarginPadding(10),
-                Child = lyricEditor = new LyricEditor
+                Child = lyricEditor = new FullScreenLyricEditor
                 {
                     RelativeSizeAxes = Axes.Both,
                 }
@@ -89,6 +91,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorMode, bindableLyricEditorMode);
+        }
+
+        protected override void PopIn()
+        {
+            base.PopIn();
+
+            // should reset the selection because selected hitobject in the editor beatmap might not sync with the selection in lyric editor.
+            lyricEditor.ResetCaret();
+        }
+
+        private class FullScreenLyricEditor : LyricEditor
+        {
+            private ILyricCaretState lyricCaretState { get; set; }
+
+            protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+            {
+                var dependencies = base.CreateChildDependencies(parent);
+                lyricCaretState = dependencies.Get<ILyricCaretState>();
+                return dependencies;
+            }
+
+            public void ResetCaret() => lyricCaretState.MoveCaret(MovingCaretAction.First);
         }
     }
 }
