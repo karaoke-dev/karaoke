@@ -8,7 +8,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
@@ -21,6 +21,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
@@ -37,14 +38,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
         public readonly Bindable<CultureInfo> NewLanguage = new();
 
-        [Resolved]
-        private ITranslateInfoProvider translateInfoProvider { get; set; }
+        [Cached(typeof(IBindable<CultureInfo>))]
+        private readonly IBindable<CultureInfo> currentLanguage = new Bindable<CultureInfo>();
 
         [Resolved]
         private ILanguagesChangeHandler languagesChangeHandler { get; set; }
 
         [Resolved]
-        private ILyricTranslateChangeHandler lyricTranslateChangeHandler { get; set; }
+        private ITranslateInfoProvider translateInfoProvider { get; set; }
 
         [Resolved]
         protected DialogOverlay DialogOverlay { get; private set; }
@@ -130,19 +131,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                                 Icon = FontAwesome.Solid.Trash,
                                                 Action = () =>
                                                 {
-                                                    var currentLanguage = languageDropdown.Current.Value;
-
-                                                    if (languagesChangeHandler.IsLanguageContainsTranslate(currentLanguage))
+                                                    if (languagesChangeHandler.IsLanguageContainsTranslate(currentLanguage.Value))
                                                     {
-                                                        DialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage, isOk =>
+                                                        DialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage.Value, isOk =>
                                                         {
                                                             if (isOk)
-                                                                languagesChangeHandler.Remove(currentLanguage);
+                                                                languagesChangeHandler.Remove(currentLanguage.Value);
                                                         }));
                                                     }
                                                     else
                                                     {
-                                                        languagesChangeHandler.Remove(currentLanguage);
+                                                        languagesChangeHandler.Remove(currentLanguage.Value);
                                                     }
                                                 }
                                             },
@@ -208,6 +207,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 },
             };
 
+            currentLanguage.BindTo(languageDropdown.Current);
+
             NewLanguage.BindValueChanged(e =>
             {
                 languagesChangeHandler.Add(e.NewValue);
@@ -225,7 +226,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             lyricSectionBackground.Colour = colours.Gray9;
 
             translateGrid.RowDimensions = translateInfoProvider.TranslatableLyrics.Select(_ => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
-            translateGrid.Content = createContent(languageDropdown.Current);
+            translateGrid.Content = createContent();
         }
 
         protected override void Dispose(bool isDisposing)
@@ -234,7 +235,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             base.Dispose(isDisposing);
         }
 
-        private Drawable[][] createContent(Bindable<CultureInfo> bindable)
+        private Drawable[][] createContent()
         {
             var lyrics = translateInfoProvider.TranslatableLyrics;
             return lyrics.Select(x =>
@@ -245,7 +246,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                     null,
                     createPreviewSpriteText(x),
                     null,
-                    createTranslateTextBox(x, bindable),
+                    createTranslateTextBox(x),
                 };
             }).ToArray();
         }
@@ -276,37 +277,75 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             };
         }
 
-        private Drawable createTranslateTextBox(Lyric lyric, Bindable<CultureInfo> bindable)
-        {
-            var textBox = new OsuTextBox
+        private Drawable createTranslateTextBox(Lyric lyric) =>
+            new LyricTranslateTextBox(lyric)
             {
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,
                 RelativeSizeAxes = Axes.X,
                 TabbableContentContainer = this,
             };
-            languageDropdown.Current.BindValueChanged(v =>
-            {
-                bool hasCultureInfo = v.NewValue != null;
 
-                // disable and clear text box if contains no language in language list.
-                textBox.Text = hasCultureInfo ? translateInfoProvider.GetLyricTranslate(lyric, v.NewValue) : null;
-                ScheduleAfterChildren(() =>
+        private class LyricTranslateTextBox : OsuTextBox
+        {
+            [Resolved]
+            private EditorBeatmap beatmap { get; set; }
+
+            [Resolved]
+            private ILyricTranslateChangeHandler lyricTranslateChangeHandler { get; set; }
+
+            [Resolved]
+            private ITranslateInfoProvider translateInfoProvider { get; set; }
+
+            private readonly IBindable<CultureInfo> currentLanguage = new Bindable<CultureInfo>();
+
+            private readonly Lyric lyric;
+
+            public LyricTranslateTextBox(Lyric lyric)
+            {
+                this.lyric = lyric;
+
+                currentLanguage.BindValueChanged(v =>
                 {
-                    textBox.Current.Disabled = !hasCultureInfo;
-                });
-            }, true);
-            textBox.OnCommit += (t, _) =>
+                    bool hasCultureInfo = v.NewValue != null;
+
+                    // disable and clear text box if contains no language in language list.
+                    Text = hasCultureInfo ? translateInfoProvider.GetLyricTranslate(lyric, v.NewValue) : null;
+                    ScheduleAfterChildren(() =>
+                    {
+                        Current.Disabled = !hasCultureInfo;
+                    });
+                }, true);
+
+                OnCommit += (t, _) =>
+                {
+                    string text = t.Text.Trim();
+
+                    var cultureInfo = currentLanguage.Value;
+                    if (cultureInfo == null)
+                        return;
+
+                    lyricTranslateChangeHandler.UpdateTranslate(cultureInfo, text);
+                };
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(IBindable<CultureInfo> currentLanguage)
             {
-                string text = t.Text.Trim();
+                this.currentLanguage.BindTo(currentLanguage);
+            }
 
-                var cultureInfo = languageDropdown.Current.Value;
-                if (cultureInfo == null)
-                    return;
+            protected override void OnFocus(FocusEvent e)
+            {
+                base.OnFocus(e);
+                beatmap.SelectedHitObjects.Add(lyric);
+            }
 
-                lyricTranslateChangeHandler.UpdateTranslate(cultureInfo, text);
-            };
-            return textBox;
+            protected override void OnFocusLost(FocusLostEvent e)
+            {
+                base.OnFocusLost(e);
+                beatmap.SelectedHitObjects.Remove(lyric);
+            }
         }
     }
 }
