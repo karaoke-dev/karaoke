@@ -8,6 +8,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
@@ -295,15 +296,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                     textBox.Current.Disabled = !hasCultureInfo;
                 });
             }, true);
-            textBox.Current.BindValueChanged(textBoxValue =>
+            textBox.OnCommit += (t, _) =>
             {
+                string text = t.Text.Trim();
+
                 var cultureInfo = languageDropdown.Current.Value;
                 if (cultureInfo == null)
                     return;
 
-                string translateText = textBoxValue.NewValue;
-                lyricTranslateChangeHandler.UpdateTranslate(cultureInfo, translateText);
-            });
+                lyricTranslateChangeHandler.UpdateTranslate(cultureInfo, text);
+            };
             return textBox;
         }
     }
