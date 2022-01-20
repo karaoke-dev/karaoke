@@ -13,6 +13,8 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
@@ -32,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         private readonly EditSingerDialog editSingerDialog;
 
         [Cached]
-        public BindableList<Lyric> SelectedLyrics { get; } = new();
+        private readonly BindableList<Lyric> selectedLyrics = new();
 
         public BindableFloat BindableZoom { get; } = new();
 
@@ -51,8 +53,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(OsuColour colours, EditorBeatmap editorBeatmap)
         {
+            BindablesUtils.Sync(selectedLyrics, editorBeatmap.SelectedHitObjects);
+
             AddInternal(new Container
             {
                 RelativeSizeAxes = Axes.Both,
@@ -84,6 +88,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                     }
                 }
             });
+        }
+
+        protected override void PopOut()
+        {
+            base.PopOut();
+
+            // should clear the selected lyrics because other place might not support multi select.
+            selectedLyrics.Clear();
         }
 
         private class FixedSectionsContainer<T> : SectionsContainer<T> where T : Drawable
