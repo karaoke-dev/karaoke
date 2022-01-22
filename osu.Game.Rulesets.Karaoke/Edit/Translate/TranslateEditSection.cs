@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
@@ -17,6 +18,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Translate.Components;
 using osu.Game.Rulesets.Karaoke.Graphics;
+using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -264,18 +266,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             };
         }
 
-        private Drawable createPreviewSpriteText(Lyric lyric)
-        {
-            return new PreviewLyricSpriteText(lyric)
+        private Drawable createPreviewSpriteText(Lyric lyric) =>
+            new TranslateLyricSpriteText(lyric)
             {
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,
-                Margin = new MarginPadding { Left = row_inner_spacing },
+                RelativeSizeAxes = Axes.X,
+                AllowMultiline = false,
+                Truncate = true,
+                Padding = new MarginPadding { Left = row_inner_spacing },
                 Font = new FontUsage(size: 25),
                 RubyFont = new FontUsage(size: 10),
                 RomajiFont = new FontUsage(size: 10),
             };
-        }
 
         private Drawable createTranslateTextBox(Lyric lyric) =>
             new LyricTranslateTextBox(lyric)
@@ -286,6 +289,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 TabbableContentContainer = this,
                 CommitOnFocusLost = true,
             };
+
+        private class TranslateLyricSpriteText : PreviewLyricSpriteText, IHasCustomTooltip<Lyric>
+        {
+            public TranslateLyricSpriteText(Lyric hitObject)
+                : base(hitObject)
+            {
+            }
+
+            public ITooltip<Lyric> GetCustomTooltip() => new LyricTooltip();
+
+            public Lyric TooltipContent => HitObject;
+        }
 
         private class LyricTranslateTextBox : OsuTextBox
         {
