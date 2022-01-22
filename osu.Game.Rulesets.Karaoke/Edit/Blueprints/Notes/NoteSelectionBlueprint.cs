@@ -16,6 +16,7 @@ using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 {
@@ -32,6 +33,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 
         [Resolved]
         private INotePositionInfo notePositionInfo { get; set; }
+
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
 
         protected ScrollingHitObjectContainer HitObjectContainer => ((KaraokePlayfield)playfield).NotePlayfield.HitObjectContainer;
 
@@ -68,6 +72,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 
         protected override bool OnClick(ClickEvent e)
         {
+            // should only select current note before open the popover because note change handler will change property in all selected notes.
+            beatmap.SelectedHitObjects.Clear();
+            beatmap.SelectedHitObjects.Add(HitObject);
+
             this.ShowPopover();
             return base.OnClick(e);
         }
