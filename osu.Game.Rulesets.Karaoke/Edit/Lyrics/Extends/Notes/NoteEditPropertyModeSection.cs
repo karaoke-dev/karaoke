@@ -20,8 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             {
                 new LabelledEnumDropdown<NoteEditPropertyMode>
                 {
-                    Label = "Record tag mode",
-                    Description = "Only record time with start/end time-tag while recording.",
+                    Label = "Edit property",
+                    Description = "Batch edit text, ruby(alternative) text or display from notes",
                     Current = bindableNoteEditPropertyMode,
                 },
             };
