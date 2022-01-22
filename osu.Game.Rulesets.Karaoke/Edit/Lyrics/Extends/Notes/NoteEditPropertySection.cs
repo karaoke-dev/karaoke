@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -80,6 +81,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         private class LabelledNoteTextTextBox : LabelledObjectFieldTextBox<Note>
         {
+            [Resolved]
+            private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+
             public LabelledNoteTextTextBox(Note item)
                 : base(item)
             {
@@ -89,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 => note.Text;
 
             protected override void ApplyValue(Note note, string value)
-                => note.Text = value;
+                => notePropertyChangeHandler.ChangeText(value);
 
             [BackgroundDependencyLoader]
             private void load(IBlueprintSelectionState blueprintSelectionState)
@@ -100,6 +104,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         private class LabelledNoteRubyTextTextBox : LabelledObjectFieldTextBox<Note>
         {
+            [Resolved]
+            private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+
             public LabelledNoteRubyTextTextBox(Note item)
                 : base(item)
             {
@@ -109,7 +116,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 => note.RubyText;
 
             protected override void ApplyValue(Note note, string value)
-                => note.RubyText = value;
+                => notePropertyChangeHandler.ChangeRubyText(value);
 
             [BackgroundDependencyLoader]
             private void load(IBlueprintSelectionState blueprintSelectionState)
@@ -120,6 +127,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         private class LabelledNoteDisplaySwitchButton : LabelledObjectFieldSwitchButton<Note>
         {
+            [Resolved]
+            private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+
             public LabelledNoteDisplaySwitchButton(Note item)
                 : base(item)
             {
@@ -129,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 => note.Display;
 
             protected override void ApplyValue(Note note, bool value)
-                => note.Display = value;
+                => notePropertyChangeHandler.ChangeDisplayState(value);
 
             [BackgroundDependencyLoader]
             private void load(IBlueprintSelectionState blueprintSelectionState)
