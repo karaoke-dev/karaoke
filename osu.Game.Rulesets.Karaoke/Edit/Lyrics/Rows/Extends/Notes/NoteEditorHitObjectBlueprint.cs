@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes.Components;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.UI.Scrolling;
@@ -41,6 +42,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 
         [Resolved]
         private INotePositionInfo notePositionInfo { get; set; }
+
+        [Resolved]
+        private IBlueprintSelectionState blueprintSelectionState { get; set; }
 
         private readonly Lyric lyric;
 
@@ -105,6 +109,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 
         protected override bool OnClick(ClickEvent e)
         {
+            // should only select current note before open the popover because note change handler will change property in all selected notes.
+            blueprintSelectionState.SelectedNotes.Clear();
+            blueprintSelectionState.SelectedNotes.Add(Item);
+
             this.ShowPopover();
             return base.OnClick(e);
         }
