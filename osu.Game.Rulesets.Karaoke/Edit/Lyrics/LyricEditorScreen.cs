@@ -42,9 +42,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(INotesChangeHandler))]
         private readonly NotesChangeHandler notesChangeHandler;
 
-        [Cached(typeof(INotePropertyChangeHandler))]
-        private readonly NotePropertyChangeHandler notePropertyChangeHandler;
-
         [Cached(typeof(ILyricLayoutChangeHandler))]
         private readonly LyricLayoutChangeHandler lyricLayoutChangeHandler;
 
@@ -70,7 +67,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             AddInternal(lyricTimeTagsChangeHandler = new LyricTimeTagsChangeHandler());
             AddInternal(notePositionInfo = new NotePositionInfo());
             AddInternal(notesChangeHandler = new NotesChangeHandler());
-            AddInternal(notePropertyChangeHandler = new NotePropertyChangeHandler());
             AddInternal(lyricLayoutChangeHandler = new LyricLayoutChangeHandler());
             AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
             AddInternal(singersChangeHandler = new SingersChangeHandler());

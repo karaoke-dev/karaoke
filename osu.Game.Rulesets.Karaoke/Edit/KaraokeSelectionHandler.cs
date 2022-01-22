@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             return new OsuMenuItem($"{displayText} {selectedObject.Count} notes.", display ? MenuItemType.Destructive : MenuItemType.Standard,
                 () =>
                 {
-                    notesChangeHandler.ChangeDisplay(!display);
+                    notesChangeHandler.ChangeDisplayState(!display);
                 });
         }
 
