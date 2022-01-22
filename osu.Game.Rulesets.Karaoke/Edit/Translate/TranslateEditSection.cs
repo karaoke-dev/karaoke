@@ -216,14 +216,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(OverlayColourProvider colourProvider)
         {
             LanguageSelectionDialog.Current = NewLanguage;
 
             languageDropdown.ItemSource = languagesChangeHandler.Languages;
 
-            timeSectionBackground.Colour = colours.ContextMenuGray;
-            lyricSectionBackground.Colour = colours.Gray9;
+            timeSectionBackground.Colour = colourProvider.Background6;
+            lyricSectionBackground.Colour = colourProvider.Dark6;
 
             translateGrid.RowDimensions = translateInfoProvider.TranslatableLyrics.Select(_ => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
             translateGrid.Content = createContent();
