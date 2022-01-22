@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             [BackgroundDependencyLoader]
             private void load(IBlueprintSelectionState blueprintSelectionState)
             {
-                blueprintSelectionState.SelectedNotes.BindTo(SelectedItems);
+                SelectedItems.BindTo(blueprintSelectionState.SelectedNotes);
             }
         }
 
@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             [BackgroundDependencyLoader]
             private void load(IBlueprintSelectionState blueprintSelectionState)
             {
-                blueprintSelectionState.SelectedNotes.BindTo(SelectedItems);
+                SelectedItems.BindTo(blueprintSelectionState.SelectedNotes);
             }
         }
 
@@ -144,7 +144,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             [BackgroundDependencyLoader]
             private void load(IBlueprintSelectionState blueprintSelectionState)
             {
-                blueprintSelectionState.SelectedNotes.BindTo(SelectedItems);
+                SelectedItems.BindTo(blueprintSelectionState.SelectedNotes);
             }
         }
     }
