@@ -37,8 +37,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                         {
                             Items = new MenuItem[]
                             {
-                                new ImportLyricMenu(null, "Import from text", _ => { }),
-                                new ImportLyricMenu(null, "Import from .lrc file", _ => { }),
+                                new ImportLyricMenu(null, "Import from text", null),
+                                new ImportLyricMenu(null, "Import from .lrc file", null),
                                 new EditorMenuItemSpacer(),
                                 new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => { }),
                                 new EditorMenuItem("Export to text", MenuItemType.Standard, () => { }),

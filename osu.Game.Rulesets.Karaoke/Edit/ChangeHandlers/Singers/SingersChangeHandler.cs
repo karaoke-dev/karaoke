@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
 {
-    public class SingersChangeHandler : BeatmapChangeHandler<Singer>, ISingersChangeHandler
+    public class SingersChangeHandler : BeatmapPropertyChangeHandler<Singer>, ISingersChangeHandler
     {
         public BindableList<Singer> Singers => Items;
 

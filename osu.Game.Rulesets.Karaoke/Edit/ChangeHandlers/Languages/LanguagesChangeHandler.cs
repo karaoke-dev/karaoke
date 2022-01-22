@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Beatmaps;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages
 {
-    public class LanguagesChangeHandler : BeatmapChangeHandler<CultureInfo>, ILanguagesChangeHandler
+    public class LanguagesChangeHandler : BeatmapPropertyChangeHandler<CultureInfo>, ILanguagesChangeHandler
     {
         public IBindableList<CultureInfo> Languages => Items;
 
