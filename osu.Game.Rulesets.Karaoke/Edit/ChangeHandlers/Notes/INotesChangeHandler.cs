@@ -5,10 +5,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 {
     public interface INotesChangeHandler : IAutoGenerateChangeHandler
     {
-        void ChangeDisplay(bool display);
-
         void Split(float percentage = 0.5f);
 
         void Combine();
+
+        void ChangeText(string text);
+
+        void ChangeRubyText(string ruby);
+
+        void ChangeDisplayState(bool display);
     }
 }

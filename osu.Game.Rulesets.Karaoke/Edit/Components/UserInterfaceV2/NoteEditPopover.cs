@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
     public class NoteEditPopover : OsuPopover
     {
         [Resolved(canBeNull: true)]
-        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+        private INotesChangeHandler notesChangeHandler { get; set; }
 
         public NoteEditPopover(Note note)
         {
@@ -56,30 +56,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
             text.OnCommit += (sender, newText) =>
             {
                 string text = sender.Text.Trim();
-                notePropertyChangeHandler?.ChangeText(text);
+                notesChangeHandler?.ChangeText(text);
             };
 
             rubyText.OnCommit += (sender, newText) =>
             {
                 string text = sender.Text.Trim();
-                notePropertyChangeHandler?.ChangeRubyText(text);
+                notesChangeHandler?.ChangeRubyText(text);
             };
 
             display.Current.BindValueChanged(v =>
             {
-                notePropertyChangeHandler?.ChangeDisplayState(v.NewValue);
+                notesChangeHandler?.ChangeDisplayState(v.NewValue);
             });
         }
 
         [BackgroundDependencyLoader(true)]
         private void load(HitObjectComposer composer)
         {
-            if (notePropertyChangeHandler != null || composer == null)
+            if (notesChangeHandler != null || composer == null)
                 return;
 
             // todo: not a good way to get change handler, might remove or found another way eventually.
             // cannot get change handler directly in editor screen, so should trying to get from karaoke hit object composer.
-            notePropertyChangeHandler = composer.Dependencies.Get<INotePropertyChangeHandler>();
+            notesChangeHandler = composer.Dependencies.Get<INotesChangeHandler>();
         }
     }
 }

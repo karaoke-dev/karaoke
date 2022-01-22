@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 
         public override MenuItem[] ContextMenuItems => new MenuItem[]
         {
-            new OsuMenuItem(Item.Display ? "Hide" : "Show", Item.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => notesChangeHandler.ChangeDisplay(!Item.Display)),
+            new OsuMenuItem(Item.Display ? "Hide" : "Show", Item.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => notesChangeHandler.ChangeDisplayState(!Item.Display)),
             new OsuMenuItem("Split", MenuItemType.Destructive, () => notesChangeHandler.Split()),
         };
 

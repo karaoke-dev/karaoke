@@ -36,18 +36,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
             });
         }
 
-        public void ChangeDisplay(bool display)
-        {
-            PerformOnSelection(note =>
-            {
-                note.Display = display;
-
-                // Move to center if note is not display
-                if (!note.Display)
-                    note.Tone = new Tone();
-            });
-        }
-
         public void Split(float percentage = 0.5f)
         {
             PerformOnSelection(note =>
@@ -77,6 +65,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 
                 RemoveRange(notes);
                 Add(combinedNote);
+            });
+        }
+
+        public void ChangeText(string text)
+        {
+            PerformOnSelection(note =>
+            {
+                note.Text = text;
+            });
+        }
+
+        public void ChangeRubyText(string ruby)
+        {
+            PerformOnSelection(note =>
+            {
+                note.RubyText = ruby;
+            });
+        }
+
+        public void ChangeDisplayState(bool display)
+        {
+            PerformOnSelection(note =>
+            {
+                note.Display = display;
+
+                // Move to center if note is not display
+                if (!note.Display)
+                    note.Tone = new Tone();
             });
         }
 
