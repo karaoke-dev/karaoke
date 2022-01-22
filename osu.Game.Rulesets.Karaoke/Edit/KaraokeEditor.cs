@@ -2,13 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.UserInterface;
-using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Edit.Export;
@@ -18,15 +17,11 @@ using osu.Game.Rulesets.Karaoke.Edit.Translate;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Screens.Edit;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
-using osu.Game.Rulesets.Objects;
-using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Menus;
-using osu.Game.Screens.Edit.Compose;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
-    [Cached(typeof(IPlacementHandler))]
-    public class KaraokeEditor : GenericEditor<KaraokeEditorScreenMode>, IPlacementHandler
+    public class KaraokeEditor : GenericEditor<KaraokeEditorScreenMode>
     {
         [Cached]
         private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Green);
@@ -55,11 +50,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private LanguageSelectionDialog languageSelectionDialog;
 
-        [Resolved]
-        private EditorBeatmap editorBeatmap { get; set; }
-
-        [Resolved]
-        private IEditorChangeHandler changeHandler { get; set; }
+        [Cached(typeof(IBeatmapChangeHandler))]
+        private readonly BeatmapChangeHandler beatmapChangeHandler;
 
         public KaraokeEditor()
         {
@@ -74,6 +66,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(exportLyricManager = new ExportLyricManager());
             AddInternal(lyricCheckerManager = new LyricCheckerManager());
             AddInternal(languageSelectionDialog = new LanguageSelectionDialog());
+
+            AddInternal(beatmapChangeHandler = new BeatmapChangeHandler());
         }
 
         protected override GenericEditorScreen<KaraokeEditorScreenMode> GenerateScreen(KaraokeEditorScreenMode screenMode) =>
@@ -95,8 +89,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     {
                         Items = new MenuItem[]
                         {
-                            new ImportLyricMenu(this, "Import from text", importLyric),
-                            new ImportLyricMenu(this, "Import from .lrc file", importLyric),
+                            new ImportLyricMenu(this, "Import from text", beatmapChangeHandler),
+                            new ImportLyricMenu(this, "Import from .lrc file", beatmapChangeHandler),
                             new EditorMenuItemSpacer(),
                             new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => exportLyricManager.ExportToLrc()),
                             new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),
@@ -119,39 +113,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                 },
                 _ => null
             };
-        }
-
-        #region IPlacementHandler
-
-        public void BeginPlacement(HitObject hitObject)
-        {
-            editorBeatmap.PlacementObject.Value = hitObject;
-        }
-
-        public void EndPlacement(HitObject hitObject, bool commit)
-        {
-            editorBeatmap.PlacementObject.Value = null;
-
-            if (commit)
-            {
-                editorBeatmap.Add(hitObject);
-            }
-        }
-
-        public void Delete(HitObject hitObject) => editorBeatmap.Remove(hitObject);
-
-        #endregion
-
-        private void importLyric(IBeatmap beatmap)
-        {
-            changeHandler.BeginChange();
-
-            editorBeatmap.Clear();
-
-            if (beatmap.HitObjects.Any())
-                editorBeatmap.AddRange(beatmap.HitObjects);
-
-            changeHandler.EndChange();
         }
     }
 }
