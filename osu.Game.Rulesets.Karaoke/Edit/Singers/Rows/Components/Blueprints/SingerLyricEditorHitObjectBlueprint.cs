@@ -60,7 +60,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints
                     {
                         Anchor = Anchor.CentreLeft,
                         Origin = Anchor.CentreLeft,
-                        Margin = new MarginPadding { Left = 10 },
+                        Margin = new MarginPadding { Left = 5 },
+                        RelativeSizeAxes = Axes.X,
+                        Truncate = true,
                         Text = item?.Text
                     }
                 }
