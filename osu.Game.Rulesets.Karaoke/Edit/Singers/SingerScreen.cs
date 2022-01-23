@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         [Cached]
         private readonly BindableList<Lyric> selectedLyrics = new();
 
-        public BindableFloat BindableZoom { get; } = new();
+        public BindableFloat BindableZoom { get; } = new(10);
 
         public BindableFloat BindableCurrent { get; } = new();
 

@@ -80,7 +80,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             // initialize scroll zone.
             MaxZoom = getZoomLevelForVisibleMilliseconds(2000);
             MinZoom = getZoomLevelForVisibleMilliseconds(20000);
-            Zoom = getZoomLevelForVisibleMilliseconds(5000);
 
             bindableZoom = scrollingInfoProvider.BindableZoom.GetBoundCopy();
             bindableCurrent = scrollingInfoProvider.BindableCurrent.GetBoundCopy();

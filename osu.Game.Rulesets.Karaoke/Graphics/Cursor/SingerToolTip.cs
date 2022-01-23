@@ -16,6 +16,10 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
     public class SingerToolTip : BackgroundToolTip<ISinger>
     {
+        private const int avater_size = 60;
+        private const int main_text_size = 24;
+        private const int sub_text_size = 12;
+
         private readonly DrawableSingerAvatar avatar;
         private readonly OsuSpriteText singerName;
         private readonly OsuSpriteText singerEnglishName;
@@ -32,38 +36,69 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                 Spacing = new Vector2(15),
                 Children = new Drawable[]
                 {
-                    avatar = new DrawableSingerAvatar
+                    new GridContainer
                     {
-                        Name = "Avatar",
-                        Size = new Vector2(64)
-                    },
-                    new FillFlowContainer
-                    {
-                        Name = "Singer name",
-                        AutoSizeAxes = Axes.Y,
+                        Name = "Basic info",
                         RelativeSizeAxes = Axes.X,
-                        Direction = FillDirection.Horizontal,
-                        Spacing = new Vector2(5),
-                        Children = new[]
+                        Height = avater_size,
+                        ColumnDimensions = new[]
                         {
-                            singerName = new OsuSpriteText
+                            new Dimension(GridSizeMode.Absolute, avater_size),
+                            new Dimension(),
+                        },
+                        Content = new[]
+                        {
+                            new Drawable[]
                             {
-                                Name = "Singer name",
-                                Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 20),
-                            },
-                            singerEnglishName = new OsuSpriteText
-                            {
-                                Name = "English name",
-                                Anchor = Anchor.BottomLeft,
-                                Origin = Anchor.BottomLeft,
-                                Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 13),
-                                Margin = new MarginPadding { Bottom = 1 }
+                                avatar = new DrawableSingerAvatar
+                                {
+                                    Name = "Avatar",
+                                    Size = new Vector2(avater_size),
+                                },
+                                new Container
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    Padding = new MarginPadding { Left = 5 },
+                                    Children = new Drawable[]
+                                    {
+                                        new FillFlowContainer
+                                        {
+                                            Name = "Singer name",
+                                            RelativeSizeAxes = Axes.X,
+                                            AutoSizeAxes = Axes.Y,
+                                            Direction = FillDirection.Vertical,
+                                            Spacing = new Vector2(1),
+                                            Children = new[]
+                                            {
+                                                singerName = new OsuSpriteText
+                                                {
+                                                    Name = "Singer name",
+                                                    Font = OsuFont.GetFont(weight: FontWeight.Bold, size: main_text_size),
+                                                    RelativeSizeAxes = Axes.X,
+                                                    Truncate = true,
+                                                },
+                                                singerRomajiName = new OsuSpriteText
+                                                {
+                                                    Name = "Romaji name",
+                                                    Font = OsuFont.GetFont(weight: FontWeight.Bold, size: sub_text_size),
+                                                    RelativeSizeAxes = Axes.X,
+                                                    Truncate = true,
+                                                },
+                                            }
+                                        },
+                                        singerEnglishName = new OsuSpriteText
+                                        {
+                                            Name = "English name",
+                                            Anchor = Anchor.BottomLeft,
+                                            Origin = Anchor.BottomLeft,
+                                            Font = OsuFont.GetFont(weight: FontWeight.Bold, size: sub_text_size),
+                                            RelativeSizeAxes = Axes.X,
+                                            Truncate = true,
+                                        }
+                                    }
+                                }
                             }
                         }
-                    },
-                    singerRomajiName = new OsuSpriteText
-                    {
-                        Name = "Romaji name"
                     },
                     singerDescription = new OsuSpriteText
                     {
@@ -92,8 +127,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             // todo: other type of singer(e.g: sub-singer) might display different info.
             avatar.Singer = s;
             singerName.Text = s.Name;
-            singerEnglishName.Text = s.EnglishName != null ? $"({s.EnglishName})" : "";
-            singerRomajiName.Text = s.RomajiName;
+            singerRomajiName.Text = s.RomajiName != null ? $"({s.RomajiName})" : "";
+            singerEnglishName.Text = s.EnglishName;
             singerDescription.Text = s.Description ?? "<No description>";
         }
     }

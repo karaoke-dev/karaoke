@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -18,7 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 
         public static Singer DefaultSinger { get; } = new(0) { Name = "Default" };
 
-        private SingerLyricEditor singerLyricEditor;
+        [Resolved]
+        private ISingerScreenScrollingInfoProvider scrollingInfoProvider { get; set; }
 
         public DefaultLyricPlacementColumn()
             : base(DefaultSinger)
@@ -69,8 +71,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
         };
 
         protected override Drawable CreateTimeLinePart(Singer singer)
-            => singerLyricEditor = new SingerLyricEditor(singer);
+            => new SingerLyricEditor(singer);
 
-        private void changeZoom(float change) => singerLyricEditor.Zoom += change;
+        private void changeZoom(float change) => scrollingInfoProvider.BindableZoom.Value += change;
     }
 }
