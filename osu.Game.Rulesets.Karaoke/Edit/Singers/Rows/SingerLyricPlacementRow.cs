@@ -38,6 +38,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 
         internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip<Singer>, IHasContextMenu
         {
+            private const int avater_size = 48;
+            private const int main_text_size = 24;
+            private const int sub_text_size = 12;
+
             [Resolved]
             private ISingersChangeHandler singersChangeHandler { get; set; }
 
@@ -50,8 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
             private readonly Box background;
             private readonly DrawableSingerAvatar avatar;
             private readonly OsuSpriteText singerName;
-            private readonly OsuSpriteText romajiName;
-            private readonly OsuSpriteText englishName;
+            private readonly OsuSpriteText singerEnglishName;
 
             private readonly Bindable<Singer> bindableSinger = new();
 
@@ -65,55 +68,59 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                         Name = "Background",
                         RelativeSizeAxes = Axes.Both,
                     },
-                    new GridContainer
+                    new Container
                     {
-                        Name = "Infos",
                         RelativeSizeAxes = Axes.Both,
-                        Margin = new MarginPadding(10),
-                        ColumnDimensions = new[]
+                        Padding = new MarginPadding(10) { Right = 0 },
+                        Child = new GridContainer
                         {
-                            new Dimension(GridSizeMode.AutoSize, 48),
-                            new Dimension(),
-                        },
-                        Content = new[]
-                        {
-                            new Drawable[]
+                            Name = "Basic info",
+                            RelativeSizeAxes = Axes.X,
+                            Height = avater_size,
+                            ColumnDimensions = new[]
                             {
-                                avatar = new DrawableSingerAvatar
+                                new Dimension(GridSizeMode.Absolute, avater_size),
+                                new Dimension(),
+                            },
+                            Content = new[]
+                            {
+                                new Drawable[]
                                 {
-                                    Name = "Avatar",
-                                    Size = new Vector2(48),
-                                },
-                                new FillFlowContainer
-                                {
-                                    Name = "Singer name",
-                                    RelativeSizeAxes = Axes.X,
-                                    AutoSizeAxes = Axes.Y,
-                                    Direction = FillDirection.Vertical,
-                                    Spacing = new Vector2(1),
-                                    Padding = new MarginPadding { Left = 5 },
-                                    Children = new[]
+                                    avatar = new DrawableSingerAvatar
                                     {
-                                        singerName = new OsuSpriteText
+                                        Name = "Avatar",
+                                        Size = new Vector2(avater_size),
+                                    },
+                                    new FillFlowContainer
+                                    {
+                                        Name = "Singer name",
+                                        RelativeSizeAxes = Axes.X,
+                                        AutoSizeAxes = Axes.Y,
+                                        Direction = FillDirection.Vertical,
+                                        Padding = new MarginPadding { Left = 5 },
+                                        Spacing = new Vector2(1),
+                                        Children = new Drawable[]
                                         {
-                                            Name = "Singer name",
-                                            Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 20),
-                                        },
-                                        romajiName = new OsuSpriteText
-                                        {
-                                            Name = "Romaji name",
-                                            Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 9),
-                                        },
-                                        englishName = new OsuSpriteText
-                                        {
-                                            Name = "English name",
-                                            Font = OsuFont.GetFont(weight: FontWeight.Bold, size: 12),
+                                            singerName = new OsuSpriteText
+                                            {
+                                                Name = "Singer name",
+                                                Font = OsuFont.GetFont(weight: FontWeight.Bold, size: main_text_size),
+                                                RelativeSizeAxes = Axes.X,
+                                                Truncate = true,
+                                            },
+                                            singerEnglishName = new OsuSpriteText
+                                            {
+                                                Name = "English name",
+                                                Font = OsuFont.GetFont(weight: FontWeight.Bold, size: sub_text_size),
+                                                RelativeSizeAxes = Axes.X,
+                                                Truncate = true,
+                                            }
                                         }
                                     }
-                                },
+                                }
                             }
-                        }
-                    },
+                        },
+                    }
                 };
 
                 bindableSinger.BindValueChanged(e =>
@@ -140,13 +147,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 
                 // metadata
                 updateSingerName(singer);
-                romajiName.Text = singer.RomajiName;
-                englishName.Text = singer.EnglishName != null ? $"({singer.EnglishName})" : "";
             }
 
             private void updateSingerName(Singer singer)
             {
                 singerName.Text = $"#{singer.Order} {singer.Name}";
+                singerEnglishName.Text = singer.EnglishName;
             }
 
             public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
