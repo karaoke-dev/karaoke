@@ -53,7 +53,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
             setTooltip("Test singer with romaji name", singer =>
             {
                 singer.Name = "Singer with Romaji name";
-                singer.EnglishName = "Hatsune Miku";
+                singer.RomajiName = "Hatsune Miku";
+            });
+
+            setTooltip("Test singer with large context", singer =>
+            {
+                singer.Name = "Singer with Romaji name large large large large large large large large large";
+                singer.RomajiName = "Hatsune Miku large large large large large large large large large";
+                singer.EnglishName = "Hatsune Miku large large large large large large large large large";
+                singer.Description =
+                    "International superstar vocaloid Hatsune Miku on Sept 9 assumed her new position as Coronavirus Countermeasure Supporter in the Office for Novel Coronavirus Disease Control of the Japanese government’s Cabinet Secretariat.";
             });
         }
 
