@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens
         [BackgroundDependencyLoader]
         private void load(SkinManager skinManager)
         {
-            // todo: karaoke skin editor might not need editor click eventually?
+            // todo: karaoke skin editor might not need editor clock eventually?
             Dependencies.Cache(new EditorClock());
 
             skinManager.CurrentSkinInfo.Value = DefaultKaraokeSkin.CreateInfo().ToLiveUnmanaged();

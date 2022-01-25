@@ -1,7 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using osu.Framework.Audio.Sample;
@@ -10,7 +9,6 @@ using osu.Framework.Graphics.OpenGL.Textures;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Audio;
 using osu.Game.IO;
-using osu.Game.Rulesets.Karaoke.Skinning.Mappings;
 using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
@@ -27,17 +25,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         public readonly Bindable<LyricConfig> BindableDefaultLyricConfig = new();
         public readonly Bindable<LyricStyle> BindableDefaultLyricStyle = new();
         public readonly Bindable<NoteStyle> BindableDefaultNoteStyle = new();
-
-        // todo: those properties should only appear in karaoke beatmap skin.
-        public readonly IDictionary<int, Bindable<LyricLayout>> BindableLayouts = new Dictionary<int, Bindable<LyricLayout>>();
-        public readonly IDictionary<int, Bindable<LayoutGroup>> BindableLayoutGroups = new Dictionary<int, Bindable<LayoutGroup>>();
-        public readonly IDictionary<int, Bindable<LyricStyle>> BindableLyricStyles = new Dictionary<int, Bindable<LyricStyle>>();
-        public readonly IDictionary<int, Bindable<NoteStyle>> BindableNoteStyles = new Dictionary<int, Bindable<NoteStyle>>();
-        public readonly HashSet<IStyleMappingRole> BindableStyleMappingRoles = new();
-
-        public readonly Bindable<IDictionary<int, string>> BindableFontsLookup = new();
-        public readonly Bindable<IDictionary<int, string>> BindableLayoutsLookup = new();
-        public readonly Bindable<IDictionary<int, string>> BindableNotesLookup = new();
 
         private readonly Bindable<float> bindableColumnHeight = new(DefaultColumnBackground.COLUMN_HEIGHT);
         private readonly Bindable<float> bindableColumnSpacing = new(ScrollingNotePlayfield.COLUMN_SPACING);
@@ -73,27 +60,16 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 case KaraokeSkinLookup skinLookup:
                 {
                     var config = skinLookup.Config;
-                    int lookupNumber = skinLookup.Lookup;
 
                     return config switch
                     {
-                        KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(BindableLyricStyles[lookupNumber]),
-                        KaraokeSkinConfiguration.LyricLayout => SkinUtils.As<TValue>(BindableLayouts[lookupNumber]),
+                        KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(BindableDefaultLyricStyle),
+                        KaraokeSkinConfiguration.LyricLayout => null,
                         KaraokeSkinConfiguration.LyricConfig => SkinUtils.As<TValue>(BindableDefaultLyricConfig),
-                        KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(BindableNoteStyles[lookupNumber]),
+                        KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(BindableDefaultNoteStyle),
                         _ => throw new InvalidEnumArgumentException(nameof(config))
                     };
                 }
-
-                // Lookup list of name by type
-                case KaraokeIndexLookup indexLookup:
-                    return indexLookup switch
-                    {
-                        KaraokeIndexLookup.Layout => SkinUtils.As<TValue>(BindableLayoutsLookup),
-                        KaraokeIndexLookup.Style => SkinUtils.As<TValue>(BindableFontsLookup),
-                        KaraokeIndexLookup.Note => SkinUtils.As<TValue>(BindableNotesLookup),
-                        _ => throw new InvalidEnumArgumentException(nameof(indexLookup))
-                    };
 
                 case KaraokeSkinConfigurationLookup skinConfigurationLookup:
                     switch (skinConfigurationLookup.Lookup)
