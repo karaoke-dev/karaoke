@@ -64,6 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     return config switch
                     {
                         KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(BindableDefaultLyricStyle),
+                        KaraokeSkinConfiguration.LyricLayout => null,
                         KaraokeSkinConfiguration.LyricConfig => SkinUtils.As<TValue>(BindableDefaultLyricConfig),
                         KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(BindableDefaultNoteStyle),
                         _ => throw new InvalidEnumArgumentException(nameof(config))
