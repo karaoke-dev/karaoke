@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         [STAThread]
         public static int Main(string[] args)
         {
-            using (var host = Host.GetSuitableHost(@"karaoke-visual-test-runner", true))
+            using (var host = Host.GetSuitableDesktopHost(@"karaoke-visual-test-runner", new HostOptions { BindIPC = true, }))
             {
                 host.Run(new KaraokeTestBrowser());
                 return 0;
