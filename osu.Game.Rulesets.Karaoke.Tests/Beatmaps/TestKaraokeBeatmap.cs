@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Diagnostics;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
@@ -19,9 +20,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
             Breaks = baseBeatmap.Breaks;
             HitObjects = baseBeatmap.HitObjects;
 
-            BeatmapInfo.RulesetID = 1;
             BeatmapInfo.Ruleset = ruleset;
-            BeatmapInfo.BeatmapSet.Metadata = BeatmapInfo.Metadata;
+
+            Debug.Assert(BeatmapInfo.BeatmapSet != null);
+
             BeatmapInfo.BeatmapSet.Beatmaps.Add(BeatmapInfo);
         }
 
