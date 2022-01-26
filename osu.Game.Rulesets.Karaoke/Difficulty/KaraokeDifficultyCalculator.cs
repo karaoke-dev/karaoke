@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
                 return new KaraokeDifficultyAttributes { Mods = mods };
 
             HitWindows hitWindows = new KaraokeHitWindows();
-            hitWindows.SetDifficulty(beatmap.BeatmapInfo.BaseDifficulty.OverallDifficulty);
+            hitWindows.SetDifficulty(beatmap.Difficulty.OverallDifficulty);
 
             return new KaraokeDifficultyAttributes
             {
