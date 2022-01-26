@@ -53,9 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             var beatmapSetInfo = beatmapInfo.BeatmapSet;
             string audioFile = beatmapInfo.Metadata.AudioFile;
 
-            return beatmapSetInfo.Files
-                                 .FirstOrDefault(f => string.Equals(f.Filename, audioFile, StringComparison.OrdinalIgnoreCase))
-                                 ?.FileInfo.GetStoragePath();
+            return beatmapSetInfo?.Files.SingleOrDefault(f => string.Equals(f.Filename, audioFile, StringComparison.OrdinalIgnoreCase))?.File.GetStoragePath();
         }
     }
 }
