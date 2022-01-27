@@ -13,6 +13,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
     {
         public TestKaraokeBeatmap(RulesetInfo ruleset)
         {
+            // It's a tricky way not to trigger change handler throw exception.
+            // not a good solution, but seems ok because there's no other ruleset in the test case.
+            ruleset.OnlineID = 1;
+
             var baseBeatmap = createTestBeatmap();
 
             BeatmapInfo = baseBeatmap.BeatmapInfo;
