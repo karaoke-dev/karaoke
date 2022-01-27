@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         protected virtual KaraokeBeatmap CreateBeatmap()
         {
-            var beatmap = new TestKaraokeBeatmap(Ruleset.Value);
+            var beatmap = new TestKaraokeBeatmap(new KaraokeRuleset().RulesetInfo);
             if (new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() is not KaraokeBeatmap karaokeBeatmap)
                 throw new ArgumentNullException(nameof(karaokeBeatmap));
 
