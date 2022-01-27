@@ -121,6 +121,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         {
             var karaokeBeatmap = new KaraokeBeatmap
             {
+                BeatmapInfo =
+                {
+                    Ruleset = new KaraokeRuleset().RulesetInfo,
+                },
                 AvailableTranslates = translateLanguage,
                 HitObjects = lyrics?.OfType<KaraokeHitObject>().ToList() ?? new List<KaraokeHitObject>()
             };

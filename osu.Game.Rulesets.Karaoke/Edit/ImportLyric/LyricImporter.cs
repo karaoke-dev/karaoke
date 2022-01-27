@@ -87,7 +87,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             dependencies.Cache(beatDivisor);
 
             // inject local editor beatmap handler because should not affect global beatmap data.
-            var playableBeatmap = new KaraokeBeatmap();
+            var playableBeatmap = new KaraokeBeatmap
+            {
+                BeatmapInfo =
+                {
+                    Ruleset = new KaraokeRuleset().RulesetInfo,
+                },
+            };
             AddInternal(editorBeatmap = new EditorBeatmap(playableBeatmap));
             dependencies.CacheAs(editorBeatmap);
             changeHandler = new ImportLyricEditorChangeHandler(editorBeatmap);
