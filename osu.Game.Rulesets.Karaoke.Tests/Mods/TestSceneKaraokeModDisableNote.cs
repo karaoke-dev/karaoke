@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
         {
             Mod = new KaraokeModDisableNote(),
             Autoplay = true,
-            Beatmap = new TestKaraokeBeatmap(null),
+            Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
             PassCondition = () =>
             {
                 var lyricPlayfield = Player.GetLyricPlayfield();

@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
         {
             Mod = new KaraokeModSnow(),
             Autoplay = false,
-            Beatmap = new TestKaraokeBeatmap(null),
+            Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
             PassCondition = () => true
         });
 
@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
         {
             Mod = new KaraokeModWindowsUpdate(),
             Autoplay = false,
-            Beatmap = new TestKaraokeBeatmap(null),
+            Beatmap = new TestKaraokeBeatmap(Ruleset.Value),
             PassCondition = () => true
         });
     }

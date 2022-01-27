@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         public TestSceneLyricImporter()
         {
-            var beatmap = new TestKaraokeBeatmap(null);
+            var beatmap = new TestKaraokeBeatmap(Ruleset.Value);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
             lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();
         }

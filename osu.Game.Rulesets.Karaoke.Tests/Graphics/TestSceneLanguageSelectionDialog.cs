@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
         [BackgroundDependencyLoader]
         private void load()
         {
-            var beatmap = new TestKaraokeBeatmap(null);
+            var beatmap = new TestKaraokeBeatmap(Ruleset.Value);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert();
             var editorBeatmap = new EditorBeatmap(karaokeBeatmap);
             Dependencies.Cache(editorBeatmap);
