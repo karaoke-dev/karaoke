@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
 
         protected override bool OnClick(ClickEvent e)
         {
-            game?.ShowBeatmap(beatmap.BeatmapInfo.ID);
+            game?.ShowBeatmap(beatmap.BeatmapInfo.OnlineID);
             return base.OnClick(e);
         }
 

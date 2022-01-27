@@ -15,7 +15,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens
     {
         // todo: karaoke skin editor might not need editor beatmap, or at least it will be optional.
         [Cached(typeof(EditorBeatmap))]
-        private readonly EditorBeatmap editorBeatmap = new(new KaraokeBeatmap());
+        private readonly EditorBeatmap editorBeatmap = new(new KaraokeBeatmap
+        {
+            BeatmapInfo =
+            {
+                Ruleset = new KaraokeRuleset().RulesetInfo,
+            },
+        });
 
         private KaraokeSkin karaokeSkin;
 

@@ -8,6 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Layout;
+using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
@@ -21,6 +22,25 @@ namespace osu.Game.Rulesets.Karaoke.Mods
     {
         public override double ScoreMultiplier => 1;
         public override Type[] IncompatibleMods => new[] { typeof(ModHidden) };
+
+        [SettingSource("Flashlight size", "Multiplier applied to the default flashlight size.")]
+        public override BindableNumber<float> SizeMultiplier { get; } = new()
+        {
+            MinValue = 0.5f,
+            MaxValue = 3f,
+            Default = 1f,
+            Value = 1f,
+            Precision = 0.1f
+        };
+
+        [SettingSource("Change size based on combo", "Decrease the flashlight size as combo increases.")]
+        public override BindableBool ComboBasedSize { get; } = new()
+        {
+            Default = false,
+            Value = false
+        };
+
+        public override float DefaultFlashlightSize => 50;
 
         public override void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
         {
@@ -41,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             flashlight.Y = 80;
         }
 
-        public override Flashlight CreateFlashlight() => new KaraokeFlashlight();
+        protected override Flashlight CreateFlashlight() => new KaraokeFlashlight(this);
 
         internal class KaraokeFlashlight : Flashlight
         {
@@ -50,7 +70,8 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
             private readonly IBindable<double> timeRange = new Bindable<double>();
 
-            public KaraokeFlashlight()
+            public KaraokeFlashlight(KaraokeModFlashlight modFlashlight)
+                : base(modFlashlight)
             {
                 AddLayout(flashlightProperties);
             }
@@ -95,6 +116,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
             protected override void OnComboChange(ValueChangedEvent<int> e)
             {
+                this.TransformTo(nameof(FlashlightSize), new Vector2(DrawWidth, GetSizeFor(e.NewValue)), FLASHLIGHT_FADE_DURATION);
             }
 
             protected override string FragmentShader => "RectangularFlashlight";

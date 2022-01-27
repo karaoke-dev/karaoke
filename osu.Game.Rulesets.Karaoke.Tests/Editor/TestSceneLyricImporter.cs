@@ -10,12 +10,10 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Screens;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Tests.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Rulesets.Karaoke.Tests.Screens;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -42,8 +40,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         public TestSceneLyricImporter()
         {
-            var beatmap = new TestKaraokeBeatmap(null);
-            var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
             lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();
         }
 

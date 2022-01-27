@@ -29,14 +29,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         }
 
         [BackgroundDependencyLoader]
-        private void load(IRulesetConfigCache configCache)
+        private void load()
         {
-            // Cache ruleset config manager and session because karaoke input manager need it.
-            var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(Ruleset.Value.CreateInstance());
+            var config = Dependencies.Get<KaraokeRulesetConfigManager>();
             config.SetValue(KaraokeRulesetSetting.UseTranslate, true);
             config.SetValue(KaraokeRulesetSetting.PreferLanguage, cultureInfo);
-
-            Dependencies.Cache(config);
         }
 
         private Drawable testSingle(double timeOffset = 0)

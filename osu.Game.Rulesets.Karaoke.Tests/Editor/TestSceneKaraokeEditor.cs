@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         public TestSceneKaraokeEditor()
         {
-            var beatmap = new TestKaraokeBeatmap(null);
+            var beatmap = new TestKaraokeBeatmap(new KaraokeRuleset().RulesetInfo);
             var karaokeBeatmap = new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
             editorBeatmap = new EditorBeatmap(karaokeBeatmap);
             lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager();

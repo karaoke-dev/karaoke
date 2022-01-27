@@ -26,7 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 
             BeatmapInfo = new TestKaraokeBeatmap(ruleset).BeatmapInfo;
             Ruleset = ruleset;
-            RulesetID = ruleset.ID ?? 0;
             Mods = new Mod[] { new KaraokeModFlashlight(), new KaraokeModSnow() };
 
             TotalScore = 2845370;

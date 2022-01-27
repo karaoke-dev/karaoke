@@ -25,7 +25,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         public TestSceneSetupScreen()
         {
-            editorBeatmap = new EditorBeatmap(new KaraokeBeatmap());
+            editorBeatmap = new EditorBeatmap(new KaraokeBeatmap
+            {
+                BeatmapInfo =
+                {
+                    Ruleset = new KaraokeRuleset().RulesetInfo,
+                },
+            });
         }
 
         [Test]
