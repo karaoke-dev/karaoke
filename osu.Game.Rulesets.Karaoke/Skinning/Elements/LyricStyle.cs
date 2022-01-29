@@ -8,7 +8,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
-    public class LyricStyle
+    public class LyricStyle : IKaraokeSkinElement
     {
         public static readonly LyricStyle DEFAULT = new()
         {
@@ -54,6 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
                 }
             }
         };
+
+        public int ID { get; set; }
 
         public string Name { get; set; }
 

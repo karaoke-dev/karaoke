@@ -6,7 +6,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
-    public class NoteStyle
+    public class NoteStyle : IKaraokeSkinElement
     {
         public static readonly NoteStyle DEFAULT = new()
         {
@@ -16,6 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
             TextColor = Color4Extensions.FromHex("#FFFFFF"),
             BoldText = true,
         };
+
+        public int ID { get; set; }
 
         public string Name { get; set; }
 

@@ -5,7 +5,7 @@ using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
-    public class LyricConfig
+    public class LyricConfig : IKaraokeSkinElement
     {
         public static readonly LyricConfig DEFAULT = new()
         {
@@ -22,6 +22,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
             RubyTextFont = new FontUsage("Torus", 20, "Bold"),
             RomajiTextFont = new FontUsage("Torus", 20, "Bold")
         };
+
+        public int ID { get; set; }
 
         public string Name { get; set; }
 
