@@ -3,7 +3,7 @@
 
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Mappings
+namespace osu.Game.Rulesets.Karaoke.Skinning.Groups
 {
     public interface IStyleMappingRole
     {

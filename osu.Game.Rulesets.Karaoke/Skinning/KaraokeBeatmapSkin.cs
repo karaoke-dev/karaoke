@@ -7,7 +7,7 @@ using System.IO;
 using osu.Framework.Bindables;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
-using osu.Game.Rulesets.Karaoke.Skinning.Mappings;
+using osu.Game.Rulesets.Karaoke.Skinning.Groups;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
