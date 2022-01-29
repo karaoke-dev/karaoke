@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.MappingRoles
 {
     public class DefaultMappingRole : MappingRole
     {
-        public Type ElementType { get; set; }
+        public ElementType ElementType { get; set; }
 
         public int ElementId { get; set; }
 
@@ -27,15 +27,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.MappingRoles
             return group.GetGroupHitObjects(beatmap, element);
         }
 
-        private static IKaraokeSkinElement getElementByTypeAndId(KaraokeBeatmapSkin beatmapSkin, Type elementType, int elementId) =>
-            elementType switch
-            {
-                Type t when t == typeof(LyricConfig) => beatmapSkin.BindableDefaultLyricConfig.Value, // todo: implementation
-                Type t when t == typeof(LyricLayout) => beatmapSkin.BindableLayouts[elementId].Value,
-                Type t when t == typeof(LyricStyle) => beatmapSkin.BindableLyricStyles[elementId].Value,
-                Type t when t == typeof(NoteStyle) => beatmapSkin.BindableNoteStyles[elementId].Value,
-                _ => throw new InvalidCastException(nameof(elementType))
-            };
+        private static IKaraokeSkinElement getElementByTypeAndId(KaraokeBeatmapSkin beatmapSkin, ElementType elementType, int elementId)
+            => beatmapSkin.Elements[elementType].FirstOrDefault(x => x.ID == elementId);
 
         private static IGroup getGroupById(KaraokeBeatmapSkin beatmapSkin, int groupId)
             => beatmapSkin.BindableStyleMappingRoles.FirstOrDefault(x => x.ID == groupId);

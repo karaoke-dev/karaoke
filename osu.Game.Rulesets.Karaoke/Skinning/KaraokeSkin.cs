@@ -1,6 +1,8 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using osu.Framework.Audio.Sample;
@@ -22,9 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     /// </summary>
     public class KaraokeSkin : Skin
     {
-        public readonly Bindable<LyricConfig> BindableDefaultLyricConfig = new();
-        public readonly Bindable<LyricStyle> BindableDefaultLyricStyle = new();
-        public readonly Bindable<NoteStyle> BindableDefaultNoteStyle = new();
+        public readonly IDictionary<ElementType, IKaraokeSkinElement> DefaultElement = new Dictionary<ElementType, IKaraokeSkinElement>();
 
         private readonly Bindable<float> bindableColumnHeight = new(DefaultColumnBackground.COLUMN_HEIGHT);
         private readonly Bindable<float> bindableColumnSpacing = new(ScrollingNotePlayfield.COLUMN_SPACING);
@@ -35,6 +35,19 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             : base(skin, resources, configurationStream)
         {
             this.resources = resources;
+
+            SkinInfo.PerformRead(s =>
+            {
+                // we may want to move this to some kind of async operation in the future.
+                foreach (ElementType skinnableTarget in Enum.GetValues(typeof(ElementType)))
+                {
+                    if (skinnableTarget == ElementType.LyricLayout)
+                        return;
+
+                    // todo: load the target from skin info.
+                    DefaultElement.Add(skinnableTarget, null);
+                }
+            });
         }
 
         public override ISample GetSample(ISampleInfo sampleInfo)
@@ -63,10 +76,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                     return config switch
                     {
-                        KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(BindableDefaultLyricStyle),
+                        KaraokeSkinConfiguration.LyricStyle => SkinUtils.As<TValue>(new Bindable<LyricStyle>(DefaultElement[ElementType.LyricStyle] as LyricStyle)),
                         KaraokeSkinConfiguration.LyricLayout => null,
-                        KaraokeSkinConfiguration.LyricConfig => SkinUtils.As<TValue>(BindableDefaultLyricConfig),
-                        KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(BindableDefaultNoteStyle),
+                        KaraokeSkinConfiguration.LyricConfig => SkinUtils.As<TValue>(new Bindable<LyricConfig>(DefaultElement[ElementType.LyricConfig] as LyricConfig)),
+                        KaraokeSkinConfiguration.NoteStyle => SkinUtils.As<TValue>(new Bindable<NoteStyle>(DefaultElement[ElementType.NoteStyle] as NoteStyle)),
                         _ => throw new InvalidEnumArgumentException(nameof(config))
                     };
                 }

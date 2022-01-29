@@ -4,7 +4,6 @@
 using System.Linq;
 using System.Reflection;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.IO;
@@ -54,17 +53,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens
                     var karaokeSkin = new KaraokeSkinDecoder().Decode(reader);
 
                     // Default values
-                    BindableDefaultLyricConfig.Value = karaokeSkin.DefaultLyricConfig;
-                    BindableDefaultLyricStyle.Value = karaokeSkin.DefaultLyricStyle;
-                    BindableDefaultNoteStyle.Value = karaokeSkin.DefaultNoteStyle;
+                    DefaultElement[ElementType.LyricConfig] = karaokeSkin.DefaultLyricConfig;
+                    DefaultElement[ElementType.LyricStyle] = karaokeSkin.DefaultLyricStyle;
+                    DefaultElement[ElementType.NoteStyle] = karaokeSkin.DefaultNoteStyle;
 
                     // Create bindable
-                    for (int i = 0; i < karaokeSkin.Layouts.Count; i++)
-                        BindableLayouts.Add(i, new Bindable<LyricLayout>(karaokeSkin.Layouts[i]));
-                    for (int i = 0; i < karaokeSkin.LyricStyles.Count; i++)
-                        BindableLyricStyles.Add(i, new Bindable<LyricStyle>(karaokeSkin.LyricStyles[i]));
-                    for (int i = 0; i < karaokeSkin.NoteStyles.Count; i++)
-                        BindableNoteStyles.Add(i, new Bindable<NoteStyle>(karaokeSkin.NoteStyles[i]));
+                    foreach (LyricLayout t in karaokeSkin.Layouts)
+                        Elements[ElementType.LyricLayout].Add(t);
+
+                    foreach (LyricStyle t in karaokeSkin.LyricStyles)
+                        Elements[ElementType.LyricStyle].Add(t);
+
+                    foreach (NoteStyle t in karaokeSkin.NoteStyles)
+                        Elements[ElementType.NoteStyle].Add(t);
+
+                    // before apply new logic, add fake lyric layout for prevent test failed.
+                    Elements[ElementType.LyricConfig].Add(LyricConfig.DEFAULT);
 
                     // Create lookups
                     BindableFontsLookup.Value = karaokeSkin.LyricStyles.ToDictionary(k => karaokeSkin.LyricStyles.IndexOf(k), y => y.Name);

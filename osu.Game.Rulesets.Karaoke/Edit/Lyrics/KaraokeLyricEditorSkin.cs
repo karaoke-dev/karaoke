@@ -3,7 +3,6 @@
 
 using System;
 using JetBrains.Annotations;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -41,32 +40,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public KaraokeLyricEditorSkin(SkinInfo skin, IStorageResourceProvider resources)
             : base(skin, resources)
         {
-            BindableDefaultLyricConfig.Value = LyricConfig.DEFAULT;
-            BindableDefaultLyricStyle.Value = new LyricStyle { Name = "No effect" };
-            BindableDefaultNoteStyle.Value = NoteStyle.DEFAULT;
+            DefaultElement[ElementType.LyricConfig] = LyricConfig.DEFAULT;
+            DefaultElement[ElementType.LyricStyle] = new LyricStyle { Name = "No effect" };
+            DefaultElement[ElementType.NoteStyle] = NoteStyle.DEFAULT;
 
             // todo: should use better way to handle overall size.
             FontSize = 26;
         }
 
-        protected Bindable<LyricConfig> BindableFont => BindableDefaultLyricConfig;
+        protected LyricConfig LyricConfig => DefaultElement[ElementType.LyricConfig] as LyricConfig;
 
         public float FontSize
         {
-            get => BindableFont.Value.MainTextFont.Size;
+            get => LyricConfig.MainTextFont.Size;
             set
             {
                 float textSize = Math.Max(Math.Min(value, MAX_FONT_SIZE), MIN_FONT_SIZE);
                 float changePercentage = textSize / FontSize;
 
-                BindableFont.Value.MainTextFont
-                    = multipleSize(BindableFont.Value.MainTextFont, changePercentage);
-                BindableFont.Value.RubyTextFont
-                    = multipleSize(BindableFont.Value.RubyTextFont, changePercentage);
-                BindableFont.Value.RomajiTextFont
-                    = multipleSize(BindableFont.Value.RomajiTextFont, changePercentage);
+                LyricConfig.MainTextFont
+                    = multipleSize(LyricConfig.MainTextFont, changePercentage);
+                LyricConfig.RubyTextFont
+                    = multipleSize(LyricConfig.RubyTextFont, changePercentage);
+                LyricConfig.RomajiTextFont
+                    = multipleSize(LyricConfig.RomajiTextFont, changePercentage);
 
-                BindableFont.TriggerChange();
+                // todo: change size might not working now.
+                // DefaultElement[ElementType.LyricConfig].TriggerChange();
 
                 static FontUsage multipleSize(FontUsage origin, float percentage)
                     => origin.With(size: origin.Size * percentage);
