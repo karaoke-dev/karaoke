@@ -5,7 +5,7 @@ using System;
 using JetBrains.Annotations;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Extensions;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
+using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning

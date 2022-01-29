@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
+using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.Skinning.Tools;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;

@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using Newtonsoft.Json;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
+using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Mappings
 {

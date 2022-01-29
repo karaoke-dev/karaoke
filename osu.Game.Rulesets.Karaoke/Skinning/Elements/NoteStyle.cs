@@ -4,7 +4,7 @@
 using osu.Framework.Extensions.Color4Extensions;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
+namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
     public class NoteStyle
     {

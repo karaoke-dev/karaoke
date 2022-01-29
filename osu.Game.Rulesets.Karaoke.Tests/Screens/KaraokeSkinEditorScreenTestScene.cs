@@ -12,7 +12,7 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Screens.Skin;
 using osu.Game.Rulesets.Karaoke.Skinning;
-using osu.Game.Rulesets.Karaoke.Skinning.Metadatas;
+using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Skinning;
 using osu.Game.Tests.Visual;
 

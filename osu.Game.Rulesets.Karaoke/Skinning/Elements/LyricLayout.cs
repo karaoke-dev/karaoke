@@ -3,7 +3,7 @@
 
 using osu.Framework.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
+namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
     public class LyricLayout
     {

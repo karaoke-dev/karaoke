@@ -6,7 +6,7 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics.Shaders;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
+namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
     public class LyricStyle
     {
