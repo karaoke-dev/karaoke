@@ -3,10 +3,14 @@
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
-    public interface IKaraokeSkinElement
+    public enum ElementType
     {
-        int ID { get; set; }
+        LyricConfig,
 
-        string Name { get; set; }
+        LyricStyle,
+
+        LyricLayout,
+
+        NoteStyle,
     }
 }
