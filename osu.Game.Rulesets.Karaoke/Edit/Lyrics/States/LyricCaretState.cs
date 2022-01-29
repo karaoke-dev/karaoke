@@ -9,7 +9,6 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
-using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
@@ -114,9 +113,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                     return null;
 
                 if (lyric == null)
-                    return algorithm.CallMethod<ICaretPosition>("MoveToFirst");
+                    return algorithm.MoveToFirst();
 
-                return algorithm.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
+                return algorithm.MoveToTarget(lyric);
             }
         }
 
@@ -139,12 +138,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             var position = action switch
             {
-                MovingCaretAction.Up => algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveUp", currentPosition),
-                MovingCaretAction.Down => algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveDown", currentPosition),
-                MovingCaretAction.Left => algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveLeft", currentPosition),
-                MovingCaretAction.Right => algorithm.CallMethod<ICaretPosition, ICaretPosition>("MoveRight", currentPosition),
-                MovingCaretAction.First => algorithm.CallMethod<ICaretPosition>("MoveToFirst"),
-                MovingCaretAction.Last => algorithm.CallMethod<ICaretPosition>("MoveToLast"),
+                MovingCaretAction.Up => algorithm.MoveUp(currentPosition),
+                MovingCaretAction.Down => algorithm.MoveDown(currentPosition),
+                MovingCaretAction.Left => algorithm.MoveLeft(currentPosition),
+                MovingCaretAction.Right => algorithm.MoveRight(currentPosition),
+                MovingCaretAction.First => algorithm.MoveToFirst(),
+                MovingCaretAction.Last => algorithm.MoveToLast(),
                 _ => throw new InvalidEnumArgumentException(nameof(action))
             };
 
@@ -161,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 throw new ArgumentNullException(nameof(lyric));
 
             bool hasAlgorithm = algorithm != null;
-            var caretPosition = algorithm?.CallMethod<ICaretPosition, Lyric>("MoveToTarget", lyric);
+            var caretPosition = algorithm?.MoveToTarget(lyric);
 
             if (hasAlgorithm && caretPosition == null)
                 return;
@@ -228,7 +227,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public bool CaretPositionMovable(ICaretPosition position)
         {
-            return algorithm?.CallMethod<bool, ICaretPosition>("PositionMovable", position) ?? false;
+            return algorithm?.PositionMovable(position) ?? false;
         }
 
         public bool CaretEnabled => algorithm != null;
