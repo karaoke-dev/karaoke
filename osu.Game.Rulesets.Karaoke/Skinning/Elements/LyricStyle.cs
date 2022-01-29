@@ -6,9 +6,9 @@ using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics.Shaders;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
+namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
-    public class LyricStyle
+    public class LyricStyle : IKaraokeSkinElement
     {
         public static readonly LyricStyle DEFAULT = new()
         {
@@ -54,6 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
                 }
             }
         };
+
+        public int ID { get; set; }
 
         public string Name { get; set; }
 

@@ -3,18 +3,12 @@
 
 using osu.Framework.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Skinning.Metadatas
+namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
-    public class LyricLayout
+    public class LyricLayout : IKaraokeSkinElement
     {
-        /// <summary>
-        /// ID
-        /// </summary>
         public int ID { get; set; }
 
-        /// <summary>
-        /// Name
-        /// </summary>
         public string Name { get; set; }
 
         /// <summary>
