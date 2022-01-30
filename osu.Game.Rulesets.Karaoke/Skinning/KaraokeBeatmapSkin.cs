@@ -47,19 +47,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 // Lookup skin by type and index
                 case KaraokeSkinLookup skinLookup:
                 {
-                    var config = skinLookup.Config;
+                    var type = skinLookup.Type;
                     int lookupNumber = skinLookup.Lookup;
-
-                    var elements = config switch
-                    {
-                        KaraokeSkinConfiguration.LyricStyle => Elements[ElementType.LyricStyle],
-                        KaraokeSkinConfiguration.LyricLayout => Elements[ElementType.LyricLayout],
-                        KaraokeSkinConfiguration.LyricConfig => Elements[ElementType.LyricConfig],
-                        KaraokeSkinConfiguration.NoteStyle => Elements[ElementType.NoteStyle],
-                        _ => throw new InvalidEnumArgumentException(nameof(config))
-                    };
-
-                    var element = elements.FirstOrDefault(x => x.ID == lookupNumber);
+                    var element = Elements[type].FirstOrDefault(x => x.ID == lookupNumber);
                     return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element));
                 }
 

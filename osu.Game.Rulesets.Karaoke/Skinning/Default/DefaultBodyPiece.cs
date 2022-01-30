@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
 
         private void applySingerStyle(ISkinSource skin, IEnumerable<int> singers)
         {
-            var noteSkin = skin?.GetConfig<KaraokeSkinLookup, NoteStyle>(new KaraokeSkinLookup(KaraokeSkinConfiguration.NoteStyle, singers))?.Value;
+            var noteSkin = skin?.GetConfig<KaraokeSkinLookup, NoteStyle>(new KaraokeSkinLookup(ElementType.NoteStyle, singers))?.Value;
             if (noteSkin == null)
                 return;
 

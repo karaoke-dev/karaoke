@@ -116,7 +116,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                         return;
 
                     int layoutIndex = x.Key;
-                    var layout = source.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, layoutIndex)).Value;
+                    var layout = source.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(ElementType.LyricLayout, layoutIndex)).Value;
                     lyricLayoutChangeHandler.ChangeLayout(layout);
                 })).ToArray()
             };

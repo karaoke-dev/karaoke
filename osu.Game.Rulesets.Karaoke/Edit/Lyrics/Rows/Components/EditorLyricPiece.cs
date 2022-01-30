@@ -132,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         private void load(ISkinSource skin, ShaderManager shaderManager)
         {
             // this is a temp way to apply style.
-            skin.GetConfig<KaraokeSkinLookup, LyricStyle>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.BindValueChanged(lyricStyle =>
+            skin.GetConfig<KaraokeSkinLookup, LyricStyle>(new KaraokeSkinLookup(ElementType.LyricStyle, HitObject.Singers))?.BindValueChanged(lyricStyle =>
             {
                 var newStyle = lyricStyle.NewValue;
                 if (newStyle == null)
@@ -142,7 +142,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 RightLyricTextShaders = SkinConvertorTool.ConvertRightSideShader(shaderManager, newStyle);
             }, true);
 
-            skin.GetConfig<KaraokeSkinLookup, LyricConfig>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricConfig, HitObject.Singers))?.BindValueChanged(lyricConfig =>
+            skin.GetConfig<KaraokeSkinLookup, LyricConfig>(new KaraokeSkinLookup(ElementType.LyricConfig, HitObject.Singers))?.BindValueChanged(lyricConfig =>
             {
                 var newConfig = lyricConfig.NewValue;
                 if (newConfig == null)
