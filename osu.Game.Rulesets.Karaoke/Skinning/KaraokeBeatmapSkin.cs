@@ -10,6 +10,7 @@ using osu.Framework.Bindables;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.Skinning.Groups;
+using osu.Game.Rulesets.Karaoke.Skinning.MappingRoles;
 using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning
@@ -20,7 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     public class KaraokeBeatmapSkin : KaraokeSkin
     {
         public readonly IDictionary<ElementType, IList<IKaraokeSkinElement>> Elements = new Dictionary<ElementType, IList<IKaraokeSkinElement>>();
-        public readonly HashSet<IGroup> BindableStyleMappingRoles = new();
+        public readonly List<IGroup> Groups = new();
+        public readonly List<IMappingRole> DefaultMappingRoles = new();
 
         public readonly Bindable<IDictionary<int, string>> BindableFontsLookup = new();
         public readonly Bindable<IDictionary<int, string>> BindableLayoutsLookup = new();
