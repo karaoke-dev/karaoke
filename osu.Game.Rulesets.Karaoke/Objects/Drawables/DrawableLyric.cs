@@ -171,7 +171,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (HitObject == null)
                 return;
 
-            var lyricFont = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricStyle>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricStyle, HitObject.Singers))?.Value;
+            var lyricFont = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricStyle>(new KaraokeSkinLookup(ElementType.LyricStyle, HitObject.Singers))?.Value;
             if (lyricFont == null)
                 return;
 
@@ -191,7 +191,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (HitObject == null)
                 return;
 
-            var lyricConfig = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricConfig>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricConfig, HitObject.Singers))?.Value;
+            var lyricConfig = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricConfig>(new KaraokeSkinLookup(ElementType.LyricConfig, HitObject.Singers))?.Value;
 
             foreach (var lyricPiece in lyricPieces)
             {
@@ -268,7 +268,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (HitObject == null)
                 return;
 
-            var layout = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, HitObject.LayoutIndex))?.Value;
+            var layout = CurrentSkin.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(ElementType.LyricLayout, HitObject.LayoutIndex))?.Value;
             if (layout == null)
                 return;
 

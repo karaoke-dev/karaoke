@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 
             foreach (var layoutLookup in layoutLookups)
             {
-                var lookup = new KaraokeSkinLookup(KaraokeSkinConfiguration.LyricLayout, layoutLookup.Key);
+                var lookup = new KaraokeSkinLookup(ElementType.LyricLayout, layoutLookup.Key);
                 var layout = source.GetConfig<KaraokeSkinLookup, LyricLayout>(lookup)?.Value;
                 if (layout != null)
                     Layouts.Add(layout);
