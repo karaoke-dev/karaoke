@@ -13,6 +13,7 @@ using osu.Framework.Graphics.Animations;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Layout;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Objects.Drawables;
@@ -57,23 +58,19 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 border = createLayer("Border layer", skin, LegacyKaraokeSkinNoteLayer.Border)
             };
 
+            var note = (DrawableNote)drawableObject;
+
             direction.BindTo(scrollingInfo.Direction);
             direction.BindValueChanged(OnDirectionChanged, true);
-
-            if (drawableObject != null)
-            {
-                var holdNote = (DrawableNote)drawableObject;
-
-                isHitting.BindTo(holdNote.IsHitting);
-                display.BindTo(holdNote.DisplayBindable);
-                singer.BindTo(holdNote.SingersBindable);
-            }
+            isHitting.BindTo(note.IsHitting);
+            display.BindTo(note.DisplayBindable);
+            singer.BindTo(note.SingersBindable);
 
             AccentColour.BindValueChanged(onAccentChanged);
             HitColour.BindValueChanged(onAccentChanged);
             isHitting.BindValueChanged(onIsHittingChanged, true);
             display.BindValueChanged(_ => onAccentChanged(), true);
-            singer.BindCollectionChanged((_, _) => applySingerStyle(skin, singer), true);
+            singer.BindCollectionChanged((_, _) => applySingerStyle(skin, note.HitObject), true);
         }
 
         private void onIsHittingChanged(ValueChangedEvent<bool> isHitting)
@@ -102,9 +99,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 foreground.FadeColour(AccentColour.Value.Lighten(0.7f), animation_length).Then().FadeColour(foreground.Colour, animation_length).Loop();
         }
 
-        private void applySingerStyle(ISkinSource skin, IEnumerable<int> singers)
+        private void applySingerStyle(ISkinSource skin, Note note)
         {
-            var noteSkin = skin?.GetConfig<KaraokeSkinLookup, NoteStyle>(new KaraokeSkinLookup(ElementType.NoteStyle, singers))?.Value;
+            var noteSkin = skin?.GetConfig<Note, NoteStyle>(note)?.Value;
             if (noteSkin == null)
                 return;
 

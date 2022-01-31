@@ -47,7 +47,16 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             switch (lookup)
             {
-                // Lookup skin by type and index
+                // get the target element by hit object.
+                case KaraokeHitObject hitObject:
+                {
+                    var type = typeof(TValue);
+                    var element = GetElementByHitObjectAndElementType(hitObject, type);
+                    return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element));
+                }
+
+                // in some cases, we still need to get target of element by type and id.
+                // e.d: get list of layout in the skin manager.
                 case KaraokeSkinLookup skinLookup:
                 {
                     var type = skinLookup.Type;
