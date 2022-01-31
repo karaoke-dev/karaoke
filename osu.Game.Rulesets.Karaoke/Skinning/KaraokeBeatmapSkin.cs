@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.Skinning.Groups;
 using osu.Game.Rulesets.Karaoke.Skinning.MappingRoles;
@@ -46,7 +47,16 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             switch (lookup)
             {
-                // Lookup skin by type and index
+                // get the target element by hit object.
+                case KaraokeHitObject hitObject:
+                {
+                    var type = typeof(TValue);
+                    var element = GetElementByHitObjectAndElementType(hitObject, type);
+                    return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element));
+                }
+
+                // in some cases, we still need to get target of element by type and id.
+                // e.d: get list of layout in the skin manager.
                 case KaraokeSkinLookup skinLookup:
                 {
                     var type = skinLookup.Type;
@@ -70,6 +80,33 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
 
             return null;
+        }
+
+        protected override IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
+        {
+            var type = GetElementType(elementType);
+            var firstMatchedRole = DefaultMappingRoles.FirstOrDefault(x => x.CanApply(this, hitObject, type));
+
+            if (firstMatchedRole == null)
+                return base.GetElementByHitObjectAndElementType(hitObject, elementType);
+
+            int elementId = firstMatchedRole.ElementId;
+            var element = ToElement(type, elementId);
+            return element;
+        }
+
+        protected IKaraokeSkinElement ToElement(ElementType type, int id)
+        {
+            var elements = Elements[type];
+            if (elements == null)
+                throw new ArgumentNullException(nameof(elements));
+
+            var element = elements.FirstOrDefault(x => x.ID == id);
+            if (element == null)
+                throw new ArgumentNullException(nameof(element));
+
+            // should make sure that must be able to found element from the skin.
+            return element;
         }
     }
 }

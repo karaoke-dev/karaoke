@@ -1,9 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
-using System.Linq;
-using osu.Game.Beatmaps;
+using System.ComponentModel;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 
@@ -15,33 +13,29 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Groups
 
         public string Name { get; set; }
 
-        public IEnumerable<KaraokeHitObject> GetGroupHitObjects(IBeatmap beatmap, IKaraokeSkinElement element)
+        public bool InTheGroup(KaraokeHitObject hitObject, ElementType elementType)
         {
-            // get processable hit objects type first.
-            var acceptedHitObjects = filterAcceptedHitObjects(beatmap, element).OfType<THitObject>();
-
-            // then get the objects by customized group.
-            return acceptedHitObjects.Where(InTheGroup);
+            bool accepted = isTypeAccepted(hitObject, elementType);
+            return accepted && InTheGroup(hitObject as THitObject);
         }
 
         protected abstract bool InTheGroup(THitObject hitObject);
 
-        private IEnumerable<KaraokeHitObject> filterAcceptedHitObjects(IBeatmap beatmap, IKaraokeSkinElement element)
+        private static bool isTypeAccepted(KaraokeHitObject hitObject, ElementType elementType)
         {
-            var karaokeHitObjects = beatmap.HitObjects.OfType<KaraokeHitObject>();
-
-            switch (element)
+            switch (elementType)
             {
-                case LyricConfig:
-                case LyricLayout:
-                case LyricStyle:
-                    return karaokeHitObjects.OfType<Lyric>();
+                case ElementType.LyricConfig:
+                case ElementType.LyricLayout:
+                case ElementType.LyricStyle:
+                    return hitObject is Lyric;
 
-                case NoteStyle:
-                    return karaokeHitObjects.OfType<Note>();
+                case ElementType.NoteStyle:
+                    return hitObject is Note;
+
+                default:
+                    throw new InvalidEnumArgumentException(nameof(elementType));
             }
-
-            return karaokeHitObjects;
         }
     }
 }

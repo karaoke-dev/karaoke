@@ -11,6 +11,7 @@ using osu.Framework.Graphics.OpenGL.Textures;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Audio;
 using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
@@ -69,7 +70,16 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             switch (lookup)
             {
-                // Lookup skin by type and index
+                // get the target element by hit object.
+                case KaraokeHitObject hitObject:
+                {
+                    var type = typeof(TValue);
+                    var element = GetElementByHitObjectAndElementType(hitObject, type);
+                    return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element));
+                }
+
+                // in some cases, we still need to get target of element by type and id.
+                // e.d: get list of layout in the skin manager.
                 case KaraokeSkinLookup skinLookup:
                 {
                     var type = skinLookup.Type;
@@ -99,5 +109,31 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             return null;
         }
+
+        protected virtual IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
+        {
+            var type = GetElementType(elementType);
+            return ToElement(type);
+        }
+
+        protected static ElementType GetElementType(Type elementType)
+        {
+            return elementType switch
+            {
+                var type when type == typeof(LyricConfig) => ElementType.LyricConfig,
+                var type when type == typeof(LyricLayout) => ElementType.LyricLayout,
+                var type when type == typeof(LyricStyle) => ElementType.LyricStyle,
+                var type when type == typeof(NoteStyle) => ElementType.NoteStyle,
+                _ => throw new NotSupportedException()
+            };
+        }
+
+        protected IKaraokeSkinElement ToElement(ElementType type)
+            => type switch
+            {
+                ElementType.LyricStyle or ElementType.LyricConfig or ElementType.NoteStyle => DefaultElement[type],
+                ElementType.LyricLayout => null,
+                _ => throw new InvalidEnumArgumentException(nameof(type))
+            };
     }
 }

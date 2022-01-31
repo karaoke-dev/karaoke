@@ -129,7 +129,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (HitObject == null)
                 return;
 
-            var noteSkin = skin.GetConfig<KaraokeSkinLookup, NoteStyle>(new KaraokeSkinLookup(ElementType.NoteStyle, HitObject.ParentLyric?.Singers))?.Value;
+            var noteSkin = skin.GetConfig<Note, NoteStyle>(HitObject)?.Value;
             if (noteSkin == null)
                 return;
 
