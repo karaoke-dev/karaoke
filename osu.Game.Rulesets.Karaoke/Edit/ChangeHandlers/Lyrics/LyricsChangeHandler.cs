@@ -22,7 +22,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 // Split lyric
                 var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, index);
                 firstLyric.Order = lyric.Order;
+                firstLyric.ID = getId();
                 secondLyric.Order = lyric.Order + 1;
+                secondLyric.ID = getId() + 1;
 
                 // Add those tho lyric and remove old one.
                 Add(secondLyric);
@@ -108,8 +110,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         protected override void Add(Lyric hitObject)
         {
+            hitObject.ID = getId();
+
             int index = HitObjects.ToList().FindIndex(x => x.Order == hitObject.Order - 1) + 1;
             Insert(index, hitObject);
         }
+
+        private int getId()
+            => HitObjects.Max(x => x.ID) + 1;
     }
 }

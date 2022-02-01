@@ -22,8 +22,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
             beatmap.Clear();
 
             var lyrics = newBeatmap.HitObjects.OfType<Lyric>().ToArray();
+
             if (lyrics.Any())
+            {
+                for (int i = 0; i < lyrics.Length; i++)
+                {
+                    lyrics[i].ID = i;
+                }
+
                 beatmap.AddRange(lyrics);
+            }
 
             beatmap.EndChange();
         }

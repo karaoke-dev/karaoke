@@ -17,8 +17,13 @@ using osu.Game.Rulesets.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Lyric : KaraokeHitObject, IHasDuration, IHasSingers, IHasOrder, IHasLock
+    public class Lyric : KaraokeHitObject, IHasDuration, IHasSingers, IHasOrder, IHasLock, IHasPrimaryKey
     {
+        /// <summary>
+        /// Primary key.
+        /// </summary>
+        public int ID { get; set; }
+
         [JsonIgnore]
         public readonly Bindable<string> TextBindable = new();
 
