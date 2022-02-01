@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.Skinning.Groups;
@@ -84,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         protected override IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
         {
-            var type = GetElementType(elementType);
+            var type = KaraokeSkinElementConvertor.GetElementType(elementType);
             var firstMatchedRole = DefaultMappingRoles.FirstOrDefault(x => x.CanApply(this, hitObject, type));
 
             if (firstMatchedRole == null)

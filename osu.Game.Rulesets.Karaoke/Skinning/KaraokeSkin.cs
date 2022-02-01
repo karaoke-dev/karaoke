@@ -11,6 +11,7 @@ using osu.Framework.Graphics.OpenGL.Textures;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Audio;
 using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.UI.Components;
@@ -112,23 +113,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         protected virtual IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
         {
-            var type = GetElementType(elementType);
-            return ToElement(type);
+            var type = KaraokeSkinElementConvertor.GetElementType(elementType);
+            return toElement(type);
         }
 
-        protected static ElementType GetElementType(Type elementType)
-        {
-            return elementType switch
-            {
-                var type when type == typeof(LyricConfig) => ElementType.LyricConfig,
-                var type when type == typeof(LyricLayout) => ElementType.LyricLayout,
-                var type when type == typeof(LyricStyle) => ElementType.LyricStyle,
-                var type when type == typeof(NoteStyle) => ElementType.NoteStyle,
-                _ => throw new NotSupportedException()
-            };
-        }
-
-        protected IKaraokeSkinElement ToElement(ElementType type)
+        private IKaraokeSkinElement toElement(ElementType type)
             => type switch
             {
                 ElementType.LyricStyle or ElementType.LyricConfig or ElementType.NoteStyle => DefaultElement[type],
