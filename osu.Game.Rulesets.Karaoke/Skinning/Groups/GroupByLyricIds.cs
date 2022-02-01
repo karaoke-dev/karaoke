@@ -16,11 +16,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Groups
             if (LyricIds == null)
                 return false;
 
-            // todo: add lyric id.
             return hitObject switch
             {
-                Lyric lyric => LyricIds.Contains(lyric.Order),
-                Note note => LyricIds.Contains(note.ParentLyric.Order),
+                Lyric lyric => LyricIds.Contains(lyric.ID),
+                Note note => LyricIds.Contains(note.ParentLyric.ID),
                 _ => false
             };
         }
