@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using osu.Framework.Bindables;
+using osu.Framework.Logging;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -35,11 +37,90 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             SkinInfo.PerformRead(s =>
             {
+                var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinElementConvertor());
+
                 // we may want to move this to some kind of async operation in the future.
                 foreach (ElementType skinnableTarget in Enum.GetValues(typeof(ElementType)))
                 {
-                    // todo: load the target from skin info.
-                    Elements.Add(skinnableTarget, new List<IKaraokeSkinElement>());
+                    string filename = $"{getFileNameByType(skinnableTarget)}.json";
+
+                    try
+                    {
+                        Elements.Add(skinnableTarget, new List<IKaraokeSkinElement>());
+
+                        string jsonContent = GetElementStringContentFromSkinInfo(s, filename);
+                        if (string.IsNullOrEmpty(jsonContent))
+                            return;
+
+                        var deserializedContent = JsonConvert.DeserializeObject<IKaraokeSkinElement[]>(jsonContent, globalSetting);
+
+                        if (deserializedContent == null)
+                            continue;
+
+                        Elements[skinnableTarget] = deserializedContent;
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error(ex, "Failed to load skin element.");
+                    }
+                }
+
+                static string getFileNameByType(ElementType elementType)
+                    => elementType switch
+                    {
+                        ElementType.LyricConfig => "lyric-configs",
+                        ElementType.LyricLayout => "lyric-layouts",
+                        ElementType.LyricStyle => "lyric-styles",
+                        ElementType.NoteStyle => "note-styles",
+                        _ => throw new InvalidEnumArgumentException(nameof(elementType))
+                    };
+            });
+
+            SkinInfo.PerformRead(s =>
+            {
+                const string filename = "groups.json";
+
+                try
+                {
+                    string jsonContent = GetElementStringContentFromSkinInfo(s, filename);
+                    if (string.IsNullOrEmpty(jsonContent))
+                        return;
+
+                    var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinGroupConvertor());
+                    var deserializedContent = JsonConvert.DeserializeObject<IGroup[]>(jsonContent, globalSetting);
+
+                    if (deserializedContent == null)
+                        return;
+
+                    Groups.AddRange(deserializedContent);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, "Failed to load skin element.");
+                }
+            });
+
+            SkinInfo.PerformRead(s =>
+            {
+                const string filename = "default-mapping-roles.json";
+
+                try
+                {
+                    string jsonContent = GetElementStringContentFromSkinInfo(s, filename);
+                    if (string.IsNullOrEmpty(jsonContent))
+                        return;
+
+                    var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinMappingRoleConvertor());
+                    var deserializedContent = JsonConvert.DeserializeObject<IMappingRole[]>(jsonContent, globalSetting);
+
+                    if (deserializedContent == null)
+                        return;
+
+                    DefaultMappingRoles.AddRange(deserializedContent);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, "Failed to load skin element.");
                 }
             });
         }

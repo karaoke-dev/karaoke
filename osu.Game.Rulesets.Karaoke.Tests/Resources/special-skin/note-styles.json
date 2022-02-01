@@ -1,0 +1,11 @@
+[
+  {
+    "$type": 3,
+    "id": 1,
+    "name": "Customized note style",
+    "note_color": "#C944DD",
+    "blink_color": "#FF66AA",
+    "text_color": "#FFFFFF",
+    "bold_text": true
+  }
+]
