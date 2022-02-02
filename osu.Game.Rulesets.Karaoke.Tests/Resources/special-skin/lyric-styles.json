@@ -1,0 +1,51 @@
+[
+  {
+    "$type": 2,
+    "id": 1,
+    "name": "Customized lyric style",
+    "left_lyric_text_shaders": [
+      {
+        "$type": "StepShader",
+        "name": "HelloShader",
+        "draw": true,
+        "step_shaders": [
+          {
+            "$type": "OutlineShader",
+            "radius": 10,
+            "outline_colour": "#CCA532"
+          },
+          {
+            "$type": "ShadowShader",
+            "shadow_colour": "#6B5B2D",
+            "shadow_offset": {
+              "x": 3.0,
+              "y": 3.0
+            }
+          }
+        ]
+      }
+    ],
+    "right_lyric_text_shaders": [
+      {
+        "$type": "StepShader",
+        "name": "HelloShader",
+        "draw": true,
+        "step_shaders": [
+          {
+            "$type": "OutlineShader",
+            "radius": 10,
+            "outline_colour": "#5932CC"
+          },
+          {
+            "$type": "ShadowShader",
+            "shadow_colour": "#3D2D6B",
+            "shadow_offset": {
+              "x": 3.0,
+              "y": 3.0
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

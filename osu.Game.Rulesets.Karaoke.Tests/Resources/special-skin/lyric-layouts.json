@@ -1,0 +1,18 @@
+[
+  {
+    "$type": 1,
+    "id": 1,
+    "name": "下-1",
+    "alignment": 36,
+    "horizontal_margin": 30,
+    "vertical_margin": 45
+  },
+  {
+    "$type": 1,
+    "name": "下-2",
+    "id": 2,
+    "alignment": 36,
+    "horizontal_margin": 30,
+    "vertical_margin": 45
+  }
+]

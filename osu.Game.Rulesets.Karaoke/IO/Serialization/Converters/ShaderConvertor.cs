@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 using osu.Framework.Graphics.Shaders;
 using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -22,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         public ShaderConvertor()
         {
             var settings = JsonSerializableExtensions.CreateGlobalSettings();
-            settings.ContractResolver = new WritablePropertiesOnlyResolver();
+            settings.ContractResolver = new KaraokeSkinContractResolver();
             settings.Converters.Add(new ColourConvertor());
             localSerializer = JsonSerializer.Create(settings);
         }
@@ -108,15 +107,5 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
         private static string getNameByType(MemberInfo type)
             => type.Name;
-
-        private class WritablePropertiesOnlyResolver : SnakeCaseKeyContractResolver
-        {
-            // we only wants to save properties that only writable.
-            protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
-            {
-                var props = base.CreateProperties(type, memberSerialization);
-                return props.Where(p => p.Writable).ToList();
-            }
-        }
     }
 }

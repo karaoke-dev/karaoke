@@ -1,0 +1,16 @@
+[
+  {
+    "$type":"DefaultMappingRole",
+    "group_id":1,
+    "name":"Apply layout 1 to odd singer",
+    "element_type":1,
+    "element_id":1
+  },
+  {
+    "$type":"DefaultMappingRole",
+    "group_id":2,
+    "name":"Apply layout 1 to even singer",
+    "element_type":1,
+    "element_id":2
+  }
+]

@@ -6,8 +6,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using osu.Framework.Bindables;
+using osu.Framework.Logging;
 using osu.Game.IO;
+using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.Skinning.Groups;
@@ -25,20 +28,95 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         public readonly List<IGroup> Groups = new();
         public readonly List<IMappingRole> DefaultMappingRoles = new();
 
-        public readonly Bindable<IDictionary<int, string>> BindableFontsLookup = new();
-        public readonly Bindable<IDictionary<int, string>> BindableLayoutsLookup = new();
-        public readonly Bindable<IDictionary<int, string>> BindableNotesLookup = new();
-
         public KaraokeBeatmapSkin(SkinInfo skin, IStorageResourceProvider resources, Stream configurationStream = null)
             : base(skin, resources, configurationStream)
         {
             SkinInfo.PerformRead(s =>
             {
+                var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinElementConvertor());
+
                 // we may want to move this to some kind of async operation in the future.
                 foreach (ElementType skinnableTarget in Enum.GetValues(typeof(ElementType)))
                 {
-                    // todo: load the target from skin info.
-                    Elements.Add(skinnableTarget, new List<IKaraokeSkinElement>());
+                    string filename = $"{getFileNameByType(skinnableTarget)}.json";
+
+                    try
+                    {
+                        Elements.Add(skinnableTarget, new List<IKaraokeSkinElement>());
+
+                        string jsonContent = GetElementStringContentFromSkinInfo(s, filename);
+                        if (string.IsNullOrEmpty(jsonContent))
+                            return;
+
+                        var deserializedContent = JsonConvert.DeserializeObject<IKaraokeSkinElement[]>(jsonContent, globalSetting);
+
+                        if (deserializedContent == null)
+                            continue;
+
+                        Elements[skinnableTarget] = deserializedContent;
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error(ex, "Failed to load skin element.");
+                    }
+                }
+
+                static string getFileNameByType(ElementType elementType)
+                    => elementType switch
+                    {
+                        ElementType.LyricConfig => "lyric-configs",
+                        ElementType.LyricLayout => "lyric-layouts",
+                        ElementType.LyricStyle => "lyric-styles",
+                        ElementType.NoteStyle => "note-styles",
+                        _ => throw new InvalidEnumArgumentException(nameof(elementType))
+                    };
+            });
+
+            SkinInfo.PerformRead(s =>
+            {
+                const string filename = "groups.json";
+
+                try
+                {
+                    string jsonContent = GetElementStringContentFromSkinInfo(s, filename);
+                    if (string.IsNullOrEmpty(jsonContent))
+                        return;
+
+                    var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinGroupConvertor());
+                    var deserializedContent = JsonConvert.DeserializeObject<IGroup[]>(jsonContent, globalSetting);
+
+                    if (deserializedContent == null)
+                        return;
+
+                    Groups.AddRange(deserializedContent);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, "Failed to load skin element.");
+                }
+            });
+
+            SkinInfo.PerformRead(s =>
+            {
+                const string filename = "default-mapping-roles.json";
+
+                try
+                {
+                    string jsonContent = GetElementStringContentFromSkinInfo(s, filename);
+                    if (string.IsNullOrEmpty(jsonContent))
+                        return;
+
+                    var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinMappingRoleConvertor());
+                    var deserializedContent = JsonConvert.DeserializeObject<IMappingRole[]>(jsonContent, globalSetting);
+
+                    if (deserializedContent == null)
+                        return;
+
+                    DefaultMappingRoles.AddRange(deserializedContent);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, "Failed to load skin element.");
                 }
             });
         }
@@ -61,6 +139,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 {
                     var type = skinLookup.Type;
                     int lookupNumber = skinLookup.Lookup;
+                    if (lookupNumber < 0)
+                        return base.GetConfig<KaraokeSkinLookup, TValue>(skinLookup);
+
                     var element = Elements[type].FirstOrDefault(x => x.ID == lookupNumber);
                     return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element));
                 }
@@ -69,9 +150,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 case KaraokeIndexLookup indexLookup:
                     return indexLookup switch
                     {
-                        KaraokeIndexLookup.Layout => SkinUtils.As<TValue>(BindableLayoutsLookup),
-                        KaraokeIndexLookup.Style => SkinUtils.As<TValue>(BindableFontsLookup),
-                        KaraokeIndexLookup.Note => SkinUtils.As<TValue>(BindableNotesLookup),
+                        KaraokeIndexLookup.Layout => SkinUtils.As<TValue>(getSelectionFromElementType(ElementType.LyricLayout)),
+                        KaraokeIndexLookup.Style => SkinUtils.As<TValue>(getSelectionFromElementType(ElementType.LyricStyle)),
+                        KaraokeIndexLookup.Note => SkinUtils.As<TValue>(getSelectionFromElementType(ElementType.NoteStyle)),
                         _ => throw new InvalidEnumArgumentException(nameof(indexLookup))
                     };
 
@@ -80,11 +161,14 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
 
             return null;
+
+            Bindable<IDictionary<int, string>> getSelectionFromElementType(ElementType elementType)
+                => new(Elements[elementType].ToDictionary(k => k.ID, k => k.Name));
         }
 
         protected override IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
         {
-            var type = GetElementType(elementType);
+            var type = KaraokeSkinElementConvertor.GetElementType(elementType);
             var firstMatchedRole = DefaultMappingRoles.FirstOrDefault(x => x.CanApply(this, hitObject, type));
 
             if (firstMatchedRole == null)

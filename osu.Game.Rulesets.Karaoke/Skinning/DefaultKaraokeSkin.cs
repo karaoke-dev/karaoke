@@ -32,9 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         public DefaultKaraokeSkin(SkinInfo skin, IStorageResourceProvider resources)
             : base(skin, resources)
         {
-            DefaultElement[ElementType.LyricConfig] = LyricConfig.DEFAULT;
-            DefaultElement[ElementType.LyricStyle] = LyricStyle.DEFAULT;
-            DefaultElement[ElementType.NoteStyle] = NoteStyle.DEFAULT;
+            DefaultElement[ElementType.LyricConfig] = LyricConfig.CreateDefault();
+            DefaultElement[ElementType.LyricStyle] = LyricStyle.CreateDefault();
+            DefaultElement[ElementType.NoteStyle] = NoteStyle.CreateDefault();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
     public class LyricStyle : IKaraokeSkinElement
     {
-        public static readonly LyricStyle DEFAULT = new()
+        public static LyricStyle CreateDefault() => new()
         {
             Name = "Default",
             LeftLyricTextShaders = new List<ICustomizedShader>

@@ -5,12 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Text;
+using Newtonsoft.Json;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.OpenGL.Textures;
 using osu.Framework.Graphics.Textures;
+using osu.Framework.IO.Stores;
+using osu.Framework.Logging;
 using osu.Game.Audio;
+using osu.Game.Extensions;
 using osu.Game.IO;
+using osu.Game.IO.Serialization;
+using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.UI.Components;
@@ -25,7 +33,12 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     /// </summary>
     public class KaraokeSkin : Skin
     {
-        public readonly IDictionary<ElementType, IKaraokeSkinElement> DefaultElement = new Dictionary<ElementType, IKaraokeSkinElement>();
+        public readonly IDictionary<ElementType, IKaraokeSkinElement> DefaultElement = new Dictionary<ElementType, IKaraokeSkinElement>
+        {
+            { ElementType.LyricConfig, LyricConfig.CreateDefault() },
+            { ElementType.LyricStyle, LyricStyle.CreateDefault() },
+            { ElementType.NoteStyle, NoteStyle.CreateDefault() },
+        };
 
         private readonly Bindable<float> bindableColumnHeight = new(DefaultColumnBackground.COLUMN_HEIGHT);
         private readonly Bindable<float> bindableColumnSpacing = new(ScrollingNotePlayfield.COLUMN_SPACING);
@@ -39,16 +52,66 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
             SkinInfo.PerformRead(s =>
             {
-                // we may want to move this to some kind of async operation in the future.
-                foreach (ElementType skinnableTarget in Enum.GetValues(typeof(ElementType)))
+                const string filename = "default.json";
+
+                try
                 {
-                    if (skinnableTarget == ElementType.LyricLayout)
+                    string jsonContent = GetElementStringContentFromSkinInfo(s, filename);
+                    if (string.IsNullOrEmpty(jsonContent))
                         return;
 
-                    // todo: load the target from skin info.
-                    DefaultElement.Add(skinnableTarget, null);
+                    var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinElementConvertor());
+                    var deserializedContent = JsonConvert.DeserializeObject<DefaultSkinFormat>(jsonContent, globalSetting);
+
+                    if (deserializedContent == null)
+                        return;
+
+                    DefaultElement[ElementType.LyricConfig] = deserializedContent.LyricConfig;
+                    DefaultElement[ElementType.LyricStyle] = deserializedContent.LyricStyle;
+                    DefaultElement[ElementType.NoteStyle] = deserializedContent.NoteStyle;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, "Failed to load skin element.");
                 }
             });
+        }
+
+        protected JsonSerializerSettings CreateJsonSerializerSettings(params JsonConverter[] converters)
+        {
+            var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
+            globalSetting.ContractResolver = new SnakeCaseKeyContractResolver();
+            globalSetting.Converters.AddRange(converters);
+            return globalSetting;
+        }
+
+        protected string GetElementStringContentFromSkinInfo(SkinInfo skinInfo, string filename)
+        {
+            // should get by file name if files is namespace resource store.
+            var files = resources?.Files;
+            if (files == null)
+                return null;
+
+            byte[] bytes = files is NamespacedResourceStore<byte[]> ? getFileFromNamespaceStore(files, filename) : getFileFromSkinInfo(files, skinInfo, filename);
+
+            if (bytes == null)
+                return null;
+
+            return Encoding.UTF8.GetString(bytes);
+
+            static byte[] getFileFromNamespaceStore(IResourceStore<byte[]> files, string filename)
+                => files.Get(filename);
+
+            static byte[] getFileFromSkinInfo(IResourceStore<byte[]> files, SkinInfo skinInfo, string filename)
+            {
+                // skin element files may be null for default skin.
+                var fileInfo = skinInfo.Files.FirstOrDefault(f => f.Filename == filename);
+
+                if (fileInfo == null)
+                    return null;
+
+                return files.Get(fileInfo.File.GetStoragePath());
+            }
         }
 
         public override ISample GetSample(ISampleInfo sampleInfo)
@@ -112,28 +175,25 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         protected virtual IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
         {
-            var type = GetElementType(elementType);
-            return ToElement(type);
+            var type = KaraokeSkinElementConvertor.GetElementType(elementType);
+            return toElement(type);
         }
 
-        protected static ElementType GetElementType(Type elementType)
-        {
-            return elementType switch
-            {
-                var type when type == typeof(LyricConfig) => ElementType.LyricConfig,
-                var type when type == typeof(LyricLayout) => ElementType.LyricLayout,
-                var type when type == typeof(LyricStyle) => ElementType.LyricStyle,
-                var type when type == typeof(NoteStyle) => ElementType.NoteStyle,
-                _ => throw new NotSupportedException()
-            };
-        }
-
-        protected IKaraokeSkinElement ToElement(ElementType type)
+        private IKaraokeSkinElement toElement(ElementType type)
             => type switch
             {
                 ElementType.LyricStyle or ElementType.LyricConfig or ElementType.NoteStyle => DefaultElement[type],
                 ElementType.LyricLayout => null,
                 _ => throw new InvalidEnumArgumentException(nameof(type))
             };
+
+        private class DefaultSkinFormat
+        {
+            public LyricConfig LyricConfig { get; set; }
+
+            public LyricStyle LyricStyle { get; set; }
+
+            public NoteStyle NoteStyle { get; set; }
+        }
     }
 }

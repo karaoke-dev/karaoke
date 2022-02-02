@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
         }
 
-        public KaraokeSkinLookup(ElementType type, int lookup)
+        public KaraokeSkinLookup(ElementType type, int lookup = -1)
         {
             Type = type;
             Lookup = lookup;
