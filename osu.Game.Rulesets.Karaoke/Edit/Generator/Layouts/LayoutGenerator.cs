@@ -3,11 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using osu.Framework.Extensions.IEnumerableExtensions;
-using osu.Game.IO;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 
@@ -23,23 +19,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts
         {
             Config = config;
 
-            // todo : need better way to load resource
-            var assembly = Assembly.GetExecutingAssembly();
-            const string resource_name = @"osu.Game.Rulesets.Karaoke.Resources.Skin.default.skin";
-
-            using (var stream = assembly.GetManifestResourceStream(resource_name))
-            using (var reader = new LineBufferedReader(stream))
+            // todo: implement the better algorithm.
+            layouts.Add(new KeyValuePair<int, LyricLayout[]>(1, new[]
             {
-                var skin = new KaraokeSkinDecoder().Decode(reader);
+                new LyricLayout(),
+                new LyricLayout()
+            }));
 
-                var groups = skin.LayoutGroups;
+            layouts.Add(new KeyValuePair<int, LyricLayout[]>(2, new[]
+            {
+                new LyricLayout(),
+                new LyricLayout(),
+                new LyricLayout()
+            }));
 
-                foreach (var group in groups)
-                {
-                    var matchLayouts = skin.Layouts.Where(x => x.Group == group.Id).ToArray();
-                    layouts.Add(group.Id, matchLayouts);
-                }
-            }
+            layouts.Add(new KeyValuePair<int, LyricLayout[]>(3, new[]
+            {
+                new LyricLayout(),
+                new LyricLayout(),
+                new LyricLayout(),
+                new LyricLayout()
+            }));
         }
 
         public void ApplyLayout(Lyric[] lyrics, LocalLayout layout = LocalLayout.CycleTwo)
