@@ -28,10 +28,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         public readonly List<IGroup> Groups = new();
         public readonly List<IMappingRole> DefaultMappingRoles = new();
 
-        public readonly Bindable<IDictionary<int, string>> BindableFontsLookup = new();
-        public readonly Bindable<IDictionary<int, string>> BindableLayoutsLookup = new();
-        public readonly Bindable<IDictionary<int, string>> BindableNotesLookup = new();
-
         public KaraokeBeatmapSkin(SkinInfo skin, IStorageResourceProvider resources, Stream configurationStream = null)
             : base(skin, resources, configurationStream)
         {
@@ -151,9 +147,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 case KaraokeIndexLookup indexLookup:
                     return indexLookup switch
                     {
-                        KaraokeIndexLookup.Layout => SkinUtils.As<TValue>(BindableLayoutsLookup),
-                        KaraokeIndexLookup.Style => SkinUtils.As<TValue>(BindableFontsLookup),
-                        KaraokeIndexLookup.Note => SkinUtils.As<TValue>(BindableNotesLookup),
+                        KaraokeIndexLookup.Layout => SkinUtils.As<TValue>(getSelectionFromElementType(ElementType.LyricLayout)),
+                        KaraokeIndexLookup.Style => SkinUtils.As<TValue>(getSelectionFromElementType(ElementType.LyricStyle)),
+                        KaraokeIndexLookup.Note => SkinUtils.As<TValue>(getSelectionFromElementType(ElementType.NoteStyle)),
                         _ => throw new InvalidEnumArgumentException(nameof(indexLookup))
                     };
 
@@ -162,6 +158,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
 
             return null;
+
+            Bindable<IDictionary<int, string>> getSelectionFromElementType(ElementType elementType)
+                => new(Elements[elementType].ToDictionary(k => k.ID, k => k.Name));
         }
 
         protected override IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
