@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
     public class NoteStyle : IKaraokeSkinElement
     {
-        public static readonly NoteStyle DEFAULT = new()
+        public static NoteStyle CreateDefault() => new()
         {
             Name = "Default",
             NoteColor = Color4Extensions.FromHex("#44AADD"),

@@ -35,9 +35,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
     {
         public readonly IDictionary<ElementType, IKaraokeSkinElement> DefaultElement = new Dictionary<ElementType, IKaraokeSkinElement>
         {
-            { ElementType.LyricConfig, LyricConfig.DEFAULT },
-            { ElementType.LyricStyle, LyricStyle.DEFAULT },
-            { ElementType.NoteStyle, NoteStyle.DEFAULT },
+            { ElementType.LyricConfig, LyricConfig.CreateDefault() },
+            { ElementType.LyricStyle, LyricStyle.CreateDefault() },
+            { ElementType.NoteStyle, NoteStyle.CreateDefault() },
         };
 
         private readonly Bindable<float> bindableColumnHeight = new(DefaultColumnBackground.COLUMN_HEIGHT);

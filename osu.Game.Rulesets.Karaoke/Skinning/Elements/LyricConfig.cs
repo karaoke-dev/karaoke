@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
     public class LyricConfig : IKaraokeSkinElement
     {
-        public static readonly LyricConfig DEFAULT = new()
+        public static LyricConfig CreateDefault() => new()
         {
             Name = "Default",
             SmartHorizon = KaraokeTextSmartHorizon.Multi,

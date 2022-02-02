@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [Test]
         public void TestLyricConfigSerializer()
         {
-            var lyricConfig = LyricConfig.DEFAULT;
+            var lyricConfig = LyricConfig.CreateDefault();
             string result = JsonConvert.SerializeObject(lyricConfig, CreateSettings());
             Assert.AreEqual(result, "{\"$type\":0,\"name\":\"Default\",\"smart_horizon\":2,\"lyrics_interval\":4,\"ruby_interval\":2,\"romaji_interval\":2,\"ruby_alignment\":2,\"romaji_alignment\":2,\"ruby_margin\":4,\"romaji_margin\":4,\"main_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\",\"size\":48.0},\"ruby_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"},\"romaji_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"}}");
         }
@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         {
             const string json = "{\"$type\":0,\"name\":\"Default\",\"smart_horizon\":2,\"lyrics_interval\":4,\"ruby_interval\":2,\"romaji_interval\":2,\"ruby_alignment\":2,\"romaji_alignment\":2,\"ruby_margin\":4,\"romaji_margin\":4,\"main_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\",\"size\":48.0},\"ruby_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"},\"romaji_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"}}";
             var result = JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings()) as LyricConfig;
-            var actual = LyricConfig.DEFAULT;
+            var actual = LyricConfig.CreateDefault();
 
             Assert.NotNull(result);
             Assert.AreEqual(result.Name, actual.Name);
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [Test]
         public void TestLyricStyleSerializer()
         {
-            var lyricStyle = LyricStyle.DEFAULT;
+            var lyricStyle = LyricStyle.CreateDefault();
             string result = JsonConvert.SerializeObject(lyricStyle, CreateSettings());
             Assert.AreEqual(result, "{\"$type\":2,\"left_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"radius\":10,\"outline_colour\":\"#CCA532\"},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#6B5B2D\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"right_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"radius\":10,\"outline_colour\":\"#5932CC\"},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#3D2D6B\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"name\":\"Default\"}");
         }
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         {
             const string json = "{\"$type\":2,\"left_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"radius\":10,\"outline_colour\":\"#CCA532\"},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#6B5B2D\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"right_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"radius\":10,\"outline_colour\":\"#5932CC\"},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#3D2D6B\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"name\":\"Default\"}";
             var result = JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings()) as LyricStyle;
-            var actual = LyricStyle.DEFAULT;
+            var actual = LyricStyle.CreateDefault();
 
             Assert.NotNull(result);
             Assert.AreEqual(result.Name, actual.Name);
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [Test]
         public void TestNoteStyleSerializer()
         {
-            var lyricConfig = NoteStyle.DEFAULT;
+            var lyricConfig = NoteStyle.CreateDefault();
             string result = JsonConvert.SerializeObject(lyricConfig, CreateSettings());
             Assert.AreEqual(result, "{\"$type\":3,\"name\":\"Default\",\"note_color\":\"#44AADD\",\"blink_color\":\"#FF66AA\",\"text_color\":\"#FFFFFF\",\"bold_text\":true}");
         }
@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         {
             const string json = "{\"$type\":3,\"name\":\"Default\",\"note_color\":\"#44AADD\",\"blink_color\":\"#FF66AA\",\"text_color\":\"#FFFFFF\",\"bold_text\":true}";
             var result = JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings()) as NoteStyle;
-            var actual = NoteStyle.DEFAULT;
+            var actual = NoteStyle.CreateDefault();
 
             Assert.NotNull(result);
             Assert.AreEqual(result.Name, actual.Name);

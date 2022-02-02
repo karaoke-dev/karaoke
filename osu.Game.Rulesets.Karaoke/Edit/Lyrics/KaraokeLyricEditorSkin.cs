@@ -40,9 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public KaraokeLyricEditorSkin(SkinInfo skin, IStorageResourceProvider resources)
             : base(skin, resources)
         {
-            DefaultElement[ElementType.LyricConfig] = LyricConfig.DEFAULT;
+            DefaultElement[ElementType.LyricConfig] = LyricConfig.CreateDefault();
             DefaultElement[ElementType.LyricStyle] = new LyricStyle { Name = "No effect" };
-            DefaultElement[ElementType.NoteStyle] = NoteStyle.DEFAULT;
+            DefaultElement[ElementType.NoteStyle] = NoteStyle.CreateDefault();
 
             // todo: should use better way to handle overall size.
             FontSize = 26;
