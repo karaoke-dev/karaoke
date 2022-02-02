@@ -1,12 +1,15 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.IO;
 using NUnit.Framework;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Track;
+using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
-using osu.Game.Skinning;
+using osu.Game.Database;
+using osu.Game.IO;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Resources
 {
@@ -40,13 +43,24 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Resources
 
         public static Track OpenTrackInfo(AudioManager audioManager, string name) => audioManager.GetTrackStore(GetStore()).Get($"Resources/Testing/Track/{name}.mp3");
 
-        internal class TestLegacySkin : LegacySkin
+        public static IStorageResourceProvider CreateSkinStorageResourceProvider(string skinName = "special-skin") => new TestStorageResourceProvider(skinName);
+
+        private class TestStorageResourceProvider : IStorageResourceProvider
         {
-            public TestLegacySkin(SkinInfo skin, IResourceStore<byte[]> storage)
-                // Bypass LegacySkinResourceStore to avoid returning null for retrieving files due to bad skin info (SkinInfo.Files = null).
-                : base(skin, storage, null, "skin.ini")
+            public TestStorageResourceProvider(string skinName)
             {
+                Files = Resources = new NamespacedResourceStore<byte[]>(new DllResourceStore(GetType().Assembly), $"Resources/{skinName}");
             }
+
+            public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore)
+            {
+                throw new NotImplementedException();
+            }
+
+            public AudioManager AudioManager => null;
+            public IResourceStore<byte[]> Files { get; }
+            public IResourceStore<byte[]> Resources { get; }
+            public RealmAccess RealmAccess => null;
         }
     }
 }
