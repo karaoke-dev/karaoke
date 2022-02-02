@@ -139,6 +139,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 {
                     var type = skinLookup.Type;
                     int lookupNumber = skinLookup.Lookup;
+                    if (lookupNumber < 0)
+                        return base.GetConfig<KaraokeSkinLookup, TValue>(skinLookup);
+
                     var element = Elements[type].FirstOrDefault(x => x.ID == lookupNumber);
                     return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element));
                 }
