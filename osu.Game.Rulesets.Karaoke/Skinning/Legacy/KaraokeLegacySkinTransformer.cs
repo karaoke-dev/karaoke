@@ -3,10 +3,13 @@
 
 using System;
 using System.ComponentModel;
-using System.Reflection;
+using osu.Framework.Audio;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Textures;
+using osu.Framework.IO.Stores;
 using osu.Game.Beatmaps;
+using osu.Game.Database;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Rulesets.Scoring;
@@ -17,30 +20,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
     public class KaraokeLegacySkinTransformer : LegacySkinTransformer
     {
         private readonly Lazy<bool> isLegacySkin;
-        private readonly DefaultKaraokeSkin defaultKaraokeSkin;
+        private readonly KaraokeBeatmapSkin defaultKaraokeSkin;
 
         public KaraokeLegacySkinTransformer(ISkin source, IBeatmap beatmap)
             : base(source)
         {
             // we should get config by default karaoke skin.
             // if has resource or texture, then try to get from legacy skin.
-            defaultKaraokeSkin = generateDefaultKaraokeSkin(source);
+            defaultKaraokeSkin = new KaraokeBeatmapSkin(new SkinInfo(), new InternalSkinStorageResourceProvider("Default"));
             isLegacySkin = new Lazy<bool>(() => GetConfig<SkinConfiguration.LegacySetting, decimal>(SkinConfiguration.LegacySetting.Version) != null);
-
-            static DefaultKaraokeSkin generateDefaultKaraokeSkin(ISkin skin)
-            {
-                var resources = getStorageResourceProvider(skin);
-                return new DefaultKaraokeSkin(resources);
-
-                static IStorageResourceProvider getStorageResourceProvider(ISkin skin)
-                {
-                    if (skin is not LegacySkin legacySkin)
-                        return null;
-
-                    var property = typeof(Skin).GetField("resources", BindingFlags.Instance | BindingFlags.NonPublic);
-                    return property?.GetValue(legacySkin) as IStorageResourceProvider;
-                }
-            }
         }
 
         public override Drawable GetDrawableComponent(ISkinComponent component)
@@ -111,6 +99,24 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 : base(skin, null, null, default(string))
             {
             }
+        }
+
+        private class InternalSkinStorageResourceProvider : IStorageResourceProvider
+        {
+            public InternalSkinStorageResourceProvider(string skinName)
+            {
+                Files = Resources = new NamespacedResourceStore<byte[]>(new DllResourceStore(GetType().Assembly), $"Resources/Skin/{skinName}");
+            }
+
+            public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore)
+            {
+                throw new NotImplementedException();
+            }
+
+            public AudioManager AudioManager => null;
+            public IResourceStore<byte[]> Files { get; }
+            public IResourceStore<byte[]> Resources { get; }
+            public RealmAccess RealmAccess => null;
         }
     }
 }
