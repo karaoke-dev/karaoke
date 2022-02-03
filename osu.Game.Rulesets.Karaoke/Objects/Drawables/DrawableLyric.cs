@@ -16,7 +16,6 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Judgements;
-using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.Skinning.Tools;
@@ -341,6 +340,17 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 const float fade_out_time = 500;
                 this.FadeOut(fade_out_time);
             }
+        }
+
+        public void ApplyToLyricPieces(Action<DefaultLyricPiece> action)
+        {
+            foreach (var lyricPiece in lyricPieces)
+                action?.Invoke(lyricPiece);
+        }
+
+        public void ApplyToTranslateText(Action<OsuSpriteText> action)
+        {
+            action?.Invoke(translateText);
         }
     }
 }
