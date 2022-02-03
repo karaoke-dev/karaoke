@@ -1,7 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 {
@@ -35,5 +37,28 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
         /// ???
         /// </summary>
         public bool Continuous { get; set; }
+
+        public void ApplyTo(Drawable d)
+        {
+            if (d is not DrawableLyric drawableLyric)
+                throw new InvalidDrawableTypeException(nameof(d));
+
+            // Layout relative to parent
+            drawableLyric.Anchor = Alignment;
+            drawableLyric.Origin = Alignment;
+            drawableLyric.Margin = new MarginPadding
+            {
+                Left = Alignment.HasFlagFast(Anchor.x0) ? HorizontalMargin : 0,
+                Right = Alignment.HasFlagFast(Anchor.x2) ? HorizontalMargin : 0,
+                Top = Alignment.HasFlagFast(Anchor.y0) ? VerticalMargin : 0,
+                Bottom = Alignment.HasFlagFast(Anchor.y2) ? VerticalMargin : 0
+            };
+
+            drawableLyric.ApplyToLyricPieces(l =>
+            {
+                // Layout to text
+                l.Continuous = Continuous;
+            });
+        }
     }
 }

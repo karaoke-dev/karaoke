@@ -2,6 +2,9 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Extensions.Color4Extensions;
+using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
@@ -28,5 +31,25 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
         public Color4 TextColor { get; set; }
 
         public bool BoldText { get; set; }
+
+        public void ApplyTo(Drawable d)
+        {
+            if (d is not DrawableNote drawableNote)
+                throw new InvalidDrawableTypeException(nameof(d));
+
+            drawableNote.ApplyToLyricText(text =>
+            {
+                text.Colour = TextColor;
+            });
+
+            drawableNote.ApplyToBackground(background =>
+            {
+                if (background.Drawable is not DefaultBodyPiece defaultBodyPiece)
+                    return;
+
+                defaultBodyPiece.AccentColour.Value = NoteColor;
+                defaultBodyPiece.HitColour.Value = BlinkColor;
+            });
+        }
     }
 }
