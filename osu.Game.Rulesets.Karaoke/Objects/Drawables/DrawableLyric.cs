@@ -6,20 +6,16 @@ using System.Globalization;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shaders;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Judgements;
-using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
-using osu.Game.Rulesets.Karaoke.Skinning.Tools;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
@@ -34,9 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         [Resolved(canBeNull: true)]
         private KaraokeRulesetConfigManager config { get; set; }
-
-        [Resolved]
-        private ShaderManager shaderManager { get; set; }
 
         private readonly BindableBool useTranslateBindable = new();
         private readonly Bindable<CultureInfo> preferLanguageBindable = new();
@@ -69,6 +62,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public DrawableLyric([CanBeNull] Lyric hitObject)
             : base(hitObject)
         {
+            // todo: it's a reservable size, should be removed eventually.
+            Padding = new MarginPadding(30);
         }
 
         [BackgroundDependencyLoader(true)]
@@ -171,16 +166,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             if (HitObject == null)
                 return;
 
-            var lyricFont = CurrentSkin.GetConfig<Lyric, LyricStyle>(HitObject)?.Value;
-            if (lyricFont == null)
-                return;
-
-            foreach (var lyricPiece in lyricPieces)
-            {
-                // Apply shader.
-                lyricPiece.LeftLyricTextShaders = SkinConvertorTool.ConvertLeftSideShader(shaderManager, lyricFont);
-                lyricPiece.RightLyricTextShaders = SkinConvertorTool.ConvertRightSideShader(shaderManager, lyricFont);
-            }
+            var lyricStyle = CurrentSkin.GetConfig<Lyric, LyricStyle>(HitObject)?.Value;
+            lyricStyle?.ApplyTo(this);
         }
 
         private void updateLyricConfig()
@@ -192,72 +179,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 return;
 
             var lyricConfig = CurrentSkin.GetConfig<Lyric, LyricConfig>(HitObject)?.Value;
-
-            foreach (var lyricPiece in lyricPieces)
-            {
-                // Apply text font info
-                var mainFont = lyricConfig?.MainTextFont;
-                lyricPiece.Font = getFont(KaraokeRulesetSetting.MainFont, mainFont);
-
-                var rubyFont = lyricConfig?.RubyTextFont;
-                lyricPiece.DisplayRuby = displayRubyBindable.Value;
-                lyricPiece.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, rubyFont);
-                lyricPiece.RubyMargin = rubyMarginBindable.Value;
-
-                var romajiFont = lyricConfig?.RomajiTextFont;
-                lyricPiece.DisplayRomaji = displayRomajiBindable.Value;
-                lyricPiece.RomajiFont = getFont(KaraokeRulesetSetting.RomajiFont, romajiFont);
-                lyricPiece.RomajiMargin = romajiMarginBindable.Value;
-
-                // todo: should make some config like KaraokeRulesetSetting.RomajiFont into KaraokeRulesetSetting.DefaultFontConfig.
-                if (lyricConfig == null)
-                    continue;
-
-                // Layout to text
-                lyricPiece.KaraokeTextSmartHorizon = lyricConfig.SmartHorizon;
-                lyricPiece.Spacing = new Vector2(lyricConfig.LyricsInterval, lyricPiece.Spacing.Y);
-
-                // Ruby
-                lyricPiece.RubySpacing = new Vector2(lyricConfig.RubyInterval, lyricPiece.RubySpacing.Y);
-                lyricPiece.RubyAlignment = lyricConfig.RubyAlignment;
-                lyricPiece.RubyMargin = lyricConfig.RubyMargin;
-
-                // Romaji
-                lyricPiece.RomajiSpacing = new Vector2(lyricConfig.RomajiInterval, lyricPiece.RomajiSpacing.Y);
-                lyricPiece.RomajiAlignment = lyricConfig.RomajiAlignment;
-                lyricPiece.RomajiMargin = lyricConfig.RomajiMargin;
-            }
-
-            // Apply translate font.
-            translateText.Font = getFont(KaraokeRulesetSetting.TranslateFont);
-
-            FontUsage getFont(KaraokeRulesetSetting setting, FontUsage? skinFont = null)
-            {
-                bool forceUseDefault = forceUseDefaultFont();
-                var font = config?.Get<FontUsage>(setting) ?? FontUsage.Default;
-
-                if (forceUseDefault || skinFont == null)
-                    return font;
-
-                return font.With(size: skinFont.Value.Size);
-
-                bool forceUseDefaultFont()
-                {
-                    switch (setting)
-                    {
-                        case KaraokeRulesetSetting.MainFont:
-                        case KaraokeRulesetSetting.RubyFont:
-                        case KaraokeRulesetSetting.RomajiFont:
-                            return config?.Get<bool>(KaraokeRulesetSetting.ForceUseDefaultFont) ?? false;
-
-                        case KaraokeRulesetSetting.TranslateFont:
-                            return config?.Get<bool>(KaraokeRulesetSetting.ForceUseDefaultTranslateFont) ?? false;
-
-                        default:
-                            throw new InvalidOperationException(nameof(setting));
-                    }
-                }
-            }
+            lyricConfig?.ApplyTo(this);
         }
 
         private void updateLayout()
@@ -269,26 +191,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 return;
 
             var layout = CurrentSkin.GetConfig<Lyric, LyricLayout>(HitObject)?.Value;
-            if (layout == null)
-                return;
-
-            // Layout relative to parent
-            Anchor = layout.Alignment;
-            Origin = layout.Alignment;
-            Margin = new MarginPadding
-            {
-                Left = layout.Alignment.HasFlagFast(Anchor.x0) ? layout.HorizontalMargin : 0,
-                Right = layout.Alignment.HasFlagFast(Anchor.x2) ? layout.HorizontalMargin : 0,
-                Top = layout.Alignment.HasFlagFast(Anchor.y0) ? layout.VerticalMargin : 0,
-                Bottom = layout.Alignment.HasFlagFast(Anchor.y2) ? layout.VerticalMargin : 0
-            };
-            Padding = new MarginPadding(30);
-
-            foreach (var lyricPiece in lyricPieces)
-            {
-                // Layout to text
-                lyricPiece.Continuous = layout.Continuous;
-            }
+            layout?.ApplyTo(this);
         }
 
         private void applyTranslate()
@@ -341,6 +244,17 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 const float fade_out_time = 500;
                 this.FadeOut(fade_out_time);
             }
+        }
+
+        public void ApplyToLyricPieces(Action<DefaultLyricPiece> action)
+        {
+            foreach (var lyricPiece in lyricPieces)
+                action?.Invoke(lyricPiece);
+        }
+
+        public void ApplyToTranslateText(Action<OsuSpriteText> action)
+        {
+            action?.Invoke(translateText);
         }
     }
 }

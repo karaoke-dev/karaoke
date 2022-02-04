@@ -2,8 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
+using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shaders;
+using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Skinning.Tools;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
@@ -68,5 +72,19 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
         ///  todo: should use <see cref="ICustomizedShader"/> instead because we should save <see cref="StepShader"/> also.
         /// </summary>
         public List<ICustomizedShader> RightLyricTextShaders = new();
+
+        public void ApplyTo(Drawable d)
+        {
+            if (d is not DrawableLyric drawableLyric)
+                throw new InvalidDrawableTypeException(nameof(d));
+
+            var shaderManager = drawableLyric.Dependencies.Get<ShaderManager>();
+            drawableLyric.ApplyToLyricPieces(l =>
+            {
+                // Apply shader.
+                l.LeftLyricTextShaders = SkinConvertorTool.ConvertLeftSideShader(shaderManager, this);
+                l.RightLyricTextShaders = SkinConvertorTool.ConvertRightSideShader(shaderManager, this);
+            });
+        }
     }
 }
