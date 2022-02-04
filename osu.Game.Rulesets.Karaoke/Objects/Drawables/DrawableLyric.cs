@@ -179,72 +179,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 return;
 
             var lyricConfig = CurrentSkin.GetConfig<Lyric, LyricConfig>(HitObject)?.Value;
-
-            foreach (var lyricPiece in lyricPieces)
-            {
-                // Apply text font info
-                var mainFont = lyricConfig?.MainTextFont;
-                lyricPiece.Font = getFont(KaraokeRulesetSetting.MainFont, mainFont);
-
-                var rubyFont = lyricConfig?.RubyTextFont;
-                lyricPiece.DisplayRuby = displayRubyBindable.Value;
-                lyricPiece.RubyFont = getFont(KaraokeRulesetSetting.RubyFont, rubyFont);
-                lyricPiece.RubyMargin = rubyMarginBindable.Value;
-
-                var romajiFont = lyricConfig?.RomajiTextFont;
-                lyricPiece.DisplayRomaji = displayRomajiBindable.Value;
-                lyricPiece.RomajiFont = getFont(KaraokeRulesetSetting.RomajiFont, romajiFont);
-                lyricPiece.RomajiMargin = romajiMarginBindable.Value;
-
-                // todo: should make some config like KaraokeRulesetSetting.RomajiFont into KaraokeRulesetSetting.DefaultFontConfig.
-                if (lyricConfig == null)
-                    continue;
-
-                // Layout to text
-                lyricPiece.KaraokeTextSmartHorizon = lyricConfig.SmartHorizon;
-                lyricPiece.Spacing = new Vector2(lyricConfig.LyricsInterval, lyricPiece.Spacing.Y);
-
-                // Ruby
-                lyricPiece.RubySpacing = new Vector2(lyricConfig.RubyInterval, lyricPiece.RubySpacing.Y);
-                lyricPiece.RubyAlignment = lyricConfig.RubyAlignment;
-                lyricPiece.RubyMargin = lyricConfig.RubyMargin;
-
-                // Romaji
-                lyricPiece.RomajiSpacing = new Vector2(lyricConfig.RomajiInterval, lyricPiece.RomajiSpacing.Y);
-                lyricPiece.RomajiAlignment = lyricConfig.RomajiAlignment;
-                lyricPiece.RomajiMargin = lyricConfig.RomajiMargin;
-            }
-
-            // Apply translate font.
-            translateText.Font = getFont(KaraokeRulesetSetting.TranslateFont);
-
-            FontUsage getFont(KaraokeRulesetSetting setting, FontUsage? skinFont = null)
-            {
-                bool forceUseDefault = forceUseDefaultFont();
-                var font = config?.Get<FontUsage>(setting) ?? FontUsage.Default;
-
-                if (forceUseDefault || skinFont == null)
-                    return font;
-
-                return font.With(size: skinFont.Value.Size);
-
-                bool forceUseDefaultFont()
-                {
-                    switch (setting)
-                    {
-                        case KaraokeRulesetSetting.MainFont:
-                        case KaraokeRulesetSetting.RubyFont:
-                        case KaraokeRulesetSetting.RomajiFont:
-                            return config?.Get<bool>(KaraokeRulesetSetting.ForceUseDefaultFont) ?? false;
-
-                        case KaraokeRulesetSetting.TranslateFont:
-                            return config?.Get<bool>(KaraokeRulesetSetting.ForceUseDefaultTranslateFont) ?? false;
-
-                        default:
-                            throw new InvalidOperationException(nameof(setting));
-                    }
-                }
-            }
+            lyricConfig?.ApplyTo(this);
         }
 
         private void updateLayout()
