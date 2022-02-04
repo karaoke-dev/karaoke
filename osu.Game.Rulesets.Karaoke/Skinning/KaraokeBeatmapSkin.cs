@@ -166,6 +166,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 => new(Elements[elementType].ToDictionary(k => k.ID, k => k.Name));
         }
 
+        // todo: should move the logic outside if wants to support time-based roles.
+        // because it's impossible to get the current time in skin.
         protected override IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
         {
             var type = KaraokeSkinElementConvertor.GetElementType(elementType);
