@@ -295,6 +295,9 @@ namespace osu.Game.Rulesets.Karaoke
         {
             // It's a tricky way to let lazer to read karaoke testing beatmap
             KaraokeLegacyBeatmapDecoder.Register();
+
+            // it's a tricky way for loading customized karaoke beatmap.
+            RulesetInfo.OnlineID = 111;
         }
     }
 }
