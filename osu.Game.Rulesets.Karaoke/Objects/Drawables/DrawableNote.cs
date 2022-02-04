@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Diagnostics;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
@@ -10,7 +11,6 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Judgements;
-using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -26,6 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
     /// </summary>
     public class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKeyBindingHandler<KaraokeSaitenAction>
     {
+        private readonly SkinnableDrawable background;
         private readonly OsuSpriteText textPiece;
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         {
             AddRangeInternal(new Drawable[]
             {
-                new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.Note), _ => new DefaultBodyPiece { RelativeSizeAxes = Axes.Both }),
+                background = new SkinnableDrawable(new KaraokeSkinComponent(KaraokeSkinComponents.Note), _ => new DefaultBodyPiece { RelativeSizeAxes = Axes.Both }),
                 textPiece = new OsuSpriteText(),
             });
 
@@ -218,5 +219,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             // User stop singing this note
             EndSing();
         }
+
+        public void ApplyToLyricText(Action<OsuSpriteText> action) => action?.Invoke(textPiece);
+
+        public void ApplyToBackground(Action<SkinnableDrawable> action) => action?.Invoke(background);
     }
 }

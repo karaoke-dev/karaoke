@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
@@ -23,8 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
     {
         public const float CORNER_RADIUS = 5;
 
-        protected readonly Bindable<Color4> AccentColour = new();
-        protected readonly Bindable<Color4> HitColour = new();
+        public readonly Bindable<Color4> AccentColour = new();
+        public readonly Bindable<Color4> HitColour = new();
 
         private readonly LayoutValue subtractionCache = new(Invalidation.DrawSize);
         private readonly IBindable<bool> isHitting = new Bindable<bool>();
