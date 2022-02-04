@@ -6,7 +6,6 @@ using System.Globalization;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -63,6 +62,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public DrawableLyric([CanBeNull] Lyric hitObject)
             : base(hitObject)
         {
+            // todo: it's a reservable size, should be removed eventually.
+            Padding = new MarginPadding(30);
         }
 
         [BackgroundDependencyLoader(true)]
@@ -255,26 +256,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 return;
 
             var layout = CurrentSkin.GetConfig<Lyric, LyricLayout>(HitObject)?.Value;
-            if (layout == null)
-                return;
-
-            // Layout relative to parent
-            Anchor = layout.Alignment;
-            Origin = layout.Alignment;
-            Margin = new MarginPadding
-            {
-                Left = layout.Alignment.HasFlagFast(Anchor.x0) ? layout.HorizontalMargin : 0,
-                Right = layout.Alignment.HasFlagFast(Anchor.x2) ? layout.HorizontalMargin : 0,
-                Top = layout.Alignment.HasFlagFast(Anchor.y0) ? layout.VerticalMargin : 0,
-                Bottom = layout.Alignment.HasFlagFast(Anchor.y2) ? layout.VerticalMargin : 0
-            };
-            Padding = new MarginPadding(30);
-
-            foreach (var lyricPiece in lyricPieces)
-            {
-                // Layout to text
-                lyricPiece.Continuous = layout.Continuous;
-            }
+            layout?.ApplyTo(this);
         }
 
         private void applyTranslate()
