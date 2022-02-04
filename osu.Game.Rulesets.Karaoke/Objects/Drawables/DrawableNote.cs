@@ -131,10 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
                 return;
 
             var noteSkin = skin.GetConfig<Note, NoteStyle>(HitObject)?.Value;
-            if (noteSkin == null)
-                return;
-
-            textPiece.Colour = noteSkin.TextColor;
+            noteSkin?.ApplyTo(this);
         }
 
         protected override void OnDirectionChanged(ValueChangedEvent<ScrollingDirection> e)
