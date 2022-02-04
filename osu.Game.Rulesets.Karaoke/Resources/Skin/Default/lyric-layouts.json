@@ -1,0 +1,72 @@
+[
+  {
+    "$type": 1,
+    "id": 1,
+    "name": "下-1",
+    "alignment": 36,
+    "horizontal_margin": 30,
+    "vertical_margin": 45
+  },
+  {
+    "$type": 1,
+    "name": "下-2",
+    "id": 2,
+    "alignment": 12,
+    "horizontal_margin": 30,
+    "vertical_margin": 130
+  },
+  {
+    "$type": 1,
+    "name": "下-3",
+    "id": 3,
+    "alignment": 12,
+    "horizontal_margin": 30,
+    "vertical_margin": 215
+  },
+  {
+    "$type": 1,
+    "name": "下-4",
+    "id": 4,
+    "alignment": 12,
+    "horizontal_margin": 30,
+    "vertical_margin": 300
+  },
+  {
+    "$type": 1,
+    "name": "上-1",
+    "id": 5,
+    "alignment": 9,
+    "horizontal_margin": 30,
+    "vertical_margin": 115
+  },
+  {
+    "$type": 1,
+    "name": "上-2",
+    "id": 6,
+    "alignment": 33,
+    "horizontal_margin": 30,
+    "vertical_margin": 200
+  },
+  {
+    "$type": 1,
+    "name": "上-3",
+    "id": 7,
+    "alignment": 33,
+    "horizontal_margin": 30,
+    "vertical_margin": 285
+  },
+  {
+    "$type": 1,
+    "name": "上-4",
+    "id": 8,
+    "alignment": 33,
+    "horizontal_margin": 30,
+    "vertical_margin": 370
+  },
+  {
+    "$type": 1,
+    "name": "中",
+    "id": 9,
+    "alignment": 18
+  }
+]
