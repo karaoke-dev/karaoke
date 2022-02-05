@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public override Type[] IncompatibleMods => new[] { typeof(ModHidden) };
 
         [SettingSource("Flashlight size", "Multiplier applied to the default flashlight size.")]
-        public override BindableNumber<float> SizeMultiplier { get; } = new()
+        public override BindableFloat SizeMultiplier { get; } = new()
         {
             MinValue = 0.5f,
             MaxValue = 3f,
