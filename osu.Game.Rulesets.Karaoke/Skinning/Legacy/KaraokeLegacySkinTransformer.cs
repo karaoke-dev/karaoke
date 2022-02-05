@@ -105,7 +105,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         {
             public InternalSkinStorageResourceProvider(string skinName)
             {
-                Files = Resources = new NamespacedResourceStore<byte[]>(new DllResourceStore(GetType().Assembly), $"Resources/Skin/{skinName}");
+                var store = new KaraokeRuleset().CreateResourceStore();
+                Files = Resources = new NamespacedResourceStore<byte[]>(store, $"Skin/{skinName}");
             }
 
             public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore)
