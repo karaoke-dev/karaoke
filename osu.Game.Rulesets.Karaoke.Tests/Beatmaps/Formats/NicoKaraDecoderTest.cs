@@ -40,7 +40,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(firstLayout.Alignment, Anchor.BottomRight);
                 Assert.AreEqual(firstLayout.HorizontalMargin, 30);
                 Assert.AreEqual(firstLayout.VerticalMargin, 45);
-                Assert.AreEqual(firstLayout.Continuous, false);
 
                 // Testing style
                 var firstFont = skin.LyricStyles.FirstOrDefault();

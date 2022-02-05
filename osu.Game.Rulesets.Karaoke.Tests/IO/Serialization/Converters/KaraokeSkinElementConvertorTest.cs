@@ -41,16 +41,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 Alignment = Anchor.TopLeft,
                 HorizontalMargin = 10,
                 VerticalMargin = 20,
-                Continuous = true,
             };
             string result = JsonConvert.SerializeObject(lyricLayout, CreateSettings());
-            Assert.AreEqual(result, "{\"$type\":1,\"id\":1,\"name\":\"Testing layout\",\"alignment\":9,\"horizontal_margin\":10,\"vertical_margin\":20,\"continuous\":true}");
+            Assert.AreEqual(result, "{\"$type\":1,\"id\":1,\"name\":\"Testing layout\",\"alignment\":9,\"horizontal_margin\":10,\"vertical_margin\":20}");
         }
 
         [Test]
         public void TestLyricLayoutDeserialize()
         {
-            const string json = "{\"$type\":1,\"id\":1,\"name\":\"Testing layout\",\"alignment\":9,\"horizontal_margin\":10,\"vertical_margin\":20,\"continuous\":true}";
+            const string json = "{\"$type\":1,\"id\":1,\"name\":\"Testing layout\",\"alignment\":9,\"horizontal_margin\":10,\"vertical_margin\":20}";
             var result = JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings()) as LyricLayout;
             var actual = new LyricLayout
             {
@@ -59,7 +58,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 Alignment = Anchor.TopLeft,
                 HorizontalMargin = 10,
                 VerticalMargin = 20,
-                Continuous = true,
             };
 
             Assert.NotNull(result);

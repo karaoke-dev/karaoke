@@ -33,11 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
         /// </summary>
         public int VerticalMargin { get; set; }
 
-        /// <summary>
-        /// ???
-        /// </summary>
-        public bool Continuous { get; set; }
-
         public void ApplyTo(Drawable d)
         {
             if (d is not DrawableLyric drawableLyric)
@@ -53,12 +48,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
                 Top = Alignment.HasFlagFast(Anchor.y0) ? VerticalMargin : 0,
                 Bottom = Alignment.HasFlagFast(Anchor.y2) ? VerticalMargin : 0
             };
-
-            drawableLyric.ApplyToLyricPieces(l =>
-            {
-                // Layout to text
-                l.Continuous = Continuous;
-            });
         }
     }
 }

@@ -51,7 +51,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     Alignment = convertAnchor(karaokeLayout.HorizontalAlignment, karaokeLayout.VerticalAlignment),
                     HorizontalMargin = karaokeLayout.HorizontalMargin,
                     VerticalMargin = karaokeLayout.VerticalMargin,
-                    Continuous = karaokeLayout.Continuous,
                 });
             }
 
