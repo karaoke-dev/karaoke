@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 
         protected IEnumerable<THitObject> HitObjects => beatmap.HitObjects.OfType<THitObject>();
 
-        protected void PerformOnSelection(Action<THitObject> action) => beatmap.PerformOnSelection((h) =>
+        protected void PerformOnSelection(Action<THitObject> action) => beatmap.PerformOnSelection(h =>
         {
             if (h is THitObject tHitObject)
                 action.Invoke(tHitObject);

@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             Origin = Anchor.Centre,
             RelativeSizeAxes = Axes.X,
             CornerRadius = CORNER_RADIUS,
-            Selected = (selected) =>
+            Selected = selected =>
             {
                 if (selected)
                 {
