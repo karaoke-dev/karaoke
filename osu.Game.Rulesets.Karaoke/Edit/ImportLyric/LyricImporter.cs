@@ -29,7 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         private readonly BindableBeatDivisor beatDivisor = new();
 
         private EditorBeatmap editorBeatmap;
-        private ImportLyricEditorChangeHandler changeHandler;
 
         private ImportLyricManager importManager;
 
@@ -96,8 +95,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             };
             AddInternal(editorBeatmap = new EditorBeatmap(playableBeatmap));
             dependencies.CacheAs(editorBeatmap);
-            changeHandler = new ImportLyricEditorChangeHandler(editorBeatmap);
-            dependencies.CacheAs<IEditorChangeHandler>(changeHandler);
 
             AddInternal(importManager = new ImportLyricManager());
             dependencies.Cache(importManager);
@@ -129,24 +126,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 SecondWaveColour = Color4Extensions.FromHex(@"554075");
                 ThirdWaveColour = Color4Extensions.FromHex(@"44325e");
                 FourthWaveColour = Color4Extensions.FromHex(@"392850");
-            }
-        }
-
-        /// <summary>
-        /// Use this class as temp class until <see cref="EditorChangeHandler"/> support customized beatmap.
-        /// </summary>
-        private class ImportLyricEditorChangeHandler : TransactionalCommitComponent, IEditorChangeHandler
-        {
-            public event Action OnStateChange;
-
-            public ImportLyricEditorChangeHandler(EditorBeatmap editorBeatmap)
-            {
-            }
-
-            protected override void UpdateState()
-            {
-                // do nothing.
-                OnStateChange?.Invoke();
             }
         }
     }
