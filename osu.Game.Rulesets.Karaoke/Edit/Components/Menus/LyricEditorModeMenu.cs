@@ -26,7 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
             LyricEditorMode.EditRomaji,
             LyricEditorMode.CreateTimeTag,
             LyricEditorMode.EditNote,
-            LyricEditorMode.Layout,
             LyricEditorMode.Singer,
         };
 
@@ -59,9 +58,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 
                 case LyricEditorMode.EditNote:
                     return "Edit note";
-
-                case LyricEditorMode.Layout:
-                    return "Select layout";
 
                 case LyricEditorMode.Singer:
                     return "Select singer";

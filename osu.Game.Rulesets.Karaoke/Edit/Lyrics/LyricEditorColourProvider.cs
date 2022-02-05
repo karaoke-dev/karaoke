@@ -61,7 +61,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.EditNote:
                     return 203 / 360f; // blue
 
-                case LyricEditorMode.Layout:
                 case LyricEditorMode.Singer:
                     return 271 / 360f; // purple
 

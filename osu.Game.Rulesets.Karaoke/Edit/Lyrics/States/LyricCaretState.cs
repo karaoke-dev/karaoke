@@ -102,7 +102,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                     LyricEditorMode.RecordTimeTag => new TimeTagCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode },
                     LyricEditorMode.AdjustTimeTag => new NavigateCaretPositionAlgorithm(lyrics),
                     LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
-                    LyricEditorMode.Layout => new NavigateCaretPositionAlgorithm(lyrics),
                     LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
                     _ => null
                 };

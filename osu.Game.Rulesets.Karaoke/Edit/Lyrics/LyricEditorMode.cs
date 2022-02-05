@@ -56,11 +56,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         EditNote,
 
         /// <summary>
-        /// Can edit each lyric's layout.
-        /// </summary>
-        Layout,
-
-        /// <summary>
         /// Can edit each lyric's singer.
         /// </summary>
         Singer,
