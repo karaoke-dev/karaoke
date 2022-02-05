@@ -44,9 +44,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         private INotesChangeHandler notesChangeHandler { get; set; }
 
         [Resolved]
-        private ILyricLayoutChangeHandler lyricLayoutChangeHandler { get; set; }
-
-        [Resolved]
         private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
 
         protected ScrollingNotePlayfield NotePlayfield => ((KaraokeHitObjectComposer)composer).Playfield.NotePlayfield;
@@ -117,7 +114,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
                     int layoutIndex = x.Key;
                     var layout = source.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(ElementType.LyricLayout, layoutIndex)).Value;
-                    lyricLayoutChangeHandler.ChangeLayout(layout);
+
+                    // todo: should use another way to change the layout.
+                    // lyricLayoutChangeHandler.ChangeLayout(layout);
                 })).ToArray()
             };
         }

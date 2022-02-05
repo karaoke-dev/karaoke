@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -12,14 +11,13 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
+namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
     public class LayoutSelection : Section
     {
@@ -46,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
         }
 
         [BackgroundDependencyLoader]
-        private void load(ISkinSource skinSource, ILyricCaretState lyricCaretState)
+        private void load(ISkinSource skinSource)
         {
             var layoutDictionary = skinSource.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
             if (layoutDictionary == null)
@@ -58,6 +56,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
                 Content.Add(new LayoutSelectionItem(layout));
             }
 
+            // todo: load current layout.
+            /*
             lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
             {
                 var lyric = e.NewValue?.Lyric;
@@ -68,6 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts
                     item.Lyric = lyric;
                 }
             }, true);
+            */
         }
 
         public class LayoutSelectionItem : FillFlowContainer

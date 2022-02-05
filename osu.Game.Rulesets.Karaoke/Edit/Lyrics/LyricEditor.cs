@@ -16,7 +16,6 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Layouts;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
@@ -216,7 +215,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     LyricEditorMode.AdjustTimeTag => new TimeTagExtend(),
                     LyricEditorMode.EditNote => new NoteExtend(),
                     LyricEditorMode.Singer => new SingerExtend(),
-                    LyricEditorMode.Layout => new LayoutExtend(),
                     _ => null
                 };
 
@@ -311,7 +309,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return false;
 
                 case LyricEditorMode.EditNote:
-                case LyricEditorMode.Layout:
                 case LyricEditorMode.Singer:
                     return false;
 

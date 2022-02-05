@@ -229,9 +229,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.EditNote:
                             return null;
 
-                        case LyricEditorMode.Layout:
-                            return new LayoutInfo(Lyric);
-
                         case LyricEditorMode.Singer:
                             return new SingerInfo(Lyric);
 
@@ -393,7 +390,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                     case LyricEditorMode.AdjustTimeTag:
                     case LyricEditorMode.EditNote:
-                    case LyricEditorMode.Layout:
                     case LyricEditorMode.Singer:
                         lyricCaretState.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                         break;
@@ -527,7 +523,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                         case LyricEditorMode.AdjustTimeTag:
                         case LyricEditorMode.EditNote:
-                        case LyricEditorMode.Layout:
                         case LyricEditorMode.Singer:
                             return null;
 

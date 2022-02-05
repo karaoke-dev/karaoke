@@ -4,7 +4,6 @@
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -278,32 +277,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             };
 
             Assert.AreEqual(LyricUtils.TimeTagTimeFormattedString(lyric), format);
-        }
-
-        #endregion
-
-        #region Layout
-
-        [TestCase(1, 1)]
-        [TestCase(0, 0)] // Id should be ok with 0
-        [TestCase(-1, null)]
-        public void TestAssignLayout(int layoutIndex, int? actual)
-        {
-            var lyric = new Lyric();
-            var layout = new LyricLayout
-            {
-                ID = layoutIndex
-            };
-
-            try
-            {
-                LyricUtils.AssignLayout(lyric, layout);
-                Assert.AreEqual(lyric.LayoutIndex, actual);
-            }
-            catch
-            {
-                Assert.IsNull(actual);
-            }
         }
 
         #endregion

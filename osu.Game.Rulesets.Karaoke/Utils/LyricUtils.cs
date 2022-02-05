@@ -10,7 +10,6 @@ using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
-using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
@@ -254,24 +253,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             string startTime = TimeTagUtils.FormattedString(minTimeTag);
             string endTime = TimeTagUtils.FormattedString(maxTimeTag);
             return $"{startTime} - {endTime}";
-        }
-
-        #endregion
-
-        #region Layout
-
-        public static void AssignLayout(Lyric lyric, LyricLayout layout)
-        {
-            if (lyric == null)
-                throw new ArgumentNullException(nameof(lyric));
-
-            if (layout == null)
-                throw new ArgumentNullException(nameof(layout));
-
-            if (layout.ID < 0)
-                throw new InvalidOperationException($"{nameof(layout.ID)} cannot be negative");
-
-            lyric.LayoutIndex = layout.ID;
         }
 
         #endregion
