@@ -4,13 +4,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Layouts;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Patterns
 {
     /// <summary>
-    /// Note: this class will be replaced by <see cref="LayoutGenerator"/>
+    /// Note: this class will be replaced by another lyric-time generator.
     /// </summary>
     public class LegacyLyricTimeGenerator : IPatternGenerator<Lyric>
     {
