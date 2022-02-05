@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             if (!lyrics.Any())
                 return;
 
-            var pattern = new LegacyKaraokeLayoutGenerator();
+            var pattern = new LegacyLyricTimeGenerator();
             pattern.Generate(lyrics);
         }
     }
