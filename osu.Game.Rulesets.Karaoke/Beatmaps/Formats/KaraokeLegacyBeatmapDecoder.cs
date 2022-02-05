@@ -34,7 +34,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         private readonly IList<string> lrcLines = new List<string>();
         private readonly IList<string> noteLines = new List<string>();
-        private readonly IList<string> lyricStyles = new List<string>();
         private readonly IList<string> translates = new List<string>();
 
         protected override void ParseLine(Beatmap beatmap, Section section, string line)
@@ -54,11 +53,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             {
                 // add tone line queue
                 noteLines.Add(line);
-            }
-            else if (line.ToLower().StartsWith("@style", StringComparison.Ordinal))
-            {
-                // add style queue
-                lyricStyles.Add(line);
             }
             else if (line.ToLower().StartsWith("@tr", StringComparison.Ordinal))
             {
@@ -92,9 +86,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                 processNotes(beatmap, noteLines);
                 processTranslate(beatmap, translates);
-
-                if (lyricStyles.Any())
-                    processStyle(beatmap, lyricStyles);
             }
         }
 
@@ -222,30 +213,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                         Half = half
                     };
                 }
-            }
-        }
-
-        private void processStyle(Beatmap beatmap, IList<string> styleLines)
-        {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-
-            for (int l = 0; l < lyrics.Count; l++)
-            {
-                var lyric = lyrics[l];
-                string line = styleLines.ElementAtOrDefault(l)?.Split('=').Last();
-
-                // TODO : maybe create default layer and style index here?
-                if (string.IsNullOrEmpty(line))
-                    return;
-
-                string layoutIndexStr = line.Split(',').FirstOrDefault();
-                string styleIndexStr = line.Split(',').ElementAtOrDefault(1);
-
-                if (int.TryParse(layoutIndexStr, out int layoutIndex))
-                    lyric.LayoutIndex = layoutIndex;
-
-                if (int.TryParse(styleIndexStr, out int styleIndex))
-                    lyric.Singers = SingerUtils.GetSingersIndex(styleIndex);
             }
         }
 

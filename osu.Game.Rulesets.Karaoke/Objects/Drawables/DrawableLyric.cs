@@ -44,7 +44,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         private readonly Bindable<FontUsage> translateFontUsageBindable = new();
 
         private readonly IBindableList<int> singersBindable = new BindableList<int>();
-        private readonly IBindable<int> layoutIndexBindable = new Bindable<int>();
         private readonly BindableDictionary<CultureInfo, string> translateTextBindable = new();
 
         /// <summary>
@@ -123,7 +122,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
             // property in hitobject.
             singersBindable.BindCollectionChanged((_, _) => { updateFontStyle(); });
-            layoutIndexBindable.BindValueChanged(_ => { updateLayout(); });
             translateTextBindable.BindCollectionChanged((_, _) => { applyTranslate(); });
         }
 
@@ -136,7 +134,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             ApplySkin(CurrentSkin, false);
 
             singersBindable.BindTo(HitObject.SingersBindable);
-            layoutIndexBindable.BindTo(HitObject.LayoutIndexBindable);
             translateTextBindable.BindTo(HitObject.TranslateTextBindable);
         }
 
@@ -145,7 +142,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             base.OnFree();
 
             singersBindable.UnbindFrom(HitObject.SingersBindable);
-            layoutIndexBindable.UnbindFrom(HitObject.LayoutIndexBindable);
             translateTextBindable.UnbindFrom(HitObject.TranslateTextBindable);
         }
 
