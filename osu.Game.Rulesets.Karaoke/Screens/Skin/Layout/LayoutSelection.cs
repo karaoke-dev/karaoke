@@ -75,6 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
         {
             private const float selection_size = (240 - layout_setting_horizontal_padding * 2 - SECTION_SPACING) / 2;
 
+            // todo: should changed into selected layout index
             private readonly Bindable<int> selectedLayoutIndex = new();
 
             private readonly DrawableLayoutPreview drawableLayoutPreview;
@@ -131,20 +132,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
                     if (drawableLayoutPreview.Lyric == value)
                         return;
 
-                    // unbind previous event
-                    if (Lyric != null)
-                    {
-                        selectedLayoutIndex.UnbindFrom(Lyric.LayoutIndexBindable);
-                    }
-
                     // update lyric
                     drawableLayoutPreview.Lyric = value;
-
-                    // bind layout index.
-                    if (Lyric != null)
-                    {
-                        selectedLayoutIndex.BindTo(Lyric.LayoutIndexBindable);
-                    }
                 }
             }
 

@@ -65,7 +65,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 RomajiTags = lyric.RomajiTags?.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray(),
                 // todo : should implement time and duration
                 Singers = lyric.Singers,
-                LayoutIndex = lyric.LayoutIndex,
                 Language = lyric.Language,
             };
 
@@ -78,7 +77,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 RomajiTags = shiftingTextTag(lyric.RomajiTags?.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), secondLyricText, -splitIndex),
                 // todo : should implement time and duration
                 Singers = lyric.Singers,
-                LayoutIndex = lyric.LayoutIndex,
                 Language = lyric.Language,
             };
 
@@ -127,7 +125,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 StartTime = startTime,
                 Duration = endTime - startTime,
                 Singers = singers.Distinct().ToArray(),
-                LayoutIndex = firstLyric.LayoutIndex,
                 Language = language,
             };
         }

@@ -133,19 +133,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<int> LayoutIndexBindable = new();
-
-        /// <summary>
-        /// Layout index
-        /// </summary>
-        [JsonIgnore]
-        public int LayoutIndex
-        {
-            get => LayoutIndexBindable.Value;
-            set => LayoutIndexBindable.Value = value;
-        }
-
-        [JsonIgnore]
         public readonly BindableDictionary<CultureInfo, string> TranslateTextBindable = new();
 
         /// <summary>
