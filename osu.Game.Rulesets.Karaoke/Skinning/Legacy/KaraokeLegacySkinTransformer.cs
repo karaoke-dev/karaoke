@@ -12,6 +12,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Database;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.UI.HUD;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
 
@@ -105,7 +106,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         {
             public InternalSkinStorageResourceProvider(string skinName)
             {
-                Files = Resources = new NamespacedResourceStore<byte[]>(new DllResourceStore(GetType().Assembly), $"Resources/Skin/{skinName}");
+                var assembly = AssemblyUtils.GetAssemblyByName("osu.Game.Rulesets.Karaoke");
+                Files = Resources = new NamespacedResourceStore<byte[]>(new DllResourceStore(assembly), $"Resources/Skin/{skinName}");
             }
 
             public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore)
