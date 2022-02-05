@@ -9,9 +9,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class AssemblyUtils
     {
-        public static Assembly GetAssemblyByName(string partialName)
+        public static Assembly GetAssemblyByName(string name)
         {
-            var defaultAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName.Contains(partialName));
+            var defaultAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.GetName().Name == name);
 
             if (defaultAssembly != null)
                 return defaultAssembly;
