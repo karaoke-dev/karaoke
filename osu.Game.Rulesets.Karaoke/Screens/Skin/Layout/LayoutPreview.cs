@@ -85,7 +85,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
                 manager.EditLayout.BindValueChanged(v =>
                 {
                     if (Child is PreviewDrawableLyric lyric)
-                        lyric.HitObject.LayoutIndex = v.NewValue.ID;
+                    {
+                        // todo: should trigger the skin change instead.
+                    }
                 }, true);
             }
 
