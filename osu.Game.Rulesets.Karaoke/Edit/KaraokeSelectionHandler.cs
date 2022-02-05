@@ -13,8 +13,6 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Skinning;
-using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
 using osu.Game.Rulesets.Karaoke.UI.Scrolling;
@@ -54,7 +52,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             {
                 return new[]
                 {
-                    createLayoutMenuItem(),
                     createSingerMenuItem()
                 };
             }
@@ -96,29 +93,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             {
                 notesChangeHandler.Combine();
             });
-        }
-
-        private MenuItem createLayoutMenuItem()
-        {
-            var lyrics = EditorBeatmap.SelectedHitObjects.Cast<Lyric>();
-            var layoutDictionary = source.GetConfig<KaraokeIndexLookup, IDictionary<int, string>>(KaraokeIndexLookup.Layout)?.Value;
-            var selectedLayoutIndexes = lyrics.Select(x => x.LayoutIndex).Distinct().ToList();
-            int selectedLayoutIndex = selectedLayoutIndexes.Count == 1 ? selectedLayoutIndexes.FirstOrDefault() : -1;
-
-            return new OsuMenuItem("Layout")
-            {
-                Items = layoutDictionary?.Select(x => new TernaryStateToggleMenuItem(x.Value, selectedLayoutIndex == x.Key ? MenuItemType.Highlighted : MenuItemType.Standard, state =>
-                {
-                    if (state != TernaryState.True)
-                        return;
-
-                    int layoutIndex = x.Key;
-                    var layout = source.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(ElementType.LyricLayout, layoutIndex)).Value;
-
-                    // todo: should use another way to change the layout.
-                    // lyricLayoutChangeHandler.ChangeLayout(layout);
-                })).ToArray()
-            };
         }
 
         private MenuItem createSingerMenuItem()
