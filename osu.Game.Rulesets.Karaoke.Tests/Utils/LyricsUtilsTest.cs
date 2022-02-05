@@ -139,24 +139,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         }
 
         [TestCase(1, 1, 1)]
-        [TestCase(2, 2, 2)]
-        [TestCase(-5, -5, -5)] // copy layout index even it's wrong.
-        public void TestSeparateLyricLayoutIndex(int actualLayout, int firstLayout, int secondLayout)
-        {
-            const int split_index = 2;
-            var lyric = new Lyric
-            {
-                Text = "karaoke!",
-                LayoutIndex = actualLayout
-            };
-
-            var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, split_index);
-
-            Assert.AreEqual(firstLyric.LayoutIndex, firstLayout);
-            Assert.AreEqual(secondLyric.LayoutIndex, secondLayout);
-        }
-
-        [TestCase(1, 1, 1)]
         [TestCase(54, 54, 54)]
         [TestCase(null, null, null)]
         public void TestSeparateLyricLanguage(int? lcid, int? firstLcid, int? secondLcid)
@@ -307,21 +289,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
             Assert.AreEqual(combineLyric.Singers, actualSingerIndexes);
-        }
-
-        [TestCase(1, 2, 1)]
-        [TestCase(1, 3, 1)]
-        [TestCase(1, -1, 1)]
-        [TestCase(-1, 1, -1)]
-        [TestCase(-5, 1, -5)] // Wrong layout index
-        public void TestCombineLayoutIndex(int firstLayout, int secondLayout, int actualLayout)
-        {
-            var lyric1 = new Lyric { LayoutIndex = firstLayout };
-            var lyric2 = new Lyric { LayoutIndex = secondLayout };
-
-            // just use first lyric's layout id.
-            var combineLyric = LyricsUtils.CombineLyric(lyric1, lyric2);
-            Assert.AreEqual(combineLyric.LayoutIndex, actualLayout);
         }
 
         [TestCase(1, 1, 1)]
