@@ -22,7 +22,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
         }
 
         protected override Section[] CreateSelectionContainer()
-            => new Section[] { };
+            => new Section[]
+            {
+                new LayoutSelection(),
+            };
 
         protected override Section[] CreatePropertiesContainer()
             => new Section[]
