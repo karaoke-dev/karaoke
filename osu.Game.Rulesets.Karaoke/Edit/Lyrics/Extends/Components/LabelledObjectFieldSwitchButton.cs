@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected override SwitchButton CreateComponent() => new ObjectFieldSwitchButton
         {
-            Selected = (selected) =>
+            Selected = selected =>
             {
                 if (selected)
                 {

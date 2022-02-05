@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
                     Width = 50,
                     Height = 20,
                     ReleaseFocusOnCommit = false,
-                    NewCommitText = (text) =>
+                    NewCommitText = text =>
                     {
                         if (caretPosition == null)
                             throw new ArgumentNullException(nameof(caretPosition));
