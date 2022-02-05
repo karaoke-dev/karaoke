@@ -43,7 +43,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
             foreach ((int key, string value) in layouts)
             {
-                setTooltip($"Test lyric with layout {value}", lyric => { lyric.LayoutIndex = key; });
+                setTooltip($"Test lyric with layout {value}", lyric =>
+                {
+                    // todo: should change mapping group id from the lyric.
+                });
             }
         }
 
