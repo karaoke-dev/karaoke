@@ -56,9 +56,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached(typeof(ILyricSingerChangeHandler))]
         private readonly LyricSingerChangeHandler lyricSingerChangeHandler;
 
-        [Cached(typeof(ILyricLayoutChangeHandler))]
-        private readonly LyricLayoutChangeHandler lyricLayoutChangeHandler;
-
         [Cached(typeof(ISingersChangeHandler))]
         private readonly SingersChangeHandler singersChangeHandler;
 
@@ -79,7 +76,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(notePositionInfo = new NotePositionInfo());
             AddInternal(notesChangeHandler = new NotesChangeHandler());
             AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
-            AddInternal(lyricLayoutChangeHandler = new LyricLayoutChangeHandler());
             AddInternal(singersChangeHandler = new SingersChangeHandler());
         }
 
