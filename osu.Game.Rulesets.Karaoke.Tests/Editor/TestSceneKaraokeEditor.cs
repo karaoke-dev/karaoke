@@ -56,7 +56,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             Dependencies.Cache(lyricCheckerManager);
 
             Dependencies.Cache(new EditorClock());
-            Dependencies.CacheAs<IEditorChangeHandler>(new EditorChangeHandler(editorBeatmap));
         }
     }
 }
