@@ -239,17 +239,17 @@ namespace osu.Game.Rulesets.Karaoke
                 {
                     Columns = new[]
                     {
-                        new StatisticItem("Info", new BeatmapInfoGraph(playableBeatmap)
+                        new StatisticItem("Info", () => new BeatmapInfoGraph(playableBeatmap)
                         {
                             RelativeSizeAxes = Axes.X,
                             Height = info_height
-                        }, new Dimension(GridSizeMode.Relative, 0.6f)),
-                        new StatisticItem("", new Container(), new Dimension(GridSizeMode.Absolute, 10)),
-                        new StatisticItem("Metadata", new BeatmapMetadataGraph(playableBeatmap)
+                        }, dimension: new Dimension(GridSizeMode.Relative, 0.6f)),
+                        new StatisticItem("", () => new Container(), dimension: new Dimension(GridSizeMode.Absolute, 10)),
+                        new StatisticItem("Metadata", () => new BeatmapMetadataGraph(playableBeatmap)
                         {
                             RelativeSizeAxes = Axes.X,
                             Height = info_height
-                        }, new Dimension())
+                        }, dimension: new Dimension())
                     }
                 },
             };
@@ -263,7 +263,7 @@ namespace osu.Game.Rulesets.Karaoke
                 {
                     Columns = new[]
                     {
-                        new StatisticItem("Saiten Result", new SaitenResultGraph(score, playableBeatmap)
+                        new StatisticItem("Saiten Result", () => new SaitenResultGraph(score, playableBeatmap)
                         {
                             RelativeSizeAxes = Axes.X,
                             Height = remain_height - text_size - spacing
@@ -277,7 +277,7 @@ namespace osu.Game.Rulesets.Karaoke
                 {
                     Columns = new[]
                     {
-                        new StatisticItem("Result", new NotScorableGraph
+                        new StatisticItem("Result", () => new NotScorableGraph
                         {
                             RelativeSizeAxes = Axes.X,
                             Height = remain_height - text_size - spacing
