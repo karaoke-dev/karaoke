@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -18,7 +17,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             {
                 lrcEncoder.Encode(output),
                 string.Join("\n", encodeNote(output)),
-                string.Join("\n", encodeStyle(output)),
                 string.Join("\n", encodeTranslate(output)),
             };
 
@@ -57,19 +55,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                 // Convert tone to string
                 static string convertTone(Tone tone) => tone.Scale + (tone.Half ? "#" : "");
-            }
-        }
-
-        private IEnumerable<string> encodeStyle(Beatmap output)
-        {
-            var lyrics = output.HitObjects.OfType<Lyric>().ToList();
-
-            for (int i = 0; i < lyrics.Count; i++)
-            {
-                var lyric = lyrics[i];
-                int layoutIndex = lyric.LayoutIndex;
-                int styleIndex = SingerUtils.GetShiftingStyleIndex(lyric.Singers);
-                yield return $"@style{i}={layoutIndex},{styleIndex}";
             }
         }
 

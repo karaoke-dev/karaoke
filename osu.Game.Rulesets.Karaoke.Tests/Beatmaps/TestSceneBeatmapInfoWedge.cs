@@ -39,7 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
         [TestCase("karaoke-file-samples")]
         [TestCase("karaoke-file-samples-without-note")]
         [TestCase("karaoke-note-samples")]
-        [TestCase("karaoke-style-samples")]
         [TestCase("karaoke-translate-samples")]
         public void TestNullBeatmap(string fileName)
         {

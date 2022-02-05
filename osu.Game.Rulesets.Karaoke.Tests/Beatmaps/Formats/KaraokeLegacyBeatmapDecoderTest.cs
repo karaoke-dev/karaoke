@@ -77,23 +77,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         }
 
         [Test]
-        public void TestDecodeStyle()
-        {
-            // Karaoke beatmap
-            var beatmap = decodeBeatmap("karaoke-style-samples");
-
-            // Get lyric
-            var lyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
-
-            // Check is not null
-            Assert.IsTrue(lyric != null);
-
-            // Check layout and font index
-            Assert.AreEqual(lyric.LayoutIndex, 2);
-            Assert.AreEqual(lyric.Singers, new[] { 1, 2 });
-        }
-
-        [Test]
         public void TestDecodeTranslate()
         {
             // Karaoke beatmap
