@@ -33,8 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             bindableDisplayTranslateToggle.BindValueChanged(x => { Session.SetValue(KaraokeRulesetSession.UseTranslate, x.NewValue); });
         }
 
-        public override DrawableHitObject<KaraokeHitObject> CreateDrawableRepresentation(KaraokeHitObject h) => null;
-
         protected override Playfield CreatePlayfield() => new KaraokeEditorPlayfield();
 
         [BackgroundDependencyLoader]
@@ -44,5 +42,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayRomaji, bindableDisplayRomajiToggle);
             editConfigManager.BindWith(KaraokeRulesetEditSetting.DisplayTranslate, bindableDisplayTranslateToggle);
         }
+
+        // todo: use default adjustment container because DrawableEditorRulesetWrapper will create it but contains no KaraokeRulesetConfigManager
+        public override PlayfieldAdjustmentContainer CreatePlayfieldAdjustmentContainer() => new();
     }
 }
