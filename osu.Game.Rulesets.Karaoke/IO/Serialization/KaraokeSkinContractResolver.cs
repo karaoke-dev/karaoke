@@ -9,7 +9,7 @@ using Newtonsoft.Json.Serialization;
 using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
+namespace osu.Game.Rulesets.Karaoke.IO.Serialization
 {
     /// <summary>
     /// This contract resolver is for save and load data from <see cref="KaraokeSkin"/>
