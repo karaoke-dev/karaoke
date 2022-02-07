@@ -41,9 +41,23 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit
 
         private GenericEditorMenuBar<TScreenMode> menuBar;
 
+        private DependencyContainer dependencies;
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+            => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+
         [BackgroundDependencyLoader(true)]
-        private void load(OsuColour colours, EditorBeatmap beatmap)
+        private void load(OsuColour colours, EditorBeatmap editorBeatmap, BindableBeatDivisor beatDivisor)
         {
+            // todo: should re-inject editor clock because it will let track cannot change time because it's in another screen.
+            var clock = new EditorClock(editorBeatmap, beatDivisor) { IsCoupled = false };
+
+            var loadableBeatmap = Beatmap.Value;
+            clock.ChangeSource(loadableBeatmap.Track);
+
+            dependencies.CacheAs(clock);
+            AddInternal(clock);
+
             AddInternal(new OsuContextMenuContainer
             {
                 RelativeSizeAxes = Axes.Both,
