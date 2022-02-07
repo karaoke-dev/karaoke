@@ -35,7 +35,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="Fody" Version="6.3.0" PrivateAssets="All" />
-    <PackageReference Include="ILMerge.Fody" Version="1.16.0" PrivateAssets="All" />
+    <PackageReference Include="Fody" Version="6.6.0" PrivateAssets="All" />
+    <PackageReference Include="ILMerge.Fody" Version="1.22.0" PrivateAssets="All" />
   </ItemGroup>
 </Project>
