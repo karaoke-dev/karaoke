@@ -9,15 +9,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Asserts
 {
     public class TimeTagAssert : Assert
     {
-        public static void ArePropertyEqual(IList<TimeTag> expect, IList<TimeTag> actually)
+        public static void ArePropertyEqual(IList<TimeTag> expected, IList<TimeTag> actual)
         {
-            AreEqual(expect?.Count, actually?.Count);
-            if (expect == null || actually == null)
+            AreEqual(expected?.Count, actual?.Count);
+            if (expected == null || actual == null)
                 return;
 
-            for (int i = 0; i < expect.Count; i++)
+            for (int i = 0; i < expected.Count; i++)
             {
-                ArePropertyEqual(expect[i], actually[i]);
+                ArePropertyEqual(expected[i], actual[i]);
             }
         }
 
