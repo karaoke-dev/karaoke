@@ -28,23 +28,26 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 ShadowOffset = new Vector2(10),
                 ShadowColour = new Color4(0.5f, 0.5f, 0.5f, 0.5f),
             };
+
+            const string expected = "{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}";
             string result = JsonConvert.SerializeObject(shader, CreateSettings());
-            Assert.AreEqual(result, "{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}");
+            Assert.AreEqual(expected, result);
         }
 
         [Test]
         public void TestDeserialize()
         {
             const string json = "{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}";
-            var result = JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings()) as ShadowShader;
-            var actual = new ShadowShader
+
+            var expected = new ShadowShader
             {
                 ShadowOffset = new Vector2(10),
                 ShadowColour = new Color4(0.5f, 0.5f, 0.5f, 0.5f),
             };
-            Assert.NotNull(result);
-            Assert.AreEqual(result.ShadowOffset, actual.ShadowOffset);
-            Assert.AreEqual(result.ShadowColour.ToHex(), actual.ShadowColour.ToHex());
+            var actual = JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings()) as ShadowShader;
+            Assert.NotNull(actual);
+            Assert.AreEqual(expected.ShadowOffset, actual.ShadowOffset);
+            Assert.AreEqual(expected.ShadowColour.ToHex(), actual.ShadowColour.ToHex());
         }
 
         [Test]
@@ -62,9 +65,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                     }
                 }
             };
-            string result = JsonConvert.SerializeObject(shader, CreateSettings());
-            Assert.AreEqual(result,
-                "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}]}");
+
+            const string expected = "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}]}";
+            string actual = JsonConvert.SerializeObject(shader, CreateSettings());
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -72,8 +76,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         {
             const string json =
                 "{\"$type\":\"StepShader\",\"name\":\"HelloShader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#7F7F7F7F\",\"shadow_offset\":{\"x\":10.0,\"y\":10.0}}]}";
-            var result = JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings()) as StepShader;
-            var actual = new StepShader
+
+            var expected = new StepShader
             {
                 Name = "HelloShader",
                 StepShaders = new[]
@@ -85,18 +89,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                     }
                 }
             };
+            var actual = JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings()) as StepShader;
 
             // test step shader.
-            Assert.NotNull(result);
-            Assert.AreEqual(result.StepShaders.Count, actual.StepShaders.Count);
+            Assert.NotNull(actual);
+            Assert.AreEqual(expected.StepShaders.Count, actual.StepShaders.Count);
 
             // test shadow shader inside.
-            var resultShadowShader = result.StepShaders.FirstOrDefault() as ShadowShader;
-            var actualShadowShader = result.StepShaders.FirstOrDefault() as ShadowShader;
-            Assert.NotNull(resultShadowShader);
+            var expectedShadowShader = expected.StepShaders.FirstOrDefault() as ShadowShader;
+            var actualShadowShader = actual.StepShaders.FirstOrDefault() as ShadowShader;
+            Assert.NotNull(expectedShadowShader);
             Assert.NotNull(actualShadowShader);
-            Assert.AreEqual(resultShadowShader.ShadowOffset, actualShadowShader.ShadowOffset);
-            Assert.AreEqual(resultShadowShader.ShadowColour.ToHex(), actualShadowShader.ShadowColour.ToHex());
+            Assert.AreEqual(expectedShadowShader.ShadowOffset, actualShadowShader.ShadowOffset);
+            Assert.AreEqual(expectedShadowShader.ShadowColour.ToHex(), actualShadowShader.ShadowColour.ToHex());
         }
     }
 }

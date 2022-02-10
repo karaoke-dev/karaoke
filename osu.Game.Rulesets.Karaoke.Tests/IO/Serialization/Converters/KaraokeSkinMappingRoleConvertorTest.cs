@@ -21,28 +21,30 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 ElementId = 1,
                 GroupId = 2,
             };
-            string result = JsonConvert.SerializeObject(group, CreateSettings());
-            Assert.AreEqual(result, "{\"$type\":\"DefaultMappingRole\",\"group_id\":2,\"name\":\"Singer 1 and 2\",\"element_type\":1,\"element_id\":1}");
+
+            const string expected = "{\"$type\":\"DefaultMappingRole\",\"group_id\":2,\"name\":\"Singer 1 and 2\",\"element_type\":1,\"element_id\":1}";
+            string actual = JsonConvert.SerializeObject(group, CreateSettings());
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void TestDefaultMappingRoleDeserializer()
         {
             const string json = "{\"$type\":\"DefaultMappingRole\",\"group_id\":2,\"name\":\"Singer 1 and 2\",\"element_type\":1,\"element_id\":1}";
-            var result = JsonConvert.DeserializeObject<IMappingRole>(json, CreateSettings()) as DefaultMappingRole;
-            var actual = new DefaultMappingRole
+
+            var expected = new DefaultMappingRole
             {
                 Name = "Singer 1 and 2",
                 ElementType = ElementType.LyricLayout,
                 ElementId = 1,
                 GroupId = 2,
             };
-
-            Assert.NotNull(result);
-            Assert.AreEqual(result.Name, actual.Name);
-            Assert.AreEqual(result.ElementType, actual.ElementType);
-            Assert.AreEqual(result.ElementId, actual.ElementId);
-            Assert.AreEqual(result.GroupId, actual.GroupId);
+            var actual = JsonConvert.DeserializeObject<IMappingRole>(json, CreateSettings()) as DefaultMappingRole;
+            Assert.NotNull(actual);
+            Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.ElementType, actual.ElementType);
+            Assert.AreEqual(expected.ElementId, actual.ElementId);
+            Assert.AreEqual(expected.GroupId, actual.GroupId);
         }
     }
 }

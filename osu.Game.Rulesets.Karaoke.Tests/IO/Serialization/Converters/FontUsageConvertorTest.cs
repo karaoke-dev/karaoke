@@ -16,11 +16,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase("OpenSans", 30, "RegularItalic", false, false, "{\"family\":\"OpenSans\",\"weight\":\"RegularItalic\",\"size\":30.0}")]
         [TestCase("OpenSans", 30, "RegularItalic", true, false, "{\"family\":\"OpenSans\",\"weight\":\"RegularItalic\",\"size\":30.0,\"italics\":true}")]
         [TestCase("OpenSans", 30, "RegularItalic", true, true, "{\"family\":\"OpenSans\",\"weight\":\"RegularItalic\",\"size\":30.0,\"italics\":true,\"fixedWidth\":true}")]
-        public void TestSerialize(string family, float size, string weight, bool italics, bool fixedWidth, string json)
+        public void TestSerialize(string family, float size, string weight, bool italics, bool fixedWidth, string expected)
         {
             var font = new FontUsage(family, size, weight, italics, fixedWidth);
-            string result = JsonConvert.SerializeObject(font, CreateSettings());
-            Assert.AreEqual(result, json);
+
+            string actual = JsonConvert.SerializeObject(font, CreateSettings());
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("{}", null, 20, null, false, false)]
@@ -31,9 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase("{\"family\": \"OpenSans\",\"weight\": \"RegularItalic\",\"size\": 30.0,\"italics\": true,\"fixedWidth\": true}", "OpenSans", 30, "RegularItalic", true, true)]
         public void TestDeserialize(string json, string family, float size, string weight, bool italics, bool fixedWidth)
         {
-            var result = JsonConvert.DeserializeObject<FontUsage>(json, CreateSettings());
-            var actual = new FontUsage(family, size, weight, italics, fixedWidth);
-            Assert.AreEqual(result, actual);
+            var expected = new FontUsage(family, size, weight, italics, fixedWidth);
+            var actual = JsonConvert.DeserializeObject<FontUsage>(json, CreateSettings());
+            Assert.AreEqual(expected, actual);
         }
     }
 }

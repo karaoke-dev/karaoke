@@ -19,26 +19,28 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 Name = "Singer 1 and 2",
                 SingerIds = new[] { 1, 2 }
             };
-            string result = JsonConvert.SerializeObject(group, CreateSettings());
-            Assert.AreEqual(result, "{\"$type\":\"GroupBySingerIds\",\"singer_ids\":[1,2],\"id\":123,\"name\":\"Singer 1 and 2\"}");
+
+            const string expected = "{\"$type\":\"GroupBySingerIds\",\"singer_ids\":[1,2],\"id\":123,\"name\":\"Singer 1 and 2\"}";
+            string actual = JsonConvert.SerializeObject(group, CreateSettings());
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void TestGroupBySingerIdsDeserializer()
         {
             const string json = "{\"$type\":\"GroupBySingerIds\",\"singer_ids\":[1,2],\"id\":123,\"name\":\"Singer 1 and 2\"}";
-            var result = JsonConvert.DeserializeObject<IGroup>(json, CreateSettings()) as GroupBySingerIds;
-            var actual = new GroupBySingerIds
+
+            var expected = new GroupBySingerIds
             {
                 ID = 123,
                 Name = "Singer 1 and 2",
                 SingerIds = new[] { 1, 2 }
             };
-
-            Assert.NotNull(result);
-            Assert.AreEqual(result.ID, actual.ID);
-            Assert.AreEqual(result.Name, actual.Name);
-            Assert.AreEqual(result.SingerIds, actual.SingerIds);
+            var actual = JsonConvert.DeserializeObject<IGroup>(json, CreateSettings()) as GroupBySingerIds;
+            Assert.NotNull(actual);
+            Assert.AreEqual(expected.ID, actual.ID);
+            Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.SingerIds, actual.SingerIds);
         }
 
         [Test]
@@ -50,26 +52,28 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 Name = "Two singers",
                 SingerNumber = 2,
             };
-            string result = JsonConvert.SerializeObject(group, CreateSettings());
-            Assert.AreEqual(result, "{\"$type\":\"GroupBySingerNumber\",\"singer_number\":2,\"id\":123,\"name\":\"Two singers\"}");
+
+            const string expected = "{\"$type\":\"GroupBySingerNumber\",\"singer_number\":2,\"id\":123,\"name\":\"Two singers\"}";
+            string actua = JsonConvert.SerializeObject(group, CreateSettings());
+            Assert.AreEqual(expected, actua);
         }
 
         [Test]
         public void TestGroupBySingerNumberDeserializer()
         {
             const string json = "{\"$type\":\"GroupBySingerNumber\",\"singer_number\":2,\"id\":123,\"name\":\"Two singers\"}";
-            var result = JsonConvert.DeserializeObject<IGroup>(json, CreateSettings()) as GroupBySingerNumber;
-            var actual = new GroupBySingerNumber
+
+            var expected = new GroupBySingerNumber
             {
                 ID = 123,
                 Name = "Two singers",
                 SingerNumber = 2,
             };
-
-            Assert.NotNull(result);
-            Assert.AreEqual(result.ID, actual.ID);
-            Assert.AreEqual(result.Name, actual.Name);
-            Assert.AreEqual(result.SingerNumber, actual.SingerNumber);
+            var actual = JsonConvert.DeserializeObject<IGroup>(json, CreateSettings()) as GroupBySingerNumber;
+            Assert.NotNull(actual);
+            Assert.AreEqual(expected.ID, actual.ID);
+            Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.SingerNumber, actual.SingerNumber);
         }
 
         [Test]
@@ -81,26 +85,28 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 Name = "Lyric 1 and 2",
                 LyricIds = new[] { 1, 2 }
             };
-            string result = JsonConvert.SerializeObject(group, CreateSettings());
-            Assert.AreEqual(result, "{\"$type\":\"GroupByLyricIds\",\"lyric_ids\":[1,2],\"id\":123,\"name\":\"Lyric 1 and 2\"}");
+
+            const string expected = "{\"$type\":\"GroupByLyricIds\",\"lyric_ids\":[1,2],\"id\":123,\"name\":\"Lyric 1 and 2\"}";
+            string actual = JsonConvert.SerializeObject(group, CreateSettings());
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void TestGroupByLyricIdsDeserializer()
         {
             const string json = "{\"$type\":\"GroupByLyricIds\",\"lyric_ids\":[1,2],\"id\":123,\"name\":\"Lyric 1 and 2\"}";
-            var result = JsonConvert.DeserializeObject<IGroup>(json, CreateSettings()) as GroupByLyricIds;
-            var actual = new GroupByLyricIds
+
+            var expected = new GroupByLyricIds
             {
                 ID = 123,
                 Name = "Lyric 1 and 2",
                 LyricIds = new[] { 1, 2 }
             };
-
-            Assert.NotNull(result);
-            Assert.AreEqual(result.ID, actual.ID);
-            Assert.AreEqual(result.Name, actual.Name);
-            Assert.AreEqual(result.LyricIds, actual.LyricIds);
+            var actual = JsonConvert.DeserializeObject<IGroup>(json, CreateSettings()) as GroupByLyricIds;
+            Assert.NotNull(actual);
+            Assert.AreEqual(expected.ID, actual.ID);
+            Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.LyricIds, actual.LyricIds);
         }
     }
 }
