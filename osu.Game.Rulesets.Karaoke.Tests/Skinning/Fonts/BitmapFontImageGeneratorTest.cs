@@ -41,12 +41,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
             var originPage = glyphStore.GetPageImage(0);
 
             // test should draw same image as origin resource in glyph store.
-            Assert.AreEqual(result.Length, 1);
+            Assert.AreEqual(1, result.Length);
 
             // test should draw same image as origin resource in glyph store.
-            var originImageData = originPage.Data.ToArray();
-            var resultImageData = result.FirstOrDefault()?.Data.ToArray();
-            Assert.AreEqual(resultImageData, originImageData);
+            var expected = originPage.Data.ToArray();
+            var actual = result.FirstOrDefault()?.Data.ToArray();
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -61,9 +61,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
             var originPage = glyphStore.GetPageImage(0);
 
             // test should draw same image as origin resource in glyph store.
-            var originImageData = originPage.Data.ToArray();
-            var resultImageData = result.Data.ToArray();
-            Assert.AreEqual(resultImageData, originImageData);
+            var expected = originPage.Data.ToArray();
+            var actual = result.Data.ToArray();
+            Assert.AreEqual(expected, actual);
         }
 
         private class TestFntGlyphStore : FntGlyphStore
