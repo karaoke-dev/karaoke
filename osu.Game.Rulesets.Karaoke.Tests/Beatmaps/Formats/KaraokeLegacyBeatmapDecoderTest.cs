@@ -36,27 +36,27 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
                 var working = new TestWorkingBeatmap(decoder.Decode(stream));
 
-                Assert.AreEqual(working.BeatmapInfo.BeatmapVersion, 1);
-                Assert.AreEqual(working.Beatmap.BeatmapInfo.BeatmapVersion, 1);
-                Assert.AreEqual(working.GetPlayableBeatmap(new KaraokeRuleset().RulesetInfo, Array.Empty<Mod>()).BeatmapInfo.BeatmapVersion, 1);
+                Assert.AreEqual(1, working.BeatmapInfo.BeatmapVersion);
+                Assert.AreEqual(1, working.Beatmap.BeatmapInfo.BeatmapVersion);
+                Assert.AreEqual(1, working.GetPlayableBeatmap(new KaraokeRuleset().RulesetInfo, Array.Empty<Mod>()).BeatmapInfo.BeatmapVersion);
 
                 // Test lyric part decode result
                 var lyrics = working.Beatmap.HitObjects.OfType<Lyric>();
-                Assert.AreEqual(lyrics.Count(), 54);
+                Assert.AreEqual(54, lyrics.Count());
 
                 // Test note decode part
                 var notes = working.Beatmap.HitObjects.OfType<Note>().Where(x => x.Display).ToList();
-                Assert.AreEqual(notes.Count, 36);
+                Assert.AreEqual(36, notes.Count);
 
-                testNote("た", 0, note: notes[0]);
-                testNote("だ", 0, note: notes[1]);
-                testNote("か", 0, note: notes[2]); // 風,か
-                testNote("ぜ", 0, note: notes[3]); // 風,ぜ
-                testNote("に", 1, note: notes[4]);
-                testNote("揺", 2, note: notes[5]);
-                testNote("ら", 3, note: notes[6]);
-                testNote("れ", 4, note: notes[7]);
-                testNote("て", 3, note: notes[8]);
+                testNote("た", 0, actualNote: notes[0]);
+                testNote("だ", 0, actualNote: notes[1]);
+                testNote("か", 0, actualNote: notes[2]); // 風,か
+                testNote("ぜ", 0, actualNote: notes[3]); // 風,ぜ
+                testNote("に", 1, actualNote: notes[4]);
+                testNote("揺", 2, actualNote: notes[5]);
+                testNote("ら", 3, actualNote: notes[6]);
+                testNote("れ", 4, actualNote: notes[7]);
+                testNote("て", 3, actualNote: notes[8]);
             }
         }
 
@@ -69,11 +69,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             // Get notes
             var notes = beatmap.HitObjects.OfType<Note>().ToList();
 
-            testNote("か", 1, note: notes[0]);
+            testNote("か", 1, actualNote: notes[0]);
             testNote("ら", 2, true, notes[1]);
-            testNote("お", 3, note: notes[2]);
+            testNote("お", 3, actualNote: notes[2]);
             testNote("け", 3, true, notes[3]);
-            testNote("け", 4, note: notes[4]);
+            testNote("け", 4, actualNote: notes[4]);
         }
 
         [Test]
@@ -87,24 +87,24 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
 
             // Check is not null
-            Assert.IsTrue(translates != null);
+            Assert.NotNull(translates);
 
             // Check translate count
-            Assert.AreEqual(translates.Count, 2);
+            Assert.AreEqual(2, translates.Count);
 
             // All lyric should have two translates
-            Assert.AreEqual(lyrics[0].Translates.Count, 2);
-            Assert.AreEqual(lyrics[1].Translates.Count, 2);
+            Assert.AreEqual(2, lyrics[0].Translates.Count);
+            Assert.AreEqual(2, lyrics[1].Translates.Count);
 
             // Check chinese translate
             var chineseLanguageId = translates[0];
-            Assert.AreEqual(lyrics[0].Translates[chineseLanguageId], "卡拉OK");
-            Assert.AreEqual(lyrics[1].Translates[chineseLanguageId], "喜歡");
+            Assert.AreEqual("卡拉OK", lyrics[0].Translates[chineseLanguageId]);
+            Assert.AreEqual("喜歡", lyrics[1].Translates[chineseLanguageId]);
 
             // Check english translate
             var englishLanguageId = translates[1];
-            Assert.AreEqual(lyrics[0].Translates[englishLanguageId], "karaoke");
-            Assert.AreEqual(lyrics[1].Translates[englishLanguageId], "like it");
+            Assert.AreEqual("karaoke", lyrics[0].Translates[englishLanguageId]);
+            Assert.AreEqual("like it", lyrics[1].Translates[englishLanguageId]);
         }
 
         private static KaraokeBeatmap decodeBeatmap(string fileName)
@@ -123,11 +123,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             }
         }
 
-        private static void testNote(string text, int tone, bool half = false, Note note = null)
+        private static void testNote(string expectedText, int expectedTone, bool expectedHalf = false, Note actualNote = null)
         {
-            Assert.AreEqual(note?.Text, text);
-            Assert.AreEqual(note?.Tone.Scale, tone);
-            Assert.AreEqual(note?.Tone.Half, half);
+            Assert.AreEqual(expectedText, actualNote?.Text);
+            Assert.AreEqual(expectedTone, actualNote?.Tone.Scale);
+            Assert.AreEqual(expectedHalf, actualNote?.Tone.Half);
         }
     }
 }

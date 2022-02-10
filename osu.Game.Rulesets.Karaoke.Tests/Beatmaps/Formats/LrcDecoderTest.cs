@@ -18,29 +18,28 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
     public class LrcDecoderTest
     {
         [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "からおけ", 1000, 5000)]
-        public void TestLyricTextAndTime(string lyricText, string text, double startTime, double endTime)
+        public void TestLyricTextAndTime(string lyricText, string expectedText, double expectedStartTime, double expectedEndTime)
         {
             var beatmap = decodeLrcLine(lyricText);
 
             // Get first lyric from beatmap
-            var lyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
-
-            // Check lyric
-            Assert.AreEqual(lyric?.Text, text);
-            Assert.AreEqual(lyric?.StartTime, startTime);
-            Assert.AreEqual(lyric?.EndTime, endTime);
+            var actual = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
+            Assert.AreEqual(expectedText, actual?.Text);
+            Assert.AreEqual(expectedStartTime, actual?.StartTime);
+            Assert.AreEqual(expectedEndTime, actual?.EndTime);
         }
 
         [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" })]
         public void TestLyricTimeTag(string text, string[] timeTags)
         {
-            var beatmap = decodeLrcLine(text);
-
             // Get first lyric from beatmap
+            var beatmap = decodeLrcLine(text);
             var lyric = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
 
             // Check time tag
-            TimeTagAssert.ArePropertyEqual(lyric?.TimeTags, TestCaseTagHelper.ParseTimeTags(timeTags));
+            var expected = TestCaseTagHelper.ParseTimeTags(timeTags);
+            var actual = lyric?.TimeTags;
+            TimeTagAssert.ArePropertyEqual(expected, actual);
         }
 
         [TestCase("[00:04.00]か[00:04.00]ら[00:05.00]お[00:06.00]け[00:07.00]")]

@@ -36,15 +36,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 // Testing layout
                 var firstLayout = skin.Layouts.FirstOrDefault();
                 Assert.IsNotNull(firstLayout);
-                Assert.AreEqual(firstLayout.Name, "下-1");
-                Assert.AreEqual(firstLayout.Alignment, Anchor.BottomRight);
-                Assert.AreEqual(firstLayout.HorizontalMargin, 30);
-                Assert.AreEqual(firstLayout.VerticalMargin, 45);
+                Assert.AreEqual("下-1", firstLayout.Name);
+                Assert.AreEqual(Anchor.BottomRight, firstLayout.Alignment);
+                Assert.AreEqual(30, firstLayout.HorizontalMargin);
+                Assert.AreEqual(45, firstLayout.VerticalMargin);
 
                 // Testing style
                 var firstFont = skin.LyricStyles.FirstOrDefault();
                 Assert.IsNotNull(firstFont);
-                Assert.AreEqual(firstFont.Name, "標準配色");
+                Assert.AreEqual("標準配色", firstFont.Name);
 
                 // Because some property has been converted into shader, so should test shader property.
                 var shaders = firstFont.LeftLyricTextShaders;
@@ -53,29 +53,29 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 // Test outline shader.
                 var outlineShader = shaders.FirstOrDefault() as OutlineShader;
                 Assert.NotNull(outlineShader);
-                Assert.AreEqual(outlineShader.OutlineColour, new Color4(255, 255, 255, 255));
-                Assert.AreEqual(outlineShader.Radius, 10);
+                Assert.AreEqual(new Color4(255, 255, 255, 255), outlineShader.OutlineColour);
+                Assert.AreEqual(10, outlineShader.Radius);
 
                 // Test shader convert result.
                 var shadowShader = shaders.LastOrDefault() as ShadowShader;
                 Assert.NotNull(shadowShader);
-                Assert.AreEqual(shadowShader.ShadowOffset, new Vector2(3));
+                Assert.AreEqual(new Vector2(3), shadowShader.ShadowOffset);
 
                 // test lyric config
                 var defaultLyricConfig = skin.DefaultLyricConfig;
                 Assert.NotNull(defaultLyricConfig);
-                Assert.AreEqual(defaultLyricConfig.SmartHorizon, KaraokeTextSmartHorizon.Multi);
-                Assert.AreEqual(defaultLyricConfig.LyricsInterval, 4);
-                Assert.AreEqual(defaultLyricConfig.RubyInterval, 2);
-                Assert.AreEqual(defaultLyricConfig.RubyAlignment, LyricTextAlignment.Auto);
-                Assert.AreEqual(defaultLyricConfig.RubyMargin, 4);
+                Assert.AreEqual(KaraokeTextSmartHorizon.Multi, defaultLyricConfig.SmartHorizon);
+                Assert.AreEqual(4, defaultLyricConfig.LyricsInterval);
+                Assert.AreEqual(2, defaultLyricConfig.RubyInterval);
+                Assert.AreEqual(LyricTextAlignment.Auto, defaultLyricConfig.RubyAlignment);
+                Assert.AreEqual(4, defaultLyricConfig.RubyMargin);
 
                 // Test main text font
                 var mainTextFontInfo = defaultLyricConfig.MainTextFont;
-                Assert.AreEqual(mainTextFontInfo.Family, "游明朝 Demibold");
-                Assert.AreEqual(mainTextFontInfo.Weight, "Bold");
-                Assert.AreEqual(mainTextFontInfo.Size, 40);
-                Assert.AreEqual(mainTextFontInfo.FixedWidth, false);
+                Assert.AreEqual("游明朝 Demibold", mainTextFontInfo.Family);
+                Assert.AreEqual("Bold", mainTextFontInfo.Weight);
+                Assert.AreEqual(40, mainTextFontInfo.Size);
+                Assert.AreEqual(false, mainTextFontInfo.FixedWidth);
             }
         }
     }
