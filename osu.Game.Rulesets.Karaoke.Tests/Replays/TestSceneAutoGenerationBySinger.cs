@@ -24,23 +24,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
             var generated = new KaraokeAutoGeneratorBySinger(beatmap, data).Generate();
 
             // Get generated frame and compare frame
-            var karaokeFrames = generated.Frames.OfType<KaraokeReplayFrame>().ToList();
-            var compareFrame = getCompareResultFromName("demo");
+            var expected = getCompareResultFromName("demo");
+            var actual = generated.Frames.OfType<KaraokeReplayFrame>().ToList();
 
             // Check total frames.
-            Assert.AreEqual(karaokeFrames.Count, compareFrame.Count, $"Replay frame should have {compareFrame.Count}.");
+            Assert.AreEqual(expected.Count, actual.Count, $"Replay frame should have {expected.Count}.");
 
             // Compare generated frame with result;
-            for (int i = 0; i < compareFrame.Count; i++)
+            for (int i = 0; i < expected.Count; i++)
             {
-                Assert.AreEqual(karaokeFrames[i].Time, compareFrame[i].Time);
-                Assert.AreEqual(karaokeFrames[i].Sound, compareFrame[i].Sound);
+                Assert.AreEqual(expected[i].Time, actual[i].Time);
+                Assert.AreEqual(expected[i].Sound, actual[i].Sound);
 
-                if (!compareFrame[i].Sound)
+                if (!expected[i].Sound)
                     continue;
 
-                float convertedScale = beatmap.PitchToScale(compareFrame[i].Pitch);
-                Assert.AreEqual(karaokeFrames[i].Scale, convertedScale);
+                float convertedScale = beatmap.PitchToScale(expected[i].Pitch);
+                Assert.AreEqual(convertedScale, actual[i].Scale);
             }
         }
 
