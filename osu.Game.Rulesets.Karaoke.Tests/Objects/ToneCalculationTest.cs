@@ -17,7 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
         [TestCase(1.5, -2.5, -1)]
         public void TestOperatorPlus(double tone1, double tone2, double tone)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1) + TestCaseToneHelper.NumberToTone(tone2), TestCaseToneHelper.NumberToTone(tone));
+            var expected = TestCaseToneHelper.NumberToTone(tone);
+            var actual = TestCaseToneHelper.NumberToTone(tone1) + TestCaseToneHelper.NumberToTone(tone2);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(1, 1, 2)]
@@ -25,7 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
         [TestCase(1, -1, 0)]
         public void TestOperatorPlusWithInt(double tone1, int scale1, double tone)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1) + scale1, TestCaseToneHelper.NumberToTone(tone));
+            var expected = TestCaseToneHelper.NumberToTone(tone);
+            var actual = TestCaseToneHelper.NumberToTone(tone1) + scale1;
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(1, 1, 0)]
@@ -36,7 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
         [TestCase(1.5, -2.5, 4)]
         public void TestOperatorMinus(double tone1, double tone2, double tone)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1) - TestCaseToneHelper.NumberToTone(tone2), TestCaseToneHelper.NumberToTone(tone));
+            var expected = TestCaseToneHelper.NumberToTone(tone);
+            var actual = TestCaseToneHelper.NumberToTone(tone1) - TestCaseToneHelper.NumberToTone(tone2);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(1, 1, 0)]
@@ -44,7 +50,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
         [TestCase(1, -1, 2)]
         public void TestOperatorMinusWithInt(double tone1, int scale1, double tone)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1) - scale1, TestCaseToneHelper.NumberToTone(tone));
+            var expected = TestCaseToneHelper.NumberToTone(tone);
+            var actual = TestCaseToneHelper.NumberToTone(tone1) - scale1;
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(1, 1)]
@@ -52,7 +60,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
         [TestCase(-1.5, -1.5)]
         public void TestOperatorEqual(double tone1, double tone2)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1), TestCaseToneHelper.NumberToTone(tone2));
+            var expected = TestCaseToneHelper.NumberToTone(tone1);
+            var actual = TestCaseToneHelper.NumberToTone(tone2);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(1, 1)]
@@ -70,7 +80,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
         [TestCase(-1.5, -2)]
         public void TestOperatorNotEqual(double tone1, double tone2)
         {
-            Assert.AreNotEqual(TestCaseToneHelper.NumberToTone(tone1), TestCaseToneHelper.NumberToTone(tone2));
+            var expected = TestCaseToneHelper.NumberToTone(tone1);
+            var actual = TestCaseToneHelper.NumberToTone(tone2);
+            Assert.AreNotEqual(expected, actual);
         }
 
         [TestCase(-1, 1)]
@@ -86,64 +98,72 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
         [TestCase(1, 0.5, true)]
         [TestCase(1, 1, false)]
         [TestCase(1, 1.5, false)]
-        public void TestOperatorGreater(double tone1, double tone2, bool match)
+        public void TestOperatorGreater(double tone1, double tone2, bool expected)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1) > TestCaseToneHelper.NumberToTone(tone2), match);
+            bool actual = TestCaseToneHelper.NumberToTone(tone1) > TestCaseToneHelper.NumberToTone(tone2);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(1, 0, true)]
         [TestCase(1, 1, false)]
-        public void TestOperatorGreaterWithInt(double tone1, int scale1, bool match)
+        public void TestOperatorGreaterWithInt(double tone1, int scale1, bool expected)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1) > scale1, match);
+            bool actual = TestCaseToneHelper.NumberToTone(tone1) > scale1;
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(1, 0, true)]
         [TestCase(1, 0.5, true)]
         [TestCase(1, 1, true)]
         [TestCase(1, 1.5, false)]
-        public void TestOperatorGreaterOrEqual(double tone1, double tone2, bool match)
+        public void TestOperatorGreaterOrEqual(double tone1, double tone2, bool expected)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1) >= TestCaseToneHelper.NumberToTone(tone2), match);
+            bool actual = TestCaseToneHelper.NumberToTone(tone1) >= TestCaseToneHelper.NumberToTone(tone2);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(1, 0, true)]
         [TestCase(1, 1, true)]
-        public void TestOperatorGreaterOrEqualWithInt(double tone1, int scale1, bool match)
+        public void TestOperatorGreaterOrEqualWithInt(double tone1, int scale1, bool expected)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1) >= scale1, match);
+            bool actual = TestCaseToneHelper.NumberToTone(tone1) >= scale1;
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(-1, 0, true)]
         [TestCase(-1, -0.5, true)]
         [TestCase(-1, -1, false)]
         [TestCase(-1, -1.5, false)]
-        public void TestOperatorLess(double tone1, double tone2, bool match)
+        public void TestOperatorLess(double tone1, double tone2, bool expected)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1) < TestCaseToneHelper.NumberToTone(tone2), match);
+            bool actual = TestCaseToneHelper.NumberToTone(tone1) < TestCaseToneHelper.NumberToTone(tone2);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(-1, 0, true)]
         [TestCase(-1, -1, false)]
-        public void TestOperatorLessWithInt(double tone1, int scale1, bool match)
+        public void TestOperatorLessWithInt(double tone1, int scale1, bool expected)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1) < scale1, match);
+            bool actual = TestCaseToneHelper.NumberToTone(tone1) < scale1;
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(-1, 0, true)]
         [TestCase(-1, -0.5, true)]
         [TestCase(-1, -1, true)]
         [TestCase(-1, -1.5, false)]
-        public void TestOperatorLessOrEqual(double tone1, double tone2, bool match)
+        public void TestOperatorLessOrEqual(double tone1, double tone2, bool expected)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1) <= TestCaseToneHelper.NumberToTone(tone2), match);
+            bool actual = TestCaseToneHelper.NumberToTone(tone1) <= TestCaseToneHelper.NumberToTone(tone2);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(-1, 0, true)]
         [TestCase(-1, -1, true)]
-        public void TestOperatorLessOrEqualWithInt(double tone1, int scale1, bool match)
+        public void TestOperatorLessOrEqualWithInt(double tone1, int scale1, bool expected)
         {
-            Assert.AreEqual(TestCaseToneHelper.NumberToTone(tone1) <= scale1, match);
+            bool actual = TestCaseToneHelper.NumberToTone(tone1) <= scale1;
+            Assert.AreEqual(expected, actual);
         }
     }
 }

@@ -12,13 +12,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [Test]
         public void TestGetValues()
         {
-            var actual = new[]
+            var expected = new[]
             {
                 TestEnum.Enum1,
                 TestEnum.Enum2,
                 TestEnum.Enum3
             };
-            Assert.AreEqual(EnumUtils.GetValues<TestEnum>(), actual);
+            var actual = EnumUtils.GetValues<TestEnum>();
+            Assert.AreEqual(expected, actual);
         }
 
         internal enum TestEnum

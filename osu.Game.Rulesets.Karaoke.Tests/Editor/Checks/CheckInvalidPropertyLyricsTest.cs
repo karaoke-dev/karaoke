@@ -30,15 +30,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         [TestCase("Ja-jp", false)]
         [TestCase("", false)] // should not have issue if CultureInfo accept it.
         [TestCase(null, true)]
-        public void TestCheckLanguage(string language, bool hasIssue)
+        public void TestCheckLanguage(string language, bool expected)
         {
             var lyric = new Lyric
             {
                 Language = language != null ? new CultureInfo(language) : null,
             };
 
-            var issueTemplate = run(lyric).Select(x => x.Template).OfType<IssueTemplateNotFillLanguage>().FirstOrDefault();
-            Assert.AreEqual(issueTemplate != null, hasIssue);
+            bool actual = run(lyric).Select(x => x.Template).OfType<IssueTemplateNotFillLanguage>().Any();
+            Assert.AreEqual(expected, actual);
         }
 
         [Ignore("Not implement.")]
@@ -57,30 +57,30 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         [TestCase(" ", true)] // but should not be empty or white space.
         [TestCase("", true)]
         [TestCase(null, true)]
-        public void TestCheckText(string text, bool hasIssue)
+        public void TestCheckText(string text, bool expected)
         {
             var lyric = new Lyric
             {
                 Text = text
             };
 
-            var issueTemplate = run(lyric).Select(x => x.Template).OfType<IssueTemplateNoText>().FirstOrDefault();
-            Assert.AreEqual(issueTemplate != null, hasIssue);
+            bool actual = run(lyric).Select(x => x.Template).OfType<IssueTemplateNoText>().Any();
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(new[] { 1, 2, 3 }, false)]
         [TestCase(new[] { 1 }, false)]
         [TestCase(new[] { 100 }, false)] // although singer is not exist, but should not check in this test case.
         [TestCase(new int[] { }, true)]
-        public void TestCheckNoSinger(int[] singers, bool hasIssue)
+        public void TestCheckNoSinger(int[] singers, bool expected)
         {
             var lyric = new Lyric
             {
                 Singers = singers
             };
 
-            var issueTemplate = run(lyric).Select(x => x.Template).OfType<IssueTemplateNoSinger>().FirstOrDefault();
-            Assert.AreEqual(issueTemplate != null, hasIssue);
+            bool actual = run(lyric).Select(x => x.Template).OfType<IssueTemplateNoSinger>().Any();
+            Assert.AreEqual(expected, actual);
         }
 
         [Ignore("Not implement.")]

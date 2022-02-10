@@ -41,10 +41,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
         [Test]
         public void CompareFontNameWithOrigin()
         {
-            string fontName = CustomizeGlyphStore.FontName;
-            string actual = GlyphStore.FontName;
-
-            Assert.AreEqual(fontName, actual);
+            string expected = GlyphStore.FontName;
+            string actual = CustomizeGlyphStore.FontName;
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase('a')]
@@ -53,19 +52,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
         [TestCase('あ')] // should not have those texts in store.
         public void CompareHasGlyphWithOrigin(char c)
         {
-            bool hasGlyph = CustomizeGlyphStore.HasGlyph(c);
-            bool actual = GlyphStore.HasGlyph(c);
-
-            Assert.AreEqual(hasGlyph, actual);
+            bool expected = GlyphStore.HasGlyph(c);
+            bool actual = CustomizeGlyphStore.HasGlyph(c);
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void CompareGetBaseHeightWithOrigin()
         {
-            float? baseHeight = CustomizeGlyphStore.Baseline;
-            float? actual = GlyphStore.Baseline;
-
-            Assert.AreEqual(baseHeight, actual);
+            float? expected = GlyphStore.Baseline;
+            float? actual = CustomizeGlyphStore.Baseline;
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase('a')]
@@ -76,18 +73,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
         [TestCase('#')]
         public void CompareGetCharacterGlyphWithOrigin(char c)
         {
-            var characterGlyph = CustomizeGlyphStore.Get(c);
-            var actual = GlyphStore.Get(c);
+            var expected = GlyphStore.Get(c);
+            var actual = CustomizeGlyphStore.Get(c);
 
             // because get character glyph should make sure that this glyph store contains char, so will not be null.
-            Assert.IsNotNull(characterGlyph);
+            Assert.IsNotNull(expected);
             Assert.IsNotNull(actual);
 
             // test all property should be matched.
-            Assert.AreEqual(characterGlyph.Character, actual.Character);
-            Assert.AreEqual(characterGlyph.XOffset, actual.XOffset);
-            Assert.AreEqual(characterGlyph.YOffset, actual.YOffset);
-            Assert.AreEqual(characterGlyph.XAdvance, actual.XAdvance);
+            Assert.AreEqual(expected.Character, actual.Character);
+            Assert.AreEqual(expected.XOffset, actual.XOffset);
+            Assert.AreEqual(expected.YOffset, actual.YOffset);
+            Assert.AreEqual(expected.XAdvance, actual.XAdvance);
         }
 
         [TestCase('a', 'a')]
@@ -97,10 +94,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
         [TestCase('a', 'あ')]
         public void CompareGetKerningWithOrigin(char left, char right)
         {
-            int kerning = CustomizeGlyphStore.GetKerning(left, right);
-            int actual = GlyphStore.GetKerning(left, right);
-
-            Assert.AreEqual(kerning, actual);
+            int expected = GlyphStore.GetKerning(left, right);
+            int actual = CustomizeGlyphStore.GetKerning(left, right);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase('a')]
@@ -111,12 +107,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
         [TestCase('#')]
         public void CompareGetTextureUploadWithOrigin(char c)
         {
-            var characterGlyph = (CustomizeGlyphStore as IResourceStore<TextureUpload>)?.Get(new string(new[] { c }));
-            var actual = GlyphStore.Get(new string(new[] { c }));
+            var expected = GlyphStore.Get(new string(new[] { c }));
+            var actual = (CustomizeGlyphStore as IResourceStore<TextureUpload>)?.Get(new string(new[] { c }));
+
+            Assert.IsNotNull(expected);
+            Assert.IsNotNull(actual);
 
             // todo : should test with pixel perfect, but it's ok to pass if size is almost the same.
-            Assert.AreEqual(characterGlyph.Width, actual.Width);
-            Assert.AreEqual(characterGlyph.Height, actual.Height);
+            Assert.AreEqual(expected.Width, actual.Width);
+            Assert.AreEqual(expected.Height, actual.Height);
         }
     }
 }

@@ -37,17 +37,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         [TestCase("カラオケ", new[] { "[0,1]:か", "[0,1]:ら" }, new[] { RubyTagInvalid.Overlapping })]
         [TestCase("カラオケ", new[] { "[0,3]:か", "[1,2]:ら" }, new[] { RubyTagInvalid.Overlapping })]
         [TestCase("カラオケ", new[] { "[0,3]:" }, new[] { RubyTagInvalid.EmptyText })]
-        public void TestCheckInvalidRubyTags(string text, string[] rubies, RubyTagInvalid[] invalids)
+        public void TestCheckInvalidRubyTags(string text, string[] rubies, RubyTagInvalid[] expected)
         {
             var lyric = new Lyric
             {
                 Text = text,
                 RubyTags = TestCaseTagHelper.ParseRubyTags(rubies)
             };
-
             var issue = run(lyric).OfType<RubyTagIssue>().FirstOrDefault();
-            var invalidRubyTagDictionaryKeys = issue?.InvalidRubyTags.Keys.ToArray() ?? Array.Empty<RubyTagInvalid>();
-            Assert.AreEqual(invalidRubyTagDictionaryKeys, invalids);
+
+            var actual = issue?.InvalidRubyTags.Keys.ToArray() ?? Array.Empty<RubyTagInvalid>();
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("karaoke", new[] { "[0,2]:ka", "[2,4]:ra", "[4,5]:o", "[5,7]:ke" }, new RomajiTagInvalid[] { })]
@@ -57,17 +57,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         [TestCase("karaoke", new[] { "[0,2]:ka", "[1,3]:ra" }, new[] { RomajiTagInvalid.Overlapping })]
         [TestCase("karaoke", new[] { "[0,3]:ka", "[1,2]:ra" }, new[] { RomajiTagInvalid.Overlapping })]
         [TestCase("karaoke", new[] { "[0,3]:" }, new[] { RomajiTagInvalid.EmptyText })]
-        public void TestCheckInvalidRomajiTags(string text, string[] romajies, RomajiTagInvalid[] invalids)
+        public void TestCheckInvalidRomajiTags(string text, string[] romajies, RomajiTagInvalid[] expected)
         {
             var lyric = new Lyric
             {
                 Text = text,
                 RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies)
             };
-
             var issue = run(lyric).OfType<RomajiTagIssue>().FirstOrDefault();
-            var invalidRomajiTagDictionaryKeys = issue?.InvalidRomajiTags.Keys.ToArray() ?? Array.Empty<RomajiTagInvalid>();
-            Assert.AreEqual(invalidRomajiTagDictionaryKeys, invalids);
+
+            var actual = issue?.InvalidRomajiTags.Keys.ToArray() ?? Array.Empty<RomajiTagInvalid>();
+            Assert.AreEqual(expected, actual);
         }
 
         private IEnumerable<Issue> run(HitObject lyric)

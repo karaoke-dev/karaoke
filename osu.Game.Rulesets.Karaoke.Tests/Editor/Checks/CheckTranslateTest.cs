@@ -32,7 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             // test no lyric and no default language. (should not show alert)
             var beatmap = createTestingBeatmap(null, null);
             var result = check.Run(getContext(beatmap));
-            Assert.AreEqual(result.Count(), 0);
+
+            int actual = result.Count();
+            Assert.AreEqual(0, actual);
         }
 
         [Test]
@@ -42,7 +44,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             var translateLanguages = new List<CultureInfo> { new("Ja-jp") };
             var beatmap = createTestingBeatmap(translateLanguages, null);
             var result = check.Run(getContext(beatmap));
-            Assert.AreEqual(result.Count(), 0);
+
+            int actual = result.Count();
+            Assert.AreEqual(0, actual);
         }
 
         [Test]
@@ -52,7 +56,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             var lyrics = new[] { new Lyric() };
             var beatmap = createTestingBeatmap(null, lyrics);
             var result = check.Run(getContext(beatmap));
-            Assert.AreEqual(result.Count(), 0);
+
+            int actual = result.Count();
+            Assert.AreEqual(0, actual);
         }
 
         [Test]
@@ -65,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 createLyric(),
                 createLyric(),
             });
-            Assert.AreEqual(check.Run(getContext(beatmap)).Count(), 1);
+            Assert.AreEqual(1, check.Run(getContext(beatmap)).Count());
 
             // no lyric with translate string. (should have issue)
             var beatmap2 = createTestingBeatmap(translateLanguages, new[]
@@ -73,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 createLyric(new CultureInfo("Ja-jp")),
                 createLyric(),
             });
-            Assert.AreEqual(check.Run(getContext(beatmap2)).Count(), 1);
+            Assert.AreEqual(1, check.Run(getContext(beatmap2)).Count());
 
             // no lyric with translate string. (should have issue)
             var beatmap3 = createTestingBeatmap(translateLanguages, new[]
@@ -81,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 createLyric(new CultureInfo("Ja-jp")),
                 createLyric(new CultureInfo("Ja-jp"), ""),
             });
-            Assert.AreEqual(check.Run(getContext(beatmap3)).Count(), 1);
+            Assert.AreEqual(1, check.Run(getContext(beatmap3)).Count());
 
             // some lyric with translate string. (should have issue)
             var beatmap4 = createTestingBeatmap(translateLanguages, new[]
@@ -89,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 createLyric(new CultureInfo("Ja-jp"), "translate1"),
                 createLyric(new CultureInfo("Ja-jp")),
             });
-            Assert.AreEqual(check.Run(getContext(beatmap4)).Count(), 1);
+            Assert.AreEqual(1, check.Run(getContext(beatmap4)).Count());
 
             // every lyric with translate string. (should not have issue)
             var beatmap5 = createTestingBeatmap(translateLanguages, new[]
@@ -97,14 +103,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 createLyric(new CultureInfo("Ja-jp"), "translate1"),
                 createLyric(new CultureInfo("Ja-jp"), "translate2"),
             });
-            Assert.AreEqual(check.Run(getContext(beatmap5)).Count(), 0);
+            Assert.AreEqual(0, check.Run(getContext(beatmap5)).Count());
 
             // lyric translate not listed. (should have issue)
             var beatmap6 = createTestingBeatmap(null, new[]
             {
                 createLyric(new CultureInfo("en-US"), "translate1"),
             });
-            Assert.AreEqual(check.Run(getContext(beatmap6)).Count(), 1);
+            Assert.AreEqual(1, check.Run(getContext(beatmap6)).Count());
 
             static Lyric createLyric(CultureInfo cultureInfo = null, string translate = null)
             {

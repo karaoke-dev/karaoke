@@ -16,8 +16,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         public void TestSerialize(string hex, string json)
         {
             var colour = Color4Extensions.FromHex(hex);
-            string result = JsonConvert.SerializeObject(colour, CreateSettings());
-            Assert.AreEqual(result, $"\"{json}\"");
+
+            string expected = $"\"{json}\"";
+            string actual = JsonConvert.SerializeObject(colour, CreateSettings());
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("#aaaaaa", "#AAAAAA")]
@@ -29,9 +31,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         {
             try
             {
-                var result = JsonConvert.DeserializeObject<Color4>($"\"{json}\"", CreateSettings());
-                var colour = Color4Extensions.FromHex(hex);
-                Assert.AreEqual(result, colour);
+                var expected = Color4Extensions.FromHex(hex);
+                var actual = JsonConvert.DeserializeObject<Color4>($"\"{json}\"", CreateSettings());
+                Assert.AreEqual(expected, actual);
             }
             catch
             {

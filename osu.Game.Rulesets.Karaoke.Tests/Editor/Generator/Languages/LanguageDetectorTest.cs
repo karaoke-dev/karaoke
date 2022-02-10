@@ -19,8 +19,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
         public void TestDetectLanguage(string text, string language)
         {
             var detector = new LanguageDetector(generateConfig());
-            var result = detector.DetectLanguage(new Lyric { Text = text });
-            Assert.AreEqual(result, new CultureInfo(language));
+
+            var expected = new CultureInfo(language);
+            var actual = detector.DetectLanguage(new Lyric { Text = text });
+            Assert.AreEqual(expected, actual);
         }
 
         private static LanguageDetectorConfig generateConfig() => new();

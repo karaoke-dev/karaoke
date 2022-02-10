@@ -14,37 +14,43 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(0, TextIndex.IndexState.End, 1)]
         [TestCase(-1, TextIndex.IndexState.Start, -1)] // In utils not checking is index out of range
         [TestCase(-1, TextIndex.IndexState.End, 0)]
-        public void TestToStringIndex(int index, TextIndex.IndexState state, int actualIndex)
+        public void TestToStringIndex(int index, TextIndex.IndexState state, int expected)
         {
             var textIndex = new TextIndex(index, state);
-            Assert.AreEqual(TextIndexUtils.ToStringIndex(textIndex), actualIndex);
+
+            int actual = TextIndexUtils.ToStringIndex(textIndex);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(0, false, 0, TextIndex.IndexState.Start)]
         [TestCase(1, true, 0, TextIndex.IndexState.End)]
         [TestCase(0, true, -1, TextIndex.IndexState.End)] // In utils not checking is index out of range
-        public void TestFromStringIndex(int textIndex, bool end, int actualIndex, TextIndex.IndexState actualState)
+        public void TestFromStringIndex(int textIndex, bool end, int expectedIndex, TextIndex.IndexState expectedState)
         {
-            var actualTextIndex = new TextIndex(actualIndex, actualState);
-            Assert.AreEqual(TextIndexUtils.FromStringIndex(textIndex, end), actualTextIndex);
+            var expected = new TextIndex(expectedIndex, expectedState);
+            var actual = TextIndexUtils.FromStringIndex(textIndex, end);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(TextIndex.IndexState.Start, TextIndex.IndexState.End)]
         [TestCase(TextIndex.IndexState.End, TextIndex.IndexState.Start)]
-        public void TestReverseState(TextIndex.IndexState state, TextIndex.IndexState actualState)
+        public void TestReverseState(TextIndex.IndexState state, TextIndex.IndexState expected)
         {
-            Assert.AreEqual(TextIndexUtils.ReverseState(state), actualState);
+            var actual = TextIndexUtils.ReverseState(state);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(0, TextIndex.IndexState.Start, 1, 1, TextIndex.IndexState.Start)]
         [TestCase(0, TextIndex.IndexState.End, 1, 1, TextIndex.IndexState.End)]
         [TestCase(0, TextIndex.IndexState.Start, -1, -1, TextIndex.IndexState.Start)]
         [TestCase(0, TextIndex.IndexState.End, -1, -1, TextIndex.IndexState.End)]
-        public void TestShiftingIndex(int index, TextIndex.IndexState state, int offset, int actualIndex, TextIndex.IndexState actualState)
+        public void TestShiftingIndex(int index, TextIndex.IndexState state, int offset, int expectedIndex, TextIndex.IndexState expectedState)
         {
             var textIndex = new TextIndex(index, state);
-            var actualTextIndex = new TextIndex(actualIndex, actualState);
-            Assert.AreEqual(TextIndexUtils.ShiftingIndex(textIndex, offset), actualTextIndex);
+
+            var expected = new TextIndex(expectedIndex, expectedState);
+            var actual = TextIndexUtils.ShiftingIndex(textIndex, offset);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(0, TextIndex.IndexState.Start, "karaoke", false)]
@@ -55,20 +61,24 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(0, TextIndex.IndexState.End, "", true)]
         [TestCase(0, TextIndex.IndexState.Start, null, true)] // should be counted as out of range if lyric is null
         [TestCase(0, TextIndex.IndexState.End, null, true)]
-        public void TestOutOfRange(int index, TextIndex.IndexState state, string lyric, bool outOfRange)
+        public void TestOutOfRange(int index, TextIndex.IndexState state, string lyric, bool expected)
         {
             var textIndex = new TextIndex(index, state);
-            Assert.AreEqual(TextIndexUtils.OutOfRange(textIndex, lyric), outOfRange);
+
+            bool actual = TextIndexUtils.OutOfRange(textIndex, lyric);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(0, TextIndex.IndexState.Start, "0")]
         [TestCase(0, TextIndex.IndexState.End, "0(end)")]
         [TestCase(-1, TextIndex.IndexState.Start, "-1")]
         [TestCase(-1, TextIndex.IndexState.End, "-1(end)")]
-        public void TestPositionFormattedString(int index, TextIndex.IndexState state, string actual)
+        public void TestPositionFormattedString(int index, TextIndex.IndexState state, string expected)
         {
             var textIndex = new TextIndex(index, state);
-            Assert.AreEqual(TextIndexUtils.PositionFormattedString(textIndex), actual);
+
+            string actual = TextIndexUtils.PositionFormattedString(textIndex);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

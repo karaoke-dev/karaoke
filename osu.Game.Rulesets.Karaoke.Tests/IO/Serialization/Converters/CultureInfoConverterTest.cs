@@ -16,8 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         public void TestSerialize(int? lcid, string json)
         {
             var language = lcid != null ? new CultureInfo(lcid.Value) : default;
-            string result = JsonConvert.SerializeObject(language, CreateSettings());
-            Assert.AreEqual(result, json);
+            string actual = JsonConvert.SerializeObject(language, CreateSettings());
+            Assert.AreEqual(json, actual);
         }
 
         [TestCase("1", 1)]
@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         public void TestDeserialize(string json, int? lcid)
         {
             var result = JsonConvert.DeserializeObject<CultureInfo>(json, CreateSettings());
-            Assert.AreEqual(result?.LCID, lcid);
+            Assert.AreEqual(lcid, result?.LCID);
         }
 
         [Test]
@@ -40,8 +40,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                     continue;
 
                 string json = JsonConvert.SerializeObject(cultureInfo, CreateSettings());
-                var deserializedCultureInfo = JsonConvert.DeserializeObject<CultureInfo>(json, CreateSettings());
-                Assert.AreEqual(deserializedCultureInfo, cultureInfo);
+                var actual = JsonConvert.DeserializeObject<CultureInfo>(json, CreateSettings());
+                Assert.AreEqual(cultureInfo, actual);
             }
         }
     }

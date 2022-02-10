@@ -21,8 +21,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         {
             var timeTag = new TimeTag(new TextIndex(index, state), time);
 
-            string result = JsonConvert.SerializeObject(timeTag, CreateSettings());
-            Assert.AreEqual(result, $"\"{json}\"");
+            string expected = $"\"{json}\"";
+            string actual = JsonConvert.SerializeObject(timeTag, CreateSettings());
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("[1,start]:1000", 1, TextIndex.IndexState.Start, 1000)]
@@ -37,10 +38,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase("[]", 0, TextIndex.IndexState.Start, null)]
         public void TestDeserialize(string json, int index, TextIndex.IndexState state, int? time)
         {
-            var result = JsonConvert.DeserializeObject<TimeTag>($"\"{json}\"", CreateSettings());
-            var actual = new TimeTag(new TextIndex(index, state), time);
-            Assert.AreEqual(result?.Index, actual.Index);
-            Assert.AreEqual(result?.Time, actual.Time);
+            var expected = new TimeTag(new TextIndex(index, state), time);
+            var actual = JsonConvert.DeserializeObject<TimeTag>($"\"{json}\"", CreateSettings());
+            Assert.AreEqual(expected.Index, actual?.Index);
+            Assert.AreEqual(expected.Time, actual?.Time);
         }
     }
 }

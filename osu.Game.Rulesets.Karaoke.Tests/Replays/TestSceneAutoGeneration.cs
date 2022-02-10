@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
 
             var generated = new KaraokeAutoGenerator(beatmap).Generate();
 
-            Assert.IsTrue(generated.Frames.Count == 11, "Replay must have 11 frames,Start, duration(9 frames) and end.");
+            Assert.AreEqual(11, generated.Frames.Count, "Replay must have 11 frames,Start, duration(9 frames) and end.");
             Assert.AreEqual(1000, generated.Frames[0].Time, "Incorrect hit time");
             Assert.AreEqual(2001, generated.Frames[10].Time, "Incorrect time");
             Assert.IsTrue(checkMatching(generated.Frames[0], new Tone(0, true)), "Fist frame should sing.");
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
 
             var generated = new KaraokeAutoGenerator(beatmap).Generate();
 
-            Assert.IsTrue(generated.Frames.Count == 3, "Replay must have 3 frames, note1's start, note2's start and note2's end.");
+            Assert.AreEqual(3, generated.Frames.Count, "Replay must have 3 frames, note1's start, note2's start and note2's end.");
             Assert.AreEqual(1000, generated.Frames[0].Time, "Incorrect time");
             Assert.AreEqual(1050, generated.Frames[1].Time, "Incorrect time");
             Assert.AreEqual(1101, generated.Frames[2].Time, "Incorrect time");

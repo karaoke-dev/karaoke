@@ -9,24 +9,24 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Asserts
 {
     public class TextTagAssert : Assert
     {
-        public static void ArePropertyEqual<T>(IList<T> expect, IList<T> actually) where T : ITextTag
+        public static void ArePropertyEqual<T>(IList<T> expected, IList<T> actual) where T : ITextTag
         {
-            AreEqual(expect?.Count, actually?.Count);
-            if (expect == null || actually == null)
+            AreEqual(expected?.Count, actual?.Count);
+            if (expected == null || actual == null)
                 return;
 
-            for (int i = 0; i < expect.Count; i++)
+            for (int i = 0; i < expected.Count; i++)
             {
-                ArePropertyEqual(expect[i], actually[i]);
-                ArePropertyEqual(expect[i], actually[i]);
+                ArePropertyEqual(expected[i], actual[i]);
+                ArePropertyEqual(expected[i], actual[i]);
             }
         }
 
-        public static void ArePropertyEqual<T>(T expect, T actually) where T : ITextTag
+        public static void ArePropertyEqual<T>(T expected, T actual) where T : ITextTag
         {
-            AreEqual(expect.Text, actually.Text);
-            AreEqual(expect.StartIndex, actually.StartIndex);
-            AreEqual(expect.EndIndex, actually.EndIndex);
+            AreEqual(expected.Text, actual.Text);
+            AreEqual(expected.StartIndex, actual.StartIndex);
+            AreEqual(expected.EndIndex, actual.EndIndex);
         }
     }
 }

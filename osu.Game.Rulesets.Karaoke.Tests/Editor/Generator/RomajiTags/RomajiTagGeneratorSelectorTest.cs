@@ -15,16 +15,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags
         [TestCase(17, "花火大会", new[] { "[0,2]:hanabi", "[2,4]:taikai" })] // Japanese
         [TestCase(1041, "はなび", new[] { "[0,3]:hanabi" })] // Japanese
         [TestCase(1028, "はなび", null)] // Chinese(should not supported)
-        public void TestCreateRomajiTag(int lcid, string text, string[] actualRomaji)
+        public void TestCreateRomajiTag(int lcid, string text, string[] expectedRomajies)
         {
+            var selector = CreateSelector();
             var lyric = new Lyric
             {
                 Language = new CultureInfo(lcid),
                 Text = text,
             };
-            var selector = CreateSelector();
-            var generatedRomaji = selector.GenerateRomajiTags(lyric);
-            TextTagAssert.ArePropertyEqual(generatedRomaji, TestCaseTagHelper.ParseRomajiTags(actualRomaji));
+
+            var expected = TestCaseTagHelper.ParseRomajiTags(expectedRomajies);
+            var actual = selector.GenerateRomajiTags(lyric);
+            TextTagAssert.ArePropertyEqual(expected, actual);
         }
     }
 }

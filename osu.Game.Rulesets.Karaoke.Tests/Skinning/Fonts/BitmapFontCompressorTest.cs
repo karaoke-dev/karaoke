@@ -42,8 +42,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
             var result = BitmapFontCompressor.Compress(font, chars?.ToArray());
 
             // info and common should just copy.
-            ObjectAssert.ArePropertyEqual(result.Info, font.Info);
-            ObjectAssert.ArePropertyEqual(result.Common, font.Common);
+            ObjectAssert.ArePropertyEqual(font.Info, result.Info);
+            ObjectAssert.ArePropertyEqual(font.Common, result.Common);
 
             // should have page if have char.
             Assert.NotNull(result.Pages);
@@ -68,19 +68,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [TestCase(new int[] { }, new string[] { })]
         [TestCase(new[] { 0 }, new[] { "OpenSans_0.png" })] // max store page is start from 0.
         [TestCase(new[] { 0, 1 }, new[] { "OpenSans_0.png" })] // should not have the case that more then origin page number.
-        public void TestGeneratePage(int[] pages, string[] pageNames)
+        public void TestGeneratePage(int[] pages, string[] expected)
         {
             var characters = pages.Select(x => new Character { Page = x }).ToArray();
 
             try
             {
-                var result = BitmapFontCompressor.GeneratePages(font.Pages, characters);
-                Assert.AreEqual(result.Values.ToArray(), pageNames);
+                string[] actual = BitmapFontCompressor.GeneratePages(font.Pages, characters).Values.ToArray();
+                Assert.AreEqual(expected, actual);
             }
             catch
             {
+                int expectedPageSize = expected.Length;
                 int storePage = font.Pages.Max(x => x.Key);
-                Assert.Greater(pageNames.Length, storePage);
+                Assert.Greater(expectedPageSize, storePage);
             }
         }
 
@@ -100,14 +101,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
             foreach ((int c, var character) in result)
             {
                 // check some property should be same as origin character.
-                var originCharacter = characters[c];
-                Assert.IsNotNull(originCharacter);
-                Assert.AreEqual(character.Width, originCharacter.Width);
-                Assert.AreEqual(character.Height, originCharacter.Height);
-                Assert.AreEqual(character.XOffset, originCharacter.XOffset);
-                Assert.AreEqual(character.YOffset, originCharacter.YOffset);
-                Assert.AreEqual(character.XAdvance, originCharacter.XAdvance);
-                Assert.AreEqual(character.Channel, originCharacter.Channel);
+                var expected = characters[c];
+                Assert.IsNotNull(expected);
+                Assert.AreEqual(expected.Width, character.Width);
+                Assert.AreEqual(expected.Height, character.Height);
+                Assert.AreEqual(expected.XOffset, character.XOffset);
+                Assert.AreEqual(expected.YOffset, character.YOffset);
+                Assert.AreEqual(expected.XAdvance, character.XAdvance);
+                Assert.AreEqual(expected.Channel, character.Channel);
 
                 // test previous position should smaller the current one.
                 var previousChar = result.Values.GetPrevious(character);
@@ -115,9 +116,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
                     return;
 
                 // all the test case can be finished in single line.
-                Assert.AreEqual(previousChar.X + previousChar.Width + spacing, character.X);
-                Assert.AreEqual(previousChar.Y, topPadding);
-                Assert.AreEqual(previousChar.Page, 0);
+                Assert.AreEqual(character.X, previousChar.X + previousChar.Width + spacing);
+                Assert.AreEqual(topPadding, previousChar.Y);
+                Assert.AreEqual(0, previousChar.Page);
             }
         }
 
@@ -148,9 +149,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
                     return;
 
                 // all the test case can be finished in different line.
-                Assert.AreEqual(previousChar.X, leftPadding);
-                Assert.AreEqual(previousChar.Y + previousChar.Height + spacing, character.Y);
-                Assert.AreEqual(previousChar.Page, 0);
+                Assert.AreEqual(leftPadding, previousChar.X);
+                Assert.AreEqual(character.Y, previousChar.Y + previousChar.Height + spacing);
+                Assert.AreEqual(0, previousChar.Page);
             }
         }
 
@@ -182,9 +183,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
                     return;
 
                 // all the test case can be finished in single line, so just test x position.
-                Assert.AreEqual(previousChar.X, leftPadding);
-                Assert.AreEqual(previousChar.Y, topPadding);
-                Assert.AreEqual(previousChar.Page, page);
+                Assert.AreEqual(leftPadding, previousChar.X);
+                Assert.AreEqual(topPadding, previousChar.Y);
+                Assert.AreEqual(page, previousChar.Page);
                 page++;
             }
         }
@@ -192,22 +193,25 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [Test]
         public void TestGenerateAllCharacters()
         {
-            char[] chars = font.Characters.Keys.Select(x => (char)x).ToArray();
-            var characters = font.Characters;
-
             // make sure that no characters is missing.
             // not checking position because algorithm might not save as original one.
+            char[] chars = font.Characters.Keys.Select(x => (char)x).ToArray();
             var result = BitmapFontCompressor.GenerateCharacters(font.Info, font.Common, font.Characters, chars);
-            Assert.AreEqual(result.Count, characters.Count);
+
+            int expected = font.Characters.Count;
+            int actual = result.Count;
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("カラオケ", 0)]
         [TestCase("からおけ", 0)]
         [TestCase("カラオケ(karaoke)", 7)]
-        public void TestGenerateCharactersIfNotExist(string chars, int amount)
+        public void TestGenerateCharactersIfNotExist(string chars, int expected)
         {
             var result = BitmapFontCompressor.GenerateCharacters(font.Info, font.Common, font.Characters, chars.ToArray());
-            Assert.AreEqual(result.Count, amount);
+
+            int actual = result.Count;
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("", 0)]
@@ -217,21 +221,25 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [TestCase("ab", 0)] // don't worry. some of pairs does not have kerning pair.
         [TestCase("AB", 1)]
         [TestCase("ABC", 3)]
-        public void TestGenerateKerningPairs(string chars, int amount)
+        public void TestGenerateKerningPairs(string chars, int expected)
         {
             var result = BitmapFontCompressor.GenerateKerningPairs(font.KerningPairs, chars?.ToArray());
-            Assert.AreEqual(result.Count, amount);
+
+            int actual = result.Count;
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void TestGenerateKerningPairsWithAllChars()
         {
+            // make sure that no kerning is missing.
             char[] chars = font.Characters.Keys.Select(x => (char)x).ToArray();
             var kerningPairs = font.KerningPairs;
-
-            // make sure that no kerning is missing.
             var result = BitmapFontCompressor.GenerateKerningPairs(kerningPairs, chars);
-            Assert.AreEqual(result.Count, kerningPairs.Count);
+
+            int expected = kerningPairs.Count;
+            int actual = result.Count;
+            Assert.AreEqual(expected, actual);
         }
     }
 }

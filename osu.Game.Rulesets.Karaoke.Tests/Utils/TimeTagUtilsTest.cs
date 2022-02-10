@@ -15,15 +15,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[1,end]:", 2, "[3,end]:")]
         [TestCase("[1,start]:1000", -2, "[-1,start]:1000")]
         [TestCase("[1,end]:1000", -2, "[-1,end]:1000")]
-        public void TestShiftingTimeTag(string shiftingTag, int offset, string actualTag)
+        public void TestShiftingTimeTag(string shiftingTag, int offset, string expectedTimeTag)
         {
             var timeTag = TestCaseTagHelper.ParseTimeTag(shiftingTag);
 
-            var shiftingTimeTag = TimeTagUtils.ShiftingTimeTag(timeTag, offset);
-            var actualTimeTag = TestCaseTagHelper.ParseTimeTag(actualTag);
-
-            Assert.AreEqual(shiftingTimeTag.Index, actualTimeTag.Index);
-            Assert.AreEqual(shiftingTimeTag.Time, actualTimeTag.Time);
+            var expected = TestCaseTagHelper.ParseTimeTag(expectedTimeTag);
+            var actual = TimeTagUtils.ShiftingTimeTag(timeTag, offset);
+            Assert.AreEqual(expected.Index, actual.Index);
+            Assert.AreEqual(expected.Time, actual.Time);
         }
 
         [TestCase("[1,start]:1000", "00:01:000")]
@@ -31,10 +30,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[-1,start]:1000", "00:01:000")]
         [TestCase("[-1,start]:-1000", "-00:01:000")]
         [TestCase("[-1,start]:", "--:--:---")]
-        public void TestFormattedString(string tag, string format)
+        public void TestFormattedString(string tag, string expected)
         {
             var timeTag = TestCaseTagHelper.ParseTimeTag(tag);
-            Assert.AreEqual(TimeTagUtils.FormattedString(timeTag), format);
+
+            string actual = TimeTagUtils.FormattedString(timeTag);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

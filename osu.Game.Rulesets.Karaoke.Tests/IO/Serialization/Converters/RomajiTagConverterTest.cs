@@ -27,8 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 Text = text
             };
 
-            string result = JsonConvert.SerializeObject(romajiTag, CreateSettings());
-            Assert.AreEqual(result, $"\"{json}\"");
+            string expected = $"\"{json}\"";
+            string actual = JsonConvert.SerializeObject(romajiTag, CreateSettings());
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("[1,2]:romaji", 1, 2, "romaji")]
@@ -44,14 +45,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase("[]", 0, 0, null)]
         public void TestDeserialize(string json, int startIndex, int endIndex, string text)
         {
-            var result = JsonConvert.DeserializeObject<RomajiTag>($"\"{json}\"", CreateSettings());
-            var actual = new RomajiTag
+            var expected = new RomajiTag
             {
                 StartIndex = startIndex,
                 EndIndex = endIndex,
                 Text = text
             };
-            TextTagAssert.ArePropertyEqual(result, actual);
+            var actual = JsonConvert.DeserializeObject<RomajiTag>($"\"{json}\"", CreateSettings());
+            TextTagAssert.ArePropertyEqual(expected, actual);
         }
     }
 }

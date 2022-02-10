@@ -167,16 +167,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             TestMoveToTarget(lyrics, lyric, caretPosition, algorithms => algorithms.Mode = mode);
         }
 
-        protected override void AssertEqual(TimeTagIndexCaretPosition compare, TimeTagIndexCaretPosition actual)
+        protected override void AssertEqual(TimeTagIndexCaretPosition expected, TimeTagIndexCaretPosition actual)
         {
-            if (compare == null)
+            if (expected == null)
             {
                 Assert.IsNull(actual);
             }
             else
             {
-                Assert.AreEqual(compare.Lyric, actual.Lyric);
-                Assert.AreEqual(compare.Index, actual.Index);
+                Assert.AreEqual(expected.Lyric, actual.Lyric);
+                Assert.AreEqual(expected.Index, actual.Index);
             }
         }
 

@@ -22,17 +22,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("カラオケ", 0, 100, "")] // test end position not in the range
         [TestCase("", 0, 0, "")]
         [TestCase(null, 0, 0, null)]
-        public void TestRemoveText(string text, int position, int count, string actualText)
+        public void TestRemoveText(string text, int position, int count, string expected)
         {
             try
             {
                 var lyric = new Lyric { Text = text };
                 LyricUtils.RemoveText(lyric, position, count);
-                Assert.AreEqual(lyric.Text, actualText);
+                Assert.AreEqual(expected, lyric.Text);
             }
             catch
             {
-                Assert.Null(actualText);
+                Assert.Null(expected);
             }
         }
 
@@ -49,7 +49,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RubyTags = TestCaseTagHelper.ParseRubyTags(rubies),
             };
             LyricUtils.RemoveText(lyric, position, count);
-            TextTagAssert.ArePropertyEqual(lyric.RubyTags, TestCaseTagHelper.ParseRubyTags(targetRubies));
+
+            var expected = TestCaseTagHelper.ParseRubyTags(targetRubies);
+            var actual = lyric.RubyTags;
+            TextTagAssert.ArePropertyEqual(expected, actual);
         }
 
         [TestCase(new[] { "[0,1]:ka", "[1,2]:ra", "[2,3]:o", "[3,4]:ke" }, 0, 2, new[] { "[0,1]:o", "[1,2]:ke" })]
@@ -62,7 +65,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
             };
             LyricUtils.RemoveText(lyric, position, count);
-            TextTagAssert.ArePropertyEqual(lyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(targetRomajies));
+
+            var expected = TestCaseTagHelper.ParseRomajiTags(targetRomajies);
+            var actual = lyric.RomajiTags;
+            TextTagAssert.ArePropertyEqual(expected, actual);
         }
 
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 0, 2, new[] { "[0,start]:3000", "[1,start]:4000" })]
@@ -76,7 +82,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             };
             LyricUtils.RemoveText(lyric, position, count);
-            TimeTagAssert.ArePropertyEqual(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
+
+            var expected = TestCaseTagHelper.ParseTimeTags(actualTimeTags);
+            var actual = lyric.TimeTags;
+            TimeTagAssert.ArePropertyEqual(expected, actual);
         }
 
         [TestCase("kake", 2, "rao", "karaoke")]
@@ -86,11 +95,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("カラ", 4, "オケ", "カラオケ")] // test start position not in the range, but it's valid.
         [TestCase("", 0, "カラオケ", "カラオケ")]
         [TestCase(null, 0, "カラオケ", "カラオケ")]
-        public void TestAddTextText(string text, int position, string addedText, string actualText)
+        public void TestAddTextText(string text, int position, string addedText, string expected)
         {
             var lyric = new Lyric { Text = text };
             LyricUtils.AddText(lyric, position, addedText);
-            Assert.AreEqual(lyric.Text, actualText);
+
+            string actual = lyric.Text;
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 0, "karaoke", new[] { "[7,8]:か", "[8,9]:ら", "[9,10]:お", "[10,11]:け" })]
@@ -104,7 +115,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RubyTags = TestCaseTagHelper.ParseRubyTags(rubies),
             };
             LyricUtils.AddText(lyric, position, addedText);
-            TextTagAssert.ArePropertyEqual(lyric.RubyTags, TestCaseTagHelper.ParseRubyTags(targetRubies));
+
+            var expected = TestCaseTagHelper.ParseRubyTags(targetRubies);
+            var actual = lyric.RubyTags;
+            TextTagAssert.ArePropertyEqual(expected, actual);
         }
 
         [TestCase(new[] { "[0,1]:か", "[1,2]:ら", "[2,3]:お", "[3,4]:け" }, 0, "karaoke", new[] { "[7,8]:か", "[8,9]:ら", "[9,10]:お", "[10,11]:け" })]
@@ -118,7 +132,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RomajiTags = TestCaseTagHelper.ParseRomajiTags(romajies),
             };
             LyricUtils.AddText(lyric, position, addedText);
-            TextTagAssert.ArePropertyEqual(lyric.RomajiTags, TestCaseTagHelper.ParseRomajiTags(targetRomajies));
+
+            var expected = TestCaseTagHelper.ParseRomajiTags(targetRomajies);
+            var actual = lyric.RomajiTags;
+            TextTagAssert.ArePropertyEqual(expected, actual);
         }
 
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, 0, "karaoke", new[] { "[7,start]:1000", "[8,start]:2000", "[9,start]:3000", "[10,start]:4000" })]
@@ -135,7 +152,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             };
             LyricUtils.AddText(lyric, position, addedText);
-            TimeTagAssert.ArePropertyEqual(lyric.TimeTags, TestCaseTagHelper.ParseTimeTags(actualTimeTags));
+
+            var expected = TestCaseTagHelper.ParseTimeTags(actualTimeTags);
+            var actual = lyric.TimeTags;
+            TimeTagAssert.ArePropertyEqual(expected, actual);
         }
 
         #endregion
@@ -144,14 +164,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, true)]
         [TestCase(new string[] { }, false)]
-        public void TestHasTimedTimeTags(string[] timeTags, bool hasTimedTimeTag)
+        public void TestHasTimedTimeTags(string[] timeTags, bool expected)
         {
             var lyric = new Lyric
             {
                 Text = "カラオケ",
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             };
-            Assert.AreEqual(LyricUtils.HasTimedTimeTags(lyric), hasTimedTimeTag);
+
+            bool actual = LyricUtils.HasTimedTimeTags(lyric);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "[0,start]", "か-")]
@@ -170,11 +192,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("からおけ", "[4,end]", "-")]
         [TestCase("からおけ", "[-1,start]", "-")]
         [TestCase("からおけ", "[-1,end]", "-")]
-        public void TestGetTimeTagIndexDisplayText(string text, string textIndexStr, string actual)
+        public void TestGetTimeTagIndexDisplayText(string text, string textIndexStr, string expected)
         {
             var lyric = TestCaseTagHelper.ParseLyricWithTimeTag(text);
             var textIndex = TestCaseTagHelper.ParseTextIndex(textIndexStr);
-            Assert.AreEqual(LyricUtils.GetTimeTagIndexDisplayText(lyric, textIndex), actual);
+
+            string actual = LyricUtils.GetTimeTagIndexDisplayText(lyric, textIndex);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "[0,start]", "か-")]
@@ -182,12 +206,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", "[3,end]", "-け")]
         [TestCase("[00:01.00]からおけ[00:05.00]", "[0,start]", "からおけ-")]
         [TestCase("[00:01.00]からおけ[00:05.00]", "[3,end]", "-からおけ")]
-        public void TestGetTimeTagDisplayText(string text, string textIndexStr, string actual)
+        public void TestGetTimeTagDisplayText(string text, string textIndexStr, string expected)
         {
             var lyric = TestCaseTagHelper.ParseLyricWithTimeTag(text);
             var textIndex = TestCaseTagHelper.ParseTextIndex(textIndexStr);
             var timeTag = lyric.TimeTags?.Where(x => x.Index == textIndex).FirstOrDefault();
-            Assert.AreEqual(LyricUtils.GetTimeTagDisplayText(lyric, timeTag), actual);
+
+            string actual = LyricUtils.GetTimeTagDisplayText(lyric, timeTag);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(0, "(か)-")]
@@ -200,7 +226,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(7, "(け)-")]
         [TestCase(8, "(け)-")]
         [TestCase(9, "-(け)")]
-        public void TestGetTimeTagDisplayRubyText(int indexOfTimeTag, string actual)
+        public void TestGetTimeTagDisplayRubyText(int indexOfTimeTag, string expected)
         {
             var lyric = new Lyric
             {
@@ -225,7 +251,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 })
             };
             var timeTag = lyric.TimeTags[indexOfTimeTag];
-            Assert.AreEqual(LyricUtils.GetTimeTagDisplayRubyText(lyric, timeTag), actual);
+
+            string actual = LyricUtils.GetTimeTagDisplayRubyText(lyric, timeTag);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -238,10 +266,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("からおけ", 5, false)]
         [TestCase("", 0, true)]
         [TestCase(null, 0, true)]
-        public void TestAbleToInsertTextTagAtIndex(string text, int index, bool actual)
+        public void TestAbleToInsertTextTagAtIndex(string text, int index, bool expected)
         {
             var lyric = TestCaseTagHelper.ParseLyricWithTimeTag(text);
-            Assert.AreEqual(LyricUtils.AbleToInsertTextTagAtIndex(lyric, index), actual);
+
+            bool actual = LyricUtils.AbleToInsertTextTagAtIndex(lyric, index);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -253,7 +283,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(1000, 0, "00:01:000 - 00:00:000")] // do not check time order in here
         [TestCase(-1000, 0, "-00:01:000 - 00:00:000")]
         [TestCase(0, -1000, "00:00:000 - -00:01:000")]
-        public void TestLyricTimeFormattedString(double startTime, double endTime, string format)
+        public void TestLyricTimeFormattedString(double startTime, double endTime, string expected)
         {
             var lyric = new Lyric
             {
@@ -261,7 +291,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 Duration = endTime - startTime
             };
 
-            Assert.AreEqual(LyricUtils.LyricTimeFormattedString(lyric), format);
+            string actual = LyricUtils.LyricTimeFormattedString(lyric);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000" }, "00:01:000 - 00:04:000")]
@@ -269,14 +300,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[3,start]:4000", "[2,start]:3000", "[1,start]:2000", "[0,start]:1000" }, "00:01:000 - 00:04:000")] // should display right-time even it's not being ordered.
         [TestCase(new[] { "[0,start]:1000" }, "00:01:000 - 00:01:000")]
         [TestCase(new string[] { }, "--:--:--- - --:--:---")]
-        public void TestTimeTagTimeFormattedString(string[] timeTags, string format)
+        public void TestTimeTagTimeFormattedString(string[] timeTags, string expected)
         {
             var lyric = new Lyric
             {
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             };
 
-            Assert.AreEqual(LyricUtils.TimeTagTimeFormattedString(lyric), format);
+            string actual = LyricUtils.TimeTagTimeFormattedString(lyric);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -286,28 +318,32 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[1]name:Singer1" }, "[1]name:Singer1", true)]
         [TestCase(new[] { "[1]name:Singer1" }, "[2]name:Singer2", false)]
         [TestCase(new string[] { }, "[1]name:Singer1", false)]
-        public void TestContainsSinger(string[] existSingers, string compareSinger, bool isContain)
+        public void TestContainsSinger(string[] existSingers, string compareSinger, bool expected)
         {
             var singer = TestCaseTagHelper.ParseSinger(compareSinger);
             var lyric = new Lyric
             {
                 Singers = TestCaseTagHelper.ParseSingers(existSingers)?.Select(x => x.ID).ToArray()
             };
-            Assert.AreEqual(LyricUtils.ContainsSinger(lyric, singer), isContain);
+
+            bool actual = LyricUtils.ContainsSinger(lyric, singer);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(new[] { "[1]name:Singer1" }, new[] { "[1]name:Singer1", "[1]name:Singer1" }, true)]
         [TestCase(new[] { "[1]name:Singer1" }, new[] { "[1]name:Singer1" }, true)]
         [TestCase(new[] { "[1]name:Singer1" }, new[] { "[2]name:Singer2" }, false)]
         [TestCase(new string[] { }, new[] { "[1]name:Singer1" }, true)]
-        public void TestOnlyContainsSingers(string[] existSingers, string[] compareSingers, bool isContain)
+        public void TestOnlyContainsSingers(string[] existSingers, string[] compareSingers, bool expected)
         {
             var singers = TestCaseTagHelper.ParseSingers(compareSingers).ToList();
             var lyric = new Lyric
             {
                 Singers = TestCaseTagHelper.ParseSingers(existSingers)?.Select(x => x.ID).ToArray()
             };
-            Assert.AreEqual(LyricUtils.OnlyContainsSingers(lyric, singers), isContain);
+
+            bool actual = LyricUtils.OnlyContainsSingers(lyric, singers);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -317,32 +353,38 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[1000,3000]:karaoke", false)]
         [TestCase("[1000,1000]:karaoke", false)] // it's ok to let it pass(for no reason now).
         [TestCase("[1000,0]:karaoke", true)]
-        public void TestCheckIsTimeOverlapping(string lyricText, bool actual)
+        public void TestCheckIsTimeOverlapping(string lyricText, bool expected)
         {
             var lyric = TestCaseTagHelper.ParseLyric(lyricText);
-            Assert.AreEqual(LyricUtils.CheckIsTimeOverlapping(lyric), actual);
+
+            bool actual = LyricUtils.CheckIsTimeOverlapping(lyric);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("[1000,5000]:karaoke", new[] { "[0,start]:1000", "[2,start]:2000", "[4,start]:3000", "[5,start]:4000", "[7,end]:5000" }, false)]
         [TestCase("[1000,5000]:karaoke", new[] { "[0,start]:1000", "[7,end]:5000" }, false)]
         [TestCase("[1000,2000]:karaoke", new[] { "[0,start]:1000", "[7,end]:5000" }, false)] // not check end time now.
         [TestCase("[2000,5000]:karaoke", new[] { "[0,start]:1000", "[7,end]:5000" }, true)]
-        public void TestCheckIsStartTimeInvalid(string lyricText, string[] timeTags, bool actual)
+        public void TestCheckIsStartTimeInvalid(string lyricText, string[] timeTags, bool expected)
         {
             var lyric = TestCaseTagHelper.ParseLyric(lyricText);
             lyric.TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags);
-            Assert.AreEqual(LyricUtils.CheckIsStartTimeInvalid(lyric), actual);
+
+            bool actual = LyricUtils.CheckIsStartTimeInvalid(lyric);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("[1000,5000]:karaoke", new[] { "[0,start]:1000", "[2,start]:2000", "[4,start]:3000", "[5,start]:4000", "[7,end]:5000" }, false)]
         [TestCase("[1000,5000]:karaoke", new[] { "[0,start]:1000", "[7,end]:5000" }, false)]
         [TestCase("[2000,5000]:karaoke", new[] { "[0,start]:1000", "[7,end]:5000" }, false)] // not check start time now.
         [TestCase("[1000,2000]:karaoke", new[] { "[0,start]:1000", "[7,end]:5000" }, true)]
-        public void TestCheckIsEndTimeInvalid(string lyricText, string[] timeTags, bool actual)
+        public void TestCheckIsEndTimeInvalid(string lyricText, string[] timeTags, bool expected)
         {
             var lyric = TestCaseTagHelper.ParseLyric(lyricText);
             lyric.TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags);
-            Assert.AreEqual(LyricUtils.CheckIsEndTimeInvalid(lyric), actual);
+
+            bool actual = LyricUtils.CheckIsEndTimeInvalid(lyric);
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
