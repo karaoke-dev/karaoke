@@ -20,73 +20,73 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             Assert.IsNotNull(algorithm);
 
             invokeAlgorithm?.Invoke(algorithm);
-            Assert.AreEqual(algorithm.PositionMovable(caret), movable);
+            Assert.AreEqual(movable, algorithm.PositionMovable(caret));
         }
 
-        protected void TestMoveUp(Lyric[] lyrics, TCaret caret, TCaret actual, Action<TAlgorithm> invokeAlgorithm = null)
+        protected void TestMoveUp(Lyric[] lyrics, TCaret caret, TCaret expected, Action<TAlgorithm> invokeAlgorithm = null)
         {
             var algorithm = (TAlgorithm)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
             Assert.IsNotNull(algorithm);
 
             invokeAlgorithm?.Invoke(algorithm);
-            AssertEqual(algorithm.MoveUp(caret), actual);
+            AssertEqual(expected, algorithm.MoveUp(caret));
         }
 
-        protected void TestMoveDown(Lyric[] lyrics, TCaret caret, TCaret actual, Action<TAlgorithm> invokeAlgorithm = null)
+        protected void TestMoveDown(Lyric[] lyrics, TCaret caret, TCaret expected, Action<TAlgorithm> invokeAlgorithm = null)
         {
             var algorithm = (TAlgorithm)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
             Assert.IsNotNull(algorithm);
 
             invokeAlgorithm?.Invoke(algorithm);
-            AssertEqual(algorithm.MoveDown(caret), actual);
+            AssertEqual(expected, algorithm.MoveDown(caret));
         }
 
-        protected void TestMoveLeft(Lyric[] lyrics, TCaret caret, TCaret actual, Action<TAlgorithm> invokeAlgorithm = null)
+        protected void TestMoveLeft(Lyric[] lyrics, TCaret caret, TCaret expected, Action<TAlgorithm> invokeAlgorithm = null)
         {
             var algorithm = (TAlgorithm)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
             Assert.IsNotNull(algorithm);
 
             invokeAlgorithm?.Invoke(algorithm);
-            AssertEqual(algorithm.MoveLeft(caret), actual);
+            AssertEqual(expected, algorithm.MoveLeft(caret));
         }
 
-        protected void TestMoveRight(Lyric[] lyrics, TCaret caret, TCaret actual, Action<TAlgorithm> invokeAlgorithm = null)
+        protected void TestMoveRight(Lyric[] lyrics, TCaret caret, TCaret expected, Action<TAlgorithm> invokeAlgorithm = null)
         {
             var algorithm = (TAlgorithm)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
             Assert.IsNotNull(algorithm);
 
             invokeAlgorithm?.Invoke(algorithm);
-            AssertEqual(algorithm.MoveRight(caret), actual);
+            AssertEqual(expected, algorithm.MoveRight(caret));
         }
 
-        protected void TestMoveToFirst(Lyric[] lyrics, TCaret actual, Action<TAlgorithm> invokeAlgorithm = null)
+        protected void TestMoveToFirst(Lyric[] lyrics, TCaret expected, Action<TAlgorithm> invokeAlgorithm = null)
         {
             var algorithm = (TAlgorithm)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
             Assert.IsNotNull(algorithm);
 
             invokeAlgorithm?.Invoke(algorithm);
-            AssertEqual(algorithm.MoveToFirst(), actual);
+            AssertEqual(expected, algorithm.MoveToFirst());
         }
 
-        protected void TestMoveToLast(Lyric[] lyrics, TCaret actual, Action<TAlgorithm> invokeAlgorithm = null)
+        protected void TestMoveToLast(Lyric[] lyrics, TCaret expected, Action<TAlgorithm> invokeAlgorithm = null)
         {
             var algorithm = (TAlgorithm)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
             Assert.IsNotNull(algorithm);
 
             invokeAlgorithm?.Invoke(algorithm);
-            AssertEqual(algorithm.MoveToLast(), actual);
+            AssertEqual(expected, algorithm.MoveToLast());
         }
 
-        protected void TestMoveToTarget(Lyric[] lyrics, Lyric lyric, TCaret actual, Action<TAlgorithm> invokeAlgorithm = null)
+        protected void TestMoveToTarget(Lyric[] lyrics, Lyric lyric, TCaret expected, Action<TAlgorithm> invokeAlgorithm = null)
         {
             var algorithm = (TAlgorithm)Activator.CreateInstance(typeof(TAlgorithm), new object[] { lyrics });
             Assert.IsNotNull(algorithm);
 
             invokeAlgorithm?.Invoke(algorithm);
-            AssertEqual(algorithm.MoveToTarget(lyric), actual);
+            AssertEqual(expected, algorithm.MoveToTarget(lyric));
         }
 
-        protected abstract void AssertEqual(TCaret compare, TCaret actual);
+        protected abstract void AssertEqual(TCaret expected, TCaret actual);
 
         protected Lyric[] GetLyricsByMethodName(string methodName)
         {

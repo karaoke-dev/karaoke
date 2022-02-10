@@ -117,15 +117,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             TestMoveToTarget(lyrics, lyric, caretPosition);
         }
 
-        protected override void AssertEqual(NavigateCaretPosition compare, NavigateCaretPosition actual)
+        protected override void AssertEqual(NavigateCaretPosition expected, NavigateCaretPosition actual)
         {
-            if (compare == null)
+            if (expected == null)
             {
                 Assert.IsNull(actual);
             }
             else
             {
-                Assert.AreEqual(compare.Lyric, actual.Lyric);
+                Assert.AreEqual(expected.Lyric, actual.Lyric);
             }
         }
 
