@@ -59,7 +59,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
                     {
                         RelativeSizeAxes = Axes.Both,
                         Padding = new MarginPadding { Top = Header.HEIGHT, Left = KaraokeSettingsPanel.WIDTH }
-                    }
+                    },
+                    new KaraokeVersionManager().With(x => x.Show())
                 }
             };
 
