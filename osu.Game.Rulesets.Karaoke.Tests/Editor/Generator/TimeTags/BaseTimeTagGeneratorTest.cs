@@ -12,22 +12,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
     public abstract class BaseTimeTagGeneratorTest<TTimeTagGenerator, TConfig>
         where TTimeTagGenerator : TimeTagGenerator<TConfig> where TConfig : TimeTagGeneratorConfig, new()
     {
-        protected void RunTimeTagCheckTest(string text, string[] actualTimeTags, TConfig config)
+        protected void RunTimeTagCheckTest(string text, string[] expectedTimeTags, TConfig config)
         {
             var lyric = new Lyric { Text = text };
-            RunTimeTagCheckTest(lyric, actualTimeTags, config);
+            RunTimeTagCheckTest(lyric, expectedTimeTags, config);
         }
 
-        protected void RunTimeTagCheckTest(Lyric lyric, string[] actualTimeTags, TConfig config)
+        protected void RunTimeTagCheckTest(Lyric lyric, string[] expectedTimeTags, TConfig config)
         {
             var generator = Activator.CreateInstance(typeof(TTimeTagGenerator), config) as TTimeTagGenerator;
 
             // create time tag and actually time tag.
-            var timeTags = generator?.CreateTimeTags(lyric);
-            var actualIndexed = TestCaseTagHelper.ParseTimeTags(actualTimeTags);
-
-            // check should be equal
-            TimeTagAssert.ArePropertyEqual(timeTags, actualIndexed);
+            var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
+            var actual = generator?.CreateTimeTags(lyric);
+            TimeTagAssert.ArePropertyEqual(expected, actual);
         }
 
         protected TConfig GeneratorConfig(params string[] properties)

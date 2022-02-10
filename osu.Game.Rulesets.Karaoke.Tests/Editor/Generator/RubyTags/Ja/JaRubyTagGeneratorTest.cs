@@ -16,39 +16,38 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RubyTags.Ja
     {
         [TestCase("花火大会", new[] { "[0,2]:はなび", "[2,4]:たいかい" })]
         [TestCase("はなび", new string[] { })]
-        public void TestCreateRubyTags(string text, string[] actualRuby)
+        public void TestCreateRubyTags(string text, string[] expectedRubies)
         {
             var config = generatorConfig(null);
-            runRubyCheckTest(text, actualRuby, config);
+            runRubyCheckTest(text, expectedRubies, config);
         }
 
         [TestCase("花火大会", new[] { "[0,2]:ハナビ", "[2,4]:タイカイ" })]
         [TestCase("ハナビ", new string[] { })]
-        public void TestCreateRubyTagsWithRubyAsKatakana(string text, string[] actualRuby)
+        public void TestCreateRubyTagsWithRubyAsKatakana(string text, string[] expectedRubies)
         {
             var config = generatorConfig(nameof(JaRubyTagGeneratorConfig.RubyAsKatakana));
-            runRubyCheckTest(text, actualRuby, config);
+            runRubyCheckTest(text, expectedRubies, config);
         }
 
         [TestCase("はなび", new[] { "[0,2]:はな", "[2,3]:び" })]
         [TestCase("ハナビ", new[] { "[0,3]:はなび" })]
-        public void TestCreateRubyTagsWithEnableDuplicatedRuby(string text, string[] actualRuby)
+        public void TestCreateRubyTagsWithEnableDuplicatedRuby(string text, string[] expectedRubies)
         {
             var config = generatorConfig(nameof(JaRubyTagGeneratorConfig.EnableDuplicatedRuby));
-            runRubyCheckTest(text, actualRuby, config);
+            runRubyCheckTest(text, expectedRubies, config);
         }
 
         #region test helper
 
-        private static void runRubyCheckTest(string text, IEnumerable<string> actualRuby, JaRubyTagGeneratorConfig config)
+        private static void runRubyCheckTest(string text, IEnumerable<string> expectedRubies, JaRubyTagGeneratorConfig config)
         {
             var generator = new JaRubyTagGenerator(config);
-
             var lyric = new Lyric { Text = text };
-            var rubyTags = generator.CreateRubyTags(lyric);
-            var actualRubyTags = TestCaseTagHelper.ParseRubyTags(actualRuby);
 
-            TextTagAssert.ArePropertyEqual(rubyTags, actualRubyTags);
+            var expected = TestCaseTagHelper.ParseRubyTags(expectedRubies);
+            var actual = generator.CreateRubyTags(lyric);
+            TextTagAssert.ArePropertyEqual(expected, actual);
         }
 
         private static JaRubyTagGeneratorConfig generatorConfig(params string[] properties)
