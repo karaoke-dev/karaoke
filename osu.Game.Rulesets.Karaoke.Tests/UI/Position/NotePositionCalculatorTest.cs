@@ -19,51 +19,55 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI.Position
         [TestCase(0, 0)]
         [TestCase(1, -21f)]
         [TestCase(1.5, -31.5f)]
-        public void TestPositionAtTone(double scale, float actual)
+        public void TestPositionAtTone(double scale, float expected)
         {
+            var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
             var note = new Note
             {
                 Tone = TestCaseToneHelper.NumberToTone(scale)
             };
 
-            var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
-            Assert.AreEqual(calculator.YPositionAt(note), actual);
+            float actual = calculator.YPositionAt(note);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(0, 0)]
         [TestCase(1, -21f)]
         [TestCase(1.5, -31.5f)]
-        public void TestPositionAtNote(double scale, float actual)
+        public void TestPositionAtNote(double scale, float expected)
         {
+            var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
             var tone = TestCaseToneHelper.NumberToTone(scale);
 
-            var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
-            Assert.AreEqual(calculator.YPositionAt(tone), actual);
+            float actual = calculator.YPositionAt(tone);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(0f, 0)]
         [TestCase(1f, -21f)]
         [TestCase(-1f, 21f)]
-        public void TestPositionAtSaitenAction(float scale, float actual)
+        public void TestPositionAtSaitenAction(float scale, float expected)
         {
+            var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
             var action = new KaraokeSaitenAction
             {
                 Scale = scale
             };
 
-            var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
-            Assert.AreEqual(calculator.YPositionAt(action), actual);
+            float actual = calculator.YPositionAt(action);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(0f, 0)]
         [TestCase(1f, -21f)]
         [TestCase(-1f, 21f)]
-        public void TestPositionAtReplayFrame(float scale, float actual)
+        public void TestPositionAtReplayFrame(float scale, float expected)
         {
+            var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
             var frame = new KaraokeReplayFrame(0, scale);
 
-            var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
-            Assert.AreEqual(calculator.YPositionAt(frame), actual);
+            float actual = calculator.YPositionAt(frame);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(0f, 0)]
@@ -71,10 +75,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI.Position
         [TestCase(-1f, 21f)]
         [TestCase(10f, -84f)] // should handle the case not out of the range.
         [TestCase(-10f, 84f)]
-        public void TestPositionAtScale(float scale, float actual)
+        public void TestPositionAtScale(float scale, float expected)
         {
             var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
-            Assert.AreEqual(calculator.YPositionAt(scale), actual);
+
+            float actual = calculator.YPositionAt(scale);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(1, 0)]
@@ -82,7 +88,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI.Position
         public void TestGetMaxTone(int columns, double actual)
         {
             var calculator = new NotePositionCalculator(columns, default_column_height, default_spacing);
-            Assert.AreEqual(calculator.MaxTone, TestCaseToneHelper.NumberToTone(actual));
+
+            var expected = calculator.MaxTone;
+            Assert.AreEqual(expected, TestCaseToneHelper.NumberToTone(actual));
         }
 
         [TestCase(1, 0)]
@@ -90,7 +98,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI.Position
         public void TestGetMinTone(int columns, double actual)
         {
             var calculator = new NotePositionCalculator(columns, default_column_height, default_spacing);
-            Assert.AreEqual(calculator.MinTone, TestCaseToneHelper.NumberToTone(actual));
+
+            var expected = calculator.MinTone;
+            Assert.AreEqual(expected, TestCaseToneHelper.NumberToTone(actual));
         }
     }
 }
