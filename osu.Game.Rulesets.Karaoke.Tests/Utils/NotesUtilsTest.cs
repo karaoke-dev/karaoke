@@ -29,11 +29,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             try
             {
                 var (firstNote, secondNote) = NotesUtils.SplitNote(note, percentage);
-                Assert.AreEqual(firstNote.StartTime, firstTime[0]);
-                Assert.AreEqual(firstNote.Duration, firstTime[1]);
+                Assert.AreEqual(firstTime[0], firstNote.StartTime);
+                Assert.AreEqual(firstTime[1], firstNote.Duration);
 
-                Assert.AreEqual(secondNote.StartTime, secondTime[0]);
-                Assert.AreEqual(secondNote.Duration, secondTime[1]);
+                Assert.AreEqual(secondTime[0], secondNote.StartTime);
+                Assert.AreEqual(secondTime[1], secondNote.Duration);
             }
             catch
             {
@@ -66,14 +66,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             // create other property and make sure other class is applied value.
             var (firstNote, secondNote) = NotesUtils.SplitNote(note, percentage);
 
-            Assert.AreEqual(firstNote.StartTime, 1000);
-            Assert.AreEqual(secondNote.StartTime, 1600);
+            Assert.AreEqual(1000, firstNote.StartTime);
+            Assert.AreEqual(1600, secondNote.StartTime);
 
-            Assert.AreEqual(firstNote.Duration, 600);
-            Assert.AreEqual(secondNote.Duration, 1400);
+            Assert.AreEqual(600, firstNote.Duration);
+            Assert.AreEqual(1400, secondNote.Duration);
 
-            testRemainProperty(firstNote, note);
-            testRemainProperty(firstNote, note);
+            testRemainProperty(note, firstNote);
+            testRemainProperty(note, firstNote);
 
             static void testRemainProperty(Note expect, Note actual)
             {
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new double[] { 1000, 1000 }, new double[] { 2000, 4000 }, new double[] { 1000, 5000 })]
         [TestCase(new double[] { 1000, 2500 }, new double[] { 3500, 2500 }, new double[] { 1000, 5000 })]
         [TestCase(new double[] { 1000, 0 }, new double[] { 1000, 0 }, new double[] { 1000, 0 })] // it's ok to combine if duration is 0.
-        public void TestCombineNoteTime(double[] firstTime, double[] secondTime, double[] actualTime)
+        public void TestCombineNoteTime(double[] firstTime, double[] secondTime, double[] expected)
         {
             const int start_index = 3;
             const int end_index = 5;
@@ -118,8 +118,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             };
 
             var combineNote = NotesUtils.CombineNote(firstNote, secondNote);
-            Assert.AreEqual(combineNote.StartTime, actualTime[0]);
-            Assert.AreEqual(combineNote.Duration, actualTime[1]);
+            Assert.AreEqual(expected[0], combineNote.StartTime);
+            Assert.AreEqual(expected[1], combineNote.Duration);
         }
     }
 }

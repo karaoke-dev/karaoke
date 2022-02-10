@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 1 }, new[] { 2 }, null, null, new[] { 1, 2 }, new[] { 2, 1 })]
         [TestCase(new[] { 1 }, new[] { 2 }, new[] { 3 }, null, new[] { 1, 2, 3 }, new[] { 2, 1, 3 })]
         [TestCase(new[] { 1 }, new[] { 2 }, null, new[] { 3 }, new[] { 1, 2, 3 }, new[] { 2, 1, 3 })]
-        public void TestSyncWithAddItems(int[] firstDefaultValues, int[] secondDefaultValues, int[] firstNewValues, int[] secondNewValues, int[] actualFirstValues, int[] actualSecondValues)
+        public void TestSyncWithAddItems(int[] firstDefaultValues, int[] secondDefaultValues, int[] firstNewValues, int[] secondNewValues, int[] expectedFirstValues, int[] expectedSecondValues)
         {
             var firstBindableList = new BindableList<int>(firstDefaultValues);
             var secondBindableList = new BindableList<int>(secondDefaultValues);
@@ -29,8 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             if (secondNewValues != null)
                 secondBindableList.AddRange(secondNewValues);
 
-            Assert.AreEqual(firstBindableList.ToArray(), actualFirstValues);
-            Assert.AreEqual(secondBindableList.ToArray(), actualSecondValues);
+            Assert.AreEqual(expectedFirstValues, firstBindableList.ToArray());
+            Assert.AreEqual(expectedSecondValues, secondBindableList.ToArray());
         }
 
         [TestCase(null, null, new[] { 1 }, null, new int[] { }, new int[] { })] // should not clear if has no values.
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 1 }, new[] { 2 }, new[] { 2 }, new[] { 1 }, new int[] { }, new int[] { })]
         [TestCase(new[] { 1 }, new[] { 2 }, new[] { 3 }, null, new[] { 1, 2 }, new[] { 2, 1 })] // should not clear value if not contains.
         [TestCase(new[] { 1 }, new[] { 2 }, null, new[] { 3 }, new[] { 1, 2 }, new[] { 2, 1 })]
-        public void TestSyncWithRemoveItems(int[] firstDefaultValues, int[] secondDefaultValues, int[] firstRemoveValues, int[] secondRemoveValues, int[] actualFirstValues, int[] actualSecondValues)
+        public void TestSyncWithRemoveItems(int[] firstDefaultValues, int[] secondDefaultValues, int[] firstRemoveValues, int[] secondRemoveValues, int[] expectedFirstValues, int[] expectedSecondValues)
         {
             var firstBindableList = new BindableList<int>(firstDefaultValues);
             var secondBindableList = new BindableList<int>(secondDefaultValues);
@@ -55,8 +55,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             if (secondRemoveValues != null)
                 secondBindableList.RemoveAll(secondRemoveValues.Contains);
 
-            Assert.AreEqual(firstBindableList.ToArray(), actualFirstValues);
-            Assert.AreEqual(secondBindableList.ToArray(), actualSecondValues);
+            Assert.AreEqual(expectedFirstValues, firstBindableList.ToArray());
+            Assert.AreEqual(expectedSecondValues, secondBindableList.ToArray());
         }
 
         [TestCase(new[] { 1 }, null, null, new[] { 1 })] // should sync default value also.
@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 1, 1 }, new[] { 1 }, null, new[] { 1 })]
         [TestCase(new[] { 1, 1 }, new[] { 2 }, null, new[] { 2, 1 })] // it's ok if has duplicated value in default value.
         [TestCase(new[] { 1 }, new[] { 1 }, new[] { 1 }, new[] { 1 })] // should not sync to second list if add the same value.
-        public void TestOnyWaySyncWithAddItems(int[] defaultValuesInFirstBindable, int[] defaultValuesInSecondBindable, int[] newValues, int[] actualValuesInSecondBindable)
+        public void TestOnyWaySyncWithAddItems(int[] defaultValuesInFirstBindable, int[] defaultValuesInSecondBindable, int[] newValues, int[] expectedValuesInSecondBindable)
         {
             var firstBindableList = new BindableList<int>(defaultValuesInFirstBindable);
             var secondBindableList = new BindableList<int>(defaultValuesInSecondBindable);
@@ -77,14 +77,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             if (newValues != null)
                 firstBindableList.AddRange(newValues);
 
-            Assert.AreEqual(secondBindableList.ToArray(), actualValuesInSecondBindable);
+            Assert.AreEqual(expectedValuesInSecondBindable, secondBindableList.ToArray());
         }
 
         [TestCase(new[] { 1, 2, 3 }, null, new[] { 1 }, new[] { 2, 3 })]
         [TestCase(new[] { 1 }, null, new[] { 1 }, new int[] { })] // remove all values
         [TestCase(null, null, new[] { 2 }, new int[] { })] // remove value that is not exist.
         [TestCase(new[] { 1, 2 }, new[] { 3 }, new[] { 3 }, new[] { 3, 1, 2 })] // cannot remove value from second list if remove value is not in the first list.
-        public void TestOnyWaySyncWithRemoveItems(int[] defaultValuesInFirstBindable, int[] defaultValuesInSecondBindable, int[] removeValues, int[] actualValuesInSecondBindable)
+        public void TestOnyWaySyncWithRemoveItems(int[] defaultValuesInFirstBindable, int[] defaultValuesInSecondBindable, int[] removeValues, int[] expectedValuesInSecondBindable)
         {
             var firstBindableList = new BindableList<int>(defaultValuesInFirstBindable);
             var secondBindableList = new BindableList<int>(defaultValuesInSecondBindable);
@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             if (removeValues != null)
                 firstBindableList.RemoveAll(removeValues.Contains);
 
-            Assert.AreEqual(secondBindableList.ToArray(), actualValuesInSecondBindable);
+            Assert.AreEqual(expectedValuesInSecondBindable, secondBindableList.ToArray());
         }
     }
 }

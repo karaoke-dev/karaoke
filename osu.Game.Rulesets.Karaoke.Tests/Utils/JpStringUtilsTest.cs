@@ -12,19 +12,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("ハナビ", "はなび")]
         [TestCase("タイカイ", "たいかい")]
         [TestCase("花火大会", "花火大会")]
-        public void TestToHiragana(string text, string actual)
+        public void TestToHiragana(string text, string expected)
         {
-            string katakana = JpStringUtils.ToHiragana(text);
-            Assert.AreEqual(katakana, actual);
+            string actual = JpStringUtils.ToHiragana(text);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("はなび", "ハナビ")]
         [TestCase("たいかい", "タイカイ")]
         [TestCase("花火大会", "花火大会")]
-        public void TestToKatakana(string text, string actual)
+        public void TestToKatakana(string text, string expected)
         {
-            string katakana = JpStringUtils.ToKatakana(text);
-            Assert.AreEqual(katakana, actual);
+            string actual = JpStringUtils.ToKatakana(text);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("はなび", "hanabi")]
@@ -35,10 +35,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("ハナビ wo miru", "hanabi wo miru")]
         [TestCase("タイカイー☆", "taikaii☆")] // it's converted by package, let's skip this checking.
         [TestCase("タイカイ ー☆", "taikai -☆")] // it's converted by package, let's skip this checking.
-        public void TestToRomaji(string text, string actual)
+        public void TestToRomaji(string text, string expected)
         {
-            string romaji = JpStringUtils.ToRomaji(text);
-            Assert.AreEqual(romaji, actual);
+            string actual = JpStringUtils.ToRomaji(text);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

@@ -23,13 +23,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         {
             // test ruby tag.
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
-            var actualRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
-            TextTagAssert.ArePropertyEqual(generateFixedTag(rubyTag, lyric), actualRubyTag);
+
+            var expectedRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
+            var actualRubyTag = generateFixedTag(rubyTag, lyric);
+            TextTagAssert.ArePropertyEqual(expectedRubyTag, actualRubyTag);
 
             // test romaji tag.
             var romajiTag = TestCaseTagHelper.ParseRubyTag(textTag);
-            var actualRomaji = TestCaseTagHelper.ParseRubyTag(actualTag);
-            TextTagAssert.ArePropertyEqual(generateFixedTag(romajiTag, lyric), actualRomaji);
+
+            var expectedRomajiTag = TestCaseTagHelper.ParseRubyTag(actualTag);
+            var actualRomajiTag = generateFixedTag(romajiTag, lyric);
+            TextTagAssert.ArePropertyEqual(expectedRomajiTag, actualRomajiTag);
 
             static T generateFixedTag<T>(T textTag, string lyric) where T : ITextTag, new()
             {
@@ -55,13 +59,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         {
             // test ruby tag.
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
-            var actualRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
-            TextTagAssert.ArePropertyEqual(generateShiftingTag(rubyTag, lyric, offset), actualRubyTag);
+
+            var expectedRubyTag = TestCaseTagHelper.ParseRubyTag(actualTag);
+            var actualRubyTag = generateShiftingTag(rubyTag, lyric, offset);
+            TextTagAssert.ArePropertyEqual(expectedRubyTag, actualRubyTag);
 
             // test romaji tag.
             var romajiTag = TestCaseTagHelper.ParseRubyTag(textTag);
-            var actualRomaji = TestCaseTagHelper.ParseRubyTag(actualTag);
-            TextTagAssert.ArePropertyEqual(generateShiftingTag(romajiTag, lyric, offset), actualRomaji);
+
+            var expectedRomajiTag = TestCaseTagHelper.ParseRubyTag(actualTag);
+            var actualRomajiTag = generateShiftingTag(romajiTag, lyric, offset);
+            TextTagAssert.ArePropertyEqual(expectedRomajiTag, actualRomajiTag);
 
             static T generateShiftingTag<T>(T textTag, string lyric, int offset) where T : ITextTag, new()
             {
@@ -82,18 +90,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[1,0]:ka", "karaoke", false)] // should not be counted as out of range if index is not ordered.
         [TestCase("[0,0]:ka", "", true)] // should be counted as out of range if lyric is empty
         [TestCase("[0,0]:ka", null, true)] // should be counted as out of range if lyric is null
-        public void TestOutOfRange(string textTag, string lyric, bool outOfRange)
+        public void TestOutOfRange(string textTag, string lyric, bool expected)
         {
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
-            Assert.AreEqual(TextTagUtils.OutOfRange(rubyTag, lyric), outOfRange);
+
+            bool actual = TextTagUtils.OutOfRange(rubyTag, lyric);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("[0,1]:ka", false)]
         [TestCase("[0,1]:", true)]
-        public void TestEmptyText(string textTag, bool emptyText)
+        public void TestEmptyText(string textTag, bool expected)
         {
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
-            Assert.AreEqual(TextTagUtils.EmptyText(rubyTag), emptyText);
+
+            bool actual = TextTagUtils.EmptyText(rubyTag);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("[0,1]:ka", "ka(0 ~ 1)")]
@@ -102,10 +114,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[-1,-1]:ka", "ka(-1 ~ -1)")]
         [TestCase("[-1,-2]:ka", "ka(-1 ~ -2)")] // will not fix the order in display.
         [TestCase("[2,1]:ka", "ka(2 ~ 1)")] // will not fix the order in display.
-        public void TestPositionFormattedString(string textTag, string actual)
+        public void TestPositionFormattedString(string textTag, string expected)
         {
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
-            Assert.AreEqual(TextTagUtils.PositionFormattedString(rubyTag), actual);
+
+            string actual = TextTagUtils.PositionFormattedString(rubyTag);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase("[0,1]:ka", "カラオケ", "カ")]
@@ -115,10 +129,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[4,0]:karaoke", "カラオケ", "カラオケ")] // should not have those state but still give it a value.
         [TestCase("[0,4]:karaoke", "", "")]
         [TestCase("[0,4]:karaoke", null, null)]
-        public void TestGetTextFromLyric(string textTag, string lyric, string actual)
+        public void TestGetTextFromLyric(string textTag, string lyric, string expected)
         {
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
-            Assert.AreEqual(TextTagUtils.GetTextFromLyric(rubyTag, lyric), actual);
+
+            string actual = TextTagUtils.GetTextFromLyric(rubyTag, lyric);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

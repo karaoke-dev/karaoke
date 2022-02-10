@@ -19,10 +19,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase('ー', true)]
         [TestCase('a', false)]
         [TestCase('1', false)]
-        public void TestIsKana(char c, bool match)
+        public void TestIsKana(char c, bool expected)
         {
-            bool isKana = CharUtils.IsKana(c);
-            Assert.AreEqual(isKana, match);
+            bool actual = CharUtils.IsKana(c);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase('A', true)]
@@ -31,10 +31,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase('ｚ', true)]
         [TestCase('1', false)]
         [TestCase('文', false)]
-        public void TestIsLatin(char c, bool match)
+        public void TestIsLatin(char c, bool expected)
         {
-            bool isLatin = CharUtils.IsLatin(c);
-            Assert.AreEqual(isLatin, match);
+            bool actual = CharUtils.IsLatin(c);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(':', true)]
@@ -43,10 +43,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase('#', true)]
         [TestCase('@', true)]
         [TestCase('A', false)]
-        public void TestIsAsciiSymbol(char c, bool match)
+        public void TestIsAsciiSymbol(char c, bool expected)
         {
-            bool isAsciiSymbol = CharUtils.IsAsciiSymbol(c);
-            Assert.AreEqual(isAsciiSymbol, match);
+            bool actual = CharUtils.IsAsciiSymbol(c);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase('你', true)]
@@ -62,10 +62,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase('ハ', false)]
         [TestCase('は', false)]
         [TestCase('ハ', false)]
-        public void TestIsChinese(char c, bool result)
+        public void TestIsChinese(char c, bool expected)
         {
-            bool isChinese = CharUtils.IsChinese(c);
-            Assert.AreEqual(isChinese, result);
+            bool actual = CharUtils.IsChinese(c);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

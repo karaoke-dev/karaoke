@@ -13,9 +13,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 1 }, 1)]
         [TestCase(new[] { 1, 2, 3 }, 7)]
         [TestCase(new[] { 1, 4, 5 }, 25)]
-        public void TestGetShiftingStyleIndex(int[] singerIndexes, int styleIndex)
+        public void TestGetShiftingStyleIndex(int[] singerIndexes, int expected)
         {
-            Assert.AreEqual(SingerUtils.GetShiftingStyleIndex(singerIndexes), styleIndex);
+            int actual = SingerUtils.GetShiftingStyleIndex(singerIndexes);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestCase(-1, new int[] { })]
@@ -23,9 +24,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(1, new[] { 1 })]
         [TestCase(7, new[] { 1, 2, 3 })]
         [TestCase(25, new[] { 1, 4, 5 })]
-        public void TestGetSingersIndex(int styleIndex, int[] singerIndexes)
+        public void TestGetSingersIndex(int styleIndex, int[] expected)
         {
-            Assert.AreEqual(SingerUtils.GetSingersIndex(styleIndex), singerIndexes);
+            int[] actual = SingerUtils.GetSingersIndex(styleIndex);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

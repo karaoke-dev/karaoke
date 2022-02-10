@@ -19,11 +19,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[0,0,0,0]", "[5,0,0,0]", "[0,5,0,0]" }, "[0,0,5,5]")]
         [TestCase(new[] { "" }, "")]
         [TestCase(new string[] { }, "")]
-        public void TestUnion(string[] positions, string actual)
+        public void TestUnion(string[] positions, string expectedRectangle)
         {
             var objects = positions?.Select(convertTestCaseToValue).ToArray();
-            var result = RectangleFUtils.Union(objects);
-            Assert.AreEqual(result, convertTestCaseToValue(actual));
+
+            var expected = convertTestCaseToValue(expectedRectangle);
+            var actual = RectangleFUtils.Union(objects);
+            Assert.AreEqual(expected, actual);
         }
 
         private RectangleF convertTestCaseToValue(string str)

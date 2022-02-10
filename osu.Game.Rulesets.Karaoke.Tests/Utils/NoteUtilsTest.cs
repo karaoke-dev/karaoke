@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new double[] { 1000, 3000 }, 0.5, 0.5, new double[] { 2500, 1500 })]
         [TestCase(new double[] { 1000, 3000 }, 0.3, 0.4, new double[] { 1900, 1200 })]
         [TestCase(new double[] { 1000, 3000 }, 0.3, 1, null)] // start + duration should not exceed 1
-        public void TestSliceNoteTime(double[] time, double startPercentage, double durationPercentage, double[] actualTime)
+        public void TestSliceNoteTime(double[] time, double startPercentage, double durationPercentage, double[] expected)
         {
             var note = new Note
             {
@@ -25,12 +25,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             try
             {
                 var sliceNote = NoteUtils.SliceNote(note, startPercentage, durationPercentage);
-                Assert.AreEqual(sliceNote.StartTime, actualTime[0]);
-                Assert.AreEqual(sliceNote.Duration, actualTime[1]);
+                Assert.AreEqual(expected[0], sliceNote.StartTime);
+                Assert.AreEqual(expected[1], sliceNote.Duration);
             }
             catch
             {
-                Assert.IsNull(actualTime);
+                Assert.IsNull(expected);
             }
         }
 
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("karaoke", "ka- ra- o- ke-", true, "ka- ra- o- ke-")]
         [TestCase("", "ka- ra- o- ke-", true, "ka- ra- o- ke-")]
         [TestCase(null, "ka- ra- o- ke-", true, "ka- ra- o- ke-")]
-        public void TestDisplayText(string text, string rubyText, bool useRubyTextIfHave, string actual)
+        public void TestDisplayText(string text, string rubyText, bool useRubyTextIfHave, string expected)
         {
             var note = new Note
             {
@@ -51,8 +51,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 RubyText = rubyText
             };
 
-            string result = NoteUtils.DisplayText(note, useRubyTextIfHave);
-            Assert.AreEqual(result, actual);
+            string actual = NoteUtils.DisplayText(note, useRubyTextIfHave);
+            Assert.AreEqual(expected, actual);
         }
     }
 }
