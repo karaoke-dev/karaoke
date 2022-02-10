@@ -16,7 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Bindables
             var bindable = new BindableFontUsage();
             bindable.Parse(value);
 
-            Assert.AreEqual(bindable.Value, new FontUsage(family, size, weight, italics, fixedWidth));
+            var expected = new FontUsage(family, size, weight, italics, fixedWidth);
+            var actual = bindable.Value;
+            Assert.AreEqual(expected, actual);
         }
     }
 }
