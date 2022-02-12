@@ -4,7 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 {
@@ -45,9 +45,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorExtendAreaState lyricEditorExtendAreaState)
+        private void load(ILanguageModeState languageModeState)
         {
-            bindableMode.BindTo(lyricEditorExtendAreaState.BindableLanguageEditMode);
+            bindableMode.BindTo(languageModeState.BindableEditMode);
         }
     }
 }

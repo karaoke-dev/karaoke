@@ -3,7 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
@@ -46,9 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorExtendAreaState lyricEditorExtendAreaState)
+        private void load(IEditRomajiModeState romajiModeState)
         {
-            EditMode.BindTo(lyricEditorExtendAreaState.BindableRomajiTagEditMode);
+            EditMode.BindTo(romajiModeState.BindableEditMode);
         }
     }
 }
