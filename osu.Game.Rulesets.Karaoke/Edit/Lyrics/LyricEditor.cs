@@ -21,6 +21,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Timing;
@@ -58,11 +59,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(ILyricCaretState))]
         private readonly LyricCaretState lyricCaretState;
 
-        [Cached(typeof(IBlueprintSelectionState))]
-        private readonly BlueprintSelectionState blueprintSelectionState;
+        [Cached(typeof(ILanguageModeState))]
+        private readonly LanguageModeState languageModeState;
 
-        [Cached(typeof(ILyricEditorExtendAreaState))]
-        private readonly LyricEditorExtendAreaState lyricEditorExtendAreaState;
+        [Cached(typeof(IEditRubyModeState))]
+        private readonly EditRubyModeState editRubyModeState;
+
+        [Cached(typeof(IEditRomajiModeState))]
+        private readonly EditRomajiModeState editRomajiModeState;
+
+        [Cached(typeof(ITimeTagModeState))]
+        private readonly TimeTagModeState timeTagModeState;
+
+        [Cached(typeof(IEditNoteModeState))]
+        private readonly EditNoteModeState editNoteModeState;
 
         [Cached(typeof(IScrollingInfo))]
         private readonly LocalScrollingInfo scrollingInfo = new();
@@ -88,10 +98,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         public LyricEditor()
         {
+            // global state
             AddInternal(lyricSelectionState = new LyricSelectionState());
             AddInternal(lyricCaretState = new LyricCaretState(bindableLyrics));
-            AddInternal(blueprintSelectionState = new BlueprintSelectionState());
-            AddInternal(lyricEditorExtendAreaState = new LyricEditorExtendAreaState());
+
+            // state for target mode only.
+            AddInternal(languageModeState = new LanguageModeState());
+            AddInternal(editRubyModeState = new EditRubyModeState());
+            AddInternal(editRomajiModeState = new EditRomajiModeState());
+            AddInternal(timeTagModeState = new TimeTagModeState());
+            AddInternal(editNoteModeState = new EditNoteModeState());
 
             Add(gridContainer = new GridContainer
             {
