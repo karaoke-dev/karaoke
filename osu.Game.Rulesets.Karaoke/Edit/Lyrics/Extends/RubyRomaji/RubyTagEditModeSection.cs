@@ -3,17 +3,17 @@
 
 using System.Collections.Generic;
 using osu.Framework.Allocation;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
     public class RubyTagEditModeSection : TextTagEditModeSection
     {
         [Resolved]
-        private ILyricEditorExtendAreaState lyricEditorExtendAreaState { get; set; }
+        private IEditRubyModeState editRubyModeState { get; set; }
 
         protected override TextTagEditMode DefaultMode()
-            => lyricEditorExtendAreaState.RubyTagEditMode;
+            => editRubyModeState.EditMode;
 
         protected override Dictionary<TextTagEditMode, EditModeSelectionItem> CreateSelections()
             => new()
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
         protected override void UpdateEditMode(TextTagEditMode mode)
         {
-            lyricEditorExtendAreaState.ChangeRubyTagEditMode(mode);
+            editRubyModeState.ChangeEditMode(mode);
 
             base.UpdateEditMode(mode);
         }

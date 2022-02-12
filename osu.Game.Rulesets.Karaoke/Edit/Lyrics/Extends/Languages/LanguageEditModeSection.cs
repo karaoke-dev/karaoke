@@ -7,7 +7,7 @@ using osu.Framework.Allocation;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
@@ -15,13 +15,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
     public class LanguageEditModeSection : EditModeSection<LanguageEditMode>
     {
         [Resolved]
-        private ILyricEditorExtendAreaState lyricEditorExtendAreaState { get; set; }
+        private ILanguageModeState languageModeState { get; set; }
 
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Pink;
 
         protected override LanguageEditMode DefaultMode()
-            => lyricEditorExtendAreaState.LanguageEditMode;
+            => languageModeState.EditMode;
 
         protected override Dictionary<LanguageEditMode, EditModeSelectionItem> CreateSelections()
             => new()
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 
         protected override void UpdateEditMode(LanguageEditMode mode)
         {
-            lyricEditorExtendAreaState.ChangeLanguageEditMode(mode);
+            languageModeState.ChangeEditMode(mode);
 
             base.UpdateEditMode(mode);
         }
