@@ -8,7 +8,7 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 
@@ -26,10 +26,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(IBlueprintSelectionState blueprintSelectionState)
+        private void load(IEditRubyModeState editRubyModeState)
         {
             // Add ruby tag into blueprint container
-            SelectedItems.BindTo(blueprintSelectionState.SelectedRubyTags);
+            SelectedItems.BindTo(editRubyModeState.SelectedItems);
             RegisterBindable(rubyTags);
         }
 
@@ -45,9 +45,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
 
             [BackgroundDependencyLoader]
-            private void load(IBlueprintSelectionState blueprintSelectionState)
+            private void load(IEditRubyModeState editRubyModeState)
             {
-                SelectedItems.BindTo(blueprintSelectionState.SelectedRubyTags);
+                SelectedItems.BindTo(editRubyModeState.SelectedItems);
             }
 
             protected override void DeleteItems(IEnumerable<RubyTag> items)

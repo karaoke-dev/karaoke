@@ -19,6 +19,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -213,10 +214,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 private BindableList<TimeTag> selectedTimeTags;
 
                 [BackgroundDependencyLoader]
-                private void load(ILyricEditorState state, ILyricCaretState lyricCaretState, IBlueprintSelectionState blueprintSelectionState)
+                private void load(ILyricEditorState state, ILyricCaretState lyricCaretState, ITimeTagModeState timeTagModeState)
                 {
                     // update selected state by bindable.
-                    selectedTimeTags = blueprintSelectionState.SelectedTimeTags.GetBoundCopy();
+                    selectedTimeTags = timeTagModeState.SelectedItems.GetBoundCopy();
                     selectedTimeTags.BindCollectionChanged((_, _) =>
                     {
                         bool selected = selectedTimeTags.Contains(timeTag);

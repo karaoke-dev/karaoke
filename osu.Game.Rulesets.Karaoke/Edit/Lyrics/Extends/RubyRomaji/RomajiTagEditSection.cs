@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
@@ -57,9 +58,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             }
 
             [BackgroundDependencyLoader]
-            private void load(IBlueprintSelectionState blueprintSelectionState)
+            private void load(IEditRomajiModeState editRomajiModeState)
             {
-                SelectedItems.BindTo(blueprintSelectionState.SelectedRomajiTags);
+                SelectedItems.BindTo(editRomajiModeState.SelectedItems);
             }
         }
     }

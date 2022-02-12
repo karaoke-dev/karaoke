@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 
@@ -38,9 +39,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(IBlueprintSelectionState blueprintSelectionState)
+        private void load(ITimeTagModeState timeTagModeState)
         {
-            SelectedItems.BindTo(blueprintSelectionState.SelectedTimeTags);
+            SelectedItems.BindTo(timeTagModeState.SelectedItems);
 
             // Add time tag into blueprint container
             RegisterBindable(timeTags);
@@ -55,9 +56,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         protected class TimeTagSelectionHandler : ExtendSelectionHandler<TimeTag>
         {
             [BackgroundDependencyLoader]
-            private void load(IBlueprintSelectionState blueprintSelectionState)
+            private void load(ITimeTagModeState timeTagModeState)
             {
-                SelectedItems.BindTo(blueprintSelectionState.SelectedTimeTags);
+                SelectedItems.BindTo(timeTagModeState.SelectedItems);
             }
 
             // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation

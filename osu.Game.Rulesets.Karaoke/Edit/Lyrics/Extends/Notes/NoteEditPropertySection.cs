@@ -11,6 +11,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -96,9 +97,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 => notesChangeHandler.ChangeText(value);
 
             [BackgroundDependencyLoader]
-            private void load(IBlueprintSelectionState blueprintSelectionState)
+            private void load(IEditNoteModeState editNoteModeState)
             {
-                SelectedItems.BindTo(blueprintSelectionState.SelectedNotes);
+                SelectedItems.BindTo(editNoteModeState.SelectedItems);
             }
         }
 
@@ -119,9 +120,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 => notesChangeHandler.ChangeRubyText(value);
 
             [BackgroundDependencyLoader]
-            private void load(IBlueprintSelectionState blueprintSelectionState)
+            private void load(IEditNoteModeState editNoteModeState)
             {
-                SelectedItems.BindTo(blueprintSelectionState.SelectedNotes);
+                SelectedItems.BindTo(editNoteModeState.SelectedItems);
             }
         }
 
@@ -142,9 +143,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 => notesChangeHandler.ChangeDisplayState(value);
 
             [BackgroundDependencyLoader]
-            private void load(IBlueprintSelectionState blueprintSelectionState)
+            private void load(IEditNoteModeState editNoteModeState)
             {
-                SelectedItems.BindTo(blueprintSelectionState.SelectedNotes);
+                SelectedItems.BindTo(editNoteModeState.SelectedItems);
             }
         }
     }
