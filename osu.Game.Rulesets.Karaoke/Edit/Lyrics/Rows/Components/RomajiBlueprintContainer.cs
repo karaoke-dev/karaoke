@@ -8,7 +8,7 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 
@@ -26,10 +26,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(IBlueprintSelectionState blueprintSelectionState)
+        private void load(IEditRomajiModeState editRomajiModeState)
         {
             // Add romaji tag into blueprint container
-            SelectedItems.BindTo(blueprintSelectionState.SelectedRomajiTags);
+            SelectedItems.BindTo(editRomajiModeState.SelectedItems);
             RegisterBindable(romajiTags);
         }
 
@@ -45,9 +45,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }
 
             [BackgroundDependencyLoader]
-            private void load(IBlueprintSelectionState blueprintSelectionState)
+            private void load(IEditRomajiModeState editRomajiModeState)
             {
-                SelectedItems.BindTo(blueprintSelectionState.SelectedRomajiTags);
+                SelectedItems.BindTo(editRomajiModeState.SelectedItems);
             }
 
             protected override void DeleteItems(IEnumerable<RomajiTag> items)

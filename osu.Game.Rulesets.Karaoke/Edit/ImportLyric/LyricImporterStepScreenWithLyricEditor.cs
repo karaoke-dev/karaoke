@@ -9,6 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
@@ -50,26 +51,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             private LyricImporterSubScreenStack screenStack { get; set; }
 
             private ILyricSelectionState lyricSelectionState { get; set; }
-
-            private ILyricEditorExtendAreaState lyricEditorExtendAreaState { get; set; }
+            private ILanguageModeState languageModeState { get; set; }
+            private IEditRubyModeState editRubyModeState { get; set; }
+            private IEditRomajiModeState editRomajiModeState { get; set; }
 
             public void PrepareAutoGenerate()
             {
-                // for some mode, we need to switch to generate section.
-                lyricEditorExtendAreaState.ChangeLanguageEditMode(LanguageEditMode.Generate);
-                lyricEditorExtendAreaState.ChangeRubyTagEditMode(TextTagEditMode.Generate);
-                lyricEditorExtendAreaState.ChangeRomajiTagEditMode(TextTagEditMode.Generate);
-
                 // then open the selecting mode and select all lyrics.
                 lyricSelectionState.StartSelecting();
                 lyricSelectionState.SelectAll();
+
+                // for some mode, we need to switch to generate section.
+                languageModeState.ChangeEditMode(LanguageEditMode.Generate);
+                editRubyModeState.ChangeEditMode(TextTagEditMode.Generate);
+                editRomajiModeState.ChangeEditMode(TextTagEditMode.Generate);
             }
 
             protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
             {
                 var dependencies = base.CreateChildDependencies(parent);
                 lyricSelectionState = dependencies.Get<ILyricSelectionState>();
-                lyricEditorExtendAreaState = dependencies.Get<ILyricEditorExtendAreaState>();
+                languageModeState = dependencies.Get<ILanguageModeState>();
+                editRubyModeState = dependencies.Get<IEditRubyModeState>();
+                editRomajiModeState = dependencies.Get<IEditRomajiModeState>();
                 return dependencies;
             }
 
