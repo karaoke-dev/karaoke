@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
             var config = generatorConfigManager.Get<NoteGeneratorConfig>(KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig);
             var generator = new NoteGenerator(config);
 
-            PerformOnSelection(lyric =>
+            PerformOnLyricSelection(lyric =>
             {
                 // clear exist notes if from those
                 var matchedNotes = HitObjects.Where(x => x.ParentLyric == lyric).ToArray();
@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 
         public void Combine()
         {
-            PerformOnSelection(lyric =>
+            PerformOnLyricSelection(lyric =>
             {
                 var notes = beatmap.SelectedHitObjects.OfType<Note>().Where(n => n.ParentLyric == lyric).ToList();
 
@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
             });
         }
 
-        protected void PerformOnSelection(Action<Lyric> action) => beatmap.PerformOnSelection(h =>
+        protected void PerformOnLyricSelection(Action<Lyric> action) => beatmap.PerformOnSelection(h =>
         {
             if (h is Lyric lyric)
                 action.Invoke(lyric);
