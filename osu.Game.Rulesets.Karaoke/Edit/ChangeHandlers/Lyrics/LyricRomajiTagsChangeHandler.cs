@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -24,14 +25,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             PerformOnSelection(lyric =>
             {
                 var romajiTags = selector.GenerateRomajiTags(lyric);
-                lyric.RomajiTags = romajiTags;
+                lyric.RomajiTags = romajiTags ?? Array.Empty<RomajiTag>();
             });
         }
 
         public bool CanGenerate()
-        {
-            return HitObjects.Any(lyric => selector.CanGenerate(lyric));
-        }
+            => HitObjects.Any(lyric => selector.CanGenerate(lyric));
 
         protected override bool ContainsInLyric(Lyric lyric, RomajiTag textTag)
             => lyric.RomajiTags.Contains(textTag);
