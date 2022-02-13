@@ -14,6 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
     {
         public void Add(TTextTag textTag)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 bool containsInLyric = ContainsInLyric(lyric, textTag);
@@ -26,6 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void Remove(TTextTag textTag)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 bool containsInLyric = ContainsInLyric(lyric, textTag);
@@ -38,6 +42,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void RemoveAll(IEnumerable<TTextTag> textTags)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 // should convert to array because enumerable might change while deleting.
@@ -54,6 +60,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void SetIndex(TTextTag textTag, int? startIndex, int? endIndex)
         {
+            CheckExactlySelectedOneHitObject();
+
             // note: it's ok not sort the text tag by index.
             PerformOnSelection(lyric =>
             {
@@ -71,6 +79,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void ShiftingIndex(IEnumerable<TTextTag> textTags, int offset)
         {
+            CheckExactlySelectedOneHitObject();
+
             // note: it's ok not sort the text tag by index.
             PerformOnSelection(lyric =>
             {
@@ -89,6 +99,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void SetText(TTextTag textTag, string text)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 bool containsInLyric = ContainsInLyric(lyric, textTag);

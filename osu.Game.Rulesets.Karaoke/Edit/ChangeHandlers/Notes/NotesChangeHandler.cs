@@ -38,6 +38,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 
         public void Split(float percentage = 0.5f)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(note =>
             {
                 var (firstNote, secondNote) = NotesUtils.SplitNote(note);
@@ -70,6 +72,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 
         public void ChangeText(string text)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(note =>
             {
                 note.Text = text;
@@ -78,6 +82,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 
         public void ChangeRubyText(string ruby)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(note =>
             {
                 note.RubyText = ruby;

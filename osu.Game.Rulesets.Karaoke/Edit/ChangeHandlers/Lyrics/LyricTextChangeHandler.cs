@@ -11,6 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
     {
         public void InsertText(int index, string text)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 LyricUtils.AddText(lyric, index, text);
@@ -19,6 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void DeleteLyricText(int index)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 LyricUtils.RemoveText(lyric, index - 1);
