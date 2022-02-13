@@ -18,6 +18,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 
         protected IEnumerable<THitObject> HitObjects => beatmap.HitObjects.OfType<THitObject>();
 
+        protected void CheckExactlySelectedOneHitObject()
+        {
+            if (beatmap.SelectedHitObjects.OfType<THitObject>().Count() != 1)
+                throw new InvalidOperationException($"Should be exactly one {nameof(THitObject)} being selected.");
+        }
+
         protected void PerformOnSelection(Action<THitObject> action) => beatmap.PerformOnSelection(h =>
         {
             if (h is THitObject tHitObject)

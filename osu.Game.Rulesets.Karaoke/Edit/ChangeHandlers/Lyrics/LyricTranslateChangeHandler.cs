@@ -11,6 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
     {
         public void UpdateTranslate(CultureInfo cultureInfo, string translate)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 // should not save translate if is null or empty or whitespace

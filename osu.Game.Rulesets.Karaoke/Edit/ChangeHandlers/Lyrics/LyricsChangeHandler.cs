@@ -13,6 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
     {
         public void Split(int index)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 // Shifting order that order is larger than current lyric.
@@ -35,6 +37,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void Combine()
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 var previousLyric = HitObjects.GetPrevious(lyric);
@@ -57,6 +61,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void CreateAtPosition()
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 int order = lyric.Order;

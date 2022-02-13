@@ -32,6 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void SetTimeTagTime(TimeTag timeTag, double time)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 bool containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
@@ -44,6 +46,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void ClearTimeTagTime(TimeTag timeTag)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 bool containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
@@ -56,6 +60,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void Add(TimeTag timeTag)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 bool containsInLyric = lyric.TimeTags.Contains(timeTag);
@@ -68,6 +74,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void Remove(TimeTag timeTag)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 // delete time tag from list
@@ -77,6 +85,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void AddByPosition(TextIndex index)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 lyric.TimeTags.Add(new TimeTag(index));
@@ -85,6 +95,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void RemoveByPosition(TextIndex index)
         {
+            CheckExactlySelectedOneHitObject();
+
             PerformOnSelection(lyric =>
             {
                 var matchedTimeTags = lyric.TimeTags.Where(x => x.Index == index).ToList();
