@@ -22,6 +22,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
 
         public TimeTag[] GenerateTimeTags(Lyric lyric)
         {
+            if (lyric.Language == null)
+                return null;
+
+            if (string.IsNullOrEmpty(lyric.Text))
+                return null;
+
             if (!Generator.TryGetValue(lyric.Language, out var generator))
                 return null;
 
