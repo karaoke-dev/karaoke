@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             AssertSelectedHitObject(h =>
             {
                 // should not able to generate time-tag if lyric text is empty, or did not have language.
-                Assert.Zero(h.TimeTags.Count);
+                Assert.IsEmpty(h.TimeTags);
             });
         }
 
@@ -152,7 +152,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 
             AssertSelectedHitObject(h =>
             {
-                Assert.Zero(h.TimeTags.Count);
+                Assert.IsEmpty(h.TimeTags);
             });
         }
 
