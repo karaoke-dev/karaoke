@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 
         protected virtual void Add(THitObject hitObject) => beatmap.Add(hitObject);
 
-        public void Insert(int index, THitObject hitObject) => beatmap.Insert(index, hitObject);
+        protected void Insert(int index, THitObject hitObject) => beatmap.Insert(index, hitObject);
 
         protected void Remove(THitObject hitObject) => beatmap.Remove(hitObject);
 
