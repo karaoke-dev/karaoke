@@ -17,8 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             PerformOnSelection(lyric =>
             {
                 bool containsInLyric = ContainsInLyric(lyric, textTag);
-                if (containsInLyric == false)
-                    throw new InvalidOperationException($"{nameof(textTag)} is not in the lyric");
+                if (containsInLyric)
+                    throw new InvalidOperationException($"{nameof(textTag)} already in the lyric");
 
                 AddToLyric(lyric, textTag);
             });
@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             PerformOnSelection(lyric =>
             {
                 bool containsInLyric = ContainsInLyric(lyric, textTag);
-                if (containsInLyric == false)
+                if (!containsInLyric)
                     throw new InvalidOperationException($"{nameof(textTag)} is not in the lyric");
 
                 RemoveFromLyric(lyric, textTag);
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 foreach (var textTag in textTags.ToArray())
                 {
                     bool containsInLyric = ContainsInLyric(lyric, textTag);
-                    if (containsInLyric == false)
+                    if (!containsInLyric)
                         throw new InvalidOperationException($"{nameof(textTag)} is not in the lyric");
 
                     RemoveFromLyric(lyric, textTag);
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             PerformOnSelection(lyric =>
             {
                 bool containsInLyric = ContainsInLyric(lyric, textTag);
-                if (containsInLyric == false)
+                if (!containsInLyric)
                     throw new InvalidOperationException($"{nameof(textTag)} is not in the lyric");
 
                 if (startIndex != null)
@@ -77,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 foreach (var textTag in textTags)
                 {
                     bool containsInLyric = ContainsInLyric(lyric, textTag);
-                    if (containsInLyric == false)
+                    if (!containsInLyric)
                         throw new InvalidOperationException($"{nameof(textTag)} is not in the lyric");
 
                     (int startIndex, int endIndex) = TextTagUtils.GetShiftingIndex(textTag, lyric.Text, offset);
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             PerformOnSelection(lyric =>
             {
                 bool containsInLyric = ContainsInLyric(lyric, textTag);
-                if (containsInLyric == false)
+                if (!containsInLyric)
                     throw new InvalidOperationException($"{nameof(textTag)} is not in the lyric");
 
                 textTag.Text = text;
