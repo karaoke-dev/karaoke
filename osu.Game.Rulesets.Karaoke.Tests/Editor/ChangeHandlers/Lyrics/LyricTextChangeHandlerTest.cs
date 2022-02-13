@@ -40,5 +40,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 Assert.AreEqual("カラオ", h.Text);
             });
         }
+
+        [Test]
+        public void TestDeleteAllLyricText()
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カ"
+            });
+
+            TriggerHandlerChanged(c => c.DeleteLyricText(1));
+
+            AssertHitObjects(Assert.IsEmpty);
+        }
     }
 }
