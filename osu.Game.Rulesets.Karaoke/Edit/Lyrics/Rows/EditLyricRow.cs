@@ -243,9 +243,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     {
                         new OsuMenuItem("Create new lyric", MenuItemType.Standard, () =>
                         {
-                            // add new lyric with below of current lyric.
-                            int targetOrder = Lyric.Order;
-                            lyricsChangeHandler.CreateAtPosition(targetOrder);
+                            lyricsChangeHandler.CreateAtPosition();
                         })
                     };
 

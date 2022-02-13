@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void CreateAtPosition(int? nextToOrder = null)
+        public void CreateAtPosition()
         {
             PerformOnSelection(lyric =>
             {
@@ -117,6 +117,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         }
 
         private int getId()
-            => HitObjects.Max(x => x.ID) + 1;
+            => HitObjects.Any() ? HitObjects.Max(x => x.ID) + 1 : 1;
     }
 }

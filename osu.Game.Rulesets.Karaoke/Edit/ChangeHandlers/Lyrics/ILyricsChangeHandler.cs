@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         void Combine();
 
-        void CreateAtPosition(int? nextToOrder = null);
+        void CreateAtPosition();
 
         void CreateAtLast();
 
