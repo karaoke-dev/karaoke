@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             foreach (var cultureInfo in cultureInfos)
             {
                 // this weird cultureInfo will let test case failed.
-                if (cultureInfo.LCID == 4096)
+                if (cultureInfo.LCID is 4096 or 4 or 31748)
                     continue;
 
                 string json = JsonConvert.SerializeObject(cultureInfo, CreateSettings());

@@ -23,13 +23,37 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
         public GeneralSettingOverlay(IBeatmap beatmap)
         {
             // Add common group
-            Add(new VisualSettings { Expanded = false });
-            Add(new PitchSettings { Expanded = false });
-            Add(new RubyRomajiSettings { Expanded = false });
+            Add(new VisualSettings
+            {
+                Expanded =
+                {
+                    Value = false
+                }
+            });
+            Add(new PitchSettings
+            {
+                Expanded =
+                {
+                    Value = false
+                }
+            });
+            Add(new RubyRomajiSettings
+            {
+                Expanded =
+                {
+                    Value = false
+                }
+            });
 
             // Add translate group if this beatmap has translate
             if (beatmap.AnyTranslate())
-                Add(new TranslateSettings(beatmap.AvailableTranslates()) { Expanded = false });
+                Add(new TranslateSettings(beatmap.AvailableTranslates())
+                {
+                    Expanded =
+                    {
+                        Value = false
+                    }
+                });
         }
 
         public override SettingButton CreateToggleButton() => new()
