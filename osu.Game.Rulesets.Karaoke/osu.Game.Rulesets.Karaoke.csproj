@@ -10,15 +10,15 @@
     <PackageReference Include="ILRepack.MSBuild.Task" Version="2.0.13" />
     <PackageReference Include="LanguageDetection.karaoke-dev" Version="1.3.3-alpha" />
     <PackageReference Include="Octokit" Version="0.50.0" />
-    <PackageReference Include="osu.Framework.KaraokeFont" Version="2022.118.0" />
-    <PackageReference Include="osu.Framework.Microphone" Version="2022.118.0" />
-    <PackageReference Include="ppy.osu.Game" Version="2022.205.0" />
+    <PackageReference Include="osu.Framework.KaraokeFont" Version="2022.214.0" />
+    <PackageReference Include="osu.Framework.Microphone" Version="2022.214.0" />
+    <PackageReference Include="ppy.osu.Game" Version="2022.216.0" />
     <PackageReference Include="LyricMaker" Version="1.1.1" />
     <PackageReference Include="NicoKaraParser" Version="1.1.0" />
     <PackageReference Include="SixLabors.Fonts" Version="1.0.0-beta15" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
     <!--install because it might cause "Could not load file or assembly" error, might be removed eventually-->
-    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.1" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
     <PackageReference Include="WanaKanaSharp" Version="0.2.0" />
     <PackageReference Include="Zipangu" Version="1.1.8" />
   </ItemGroup>
