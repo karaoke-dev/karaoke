@@ -120,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             [Resolved]
             private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
-            private readonly Bindable<double?> bindableTIme;
+            private readonly Bindable<double?> bindableTime;
 
             private readonly RightTriangle timeTagTriangle;
 
@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 RelativePositionAxes = Axes.X;
                 Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT);
 
-                bindableTIme = timeTag.TimeBindable.GetBoundCopy();
+                bindableTime = timeTag.TimeBindable.GetBoundCopy();
                 InternalChildren = new Drawable[]
                 {
                     timeTagTriangle = new RightTriangle
@@ -163,7 +163,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             {
                 timeTagTriangle.Colour = colours.GetTimeTagColour(timeTag);
 
-                bindableTIme.BindValueChanged(e =>
+                bindableTime.BindValueChanged(e =>
                 {
                     bool hasValue = e.NewValue.HasValue;
                     Alpha = hasValue ? 1 : 0;
