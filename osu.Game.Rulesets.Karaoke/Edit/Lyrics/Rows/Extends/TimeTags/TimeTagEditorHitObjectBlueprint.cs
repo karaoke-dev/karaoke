@@ -18,7 +18,9 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Screens.Edit;
 using osuTK;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 {
@@ -81,11 +83,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         }
 
         [BackgroundDependencyLoader]
-        private void load(TimeTagEditor timeline, OsuColour colours)
+        private void load(EditorClock clock, TimeTagEditor timeline, OsuColour colours)
         {
             // todo : should be able to let user able to select show from ruby or main text.
             timeTagText.Text = LyricUtils.GetTimeTagDisplayRubyText(timeline.HitObject, Item);
+
+            timeTagPiece.Clock = clock;
             timeTagPiece.Colour = colours.BlueLight;
+
             timeTagWithNoTimePiece.Colour = colours.Red;
             startTime.BindValueChanged(_ =>
             {
@@ -105,10 +110,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                         break;
                 }
 
+                // should wait until all time-tag time has been modified.
                 Schedule(() =>
                 {
-                    // should wait until all time-tag time has been modified.
-                    X = (float)timeline.GetPreviewTime(Item);
+                    double previewTime = timeline.GetPreviewTime(Item);
+
+                    // adjust position.
+                    X = (float)previewTime;
+
+                    // make tickle effect.
+                    timeTagPiece.ClearTransforms();
+
+                    using (timeTagPiece.BeginAbsoluteSequence(previewTime))
+                    {
+                        timeTagPiece.Colour = colours.BlueLight;
+                        timeTagPiece.FlashColour(colours.PurpleDark, 750, Easing.OutQuint);
+                    }
                 });
             }, true);
         }
@@ -180,6 +197,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                         throw new ArgumentOutOfRangeException(nameof(timeTag.Index.State));
                 }
             }
+
+            public override bool RemoveCompletedTransforms => false;
         }
 
         public class TimeTagWithNoTimePiece : CompositeDrawable

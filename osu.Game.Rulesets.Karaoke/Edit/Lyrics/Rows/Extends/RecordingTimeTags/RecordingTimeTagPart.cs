@@ -22,6 +22,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components.Timelines.Summary.Parts;
 using osuTK;
+using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 {
@@ -120,9 +121,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             [Resolved]
             private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
 
-            private readonly Bindable<double?> bindableTIme;
+            private readonly Bindable<double?> bindableTime;
 
-            private readonly RightTriangle timeTagTriangle;
+            private readonly TimeTagPiece timeTagPiece;
 
             private readonly Lyric lyric;
             private readonly TimeTag timeTag;
@@ -138,10 +139,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 RelativePositionAxes = Axes.X;
                 Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT);
 
-                bindableTIme = timeTag.TimeBindable.GetBoundCopy();
+                bindableTime = timeTag.TimeBindable.GetBoundCopy();
                 InternalChildren = new Drawable[]
                 {
-                    timeTagTriangle = new RightTriangle
+                    timeTagPiece = new TimeTagPiece
                     {
                         Name = "Time tag triangle",
                         Anchor = Anchor.Centre,
@@ -159,11 +160,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             }
 
             [BackgroundDependencyLoader]
-            private void load(OsuColour colours, RecordingTimeTagEditor timeline)
+            private void load(EditorClock clock, OsuColour colours, RecordingTimeTagEditor timeline)
             {
-                timeTagTriangle.Colour = colours.GetTimeTagColour(timeTag);
+                timeTagPiece.Clock = clock;
+                timeTagPiece.Colour = colours.GetTimeTagColour(timeTag);
 
-                bindableTIme.BindValueChanged(e =>
+                bindableTime.BindValueChanged(e =>
                 {
                     bool hasValue = e.NewValue.HasValue;
                     Alpha = hasValue ? 1 : 0;
@@ -171,7 +173,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                     if (!hasValue)
                         return;
 
-                    X = (float)timeline.GetPreviewTime(timeTag);
+                    // should wait until all time-tag time has been modified.
+                    Schedule(() =>
+                    {
+                        double previewTime = timeline.GetPreviewTime(timeTag);
+
+                        // adjust position.
+                        X = (float)previewTime;
+
+                        // make tickle effect.
+                        timeTagPiece.ClearTransforms();
+
+                        using (timeTagPiece.BeginAbsoluteSequence(previewTime))
+                        {
+                            timeTagPiece.Colour = colours.GetTimeTagColour(timeTag);
+                            timeTagPiece.FlashColour(colours.RedDark, 750, Easing.OutQuint);
+                        }
+                    });
                 }, true);
             }
 
@@ -199,6 +217,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                         lyricTimeTagsChangeHandler.ClearTimeTagTime(timeTag);
                     })
                 };
+        }
+
+        private class TimeTagPiece : RightTriangle
+        {
+            public override bool RemoveCompletedTransforms => false;
         }
     }
 }
