@@ -15,8 +15,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
             globalSetting.Converters.Add(new CultureInfoConverter());
             globalSetting.Converters.Add(new RomajiTagConverter());
+            globalSetting.Converters.Add(new RomajiTagsConverter());
             globalSetting.Converters.Add(new RubyTagConverter());
+            globalSetting.Converters.Add(new RubyTagsConverter());
             globalSetting.Converters.Add(new TimeTagConverter());
+            globalSetting.Converters.Add(new TimeTagsConverter());
             globalSetting.Converters.Add(new ToneConverter());
 
             // replace string stream.ReadToEnd().Serialize(output);
