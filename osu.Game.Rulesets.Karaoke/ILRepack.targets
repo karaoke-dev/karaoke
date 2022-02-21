@@ -16,15 +16,8 @@
             <InputAssemblies Include="$(OutputPath)\osu.Game.Rulesets.Karaoke.dll" />
         </ItemGroup>
 
-        <ItemGroup>
-            <InternalizeExcludeAssemblies Include="osu.Game.dll" />
-            <InternalizeExcludeAssemblies Include="osu.Framework.dll" />
-        </ItemGroup>
-
         <ILRepack
                 Parallel="true"
-                Internalize="true"
-                InternalizeExclude="@(InternalizeExcludeAssemblies)"
                 InputAssemblies="@(InputAssemblies)"
                 TargetKind="Dll"
                 OutputFile="$(OutputPath)$(AssemblyName).Packed.dll"
