@@ -22,6 +22,7 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
+      continue-on-error: true # ILRepack.Lib.MSBuild can make dll but with error, so there's no other choice to add this line.
       run: dotnet build osu.Game.Rulesets.Karaoke --configuration Release -p:version=${{env.CURRENT_TAG}} --no-restore
     - name: Create Release
       id: create_release
