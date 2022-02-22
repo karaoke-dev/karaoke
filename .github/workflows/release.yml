@@ -12,9 +12,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Setup dotnet version
-      uses: actions/setup-dotnet@v1 # Build with netCore 3.1 because ILRepack not support .net5
+      uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.x' # SDK Version to use.
+        dotnet-version: '6.0.x' # SDK Version to use.
     - name: Fetch all tags
       run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
     - name: Get current tag
@@ -22,6 +22,7 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
+      continue-on-error: true # ILRepack.Lib.MSBuild can make dll but with error, so there's no other choice to add this line.
       run: dotnet build osu.Game.Rulesets.Karaoke --configuration Release -p:version=${{env.CURRENT_TAG}} --no-restore
     - name: Create Release
       id: create_release

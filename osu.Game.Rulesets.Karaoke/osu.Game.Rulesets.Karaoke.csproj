@@ -7,7 +7,7 @@
     <RootNamespace>osu.Game.Rulesets.Karaoke</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ILRepack.MSBuild.Task" Version="2.0.13" />
+    <PackageReference Include="ILRepack.Lib.MSBuild" Version="2.1.18" />
     <PackageReference Include="LanguageDetection.karaoke-dev" Version="1.3.3-alpha" />
     <PackageReference Include="Octokit" Version="0.50.0" />
     <PackageReference Include="osu.Framework.KaraokeFont" Version="2022.214.0" />
@@ -36,32 +36,5 @@
   <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
-
-  <Target Name="ILRepack" AfterTargets="Build" Condition=" '$(Configuration)'=='Release' ">
-    <PropertyGroup>
-      <WorkingDirectory>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)</WorkingDirectory>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <InputAssemblies Include="LanguageDetection.dll" />
-      <InputAssemblies Include="Octokit.dll" />
-      <InputAssemblies Include="osu.Framework.KaraokeFont.dll" />
-      <InputAssemblies Include="osu.Framework.Microphone.dll" />
-      <InputAssemblies Include="NWaves.dll" />
-      <InputAssemblies Include="LyricMaker.dll" />
-      <InputAssemblies Include="NicoKaraParser.dll" />
-      <InputAssemblies Include="SixLabors.Fonts.dll" />
-      <InputAssemblies Include="SixLabors.ImageSharp.Drawing.dll" />
-      <InputAssemblies Include="WanaKanaSharp.dll" />
-      <InputAssemblies Include="Zipangu.dll" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <InternalizeExcludeAssemblies Include="osu.Game.dll" />
-      <InternalizeExcludeAssemblies Include="osu.Framework.dll" />
-    </ItemGroup>
-
-    <ILRepack OutputType="$(OutputType)" MainAssembly="$(AssemblyName).dll" OutputAssembly="$(AssemblyName).Packed.dll" InputAssemblies="@(InputAssemblies)" InternalizeExcludeAssemblies="@(InternalizeExcludeAssemblies)" WorkingDirectory="$(WorkingDirectory)" />
-
-  </Target>
+  
 </Project>
