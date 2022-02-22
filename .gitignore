@@ -340,3 +340,6 @@ inspectcode
 /BenchmarkDotNet.Artifacts
 
 *.GeneratedMSBuildEditorConfig.editorconfig
+
+# Temp file for Fody merge
+FodyWeavers.xsd
