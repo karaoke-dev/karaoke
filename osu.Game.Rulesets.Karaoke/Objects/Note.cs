@@ -139,7 +139,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// Relative lyric.
         /// Technically parent lyric will not change after assign, but should not restrict in model layer.
         /// </summary>
-        [JsonProperty(IsReference = true)]
+        [JsonProperty(IsReference = true, TypeNameHandling = TypeNameHandling.Objects)]
         public Lyric? ReferenceLyric
         {
             get => ReferenceLyricBindable.Value;

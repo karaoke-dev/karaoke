@@ -26,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 throw new InvalidOperationException();
             }
 
+            // create id if object is by reference.
+            globalSetting.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+
             // replace string stream.ReadToEnd().Serialize(output);
             string json = JsonConvert.SerializeObject(output, globalSetting);
             return "// karaoke json file format v1" + '\n' + json;

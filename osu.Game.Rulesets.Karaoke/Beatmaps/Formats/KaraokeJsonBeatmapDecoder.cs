@@ -1,4 +1,4 @@
-// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
@@ -32,6 +32,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
             // create id if object is by reference.
             globalSetting.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+
+            // also notice that it might have a bug that cannot deserializer the reference normally, so should add those options.
+            // https://stackoverflow.com/questions/25853407/json-net-not-respecting-preservereferenceshandling-on-deserialization
+            // demo: https://dotnetfiddle.net/j1Qhu6
+            // discussion: https://github.com/JamesNK/Newtonsoft.Json/issues/124
+            globalSetting.TypeNameHandling = TypeNameHandling.Auto;
 
             // should not let json decoder to read this line.
             if (stream.PeekLine()?.Contains("// karaoke json file format v") ?? false)
