@@ -1,4 +1,4 @@
-// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 #nullable disable
@@ -13,6 +13,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Database;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Formats;
 using osu.Game.Screens.Edit;
 using SharpCompress.Archives.Zip;
@@ -75,6 +76,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
             using (var sw = new StreamWriter(outputStream))
             {
                 sw.WriteLine(generateJsonBeatmap());
+            }
+
+            using (var stream = exportStorage.GetStream(filename))
+            using (var reader = new LineBufferedReader(stream))
+            {
+                // Create stream
+                stream.Position = 0;
+
+                // test decoder
+                var decoder = new KaraokeJsonBeatmapDecoder();
+                decoder.Decode(reader);
             }
 
             exportStorage.PresentFileExternally(filename);
