@@ -1,9 +1,11 @@
-﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
@@ -26,6 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         protected override void ParseStreamInto(LineBufferedReader stream, Beatmap output)
         {
             var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
+            globalSetting.ContractResolver = new KaraokeBeatmapContractResolver();
             globalSetting.Converters.Add(new CultureInfoConverter());
             globalSetting.Converters.Add(new RomajiTagConverter());
             globalSetting.Converters.Add(new RomajiTagsConverter());
@@ -64,6 +67,21 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             }
 
             var notes = output.HitObjects.OfType<Note>();
+        }
+
+        private class KaraokeBeatmapContractResolver : SnakeCaseKeyContractResolver
+        {
+            protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
+            {
+                var props = base.CreateProperties(type, memberSerialization);
+
+                if (type == typeof(BeatmapInfo))
+                {
+                    return props.Where(p => p.PropertyName != "ruleset_id").ToList();
+                }
+
+                return props;
+            }
         }
     }
 }
