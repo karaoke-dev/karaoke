@@ -2,6 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Target Name="ILRepacker" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
         <ItemGroup>
+            <InputAssemblies Include="$(OutputPath)\osu.Game.Rulesets.Karaoke.dll" />
             <InputAssemblies Include="$(OutputPath)\LanguageDetection.dll" />
             <InputAssemblies Include="$(OutputPath)\Octokit.dll" />
             <InputAssemblies Include="$(OutputPath)\osu.Framework.KaraokeFont.dll" />
@@ -13,14 +14,13 @@
             <InputAssemblies Include="$(OutputPath)\SixLabors.ImageSharp.Drawing.dll" />
             <InputAssemblies Include="$(OutputPath)\WanaKanaSharp.dll" />
             <InputAssemblies Include="$(OutputPath)\Zipangu.dll" />
-            <InputAssemblies Include="$(OutputPath)\osu.Game.Rulesets.Karaoke.dll" />
         </ItemGroup>
 
         <ILRepack
                 Parallel="true"
                 InputAssemblies="@(InputAssemblies)"
                 TargetKind="Dll"
-                OutputFile="$(OutputPath)$(AssemblyName).Packed.dll"
+                OutputFile="$(OutputPath)Packed\$(AssemblyName).dll"
         />
     </Target>
 </Project>
