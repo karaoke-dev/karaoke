@@ -95,6 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                             new EditorMenuItem("Export to .lrc", MenuItemType.Standard, () => exportLyricManager.ExportToLrc()),
                             new EditorMenuItem("Export to text", MenuItemType.Standard, () => exportLyricManager.ExportToText()),
                             new EditorMenuItem("Export to json", MenuItemType.Destructive, () => exportLyricManager.ExportToJson()),
+                            new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => exportLyricManager.ExportToJsonBeatmap()),
                         }
                     },
                     new LyricEditorModeMenu(lyricEditorConfigManager, "Mode"),
