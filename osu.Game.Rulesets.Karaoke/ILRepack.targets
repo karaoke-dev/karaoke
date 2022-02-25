@@ -20,7 +20,7 @@
                 Parallel="true"
                 InputAssemblies="@(InputAssemblies)"
                 TargetKind="Dll"
-                OutputFile="$(OutputPath)$(AssemblyName).Packed.dll"
+                OutputFile="$(OutputPath)Packed\$(AssemblyName).dll"
         />
     </Target>
 </Project>
