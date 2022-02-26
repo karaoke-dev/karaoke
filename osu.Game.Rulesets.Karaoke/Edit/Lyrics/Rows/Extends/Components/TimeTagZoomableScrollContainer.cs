@@ -8,14 +8,14 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
-using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 {
-    public abstract class TimeTagZoomableScrollContainer : ZoomableScrollContainer
+    public abstract class TimeTagZoomableScrollContainer : EditorScrollContainer
     {
         protected readonly IBindableList<TimeTag> TimeTagsBindable = new BindableList<TimeTag>();
 

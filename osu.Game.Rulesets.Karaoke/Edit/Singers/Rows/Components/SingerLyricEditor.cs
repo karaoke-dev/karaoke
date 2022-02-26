@@ -1,24 +1,21 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
-using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 {
     [Cached]
-    public class SingerLyricEditor : ZoomableScrollContainer
+    public class SingerLyricEditor : EditorScrollContainer
     {
         private const float timeline_height = 38;
 
@@ -27,9 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
-
-        private Bindable<float> bindableZoom;
-        private Bindable<float> bindableCurrent;
 
         public readonly Singer Singer;
 
@@ -77,63 +71,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
                 },
             });
 
-            // initialize scroll zone.
-            MaxZoom = getZoomLevelForVisibleMilliseconds(2000);
-            MinZoom = getZoomLevelForVisibleMilliseconds(20000);
-
-            bindableZoom = scrollingInfoProvider.BindableZoom.GetBoundCopy();
-            bindableCurrent = scrollingInfoProvider.BindableCurrent.GetBoundCopy();
-
-            bindableZoom.BindValueChanged(e =>
-            {
-                if (e.NewValue == Zoom)
-                    return;
-
-                Zoom = e.NewValue;
-            }, true);
-
-            bindableCurrent.BindValueChanged(e =>
-            {
-                ScrollTo(e.NewValue);
-            }, true);
-        }
-
-        private float getZoomLevelForVisibleMilliseconds(double milliseconds) => Math.Max(1, (float)(editorClock.TrackLength / milliseconds));
-
-        protected override bool OnScroll(ScrollEvent e)
-        {
-            bool zoneChanged = base.OnScroll(e);
-            if (!zoneChanged)
-                return false;
-
-            if (e.AltPressed)
-            {
-                // todo : this event not working while zooming, because zooming will also call scroll to.
-                // bindableCurrent.Value = getCurrentPosition();
-
-                // Update zoom to target, ignore easing value.
-                bindableZoom.Value = Zoom;
-            }
-
-            return true;
-
-            /*
-            float getCurrentPosition()
-            {
-                // params
-                var zoomedContent = Content;
-                var focusPoint = zoomedContent.ToLocalSpace(e.ScreenSpaceMousePosition).X;
-                var contentSize = zoomedContent.DrawWidth;
-                var scrollOffset = Current;
-
-                // calculation
-                float focusOffset = focusPoint - scrollOffset;
-                float expectedWidth = DrawWidth * Zoom;
-                float targetOffset = expectedWidth * (focusPoint / contentSize) - focusOffset;
-
-                return targetOffset;
-            }
-            */
+            BindableZoom.BindTo(scrollingInfoProvider.BindableZoom);
+            BindableCurrent.BindTo(scrollingInfoProvider.BindableCurrent);
         }
 
         protected override void LoadComplete()
@@ -148,14 +87,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
             float position = getPositionFromTime(firstLyric.LyricStartTime - preempt_time);
             ScrollTo(position, false);
-        }
-
-        protected override void OnUserScroll(float value, bool animated = true, double? distanceDecay = null)
-        {
-            base.OnUserScroll(value, animated, distanceDecay);
-
-            // update current value if user scroll to.
-            bindableCurrent.Value = value;
         }
 
         private float getPositionFromTime(double time)

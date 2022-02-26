@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -36,7 +37,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         [Cached]
         private readonly BindableList<Lyric> selectedLyrics = new();
 
-        public BindableFloat BindableZoom { get; } = new(10);
+        [Resolved]
+        private EditorClock editorClock { get; set; }
+
+        public BindableFloat BindableZoom { get; } = new();
 
         public BindableFloat BindableCurrent { get; } = new();
 
@@ -56,6 +60,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         private void load(OsuColour colours, EditorBeatmap editorBeatmap)
         {
             BindablesUtils.Sync(selectedLyrics, editorBeatmap.SelectedHitObjects);
+
+            // initialize scroll zone.
+            BindableZoom.MaxValue = getZoomLevelForVisibleMilliseconds(8000);
+            BindableZoom.MinValue = getZoomLevelForVisibleMilliseconds(80000);
+            BindableZoom.Value = getZoomLevelForVisibleMilliseconds(40000);
 
             AddInternal(new Container
             {
@@ -89,6 +98,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                 }
             });
         }
+
+        private float getZoomLevelForVisibleMilliseconds(double milliseconds) => Math.Max(1, (float)(editorClock.TrackLength / milliseconds));
 
         protected override void PopOut()
         {
