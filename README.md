@@ -49,3 +49,5 @@ Parts of the lyrics editor in this ruleset were inspired by them.
 - [Appveyor](https://www.appveyor.com/), [CodeFactor](https://www.codefactor.io/) and [Github action](https://github.com/features/actions) for providing free `CI`/`CD` service.
 
 - [Figma](https://www.figma.com/), for fast creating assets like logo or icon.
+
+- [Miro](https://miro.com/). Used to declare the complex question by drawing the graph.
