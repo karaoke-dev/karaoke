@@ -9,6 +9,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
@@ -40,8 +41,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         private TimelineTickDisplay ticks;
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour)
+        private void load(OsuColour colour, ITimeTagModeState timeTagModeState)
         {
+            BindableZoom.BindTo(timeTagModeState.BindableAdjustZoom);
+
             AddInternal(new Box
             {
                 Name = "Background",

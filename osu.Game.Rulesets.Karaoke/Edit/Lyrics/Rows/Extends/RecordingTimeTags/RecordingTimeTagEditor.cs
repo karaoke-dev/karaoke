@@ -14,6 +14,7 @@ using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
@@ -65,8 +66,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
         private TimelineTickDisplay ticks;
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(OsuColour colours, ITimeTagModeState timeTagModeState)
         {
+            BindableZoom.BindTo(timeTagModeState.BindableRecordZoom);
+
             CentreMarker centreMarker;
 
             // We don't want the centre marker to scroll
