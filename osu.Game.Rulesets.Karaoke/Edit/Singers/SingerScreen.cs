@@ -37,9 +37,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         [Cached]
         private readonly BindableList<Lyric> selectedLyrics = new();
 
-        [Resolved]
-        private EditorClock editorClock { get; set; }
-
         public BindableFloat BindableZoom { get; } = new();
 
         public BindableFloat BindableCurrent { get; } = new();
@@ -57,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, EditorBeatmap editorBeatmap)
+        private void load(OsuColour colours, EditorBeatmap editorBeatmap, EditorClock editorClock)
         {
             BindablesUtils.Sync(selectedLyrics, editorBeatmap.SelectedHitObjects);
 
