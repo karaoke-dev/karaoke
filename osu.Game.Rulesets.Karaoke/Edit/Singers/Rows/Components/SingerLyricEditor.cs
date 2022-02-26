@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -72,15 +71,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
                 },
             });
 
-            // initialize scroll zone.
-            MaxZoom = getZoomLevelForVisibleMilliseconds(2000);
-            MinZoom = getZoomLevelForVisibleMilliseconds(20000);
-
             BindableZoom.BindTo(scrollingInfoProvider.BindableZoom);
             BindableCurrent.BindTo(scrollingInfoProvider.BindableCurrent);
         }
-
-        private float getZoomLevelForVisibleMilliseconds(double milliseconds) => Math.Max(1, (float)(editorClock.TrackLength / milliseconds));
 
         protected override void LoadComplete()
         {
