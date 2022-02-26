@@ -11,19 +11,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Containers
 {
     public abstract class EditorScrollContainer : ZoomableScrollContainer
     {
-        public readonly Bindable<float> BindableZoom = new();
-        public readonly Bindable<float> BindableCurrent = new();
+        public readonly BindableFloat BindableZoom = new();
+        public readonly BindableFloat BindableCurrent = new();
 
         protected EditorScrollContainer()
         {
             ZoomDuration = 200;
             ZoomEasing = Easing.OutQuint;
             ScrollbarVisible = false;
-        }
 
-        [BackgroundDependencyLoader]
-        private void load()
-        {
+            BindableZoom.MaxValueChanged += (v) =>
+            {
+                MaxZoom = v;
+            };
+
+            BindableZoom.MinValueChanged += (v) =>
+            {
+                MinZoom = v;
+            };
+
             BindableZoom.BindValueChanged(e =>
             {
                 if (e.NewValue == Zoom)
