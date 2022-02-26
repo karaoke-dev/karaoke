@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -13,6 +12,7 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
@@ -37,9 +37,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         [Cached]
         private readonly BindableList<Lyric> selectedLyrics = new();
 
-        [Resolved]
-        private EditorClock editorClock { get; set; }
-
         public BindableFloat BindableZoom { get; } = new();
 
         public BindableFloat BindableCurrent { get; } = new();
@@ -57,14 +54,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, EditorBeatmap editorBeatmap)
+        private void load(OsuColour colours, EditorBeatmap editorBeatmap, EditorClock editorClock)
         {
             BindablesUtils.Sync(selectedLyrics, editorBeatmap.SelectedHitObjects);
 
             // initialize scroll zone.
-            BindableZoom.MaxValue = getZoomLevelForVisibleMilliseconds(8000);
-            BindableZoom.MinValue = getZoomLevelForVisibleMilliseconds(80000);
-            BindableZoom.Value = getZoomLevelForVisibleMilliseconds(40000);
+            BindableZoom.MaxValue = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 8000);
+            BindableZoom.MinValue = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 80000);
+            BindableZoom.Value = BindableZoom.Default = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 40000);
 
             AddInternal(new Container
             {
@@ -98,8 +95,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                 }
             });
         }
-
-        private float getZoomLevelForVisibleMilliseconds(double milliseconds) => Math.Max(1, (float)(editorClock.TrackLength / milliseconds));
 
         protected override void PopOut()
         {
