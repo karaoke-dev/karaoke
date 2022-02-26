@@ -15,7 +15,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 {
-    public abstract class TimeTagZoomableScrollContainer : EditorScrollContainer
+    public abstract class TimeTagEditorScrollContainer : EditorScrollContainer
     {
         protected readonly IBindableList<TimeTag> TimeTagsBindable = new BindableList<TimeTag>();
 
@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 
         protected double EndTime { get; private set; }
 
-        protected TimeTagZoomableScrollContainer(Lyric lyric)
+        protected TimeTagEditorScrollContainer(Lyric lyric)
         {
             HitObject = lyric;
 

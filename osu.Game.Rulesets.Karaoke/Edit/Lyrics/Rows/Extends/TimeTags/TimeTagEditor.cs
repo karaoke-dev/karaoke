@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 {
     [Cached(typeof(IPositionSnapProvider))]
     [Cached]
-    public class TimeTagEditor : TimeTagZoomableScrollContainer, IPositionSnapProvider
+    public class TimeTagEditor : TimeTagEditorScrollContainer, IPositionSnapProvider
     {
         private const float timeline_height = 38;
 
