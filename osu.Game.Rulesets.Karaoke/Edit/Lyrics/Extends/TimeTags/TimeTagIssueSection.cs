@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
         public class TimeTagIssueTable : IssueTableContainer
         {
             [Resolved]
-            private OsuColour colour { get; set; }
+            private OsuColour colours { get; set; }
 
             public IEnumerable<TimeTagIssue> Issues
             {
@@ -155,7 +155,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 {
                     Origin = Anchor.Centre,
                     Size = new Vector2(10),
-                    Colour = colour.Red,
+                    Colour = colours.Red,
                     Margin = new MarginPadding { Left = 10 },
                     Icon = FontAwesome.Solid.AlignLeft
                 },
@@ -182,9 +182,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
             private Color4 getInvalidColour(TimeTagInvalid invalid) =>
                 invalid switch
                 {
-                    TimeTagInvalid.OutOfRange => colour.Red,
-                    TimeTagInvalid.Overlapping => colour.Red,
-                    TimeTagInvalid.EmptyTime => colour.Yellow,
+                    TimeTagInvalid.OutOfRange => colours.Red,
+                    TimeTagInvalid.Overlapping => colours.Red,
+                    TimeTagInvalid.EmptyTime => colours.Yellow,
                     _ => throw new ArgumentOutOfRangeException(nameof(invalid))
                 };
 

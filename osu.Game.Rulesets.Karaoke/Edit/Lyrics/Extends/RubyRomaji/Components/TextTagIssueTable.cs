@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
     public abstract class TextTagIssueTable<TInvalid, TTextTag> : IssueTableContainer where TTextTag : ITextTag
     {
         [Resolved]
-        private OsuColour colour { get; set; }
+        private OsuColour colours { get; set; }
 
         public IEnumerable<Issue> Issues
         {
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
             {
                 Origin = Anchor.Centre,
                 Size = new Vector2(10),
-                Colour = colour.Red,
+                Colour = colours.Red,
                 Margin = new MarginPadding { Left = 10 },
                 Icon = FontAwesome.Solid.Tag,
             },
