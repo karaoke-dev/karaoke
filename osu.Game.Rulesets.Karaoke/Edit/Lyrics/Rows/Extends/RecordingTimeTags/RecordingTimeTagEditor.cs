@@ -10,6 +10,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -57,9 +58,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, ITimeTagModeState timeTagModeState)
+        private void load(OsuColour colours, ITimeTagModeState timeTagModeState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
             BindableZoom.BindTo(timeTagModeState.BindableRecordZoom);
+
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowWaveform, ShowWaveformGraph);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagWaveformOpacity, WaveformOpacity);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowTick, ShowTick);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagTickOpacity, TickOpacity);
 
             AddRangeInternal(new Drawable[]
             {
