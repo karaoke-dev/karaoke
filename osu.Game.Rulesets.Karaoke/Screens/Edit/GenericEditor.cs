@@ -10,10 +10,13 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Input.Bindings;
+using osu.Framework.Input.Events;
 using osu.Framework.Screens;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Cursor;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Input.Bindings;
 using osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Menus;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Components;
@@ -23,7 +26,7 @@ using osu.Game.Screens.Play;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit
 {
-    public abstract class GenericEditor<TScreenMode> : ScreenWithBeatmapBackground where TScreenMode : Enum
+    public abstract class GenericEditor<TScreenMode> : ScreenWithBeatmapBackground, IKeyBindingHandler<GlobalAction> where TScreenMode : Enum
     {
         public override float BackgroundParallaxAmount => 0.1f;
 
@@ -204,5 +207,27 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit
         protected abstract GenericEditorScreen<TScreenMode> GenerateScreen(TScreenMode screenMode);
 
         protected abstract MenuItem[] GenerateMenuItems(TScreenMode screenMode);
+
+        public bool OnPressed(KeyBindingPressEvent<GlobalAction> e)
+        {
+            if (e.Repeat)
+                return false;
+
+            switch (e.Action)
+            {
+                case GlobalAction.Back:
+                    // as we don't want to display the back button, manual handling of exit action is required.
+                    // follow how editor.cs does.
+                    this.Exit();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        public void OnReleased(KeyBindingReleaseEvent<GlobalAction> e)
+        {
+        }
     }
 }
