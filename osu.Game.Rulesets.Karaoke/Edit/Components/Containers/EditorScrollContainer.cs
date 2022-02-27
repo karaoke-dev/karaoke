@@ -1,7 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using osu.Framework.Allocation;
+using System;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
@@ -20,15 +20,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Containers
             ZoomEasing = Easing.OutQuint;
             ScrollbarVisible = false;
 
-            BindableZoom.MaxValueChanged += (v) =>
-            {
-                MaxZoom = v;
-            };
+            BindableZoom.MaxValueChanged += assignZoomRange;
+            BindableZoom.MinValueChanged += assignZoomRange;
 
-            BindableZoom.MinValueChanged += (v) =>
+            void assignZoomRange(float _)
             {
-                MinZoom = v;
-            };
+                // we should make sure that will not cause error while assigning the size.
+                MaxZoom = Math.Max(BindableZoom.MaxValue, MinZoom);
+                MinZoom = Math.Min(BindableZoom.MinValue, MaxZoom);
+            }
 
             BindableZoom.BindValueChanged(e =>
             {

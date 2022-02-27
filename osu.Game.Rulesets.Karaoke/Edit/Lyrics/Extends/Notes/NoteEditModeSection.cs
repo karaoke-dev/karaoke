@@ -37,12 +37,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 }
             };
 
-        protected override Color4 GetColour(OsuColour colour, NoteEditMode mode, bool active) =>
+        protected override Color4 GetColour(OsuColour colours, NoteEditMode mode, bool active) =>
             mode switch
             {
-                NoteEditMode.Generate => active ? colour.Blue : colour.BlueDarker,
-                NoteEditMode.Edit => active ? colour.Red : colour.RedDarker,
-                NoteEditMode.Verify => active ? colour.Yellow : colour.YellowDarker,
+                NoteEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
+                NoteEditMode.Edit => active ? colours.Red : colours.RedDarker,
+                NoteEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
 

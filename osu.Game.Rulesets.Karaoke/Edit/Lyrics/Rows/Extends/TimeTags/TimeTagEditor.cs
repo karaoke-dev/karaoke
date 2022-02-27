@@ -8,12 +8,12 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
-using osu.Game.Screens.Edit.Compose.Components.Timeline;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
@@ -27,23 +27,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         [Resolved]
         private EditorClock editorClock { get; set; }
 
+        private CurrentTimeMarker currentTimeMarker;
+
         public TimeTagEditor(Lyric lyric)
             : base(lyric)
         {
             Padding = new MarginPadding { Top = 10 };
-            Height = timeline_height;
         }
 
-        private Container mainContent;
-
-        private CurrentTimeMarker currentTimeMarker;
-
-        private TimelineTickDisplay ticks;
-
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour, ITimeTagModeState timeTagModeState)
+        private void load(OsuColour colours, ITimeTagModeState timeTagModeState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
             BindableZoom.BindTo(timeTagModeState.BindableAdjustZoom);
+
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.AdjustTimeTagShowWaveform, ShowWaveformGraph);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.AdjustTimeTagWaveformOpacity, WaveformOpacity);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.AdjustTimeTagShowTick, ShowTick);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.AdjustTimeTagTickOpacity, TickOpacity);
 
             AddInternal(new Box
             {
@@ -51,22 +51,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                 Depth = 1,
                 RelativeSizeAxes = Axes.X,
                 Height = timeline_height,
-                Colour = colour.Gray3,
+                Colour = colours.Gray3,
             });
-            AddRange(new Drawable[]
+        }
+
+        protected override void PostProcessContent(Container content)
+        {
+            content.Height = timeline_height;
+            content.AddRange(new Drawable[]
             {
-                mainContent = new Container
-                {
-                    RelativeSizeAxes = Axes.X,
-                    Height = timeline_height,
-                    Depth = float.MaxValue,
-                    Children = new Drawable[]
-                    {
-                        ticks = new TimelineTickDisplay(),
-                        new TimeTagEditorBlueprintContainer(HitObject),
-                        currentTimeMarker = new CurrentTimeMarker(),
-                    }
-                },
+                new TimeTagEditorBlueprintContainer(HitObject),
+                currentTimeMarker = new CurrentTimeMarker(),
             });
         }
 

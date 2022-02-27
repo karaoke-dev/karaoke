@@ -1,17 +1,21 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Specialized;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Audio.Track;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Audio;
+using osu.Framework.Graphics.Containers;
 using osu.Game.Beatmaps;
+using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Screens.Edit;
+using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 {
@@ -21,24 +25,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 
         protected readonly IBindable<WorkingBeatmap> Beatmap = new Bindable<WorkingBeatmap>();
 
-        [Resolved]
-        private EditorClock editorClock { get; set; }
+        protected readonly IBindable<bool> ShowWaveformGraph = new BindableBool();
 
-        public readonly Lyric HitObject;
+        protected readonly IBindable<float> WaveformOpacity = new BindableFloat();
+
+        protected readonly IBindable<bool> ShowTick = new BindableBool();
+
+        protected readonly IBindable<float> TickOpacity = new BindableFloat();
 
         protected double StartTime { get; private set; }
 
         protected double EndTime { get; private set; }
 
+        protected Track Track { get; private set; }
+
+        public readonly Lyric HitObject;
+
         protected TimeTagEditorScrollContainer(Lyric lyric)
         {
             HitObject = lyric;
-
             RelativeSizeAxes = Axes.X;
-
-            ZoomDuration = 200;
-            ZoomEasing = Easing.OutQuint;
-            ScrollbarVisible = false;
 
             TimeTagsBindable.BindCollectionChanged((_, args) =>
             {
@@ -87,18 +93,56 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
             }
         }
 
+        private WaveformGraph waveform;
+
+        private TimelineTickDisplay ticks;
+
         [BackgroundDependencyLoader]
-        private void load(IBindable<WorkingBeatmap> beatmap)
+        private void load(OsuColour colours, IBindable<WorkingBeatmap> beatmap)
         {
             Beatmap.BindTo(beatmap);
 
-            // initialize scroll zone.
-            MaxZoom = getZoomLevelForVisibleMilliseconds(500);
-            MinZoom = getZoomLevelForVisibleMilliseconds(10000);
-            Zoom = getZoomLevelForVisibleMilliseconds(3000);
+            Container container;
+
+            Add(container = new Container
+            {
+                RelativeSizeAxes = Axes.X,
+                Depth = float.MaxValue,
+                Children = new Drawable[]
+                {
+                    waveform = new WaveformGraph
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        BaseColour = colours.Blue.Opacity(0.2f),
+                        LowColour = colours.BlueLighter,
+                        MidColour = colours.BlueDark,
+                        HighColour = colours.BlueDarker,
+                    },
+                    ticks = new TimelineTickDisplay(),
+                }
+            });
+
+            PostProcessContent(container);
+
+            Beatmap.BindValueChanged(b =>
+            {
+                waveform.Waveform = b.NewValue.Waveform;
+                Track = b.NewValue.Track;
+            }, true);
+
+            ShowWaveformGraph.BindValueChanged(e => updateWaveformOpacity());
+            WaveformOpacity.BindValueChanged(e => updateWaveformOpacity());
+            ShowTick.BindValueChanged(e => updateTickOpacity());
+            TickOpacity.BindValueChanged(e => updateTickOpacity());
         }
 
-        private float getZoomLevelForVisibleMilliseconds(double milliseconds) => Math.Max(1, (float)(editorClock.TrackLength / milliseconds));
+        private void updateWaveformOpacity() =>
+            waveform.FadeTo(ShowWaveformGraph.Value ? WaveformOpacity.Value : 0, 200, Easing.OutQuint);
+
+        private void updateTickOpacity() =>
+            ticks.FadeTo(ShowTick.Value ? TickOpacity.Value : 0, 200, Easing.OutQuint);
+
+        protected abstract void PostProcessContent(Container content);
 
         public double GetPreviewTime(TimeTag timeTag)
         {

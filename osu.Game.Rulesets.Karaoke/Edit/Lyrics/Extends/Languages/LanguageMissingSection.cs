@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
         public class LyricLanguageIssueTable : IssueTableContainer
         {
             [Resolved]
-            private OsuColour colour { get; set; }
+            private OsuColour colours { get; set; }
 
             public IEnumerable<Issue> Issues
             {
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
                 {
                     Origin = Anchor.Centre,
                     Size = new Vector2(10),
-                    Colour = colour.Red,
+                    Colour = colours.Red,
                     Margin = new MarginPadding { Left = 10 },
                     Icon = FontAwesome.Solid.Globe,
                 },

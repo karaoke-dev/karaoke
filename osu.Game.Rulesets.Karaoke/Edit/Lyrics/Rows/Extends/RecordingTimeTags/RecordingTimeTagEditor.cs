@@ -3,21 +3,18 @@
 
 using System;
 using osu.Framework.Allocation;
-using osu.Framework.Audio.Track;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Audio;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Extensions;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
-using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 {
@@ -49,31 +46,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
         /// </summary>
         private bool trackWasPlaying;
 
-        private Track track;
+        private readonly CentreMarker centreMarker;
+
+        private OsuSpriteText trackTimer;
 
         public RecordingTimeTagEditor(Lyric lyric)
             : base(lyric)
         {
-            Height = TIMELINE_HEIGHT;
+            // We don't want the centre marker to scroll
+            AddInternal(centreMarker = new CentreMarker());
         }
 
-        private OsuSpriteText trackTimer;
-
-        private Container mainContent;
-
-        private WaveformGraph waveform;
-
-        private TimelineTickDisplay ticks;
-
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, ITimeTagModeState timeTagModeState)
+        private void load(OsuColour colours, ITimeTagModeState timeTagModeState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
             BindableZoom.BindTo(timeTagModeState.BindableRecordZoom);
 
-            CentreMarker centreMarker;
-
-            // We don't want the centre marker to scroll
-            AddInternal(centreMarker = new CentreMarker());
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowWaveform, ShowWaveformGraph);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagWaveformOpacity, WaveformOpacity);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowTick, ShowTick);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagTickOpacity, TickOpacity);
 
             AddRangeInternal(new Drawable[]
             {
@@ -95,37 +87,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                     Font = OsuFont.GetFont(size: 16, fixedWidth: true),
                 }
             });
+        }
 
-            AddRange(new Drawable[]
+        protected override void PostProcessContent(Container content)
+        {
+            content.Height = TIMELINE_HEIGHT;
+            content.Y = 10;
+            content.AddRange(new[]
             {
-                mainContent = new Container
-                {
-                    RelativeSizeAxes = Axes.X,
-                    Height = TIMELINE_HEIGHT,
-                    Y = 10,
-                    Depth = float.MaxValue,
-                    Children = new[]
-                    {
-                        waveform = new WaveformGraph
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            BaseColour = colours.Blue.Opacity(0.2f),
-                            LowColour = colours.BlueLighter,
-                            MidColour = colours.BlueDark,
-                            HighColour = colours.BlueDarker,
-                        },
-                        centreMarker.CreateProxy(),
-                        ticks = new TimelineTickDisplay(),
-                        new RecordingTimeTagPart(HitObject),
-                    }
-                },
+                centreMarker.CreateProxy(),
+                new RecordingTimeTagPart(HitObject),
             });
-
-            Beatmap.BindValueChanged(b =>
-            {
-                waveform.Waveform = b.NewValue.Waveform;
-                track = b.NewValue.Track;
-            }, true);
         }
 
         protected override void Update()
@@ -169,16 +141,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
         private void seekTrackToCurrent()
         {
-            if (!track.IsLoaded)
+            if (!Track.IsLoaded)
                 return;
 
-            double target = Current / Content.DrawWidth * track.Length;
-            editorClock.Seek(Math.Min(track.Length, target));
+            double target = Current / Content.DrawWidth * Track.Length;
+            editorClock.Seek(Math.Min(Track.Length, target));
         }
 
         private void scrollToTrackTime()
         {
-            if (!track.IsLoaded || track.Length == 0)
+            if (!Track.IsLoaded || Track.Length == 0)
                 return;
 
             // covers the case where the user starts playback after a drag is in progress.

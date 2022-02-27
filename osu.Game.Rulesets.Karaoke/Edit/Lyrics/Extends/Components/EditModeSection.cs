@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         private readonly OverlayColourProvider overlayColourProvider;
 
         [Resolved]
-        private OsuColour colour { get; set; }
+        private OsuColour colours { get; set; }
 
         private readonly EditModeButton[] buttons;
         private readonly OsuMarkdownTextFlowContainer description;
@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             {
                 bool highLight = EqualityComparer<T>.Default.Equals(button.Mode, mode);
                 button.Alpha = highLight ? 0.8f : 0.4f;
-                button.BackgroundColour = GetColour(colour, button.Mode, highLight);
+                button.BackgroundColour = GetColour(colours, button.Mode, highLight);
 
                 if (!highLight)
                     continue;
@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected abstract Dictionary<T, EditModeSelectionItem> CreateSelections();
 
-        protected abstract Color4 GetColour(OsuColour colour, T mode, bool active);
+        protected abstract Color4 GetColour(OsuColour colours, T mode, bool active);
 
         private class EditModeButton : OsuButton
         {

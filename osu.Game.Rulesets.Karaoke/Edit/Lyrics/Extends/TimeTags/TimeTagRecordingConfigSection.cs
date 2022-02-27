@@ -6,6 +6,7 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
@@ -37,6 +38,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     Label = "Time range",
                     Description = "Change time-range to zoom-in/zoom-out the recording area.",
                     Current = timeTagModeState.BindableRecordZoom
+                },
+                new LabelledOpacityAdjustment
+                {
+                    Label = "Waveform",
+                    Description = "Show/hide or change the opacity of the waveform.",
+                    Current = lyricEditorConfigManager.GetBindable<bool>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowWaveform),
+                    Opacity = lyricEditorConfigManager.GetBindable<float>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagWaveformOpacity),
+                },
+                new LabelledOpacityAdjustment
+                {
+                    Label = "Ticks",
+                    Description = "Show/hide or change the opacity of the ticks.",
+                    Current = lyricEditorConfigManager.GetBindable<bool>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowTick),
+                    Opacity = lyricEditorConfigManager.GetBindable<float>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagTickOpacity),
                 }
             };
         }
