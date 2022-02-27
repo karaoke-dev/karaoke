@@ -34,11 +34,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
                 }
             };
 
-        protected override Color4 GetColour(OsuColour colour, LanguageEditMode mode, bool active) =>
+        protected override Color4 GetColour(OsuColour colours, LanguageEditMode mode, bool active) =>
             mode switch
             {
-                LanguageEditMode.Generate => active ? colour.Blue : colour.BlueDarker,
-                LanguageEditMode.Verify => active ? colour.Yellow : colour.YellowDarker,
+                LanguageEditMode.Generate => active ? colours.Blue : colours.BlueDarker,
+                LanguageEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
 

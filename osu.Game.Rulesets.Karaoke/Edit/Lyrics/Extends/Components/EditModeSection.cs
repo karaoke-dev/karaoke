@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected abstract Dictionary<T, EditModeSelectionItem> CreateSelections();
 
-        protected abstract Color4 GetColour(OsuColour colour, T mode, bool active);
+        protected abstract Color4 GetColour(OsuColour colours, T mode, bool active);
 
         private class EditModeButton : OsuButton
         {

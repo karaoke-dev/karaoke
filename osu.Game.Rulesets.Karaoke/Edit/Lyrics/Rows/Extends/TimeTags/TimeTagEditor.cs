@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         private TimelineTickDisplay ticks;
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colour, ITimeTagModeState timeTagModeState)
+        private void load(OsuColour colours, ITimeTagModeState timeTagModeState)
         {
             BindableZoom.BindTo(timeTagModeState.BindableAdjustZoom);
 
@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                 Depth = 1,
                 RelativeSizeAxes = Axes.X,
                 Height = timeline_height,
-                Colour = colour.Gray3,
+                Colour = colours.Gray3,
             });
             AddRange(new Drawable[]
             {

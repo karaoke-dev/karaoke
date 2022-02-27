@@ -30,13 +30,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 }
             };
 
-        protected override Color4 GetColour(OsuColour colour, LyricEditorMode mode, bool active)
+        protected override Color4 GetColour(OsuColour colours, LyricEditorMode mode, bool active)
         {
             return mode switch
             {
-                LyricEditorMode.CreateTimeTag => active ? colour.Blue : colour.BlueDarker,
-                LyricEditorMode.RecordTimeTag => active ? colour.Red : colour.RedDarker,
-                LyricEditorMode.AdjustTimeTag => active ? colour.Yellow : colour.YellowDarker,
+                LyricEditorMode.CreateTimeTag => active ? colours.Blue : colours.BlueDarker,
+                LyricEditorMode.RecordTimeTag => active ? colours.Red : colours.RedDarker,
+                LyricEditorMode.AdjustTimeTag => active ? colours.Yellow : colours.YellowDarker,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
         }
