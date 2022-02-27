@@ -13,7 +13,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
-using osu.Game.Screens.Edit.Compose.Components.Timeline;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
@@ -27,18 +26,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         [Resolved]
         private EditorClock editorClock { get; set; }
 
+        private CurrentTimeMarker currentTimeMarker;
+
         public TimeTagEditor(Lyric lyric)
             : base(lyric)
         {
             Padding = new MarginPadding { Top = 10 };
-            Height = timeline_height;
         }
-
-        private Container mainContent;
-
-        private CurrentTimeMarker currentTimeMarker;
-
-        private TimelineTickDisplay ticks;
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, ITimeTagModeState timeTagModeState)
@@ -53,20 +47,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                 Height = timeline_height,
                 Colour = colours.Gray3,
             });
-            AddRange(new Drawable[]
+        }
+
+        protected override void PostProcessContent(Container content)
+        {
+            content.Height = timeline_height;
+            content.AddRange(new Drawable[]
             {
-                mainContent = new Container
-                {
-                    RelativeSizeAxes = Axes.X,
-                    Height = timeline_height,
-                    Depth = float.MaxValue,
-                    Children = new Drawable[]
-                    {
-                        ticks = new TimelineTickDisplay(),
-                        new TimeTagEditorBlueprintContainer(HitObject),
-                        currentTimeMarker = new CurrentTimeMarker(),
-                    }
-                },
+                new TimeTagEditorBlueprintContainer(HitObject),
+                currentTimeMarker = new CurrentTimeMarker(),
             });
         }
 
