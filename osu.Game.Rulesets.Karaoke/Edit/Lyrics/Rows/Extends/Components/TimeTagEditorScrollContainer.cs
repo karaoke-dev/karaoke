@@ -27,7 +27,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 
         protected readonly IBindable<bool> ShowWaveformGraph = new BindableBool();
 
+        protected readonly IBindable<float> WaveformOpacity = new BindableFloat();
+
         protected readonly IBindable<bool> ShowTick = new BindableBool();
+
+        protected readonly IBindable<float> TickOpacity = new BindableFloat();
 
         protected double StartTime { get; private set; }
 
@@ -125,7 +129,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
                 waveform.Waveform = b.NewValue.Waveform;
                 Track = b.NewValue.Track;
             }, true);
+
+            ShowWaveformGraph.BindValueChanged(e => updateWaveformOpacity());
+            WaveformOpacity.BindValueChanged(e => updateWaveformOpacity());
+            ShowTick.BindValueChanged(e => updateTickOpacity());
+            TickOpacity.BindValueChanged(e => updateTickOpacity());
         }
+
+        private void updateWaveformOpacity() =>
+            waveform.FadeTo(ShowWaveformGraph.Value ? WaveformOpacity.Value : 0, 200, Easing.OutQuint);
+
+        private void updateTickOpacity() =>
+            ticks.FadeTo(ShowTick.Value ? TickOpacity.Value : 0, 200, Easing.OutQuint);
 
         protected abstract void PostProcessContent(Container content);
 
