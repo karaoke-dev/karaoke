@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Specialized;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -91,14 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
         private void load(IBindable<WorkingBeatmap> beatmap)
         {
             Beatmap.BindTo(beatmap);
-
-            // initialize scroll zone.
-            MaxZoom = getZoomLevelForVisibleMilliseconds(500);
-            MinZoom = getZoomLevelForVisibleMilliseconds(10000);
-            Zoom = getZoomLevelForVisibleMilliseconds(3000);
         }
-
-        private float getZoomLevelForVisibleMilliseconds(double milliseconds) => Math.Max(1, (float)(editorClock.TrackLength / milliseconds));
 
         public double GetPreviewTime(TimeTag timeTag)
         {
