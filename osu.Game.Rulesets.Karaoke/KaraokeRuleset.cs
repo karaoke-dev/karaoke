@@ -53,7 +53,11 @@ namespace osu.Game.Rulesets.Karaoke
 
         public const string SHORT_NAME = "karaoke";
 
-        public override IEnumerable<int> AvailableVariants => new[] { 1, 2 };
+        public const int GAMEPLAY_INPUT_VARIANT = 1;
+
+        public const int EDIT_INPUT_VARIANT = 2;
+
+        public override IEnumerable<int> AvailableVariants => new[] { GAMEPLAY_INPUT_VARIANT, EDIT_INPUT_VARIANT };
 
         public override IEnumerable<KeyBinding> GetDefaultKeyBindings(int variant = 0) =>
             variant switch
@@ -61,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke
                 0 =>
                     // Vocal
                     Array.Empty<KeyBinding>(),
-                1 => new[]
+                GAMEPLAY_INPUT_VARIANT => new[]
                 {
                     // Basic control
                     new KeyBinding(InputKey.Number1, KaraokeAction.FirstLyric),
@@ -86,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke
                     new KeyBinding(InputKey.F, KaraokeAction.DecreaseSaitenPitch),
                     new KeyBinding(InputKey.V, KaraokeAction.ResetSaitenPitch),
                 },
-                2 => new[]
+                EDIT_INPUT_VARIANT => new[]
                 {
                     // moving
                     new KeyBinding(InputKey.Up, KaraokeEditAction.Up),
@@ -108,8 +112,8 @@ namespace osu.Game.Rulesets.Karaoke
         public override string GetVariantName(int variant)
             => variant switch
             {
-                1 => "Gameplay",
-                2 => "Composer",
+                GAMEPLAY_INPUT_VARIANT => "Gameplay",
+                EDIT_INPUT_VARIANT => "Composer",
                 _ => throw new ArgumentNullException(nameof(variant)),
             };
 
