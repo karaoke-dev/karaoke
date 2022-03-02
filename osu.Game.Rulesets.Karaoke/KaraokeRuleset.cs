@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke
                     // edit
                     new KeyBinding(InputKey.N, KaraokeEditAction.Create),
                     new KeyBinding(InputKey.Delete, KaraokeEditAction.Remove),
-                    new KeyBinding(InputKey.Space, KaraokeEditAction.SetTime),
+                    new KeyBinding(InputKey.Enter, KaraokeEditAction.SetTime),
                     new KeyBinding(InputKey.BackSpace, KaraokeEditAction.ClearTime),
                 },
                 _ => Array.Empty<KeyBinding>()
