@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
@@ -20,7 +21,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
             {
                 {
                     LyricEditorMode.CreateTimeTag,
-                    new EditModeSelectionItem("Create", "Use keyboard to control caret position, press `N` to create new time-tag and press `D` to delete exist time-tag.")
+                    new EditModeSelectionItem("Create", new DescriptionFormat
+                    {
+                        Text = "Use keyboard to control caret position, press [key](create_time_tag) to create new time-tag and press [key](remove_time_tag) to delete exist time-tag.",
+                        Keys = new Dictionary<string, InputKey>
+                        {
+                            {
+                                "create_time_tag", new InputKey
+                                {
+                                    AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.Create }
+                                }
+                            },
+                            {
+                                "remove_time_tag", new InputKey
+                                {
+                                    AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.Remove }
+                                }
+                            }
+                        }
+                    })
                 },
                 {
                     LyricEditorMode.RecordTimeTag, new EditModeSelectionItem("Recording", "Press spacing button at the right time to set current time to time-tag.")
