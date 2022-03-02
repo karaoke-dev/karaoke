@@ -4,27 +4,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Markdig;
-using Markdig.Syntax;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Containers.Markdown;
-using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
-using osu.Game.Graphics.Containers.Markdown;
-using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
-    [Cached(typeof(IMarkdownTextComponent))]
-    public abstract class EditModeSection<T> : Section, IMarkdownTextComponent where T : Enum
+    public abstract class EditModeSection<T> : Section where T : Enum
     {
         protected sealed override string Title => "Edit mode";
 
@@ -35,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         private OsuColour colours { get; set; }
 
         private readonly EditModeButton[] buttons;
-        private readonly OsuMarkdownTextFlowContainer description;
+        private readonly DescriptionTextFlowContainer description;
 
         protected EditModeSection()
         {
@@ -60,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                         }).ToArray(),
                     }
                 },
-                description = new OsuMarkdownTextFlowContainer
+                description = new DescriptionTextFlowContainer
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
@@ -74,11 +68,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             });
         }
 
-        public SpriteText CreateSpriteText() => new OsuSpriteText
-        {
-            Font = OsuFont.GetFont(size: 14, weight: FontWeight.Regular)
-        };
-
         protected virtual void UpdateEditMode(T mode)
         {
             // update button style.
@@ -91,19 +80,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 if (!highLight)
                     continue;
 
-                // update description text.
-                var item = button.Item;
-                string markdownText = item.Description.Value.ToString();
-                var parsed = Markdown.Parse(markdownText);
-
-                if (parsed.FirstOrDefault() is ParagraphBlock paragraphBlock)
+                Schedule(() =>
                 {
-                    Schedule(() =>
-                    {
-                        description.Clear();
-                        description.AddInlineText(paragraphBlock.Inline);
-                    });
-                }
+                    // update description text.
+                    var item = button.Item;
+                    description.Description = item.Description.Value;
+                });
             }
         }
 
@@ -155,7 +137,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             /// <summary>
             /// The description which this <see cref="EditModeButton"/> displays.
             /// </summary>
-            public readonly Bindable<LocalisableString> Description = new(string.Empty);
+            public readonly Bindable<DescriptionFormat> Description = new();
 
             /// <summary>
             /// The alert number which this <see cref="EditModeButton"/> displays.
@@ -163,9 +145,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             public readonly Bindable<int> Alert = new();
 
             public EditModeSelectionItem(LocalisableString text, LocalisableString description)
+                : this(text, new DescriptionFormat { Text = description })
+            {
+            }
+
+            public EditModeSelectionItem(LocalisableString text, DescriptionFormat descriptionFormat)
             {
                 Text.Value = text;
-                Description.Value = description;
+                Description.Value = descriptionFormat;
             }
         }
     }
