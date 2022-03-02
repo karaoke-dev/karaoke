@@ -42,7 +42,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     })
                 },
                 {
-                    LyricEditorMode.RecordTimeTag, new EditModeSelectionItem("Recording", "Press spacing button at the right time to set current time to time-tag.")
+                    LyricEditorMode.RecordTimeTag, new EditModeSelectionItem("Recording", new DescriptionFormat
+                    {
+                        Text = "Press [key](set_time_tag_time) at the right time to set current time to time-tag. Press [key](clear_time_tag_time) to clear the time-tag time.",
+                        Keys = new Dictionary<string, InputKey>
+                        {
+                            {
+                                "set_time_tag_time", new InputKey
+                                {
+                                    AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.SetTime }
+                                }
+                            },
+                            {
+                                "clear_time_tag_time", new InputKey
+                                {
+                                    AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.ClearTime }
+                                }
+                            }
+                        }
+                    })
                 },
                 {
                     LyricEditorMode.AdjustTimeTag, new EditModeSelectionItem("Adjust", "Drag to adjust time-tag time precisely.")
