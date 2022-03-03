@@ -27,7 +27,7 @@ And feel free to report any bugs if found.
 
 See [this tutorial](https://karaoke-dev.github.io/how-to-install/) to get the ruleset from the existing build.
 
-Or you can compile it yourself: `release build` then copy `osu.Game.Rulesets.Karaoke.Packed.dll` into your [ruleset folder](https://github.com/LumpBloom7/sentakki/wiki/Ruleset-installation-guide)
+Or you can compile it yourself: `release build` then copy `Packed/osu.Game.Rulesets.Karaoke.dll` into your [ruleset folder](https://github.com/LumpBloom7/sentakki/wiki/Ruleset-installation-guide)
 
 ## License
 
