@@ -196,7 +196,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 {
                     bool half = false;
 
-                    if (tone.Contains(".") || tone.Contains("#"))
+                    if (tone.Contains('.') || tone.Contains('#'))
                     {
                         half = true;
 

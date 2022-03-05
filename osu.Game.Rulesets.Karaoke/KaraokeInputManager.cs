@@ -111,9 +111,6 @@ namespace osu.Game.Rulesets.Karaoke
                 var lastVoice = microphoneSoundChange.LastVoice;
                 var voice = inputState.Microphone.Voice;
 
-                if (voice == null)
-                    throw new ArgumentNullException(nameof(voice));
-
                 // Convert beatmap's pitch to scale setting.
                 float scale = beatmap.PitchToScale(voice.HasVoice ? voice.Pitch : lastVoice.Pitch);
 
