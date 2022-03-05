@@ -54,8 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             };
 
             const string expected = "{\"$type\":\"GroupBySingerNumber\",\"singer_number\":2,\"id\":123,\"name\":\"Two singers\"}";
-            string actua = JsonConvert.SerializeObject(group, CreateSettings());
-            Assert.AreEqual(expected, actua);
+            string actual = JsonConvert.SerializeObject(group, CreateSettings());
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
