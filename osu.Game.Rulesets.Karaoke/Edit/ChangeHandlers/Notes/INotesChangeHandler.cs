@@ -14,5 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
         void ChangeRubyText(string ruby);
 
         void ChangeDisplayState(bool display);
+
+        void Clear();
     }
 }

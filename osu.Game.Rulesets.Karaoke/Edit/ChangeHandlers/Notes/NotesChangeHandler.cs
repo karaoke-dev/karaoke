@@ -102,6 +102,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
             });
         }
 
+        public void Clear()
+        {
+            PerformOnLyricSelection(lyric =>
+            {
+                var notes = beatmap.HitObjects.OfType<Note>().Where(n => n.ParentLyric == lyric).ToList();
+                RemoveRange(notes);
+            });
+        }
+
         protected void PerformOnLyricSelection(Action<Lyric> action) => beatmap.PerformOnSelection(h =>
         {
             if (h is Lyric lyric)
