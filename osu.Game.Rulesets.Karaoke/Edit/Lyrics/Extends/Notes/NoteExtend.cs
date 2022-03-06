@@ -16,6 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         private readonly IBindable<NoteEditMode> bindableMode = new Bindable<NoteEditMode>();
 
+        private readonly IBindable<NoteEditModeSpecialAction> bindableModeSpecialAction = new Bindable<NoteEditModeSpecialAction>();
 
         public NoteExtend()
         {
@@ -28,8 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                         {
                             new NoteEditModeSection(),
                             new NoteConfigSection(),
-                            new NoteAutoGenerateSection(),
+                            new SwitchSpecialActionSection(),
                         };
+                        updateActionArea();
                         break;
 
                     case NoteEditMode.Edit:
@@ -53,12 +55,44 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                         return;
                 }
             }, true);
+
+            bindableModeSpecialAction.BindValueChanged(e =>
+            {
+                if (bindableMode.Value != NoteEditMode.Generate)
+                    return;
+
+                updateActionArea();
+            }, true);
+
+            void updateActionArea()
+            {
+                RemoveAll(x => x is NoteAutoGenerateSection or NoteClearSection);
+
+                switch (bindableModeSpecialAction.Value)
+                {
+                    case NoteEditModeSpecialAction.AutoGenerate:
+                        Add(new NoteAutoGenerateSection());
+                        break;
+
+                    case NoteEditModeSpecialAction.SyncTime:
+                        // todo: implement
+                        break;
+
+                    case NoteEditModeSpecialAction.Clear:
+                        Add(new NoteClearSection());
+                        break;
+
+                    default:
+                        return;
+                }
+            }
         }
 
         [BackgroundDependencyLoader]
         private void load(IEditNoteModeState editNoteModeState)
         {
             bindableMode.BindTo(editNoteModeState.BindableEditMode);
+            bindableModeSpecialAction.BindTo(editNoteModeState.BindableSpecialAction);
         }
     }
 }
