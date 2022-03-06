@@ -53,9 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             }
 
             protected override void SetText(RomajiTag item, string value)
-            {
-                romajiTagsChangeHandler.SetText(item, value);
-            }
+                => romajiTagsChangeHandler.SetText(item, value);
 
             [BackgroundDependencyLoader]
             private void load(IEditRomajiModeState editRomajiModeState)
