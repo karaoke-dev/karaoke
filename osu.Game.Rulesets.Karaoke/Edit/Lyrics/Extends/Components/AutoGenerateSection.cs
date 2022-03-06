@@ -32,6 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         [BackgroundDependencyLoader]
         private void load(EditorBeatmap beatmap, ILyricSelectionState lyricSelectionState, OsuColour colours)
         {
+            // should wait until BDL in the parent class has been loaded.
             Schedule(() =>
             {
                 var disableSelectingLyrics = GetDisableSelectingLyrics(beatmap.HitObjects.OfType<Lyric>());
