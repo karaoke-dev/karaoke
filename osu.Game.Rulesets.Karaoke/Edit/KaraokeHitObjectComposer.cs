@@ -3,9 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Testing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
@@ -128,16 +129,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         protected void CreateMenuBar()
         {
-            // It's a tricky way to place menu bar in here, will be removed eventually.
-            var prop = typeof(Editor).GetField("menuBar", BindingFlags.Instance | BindingFlags.NonPublic);
-            if (prop == null)
+            var editorMenuBar = editor.ChildrenOfType<EditorMenuBar>().FirstOrDefault();
+            if (editorMenuBar == null)
                 return;
-
-            var menuBar = (EditorMenuBar)prop.GetValue(editor);
 
             Schedule(() =>
             {
-                menuBar.Items = new List<MenuItem>(menuBar.Items)
+                editorMenuBar.Items = new List<MenuItem>(editorMenuBar.Items)
                 {
                     new("Config")
                     {
