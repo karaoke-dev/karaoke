@@ -33,6 +33,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     Description = "Auto move to next time-tag if set time to current time-tag.",
                     Current = lyricEditorConfigManager.GetBindable<bool>(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag),
                 },
+                new LabelledSwitchButton
+                {
+                    Label = "Change the time by time-tag.",
+                    Description = "Change the track time if change the recording caret while pausing.",
+                    Current = lyricEditorConfigManager.GetBindable<bool>(KaraokeRulesetLyricEditorSetting.RecordingChangeTimeWhileMovingTheCaret),
+                },
                 new LabelledRealTimeSliderBar<float>
                 {
                     Label = "Time range",

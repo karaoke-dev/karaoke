@@ -112,9 +112,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
         private class RecordingTimeTagVisualization : CompositeDrawable, IHasCustomTooltip<TimeTag>, IHasContextMenu
         {
             [Resolved]
-            private EditorClock editorClock { get; set; }
-
-            [Resolved]
             private ILyricCaretState lyricCaretState { get; set; }
 
             [Resolved]
@@ -194,11 +191,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
             protected override bool OnClick(ClickEvent e)
             {
-                // navigation to target time
-                double? time = timeTag.Time;
-                if (time != null)
-                    editorClock.SeekSmoothlyTo(time.Value);
-
                 lyricCaretState.MoveCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag));
 
                 return base.OnClick(e);

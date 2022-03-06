@@ -292,9 +292,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             private ILyricsChangeHandler lyricsChangeHandler { get; set; }
 
             [Resolved]
-            private EditorClock editorClock { get; set; }
-
-            [Resolved]
             private ILyricCaretState lyricCaretState { get; set; }
 
             public Lyric Lyric { get; }
@@ -425,12 +422,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     case TextCaretPosition textCaretPosition:
                         if (mode == LyricEditorMode.Manage)
                             lyricsChangeHandler.Split(textCaretPosition.Index);
-                        return true;
-
-                    case TimeTagCaretPosition timeTagCaretPosition:
-                        double? timeTagTime = timeTagCaretPosition.TimeTag.Time;
-                        if (timeTagTime.HasValue)
-                            editorClock.SeekSmoothlyTo(timeTagTime.Value);
                         return true;
 
                     default:

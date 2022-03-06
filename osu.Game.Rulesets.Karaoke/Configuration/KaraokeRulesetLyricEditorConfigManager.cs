@@ -27,6 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             // Recording
             SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
             SetDefault(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag, true);
+            SetDefault(KaraokeRulesetLyricEditorSetting.RecordingChangeTimeWhileMovingTheCaret, true);
             SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowWaveform, true);
             SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagWaveformOpacity, 0.5f, 0, 1, 0.01f);
             SetDefault(KaraokeRulesetLyricEditorSetting.RecordingTimeTagShowTick, true);
@@ -60,6 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         // Recording
         RecordingTimeTagMovingCaretMode,
         RecordingAutoMoveToNextTimeTag,
+        RecordingChangeTimeWhileMovingTheCaret,
         RecordingTimeTagShowWaveform,
         RecordingTimeTagWaveformOpacity,
         RecordingTimeTagShowTick,
