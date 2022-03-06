@@ -38,11 +38,13 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit
 
         public override bool? AllowTrackAdjustments => false;
 
+        public readonly Bindable<TScreenMode> Mode = new();
+
         private Container<GenericEditorScreen<TScreenMode>> screenContainer;
 
         private GenericEditorScreen<TScreenMode> currentScreen;
 
-        private GenericEditorMenuBar<TScreenMode> menuBar;
+        private EditorMenuBar menuBar;
 
         private DependencyContainer dependencies;
 
@@ -82,12 +84,22 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit
                         Name = "Top bar",
                         RelativeSizeAxes = Axes.X,
                         Height = 40,
-                        Child = menuBar = new GenericEditorMenuBar<TScreenMode>
+                        Children = new Drawable[]
                         {
-                            Anchor = Anchor.CentreLeft,
-                            Origin = Anchor.CentreLeft,
-                            RelativeSizeAxes = Axes.Both,
-                        }
+                            menuBar = new EditorMenuBar
+                            {
+                                Anchor = Anchor.CentreLeft,
+                                Origin = Anchor.CentreLeft,
+                                RelativeSizeAxes = Axes.Both,
+                            },
+                            new GenericScreenSelectionTabControl<TScreenMode>
+                            {
+                                Anchor = Anchor.BottomRight,
+                                Origin = Anchor.BottomRight,
+                                X = -15,
+                                Current = Mode,
+                            },
+                        },
                     },
                     new Container
                     {
@@ -145,7 +157,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit
                 }
             });
 
-            menuBar.Mode.ValueChanged += onModeChanged;
+            Mode.BindValueChanged(onModeChanged, true);
         }
 
         private void onModeChanged(ValueChangedEvent<TScreenMode> e)
