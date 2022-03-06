@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Diagnostics;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components;
@@ -37,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         }
 
         protected override LabelledTextTagTextBox<RubyTag> CreateLabelledTextTagTextBox(RubyTag textTag)
-            => new LabelledRubyTagTextBox(textTag);
+            => new LabelledRubyTagTextBox(Lyric, textTag);
 
         protected override void RemoveTextTag(RubyTag textTag)
             => rubyTagsChangeHandler.Remove(textTag);
@@ -47,15 +48,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             [Resolved]
             private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
 
-            public LabelledRubyTagTextBox(RubyTag textTag)
-                : base(textTag)
+            public LabelledRubyTagTextBox(Lyric lyric, RubyTag textTag)
+                : base(lyric, textTag)
             {
+                Debug.Assert(lyric.RubyTags.Contains(textTag));
             }
 
             protected override void SetText(RubyTag item, string value)
-            {
-                rubyTagsChangeHandler.SetText(item, value);
-            }
+                => rubyTagsChangeHandler.SetText(item, value);
 
             [BackgroundDependencyLoader]
             private void load(IEditRubyModeState editRubyModeState)

@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             private INotesChangeHandler notesChangeHandler { get; set; }
 
             public LabelledNoteTextTextBox(Note item)
-                : base(item)
+                : base(item.ParentLyric, item)
             {
             }
 
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             private INotesChangeHandler notesChangeHandler { get; set; }
 
             public LabelledNoteRubyTextTextBox(Note item)
-                : base(item)
+                : base(item.ParentLyric, item)
             {
             }
 

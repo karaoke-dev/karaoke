@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osuTK;
 
@@ -18,8 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
 
         public Action OnDeleteButtonClick;
 
-        protected LabelledTextTagTextBox(T textTag)
-            : base(textTag)
+        protected LabelledTextTagTextBox(Lyric lyric, T textTag)
+            : base(lyric, textTag)
         {
             if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
                 return;
