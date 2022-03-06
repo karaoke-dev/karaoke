@@ -8,11 +8,16 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Screens.Edit.Components.Menus;
 using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Menus
 {
+    /// <summary>
+    /// Copied from <see cref="ScreenSelectionTabControl"/>
+    /// </summary>
+    /// <typeparam name="TScreenMode"></typeparam>
     public class GenericScreenSelectionTabControl<TScreenMode> : OsuTabControl<TScreenMode>
     {
         public GenericScreenSelectionTabControl()
