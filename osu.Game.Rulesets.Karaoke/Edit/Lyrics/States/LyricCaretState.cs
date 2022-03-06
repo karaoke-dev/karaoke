@@ -30,6 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<MovingTimeTagCaretMode> bindableCreateMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
         private readonly IBindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
+        private readonly IBindable<bool> bindableRecordingChangeTimeWhileMovingTheCaret = new Bindable<bool>();
 
         private readonly IBindableList<Lyric> lyrics;
 
@@ -127,8 +128,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             selectedHitObjects.BindTo(beatmap.SelectedHitObjects);
             bindableMode.BindTo(state.BindableMode);
 
-            bindableCreateMovingCaretMode.BindTo(lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode));
-            bindableRecordingMovingCaretMode.BindTo(lyricEditorConfigManager.GetBindable<MovingTimeTagCaretMode>(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode));
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, bindableCreateMovingCaretMode);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingTimeTagMovingCaretMode, bindableRecordingMovingCaretMode);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.RecordingChangeTimeWhileMovingTheCaret, bindableRecordingChangeTimeWhileMovingTheCaret);
         }
 
         public bool MoveCaret(MovingCaretAction action)
@@ -204,7 +206,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 return;
 
             double? timeTagTime = timeTagCaretPosition.TimeTag.Time;
-            if (timeTagTime.HasValue && !editorClock.IsRunning)
+            if (timeTagTime.HasValue && !editorClock.IsRunning && bindableRecordingChangeTimeWhileMovingTheCaret.Value)
                 editorClock.SeekSmoothlyTo(timeTagTime.Value);
         }
 
