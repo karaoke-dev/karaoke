@@ -158,23 +158,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
-            bool hasAlgorithm = algorithm != null;
             var caretPosition = algorithm?.MoveToTarget(lyric);
-
-            if (hasAlgorithm && caretPosition == null)
-                return;
-
-            // remain state:
-            // 1. has no caret position because has no algorithm.
-            // 2. has caret position.
-            // should update beatmap selected object in both cases.
-            updateEditorBeatmapSelectedHitObject(lyric);
-
             if (caretPosition == null)
                 return;
 
-            bindableHoverCaretPosition.Value = null;
-            bindableCaretPosition.Value = caretPosition;
+            MoveCaretToTargetPosition(caretPosition);
         }
 
         public void MoveCaretToTargetPosition(ICaretPosition position)
