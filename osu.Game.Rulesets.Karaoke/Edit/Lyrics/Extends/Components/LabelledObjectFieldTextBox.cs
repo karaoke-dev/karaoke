@@ -10,6 +10,8 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
@@ -20,9 +22,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected new ObjectFieldTextBox Component => (ObjectFieldTextBox)base.Component;
 
+        [Resolved]
+        private ILyricCaretState lyricCaretState { get; set; }
+
         private readonly T item;
 
-        protected LabelledObjectFieldTextBox(T item)
+        protected LabelledObjectFieldTextBox(Lyric lyric, T item)
         {
             this.item = item;
 
@@ -32,6 +37,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             // should change preview text box if selected ruby/romaji changed.
             OnCommit += (sender, _) =>
             {
+                // because selected lyric might changed if user click another lyric before on commit triggered.
+                // so should force to select the lyric back.
+                if (lyricCaretState.BindableCaretPosition.Value.Lyric != lyric)
+                    lyricCaretState.MoveCaretToTargetPosition(lyric);
+
                 ApplyValue(item, sender.Text);
             };
 
