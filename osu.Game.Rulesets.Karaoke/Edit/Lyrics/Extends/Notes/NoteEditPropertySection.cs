@@ -70,9 +70,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, ILyricCaretState lyricCaretState, Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode)
+        private void load(EditorBeatmap beatmap, ILyricCaretState lyricCaretState, IEditNoteModeState editNoteModeState)
         {
-            this.bindableNoteEditPropertyMode.BindTo(bindableNoteEditPropertyMode);
+            bindableNoteEditPropertyMode.BindTo(editNoteModeState.NoteEditPropertyMode);
             lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
             {
                 var lyric = e.NewValue?.Lyric;

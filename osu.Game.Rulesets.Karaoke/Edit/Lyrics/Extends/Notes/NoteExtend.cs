@@ -16,8 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         private readonly IBindable<NoteEditMode> bindableMode = new Bindable<NoteEditMode>();
 
-        [Cached]
-        private readonly Bindable<NoteEditPropertyMode> noteEditPropertyMode = new();
 
         public NoteExtend()
         {
