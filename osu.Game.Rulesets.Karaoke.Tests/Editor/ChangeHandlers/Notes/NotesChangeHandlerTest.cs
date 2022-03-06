@@ -198,5 +198,37 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
                 Assert.AreEqual(new Tone(), h.Tone);
             });
         }
+
+        [Test]
+        public void TestClear()
+        {
+            var lyric = new Lyric();
+
+            // note that lyric and notes should in the selection.
+            PrepareHitObject(lyric);
+            PrepareHitObjects(new[]
+            {
+                new Note
+                {
+                    Text = "カラ",
+                    RubyText = "から",
+                    StartTime = 1000,
+                    Duration = 500,
+                    ParentLyric = lyric,
+                },
+                new Note
+                {
+                    Text = "オケ",
+                    RubyText = "おけ",
+                    StartTime = 1500,
+                    Duration = 500,
+                    ParentLyric = lyric,
+                }
+            }, false);
+
+            TriggerHandlerChanged(c => c.Clear());
+
+            AssertHitObjects(Assert.IsEmpty);
+        }
     }
 }

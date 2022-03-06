@@ -2,28 +2,27 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
-    public class NoteEditPropertyModeSection : Section
+    public class SwitchSpecialActionSection : Section
     {
-        protected override string Title => "Edit property";
+        protected sealed override string Title => "Clear";
 
         [BackgroundDependencyLoader]
         private void load(IEditNoteModeState editNoteModeState)
         {
-            Children = new Drawable[]
+            Children = new[]
             {
-                new LabelledEnumDropdown<NoteEditPropertyMode>
+                new LabelledEnumDropdown<NoteEditModeSpecialAction>
                 {
-                    Label = "Edit property",
-                    Description = "Batch edit text, ruby(alternative) text or display from notes",
-                    Current = editNoteModeState.NoteEditPropertyMode,
-                },
+                    Label = "Switch special actions",
+                    Description = "Auto-generate, edit or clear the notes.",
+                    Current = editNoteModeState.BindableSpecialAction,
+                }
             };
         }
     }

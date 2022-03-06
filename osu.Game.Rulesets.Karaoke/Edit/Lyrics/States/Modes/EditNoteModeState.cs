@@ -24,6 +24,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 
         public BindableList<Note> SelectedItems { get; } = new();
 
+        public Bindable<NoteEditModeSpecialAction> BindableSpecialAction { get; } = new();
+
+        public Bindable<NoteEditPropertyMode> NoteEditPropertyMode { get; } = new();
+
         [BackgroundDependencyLoader]
         private void load(EditorBeatmap editorBeatmap)
         {
