@@ -33,6 +33,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         private readonly IBindableList<Lyric> lyrics;
 
+        [Resolved]
+        private EditorClock editorClock { get; set; }
+
         public LyricCaretState(IBindableList<Lyric> lyrics)
         {
             this.lyrics = lyrics;
@@ -191,6 +194,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             bindableHoverCaretPosition.Value = null;
             bindableCaretPosition.Value = position;
+
+            postProcessMoveCaretToTargetPosition(position);
+        }
+
+        private void postProcessMoveCaretToTargetPosition(ICaretPosition position)
+        {
+            if (position is not TimeTagCaretPosition timeTagCaretPosition)
+                return;
+
+            double? timeTagTime = timeTagCaretPosition.TimeTag.Time;
+            if (timeTagTime.HasValue && !editorClock.IsRunning)
+                editorClock.SeekSmoothlyTo(timeTagTime.Value);
         }
 
         public void MoveHoverCaretToTargetPosition(ICaretPosition position)
