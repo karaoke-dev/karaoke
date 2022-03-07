@@ -146,14 +146,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             updateBackgroundColour();
         }
 
-        private bool isDragging;
-
         protected override bool OnDragStart(DragStartEvent e)
         {
             if (!base.OnDragStart(e))
                 return false;
 
-            isDragging = true;
             updateBackgroundColour();
 
             // should mark object as selecting while dragging.
@@ -164,7 +161,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         protected override void OnDragEnd(DragEndEvent e)
         {
-            isDragging = false;
             updateBackgroundColour();
 
             base.OnDragEnd(e);
@@ -177,8 +173,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             Color4 getColour()
             {
                 var mode = bindableMode.Value;
-                if (isDragging)
-                    return colourProvider.Background3(mode);
 
                 if (bindableCaretPosition.Value?.Lyric == Model)
                     return colourProvider.Background3(mode);
