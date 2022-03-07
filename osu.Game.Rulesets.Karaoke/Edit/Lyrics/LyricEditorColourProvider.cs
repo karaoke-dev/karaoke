@@ -42,10 +42,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             switch (mode)
             {
                 case LyricEditorMode.View:
-                    return 182 / 360f; // miku blue
+                    return 200 / 360f; // blue
 
                 case LyricEditorMode.Manage:
-                    return 50 / 360f; // yellow
+                    return 0 / 360f; // red
 
                 case LyricEditorMode.Typing:
                 case LyricEditorMode.Language:
@@ -56,13 +56,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.CreateTimeTag:
                 case LyricEditorMode.RecordTimeTag:
                 case LyricEditorMode.AdjustTimeTag:
-                    return 33 / 360f; // orange
+                    return 45 / 360f; // orange
 
                 case LyricEditorMode.EditNote:
-                    return 203 / 360f; // blue
+                    return 200 / 360f; // blue
 
                 case LyricEditorMode.Singer:
-                    return 271 / 360f; // purple
+                    return 255 / 360f; // purple
 
                 default:
                     throw new InvalidEnumArgumentException($@"{mode} colour scheme does not provide a hue value in {nameof(getBaseHue)}.");
