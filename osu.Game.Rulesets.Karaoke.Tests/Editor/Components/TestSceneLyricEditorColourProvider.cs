@@ -59,6 +59,21 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Components
 
             Schedule(() =>
             {
+                var editMOdeColumns = new TableColumn[]
+                {
+                    new TitleTableColumn("Edit mode")
+                };
+                var editModeContent = types.Select(type =>
+                {
+                    return new Drawable[]
+                    {
+                        new OsuSpriteText
+                        {
+                            Text = type.ToString()
+                        }
+                    };
+                }).To2DArray();
+
                 var columns = colourName.Select(c => new TitleTableColumn(c)).OfType<TableColumn>().ToArray();
                 var content = types.Select(type =>
                 {
@@ -73,15 +88,30 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Components
                     }).OfType<Drawable>();
                 }).To2DArray();
 
+                const int edit_mode_name_width = 120;
                 Child = new OsuScrollContainer(Direction.Horizontal)
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Child = new TableContainer
+                    Children = new Drawable[]
                     {
-                        RelativeSizeAxes = Axes.Y,
-                        AutoSizeAxes = Axes.X,
-                        Columns = columns,
-                        Content = content,
+                        new TableContainer
+                        {
+                            RelativeSizeAxes = Axes.Y,
+                            Width = edit_mode_name_width,
+                            Columns = editMOdeColumns,
+                            Content = editModeContent,
+                        },
+                        new TableContainer
+                        {
+                            RelativeSizeAxes = Axes.Y,
+                            AutoSizeAxes = Axes.X,
+                            Columns = columns,
+                            Content = content,
+                            Margin = new MarginPadding
+                            {
+                                Left = edit_mode_name_width
+                            }
+                        }
                     }
                 };
             });
