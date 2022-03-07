@@ -8,6 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Testing;
 using osu.Game.Beatmaps;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -15,6 +16,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
+using osu.Game.Rulesets.Karaoke.Edit.Export;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.UI;
@@ -60,6 +62,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached(typeof(ISingersChangeHandler))]
         private readonly SingersChangeHandler singersChangeHandler;
 
+        [Cached]
+        private readonly ExportLyricManager exportLyricManager;
+
         [Resolved]
         private Editor editor { get; set; }
 
@@ -78,6 +83,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(notesChangeHandler = new NotesChangeHandler());
             AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
             AddInternal(singersChangeHandler = new SingersChangeHandler());
+
+            AddInternal(exportLyricManager = new ExportLyricManager());
         }
 
         [BackgroundDependencyLoader]
@@ -150,6 +157,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                         {
                             new KaraokeSkinEditorMenu(editor, null, "Skin editor"),
                             new KaraokeEditorMenu(editor, "Karaoke editor")
+                        }
+                    },
+                    new MenuItem("Debug")
+                    {
+                        Items = new MenuItem[]
+                        {
+                            new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => exportLyricManager.ExportToJsonBeatmap()),
                         }
                     }
                 };
