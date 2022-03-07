@@ -1,11 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
@@ -17,6 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 
         protected override Container<Drawable> Content => content;
 
+        private readonly CornerBackground background;
         private readonly FillFlowContainer content;
 
         protected EditExtend()
@@ -24,12 +25,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
             RelativeSizeAxes = Axes.Both;
             InternalChildren = new Drawable[]
             {
-                new CornerBackground
+                background = new CornerBackground
                 {
                     Depth = float.MaxValue,
                     RelativeSizeAxes = Axes.Both,
-                    Alpha = 0.5f,
-                    Colour = Color4.Black
                 },
                 new OsuScrollContainer
                 {
@@ -41,6 +40,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
                     }
                 }
             };
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
+        {
+            background.Colour = colourProvider.Background3(state.Mode);
         }
     }
 }

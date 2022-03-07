@@ -118,7 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     background = new Box
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Alpha = 0.5f
+                        Alpha = 0.7f
                     },
                     content = new FillFlowContainer
                     {
@@ -146,14 +146,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             updateBackgroundColour();
         }
 
-        private bool isDragging;
-
         protected override bool OnDragStart(DragStartEvent e)
         {
             if (!base.OnDragStart(e))
                 return false;
 
-            isDragging = true;
             updateBackgroundColour();
 
             // should mark object as selecting while dragging.
@@ -164,7 +161,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         protected override void OnDragEnd(DragEndEvent e)
         {
-            isDragging = false;
             updateBackgroundColour();
 
             base.OnDragEnd(e);
@@ -177,16 +173,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             Color4 getColour()
             {
                 var mode = bindableMode.Value;
-                if (isDragging)
-                    return colourProvider.Background3(mode);
 
                 if (bindableCaretPosition.Value?.Lyric == Model)
                     return colourProvider.Background3(mode);
 
                 if (bindableHoverCaretPosition.Value?.Lyric == Model)
-                    return colourProvider.Background6(mode);
+                    return colourProvider.Background4(mode);
 
-                return Color4.Black;
+                return colourProvider.Background6(mode);
             }
         }
     }
