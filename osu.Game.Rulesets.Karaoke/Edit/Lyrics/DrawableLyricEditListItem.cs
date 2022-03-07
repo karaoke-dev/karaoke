@@ -118,7 +118,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     background = new Box
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Alpha = 0.5f
+                        Alpha = 0.7f
                     },
                     content = new FillFlowContainer
                     {
@@ -178,9 +178,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return colourProvider.Background3(mode);
 
                 if (bindableHoverCaretPosition.Value?.Lyric == Model)
-                    return colourProvider.Background6(mode);
+                    return colourProvider.Background4(mode);
 
-                return Color4.Black;
+                return colourProvider.Background6(mode);
             }
         }
     }
