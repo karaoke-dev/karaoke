@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
@@ -61,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="timeTags">Time tags</param>
         /// <returns>Sorted time tags</returns>
-        public static TimeTag[] Sort(IEnumerable<TimeTag> timeTags)
+        public static IList<TimeTag> Sort(IEnumerable<TimeTag> timeTags)
         {
             return timeTags?.OrderBy(x => x.Index)
                            .ThenBy(x => x.Time).ToArray();
@@ -109,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="other">Check way</param>
         /// <param name="self">Check way</param>
         /// <returns>List of overlapping time tags</returns>
-        public static TimeTag[] FindOverlapping(IEnumerable<TimeTag> timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
+        public static IList<TimeTag> FindOverlapping(IEnumerable<TimeTag> timeTags, GroupCheck other = GroupCheck.Asc, SelfCheck self = SelfCheck.BasedOnStart)
         {
             if (timeTags == null)
                 return null;
