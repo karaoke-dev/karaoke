@@ -32,8 +32,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (currentLyric != currentPosition.Lyric)
                 throw new ArgumentException(nameof(currentPosition.Lyric));
 
-            var upTimeTag = Lyrics.GetPreviousMatch(currentLyric, l => l.TimeTags?.Any() ?? false)
-                                  ?.TimeTags.FirstOrDefault(x => x.Index >= currentTimeTag.Index && timeTagMovable(x));
+            // get previous movable lyric.
+            var previousLyric = Lyrics.GetPreviousMatch(currentLyric, l => l.TimeTags?.Any(timeTagMovable) ?? false);
+            if (previousLyric == null)
+                return null;
+
+            var timeTags = previousLyric.TimeTags.Where(timeTagMovable).ToArray();
+            var upTimeTag = timeTags.FirstOrDefault(x => x.Index >= currentTimeTag.Index)
+                            ?? timeTags.LastOrDefault();
             return timeTagToPosition(upTimeTag);
         }
 
@@ -46,8 +52,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (currentLyric != currentPosition.Lyric)
                 throw new ArgumentException(nameof(currentPosition.Lyric));
 
-            var downTimeTag = Lyrics.GetNextMatch(currentLyric, l => l.TimeTags?.Any() ?? false)
-                                    ?.TimeTags?.FirstOrDefault(x => x.Index >= currentTimeTag.Index && timeTagMovable(x));
+            // get next movable lyric.
+            var nextLyric = Lyrics.GetNextMatch(currentLyric, l => l.TimeTags?.Any(timeTagMovable) ?? false);
+            if (nextLyric == null)
+                return null;
+
+            var timeTags = nextLyric.TimeTags.Where(timeTagMovable).ToArray();
+            var downTimeTag = timeTags.FirstOrDefault(x => x.Index >= currentTimeTag.Index)
+                              ?? timeTags.LastOrDefault();
             return timeTagToPosition(downTimeTag);
         }
 
