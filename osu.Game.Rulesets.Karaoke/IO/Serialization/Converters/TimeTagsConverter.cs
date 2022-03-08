@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
     public class TimeTagsConverter : SortableJsonConvertor<TimeTag>
     {
-        protected override IEnumerable<TimeTag> GetSortedValue(IEnumerable<TimeTag> objects)
+        protected override IList<TimeTag> GetSortedValue(IEnumerable<TimeTag> objects)
             => TimeTagsUtils.Sort(objects);
     }
 }

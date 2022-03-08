@@ -39,11 +39,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 1, 0, 0, 0)]
         [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 1, 3, 0, 3)]
         [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 1, 3, 0, 3)]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 1, 3, 0, 4)] // todo : Not really sure the behavior in here
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 1, 3, 0, 4)]
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, 0, 0, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 2, 3, 0, 3)]
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 2, 3, 0, 3)]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 2, 3, 0, 4)] // todo : Not really sure the behavior in here
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 2, 3, 0, 4)]
         public void TestMoveUp(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int newLyricIndex, int newIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
@@ -58,11 +58,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 0, 0, 1, 0)]
         [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.None, 0, 2, 1, 2)]
         [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyStartTag, 0, 2, 1, 2)]
-        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 0, 2, 1, 3)] // todo : Not really sure the behavior in here
+        [TestCase(nameof(twoLyricsWithText), MovingTimeTagCaretMode.OnlyEndTag, 0, 2, 1, 3)]
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, 0, 2, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.None, 0, 2, 2, 2)]
         [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyStartTag, 0, 2, 2, 2)]
-        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 0, 2, 2, 3)] // todo : Not really sure the behavior in here
+        [TestCase(nameof(threeLyricsWithSpacing), MovingTimeTagCaretMode.OnlyEndTag, 0, 2, 2, 3)]
         public void TestMoveDown(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index, int newLyricIndex, int newIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
