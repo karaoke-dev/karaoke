@@ -108,6 +108,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
         }
 
+        public void Focus()
+        {
+            Schedule(() =>
+            {
+                GetContainingInputManager().ChangeFocus(Component);
+            });
+        }
+
         protected class ObjectFieldTextBox : OsuTextBox
         {
             [Resolved]
