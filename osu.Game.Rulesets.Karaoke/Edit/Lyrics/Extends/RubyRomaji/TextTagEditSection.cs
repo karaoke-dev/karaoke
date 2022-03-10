@@ -2,12 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -16,9 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
     public abstract class TextTagEditSection<T> : Section where T : class, ITextTag
     {
-        protected readonly BindableList<T> TextTags = new();
+        protected readonly IBindableList<T> TextTags = new BindableList<T>();
 
-        protected Lyric Lyric { get; set; }
+        protected Lyric Lyric { get; private set; }
 
         protected TextTagEditSection()
         {
@@ -47,6 +49,37 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             // add create button.
             AddCreateButton();
         }
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricCaretState lyricCaretState)
+        {
+            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
+            {
+                Lyric = e.NewValue.Lyric;
+
+                if (e.OldValue?.Lyric != null)
+                {
+                    TextTags.UnbindFrom(GetBindableTextTags(e.OldValue.Lyric));
+                }
+
+                if (e.NewValue?.Lyric != null)
+                {
+                    TextTags.BindTo(GetBindableTextTags(e.NewValue.Lyric));
+                }
+
+                Schedule(() =>
+                {
+                    var firstTextTagTextBox = Children.OfType<LabelledTextTagTextBox<T>>().FirstOrDefault();
+                    if (firstTextTagTextBox == null)
+                        return;
+
+                    // should auto-focus to the first time-tag if change the lyric.
+                    firstTextTagTextBox.Focus();
+                });
+            }, true);
+        }
+
+        protected abstract IBindableList<T> GetBindableTextTags(Lyric lyric);
 
         protected abstract LabelledTextTagTextBox<T> CreateLabelledTextTagTextBox(T textTag);
 
