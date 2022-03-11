@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             });
             bindableLyricEditorMode.BindValueChanged(e =>
             {
-                lyricEditor.Mode = e.NewValue;
+                lyricEditor.SwitchMode(e.NewValue);
             });
         }
 
