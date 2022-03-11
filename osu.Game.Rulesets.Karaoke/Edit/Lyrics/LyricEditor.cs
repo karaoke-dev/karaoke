@@ -405,12 +405,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        public LyricEditorMode Mode
-        {
-            get => bindableMode.Value;
-            set => bindableMode.Value = value;
-        }
-
         public virtual void NavigateToFix(LyricEditorMode mode)
         {
             switch (mode)
@@ -418,13 +412,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.Typing:
                 case LyricEditorMode.Language:
                 case LyricEditorMode.AdjustTimeTag:
-                    Mode = mode;
+                    SwitchMode(mode);
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mode));
             }
         }
+
+        public LyricEditorMode Mode
+            => bindableMode.Value;
+
+        public void SwitchMode(LyricEditorMode mode)
+            => bindableMode.Value = mode;
 
         private class LocalScrollingInfo : IScrollingInfo
         {

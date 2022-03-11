@@ -9,7 +9,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         IBindable<LyricEditorMode> BindableMode { get; }
 
-        LyricEditorMode Mode { get; set; }
+        LyricEditorMode Mode { get; }
+
+        void SwitchMode(LyricEditorMode mode);
 
         void NavigateToFix(LyricEditorMode mode);
     }
