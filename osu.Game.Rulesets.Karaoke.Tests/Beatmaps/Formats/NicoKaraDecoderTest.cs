@@ -48,22 +48,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
                 // Because some property has been converted into shader, so should test shader property.
                 var shaders = firstFont.LeftLyricTextShaders;
-                Assert.NotNull(shaders);
+                Assert.IsNotNull(shaders);
 
                 // Test outline shader.
                 var outlineShader = shaders.FirstOrDefault() as OutlineShader;
-                Assert.NotNull(outlineShader);
+                Assert.IsNotNull(outlineShader);
                 Assert.AreEqual(new Color4(255, 255, 255, 255), outlineShader.OutlineColour);
                 Assert.AreEqual(10, outlineShader.Radius);
 
                 // Test shader convert result.
                 var shadowShader = shaders.LastOrDefault() as ShadowShader;
-                Assert.NotNull(shadowShader);
+                Assert.IsNotNull(shadowShader);
                 Assert.AreEqual(new Vector2(3), shadowShader.ShadowOffset);
 
                 // test lyric config
                 var defaultLyricConfig = skin.DefaultLyricConfig;
-                Assert.NotNull(defaultLyricConfig);
+                Assert.IsNotNull(defaultLyricConfig);
                 Assert.AreEqual(KaraokeTextSmartHorizon.Multi, defaultLyricConfig.SmartHorizon);
                 Assert.AreEqual(4, defaultLyricConfig.LyricsInterval);
                 Assert.AreEqual(2, defaultLyricConfig.RubyInterval);

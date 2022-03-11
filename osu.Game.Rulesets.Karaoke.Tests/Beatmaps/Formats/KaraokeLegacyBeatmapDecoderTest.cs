@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
 
             // Check is not null
-            Assert.NotNull(translates);
+            Assert.IsNotNull(translates);
 
             // Check translate count
             Assert.AreEqual(2, translates.Count);

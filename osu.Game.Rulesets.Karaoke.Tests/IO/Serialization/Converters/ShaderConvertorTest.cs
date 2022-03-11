@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 ShadowColour = new Color4(0.5f, 0.5f, 0.5f, 0.5f),
             };
             var actual = JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings()) as ShadowShader;
-            Assert.NotNull(actual);
+            Assert.IsNotNull(actual);
             Assert.AreEqual(expected.ShadowOffset, actual.ShadowOffset);
             Assert.AreEqual(expected.ShadowColour.ToHex(), actual.ShadowColour.ToHex());
         }
@@ -92,14 +92,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             var actual = JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings()) as StepShader;
 
             // test step shader.
-            Assert.NotNull(actual);
+            Assert.IsNotNull(actual);
             Assert.AreEqual(expected.StepShaders.Count, actual.StepShaders.Count);
 
             // test shadow shader inside.
             var expectedShadowShader = expected.StepShaders.FirstOrDefault() as ShadowShader;
             var actualShadowShader = actual.StepShaders.FirstOrDefault() as ShadowShader;
-            Assert.NotNull(expectedShadowShader);
-            Assert.NotNull(actualShadowShader);
+            Assert.IsNotNull(expectedShadowShader);
+            Assert.IsNotNull(actualShadowShader);
             Assert.AreEqual(expectedShadowShader.ShadowOffset, actualShadowShader.ShadowOffset);
             Assert.AreEqual(expectedShadowShader.ShadowColour.ToHex(), actualShadowShader.ShadowColour.ToHex());
         }
