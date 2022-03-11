@@ -35,10 +35,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             };
 
         public LyricEditorMode LyricEditorMode
-        {
-            get => lyricEditor.Mode;
-            protected set => lyricEditor.SwitchMode(value);
-        }
+            => lyricEditor.Mode;
+
+        public virtual void SwitchLyricEditorMode(LyricEditorMode mode)
+            => lyricEditor.SwitchMode(mode);
 
         protected void PrepareAutoGenerate()
         {
