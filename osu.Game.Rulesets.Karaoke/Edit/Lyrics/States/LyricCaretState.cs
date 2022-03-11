@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             // refresh caret position
             var lyric = bindableCaretPosition.Value?.Lyric;
             bindableCaretPosition.Value = getCaretPosition(algorithm, lyric);
-            bindableHoverCaretPosition.Value = getCaretPosition(algorithm, lyric);
+            bindableHoverCaretPosition.Value = null;
 
             // should update selection if selected lyric changed.
             updateEditorBeatmapSelectedHitObject(bindableCaretPosition.Value?.Lyric);
