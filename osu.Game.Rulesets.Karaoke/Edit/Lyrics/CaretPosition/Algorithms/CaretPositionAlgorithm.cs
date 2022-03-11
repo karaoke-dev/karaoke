@@ -1,12 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
-    public abstract class CaretPositionAlgorithm<T> : ICaretPositionAlgorithm where T : class, ICaretPosition
+    public abstract class CaretPositionAlgorithm<TCaretPosition> : ICaretPositionAlgorithm where TCaretPosition : class, ICaretPosition
     {
         // Lyrics is not lock and can be accessible.
         protected readonly Lyric[] Lyrics;
@@ -16,36 +17,61 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             Lyrics = LyricsUtils.FindUnlockLyrics(OrderUtils.Sorted(lyrics));
         }
 
-        public abstract bool PositionMovable(T position);
+        public abstract bool PositionMovable(TCaretPosition position);
 
-        public abstract T MoveUp(T currentPosition);
+        public abstract TCaretPosition MoveUp(TCaretPosition currentPosition);
 
-        public abstract T MoveDown(T currentPosition);
+        public abstract TCaretPosition MoveDown(TCaretPosition currentPosition);
 
-        public abstract T MoveLeft(T currentPosition);
+        public abstract TCaretPosition MoveLeft(TCaretPosition currentPosition);
 
-        public abstract T MoveRight(T currentPosition);
+        public abstract TCaretPosition MoveRight(TCaretPosition currentPosition);
 
-        public abstract T MoveToFirst();
+        public abstract TCaretPosition MoveToFirst();
 
-        public abstract T MoveToLast();
+        public abstract TCaretPosition MoveToLast();
 
-        public abstract T MoveToTarget(Lyric lyric);
+        public abstract TCaretPosition MoveToTarget(Lyric lyric);
 
         public bool PositionMovable(ICaretPosition position)
-            => PositionMovable(position as T);
+        {
+            if (position is not TCaretPosition tCaretPosition)
+                throw new InvalidCastException(nameof(position));
+
+            return PositionMovable(tCaretPosition);
+        }
 
         public ICaretPosition MoveUp(ICaretPosition currentPosition)
-            => MoveUp(currentPosition as T);
+        {
+            if (currentPosition is not TCaretPosition tCaretPosition)
+                throw new InvalidCastException(nameof(currentPosition));
+
+            return MoveUp(tCaretPosition);
+        }
 
         public ICaretPosition MoveDown(ICaretPosition currentPosition)
-            => MoveDown(currentPosition as T);
+        {
+            if (currentPosition is not TCaretPosition tCaretPosition)
+                throw new InvalidCastException(nameof(currentPosition));
+
+            return MoveDown(tCaretPosition);
+        }
 
         public ICaretPosition MoveLeft(ICaretPosition currentPosition)
-            => MoveLeft(currentPosition as T);
+        {
+            if (currentPosition is not TCaretPosition tCaretPosition)
+                throw new InvalidCastException(nameof(currentPosition));
+
+            return MoveLeft(tCaretPosition);
+        }
 
         public ICaretPosition MoveRight(ICaretPosition currentPosition)
-            => MoveRight(currentPosition as T);
+        {
+            if (currentPosition is not TCaretPosition tCaretPosition)
+                throw new InvalidCastException(nameof(currentPosition));
+
+            return MoveRight(tCaretPosition);
+        }
 
         ICaretPosition ICaretPositionAlgorithm.MoveToFirst()
             => MoveToFirst();
