@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
             ObjectAssert.ArePropertyEqual(font.Common, result.Common);
 
             // should have page if have char.
-            Assert.NotNull(result.Pages);
+            Assert.IsNotNull(result.Pages);
 
             if (!string.IsNullOrEmpty(chars) && charAmount > 0)
             {
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
             }
 
             // should have chars if have char.
-            Assert.NotNull(result.Characters);
+            Assert.IsNotNull(result.Characters);
 
             if (!string.IsNullOrEmpty(chars))
             {
@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
             }
 
             // kerning pairs amount might be zero but cannot be null.
-            Assert.NotNull(result.KerningPairs);
+            Assert.IsNotNull(result.KerningPairs);
         }
 
         [TestCase(new int[] { }, new string[] { })]

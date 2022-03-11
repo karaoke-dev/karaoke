@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 GroupId = 2,
             };
             var actual = JsonConvert.DeserializeObject<IMappingRole>(json, CreateSettings()) as DefaultMappingRole;
-            Assert.NotNull(actual);
+            Assert.IsNotNull(actual);
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.ElementType, actual.ElementType);
             Assert.AreEqual(expected.ElementId, actual.ElementId);

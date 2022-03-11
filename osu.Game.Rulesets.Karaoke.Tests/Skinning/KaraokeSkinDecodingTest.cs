@@ -30,14 +30,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
             var defaultNoteStyle = skin.GetConfig<Note, NoteStyle>(testingNote).Value;
 
             // should be able to get the default value.
-            Assert.NotNull(defaultLyricConfig);
-            Assert.NotNull(defaultLyricStyle);
-            Assert.NotNull(defaultNoteStyle);
+            Assert.IsNotNull(defaultLyricConfig);
+            Assert.IsNotNull(defaultLyricStyle);
+            Assert.IsNotNull(defaultNoteStyle);
 
             // Check the content
-            Assert.NotNull(defaultLyricConfig.Name, "Default lyric config");
-            Assert.NotNull(defaultLyricStyle.Name, "Default lyric style");
-            Assert.NotNull(defaultNoteStyle.Name, "Default note style");
+            Assert.IsNotNull(defaultLyricConfig.Name, "Default lyric config");
+            Assert.IsNotNull(defaultLyricStyle.Name, "Default lyric style");
+            Assert.IsNotNull(defaultNoteStyle.Name, "Default note style");
         }
     }
 }

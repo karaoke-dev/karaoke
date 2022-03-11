@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             }
             catch
             {
-                Assert.Null(expected);
+                Assert.IsNull(expected);
             }
         }
 

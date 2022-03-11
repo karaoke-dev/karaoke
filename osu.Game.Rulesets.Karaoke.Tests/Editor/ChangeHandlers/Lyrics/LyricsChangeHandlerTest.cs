@@ -26,8 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 var firstLyric = lyrics.FirstOrDefault();
                 var secondLyric = lyrics.LastOrDefault();
 
-                Assert.NotNull(firstLyric);
-                Assert.NotNull(secondLyric);
+                Assert.IsNotNull(firstLyric);
+                Assert.IsNotNull(secondLyric);
 
                 // test property in the first lyric.
                 Assert.AreEqual("カラ", firstLyric.Text);
@@ -74,8 +74,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 
                 var combinedLyric = lyrics.FirstOrDefault(x => x.Text == "カラオケ");
                 var notAffectedLyric = lyrics.FirstOrDefault(x => x.Text == "karaoke");
-                Assert.NotNull(combinedLyric);
-                Assert.NotNull(notAffectedLyric);
+                Assert.IsNotNull(combinedLyric);
+                Assert.IsNotNull(notAffectedLyric);
 
                 Assert.AreEqual(3, combinedLyric.ID);
                 Assert.AreEqual(1, combinedLyric.Order);
@@ -110,17 +110,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 Assert.AreEqual(3, lyrics.Length);
 
                 var firstLyric = lyrics.FirstOrDefault(x => x.Text == "カラオケ");
-                Assert.NotNull(firstLyric);
+                Assert.IsNotNull(firstLyric);
                 Assert.AreEqual(1, firstLyric.ID);
                 Assert.AreEqual(1, firstLyric.Order);
 
                 var secondLyric = lyrics.FirstOrDefault(x => x.Text == "New lyric");
-                Assert.NotNull(secondLyric);
+                Assert.IsNotNull(secondLyric);
                 Assert.AreEqual(3, secondLyric.ID);
                 Assert.AreEqual(2, secondLyric.Order);
 
                 var thirdLyric = lyrics.FirstOrDefault(x => x.Text == "karaoke");
-                Assert.NotNull(thirdLyric);
+                Assert.IsNotNull(thirdLyric);
                 Assert.AreEqual(2, thirdLyric.ID);
                 Assert.AreEqual(3, thirdLyric.Order);
             });
@@ -151,17 +151,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 Assert.AreEqual(3, lyrics.Length);
 
                 var firstLyric = lyrics.FirstOrDefault(x => x.Text == "カラオケ");
-                Assert.NotNull(firstLyric);
+                Assert.IsNotNull(firstLyric);
                 Assert.AreEqual(1, firstLyric.ID);
                 Assert.AreEqual(1, firstLyric.Order);
 
                 var secondLyric = lyrics.FirstOrDefault(x => x.Text == "karaoke");
-                Assert.NotNull(secondLyric);
+                Assert.IsNotNull(secondLyric);
                 Assert.AreEqual(2, secondLyric.ID);
                 Assert.AreEqual(2, secondLyric.Order);
 
                 var thirdLyric = lyrics.FirstOrDefault(x => x.Text == "New lyric");
-                Assert.NotNull(thirdLyric);
+                Assert.IsNotNull(thirdLyric);
                 Assert.AreEqual(3, thirdLyric.ID);
                 Assert.AreEqual(3, thirdLyric.Order);
             });
@@ -178,7 +178,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 Assert.AreEqual(1, lyrics.Length);
 
                 var addedLyric = lyrics.FirstOrDefault(x => x.Text == "New lyric");
-                Assert.NotNull(addedLyric);
+                Assert.IsNotNull(addedLyric);
                 Assert.AreEqual(1, addedLyric.ID);
                 Assert.AreEqual(1, addedLyric.Order);
             });
@@ -209,7 +209,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 Assert.AreEqual(1, lyrics.Length);
 
                 var secondLyric = lyrics.FirstOrDefault(x => x.Text == "karaoke");
-                Assert.NotNull(secondLyric);
+                Assert.IsNotNull(secondLyric);
                 Assert.AreEqual(2, secondLyric.ID);
                 Assert.AreEqual(1, secondLyric.Order);
             });
@@ -241,12 +241,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 Assert.AreEqual(2, lyrics.Length);
 
                 var firstLyric = lyrics.FirstOrDefault(x => x.Text == "karaoke");
-                Assert.NotNull(firstLyric);
+                Assert.IsNotNull(firstLyric);
                 Assert.AreEqual(2, firstLyric.ID);
                 Assert.AreEqual(1, firstLyric.Order);
 
                 var secondLyric = lyrics.FirstOrDefault(x => x.Text == "カラオケ");
-                Assert.NotNull(secondLyric);
+                Assert.IsNotNull(secondLyric);
                 Assert.AreEqual(1, secondLyric.ID);
                 Assert.AreEqual(2, secondLyric.Order);
             });

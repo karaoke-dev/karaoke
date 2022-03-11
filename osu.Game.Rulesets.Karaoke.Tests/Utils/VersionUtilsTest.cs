@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         {
             var expected = new Version(1, 0, 0, 0);
             var actual = VersionUtils.GetVersion();
-            Assert.NotNull(actual);
+            Assert.IsNotNull(actual);
             Assert.AreEqual(expected.Major, actual.Major);
             Assert.AreEqual(expected.Minor, actual.Minor);
             Assert.AreEqual(expected.Build, actual.Build);

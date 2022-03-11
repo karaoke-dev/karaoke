@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 
             var expected = LyricConfig.CreateDefault();
             var actual = JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings()) as LyricConfig;
-            Assert.NotNull(actual);
+            Assert.IsNotNull(actual);
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.SmartHorizon, actual.SmartHorizon);
         }
@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 VerticalMargin = 20,
             };
             var actual = JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings()) as LyricLayout;
-            Assert.NotNull(actual);
+            Assert.IsNotNull(actual);
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.Alignment, actual.Alignment);
         }
@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 
             var expected = LyricStyle.CreateDefault();
             var actual = JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings()) as LyricStyle;
-            Assert.NotNull(actual);
+            Assert.IsNotNull(actual);
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.ID, actual.ID);
             Assert.AreEqual(expected.LeftLyricTextShaders.Count, actual.LeftLyricTextShaders.Count);
@@ -110,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 
             var expected = NoteStyle.CreateDefault();
             var actual = JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings()) as NoteStyle;
-            Assert.NotNull(actual);
+            Assert.IsNotNull(actual);
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.ID, actual.ID);
             Assert.AreEqual(expected.BlinkColor, actual.BlinkColor);
