@@ -94,7 +94,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         public override TimeTagCaretPosition MoveToTarget(Lyric lyric)
         {
             var targetTimeTag = lyric.TimeTags?.FirstOrDefault(timeTagMovable);
-            return new TimeTagCaretPosition(lyric, targetTimeTag);
+
+            // should not move to lyric if contains no time-tag.
+            return targetTimeTag == null ? null : new TimeTagCaretPosition(lyric, targetTimeTag);
         }
 
         private TimeTagCaretPosition timeTagToPosition(TimeTag timeTag)

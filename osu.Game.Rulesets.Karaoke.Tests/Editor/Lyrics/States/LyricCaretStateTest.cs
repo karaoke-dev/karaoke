@@ -98,10 +98,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         {
             // change from edit mode to view mode for checking that caret position should be clear.
             changeMode(LyricEditorMode.Manage);
-            changeMode(LyricEditorMode.RecordTimeTag);
+            changeMode(LyricEditorMode.EditRuby);
 
             // get the action
-            assertCaretPosition(Assert.IsInstanceOf<TimeTagCaretPosition>);
+            assertCaretPosition(Assert.IsInstanceOf<NavigateCaretPosition>);
             assertHoverCaretPosition(Assert.IsNull);
         }
 

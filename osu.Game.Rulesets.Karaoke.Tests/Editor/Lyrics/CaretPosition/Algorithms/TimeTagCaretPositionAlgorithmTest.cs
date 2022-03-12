@@ -149,15 +149,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             TestMoveToLast(lyrics, caretPosition, algorithms => algorithms.Mode = mode);
         }
 
-        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0)]
-        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, 0)]
-        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, 4)]
-        [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, 0, not_exist_tag)]
-        public void TestMoveToTarget(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int index)
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.None, 0, 0, 0)]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyStartTag, 0, 0, 0)]
+        [TestCase(nameof(singleLyric), MovingTimeTagCaretMode.OnlyEndTag, 0, 0, 4)]
+        [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.None, 0, NOT_EXIST, not_exist_tag)] // should not hover to the lyric if contains no time-tag in the lyric.
+        [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.OnlyStartTag, 0, NOT_EXIST, not_exist_tag)]
+        [TestCase(nameof(singleLyricWithoutTimeTag), MovingTimeTagCaretMode.OnlyEndTag, 0, NOT_EXIST, not_exist_tag)]
+        [TestCase(nameof(singleLyricWithNoText), MovingTimeTagCaretMode.None, 0, NOT_EXIST, not_exist_tag)] // should not hover to the lyric if contains no text and no time-tag in the lyric
+        public void TestMoveToTarget(string sourceName, MovingTimeTagCaretMode mode, int lyricIndex, int expectedLyricIndex, int expectedTimeTagIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var lyric = lyrics[lyricIndex];
-            var caretPosition = createTimeTagCaretPosition(lyrics, lyricIndex, index);
+            var caretPosition = createTimeTagCaretPosition(lyrics, expectedLyricIndex, expectedTimeTagIndex);
 
             // Check move to target position.
             TestMoveToTarget(lyrics, lyric, caretPosition, algorithms => algorithms.Mode = mode);
