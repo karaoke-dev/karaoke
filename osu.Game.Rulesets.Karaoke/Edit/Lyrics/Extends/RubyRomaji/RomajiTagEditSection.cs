@@ -3,9 +3,9 @@
 
 using System.Diagnostics;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -18,24 +18,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         [Resolved]
         private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }
 
-        [BackgroundDependencyLoader]
-        private void load(ILyricCaretState lyricCaretState)
-        {
-            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
-            {
-                Lyric = e.NewValue?.Lyric;
-
-                if (e.OldValue?.Lyric != null)
-                {
-                    TextTags.UnbindFrom(e.OldValue.Lyric.RomajiTagsBindable);
-                }
-
-                if (e.NewValue?.Lyric != null)
-                {
-                    TextTags.BindTo(e.NewValue.Lyric.RomajiTagsBindable);
-                }
-            }, true);
-        }
+        protected override IBindableList<RomajiTag> GetBindableTextTags(Lyric lyric)
+            => lyric.RomajiTagsBindable;
 
         protected override LabelledTextTagTextBox<RomajiTag> CreateLabelledTextTagTextBox(RomajiTag textTag)
             => new LabelledRomajiTagTextBox(Lyric, textTag);
