@@ -93,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             bindableHoverCaretPosition.Value = null;
 
             // should update selection if selected lyric changed.
-            updateEditorBeatmapSelectedHitObject(bindableCaretPosition.Value?.Lyric);
+            postProcess();
 
             static ICaretPositionAlgorithm getAlgorithmByMode(Lyric[] lyrics, LyricEditorMode lyricEditorMode, MovingTimeTagCaretMode movingTimeTagCaretMode) =>
                 lyricEditorMode switch
@@ -178,36 +178,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (position.Lyric == null)
                 return;
 
-            bool hasAlgorithm = algorithm != null;
-            bool movable = hasAlgorithm && CaretPositionMovable(position);
+            bool movable = CaretPositionMovable(position);
 
             // stop moving the caret if forbidden by algorithm calculation.
-            if (hasAlgorithm && !movable)
-                return;
-
-            // remain state:
-            // 1. cannot move because has no algorithm.
-            // 2. can move the caret.
-            // should update beatmap selected object in both cases.
-            updateEditorBeatmapSelectedHitObject(position.Lyric);
-
             if (!movable)
                 return;
 
             bindableHoverCaretPosition.Value = null;
             bindableCaretPosition.Value = position;
 
-            postProcessMoveCaretToTargetPosition(position);
-        }
-
-        private void postProcessMoveCaretToTargetPosition(ICaretPosition position)
-        {
-            if (position is not TimeTagCaretPosition timeTagCaretPosition)
-                return;
-
-            double? timeTagTime = timeTagCaretPosition.TimeTag.Time;
-            if (timeTagTime.HasValue && !editorClock.IsRunning && bindableRecordingChangeTimeWhileMovingTheCaret.Value)
-                editorClock.SeekSmoothlyTo(timeTagTime.Value);
+            postProcess();
         }
 
         public void MoveHoverCaretToTargetPosition(ICaretPosition position)
@@ -230,18 +210,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         }
 
         public bool CaretPositionMovable(ICaretPosition position)
-        {
-            return algorithm?.PositionMovable(position) ?? false;
-        }
+            => algorithm?.PositionMovable(position) ?? false;
 
         public bool CaretEnabled => algorithm != null;
 
-        private void updateEditorBeatmapSelectedHitObject(HitObject hitObject)
+        private void postProcess()
         {
-            selectedHitObjects.Clear();
+            var caretPosition = bindableCaretPosition.Value;
+            navigateToTByCaretPosition(caretPosition);
+            updateEditorBeatmapSelectedHitObject(caretPosition?.Lyric);
 
-            if (hitObject != null)
-                selectedHitObjects.Add(hitObject);
+            void navigateToTByCaretPosition(ICaretPosition position)
+            {
+                if (position is not TimeTagCaretPosition timeTagCaretPosition)
+                    return;
+
+                double? timeTagTime = timeTagCaretPosition.TimeTag.Time;
+                if (timeTagTime.HasValue && !editorClock.IsRunning && bindableRecordingChangeTimeWhileMovingTheCaret.Value)
+                    editorClock.SeekSmoothlyTo(timeTagTime.Value);
+            }
+
+            void updateEditorBeatmapSelectedHitObject(HitObject hitObject)
+            {
+                selectedHitObjects.Clear();
+
+                if (hitObject != null)
+                    selectedHitObjects.Add(hitObject);
+            }
         }
     }
 }
