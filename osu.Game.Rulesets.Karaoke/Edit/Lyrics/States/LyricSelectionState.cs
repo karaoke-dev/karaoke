@@ -41,6 +41,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public void EndSelecting(LyricEditorSelectingAction action)
         {
+            if (selecting.Value == false)
+                return;
+
             selecting.Value = false;
 
             if (beatmap == null)
