@@ -15,39 +15,50 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
     public class RubyTagAutoGenerateSection : TextTagAutoGenerateSection
     {
-        [Resolved]
-        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
-
-        protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(IEnumerable<Lyric> lyrics)
-            => lyrics.Where(x => x.Language == null)
-                     .ToDictionary(k => k, _ => "Before generate ruby-tag, need to assign language first.");
-
-        protected override void Apply()
-            => rubyTagsChangeHandler.AutoGenerate();
-
-        protected override ConfigButton CreateConfigButton()
-            => new RubyTagAutoGenerateConfigButton();
-
-        protected class RubyTagAutoGenerateConfigButton : MultiConfigButton
+        public RubyTagAutoGenerateSection()
         {
-            protected override IEnumerable<KaraokeRulesetEditGeneratorSetting> AvailableSettings => new[]
+            Children = new[]
             {
-                KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig,
+                new RubyTagAutoGenerateSubsection()
             };
+        }
 
-            protected override string GetDisplayName(KaraokeRulesetEditGeneratorSetting setting) =>
-                setting switch
+        private class RubyTagAutoGenerateSubsection : TextTagAutoGenerateSubsection
+        {
+            [Resolved]
+            private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
+
+            protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(IEnumerable<Lyric> lyrics)
+                => lyrics.Where(x => x.Language == null)
+                         .ToDictionary(k => k, _ => "Before generate ruby-tag, need to assign language first.");
+
+            protected override void Apply()
+                => rubyTagsChangeHandler.AutoGenerate();
+
+            protected override ConfigButton CreateConfigButton()
+                => new RubyTagAutoGenerateConfigButton();
+
+            protected class RubyTagAutoGenerateConfigButton : MultiConfigButton
+            {
+                protected override IEnumerable<KaraokeRulesetEditGeneratorSetting> AvailableSettings => new[]
                 {
-                    KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig => "Japanese",
-                    _ => throw new ArgumentOutOfRangeException(nameof(setting))
+                    KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig,
                 };
 
-            protected override Popover GetPopoverBySettingType(KaraokeRulesetEditGeneratorSetting setting) =>
-                setting switch
-                {
-                    KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig => new JaRubyTagGeneratorConfigPopover(),
-                    _ => throw new ArgumentOutOfRangeException(nameof(setting))
-                };
+                protected override string GetDisplayName(KaraokeRulesetEditGeneratorSetting setting) =>
+                    setting switch
+                    {
+                        KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig => "Japanese",
+                        _ => throw new ArgumentOutOfRangeException(nameof(setting))
+                    };
+
+                protected override Popover GetPopoverBySettingType(KaraokeRulesetEditGeneratorSetting setting) =>
+                    setting switch
+                    {
+                        KaraokeRulesetEditGeneratorSetting.JaRubyTagGeneratorConfig => new JaRubyTagGeneratorConfigPopover(),
+                        _ => throw new ArgumentOutOfRangeException(nameof(setting))
+                    };
+            }
         }
     }
 }

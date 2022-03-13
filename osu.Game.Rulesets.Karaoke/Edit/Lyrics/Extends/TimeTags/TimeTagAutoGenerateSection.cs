@@ -8,6 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Zh;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
@@ -15,58 +16,71 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 {
-    public class TimeTagAutoGenerateSection : AutoGenerateSection
+    public class TimeTagAutoGenerateSection : Section
     {
-        [Resolved]
-        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+        protected override string Title => "Auto generate";
 
-        protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(IEnumerable<Lyric> lyrics)
-            => lyrics.Where(x => x.Language == null)
-                     .ToDictionary(k => k, _ => "Before generate time-tag, need to assign language first.");
-
-        protected override void Apply()
-            => lyricTimeTagsChangeHandler.AutoGenerate();
-
-        protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
-            => new InvalidLyricLanguageAlertTextContainer();
-
-        protected override ConfigButton CreateConfigButton()
-            => new TimeTagAutoGenerateConfigButton();
-
-        protected class InvalidLyricLanguageAlertTextContainer : InvalidLyricAlertTextContainer
+        public TimeTagAutoGenerateSection()
         {
-            private const string language_mode = "LANGUAGE_MODE";
-
-            public InvalidLyricLanguageAlertTextContainer()
+            Children = new[]
             {
-                SwitchToEditorMode(language_mode, "edit language mode", LyricEditorMode.Language);
-                Text = $"Seems some lyric missing language, go to [{language_mode}] to fill the language.";
-            }
+                new TimeTageAutoGenerateSubsection()
+            };
         }
 
-        protected class TimeTagAutoGenerateConfigButton : MultiConfigButton
+        private class TimeTageAutoGenerateSubsection : AutoGenerateSubsection
         {
-            protected override IEnumerable<KaraokeRulesetEditGeneratorSetting> AvailableSettings => new[]
+            [Resolved]
+            private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+
+            protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(IEnumerable<Lyric> lyrics)
+                => lyrics.Where(x => x.Language == null)
+                         .ToDictionary(k => k, _ => "Before generate time-tag, need to assign language first.");
+
+            protected override void Apply()
+                => lyricTimeTagsChangeHandler.AutoGenerate();
+
+            protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
+                => new InvalidLyricLanguageAlertTextContainer();
+
+            protected override ConfigButton CreateConfigButton()
+                => new TimeTagAutoGenerateConfigButton();
+
+            protected class InvalidLyricLanguageAlertTextContainer : InvalidLyricAlertTextContainer
             {
-                KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig,
-                KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig,
-            };
+                private const string language_mode = "LANGUAGE_MODE";
 
-            protected override string GetDisplayName(KaraokeRulesetEditGeneratorSetting setting) =>
-                setting switch
+                public InvalidLyricLanguageAlertTextContainer()
                 {
-                    KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig => "Japanese",
-                    KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig => "Chinese",
-                    _ => throw new ArgumentOutOfRangeException(nameof(setting))
+                    SwitchToEditorMode(language_mode, "edit language mode", LyricEditorMode.Language);
+                    Text = $"Seems some lyric missing language, go to [{language_mode}] to fill the language.";
+                }
+            }
+
+            protected class TimeTagAutoGenerateConfigButton : MultiConfigButton
+            {
+                protected override IEnumerable<KaraokeRulesetEditGeneratorSetting> AvailableSettings => new[]
+                {
+                    KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig,
+                    KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig,
                 };
 
-            protected override Popover GetPopoverBySettingType(KaraokeRulesetEditGeneratorSetting setting) =>
-                setting switch
-                {
-                    KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig => new JaTimeTagGeneratorConfigPopover(),
-                    KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig => new ZhTimeTagGeneratorConfigPopover(),
-                    _ => throw new ArgumentOutOfRangeException(nameof(setting))
-                };
+                protected override string GetDisplayName(KaraokeRulesetEditGeneratorSetting setting) =>
+                    setting switch
+                    {
+                        KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig => "Japanese",
+                        KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig => "Chinese",
+                        _ => throw new ArgumentOutOfRangeException(nameof(setting))
+                    };
+
+                protected override Popover GetPopoverBySettingType(KaraokeRulesetEditGeneratorSetting setting) =>
+                    setting switch
+                    {
+                        KaraokeRulesetEditGeneratorSetting.JaTimeTagGeneratorConfig => new JaTimeTagGeneratorConfigPopover(),
+                        KaraokeRulesetEditGeneratorSetting.ZhTimeTagGeneratorConfig => new ZhTimeTagGeneratorConfigPopover(),
+                        _ => throw new ArgumentOutOfRangeException(nameof(setting))
+                    };
+            }
         }
     }
 }
