@@ -17,7 +17,6 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
@@ -25,9 +24,13 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
-    public abstract class AutoGenerateSection : Section
+    public abstract class AutoGenerateSubsection : FillFlowContainer
     {
-        protected sealed override string Title => "Auto generate";
+        protected AutoGenerateSubsection()
+        {
+            RelativeSizeAxes = Axes.X;
+            AutoSizeAxes = Axes.Y;
+        }
 
         [BackgroundDependencyLoader]
         private void load(EditorBeatmap beatmap, ILyricSelectionState lyricSelectionState, OsuColour colours)
