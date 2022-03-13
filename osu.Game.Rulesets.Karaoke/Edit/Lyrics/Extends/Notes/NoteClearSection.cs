@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
         {
             Children = new Drawable[]
             {
-                new AutoGenerateButton
+                new ClearNotesButton
                 {
                     StartSelecting = () => new Dictionary<Lyric, string>()
                 },
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             };
         }
 
-        private class AutoGenerateButton : SelectLyricButton
+        private class ClearNotesButton : SelectLyricButton
         {
             protected override string StandardText => "Clear";
 
