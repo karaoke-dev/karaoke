@@ -2,9 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
@@ -14,6 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         protected sealed override string Title => "Action";
 
         private readonly Bindable<TAction> bindableModeSpecialAction = new();
+
+        [Resolved]
+        private ILyricSelectionState lyricSelectionState { get; set; }
 
         protected SpecialActionSection()
         {
@@ -29,6 +34,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
             bindableModeSpecialAction.BindValueChanged(e =>
             {
+                // should cancel the selection after change to the new action.
+                lyricSelectionState?.EndSelecting(LyricEditorSelectingAction.Cancel);
+
                 UpdateActionArea(e.NewValue);
             }, true);
         }
