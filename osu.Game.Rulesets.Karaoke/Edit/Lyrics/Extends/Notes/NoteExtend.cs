@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                         {
                             new NoteEditModeSection(),
                             new NoteConfigSection(),
-                            new SwitchSpecialActionSection(),
+                            new NoteSwitchSpecialActionSection(),
                         };
                         updateActionArea();
                         break;

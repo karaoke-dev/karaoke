@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
-    public class SwitchSpecialActionSection : Section
+    public class NoteSwitchSpecialActionSection : Section
     {
         protected sealed override string Title => "Action";
 
