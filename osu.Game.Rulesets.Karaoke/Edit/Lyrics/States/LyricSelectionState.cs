@@ -28,6 +28,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
 
+        [Resolved]
+        private ILyricCaretState lyricCaretState { get; set; }
+
         private readonly BindableBool selecting = new();
 
         public void StartSelecting()
@@ -38,6 +41,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public void EndSelecting(LyricEditorSelectingAction action)
         {
+            if (selecting.Value == false)
+                return;
+
             selecting.Value = false;
 
             if (beatmap == null)
@@ -52,6 +58,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             // after being applied, should clear the selection.
             beatmap.SelectedHitObjects.Clear();
+
+            // should add selected lyric back.
+            var caretPosition = lyricCaretState.BindableCaretPosition.Value;
+            if (caretPosition?.Lyric != null)
+                beatmap.SelectedHitObjects.Add(caretPosition.Lyric);
         }
 
         public void Select(Lyric lyric)
