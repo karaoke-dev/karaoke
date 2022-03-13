@@ -13,7 +13,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
-    public class SelectLyricButton : OsuButton
+    public abstract class SelectLyricButton : OsuButton
     {
         private IBindable<bool> selecting;
 
@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         public Func<Dictionary<Lyric, string>> StartSelecting { get; set; }
 
-        public SelectLyricButton()
+        protected SelectLyricButton()
         {
             RelativeSizeAxes = Axes.X;
             Content.CornerRadius = 15;

@@ -7,10 +7,8 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 {
-    public interface IEditNoteModeState : IHasEditModeState<NoteEditMode>, IHasBlueprintSelection<Note>
+    public interface IEditNoteModeState : IHasEditModeState<NoteEditMode>, IHasSpecialAction<NoteEditModeSpecialAction>, IHasBlueprintSelection<Note>
     {
-        Bindable<NoteEditModeSpecialAction> BindableSpecialAction { get; }
-
         Bindable<NoteEditPropertyMode> NoteEditPropertyMode { get; }
     }
 }
