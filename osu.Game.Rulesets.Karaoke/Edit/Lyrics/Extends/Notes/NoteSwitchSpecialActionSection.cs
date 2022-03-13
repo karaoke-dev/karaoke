@@ -3,18 +3,18 @@
 
 using osu.Framework.Allocation;
 using osu.Game.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
-    public class NoteSwitchSpecialActionSection : Section
+    public class NoteSwitchSpecialActionSection : SpecialActionSection<NoteEditModeSpecialAction>
     {
-        protected sealed override string Title => "Action";
-
         [BackgroundDependencyLoader]
         private void load(IEditNoteModeState editNoteModeState)
         {
+            BindTo(editNoteModeState);
+
             Children = new[]
             {
                 new LabelledEnumDropdown<NoteEditModeSpecialAction>
@@ -24,6 +24,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                     Current = editNoteModeState.BindableSpecialAction,
                 }
             };
+        }
+
+        protected override void UpdateActionArea(NoteEditModeSpecialAction action)
+        {
+            RemoveAll(x => x is NoteAutoGenerateSubsection or NoteClearSubsection);
+
+            switch (action)
+            {
+                case NoteEditModeSpecialAction.AutoGenerate:
+                    Add(new NoteAutoGenerateSubsection());
+                    break;
+
+                case NoteEditModeSpecialAction.SyncTime:
+                    // todo: implement
+                    break;
+
+                case NoteEditModeSpecialAction.Clear:
+                    Add(new NoteClearSubsection());
+                    break;
+
+                default:
+                    return;
+            }
         }
     }
 }
