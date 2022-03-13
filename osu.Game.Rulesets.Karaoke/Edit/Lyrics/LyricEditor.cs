@@ -16,6 +16,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
@@ -58,6 +59,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Cached(typeof(ILyricCaretState))]
         private readonly LyricCaretState lyricCaretState;
+
+        [Cached(typeof(IManageModeState))]
+        private readonly ManageModeState manageModeState;
 
         [Cached(typeof(ILanguageModeState))]
         private readonly LanguageModeState languageModeState;
@@ -103,6 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             AddInternal(lyricCaretState = new LyricCaretState(bindableLyrics));
 
             // state for target mode only.
+            AddInternal(manageModeState = new ManageModeState());
             AddInternal(languageModeState = new LanguageModeState());
             AddInternal(editRubyModeState = new EditRubyModeState());
             AddInternal(editRomajiModeState = new EditRomajiModeState());
@@ -223,6 +228,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             EditExtend getExtendArea() =>
                 Mode switch
                 {
+                    LyricEditorMode.Manage => new ManageExtend(),
                     LyricEditorMode.Language => new LanguageExtend(),
                     LyricEditorMode.EditRuby => new RubyTagExtend(),
                     LyricEditorMode.EditRomaji => new RomajiTagExtend(),
