@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
                         Children = new Drawable[]
                         {
                             new LanguageEditModeSection(),
-                            new LanguageAutoGenerateSection(),
+                            new LanguageSwitchSpecialActionSection(),
                         };
                         break;
 
