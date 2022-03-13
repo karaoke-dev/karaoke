@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
     public class SwitchSpecialActionSection : Section
     {
-        protected sealed override string Title => "Clear";
+        protected sealed override string Title => "Action";
 
         [BackgroundDependencyLoader]
         private void load(IEditNoteModeState editNoteModeState)
