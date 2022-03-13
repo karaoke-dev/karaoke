@@ -14,6 +14,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
@@ -27,6 +28,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         [Resolved]
         private OsuColour colours { get; set; }
+
+        [Resolved]
+        private ILyricSelectionState lyricSelectionState { get; set; }
 
         private readonly EditModeButton[] buttons;
         private readonly DescriptionTextFlowContainer description;
@@ -70,6 +74,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected virtual void UpdateEditMode(T mode)
         {
+            // should cancel the selection after change to the new edit mode.
+            lyricSelectionState?.EndSelecting(LyricEditorSelectingAction.Cancel);
+
             // update button style.
             foreach (var button in buttons)
             {
