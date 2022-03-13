@@ -11,6 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
     {
         private readonly Bindable<LanguageEditMode> bindableEditMode = new();
 
+        public Bindable<LanguageEditModeSpecialAction> BindableSpecialAction { get; } = new();
+
         public IBindable<LanguageEditMode> BindableEditMode => bindableEditMode;
 
         public void ChangeEditMode(LanguageEditMode mode)

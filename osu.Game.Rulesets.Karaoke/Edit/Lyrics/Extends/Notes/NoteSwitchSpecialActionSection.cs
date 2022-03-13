@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
@@ -10,20 +9,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
     public class NoteSwitchSpecialActionSection : SpecialActionSection<NoteEditModeSpecialAction>
     {
+        protected override string SwitchActionTitle => "Special actions";
+        protected override string SwitchActionDescription => "Auto-generate, edit or clear the notes.";
+
         [BackgroundDependencyLoader]
         private void load(IEditNoteModeState editNoteModeState)
         {
             BindTo(editNoteModeState);
-
-            Children = new[]
-            {
-                new LabelledEnumDropdown<NoteEditModeSpecialAction>
-                {
-                    Label = "Switch special actions",
-                    Description = "Auto-generate, edit or clear the notes.",
-                    Current = editNoteModeState.BindableSpecialAction,
-                }
-            };
         }
 
         protected override void UpdateActionArea(NoteEditModeSpecialAction action)
