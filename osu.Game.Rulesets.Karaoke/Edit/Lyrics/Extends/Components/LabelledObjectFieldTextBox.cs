@@ -25,11 +25,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
 
-        private readonly T item;
+        protected readonly T Item;
 
         protected LabelledObjectFieldTextBox(Lyric lyric, T item)
         {
-            this.item = item;
+            this.Item = item;
 
             // apply current text from text-tag.
             Component.Text = GetFieldValue(item);
@@ -88,16 +88,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 if (selected)
                 {
                     // not trigger again if already focus.
-                    if (SelectedItems.Contains(item) && SelectedItems.Count == 1)
+                    if (SelectedItems.Contains(Item) && SelectedItems.Count == 1)
                         return;
 
                     // trigger selected.
                     SelectedItems.Clear();
-                    SelectedItems.Add(item);
+                    SelectedItems.Add(Item);
                 }
                 else
                 {
-                    SelectedItems.Remove(item);
+                    SelectedItems.Remove(Item);
                 }
             }
         };
