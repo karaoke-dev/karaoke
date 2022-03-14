@@ -35,8 +35,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
         [BackgroundDependencyLoader]
         private void load(IEditNoteModeState editNoteModeState, EditorBeatmap beatmap)
         {
-            SelectedItems.BindTo(editNoteModeState.SelectedItems);
-
             // todo : might deal with the cause if create or delete notes.
             notes.Clear();
             notes.AddRange(beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray());

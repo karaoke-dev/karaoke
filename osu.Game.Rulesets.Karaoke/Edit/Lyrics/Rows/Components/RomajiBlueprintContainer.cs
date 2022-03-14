@@ -29,7 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         private void load(IEditRomajiModeState editRomajiModeState)
         {
             // Add romaji tag into blueprint container
-            SelectedItems.BindTo(editRomajiModeState.SelectedItems);
             RegisterBindable(romajiTags);
         }
 
