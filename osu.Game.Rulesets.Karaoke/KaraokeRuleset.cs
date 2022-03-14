@@ -100,6 +100,12 @@ namespace osu.Game.Rulesets.Karaoke
                     new KeyBinding(InputKey.PageUp, KaraokeEditAction.First),
                     new KeyBinding(InputKey.PageDown, KaraokeEditAction.Last),
 
+                    // Edit Ruby / romaji tag.
+                    new KeyBinding(new[] { InputKey.Control, InputKey.Left }, KaraokeEditAction.EditTextTagReduceStartIndex),
+                    new KeyBinding(new[] { InputKey.Control, InputKey.Right }, KaraokeEditAction.EditTextTagIncreaseStartIndex),
+                    new KeyBinding(new[] { InputKey.Alt, InputKey.Left }, KaraokeEditAction.EditTextTagReduceEndIndex),
+                    new KeyBinding(new[] { InputKey.Alt, InputKey.Right }, KaraokeEditAction.EditTextTagIncreaseEndIndex),
+
                     // edit
                     new KeyBinding(InputKey.N, KaraokeEditAction.Create),
                     new KeyBinding(InputKey.Delete, KaraokeEditAction.Remove),
