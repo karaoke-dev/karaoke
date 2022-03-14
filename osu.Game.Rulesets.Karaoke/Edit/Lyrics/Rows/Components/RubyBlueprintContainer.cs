@@ -29,7 +29,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         private void load(IEditRubyModeState editRubyModeState)
         {
             // Add ruby tag into blueprint container
-            SelectedItems.BindTo(editRubyModeState.SelectedItems);
             RegisterBindable(rubyTags);
         }
 

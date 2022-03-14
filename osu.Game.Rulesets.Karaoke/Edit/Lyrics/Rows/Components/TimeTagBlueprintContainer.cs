@@ -41,8 +41,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         [BackgroundDependencyLoader]
         private void load(ITimeTagModeState timeTagModeState)
         {
-            SelectedItems.BindTo(timeTagModeState.SelectedItems);
-
             // Add time tag into blueprint container
             RegisterBindable(timeTags);
         }
