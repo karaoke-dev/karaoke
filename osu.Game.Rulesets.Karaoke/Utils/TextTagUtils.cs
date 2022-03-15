@@ -21,18 +21,34 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static bool OutOfRange<T>(T textTag, string lyric) where T : ITextTag
         {
+            return OutOfRange(lyric, textTag.StartIndex) || OutOfRange(lyric, textTag.EndIndex);
+        }
+
+        public static bool ValidNewStartIndex<T>(T textTag, int newStartIndex) where T : ITextTag
+        {
+            if (textTag == null)
+                throw new ArgumentNullException(nameof(textTag));
+
+            return newStartIndex < textTag.EndIndex;
+        }
+
+        public static bool ValidNewEndIndex<T>(T textTag, int newEndIndex) where T : ITextTag
+        {
+            if (textTag == null)
+                throw new ArgumentNullException(nameof(textTag));
+
+            return newEndIndex > textTag.StartIndex;
+        }
+
+        public static bool OutOfRange(string lyric, int index)
+        {
             if (string.IsNullOrEmpty(lyric))
                 return true;
 
-            return outOfRange(lyric, textTag.StartIndex) || outOfRange(lyric, textTag.EndIndex);
+            const int min_index = 0;
+            int maxIndex = lyric.Length;
 
-            static bool outOfRange(string lyric, int index)
-            {
-                const int min_index = 0;
-                int maxIndex = lyric.Length;
-
-                return index < min_index || index > maxIndex;
-            }
+            return index < min_index || index > maxIndex;
         }
 
         public static bool EmptyText<T>(T textTag) where T : ITextTag

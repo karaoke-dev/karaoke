@@ -98,6 +98,48 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase("[0,1]:ka", 0, true)]
+        [TestCase("[0,1]:ka", 1, false)]
+        [TestCase("[0,1]:ka", -1, true)] // should be ok with negative value because we only check if valid with current text-tag index.
+        [TestCase("[2,1]:ka", 0, true)]
+        [TestCase("[2,1]:ka", 1, false)]
+        [TestCase("[2,1]:ka", 2, false)]
+        public void TestValidNewStartIndex(string textTag, int newStartIndex, bool expected)
+        {
+            var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
+
+            bool actual = TextTagUtils.ValidNewStartIndex(rubyTag, newStartIndex);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase("[0,1]:ka", 1, true)]
+        [TestCase("[0,1]:ka", 0, false)]
+        [TestCase("[0,1]:ka", 1000, true)] // should be ok with large value because we only check if valid with current text-tag index.
+        [TestCase("[2,1]:ka", 0, false)]
+        [TestCase("[2,1]:ka", 1, false)]
+        [TestCase("[2,1]:ka", 2, false)]
+        [TestCase("[2,1]:ka", 3, true)]
+        public void TestValidNewEndIndex(string textTag, int newEndIndex, bool expected)
+        {
+            var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
+
+            bool actual = TextTagUtils.ValidNewEndIndex(rubyTag, newEndIndex);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase("karaoke", 0, false)]
+        [TestCase("karaoke", 7, false)]
+        [TestCase("karaoke", -1, true)]
+        [TestCase("karaoke", 8, true)]
+        [TestCase("", -1, true)]
+        [TestCase("", 0, true)]
+        [TestCase("", 1, true)]
+        public void TestOutOfRange(string lyric, int index, bool expected)
+        {
+            bool actual = TextTagUtils.OutOfRange(lyric, index);
+            Assert.AreEqual(expected, actual);
+        }
+
         [TestCase("[0,1]:ka", false)]
         [TestCase("[0,1]:", true)]
         public void TestEmptyText(string textTag, bool expected)
