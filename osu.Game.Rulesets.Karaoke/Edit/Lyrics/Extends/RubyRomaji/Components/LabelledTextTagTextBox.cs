@@ -82,6 +82,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
 
         protected abstract void SetText(T item, string value);
 
+        protected abstract void SetIndex(T item, int? startIndex, int? endIndex);
+
         protected override void OnFocus(FocusEvent e)
         {
             // do not trigger origin focus event if this drawable has been removed.
