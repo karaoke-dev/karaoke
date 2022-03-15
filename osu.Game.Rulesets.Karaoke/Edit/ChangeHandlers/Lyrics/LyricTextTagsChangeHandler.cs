@@ -74,6 +74,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
                 if (endIndex != null)
                     textTag.EndIndex = endIndex.Value;
+
+                // after change the index, should check if index is valid.
+                if (TextTagUtils.OutOfRange(textTag, lyric.Text))
+                    throw new InvalidOperationException($"{nameof(startIndex)} or {nameof(endIndex)} is not valid");
             });
         }
 
