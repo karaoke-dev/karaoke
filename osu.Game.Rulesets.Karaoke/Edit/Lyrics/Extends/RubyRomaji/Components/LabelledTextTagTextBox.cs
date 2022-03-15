@@ -24,8 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
     {
         protected const float DELETE_BUTTON_SIZE = 20f;
 
-        public Action OnDeleteButtonClick;
-
         private readonly IndexShiftingPart indexShiftingPart;
 
         protected LabelledTextTagTextBox(Lyric lyric, T textTag)
@@ -57,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                     Anchor = Anchor.TopRight,
                     Origin = Anchor.TopRight,
                     Size = new Vector2(DELETE_BUTTON_SIZE),
-                    Action = () => OnDeleteButtonClick?.Invoke(),
+                    Action = () => RemoveTextTag(textTag),
                     Hover = hover =>
                     {
                         if (hover)
@@ -166,6 +164,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
         protected abstract void SetText(T item, string value);
 
         protected abstract void SetIndex(T item, int? startIndex, int? endIndex);
+
+        protected abstract void RemoveTextTag(T item);
 
         protected override void OnFocus(FocusEvent e)
         {

@@ -44,6 +44,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             protected override void SetIndex(RomajiTag item, int? startIndex, int? endIndex)
                 => romajiTagsChangeHandler.SetIndex(item, startIndex, endIndex);
 
+            protected override void RemoveTextTag(RomajiTag textTag)
+                => romajiTagsChangeHandler.Remove(textTag);
+
             [BackgroundDependencyLoader]
             private void load(IEditRomajiModeState editRomajiModeState)
             {
