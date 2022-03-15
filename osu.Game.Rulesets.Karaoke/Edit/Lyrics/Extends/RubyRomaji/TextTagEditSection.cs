@@ -37,10 +37,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     {
                         t.Label = relativeToLyricText;
                         t.Description = range;
-                        t.OnDeleteButtonClick = () =>
-                        {
-                            RemoveTextTag(x);
-                        };
                         t.TabbableContentContainer = this;
                     });
                 }));
@@ -82,8 +78,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         protected abstract IBindableList<T> GetBindableTextTags(Lyric lyric);
 
         protected abstract LabelledTextTagTextBox<T> CreateLabelledTextTagTextBox(T textTag);
-
-        protected abstract void RemoveTextTag(T textTag);
 
         protected void AddCreateButton()
         {
