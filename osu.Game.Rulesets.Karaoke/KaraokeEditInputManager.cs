@@ -36,6 +36,19 @@ namespace osu.Game.Rulesets.Karaoke
         [Description("Last")]
         Last,
 
+        // Edit Ruby / romaji tag.
+        [Description("Reduce start index")]
+        EditTextTagReduceStartIndex,
+
+        [Description("Increase start index")]
+        EditTextTagIncreaseStartIndex,
+
+        [Description("Reduce end index")]
+        EditTextTagReduceEndIndex,
+
+        [Description("Increase end index")]
+        EditTextTagIncreaseEndIndex,
+
         // Edit
         [Description("Create new")]
         Create,

@@ -107,8 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
                 {
                     case Anchor.CentreLeft:
                         int newStartIndex = calculateNewIndex(selectedTextTag, deltaScaleSize, anchor);
-                        if (newStartIndex >= selectedTextTag.EndIndex)
-
+                        if (!TextTagUtils.ValidNewStartIndex(selectedTextTag, newStartIndex))
                             return false;
 
                         SetTextTagIndex(selectedTextTag, newStartIndex, null);
@@ -116,7 +115,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
                     case Anchor.CentreRight:
                         int newEndIndex = calculateNewIndex(selectedTextTag, deltaScaleSize, anchor);
-                        if (newEndIndex <= selectedTextTag.StartIndex)
+                        if (!TextTagUtils.ValidNewEndIndex(selectedTextTag, newEndIndex))
                             return false;
 
                         SetTextTagIndex(selectedTextTag, null, newEndIndex);
