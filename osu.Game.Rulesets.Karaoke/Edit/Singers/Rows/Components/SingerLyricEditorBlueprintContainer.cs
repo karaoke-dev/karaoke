@@ -35,10 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, BindableList<Lyric> selectedLyrics)
+        private void load(EditorBeatmap beatmap)
         {
-            SelectedItems.BindTo(selectedLyrics);
-
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
             foreach (var lyric in lyrics)
                 AddBlueprintFor(lyric);
