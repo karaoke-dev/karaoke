@@ -5,8 +5,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
-using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -20,11 +18,8 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 {
     [Cached(typeof(ISingerScreenScrollingInfoProvider))]
-    public class SingerScreen : KaraokeEditorScreen, ISingerScreenScrollingInfoProvider
+    public class SingerScreen : KaraokeEditorRoundedScreen, ISingerScreenScrollingInfoProvider
     {
-        [Cached]
-        protected readonly OverlayColourProvider ColourProvider;
-
         [Cached(typeof(ISingersChangeHandler))]
         private readonly SingersChangeHandler singersChangeHandler;
 
@@ -44,17 +39,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         public SingerScreen()
             : base(KaraokeEditorScreenMode.Singer)
         {
-            ColourProvider = new OverlayColourProvider(OverlayColourScheme.Purple);
+            editSingerDialog = new EditSingerDialog();
             AddInternal(singersChangeHandler = new SingersChangeHandler());
             AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
-            Add(editSingerDialog = new EditSingerDialog
-            {
-                Depth = -1,
-            });
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, EditorBeatmap editorBeatmap, EditorClock editorClock)
+        private void load(EditorBeatmap editorBeatmap, EditorClock editorClock)
         {
             BindablesUtils.Sync(selectedLyrics, editorBeatmap.SelectedHitObjects);
 
@@ -63,37 +54,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
             BindableZoom.MinValue = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 80000);
             BindableZoom.Value = BindableZoom.Default = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 40000);
 
-            AddInternal(new Container
+            Add(new FixedSectionsContainer<Drawable>
             {
+                FixedHeader = new SingerScreenHeader(),
                 RelativeSizeAxes = Axes.Both,
-                Padding = new MarginPadding(50),
-                Child = new Container
+                Children = new[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    Masking = true,
-                    CornerRadius = 10,
-                    Children = new Drawable[]
+                    new SingerEditSection
                     {
-                        new Box
-                        {
-                            Colour = colours.GreySeaFoamDark,
-                            RelativeSizeAxes = Axes.Both,
-                        },
-                        new FixedSectionsContainer<Drawable>
-                        {
-                            FixedHeader = new SingerScreenHeader(),
-                            RelativeSizeAxes = Axes.Both,
-                            Children = new[]
-                            {
-                                new SingerEditSection
-                                {
-                                    RelativeSizeAxes = Axes.Both,
-                                },
-                            }
-                        },
-                    }
+                        RelativeSizeAxes = Axes.Both,
+                    },
                 }
             });
+
+            Add(editSingerDialog);
         }
 
         protected override void PopOut()
@@ -108,6 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         {
             private readonly Container<T> content;
 
+            // todo: check what this shit doing.
             protected override Container<T> Content => content;
 
             public FixedSectionsContainer()
