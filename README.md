@@ -16,8 +16,8 @@ The source code of the `karaoke` ruleset, running on [osu!lazer](https://github.
 
 Some features are still under heavy development, but existing features should work fine.
 
-And notice that this project not have much [demo](https://github.com/karaoke-dev/sample-beatmap) can try, and most of them are written in Japanese.
-So recommend looking this project around for seeing new feature instead of actually using it.
+Please note that this project doesn't have much of a [demo](https://github.com/karaoke-dev/sample-beatmap) currently available, and most of the lyrics are written in Japanese.
+So we recommend looking around this project to find new features instead of actually using it, unless you understand / speak Japanese.
 
 If you run into any problems, you can shoot us an email (support@karaoke.dev) or send me a message on [discord](https://discord.gg/ga2xZXk). I will typically reply faster on discord.
 
@@ -48,6 +48,6 @@ Parts of the lyrics editor in this ruleset were inspired by them.
 
 - [Appveyor](https://www.appveyor.com/), [CodeFactor](https://www.codefactor.io/) and [Github action](https://github.com/features/actions) for providing free `CI`/`CD` service.
 
-- [Figma](https://www.figma.com/), for fast creating assets like logo or icon.
+- [Figma](https://www.figma.com/), for fast creation of assets like logo or icon.
 
-- [Miro](https://miro.com/). Used to declare the complex question by drawing the graph.
+- [Miro](https://miro.com/). Used to play 
