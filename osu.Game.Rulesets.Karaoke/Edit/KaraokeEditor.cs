@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
     public class KaraokeEditor : GenericEditor<KaraokeEditorScreenMode>
     {
         [Cached]
-        private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Green);
+        private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
 
         [Cached]
         private readonly KaraokeRulesetEditConfigManager editConfigManager;

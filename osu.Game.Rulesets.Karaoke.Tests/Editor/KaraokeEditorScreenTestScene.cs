@@ -5,6 +5,7 @@ using System;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit;
@@ -19,6 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         [Cached(typeof(EditorBeatmap))]
         [Cached(typeof(IBeatSnapProvider))]
         private readonly EditorBeatmap editorBeatmap;
+
+        [Cached]
+        private readonly OverlayColourProvider colourProvider = new(OverlayColourScheme.Blue);
 
         protected KaraokeEditorScreenTestScene()
         {

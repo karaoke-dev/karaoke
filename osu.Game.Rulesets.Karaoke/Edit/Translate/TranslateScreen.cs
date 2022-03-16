@@ -8,8 +8,6 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
-using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages;
@@ -21,13 +19,10 @@ using osu.Game.Screens.Edit;
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
     [Cached(typeof(ITranslateInfoProvider))]
-    public class TranslateScreen : KaraokeEditorScreen, ITranslateInfoProvider
+    public class TranslateScreen : KaraokeEditorRoundedScreen, ITranslateInfoProvider
     {
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
-
-        [Cached]
-        protected readonly OverlayColourProvider ColourProvider;
 
         [Cached(typeof(ILanguagesChangeHandler))]
         private readonly LanguagesChangeHandler languagesChangeHandler;
@@ -38,44 +33,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         public TranslateScreen()
             : base(KaraokeEditorScreenMode.Translate)
         {
-            ColourProvider = new OverlayColourProvider(OverlayColourScheme.Green);
             AddInternal(languagesChangeHandler = new LanguagesChangeHandler());
             AddInternal(lyricTranslateChangeHandler = new LyricTranslateChangeHandler());
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, DialogOverlay dialogOverlay, LanguageSelectionDialog languageSelectionDialog)
+        private void load(DialogOverlay dialogOverlay, LanguageSelectionDialog languageSelectionDialog)
         {
-            Add(new Container
+            Add(new SectionsContainer<Container>
             {
+                FixedHeader = new TranslateScreenHeader(),
                 RelativeSizeAxes = Axes.Both,
-                Padding = new MarginPadding(50),
-                Child = new Container
+                Children = new Container[]
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    Masking = true,
-                    CornerRadius = 10,
-                    Children = new Drawable[]
+                    new TranslateEditSection
                     {
-                        new Box
-                        {
-                            Colour = colours.GreySeaFoamDark,
-                            RelativeSizeAxes = Axes.Both,
-                        },
-                        new SectionsContainer<Container>
-                        {
-                            FixedHeader = new TranslateScreenHeader(),
-                            RelativeSizeAxes = Axes.Both,
-                            Children = new Container[]
-                            {
-                                new TranslateEditSection
-                                {
-                                    RelativeSizeAxes = Axes.X,
-                                    AutoSizeAxes = Axes.Y,
-                                },
-                            }
-                        },
-                    }
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                    },
                 }
             });
 
