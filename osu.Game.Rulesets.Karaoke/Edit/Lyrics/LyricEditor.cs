@@ -85,6 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private readonly BindableBeatDivisor beatDivisor = new();
 
         private readonly Bindable<LyricEditorMode> bindableMode = new();
+        private IBindable<bool> bindableSelecting => lyricSelectionState.Selecting;
 
         public IBindable<LyricEditorMode> BindableMode => bindableMode;
 
@@ -166,8 +167,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             BindableMode.BindValueChanged(e =>
             {
-                // display add new lyric only with edit mode.
-                container.DisplayBottomDrawable = e.NewValue == LyricEditorMode.Manage;
+                updateAddLyricState();
 
                 // should control grid container spacing and place some component.
                 initializeExtendArea();
@@ -175,6 +175,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 // cancel selecting if switch mode.
                 lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
             }, true);
+
+            bindableSelecting.BindValueChanged(e =>
+            {
+                updateAddLyricState();
+            });
 
             bindableFontSize.BindValueChanged(e =>
             {
@@ -185,6 +190,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 initializeApplySelectingArea();
             }, true);
+        }
+
+        private void updateAddLyricState()
+        {
+            // display add new lyric only with edit mode.
+            bool disableBottomDrawable = BindableMode.Value == LyricEditorMode.Manage && !bindableSelecting.Value;
+            container.DisplayBottomDrawable = disableBottomDrawable;
         }
 
         private void initializeExtendArea()
