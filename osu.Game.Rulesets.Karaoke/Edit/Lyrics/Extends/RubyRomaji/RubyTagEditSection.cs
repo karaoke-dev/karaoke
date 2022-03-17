@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                 Debug.Assert(lyric.RubyTags.Contains(textTag));
             }
 
-            protected override void SetText(RubyTag item, string value)
+            protected override void ApplyValue(RubyTag item, string value)
                 => rubyTagsChangeHandler.SetText(item, value);
 
             protected override void SetIndex(RubyTag item, int? startIndex, int? endIndex)

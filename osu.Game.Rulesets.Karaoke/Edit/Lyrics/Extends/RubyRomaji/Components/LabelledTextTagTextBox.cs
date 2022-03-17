@@ -153,16 +153,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
         protected sealed override string GetFieldValue(T item)
             => item.Text;
 
-        protected sealed override void ApplyValue(T item, string value)
-        {
-            if (item.Text == value)
-                return;
-
-            SetText(item, value);
-        }
-
-        protected abstract void SetText(T item, string value);
-
         protected abstract void SetIndex(T item, int? startIndex, int? endIndex);
 
         protected abstract void RemoveTextTag(T item);
