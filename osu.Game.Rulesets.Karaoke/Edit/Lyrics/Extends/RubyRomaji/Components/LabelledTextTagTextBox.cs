@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
         private readonly IndexShiftingPart indexShiftingPart;
 
         protected LabelledTextTagTextBox(Lyric lyric, T textTag)
-            : base(lyric, textTag)
+            : base(textTag)
         {
             if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
                 return;
@@ -152,16 +152,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
 
         protected sealed override string GetFieldValue(T item)
             => item.Text;
-
-        protected sealed override void ApplyValue(T item, string value)
-        {
-            if (item.Text == value)
-                return;
-
-            SetText(item, value);
-        }
-
-        protected abstract void SetText(T item, string value);
 
         protected abstract void SetIndex(T item, int? startIndex, int? endIndex);
 
