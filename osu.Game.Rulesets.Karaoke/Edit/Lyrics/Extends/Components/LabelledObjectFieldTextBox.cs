@@ -10,7 +10,6 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
@@ -23,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected readonly T Item;
 
-        protected LabelledObjectFieldTextBox(Lyric lyric, T item)
+        protected LabelledObjectFieldTextBox(T item)
         {
             Item = item;
 

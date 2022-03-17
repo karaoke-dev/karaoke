@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
         private readonly IndexShiftingPart indexShiftingPart;
 
         protected LabelledTextTagTextBox(Lyric lyric, T textTag)
-            : base(lyric, textTag)
+            : base(textTag)
         {
             if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
                 return;
