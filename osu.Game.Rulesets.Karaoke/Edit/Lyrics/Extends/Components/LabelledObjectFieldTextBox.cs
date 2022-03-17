@@ -10,8 +10,6 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
 
@@ -23,31 +21,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected new ObjectFieldTextBox Component => (ObjectFieldTextBox)base.Component;
 
-        private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
-
         protected readonly T Item;
 
         protected LabelledObjectFieldTextBox(Lyric lyric, T item)
         {
-            this.Item = item;
+            Item = item;
 
             // apply current text from text-tag.
             Component.Text = GetFieldValue(item);
 
-            // should commit the editing text if caret lyric changed.
-            bindableCaretPosition.BindValueChanged(e =>
-            {
-                if (!Component.HasFocus || e.NewValue.Lyric == lyric)
-                    return;
-
-                ApplyValue(item, Component.Text);
-            });
-
             // should change preview text box if selected ruby/romaji changed.
-            OnCommit += (sender, _) =>
+            OnCommit += (sender, edited) =>
             {
-                // prevent duplicated submit after lyric position changed.
-                if (bindableCaretPosition.Value.Lyric != lyric)
+                if (!edited)
                     return;
 
                 ApplyValue(item, sender.Text);
@@ -102,12 +88,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             }
         };
 
-        [BackgroundDependencyLoader]
-        private void load(ILyricCaretState lyricCaretState)
-        {
-            bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
-        }
-
         public void Focus()
         {
             Schedule(() =>
@@ -125,14 +105,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
             protected override void OnFocus(FocusEvent e)
             {
-                Selected?.Invoke(true);
                 base.OnFocus(e);
+                Selected?.Invoke(true);
             }
 
             protected override void OnFocusLost(FocusLostEvent e)
             {
-                Selected?.Invoke(false);
                 base.OnFocusLost(e);
+
+                // note: should trigger commit event first in the base class.
+                Selected?.Invoke(false);
             }
 
             private Color4 standardBorderColour;
