@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <summary>
         /// Ruby text.
         /// Should placing something like ruby, 拼音 or ふりがな.
-        /// Will be display only if <see cref="KaraokeRulesetSetting.DisplayRubyText"/> is true.
+        /// Will be display only if <see cref="KaraokeRulesetSetting.DisplayNoteRubyText"/> is true.
         /// </summary>
         /// <example>
         /// はな

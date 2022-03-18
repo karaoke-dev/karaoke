@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             // Visual
             SetDefault(KaraokeRulesetSetting.ScrollTime, 5000.0, 1000.0, 10000.0, 100.0);
             SetDefault(KaraokeRulesetSetting.ScrollDirection, KaraokeScrollingDirection.Left);
-            SetDefault(KaraokeRulesetSetting.DisplayRubyText, false);
+            SetDefault(KaraokeRulesetSetting.DisplayNoteRubyText, false);
             SetDefault(KaraokeRulesetSetting.ShowCursor, false);
             SetDefault(KaraokeRulesetSetting.NoteAlpha, 1, 0.2, 1, 0.01);
             SetDefault(KaraokeRulesetSetting.LyricAlpha, 1, 0.2, 1, 0.01);
@@ -113,7 +113,14 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
         public override TrackedSettings CreateTrackedSettings() => new()
         {
-            new TrackedSetting<double>(KaraokeRulesetSetting.ScrollTime, v => new SettingDescription(v, "Scroll Time", $"{v}ms"))
+            new TrackedSetting<double>(KaraokeRulesetSetting.ScrollTime, v => new SettingDescription(v, "Scroll Time", $"{v}ms")),
+            new TrackedSetting<bool>(KaraokeRulesetSetting.DisplayNoteRubyText, b => new SettingDescription(b, "Toggle display", b ? "Show" : "Hide")),
+            new TrackedSetting<bool>(KaraokeRulesetSetting.ShowCursor, b => new SettingDescription(b, "Cursor display", b ? "Show" : "Hide")),
+            new TrackedSetting<bool>(KaraokeRulesetSetting.UseTranslate, b => new SettingDescription(b, "Display translate", b ? "Show" : "Hide")),
+            new TrackedSetting<CultureInfo>(KaraokeRulesetSetting.PreferLanguage, c => new SettingDescription(c, "Translate language", c.DisplayName)),
+            new TrackedSetting<bool>(KaraokeRulesetSetting.DisplayRuby, b => new SettingDescription(b, "Display ruby", b ? "Show" : "Hide")),
+            new TrackedSetting<bool>(KaraokeRulesetSetting.DisplayRomaji, b => new SettingDescription(b, "Display romaji", b ? "Show" : "Hide")),
+            new TrackedSetting<string>(KaraokeRulesetSetting.MicrophoneDevice, d => new SettingDescription(d, "Change to the new microphone device", d)),
         };
     }
 
@@ -122,7 +129,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         // Visual
         ScrollTime,
         ScrollDirection,
-        DisplayRubyText,
+        DisplayNoteRubyText,
         ShowCursor,
         NoteAlpha,
         LyricAlpha,
