@@ -157,19 +157,41 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             public override bool OnPressed(KeyBindingPressEvent<PlatformAction> e)
             {
                 bool triggerDeleteText = processTriggerDeleteText(e.Action);
-
-                if (!triggerDeleteText || !string.IsNullOrEmpty(Text))
-                    return base.OnPressed(e);
+                bool triggerMoveTextCaretIndex = processTriggerMoveText(e.Action);
 
                 // should trigger delete the main text in lyric if there's not pending text.
-                DeleteText?.Invoke();
-                return true;
+                if (triggerDeleteText && string.IsNullOrEmpty(Text))
+                {
+                    DeleteText?.Invoke();
+                    return true;
+                }
+
+                // should not block the move left/right event if there's on text in the text box.
+                if (triggerMoveTextCaretIndex && string.IsNullOrEmpty(Text))
+                {
+                    return false;
+                }
+
+                return base.OnPressed(e);
 
                 static bool processTriggerDeleteText(PlatformAction action) =>
                     action switch
                     {
                         // Deletion
                         PlatformAction.DeleteBackwardChar => true,
+                        _ => false
+                    };
+
+                static bool processTriggerMoveText(PlatformAction action) =>
+                    action switch
+                    {
+                        // Move left/right actions.
+                        PlatformAction.MoveBackwardChar => true,
+                        PlatformAction.MoveForwardChar => true,
+                        PlatformAction.MoveBackwardWord => true,
+                        PlatformAction.MoveForwardWord => true,
+                        PlatformAction.MoveBackwardLine => true,
+                        PlatformAction.MoveForwardLine => true,
                         _ => false
                     };
             }
