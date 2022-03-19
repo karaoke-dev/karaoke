@@ -138,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
                 {
                     var colour = colourProvider.GetContentColour(x.NewValue);
 
-                    pageTitle.Text = x.NewValue.Header;
+                    pageTitle.Text = x.NewValue?.Header ?? "404 Not found";
                     pageTitle.FadeColour(colour, 200);
                 });
             }
