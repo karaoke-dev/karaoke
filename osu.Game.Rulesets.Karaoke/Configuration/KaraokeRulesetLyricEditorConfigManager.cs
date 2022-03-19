@@ -16,7 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
             // General
             SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, 28f);
-            SetDefault(KaraokeRulesetLyricEditorSetting.LyricEditorMode, LyricEditorMode.View);
             SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric, true);
             SetDefault(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, 1, 0, 4);
             SetDefault(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState, LockState.Partial);
@@ -50,7 +49,6 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
     {
         // General
         LyricEditorFontSize,
-        LyricEditorMode,
         AutoFocusToEditLyric,
         AutoFocusToEditLyricSkipRows,
         ClickToLockLyricState,
