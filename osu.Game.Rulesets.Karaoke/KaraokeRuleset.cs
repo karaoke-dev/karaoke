@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke
         public override IBeatmapConverter CreateBeatmapConverter(IBeatmap beatmap) => new KaraokeBeatmapConverter(beatmap, this);
         public override IBeatmapProcessor CreateBeatmapProcessor(IBeatmap beatmap) => new KaraokeBeatmapProcessor(beatmap);
 
-        public override PerformanceCalculator CreatePerformanceCalculator(DifficultyAttributes attributes, ScoreInfo score) => new KaraokePerformanceCalculator(this, attributes, score);
+        public override PerformanceCalculator CreatePerformanceCalculator() => new KaraokePerformanceCalculator();
 
         public const string SHORT_NAME = "karaoke";
 
