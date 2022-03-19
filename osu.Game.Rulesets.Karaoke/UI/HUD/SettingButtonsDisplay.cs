@@ -2,10 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.EnumExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Layout;
+using osu.Game.Configuration;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Screens.Play;
@@ -20,6 +22,14 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
         private readonly FillFlowContainer<SettingButton> triggerButtons;
 
         public bool UsesFixedAnchor { get; set; }
+
+        [SettingSource("Alpha", "The alpha value of this box")]
+        public BindableNumber<float> BoxAlpha { get; } = new(1)
+        {
+            MinValue = 0,
+            MaxValue = 1,
+            Precision = 0.01f,
+        };
 
         public SettingButtonsDisplay()
         {
@@ -38,6 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                     Spacing = new Vector2(10),
                     Margin = new MarginPadding(10),
                     Direction = FillDirection.Vertical,
+                    AlwaysPresent = true
                 },
             };
         }
@@ -78,6 +89,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                     }
                 });
             });
+
+            BoxAlpha.BindValueChanged(alpha => triggerButtons.Alpha = alpha.NewValue, true);
         }
     }
 }
