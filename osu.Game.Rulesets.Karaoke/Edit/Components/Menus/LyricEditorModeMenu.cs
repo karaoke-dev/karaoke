@@ -2,16 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 {
-    public class LyricEditorModeMenu : EnumMenu<KaraokeRulesetLyricEditorSetting, LyricEditorMode>
+    public class LyricEditorModeMenu : EnumMenu<LyricEditorMode>
     {
-        protected override KaraokeRulesetLyricEditorSetting Setting => KaraokeRulesetLyricEditorSetting.LyricEditorMode;
-
-        public LyricEditorModeMenu(KaraokeRulesetLyricEditorConfigManager config, string text)
+        public LyricEditorModeMenu(Bindable<LyricEditorMode> config, string text)
             : base(config, text)
         {
         }

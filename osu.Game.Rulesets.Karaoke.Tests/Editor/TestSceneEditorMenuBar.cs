@@ -3,12 +3,14 @@
 
 using NUnit.Framework;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Screens.Edit.Components.Menus;
 using osu.Game.Tests.Visual;
 
@@ -45,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                                 new EditorMenuItem("Export to json", MenuItemType.Destructive, () => { }),
                             }
                         },
-                        new LyricEditorModeMenu(lyricEditorConfig, "Mode"),
+                        new LyricEditorModeMenu(new Bindable<LyricEditorMode>(), "Mode"),
                         new MenuItem("View")
                         {
                             Items = new MenuItem[]

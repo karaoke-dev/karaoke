@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                             new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => exportLyricManager.ExportToJsonBeatmap()),
                         }
                     },
-                    new LyricEditorModeMenu(lyricEditorConfigManager, "Mode"),
+                    new LyricEditorModeMenu(bindableLyricEditorMode, "Mode"),
                     new("View")
                     {
                         Items = new MenuItem[]
