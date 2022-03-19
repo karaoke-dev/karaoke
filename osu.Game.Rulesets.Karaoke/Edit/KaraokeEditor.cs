@@ -3,6 +3,7 @@
 
 using System;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
@@ -52,6 +53,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
         [Cached(typeof(IBeatmapChangeHandler))]
         private readonly BeatmapChangeHandler beatmapChangeHandler;
+
+        [Cached]
+        private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new();
 
         public KaraokeEditor()
         {
