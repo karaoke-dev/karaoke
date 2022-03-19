@@ -3,6 +3,7 @@
 
 using System;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
@@ -53,6 +54,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached(typeof(IBeatmapChangeHandler))]
         private readonly BeatmapChangeHandler beatmapChangeHandler;
 
+        [Cached]
+        private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new();
+
         public KaraokeEditor()
         {
             editConfigManager = new KaraokeRulesetEditConfigManager();
@@ -98,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                             new EditorMenuItem("Export to json beatmap", MenuItemType.Destructive, () => exportLyricManager.ExportToJsonBeatmap()),
                         }
                     },
-                    new LyricEditorModeMenu(lyricEditorConfigManager, "Mode"),
+                    new LyricEditorModeMenu(bindableLyricEditorMode, "Mode"),
                     new("View")
                     {
                         Items = new MenuItem[]

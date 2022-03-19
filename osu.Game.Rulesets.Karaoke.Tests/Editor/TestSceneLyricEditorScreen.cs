@@ -4,6 +4,7 @@
 using System;
 using NUnit.Framework;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays;
@@ -16,6 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
     public class TestSceneLyricEditorScreen : KaraokeEditorScreenTestScene<LyricEditorScreen>
     {
+        [Cached]
+        private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new();
+
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
         protected override LyricEditorScreen CreateEditorScreen() => new();
@@ -56,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         {
             AddStep($"switch to mode {Enum.GetName(typeof(LyricEditorMode), mode)}", () =>
             {
-                lyricEditorConfigManager.SetValue(KaraokeRulesetLyricEditorSetting.LyricEditorMode, mode);
+                bindableLyricEditorMode.Value = mode;
             });
             AddWaitStep("wait for switch to new mode", 5);
         }

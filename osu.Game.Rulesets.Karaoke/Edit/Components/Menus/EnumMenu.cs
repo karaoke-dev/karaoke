@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using osu.Framework.Bindables;
-using osu.Framework.Configuration;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
@@ -12,18 +11,16 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 {
-    public abstract class EnumMenu<TSetting, T> : MenuItem where TSetting : struct, Enum
+    public abstract class EnumMenu<T> : MenuItem where T : struct, Enum
     {
         private readonly Bindable<T> bindableEnum = new();
 
-        protected abstract TSetting Setting { get; }
-
-        protected EnumMenu(ConfigManager<TSetting> config, string text)
+        protected EnumMenu(Bindable<T> bindable, string text)
             : base(text)
         {
             Items = createMenuItems();
 
-            config.BindWith(Setting, bindableEnum);
+            bindableEnum.BindTo(bindable);
             bindableEnum.BindValueChanged(e =>
             {
                 var newSelection = e.NewValue;

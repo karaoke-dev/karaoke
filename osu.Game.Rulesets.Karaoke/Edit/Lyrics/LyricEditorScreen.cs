@@ -4,7 +4,6 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
@@ -16,8 +15,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class LyricEditorScreen : KaraokeEditorScreen
     {
-        private readonly Bindable<LyricEditorMode> bindableLyricEditorMode = new();
-
         [Cached(typeof(ILyricsChangeHandler))]
         private readonly LyricsChangeHandler lyricsChangeHandler;
 
@@ -77,16 +74,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     RelativeSizeAxes = Axes.Both,
                 }
             });
-            bindableLyricEditorMode.BindValueChanged(e =>
-            {
-                lyricEditor.SwitchMode(e.NewValue);
-            });
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+        private void load(Bindable<LyricEditorMode> lyricEditorMode)
         {
-            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorMode, bindableLyricEditorMode);
+            lyricEditor.BindableMode.BindTo(lyricEditorMode);
         }
 
         protected override void PopIn()
