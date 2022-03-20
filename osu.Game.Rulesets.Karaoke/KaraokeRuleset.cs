@@ -106,9 +106,13 @@ namespace osu.Game.Rulesets.Karaoke
                     new KeyBinding(new[] { InputKey.X, InputKey.Left }, KaraokeEditAction.EditTextTagReduceEndIndex),
                     new KeyBinding(new[] { InputKey.X, InputKey.Right }, KaraokeEditAction.EditTextTagIncreaseEndIndex),
 
-                    // edit
+                    // edit time-tag.
                     new KeyBinding(InputKey.N, KaraokeEditAction.Create),
                     new KeyBinding(InputKey.Delete, KaraokeEditAction.Remove),
+                    new KeyBinding(new[] { InputKey.Z, InputKey.Left }, KaraokeEditAction.ShiftTheTimeTagLeft),
+                    new KeyBinding(new[] { InputKey.Z, InputKey.Right }, KaraokeEditAction.ShiftTheTimeTagRight),
+                    new KeyBinding(new[] { InputKey.X, InputKey.Left }, KaraokeEditAction.ShiftTheTimeTagStateLeft),
+                    new KeyBinding(new[] { InputKey.X, InputKey.Right }, KaraokeEditAction.ShiftTheTimeTagStateRight),
                     new KeyBinding(InputKey.Enter, KaraokeEditAction.SetTime),
                     new KeyBinding(InputKey.BackSpace, KaraokeEditAction.ClearTime),
                 },

@@ -49,12 +49,24 @@ namespace osu.Game.Rulesets.Karaoke
         [Description("Increase end index")]
         EditTextTagIncreaseEndIndex,
 
-        // Edit
+        // Edit time-tag.
         [Description("Create new")]
         Create,
 
         [Description("Remove")]
         Remove,
+
+        [Description("Shift the time-tag left.")]
+        ShiftTheTimeTagLeft,
+
+        [Description("Shift the time-tag right.")]
+        ShiftTheTimeTagRight,
+
+        [Description("Shift the time-tag left.")]
+        ShiftTheTimeTagStateLeft,
+
+        [Description("Shift the time-tag right.")]
+        ShiftTheTimeTagStateRight,
 
         [Description("Set time")]
         SetTime,
