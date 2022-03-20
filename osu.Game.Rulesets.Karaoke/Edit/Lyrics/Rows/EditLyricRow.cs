@@ -17,7 +17,6 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -280,12 +279,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             [Cached]
             private readonly EditorLyricPiece lyricPiece;
 
-            private readonly Container timeTagContainer;
-
             private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-
-            [Resolved]
-            private ILyricsChangeHandler lyricsChangeHandler { get; set; }
 
             public Lyric Lyric { get; }
 
@@ -298,7 +292,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 Children = new Drawable[]
                 {
                     lyricPiece = new EditorLyricPiece(lyric),
-                    timeTagContainer = new Container
+                    new TimeTagLayer(lyric)
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
@@ -307,11 +301,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         RelativeSizeAxes = Axes.Both,
                     }
                 };
-
-                lyricPiece.TimeTagsBindable.BindCollectionChanged((_, _) =>
-                {
-                    ScheduleAfterChildren(UpdateTimeTags);
-                }, true);
 
                 bindableMode.BindValueChanged(e =>
                 {
@@ -347,23 +336,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         LyricEditorMode.AdjustTimeTag => new TimeTagBlueprintContainer(lyric),
                         _ => null
                     };
-            }
-
-            protected void UpdateTimeTags()
-            {
-                timeTagContainer.Clear();
-                var timeTags = lyricPiece.TimeTagsBindable;
-                if (timeTags == null)
-                    return;
-
-                foreach (var timeTag in timeTags)
-                {
-                    var position = lyricPiece.GetTimeTagPosition(timeTag);
-                    timeTagContainer.Add(new DrawableTimeTag(Lyric, timeTag)
-                    {
-                        Position = position
-                    });
-                }
             }
         }
     }
