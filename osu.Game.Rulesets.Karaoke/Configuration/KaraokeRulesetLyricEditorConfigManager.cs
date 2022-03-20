@@ -4,6 +4,7 @@
 using osu.Framework.Bindables;
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Configuration
@@ -21,6 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState, LockState.Partial);
 
             // Create time-tag.
+            SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode, CreateTimeTagEditMode.Create);
             SetDefault(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, MovingTimeTagCaretMode.None);
 
             // Recording
@@ -54,6 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         ClickToLockLyricState,
 
         // Create time-tag.
+        CreateTimeTagEditMode,
         CreateTimeTagMovingCaretMode,
 
         // Recording
