@@ -6,6 +6,7 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
