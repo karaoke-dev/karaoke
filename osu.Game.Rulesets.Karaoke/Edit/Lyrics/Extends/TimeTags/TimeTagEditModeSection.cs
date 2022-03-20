@@ -20,26 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
             => new()
             {
                 {
-                    LyricEditorMode.CreateTimeTag,
-                    new EditModeSelectionItem("Create", new DescriptionFormat
-                    {
-                        Text = "Use keyboard to control caret position, press [key](create_time_tag) to create new time-tag and press [key](remove_time_tag) to delete exist time-tag.",
-                        Keys = new Dictionary<string, InputKey>
-                        {
-                            {
-                                "create_time_tag", new InputKey
-                                {
-                                    AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.Create }
-                                }
-                            },
-                            {
-                                "remove_time_tag", new InputKey
-                                {
-                                    AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.Remove }
-                                }
-                            }
-                        }
-                    })
+                    LyricEditorMode.CreateTimeTag, new EditModeSelectionItem("Adjust", "Create the time-tag or adjust the position.")
                 },
                 {
                     LyricEditorMode.RecordTimeTag, new EditModeSelectionItem("Recording", new DescriptionFormat
