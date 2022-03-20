@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Containers;
@@ -35,7 +36,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
                 }
 
                 Show();
-                Apply(position as TCaret);
+
+                if (position is not TCaret tCaret)
+                    throw new InvalidCastException();
+
+                Apply(tCaret);
             });
         }
 
