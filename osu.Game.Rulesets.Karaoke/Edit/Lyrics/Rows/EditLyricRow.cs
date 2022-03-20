@@ -279,13 +279,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             [Cached]
             private readonly EditorLyricPiece lyricPiece;
 
-            private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-
-            public Lyric Lyric { get; }
-
             public SingleLyricEditor(Lyric lyric)
             {
-                Lyric = lyric;
                 CornerRadius = 5;
                 AutoSizeAxes = Axes.Y;
                 Padding = new MarginPadding { Bottom = 10 };
@@ -299,43 +294,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     new CaretLayer(lyric)
                     {
                         RelativeSizeAxes = Axes.Both,
+                    },
+                    new BlueprintLayer(lyric)
+                    {
+                        RelativeSizeAxes = Axes.Both,
                     }
                 };
-
-                bindableMode.BindValueChanged(e =>
-                {
-                    // Initial blueprint container.
-                    InitializeBlueprint(e.NewValue);
-                });
             }
 
             [BackgroundDependencyLoader]
-            private void load(EditorClock clock, ILyricEditorState state)
+            private void load(EditorClock clock)
             {
                 lyricPiece.Clock = clock;
-                bindableMode.BindTo(state.BindableMode);
-            }
-
-            protected void InitializeBlueprint(LyricEditorMode mode)
-            {
-                // remove all exist blueprint container
-                RemoveAll(x => x is RubyBlueprintContainer or RomajiBlueprintContainer or TimeTagBlueprintContainer);
-
-                // create preview and real caret
-                var blueprintContainer = createBlueprintContainer(mode, Lyric);
-                if (blueprintContainer == null)
-                    return;
-
-                AddInternal(blueprintContainer);
-
-                static Drawable createBlueprintContainer(LyricEditorMode mode, Lyric lyric) =>
-                    mode switch
-                    {
-                        LyricEditorMode.EditRuby => new RubyBlueprintContainer(lyric),
-                        LyricEditorMode.EditRomaji => new RomajiBlueprintContainer(lyric),
-                        LyricEditorMode.AdjustTimeTag => new TimeTagBlueprintContainer(lyric),
-                        _ => null
-                    };
             }
         }
     }
