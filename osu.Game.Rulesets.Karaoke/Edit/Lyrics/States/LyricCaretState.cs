@@ -21,10 +21,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         public IBindable<ICaretPosition> BindableHoverCaretPosition => bindableHoverCaretPosition;
         public IBindable<ICaretPosition> BindableCaretPosition => bindableCaretPosition;
 
+        public IBindable<ICaretPositionAlgorithm> BindableCaretPositionAlgorithm => bindableCaretPositionAlgorithm;
+
         private readonly Bindable<ICaretPosition> bindableHoverCaretPosition = new();
         private readonly Bindable<ICaretPosition> bindableCaretPosition = new();
+        private readonly Bindable<ICaretPositionAlgorithm> bindableCaretPositionAlgorithm = new();
 
-        private ICaretPositionAlgorithm algorithm;
+        private ICaretPositionAlgorithm algorithm => bindableCaretPositionAlgorithm.Value;
 
         private readonly BindableList<HitObject> selectedHitObjects = new();
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
@@ -90,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             var mode = bindableMode.Value;
 
             // refresh algorithm
-            algorithm = getAlgorithmByMode(bindableLyrics.ToArray(), mode);
+            bindableCaretPositionAlgorithm.Value = getAlgorithmByMode(bindableLyrics.ToArray(), mode);
 
             // refresh caret position
             var lyric = bindableCaretPosition.Value?.Lyric;
