@@ -306,47 +306,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             };
         }
 
-        public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
-        {
-            var action = e.Action;
-            bool isMoving = HandleMovingEvent(action);
-            if (isMoving)
-                return true;
-
-            switch (Mode)
-            {
-                case LyricEditorMode.View:
-                case LyricEditorMode.Manage:
-                case LyricEditorMode.Typing: // will handle in OnKeyDown
-                case LyricEditorMode.Language:
-                case LyricEditorMode.EditRuby:
-                case LyricEditorMode.EditRomaji:
-                    return false;
-
-                case LyricEditorMode.CreateTimeTag:
-                    return false;
-
-                case LyricEditorMode.RecordTimeTag:
-                    return false;
-
-                case LyricEditorMode.AdjustTimeTag:
-                    return false;
-
-                case LyricEditorMode.EditNote:
-                case LyricEditorMode.Singer:
-                    return false;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(Mode));
-            }
-        }
-
-        public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
-        {
-        }
-
-        protected bool HandleMovingEvent(KaraokeEditAction action) =>
-            action switch
+        public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e) =>
+            e.Action switch
             {
                 KaraokeEditAction.Up => lyricCaretState.MoveCaret(MovingCaretAction.Up),
                 KaraokeEditAction.Down => lyricCaretState.MoveCaret(MovingCaretAction.Down),
@@ -356,6 +317,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 KaraokeEditAction.Last => lyricCaretState.MoveCaret(MovingCaretAction.Last),
                 _ => false
             };
+
+        public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
+        {
+        }
 
         public virtual void NavigateToFix(LyricEditorMode mode)
         {
