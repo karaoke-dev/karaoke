@@ -13,7 +13,6 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage;
@@ -38,15 +37,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         [Resolved(canBeNull: true)]
         private ILyricsChangeHandler lyricsChangeHandler { get; set; }
-
-        [Resolved(canBeNull: true)]
-        private ILyricTextChangeHandler lyricTextChangeHandler { get; set; }
-
-        [Resolved(canBeNull: true)]
-        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
-
-        [Resolved]
-        private EditorClock editorClock { get; set; }
 
         [Resolved]
         private KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager { get; set; }
@@ -316,47 +306,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             };
         }
 
-        public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
-        {
-            var action = e.Action;
-            bool isMoving = HandleMovingEvent(action);
-            if (isMoving)
-                return true;
-
-            switch (Mode)
-            {
-                case LyricEditorMode.View:
-                case LyricEditorMode.Manage:
-                case LyricEditorMode.Typing: // will handle in OnKeyDown
-                case LyricEditorMode.Language:
-                case LyricEditorMode.EditRuby:
-                case LyricEditorMode.EditRomaji:
-                    return false;
-
-                case LyricEditorMode.CreateTimeTag:
-                    return HandleCreateOrDeleterTimeTagEvent(action);
-
-                case LyricEditorMode.RecordTimeTag:
-                    return HandleSetTimeEvent(action);
-
-                case LyricEditorMode.AdjustTimeTag:
-                    return false;
-
-                case LyricEditorMode.EditNote:
-                case LyricEditorMode.Singer:
-                    return false;
-
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(Mode));
-            }
-        }
-
-        public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
-        {
-        }
-
-        protected bool HandleMovingEvent(KaraokeEditAction action) =>
-            action switch
+        public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e) =>
+            e.Action switch
             {
                 KaraokeEditAction.Up => lyricCaretState.MoveCaret(MovingCaretAction.Up),
                 KaraokeEditAction.Down => lyricCaretState.MoveCaret(MovingCaretAction.Down),
@@ -367,60 +318,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 _ => false
             };
 
-        protected bool HandleSetTimeEvent(KaraokeEditAction action)
+        public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
         {
-            if (lyricTimeTagsChangeHandler == null)
-                return false;
-
-            var caretPosition = lyricCaretState.BindableCaretPosition.Value;
-            if (caretPosition is not TimeTagCaretPosition timeTagCaretPosition)
-                throw new NotSupportedException(nameof(caretPosition));
-
-            var currentTimeTag = timeTagCaretPosition.TimeTag;
-
-            switch (action)
-            {
-                case KaraokeEditAction.ClearTime:
-                    lyricTimeTagsChangeHandler.ClearTimeTagTime(currentTimeTag);
-                    return true;
-
-                case KaraokeEditAction.SetTime:
-                    double currentTime = editorClock.CurrentTime;
-                    lyricTimeTagsChangeHandler.SetTimeTagTime(currentTimeTag, currentTime);
-
-                    if (lyricEditorConfigManager.Get<bool>(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag))
-                        lyricCaretState.MoveCaret(MovingCaretAction.Right);
-
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
-
-        protected bool HandleCreateOrDeleterTimeTagEvent(KaraokeEditAction action)
-        {
-            if (lyricTimeTagsChangeHandler == null)
-                return false;
-
-            if (lyricCaretState.BindableCaretPosition.Value is not TimeTagIndexCaretPosition position)
-                throw new NotSupportedException(nameof(position));
-
-            var index = position.Index;
-
-            switch (action)
-            {
-                case KaraokeEditAction.Create:
-                    lyricTimeTagsChangeHandler.AddByPosition(index);
-                    return true;
-
-                case KaraokeEditAction.Remove:
-                    lyricTimeTagsChangeHandler.RemoveByPosition(index);
-                    return true;
-
-                default:
-                    return false;
-            }
         }
 
         public virtual void NavigateToFix(LyricEditorMode mode)
