@@ -334,7 +334,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return false;
 
                 case LyricEditorMode.CreateTimeTag:
-                    return HandleCreateOrDeleterTimeTagEvent(action);
+                    return false;
 
                 case LyricEditorMode.RecordTimeTag:
                     return HandleSetTimeEvent(action);
@@ -391,31 +391,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     if (lyricEditorConfigManager.Get<bool>(KaraokeRulesetLyricEditorSetting.RecordingAutoMoveToNextTimeTag))
                         lyricCaretState.MoveCaret(MovingCaretAction.Right);
 
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
-
-        protected bool HandleCreateOrDeleterTimeTagEvent(KaraokeEditAction action)
-        {
-            if (lyricTimeTagsChangeHandler == null)
-                return false;
-
-            if (lyricCaretState.BindableCaretPosition.Value is not TimeTagIndexCaretPosition position)
-                throw new NotSupportedException(nameof(position));
-
-            var index = position.Index;
-
-            switch (action)
-            {
-                case KaraokeEditAction.Create:
-                    lyricTimeTagsChangeHandler.AddByPosition(index);
-                    return true;
-
-                case KaraokeEditAction.Remove:
-                    lyricTimeTagsChangeHandler.RemoveByPosition(index);
                     return true;
 
                 default:
