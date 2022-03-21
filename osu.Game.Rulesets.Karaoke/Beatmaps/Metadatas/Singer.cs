@@ -32,16 +32,58 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
             set => OrderBindable.Value = value;
         }
 
-        public string Name { get; set; }
+        [JsonIgnore]
+        public readonly Bindable<string> AvatarBindable = new();
 
-        public string RomajiName { get; set; }
+        public string Avatar
+        {
+            get => AvatarBindable.Value;
+            set => AvatarBindable.Value = value;
+        }
 
-        public string EnglishName { get; set; }
+        [JsonIgnore]
+        public readonly Bindable<float> HueBindable = new();
 
-        public int Hue { get; set; }
+        public float Hue
+        {
+            get => HueBindable.Value;
+            set => HueBindable.Value = value;
+        }
 
-        public string Avatar { get; set; }
+        [JsonIgnore]
+        public readonly Bindable<string> NameBindable = new();
 
-        public string Description { get; set; }
+        public string Name
+        {
+            get => NameBindable.Value;
+            set => NameBindable.Value = value;
+        }
+
+        [JsonIgnore]
+        public readonly Bindable<string> RomajiNameBindable = new();
+
+        public string RomajiName
+        {
+            get => RomajiNameBindable.Value;
+            set => RomajiNameBindable.Value = value;
+        }
+
+        [JsonIgnore]
+        public readonly Bindable<string> EnglishNameBindable = new();
+
+        public string EnglishName
+        {
+            get => EnglishNameBindable.Value;
+            set => EnglishNameBindable.Value = value;
+        }
+
+        [JsonIgnore]
+        public readonly Bindable<string> DescriptionBindable = new();
+
+        public string Description
+        {
+            get => DescriptionBindable.Value;
+            set => DescriptionBindable.Value = value;
+        }
     }
 }

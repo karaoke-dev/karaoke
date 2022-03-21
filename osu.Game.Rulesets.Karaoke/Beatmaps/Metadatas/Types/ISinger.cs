@@ -9,6 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types
     {
         int ID { get; }
 
-        int Hue { get; }
+        float Hue { get; }
     }
 }
