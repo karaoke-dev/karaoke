@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Detail
                             Size = new Vector2(1 / section_scale),
                             Children = new EditSingerSection[]
                             {
-                                new AvatarSection(),
+                                new AvatarSection(e.NewValue),
                                 new MetadataSection(e.NewValue),
                             }
                         }
