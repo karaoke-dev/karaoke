@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
-using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
@@ -27,9 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         }
 
         public static Color4 GetContentColour(ISinger singer)
-            => Color4.FromHsl(new Vector4(singer.Hue / 360, 0.4f, 0.6f, 1));
+            => Colour4.FromHSL(singer.Hue, 0.4f, 0.6f);
 
         public static Color4 GetBackgroundColour(ISinger singer)
-            => Color4.FromHsl(new Vector4(singer.Hue / 360, 0.1f, 0.4f, 1));
+            => Colour4.FromHSL(singer.Hue, 0.1f, 0.4f);
     }
 }
