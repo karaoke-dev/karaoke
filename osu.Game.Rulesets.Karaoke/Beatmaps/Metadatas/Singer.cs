@@ -42,7 +42,11 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
         }
 
         [JsonIgnore]
-        public readonly Bindable<float> HueBindable = new();
+        public Bindable<float> HueBindable = new BindableFloat
+        {
+            MinValue = 0,
+            MaxValue = 1
+        };
 
         public float Hue
         {
