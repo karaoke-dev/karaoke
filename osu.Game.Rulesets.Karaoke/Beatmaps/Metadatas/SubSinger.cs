@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
 
         public int ID { get; private set; }
 
-        public int Hue { get; set; }
+        public float Hue { get; set; }
 
         public int Parent { get; set; }
 

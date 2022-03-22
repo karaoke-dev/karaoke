@@ -34,37 +34,42 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Detail
         {
             AutoSizeAxes = Axes.Both;
 
-            // todo : also has apply, cancel and reset button.
-            Child = new Container
+            current.BindValueChanged(e =>
             {
-                Name = "Layout adjustment area",
-                Width = 400,
-                Height = 600,
-                Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
-                Masking = true,
-                CornerRadius = 10,
-                Children = new Drawable[]
+                if (e.NewValue == null)
+                    return;
+
+                Child = new Container
                 {
-                    new Box
+                    Name = "Layout adjustment area",
+                    Width = 400,
+                    Height = 600,
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Masking = true,
+                    CornerRadius = 10,
+                    Children = new Drawable[]
                     {
-                        Colour = colourProvider.Background2,
-                        RelativeSizeAxes = Axes.Both,
-                    },
-                    new SectionsContainer<EditSingerSection>
-                    {
-                        FixedHeader = new EditSingerScreenHeader(),
-                        RelativeSizeAxes = Axes.Both,
-                        Scale = new Vector2(section_scale),
-                        Size = new Vector2(1 / section_scale),
-                        Children = new EditSingerSection[]
+                        new Box
                         {
-                            new AvatarSection(),
-                            new MetadataSection(),
+                            Colour = colourProvider.Background2,
+                            RelativeSizeAxes = Axes.Both,
+                        },
+                        new SectionsContainer<EditSingerSection>
+                        {
+                            FixedHeader = new EditSingerScreenHeader(),
+                            RelativeSizeAxes = Axes.Both,
+                            Scale = new Vector2(section_scale),
+                            Size = new Vector2(1 / section_scale),
+                            Children = new EditSingerSection[]
+                            {
+                                new AvatarSection(),
+                                new MetadataSection(e.NewValue),
+                            }
                         }
                     }
-                }
-            };
+                };
+            });
         }
 
         internal class EditSingerScreenHeader : OverlayHeader

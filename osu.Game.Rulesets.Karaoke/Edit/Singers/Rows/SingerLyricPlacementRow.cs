@@ -56,11 +56,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
             private readonly OsuSpriteText singerName;
             private readonly OsuSpriteText singerEnglishName;
 
-            private readonly Bindable<Singer> bindableSinger = new();
+            private readonly IBindable<int> bindableOrder = new Bindable<int>();
+            private readonly IBindable<float> bindableHue = new Bindable<float>();
+            private readonly IBindable<string> bindableAvatar = new Bindable<string>();
+            private readonly IBindable<string> bindableSingerName = new Bindable<string>();
+            private readonly IBindable<string> bindableEnglishName = new Bindable<string>();
+
+            private readonly Singer singer;
 
             public DrawableSingerInfo(Singer singer)
             {
-                bindableSinger.Value = singer;
+                this.singer = singer;
+
+                bindableOrder.BindTo(singer.OrderBindable);
+                bindableHue.BindTo(singer.HueBindable);
+                bindableAvatar.BindTo(singer.AvatarBindable);
+                bindableSingerName.BindTo(singer.NameBindable);
+                bindableEnglishName.BindTo(singer.EnglishNameBindable);
+
                 InternalChildren = new Drawable[]
                 {
                     background = new Box
@@ -123,47 +136,43 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                     }
                 };
 
-                bindableSinger.BindValueChanged(e =>
+                bindableOrder.BindValueChanged(_ =>
                 {
-                    updateSingerInfo(e.NewValue);
+                    singerName.Text = $"#{singer.Order} {singer.Name}";
                 }, true);
 
-                singer.OrderBindable.BindValueChanged(_ =>
+                bindableHue.BindValueChanged(_ =>
                 {
-                    updateSingerName(singer);
-                });
-            }
+                    // background
+                    background.Colour = SingerUtils.GetBackgroundColour(singer);
+                }, true);
 
-            private void updateSingerInfo(Singer singer)
-            {
-                if (singer == null)
-                    return;
+                bindableAvatar.BindValueChanged(_ =>
+                {
+                    // avatar
+                    avatar.Singer = singer;
+                }, true);
 
-                // background
-                background.Colour = SingerUtils.GetBackgroundColour(singer);
+                bindableSingerName.BindValueChanged(_ =>
+                {
+                    singerName.Text = $"#{singer.Order} {singer.Name}";
+                }, true);
 
-                // avatar
-                avatar.Singer = singer;
-
-                // metadata
-                updateSingerName(singer);
-            }
-
-            private void updateSingerName(Singer singer)
-            {
-                singerName.Text = $"#{singer.Order} {singer.Name}";
-                singerEnglishName.Text = singer.EnglishName;
+                bindableEnglishName.BindValueChanged(_ =>
+                {
+                    singerEnglishName.Text = singer.EnglishName;
+                }, true);
             }
 
             public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
 
-            public Singer TooltipContent => bindableSinger.Value;
+            public Singer TooltipContent => singer;
 
             public MenuItem[] ContextMenuItems => new MenuItem[]
             {
                 new OsuMenuItem("Edit singer info", MenuItemType.Standard, () =>
                 {
-                    editSingerDialog.Current = bindableSinger;
+                    editSingerDialog.Current.Value = singer;
                     editSingerDialog.Show();
                 }),
                 new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
@@ -171,7 +180,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                     dialogOverlay.Push(new DeleteSingerDialog(isOk =>
                     {
                         if (isOk)
-                            singersChangeHandler.Remove(bindableSinger.Value);
+                            singersChangeHandler.Remove(singer);
                     }));
                 }),
             };

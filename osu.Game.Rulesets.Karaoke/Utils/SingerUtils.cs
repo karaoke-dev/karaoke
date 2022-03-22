@@ -27,9 +27,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         }
 
         public static Color4 GetContentColour(ISinger singer)
-            => Color4.FromHsl(new Vector4((float)singer.Hue / 360, 0.4f, 0.6f, 1));
+            => Color4.FromHsl(new Vector4(singer.Hue / 360, 0.4f, 0.6f, 1));
 
         public static Color4 GetBackgroundColour(ISinger singer)
-            => Color4.FromHsl(new Vector4((float)singer.Hue / 360, 0.1f, 0.4f, 1));
+            => Color4.FromHsl(new Vector4(singer.Hue / 360, 0.1f, 0.4f, 1));
     }
 }
