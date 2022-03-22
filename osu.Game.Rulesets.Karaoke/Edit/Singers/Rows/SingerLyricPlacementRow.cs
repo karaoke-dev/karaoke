@@ -3,11 +3,13 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
@@ -36,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
         protected override Drawable CreateTimeLinePart(Singer singer)
             => new SingerLyricEditor(singer);
 
-        internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip<Singer>, IHasContextMenu
+        internal class DrawableSingerInfo : CompositeDrawable, IHasCustomTooltip<Singer>, IHasContextMenu, IHasPopover
         {
             private const int avatar_size = 48;
             private const int main_text_size = 24;
@@ -47,14 +49,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 
             [Resolved]
             private DialogOverlay dialogOverlay { get; set; }
-
-            [Resolved]
-            private EditSingerDialog editSingerDialog { get; set; }
-
-            private readonly Box background;
-            private readonly DrawableSingerAvatar avatar;
-            private readonly OsuSpriteText singerName;
-            private readonly OsuSpriteText singerEnglishName;
 
             private readonly IBindable<int> bindableOrder = new Bindable<int>();
             private readonly IBindable<float> bindableHue = new Bindable<float>();
@@ -73,6 +67,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                 bindableAvatar.BindTo(singer.AvatarBindable);
                 bindableSingerName.BindTo(singer.NameBindable);
                 bindableEnglishName.BindTo(singer.EnglishNameBindable);
+
+                Box background;
+                DrawableSingerAvatar avatar;
+                OsuSpriteText singerName;
+                OsuSpriteText singerEnglishName;
 
                 InternalChildren = new Drawable[]
                 {
@@ -170,11 +169,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 
             public MenuItem[] ContextMenuItems => new MenuItem[]
             {
-                new OsuMenuItem("Edit singer info", MenuItemType.Standard, () =>
-                {
-                    editSingerDialog.Current.Value = singer;
-                    editSingerDialog.Show();
-                }),
+                new OsuMenuItem("Edit singer info", MenuItemType.Standard, this.ShowPopover),
                 new OsuMenuItem("Delete", MenuItemType.Destructive, () =>
                 {
                     dialogOverlay.Push(new DeleteSingerDialog(isOk =>
@@ -184,6 +179,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                     }));
                 }),
             };
+
+            protected override bool OnClick(ClickEvent e)
+            {
+                this.ShowPopover();
+                return base.OnClick(e);
+            }
+
+            public Popover GetPopover()
+                => new SingerEditPopover(singer);
         }
     }
 }

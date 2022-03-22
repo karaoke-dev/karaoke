@@ -15,6 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Detail
         {
             Children = new Drawable[]
             {
+                // todo: because cannot open the popover inside the popover.
+                // so might change the avatar only if click the avatar image in the singer editor.
                 new LabelledImageSelector
                 {
                     Label = "Avatar",
