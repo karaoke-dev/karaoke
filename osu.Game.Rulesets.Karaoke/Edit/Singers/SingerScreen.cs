@@ -9,7 +9,6 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
-using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -27,9 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         private readonly LyricSingerChangeHandler lyricSingerChangeHandler;
 
         [Cached]
-        private readonly EditSingerDialog editSingerDialog;
-
-        [Cached]
         private readonly BindableList<Lyric> selectedLyrics = new();
 
         public BindableFloat BindableZoom { get; } = new();
@@ -39,7 +35,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
         public SingerScreen()
             : base(KaraokeEditorScreenMode.Singer)
         {
-            editSingerDialog = new EditSingerDialog();
             AddInternal(singersChangeHandler = new SingersChangeHandler());
             AddInternal(lyricSingerChangeHandler = new LyricSingerChangeHandler());
         }
@@ -66,8 +61,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
                     },
                 }
             });
-
-            Add(editSingerDialog);
         }
 
         protected override void PopOut()
