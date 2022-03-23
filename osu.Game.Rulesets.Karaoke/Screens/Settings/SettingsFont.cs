@@ -4,15 +4,17 @@
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
+using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Overlays;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Bindables;
-using osu.Game.Rulesets.Karaoke.Extensions;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
@@ -24,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             RelativeSizeAxes = Axes.X,
         };
 
-        internal class FontSelectionButton : CompositeDrawable, IHasCurrentValue<FontUsage>
+        internal class FontSelectionButton : CompositeDrawable, IHasCurrentValue<FontUsage>, IHasPopover
         {
             private const float height = 30;
 
@@ -90,31 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
                                 RelativeSizeAxes = Axes.X,
                                 Padding = new MarginPadding { Left = SettingsPanel.CONTENT_MARGINS },
                                 Height = height,
-                                Action = () =>
-                                {
-                                    try
-                                    {
-                                        var displayContainer = Game.GetDialogPlacementContainer();
-                                        if (displayContainer == null)
-                                            return;
-
-                                        // Should only has one instance.
-                                        var dialog = displayContainer.Children.OfType<FontSelectionDialog>().FirstOrDefault();
-
-                                        if (dialog == null)
-                                        {
-                                            displayContainer.Add(dialog = new FontSelectionDialog());
-                                        }
-
-                                        // If has bindable font usage source, the bind with it first(for getter other property in bindable).
-                                        dialog.Current = bindableFontUsage ?? Current;
-                                        dialog.Show();
-                                    }
-                                    catch
-                                    {
-                                        // maybe this overlay has been moved into internal.
-                                    }
-                                }
+                                Action = this.ShowPopover
                             },
                             null,
                             decreaseFontSizeButton = new SettingsButton
@@ -163,6 +141,22 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
                     string displayText = $"{fontName}, {size} {fixedWidthText}";
                     fontButton.Text = displayText;
                 });
+            }
+
+            public Popover GetPopover()
+                => new FontSelectorPopover(bindableFontUsage ?? Current);
+        }
+
+        internal class FontSelectorPopover : OsuPopover
+        {
+            public FontSelectorPopover(Bindable<FontUsage> bindableFontUsage)
+            {
+                Child = new FontSelector
+                {
+                    Width = 1000,
+                    Height = 600,
+                    Current = bindableFontUsage
+                };
             }
         }
     }

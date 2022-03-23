@@ -6,6 +6,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Framework.Platform;
@@ -43,24 +44,28 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             InternalChild = waves = new KaraokeConfigWaveContainer
             {
                 RelativeSizeAxes = Axes.Both,
-                Children = new Drawable[]
+                Child = new PopoverContainer
                 {
-                    background = new Box
+                    RelativeSizeAxes = Axes.Both,
+                    Children = new Drawable[]
                     {
-                        RelativeSizeAxes = Axes.Both,
-                        Colour = backgroundColour,
-                    },
-                    settingsPanel = new KaraokeSettingsPanel(),
-                    header = new Header
-                    {
-                        Padding = new MarginPadding { Left = KaraokeSettingsPanel.WIDTH },
-                    },
-                    previewArea = new Container
-                    {
-                        RelativeSizeAxes = Axes.Both,
-                        Padding = new MarginPadding { Top = Header.HEIGHT, Left = KaraokeSettingsPanel.WIDTH }
-                    },
-                    new KaraokeVersionManager().With(x => x.Show())
+                        background = new Box
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Colour = backgroundColour,
+                        },
+                        settingsPanel = new KaraokeSettingsPanel(),
+                        header = new Header
+                        {
+                            Padding = new MarginPadding { Left = KaraokeSettingsPanel.WIDTH },
+                        },
+                        previewArea = new Container
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Padding = new MarginPadding { Top = Header.HEIGHT, Left = KaraokeSettingsPanel.WIDTH }
+                        },
+                        new KaraokeVersionManager().With(x => x.Show())
+                    }
                 }
             };
 
