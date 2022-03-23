@@ -9,27 +9,23 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.UserInterface;
 using osu.Framework.IO.Stores;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Bindables;
-using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
+namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
-    public class FontSelectionDialog : TitleFocusedOverlayContainer, IHasCurrentValue<FontUsage>
+    public class FontSelector : CompositeDrawable
     {
-        protected override string Title => "Select font";
-
         private readonly SpriteText previewText;
         private readonly FontFamilyPropertyList familyProperty;
         private readonly FontPropertyList<string> weightProperty;
@@ -65,12 +61,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             }
         }
 
-        public FontSelectionDialog()
+        public FontSelector()
         {
-            RelativeSizeAxes = Axes.Both;
-            Size = new Vector2(0.6f, 0.8f);
-
-            Child = new GridContainer
+            InternalChild = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
                 RowDimensions = new[]

@@ -5,22 +5,17 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Testing;
-using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Bindables;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Tests.Visual;
+using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
 {
-    public class TestSceneFontSelectionDialog : OsuManualInputManagerTestScene
+    public class TestSceneFontSelector : OsuManualInputManagerTestScene
     {
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
-
-        private DialogOverlay dialogOverlay;
-
-        private FontSelectionDialog dialog;
 
         private FontManager fontManager;
 
@@ -30,32 +25,31 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
             base.Content.AddRange(new Drawable[]
             {
                 Content,
-                dialogOverlay = new DialogOverlay(),
                 fontManager = new FontManager(),
             });
 
-            Dependencies.Cache(dialogOverlay);
             Dependencies.Cache(fontManager);
         }
 
-        [SetUp]
-        public void SetUp() => Schedule(() =>
+        [Test]
+        public void TestAllFiles()
         {
-            var language = new BindableFontUsage
+            AddStep("create", () =>
             {
-                MinFontSize = 32,
-                MaxFontSize = 72
-            };
-            Child = dialog = new FontSelectionDialog
-            {
-                Current = language,
-            };
-        });
-
-        [SetUpSteps]
-        public void SetUpSteps()
-        {
-            AddStep("show dialog", () => dialog.Show());
+                var language = new BindableFontUsage
+                {
+                    MinFontSize = 32,
+                    MaxFontSize = 72
+                };
+                Child = new FontSelector
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Size = new Vector2(0.6f, 0.8f),
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre,
+                    Current = language
+                };
+            });
         }
     }
 }
