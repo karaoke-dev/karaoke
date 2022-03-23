@@ -213,14 +213,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
             weightProperty.Current.BindValueChanged(_ => previewChange());
             fontSizeProperty.Current.BindValueChanged(_ => previewChange());
             fixedWidthCheckbox.Current.BindValueChanged(_ => previewChange());
-            Current.BindValueChanged(e =>
-            {
-                var newFont = e.NewValue;
-                familyProperty.Current.Value = newFont.Family;
-                weightProperty.Current.Value = newFont.Weight;
-                fontSizeProperty.Current.Value = newFont.Size;
-                fixedWidthCheckbox.Current.Value = newFont.FixedWidth;
-            });
         }
 
         [BackgroundDependencyLoader]
@@ -231,6 +223,15 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
             // create local font store and import those files
             localFontStore = new KaraokeLocalFontStore(fontManager);
             fontStore.AddStore(localFontStore);
+
+            Current.BindValueChanged(e =>
+            {
+                var newFont = e.NewValue;
+                familyProperty.Current.Value = newFont.Family;
+                weightProperty.Current.Value = newFont.Weight;
+                fontSizeProperty.Current.Value = newFont.Size;
+                fixedWidthCheckbox.Current.Value = newFont.FixedWidth;
+            });
         }
 
         private void previewChange()
