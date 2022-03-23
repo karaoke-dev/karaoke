@@ -2,14 +2,14 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Globalization;
-using System.Linq;
-using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.UserInterface;
+using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Overlays.Settings;
-using osu.Game.Rulesets.Karaoke.Extensions;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
 {
@@ -20,11 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             RelativeSizeAxes = Axes.X,
         };
 
-        internal class LanguageSelectionButton : SettingsButton, IHasCurrentValue<CultureInfo>
+        private class LanguageSelectionButton : SettingsButton, IHasCurrentValue<CultureInfo>, IHasPopover
         {
-            [Resolved(canBeNull: true)]
-            protected OsuGame Game { get; private set; }
-
             private readonly BindableWithCurrent<CultureInfo> current = new();
 
             public Bindable<CultureInfo> Current
@@ -36,32 +33,25 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             public LanguageSelectionButton()
             {
                 Height = 30;
-                Action = () =>
-                {
-                    try
-                    {
-                        var displayContainer = Game.GetDialogPlacementContainer();
-                        if (displayContainer == null)
-                            return;
-
-                        // Should only has one instance.
-                        var dialog = displayContainer.Children.OfType<LanguageSelectionDialog>().FirstOrDefault();
-
-                        if (dialog == null)
-                        {
-                            displayContainer.Add(dialog = new LanguageSelectionDialog());
-                        }
-
-                        dialog.Current = Current;
-                        dialog.Show();
-                    }
-                    catch
-                    {
-                        // maybe this overlay has been moved into internal.
-                    }
-                };
+                Action = this.ShowPopover;
 
                 Current.BindValueChanged(e => Text = e.NewValue.DisplayName);
+            }
+
+            public Popover GetPopover()
+                => new LanguageSelectorPopover(Current);
+        }
+
+        private class LanguageSelectorPopover : OsuPopover
+        {
+            public LanguageSelectorPopover(Bindable<CultureInfo> bindableCultureInfo)
+            {
+                Child = new LanguageSelector
+                {
+                    Width = 400,
+                    Height = 600,
+                    Current = bindableCultureInfo
+                };
             }
         }
     }
