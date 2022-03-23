@@ -27,9 +27,6 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
         public static Container GetChangelogPlacementContainer(this OsuGame game)
             => game.getBasePlacementContainer().Children[0] as Container;
 
-        public static Container GetDialogPlacementContainer(this OsuGame game)
-            => game.getBasePlacementContainer().Children[0] as Container;
-
         public static SettingsOverlay GetSettingsOverlay(this OsuGame game)
             => game.getBasePlacementContainer()?.ChildrenOfType<SettingsOverlay>().FirstOrDefault();
 
