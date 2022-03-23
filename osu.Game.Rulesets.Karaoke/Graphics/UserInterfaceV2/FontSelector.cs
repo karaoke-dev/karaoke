@@ -9,27 +9,23 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.UserInterface;
 using osu.Framework.IO.Stores;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Bindables;
-using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Skinning.Fonts;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
+namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
-    public class FontSelectionDialog : TitleFocusedOverlayContainer, IHasCurrentValue<FontUsage>
+    public class FontSelector : CompositeDrawable
     {
-        protected override string Title => "Select font";
-
         private readonly SpriteText previewText;
         private readonly FontFamilyPropertyList familyProperty;
         private readonly FontPropertyList<string> weightProperty;
@@ -65,12 +61,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             }
         }
 
-        public FontSelectionDialog()
+        public FontSelector()
         {
-            RelativeSizeAxes = Axes.Both;
-            Size = new Vector2(0.6f, 0.8f);
-
-            Child = new GridContainer
+            InternalChild = new GridContainer
             {
                 RelativeSizeAxes = Axes.Both,
                 RowDimensions = new[]
@@ -125,7 +118,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                             {
                                                 new Dimension(),
                                                 new Dimension(GridSizeMode.Absolute, 48),
-                                                new Dimension(GridSizeMode.Absolute, 64),
                                             },
                                             Content = new[]
                                             {
@@ -145,25 +137,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                                                         RelativeSizeAxes = Axes.X,
                                                         Padding = new MarginPadding(10),
                                                         LabelText = "FixedWidth",
-                                                    },
-                                                },
-                                                new Drawable[]
-                                                {
-                                                    // OK Button.
-                                                    new TriangleButton
-                                                    {
-                                                        Name = "OK Button",
-                                                        RelativeSizeAxes = Axes.X,
-                                                        Padding = new MarginPadding(10),
-                                                        Text = "OK",
-                                                        Height = 64,
-                                                        Action = () =>
-                                                        {
-                                                            // set to current value and hide.
-                                                            var font = generateFontUsage();
-                                                            Current.Value = font;
-                                                            Hide();
-                                                        }
                                                     },
                                                 }
                                             }
@@ -207,7 +180,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
 
             familyProperty.Current.BindValueChanged(x =>
             {
-                previewChange();
+                performChange();
 
                 // re-calculate if family changed.
                 string[] weight = fonts.Where(f => f.Family == x.NewValue).Select(f => f.Weight).Where(s => !string.IsNullOrEmpty(s)).Distinct().ToArray();
@@ -217,17 +190,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 // set to first or empty if change new family.
                 weightProperty.Current.Value = weight.FirstOrDefault();
             });
-            weightProperty.Current.BindValueChanged(_ => previewChange());
-            fontSizeProperty.Current.BindValueChanged(_ => previewChange());
-            fixedWidthCheckbox.Current.BindValueChanged(_ => previewChange());
-            Current.BindValueChanged(e =>
-            {
-                var newFont = e.NewValue;
-                familyProperty.Current.Value = newFont.Family;
-                weightProperty.Current.Value = newFont.Weight;
-                fontSizeProperty.Current.Value = newFont.Size;
-                fixedWidthCheckbox.Current.Value = newFont.FixedWidth;
-            });
+            weightProperty.Current.BindValueChanged(_ => performChange());
+            fontSizeProperty.Current.BindValueChanged(_ => performChange());
+            fixedWidthCheckbox.Current.BindValueChanged(_ => performChange());
         }
 
         [BackgroundDependencyLoader]
@@ -238,9 +203,18 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             // create local font store and import those files
             localFontStore = new KaraokeLocalFontStore(fontManager);
             fontStore.AddStore(localFontStore);
+
+            Current.BindValueChanged(e =>
+            {
+                var newFont = e.NewValue;
+                familyProperty.Current.Value = newFont.Family;
+                weightProperty.Current.Value = newFont.Weight;
+                fontSizeProperty.Current.Value = newFont.Size;
+                fixedWidthCheckbox.Current.Value = newFont.FixedWidth;
+            }, true);
         }
 
-        private void previewChange()
+        private void performChange()
         {
             var fontUsage = generateFontUsage();
 
@@ -249,6 +223,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             localFontStore.AddFont(fontUsage);
 
             previewText.Font = fontUsage;
+
+            // write-back the value.
+            Current.Value = fontUsage;
         }
 
         private FontUsage generateFontUsage()
