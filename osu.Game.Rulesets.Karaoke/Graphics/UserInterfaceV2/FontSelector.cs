@@ -118,7 +118,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                                             {
                                                 new Dimension(),
                                                 new Dimension(GridSizeMode.Absolute, 48),
-                                                new Dimension(GridSizeMode.Absolute, 64),
                                             },
                                             Content = new[]
                                             {
@@ -138,25 +137,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                                                         RelativeSizeAxes = Axes.X,
                                                         Padding = new MarginPadding(10),
                                                         LabelText = "FixedWidth",
-                                                    },
-                                                },
-                                                new Drawable[]
-                                                {
-                                                    // OK Button.
-                                                    new TriangleButton
-                                                    {
-                                                        Name = "OK Button",
-                                                        RelativeSizeAxes = Axes.X,
-                                                        Padding = new MarginPadding(10),
-                                                        Text = "OK",
-                                                        Height = 64,
-                                                        Action = () =>
-                                                        {
-                                                            // set to current value and hide.
-                                                            var font = generateFontUsage();
-                                                            Current.Value = font;
-                                                            Hide();
-                                                        }
                                                     },
                                                 }
                                             }
@@ -200,7 +180,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 
             familyProperty.Current.BindValueChanged(x =>
             {
-                previewChange();
+                performChange();
 
                 // re-calculate if family changed.
                 string[] weight = fonts.Where(f => f.Family == x.NewValue).Select(f => f.Weight).Where(s => !string.IsNullOrEmpty(s)).Distinct().ToArray();
@@ -210,9 +190,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                 // set to first or empty if change new family.
                 weightProperty.Current.Value = weight.FirstOrDefault();
             });
-            weightProperty.Current.BindValueChanged(_ => previewChange());
-            fontSizeProperty.Current.BindValueChanged(_ => previewChange());
-            fixedWidthCheckbox.Current.BindValueChanged(_ => previewChange());
+            weightProperty.Current.BindValueChanged(_ => performChange());
+            fontSizeProperty.Current.BindValueChanged(_ => performChange());
+            fixedWidthCheckbox.Current.BindValueChanged(_ => performChange());
         }
 
         [BackgroundDependencyLoader]
@@ -234,7 +214,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
             }, true);
         }
 
-        private void previewChange()
+        private void performChange()
         {
             var fontUsage = generateFontUsage();
 
@@ -243,6 +223,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
             localFontStore.AddFont(fontUsage);
 
             previewText.Font = fontUsage;
+
+            // write-back the value.
+            Current.Value = fontUsage;
         }
 
         private FontUsage generateFontUsage()
