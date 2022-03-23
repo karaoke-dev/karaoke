@@ -144,7 +144,10 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             }
 
             public Popover GetPopover()
-                => new FontSelectorPopover(bindableFontUsage ?? Current);
+            {
+                // note: should return BindableFontUsage first for restrict the size range in the FontSelector
+                return new FontSelectorPopover(bindableFontUsage ?? Current);
+            }
         }
 
         internal class FontSelectorPopover : OsuPopover
