@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
-using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics;
@@ -26,12 +25,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             RelativeSizeAxes = Axes.X,
         };
 
-        internal class FontSelectionButton : CompositeDrawable, IHasCurrentValue<FontUsage>, IHasPopover
+        private class FontSelectionButton : CompositeDrawable, IHasCurrentValue<FontUsage>, IHasPopover
         {
             private const float height = 30;
-
-            [Resolved(canBeNull: true)]
-            protected OsuGame Game { get; private set; }
 
             private readonly BindableWithCurrent<FontUsage> current = new();
             private BindableFontUsage bindableFontUsage;
@@ -150,7 +146,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             }
         }
 
-        internal class FontSelectorPopover : OsuPopover
+        private class FontSelectorPopover : OsuPopover
         {
             public FontSelectorPopover(Bindable<FontUsage> bindableFontUsage)
             {
