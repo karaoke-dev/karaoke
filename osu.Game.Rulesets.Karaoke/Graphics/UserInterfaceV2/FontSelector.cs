@@ -231,7 +231,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                 weightProperty.Current.Value = newFont.Weight;
                 fontSizeProperty.Current.Value = newFont.Size;
                 fixedWidthCheckbox.Current.Value = newFont.FixedWidth;
-            });
+            }, true);
         }
 
         private void previewChange()
