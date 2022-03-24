@@ -54,7 +54,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                             RequestSelection = item =>
                             {
                                 Current.Value = item;
-                                Hide();
                             },
                             Items = { BindTarget = languages }
                         }
