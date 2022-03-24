@@ -12,7 +12,6 @@ using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -38,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         }
 
         [BackgroundDependencyLoader]
-        private void load(DialogOverlay dialogOverlay, LanguageSelectionDialog languageSelectionDialog)
+        private void load()
         {
             Add(new SectionsContainer<Container>
             {
@@ -53,24 +52,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                     },
                 }
             });
-
-            // ask only once if contains no language after switch to translate editor.
-            bool alreadyAsked;
-            languagesChangeHandler.Languages.BindCollectionChanged((_, _) =>
-            {
-                alreadyAsked = true;
-
-                if (!languagesChangeHandler.Languages.Any() && !alreadyAsked)
-                {
-                    dialogOverlay.Push(new CreateNewLanguagePopupDialog(isOk =>
-                    {
-                        if (isOk)
-                        {
-                            languageSelectionDialog.Show();
-                        }
-                    }));
-                }
-            }, true);
         }
 
         protected override void PopIn()

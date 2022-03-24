@@ -4,19 +4,19 @@
 using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions;
+using osu.Framework.Graphics.Cursor;
+using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
 {
-    public class LanguageInfo : SubInfo
+    public class LanguageInfo : SubInfo, IHasPopover
     {
-        [Resolved]
-        private LanguageSelectionDialog languageSelectionDialog { get; set; }
-
         private readonly Bindable<CultureInfo> languageBindable = new();
 
         public LanguageInfo(Lyric lyric)
@@ -46,10 +46,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
 
         protected override bool OnClick(ClickEvent e)
         {
-            languageSelectionDialog.Current = Lyric.LanguageBindable;
-            languageSelectionDialog.Show();
+            this.ShowPopover();
 
             return base.OnClick(e);
         }
+
+        public Popover GetPopover()
+            => new LanguageSelectorPopover(languageBindable);
     }
 }
