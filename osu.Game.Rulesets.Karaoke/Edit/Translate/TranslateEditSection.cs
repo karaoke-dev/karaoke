@@ -10,12 +10,10 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages;
 using osu.Game.Rulesets.Karaoke.Edit.Translate.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -32,8 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         private readonly LanguageDropdown languageDropdown;
         private readonly GridContainer translateGrid;
 
-        public readonly Bindable<CultureInfo> NewLanguage = new();
-
         [Cached(typeof(IBindable<CultureInfo>))]
         private readonly IBindable<CultureInfo> currentLanguage = new Bindable<CultureInfo>();
 
@@ -42,12 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
         [Resolved]
         private ITranslateInfoProvider translateInfoProvider { get; set; }
-
-        [Resolved]
-        protected DialogOverlay DialogOverlay { get; private set; }
-
-        [Resolved]
-        protected LanguageSelectionDialog LanguageSelectionDialog { get; private set; }
 
         public TranslateEditSection()
         {
@@ -111,35 +101,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                                                 RelativeSizeAxes = Axes.X,
                                             },
                                             null,
-                                            new IconButton
+                                            new CreateNewLanguageButton
                                             {
                                                 Y = 5,
-                                                Icon = FontAwesome.Solid.Plus,
-                                                Action = () =>
-                                                {
-                                                    LanguageSelectionDialog.Show();
-                                                }
                                             },
                                             null,
-                                            new IconButton
+                                            new RemoveLanguageButton
                                             {
                                                 Y = 5,
-                                                Icon = FontAwesome.Solid.Trash,
-                                                Action = () =>
-                                                {
-                                                    if (languagesChangeHandler.IsLanguageContainsTranslate(currentLanguage.Value))
-                                                    {
-                                                        DialogOverlay.Push(new DeleteLanguagePopupDialog(currentLanguage.Value, isOk =>
-                                                        {
-                                                            if (isOk)
-                                                                languagesChangeHandler.Remove(currentLanguage.Value);
-                                                        }));
-                                                    }
-                                                    else
-                                                    {
-                                                        languagesChangeHandler.Remove(currentLanguage.Value);
-                                                    }
-                                                }
                                             },
                                         }
                                     }
@@ -204,18 +173,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             };
 
             currentLanguage.BindTo(languageDropdown.Current);
-
-            NewLanguage.BindValueChanged(e =>
-            {
-                languagesChangeHandler.Add(e.NewValue);
-            });
         }
 
         [BackgroundDependencyLoader]
         private void load(OverlayColourProvider colourProvider)
         {
-            LanguageSelectionDialog.Current = NewLanguage;
-
             languageDropdown.ItemSource = languagesChangeHandler.Languages;
 
             timeSectionBackground.Colour = colourProvider.Background6;
@@ -223,12 +185,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 
             translateGrid.RowDimensions = translateInfoProvider.TranslatableLyrics.Select(_ => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
             translateGrid.Content = createContent();
-        }
-
-        protected override void Dispose(bool isDisposing)
-        {
-            NewLanguage.UnbindAll();
-            base.Dispose(isDisposing);
         }
 
         private Drawable[][] createContent()

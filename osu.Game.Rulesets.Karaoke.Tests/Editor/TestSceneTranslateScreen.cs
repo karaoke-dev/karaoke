@@ -10,7 +10,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Edit.Translate;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
@@ -36,7 +35,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         }
 
         private DialogOverlay dialogOverlay;
-        private LanguageSelectionDialog languageSelectionDialog;
 
         [BackgroundDependencyLoader]
         private void load()
@@ -45,11 +43,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             {
                 Content,
                 dialogOverlay = new DialogOverlay(),
-                languageSelectionDialog = new LanguageSelectionDialog()
             });
 
             Dependencies.Cache(dialogOverlay);
-            Dependencies.Cache(languageSelectionDialog);
         }
     }
 }
