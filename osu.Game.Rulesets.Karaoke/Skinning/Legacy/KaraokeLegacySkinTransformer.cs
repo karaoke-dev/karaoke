@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
         private class TempLegacySkin : LegacySkin
         {
             public TempLegacySkin(SkinInfo skin)
-                : base(skin, null, null, default(string))
+                : base(skin, null, null)
             {
             }
         }
@@ -109,10 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 Files = Resources = new NamespacedResourceStore<byte[]>(store, $"Skin/{skinName}");
             }
 
-            public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore)
-            {
-                throw new NotImplementedException();
-            }
+            public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
 
             public AudioManager AudioManager => null;
             public IResourceStore<byte[]> Files { get; }

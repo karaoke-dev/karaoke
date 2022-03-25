@@ -1,7 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.IO;
 using NUnit.Framework;
 using osu.Framework.Audio;
@@ -52,10 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Resources
                 Files = Resources = new NamespacedResourceStore<byte[]>(new DllResourceStore(GetType().Assembly), $"Resources/{skinName}");
             }
 
-            public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore)
-            {
-                throw new NotImplementedException();
-            }
+            public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
 
             public AudioManager AudioManager => null;
             public IResourceStore<byte[]> Files { get; }

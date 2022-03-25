@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
+using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
@@ -28,8 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         public readonly List<IGroup> Groups = new();
         public readonly List<IMappingRole> DefaultMappingRoles = new();
 
-        public KaraokeBeatmapSkin(SkinInfo skin, IStorageResourceProvider resources, Stream configurationStream = null)
-            : base(skin, resources, configurationStream)
+        public KaraokeBeatmapSkin(SkinInfo skin, IStorageResourceProvider resources, IResourceStore<byte[]> storage = null)
+            : base(skin, resources, storage)
         {
             SkinInfo.PerformRead(s =>
             {

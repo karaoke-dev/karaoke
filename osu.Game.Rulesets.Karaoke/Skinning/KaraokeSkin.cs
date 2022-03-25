@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
@@ -45,8 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         private readonly IStorageResourceProvider resources;
 
-        public KaraokeSkin(SkinInfo skin, IStorageResourceProvider resources, Stream configurationStream = null)
-            : base(skin, resources, configurationStream)
+        public KaraokeSkin(SkinInfo skin, IStorageResourceProvider resources, IResourceStore<byte[]> storage = null)
+            : base(skin, resources, storage)
         {
             this.resources = resources;
 
