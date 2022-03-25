@@ -12,7 +12,10 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <returns></returns>
         public static CultureInfo[] GetAvailableLanguages()
-            => CultureInfo.GetCultures(CultureTypes.NeutralCultures);
+        {
+            // todo: should make sure that all the language's LCID or ISC code are not duplicated.
+            return CultureInfo.GetCultures(CultureTypes.NeutralCultures);
+        }
 
         public static bool IsLanguage(CultureInfo cultureInfo)
             => (cultureInfo.CultureTypes & CultureTypes.NeutralCultures) != 0;

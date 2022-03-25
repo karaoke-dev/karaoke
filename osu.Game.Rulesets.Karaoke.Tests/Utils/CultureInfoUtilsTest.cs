@@ -25,15 +25,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         {
             var languages = CultureInfoUtils.GetAvailableLanguages();
 
-            int languageAmount = languages.Length;
             int uniqueLcidAmount = languages.Select(x => x.LCID).Where(x => x > 0).Distinct().Count();
             int uniqueTwoLetterIsoLanguageNameAmount = languages.Select(x => x.TwoLetterISOLanguageName).Where(x => !string.IsNullOrEmpty(x)).Distinct().Count();
             int uniqueThreeLetterIsoLanguageNameAmount = languages.Select(x => x.ThreeLetterISOLanguageName).Where(x => !string.IsNullOrEmpty(x)).Distinct().Count();
 
-            // we should make sure that all the language code is not duplicated.
-            //Assert.AreEqual(languageAmount, uniqueLcidAmount);
-            //Assert.AreEqual(languageAmount, uniqueTwoLetterIsoLanguageNameAmount);
-            //Assert.AreEqual(languageAmount, uniqueThreeLetterIsoLanguageNameAmount);
+            // todo: we should make sure that all the language code is not duplicated.
+            Assert.AreEqual(160, uniqueLcidAmount);
+            Assert.AreEqual(244, uniqueTwoLetterIsoLanguageNameAmount);
+            Assert.AreEqual(244, uniqueThreeLetterIsoLanguageNameAmount);
         }
 
         [TestCase("zh-Hans", true)] // 中文（简体）, 4
