@@ -10,6 +10,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
 {
@@ -35,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
                 Height = 30;
                 Action = this.ShowPopover;
 
-                Current.BindValueChanged(e => Text = e.NewValue.DisplayName);
+                Current.BindValueChanged(e => Text = CultureInfoUtils.GetLanguageDisplayText(e.NewValue));
             }
 
             public Popover GetPopover()
