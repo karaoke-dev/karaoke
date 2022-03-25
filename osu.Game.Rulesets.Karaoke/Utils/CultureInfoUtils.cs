@@ -21,6 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             => (cultureInfo.CultureTypes & CultureTypes.NeutralCultures) != 0;
 
         public static string GetLanguageDisplayText(CultureInfo cultureInfo)
-            => cultureInfo.NativeName;
+            => cultureInfo?.NativeName ?? "None";
     }
 }
