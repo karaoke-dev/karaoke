@@ -9,10 +9,10 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Game.Graphics.UserInterface;
+using osu.Framework.Graphics.Shapes;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osuTK;
 
@@ -53,9 +53,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
             });
 
             var fillFlowContainer = Content as FillFlowContainer;
-            fillFlowContainer?.Insert(int.MaxValue, new CreateLanguageButton
+            fillFlowContainer?.Insert(int.MaxValue, new CreateLanguageSubsection
             {
-                Text = "Add new language",
+                RelativeSizeAxes = Axes.X,
+                Height = 300,
                 LanguageSelected = addCultureInfo
             });
 
@@ -122,27 +123,50 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
             }
         }
 
-        public class CreateLanguageButton : OsuButton
+        private class CreateLanguageSubsection : CompositeDrawable
         {
-            [Resolved]
-            protected LanguageSelectionDialog LanguageSelectionDialog { get; private set; }
+            private const int padding = 15;
 
             private readonly Bindable<CultureInfo> current = new();
 
             public Action<CultureInfo> LanguageSelected;
 
-            public CreateLanguageButton()
+            public CreateLanguageSubsection()
             {
-                RelativeSizeAxes = Axes.X;
-                Content.CornerRadius = 15;
-
-                Action = () =>
+                current.BindValueChanged(e =>
                 {
-                    LanguageSelectionDialog.Current = current;
-                    LanguageSelectionDialog.Show();
-                };
+                    var newLanguage = e.NewValue;
+                    if (newLanguage == null)
+                        return;
 
-                current.BindValueChanged(e => LanguageSelected?.Invoke(e.NewValue));
+                    LanguageSelected?.Invoke(newLanguage);
+                    current.Value = null;
+                });
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(OverlayColourProvider colourProvider)
+            {
+                Masking = true;
+                CornerRadius = 15;
+                InternalChildren = new Drawable[]
+                {
+                    new Box
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = colourProvider.Background3
+                    },
+                    new Container
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Padding = new MarginPadding(padding),
+                        Child = new LanguageSelector
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Current = current
+                        }
+                    }
+                };
             }
         }
     }
