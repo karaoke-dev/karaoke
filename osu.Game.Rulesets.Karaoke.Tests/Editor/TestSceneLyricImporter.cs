@@ -13,7 +13,6 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric;
 using osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
 using osu.Game.Rulesets.Karaoke.Tests.Screens;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -36,7 +35,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         }
 
         private DialogOverlay dialogOverlay;
-        private LanguageSelectionDialog languageSelectionDialog;
 
         public TestSceneLyricImporter()
         {
@@ -50,12 +48,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             {
                 Content,
                 dialogOverlay = new DialogOverlay(),
-                languageSelectionDialog = new LanguageSelectionDialog(),
             });
 
             Dependencies.Cache(dialogOverlay);
-            Dependencies.Cache(languageSelectionDialog);
-
             Dependencies.Cache(new EditorClock());
         }
 
