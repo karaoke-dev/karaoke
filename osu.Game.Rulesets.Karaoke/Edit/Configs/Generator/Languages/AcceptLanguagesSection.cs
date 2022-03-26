@@ -10,10 +10,12 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
@@ -29,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
         {
             bindableCultureInfo.BindValueChanged(e =>
             {
-                RemoveAll(x => x is RemovableLabelledLanguageSelector);
+                RemoveAll(x => x is SelectedLanguage);
 
                 for (int i = 0; i < e.NewValue.Length; i++)
                 {
@@ -42,11 +44,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
                         addCultureInfo(c.NewValue);
                     });
 
-                    Add(new RemovableLabelledLanguageSelector
+                    Add(new SelectedLanguage
                     {
-                        Label = $"#{i}",
-                        Description = "Language detector will only use those selected language.",
-                        Current = bindable,
+                        RelativeSizeAxes = Axes.X,
+                        Text = $"#{i} - {CultureInfoUtils.GetLanguageDisplayText(cultureInfo)}",
                         OnDeleteButtonClick = () => removeCultureInfo(cultureInfo)
                     });
                 }
@@ -83,43 +84,64 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
             bindableCultureInfo.Value = languageList.ToArray();
         }
 
-        private class RemovableLabelledLanguageSelector : LabelledLanguageSelector
+        // todo: will use rearrangeable list view for able to change the order.
+        private class SelectedLanguage : CompositeDrawable
         {
             private const float delete_button_size = 20f;
+            private const int padding = 15;
 
             public Action OnDeleteButtonClick;
 
-            public RemovableLabelledLanguageSelector()
+            private readonly OsuSpriteText langaugeSpriteText;
+            private readonly Box background;
+
+            public SelectedLanguage()
             {
-                if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
-                    return;
+                Height = 32;
+                Masking = true;
+                CornerRadius = 15;
 
-                // change padding to place delete button.
-                fillFlowContainer.Padding = new MarginPadding
+                InternalChildren = new Drawable[]
                 {
-                    Horizontal = CONTENT_PADDING_HORIZONTAL,
-                    Vertical = CONTENT_PADDING_VERTICAL,
-                    Right = CONTENT_PADDING_HORIZONTAL + delete_button_size + CONTENT_PADDING_HORIZONTAL,
-                };
-
-                // add delete button.
-                AddInternal(new Container
-                {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
-                    Padding = new MarginPadding
+                    background = new Box
                     {
-                        Top = CONTENT_PADDING_VERTICAL + 10,
-                        Right = CONTENT_PADDING_HORIZONTAL,
+                        RelativeSizeAxes = Axes.Both,
                     },
-                    Child = new DeleteIconButton
+                    langaugeSpriteText = new OsuSpriteText
                     {
-                        Anchor = Anchor.TopRight,
-                        Origin = Anchor.TopRight,
+                        Anchor = Anchor.CentreLeft,
+                        Origin = Anchor.CentreLeft,
+                        RelativeSizeAxes = Axes.X,
+                        Padding = new MarginPadding
+                        {
+                            Left = padding,
+                            Right = padding * 2 + delete_button_size,
+                        },
+                        Truncate = true,
+                    },
+                    new DeleteIconButton
+                    {
+                        Anchor = Anchor.CentreRight,
+                        Origin = Anchor.CentreRight,
+                        Margin = new MarginPadding
+                        {
+                            Right = padding,
+                        },
                         Size = new Vector2(delete_button_size),
                         Action = () => OnDeleteButtonClick?.Invoke(),
                     }
-                });
+                };
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(OverlayColourProvider colourProvider)
+            {
+                background.Colour = colourProvider.Background3;
+            }
+
+            public string Text
+            {
+                set => langaugeSpriteText.Text = value;
             }
         }
 
