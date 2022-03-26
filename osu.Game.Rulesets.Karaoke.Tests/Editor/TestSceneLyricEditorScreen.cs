@@ -11,7 +11,6 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
@@ -25,9 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         protected override LyricEditorScreen CreateEditorScreen() => new();
 
         private DialogOverlay dialogOverlay;
-        private LanguageSelectionDialog languageSelectionDialog;
         private LyricCheckerManager lyricCheckManager;
-        private KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager;
 
         [BackgroundDependencyLoader]
         private void load()
@@ -36,14 +33,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             {
                 Content,
                 dialogOverlay = new DialogOverlay(),
-                languageSelectionDialog = new LanguageSelectionDialog(),
                 lyricCheckManager = new LyricCheckerManager(),
             });
 
             Dependencies.Cache(dialogOverlay);
-            Dependencies.Cache(languageSelectionDialog);
             Dependencies.Cache(lyricCheckManager);
-            Dependencies.Cache(lyricEditorConfigManager = new KaraokeRulesetLyricEditorConfigManager());
+            Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
             Dependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
         }
 
