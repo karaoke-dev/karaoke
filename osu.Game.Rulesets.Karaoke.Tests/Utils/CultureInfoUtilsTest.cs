@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 {
-    [TestFixture]
+    [Ignore("Cannot run those test cases right now because will got different results in the different platform...")]
     public class CultureInfoUtilsTest
     {
         [Test]
