@@ -9,6 +9,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
@@ -25,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 
         public LanguageSelector()
         {
-            var languages = new BindableList<CultureInfo>(CultureInfo.GetCultures(CultureTypes.NeutralCultures));
+            var languages = new BindableList<CultureInfo>(CultureInfoUtils.GetAvailableLanguages());
 
             LanguageSelectionSearchTextBox filter;
             RearrangeableLanguageListContainer languageList;
@@ -97,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                 };
 
                 protected override void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, CultureInfo model)
-                    => textFlowContainer.AddText(model.DisplayName);
+                    => textFlowContainer.AddText(CultureInfoUtils.GetLanguageDisplayText(model));
             }
         }
     }

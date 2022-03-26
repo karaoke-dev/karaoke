@@ -3,6 +3,7 @@
 
 using System.Globalization;
 using osu.Framework.Bindables;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Bindables
 {
@@ -43,6 +44,6 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
 
         protected override Bindable<CultureInfo> CreateInstance() => new BindableCultureInfo();
 
-        public override string ToString() => Value?.Name;
+        public override string ToString() => CultureInfoUtils.GetLanguageDisplayText(Value);
     }
 }

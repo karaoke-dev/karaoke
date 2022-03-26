@@ -12,6 +12,7 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
 {
@@ -41,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
             BadgeColour = colours.BlueDarker;
 
             void updateBadgeText(CultureInfo language)
-                => BadgeText = language?.DisplayName ?? "None";
+                => BadgeText = CultureInfoUtils.GetLanguageDisplayText(language);
         }
 
         protected override bool OnClick(ClickEvent e)

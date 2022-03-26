@@ -4,12 +4,13 @@
 using System.Globalization;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
 {
     public class LanguageDropdown : OsuDropdown<CultureInfo>
     {
         protected override LocalisableString GenerateItemText(CultureInfo item)
-            => item.DisplayName;
+            => CultureInfoUtils.GetLanguageDisplayText(item);
     }
 }
