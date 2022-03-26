@@ -91,11 +91,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers
 
         private class SingerScreenHeader : OverlayHeader
         {
-            protected override OverlayTitle CreateTitle() => new TranslateScreenTitle();
+            protected override OverlayTitle CreateTitle() => new SingerScreenTitle();
 
-            private class TranslateScreenTitle : OverlayTitle
+            private class SingerScreenTitle : OverlayTitle
             {
-                public TranslateScreenTitle()
+                public SingerScreenTitle()
                 {
                     Title = "singer";
                     Description = "create singer of your beatmap";
