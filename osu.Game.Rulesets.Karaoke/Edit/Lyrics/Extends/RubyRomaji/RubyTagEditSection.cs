@@ -15,11 +15,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
     {
         protected override string Title => "Ruby";
 
+        [Resolved]
+        private ILyricRubyTagsChangeHandler rubyTagsChangeHandler { get; set; }
+
         protected override IBindableList<RubyTag> GetBindableTextTags(Lyric lyric)
             => lyric.RubyTagsBindable;
 
         protected override LabelledTextTagTextBox<RubyTag> CreateLabelledTextTagTextBox(RubyTag textTag)
             => new LabelledRubyTagTextBox(Lyric, textTag);
+
+        protected override void AddTextTag(RubyTag textTag)
+            => rubyTagsChangeHandler.Add(textTag);
 
         protected class LabelledRubyTagTextBox : LabelledTextTagTextBox<RubyTag>
         {
