@@ -23,6 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         public Func<Dictionary<Lyric, string>> StartSelecting { get; set; }
 
+        [Resolved]
+        private ILyricSelectionState lyricSelectionState { get; set; }
+
         protected SelectLyricButton()
         {
             RelativeSizeAxes = Axes.X;
@@ -30,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, ILyricSelectionState lyricSelectionState)
+        private void load(OsuColour colours)
         {
             selecting = lyricSelectionState.Selecting.GetBoundCopy();
             selecting.BindValueChanged(e =>
@@ -42,20 +45,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
             Action = () =>
             {
-                if (selecting.Value)
+                if (!selecting.Value)
                 {
-                    lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
+                    StartSelectingLyrics();
                 }
                 else
                 {
-                    // update disabled lyrics list.
-                    var disableLyrics = StartSelecting?.Invoke();
-                    lyricSelectionState.UpdateDisableLyricList(disableLyrics);
-
-                    // then start selecting.
-                    lyricSelectionState.StartSelecting();
+                    EndSelectingLyrics();
                 }
             };
+        }
+
+        protected virtual void StartSelectingLyrics()
+        {
+            // update disabled lyrics list.
+            var disableLyrics = StartSelecting?.Invoke();
+            lyricSelectionState.UpdateDisableLyricList(disableLyrics);
+
+            // then start selecting.
+            lyricSelectionState.StartSelecting();
+        }
+
+        protected virtual void EndSelectingLyrics()
+        {
+            lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
         }
     }
 }

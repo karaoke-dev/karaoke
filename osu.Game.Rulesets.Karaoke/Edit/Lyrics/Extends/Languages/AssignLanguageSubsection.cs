@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Globalization;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -12,8 +11,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
-using osu.Game.Rulesets.Objects;
-using osu.Game.Screens.Edit;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 {
@@ -21,24 +19,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
     {
         protected override string StandardText => "Change language";
 
-        protected override string SelectingText => "Cancel change language";
+        protected override string SelectingText => $"Cancel change language({CultureInfoUtils.GetLanguageDisplayText(bindableLanguage.Value)})";
 
         private readonly Bindable<CultureInfo> bindableLanguage = new();
 
-        private readonly List<HitObject> selectedLyrics = new();
-
         [BackgroundDependencyLoader]
-        private void load(ILyricSelectionState lyricSelectionState, ILyricLanguageChangeHandler lyricLanguageChangeHandler, ILyricCaretState lyricCaretState, EditorBeatmap beatmap)
+        private void load(ILyricSelectionState lyricSelectionState, ILyricLanguageChangeHandler lyricLanguageChangeHandler)
         {
             lyricSelectionState.Action = e =>
             {
                 if (e != LyricEditorSelectingAction.Apply)
+                {
+                    bindableLanguage.Value = null;
                     return;
+                }
 
-                selectedLyrics.Clear();
-                selectedLyrics.AddRange(beatmap.SelectedHitObjects);
-
-                this.ShowPopover();
+                lyricLanguageChangeHandler.SetLanguage(bindableLanguage.Value);
+                bindableLanguage.Value = null;
             };
 
             bindableLanguage.BindValueChanged(e =>
@@ -47,17 +44,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
                 if (language == null)
                     return;
 
-                // Note: because selected hit objects was cleared after end of selection.
-                // So should re-add them into the selection list again.
-                beatmap.SelectedHitObjects.AddRange(selectedLyrics);
-                lyricLanguageChangeHandler.SetLanguage(language);
-
                 this.HidePopover();
-                bindableLanguage.Value = null;
-
-                // after apply the language, should make sure that should sync the selected hit object again.
-                lyricCaretState.SyncSelectedHitObjectWithCaret();
+                StartSelectingLyrics();
             });
+        }
+
+        protected override void StartSelectingLyrics()
+        {
+            // before start selecting, we should make sure that language has been assigned.
+            if (bindableLanguage.Value == null)
+            {
+                this.ShowPopover();
+                return;
+            }
+
+            base.StartSelectingLyrics();
         }
 
         public Popover GetPopover()
