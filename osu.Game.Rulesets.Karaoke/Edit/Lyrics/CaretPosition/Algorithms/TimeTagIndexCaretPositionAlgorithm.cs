@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
             // get previous caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
-            var index = getPreviousIndex(currentPosition.Index);
+            var index = TextIndexUtils.GetPreviousIndex(currentPosition.Index);
 
             if (!textIndexMovable(index))
                 return MoveLeft(new TimeTagIndexCaretPosition(currentPosition.Lyric, index));
@@ -70,20 +70,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 return MoveUp(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MaxValue, index.State)));
 
             return new TimeTagIndexCaretPosition(currentPosition.Lyric, index);
-
-            static TextIndex getPreviousIndex(TextIndex currentIndex)
-            {
-                int previousIndex = TextIndexUtils.ToStringIndex(currentIndex) - 1;
-                var previousState = TextIndexUtils.ReverseState(currentIndex.State);
-                return new TextIndex(previousIndex, previousState);
-            }
         }
 
         public override TimeTagIndexCaretPosition MoveRight(TimeTagIndexCaretPosition currentPosition)
         {
             // get next caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
-            var index = getNextIndex(currentPosition.Index);
+            var index = TextIndexUtils.GetNextIndex(currentPosition.Index);
 
             if (!textIndexMovable(index))
                 return MoveRight(new TimeTagIndexCaretPosition(currentPosition.Lyric, index));
@@ -92,13 +85,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
                 return MoveDown(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MinValue, index.State)));
 
             return new TimeTagIndexCaretPosition(currentPosition.Lyric, index);
-
-            static TextIndex getNextIndex(TextIndex currentIndex)
-            {
-                int nextIndex = TextIndexUtils.ToStringIndex(currentIndex);
-                var nextState = TextIndexUtils.ReverseState(currentIndex.State);
-                return new TextIndex(nextIndex, nextState);
-            }
         }
 
         public override TimeTagIndexCaretPosition MoveToFirst()
