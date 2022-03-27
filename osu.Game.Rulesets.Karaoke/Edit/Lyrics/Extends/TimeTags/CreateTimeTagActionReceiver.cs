@@ -22,12 +22,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
         public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
         {
-            if (lyricCaretState.BindableCaretPosition.Value is not TimeTagIndexCaretPosition position)
-                throw new NotSupportedException(nameof(position));
+            var action = e.Action;
+            var caretPosition = lyricCaretState.BindableCaretPosition.Value;
 
-            var index = position.Index;
+            if (caretPosition is TimeTagIndexCaretPosition timeTagIndexCaretPosition)
+                return processCreateTimeTagAction(timeTagIndexCaretPosition, action);
 
-            switch (e.Action)
+            if (caretPosition is TimeTagCaretPosition timeTagCaretPosition)
+                return processModifyTimeTagAction(timeTagCaretPosition, action);
+
+            throw new NotSupportedException(nameof(caretPosition));
+        }
+
+        private bool processCreateTimeTagAction(TimeTagIndexCaretPosition timeTagIndexCaretPosition, KaraokeEditAction action)
+        {
+            var index = timeTagIndexCaretPosition.Index;
+
+            switch (action)
             {
                 case KaraokeEditAction.Create:
                     lyricTimeTagsChangeHandler.AddByPosition(index);
@@ -40,6 +51,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 default:
                     return false;
             }
+        }
+
+        private bool processModifyTimeTagAction(TimeTagCaretPosition timeTagCaretPosition, KaraokeEditAction action)
+        {
+            // todo: implement the action.
+            return false;
         }
 
         public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
