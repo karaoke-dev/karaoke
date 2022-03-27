@@ -22,9 +22,9 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
-    public abstract class TextTagEditSection<T> : Section where T : class, ITextTag, new()
+    public abstract class TextTagEditSection<TTextTag> : Section where TTextTag : class, ITextTag, new()
     {
-        protected readonly IBindableList<T> TextTags = new BindableList<T>();
+        protected readonly IBindableList<TTextTag> TextTags = new BindableList<TTextTag>();
 
         protected Lyric Lyric { get; private set; }
 
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             // create list of text-tag text-box if bindable changed.
             TextTags.BindCollectionChanged((_, _) =>
             {
-                RemoveAll(x => x is LabelledTextTagTextBox<T>);
+                RemoveAll(x => x is LabelledTextTagTextBox<TTextTag>);
                 AddRange(TextTags.Select(x =>
                 {
                     string relativeToLyricText = TextTagUtils.GetTextFromLyric(x, Lyric?.Text);
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
                 Schedule(() =>
                 {
-                    var firstTextTagTextBox = Children.OfType<LabelledTextTagTextBox<T>>().FirstOrDefault();
+                    var firstTextTagTextBox = Children.OfType<LabelledTextTagTextBox<TTextTag>>().FirstOrDefault();
                     if (firstTextTagTextBox == null)
                         return;
 
@@ -93,15 +93,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             });
         }
 
-        protected abstract IBindableList<T> GetBindableTextTags(Lyric lyric);
+        protected abstract IBindableList<TTextTag> GetBindableTextTags(Lyric lyric);
 
-        protected abstract LabelledTextTagTextBox<T> CreateLabelledTextTagTextBox(T textTag);
+        protected abstract LabelledTextTagTextBox<TTextTag> CreateLabelledTextTagTextBox(TTextTag textTag);
 
-        protected abstract void AddTextTag(T textTag);
+        protected abstract void AddTextTag(TTextTag textTag);
 
         private class CreateNewButton : OsuButton, IHasPopover
         {
-            public new Action<T> Action;
+            public new Action<TTextTag> Action;
 
             [Resolved]
             private ILyricCaretState lyricCaretState { get; set; }
@@ -129,7 +129,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
         private class CreateNewPopover : OsuPopover
         {
-            public Action<T> Action;
+            public Action<TTextTag> Action;
 
             private readonly LabelledNumberBox labelledStartIndexNumberBox;
             private readonly LabelledNumberBox labelledEndIndexNumberBox;
@@ -180,10 +180,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
             private string getTextTagLabel()
             {
-                if (typeof(T) == typeof(RubyTag))
+                if (typeof(TTextTag) == typeof(RubyTag))
                     return "Ruby";
 
-                if (typeof(T) == typeof(RomajiTag))
+                if (typeof(TTextTag) == typeof(RomajiTag))
                     return "Romaji";
 
                 return "Text";
@@ -191,10 +191,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
             private string getTextTagDescription()
             {
-                if (typeof(T) == typeof(RubyTag))
+                if (typeof(TTextTag) == typeof(RubyTag))
                     return "Please enter the ruby.";
 
-                if (typeof(T) == typeof(RomajiTag))
+                if (typeof(TTextTag) == typeof(RomajiTag))
                     return "Please enter the romaji.";
 
                 return "Text";
@@ -202,10 +202,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
             private string getPlaceholderText()
             {
-                if (typeof(T) == typeof(RubyTag))
+                if (typeof(TTextTag) == typeof(RubyTag))
                     return "Ruby";
 
-                if (typeof(T) == typeof(RomajiTag))
+                if (typeof(TTextTag) == typeof(RomajiTag))
                     return "Romaji";
 
                 return "Text";
@@ -241,7 +241,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     return;
                 }
 
-                Action?.Invoke(new T
+                Action?.Invoke(new TTextTag
                 {
                     StartIndex = Math.Min(startIndex, endIndex),
                     EndIndex = Math.Max(startIndex, endIndex),
