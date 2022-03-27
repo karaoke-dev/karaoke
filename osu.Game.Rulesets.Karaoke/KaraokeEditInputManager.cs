@@ -62,10 +62,10 @@ namespace osu.Game.Rulesets.Karaoke
         [Description("Shift the time-tag right.")]
         ShiftTheTimeTagRight,
 
-        [Description("Shift the time-tag left.")]
+        [Description("Shift the time-tag state left.")]
         ShiftTheTimeTagStateLeft,
 
-        [Description("Shift the time-tag right.")]
+        [Description("Shift the time-tag state right.")]
         ShiftTheTimeTagStateRight,
 
         [Description("Set time")]
