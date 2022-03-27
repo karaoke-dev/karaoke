@@ -60,9 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             beatmap.SelectedHitObjects.Clear();
 
             // should add selected lyric back.
-            var caretPosition = lyricCaretState.BindableCaretPosition.Value;
-            if (caretPosition?.Lyric != null)
-                beatmap.SelectedHitObjects.Add(caretPosition.Lyric);
+            lyricCaretState.SyncSelectedHitObjectWithCaret();
         }
 
         public void Select(Lyric lyric)

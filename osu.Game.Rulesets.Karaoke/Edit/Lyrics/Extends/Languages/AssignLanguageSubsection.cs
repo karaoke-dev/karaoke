@@ -3,17 +3,25 @@
 
 using System.Globalization;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
+using osu.Framework.Extensions;
+using osu.Framework.Graphics.Cursor;
+using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 {
-    public class AssignLanguageSubsection : SelectLyricButton
+    public class AssignLanguageSubsection : SelectLyricButton, IHasPopover
     {
         protected override string StandardText => "Change language";
 
-        protected override string SelectingText => "Cancel change language";
+        protected override string SelectingText => $"Cancel change language({CultureInfoUtils.GetLanguageDisplayText(bindableLanguage.Value)})";
+
+        private readonly Bindable<CultureInfo> bindableLanguage = new();
 
         [BackgroundDependencyLoader]
         private void load(ILyricSelectionState lyricSelectionState, ILyricLanguageChangeHandler lyricLanguageChangeHandler)
@@ -21,12 +29,39 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
             lyricSelectionState.Action = e =>
             {
                 if (e != LyricEditorSelectingAction.Apply)
+                {
+                    bindableLanguage.Value = null;
+                    return;
+                }
+
+                lyricLanguageChangeHandler.SetLanguage(bindableLanguage.Value);
+                bindableLanguage.Value = null;
+            };
+
+            bindableLanguage.BindValueChanged(e =>
+            {
+                var language = e.NewValue;
+                if (language == null)
                     return;
 
-                // todo: should have a popover for user to select the language.
-                var language = new CultureInfo("Ja-jp");
-                lyricLanguageChangeHandler.SetLanguage(language);
-            };
+                this.HidePopover();
+                StartSelectingLyrics();
+            });
         }
+
+        protected override void StartSelectingLyrics()
+        {
+            // before start selecting, we should make sure that language has been assigned.
+            if (bindableLanguage.Value == null)
+            {
+                this.ShowPopover();
+                return;
+            }
+
+            base.StartSelectingLyrics();
+        }
+
+        public Popover GetPopover()
+            => new LanguageSelectorPopover(bindableLanguage);
     }
 }
