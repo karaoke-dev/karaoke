@@ -19,5 +19,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         void AddByPosition(TextIndex index);
 
         void RemoveByPosition(TextIndex index);
+
+        TimeTag Shifting(TimeTag timeTag, ShiftingDirection direction, ShiftingType type);
+    }
+
+    public enum ShiftingDirection
+    {
+        Left,
+
+        Right
+    }
+
+    public enum ShiftingType
+    {
+        State,
+
+        Index,
     }
 }

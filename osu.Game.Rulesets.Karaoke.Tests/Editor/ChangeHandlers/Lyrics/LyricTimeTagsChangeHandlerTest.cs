@@ -1,13 +1,16 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Globalization;
+using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
@@ -226,6 +229,214 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 var actualTimeTag = h.TimeTags[0];
                 Assert.AreEqual(new TextIndex(3, TextIndex.IndexState.End), actualTimeTag.Index);
                 Assert.AreEqual(5000, actualTimeTag.Time);
+            });
+        }
+
+        [TestCase(ShiftingDirection.Left, ShiftingType.Index, 1)]
+        [TestCase(ShiftingDirection.Left, ShiftingType.State, 2)]
+        [TestCase(ShiftingDirection.Right, ShiftingType.State, 2)]
+        [TestCase(ShiftingDirection.Right, ShiftingType.Index, 3)]
+        public void TestShifting(ShiftingDirection direction, ShiftingType type, int expectedIndex)
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = new[]
+                {
+                    new TimeTag(new TextIndex(1)),
+                    new TimeTag(new TextIndex(1, TextIndex.IndexState.End)),
+                    new TimeTag(new TextIndex(2), 4000), // target.
+                    new TimeTag(new TextIndex(2, TextIndex.IndexState.End)),
+                    new TimeTag(new TextIndex(3)),
+                }
+            });
+
+            TriggerHandlerChanged(c =>
+            {
+                var lyric = Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Lyric>().First();
+                var targetTimeTag = lyric.TimeTags[2];
+                var actualTimeTag = c.Shifting(targetTimeTag, direction, type);
+
+                Assert.AreEqual(expectedIndex, lyric.TimeTags.IndexOf(actualTimeTag));
+
+                // the property should be the same
+                Assert.AreEqual(targetTimeTag.Time, actualTimeTag.Time);
+            });
+        }
+
+        [TestCase(ShiftingDirection.Left, ShiftingType.Index, 0)]
+        [TestCase(ShiftingDirection.Left, ShiftingType.State, 0)]
+        [TestCase(ShiftingDirection.Right, ShiftingType.State, 0)]
+        [TestCase(ShiftingDirection.Right, ShiftingType.Index, 0)]
+        public void TestShiftingToFirst(ShiftingDirection direction, ShiftingType type, int expectedIndex)
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = new[]
+                {
+                    new TimeTag(new TextIndex(1)), // target.
+                    new TimeTag(new TextIndex(3)),
+                }
+            });
+
+            TriggerHandlerChanged(c =>
+            {
+                var lyric = Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Lyric>().First();
+                var targetTimeTag = lyric.TimeTags[0];
+                var actualTimeTag = c.Shifting(targetTimeTag, direction, type);
+
+                Assert.AreEqual(expectedIndex, lyric.TimeTags.IndexOf(actualTimeTag));
+
+                // the property should be the same
+                Assert.AreEqual(targetTimeTag.Time, actualTimeTag.Time);
+            });
+        }
+
+        [TestCase(ShiftingDirection.Left, ShiftingType.Index, 1)]
+        [TestCase(ShiftingDirection.Left, ShiftingType.State, 1)]
+        [TestCase(ShiftingDirection.Right, ShiftingType.State, 1)]
+        [TestCase(ShiftingDirection.Right, ShiftingType.Index, 1)]
+        public void TestShiftingToLast(ShiftingDirection direction, ShiftingType type, int expectedIndex)
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = new[]
+                {
+                    new TimeTag(new TextIndex(0)),
+                    new TimeTag(new TextIndex(2)), // target.
+                }
+            });
+
+            TriggerHandlerChanged(c =>
+            {
+                var lyric = Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Lyric>().First();
+                var targetTimeTag = lyric.TimeTags[1];
+                var actualTimeTag = c.Shifting(targetTimeTag, direction, type);
+
+                Assert.AreEqual(expectedIndex, lyric.TimeTags.IndexOf(actualTimeTag));
+
+                // the property should be the same
+                Assert.AreEqual(targetTimeTag.Time, actualTimeTag.Time);
+            });
+        }
+
+        [TestCase(ShiftingDirection.Left, ShiftingType.Index, 1)]
+        [TestCase(ShiftingDirection.Left, ShiftingType.State, 1)]
+        [TestCase(ShiftingDirection.Right, ShiftingType.State, 1)]
+        [TestCase(ShiftingDirection.Right, ShiftingType.Index, 1)]
+        public void TestShiftingWithNoDuplicatedTimeTag(ShiftingDirection direction, ShiftingType type, int expectedIndex)
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = new[]
+                {
+                    new TimeTag(new TextIndex(0)),
+                    new TimeTag(new TextIndex(2), 4000), // target.
+                    new TimeTag(new TextIndex(3, TextIndex.IndexState.End)),
+                }
+            });
+
+            TriggerHandlerChanged(c =>
+            {
+                var lyric = Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Lyric>().First();
+                var targetTimeTag = lyric.TimeTags[1];
+                var actualTimeTag = c.Shifting(targetTimeTag, direction, type);
+
+                Assert.AreEqual(expectedIndex, lyric.TimeTags.IndexOf(actualTimeTag));
+
+                // the property should be the same
+                Assert.AreEqual(targetTimeTag.Time, actualTimeTag.Time);
+            });
+        }
+
+        [TestCase(ShiftingDirection.Left, ShiftingType.Index, 0)]
+        [TestCase(ShiftingDirection.Left, ShiftingType.State, 0)]
+        [TestCase(ShiftingDirection.Right, ShiftingType.State, 0)]
+        [TestCase(ShiftingDirection.Right, ShiftingType.Index, 0)]
+        public void TestShiftingWithOneTimeTag(ShiftingDirection direction, ShiftingType type, int expectedIndex)
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = new[]
+                {
+                    new TimeTag(new TextIndex(2), 4000), // target.
+                }
+            });
+
+            TriggerHandlerChanged(c =>
+            {
+                var lyric = Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Lyric>().First();
+                var targetTimeTag = lyric.TimeTags[0];
+                var actualTimeTag = c.Shifting(targetTimeTag, direction, type);
+
+                Assert.AreEqual(expectedIndex, lyric.TimeTags.IndexOf(actualTimeTag));
+
+                // the property should be the same
+                Assert.AreEqual(targetTimeTag.Time, actualTimeTag.Time);
+            });
+        }
+
+        [Ignore("Will be implement if it will increase better UX.")]
+        [TestCase(ShiftingDirection.Left, ShiftingType.State, 1)]
+        [TestCase(ShiftingDirection.Left, ShiftingType.Index, 1)]
+        [TestCase(ShiftingDirection.Right, ShiftingType.State, 3)]
+        [TestCase(ShiftingDirection.Right, ShiftingType.Index, 3)]
+        public void TestShiftingWithSameTextTag(ShiftingDirection direction, ShiftingType type, int expectedIndex)
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = new[]
+                {
+                    new TimeTag(new TextIndex(2), 3000),
+                    new TimeTag(new TextIndex(2), 4000), // target.
+                    new TimeTag(new TextIndex(2), 5000),
+                }
+            });
+
+            TriggerHandlerChanged(c =>
+            {
+                var lyric = Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Lyric>().First();
+                var targetTimeTag = lyric.TimeTags[1];
+                var actualTimeTag = c.Shifting(targetTimeTag, direction, type);
+
+                Assert.AreEqual(expectedIndex, lyric.TimeTags.IndexOf(actualTimeTag));
+
+                // the property should be the same
+                Assert.AreEqual(targetTimeTag.Time, actualTimeTag.Time);
+            });
+        }
+
+        [TestCase(TextIndex.IndexState.Start, ShiftingDirection.Left, ShiftingType.Index)]
+        [TestCase(TextIndex.IndexState.Start, ShiftingDirection.Left, ShiftingType.State)]
+        [TestCase(TextIndex.IndexState.Start, ShiftingDirection.Right, ShiftingType.Index)]
+        [TestCase(TextIndex.IndexState.End, ShiftingDirection.Left, ShiftingType.Index)]
+        [TestCase(TextIndex.IndexState.End, ShiftingDirection.Right, ShiftingType.State)]
+        [TestCase(TextIndex.IndexState.End, ShiftingDirection.Right, ShiftingType.Index)]
+        public void TestShiftingException(TextIndex.IndexState state, ShiftingDirection direction, ShiftingType type)
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "-",
+                TimeTags = new[]
+                {
+                    new TimeTag(new TextIndex(0, state), 5000), // target.
+                }
+            });
+
+            // will have exception because the time-tag cannot move right.
+            TriggerHandlerChanged(c =>
+            {
+                Assert.Catch<ArgumentOutOfRangeException>(() =>
+                {
+                    var lyric = Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Lyric>().First();
+                    var targetTimeTag = lyric.TimeTags[0];
+                    c.Shifting(targetTimeTag, direction, type);
+                });
             });
         }
     }
