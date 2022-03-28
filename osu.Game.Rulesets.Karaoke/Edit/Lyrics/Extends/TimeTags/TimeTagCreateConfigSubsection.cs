@@ -151,7 +151,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 },
                 CreateTimeTagEditMode.Modify => new DescriptionFormat
                 {
-                    Text = "Press [key](move_time_tag_position) to move the time-tag position. Press [key](remove_time_tag) to delete exist time-tag.",
+                    Text = "Press [key](move_time_tag_position) to move the time-tag position. Press press [key](create_time_tag) to create new time-tag and [key](remove_time_tag) to delete exist time-tag.",
                     Keys = new Dictionary<string, InputKey>
                     {
                         {
@@ -167,6 +167,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                                 }
                             }
                         },
+                        { "create_time_tag", new InputKey { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.Create } } },
                         { "remove_time_tag", new InputKey { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.Remove } } }
                     }
                 },
