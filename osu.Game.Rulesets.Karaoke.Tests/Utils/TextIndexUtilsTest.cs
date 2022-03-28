@@ -40,6 +40,32 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(1, TextIndex.IndexState.End, 1, TextIndex.IndexState.Start)]
+        [TestCase(1, TextIndex.IndexState.Start, 0, TextIndex.IndexState.End)]
+        [TestCase(0, TextIndex.IndexState.Start, -1, TextIndex.IndexState.End)] // didn't care about negative value.
+        [TestCase(-1, TextIndex.IndexState.End, -1, TextIndex.IndexState.Start)] // didn't care about negative value.
+        public void TestGetPreviousIndex(int index, TextIndex.IndexState state, int expectedIndex, TextIndex.IndexState expectedState)
+        {
+            var textIndex = new TextIndex(index, state);
+
+            var expected = new TextIndex(expectedIndex, expectedState);
+            var actual = TextIndexUtils.GetPreviousIndex(textIndex);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(0, TextIndex.IndexState.Start, 0, TextIndex.IndexState.End)]
+        [TestCase(0, TextIndex.IndexState.End, 1, TextIndex.IndexState.Start)]
+        [TestCase(-1, TextIndex.IndexState.Start, -1, TextIndex.IndexState.End)] // didn't care about negative value.
+        [TestCase(-1, TextIndex.IndexState.End, 0, TextIndex.IndexState.Start)] // didn't care about negative value.
+        public void TestGetNextIndex(int index, TextIndex.IndexState state, int expectedIndex, TextIndex.IndexState expectedState)
+        {
+            var textIndex = new TextIndex(index, state);
+
+            var expected = new TextIndex(expectedIndex, expectedState);
+            var actual = TextIndexUtils.GetNextIndex(textIndex);
+            Assert.AreEqual(expected, actual);
+        }
+
         [TestCase(0, TextIndex.IndexState.Start, 1, 1, TextIndex.IndexState.Start)]
         [TestCase(0, TextIndex.IndexState.End, 1, 1, TextIndex.IndexState.End)]
         [TestCase(0, TextIndex.IndexState.Start, -1, -1, TextIndex.IndexState.Start)]
