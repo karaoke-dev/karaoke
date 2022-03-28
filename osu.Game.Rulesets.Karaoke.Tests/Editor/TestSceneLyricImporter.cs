@@ -24,6 +24,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
     public class TestSceneLyricImporter : ScreenTestScene<TestSceneLyricImporter.TestLyricImporter>
     {
         [Cached]
+        private readonly OverlayColourProvider overlayColourProvider = new(OverlayColourScheme.Blue);
+
+        [Cached]
         private readonly KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager;
 
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
