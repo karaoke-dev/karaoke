@@ -55,13 +55,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
         private bool processModifyTimeTagAction(TimeTagCaretPosition timeTagCaretPosition, KaraokeEditAction action)
         {
-            var tuple = getTupleByAction(action);
-            if (tuple == null)
-                return false;
+            switch (action)
+            {
+                case KaraokeEditAction.Create:
+                    var index = timeTagCaretPosition.TimeTag.Index;
+                    lyricTimeTagsChangeHandler.AddByPosition(index);
+                    return true;
 
-            var newTimeTag = lyricTimeTagsChangeHandler.Shifting(timeTagCaretPosition.TimeTag, tuple.Item1, tuple.Item2);
-            lyricCaretState.MoveCaretToTargetPosition(new TimeTagCaretPosition(timeTagCaretPosition.Lyric, newTimeTag));
-            return true;
+                case KaraokeEditAction.Remove:
+                    var timeTag = timeTagCaretPosition.TimeTag;
+                    lyricCaretState.MoveCaret(MovingCaretAction.Left);
+                    lyricTimeTagsChangeHandler.Remove(timeTag);
+                    return true;
+
+                default:
+                    var tuple = getTupleByAction(action);
+                    if (tuple == null)
+                        return false;
+
+                    var newTimeTag = lyricTimeTagsChangeHandler.Shifting(timeTagCaretPosition.TimeTag, tuple.Item1, tuple.Item2);
+                    lyricCaretState.MoveCaretToTargetPosition(new TimeTagCaretPosition(timeTagCaretPosition.Lyric, newTimeTag));
+                    return true;
+            }
 
             static Tuple<ShiftingDirection, ShiftingType> getTupleByAction(KaraokeEditAction action) =>
                 action switch
