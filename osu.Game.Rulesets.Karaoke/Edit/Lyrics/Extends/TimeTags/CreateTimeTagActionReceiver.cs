@@ -64,8 +64,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
                 case KaraokeEditAction.Remove:
                     var timeTag = timeTagCaretPosition.TimeTag;
-                    lyricCaretState.MoveCaret(MovingCaretAction.Left);
+                    bool movable = lyricCaretState.MoveCaret(MovingCaretAction.Left);
                     lyricTimeTagsChangeHandler.Remove(timeTag);
+
+                    if (!movable)
+                    {
+                        // Should make sure that hover to the first time-tag again if first time-tag has been removed.
+                        lyricCaretState.MoveCaret(MovingCaretAction.First);
+                    }
+
                     return true;
 
                 default:
