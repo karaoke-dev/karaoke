@@ -3,27 +3,35 @@
 
 using System;
 using System.Collections.Generic;
+using osu.Framework.Allocation;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 {
-    public class TimeTagEditModeSection : LyricEditorEditModeSection
+    public class TimeTagEditModeSection : EditModeSection<TimeTagEditMode>
     {
+        [Resolved]
+        private ITimeTagModeState timeTagModeState { get; set; }
+
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Orange;
 
-        protected override Dictionary<LyricEditorMode, EditModeSelectionItem> CreateSelections()
+        protected override TimeTagEditMode DefaultMode()
+            => timeTagModeState.EditMode;
+
+        protected override Dictionary<TimeTagEditMode, EditModeSelectionItem> CreateSelections()
             => new()
             {
                 {
-                    LyricEditorMode.CreateTimeTag, new EditModeSelectionItem("Adjust", "Create the time-tag or adjust the position.")
+                    TimeTagEditMode.Create, new EditModeSelectionItem("Adjust", "Create the time-tag or adjust the position.")
                 },
                 {
-                    LyricEditorMode.RecordTimeTag, new EditModeSelectionItem("Recording", new DescriptionFormat
+                    TimeTagEditMode.Recording, new EditModeSelectionItem("Recording", new DescriptionFormat
                     {
                         Text = "Press [key](set_time_tag_time) at the right time to set current time to time-tag. Press [key](clear_time_tag_time) to clear the time-tag time.",
                         Keys = new Dictionary<string, InputKey>
@@ -44,19 +52,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     })
                 },
                 {
-                    LyricEditorMode.AdjustTimeTag, new EditModeSelectionItem("Adjust", "Drag to adjust time-tag time precisely.")
+                    TimeTagEditMode.Adjust, new EditModeSelectionItem("Adjust", "Drag to adjust time-tag time precisely.")
                 }
             };
 
-        protected override Color4 GetColour(OsuColour colours, LyricEditorMode mode, bool active)
+        protected override Color4 GetColour(OsuColour colours, TimeTagEditMode mode, bool active)
         {
             return mode switch
             {
-                LyricEditorMode.CreateTimeTag => active ? colours.Blue : colours.BlueDarker,
-                LyricEditorMode.RecordTimeTag => active ? colours.Red : colours.RedDarker,
-                LyricEditorMode.AdjustTimeTag => active ? colours.Yellow : colours.YellowDarker,
+                TimeTagEditMode.Create => active ? colours.Blue : colours.BlueDarker,
+                TimeTagEditMode.Recording => active ? colours.Red : colours.RedDarker,
+                TimeTagEditMode.Adjust => active ? colours.Yellow : colours.YellowDarker,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
+        }
+
+        protected override void UpdateEditMode(TimeTagEditMode mode)
+        {
+            timeTagModeState.ChangeEditMode(mode);
+
+            base.UpdateEditMode(mode);
         }
     }
 }
