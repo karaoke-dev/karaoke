@@ -22,7 +22,25 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(expected, actual);
         }
 
-        internal enum TestEnum
+        [TestCase(TestEnum.Enum1, TestEnum.Enum3)]
+        [TestCase(TestEnum.Enum2, TestEnum.Enum1)]
+        [TestCase(TestEnum.Enum3, TestEnum.Enum2)]
+        public void TestGetPreviousValue(TestEnum current, TestEnum expected)
+        {
+            var actual = EnumUtils.GetPreviousValue(current);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(TestEnum.Enum1, TestEnum.Enum2)]
+        [TestCase(TestEnum.Enum2, TestEnum.Enum3)]
+        [TestCase(TestEnum.Enum3, TestEnum.Enum1)]
+        public void TestGetNextValue(TestEnum current, TestEnum expected)
+        {
+            var actual = EnumUtils.GetNextValue(current);
+            Assert.AreEqual(expected, actual);
+        }
+
+        public enum TestEnum
         {
             Enum1,
 
