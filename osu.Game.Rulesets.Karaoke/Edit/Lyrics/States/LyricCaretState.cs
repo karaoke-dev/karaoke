@@ -9,6 +9,8 @@ using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
@@ -33,6 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
         // it might be special for create time-tag mode.
+        private readonly IBindable<TimeTagEditMode> bindableTimeTagEditMode = new Bindable<TimeTagEditMode>();
         private readonly IBindable<CreateTimeTagEditMode> bindableCreateTimeTagEditMode = new Bindable<CreateTimeTagEditMode>();
         private readonly IBindable<MovingTimeTagCaretMode> bindableCreateMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
         private readonly IBindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
@@ -67,6 +70,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 Schedule(refreshAlgorithmAndCaretPosition);
             });
 
+            bindableTimeTagEditMode.BindValueChanged(e =>
+            {
+                refreshAlgorithmAndCaretPosition();
+            });
+
             bindableCreateTimeTagEditMode.BindValueChanged(_ =>
             {
                 refreshAlgorithmAndCaretPosition();
@@ -90,10 +98,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         private void refreshAlgorithmAndCaretPosition()
         {
-            var mode = bindableMode.Value;
-
             // refresh algorithm
-            bindableCaretPositionAlgorithm.Value = getAlgorithmByMode(bindableLyrics.ToArray(), mode);
+            bindableCaretPositionAlgorithm.Value = getAlgorithmByMode();
 
             // refresh caret position
             var lyric = bindableCaretPosition.Value?.Lyric;
@@ -102,33 +108,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             // should update selection if selected lyric changed.
             postProcess();
-
-            ICaretPositionAlgorithm getAlgorithmByMode(Lyric[] lyrics, LyricEditorMode lyricEditorMode)
-            {
-                return lyricEditorMode switch
-                {
-                    LyricEditorMode.View => null,
-                    LyricEditorMode.Manage => new CuttingCaretPositionAlgorithm(lyrics),
-                    LyricEditorMode.Typing => new TypingCaretPositionAlgorithm(lyrics),
-                    LyricEditorMode.Language => null,
-                    LyricEditorMode.EditRuby => new NavigateCaretPositionAlgorithm(lyrics),
-                    LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
-                    LyricEditorMode.CreateTimeTag => getCreateTimeTagEditModeAlgorithm(lyrics, bindableCreateTimeTagEditMode.Value, bindableCreateMovingCaretMode.Value),
-                    LyricEditorMode.RecordTimeTag => new TimeTagCaretPositionAlgorithm(lyrics) { Mode = bindableRecordingMovingCaretMode.Value },
-                    LyricEditorMode.AdjustTimeTag => new NavigateCaretPositionAlgorithm(lyrics),
-                    LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
-                    LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
-                    _ => throw new InvalidOperationException(nameof(lyricEditorMode))
-                };
-
-                static ICaretPositionAlgorithm getCreateTimeTagEditModeAlgorithm(Lyric[] lyrics, CreateTimeTagEditMode createTimeTagEditMode, MovingTimeTagCaretMode movingTimeTagCaretMode) =>
-                    createTimeTagEditMode switch
-                    {
-                        CreateTimeTagEditMode.Create => new TimeTagIndexCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode },
-                        CreateTimeTagEditMode.Modify => new TimeTagCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode },
-                        _ => throw new InvalidOperationException(nameof(createTimeTagEditMode))
-                    };
-            }
 
             static ICaretPosition getCaretPosition(ICaretPositionAlgorithm algorithm, Lyric lyric)
             {
@@ -142,11 +121,52 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             }
         }
 
+        private ICaretPositionAlgorithm getAlgorithmByMode()
+        {
+            var lyrics = bindableLyrics.ToArray();
+            var lyricEditorMode = bindableMode.Value;
+            return lyricEditorMode switch
+            {
+                LyricEditorMode.View => null,
+                LyricEditorMode.Manage => new CuttingCaretPositionAlgorithm(lyrics),
+                LyricEditorMode.Typing => new TypingCaretPositionAlgorithm(lyrics),
+                LyricEditorMode.Language => null,
+                LyricEditorMode.EditRuby => new NavigateCaretPositionAlgorithm(lyrics),
+                LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
+                LyricEditorMode.CreateTimeTag => getTimeTagModeAlgorithm(),
+                LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
+                LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
+                _ => throw new InvalidOperationException(nameof(lyricEditorMode))
+            };
+
+            ICaretPositionAlgorithm getTimeTagModeAlgorithm()
+            {
+                var timeTagEditMode = bindableTimeTagEditMode.Value;
+                return timeTagEditMode switch
+                {
+                    TimeTagEditMode.Create => getCreateTimeTagEditModeAlgorithm(lyrics, bindableCreateTimeTagEditMode.Value, bindableCreateMovingCaretMode.Value),
+                    TimeTagEditMode.Recording => new TimeTagCaretPositionAlgorithm(lyrics) { Mode = bindableRecordingMovingCaretMode.Value },
+                    TimeTagEditMode.Adjust => new NavigateCaretPositionAlgorithm(lyrics),
+                    _ => throw new InvalidOperationException(nameof(timeTagEditMode))
+                };
+
+                static ICaretPositionAlgorithm getCreateTimeTagEditModeAlgorithm(Lyric[] lyrics, CreateTimeTagEditMode createTimeTagEditMode, MovingTimeTagCaretMode movingTimeTagCaretMode) =>
+                    createTimeTagEditMode switch
+                    {
+                        CreateTimeTagEditMode.Create => new TimeTagIndexCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode },
+                        CreateTimeTagEditMode.Modify => new TimeTagCaretPositionAlgorithm(lyrics) { Mode = movingTimeTagCaretMode },
+                        _ => throw new InvalidOperationException(nameof(createTimeTagEditMode))
+                    };
+            }
+        }
+
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, ILyricEditorState state, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+        private void load(EditorBeatmap beatmap, ILyricEditorState state, ITimeTagModeState timeTagModeState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
             selectedHitObjects.BindTo(beatmap.SelectedHitObjects);
             bindableMode.BindTo(state.BindableMode);
+
+            bindableTimeTagEditMode.BindTo(timeTagModeState.BindableEditMode);
 
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode, bindableCreateTimeTagEditMode);
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagMovingCaretMode, bindableCreateMovingCaretMode);
