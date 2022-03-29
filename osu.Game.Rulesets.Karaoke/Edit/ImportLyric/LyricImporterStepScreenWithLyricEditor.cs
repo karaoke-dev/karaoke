@@ -6,8 +6,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 

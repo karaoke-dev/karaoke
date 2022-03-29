@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
