@@ -36,6 +36,13 @@ namespace osu.Game.Rulesets.Karaoke
         [Description("Last")]
         Last,
 
+        // Switch edit mode.
+        [Description("Previous edit mode")]
+        PreviousEditMode,
+
+        [Description("Next edit mode")]
+        NextEditMode,
+
         // Edit Ruby / romaji tag.
         [Description("Reduce start index")]
         EditTextTagReduceStartIndex,
