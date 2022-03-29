@@ -214,7 +214,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 private BindableList<TimeTag> selectedTimeTags;
 
                 [BackgroundDependencyLoader]
-                private void load(ILyricEditorState state, ILyricCaretState lyricCaretState, ITimeTagModeState timeTagModeState)
+                private void load(ILyricCaretState lyricCaretState, ITimeTagModeState timeTagModeState)
                 {
                     // update selected state by bindable.
                     selectedTimeTags = timeTagModeState.SelectedItems.GetBoundCopy();
@@ -227,12 +227,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                     Action = () =>
                     {
                         // navigate to current lyric.
-                        ICaretPosition caretPosition = state.Mode switch
+                        ICaretPosition caretPosition = timeTagModeState.EditMode switch
                         {
-                            LyricEditorMode.CreateTimeTag => new TimeTagIndexCaretPosition(lyric, timeTag?.Index ?? new TextIndex()),
-                            LyricEditorMode.RecordTimeTag => new TimeTagCaretPosition(lyric, timeTag),
-                            LyricEditorMode.AdjustTimeTag => new NavigateCaretPosition(lyric),
-                            _ => throw new ArgumentOutOfRangeException(nameof(state.Mode))
+                            TimeTagEditMode.Create => new TimeTagIndexCaretPosition(lyric, timeTag?.Index ?? new TextIndex()),
+                            TimeTagEditMode.Recording => new TimeTagCaretPosition(lyric, timeTag),
+                            TimeTagEditMode.Adjust => new NavigateCaretPosition(lyric),
+                            _ => throw new ArgumentOutOfRangeException(nameof(timeTagModeState.EditMode))
                         };
 
                         lyricCaretState.MoveCaretToTargetPosition(caretPosition);
