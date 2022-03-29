@@ -326,7 +326,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 case LyricEditorMode.Typing:
                 case LyricEditorMode.Language:
-                case LyricEditorMode.AdjustTimeTag:
+                case LyricEditorMode.CreateTimeTag:
                     SwitchMode(mode);
                     break;
 
