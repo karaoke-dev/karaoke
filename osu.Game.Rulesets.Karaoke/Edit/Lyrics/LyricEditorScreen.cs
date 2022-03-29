@@ -1,10 +1,15 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
+using osu.Framework.Localisation;
+using osu.Game.Overlays;
+using osu.Game.Overlays.OSD;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
@@ -96,6 +101,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             private ILyricCaretState lyricCaretState { get; set; }
 
+            [Resolved(canBeNull: true)]
+            private OnScreenDisplay onScreenDisplay { get; set; }
+
             protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
             {
                 var dependencies = base.CreateChildDependencies(parent);
@@ -111,16 +119,74 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 {
                     case KaraokeEditAction.PreviousEditMode:
                         SwitchMode(EnumUtils.GetPreviousValue(Mode));
+                        onScreenDisplay?.Display(new LyricEditorEditModeToast(Mode));
                         return true;
 
                     case KaraokeEditAction.NextEditMode:
                         SwitchMode(EnumUtils.GetNextValue(Mode));
+                        onScreenDisplay?.Display(new LyricEditorEditModeToast(Mode));
                         return true;
 
                     default:
                         return base.OnPressed(e);
                 }
             }
+        }
+
+        public class LyricEditorEditModeToast : Toast
+        {
+            public LyricEditorEditModeToast(LyricEditorMode mode)
+                : base(getDescription(mode), getValue(mode), getShortcut())
+            {
+            }
+
+            private static LocalisableString getDescription(LyricEditorMode mode)
+            {
+                switch (mode)
+                {
+                    case LyricEditorMode.View:
+                        return "View the lyric";
+
+                    case LyricEditorMode.Manage:
+                        return "Manage the lyric";
+
+                    case LyricEditorMode.Typing:
+                        return "Typing...";
+
+                    case LyricEditorMode.Language:
+                        return "Manage the language in the lyric.";
+
+                    case LyricEditorMode.EditRuby:
+                        return "Create/edit/delete the ruby";
+
+                    case LyricEditorMode.EditRomaji:
+                        return "Create/edit/delete the romaji";
+
+                    case LyricEditorMode.CreateTimeTag:
+                        return "Create/edit the time-tag.";
+
+                    case LyricEditorMode.RecordTimeTag:
+                        return "Set time to the time-tag.";
+
+                    case LyricEditorMode.AdjustTimeTag:
+                        return "Check the time-tag.";
+
+                    case LyricEditorMode.EditNote:
+                        return "Create the notes for scoring.";
+
+                    case LyricEditorMode.Singer:
+                        return "Assign the singer to lyric.";
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
+                }
+            }
+
+            private static LocalisableString getValue(LyricEditorMode mode)
+                => mode.GetDescription();
+
+            private static LocalisableString getShortcut()
+                => "Switch edit mode";
         }
     }
 }
