@@ -306,7 +306,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             };
         }
 
-        public bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e) =>
+        public virtual bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e) =>
             e.Action switch
             {
                 KaraokeEditAction.Up => lyricCaretState.MoveCaret(MovingCaretAction.Up),
