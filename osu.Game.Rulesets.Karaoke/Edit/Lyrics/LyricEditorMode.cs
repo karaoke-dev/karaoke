@@ -50,18 +50,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         CreateTimeTag,
 
         /// <summary>
-        /// Click white-space to set current time into time-tag.
-        /// </summary>
-        [Description("Record time tag")]
-        RecordTimeTag,
-
-        /// <summary>
-        /// Precisely adjust time-tag time.
-        /// </summary>
-        [Description("Adjust time tag")]
-        AdjustTimeTag,
-
-        /// <summary>
         /// Enable to create/delete notes.
         /// </summary>
         [Description("Edit note")]

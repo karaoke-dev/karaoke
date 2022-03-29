@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                         screenStack.Pop(LyricImporterStep.AssignLanguage);
                         break;
 
-                    case LyricEditorMode.AdjustTimeTag:
+                    case LyricEditorMode.CreateTimeTag:
                         screenStack.Pop(LyricImporterStep.GenerateTimeTag);
                         break;
 

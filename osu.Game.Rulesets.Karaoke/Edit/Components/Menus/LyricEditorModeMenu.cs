@@ -50,8 +50,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
                     return "Edit romaji";
 
                 case LyricEditorMode.CreateTimeTag:
-                case LyricEditorMode.RecordTimeTag:
-                case LyricEditorMode.AdjustTimeTag:
                     return "Edit time tag";
 
                 case LyricEditorMode.EditNote:
