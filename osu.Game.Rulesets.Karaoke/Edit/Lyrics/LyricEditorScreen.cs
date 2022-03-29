@@ -4,12 +4,14 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.UI.Position;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
@@ -102,6 +104,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
 
             public void ResetCaret() => lyricCaretState.MoveCaret(MovingCaretAction.First);
+
+            public override bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
+            {
+                switch (e.Action)
+                {
+                    case KaraokeEditAction.PreviousEditMode:
+                        SwitchMode(EnumUtils.GetPreviousValue(Mode));
+                        return true;
+
+                    case KaraokeEditAction.NextEditMode:
+                        SwitchMode(EnumUtils.GetNextValue(Mode));
+                        return true;
+
+                    default:
+                        return base.OnPressed(e);
+                }
+            }
         }
     }
 }
