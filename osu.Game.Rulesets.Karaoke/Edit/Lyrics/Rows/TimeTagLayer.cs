@@ -14,12 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         [Resolved]
         private EditorLyricPiece lyricPiece { get; set; }
 
-        private readonly Lyric lyric;
-
         public TimeTagLayer(Lyric lyric)
         {
-            this.lyric = lyric;
-
             lyric.TimeTagsBindable.BindCollectionChanged((_, _) =>
             {
                 ScheduleAfterChildren(updateTimeTags);
@@ -36,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             foreach (var timeTag in timeTags)
             {
                 var position = lyricPiece.GetTimeTagPosition(timeTag);
-                AddInternal(new DrawableTimeTag(lyric, timeTag)
+                AddInternal(new DrawableTimeTag(timeTag)
                 {
                     Position = position
                 });
