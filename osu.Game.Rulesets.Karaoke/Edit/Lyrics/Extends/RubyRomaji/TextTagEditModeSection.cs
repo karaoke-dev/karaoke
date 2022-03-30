@@ -5,6 +5,7 @@ using System;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji

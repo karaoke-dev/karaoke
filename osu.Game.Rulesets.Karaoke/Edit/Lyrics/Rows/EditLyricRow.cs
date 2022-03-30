@@ -15,7 +15,6 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo;
