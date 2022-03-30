@@ -10,7 +10,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes;
