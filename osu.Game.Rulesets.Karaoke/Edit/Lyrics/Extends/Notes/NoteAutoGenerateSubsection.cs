@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
             public InvalidLyricTimeTagAlertTextContainer()
             {
-                SwitchToEditorMode(create_time_tag_mode, "adjust time-tag mode", LyricEditorMode.CreateTimeTag);
+                SwitchToEditorMode(create_time_tag_mode, "adjust time-tag mode", LyricEditorMode.EditTimeTag);
                 Text = $"Seems some lyric contains invalid time-tag, go to [{create_time_tag_mode}] to fix those issue.";
             }
         }

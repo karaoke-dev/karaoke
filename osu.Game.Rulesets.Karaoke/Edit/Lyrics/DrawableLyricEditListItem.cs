@@ -95,8 +95,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     mode switch
                     {
                         LyricEditorMode.EditNote => new NoteRowExtend(lyric),
-                        LyricEditorMode.CreateTimeTag when timeTagEditMode == TimeTagEditMode.Recording => new RecordingTimeTagRowExtend(lyric),
-                        LyricEditorMode.CreateTimeTag when timeTagEditMode == TimeTagEditMode.Adjust => new TimeTagRowExtend(lyric),
+                        LyricEditorMode.EditTimeTag when timeTagEditMode == TimeTagEditMode.Recording => new RecordingTimeTagRowExtend(lyric),
+                        LyricEditorMode.EditTimeTag when timeTagEditMode == TimeTagEditMode.Adjust => new TimeTagRowExtend(lyric),
                         _ => null
                     };
             });

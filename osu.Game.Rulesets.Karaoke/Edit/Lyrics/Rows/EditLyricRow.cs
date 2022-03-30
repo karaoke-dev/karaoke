@@ -217,7 +217,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.EditRomaji:
                             return new LanguageInfo(Lyric);
 
-                        case LyricEditorMode.CreateTimeTag:
+                        case LyricEditorMode.EditTimeTag:
                             return createTimeTagModeSubInfo();
 
                         case LyricEditorMode.EditNote:

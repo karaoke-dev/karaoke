@@ -133,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 LyricEditorMode.Language => null,
                 LyricEditorMode.EditRuby => new NavigateCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
-                LyricEditorMode.CreateTimeTag => getTimeTagModeAlgorithm(),
+                LyricEditorMode.EditTimeTag => getTimeTagModeAlgorithm(),
                 LyricEditorMode.EditNote => new NavigateCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
                 _ => throw new InvalidOperationException(nameof(lyricEditorMode))

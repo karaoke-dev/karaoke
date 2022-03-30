@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 {
                     LyricEditorMode.EditRuby => new RubyBlueprintContainer(lyric),
                     LyricEditorMode.EditRomaji => new RomajiBlueprintContainer(lyric),
-                    LyricEditorMode.CreateTimeTag => timeTagEditMode == TimeTagEditMode.Adjust ? new TimeTagBlueprintContainer(lyric) : null,
+                    LyricEditorMode.EditTimeTag => timeTagEditMode == TimeTagEditMode.Adjust ? new TimeTagBlueprintContainer(lyric) : null,
                     _ => null
                 };
         }

@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         [TestCase(LyricEditorMode.Language)]
         [TestCase(LyricEditorMode.EditRuby)]
         [TestCase(LyricEditorMode.EditRomaji)]
-        [TestCase(LyricEditorMode.CreateTimeTag)]
+        [TestCase(LyricEditorMode.EditTimeTag)]
         [TestCase(LyricEditorMode.EditNote)]
         [TestCase(LyricEditorMode.Singer)]
         public void TestSwitchMode(LyricEditorMode mode)

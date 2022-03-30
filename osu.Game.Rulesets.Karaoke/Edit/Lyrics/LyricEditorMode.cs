@@ -46,8 +46,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         /// <summary>
         /// Enable to create/delete and reset time tag.
         /// </summary>
-        [Description("Create time tag")]
-        CreateTimeTag,
+        [Description("Edit time tag")]
+        EditTimeTag,
 
         /// <summary>
         /// Enable to create/delete notes.
