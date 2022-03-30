@@ -42,12 +42,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         protected class InvalidLyricTimeTagAlertTextContainer : InvalidLyricAlertTextContainer
         {
-            private const string adjust_time_tag_mode = "ADJUST_TIME_TAG_MODE";
+            private const string create_time_tag_mode = "CREATE_TIME_TAG_MODE";
 
             public InvalidLyricTimeTagAlertTextContainer()
             {
-                SwitchToEditorMode(adjust_time_tag_mode, "adjust time-tag mode", LyricEditorMode.AdjustTimeTag);
-                Text = $"Seems some lyric contains invalid time-tag, go to [{adjust_time_tag_mode}] to fix those issue.";
+                SwitchToEditorMode(create_time_tag_mode, "adjust time-tag mode", LyricEditorMode.EditTimeTag);
+                Text = $"Seems some lyric contains invalid time-tag, go to [{create_time_tag_mode}] to fix those issue.";
             }
         }
 

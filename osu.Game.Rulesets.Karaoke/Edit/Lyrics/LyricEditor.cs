@@ -234,9 +234,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     LyricEditorMode.Language => new LanguageExtend(),
                     LyricEditorMode.EditRuby => new RubyTagExtend(),
                     LyricEditorMode.EditRomaji => new RomajiTagExtend(),
-                    LyricEditorMode.CreateTimeTag => new TimeTagExtend(),
-                    LyricEditorMode.RecordTimeTag => new TimeTagExtend(),
-                    LyricEditorMode.AdjustTimeTag => new TimeTagExtend(),
+                    LyricEditorMode.EditTimeTag => new TimeTagExtend(),
                     LyricEditorMode.EditNote => new NoteExtend(),
                     LyricEditorMode.Singer => new SingerExtend(),
                     _ => null
@@ -328,7 +326,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 case LyricEditorMode.Typing:
                 case LyricEditorMode.Language:
-                case LyricEditorMode.AdjustTimeTag:
+                case LyricEditorMode.EditTimeTag:
                     SwitchMode(mode);
                     break;
 

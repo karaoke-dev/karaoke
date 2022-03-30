@@ -162,14 +162,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     case LyricEditorMode.EditRomaji:
                         return "Create/edit/delete the romaji";
 
-                    case LyricEditorMode.CreateTimeTag:
-                        return "Create/edit the time-tag.";
-
-                    case LyricEditorMode.RecordTimeTag:
-                        return "Set time to the time-tag.";
-
-                    case LyricEditorMode.AdjustTimeTag:
-                        return "Check the time-tag.";
+                    case LyricEditorMode.EditTimeTag:
+                        return "Create/edit/delete the time-tag.";
 
                     case LyricEditorMode.EditNote:
                         return "Create the notes for scoring.";

@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
@@ -12,6 +13,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 {
     public class TimeTagModeState : Component, ITimeTagModeState
     {
+        private readonly Bindable<TimeTagEditMode> bindableEditMode = new();
+
+        public IBindable<TimeTagEditMode> BindableEditMode => bindableEditMode;
+
         public BindableList<TimeTag> SelectedItems { get; } = new();
 
         public BindableFloat BindableRecordZoom { get; } = new();
@@ -29,5 +34,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
             BindableAdjustZoom.MinValue = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 8000);
             BindableAdjustZoom.Value = BindableAdjustZoom.Default = ZoomableScrollContainerUtils.GetZoomLevelForVisibleMilliseconds(editorClock, 4000);
         }
+
+        public void ChangeEditMode(TimeTagEditMode mode)
+            => bindableEditMode.Value = mode;
     }
 }

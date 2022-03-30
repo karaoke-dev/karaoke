@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 {
@@ -12,17 +13,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
         public override ExtendDirection Direction => ExtendDirection.Right;
         public override float ExtendWidth => 300;
 
-        private IBindable<LyricEditorMode> bindableMode;
+        private readonly IBindable<TimeTagEditMode> bindableMode = new Bindable<TimeTagEditMode>();
 
-        [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        public TimeTagExtend()
         {
-            bindableMode = state.BindableMode.GetBoundCopy();
             bindableMode.BindValueChanged(e =>
             {
                 switch (e.NewValue)
                 {
-                    case LyricEditorMode.CreateTimeTag:
+                    case TimeTagEditMode.Create:
                         Children = new Drawable[]
                         {
                             new TimeTagEditModeSection(),
@@ -32,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         };
                         break;
 
-                    case LyricEditorMode.RecordTimeTag:
+                    case TimeTagEditMode.Recording:
                         Children = new Drawable[]
                         {
                             new TimeTagEditModeSection(),
@@ -41,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         };
                         break;
 
-                    case LyricEditorMode.AdjustTimeTag:
+                    case TimeTagEditMode.Adjust:
                         Children = new Drawable[]
                         {
                             new TimeTagEditModeSection(),
@@ -54,6 +53,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                         return;
                 }
             }, true);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ITimeTagModeState timeTagModeState)
+        {
+            bindableMode.BindTo(timeTagModeState.BindableEditMode);
         }
     }
 }

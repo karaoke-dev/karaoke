@@ -10,12 +10,14 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
 
@@ -33,6 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private ILyricCaretState lyricCaretState { get; set; }
 
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+        private readonly IBindable<TimeTagEditMode> bindableTimeTagEditMode = new Bindable<TimeTagEditMode>();
         private readonly IBindable<ICaretPosition> bindableHoverCaretPosition = new Bindable<ICaretPosition>();
         private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
 
@@ -48,6 +51,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 removeExtend();
             }, true);
 
+            bindableTimeTagEditMode.BindValueChanged(_ =>
+            {
+                // should remove extend when switch mode.
+                removeExtend();
+            });
+
             bindableHoverCaretPosition.BindValueChanged(_ =>
             {
                 updateBackgroundColour();
@@ -57,35 +66,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 updateBackgroundColour();
 
-                if (e.NewValue?.Lyric != Model)
+                // should wait until time-tag edit mode value updated.
+                Schedule(() =>
                 {
-                    removeExtend();
-                    return;
-                }
+                    // should remove the extend area if caret position does not focus to current lyric row.
+                    if (e.NewValue?.Lyric != Model)
+                    {
+                        removeExtend();
+                        return;
+                    }
 
-                // show not create again if contains same extend.
-                var existExtend = getExtend();
-                if (existExtend != null)
-                    return;
+                    // show not create again if contains same extend.
+                    var existExtend = getExtend();
+                    if (existExtend != null)
+                        return;
 
-                // show extra extend if hover to current lyric.
-                var editExtend = createExtend(bindableMode.Value, Model);
-                if (editExtend == null)
-                    return;
+                    // show extra extend if hover to current lyric.
+                    var editExtend = createExtend(bindableMode.Value, bindableTimeTagEditMode.Value, Model);
+                    if (editExtend == null)
+                        return;
 
-                editExtend.RelativeSizeAxes = Axes.X;
-                content.Add(editExtend);
-                editExtend.Show();
+                    editExtend.RelativeSizeAxes = Axes.X;
+                    content.Add(editExtend);
+                    editExtend.Show();
+                });
+
+                static EditRowExtend createExtend(LyricEditorMode mode, TimeTagEditMode timeTagEditMode, Lyric lyric) =>
+                    mode switch
+                    {
+                        LyricEditorMode.EditNote => new NoteRowExtend(lyric),
+                        LyricEditorMode.EditTimeTag when timeTagEditMode == TimeTagEditMode.Recording => new RecordingTimeTagRowExtend(lyric),
+                        LyricEditorMode.EditTimeTag when timeTagEditMode == TimeTagEditMode.Adjust => new TimeTagRowExtend(lyric),
+                        _ => null
+                    };
             });
-
-            static EditRowExtend createExtend(LyricEditorMode mode, Lyric lyric) =>
-                mode switch
-                {
-                    LyricEditorMode.RecordTimeTag => new RecordingTimeTagRowExtend(lyric),
-                    LyricEditorMode.AdjustTimeTag => new TimeTagRowExtend(lyric),
-                    LyricEditorMode.EditNote => new NoteRowExtend(lyric),
-                    _ => null
-                };
 
             void removeExtend()
             {
@@ -137,9 +151,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        private void load(ILyricEditorState state, ITimeTagModeState timeTagModeState)
         {
             bindableMode.BindTo(state.BindableMode);
+            bindableTimeTagEditMode.BindTo(timeTagModeState.BindableEditMode);
             bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
             bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
 

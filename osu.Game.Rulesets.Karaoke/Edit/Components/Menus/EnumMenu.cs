@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
@@ -43,7 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
 
         protected virtual T[] ValidEnums => EnumUtils.GetValues<T>();
 
-        protected abstract string GetName(T selection);
+        protected string GetName(T selection)
+            => selection.GetDescription();
 
         protected virtual void UpdateSelection(T selection)
         {

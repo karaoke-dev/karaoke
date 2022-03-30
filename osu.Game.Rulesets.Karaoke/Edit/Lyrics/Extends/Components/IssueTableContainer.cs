@@ -84,8 +84,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             [BackgroundDependencyLoader]
             private void load(LyricEditorColourProvider colourProvider, ILyricEditorState state)
             {
-                hoveredBackground.Colour = colourHover = colourProvider.Background1(LyricEditorMode.CreateTimeTag);
-                colourSelected = colourProvider.Colour3(LyricEditorMode.CreateTimeTag);
+                hoveredBackground.Colour = colourHover = colourProvider.Background1(LyricEditorMode.EditTimeTag);
+                colourSelected = colourProvider.Colour3(LyricEditorMode.EditTimeTag);
             }
 
             protected override bool OnHover(HoverEvent e)

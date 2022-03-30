@@ -5,7 +5,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
@@ -13,6 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
     public class BlueprintLayer : CompositeDrawable
     {
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+        private readonly IBindable<TimeTagEditMode> bindableTimeTagEditMode = new Bindable<TimeTagEditMode>();
 
         private readonly Lyric lyric;
 
@@ -20,37 +23,46 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         {
             this.lyric = lyric;
 
-            bindableMode.BindValueChanged(e =>
+            bindableMode.BindValueChanged(_ =>
             {
                 // Initial blueprint container.
-                InitializeBlueprint(e.NewValue);
+                InitializeBlueprint();
+            });
+
+            bindableTimeTagEditMode.BindValueChanged(_ =>
+            {
+                // Initial blueprint container.
+                InitializeBlueprint();
             });
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
+        private void load(ILyricEditorState state, ITimeTagModeState timeTagModeState)
         {
             bindableMode.BindTo(state.BindableMode);
+            bindableTimeTagEditMode.BindTo(timeTagModeState.BindableEditMode);
         }
 
-        protected void InitializeBlueprint(LyricEditorMode mode)
+        protected void InitializeBlueprint()
         {
             // remove all exist blueprint container
             ClearInternal();
 
             // create preview and real caret
-            var blueprintContainer = createBlueprintContainer(mode, lyric);
+            var mode = bindableMode.Value;
+            var timeTagEditMode = bindableTimeTagEditMode.Value;
+            var blueprintContainer = createBlueprintContainer(mode, timeTagEditMode, lyric);
             if (blueprintContainer == null)
                 return;
 
             AddInternal(blueprintContainer);
 
-            static Drawable createBlueprintContainer(LyricEditorMode mode, Lyric lyric) =>
+            static Drawable createBlueprintContainer(LyricEditorMode mode, TimeTagEditMode timeTagEditMode, Lyric lyric) =>
                 mode switch
                 {
                     LyricEditorMode.EditRuby => new RubyBlueprintContainer(lyric),
                     LyricEditorMode.EditRomaji => new RomajiBlueprintContainer(lyric),
-                    LyricEditorMode.AdjustTimeTag => new TimeTagBlueprintContainer(lyric),
+                    LyricEditorMode.EditTimeTag => timeTagEditMode == TimeTagEditMode.Adjust ? new TimeTagBlueprintContainer(lyric) : null,
                     _ => null
                 };
         }

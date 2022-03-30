@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Tests.Visual;
@@ -62,6 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             Dependencies.Cache(editorBeatmap);
             Dependencies.Cache(new EditorClock());
             Dependencies.CacheAs(state = new TestLyricEditorState());
+            Dependencies.CacheAs<ITimeTagModeState>(new TimeTagModeState());
             Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
 
             Child = lyricCaretState = new LyricCaretState(bindableLyrics);

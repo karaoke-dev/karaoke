@@ -15,10 +15,12 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
@@ -65,6 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             private readonly Container subInfoContainer;
 
             private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+            private readonly IBindable<TimeTagEditMode> bindableTimeTagEditMode = new Bindable<TimeTagEditMode>();
 
             [Resolved(canBeNull: true)]
             private DialogOverlay dialogOverlay { get; set; }
@@ -165,20 +168,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                 bindableMode.BindValueChanged(e =>
                 {
-                    CreateBadge(e.NewValue);
+                    InitializeBadge();
+                });
+
+                bindableTimeTagEditMode.BindValueChanged(_ =>
+                {
+                    InitializeBadge();
                 });
             }
 
             [BackgroundDependencyLoader]
-            private void load(OsuColour colours, ILyricEditorState state)
+            private void load(OsuColour colours, ILyricEditorState state, ITimeTagModeState timeTagModeState)
             {
                 background.Colour = colours.Gray2;
                 headerBackground.Colour = colours.Gray3;
 
                 bindableMode.BindTo(state.BindableMode);
+                bindableTimeTagEditMode.BindTo(timeTagModeState.BindableEditMode);
             }
 
-            protected void CreateBadge(LyricEditorMode mode)
+            protected void InitializeBadge()
             {
                 subInfoContainer.Clear();
                 var subInfo = createSubInfo();
@@ -192,6 +201,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                 Drawable createSubInfo()
                 {
+                    var mode = bindableMode.Value;
+
                     switch (mode)
                     {
                         case LyricEditorMode.View:
@@ -206,12 +217,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         case LyricEditorMode.EditRomaji:
                             return new LanguageInfo(Lyric);
 
-                        case LyricEditorMode.CreateTimeTag:
-                            return new LanguageInfo(Lyric);
-
-                        case LyricEditorMode.RecordTimeTag:
-                        case LyricEditorMode.AdjustTimeTag:
-                            return new TimeTagInfo(Lyric);
+                        case LyricEditorMode.EditTimeTag:
+                            return createTimeTagModeSubInfo();
 
                         case LyricEditorMode.EditNote:
                             return null;
@@ -221,6 +228,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                         default:
                             throw new ArgumentOutOfRangeException(nameof(mode));
+                    }
+
+                    Drawable createTimeTagModeSubInfo()
+                    {
+                        var timeTagEditMode = bindableTimeTagEditMode.Value;
+
+                        switch (timeTagEditMode)
+                        {
+                            case TimeTagEditMode.Create:
+                                return new LanguageInfo(Lyric);
+
+                            case TimeTagEditMode.Recording:
+                            case TimeTagEditMode.Adjust:
+                                return new TimeTagInfo(Lyric);
+
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(timeTagEditMode));
+                        }
                     }
                 }
             }
