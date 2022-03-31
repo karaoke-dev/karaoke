@@ -10,6 +10,7 @@ using osu.Game.Graphics.Cursor;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
+using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Singers;
 using osu.Game.Screens.Edit;
 
@@ -62,6 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         }
 
         private DialogOverlay dialogOverlay;
+        private LyricsProvider lyricsProvider;
 
         [BackgroundDependencyLoader]
         private void load()
@@ -73,7 +75,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                     RelativeSizeAxes = Axes.Both,
                     Child = Content
                 },
-                dialogOverlay = new DialogOverlay()
+                dialogOverlay = new DialogOverlay(),
+                lyricsProvider = new LyricsProvider(),
             });
 
             var beatDivisor = new BindableBeatDivisor
@@ -83,6 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             var editorClock = new EditorClock(Beatmap.Value.Beatmap, beatDivisor) { IsCoupled = false };
             Dependencies.CacheAs(editorClock);
             Dependencies.Cache(beatDivisor);
+            Dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
             Dependencies.Cache(dialogOverlay);
         }
     }
