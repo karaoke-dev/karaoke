@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -19,7 +20,8 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate
 {
-    public class TranslateEditSection : Container
+    [Cached(typeof(ITranslateInfoProvider))]
+    public class TranslateEditSection : Container, ITranslateInfoProvider
     {
         private const int row_height = 50;
         private const int column_spacing = 10;
@@ -28,7 +30,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         private readonly CornerBackground timeSectionBackground;
         private readonly CornerBackground lyricSectionBackground;
         private readonly LanguageDropdown languageDropdown;
-        private readonly GridContainer translateGrid;
 
         [Cached(typeof(IBindable<CultureInfo>))]
         private readonly IBindable<CultureInfo> currentLanguage = new Bindable<CultureInfo>();
@@ -36,8 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         [Resolved]
         private ILanguagesChangeHandler languagesChangeHandler { get; set; }
 
-        [Resolved]
-        private ITranslateInfoProvider translateInfoProvider { get; set; }
+        private readonly IBindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
         public TranslateEditSection()
         {
@@ -51,6 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 new Dimension(GridSizeMode.Absolute, column_spacing),
                 new Dimension()
             };
+            GridContainer translateGrid;
 
             Child = new FillFlowContainer
             {
@@ -173,24 +174,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             };
 
             currentLanguage.BindTo(languageDropdown.Current);
+            bindableLyrics.BindCollectionChanged((_, _) =>
+            {
+                // just re-create all the view, lazy to save the performance in here.
+                translateGrid.RowDimensions = bindableLyrics.Select(_ => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
+                translateGrid.Content = createContent();
+            });
         }
 
         [BackgroundDependencyLoader]
-        private void load(OverlayColourProvider colourProvider)
+        private void load(ILyricsProvider lyricsProvider, OverlayColourProvider colourProvider)
         {
             languageDropdown.ItemSource = languagesChangeHandler.Languages;
 
+            bindableLyrics.BindTo(lyricsProvider.BindableLyrics);
+
             timeSectionBackground.Colour = colourProvider.Background6;
             lyricSectionBackground.Colour = colourProvider.Dark6;
-
-            translateGrid.RowDimensions = translateInfoProvider.TranslatableLyrics.Select(_ => new Dimension(GridSizeMode.Absolute, row_height)).ToArray();
-            translateGrid.Content = createContent();
         }
 
         private Drawable[][] createContent()
         {
-            var lyrics = translateInfoProvider.TranslatableLyrics;
-            return lyrics.Select(x =>
+            return bindableLyrics.Select(x =>
             {
                 return new[]
                 {
@@ -239,5 +244,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
                 TabbableContentContainer = this,
                 CommitOnFocusLost = true,
             };
+
+        public string GetLyricTranslate(Lyric lyric, CultureInfo cultureInfo)
+        {
+            if (cultureInfo == null)
+                throw new ArgumentNullException(nameof(cultureInfo));
+
+            return lyric.Translates.TryGetValue(cultureInfo, out string translate) ? translate : null;
+        }
     }
 }

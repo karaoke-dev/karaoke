@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Translate;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
@@ -35,6 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         }
 
         private DialogOverlay dialogOverlay;
+        private LyricsProvider lyricsProvider;
 
         [BackgroundDependencyLoader]
         private void load()
@@ -43,9 +45,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             {
                 Content,
                 dialogOverlay = new DialogOverlay(),
+                lyricsProvider = new LyricsProvider()
             });
 
             Dependencies.Cache(dialogOverlay);
+            Dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
         }
     }
 }
