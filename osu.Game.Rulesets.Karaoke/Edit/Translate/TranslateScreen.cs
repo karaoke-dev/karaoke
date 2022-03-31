@@ -54,14 +54,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
             });
         }
 
-        protected override void PopIn()
-        {
-            base.PopIn();
-
-            // should clear the selection because will cause the issue that edit more than 2 lyrics at the same time.
-            beatmap.SelectedHitObjects.Clear();
-        }
-
         public string GetLyricTranslate(Lyric lyric, CultureInfo cultureInfo)
         {
             if (cultureInfo == null)

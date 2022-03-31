@@ -94,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             base.PopIn();
 
             // should reset the selection because selected hitobject in the editor beatmap might not sync with the selection in lyric editor.
-            lyricEditor.ResetCaret();
+            lyricEditor.ResetSelectedHitObject();
         }
 
         private class FullScreenLyricEditor : LyricEditor
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 return dependencies;
             }
 
-            public void ResetCaret() => lyricCaretState.MoveCaret(MovingCaretAction.First);
+            public void ResetSelectedHitObject() => lyricCaretState.SyncSelectedHitObjectWithCaret();
 
             public override bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e)
             {
