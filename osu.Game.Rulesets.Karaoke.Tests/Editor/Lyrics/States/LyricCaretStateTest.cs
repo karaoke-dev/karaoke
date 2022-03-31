@@ -3,14 +3,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Framework.Testing;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -57,16 +58,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         [BackgroundDependencyLoader]
         private void load()
         {
-            var editorBeatmap = new EditorBeatmap(beatmap);
-            var bindableLyrics = new BindableList<Lyric>(beatmap.HitObjects.OfType<Lyric>());
-
-            Dependencies.Cache(editorBeatmap);
+            Dependencies.Cache(new EditorBeatmap(beatmap));
             Dependencies.Cache(new EditorClock());
             Dependencies.CacheAs(state = new TestLyricEditorState());
             Dependencies.CacheAs<ITimeTagModeState>(new TimeTagModeState());
             Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
 
-            Child = lyricCaretState = new LyricCaretState(bindableLyrics);
+            LyricsProvider lyricsProvider = new LyricsProvider();
+            Dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
+
+            Children = new Drawable[]
+            {
+                lyricsProvider,
+                lyricCaretState = new LyricCaretState()
+            };
         }
 
         #region Changing mode

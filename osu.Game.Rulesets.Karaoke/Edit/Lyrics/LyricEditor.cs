@@ -22,8 +22,6 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
-using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Timing;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
@@ -80,7 +78,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public IBindable<LyricEditorMode> BindableMode => bindableMode;
 
         private readonly Bindable<float> bindableFontSize = new();
-        private readonly BindableList<Lyric> bindableLyrics = new();
 
         private readonly GridContainer gridContainer;
         private readonly GridContainer lyricEditorGridContainer;
@@ -95,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             // global state
             AddInternal(lyricSelectionState = new LyricSelectionState());
-            AddInternal(lyricCaretState = new LyricCaretState(bindableLyrics));
+            AddInternal(lyricCaretState = new LyricCaretState());
 
             // state for target mode only.
             AddInternal(manageModeState = new ManageModeState());
@@ -149,7 +146,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             });
 
-            container.Items.BindTo(bindableLyrics);
             container.OnOrderChanged += (x, nowOrder) =>
             {
                 lyricsChangeHandler?.ChangeOrder(nowOrder);
@@ -265,43 +261,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap)
+        private void load(EditorBeatmap beatmap, ILyricsProvider lyricsProvider)
         {
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
 
             // set-up divisor.
             beatDivisor.Value = beatmap.BeatmapInfo.BeatDivisor;
 
-            // load lyric in here
-            var lyrics = OrderUtils.Sorted(beatmap.HitObjects.OfType<Lyric>());
-            bindableLyrics.AddRange(lyrics);
-
-            // need to check is there any lyric added or removed.
-            beatmap.HitObjectAdded += e =>
-            {
-                if (e is not Lyric lyric)
-                    return;
-
-                var previousLyric = bindableLyrics.LastOrDefault(x => x.Order < lyric.Order);
-
-                if (previousLyric != null)
-                {
-                    int insertIndex = bindableLyrics.IndexOf(previousLyric) + 1;
-                    bindableLyrics.Insert(insertIndex, lyric);
-                }
-                else
-                {
-                    // insert to first.
-                    bindableLyrics.Insert(0, lyric);
-                }
-            };
-            beatmap.HitObjectRemoved += e =>
-            {
-                if (e is not Lyric lyric)
-                    return;
-
-                bindableLyrics.Remove(lyric);
-            };
+            container.Items.BindTo(lyricsProvider.BindableLyrics);
         }
 
         public virtual bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e) =>

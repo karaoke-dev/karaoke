@@ -32,6 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         private ImportLyricManager importManager;
 
+        private LyricsProvider lyricsProvider;
+
         private LyricCheckerManager lyricCheckerManager;
 
         private DependencyContainer dependencies;
@@ -98,6 +100,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
             AddInternal(importManager = new ImportLyricManager());
             dependencies.Cache(importManager);
+
+            AddInternal(lyricsProvider = new LyricsProvider());
+            dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
 
             AddInternal(lyricCheckerManager = new LyricCheckerManager());
             dependencies.Cache(lyricCheckerManager);
