@@ -30,6 +30,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         private ICaretPositionAlgorithm algorithm => bindableCaretPositionAlgorithm.Value;
 
+        private readonly IBindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
+
         private readonly BindableList<HitObject> selectedHitObjects = new();
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
@@ -40,15 +42,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         private readonly IBindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
         private readonly IBindable<bool> bindableRecordingChangeTimeWhileMovingTheCaret = new Bindable<bool>();
 
-        private readonly IBindableList<Lyric> bindableLyrics;
-
         [Resolved]
         private EditorClock editorClock { get; set; }
 
-        public LyricCaretState(IBindableList<Lyric> bindableLyrics)
+        public LyricCaretState()
         {
-            this.bindableLyrics = bindableLyrics;
-            this.bindableLyrics.BindCollectionChanged((a, b) =>
+            bindableLyrics.BindCollectionChanged((a, b) =>
             {
                 // should reset caret position if not in the list.
                 var caretLyric = BindableCaretPosition.Value?.Lyric;
@@ -160,9 +159,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, ILyricEditorState state, ITimeTagModeState timeTagModeState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+        private void load(EditorBeatmap beatmap, ILyricsProvider lyricsProvider, ILyricEditorState state, ITimeTagModeState timeTagModeState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
             selectedHitObjects.BindTo(beatmap.SelectedHitObjects);
+
+            bindableLyrics.BindTo(lyricsProvider.BindableLyrics);
+
             bindableMode.BindTo(state.BindableMode);
 
             bindableTimeTagEditMode.BindTo(timeTagModeState.BindableEditMode);

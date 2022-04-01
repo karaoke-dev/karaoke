@@ -41,6 +41,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly FontManager fontManager;
 
+        [Cached(typeof(ILyricsProvider))]
+        private readonly LyricsProvider lyricsProvider;
+
         [Cached]
         private readonly ExportLyricManager exportLyricManager;
 
@@ -64,6 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             AddInternal(fontManager = new FontManager());
 
             AddInternal(exportLyricManager = new ExportLyricManager());
+            AddInternal(lyricsProvider = new LyricsProvider());
             AddInternal(lyricCheckerManager = new LyricCheckerManager());
 
             AddInternal(beatmapChangeHandler = new BeatmapChangeHandler());

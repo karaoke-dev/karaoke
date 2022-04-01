@@ -38,14 +38,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             ScrollbarVisible = false;
         }
 
-        private Box background;
-
-        private Container mainContent;
-
         [BackgroundDependencyLoader]
         private void load(ISingerScreenScrollingInfoProvider scrollingInfoProvider, OsuColour colour)
         {
-            AddInternal(background = new Box
+            AddInternal(new Box
             {
                 Name = "Background",
                 Depth = 1,
@@ -57,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
             });
             AddRange(new Drawable[]
             {
-                mainContent = new Container
+                new Container
                 {
                     RelativeSizeAxes = Axes.X,
                     Height = timeline_height,
@@ -66,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
                     Depth = float.MaxValue,
                     Children = new Drawable[]
                     {
-                        new LyricBlueprintContainer(Singer),
+                        new LyricBlueprintContainer(),
                     }
                 },
             });

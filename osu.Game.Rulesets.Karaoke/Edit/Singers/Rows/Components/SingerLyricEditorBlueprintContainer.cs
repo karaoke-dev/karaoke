@@ -14,7 +14,6 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Framework.Utils;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.ContextMenu;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components.Blueprints;
@@ -27,19 +26,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 {
     public class LyricBlueprintContainer : BlueprintContainer<Lyric>
     {
-        private readonly Singer singer;
+        private readonly IBindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
-        public LyricBlueprintContainer(Singer singer)
+        public LyricBlueprintContainer()
         {
-            this.singer = singer;
+            bindableLyrics.BindCollectionChanged((_, b) =>
+            {
+                var removedLyrics = b.OldItems?.OfType<Lyric>().ToArray();
+                var createdLyrics = b.NewItems?.OfType<Lyric>().ToArray();
+
+                if (removedLyrics != null)
+                {
+                    foreach (var lyric in removedLyrics)
+                        RemoveBlueprintFor(lyric);
+                }
+
+                if (createdLyrics != null)
+                {
+                    foreach (var lyric in createdLyrics)
+                        AddBlueprintFor(lyric);
+                }
+            });
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap)
+        private void load(ILyricsProvider lyricsProvider)
         {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-            foreach (var lyric in lyrics)
-                AddBlueprintFor(lyric);
+            bindableLyrics.BindTo(lyricsProvider.BindableLyrics);
         }
 
         protected override IEnumerable<SelectionBlueprint<Lyric>> SortForMovement(IReadOnlyList<SelectionBlueprint<Lyric>> blueprints)
