@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         protected CaretPositionAlgorithm(Lyric[] lyrics)
         {
-            Lyrics = LyricsUtils.FindUnlockLyrics(OrderUtils.Sorted(lyrics));
+            Lyrics = LyricsUtils.FindUnlockLyrics(lyrics);
         }
 
         public abstract bool PositionMovable(TCaretPosition position);
