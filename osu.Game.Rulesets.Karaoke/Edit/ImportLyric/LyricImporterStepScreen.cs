@@ -84,10 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         {
             DialogOverlay.Push(new RollBackPopupDialog(fromScreen, ok =>
             {
-                if (ok && Step == LyricImporterStep.ImportLyric)
-                    DialogOverlay.Push(new RollBackResetPopupDialog(rollBackScreen, callBack));
-                else
-                    callBack?.Invoke(ok);
+                callBack?.Invoke(ok);
             }));
         }
 
