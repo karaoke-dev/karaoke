@@ -143,9 +143,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 
                 void submitMessage(TextBox textBox, bool newText)
                 {
-                    string text = textBox.Text.Trim();
+                    string text = textBox.Text;
 
-                    if (string.IsNullOrWhiteSpace(text))
+                    if (string.IsNullOrEmpty(text))
                         return;
 
                     NewCommitText?.Invoke(text);
