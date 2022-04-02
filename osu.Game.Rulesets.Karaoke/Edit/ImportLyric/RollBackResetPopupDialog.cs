@@ -15,9 +15,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             BodyText = $"Are you really sure you want to roll-back to step '{screen.Title}'? You might lost every change you made.";
             Buttons = new PopupDialogButton[]
             {
-                new PopupDialogOkButton
+                new PopupDialogDangerousButton
                 {
-                    Text = @"Sure",
+                    Text = @"Forget all changes",
                     Action = () => okAction?.Invoke(true),
                 },
                 new PopupDialogCancelButton
