@@ -64,5 +64,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 }
             }
         }
+
+        public void AbortImport()
+        {
+            editorBeatmap.Clear();
+        }
     }
 }

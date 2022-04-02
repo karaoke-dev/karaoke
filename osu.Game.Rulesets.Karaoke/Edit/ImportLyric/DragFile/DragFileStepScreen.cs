@@ -117,6 +117,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
             ScreenStack.Push(LyricImporterStep.EditLyric);
         }
 
+        public override void ConfirmRollBackFromStep(ILyricImporterStepScreen fromScreen, Action<bool> callBack)
+        {
+            base.ConfirmRollBackFromStep(fromScreen, ok =>
+            {
+                DialogOverlay.Push(new RollBackResetPopupDialog(fromScreen, reset =>
+                {
+                    if (reset)
+                    {
+                        // Should be better to clear all the lyrics before roll-back to the current page.
+                        importManager.AbortImport();
+                    }
+
+                    callBack?.Invoke(ok);
+                }));
+            });
+        }
+
         public override void OnEntering(IScreen last)
         {
             game.RegisterImportHandler(this);

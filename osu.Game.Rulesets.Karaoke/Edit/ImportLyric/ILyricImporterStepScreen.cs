@@ -17,6 +17,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         IconUsage Icon { get; }
 
-        void CanRollBack(ILyricImporterStepScreen rollBackScreen, Action<bool> callBack);
+        void ConfirmRollBackFromStep(ILyricImporterStepScreen fromScreen, Action<bool> callBack);
     }
 }

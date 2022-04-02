@@ -80,14 +80,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         public abstract void Complete();
 
-        public virtual void CanRollBack(ILyricImporterStepScreen rollBackScreen, Action<bool> callBack)
+        public virtual void ConfirmRollBackFromStep(ILyricImporterStepScreen fromScreen, Action<bool> callBack)
         {
-            DialogOverlay.Push(new RollBackPopupDialog(rollBackScreen, ok =>
+            DialogOverlay.Push(new RollBackPopupDialog(fromScreen, ok =>
             {
-                if (ok && rollBackScreen.Step == LyricImporterStep.ImportLyric)
-                    DialogOverlay.Push(new RollBackResetPopupDialog(rollBackScreen, callBack));
-                else
-                    callBack?.Invoke(ok);
+                callBack?.Invoke(ok);
             }));
         }
 
