@@ -1,0 +1,24 @@
+# License related
+/CodeAnalysis/      andy840119@gmail.com
+/LICENSE            andy840119@gmail.com
+/README.md          andy840119@gmail.com
+/osu.licenseheader  andy840119@gmail.com
+
+
+# CI config
+/.github/               andy840119@gmail.com
+/Directory.Build.props  andy840119@gmail.com
+/appveyor.yml           andy840119@gmail.com
+/cake.config            andy840119@gmail.com
+
+# Resource related
+/assets/                                      andy840119@gmail.com
+/osu.Game.Rulesets.Karaoke/Resources/         andy840119@gmail.com
+/osu.Game.Rulesets.Karaoke.Tests/Resources/   andy840119@gmail.com
+
+# Editor or git config
+/.editorconfig                                andy840119@gmail.com
+/.gitattributes                               andy840119@gmail.com
+/.gitignore                                   andy840119@gmail.com
+/osu.Game.Rulesets.Karaoke.sln                andy840119@gmail.com
+/osu.Game.Rulesets.Karaoke.sln.DotSettings    andy840119@gmail.com
