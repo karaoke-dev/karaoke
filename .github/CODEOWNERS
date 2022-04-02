@@ -1,0 +1,24 @@
+# License related
+/CodeAnalysis/      @andy840119
+/LICENSE            @andy840119
+/README.md          @andy840119
+/osu.licenseheader  @andy840119
+
+
+# CI config
+/.github/               @andy840119
+/Directory.Build.props  @andy840119
+/appveyor.yml           @andy840119
+/cake.config            @andy840119
+
+# Resource related
+/assets/                                      @andy840119
+/osu.Game.Rulesets.Karaoke/Resources/         @andy840119
+/osu.Game.Rulesets.Karaoke.Tests/Resources/   @andy840119
+
+# Editor or git config
+/.editorconfig                                @andy840119
+/.gitattributes                               @andy840119
+/.gitignore                                   @andy840119
+/osu.Game.Rulesets.Karaoke.sln                @andy840119
+/osu.Game.Rulesets.Karaoke.sln.DotSettings    @andy840119
