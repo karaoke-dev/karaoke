@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -151,7 +152,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 if (tab.Value is not ILyricImporterStepScreen targetScreen)
                     return;
 
-                currentScreen.CanRollBack(targetScreen, enabled =>
+                if (targetScreen.Step > currentScreen.Step)
+                    throw new InvalidOperationException("Cannot roll back to next step. How did you did that?");
+
+                // Should make sure that
+                targetScreen.ConfirmRollBackFromStep(currentScreen, enabled =>
                 {
                     if (enabled)
                         base.SelectTab(tab);
