@@ -4,14 +4,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Beatmaps;
-using osu.Game.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
-using osu.Game.Scoring;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
@@ -19,11 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Mods
     {
         public bool MicrophoneEnabled => false;
 
-        public override Score CreateReplayScore(IBeatmap beatmap, IReadOnlyList<Mod> mods) => new()
-        {
-            ScoreInfo = new ScoreInfo { User = new APIUser { Username = "osu!7pupu" } },
-            Replay = new KaraokeAutoGenerator(beatmap, mods).Generate(),
-        };
+        public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
+            => new(new KaraokeAutoGenerator(beatmap, mods).Generate(), new ModCreatedUser { Username = "osu!7pupu" });
 
         public virtual void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
         {
