@@ -10,6 +10,7 @@ using ManagedBass;
 using NWaves.Features;
 using osu.Framework.Audio.Callbacks;
 using osu.Framework.Audio.Track;
+using osu.Game.Beatmaps;
 using osu.Game.Replays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Replays;
@@ -27,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         /// </summary>
         /// <param name="beatmap"></param>
         /// <param name="data"></param>
-        public KaraokeAutoGeneratorBySinger(KaraokeBeatmap beatmap, Stream data)
+        public KaraokeAutoGeneratorBySinger(IBeatmap beatmap, Stream data)
             : base(beatmap)
         {
             if (data == null)

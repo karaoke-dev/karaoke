@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
-using osu.Game.Online.API.Requests.Responses;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -16,7 +15,6 @@ using osu.Game.Rulesets.Karaoke.UI.HUD;
 using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
-using osu.Game.Scoring;
 
 namespace osu.Game.Rulesets.Karaoke.Mods
 {
@@ -30,11 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         private KaraokeBeatmap beatmap;
 
-        public override Score CreateReplayScore(IBeatmap beatmap, IReadOnlyList<Mod> mods) => new()
-        {
-            ScoreInfo = new ScoreInfo { User = new APIUser { Username = "practice master" } },
-            Replay = new KaraokeAutoGenerator(beatmap, mods).Generate(),
-        };
+        public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
+            => new(new KaraokeAutoGenerator(beatmap, mods).Generate(), new ModCreatedUser { Username = "practice master" });
 
         public void ApplyToDrawableRuleset(DrawableRuleset<KaraokeHitObject> drawableRuleset)
         {

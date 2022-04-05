@@ -9,6 +9,7 @@ using osu.Framework.Graphics.Textures;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
 using SharpFNT;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
@@ -74,12 +75,12 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
             for (int y = 0; y < characterHeight; y++)
             {
-                var pixelRowSpan = page.GetPixelRowSpan(startFromY + y);
+                var pixelRowMemory = page.DangerousGetPixelRowMemory(startFromY + y);
                 int readOffset = y * character.Width;
 
                 for (int x = 0; x < characterWidth; x++)
                 {
-                    pixelRowSpan[startFromX + x] = rowData[readOffset + x];
+                    pixelRowMemory.Span[startFromX + x] = rowData[readOffset + x];
                 }
             }
         }
