@@ -1,6 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
+using Lucene.Net.Support.C5;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -323,33 +325,29 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             private const int dot_amount = 30;
             private const float spacing = 5;
 
-            private readonly FillFlowContainer dots;
             private readonly PitchDot currentDot;
 
             public PitchVisualizer()
             {
-                // todo : draw that stupid shapes with progressive background color.
                 AutoSizeAxes = Axes.Both;
+
+                // todo : draw that stupid shapes with progressive background color.
                 InternalChildren = new Drawable[]
                 {
-                    dots = new FillFlowContainer
+                    new FillFlowContainer
                     {
                         AutoSizeAxes = Axes.Both,
                         Spacing = new Vector2(spacing),
+                        Children = Enumerable.Range(0, dot_amount).Select(i => new PitchDot
+                        {
+                            Colour = calculateDotColour(i, 0.8f)
+                        }).ToArray()
                     },
                     currentDot = new PitchDot
                     {
                         Alpha = 0,
                     },
                 };
-
-                for (int i = 0; i < dot_amount; i++)
-                {
-                    dots.Add(new PitchDot
-                    {
-                        Colour = calculateDotColour(i, 0.8f)
-                    });
-                }
             }
 
             private float pitch;
@@ -361,7 +359,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 get => pitch;
                 set
                 {
-                    if (pitch == value)
+                    if (EqualityComparer<float>.Default.Equals(pitch, value))
                         return;
 
                     pitch = value;
@@ -370,13 +368,13 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                     currentDot.X = calculateDotPosition((int)pitch);
 
                     // adjust show / hide.
-                    bool showPitch = pitch != 0;
-                    if (this.showPitch == showPitch)
+                    bool show = pitch != 0;
+                    if (showPitch == show)
                         return;
 
-                    this.showPitch = showPitch;
+                    showPitch = show;
 
-                    if (showPitch)
+                    if (show)
                     {
                         currentDot.FadeIn(200);
                     }
