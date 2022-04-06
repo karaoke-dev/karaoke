@@ -9,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
     public class RomajiTagsConverter : SortableJsonConvertor<RomajiTag>
     {
-        protected override IList<RomajiTag> GetSortedValue(IEnumerable<RomajiTag> objects)
+        protected override IEnumerable<RomajiTag> GetSortedValue(IEnumerable<RomajiTag> objects)
             => TextTagsUtils.Sort(objects);
     }
 }
