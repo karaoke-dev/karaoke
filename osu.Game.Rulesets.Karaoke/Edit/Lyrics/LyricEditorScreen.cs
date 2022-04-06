@@ -140,41 +140,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
             }
 
-            private static LocalisableString getDescription(LyricEditorMode mode)
-            {
-                switch (mode)
+            private static LocalisableString getDescription(LyricEditorMode mode) =>
+                mode switch
                 {
-                    case LyricEditorMode.View:
-                        return "View the lyric";
-
-                    case LyricEditorMode.Manage:
-                        return "Manage the lyric";
-
-                    case LyricEditorMode.Typing:
-                        return "Typing...";
-
-                    case LyricEditorMode.Language:
-                        return "Manage the language in the lyric.";
-
-                    case LyricEditorMode.EditRuby:
-                        return "Create/edit/delete the ruby";
-
-                    case LyricEditorMode.EditRomaji:
-                        return "Create/edit/delete the romaji";
-
-                    case LyricEditorMode.EditTimeTag:
-                        return "Create/edit/delete the time-tag.";
-
-                    case LyricEditorMode.EditNote:
-                        return "Create the notes for scoring.";
-
-                    case LyricEditorMode.Singer:
-                        return "Assign the singer to lyric.";
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
-                }
-            }
+                    LyricEditorMode.View => "View the lyric",
+                    LyricEditorMode.Manage => "Manage the lyric",
+                    LyricEditorMode.Typing => "Typing...",
+                    LyricEditorMode.Language => "Manage the language in the lyric.",
+                    LyricEditorMode.EditRuby => "Create/edit/delete the ruby",
+                    LyricEditorMode.EditRomaji => "Create/edit/delete the romaji",
+                    LyricEditorMode.EditTimeTag => "Create/edit/delete the time-tag.",
+                    LyricEditorMode.EditNote => "Create the notes for scoring.",
+                    LyricEditorMode.Singer => "Assign the singer to lyric.",
+                    _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+                };
 
             private static LocalisableString getValue(LyricEditorMode mode)
                 => mode.GetDescription();
