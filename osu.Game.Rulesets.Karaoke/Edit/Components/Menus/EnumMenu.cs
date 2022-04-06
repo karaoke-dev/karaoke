@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions;
@@ -42,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
             }).ToArray();
         }
 
-        protected virtual T[] ValidEnums => EnumUtils.GetValues<T>();
+        protected virtual IEnumerable<T> ValidEnums => EnumUtils.GetValues<T>();
 
         protected string GetName(T selection)
             => selection.GetDescription();
