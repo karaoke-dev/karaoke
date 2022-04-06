@@ -179,11 +179,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit
 
                 LoadComponentAsync(currentScreen, newScreen =>
                 {
-                    if (newScreen == currentScreen)
-                    {
-                        screenContainer.Add(newScreen);
-                        newScreen.Show();
-                    }
+                    if (newScreen != currentScreen)
+                        return;
+
+                    screenContainer.Add(newScreen);
+                    newScreen.Show();
                 });
             }
             finally
