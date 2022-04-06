@@ -138,8 +138,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         }
 
         private static BeatmapVerifierContext getContext(IBeatmap beatmap)
-        {
-            return new(beatmap, new TestWorkingBeatmap(beatmap));
-        }
+            => new(beatmap, new TestWorkingBeatmap(beatmap));
     }
 }
