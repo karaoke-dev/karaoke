@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
             }
         }
 
-        private List<TimeTag> generateTimeTagByText(string text)
+        private IEnumerable<TimeTag> generateTimeTagByText(string text)
         {
             var timeTags = new List<TimeTag>();
             if (string.IsNullOrEmpty(text))
