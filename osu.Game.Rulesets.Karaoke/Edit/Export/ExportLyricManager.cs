@@ -94,8 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Export
             var encoder = new KaraokeJsonBeatmapEncoder();
 
             // not use editor.workingBeatmap(KaraokeBeatmap) is because karaoke beatmap is not inherit beatmap class.
-            var karaokeBeatmap = beatmap.PlayableBeatmap as KaraokeBeatmap;
-            if (karaokeBeatmap == null)
+            if (beatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
                 throw new ArgumentNullException(nameof(karaokeBeatmap));
 
             var encodeBeatmap = new Beatmap

@@ -63,8 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             // for now we always allow movement. snapping is provided by the Timeline's "distance" snap implementation
             public override bool HandleMovement(MoveSelectionEvent<T> moveEvent)
             {
-                var selectedTextTags = SelectedItems;
-                if (!selectedTextTags.Any())
+                if (!SelectedItems.Any())
                     throw new InvalidOperationException("Should have at least one selected item.");
 
                 float deltaXPosition = moveEvent.ScreenSpaceDelta.X;
@@ -72,23 +71,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
                 if (deltaXPosition < 0)
                 {
-                    var firstTimeTag = selectedTextTags.OrderBy(x => x.StartIndex).FirstOrDefault();
+                    var firstTimeTag = SelectedItems.OrderBy(x => x.StartIndex).FirstOrDefault();
                     int newStartIndex = calculateNewIndex(firstTimeTag, deltaXPosition, Anchor.CentreLeft);
                     int offset = newStartIndex - firstTimeTag!.StartIndex;
                     if (offset == 0)
                         return false;
 
-                    SetTextTagShifting(selectedTextTags, -1);
+                    SetTextTagShifting(SelectedItems, -1);
                 }
                 else
                 {
-                    var lastTimeTag = selectedTextTags.OrderBy(x => x.EndIndex).LastOrDefault();
+                    var lastTimeTag = SelectedItems.OrderBy(x => x.EndIndex).LastOrDefault();
                     int newEndIndex = calculateNewIndex(lastTimeTag, deltaXPosition, Anchor.CentreRight);
                     int offset = newEndIndex - lastTimeTag!.EndIndex;
                     if (offset == 0)
                         return false;
 
-                    SetTextTagShifting(selectedTextTags, 1);
+                    SetTextTagShifting(SelectedItems, 1);
                 }
 
                 return true;

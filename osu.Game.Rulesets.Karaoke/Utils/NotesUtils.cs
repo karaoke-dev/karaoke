@@ -10,11 +10,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
     {
         public static Tuple<Note, Note> SplitNote(Note note, double percentage = 0.5)
         {
-            if (percentage < 0 || percentage > 1)
-                throw new ArgumentOutOfRangeException(nameof(note));
+            switch (percentage)
+            {
+                case < 0 or > 1:
+                    throw new ArgumentOutOfRangeException(nameof(note));
 
-            if (percentage == 0 || percentage == 1)
-                throw new InvalidOperationException($"{nameof(percentage)} cannot be {0} or {1}.");
+                case 0 or 1:
+                    throw new InvalidOperationException($"{nameof(percentage)} cannot be {0} or {1}.");
+            }
 
             double firstNoteStartTime = note.StartTime;
             double firstNoteDuration = note.Duration * percentage;

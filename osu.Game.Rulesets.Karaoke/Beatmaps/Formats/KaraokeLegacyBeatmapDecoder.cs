@@ -221,20 +221,20 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             var availableTranslates = new List<CultureInfo>();
 
             var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-            var translates = translateLines.Select(translate => new
+            var translations = translateLines.Select(translate => new
             {
                 key = translate.Split('=').FirstOrDefault()?.Split('[').LastOrDefault()?.Split(']').FirstOrDefault(),
                 value = translate.Split('=').LastOrDefault()
             }).GroupBy(x => x.key, y => y.value).ToList();
 
-            foreach (var singleLanguage in translates)
+            foreach (var translation in translations)
             {
                 // get culture and translate
-                string languageCode = singleLanguage.Key;
+                string languageCode = translation.Key;
                 var cultureInfo = new CultureInfo(languageCode);
-                var values = singleLanguage.ToList();
+                var values = translation.ToList();
 
-                int size = Math.Min(lyrics.Count, singleLanguage.Count());
+                int size = Math.Min(lyrics.Count, translation.Count());
 
                 for (int j = 0; j < size; j++)
                 {

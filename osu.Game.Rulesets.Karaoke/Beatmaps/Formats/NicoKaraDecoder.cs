@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         private static List<ICustomizedShader> createShaders(KaraokeFont font, ApplyShaderPart part)
         {
             var fontInfo = font.FontInfos[0];
-            var brushInfos = getBrusnInfos(font, part);
+            var brushInfos = getBrushInfos(font, part);
             var fontBrushInfo = brushInfos[0];
             var borderBrushInfo = brushInfos[1];
             var shaderBrushInfo = brushInfos[2];
@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             return shaders;
         }
 
-        private static BrushInfo[] getBrusnInfos(KaraokeFont font, ApplyShaderPart part) =>
+        private static BrushInfo[] getBrushInfos(KaraokeFont font, ApplyShaderPart part) =>
             part switch
             {
                 ApplyShaderPart.Left => font.BrushInfos.GetRange(0, 3).ToArray(),

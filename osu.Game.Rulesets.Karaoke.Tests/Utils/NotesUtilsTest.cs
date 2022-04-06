@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new double[] { 1000, 5000 }, 3, null, null)]
         [TestCase(new double[] { 1000, 5000 }, 0, null, null)] // should not be 0 or 1.
         [TestCase(new double[] { 1000, 5000 }, 1, null, null)]
-        public void TestSeparateNoteTime(double[] time, double percentage, double[] firstTime, double[] secondTime)
+        public void TestSplitNoteTime(double[] time, double percentage, double[] firstTime, double[] secondTime)
         {
             var note = new Note
             {
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         }
 
         [Test]
-        public void TestSeparateNoteOtherProperty()
+        public void TestSplitNoteOtherProperty()
         {
             const double percentage = 0.3;
             var lyric = new Lyric

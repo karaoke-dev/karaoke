@@ -33,6 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             writer.WriteEndArray();
         }
 
-        protected abstract IList<TObject> GetSortedValue(IEnumerable<TObject> objects);
+        protected abstract IEnumerable<TObject> GetSortedValue(IEnumerable<TObject> objects);
     }
 }

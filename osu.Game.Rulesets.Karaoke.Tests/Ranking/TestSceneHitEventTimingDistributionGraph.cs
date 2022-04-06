@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
             createTest(new List<HitEvent>());
         }
 
-        private void createTest(List<HitEvent> events) => AddStep("create test", () =>
+        private void createTest(IReadOnlyList<HitEvent> events) => AddStep("create test", () =>
         {
             Children = new Drawable[]
             {

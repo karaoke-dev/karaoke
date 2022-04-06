@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 {
     public class SingerToolTip : BackgroundToolTip<ISinger>
     {
-        private const int avater_size = 60;
+        private const int avatar_size = 60;
         private const int main_text_size = 24;
         private const int sub_text_size = 12;
 
@@ -40,10 +40,10 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                     {
                         Name = "Basic info",
                         RelativeSizeAxes = Axes.X,
-                        Height = avater_size,
+                        Height = avatar_size,
                         ColumnDimensions = new[]
                         {
-                            new Dimension(GridSizeMode.Absolute, avater_size),
+                            new Dimension(GridSizeMode.Absolute, avatar_size),
                             new Dimension(),
                         },
                         Content = new[]
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                                 avatar = new DrawableSingerAvatar
                                 {
                                     Name = "Avatar",
-                                    Size = new Vector2(avater_size),
+                                    Size = new Vector2(avatar_size),
                                 },
                                 new Container
                                 {

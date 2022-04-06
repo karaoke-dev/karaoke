@@ -159,7 +159,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                             new KaraokeEditorMenu(editor, "Karaoke editor")
                         }
                     },
-                    new MenuItem("Debug")
+                    new("Debug")
                     {
                         Items = new MenuItem[]
                         {

@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate
         {
             Icon = FontAwesome.Regular.TrashAlt;
             HeaderText = $"Confirm deletion of language {CultureInfoUtils.GetLanguageDisplayText(currentLanguage)}?";
-            BodyText = $"It will also remove the translate.";
+            BodyText = "It will also remove the translate.";
             Buttons = new PopupDialogButton[]
             {
                 new PopupDialogOkButton

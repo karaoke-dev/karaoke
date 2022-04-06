@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
 
             public Action OnDeleteButtonClick;
 
-            private readonly OsuSpriteText langaugeSpriteText;
+            private readonly OsuSpriteText languageSpriteText;
             private readonly Box background;
 
             public SelectedLanguage()
@@ -107,7 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
                     {
                         RelativeSizeAxes = Axes.Both,
                     },
-                    langaugeSpriteText = new OsuSpriteText
+                    languageSpriteText = new OsuSpriteText
                     {
                         Anchor = Anchor.CentreLeft,
                         Origin = Anchor.CentreLeft,
@@ -141,7 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
 
             public string Text
             {
-                set => langaugeSpriteText.Text = value;
+                set => languageSpriteText.Text = value;
             }
         }
 
