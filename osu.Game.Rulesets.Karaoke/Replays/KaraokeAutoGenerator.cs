@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
         public override Replay Generate()
         {
-            var notes = Beatmap.HitObjects.OfType<Note>().Where(x => x.Display);
+            var notes = Beatmap.HitObjects.OfType<Note>().Where(x => x.Display).ToArray();
             return new Replay
             {
                 Frames = notes.SelectMany((element, index) => getReplayFrames(element, notes.ElementAtOrDefault(index + 1))).ToList()
