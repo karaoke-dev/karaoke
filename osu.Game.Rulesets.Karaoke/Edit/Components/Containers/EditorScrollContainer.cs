@@ -11,8 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Containers
 {
     public abstract class EditorScrollContainer : ZoomableScrollContainer
     {
-        public readonly BindableFloat BindableZoom = new();
-        public readonly BindableFloat BindableCurrent = new();
+        protected readonly BindableFloat BindableZoom = new();
+        protected readonly BindableFloat BindableCurrent = new();
 
         protected EditorScrollContainer()
         {

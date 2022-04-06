@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
     {
         public BindableList<Singer> Singers => Items;
 
-        public override List<Singer> GetItemsFromBeatmap(KaraokeBeatmap beatmap)
+        protected override List<Singer> GetItemsFromBeatmap(KaraokeBeatmap beatmap)
             => beatmap.Singers;
 
         public void ChangeOrder(Singer singer, int newIndex)

@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
             beatmap?.EndChange();
         }
 
-        public abstract List<TItem> GetItemsFromBeatmap(KaraokeBeatmap beatmap);
+        protected abstract List<TItem> GetItemsFromBeatmap(KaraokeBeatmap beatmap);
 
         public void Add(TItem item)
         {
