@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
@@ -42,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
 
         private void addFont(FontInfo fontInfo)
         {
-            bool hasFont = fontInfos.Keys.Contains(fontInfo);
+            bool hasFont = fontInfos.ContainsKey(fontInfo);
             if (hasFont)
                 return;
 
