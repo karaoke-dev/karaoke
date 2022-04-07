@@ -18,6 +18,8 @@ Some features are still under heavy development, but existing features should wo
 
 Please note that this project doesn't have much of a [demo](https://github.com/karaoke-dev/sample-beatmap) currently available, and most of the lyrics are written in Japanese, so we recommend looking around this project to find new features instead of actually using it, unless you understand / speak Japanese.
 
+Also, another reason for looking around is that this project is not stable. I hope users don't start using it until most of the bugs are fixed, and the editor has been implemented.
+
 If you run into any problems, you can shoot us an email (support@karaoke.dev) or send me a message on [Discord](https://discord.gg/ga2xZXk). I will typically reply faster on Discord.
 
 And feel free to report any bugs if found.
