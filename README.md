@@ -18,7 +18,7 @@ Some features are still under heavy development, but existing features should wo
 
 Please note that this project doesn't have much of a [demo](https://github.com/karaoke-dev/sample-beatmap) currently available, and most of the lyrics are written in Japanese, so we recommend looking around this project to find new features instead of actually using it, unless you understand / speak Japanese.
 
-If you run into any problems, you can shoot us an email (support@karaoke.dev) or send me a message on [discord](https://discord.gg/ga2xZXk). I will typically reply faster on discord.
+If you run into any problems, you can shoot us an email (support@karaoke.dev) or send me a message on [Discord](https://discord.gg/ga2xZXk). I will typically reply faster on Discord.
 
 And feel free to report any bugs if found.
 
@@ -47,6 +47,6 @@ Parts of the lyrics editor in this ruleset were inspired by them.
 
 - [Appveyor](https://www.appveyor.com/), [CodeFactor](https://www.codefactor.io/) and [Github action](https://github.com/features/actions) for providing free `CI`/`CD` service.
 
-- [Figma](https://www.figma.com/), for fast creation of assets like logos or icon.
+- [Figma](https://www.figma.com/), for quick creation of assets like logos or icon.
 
-- [Miro](https://miro.com/). Used for project management and planning.
+- [Miro](https://miro.com/). Used for flow-charts and deciding how to structure some parts.
