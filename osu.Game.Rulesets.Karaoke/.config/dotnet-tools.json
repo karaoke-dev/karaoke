@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "ppy.localisationanalyser.tools": {
+      "version": "2022.320.0",
+      "commands": [
+        "localisation"
+      ]
+    }
+  }
+}
