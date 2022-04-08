@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="scroll_speed" xml:space="preserve">
+    <value>移动速度</value>
+  </data>
+  <data name="show_cursor_while_playing" xml:space="preserve">
+    <value>当游玩的时候，把鼠标藏起来</value>
+  </data>
+  <data name="translate" xml:space="preserve">
+    <value>显示翻译</value>
+  </data>
+  <data name="prefer_language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="select_prefer_translate_language" xml:space="preserve">
+    <value>选择想要被翻译的语言，如果图谱上的歌词有被翻译成对应的语言的话就会显示出来</value>
+  </data>
+  <data name="microphone_devices" xml:space="preserve">
+    <value>麦克风</value>
+  </data>
+  <data name="practice_preempt_time" xml:space="preserve">
+    <value>延迟时间</value>
+  </data>
+  <data name="open_ruleset_settings" xml:space="preserve">
+    <value>设定</value>
+  </data>
+  <data name="open_ruleset_settings_for_adjusting_more_configs" xml:space="preserve">
+    <value>有更多设定藏在里面</value>
+  </data>
+  <data name="change_log" xml:space="preserve">
+    <value>更新日志</value>
+  </data>
+  <data name="lets_see_what_karaoke_changed" xml:space="preserve">
+    <value>看看我们最近又更新了什么吧</value>
+  </data>
+</root>
