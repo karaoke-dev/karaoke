@@ -58,37 +58,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="scroll_speed" xml:space="preserve">
-    <value>滚动速度</value>
-  </data>
-  <data name="show_cursor_while_playing" xml:space="preserve">
-    <value>当游玩的时候，显示鼠标</value>
-  </data>
-  <data name="translate" xml:space="preserve">
-    <value>翻译</value>
-  </data>
-  <data name="prefer_language" xml:space="preserve">
-    <value>偏好语言</value>
-  </data>
-  <data name="select_prefer_translate_language" xml:space="preserve">
-    <value>选择偏好的翻译语言</value>
-  </data>
-  <data name="microphone_devices" xml:space="preserve">
-    <value>麦克风设备</value>
-  </data>
-  <data name="practice_preempt_time" xml:space="preserve">
-    <value>延迟时间</value>
-  </data>
-  <data name="open_ruleset_settings" xml:space="preserve">
-    <value>打开设置</value>
-  </data>
-  <data name="open_ruleset_settings_for_adjusting_more_configs" xml:space="preserve">
-    <value>有更多设定藏在里面</value>
-  </data>
-  <data name="change_log" xml:space="preserve">
-    <value>更新日志</value>
-  </data>
-  <data name="lets_see_what_karaoke_changed" xml:space="preserve">
-    <value>看看我们最近又更新了什么</value>
+  <data name="karaoke" xml:space="preserve">
+    <value>カラオケ!</value>
   </data>
 </root>
