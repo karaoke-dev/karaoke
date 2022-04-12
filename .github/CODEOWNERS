@@ -10,6 +10,7 @@
 /Directory.Build.props  @andy840119
 /appveyor.yml           @andy840119
 /cake.config            @andy840119
+/crowdin.yml            @andy840119
 
 # Resource related
 /assets/                                      @andy840119
@@ -17,6 +18,7 @@
 /osu.Game.Rulesets.Karaoke.Tests/Resources/   @andy840119
 
 # Editor or git config
+/.config/dotnet-tools.json                    @andy840119
 /.editorconfig                                @andy840119
 /.gitattributes                               @andy840119
 /.gitignore                                   @andy840119

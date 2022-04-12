@@ -12,12 +12,13 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Overlays;
 using osu.Game.Rulesets.Karaoke.Screens.Settings;
+using osu.Game.Rulesets.Karaoke.Localisation;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class KaraokeSettingsSubsection : RulesetSettingsSubsection
     {
-        protected override LocalisableString Header => "karaoke!";
+        protected override LocalisableString Header => CommonStrings.RulesetName;
 
         public KaraokeSettingsSubsection(Ruleset ruleset)
             : base(ruleset)
@@ -39,41 +40,41 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 // Scrolling
                 new SettingsSlider<double, TimeSlider>
                 {
-                    LabelText = "Scroll speed",
+                    LabelText = KaraokeSettingsSubsectionStrings.ScrollSpeed,
                     Current = config.GetBindable<double>(KaraokeRulesetSetting.ScrollTime)
                 },
                 new SettingsCheckbox
                 {
-                    LabelText = "Show cursor while playing",
+                    LabelText = KaraokeSettingsSubsectionStrings.ShowCursorWhilePlaying,
                     Current = config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor)
                 },
                 // Translate
                 new SettingsCheckbox
                 {
-                    LabelText = "Translate",
+                    LabelText = KaraokeSettingsSubsectionStrings.Translate,
                     Current = config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate)
                 },
                 new SettingsLanguage
                 {
-                    LabelText = "Prefer language",
-                    TooltipText = "Select prefer translate language.",
+                    LabelText = KaraokeSettingsSubsectionStrings.PreferLanguage,
+                    TooltipText = KaraokeSettingsSubsectionStrings.SelectPreferTranslateLanguage,
                     Current = config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferLanguage)
                 },
                 new SettingsMicrophoneDeviceDropdown
                 {
-                    LabelText = "Microphone devices",
+                    LabelText = KaraokeSettingsSubsectionStrings.MicrophoneDevices,
                     Current = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
                 },
                 // Practice
                 new SettingsSlider<double, TimeSlider>
                 {
-                    LabelText = "Practice preempt time",
+                    LabelText = KaraokeSettingsSubsectionStrings.PracticePreemptTime,
                     Current = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime)
                 },
                 new DangerousSettingsButton
                 {
-                    Text = "Open ruleset settings",
-                    TooltipText = "Open ruleset settings for adjusting more configs.",
+                    Text = KaraokeSettingsSubsectionStrings.OpenRulesetSettings,
+                    TooltipText = KaraokeSettingsSubsectionStrings.OpenRulesetSettingsForAdjustingMoreConfigs,
                     Action = () =>
                     {
                         try
@@ -90,8 +91,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 },
                 new SettingsButton
                 {
-                    Text = "Change log",
-                    TooltipText = "Let's see what karaoke! changed.",
+                    Text = KaraokeSettingsSubsectionStrings.ChangeLog,
+                    TooltipText = KaraokeSettingsSubsectionStrings.LetsSeeWhatKaraokeChanged,
                     Action = () =>
                     {
                         try
