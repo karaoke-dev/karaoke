@@ -8,6 +8,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Localisation;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osuTK.Graphics;
 
@@ -69,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                         {
                             new OsuSpriteText
                             {
-                                Text = "Karaoke!",
+                                Text = CommonStrings.RulesetName,
                                 Font = OsuFont.GetFont(weight: FontWeight.Medium, size: 19),
                             },
                             new OsuSpriteText
