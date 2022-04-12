@@ -18,6 +18,7 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osuTK;
 using osuTK.Graphics;
+using osu.Game.Rulesets.Karaoke.Localisation;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
 {
@@ -97,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
                     });
                 }, true);
 
-                TooltipText = "view current changelog";
+                TooltipText = ChangelogStrings.ViewCurrentChangelog;
 
                 Action = () => current.Value = post;
             }
