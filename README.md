@@ -3,7 +3,8 @@
 # karaoke --dev
 [![CodeFactor](https://www.codefactor.io/repository/github/karaoke-dev/karaoke/badge)](https://www.codefactor.io/repository/github/karaoke-dev/karaoke)
 [![Build status](https://ci.appveyor.com/api/projects/status/07ytm0sei6l5oy08?svg=true)](https://ci.appveyor.com/project/andy840119/karaoke)
-[![NuGet](https://img.shields.io/badge/月子我婆-passed-ff69b4.svg)](https://github.com/karaoke-dev/karaoke)
+[![Crowdin](https://badges.crowdin.net/karaoke-dev/localized.svg)](https://crowdin.com/project/karaoke-dev)
+[![Waifu](https://img.shields.io/badge/月子我婆-passed-ff69b4.svg)](https://github.com/karaoke-dev/karaoke)
 [![GitHub last commit](https://img.shields.io/github/last-commit/karaoke-dev/karaoke)](https://github.com/karaoke-dev/karaoke/releases)
 [![Tagged Release](https://github.com/karaoke-dev/karaoke/workflows/Tagged%20Release/badge.svg)](https://github.com/karaoke-dev/karaoke/releases)
 [![dev chat](https://discordapp.com/api/guilds/299006062323826688/widget.png?style=shield)](https://discord.gg/ga2xZXk)
