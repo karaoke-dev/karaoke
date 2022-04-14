@@ -15,10 +15,10 @@ using osu.Framework.Platform;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Localisation;
 using osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses;
 using osuTK;
 using osuTK.Graphics;
-using osu.Game.Rulesets.Karaoke.Localisation;
 
 namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
 {

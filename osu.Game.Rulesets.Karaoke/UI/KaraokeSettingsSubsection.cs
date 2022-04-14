@@ -10,9 +10,9 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Extensions;
+using osu.Game.Rulesets.Karaoke.Localisation;
 using osu.Game.Rulesets.Karaoke.Overlays;
 using osu.Game.Rulesets.Karaoke.Screens.Settings;
-using osu.Game.Rulesets.Karaoke.Localisation;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
