@@ -159,7 +159,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, ILyricsProvider lyricsProvider, ILyricEditorState state, ITimeTagModeState timeTagModeState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+        private void load(EditorBeatmap beatmap, ILyricsProvider lyricsProvider, ILyricEditorState state, ITimeTagModeState timeTagModeState,
+                          KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
             selectedHitObjects.BindTo(beatmap.SelectedHitObjects);
 

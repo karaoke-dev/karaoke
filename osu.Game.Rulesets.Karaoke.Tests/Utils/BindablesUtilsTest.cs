@@ -42,7 +42,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 1 }, new[] { 2 }, new[] { 2 }, new[] { 1 }, new int[] { }, new int[] { })]
         [TestCase(new[] { 1 }, new[] { 2 }, new[] { 3 }, null, new[] { 1, 2 }, new[] { 2, 1 })] // should not clear value if not contains.
         [TestCase(new[] { 1 }, new[] { 2 }, null, new[] { 3 }, new[] { 1, 2 }, new[] { 2, 1 })]
-        public void TestSyncWithRemoveItems(int[] firstDefaultValues, int[] secondDefaultValues, int[] firstRemoveValues, int[] secondRemoveValues, int[] expectedFirstValues, int[] expectedSecondValues)
+        public void TestSyncWithRemoveItems(int[] firstDefaultValues, int[] secondDefaultValues, int[] firstRemoveValues, int[] secondRemoveValues, int[] expectedFirstValues,
+                                            int[] expectedSecondValues)
         {
             var firstBindableList = new BindableList<int>(firstDefaultValues);
             var secondBindableList = new BindableList<int>(secondDefaultValues);
