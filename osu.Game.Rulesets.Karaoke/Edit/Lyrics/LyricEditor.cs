@@ -22,9 +22,12 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Timing;
+using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
+using osu.Game.Screens;
 using osu.Game.Screens.Edit;
 using osu.Game.Skinning;
 
@@ -83,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private readonly GridContainer lyricEditorGridContainer;
         private readonly Container leftSideExtendArea;
         private readonly Container rightSideExtendArea;
-        private readonly KaraokeLyricEditorSkin skin;
+        private readonly LyricEditorSkin skin;
         private readonly DrawableLyricEditList container;
 
         private const int spacing = 10;
@@ -121,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                             {
                                 new Drawable[]
                                 {
-                                    new SkinProvidingContainer(skin = new KaraokeLyricEditorSkin(null))
+                                    new SkinProvidingContainer(skin = new LyricEditorSkin(null))
                                     {
                                         RelativeSizeAxes = Axes.Both,
                                         Child = container = new DrawableLyricEditList
@@ -258,6 +261,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 new Dimension(GridSizeMode.Absolute, show ? spacing : 0),
                 new Dimension(GridSizeMode.AutoSize),
             };
+        }
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        {
+            var baseDependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+
+            // Add shader manager as part of dependencies.
+            // it will call CreateResourceStore() in KaraokeRuleset and add the resource.
+            return new OsuScreenDependencies(false, new DrawableRulesetDependencies(baseDependencies.GetRuleset(), baseDependencies));
         }
 
         [BackgroundDependencyLoader]

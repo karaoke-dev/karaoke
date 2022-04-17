@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
@@ -17,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
         public static LyricStyle CreateDefault() => new()
         {
             Name = "Default",
-            LeftLyricTextShaders = new List<ICustomizedShader>
+            LeftLyricTextShaders = new ICustomizedShader[]
             {
                 new StepShader
                 {
@@ -37,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
                     }
                 }
             },
-            RightLyricTextShaders = new List<ICustomizedShader>
+            RightLyricTextShaders = new ICustomizedShader[]
             {
                 new StepShader
                 {
@@ -63,15 +64,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 
         public string Name { get; set; }
 
-        /// <summary>
-        ///  todo: should use <see cref="ICustomizedShader"/> instead because we should save <see cref="StepShader"/> also.
-        /// </summary>
-        public List<ICustomizedShader> LeftLyricTextShaders = new();
+        public IReadOnlyList<ICustomizedShader> LeftLyricTextShaders = Array.Empty<ICustomizedShader>();
 
-        /// <summary>
-        ///  todo: should use <see cref="ICustomizedShader"/> instead because we should save <see cref="StepShader"/> also.
-        /// </summary>
-        public List<ICustomizedShader> RightLyricTextShaders = new();
+        public IReadOnlyList<ICustomizedShader> RightLyricTextShaders = Array.Empty<ICustomizedShader>();
 
         public void ApplyTo(Drawable d)
         {
