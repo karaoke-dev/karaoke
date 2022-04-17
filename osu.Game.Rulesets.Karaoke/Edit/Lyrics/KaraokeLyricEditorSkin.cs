@@ -2,7 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
+using osu.Framework.Extensions.Color4Extensions;
+using osu.Framework.Graphics.Shaders;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -41,7 +44,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             : base(skin, resources)
         {
             DefaultElement[ElementType.LyricConfig] = LyricConfig.CreateDefault();
-            DefaultElement[ElementType.LyricStyle] = new LyricStyle { Name = "No effect" };
+            DefaultElement[ElementType.LyricStyle] = new LyricStyle
+            {
+                Name = "Default",
+                LeftLyricTextShaders = new List<ICustomizedShader>
+                {
+                    new OutlineShader
+                    {
+                        Radius = 4,
+                        Colour = Color4Extensions.FromHex("#3D2D6B"),
+                        OutlineColour = Color4Extensions.FromHex("#CCA532")
+                    },
+                },
+                RightLyricTextShaders = new List<ICustomizedShader>
+                {
+                    new OutlineShader
+                    {
+                        Radius = 4,
+                        OutlineColour = Color4Extensions.FromHex("#5932CC")
+                    },
+                }
+            };
             DefaultElement[ElementType.NoteStyle] = NoteStyle.CreateDefault();
 
             // todo: should use better way to handle overall size.
