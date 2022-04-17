@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             return horizontalAnchor | verticalAnchor;
         }
 
-        private static List<ICustomizedShader> createShaders(KaraokeFont font, ApplyShaderPart part)
+        private static IReadOnlyList<ICustomizedShader> createShaders(KaraokeFont font, ApplyShaderPart part)
         {
             var fontInfo = font.FontInfos[0];
             var brushInfos = getBrushInfos(font, part);
