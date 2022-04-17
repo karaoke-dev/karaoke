@@ -1,277 +1,277 @@
 ﻿[
-   {
-      "Time":222.85714285714283,
-      "Pitch":130.0,
-      "Sound":true
-   },
-   {
-      "Time":297.1428571428571,
-      "Pitch":130.0,
-      "Sound":true
-   },
-   {
-      "Time":371.4285714285714,
-      "Pitch":130.0,
-      "Sound":true
-   },
-   {
-      "Time":445.71428571428567,
-      "Pitch":132.0,
-      "Sound":true
-   },
-   {
-      "Time":520.0,
-      "Pitch":131.0,
-      "Sound":true
-   },
-   {
-      "Time":594.2857142857142,
-      "Pitch":128.0,
-      "Sound":true
-   },
-   {
-      "Time":668.5714285714286,
-      "Pitch":134.0,
-      "Sound":true
-   },
-   {
-      "Time":742.8571428571428,
-      "Pitch":147.0,
-      "Sound":true
-   },
-   {
-      "Time":817.1428571428571,
-      "Pitch":147.0,
-      "Sound":true
-   },
-   {
-      "Time":891.4285714285713,
-      "Pitch":147.0,
-      "Sound":true
-   },
-   {
-      "Time":965.7142857142857,
-      "Pitch":147.0,
-      "Sound":true
-   },
-   {
-      "Time":1040.0,
-      "Pitch":146.0,
-      "Sound":true
-   },
-   {
-      "Time":1114.2857142857142,
-      "Pitch":144.0,
-      "Sound":true
-   },
-   {
-      "Time":1188.5714285714284,
-      "Pitch":154.0,
-      "Sound":true
-   },
-   {
-      "Time":1262.8571428571427,
-      "Pitch":166.0,
-      "Sound":true
-   },
-   {
-      "Time":1337.142857142857,
-      "Pitch":165.0,
-      "Sound":true
-   },
-   {
-      "Time":1411.4285714285713,
-      "Pitch":166.0,
-      "Sound":true
-   },
-   {
-      "Time":1485.7142857142856,
-      "Pitch":166.0,
-      "Sound":true
-   },
-   {
-      "Time":1560.0,
-      "Pitch":163.0,
-      "Sound":true
-   },
-   {
-      "Time":1634.2857142857142,
-      "Pitch":163.0,
-      "Sound":true
-   },
-   {
-      "Time":1708.5714285714287,
-      "Pitch":172.0,
-      "Sound":true
-   },
-   {
-      "Time":1782.8571428571427,
-      "Pitch":175.0,
-      "Sound":true
-   },
-   {
-      "Time":1857.1428571428569,
-      "Pitch":175.0,
-      "Sound":true
-   },
-   {
-      "Time":1931.4285714285713,
-      "Pitch":176.0,
-      "Sound":true
-   },
-   {
-      "Time":2005.7142857142856,
-      "Pitch":176.0,
-      "Sound":true
-   },
-   {
-      "Time":2080.0,
-      "Pitch":172.0,
-      "Sound":true
-   },
-   {
-      "Time":2154.285714285714,
-      "Pitch":176.0,
-      "Sound":true
-   },
-   {
-      "Time":2228.5714285714284,
-      "Pitch":195.0,
-      "Sound":true
-   },
-   {
-      "Time":2302.8571428571427,
-      "Pitch":196.0,
-      "Sound":true
-   },
-   {
-      "Time":2377.142857142857,
-      "Pitch":196.0,
-      "Sound":true
-   },
-   {
-      "Time":2451.4285714285716,
-      "Pitch":197.0,
-      "Sound":true
-   },
-   {
-      "Time":2525.7142857142853,
-      "Pitch":196.0,
-      "Sound":true
-   },
-   {
-      "Time":2600.0,
-      "Pitch":193.0,
-      "Sound":true
-   },
-   {
-      "Time":2674.285714285714,
-      "Pitch":202.0,
-      "Sound":true
-   },
-   {
-      "Time":2748.5714285714284,
-      "Pitch":221.0,
-      "Sound":true
-   },
-   {
-      "Time":2822.8571428571427,
-      "Pitch":220.0,
-      "Sound":true
-   },
-   {
-      "Time":2897.1428571428573,
-      "Pitch":221.0,
-      "Sound":true
-   },
-   {
-      "Time":2971.428571428571,
-      "Pitch":221.0,
-      "Sound":true
-   },
-   {
-      "Time":3045.7142857142853,
-      "Pitch":219.0,
-      "Sound":true
-   },
-   {
-      "Time":3120.0,
-      "Pitch":217.0,
-      "Sound":true
-   },
-   {
-      "Time":3194.2857142857138,
-      "Pitch":234.0,
-      "Sound":true
-   },
-   {
-      "Time":3268.5714285714284,
-      "Pitch":249.0,
-      "Sound":true
-   },
-   {
-      "Time":3342.8571428571427,
-      "Pitch":247.0,
-      "Sound":true
-   },
-   {
-      "Time":3417.1428571428573,
-      "Pitch":249.0,
-      "Sound":true
-   },
-   {
-      "Time":3491.428571428571,
-      "Pitch":249.0,
-      "Sound":true
-   },
-   {
-      "Time":3565.7142857142853,
-      "Pitch":243.0,
-      "Sound":true
-   },
-   {
-      "Time":3640.0,
-      "Pitch":246.0,
-      "Sound":true
-   },
-   {
-      "Time":3714.2857142857138,
-      "Pitch":260.0,
-      "Sound":true
-   },
-   {
-      "Time":3788.5714285714284,
-      "Pitch":264.0,
-      "Sound":true
-   },
-   {
-      "Time":3862.8571428571427,
-      "Pitch":262.0,
-      "Sound":true
-   },
-   {
-      "Time":3937.1428571428573,
-      "Pitch":262.0,
-      "Sound":true
-   },
-   {
-      "Time":4011.428571428571,
-      "Pitch":264.0,
-      "Sound":true
-   },
-   {
-      "Time":4085.7142857142853,
-      "Pitch":256.0,
-      "Sound":true
-   },
-   {
-      "Time":4160.0,
-      "Pitch":267.0,
-      "Sound":true
-   },
-   {
-      "Time":4234.285714285714,
-      "Pitch":0.0,
-      "Sound":false
-   }
+  {
+    "Time": 222.85714285714283,
+    "Pitch": 130.0,
+    "Sound": true
+  },
+  {
+    "Time": 297.1428571428571,
+    "Pitch": 130.0,
+    "Sound": true
+  },
+  {
+    "Time": 371.4285714285714,
+    "Pitch": 130.0,
+    "Sound": true
+  },
+  {
+    "Time": 445.71428571428567,
+    "Pitch": 132.0,
+    "Sound": true
+  },
+  {
+    "Time": 520.0,
+    "Pitch": 131.0,
+    "Sound": true
+  },
+  {
+    "Time": 594.2857142857142,
+    "Pitch": 128.0,
+    "Sound": true
+  },
+  {
+    "Time": 668.5714285714286,
+    "Pitch": 134.0,
+    "Sound": true
+  },
+  {
+    "Time": 742.8571428571428,
+    "Pitch": 147.0,
+    "Sound": true
+  },
+  {
+    "Time": 817.1428571428571,
+    "Pitch": 147.0,
+    "Sound": true
+  },
+  {
+    "Time": 891.4285714285713,
+    "Pitch": 147.0,
+    "Sound": true
+  },
+  {
+    "Time": 965.7142857142857,
+    "Pitch": 147.0,
+    "Sound": true
+  },
+  {
+    "Time": 1040.0,
+    "Pitch": 146.0,
+    "Sound": true
+  },
+  {
+    "Time": 1114.2857142857142,
+    "Pitch": 144.0,
+    "Sound": true
+  },
+  {
+    "Time": 1188.5714285714284,
+    "Pitch": 154.0,
+    "Sound": true
+  },
+  {
+    "Time": 1262.8571428571427,
+    "Pitch": 166.0,
+    "Sound": true
+  },
+  {
+    "Time": 1337.142857142857,
+    "Pitch": 165.0,
+    "Sound": true
+  },
+  {
+    "Time": 1411.4285714285713,
+    "Pitch": 166.0,
+    "Sound": true
+  },
+  {
+    "Time": 1485.7142857142856,
+    "Pitch": 166.0,
+    "Sound": true
+  },
+  {
+    "Time": 1560.0,
+    "Pitch": 163.0,
+    "Sound": true
+  },
+  {
+    "Time": 1634.2857142857142,
+    "Pitch": 163.0,
+    "Sound": true
+  },
+  {
+    "Time": 1708.5714285714287,
+    "Pitch": 172.0,
+    "Sound": true
+  },
+  {
+    "Time": 1782.8571428571427,
+    "Pitch": 175.0,
+    "Sound": true
+  },
+  {
+    "Time": 1857.1428571428569,
+    "Pitch": 175.0,
+    "Sound": true
+  },
+  {
+    "Time": 1931.4285714285713,
+    "Pitch": 176.0,
+    "Sound": true
+  },
+  {
+    "Time": 2005.7142857142856,
+    "Pitch": 176.0,
+    "Sound": true
+  },
+  {
+    "Time": 2080.0,
+    "Pitch": 172.0,
+    "Sound": true
+  },
+  {
+    "Time": 2154.285714285714,
+    "Pitch": 176.0,
+    "Sound": true
+  },
+  {
+    "Time": 2228.5714285714284,
+    "Pitch": 195.0,
+    "Sound": true
+  },
+  {
+    "Time": 2302.8571428571427,
+    "Pitch": 196.0,
+    "Sound": true
+  },
+  {
+    "Time": 2377.142857142857,
+    "Pitch": 196.0,
+    "Sound": true
+  },
+  {
+    "Time": 2451.4285714285716,
+    "Pitch": 197.0,
+    "Sound": true
+  },
+  {
+    "Time": 2525.7142857142853,
+    "Pitch": 196.0,
+    "Sound": true
+  },
+  {
+    "Time": 2600.0,
+    "Pitch": 193.0,
+    "Sound": true
+  },
+  {
+    "Time": 2674.285714285714,
+    "Pitch": 202.0,
+    "Sound": true
+  },
+  {
+    "Time": 2748.5714285714284,
+    "Pitch": 221.0,
+    "Sound": true
+  },
+  {
+    "Time": 2822.8571428571427,
+    "Pitch": 220.0,
+    "Sound": true
+  },
+  {
+    "Time": 2897.1428571428573,
+    "Pitch": 221.0,
+    "Sound": true
+  },
+  {
+    "Time": 2971.428571428571,
+    "Pitch": 221.0,
+    "Sound": true
+  },
+  {
+    "Time": 3045.7142857142853,
+    "Pitch": 219.0,
+    "Sound": true
+  },
+  {
+    "Time": 3120.0,
+    "Pitch": 217.0,
+    "Sound": true
+  },
+  {
+    "Time": 3194.2857142857138,
+    "Pitch": 234.0,
+    "Sound": true
+  },
+  {
+    "Time": 3268.5714285714284,
+    "Pitch": 249.0,
+    "Sound": true
+  },
+  {
+    "Time": 3342.8571428571427,
+    "Pitch": 247.0,
+    "Sound": true
+  },
+  {
+    "Time": 3417.1428571428573,
+    "Pitch": 249.0,
+    "Sound": true
+  },
+  {
+    "Time": 3491.428571428571,
+    "Pitch": 249.0,
+    "Sound": true
+  },
+  {
+    "Time": 3565.7142857142853,
+    "Pitch": 243.0,
+    "Sound": true
+  },
+  {
+    "Time": 3640.0,
+    "Pitch": 246.0,
+    "Sound": true
+  },
+  {
+    "Time": 3714.2857142857138,
+    "Pitch": 260.0,
+    "Sound": true
+  },
+  {
+    "Time": 3788.5714285714284,
+    "Pitch": 264.0,
+    "Sound": true
+  },
+  {
+    "Time": 3862.8571428571427,
+    "Pitch": 262.0,
+    "Sound": true
+  },
+  {
+    "Time": 3937.1428571428573,
+    "Pitch": 262.0,
+    "Sound": true
+  },
+  {
+    "Time": 4011.428571428571,
+    "Pitch": 264.0,
+    "Sound": true
+  },
+  {
+    "Time": 4085.7142857142853,
+    "Pitch": 256.0,
+    "Sound": true
+  },
+  {
+    "Time": 4160.0,
+    "Pitch": 267.0,
+    "Sound": true
+  },
+  {
+    "Time": 4234.285714285714,
+    "Pitch": 0.0,
+    "Sound": false
+  }
 ]
