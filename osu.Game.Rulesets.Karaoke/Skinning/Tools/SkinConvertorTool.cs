@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using osu.Framework;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics.Shaders;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
@@ -19,11 +18,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
             if (shaderManager == null)
                 return null;
 
-            // todo: do not use outline shader in other platform because seems osx use OpenGL 2.X
-            // which will cause shader compile failed.
-            if (RuntimeInfo.OS != RuntimeInfo.Platform.Windows)
-                return null;
-
             var shaders = lyricStyle.LeftLyricTextShaders?.ToArray() ?? Array.Empty<ICustomizedShader>();
             attachShaders(shaderManager, shaders);
 
@@ -33,11 +27,6 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
         public static ICustomizedShader[] ConvertRightSideShader(ShaderManager shaderManager, LyricStyle lyricStyle)
         {
             if (shaderManager == null)
-                return null;
-
-            // todo: do not use outline shader in other platform because seems osx use OpenGL 2.X
-            // which will cause shader compile failed.
-            if (RuntimeInfo.OS != RuntimeInfo.Platform.Windows)
                 return null;
 
             var shaders = lyricStyle.RightLyricTextShaders?.ToArray() ?? Array.Empty<ICustomizedShader>();
