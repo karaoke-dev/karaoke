@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.IO.Stores;
 using osu.Game.Tests;
 
 namespace osu.Game.Rulesets.Karaoke.Tests
@@ -12,8 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests
         [BackgroundDependencyLoader]
         private void load()
         {
-            // add shader resource from font package.
-            Resources.AddStore(new NamespacedResourceStore<byte[]>(new ShaderResourceStore(), "Resources"));
+            // note: not add resource store here unless there's no other better choice.
+            // because it will let error related to missing resource harder to be tracked.
         }
     }
 }
