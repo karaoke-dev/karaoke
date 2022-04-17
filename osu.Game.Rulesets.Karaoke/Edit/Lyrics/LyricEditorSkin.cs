@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     /// <summary>
     /// This karaoke skin is using in lyric editor only.
     /// </summary>
-    public class KaraokeLyricEditorSkin : KaraokeSkin
+    public class LyricEditorSkin : KaraokeSkin
     {
         public const int MIN_FONT_SIZE = 10;
         public const int MAX_FONT_SIZE = 45;
@@ -34,13 +34,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             InstantiationInfo = typeof(DefaultKaraokeSkin).GetInvariantInstantiationInfo(),
         };
 
-        public KaraokeLyricEditorSkin(IStorageResourceProvider resources)
+        public LyricEditorSkin(IStorageResourceProvider resources)
             : this(CreateInfo(), resources)
         {
         }
 
         [UsedImplicitly(ImplicitUseKindFlags.InstantiatedWithFixedConstructorSignature)]
-        public KaraokeLyricEditorSkin(SkinInfo skin, IStorageResourceProvider resources)
+        public LyricEditorSkin(SkinInfo skin, IStorageResourceProvider resources)
             : base(skin, resources)
         {
             DefaultElement[ElementType.LyricConfig] = LyricConfig.CreateDefault();
