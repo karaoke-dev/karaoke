@@ -4,7 +4,9 @@
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
+using osu.Framework.Testing;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays.Settings;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings
@@ -24,8 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
             var colour = colourProvider.GetContentColour(this);
 
             // set header box and text to target color.
-            var headerBox = InternalChildren.FirstOrDefault();
-            var title = (InternalChildren.LastOrDefault() as Container)?.Children?.FirstOrDefault();
+            var headerBox = FlowContent.ChildrenOfType<Box>().FirstOrDefault(x => x.Name == "separator");
+            var title = FlowContent.ChildrenOfType<OsuSpriteText>().FirstOrDefault(x => x.Text == Header);
             if (headerBox == null || title == null)
                 return;
 
