@@ -15,6 +15,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
+using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Skinning;
 using osuTK;
 
@@ -220,15 +221,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             }
         }
 
-        protected override void UpdateStartTimeStateTransforms()
+        protected override void UpdateHitStateTransforms(ArmedState state)
         {
-            base.UpdateStartTimeStateTransforms();
+            base.UpdateHitStateTransforms(state);
 
-            using (BeginDelayedSequence(HitObject.Duration))
-            {
-                const float fade_out_time = 500;
-                this.FadeOut(fade_out_time);
-            }
+            const float fade_out_time = 500;
+            this.FadeOut(fade_out_time);
         }
 
         public void ApplyToLyricPieces(Action<DefaultLyricPiece> action)
