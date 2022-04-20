@@ -160,6 +160,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             }, true);
         }
 
+        public override bool RemoveCompletedTransforms => false;
+
         public class EditorLyricSpriteText : LyricSpriteText
         {
             public RectangleF GetRubyTagPosition(RubyTag rubyTag)
