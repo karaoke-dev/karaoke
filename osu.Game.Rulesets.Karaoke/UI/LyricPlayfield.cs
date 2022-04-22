@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -28,18 +29,18 @@ namespace osu.Game.Rulesets.Karaoke.UI
         protected WorkingBeatmap WorkingBeatmap => beatmap.Value;
 
         private readonly BindableDouble preemptTime = new();
-        private readonly Bindable<Lyric> nowLyric = new();
+        private readonly Bindable<Lyric[]> nowLyrics = new();
         private readonly Cached seekCache = new();
 
         public LyricPlayfield()
         {
             // Switch to target time
-            nowLyric.BindValueChanged(value =>
+            nowLyrics.BindValueChanged(value =>
             {
                 if (!seekCache.IsValid || value.NewValue == null)
                     return;
 
-                double lyricStartTime = value.NewValue.LyricStartTime - preemptTime.Value;
+                double lyricStartTime = value.NewValue.Select(x => x.LyricStartTime).Min() - preemptTime.Value;
 
                 WorkingBeatmap.Track.Seek(lyricStartTime);
             });
@@ -71,9 +72,20 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 return;
 
             // Update now lyric
-            var targetLyric = karaokeLyricJudgement.Time == LyricTime.Available ? judgedObject.HitObject as Lyric : null;
+            var lyrics = nowLyrics.Value ?? Array.Empty<Lyric>();
+            var lyric = judgedObject.HitObject as Lyric;
+
             seekCache.Invalidate();
-            nowLyric.Value = targetLyric;
+
+            if (karaokeLyricJudgement.Time == LyricTime.Available)
+            {
+                nowLyrics.Value = lyrics.Concat(new[] { lyric }).Distinct().ToArray();
+            }
+            else
+            {
+                nowLyrics.Value = lyrics.Where(x => x is not Lyric).ToArray();
+            }
+
             seekCache.Validate();
         }
 
@@ -82,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             // Practice
             rulesetConfig.BindWith(KaraokeRulesetSetting.PracticePreemptTime, preemptTime);
-            session.BindWith(KaraokeRulesetSession.NowLyrics, nowLyric);
+            session.BindWith(KaraokeRulesetSession.NowLyrics, nowLyrics);
 
             RegisterPool<Lyric, DrawableLyric>(50);
         }
