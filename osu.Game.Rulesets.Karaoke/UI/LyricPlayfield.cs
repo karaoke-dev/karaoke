@@ -2,15 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Caching;
 using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Objects;
@@ -23,8 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.UI
     {
         [Resolved]
         private IBindable<WorkingBeatmap> beatmap { get; set; }
-
-        public new IEnumerable<DrawableLyric> AllHitObjects => base.AllHitObjects.OfType<DrawableLyric>();
 
         protected WorkingBeatmap WorkingBeatmap => beatmap.Value;
 
@@ -48,43 +43,43 @@ namespace osu.Game.Rulesets.Karaoke.UI
             seekCache.Validate();
         }
 
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            NewResult += OnNewResult;
-        }
-
         protected override void OnNewDrawableHitObject(DrawableHitObject drawableHitObject)
         {
             if (drawableHitObject is DrawableLyric drawableLyric)
             {
-                // todo : not really sure should cancel binding action in here?
-                drawableLyric.OnLyricStart += OnNewResult;
+                drawableLyric.OnLyricStart += onLyricStart;
+                drawableLyric.OnLyricEnd += onLyricEnd;
             }
 
             base.OnNewDrawableHitObject(drawableHitObject);
         }
 
-        internal void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)
+        private void onLyricStart(DrawableLyric drawableLyric)
         {
-            if (result.Judgement is not KaraokeLyricJudgement karaokeLyricJudgement)
-                return;
-
-            // Update now lyric
             var lyrics = nowLyrics.Value ?? Array.Empty<Lyric>();
-            var lyric = judgedObject.HitObject as Lyric;
+            var lyric = drawableLyric.HitObject;
+
+            if (lyrics.Contains(lyric))
+                return;
 
             seekCache.Invalidate();
 
-            if (karaokeLyricJudgement.Time == LyricTime.Available)
-            {
-                nowLyrics.Value = lyrics.Concat(new[] { lyric }).Distinct().ToArray();
-            }
-            else
-            {
-                nowLyrics.Value = lyrics.Where(x => x is not Lyric).ToArray();
-            }
+            nowLyrics.Value = lyrics.Concat(new[] { lyric }).ToArray();
+
+            seekCache.Validate();
+        }
+
+        private void onLyricEnd(DrawableLyric drawableLyric)
+        {
+            var lyrics = nowLyrics.Value ?? Array.Empty<Lyric>();
+            var lyric = drawableLyric.HitObject;
+
+            if (!lyrics.Contains(lyric))
+                return;
+
+            seekCache.Invalidate();
+
+            nowLyrics.Value = lyrics.Where(x => x != lyric).ToArray();
 
             seekCache.Validate();
         }

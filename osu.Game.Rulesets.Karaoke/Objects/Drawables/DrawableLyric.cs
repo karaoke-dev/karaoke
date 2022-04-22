@@ -11,13 +11,10 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics.Sprites;
-using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Judgements;
+using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning.Default;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
-using osu.Game.Rulesets.Objects.Drawables;
-using osu.Game.Rulesets.Scoring;
 using osu.Game.Skinning;
 using osuTK;
 
@@ -46,10 +43,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         private readonly IBindableList<int> singersBindable = new BindableList<int>();
         private readonly BindableDictionary<CultureInfo, string> translateTextBindable = new();
 
-        /// <summary>
-        /// Invoked when a <see cref="JudgementResult"/> has been applied by this <see cref="DrawableHitObject"/> or a nested <see cref="DrawableHitObject"/>.
-        /// </summary>
-        public event Action<DrawableHitObject, JudgementResult> OnLyricStart;
+        public event Action<DrawableLyric> OnLyricStart;
+        public event Action<DrawableLyric> OnLyricEnd;
 
         public new Lyric HitObject => (Lyric)base.HitObject;
 
@@ -208,26 +203,20 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
 
         protected override void CheckForResult(bool userTriggered, double timeOffset)
         {
-            if (Result.Judgement is not KaraokeLyricJudgement judgement)
+            if (timeOffset + HitObject.LyricDuration >= 0 && HitObject.HitWindows.CanBeHit(timeOffset + HitObject.LyricDuration))
+            {
+                // note: CheckForResult will not being triggered when roll-back the time.
+                // so there's no need to consider the case while roll-back.
+                OnLyricStart?.Invoke(this);
                 return;
-
-            double lyricStartOffset = timeOffset + HitObject.LyricDuration;
-
-            if (lyricStartOffset < 0)
-            {
-                judgement.Time = LyricTime.NotYet;
             }
-            else if (!HitObject.HitWindows.CanBeHit(lyricStartOffset) && judgement.Time != LyricTime.Available)
+
+            if (timeOffset >= 0 && HitObject.HitWindows.CanBeHit(timeOffset))
             {
-                // Apply start hit result
-                judgement.Time = LyricTime.Available;
-                OnLyricStart?.Invoke(this, Result);
-            }
-            else if (!HitObject.HitWindows.CanBeHit(timeOffset))
-            {
-                judgement.Time = LyricTime.Exceed;
+                OnLyricEnd?.Invoke(this);
+
                 // Apply end hit result
-                ApplyResult(r => { r.Type = HitResult.Meh; });
+                ApplyResult(r => { r.Type = KaraokeLyricHitWindows.DEFAULT_HIT_RESULT; });
             }
         }
 
