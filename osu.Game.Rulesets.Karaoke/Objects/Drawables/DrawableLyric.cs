@@ -221,6 +221,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             }
         }
 
+        protected override void UpdateInitialTransforms()
+        {
+            base.UpdateInitialTransforms();
+
+            lyricPieces.ForEach(x => x.RefreshStateTransforms());
+        }
+
         protected override void UpdateHitStateTransforms(ArmedState state)
         {
             base.UpdateHitStateTransforms(state);
