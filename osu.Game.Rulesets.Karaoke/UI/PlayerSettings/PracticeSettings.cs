@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
         private void load(KaraokeRulesetConfigManager config, KaraokeSessionStatics session)
         {
             preemptTimeSliderBar.Current = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime);
-            session.BindWith(KaraokeRulesetSession.NowLyrics, lyricsPreview.SelectedLyric);
+            session.BindWith(KaraokeRulesetSession.NowLyrics, lyricsPreview.SelectedLyrics);
         }
     }
 }

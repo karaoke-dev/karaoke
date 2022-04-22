@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
     public class LyricsPreview : CompositeDrawable
     {
-        public Bindable<Lyric> SelectedLyric { get; } = new();
+        public Bindable<Lyric[]> SelectedLyrics { get; } = new();
 
         private readonly FillFlowContainer<ClickableLyric> lyricTable;
 
@@ -43,24 +43,24 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 }
             };
 
-            SelectedLyric.BindValueChanged(value =>
+            SelectedLyrics.BindValueChanged(value =>
             {
                 var oldValue = value.OldValue;
                 if (oldValue != null)
-                    lyricTable.Where(x => x.HitObject == oldValue).ForEach(x => { x.Selected = false; });
+                    lyricTable.Where(x => oldValue.Contains(x.HitObject)).ForEach(x => { x.Selected = false; });
 
                 var newValue = value.NewValue;
                 if (newValue != null)
-                    lyricTable.Where(x => x.HitObject == newValue).ForEach(x => { x.Selected = true; });
+                    lyricTable.Where(x => newValue.Contains(x.HitObject)).ForEach(x => { x.Selected = true; });
             });
         }
 
         private void triggerLyric(Lyric lyric)
         {
-            if (SelectedLyric.Value == lyric)
-                SelectedLyric.TriggerChange();
+            if (SelectedLyrics.Value?.Contains(lyric) ?? false)
+                SelectedLyrics.TriggerChange();
             else
-                SelectedLyric.Value = lyric;
+                SelectedLyrics.Value = new[] { lyric };
         }
 
         public Vector2 Spacing
