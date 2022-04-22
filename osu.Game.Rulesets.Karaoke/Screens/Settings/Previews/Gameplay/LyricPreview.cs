@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
                         Text = "karaoke"
                     },
                 },
-                HitWindows = new KaraokeHitWindows(),
+                HitWindows = new KaraokeLyricHitWindows(),
             };
 
         private IDictionary<CultureInfo, string> createPreviewTranslate(CultureInfo cultureInfo)
