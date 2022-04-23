@@ -1,15 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
-using osu.Game.Beatmaps;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Play.PlayerSettings;
 using osuTK;
 
@@ -19,11 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
     {
         private readonly PlayerSliderBar<double> preemptTimeSliderBar;
 
-        public PracticeSettings(IBeatmap beatmap)
+        public PracticeSettings()
             : base("Practice")
         {
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().ToList();
-
             Children = new Drawable[]
             {
                 new OsuSpriteText
@@ -35,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 {
                     Text = "Lyric:"
                 },
-                new LyricsPreview(lyrics)
+                new LyricsPreview
                 {
                     Height = 580,
                     RelativeSizeAxes = Axes.X,
