@@ -23,8 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
         [BackgroundDependencyLoader(true)]
         private void load(Player player)
         {
-            var beatmap = player?.Beatmap?.Value.Beatmap;
-            AddExtraOverlay(generalSettingsOverlay = new GeneralSettingOverlay(beatmap));
+            AddExtraOverlay(generalSettingsOverlay = new GeneralSettingOverlay());
 
             var mods = player?.GameplayState.Mods;
             if (mods == null)

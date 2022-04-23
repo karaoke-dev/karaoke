@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
         private readonly BindableInt bindableVocalPitch = new();
         private readonly BindableInt bindableSaitenPitch = new();
 
-        public GeneralSettingOverlay(IBeatmap beatmap)
+        public GeneralSettingOverlay()
         {
             // Add common group
             Add(new VisualSettings
@@ -44,18 +44,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                     Value = false
                 }
             });
-
-            // Add translate group if this beatmap has translate
-            if (beatmap.AnyTranslate())
-            {
-                Add(new TranslateSettings(beatmap.AvailableTranslates())
-                {
-                    Expanded =
-                    {
-                        Value = false
-                    }
-                });
-            }
         }
 
         public override SettingButton CreateToggleButton() => new()
@@ -131,8 +119,20 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeSessionStatics session)
+        private void load(IBindable<WorkingBeatmap> beatmap, KaraokeSessionStatics session)
         {
+            // Add translate group if this beatmap has translate
+            if (beatmap.Value.Beatmap.AnyTranslate())
+            {
+                Add(new TranslateSettings
+                {
+                    Expanded =
+                    {
+                        Value = false
+                    }
+                });
+            }
+
             session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
             session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
             session.BindWith(KaraokeRulesetSession.SaitenPitch, bindableSaitenPitch);
