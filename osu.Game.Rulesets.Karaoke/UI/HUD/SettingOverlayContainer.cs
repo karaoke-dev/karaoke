@@ -2,14 +2,16 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Mods;
+using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.UI;
-using osu.Game.Screens.Play;
 using osu.Game.Screens.Play.PlayerSettings;
 
 namespace osu.Game.Rulesets.Karaoke.UI.HUD
@@ -20,16 +22,15 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
         public Action<SettingOverlay> OnNewOverlayAdded;
 
-        [BackgroundDependencyLoader(true)]
-        private void load(Player player)
+        [BackgroundDependencyLoader]
+        private void load(IBindable<IReadOnlyList<Mod>> mods)
         {
             AddExtraOverlay(generalSettingsOverlay = new GeneralSettingOverlay());
 
-            var mods = player?.GameplayState.Mods;
             if (mods == null)
                 return;
 
-            foreach (var mod in mods.OfType<IApplicableToSettingHUDOverlay>())
+            foreach (var mod in mods.Value.OfType<IApplicableToSettingHUDOverlay>())
                 mod.ApplyToOverlay(this);
         }
 
