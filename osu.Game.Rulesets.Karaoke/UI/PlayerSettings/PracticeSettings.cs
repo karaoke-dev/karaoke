@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
     public class PracticeSettings : PlayerSettingsGroup, IKeyBindingHandler<KaraokeAction>
     {
         private readonly PlayerSliderBar<double> preemptTimeSliderBar;
-        private readonly LyricPreview lyricPreview;
+        private readonly LyricsPreview lyricsPreview;
 
         public PracticeSettings(IBeatmap beatmap)
             : base("Practice")
@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 {
                     Text = "Lyric:"
                 },
-                lyricPreview = new LyricPreview(lyrics)
+                lyricsPreview = new LyricsPreview(lyrics)
                 {
                     Height = 580,
                     RelativeSizeAxes = Axes.X,
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
         private void load(KaraokeRulesetConfigManager config, KaraokeSessionStatics session)
         {
             preemptTimeSliderBar.Current = config.GetBindable<double>(KaraokeRulesetSetting.PracticePreemptTime);
-            session.BindWith(KaraokeRulesetSession.NowLyric, lyricPreview.SelectedLyric);
+            session.BindWith(KaraokeRulesetSession.NowLyric, lyricsPreview.SelectedLyric);
         }
     }
 }

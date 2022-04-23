@@ -19,13 +19,13 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
-    public class LyricPreview : CompositeDrawable
+    public class LyricsPreview : CompositeDrawable
     {
         public Bindable<Lyric> SelectedLyric { get; } = new();
 
         private readonly FillFlowContainer<ClickableLyric> lyricTable;
 
-        public LyricPreview(IEnumerable<Lyric> lyrics)
+        public LyricsPreview(IEnumerable<Lyric> lyrics)
         {
             InternalChild = new OsuScrollContainer
             {
