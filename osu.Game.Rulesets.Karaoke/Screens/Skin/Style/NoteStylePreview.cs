@@ -29,8 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
-            var configCache = parent.Get<IRulesetConfigCache>();
-            var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(new KaraokeRuleset());
+            var config = Dependencies.Get<KaraokeRulesetConfigManager>();
             var dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
             dependencies.Cache(new KaraokeSessionStatics(config, null));
 
