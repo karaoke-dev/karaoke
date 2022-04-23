@@ -10,8 +10,10 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
@@ -21,9 +23,13 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
     public class LyricsPreview : CompositeDrawable
     {
-        public Bindable<Lyric[]> SelectedLyrics { get; } = new();
+        private readonly Bindable<double> bindablePreemptTime = new();
+        private readonly Bindable<Lyric[]> selectedLyrics = new();
 
         private readonly FillFlowContainer<ClickableLyric> lyricTable;
+
+        [Resolved]
+        private IBindable<WorkingBeatmap> beatmap { get; set; }
 
         public LyricsPreview(IEnumerable<Lyric> lyrics)
         {
@@ -35,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                     AutoSizeAxes = Axes.Y,
                     RelativeSizeAxes = Axes.X,
                     Direction = FillDirection.Vertical,
-                    Children = lyrics.Select(x => CreateLyricContainer(x).With(c =>
+                    Children = lyrics.Select(x => createLyricContainer(x).With(c =>
                     {
                         c.Selected = false;
                         c.Action = () => triggerLyric(x);
@@ -43,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 }
             };
 
-            SelectedLyrics.BindValueChanged(value =>
+            selectedLyrics.BindValueChanged(value =>
             {
                 var oldValue = value.OldValue;
                 if (oldValue != null)
@@ -55,12 +61,16 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             });
         }
 
+        private ClickableLyric createLyricContainer(Lyric lyric) => new(lyric);
+
         private void triggerLyric(Lyric lyric)
         {
-            if (SelectedLyrics.Value?.Contains(lyric) ?? false)
-                SelectedLyrics.TriggerChange();
-            else
-                SelectedLyrics.Value = new[] { lyric };
+            double time = lyric.LyricStartTime - bindablePreemptTime.Value;
+            beatmap.Value.Track.Seek(time);
+
+            // because playback might not clear singing lyrics, so we should re-assign the lyric here.
+            // todo: find a better place.
+            selectedLyrics.Value = new[] { lyric };
         }
 
         public Vector2 Spacing
@@ -69,9 +79,14 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             set => lyricTable.Spacing = value;
         }
 
-        protected virtual ClickableLyric CreateLyricContainer(Lyric lyric) => new(lyric);
+        [BackgroundDependencyLoader]
+        private void load(KaraokeRulesetConfigManager config, KaraokeSessionStatics session)
+        {
+            config.BindWith(KaraokeRulesetSetting.PracticePreemptTime, bindablePreemptTime);
+            session.BindWith(KaraokeRulesetSession.NowLyrics, selectedLyrics);
+        }
 
-        public class ClickableLyric : ClickableContainer
+        private class ClickableLyric : ClickableContainer
         {
             private const float fade_duration = 100;
 
@@ -94,12 +109,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                     {
                         RelativeSizeAxes = Axes.Both
                     },
-                    icon = CreateIcon(),
-                    previewLyric = CreateLyric(lyric),
+                    icon = createIcon(),
+                    previewLyric = createLyric(lyric),
                 };
             }
 
-            protected virtual PreviewLyricSpriteText CreateLyric(Lyric lyric) => new(lyric)
+            private PreviewLyricSpriteText createLyric(Lyric lyric) => new(lyric)
             {
                 Font = new FontUsage(size: 25),
                 RubyFont = new FontUsage(size: 10),
@@ -107,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 Margin = new MarginPadding { Left = 25 }
             };
 
-            protected virtual Drawable CreateIcon() => new SpriteIcon
+            private Drawable createIcon() => new SpriteIcon
             {
                 Anchor = Anchor.CentreLeft,
                 Origin = Anchor.CentreLeft,

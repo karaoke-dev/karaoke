@@ -5,8 +5,6 @@ using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Caching;
-using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
@@ -18,30 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class LyricPlayfield : Playfield
     {
-        [Resolved]
-        private IBindable<WorkingBeatmap> beatmap { get; set; }
-
-        protected WorkingBeatmap WorkingBeatmap => beatmap.Value;
-
-        private readonly BindableDouble preemptTime = new();
         private readonly Bindable<Lyric[]> nowLyrics = new();
-        private readonly Cached seekCache = new();
-
-        public LyricPlayfield()
-        {
-            // Switch to target time
-            nowLyrics.BindValueChanged(value =>
-            {
-                if (!seekCache.IsValid || value.NewValue == null)
-                    return;
-
-                double lyricStartTime = value.NewValue.Select(x => x.LyricStartTime).Min() - preemptTime.Value;
-
-                WorkingBeatmap.Track.Seek(lyricStartTime);
-            });
-
-            seekCache.Validate();
-        }
 
         protected override void OnNewDrawableHitObject(DrawableHitObject drawableHitObject)
         {
@@ -62,11 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             if (lyrics.Contains(lyric))
                 return;
 
-            seekCache.Invalidate();
-
             nowLyrics.Value = lyrics.Concat(new[] { lyric }).ToArray();
-
-            seekCache.Validate();
         }
 
         private void onLyricEnd(DrawableLyric drawableLyric)
@@ -77,18 +48,13 @@ namespace osu.Game.Rulesets.Karaoke.UI
             if (!lyrics.Contains(lyric))
                 return;
 
-            seekCache.Invalidate();
-
             nowLyrics.Value = lyrics.Where(x => x != lyric).ToArray();
-
-            seekCache.Validate();
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager rulesetConfig, KaraokeSessionStatics session)
+        private void load(KaraokeSessionStatics session)
         {
             // Practice
-            rulesetConfig.BindWith(KaraokeRulesetSetting.PracticePreemptTime, preemptTime);
             session.BindWith(KaraokeRulesetSession.NowLyrics, nowLyrics);
 
             RegisterPool<Lyric, DrawableLyric>(50);
