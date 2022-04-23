@@ -37,10 +37,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
 
         private readonly List<NotePlayfield> notePlayfields = new();
 
+        protected override Ruleset CreateRuleset() => new KaraokeRuleset();
+
         [BackgroundDependencyLoader]
-        private void load(IRulesetConfigCache configCache)
+        private void load()
         {
-            var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(Ruleset.Value.CreateInstance());
+            var config = Dependencies.Get<KaraokeRulesetConfigManager>();
             Dependencies.Cache(new KaraokeSessionStatics(config, null));
 
             Child = new GridContainer

@@ -16,10 +16,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
     {
         public SettingOverlayContainer SettingOverlayContainer { get; set; }
 
+        protected override Ruleset CreateRuleset() => new KaraokeRuleset();
+
         [BackgroundDependencyLoader]
-        private void load(IRulesetConfigCache configCache)
+        private void load()
         {
-            var config = (KaraokeRulesetConfigManager)configCache.GetConfigFor(Ruleset.Value.CreateInstance());
+            var config = Dependencies.Get<KaraokeRulesetConfigManager>();
             Dependencies.Cache(new KaraokeSessionStatics(config, null));
 
             // Cannot work now because it need extra BDL in child
