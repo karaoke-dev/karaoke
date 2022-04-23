@@ -2,8 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics.Cursor;
-using osu.Game.Rulesets.Karaoke.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
+using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components

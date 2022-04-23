@@ -12,6 +12,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 using osuTK.Graphics;

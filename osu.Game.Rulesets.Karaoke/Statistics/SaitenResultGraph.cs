@@ -11,6 +11,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics;
+using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Scoring;
 using osu.Game.Scoring;
