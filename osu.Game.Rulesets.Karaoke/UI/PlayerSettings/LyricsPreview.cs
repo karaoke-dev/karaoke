@@ -12,19 +12,20 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Graphics
+namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
-    public class LyricPreview : CompositeDrawable
+    public class LyricsPreview : CompositeDrawable
     {
         public Bindable<Lyric> SelectedLyric { get; } = new();
 
         private readonly FillFlowContainer<ClickableLyric> lyricTable;
 
-        public LyricPreview(IEnumerable<Lyric> lyrics)
+        public LyricsPreview(IEnumerable<Lyric> lyrics)
         {
             InternalChild = new OsuScrollContainer
             {

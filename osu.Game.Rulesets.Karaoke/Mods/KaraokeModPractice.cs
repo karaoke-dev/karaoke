@@ -62,28 +62,5 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 }
             });
         }
-
-        private class PracticeOverlay : SettingOverlay
-        {
-            public PracticeOverlay(IBeatmap beatmap)
-            {
-                Add(new PracticeSettings(beatmap)
-                {
-                    Expanded =
-                    {
-                        Value = true
-                    },
-                    Width = 400
-                });
-            }
-
-            public override SettingButton CreateToggleButton() => new()
-            {
-                Name = "Toggle Practice",
-                Text = "Practice",
-                TooltipText = "Open/Close practice overlay",
-                Action = ToggleVisibility
-            };
-        }
     }
 }
