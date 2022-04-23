@@ -12,8 +12,10 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects.Types;
+using osu.Game.Rulesets.Scoring;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
@@ -202,5 +204,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             StartTime = LyricStartTime;
             Duration = LyricDuration;
         }
+
+        protected override HitWindows CreateHitWindows() => new KaraokeLyricHitWindows();
     }
 }

@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
                 StartTime = startTime,
                 Duration = 1000,
                 Text = "Note",
-                HitWindows = new KaraokeHitWindows(),
+                HitWindows = new KaraokeNoteHitWindows(),
             });
 
             notePlayfield.Add(new BarLine

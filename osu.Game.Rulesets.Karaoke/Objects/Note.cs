@@ -7,7 +7,9 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Objects.Types;
+using osu.Game.Rulesets.Scoring;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
@@ -100,5 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();
+
+        protected override HitWindows CreateHitWindows() => new KaraokeNoteHitWindows();
     }
 }

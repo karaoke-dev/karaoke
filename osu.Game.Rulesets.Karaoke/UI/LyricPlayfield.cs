@@ -1,15 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Caching;
-using osu.Game.Beatmaps;
-using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Objects;
@@ -20,69 +16,46 @@ namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class LyricPlayfield : Playfield
     {
-        [Resolved]
-        private IBindable<WorkingBeatmap> beatmap { get; set; }
-
-        public new IEnumerable<DrawableLyric> AllHitObjects => base.AllHitObjects.OfType<DrawableLyric>();
-
-        protected WorkingBeatmap WorkingBeatmap => beatmap.Value;
-
-        private readonly BindableDouble preemptTime = new();
-        private readonly Bindable<Lyric> nowLyric = new();
-        private readonly Cached seekCache = new();
-
-        public LyricPlayfield()
-        {
-            // Switch to target time
-            nowLyric.BindValueChanged(value =>
-            {
-                if (!seekCache.IsValid || value.NewValue == null)
-                    return;
-
-                double lyricStartTime = value.NewValue.LyricStartTime - preemptTime.Value;
-
-                WorkingBeatmap.Track.Seek(lyricStartTime);
-            });
-
-            seekCache.Validate();
-        }
-
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
-
-            NewResult += OnNewResult;
-        }
+        private readonly Bindable<Lyric[]> singingLyrics = new();
 
         protected override void OnNewDrawableHitObject(DrawableHitObject drawableHitObject)
         {
             if (drawableHitObject is DrawableLyric drawableLyric)
             {
-                // todo : not really sure should cancel binding action in here?
-                drawableLyric.OnLyricStart += OnNewResult;
+                drawableLyric.OnLyricStart += onLyricStart;
+                drawableLyric.OnLyricEnd += onLyricEnd;
             }
 
             base.OnNewDrawableHitObject(drawableHitObject);
         }
 
-        internal void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)
+        private void onLyricStart(DrawableLyric drawableLyric)
         {
-            if (result.Judgement is not KaraokeLyricJudgement karaokeLyricJudgement)
+            var lyrics = singingLyrics.Value ?? Array.Empty<Lyric>();
+            var lyric = drawableLyric.HitObject;
+
+            if (lyrics.Contains(lyric))
                 return;
 
-            // Update now lyric
-            var targetLyric = karaokeLyricJudgement.Time == LyricTime.Available ? judgedObject.HitObject as Lyric : null;
-            seekCache.Invalidate();
-            nowLyric.Value = targetLyric;
-            seekCache.Validate();
+            singingLyrics.Value = lyrics.Concat(new[] { lyric }).ToArray();
+        }
+
+        private void onLyricEnd(DrawableLyric drawableLyric)
+        {
+            var lyrics = singingLyrics.Value ?? Array.Empty<Lyric>();
+            var lyric = drawableLyric.HitObject;
+
+            if (!lyrics.Contains(lyric))
+                return;
+
+            singingLyrics.Value = lyrics.Where(x => x != lyric).ToArray();
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetConfigManager rulesetConfig, KaraokeSessionStatics session)
+        private void load(KaraokeSessionStatics session)
         {
             // Practice
-            rulesetConfig.BindWith(KaraokeRulesetSetting.PracticePreemptTime, preemptTime);
-            session.BindWith(KaraokeRulesetSession.NowLyric, nowLyric);
+            session.BindWith(KaraokeRulesetSession.SingingLyrics, singingLyrics);
 
             RegisterPool<Lyric, DrawableLyric>(50);
         }

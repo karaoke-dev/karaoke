@@ -39,9 +39,6 @@ namespace osu.Game.Rulesets.Karaoke.Difficulty
             if (beatmap.HitObjects.Count == 0)
                 return new KaraokeDifficultyAttributes { Mods = mods };
 
-            HitWindows hitWindows = new KaraokeHitWindows();
-            hitWindows.SetDifficulty(beatmap.Difficulty.OverallDifficulty);
-
             return new KaraokeDifficultyAttributes
             {
                 StarRating = skills[0].DifficultyValue() * star_scaling_factor,
