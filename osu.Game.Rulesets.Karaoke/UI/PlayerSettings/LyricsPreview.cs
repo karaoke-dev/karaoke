@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -31,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
         [Resolved]
         private IBindable<WorkingBeatmap> beatmap { get; set; }
 
-        public LyricsPreview(IEnumerable<Lyric> lyrics)
+        public LyricsPreview()
         {
             InternalChild = new OsuScrollContainer
             {
@@ -41,11 +40,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                     AutoSizeAxes = Axes.Y,
                     RelativeSizeAxes = Axes.X,
                     Direction = FillDirection.Vertical,
-                    Children = lyrics.Select(x => createLyricContainer(x).With(c =>
-                    {
-                        c.Selected = false;
-                        c.Action = () => triggerLyric(x);
-                    })).ToList()
                 }
             };
 
@@ -58,6 +52,16 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 var newValue = value.NewValue;
                 if (newValue != null)
                     lyricTable.Where(x => newValue.Contains(x.HitObject)).ForEach(x => { x.Selected = true; });
+            });
+
+            Schedule(() =>
+            {
+                var lyrics = beatmap.Value.Beatmap.HitObjects.OfType<Lyric>().ToList();
+                lyricTable.Children = lyrics.Select(x => createLyricContainer(x).With(c =>
+                {
+                    c.Selected = false;
+                    c.Action = () => triggerLyric(x);
+                })).ToList();
             });
         }
 
