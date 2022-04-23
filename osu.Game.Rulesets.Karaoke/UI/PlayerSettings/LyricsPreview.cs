@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
     public class LyricsPreview : CompositeDrawable
     {
         private readonly Bindable<double> bindablePreemptTime = new();
-        private readonly Bindable<Lyric[]> selectedLyrics = new();
+        private readonly Bindable<Lyric[]> singingLyrics = new();
 
         private readonly FillFlowContainer<ClickableLyric> lyricTable;
 
@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 }
             };
 
-            selectedLyrics.BindValueChanged(value =>
+            singingLyrics.BindValueChanged(value =>
             {
                 var oldValue = value.OldValue;
                 if (oldValue != null)
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 
             // because playback might not clear singing lyrics, so we should re-assign the lyric here.
             // todo: find a better place.
-            selectedLyrics.Value = new[] { lyric };
+            singingLyrics.Value = new[] { lyric };
         }
 
         public Vector2 Spacing
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
         private void load(KaraokeRulesetConfigManager config, KaraokeSessionStatics session)
         {
             config.BindWith(KaraokeRulesetSetting.PracticePreemptTime, bindablePreemptTime);
-            session.BindWith(KaraokeRulesetSession.NowLyrics, selectedLyrics);
+            session.BindWith(KaraokeRulesetSession.SingingLyrics, singingLyrics);
         }
 
         private class ClickableLyric : ClickableContainer

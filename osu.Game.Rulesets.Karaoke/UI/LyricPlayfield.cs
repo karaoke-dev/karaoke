@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class LyricPlayfield : Playfield
     {
-        private readonly Bindable<Lyric[]> nowLyrics = new();
+        private readonly Bindable<Lyric[]> singingLyrics = new();
 
         protected override void OnNewDrawableHitObject(DrawableHitObject drawableHitObject)
         {
@@ -31,31 +31,31 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         private void onLyricStart(DrawableLyric drawableLyric)
         {
-            var lyrics = nowLyrics.Value ?? Array.Empty<Lyric>();
+            var lyrics = singingLyrics.Value ?? Array.Empty<Lyric>();
             var lyric = drawableLyric.HitObject;
 
             if (lyrics.Contains(lyric))
                 return;
 
-            nowLyrics.Value = lyrics.Concat(new[] { lyric }).ToArray();
+            singingLyrics.Value = lyrics.Concat(new[] { lyric }).ToArray();
         }
 
         private void onLyricEnd(DrawableLyric drawableLyric)
         {
-            var lyrics = nowLyrics.Value ?? Array.Empty<Lyric>();
+            var lyrics = singingLyrics.Value ?? Array.Empty<Lyric>();
             var lyric = drawableLyric.HitObject;
 
             if (!lyrics.Contains(lyric))
                 return;
 
-            nowLyrics.Value = lyrics.Where(x => x != lyric).ToArray();
+            singingLyrics.Value = lyrics.Where(x => x != lyric).ToArray();
         }
 
         [BackgroundDependencyLoader]
         private void load(KaraokeSessionStatics session)
         {
             // Practice
-            session.BindWith(KaraokeRulesetSession.NowLyrics, nowLyrics);
+            session.BindWith(KaraokeRulesetSession.SingingLyrics, singingLyrics);
 
             RegisterPool<Lyric, DrawableLyric>(50);
         }
