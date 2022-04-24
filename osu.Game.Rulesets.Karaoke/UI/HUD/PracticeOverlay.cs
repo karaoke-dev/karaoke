@@ -9,14 +9,17 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
     {
         public PracticeOverlay()
         {
-            Add(new PracticeSettings
+            Children = new[]
             {
-                Expanded =
+                new PracticeSettings
                 {
-                    Value = true
-                },
-                Width = 400
-            });
+                    Expanded =
+                    {
+                        Value = true
+                    },
+                    Width = 400
+                }
+            };
         }
 
         public override SettingButton CreateToggleButton() => new()
