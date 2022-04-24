@@ -134,28 +134,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.DragFile
             });
         }
 
-        public override void OnEntering(IScreen last)
+        public override void OnEntering(ScreenTransitionEvent e)
         {
             game.RegisterImportHandler(this);
-            base.OnEntering(last);
+            base.OnEntering(e);
         }
 
-        public override void OnResuming(IScreen last)
+        public override void OnResuming(ScreenTransitionEvent e)
         {
             game.RegisterImportHandler(this);
-            base.OnResuming(last);
+            base.OnResuming(e);
         }
 
-        public override void OnSuspending(IScreen next)
+        public override void OnSuspending(ScreenTransitionEvent e)
         {
             game.UnregisterImportHandler(this);
-            base.OnSuspending(next);
+            base.OnSuspending(e);
         }
 
-        public override bool OnExiting(IScreen next)
+        public override bool OnExiting(ScreenExitEvent e)
         {
             game.UnregisterImportHandler(this);
-            return base.OnExiting(next);
+            return base.OnExiting(e);
         }
 
         private PopupDialog createFileNotFoundDialog()
