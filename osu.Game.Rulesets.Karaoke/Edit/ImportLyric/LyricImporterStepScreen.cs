@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         protected LyricImporterSubScreenStack ScreenStack { get; private set; }
 
         [Resolved]
-        protected DialogOverlay DialogOverlay { get; private set; }
+        protected IDialogOverlay DialogOverlay { get; private set; }
 
         public abstract string ShortTitle { get; }
 
@@ -51,31 +51,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             };
         }
 
-        public override void OnEntering(IScreen last)
+        public override void OnEntering(ScreenTransitionEvent e)
         {
+            base.OnEntering(e);
             this.FadeInFromZero(APPEAR_DURATION, Easing.OutQuint);
-            this.FadeInFromZero(APPEAR_DURATION, Easing.OutQuint);
-            this.MoveToX(X_SHIFT).MoveToX(0, X_MOVE_DURATION, Easing.OutQuint);
         }
 
-        public override bool OnExiting(IScreen next)
+        public override bool OnExiting(ScreenExitEvent e)
         {
+            base.OnExiting(e);
             this.FadeOut(DISAPPEAR_DURATION, Easing.OutQuint);
-            this.MoveToX(X_SHIFT, X_MOVE_DURATION, Easing.OutQuint);
-
             return false;
         }
 
-        public override void OnResuming(IScreen last)
+        public override void OnResuming(ScreenTransitionEvent e)
         {
-            this.Delay(RESUME_TRANSITION_DELAY).FadeIn(APPEAR_DURATION, Easing.OutQuint);
-            this.MoveToX(0, X_MOVE_DURATION, Easing.OutQuint);
+            base.OnResuming(e);
+            this.FadeIn(APPEAR_DURATION, Easing.OutQuint);
         }
 
-        public override void OnSuspending(IScreen next)
+        public override void OnSuspending(ScreenTransitionEvent e)
         {
+            base.OnSuspending(e);
             this.FadeOut(DISAPPEAR_DURATION, Easing.OutQuint);
-            this.MoveToX(-X_SHIFT, X_MOVE_DURATION, Easing.OutQuint);
         }
 
         public abstract void Complete();

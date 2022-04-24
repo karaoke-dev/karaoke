@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
             private ISingersChangeHandler singersChangeHandler { get; set; }
 
             [Resolved]
-            private DialogOverlay dialogOverlay { get; set; }
+            private IDialogOverlay dialogOverlay { get; set; }
 
             private readonly IBindable<int> bindableOrder = new Bindable<int>();
             private readonly IBindable<float> bindableHue = new Bindable<float>();

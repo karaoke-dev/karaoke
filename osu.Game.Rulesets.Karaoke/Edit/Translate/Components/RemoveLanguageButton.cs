@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
         private ILanguagesChangeHandler languagesChangeHandler { get; set; }
 
         [Resolved]
-        private DialogOverlay dialogOverlay { get; set; }
+        private IDialogOverlay dialogOverlay { get; set; }
 
         [Resolved]
         private IBindable<CultureInfo> currentLanguage { get; set; }

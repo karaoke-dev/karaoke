@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 lyricsProvider = new LyricsProvider()
             });
 
-            Dependencies.Cache(dialogOverlay);
+            Dependencies.CacheAs<IDialogOverlay>(dialogOverlay);
             Dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
         }
     }

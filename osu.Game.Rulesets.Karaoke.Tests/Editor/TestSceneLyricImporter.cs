@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 dialogOverlay = new DialogOverlay(),
             });
 
-            Dependencies.Cache(dialogOverlay);
+            Dependencies.CacheAs<IDialogOverlay>(dialogOverlay);
             Dependencies.Cache(new EditorClock());
         }
 
