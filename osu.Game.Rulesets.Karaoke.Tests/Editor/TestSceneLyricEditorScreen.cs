@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 lyricCheckManager = new LyricCheckerManager(),
             });
 
-            Dependencies.Cache(dialogOverlay);
+            Dependencies.CacheAs<IDialogOverlay>(dialogOverlay);
             Dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
             Dependencies.Cache(lyricCheckManager);
             Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());

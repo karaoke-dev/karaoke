@@ -157,7 +157,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout.Components
                 public Func<Vector2, bool> IsTextBoxHovered;
 
                 [Resolved(CanBeNull = true)]
-                private DialogOverlay dialogOverlay { get; set; }
+                private IDialogOverlay dialogOverlay { get; set; }
 
                 [Resolved(CanBeNull = true)]
                 private LayoutManager layoutManager { get; set; }

@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         protected LyricImporterSubScreenStack ScreenStack { get; private set; }
 
         [Resolved]
-        protected DialogOverlay DialogOverlay { get; private set; }
+        protected IDialogOverlay DialogOverlay { get; private set; }
 
         public abstract string ShortTitle { get; }
 

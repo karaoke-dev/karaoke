@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             private readonly IBindable<TimeTagEditMode> bindableTimeTagEditMode = new Bindable<TimeTagEditMode>();
 
             [Resolved(canBeNull: true)]
-            private DialogOverlay dialogOverlay { get; set; }
+            private IDialogOverlay dialogOverlay { get; set; }
 
             [Resolved]
             private ILyricsChangeHandler lyricsChangeHandler { get; set; }

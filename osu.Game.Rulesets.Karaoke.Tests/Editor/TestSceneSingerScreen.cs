@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             Dependencies.CacheAs(editorClock);
             Dependencies.Cache(beatDivisor);
             Dependencies.CacheAs<ILyricsProvider>(lyricsProvider);
-            Dependencies.Cache(dialogOverlay);
+            Dependencies.CacheAs<IDialogOverlay>(dialogOverlay);
         }
     }
 }
