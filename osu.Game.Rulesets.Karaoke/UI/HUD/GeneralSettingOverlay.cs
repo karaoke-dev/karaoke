@@ -3,10 +3,12 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Beatmaps;
 using osu.Game.Input.Bindings;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
@@ -20,33 +22,37 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
         private readonly BindableInt bindableVocalPitch = new();
         private readonly BindableInt bindableSaitenPitch = new();
 
+        protected override OverlayColourScheme OverlayColourScheme => OverlayColourScheme.Blue;
+
         public GeneralSettingOverlay()
         {
-            // Add common group
-            Add(new VisualSettings
+            Children = new Drawable[]
             {
-                Expanded =
+                new VisualSettings
                 {
-                    Value = false
-                }
-            });
-            Add(new PitchSettings
-            {
-                Expanded =
+                    Expanded =
+                    {
+                        Value = false
+                    }
+                },
+                new PitchSettings
                 {
-                    Value = false
-                }
-            });
-            Add(new RubyRomajiSettings
-            {
-                Expanded =
+                    Expanded =
+                    {
+                        Value = false
+                    }
+                },
+                new RubyRomajiSettings
                 {
-                    Value = false
+                    Expanded =
+                    {
+                        Value = false
+                    }
                 }
-            });
+            };
         }
 
-        public override SettingButton CreateToggleButton() => new()
+        protected override SettingButton CreateButton() => new()
         {
             Name = "Toggle setting button",
             Text = "Settings",

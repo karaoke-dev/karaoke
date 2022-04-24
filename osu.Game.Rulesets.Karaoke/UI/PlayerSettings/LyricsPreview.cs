@@ -1,4 +1,4 @@
-﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
+// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
@@ -25,13 +25,13 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
         private readonly Bindable<double> bindablePreemptTime = new();
         private readonly Bindable<Lyric[]> singingLyrics = new();
 
-        private readonly FillFlowContainer<ClickableLyric> lyricTable;
-
         [Resolved]
         private IBindable<WorkingBeatmap> beatmap { get; set; }
 
         public LyricsPreview()
         {
+            FillFlowContainer<ClickableLyric> lyricTable;
+
             InternalChild = new OsuScrollContainer
             {
                 RelativeSizeAxes = Axes.Both,
@@ -40,6 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                     AutoSizeAxes = Axes.Y,
                     RelativeSizeAxes = Axes.X,
                     Direction = FillDirection.Vertical,
+                    Spacing = new Vector2(15)
                 }
             };
 
@@ -77,12 +78,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             singingLyrics.Value = new[] { lyric };
         }
 
-        public Vector2 Spacing
-        {
-            get => lyricTable.Spacing;
-            set => lyricTable.Spacing = value;
-        }
-
         [BackgroundDependencyLoader]
         private void load(KaraokeRulesetConfigManager config, KaraokeSessionStatics session)
         {
@@ -111,29 +106,27 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 {
                     background = new Box
                     {
-                        RelativeSizeAxes = Axes.Both
+                        RelativeSizeAxes = Axes.Both,
+                        Alpha = 0,
                     },
-                    icon = createIcon(),
-                    previewLyric = createLyric(lyric),
+                    icon = new SpriteIcon
+                    {
+                        Anchor = Anchor.CentreLeft,
+                        Origin = Anchor.CentreLeft,
+                        Size = new Vector2(15),
+                        Icon = FontAwesome.Solid.Play,
+                        Margin = new MarginPadding { Left = 5 },
+                        Alpha = 0,
+                    },
+                    previewLyric = new PreviewLyricSpriteText(lyric)
+                    {
+                        Font = new FontUsage(size: 25),
+                        RubyFont = new FontUsage(size: 10),
+                        RomajiFont = new FontUsage(size: 10),
+                        Margin = new MarginPadding { Left = 25 }
+                    },
                 };
             }
-
-            private PreviewLyricSpriteText createLyric(Lyric lyric) => new(lyric)
-            {
-                Font = new FontUsage(size: 25),
-                RubyFont = new FontUsage(size: 10),
-                RomajiFont = new FontUsage(size: 10),
-                Margin = new MarginPadding { Left = 25 }
-            };
-
-            private Drawable createIcon() => new SpriteIcon
-            {
-                Anchor = Anchor.CentreLeft,
-                Origin = Anchor.CentreLeft,
-                Size = new Vector2(15),
-                Icon = FontAwesome.Solid.Play,
-                Margin = new MarginPadding { Left = 5 }
-            };
 
             private bool selected;
 
@@ -162,9 +155,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 
                 previewLyric.Colour = idolTextColour;
                 background.Colour = colours.Blue;
-                background.Alpha = 0;
                 icon.Colour = hoverTextColour;
-                icon.Alpha = 0;
             }
         }
     }
