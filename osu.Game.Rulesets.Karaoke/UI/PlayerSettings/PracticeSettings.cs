@@ -8,7 +8,6 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Screens.Play.PlayerSettings;
-using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 {
@@ -34,7 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 {
                     Height = 580,
                     RelativeSizeAxes = Axes.X,
-                    Spacing = new Vector2(15),
                 }
             };
         }
