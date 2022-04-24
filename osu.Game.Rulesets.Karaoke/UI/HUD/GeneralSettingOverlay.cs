@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
             };
         }
 
-        public override SettingButton CreateToggleButton() => new()
+        protected override SettingButton CreateButton() => new()
         {
             Name = "Toggle setting button",
             Text = "Settings",

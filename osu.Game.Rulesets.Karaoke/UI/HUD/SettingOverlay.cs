@@ -10,7 +10,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Overlays;
 using osuTK;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI.HUD
 {
@@ -28,8 +27,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
         protected override Container<Drawable> Content => content;
 
         private readonly FillFlowContainer<Drawable> content;
-
-        public abstract SettingButton CreateToggleButton();
 
         protected abstract OverlayColourScheme OverlayColourScheme { get; }
 
@@ -143,6 +140,14 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                 OverlayDirection.Right => DrawWidth,
                 _ => throw new ArgumentOutOfRangeException()
             };
+
+        public SettingButton CreateToggleButton()
+            => CreateButton().With(x =>
+            {
+                x.BackgroundColour = colourProvider.Colour1;
+            });
+
+        protected abstract SettingButton CreateButton();
     }
 
     public enum OverlayDirection
