@@ -8,6 +8,7 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Beatmaps;
 using osu.Game.Input.Bindings;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.UI.PlayerSettings;
@@ -20,6 +21,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
         private readonly BindableInt bindablePitch = new();
         private readonly BindableInt bindableVocalPitch = new();
         private readonly BindableInt bindableSaitenPitch = new();
+
+        protected override OverlayColourScheme OverlayColourScheme => OverlayColourScheme.Blue;
 
         public GeneralSettingOverlay()
         {
