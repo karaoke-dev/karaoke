@@ -21,16 +21,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 {
     public abstract class TimeTagEditorScrollContainer : EditorScrollContainer
     {
-        protected readonly IBindableList<TimeTag> TimeTagsBindable = new BindableList<TimeTag>();
-
-        protected readonly IBindable<WorkingBeatmap> Beatmap = new Bindable<WorkingBeatmap>();
+        private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();
+        private readonly IBindable<WorkingBeatmap> beatmap = new Bindable<WorkingBeatmap>();
 
         protected readonly IBindable<bool> ShowWaveformGraph = new BindableBool();
-
         protected readonly IBindable<float> WaveformOpacity = new BindableFloat();
-
         protected readonly IBindable<bool> ShowTick = new BindableBool();
-
         protected readonly IBindable<float> TickOpacity = new BindableFloat();
 
         protected double StartTime { get; private set; }
@@ -46,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
             HitObject = lyric;
             RelativeSizeAxes = Axes.X;
 
-            TimeTagsBindable.BindCollectionChanged((_, args) =>
+            timeTagsBindable.BindCollectionChanged((_, args) =>
             {
                 switch (args.Action)
                 {
@@ -71,15 +67,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
                 }
             });
 
-            TimeTagsBindable.BindTo(lyric.TimeTagsBindable);
+            timeTagsBindable.BindTo(lyric.TimeTagsBindable);
 
             updateTimeRange();
         }
 
         private void updateTimeRange()
         {
-            var fistTimeTag = TimeTagsBindable.FirstOrDefault();
-            var lastTimeTag = TimeTagsBindable.LastOrDefault();
+            var fistTimeTag = timeTagsBindable.FirstOrDefault();
+            var lastTimeTag = timeTagsBindable.LastOrDefault();
 
             if (fistTimeTag != null && lastTimeTag != null)
             {
@@ -100,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
         [BackgroundDependencyLoader]
         private void load(OsuColour colours, IBindable<WorkingBeatmap> beatmap)
         {
-            Beatmap.BindTo(beatmap);
+            this.beatmap.BindTo(beatmap);
 
             Container container;
 
@@ -124,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 
             PostProcessContent(container);
 
-            Beatmap.BindValueChanged(b =>
+            this.beatmap.BindValueChanged(b =>
             {
                 waveform.Waveform = b.NewValue.Waveform;
                 Track = b.NewValue.Track;
