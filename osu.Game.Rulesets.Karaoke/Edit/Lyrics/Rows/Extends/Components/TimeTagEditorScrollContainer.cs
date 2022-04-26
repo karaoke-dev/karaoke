@@ -1,7 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Specialized;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Audio.Track;
@@ -21,7 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
 {
     public abstract class TimeTagEditorScrollContainer : EditorScrollContainer
     {
+        private readonly IBindable<int> timeTagsVersion = new Bindable<int>();
         private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();
+
         private readonly IBindable<WorkingBeatmap> beatmap = new Bindable<WorkingBeatmap>();
 
         protected readonly IBindable<bool> ShowWaveformGraph = new BindableBool();
@@ -42,31 +43,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Components
             HitObject = lyric;
             RelativeSizeAxes = Axes.X;
 
-            timeTagsBindable.BindCollectionChanged((_, args) =>
-            {
-                switch (args.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
-                        foreach (var obj in args.NewItems.OfType<TimeTag>())
-                        {
-                            obj.TimeBindable.BindValueChanged(_ =>
-                            {
-                                updateTimeRange();
-                            });
-                        }
+            timeTagsVersion.BindValueChanged(_ => updateTimeRange());
+            timeTagsBindable.BindCollectionChanged((_, _) => updateTimeRange());
 
-                        break;
-
-                    case NotifyCollectionChangedAction.Remove:
-                        foreach (var obj in args.OldItems.OfType<TimeTag>())
-                        {
-                            obj.TimeBindable.UnbindEvents();
-                        }
-
-                        break;
-                }
-            });
-
+            timeTagsVersion.BindTo(lyric.TimeTagsVersion);
             timeTagsBindable.BindTo(lyric.TimeTagsBindable);
 
             updateTimeRange();
