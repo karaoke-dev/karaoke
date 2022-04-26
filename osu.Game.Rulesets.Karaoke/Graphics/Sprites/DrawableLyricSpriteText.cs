@@ -7,11 +7,11 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
-    public class PreviewLyricSpriteText : LyricSpriteText
+    public class DrawableLyricSpriteText : LyricSpriteText
     {
         public readonly Lyric HitObject;
 
-        public PreviewLyricSpriteText(Lyric hitObject)
+        public DrawableLyricSpriteText(Lyric hitObject)
         {
             HitObject = hitObject;
 

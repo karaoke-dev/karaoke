@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
             lastLyric = lyric;
 
-            Child = new PreviewLyricSpriteText(lyric)
+            Child = new DrawableLyricSpriteText(lyric)
             {
                 Margin = new MarginPadding(10),
                 Font = new FontUsage(size: 32),
