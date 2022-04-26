@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -9,15 +10,35 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
     public class DrawableLyricSpriteText : LyricSpriteText
     {
-        public readonly Lyric HitObject;
+        private readonly IBindable<string> textBindable = new Bindable<string>();
+        private readonly IBindable<int> rubyTagsVersion = new Bindable<int>();
+        private readonly IBindableList<RubyTag> rubyTagsBindable = new BindableList<RubyTag>();
+        private readonly IBindable<int> romajiTagsVersion = new Bindable<int>();
+        private readonly IBindableList<RomajiTag> romajiTagsBindable = new BindableList<RomajiTag>();
 
-        public DrawableLyricSpriteText(Lyric hitObject)
+        public DrawableLyricSpriteText(Lyric lyric)
         {
-            HitObject = hitObject;
+            textBindable.BindValueChanged(text => { Text = text.NewValue; }, true);
+            rubyTagsVersion.BindValueChanged(_ => updateRubies());
+            rubyTagsBindable.BindCollectionChanged((_, _) => updateRubies());
+            romajiTagsVersion.BindValueChanged(_ => updateRubies());
+            romajiTagsBindable.BindCollectionChanged((_, _) => updateRomajies());
 
-            hitObject.TextBindable.BindValueChanged(text => { Text = text.NewValue; }, true);
-            hitObject.RubyTagsBindable.BindCollectionChanged((_, _) => { Rubies = hitObject.RubyTagsBindable.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray(); }, true);
-            hitObject.RomajiTagsBindable.BindCollectionChanged((_, _) => { Romajies = hitObject.RomajiTagsBindable.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray(); }, true);
+            textBindable.BindTo(lyric.TextBindable);
+            rubyTagsVersion.BindTo(lyric.RubyTagsVersion);
+            rubyTagsBindable.BindTo(lyric.RubyTagsBindable);
+            romajiTagsVersion.BindTo(lyric.RomajiTagsVersion);
+            romajiTagsBindable.BindTo(lyric.RomajiTagsBindable);
+        }
+
+        private void updateRubies()
+        {
+            Rubies = rubyTagsBindable.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray();
+        }
+
+        private void updateRomajies()
+        {
+            Romajies = romajiTagsBindable.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray();
         }
     }
 }
