@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -9,6 +10,18 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 {
     public class RubyTag : ITextTag
     {
+        /// <summary>
+        /// Invoked when any property of this <see cref="RubyTag"/> is changed.
+        /// </summary>
+        public event Action Changed;
+
+        public RubyTag()
+        {
+            TextBindable.ValueChanged += _ => Changed?.Invoke();
+            StartIndexBindable.ValueChanged += _ => Changed?.Invoke();
+            EndIndexBindable.ValueChanged += _ => Changed?.Invoke();
+        }
+
         [JsonIgnore]
         public readonly Bindable<string> TextBindable = new();
 
