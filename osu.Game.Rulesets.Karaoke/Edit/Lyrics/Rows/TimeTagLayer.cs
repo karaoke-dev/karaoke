@@ -1,7 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts;
@@ -14,22 +16,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         [Resolved]
         private EditorLyricPiece lyricPiece { get; set; }
 
+        private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();
+
         public TimeTagLayer(Lyric lyric)
         {
-            lyric.TimeTagsBindable.BindCollectionChanged((_, _) =>
+            timeTagsBindable.BindCollectionChanged((_, _) =>
             {
                 ScheduleAfterChildren(updateTimeTags);
-            }, true);
+            });
+
+            timeTagsBindable.BindTo(lyric.TimeTagsBindable);
         }
 
         private void updateTimeTags()
         {
             ClearInternal();
-            var timeTags = lyricPiece.TimeTagsBindable;
-            if (timeTags == null)
-                return;
 
-            foreach (var timeTag in timeTags)
+            foreach (var timeTag in timeTagsBindable)
             {
                 var position = lyricPiece.GetTimeTagPosition(timeTag);
                 AddInternal(new DrawableTimeTag(timeTag)
