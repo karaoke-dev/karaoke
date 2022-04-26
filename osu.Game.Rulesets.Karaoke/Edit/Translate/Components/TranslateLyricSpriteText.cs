@@ -13,10 +13,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
         public TranslateLyricSpriteText(Lyric hitObject)
             : base(hitObject)
         {
+            TooltipContent = hitObject;
         }
 
         public ITooltip<Lyric> GetCustomTooltip() => new LyricTooltip();
 
-        public Lyric TooltipContent => HitObject;
+        public Lyric TooltipContent { get; }
     }
 }

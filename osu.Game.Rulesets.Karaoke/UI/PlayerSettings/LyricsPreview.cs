@@ -48,11 +48,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             {
                 var oldValue = value.OldValue;
                 if (oldValue != null)
-                    lyricTable.Where(x => oldValue.Contains(x.HitObject)).ForEach(x => { x.Selected = false; });
+                    lyricTable.Where(x => oldValue.Contains(x.Lyric)).ForEach(x => { x.Selected = false; });
 
                 var newValue = value.NewValue;
                 if (newValue != null)
-                    lyricTable.Where(x => newValue.Contains(x.HitObject)).ForEach(x => { x.Selected = true; });
+                    lyricTable.Where(x => newValue.Contains(x.Lyric)).ForEach(x => { x.Selected = true; });
             });
 
             Schedule(() =>
@@ -96,8 +96,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             private readonly Drawable icon;
             private readonly DrawableLyricSpriteText drawableLyric;
 
+            public readonly Lyric Lyric;
+
             public ClickableLyric(Lyric lyric)
             {
+                Lyric = lyric;
+
                 AutoSizeAxes = Axes.Y;
                 RelativeSizeAxes = Axes.X;
                 Masking = true;
@@ -144,8 +148,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                     drawableLyric.FadeColour(Selected ? hoverTextColour : idolTextColour, fade_duration);
                 }
             }
-
-            public Lyric HitObject => drawableLyric.HitObject;
 
             [BackgroundDependencyLoader]
             private void load(OsuColour colours)
