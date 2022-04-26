@@ -48,11 +48,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             {
                 var oldValue = value.OldValue;
                 if (oldValue != null)
-                    lyricTable.Where(x => oldValue.Contains(x.HitObject)).ForEach(x => { x.Selected = false; });
+                    lyricTable.Where(x => oldValue.Contains(x.Lyric)).ForEach(x => { x.Selected = false; });
 
                 var newValue = value.NewValue;
                 if (newValue != null)
-                    lyricTable.Where(x => newValue.Contains(x.HitObject)).ForEach(x => { x.Selected = true; });
+                    lyricTable.Where(x => newValue.Contains(x.Lyric)).ForEach(x => { x.Selected = true; });
             });
 
             Schedule(() =>
@@ -94,10 +94,14 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 
             private readonly Box background;
             private readonly Drawable icon;
-            private readonly PreviewLyricSpriteText previewLyric;
+            private readonly DrawableLyricSpriteText drawableLyric;
+
+            public readonly Lyric Lyric;
 
             public ClickableLyric(Lyric lyric)
             {
+                Lyric = lyric;
+
                 AutoSizeAxes = Axes.Y;
                 RelativeSizeAxes = Axes.X;
                 Masking = true;
@@ -118,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                         Margin = new MarginPadding { Left = 5 },
                         Alpha = 0,
                     },
-                    previewLyric = new PreviewLyricSpriteText(lyric)
+                    drawableLyric = new DrawableLyricSpriteText(lyric)
                     {
                         Font = new FontUsage(size: 25),
                         RubyFont = new FontUsage(size: 10),
@@ -141,11 +145,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
 
                     background.FadeTo(Selected ? 1 : 0, fade_duration);
                     icon.FadeTo(Selected ? 1 : 0, fade_duration);
-                    previewLyric.FadeColour(Selected ? hoverTextColour : idolTextColour, fade_duration);
+                    drawableLyric.FadeColour(Selected ? hoverTextColour : idolTextColour, fade_duration);
                 }
             }
-
-            public Lyric HitObject => previewLyric.HitObject;
 
             [BackgroundDependencyLoader]
             private void load(OsuColour colours)
@@ -153,7 +155,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 hoverTextColour = colours.Yellow;
                 idolTextColour = colours.Gray9;
 
-                previewLyric.Colour = idolTextColour;
+                drawableLyric.Colour = idolTextColour;
                 background.Colour = colours.Blue;
                 icon.Colour = hoverTextColour;
             }

@@ -97,11 +97,11 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                 {
                     var oldValue = value.OldValue;
                     if (oldValue != null)
-                        lyricTable.Where(x => x.HitObject == oldValue).ForEach(x => { x.Selected = false; });
+                        lyricTable.Where(x => x.Lyric == oldValue).ForEach(x => { x.Selected = false; });
 
                     var newValue = value.NewValue;
                     if (newValue != null)
-                        lyricTable.Where(x => x.HitObject == newValue).ForEach(x => { x.Selected = true; });
+                        lyricTable.Where(x => x.Lyric == newValue).ForEach(x => { x.Selected = true; });
                 });
             }
 
@@ -130,10 +130,14 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
 
                 private readonly Box background;
                 private readonly Drawable icon;
-                private readonly PreviewLyricSpriteText previewLyric;
+                private readonly DrawableLyricSpriteText drawableLyric;
+
+                public Lyric Lyric;
 
                 public ClickableLyric(Lyric lyric)
                 {
+                    Lyric = lyric;
+
                     AutoSizeAxes = Axes.Y;
                     RelativeSizeAxes = Axes.X;
                     Masking = true;
@@ -145,11 +149,11 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                             RelativeSizeAxes = Axes.Both
                         },
                         icon = CreateIcon(),
-                        previewLyric = CreateLyric(lyric),
+                        drawableLyric = CreateLyric(lyric),
                     };
                 }
 
-                protected virtual PreviewLyricSpriteText CreateLyric(Lyric lyric) => new(lyric)
+                protected virtual DrawableLyricSpriteText CreateLyric(Lyric lyric) => new(lyric)
                 {
                     Font = new FontUsage(size: 25),
                     RubyFont = new FontUsage(size: 10),
@@ -179,11 +183,9 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
 
                         background.FadeTo(Selected ? 1 : 0, fade_duration);
                         icon.FadeTo(Selected ? 1 : 0, fade_duration);
-                        previewLyric.FadeColour(Selected ? hoverTextColour : idolTextColour, fade_duration);
+                        drawableLyric.FadeColour(Selected ? hoverTextColour : idolTextColour, fade_duration);
                     }
                 }
-
-                public Lyric HitObject => previewLyric.HitObject;
 
                 [BackgroundDependencyLoader]
                 private void load(OsuColour colours)
@@ -191,7 +193,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                     hoverTextColour = colours.Yellow;
                     idolTextColour = colours.Gray9;
 
-                    previewLyric.Colour = idolTextColour;
+                    drawableLyric.Colour = idolTextColour;
                     background.Colour = colours.Blue;
                     background.Alpha = 0;
                     icon.Colour = hoverTextColour;
@@ -217,7 +219,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                 {
                 }
 
-                protected override PreviewLyricSpriteText CreateLyric(Lyric lyric)
+                protected override DrawableLyricSpriteText CreateLyric(Lyric lyric)
                     => new(lyric)
                     {
                         Font = new FontUsage(size: 15),
