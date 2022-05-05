@@ -31,7 +31,7 @@
         "step_shaders": [
           {
             "$type": "OutlineShader",
-            "radius": 10,
+            "radius": 3,
             "outline_colour": "#CCA532"
           },
           {
@@ -53,7 +53,7 @@
         "step_shaders": [
           {
             "$type": "OutlineShader",
-            "radius": 10,
+            "radius": 3,
             "outline_colour": "#5932CC"
           },
           {

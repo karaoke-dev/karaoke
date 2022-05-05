@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 {
                     new OutlineShader
                     {
-                        Radius = 4,
+                        Radius = 2,
                         Colour = Color4Extensions.FromHex("#3D2D6B"),
                         OutlineColour = Color4Extensions.FromHex("#CCA532")
                     },
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 {
                     new OutlineShader
                     {
-                        Radius = 4,
+                        Radius = 2,
                         OutlineColour = Color4Extensions.FromHex("#5932CC")
                     },
                 }

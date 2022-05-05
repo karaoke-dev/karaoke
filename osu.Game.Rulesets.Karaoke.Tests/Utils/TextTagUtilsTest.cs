@@ -178,5 +178,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             string actual = TextTagUtils.GetTextFromLyric(rubyTag, lyric);
             Assert.AreEqual(expected, actual);
         }
+
+        [TestCase("[0,1]:ka")]
+        [TestCase("[1,0]:ka")] // Should be able to convert even if time-tag is invalid.
+        [TestCase("[-1,1]:ka")] // Should be able to convert even if time-tag is invalid.
+        public void TestToPositionText(string textTag)
+        {
+            var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
+            var actual = TextTagUtils.ToPositionText(rubyTag);
+
+            Assert.AreEqual(rubyTag.Text, actual.Text);
+            Assert.AreEqual(rubyTag.StartIndex, actual.StartIndex);
+            Assert.AreEqual(rubyTag.EndIndex, actual.EndIndex);
+        }
     }
 }
