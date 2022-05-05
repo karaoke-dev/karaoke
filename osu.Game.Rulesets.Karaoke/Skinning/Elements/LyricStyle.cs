@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
                     {
                         new OutlineShader
                         {
-                            Radius = 10,
+                            Radius = 3,
                             OutlineColour = Color4Extensions.FromHex("#CCA532")
                         },
                         new ShadowShader
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
                     {
                         new OutlineShader
                         {
-                            Radius = 10,
+                            Radius = 3,
                             OutlineColour = Color4Extensions.FromHex("#5932CC")
                         },
                         new ShadowShader

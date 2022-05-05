@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var outlineShader = shaders.FirstOrDefault() as OutlineShader;
                 Assert.IsNotNull(outlineShader);
                 Assert.AreEqual(new Color4(255, 255, 255, 255), outlineShader.OutlineColour);
-                Assert.AreEqual(10, outlineShader.Radius);
+                Assert.AreEqual(3, outlineShader.Radius);
 
                 // Test shader convert result.
                 var shadowShader = shaders.LastOrDefault() as ShadowShader;
