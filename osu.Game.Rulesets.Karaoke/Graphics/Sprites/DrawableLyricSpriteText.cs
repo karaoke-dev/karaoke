@@ -5,6 +5,7 @@ using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
@@ -33,12 +34,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 
         private void updateRubies()
         {
-            Rubies = rubyTagsBindable.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray();
+            Rubies = rubyTagsBindable.Select(TextTagUtils.ToPositionText).ToArray();
         }
 
         private void updateRomajies()
         {
-            Romajies = romajiTagsBindable.Select(x => new PositionText(x.Text, x.StartIndex, x.EndIndex)).ToArray();
+            Romajies = romajiTagsBindable.Select(TextTagUtils.ToPositionText).ToArray();
         }
     }
 }
