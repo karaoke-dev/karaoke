@@ -9,7 +9,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shaders;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -165,50 +164,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         public class EditorLyricSpriteText : LyricSpriteText
         {
             public RectangleF GetRubyTagPosition(RubyTag rubyTag)
-            {
-                var matchedRuby = Rubies.FirstOrDefault(x => propertyMatched(x, rubyTag));
-                int rubyIndex = Rubies.IndexOf(matchedRuby);
-                if (rubyIndex < 0)
-                    throw new ArgumentOutOfRangeException(nameof(rubyIndex));
-
-                int startCharacterIndex = Text.Length + skinIndex(Rubies, rubyIndex);
-                int count = matchedRuby.Text.Length;
-                var rectangles = Characters.ToList().GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
-                return RectangleFUtils.Union(rectangles);
-            }
+                => GetRubyTagPosition(TextTagUtils.ToPositionText(rubyTag));
 
             public RectangleF GetRomajiTagPosition(RomajiTag romajiTag)
-            {
-                var matchedRomaji = Romajies.FirstOrDefault(x => propertyMatched(x, romajiTag));
-                int romajiIndex = Romajies.IndexOf(matchedRomaji);
-                if (romajiIndex < 0)
-                    throw new ArgumentOutOfRangeException(nameof(romajiIndex));
-
-                int startCharacterIndex = Text.Length + skinIndex(Rubies, Rubies.Count) + skinIndex(Romajies, romajiIndex);
-                int count = matchedRomaji.Text.Length;
-                var rectangles = Characters.ToList().GetRange(startCharacterIndex, count).Select(x => x.DrawRectangle).ToArray();
-                return RectangleFUtils.Union(rectangles);
-            }
+                => GetRomajiTagPosition(TextTagUtils.ToPositionText(romajiTag));
 
             public Vector2 GetTimeTagPosition(TextIndex index)
             {
-                if (string.IsNullOrEmpty(Text))
-                    return default;
-
-                int charIndex = Math.Min(index.Index, Text.Length - 1);
-                var character = Characters[charIndex];
-                var drawRectangle = character.DrawRectangle;
-
-                float x = index.State == TextIndex.IndexState.Start ? drawRectangle.Left : drawRectangle.Right;
-                float y = drawRectangle.Top - character.YOffset + LineBaseHeight;
-                return new Vector2(x, y);
+                var drawRectangle = GetCharacterRectangle(index.Index);
+                return index.State == TextIndex.IndexState.Start ? drawRectangle.BottomLeft : drawRectangle.BottomRight;
             }
-
-            private int skinIndex(IEnumerable<PositionText> positionTexts, int endIndex)
-                => positionTexts.Where((_, i) => i < endIndex).Sum(x => x.Text.Length);
-
-            private bool propertyMatched(PositionText positionText, ITextTag textTag)
-                => positionText.StartIndex == textTag.StartIndex && positionText.EndIndex == textTag.EndIndex && positionText.Text == textTag.Text;
         }
     }
 }
