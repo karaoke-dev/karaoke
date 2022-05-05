@@ -137,7 +137,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             return new OutlineShader
             {
                 OutlineColour = color,
-                Radius = (int)radius,
+                // Notice that should adjust the radius for looking the same.
+                Radius = (int)(radius / 3),
             };
 
             static float convertEdgeSize(FontInfo info) => info.EdgeSize;
