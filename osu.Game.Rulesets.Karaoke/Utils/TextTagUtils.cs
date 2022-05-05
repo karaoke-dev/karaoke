@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
@@ -80,5 +81,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             (int startIndex, int endIndex) = GetFixedIndex(textTag, lyric);
             return lyric.Substring(startIndex, endIndex - startIndex);
         }
+
+        public static PositionText ToPositionText<T>(T textTag) where T : ITextTag
+            => new(textTag.Text, textTag.StartIndex, textTag.EndIndex);
     }
 }
