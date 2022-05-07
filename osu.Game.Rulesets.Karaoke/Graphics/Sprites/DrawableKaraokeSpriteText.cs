@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
         {
             if (chunkIndex == whole_chunk_index)
             {
-                TimeTags = TimeTagsUtils.ToDictionary(timeTagsBindable.ToList());
+                TimeTags = TimeTagsUtils.ToTimeBasedDictionary(timeTagsBindable.ToList());
             }
             else
             {
