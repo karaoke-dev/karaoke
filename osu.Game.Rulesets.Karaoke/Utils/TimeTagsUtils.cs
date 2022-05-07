@@ -266,6 +266,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         /// <summary>
         /// Convert list of time tag to dictionary.
+        /// todo: this method will be removed eventually.
         /// </summary>
         /// <param name="timeTags">Time tags</param>
         /// <param name="applyFix">Should auto-fix or not</param>
