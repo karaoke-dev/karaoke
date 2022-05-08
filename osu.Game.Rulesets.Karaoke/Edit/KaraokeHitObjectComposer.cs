@@ -111,9 +111,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
             return null;
         }
 
-        public override SnapResult SnapScreenSpacePositionToValidTime(Vector2 screenSpacePosition)
+        public override SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition)
         {
-            var result = base.SnapScreenSpacePositionToValidTime(screenSpacePosition);
+            var result = base.FindSnappedPositionAndTime(screenSpacePosition);
 
             // should not affect x position and time if dragging object in note playfield.
             return result.Playfield is EditorNotePlayfield
