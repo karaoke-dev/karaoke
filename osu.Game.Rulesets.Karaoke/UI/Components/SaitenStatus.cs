@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using Markdig;
 using Markdig.Syntax;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
@@ -17,7 +16,6 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    [Cached(typeof(IMarkdownTextComponent))]
     public class SaitenStatus : FillFlowContainer, IMarkdownTextComponent
     {
         private const float size = 22;
