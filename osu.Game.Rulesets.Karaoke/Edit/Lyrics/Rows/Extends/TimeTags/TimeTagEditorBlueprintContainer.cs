@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                 return true;
 
             // navigation to target time.
-            var navigationTime = timeline.SnapScreenSpacePositionToValidTime(e.ScreenSpaceMousePosition);
+            var navigationTime = timeline.FindSnappedPositionAndTime(e.ScreenSpaceMousePosition);
             if (navigationTime.Time == null)
                 return false;
 

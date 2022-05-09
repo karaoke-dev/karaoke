@@ -6,7 +6,6 @@ using System.Linq;
 using Markdig;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
@@ -17,7 +16,6 @@ using osu.Game.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description
 {
-    [Cached(typeof(IMarkdownTextComponent))]
     public class DescriptionTextFlowContainer : Container, IMarkdownTextComponent
     {
         private readonly DescriptionMarkdownTextFlowContainer description;
