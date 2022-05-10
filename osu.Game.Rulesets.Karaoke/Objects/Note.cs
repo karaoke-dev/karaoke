@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Judgements;
@@ -87,8 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public int EndIndex { get; set; }
 
-        [JsonIgnore]
-        public readonly Bindable<Lyric> ParentLyricBindable = new();
+        private Lyric parentLyric;
 
         /// <summary>
         /// Relative lyric.
@@ -97,8 +97,15 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         [JsonProperty(IsReference = true)]
         public Lyric ParentLyric
         {
-            get => ParentLyricBindable.Value;
-            set => ParentLyricBindable.Value = value;
+            get => parentLyric;
+            set
+            {
+                // todo: will apply the check until fix the issue in the KaraokeJsonBeatmapDecoder.
+                //if (parentLyric != null)
+                //    throw new NotSupportedException("Cannot re-assign the parent lyric.");
+
+                parentLyric = value;
+            }
         }
 
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();

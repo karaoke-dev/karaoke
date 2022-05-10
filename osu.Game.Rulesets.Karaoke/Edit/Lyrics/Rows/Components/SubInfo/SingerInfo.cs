@@ -16,33 +16,35 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
 {
     public class SingerInfo : Container
     {
-        private readonly IBindableList<int> singerIndexesBindable = new BindableList<int>();
+        private readonly Lyric lyric;
+        private readonly SingerDisplay singerDisplay;
 
-        [Resolved]
-        private EditorBeatmap beatmap { get; set; }
+        private readonly IBindableList<int> singerIndexesBindable;
 
         public SingerInfo(Lyric lyric)
         {
+            this.lyric = lyric;
+            singerIndexesBindable = lyric.SingersBindable.GetBoundCopy();
+
             AutoSizeAxes = Axes.Both;
-            SingerDisplay singerDisplay;
 
             Child = singerDisplay = new SingerDisplay
             {
                 Anchor = Anchor.TopRight,
                 Origin = Anchor.TopRight,
             };
+        }
 
-            singerIndexesBindable.BindTo(lyric.SingersBindable);
+        [BackgroundDependencyLoader]
+        private void load(EditorBeatmap beatmap)
+        {
             singerIndexesBindable.BindCollectionChanged((_, _) =>
             {
-                Schedule(() =>
-                {
-                    if (beatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
-                        return;
+                if (beatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
+                    return;
 
-                    var singers = karaokeBeatmap.Singers?.Where(singer => LyricUtils.ContainsSinger(lyric, singer)).ToList();
-                    singerDisplay.Current.Value = singers;
-                });
+                var singers = karaokeBeatmap.Singers?.Where(singer => LyricUtils.ContainsSinger(lyric, singer)).ToList();
+                singerDisplay.Current.Value = singers;
             }, true);
         }
     }
