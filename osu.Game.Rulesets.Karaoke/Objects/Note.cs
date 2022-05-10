@@ -100,8 +100,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             get => parentLyric;
             set
             {
-                if (parentLyric != null)
-                    throw new NotSupportedException("Cannot re-assign the parent lyric.");
+                // todo: will apply the check until fix the issue in the KaraokeJsonBeatmapDecoder.
+                //if (parentLyric != null)
+                //    throw new NotSupportedException("Cannot re-assign the parent lyric.");
 
                 parentLyric = value;
             }
