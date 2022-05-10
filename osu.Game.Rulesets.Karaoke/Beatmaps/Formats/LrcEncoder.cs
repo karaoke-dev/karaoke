@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using LyricMaker.Model;
@@ -10,6 +11,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Utils;
 using Lyric = osu.Game.Rulesets.Karaoke.Objects.Lyric;
+using KaraokeTimeTag = osu.Game.Rulesets.Karaoke.Objects.TimeTag;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -30,8 +32,34 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             {
                 Text = lyric.Text,
                 // Note : save to lyric will lost some tags with no value.
-                TimeTags = convertTimeTag(lyric.Text, TimeTagsUtils.ToDictionary(lyric.TimeTags)).ToArray(),
+                TimeTags = convertTimeTag(lyric.Text, ToDictionary(lyric.TimeTags)).ToArray(),
             };
+
+        /// <summary>
+        /// Convert list of time tag to dictionary.
+        /// </summary>
+        /// <param name="timeTags">Time tags</param>
+        /// <param name="applyFix">Should auto-fix or not</param>
+        /// <param name="other">Fix way</param>
+        /// <param name="self">Fix way</param>
+        /// <returns>Time tags with dictionary format.</returns>
+        internal static IReadOnlyDictionary<TextIndex, double> ToDictionary(IList<KaraokeTimeTag> timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
+                                                                            SelfCheck self = SelfCheck.BasedOnStart)
+        {
+            if (timeTags == null)
+                return new Dictionary<TextIndex, double>();
+
+            // sorted value
+            var sortedTimeTags = applyFix ? TimeTagsUtils.FixOverlapping(timeTags, other, self) : TimeTagsUtils.Sort(timeTags);
+
+            // convert to dictionary, will get start's smallest time and end's largest time.
+            return sortedTimeTags.Where(x => x.Time != null).GroupBy(x => x.Index)
+                                 .Select(x =>
+                                     x.Key.State == TextIndex.IndexState.Start ? x.FirstOrDefault() : x.LastOrDefault())
+                                 .ToDictionary(
+                                     k => k?.Index ?? throw new ArgumentNullException(nameof(k)),
+                                     v => v?.Time ?? throw new ArgumentNullException(nameof(v)));
+        }
 
         private IEnumerable<TimeTag> convertTimeTag(string text, IReadOnlyDictionary<TextIndex, double> tags)
         {
