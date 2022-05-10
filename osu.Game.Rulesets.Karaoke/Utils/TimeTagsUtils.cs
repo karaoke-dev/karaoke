@@ -293,25 +293,24 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         /// <summary>
         /// Convert list of time tag to dictionary.
-        /// Used for apply the time-tag to the <see cref="KaraokeSpriteText"/>
+        /// WIll sort by the time.
         /// </summary>
         /// <param name="timeTags">Time tags</param>
-        /// <param name="applyFix">Should auto-fix or not</param>
-        /// <param name="other">Fix way</param>
-        /// <param name="self">Fix way</param>
         /// <returns>Time tags with dictionary format.</returns>
-        public static IReadOnlyDictionary<double, TextIndex> ToTimeBasedDictionary(IList<TimeTag> timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
-                                                                                   SelfCheck self = SelfCheck.BasedOnStart)
+        public static IReadOnlyDictionary<double, TextIndex> ToTimeBasedDictionary(IList<TimeTag> timeTags)
         {
             if (timeTags == null)
                 return new Dictionary<double, TextIndex>();
 
-            // sorted value
-            var sortedTimeTags = applyFix ? FixOverlapping(timeTags, other, self) : Sort(timeTags);
-
             // convert to dictionary, will get start's smallest time and end's largest time.
-            return sortedTimeTags.Where(x => x.Time != null)
-                                 .ToDictionary(k => k.Time ?? throw new ArgumentNullException(nameof(k)), v => v.Index);
+            return timeTags.Where(x => x.Time != null)
+                           .OrderBy(x => x.Time)
+                           .GroupBy(x => x.Time)
+                           .Select(x =>
+                               // will always get the first time-tag for now.
+                               x.FirstOrDefault())
+                           .ToDictionary(k => k?.Time ?? throw new ArgumentNullException(nameof(k)),
+                               v => v?.Index ?? throw new ArgumentNullException(nameof(v)));
         }
 
         /// <summary>

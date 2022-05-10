@@ -179,6 +179,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" }, new double[] { 1100, 2000, 2100, 3000 })]
+        [TestCase(new[] { "[0,start]:3000", "[0,end]:2100", "[1,start]:2000", "[1,end]:1100" }, new double[] { 1100, 2000, 2100, 3000 })] // will sort by time.
+        [TestCase(new[] { "[0,start]:", "[0,start]:", "[0,end]:2000", "[0,start]:1100" }, new double[] { 1100, 2000 })] // will remove the time-tag with no time.
+        [TestCase(new[] { "[0,start]:1000", "[0,start]:1100" }, new double[] { 1000, 1100 })] // will remain the duplicated time-tag index.
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:1000" }, new double[] { 1000 })] // Should not add duplicated time.
+        public void TestToTimeBasedDictionary(string[] timeTagTexts, double[] expected)
+        {
+            var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
+
+            var actual = TimeTagsUtils.ToTimeBasedDictionary(timeTags).Keys;
+            Assert.AreEqual(expected, actual);
+        }
+
         [TestCase(new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" }, 1100)]
         [TestCase(new[] { "[1,end]:3000", "[1,start]:2100", "[0,end]:2000", "[0,start]:1100" }, 1100)]
         [TestCase(new[] { "[0,start]:", "[0,start]:", "[0,end]:2000", "[0,start]:1100" }, 1100)]
