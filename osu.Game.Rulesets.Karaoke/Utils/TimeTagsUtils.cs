@@ -287,16 +287,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         }
 
         /// <summary>
-        /// Convert dictionary to list of time tags.
-        /// </summary>
-        /// <param name="dictionary">Dictionary.</param>
-        /// <returns>Time tags</returns>
-        public static TimeTag[] ToTimeTagList(IReadOnlyDictionary<TextIndex, double> dictionary)
-        {
-            return dictionary.Select(d => new TimeTag(d.Key, d.Value)).ToArray();
-        }
-
-        /// <summary>
         /// Get start time.
         /// </summary>
         /// <param name="timeTags">Time tags</param>
