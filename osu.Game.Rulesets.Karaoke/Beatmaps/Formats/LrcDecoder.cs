@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using LyricMaker.Extensions;
 using LyricMaker.Parser;
@@ -60,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                         // Start time and end time should be re-assigned
                         StartTime = startTime,
                         Duration = duration,
-                        TimeTags = TimeTagsUtils.ToTimeTagList(timeTags),
+                        TimeTags = ToTimeTagList(timeTags),
                         RubyTags = result.QueryRubies(line.Text).Select(ruby => new RubyTag
                         {
                             Text = ruby.Ruby.Ruby,
@@ -79,6 +80,16 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     throw new FormatException(message, ex);
                 }
             }
+        }
+
+        /// <summary>
+        /// Convert dictionary to list of time tags.
+        /// </summary>
+        /// <param name="dictionary">Dictionary.</param>
+        /// <returns>Time tags</returns>
+        internal static TimeTag[] ToTimeTagList(IReadOnlyDictionary<TextIndex, double> dictionary)
+        {
+            return dictionary.Select(d => new TimeTag(d.Key, d.Value)).ToArray();
         }
     }
 }

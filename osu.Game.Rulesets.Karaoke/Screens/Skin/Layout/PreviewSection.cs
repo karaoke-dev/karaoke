@@ -147,11 +147,11 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
                 var defaultLanguage = new CultureInfo("en-US");
                 lyric.Translates.Add(defaultLanguage, translate);
 
-                lyric.TimeTags = TimeTagsUtils.ToTimeTagList(new Dictionary<TextIndex, double>
+                lyric.TimeTags = new List<TimeTag>
                 {
-                    { new TextIndex(0), startTime },
-                    { new TextIndex(4), startTime + duration },
-                });
+                    new(new TextIndex(0), startTime),
+                    new(new TextIndex(4), startTime + duration)
+                };
 
                 return lyric;
             }

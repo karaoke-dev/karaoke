@@ -266,62 +266,24 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         /// <summary>
         /// Convert list of time tag to dictionary.
-        /// todo: this method will be removed eventually.
+        /// WIll sort by the time.
         /// </summary>
         /// <param name="timeTags">Time tags</param>
-        /// <param name="applyFix">Should auto-fix or not</param>
-        /// <param name="other">Fix way</param>
-        /// <param name="self">Fix way</param>
         /// <returns>Time tags with dictionary format.</returns>
-        public static IReadOnlyDictionary<TextIndex, double> ToDictionary(IList<TimeTag> timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
-                                                                          SelfCheck self = SelfCheck.BasedOnStart)
-        {
-            if (timeTags == null)
-                return new Dictionary<TextIndex, double>();
-
-            // sorted value
-            var sortedTimeTags = applyFix ? FixOverlapping(timeTags, other, self) : Sort(timeTags);
-
-            // convert to dictionary, will get start's smallest time and end's largest time.
-            return sortedTimeTags.Where(x => x.Time != null).GroupBy(x => x.Index)
-                                 .Select(x =>
-                                     x.Key.State == TextIndex.IndexState.Start ? x.FirstOrDefault() : x.LastOrDefault())
-                                 .ToDictionary(
-                                     k => k?.Index ?? throw new ArgumentNullException(nameof(k)),
-                                     v => v?.Time ?? throw new ArgumentNullException(nameof(v)));
-        }
-
-        /// <summary>
-        /// Convert list of time tag to dictionary.
-        /// Used for apply the time-tag to the <see cref="KaraokeSpriteText"/>
-        /// </summary>
-        /// <param name="timeTags">Time tags</param>
-        /// <param name="applyFix">Should auto-fix or not</param>
-        /// <param name="other">Fix way</param>
-        /// <param name="self">Fix way</param>
-        /// <returns>Time tags with dictionary format.</returns>
-        public static IReadOnlyDictionary<double, TextIndex> ToTimeBasedDictionary(IList<TimeTag> timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
-                                                                                   SelfCheck self = SelfCheck.BasedOnStart)
+        public static IReadOnlyDictionary<double, TextIndex> ToTimeBasedDictionary(IList<TimeTag> timeTags)
         {
             if (timeTags == null)
                 return new Dictionary<double, TextIndex>();
 
-            // sorted value
-            var sortedTimeTags = applyFix ? FixOverlapping(timeTags, other, self) : Sort(timeTags);
-
             // convert to dictionary, will get start's smallest time and end's largest time.
-            return sortedTimeTags.Where(x => x.Time != null)
-                                 .ToDictionary(k => k.Time ?? throw new ArgumentNullException(nameof(k)), v => v.Index);
-        }
-
-        /// <summary>
-        /// Convert dictionary to list of time tags.
-        /// </summary>
-        /// <param name="dictionary">Dictionary.</param>
-        /// <returns>Time tags</returns>
-        public static TimeTag[] ToTimeTagList(IReadOnlyDictionary<TextIndex, double> dictionary)
-        {
-            return dictionary.Select(d => new TimeTag(d.Key, d.Value)).ToArray();
+            return timeTags.Where(x => x.Time != null)
+                           .OrderBy(x => x.Time)
+                           .GroupBy(x => x.Time)
+                           .Select(x =>
+                               // will always get the first time-tag for now.
+                               x.FirstOrDefault())
+                           .ToDictionary(k => k?.Time ?? throw new ArgumentNullException(nameof(k)),
+                               v => v?.Index ?? throw new ArgumentNullException(nameof(v)));
         }
 
         /// <summary>
@@ -331,7 +293,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns>Start time</returns>
         public static double? GetStartTime(IList<TimeTag> timeTags)
         {
-            return ToDictionary(timeTags).FirstOrDefault().Value;
+            var dictionary = ToTimeBasedDictionary(timeTags);
+            if (!dictionary.Any())
+                return null;
+
+            return dictionary.First().Key;
         }
 
         /// <summary>
@@ -341,7 +307,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns>End time</returns>
         public static double? GetEndTime(IList<TimeTag> timeTags)
         {
-            return ToDictionary(timeTags).LastOrDefault().Value;
+            var dictionary = ToTimeBasedDictionary(timeTags);
+            if (!dictionary.Any())
+                return null;
+
+            return dictionary.Last().Key;
         }
     }
 
