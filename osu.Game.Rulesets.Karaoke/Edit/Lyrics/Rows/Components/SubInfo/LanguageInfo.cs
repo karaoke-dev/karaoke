@@ -18,12 +18,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
 {
     public class LanguageInfo : SubInfo, IHasPopover
     {
-        private readonly Bindable<CultureInfo> languageBindable = new();
+        private readonly Bindable<CultureInfo> languageBindable;
 
         public LanguageInfo(Lyric lyric)
             : base(lyric)
         {
-            languageBindable.BindTo(Lyric.LanguageBindable);
+            languageBindable = lyric.LanguageBindable.GetBoundCopy();
         }
 
         [BackgroundDependencyLoader]

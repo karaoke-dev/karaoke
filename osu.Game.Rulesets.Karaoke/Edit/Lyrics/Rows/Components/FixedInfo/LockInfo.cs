@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
@@ -34,9 +35,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
 
         private readonly Lyric lyric;
 
+        private readonly IBindable<LockState> bindableLockState;
+
         public LockInfo(Lyric lyric)
         {
             this.lyric = lyric;
+            bindableLockState = lyric.LockBindable.GetBoundCopy();
 
             Size = new Vector2(12);
         }
@@ -44,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
         [BackgroundDependencyLoader]
         private void load(OsuColour colours)
         {
-            lyric.LockBindable.BindValueChanged(value =>
+            bindableLockState.BindValueChanged(value =>
             {
                 switch (value.NewValue)
                 {
@@ -71,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
 
         protected override bool OnClick(ClickEvent e)
         {
-            if (lyric.Lock == LockState.None)
+            if (bindableLockState.Value == LockState.None)
             {
                 // should mark lyric as selected for able to apply the lock state.
                 lyricCaretState.MoveCaretToTargetPosition(lyric);
