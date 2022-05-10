@@ -330,7 +330,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns>Start time</returns>
         public static double? GetStartTime(IList<TimeTag> timeTags)
         {
-            return ToDictionary(timeTags).FirstOrDefault().Value;
+            var dictionary = ToTimeBasedDictionary(timeTags);
+            if (!dictionary.Any())
+                return null;
+
+            return dictionary.First().Key;
         }
 
         /// <summary>
@@ -340,7 +344,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns>End time</returns>
         public static double? GetEndTime(IList<TimeTag> timeTags)
         {
-            return ToDictionary(timeTags).LastOrDefault().Value;
+            var dictionary = ToTimeBasedDictionary(timeTags);
+            if (!dictionary.Any())
+                return null;
+
+            return dictionary.Last().Key;
         }
     }
 

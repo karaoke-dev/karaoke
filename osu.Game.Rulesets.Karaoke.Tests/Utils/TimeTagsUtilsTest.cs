@@ -195,6 +195,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" }, 1100)]
         [TestCase(new[] { "[1,end]:3000", "[1,start]:2100", "[0,end]:2000", "[0,start]:1100" }, 1100)]
         [TestCase(new[] { "[0,start]:", "[0,start]:", "[0,end]:2000", "[0,start]:1100" }, 1100)]
+        [TestCase(new[] { "[0,start]:" }, null)]
+        [TestCase(new string[] { }, null)]
         public void TestGetStartTime(string[] timeTagTexts, double? expected)
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
@@ -206,6 +208,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { "[0,start]:1100", "[0,end]:2000", "[1,start]:2100", "[1,end]:3000" }, 3000)]
         [TestCase(new[] { "[1,end]:3000", "[1,start]:2100", "[0,end]:2000", "[0,start]:1100" }, 3000)]
         [TestCase(new[] { "[0,start]:", "[0,start]:", "[0,end]:2000", "[0,start]:1100" }, 2000)]
+        [TestCase(new[] { "[0,start]:" }, null)]
+        [TestCase(new string[] { }, null)]
         public void TestGetEndTime(string[] timeTagTexts, double? expected)
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
