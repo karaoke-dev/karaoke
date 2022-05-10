@@ -96,15 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             RubyTextBindable.BindTo(HitObject.RubyTextBindable);
             DisplayBindable.BindTo(HitObject.DisplayBindable);
             ToneBindable.BindTo(HitObject.ToneBindable);
-
-            if (HitObject.ParentLyric != null)
-            {
-                HitObject.ParentLyricBindable.BindValueChanged(x =>
-                {
-                    SingersBindable.UnbindAll();
-                    SingersBindable.BindTo(x.NewValue.SingersBindable);
-                }, true);
-            }
+            SingersBindable.BindTo(HitObject.ParentLyric.SingersBindable);
         }
 
         protected override void OnFree()
@@ -115,9 +107,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             RubyTextBindable.UnbindFrom(HitObject.RubyTextBindable);
             DisplayBindable.UnbindFrom(HitObject.DisplayBindable);
             ToneBindable.UnbindFrom(HitObject.ToneBindable);
-
-            if (HitObject.ParentLyric != null)
-                SingersBindable.UnbindFrom(HitObject.ParentLyric?.SingersBindable);
+            SingersBindable.UnbindFrom(HitObject.ParentLyric.SingersBindable);
         }
 
         protected override void ApplySkin(ISkinSource skin, bool allowFallback)
