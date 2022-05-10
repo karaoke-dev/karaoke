@@ -10,7 +10,6 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
 {
@@ -44,14 +43,14 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
                 StartTime = startTime,
                 Duration = duration,
                 Text = "カラオケ！",
-                TimeTags = TimeTagsUtils.ToTimeTagList(new Dictionary<TextIndex, double>
+                TimeTags = new List<TimeTag>
                 {
-                    { new TextIndex(0), startTime + 500 },
-                    { new TextIndex(1), startTime + 600 },
-                    { new TextIndex(2), startTime + 1000 },
-                    { new TextIndex(3), startTime + 1500 },
-                    { new TextIndex(4), startTime + 2000 },
-                }),
+                    new(new TextIndex(0), startTime + 500),
+                    new(new TextIndex(1), startTime + 600),
+                    new(new TextIndex(2), startTime + 1000),
+                    new(new TextIndex(3), startTime + 1500),
+                    new(new TextIndex(4), startTime + 2000),
+                },
                 RubyTags = new[]
                 {
                     new RubyTag
