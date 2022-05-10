@@ -20,20 +20,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
 
         public Note[] CreateNotes(Lyric lyric)
         {
-            var timeTags = TimeTagsUtils.ToDictionary(lyric.TimeTags);
+            var timeTags = TimeTagsUtils.ToTimeBasedDictionary(lyric.TimeTags);
             var notes = new List<Note>();
 
             foreach (var timeTag in timeTags)
             {
-                (var key, double endTime) = timeTags.GetNext(timeTag);
+                // should not continue if
+                if (timeTags.LastOrDefault().Key == timeTag.Key)
+                    break;
 
-                if (key.Index <= 0)
+                (double time, var textIndex) = timeTag;
+                (double nextTime, var nextTextIndex) = timeTags.GetNext(timeTag);
+
+                int startIndex = TextIndexUtils.ToStringIndex(textIndex);
+                int endIndex = TextIndexUtils.ToStringIndex(nextTextIndex);
+
+                // prevent reverse time-tag to generate the note.
+                if (startIndex >= endIndex)
                     continue;
-
-                double startTime = timeTag.Value;
-
-                int startIndex = timeTag.Key.Index;
-                int endIndex = TextIndexUtils.ToStringIndex(key);
 
                 string text = lyric.Text[startIndex..endIndex];
                 string ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
@@ -42,8 +46,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
                 {
                     notes.Add(new Note
                     {
-                        StartTime = startTime,
-                        Duration = endTime - startTime,
+                        StartTime = time,
+                        Duration = nextTime - time,
                         StartIndex = startIndex,
                         EndIndex = endIndex,
                         Text = text,

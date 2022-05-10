@@ -13,6 +13,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Notes
     public class NoteGeneratorTest
     {
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "カ", "ラ", "オ", "ケ" })]
+        [TestCase(new[] { "[3,end]:1000", "[3,start]:2000", "[2,start]:3000", "[1,start]:4000", "[0,start]:5000" }, new string[] { })]
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:1000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "カラ", "オ", "ケ" })] // will combine the note if time is duplicated.
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "カラ", "オ", "ケ" })] // will combine the note if got no time.
+        [TestCase(new[] { "[0,start]:", "[1,start]:1000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "ラ", "オ", "ケ" })]
+        [TestCase(new[] { "[0,start]:1000" }, new string[] { })]
+        [TestCase(new[] { "[0,start]:" }, new string[] { })]
         public void TestCreateNotes(string[] timeTags, string[] expected)
         {
             var generator = new NoteGenerator(new NoteGeneratorConfig());
