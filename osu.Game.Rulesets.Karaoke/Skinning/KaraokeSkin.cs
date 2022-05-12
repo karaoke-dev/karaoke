@@ -114,16 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         }
 
         public override ISample GetSample(ISampleInfo sampleInfo)
-        {
-            foreach (string lookup in sampleInfo.LookupNames)
-            {
-                var sample = resources.AudioManager.Samples.Get(lookup);
-                if (sample != null)
-                    return sample;
-            }
-
-            return null;
-        }
+            => sampleInfo.LookupNames.Select(lookup => resources.AudioManager.Samples.Get(lookup)).FirstOrDefault(sample => sample != null);
 
         public override Texture GetTexture(string componentName, WrapMode wrapModeS, WrapMode wrapModeT)
             => null;
