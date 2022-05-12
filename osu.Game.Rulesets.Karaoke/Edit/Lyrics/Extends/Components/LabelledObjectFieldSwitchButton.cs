@@ -80,9 +80,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected class ObjectFieldSwitchButton : SwitchButton
         {
-            [Resolved]
-            private OsuColour colours { get; set; }
-
             public Action<bool> Selected;
 
             public Action<SwitchButton, bool> OnCommit;
@@ -105,11 +102,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 OnCommit?.Invoke(this, value);
             }
 
+            private Color4 highLightColour;
             private Color4 enabledColour;
 
             [BackgroundDependencyLoader(true)]
             private void load(OverlayColourProvider colourProvider, OsuColour colours)
             {
+                highLightColour = colours.Yellow;
+
                 // copied from SwitchButton
                 enabledColour = colourProvider?.Highlight1 ?? colours.BlueDark;
             }
@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                         throw new ArgumentNullException(nameof(switchContainer));
 
                     // only change dot colour because border colour should consider off case.
-                    switchContainer.Colour = value ? colours.Yellow : enabledColour;
+                    switchContainer.Colour = value ? highLightColour : enabledColour;
                 }
             }
         }
