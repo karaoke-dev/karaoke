@@ -24,9 +24,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
             // Get first lyric from beatmap
             var actual = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
-            Assert.AreEqual(expectedText, actual?.Text);
-            Assert.AreEqual(expectedStartTime, actual?.StartTime);
-            Assert.AreEqual(expectedEndTime, actual?.EndTime);
+            Assert.IsNotNull(actual);
+            Assert.AreEqual(expectedText, actual.Text);
+            Assert.AreEqual(expectedStartTime, actual.StartTime);
+            Assert.AreEqual(expectedEndTime, actual.EndTime);
         }
 
         [TestCase("[00:01.00]か[00:02.00]ら[00:03.00]お[00:04.00]け[00:05.00]", new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" })]

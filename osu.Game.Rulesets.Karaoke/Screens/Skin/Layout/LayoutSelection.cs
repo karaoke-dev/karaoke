@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 
             foreach (var layoutIndex in layoutDictionary)
             {
-                var layout = skinSource?.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(ElementType.LyricLayout, layoutIndex.Key)).Value;
+                var layout = skinSource.GetConfig<KaraokeSkinLookup, LyricLayout>(new KaraokeSkinLookup(ElementType.LyricLayout, layoutIndex.Key))?.Value;
                 Content.Add(new LayoutSelectionItem(layout));
             }
 
