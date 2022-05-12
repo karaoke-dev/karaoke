@@ -85,52 +85,59 @@ namespace osu.Game.Rulesets.Karaoke
 
         public override void HandleInputStateChange(InputStateChangeEvent inputStateChange)
         {
-            if (inputStateChange is ReplayInputHandler.ReplayStateChangeEvent<KaraokeSaitenAction> { Input: ReplayInputHandler.ReplayState<KaraokeSaitenAction> replayState } replayStateChanged)
+            switch (inputStateChange)
             {
-                // Deal with replay event
-                // Release event should be trigger first
-                if (replayStateChanged.ReleasedActions.Any() && !replayState.PressedActions.Any())
+                case ReplayInputHandler.ReplayStateChangeEvent<KaraokeSaitenAction> { Input: ReplayInputHandler.ReplayState<KaraokeSaitenAction> replayState } replayStateChanged:
                 {
-                    foreach (var action in replayStateChanged.ReleasedActions)
+                    // Deal with replay event
+                    // Release event should be trigger first
+                    if (replayStateChanged.ReleasedActions.Any() && !replayState.PressedActions.Any())
+                    {
+                        foreach (var action in replayStateChanged.ReleasedActions)
+                            KeyBindingContainer.TriggerReleased(action);
+                    }
+
+                    // If any key pressed, the continuous send press event
+                    if (replayState.PressedActions.Any())
+                    {
+                        foreach (var action in replayState.PressedActions)
+                            KeyBindingContainer.TriggerPressed(action);
+                    }
+
+                    break;
+                }
+
+                case MicrophoneVoiceChangeEvent microphoneSoundChange:
+                {
+                    // Deal with realtime microphone event
+                    if (microphoneSoundChange.State is not IMicrophoneInputState inputState)
+                        throw new NotMicrophoneInputStateException();
+
+                    var lastVoice = microphoneSoundChange.LastVoice;
+                    var voice = inputState.Microphone.Voice;
+
+                    // Convert beatmap's pitch to scale setting.
+                    float scale = beatmap.PitchToScale(voice.HasVoice ? voice.Pitch : lastVoice.Pitch);
+
+                    // TODO : adjust scale by
+                    scale += 5;
+
+                    var action = new KaraokeSaitenAction
+                    {
+                        Scale = scale
+                    };
+
+                    if (lastVoice.HasVoice && !voice.HasVoice)
                         KeyBindingContainer.TriggerReleased(action);
-                }
-
-                // If any key pressed, the continuous send press event
-                if (replayState.PressedActions.Any())
-                {
-                    foreach (var action in replayState.PressedActions)
+                    else
                         KeyBindingContainer.TriggerPressed(action);
+                    break;
                 }
-            }
-            else if (inputStateChange is MicrophoneVoiceChangeEvent microphoneSoundChange)
-            {
-                // Deal with realtime microphone event
-                if (microphoneSoundChange.State is not IMicrophoneInputState inputState)
-                    throw new NotMicrophoneInputStateException();
 
-                var lastVoice = microphoneSoundChange.LastVoice;
-                var voice = inputState.Microphone.Voice;
-
-                // Convert beatmap's pitch to scale setting.
-                float scale = beatmap.PitchToScale(voice.HasVoice ? voice.Pitch : lastVoice.Pitch);
-
-                // TODO : adjust scale by
-                scale += 5;
-
-                var action = new KaraokeSaitenAction
-                {
-                    Scale = scale
-                };
-
-                if (lastVoice.HasVoice && !voice.HasVoice)
-                    KeyBindingContainer.TriggerReleased(action);
-                else
-                    KeyBindingContainer.TriggerPressed(action);
-            }
-            else
-            {
-                // Basically should not goes to here
-                base.HandleInputStateChange(inputStateChange);
+                default:
+                    // Basically should not goes to here
+                    base.HandleInputStateChange(inputStateChange);
+                    break;
             }
         }
     }
