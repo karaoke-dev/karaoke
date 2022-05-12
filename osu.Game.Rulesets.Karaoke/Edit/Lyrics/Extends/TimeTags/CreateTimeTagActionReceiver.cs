@@ -25,13 +25,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
             var action = e.Action;
             var caretPosition = lyricCaretState.BindableCaretPosition.Value;
 
-            if (caretPosition is TimeTagIndexCaretPosition timeTagIndexCaretPosition)
-                return processCreateTimeTagAction(timeTagIndexCaretPosition, action);
-
-            if (caretPosition is TimeTagCaretPosition timeTagCaretPosition)
-                return processModifyTimeTagAction(timeTagCaretPosition, action);
-
-            throw new NotSupportedException(nameof(caretPosition));
+            return caretPosition switch
+            {
+                TimeTagIndexCaretPosition timeTagIndexCaretPosition => processCreateTimeTagAction(timeTagIndexCaretPosition, action),
+                TimeTagCaretPosition timeTagCaretPosition => processModifyTimeTagAction(timeTagCaretPosition, action),
+                _ => throw new NotSupportedException(nameof(caretPosition))
+            };
         }
 
         private bool processCreateTimeTagAction(TimeTagIndexCaretPosition timeTagIndexCaretPosition, KaraokeEditAction action)
