@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 throw new FileLoadException("Only .lrc or .kar karaoke file is supported now");
 
             var set = beatmap.Value.BeatmapSetInfo;
-            var oldFile = set.Files?.FirstOrDefault(f => f.Filename == backup_lrc_name);
+            var oldFile = set.Files.FirstOrDefault(f => f.Filename == backup_lrc_name);
 
             using (var stream = info.OpenRead())
             {

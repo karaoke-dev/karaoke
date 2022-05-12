@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         {
             // only get name from font
             var assembly = Assembly.GetExecutingAssembly();
-            return assembly?.GetType($"osu.Game.Rulesets.Karaoke.Skinning.MappingRoles.{name}");
+            return assembly.GetType($"osu.Game.Rulesets.Karaoke.Skinning.MappingRoles.{name}");
         }
 
         private static string getNameByType(MemberInfo type)
