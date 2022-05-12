@@ -20,13 +20,13 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 {
-    public class EditorLyricPiece : DrawableKaraokeSpriteText<EditorLyricPiece.EditorLyricSpriteText>
+    public class EditorKaraokeSpriteText : DrawableKaraokeSpriteText<EditorKaraokeSpriteText.EditorLyricSpriteText>
     {
         private const int time_tag_spacing = 8;
 
         public Lyric HitObject;
 
-        public EditorLyricPiece(Lyric lyric)
+        public EditorKaraokeSpriteText(Lyric lyric)
             : base(lyric)
         {
             HitObject = lyric;

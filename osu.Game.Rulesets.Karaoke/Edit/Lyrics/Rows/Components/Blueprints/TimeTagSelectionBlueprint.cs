@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints
         private const float time_tag_size = 10;
 
         [Resolved]
-        private EditorLyricPiece editorLyricPiece { get; set; }
+        private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
         public TimeTagSelectionBlueprint(TimeTag item)
             : base(item)
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints
         private void updatePosition()
         {
             var size = new Vector2(time_tag_size);
-            var position = editorLyricPiece.GetTimeTagPosition(Item) - size / 2;
+            var position = karaokeSpriteText.GetTimeTagPosition(Item) - size / 2;
 
             X = position.X;
             Y = position.Y;

@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         protected abstract class TextTagSelectionHandler : ExtendSelectionHandler<T>
         {
             [Resolved]
-            private EditorLyricPiece editorLyricPiece { get; set; }
+            private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
             private float deltaScaleSize;
 
@@ -128,17 +128,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             private int calculateNewIndex(T textTag, float offset, Anchor anchor)
             {
                 // get real left-side and right-side position
-                var rect = editorLyricPiece.GetTextTagPosition(textTag);
+                var rect = karaokeSpriteText.GetTextTagPosition(textTag);
 
                 switch (anchor)
                 {
                     case Anchor.CentreLeft:
                         float leftPosition = rect.Left + offset;
-                        return TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(leftPosition));
+                        return TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(leftPosition));
 
                     case Anchor.CentreRight:
                         float rightPosition = rect.Right + offset;
-                        return TextIndexUtils.ToStringIndex(editorLyricPiece.GetHoverIndex(rightPosition));
+                        return TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(rightPosition));
 
                     default:
                         throw new ArgumentOutOfRangeException(nameof(anchor));

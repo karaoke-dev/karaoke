@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
         private readonly SpriteIcon splitIcon;
 
         [Resolved]
-        private EditorLyricPiece lyricPiece { get; set; }
+        private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
         public DrawableLyricSplitterCaret(bool preview)
             : base(preview)
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
         protected override void Apply(TextCaretPosition caret)
         {
             Position = GetPosition(caret);
-            Height = lyricPiece.LineBaseHeight;
+            Height = karaokeSpriteText.LineBaseHeight;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
         private const float caret_width = 3;
 
         [Resolved]
-        private EditorLyricPiece lyricPiece { get; set; }
+        private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
         [Resolved]
         private ILyricTextChangeHandler lyricTextChangeHandler { get; set; }
@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
         {
             caretPosition = caret;
 
-            Height = lyricPiece.LineBaseHeight;
+            Height = karaokeSpriteText.LineBaseHeight;
             var position = GetPosition(caret);
 
             bool displayAnimation = Alpha > 0;

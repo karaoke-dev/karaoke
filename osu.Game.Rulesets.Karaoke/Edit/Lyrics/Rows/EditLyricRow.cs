@@ -301,7 +301,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         public class SingleLyricEditor : Container
         {
             [Cached]
-            private readonly EditorLyricPiece lyricPiece;
+            private readonly EditorKaraokeSpriteText karaokeSpriteText;
 
             public SingleLyricEditor(Lyric lyric)
             {
@@ -310,7 +310,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 Padding = new MarginPadding { Bottom = 10 };
                 Children = new Drawable[]
                 {
-                    lyricPiece = new EditorLyricPiece(lyric),
+                    karaokeSpriteText = new EditorKaraokeSpriteText(lyric),
                     new TimeTagLayer(lyric)
                     {
                         RelativeSizeAxes = Axes.Both,
@@ -329,7 +329,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             [BackgroundDependencyLoader]
             private void load(EditorClock clock)
             {
-                lyricPiece.Clock = clock;
+                karaokeSpriteText.Clock = clock;
             }
         }
     }

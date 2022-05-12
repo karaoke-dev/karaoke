@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
     public class TimeTagLayer : CompositeDrawable
     {
         [Resolved]
-        private EditorLyricPiece lyricPiece { get; set; }
+        private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
         private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();
 
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
             foreach (var timeTag in timeTagsBindable)
             {
-                var position = lyricPiece.GetTimeTagPosition(timeTag);
+                var position = karaokeSpriteText.GetTimeTagPosition(timeTag);
                 AddInternal(new DrawableTimeTag(timeTag)
                 {
                     Position = position

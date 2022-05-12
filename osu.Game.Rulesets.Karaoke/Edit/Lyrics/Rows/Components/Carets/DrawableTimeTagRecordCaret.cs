@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
         private OsuColour colours { get; set; }
 
         [Resolved]
-        private EditorLyricPiece lyricPiece { get; set; }
+        private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
         private readonly RightTriangle drawableTimeTag;
 
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
         protected override void Apply(TimeTagCaretPosition caret)
         {
             var timeTag = caret.TimeTag;
-            this.MoveTo(lyricPiece.GetTimeTagPosition(timeTag), Preview ? 0 : 100, Easing.OutCubic);
+            this.MoveTo(karaokeSpriteText.GetTimeTagPosition(timeTag), Preview ? 0 : 100, Easing.OutCubic);
 
             drawableTimeTag.Scale = new Vector2(timeTag.Index.State == TextIndex.IndexState.Start ? 1 : -1, 1);
             drawableTimeTag.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
