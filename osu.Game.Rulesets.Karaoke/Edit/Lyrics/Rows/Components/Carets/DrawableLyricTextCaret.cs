@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
     public abstract class DrawableLyricTextCaret : DrawableCaret<TextCaretPosition>
     {
         [Resolved]
-        private EditorLyricPiece lyricPiece { get; set; }
+        private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
         protected DrawableLyricTextCaret(bool preview)
             : base(preview)
@@ -20,9 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 
         protected Vector2 GetPosition(TextCaretPosition caret)
         {
-            float textHeight = lyricPiece.LineBaseHeight;
+            float textHeight = karaokeSpriteText.LineBaseHeight;
             bool end = caret.Index == caret.Lyric?.Text?.Length;
-            var originPosition = lyricPiece.GetTextIndexPosition(TextIndexUtils.FromStringIndex(caret.Index, end));
+            var originPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(caret.Index, end));
             return new Vector2(originPosition.X, originPosition.Y - textHeight);
         }
     }

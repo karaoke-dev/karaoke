@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints
         private readonly Container indexRangeBackground;
 
         [Resolved]
-        private EditorLyricPiece editorLyricPiece { get; set; }
+        private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
         protected TextTagSelectionBlueprint(T item)
             : base(item)
@@ -72,10 +72,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints
             // wait until lyric update ruby position.
             ScheduleAfterChildren(() =>
             {
-                var textTagRect = editorLyricPiece.GetTextTagPosition(Item);
+                var textTagRect = karaokeSpriteText.GetTextTagPosition(Item);
 
-                var startIndexPosition = editorLyricPiece.GetTextIndexPosition(TextIndexUtils.FromStringIndex(Item.StartIndex, false));
-                var endIndexPosition = editorLyricPiece.GetTextIndexPosition(TextIndexUtils.FromStringIndex(Item.EndIndex, true));
+                var startIndexPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(Item.StartIndex, false));
+                var endIndexPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(Item.EndIndex, true));
 
                 // update select position
                 updateDrawableRect(previewTextArea, textTagRect);
