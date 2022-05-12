@@ -14,9 +14,7 @@ using osu.Game.Rulesets.Karaoke.Difficulty.Preprocessing;
 using osu.Game.Rulesets.Karaoke.Difficulty.Skills;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Mods;
-using osu.Game.Rulesets.Scoring;
 
 namespace osu.Game.Rulesets.Karaoke.Difficulty
 {
