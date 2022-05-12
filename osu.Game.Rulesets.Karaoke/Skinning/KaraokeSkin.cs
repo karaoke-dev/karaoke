@@ -146,21 +146,22 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 }
 
                 case KaraokeSkinConfigurationLookup skinConfigurationLookup:
-                    switch (skinConfigurationLookup.Lookup)
+                {
+                    return skinConfigurationLookup.Lookup switch
                     {
-                        // should use customize height for note playfield in lyric editor.
-                        case LegacyKaraokeSkinConfigurationLookups.ColumnHeight:
-                            return SkinUtils.As<TValue>(bindableColumnHeight);
+                        // should use customize height for note playfield in lyric editor
+                        LegacyKaraokeSkinConfigurationLookups.ColumnHeight => SkinUtils.As<TValue>(bindableColumnHeight),
 
                         // not have note playfield judgement spacing in lyric editor.
-                        case LegacyKaraokeSkinConfigurationLookups.ColumnSpacing:
-                            return SkinUtils.As<TValue>(bindableColumnSpacing);
-                    }
+                        LegacyKaraokeSkinConfigurationLookups.ColumnSpacing => SkinUtils.As<TValue>(bindableColumnSpacing),
 
-                    break;
+                        _ => null,
+                    };
+                }
+
+                default:
+                    return null;
             }
-
-            return null;
         }
 
         protected virtual IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
