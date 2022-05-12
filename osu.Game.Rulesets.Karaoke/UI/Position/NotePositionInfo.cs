@@ -23,6 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 
         public NotePositionInfo()
         {
+            bindableColumnHeight.BindValueChanged(_ => updatePositionCalculator());
+            bindableColumnSpacing.BindValueChanged(_ => updatePositionCalculator());
+
             updatePositionCalculator();
         }
 
@@ -30,8 +33,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
         {
             base.SkinChanged(skin);
 
-            bindableColumnHeight.UnbindAll();
-            bindableColumnSpacing.UnbindAll();
+            bindableColumnHeight.UnbindBindings();
+            bindableColumnSpacing.UnbindBindings();
 
             var columnHeight = skin.GetConfig<KaraokeSkinConfigurationLookup, float>(new KaraokeSkinConfigurationLookup(columns, LegacyKaraokeSkinConfigurationLookups.ColumnHeight));
             if (columnHeight == null)
@@ -43,9 +46,6 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 
             bindableColumnHeight.BindTo(columnHeight);
             bindableColumnSpacing.BindTo(columnSpacing);
-
-            bindableColumnHeight.BindValueChanged(_ => updatePositionCalculator());
-            bindableColumnSpacing.BindValueChanged(_ => updatePositionCalculator());
         }
 
         private void updatePositionCalculator()
