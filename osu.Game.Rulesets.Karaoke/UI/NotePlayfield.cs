@@ -213,7 +213,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         }
 
         [BackgroundDependencyLoader(true)]
-        private void load(OsuColour colours, [CanBeNull] KaraokeSessionStatics session)
+        private void load([CanBeNull] KaraokeSessionStatics session)
         {
             session?.BindWith(KaraokeRulesetSession.SaitenPitch, saitenPitch);
 

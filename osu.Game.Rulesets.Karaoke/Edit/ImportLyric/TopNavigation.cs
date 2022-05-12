@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap editorBeatmap)
+        private void load()
         {
             // use transaction ended for some reason.
             // 1. seems customized beatmap cannot get hit object updated event(not really sure why).

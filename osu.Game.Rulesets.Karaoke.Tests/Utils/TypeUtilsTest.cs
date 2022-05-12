@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(new FontUsage("123"), TypeUtils.ChangeType<FontUsage>(new FontUsage("123")));
 
             // test class, should use same instance.
-            var testClass = new TestClass(123);
+            var testClass = new TestClass();
             Assert.AreEqual(testClass, TypeUtils.ChangeType<TestClass>(testClass));
         }
 
@@ -46,12 +46,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         private class TestClass
         {
-            private readonly int value;
-
-            public TestClass(int value)
-            {
-                this.value = value;
-            }
         }
     }
 }

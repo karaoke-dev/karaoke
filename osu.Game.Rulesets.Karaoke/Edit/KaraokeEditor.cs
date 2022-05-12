@@ -111,9 +111,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
                     },
                     new("Config")
                     {
-                        Items = new MenuItem[] { new EditorMenuItem("Lyric editor"), new GeneratorConfigMenu("Auto-generator"), new LockStateMenu(lyricEditorConfigManager, "Lock"), }
+                        Items = new MenuItem[] { new EditorMenuItem("Lyric editor"), new GeneratorConfigMenu("Auto-generator"), new LockStateMenu(lyricEditorConfigManager, "Lock") }
                     },
-                    new("Tools") { Items = new MenuItem[] { new KaraokeSkinEditorMenu(this, null, "Skin editor"), } },
+                    new("Tools") { Items = new MenuItem[] { new KaraokeSkinEditorMenu(this, null, "Skin editor") } },
                 },
                 _ => null
             };

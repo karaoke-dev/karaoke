@@ -185,13 +185,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             string fontName = fontInfo.FontName;
             return fontFormat switch
             {
-                FontFormat.Fnt => getFntGlyphStore(storage, fontName),
-                FontFormat.Ttf => getTtfGlyphStore(storage, fontName),
+                FontFormat.Fnt => getFntGlyphStore(fontName),
+                FontFormat.Ttf => getTtfGlyphStore(fontName),
                 FontFormat.Internal or _ => throw new ArgumentOutOfRangeException(nameof(fontFormat))
             };
         }
 
-        private FntGlyphStore getFntGlyphStore(Storage storage, string fontName)
+        private FntGlyphStore getFntGlyphStore(string fontName)
         {
             string path = Path.Combine(getPathByFontType(FontFormat.Fnt), fontName);
             string pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontFormat.Fnt));
@@ -203,7 +203,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             return new FntGlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}", host.CreateTextureLoaderStore(resources));
         }
 
-        private TtfGlyphStore getTtfGlyphStore(Storage storage, string fontName)
+        private TtfGlyphStore getTtfGlyphStore(string fontName)
         {
             string path = Path.Combine(getPathByFontType(FontFormat.Ttf), fontName);
             string pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontFormat.Ttf));

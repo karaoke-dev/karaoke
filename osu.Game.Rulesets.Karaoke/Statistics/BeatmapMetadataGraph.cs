@@ -60,11 +60,11 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                             },
                             new TextMetadataSection("Source")
                             {
-                                Text = beatmapInfo?.Metadata?.Source
+                                Text = beatmapInfo?.Metadata.Source
                             },
                             new TextMetadataSection("Tags")
                             {
-                                Text = beatmapInfo?.Metadata?.Tags
+                                Text = beatmapInfo?.Metadata.Tags
                             },
                             new SingerMetadataSection("Singer")
                             {

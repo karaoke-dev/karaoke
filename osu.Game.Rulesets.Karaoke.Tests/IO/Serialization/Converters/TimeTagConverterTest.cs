@@ -40,8 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         {
             var expected = new TimeTag(new TextIndex(index, state), time);
             var actual = JsonConvert.DeserializeObject<TimeTag>($"\"{json}\"", CreateSettings());
-            Assert.AreEqual(expected.Index, actual?.Index);
-            Assert.AreEqual(expected.Time, actual?.Time);
+            Assert.IsNotNull(actual);
+            Assert.AreEqual(expected.Index, actual.Index);
+            Assert.AreEqual(expected.Time, actual.Time);
         }
     }
 }

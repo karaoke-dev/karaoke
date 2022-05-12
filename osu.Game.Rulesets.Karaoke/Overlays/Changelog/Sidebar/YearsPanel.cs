@@ -98,11 +98,11 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
             }
 
             [BackgroundDependencyLoader]
-            private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogSidebar> metadata, Bindable<int> year)
+            private void load(OverlayColourProvider colourProvider, Bindable<APIChangelogSidebar> metadata, Bindable<int> currentYear)
             {
-                year.BindValueChanged(e =>
+                currentYear.BindValueChanged(e =>
                 {
-                    bool isCurrent = this.year == e.NewValue;
+                    bool isCurrent = year == e.NewValue;
 
                     // update hover color.
                     Colour = isCurrent ? Color4.White : colourProvider.Light2;
@@ -114,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
 
                 Action = () =>
                 {
-                    year.Value = this.year;
+                    currentYear.Value = year;
                 };
             }
         }

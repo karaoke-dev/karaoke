@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using NUnit.Framework;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
@@ -123,7 +124,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             }
         }
 
-        private static void testNote(string expectedText, int expectedTone, bool expectedHalf = false, Note actualNote = null)
+        private static void testNote(string expectedText, int expectedTone, bool expectedHalf = false, [NotNull] Note actualNote = default!)
         {
             Assert.AreEqual(expectedText, actualNote?.Text);
             Assert.AreEqual(expectedTone, actualNote?.Tone.Scale);

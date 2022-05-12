@@ -114,16 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         }
 
         public override ISample GetSample(ISampleInfo sampleInfo)
-        {
-            foreach (string lookup in sampleInfo.LookupNames)
-            {
-                var sample = resources.AudioManager.Samples.Get(lookup);
-                if (sample != null)
-                    return sample;
-            }
-
-            return null;
-        }
+            => sampleInfo.LookupNames.Select(lookup => resources.AudioManager.Samples.Get(lookup)).FirstOrDefault(sample => sample != null);
 
         public override Texture GetTexture(string componentName, WrapMode wrapModeS, WrapMode wrapModeT)
             => null;
@@ -155,21 +146,22 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 }
 
                 case KaraokeSkinConfigurationLookup skinConfigurationLookup:
-                    switch (skinConfigurationLookup.Lookup)
+                {
+                    return skinConfigurationLookup.Lookup switch
                     {
-                        // should use customize height for note playfield in lyric editor.
-                        case LegacyKaraokeSkinConfigurationLookups.ColumnHeight:
-                            return SkinUtils.As<TValue>(bindableColumnHeight);
+                        // should use customize height for note playfield in lyric editor
+                        LegacyKaraokeSkinConfigurationLookups.ColumnHeight => SkinUtils.As<TValue>(bindableColumnHeight),
 
                         // not have note playfield judgement spacing in lyric editor.
-                        case LegacyKaraokeSkinConfigurationLookups.ColumnSpacing:
-                            return SkinUtils.As<TValue>(bindableColumnSpacing);
-                    }
+                        LegacyKaraokeSkinConfigurationLookups.ColumnSpacing => SkinUtils.As<TValue>(bindableColumnSpacing),
 
-                    break;
+                        _ => null,
+                    };
+                }
+
+                default:
+                    return null;
             }
-
-            return null;
         }
 
         protected virtual IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
