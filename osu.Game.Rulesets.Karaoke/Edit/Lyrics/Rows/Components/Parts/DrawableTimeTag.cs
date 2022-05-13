@@ -5,10 +5,9 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
-using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
@@ -25,18 +24,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
 
         public DrawableTimeTag(TimeTag timeTag)
         {
+            AutoSizeAxes = Axes.Both;
+
             this.timeTag = timeTag;
+            var state = timeTag.Index.State;
 
-            Size = new Vector2(triangle_width);
-
-            var index = timeTag.Index;
-            InternalChild = new RightTriangle
+            InternalChild = new DrawableTextIndex
             {
-                Name = "Time tag triangle",
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.Centre,
+                Name = "Text index",
                 Size = new Vector2(triangle_width),
-                Scale = new Vector2(index.State == TextIndex.IndexState.Start ? 1 : -1, 1)
+                State = state
             };
         }
 

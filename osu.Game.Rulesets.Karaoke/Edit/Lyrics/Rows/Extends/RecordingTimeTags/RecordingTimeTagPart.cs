@@ -14,9 +14,9 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
-using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
@@ -57,6 +57,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
             private readonly Lyric lyric;
 
+            private readonly DrawableTextIndex drawableTextIndex;
+
             public CurrentRecordingTimeTagVisualization(Lyric lyric)
             {
                 this.lyric = lyric;
@@ -65,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 RelativePositionAxes = Axes.X;
                 Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT / 2);
 
-                InternalChild = new RightTriangle
+                InternalChild = drawableTextIndex = new DrawableTextIndex
                 {
                     Name = "Time tag triangle",
                     Anchor = Anchor.Centre,
@@ -90,11 +92,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                     }
 
                     var timeTag = timeTagCaretPosition.TimeTag;
-                    bool start = timeTag.Index.State == TextIndex.IndexState.Start;
+                    var state = timeTag.Index.State;
 
-                    Origin = start ? Anchor.BottomLeft : Anchor.BottomRight;
-                    InternalChild.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
-                    InternalChild.Scale = new Vector2(start ? 1 : -1, 1);
+                    Origin = state == TextIndex.IndexState.Start ? Anchor.BottomLeft : Anchor.BottomRight;
+                    drawableTextIndex.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
+                    drawableTextIndex.State = state;
 
                     if (timeTag.Time.HasValue)
                     {
@@ -119,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
             private readonly Bindable<double?> bindableTime;
 
-            private readonly TimeTagPiece timeTagPiece;
+            private readonly TextIndexPiece textIndexPiece;
 
             private readonly Lyric lyric;
             private readonly TimeTag timeTag;
@@ -128,7 +130,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             {
                 this.lyric = lyric;
                 this.timeTag = timeTag;
-                bool start = timeTag.Index.State == TextIndex.IndexState.Start;
+
+                var state = timeTag.Index.State;
+                bool start = state == TextIndex.IndexState.Start;
 
                 Anchor = Anchor.CentreLeft;
                 Origin = start ? Anchor.CentreLeft : Anchor.CentreRight;
@@ -138,13 +142,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 bindableTime = timeTag.TimeBindable.GetBoundCopy();
                 InternalChildren = new Drawable[]
                 {
-                    timeTagPiece = new TimeTagPiece
+                    textIndexPiece = new TextIndexPiece
                     {
                         Name = "Time tag triangle",
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
-                        Scale = new Vector2(start ? 1 : -1, 1)
+                        State = state
                     },
                     new OsuSpriteText
                     {
@@ -158,8 +162,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
             [BackgroundDependencyLoader]
             private void load(EditorClock clock, OsuColour colours, RecordingTimeTagEditor timeline)
             {
-                timeTagPiece.Clock = clock;
-                timeTagPiece.Colour = colours.GetTimeTagColour(timeTag);
+                textIndexPiece.Clock = clock;
+                textIndexPiece.Colour = colours.GetTimeTagColour(timeTag);
 
                 bindableTime.BindValueChanged(e =>
                 {
@@ -178,12 +182,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                         X = (float)previewTime;
 
                         // make tickle effect.
-                        timeTagPiece.ClearTransforms();
+                        textIndexPiece.ClearTransforms();
 
-                        using (timeTagPiece.BeginAbsoluteSequence(previewTime))
+                        using (textIndexPiece.BeginAbsoluteSequence(previewTime))
                         {
-                            timeTagPiece.Colour = colours.GetTimeTagColour(timeTag);
-                            timeTagPiece.FlashColour(colours.RedDark, 750, Easing.OutQuint);
+                            textIndexPiece.Colour = colours.GetTimeTagColour(timeTag);
+                            textIndexPiece.FlashColour(colours.RedDark, 750, Easing.OutQuint);
                         }
                     });
                 }, true);
@@ -210,7 +214,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 };
         }
 
-        private class TimeTagPiece : RightTriangle
+        private class TextIndexPiece : DrawableTextIndex
         {
             public override bool RemoveCompletedTransforms => false;
         }

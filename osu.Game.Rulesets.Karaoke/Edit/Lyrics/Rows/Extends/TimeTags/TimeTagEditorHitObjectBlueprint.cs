@@ -15,7 +15,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
-using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
@@ -155,46 +155,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 
         public class TimeTagPiece : CompositeDrawable
         {
-            private readonly Box box;
-
-            private readonly RightTriangle triangle;
-
             public TimeTagPiece(TimeTag timeTag)
             {
                 RelativeSizeAxes = Axes.Y;
                 Width = 10;
+
+                var state = timeTag.Index.State;
                 InternalChildren = new Drawable[]
                 {
-                    box = new Box
+                    new Box
                     {
                         RelativeSizeAxes = Axes.Y,
                         Width = 1.5f,
+                        Anchor = state == TextIndex.IndexState.Start ? Anchor.CentreLeft : Anchor.CentreRight,
+                        Origin = state == TextIndex.IndexState.Start ? Anchor.CentreLeft : Anchor.CentreRight
                     },
-                    triangle = new RightTriangle
+                    new DrawableTextIndex
                     {
                         Size = new Vector2(10),
                         Anchor = Anchor.BottomCentre,
-                        Origin = Anchor.BottomCentre
+                        Origin = Anchor.BottomCentre,
+                        State = state
                     }
                 };
-
-                switch (timeTag.Index.State)
-                {
-                    case TextIndex.IndexState.Start:
-                        triangle.Scale = new Vector2(1);
-                        box.Anchor = Anchor.CentreLeft;
-                        box.Origin = Anchor.CentreLeft;
-                        break;
-
-                    case TextIndex.IndexState.End:
-                        triangle.Scale = new Vector2(-1, 1);
-                        box.Anchor = Anchor.CentreRight;
-                        box.Origin = Anchor.CentreRight;
-                        break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(timeTag.Index.State));
-                }
             }
 
             public override bool RemoveCompletedTransforms => false;
@@ -202,27 +185,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 
         public class TimeTagWithNoTimePiece : CompositeDrawable
         {
-            private readonly RightTriangle triangle;
-
             public TimeTagWithNoTimePiece(TimeTag timeTag)
             {
                 AutoSizeAxes = Axes.Y;
                 Width = 10;
+
+                var state = timeTag.Index.State;
                 InternalChildren = new Drawable[]
                 {
-                    triangle = new RightTriangle
+                    new DrawableTextIndex
                     {
                         Size = new Vector2(10),
                         Anchor = Anchor.BottomCentre,
-                        Origin = Anchor.BottomCentre
+                        Origin = Anchor.BottomCentre,
+                        State = state
                     }
-                };
-
-                triangle.Scale = timeTag.Index.State switch
-                {
-                    TextIndex.IndexState.Start => new Vector2(1),
-                    TextIndex.IndexState.End => new Vector2(-1, 1),
-                    _ => triangle.Scale
                 };
             }
         }
