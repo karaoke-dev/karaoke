@@ -22,33 +22,61 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Shapes
             Texture = Texture.WhitePixel;
         }
 
-        public override RectangleF BoundingBox => toTriangle(ToParentSpace(LayoutRectangle)).AABBFloat;
+        public override RectangleF BoundingBox => toTriangle(ToParentSpace(LayoutRectangle), RightAngleDirection).AABBFloat;
 
-        private static Triangle toTriangle(Quad q) => new(
-            q.TopLeft,
-            q.BottomLeft,
-            q.BottomRight);
+        private TriangleRightAngleDirection rightAngleDirection = TriangleRightAngleDirection.BottomLeft;
 
-        public override bool Contains(Vector2 screenSpacePos) => toTriangle(ScreenSpaceDrawQuad).Contains(screenSpacePos);
+        public TriangleRightAngleDirection RightAngleDirection
+        {
+            get => rightAngleDirection;
+            set
+            {
+                rightAngleDirection = value;
+                Invalidate();
+            }
+        }
+
+        private static Triangle toTriangle(Quad q, TriangleRightAngleDirection rightAngleDirection) =>
+            rightAngleDirection switch
+            {
+                TriangleRightAngleDirection.TopLeft => new Triangle(),
+                TriangleRightAngleDirection.TopRight => new Triangle(),
+                TriangleRightAngleDirection.BottomLeft => new(q.TopLeft, q.BottomLeft, q.BottomRight),
+                TriangleRightAngleDirection.BottomRight => new Triangle(),
+                _ => throw new ArgumentOutOfRangeException(nameof(rightAngleDirection), rightAngleDirection, null)
+            };
+
+        public override bool Contains(Vector2 screenSpacePos) => toTriangle(ScreenSpaceDrawQuad, RightAngleDirection).Contains(screenSpacePos);
 
         protected override DrawNode CreateDrawNode() => new TriangleDrawNode(this);
 
         private class TriangleDrawNode : SpriteDrawNode
         {
+            protected new RightTriangle Source => (RightTriangle)base.Source;
+
+            private TriangleRightAngleDirection rightAngleDirection;
+
             public TriangleDrawNode(RightTriangle source)
                 : base(source)
             {
             }
 
+            public override void ApplyState()
+            {
+                base.ApplyState();
+
+                rightAngleDirection = Source.RightAngleDirection;
+            }
+
             protected override void Blit(Action<TexturedVertex2D> vertexAction)
             {
-                DrawTriangle(Texture, toTriangle(ScreenSpaceDrawQuad), DrawColourInfo.Colour, null, null,
+                DrawTriangle(Texture, toTriangle(ScreenSpaceDrawQuad, rightAngleDirection), DrawColourInfo.Colour, null, null,
                     new Vector2(InflationAmount.X / DrawRectangle.Width, InflationAmount.Y / DrawRectangle.Height), TextureCoords);
             }
 
             protected override void BlitOpaqueInterior(Action<TexturedVertex2D> vertexAction)
             {
-                var triangle = toTriangle(ConservativeScreenSpaceDrawQuad);
+                var triangle = toTriangle(ConservativeScreenSpaceDrawQuad, rightAngleDirection);
 
                 if (GLWrapper.IsMaskingActive)
                     DrawClipped(ref triangle, Texture, DrawColourInfo.Colour, vertexAction: vertexAction);
@@ -56,5 +84,16 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Shapes
                     DrawTriangle(Texture, triangle, DrawColourInfo.Colour, vertexAction: vertexAction);
             }
         }
+    }
+
+    public enum TriangleRightAngleDirection
+    {
+        TopLeft,
+
+        TopRight,
+
+        BottomLeft,
+
+        BottomRight,
     }
 }
