@@ -14,6 +14,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
+using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
@@ -57,6 +58,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
 
             private readonly Lyric lyric;
 
+            private readonly DrawableTextIndex drawableTextIndex;
+
             public CurrentRecordingTimeTagVisualization(Lyric lyric)
             {
                 this.lyric = lyric;
@@ -65,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 RelativePositionAxes = Axes.X;
                 Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT / 2);
 
-                InternalChild = new RightTriangle
+                InternalChild = drawableTextIndex = new DrawableTextIndex
                 {
                     Name = "Time tag triangle",
                     Anchor = Anchor.Centre,
@@ -90,11 +93,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                     }
 
                     var timeTag = timeTagCaretPosition.TimeTag;
-                    bool start = timeTag.Index.State == TextIndex.IndexState.Start;
+                    var state = timeTag.Index.State;
 
-                    Origin = start ? Anchor.BottomLeft : Anchor.BottomRight;
-                    InternalChild.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
-                    InternalChild.Scale = new Vector2(start ? 1 : -1, 1);
+                    Origin = state == TextIndex.IndexState.Start ? Anchor.BottomLeft : Anchor.BottomRight;
+                    drawableTextIndex.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
+                    drawableTextIndex.State = state;
 
                     if (timeTag.Time.HasValue)
                     {
