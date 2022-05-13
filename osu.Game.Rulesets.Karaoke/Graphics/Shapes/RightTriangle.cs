@@ -39,10 +39,10 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Shapes
         private static Triangle toTriangle(Quad q, TriangleRightAngleDirection rightAngleDirection) =>
             rightAngleDirection switch
             {
-                TriangleRightAngleDirection.TopLeft => new Triangle(),
-                TriangleRightAngleDirection.TopRight => new Triangle(),
-                TriangleRightAngleDirection.BottomLeft => new(q.TopLeft, q.BottomLeft, q.BottomRight),
-                TriangleRightAngleDirection.BottomRight => new Triangle(),
+                TriangleRightAngleDirection.TopLeft => new Triangle(q.TopLeft, q.TopRight, q.BottomLeft),
+                TriangleRightAngleDirection.TopRight => new Triangle(q.TopLeft, q.TopRight, q.BottomRight),
+                TriangleRightAngleDirection.BottomLeft => new Triangle(q.TopLeft, q.BottomLeft, q.BottomRight),
+                TriangleRightAngleDirection.BottomRight => new Triangle(q.TopRight, q.BottomLeft, q.BottomRight),
                 _ => throw new ArgumentOutOfRangeException(nameof(rightAngleDirection), rightAngleDirection, null)
             };
 
