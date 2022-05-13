@@ -31,8 +31,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             InternalChild = drawableTimeTag = new RightTriangle
             {
                 Name = "Time tag triangle",
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.Centre,
                 Size = new Vector2(triangle_width),
                 Alpha = preview ? 0.5f : 1
             };

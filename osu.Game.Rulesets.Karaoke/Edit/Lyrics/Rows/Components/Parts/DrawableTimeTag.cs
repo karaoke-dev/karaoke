@@ -25,16 +25,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
 
         public DrawableTimeTag(TimeTag timeTag)
         {
+            AutoSizeAxes = Axes.Both;
+
             this.timeTag = timeTag;
-
-            Size = new Vector2(triangle_width);
-
             var index = timeTag.Index;
+
             InternalChild = new RightTriangle
             {
                 Name = "Time tag triangle",
-                Anchor = Anchor.TopCentre,
-                Origin = Anchor.Centre,
                 Size = new Vector2(triangle_width),
                 Scale = new Vector2(index.State == TextIndex.IndexState.Start ? 1 : -1, 1)
             };
