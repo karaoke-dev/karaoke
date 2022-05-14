@@ -2,16 +2,21 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Testing;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 {
@@ -46,22 +51,90 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             Dependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
         }
 
-        [TestCase(LyricEditorMode.View)]
-        [TestCase(LyricEditorMode.Manage)]
-        [TestCase(LyricEditorMode.Typing)]
-        [TestCase(LyricEditorMode.Language)]
-        [TestCase(LyricEditorMode.EditRuby)]
-        [TestCase(LyricEditorMode.EditRomaji)]
-        [TestCase(LyricEditorMode.EditTimeTag)]
-        [TestCase(LyricEditorMode.EditNote)]
-        [TestCase(LyricEditorMode.Singer)]
-        public void TestSwitchMode(LyricEditorMode mode)
+        [Test]
+        public void TestViewMode()
+        {
+            switchToMode(LyricEditorMode.View);
+        }
+
+        [Test]
+        public void TestManageMode()
+        {
+            switchToMode(LyricEditorMode.Manage);
+        }
+
+        [Test]
+        public void TestTypingMode()
+        {
+            switchToMode(LyricEditorMode.Typing);
+        }
+
+        [Test]
+        public void TestLanguageMode()
+        {
+            switchToMode(LyricEditorMode.Language);
+            clickEditModeButtons<LanguageEditMode>();
+        }
+
+        [Test]
+        public void TestEditRubyMode()
+        {
+            switchToMode(LyricEditorMode.EditRuby);
+            clickEditModeButtons<TextTagEditMode>();
+        }
+
+        [Test]
+        public void TestEditRomajiMode()
+        {
+            switchToMode(LyricEditorMode.EditRomaji);
+            clickEditModeButtons<TextTagEditMode>();
+        }
+
+        [Test]
+        public void TestEditTimeTagMode()
+        {
+            switchToMode(LyricEditorMode.EditTimeTag);
+            clickEditModeButtons<TimeTagEditMode>();
+        }
+
+        [Test]
+        public void TestEditNoteMode()
+        {
+            switchToMode(LyricEditorMode.EditNote);
+            clickEditModeButtons<NoteEditMode>();
+        }
+
+        [Test]
+        public void TestSingerMode()
+        {
+            switchToMode(LyricEditorMode.Singer);
+        }
+
+        private void switchToMode(LyricEditorMode mode)
         {
             AddStep($"switch to mode {Enum.GetName(typeof(LyricEditorMode), mode)}", () =>
             {
                 bindableLyricEditorMode.Value = mode;
             });
             AddWaitStep("wait for switch to new mode", 5);
+        }
+
+        private void clickEditModeButtons<T>() where T : Enum
+        {
+            foreach (var editMode in EnumUtils.GetValues<T>())
+            {
+                clickTargetEditModeButton(editMode);
+            }
+        }
+
+        private void clickTargetEditModeButton<T>(T editMode) where T : Enum
+        {
+            AddStep("Click the button", () =>
+            {
+                var editModeSection = this.ChildrenOfType<EditModeSection<T>>().Single();
+                editModeSection.UpdateEditMode(editMode);
+            });
+            AddWaitStep("wait for switch to new edit mode.", 1);
         }
     }
 }
