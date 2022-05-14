@@ -92,9 +92,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                     }
 
                     var timeTag = timeTagCaretPosition.TimeTag;
+                    var textIndex = timeTag.Index;
                     var state = timeTag.Index.State;
 
-                    Origin = state == TextIndex.IndexState.Start ? Anchor.BottomLeft : Anchor.BottomRight;
+                    Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
                     drawableTextIndex.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
                     drawableTextIndex.State = state;
 
