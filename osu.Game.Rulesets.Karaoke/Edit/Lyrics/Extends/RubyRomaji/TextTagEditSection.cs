@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         {
             lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
             {
-                Lyric = e.NewValue.Lyric;
+                Lyric = e.NewValue?.Lyric;
 
                 if (e.OldValue?.Lyric != null)
                 {
