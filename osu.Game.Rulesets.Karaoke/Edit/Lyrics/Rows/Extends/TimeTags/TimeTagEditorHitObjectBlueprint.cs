@@ -160,22 +160,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
                 RelativeSizeAxes = Axes.Y;
                 Width = 10;
 
-                var state = timeTag.Index.State;
+                var textIndex = timeTag.Index;
                 InternalChildren = new Drawable[]
                 {
                     new Box
                     {
                         RelativeSizeAxes = Axes.Y,
                         Width = 1.5f,
-                        Anchor = state == TextIndex.IndexState.Start ? Anchor.CentreLeft : Anchor.CentreRight,
-                        Origin = state == TextIndex.IndexState.Start ? Anchor.CentreLeft : Anchor.CentreRight
+                        Anchor = TextIndexUtils.GetValueByState(textIndex, Anchor.CentreLeft, Anchor.CentreRight),
+                        Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.CentreLeft, Anchor.CentreRight),
                     },
                     new DrawableTextIndex
                     {
                         Size = new Vector2(10),
                         Anchor = Anchor.BottomCentre,
                         Origin = Anchor.BottomCentre,
-                        State = state
+                        State = textIndex.State
                     }
                 };
             }

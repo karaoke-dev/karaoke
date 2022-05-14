@@ -104,12 +104,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             float extraPosition = extraSpacing(HitObject.TimeTags, timeTag);
             return basePosition + new Vector2(extraPosition, 0);
 
-            static float extraSpacing(IEnumerable<TimeTag> timeTagsInLyric, TimeTag timeTag)
+            static float extraSpacing(IList<TimeTag> timeTagsInLyric, TimeTag timeTag)
             {
-                bool isStart = timeTag.Index.State == TextIndex.IndexState.Start;
-                var timeTags = isStart ? timeTagsInLyric.Reverse() : timeTagsInLyric;
-                int duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == timeTag.Index) - 1;
-                int spacing = duplicatedTagAmount * time_tag_spacing * (isStart ? 1 : -1);
+                var textIndex = timeTag.Index;
+                var timeTags = TextIndexUtils.GetValueByState(textIndex, timeTagsInLyric.Reverse(), timeTagsInLyric);
+                int duplicatedTagAmount = timeTags.SkipWhile(t => t != timeTag).Count(x => x.Index == textIndex) - 1;
+                int spacing = duplicatedTagAmount * time_tag_spacing * TextIndexUtils.GetValueByState(textIndex, 1, -1);
                 return spacing;
             }
         }
@@ -172,7 +172,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
             public Vector2 GetTimeTagPosition(TextIndex index)
             {
                 var drawRectangle = GetCharacterRectangle(index.Index);
-                return index.State == TextIndex.IndexState.Start ? drawRectangle.BottomLeft : drawRectangle.BottomRight;
+                return TextIndexUtils.GetValueByState(index, drawRectangle.BottomLeft, drawRectangle.BottomRight);
             }
         }
     }
