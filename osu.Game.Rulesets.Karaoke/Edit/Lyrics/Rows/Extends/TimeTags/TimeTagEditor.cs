@@ -18,7 +18,6 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 {
-    [Cached(typeof(IPositionSnapProvider))]
     [Cached]
     public class TimeTagEditor : TimeTagEditorScrollContainer, IPositionSnapProvider
     {

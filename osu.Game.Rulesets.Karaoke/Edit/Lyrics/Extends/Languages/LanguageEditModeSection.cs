@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
 
-        protected override void UpdateEditMode(LanguageEditMode mode)
+        internal override void UpdateEditMode(LanguageEditMode mode)
         {
             languageModeState.ChangeEditMode(mode);
 

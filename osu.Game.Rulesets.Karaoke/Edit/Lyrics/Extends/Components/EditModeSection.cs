@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             });
         }
 
-        protected virtual void UpdateEditMode(T mode)
+        internal virtual void UpdateEditMode(T mode)
         {
             // should cancel the selection after change to the new edit mode.
             lyricSelectionState?.EndSelecting(LyricEditorSelectingAction.Cancel);

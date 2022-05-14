@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
             };
         }
 
-        protected override void UpdateEditMode(TimeTagEditMode mode)
+        internal override void UpdateEditMode(TimeTagEditMode mode)
         {
             timeTagModeState.ChangeEditMode(mode);
 

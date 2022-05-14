@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                 }
             };
 
-        protected override void UpdateEditMode(TextTagEditMode mode)
+        internal override void UpdateEditMode(TextTagEditMode mode)
         {
             editRubyModeState.ChangeEditMode(mode);
 

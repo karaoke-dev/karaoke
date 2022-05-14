@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
 
-        protected override void UpdateEditMode(NoteEditMode mode)
+        internal override void UpdateEditMode(NoteEditMode mode)
         {
             editNoteModeState.ChangeEditMode(mode);
 
