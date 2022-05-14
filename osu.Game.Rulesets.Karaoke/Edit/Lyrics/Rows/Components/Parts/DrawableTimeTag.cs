@@ -10,6 +10,7 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
@@ -26,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
         public DrawableTimeTag(TimeTag timeTag)
         {
             AutoSizeAxes = Axes.Both;
-            Origin = timeTag.Index.State == TextIndex.IndexState.Start ? Anchor.BottomLeft : Anchor.BottomRight;
+            Origin = TextIndexUtils.GetValueByState(timeTag.Index, Anchor.BottomLeft, Anchor.BottomRight);
 
             this.timeTag = timeTag;
             var state = timeTag.Index.State;

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Graphics.Sprites;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
@@ -8,12 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
     public static class TextIndexUtils
     {
         public static int ToStringIndex(TextIndex index)
-        {
-            if (index.State == TextIndex.IndexState.Start)
-                return index.Index;
-
-            return index.Index + 1;
-        }
+            => GetValueByState(index, index.Index, index.Index + 1);
 
         public static TextIndex FromStringIndex(int index, bool end)
         {
@@ -50,6 +46,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return index.Index < 0 || index.Index >= lyric.Length;
         }
 
+        public static T GetValueByState<T>(TextIndex index, T startValue, T endValue) =>
+            index.State switch
+            {
+                TextIndex.IndexState.Start => startValue,
+                TextIndex.IndexState.End => endValue,
+                _ => throw new ArgumentOutOfRangeException(nameof(index))
+            };
+
         /// <summary>
         /// Display string with position format
         /// </summary>
@@ -62,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static string PositionFormattedString(TextIndex textIndex)
         {
             int index = textIndex.Index;
-            string state = textIndex.State == TextIndex.IndexState.End ? "(end)" : "";
+            string state = GetValueByState(textIndex, "", "(end)");
             return $"{index}{state}";
         }
     }

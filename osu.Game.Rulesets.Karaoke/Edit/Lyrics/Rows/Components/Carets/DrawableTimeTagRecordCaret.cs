@@ -3,10 +3,10 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Sprites;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             var timeTag = caret.TimeTag;
             var textIndex = timeTag.Index;
             this.MoveTo(karaokeSpriteText.GetTimeTagPosition(timeTag), Preview ? 0 : 100, Easing.OutCubic);
-            Origin = textIndex.State == TextIndex.IndexState.Start ? Anchor.BottomLeft : Anchor.BottomRight;
+            Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
 
             drawableTextIndex.State = textIndex.State;
             drawableTextIndex.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);

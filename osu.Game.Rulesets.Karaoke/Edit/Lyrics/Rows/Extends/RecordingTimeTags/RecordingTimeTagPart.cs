@@ -92,9 +92,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                     }
 
                     var timeTag = timeTagCaretPosition.TimeTag;
+                    var textIndex = timeTag.Index;
                     var state = timeTag.Index.State;
 
-                    Origin = state == TextIndex.IndexState.Start ? Anchor.BottomLeft : Anchor.BottomRight;
+                    Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight);
                     drawableTextIndex.Colour = colours.GetRecordingTimeTagCaretColour(timeTag);
                     drawableTextIndex.State = state;
 
@@ -131,11 +132,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                 this.lyric = lyric;
                 this.timeTag = timeTag;
 
-                var state = timeTag.Index.State;
-                bool start = state == TextIndex.IndexState.Start;
+                var textIndex = timeTag.Index;
 
                 Anchor = Anchor.CentreLeft;
-                Origin = start ? Anchor.CentreLeft : Anchor.CentreRight;
+                Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.CentreLeft, Anchor.CentreRight);
+
                 RelativePositionAxes = Axes.X;
                 Size = new Vector2(RecordingTimeTagEditor.TIMELINE_HEIGHT);
 
@@ -148,13 +149,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                         RelativeSizeAxes = Axes.Both,
-                        State = state
+                        State = textIndex.State
                     },
                     new OsuSpriteText
                     {
                         Text = LyricUtils.GetTimeTagDisplayRubyText(lyric, timeTag),
-                        Anchor = start ? Anchor.BottomLeft : Anchor.BottomRight,
-                        Origin = start ? Anchor.TopLeft : Anchor.TopRight,
+                        Anchor = TextIndexUtils.GetValueByState(textIndex, Anchor.BottomLeft, Anchor.BottomRight),
+                        Origin = TextIndexUtils.GetValueByState(textIndex, Anchor.TopLeft, Anchor.TopRight),
                     }
                 };
             }

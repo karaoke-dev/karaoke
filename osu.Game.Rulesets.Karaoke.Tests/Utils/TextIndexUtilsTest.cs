@@ -95,6 +95,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(TextIndex.IndexState.Start, 1, -1, 1)]
+        [TestCase(TextIndex.IndexState.End, 1, -1, -1)]
+        [TestCase(TextIndex.IndexState.Start, "1", "-1", "1")]
+        [TestCase(TextIndex.IndexState.End, "1", "-1", "-1")]
+        public void TestGetValueByState(TextIndex.IndexState state, object startValue, object endValue, object expected)
+        {
+            var textIndex = new TextIndex(0, state);
+
+            object actual = TextIndexUtils.GetValueByState(textIndex, startValue, endValue);
+            Assert.AreEqual(expected, actual);
+        }
+
         [TestCase(0, TextIndex.IndexState.Start, "0")]
         [TestCase(0, TextIndex.IndexState.End, "0(end)")]
         [TestCase(-1, TextIndex.IndexState.Start, "-1")]

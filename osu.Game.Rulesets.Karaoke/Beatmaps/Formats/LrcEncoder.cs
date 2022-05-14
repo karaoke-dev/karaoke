@@ -54,8 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
             // convert to dictionary, will get start's smallest time and end's largest time.
             return sortedTimeTags.Where(x => x.Time != null).GroupBy(x => x.Index)
-                                 .Select(x =>
-                                     x.Key.State == TextIndex.IndexState.Start ? x.FirstOrDefault() : x.LastOrDefault())
+                                 .Select(x => TextIndexUtils.GetValueByState(x.Key, x.FirstOrDefault(), x.LastOrDefault()))
                                  .ToDictionary(
                                      k => k?.Index ?? throw new ArgumentNullException(nameof(k)),
                                      v => v?.Time ?? throw new ArgumentNullException(nameof(v)));
