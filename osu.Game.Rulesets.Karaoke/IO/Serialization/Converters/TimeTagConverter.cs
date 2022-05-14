@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
@@ -35,11 +36,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
         public override void WriteJson(JsonWriter writer, TimeTag value, JsonSerializer serializer)
         {
-            var tag = value.Index;
-            string state = tag.State == TextIndex.IndexState.Start ? "start" : "end";
+            var index = value.Index;
+            string state = TextIndexUtils.GetValueByState(index, "start", "end");
             double? time = value.Time;
 
-            string str = $"[{tag.Index},{state}]:{time}";
+            string str = $"[{index.Index},{state}]:{time}";
             writer.WriteValue(str);
         }
     }
