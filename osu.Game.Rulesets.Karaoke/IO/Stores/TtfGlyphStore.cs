@@ -116,13 +116,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
         public int GetKerning(char left, char right)
         {
             // todo: implement.
-            var rightGlyphMetrics = fontMetrics?.GetGlyphMetrics(new CodePoint(right), ColorFontSupport.None).FirstOrDefault();
-
-            if (rightGlyphMetrics == null)
-                return 0;
-
-            float kerning = rightGlyphMetrics.LeftSideBearing;
-            return (int)kerning;
+            return 0;
         }
 
         Task<CharacterGlyph> IResourceStore<CharacterGlyph>.GetAsync(string name, CancellationToken cancellationToken) =>
