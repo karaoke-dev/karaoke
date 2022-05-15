@@ -12,6 +12,7 @@ using osu.Game.Overlays.Mods;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Scoring;
+using osu.Game.Rulesets.UI;
 using osu.Game.Screens.Play;
 using osuTK;
 using osuTK.Graphics;
@@ -97,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 };
             }
 
-            private class LoadingIcon : ModButton
+            private class LoadingIcon : ModIcon
             {
                 public LoadingIcon()
                     : base(new KaraokeModWindowsUpdate())
