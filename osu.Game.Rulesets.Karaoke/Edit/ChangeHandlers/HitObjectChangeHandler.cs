@@ -39,13 +39,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 
             changingCache.Invalidate();
 
-            beatmap.PerformOnSelection(h =>
+            try
             {
-                if (h is THitObject tHitObject)
-                    action.Invoke(tHitObject);
-            });
-
-            changingCache.Validate();
+                beatmap.PerformOnSelection(h =>
+                {
+                    if (h is THitObject tHitObject)
+                        action.Invoke(tHitObject);
+                });
+            }
+            finally
+            {
+                changingCache.Validate();
+            }
         }
 
         protected void AddRange(IEnumerable<HitObject> hitObjects) => beatmap.AddRange(hitObjects);
