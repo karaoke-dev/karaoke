@@ -46,8 +46,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (!selecting.Value)
                 return;
 
-            selecting.Value = false;
-
             // should sync selection to editor beatmap because auto-generate will be apply to those lyric that being selected.
             var selectedLyrics = bindableSelectedLyrics.ToArray();
             beatmap.SelectedHitObjects.Clear();
@@ -60,6 +58,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             // should clear the selection after finish.
             bindableSelectedLyrics.Clear();
+
+            // for able to check if still selecting, should make sure that every process step has been finished.
+            selecting.Value = false;
 
             // should add selected lyric back.
             lyricCaretState.SyncSelectedHitObjectWithCaret();
