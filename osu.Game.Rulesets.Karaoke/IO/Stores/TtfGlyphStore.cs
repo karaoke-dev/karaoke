@@ -14,6 +14,7 @@ using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using osu.Framework.Text;
 using SixLabors.Fonts;
+using SixLabors.Fonts.Unicode;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
@@ -38,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
         [CanBeNull]
         public Font Font => completionSource.Task.Result;
 
-        private IFontInstance fontInstance => Font?.Instance;
+        private FontMetrics fontInstance => Font?.FontMetrics;
 
         private readonly TaskCompletionSource<Font> completionSource = new();
 
@@ -69,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
                 using (var s = Store.GetStream($@"{AssetName}"))
                 {
                     var fonts = new FontCollection();
-                    var fontFamily = fonts.Install(s);
+                    var fontFamily = fonts.Add(s);
                     font = new Font(fontFamily, 1);
                 }
 
@@ -85,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
 
         public bool HasGlyph(char c)
         {
-            var glyph = fontInstance?.GetGlyph(c);
+            var glyph = fontInstance?.GetGlyphMetrics(new CodePoint(c), ColorFontSupport.None).FirstOrDefault();
             return glyph?.GlyphType != GlyphType.Fallback;
         }
 
@@ -97,32 +98,35 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
 
             Debug.Assert(Baseline != null);
 
-            var glyphInstance = fontInstance.GetGlyph(character);
-            if (glyphInstance.GlyphType == GlyphType.Fallback)
+            var glyphInstance = fontInstance.GetGlyphMetrics(new CodePoint(character), ColorFontSupport.None).FirstOrDefault();
+            if (glyphInstance == null || glyphInstance.GlyphType == GlyphType.Fallback)
                 return null;
 
             string text = new(new[] { character });
-            var style = new RendererOptions(Font, dpi);
+            var style = new TextOptions(Font);
             var bounds = TextMeasurer.MeasureBounds(text, style);
 
             float xOffset = bounds.Left * dpi;
             float yOffset = bounds.Top * dpi;
 
-            int advanceWidth2 = glyphInstance.AdvanceWidth * dpi / glyphInstance.SizeOfEm;
+            int advanceWidth2 = glyphInstance.AdvanceWidth * dpi / glyphInstance.UnitsPerEm;
             return new CharacterGlyph(character, xOffset, yOffset, advanceWidth2, Baseline.Value, this);
         }
 
         public int GetKerning(char left, char right)
         {
+            return 0;
+            /*
             if (fontInstance == null)
                 return 0;
 
-            var leftGlyphInstance = fontInstance.GetGlyph(left);
-            var rightGlyphInstance = fontInstance.GetGlyph(right);
+            var leftGlyphInstance = fontInstance.GetGlyphMetrics(new CodePoint(left), ColorFontSupport.None).FirstOrDefault();
+            var rightGlyphInstance = fontInstance.GetGlyphMetrics(new CodePoint(right), ColorFontSupport.None).FirstOrDefault();
 
             // todo : got no idea why all offset is zero.
-            float kerning = fontInstance.GetOffset(rightGlyphInstance, leftGlyphInstance).X;
+            float kerning = fontInstance(rightGlyphInstance, leftGlyphInstance).X;
             return (int)kerning;
+            */
         }
 
         Task<CharacterGlyph> IResourceStore<CharacterGlyph>.GetAsync(string name, CancellationToken cancellationToken) =>
@@ -161,7 +165,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
 
             // see: https://stackoverflow.com/a/53023454/4105113
             const float texture_scale = dpi;
-            var style = new RendererOptions(Font, dpi);
+            var style = new TextOptions(Font);
             string text = new(new[] { c });
             var bounds = TextMeasurer.MeasureBounds(text, style);
             var targetSize = new
