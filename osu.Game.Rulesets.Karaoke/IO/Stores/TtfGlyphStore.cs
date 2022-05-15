@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
 {
     public class TtfGlyphStore : IResourceStore<TextureUpload>, IGlyphStore
     {
-        private const int dpi = 80;
+        private const float dpi = 72f;
 
         protected readonly string AssetName;
 
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             float xOffset = bounds.Left * dpi;
             float yOffset = bounds.Top * dpi;
 
-            int advanceWidth2 = glyphMetrics.AdvanceWidth * dpi / glyphMetrics.UnitsPerEm;
+            float advanceWidth2 = glyphMetrics.AdvanceWidth * dpi / glyphMetrics.UnitsPerEm;
             return new CharacterGlyph(character, xOffset, yOffset, advanceWidth2, Baseline.Value, this);
         }
 
