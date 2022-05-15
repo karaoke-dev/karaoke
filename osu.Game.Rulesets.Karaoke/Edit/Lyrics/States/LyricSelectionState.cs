@@ -35,13 +35,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public void StartSelecting()
         {
+            if (selecting.Value)
+                throw new NotSupportedException("Selecting already started.");
+
             bindableSelectedLyrics.Clear();
             selecting.Value = true;
         }
 
         public void EndSelecting(LyricEditorSelectingAction action)
         {
-            if (selecting.Value == false)
+            if (!selecting.Value)
                 return;
 
             selecting.Value = false;
@@ -65,6 +68,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public void Select(Lyric lyric)
         {
+            if (!selecting.Value)
+                throw new NotSupportedException("Should not add the lyric if not in the selecting state.");
+
             if (bindableSelectedLyrics.Contains(lyric))
                 return;
 
@@ -76,11 +82,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public void UnSelect(Lyric lyric)
         {
+            if (!selecting.Value)
+                throw new NotSupportedException("Should not remove the lyric if not in the selecting state.");
+
             bindableSelectedLyrics.Remove(lyric);
         }
 
         public void SelectAll()
         {
+            if (!selecting.Value)
+                throw new NotSupportedException("Should not select the lyric if not in the selecting state.");
+
             var lyrics = beatmap.HitObjects.OfType<Lyric>();
 
             foreach (var lyric in lyrics)
@@ -91,11 +103,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public void UnSelectAll()
         {
+            if (!selecting.Value)
+                throw new NotSupportedException("Should not clear the selected lyric if not in the selecting state.");
+
             bindableSelectedLyrics.Clear();
         }
 
         public void UpdateDisableLyricList(IDictionary<Lyric, string> disableLyrics)
         {
+            if (selecting.Value)
+                throw new NotSupportedException("Should not update the disable lyric list while selecting.");
+
             bindableDisableSelectingLyric.Clear();
 
             if (disableLyrics == null)
