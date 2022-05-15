@@ -68,6 +68,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (bindableSelectedLyrics.Contains(lyric))
                 return;
 
+            if (bindableDisableSelectingLyric.ContainsKey(lyric))
+                return;
+
             bindableSelectedLyrics.Add(lyric);
         }
 
@@ -78,8 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public void SelectAll()
         {
-            var disableSelectingLyrics = bindableDisableSelectingLyric.Keys;
-            var lyrics = beatmap.HitObjects.OfType<Lyric>().Where(x => !disableSelectingLyrics.Contains(x));
+            var lyrics = beatmap.HitObjects.OfType<Lyric>();
 
             foreach (var lyric in lyrics)
             {
