@@ -168,17 +168,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             bindableSelecting.BindValueChanged(e =>
             {
                 updateAddLyricState();
-            });
+                initializeApplySelectingArea();
+            }, true);
 
             bindableFontSize.BindValueChanged(e =>
             {
                 skin.FontSize = e.NewValue;
             });
-
-            lyricSelectionState.Selecting.BindValueChanged(_ =>
-            {
-                initializeApplySelectingArea();
-            }, true);
         }
 
         private void updateAddLyricState()
@@ -254,7 +250,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private void initializeApplySelectingArea()
         {
-            bool show = lyricSelectionState.Selecting.Value;
+            bool show = bindableSelecting.Value;
             lyricEditorGridContainer.RowDimensions = new[]
             {
                 new Dimension(),
