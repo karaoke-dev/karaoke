@@ -37,6 +37,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
             if (!changingCache.IsValid)
                 throw new NotSupportedException("Cannot trigger the change while applying another change.");
 
+            if (beatmap.SelectedHitObjects.Count == 0)
+                throw new NotSupportedException($"Should contain at least one selected {nameof(THitObject)}");
+
             changingCache.Invalidate();
 
             try
