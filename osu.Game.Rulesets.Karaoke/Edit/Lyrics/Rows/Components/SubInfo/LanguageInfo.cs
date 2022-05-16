@@ -11,8 +11,10 @@ using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
 {
@@ -27,15 +29,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricLanguageChangeHandler lyricLanguageChangeHandler, OsuColour colours)
+        private void load(ILyricLanguageChangeHandler lyricLanguageChangeHandler, ILyricSelectionState lyricSelectionState, EditorBeatmap beatmap, OsuColour colours)
         {
             languageBindable.BindValueChanged(value =>
             {
-                // todo : how to mark lyric as selected.
                 var language = value.NewValue;
+                updateBadgeText(language);
+
+                if (lyricSelectionState.Selecting.Value)
+                    return;
+
+                // todo: it's a temp way for applying the lyric.
+                // because assign language does not have the caret algorithm, so cannot apply the selected hit object by changing the caret.
+                beatmap.SelectedHitObjects.Add(Lyric);
+
                 lyricLanguageChangeHandler.SetLanguage(language);
 
-                updateBadgeText(language);
+                beatmap.SelectedHitObjects.Remove(Lyric);
             });
             updateBadgeText(Lyric.Language);
 
