@@ -9,6 +9,9 @@
             <InputAssemblies Include="$(OutputPath)\osu.Framework.Microphone.dll"/>
             <InputAssemblies Include="$(OutputPath)\NWaves.dll"/>
             <InputAssemblies Include="$(OutputPath)\LyricMaker.dll"/>
+            <InputAssemblies Include="$(OutputPath)\Lucene.Net.dll"/>
+            <InputAssemblies Include="$(OutputPath)\Lucene.Net.Analysis.Common.dll"/>
+            <InputAssemblies Include="$(OutputPath)\Lucene.Net.Analysis.Kuromoji.dll"/>
             <InputAssemblies Include="$(OutputPath)\NicoKaraParser.dll"/>
             <InputAssemblies Include="$(OutputPath)\SixLabors.Fonts.dll"/>
             <InputAssemblies Include="$(OutputPath)\SixLabors.ImageSharp.Drawing.dll"/>
