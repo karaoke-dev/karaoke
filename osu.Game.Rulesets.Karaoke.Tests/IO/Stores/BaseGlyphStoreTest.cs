@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Game.Rulesets.Karaoke.Tests.Resources;
@@ -24,12 +25,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
             // create and load glyph store.
             var fontResourceStore = new NamespacedResourceStore<byte[]>(TestResources.GetStore(), "Resources.Testing.Fonts.Fnt.OpenSans");
             GlyphStore = new GlyphStore(fontResourceStore, FontName);
-            GlyphStore.LoadFontAsync().Wait();
+            GlyphStore.LoadFontAsync().WaitSafely();
 
             // create load load customize glyph store.
             var customizeFontResourceStore = new NamespacedResourceStore<byte[]>(TestResources.GetStore(), $"Resources.Testing.Fonts.{FontType}");
             CustomizeGlyphStore = CreateFontStore(customizeFontResourceStore, FontName);
-            CustomizeGlyphStore.LoadFontAsync().Wait();
+            CustomizeGlyphStore.LoadFontAsync().WaitSafely();
         }
 
         protected abstract string FontType { get; }

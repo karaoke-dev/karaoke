@@ -10,6 +10,7 @@ using ManagedBass;
 using NWaves.Features;
 using osu.Framework.Audio.Callbacks;
 using osu.Framework.Audio.Track;
+using osu.Framework.Extensions;
 using osu.Game.Beatmaps;
 using osu.Game.Replays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
@@ -78,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
         public override Replay Generate()
         {
-            var result = readTask.Result;
+            var result = readTask.GetResultSafely();
             return new Replay
             {
                 Frames = getReplayFrames(result).ToList()

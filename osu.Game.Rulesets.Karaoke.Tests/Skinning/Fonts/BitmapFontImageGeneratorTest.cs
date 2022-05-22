@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
@@ -24,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         {
             var fontResourceStore = new NamespacedResourceStore<byte[]>(TestResources.GetStore(), "Resources.Testing.Fonts.Fnt.OpenSans");
             glyphStore = new TestFntGlyphStore(fontResourceStore, "OpenSans-Regular");
-            glyphStore.LoadFontAsync().Wait();
+            glyphStore.LoadFontAsync().WaitSafely();
 
             // make sure glyph are loaded.
             var normalGlyph = glyphStore.Get('a');

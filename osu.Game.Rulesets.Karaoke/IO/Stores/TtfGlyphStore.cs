@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
@@ -37,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
         protected readonly ResourceStore<byte[]> Store;
 
         [CanBeNull]
-        public Font Font => completionSource.Task.Result;
+        public Font Font => completionSource.Task.GetResultSafely();
 
         private FontMetrics fontMetrics => Font?.FontMetrics;
 

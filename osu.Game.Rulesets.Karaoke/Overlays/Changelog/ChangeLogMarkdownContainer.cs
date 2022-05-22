@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using Markdig.Syntax.Inlines;
+using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
@@ -28,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
             using (var httpClient = new HttpClient())
             {
-                Text = httpClient.GetStringAsync(build.ReadmeDownloadUrl).Result;
+                Text = httpClient.GetStringAsync(build.ReadmeDownloadUrl).GetResultSafely();
             }
         }
 
