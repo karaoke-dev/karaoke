@@ -7,6 +7,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class CharUtils
     {
+        public static bool IsSpacing(char c)
+            => c is ' ' or '　';
+
         /// <summary>
         /// Check this char is kana
         /// </summary>
