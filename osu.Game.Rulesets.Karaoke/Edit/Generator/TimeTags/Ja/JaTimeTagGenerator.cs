@@ -52,10 +52,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
                 char c = text[i];
                 char pc = text[i - 1];
 
-                if (char.IsWhiteSpace(c) && Config.CheckWhiteSpace)
+                if (CharUtils.IsSpacing(c) && Config.CheckWhiteSpace)
                 {
                     // ignore continuous white space.
-                    if (char.IsWhiteSpace(pc))
+                    if (CharUtils.IsSpacing(pc))
                         continue;
 
                     if (CharUtils.IsLatin(pc))
@@ -80,12 +80,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
                 }
                 else if (CharUtils.IsLatin(c) || char.IsNumber(c) || CharUtils.IsAsciiSymbol(c))
                 {
-                    if (char.IsWhiteSpace(pc) || !CharUtils.IsLatin(pc) && !char.IsNumber(pc) && !CharUtils.IsAsciiSymbol(pc))
+                    if (CharUtils.IsSpacing(pc) || !CharUtils.IsLatin(pc) && !char.IsNumber(pc) && !CharUtils.IsAsciiSymbol(pc))
                     {
                         timeTags.Add(timeTag);
                     }
                 }
-                else if (char.IsWhiteSpace(pc))
+                else if (CharUtils.IsSpacing(pc))
                 {
                     timeTags.Add(timeTag);
                 }

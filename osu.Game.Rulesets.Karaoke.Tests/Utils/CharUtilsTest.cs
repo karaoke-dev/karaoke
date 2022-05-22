@@ -9,6 +9,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
     [TestFixture]
     public class CharUtilsTest
     {
+        [TestCase(' ', true)]
+        [TestCase('　', true)]
+        [TestCase('ぴ', false)]
+        public void TestIsSpacing(char c, bool expected)
+        {
+            bool actual = CharUtils.IsSpacing(c);
+            Assert.AreEqual(expected, actual);
+        }
+
         [TestCase('ひ', true)]
         [TestCase('び', true)]
         [TestCase('ぴ', true)]
