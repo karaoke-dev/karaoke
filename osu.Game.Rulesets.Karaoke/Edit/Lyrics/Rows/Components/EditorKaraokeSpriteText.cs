@@ -164,14 +164,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         public class EditorLyricSpriteText : LyricSpriteText
         {
             public RectangleF GetRubyTagPosition(RubyTag rubyTag)
-                => GetRubyTagPosition(TextTagUtils.ToPositionText(rubyTag));
+                => GetRubyTagDrawRectangle(TextTagUtils.ToPositionText(rubyTag));
 
             public RectangleF GetRomajiTagPosition(RomajiTag romajiTag)
-                => GetRomajiTagPosition(TextTagUtils.ToPositionText(romajiTag));
+                => GetRomajiTagDrawRectangle(TextTagUtils.ToPositionText(romajiTag));
 
             public Vector2 GetTimeTagPosition(TextIndex index)
             {
-                var drawRectangle = GetCharacterRectangle(index.Index);
+                var drawRectangle = GetCharacterDrawRectangle(index.Index);
                 return TextIndexUtils.GetValueByState(index, drawRectangle.BottomLeft, drawRectangle.BottomRight);
             }
         }
