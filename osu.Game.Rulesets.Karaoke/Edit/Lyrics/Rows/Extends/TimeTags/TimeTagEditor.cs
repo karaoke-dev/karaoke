@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
         public SnapResult FindSnappedPosition(Vector2 screenSpacePosition) =>
             new(screenSpacePosition, null);
 
-        public SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition) =>
+        public SnapResult FindSnappedPositionAndTime(Vector2 screenSpacePosition, SnapType snapType = SnapType.All) =>
             new(screenSpacePosition, getTimeFromPosition(Content.ToLocalSpace(screenSpacePosition)));
 
         private double getTimeFromPosition(Vector2 localPosition) =>

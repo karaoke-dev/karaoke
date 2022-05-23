@@ -6,6 +6,7 @@ using System.Globalization;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
@@ -89,12 +90,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                     Padding = new MarginPadding { Left = 5 };
                 }
 
-                public override IEnumerable<string> FilterTerms => new[]
+                public override IEnumerable<LocalisableString> FilterTerms => new[]
                 {
-                    Model.Name,
-                    Model.DisplayName,
-                    Model.EnglishName,
-                    Model.NativeName
+                    new LocalisableString(Model.Name),
+                    new LocalisableString(Model.DisplayName),
+                    new LocalisableString(Model.EnglishName),
+                    new LocalisableString(Model.NativeName)
                 };
 
                 protected override void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, CultureInfo model)

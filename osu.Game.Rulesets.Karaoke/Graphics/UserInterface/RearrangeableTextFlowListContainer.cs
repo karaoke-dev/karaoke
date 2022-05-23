@@ -8,6 +8,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
 using osuTK;
@@ -99,9 +100,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 return true;
             }
 
-            public virtual IEnumerable<string> FilterTerms => new[]
+            public virtual IEnumerable<LocalisableString> FilterTerms => new[]
             {
-                Model.ToString()
+                new LocalisableString(Model.ToString())
             };
 
             protected virtual void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, TModel model)
