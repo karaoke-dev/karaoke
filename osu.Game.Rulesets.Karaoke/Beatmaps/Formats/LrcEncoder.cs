@@ -4,14 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using LyricMaker.Model;
-using LyricMaker.Model.Tags;
-using LyricMaker.Parser;
-using osu.Framework.Graphics.Sprites;
+using LrcParser.Model;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using Lyric = osu.Game.Rulesets.Karaoke.Objects.Lyric;
-using KaraokeTimeTag = osu.Game.Rulesets.Karaoke.Objects.TimeTag;
+using RubyTag = osu.Game.Rulesets.Karaoke.Objects.RubyTag;
+using TextIndex = osu.Framework.Graphics.Sprites.TextIndex;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 {
@@ -19,21 +18,45 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
     {
         public string Encode(Beatmap output)
         {
-            var lyric = new LyricMaker.Model.Lyric
+            // Note : save to lyric will lost some tags with no value.
+            var song = new Song
             {
-                Lines = output.HitObjects.OfType<Lyric>().Select(encodeLyric).ToArray(),
+                Lyrics = output.HitObjects.OfType<Lyric>().Select(encodeLyric).ToList(),
             };
-            string encodeResult = new LrcParser().Encode(lyric);
+            string encodeResult = new LrcParser.Parser.Lrc.LrcParser().Encode(song);
             return encodeResult;
-        }
 
-        private LyricLine encodeLyric(Lyric lyric) =>
-            new()
+            static LrcParser.Model.Lyric encodeLyric(Lyric lyric) =>
+                new()
+                {
+                    Text = lyric.Text,
+                    TimeTags = convertTimeTag(lyric.TimeTags),
+                    RubyTags = convertRubyTag(lyric.RubyTags)
+                };
+
+            static SortedDictionary<LrcParser.Model.TextIndex, int?> convertTimeTag(IList<TimeTag> timeTags)
             {
-                Text = lyric.Text,
-                // Note : save to lyric will lost some tags with no value.
-                TimeTags = convertTimeTag(lyric.Text, ToDictionary(lyric.TimeTags)).ToArray(),
-            };
+                // Note : save to lyric will lost some tags with duplicated index.
+                var timeTagDictionary = ToDictionary(timeTags).ToDictionary(k => convertTextIndex(k.Key), v => (int?)v.Value);
+                return new SortedDictionary<LrcParser.Model.TextIndex, int?>(timeTagDictionary);
+            }
+
+            static LrcParser.Model.TextIndex convertTextIndex(TextIndex textIndex)
+            {
+                int index = textIndex.Index;
+                var state = textIndex.State == TextIndex.IndexState.Start ? IndexState.Start : IndexState.End;
+
+                return new LrcParser.Model.TextIndex(index, state);
+            }
+
+            static List<LrcParser.Model.RubyTag> convertRubyTag(IEnumerable<RubyTag> rubyTags)
+                => rubyTags.Select(x => new LrcParser.Model.RubyTag
+                {
+                    Text = x.Text,
+                    StartIndex = x.StartIndex,
+                    EndIndex = x.EndIndex
+                }).ToList();
+        }
 
         /// <summary>
         /// Convert list of time tag to dictionary.
@@ -43,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         /// <param name="other">Fix way</param>
         /// <param name="self">Fix way</param>
         /// <returns>Time tags with dictionary format.</returns>
-        internal static IReadOnlyDictionary<TextIndex, double> ToDictionary(IList<KaraokeTimeTag> timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
+        internal static IReadOnlyDictionary<TextIndex, double> ToDictionary(IList<TimeTag> timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
                                                                             SelfCheck self = SelfCheck.BasedOnStart)
         {
             if (timeTags == null)
@@ -58,56 +81,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                                  .ToDictionary(
                                      k => k?.Index ?? throw new ArgumentNullException(nameof(k)),
                                      v => v?.Time ?? throw new ArgumentNullException(nameof(v)));
-        }
-
-        private IEnumerable<TimeTag> convertTimeTag(string text, IReadOnlyDictionary<TextIndex, double> tags)
-        {
-            // total time-tag amount in lyric maker.
-            int totalTags = text.Length * 2 + 2;
-
-            for (int i = 0; i < totalTags; i++)
-            {
-                // should return empty tag if no time-tag in lyric.
-                if (tags.Count == 0)
-                {
-                    yield return new TimeTag();
-
-                    continue;
-                }
-
-                (var lastTag, double lastTagTime) = tags.LastOrDefault();
-
-                // create end time-tag
-                if ((lastTag.Index + 1) * 2 == i)
-                {
-                    yield return new TimeTag
-                    {
-                        Time = (int)lastTagTime,
-                        Check = true,
-                        KeyUp = true
-                    };
-
-                    continue;
-                }
-
-                (var firstTag, double firstTagTime) = tags.FirstOrDefault(x => x.Key.Index * 2 + 1 == i);
-
-                // create start time-tag
-                if (firstTagTime > 0 && firstTag != lastTag)
-                {
-                    yield return new TimeTag
-                    {
-                        Time = (int)firstTagTime,
-                        Check = true,
-                        KeyUp = true
-                    };
-
-                    continue;
-                }
-
-                // if has no match tag in lyric, should return empty one.
-                yield return new TimeTag();
-            }
         }
     }
 }

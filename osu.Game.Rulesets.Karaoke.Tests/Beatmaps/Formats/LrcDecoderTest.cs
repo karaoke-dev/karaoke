@@ -43,6 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             TimeTagAssert.ArePropertyEqual(expected, actual);
         }
 
+        [Ignore("Time-tags with same time might be allowed.")]
         [TestCase("[00:04.00]か[00:04.00]ら[00:05.00]お[00:06.00]け[00:07.00]")]
         public void TestDecodeLyricWithDuplicatedTimeTag(string text)
         {
