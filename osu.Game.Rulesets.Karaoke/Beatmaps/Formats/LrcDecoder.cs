@@ -8,6 +8,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 using Lyric = osu.Game.Rulesets.Karaoke.Objects.Lyric;
 using RubyTag = osu.Game.Rulesets.Karaoke.Objects.RubyTag;
 using TextIndex = osu.Framework.Graphics.Sprites.TextIndex;
@@ -32,8 +33,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
             foreach (var lrcLyric in result.Lyrics)
             {
-                var lrcTimeTags = lrcLyric.TimeTags.Select(convertTimeTag).ToList();
+                var lrcTimeTags = lrcLyric.TimeTags.Select(convertTimeTag).ToArray();
                 var lrcRubies = lrcLyric.RubyTags.Select(convertRubyTag).ToArray();
+                var lrcRubyTimeTags = lrcLyric.RubyTags.Select(convertTimeTagsFromRubyTags).SelectMany(x => x).ToArray();
 
                 double? startTime = lrcTimeTags.Select(x => x.Time).Min();
                 double? endTime = lrcTimeTags.Select(x => x.Time).Max();
@@ -47,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     // Start time and end time should be re-assigned
                     StartTime = startTime ?? 0,
                     Duration = duration ?? 0,
-                    TimeTags = lrcTimeTags,
+                    TimeTags = TimeTagsUtils.Sort(lrcTimeTags.Concat(lrcRubyTimeTags)),
                     RubyTags = lrcRubies
                 };
                 lyric.InitialWorkingTime();
@@ -72,6 +74,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     StartIndex = rubyTag.StartIndex,
                     EndIndex = rubyTag.EndIndex
                 };
+
+            static TimeTag[] convertTimeTagsFromRubyTags(LrcParser.Model.RubyTag rubyTag)
+            {
+                int startIndex = rubyTag.StartIndex;
+                return rubyTag.TimeTags.Select(x => convertTimeTag(new KeyValuePair<LrcParser.Model.TextIndex, int?>(new LrcParser.Model.TextIndex(startIndex), x.Value))).ToArray();
+            }
         }
     }
 }
