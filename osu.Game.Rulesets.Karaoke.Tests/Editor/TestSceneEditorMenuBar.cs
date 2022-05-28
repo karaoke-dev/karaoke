@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Menus;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
@@ -19,6 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
     [TestFixture]
     public class TestSceneEditorMenuBar : OsuTestScene
     {
+        [Cached]
+        private readonly OverlayColourProvider overlayColour = new(OverlayColourScheme.Aquamarine);
+
         [BackgroundDependencyLoader]
         private void load()
         {
