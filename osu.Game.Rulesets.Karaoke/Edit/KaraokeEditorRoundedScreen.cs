@@ -6,12 +6,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Overlays;
-using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit
 {
     /// <summary>
-    /// Copied from <see cref="EditorRoundedScreen"/>
+    /// Copied from EditorRoundedScreen
+    /// todo: will remove this screen eventually because new editor design not have round screen style.
     /// </summary>
     public class KaraokeEditorRoundedScreen : KaraokeEditorScreen
     {
