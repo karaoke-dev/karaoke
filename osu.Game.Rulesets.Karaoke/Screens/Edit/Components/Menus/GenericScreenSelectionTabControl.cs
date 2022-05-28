@@ -2,20 +2,19 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
+using osu.Game.Overlays;
 using osu.Game.Screens.Edit.Components.Menus;
 using osuTK;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Menus
 {
     /// <summary>
-    /// Copied from <see cref="ScreenSelectionTabControl"/>
+    /// Copied from <see cref="EditorScreenSwitcherControl"/>
     /// </summary>
     /// <typeparam name="TScreenMode"></typeparam>
     public class GenericScreenSelectionTabControl<TScreenMode> : OsuTabControl<TScreenMode>
@@ -27,22 +26,19 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Menus
 
             TabContainer.RelativeSizeAxes &= ~Axes.X;
             TabContainer.AutoSizeAxes = Axes.X;
-            TabContainer.Padding = new MarginPadding();
-
-            AddInternal(new Box
-            {
-                Anchor = Anchor.BottomLeft,
-                Origin = Anchor.BottomLeft,
-                RelativeSizeAxes = Axes.X,
-                Height = 1,
-                Colour = Color4.White.Opacity(0.2f),
-            });
+            TabContainer.Padding = new MarginPadding(10);
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(OverlayColourProvider colourProvider)
         {
-            AccentColour = colours.Yellow;
+            AccentColour = colourProvider.Light3;
+
+            AddInternal(new Box
+            {
+                RelativeSizeAxes = Axes.Both,
+                Colour = colourProvider.Background2,
+            });
         }
 
         protected override Dropdown<TScreenMode> CreateDropdown() => null;
@@ -59,6 +55,15 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit.Components.Menus
                 Text.Margin = new MarginPadding();
                 Text.Anchor = Anchor.CentreLeft;
                 Text.Origin = Anchor.CentreLeft;
+
+                Text.Font = OsuFont.TorusAlternate;
+
+                Bar.Expire();
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(OverlayColourProvider colourProvider)
+            {
             }
 
             protected override void OnActivated()
