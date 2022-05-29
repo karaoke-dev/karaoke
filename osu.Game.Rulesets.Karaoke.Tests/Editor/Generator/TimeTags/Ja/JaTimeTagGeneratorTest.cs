@@ -10,13 +10,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags.Ja
     [TestFixture]
     public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerator, JaTimeTagGeneratorConfig>
     {
-        [Ignore("This feature has not been implemented")]
-        public void TestLyricWithCheckLineEnd(string lyric, string[] expectedTimeTags, bool applyConfig)
-        {
-            var config = GeneratorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckLineEnd) : null);
-            RunTimeTagCheckTest(lyric, expectedTimeTags, config);
-        }
-
         [TestCase("か", new[] { "[0,start]:" }, false)]
         [TestCase("か", new[] { "[0,start]:", "[0,end]:" }, true)]
         public void TestLyricWithCheckLineEndKeyUp(string lyric, string[] expectedTimeTags, bool applyConfig)

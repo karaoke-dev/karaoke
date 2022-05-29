@@ -15,7 +15,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
             new()
             {
                 Checkん = true,
-                CheckLineEnd = true,
                 CheckLineEndKeyUp = true,
                 CheckWhiteSpace = true,
                 CheckWhiteSpaceKeyUp = true,
