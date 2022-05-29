@@ -25,15 +25,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags.Ja
             RunTimeTagCheckTest(lyric, expectedTimeTags, config);
         }
 
-        [Ignore("This feature has not been implemented")]
+        [TestCase(" ", new string[] { }, false)]
+        [TestCase(" ", new[] { "[0,start]:" }, true)]
         public void TestLyricWithCheckBlankLine(string lyric, string[] expectedTimeTags, bool applyConfig)
         {
             var config = GeneratorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckBlankLine) : null);
             RunTimeTagCheckTest(lyric, expectedTimeTags, config);
         }
 
-        [TestCase("     ", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:" }, false)]
-        [TestCase("     ", new[] { "[0,start]:" }, true)]
+        [TestCase("か     ", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:", "[5,start]:" }, false)]
+        [TestCase("か     ", new[] { "[0,start]:", "[1,start]:" }, true)]
         public void TestLyricWithCheckWhiteSpace(string lyric, string[] expectedTimeTags, bool applyConfig)
         {
             var config = GeneratorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpace) : null);
