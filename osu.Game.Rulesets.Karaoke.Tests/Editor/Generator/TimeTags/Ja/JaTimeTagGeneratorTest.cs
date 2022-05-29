@@ -49,34 +49,42 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags.Ja
             RunTimeTagCheckTest(lyric, expectedTimeTags, config);
         }
 
-        [TestCase("a　b　c　d　e", new[] { "[0,start]:", "[2,start]:", "[4,start]:", "[6,start]:", "[8,start]:" }, false)]
-        [TestCase("a　b　c　d　e", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:", "[5,start]:", "[6,start]:", "[7,start]:", "[8,start]:" }, true)]
-        [TestCase("Ａ　Ｂ　Ｃ　Ｄ　Ｅ", new[] { "[0,start]:", "[2,start]:", "[4,start]:", "[6,start]:", "[8,start]:" }, false)]
-        [TestCase("Ａ　Ｂ　Ｃ　Ｄ　Ｅ", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:", "[5,start]:", "[6,start]:", "[7,start]:", "[8,start]:" }, true)]
-        public void TestLyricWithCheckWhiteSpaceAlphabet(string lyric, string[] expectedTimeTags, bool applyConfig)
+        [TestCase("a　b　c", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false, false)]
+        [TestCase("a　b　c", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:" }, true, false)]
+        [TestCase("a　b　c", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
+        [TestCase("Ａ　Ｂ　Ｃ", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false, false)]
+        [TestCase("Ａ　Ｂ　Ｃ", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:" }, true, false)]
+        [TestCase("Ａ　Ｂ　Ｃ", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
+        public void TestLyricWithCheckWhiteSpaceAlphabet(string lyric, string[] expectedTimeTags, bool applyConfig, bool keyUp)
         {
             var config = GeneratorConfig(nameof(JaTimeTagGeneratorConfig.CheckWhiteSpace),
-                applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceAlphabet) : null);
+                applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceAlphabet) : null,
+                keyUp ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceKeyUp) : null);
             RunTimeTagCheckTest(lyric, expectedTimeTags, config);
         }
 
-        [TestCase("0　1　2　3　4", new[] { "[0,start]:", "[2,start]:", "[4,start]:", "[6,start]:", "[8,start]:" }, false)]
-        [TestCase("0　1　2　3　4", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:", "[5,start]:", "[6,start]:", "[7,start]:", "[8,start]:" }, true)]
-        [TestCase("０　１　２　３　４", new[] { "[0,start]:", "[2,start]:", "[4,start]:", "[6,start]:", "[8,start]:" }, false)]
-        [TestCase("０　１　２　３　４", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:", "[5,start]:", "[6,start]:", "[7,start]:", "[8,start]:" }, true)]
-        public void TestLyricWithCheckWhiteSpaceDigit(string lyric, string[] expectedTimeTags, bool applyConfig)
+        [TestCase("0　1　2", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false, false)]
+        [TestCase("0　1　2", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:" }, true, false)]
+        [TestCase("0　1　2", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
+        [TestCase("０　１　２", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false, false)]
+        [TestCase("０　１　２", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:" }, true, false)]
+        [TestCase("０　１　２", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
+        public void TestLyricWithCheckWhiteSpaceDigit(string lyric, string[] expectedTimeTags, bool applyConfig, bool keyUp)
         {
             var config = GeneratorConfig(nameof(JaTimeTagGeneratorConfig.CheckWhiteSpace),
-                applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceDigit) : null);
+                applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceDigit) : null,
+                keyUp ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceKeyUp) : null);
             RunTimeTagCheckTest(lyric, expectedTimeTags, config);
         }
 
-        [TestCase("!　!　!　!　！", new[] { "[0,start]:", "[2,start]:", "[4,start]:", "[6,start]:", "[8,start]:" }, false)]
-        [TestCase("!　!　!　!　！", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:", "[5,start]:", "[6,start]:", "[7,start]:", "[8,start]:" }, true)]
-        public void TestLyricWitCheckWhiteSpaceAsciiSymbol(string lyric, string[] expectedTimeTags, bool applyConfig)
+        [TestCase("!　!　!", new[] { "[0,start]:", "[2,start]:", "[4,start]:" }, false, false)]
+        [TestCase("!　!　!", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:" }, true, false)]
+        [TestCase("!　!　!", new[] { "[0,start]:", "[0,end]:", "[2,start]:", "[2,end]:", "[4,start]:" }, true, true)]
+        public void TestLyricWitCheckWhiteSpaceAsciiSymbol(string lyric, string[] expectedTimeTags, bool applyConfig, bool keyUp)
         {
             var config = GeneratorConfig(nameof(JaTimeTagGeneratorConfig.CheckWhiteSpace),
-                applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceAsciiSymbol) : null);
+                applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceAsciiSymbol) : null,
+                keyUp ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceKeyUp) : null);
             RunTimeTagCheckTest(lyric, expectedTimeTags, config);
         }
 
