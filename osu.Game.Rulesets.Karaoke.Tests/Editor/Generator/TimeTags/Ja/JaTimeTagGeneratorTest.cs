@@ -40,10 +40,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags.Ja
             RunTimeTagCheckTest(lyric, expectedTimeTags, config);
         }
 
-        [Ignore("This feature has not been implemented")]
+        [TestCase("か ", new[] { "[0,start]:", "[1,start]:" }, false)]
+        [TestCase("か ", new[] { "[0,start]:", "[0,end]:" }, true)]
         public void TestLyricWithCheckWhiteSpaceKeyUp(string lyric, string[] expectedTimeTags, bool applyConfig)
         {
-            var config = GeneratorConfig(applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceKeyUp) : null);
+            var config = GeneratorConfig(nameof(JaTimeTagGeneratorConfig.CheckWhiteSpace),
+                applyConfig ? nameof(JaTimeTagGeneratorConfig.CheckWhiteSpaceKeyUp) : null);
             RunTimeTagCheckTest(lyric, expectedTimeTags, config);
         }
 

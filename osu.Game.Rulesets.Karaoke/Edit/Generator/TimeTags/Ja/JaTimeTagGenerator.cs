@@ -55,24 +55,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
                     if (CharUtils.IsSpacing(pc))
                         continue;
 
+                    var timeTag = Config.CheckWhiteSpaceKeyUp
+                        ? new TimeTag(new TextIndex(i - 1, TextIndex.IndexState.End))
+                        : new TimeTag(new TextIndex(i));
+
                     if (CharUtils.IsLatin(pc))
                     {
                         if (Config.CheckWhiteSpaceAlphabet)
-                            yield return new TimeTag(new TextIndex(i));
+                            yield return timeTag;
                     }
                     else if (char.IsDigit(pc))
                     {
                         if (Config.CheckWhiteSpaceDigit)
-                            yield return new TimeTag(new TextIndex(i));
+                            yield return timeTag;
                     }
                     else if (CharUtils.IsAsciiSymbol(pc))
                     {
                         if (Config.CheckWhiteSpaceAsciiSymbol)
-                            yield return new TimeTag(new TextIndex(i));
+                            yield return timeTag;
                     }
                     else
                     {
-                        yield return new TimeTag(new TextIndex(i));
+                        yield return timeTag;
                     }
                 }
                 else if (CharUtils.IsLatin(c) || char.IsNumber(c) || CharUtils.IsAsciiSymbol(c))
@@ -112,17 +116,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
 
                         case 'ん':
                             if (Config.Checkん)
-                            {
                                 yield return new TimeTag(new TextIndex(i));
-                            }
 
                             break;
 
                         case 'っ':
                             if (Config.Checkっ)
-                            {
                                 yield return new TimeTag(new TextIndex(i));
-                            }
 
                             break;
 
