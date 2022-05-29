@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetSetting.ScrollTime, 5000.0, 1000.0, 10000.0, 100.0);
             SetDefault(KaraokeRulesetSetting.ScrollDirection, KaraokeScrollingDirection.Left);
             SetDefault(KaraokeRulesetSetting.DisplayNoteRubyText, false);
-            SetDefault(KaraokeRulesetSetting.ShowCursor, false);
+            SetDefault(KaraokeRulesetSetting.ShowCursor, true);
             SetDefault(KaraokeRulesetSetting.NoteAlpha, 1, 0.2, 1, 0.01);
             SetDefault(KaraokeRulesetSetting.LyricAlpha, 1, 0.2, 1, 0.01);
 
