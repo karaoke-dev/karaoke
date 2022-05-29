@@ -27,8 +27,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
             var timeTags = new List<TimeTag>();
             string text = lyric.Text;
 
-            if (text.Length == 0)
+            if (string.IsNullOrEmpty(text))
                 return timeTags.ToArray();
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                if (Config.CheckBlankLine)
+                    timeTags.Add(new TimeTag(new TextIndex(0)));
+
+                return timeTags.ToArray();
+            }
 
             // create tag at start of lyric
             timeTags.Add(new TimeTag(new TextIndex(0)));

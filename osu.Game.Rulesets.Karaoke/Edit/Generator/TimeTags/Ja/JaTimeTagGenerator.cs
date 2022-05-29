@@ -41,14 +41,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
 
         private IEnumerable<TimeTag> generateTimeTagByText(string text)
         {
-            var timeTags = new List<TimeTag>();
             if (string.IsNullOrEmpty(text))
-                return timeTags;
+                yield break;
 
             for (int i = 1; i < text.Length; i++)
             {
-                var timeTag = new TimeTag(new TextIndex(i));
-
                 char c = text[i];
                 char pc = text[i - 1];
 
@@ -58,36 +55,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
                     if (CharUtils.IsSpacing(pc))
                         continue;
 
+                    var timeTag = Config.CheckWhiteSpaceKeyUp
+                        ? new TimeTag(new TextIndex(i - 1, TextIndex.IndexState.End))
+                        : new TimeTag(new TextIndex(i));
+
                     if (CharUtils.IsLatin(pc))
                     {
                         if (Config.CheckWhiteSpaceAlphabet)
-                            timeTags.Add(timeTag);
+                            yield return timeTag;
                     }
                     else if (char.IsDigit(pc))
                     {
                         if (Config.CheckWhiteSpaceDigit)
-                            timeTags.Add(timeTag);
+                            yield return timeTag;
                     }
                     else if (CharUtils.IsAsciiSymbol(pc))
                     {
                         if (Config.CheckWhiteSpaceAsciiSymbol)
-                            timeTags.Add(timeTag);
+                            yield return timeTag;
                     }
                     else
                     {
-                        timeTags.Add(timeTag);
+                        yield return timeTag;
                     }
                 }
                 else if (CharUtils.IsLatin(c) || char.IsNumber(c) || CharUtils.IsAsciiSymbol(c))
                 {
-                    if (CharUtils.IsSpacing(pc) || !CharUtils.IsLatin(pc) && !char.IsNumber(pc) && !CharUtils.IsAsciiSymbol(pc))
+                    if (CharUtils.IsSpacing(pc) || (!CharUtils.IsLatin(pc) && !char.IsNumber(pc) && !CharUtils.IsAsciiSymbol(pc)))
                     {
-                        timeTags.Add(timeTag);
+                        yield return new TimeTag(new TextIndex(i));
                     }
                 }
                 else if (CharUtils.IsSpacing(pc))
                 {
-                    timeTags.Add(timeTag);
+                    yield return new TimeTag(new TextIndex(i));
                 }
                 else
                 {
@@ -115,28 +116,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
 
                         case 'ん':
                             if (Config.Checkん)
-                            {
-                                timeTags.Add(timeTag);
-                            }
+                                yield return new TimeTag(new TextIndex(i));
 
                             break;
 
                         case 'っ':
                             if (Config.Checkっ)
-                            {
-                                timeTags.Add(timeTag);
-                            }
+                                yield return new TimeTag(new TextIndex(i));
 
                             break;
 
                         default:
-                            timeTags.Add(timeTag);
+                            yield return new TimeTag(new TextIndex(i));
+
                             break;
                     }
                 }
             }
-
-            return timeTags;
         }
     }
 }
