@@ -4,8 +4,8 @@
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 
         protected override Container<Drawable> Content => content;
 
-        private readonly CornerBackground background;
+        private readonly Box background;
         private readonly FillFlowContainer content;
 
         protected EditExtend()
@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
             RelativeSizeAxes = Axes.Both;
             InternalChildren = new Drawable[]
             {
-                background = new CornerBackground
+                background = new Box
                 {
                     Depth = float.MaxValue,
                     RelativeSizeAxes = Axes.Both,
