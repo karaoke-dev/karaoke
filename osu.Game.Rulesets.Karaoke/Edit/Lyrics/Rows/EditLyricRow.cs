@@ -77,6 +77,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             [Resolved]
             private ILyricCaretState lyricCaretState { get; set; }
 
+            [Resolved]
+            private LyricEditorColourProvider colourProvider { get; set; }
+
             public Lyric Lyric { get; }
 
             public InfoControl(Lyric lyric)
@@ -167,26 +170,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                 bindableMode.BindValueChanged(e =>
                 {
-                    InitializeBadge();
-                });
+                    Schedule(updateColour);
+                    initializeBadge();
+                }, true);
 
                 bindableTimeTagEditMode.BindValueChanged(_ =>
                 {
-                    InitializeBadge();
+                    initializeBadge();
                 });
             }
 
             [BackgroundDependencyLoader]
-            private void load(OsuColour colours, ILyricEditorState state, ITimeTagModeState timeTagModeState)
+            private void load(ILyricEditorState state, ITimeTagModeState timeTagModeState)
             {
-                background.Colour = colours.Gray2;
-                headerBackground.Colour = colours.Gray3;
-
                 bindableMode.BindTo(state.BindableMode);
                 bindableTimeTagEditMode.BindTo(timeTagModeState.BindableEditMode);
             }
 
-            protected void InitializeBadge()
+            private void updateColour()
+            {
+                background.Colour = colourProvider.Background2(bindableMode.Value);
+                headerBackground.Colour = colourProvider.Background5(bindableMode.Value);
+            }
+
+            private void initializeBadge()
             {
                 subInfoContainer.Clear();
                 var subInfo = createSubInfo();
