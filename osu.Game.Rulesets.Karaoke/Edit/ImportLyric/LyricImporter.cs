@@ -3,7 +3,6 @@
 
 using System;
 using osu.Framework.Allocation;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
@@ -13,6 +12,7 @@ using osu.Framework.Screens;
 using osu.Game.Beatmaps;
 using osu.Game.Graphics.Containers;
 using osu.Game.Input.Bindings;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
@@ -25,6 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
     public class LyricImporter : ScreenWithBeatmapBackground, IImportStateResolver, IKeyBindingHandler<GlobalAction>
     {
         private readonly LyricImporterWaveContainer waves;
+        private readonly Box background;
 
         [Cached]
         protected LyricImporterSubScreenStack ScreenStack { get; private set; }
@@ -51,8 +52,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         public LyricImporter()
         {
-            var backgroundColour = Color4Extensions.FromHex(@"3e3a44");
-
             InternalChild = waves = new LyricImporterWaveContainer
             {
                 RelativeSizeAxes = Axes.Both,
@@ -61,10 +60,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                     RelativeSizeAxes = Axes.Both,
                     Children = new Drawable[]
                     {
-                        new Box
+                        background = new Box
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Colour = backgroundColour,
                         },
                         new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
                         {
@@ -87,8 +85,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void load(OverlayColourProvider colourProvider)
         {
+            background.Colour = colourProvider.Background3;
+
             // todo: remove caching of this and consume via editorBeatmap?
             // follow how editor.cs do.
             dependencies.Cache(beatDivisor);
@@ -166,12 +166,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         {
             protected override bool StartHidden => true;
 
-            public LyricImporterWaveContainer()
+            [BackgroundDependencyLoader]
+            private void load(OverlayColourProvider colourProvider)
             {
-                FirstWaveColour = Color4Extensions.FromHex(@"654d8c");
-                SecondWaveColour = Color4Extensions.FromHex(@"554075");
-                ThirdWaveColour = Color4Extensions.FromHex(@"44325e");
-                FourthWaveColour = Color4Extensions.FromHex(@"392850");
+                FirstWaveColour = colourProvider.Light4;
+                SecondWaveColour = colourProvider.Light3;
+                ThirdWaveColour = colourProvider.Dark4;
+                FourthWaveColour = colourProvider.Dark3;
             }
         }
     }
