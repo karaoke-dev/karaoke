@@ -6,7 +6,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
-using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends
@@ -26,14 +25,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends
         }
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours)
+        private void load(ILyricEditorState state, LyricEditorColourProvider colourProvider)
         {
             InternalChildren = new Drawable[]
             {
                 new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Colour = colours.Gray2,
+                    Colour = colourProvider.Background5(state.Mode)
                 },
                 new GridContainer
                 {

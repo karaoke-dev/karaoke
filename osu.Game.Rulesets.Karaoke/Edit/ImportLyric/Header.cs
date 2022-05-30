@@ -23,6 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
     {
         public const float HEIGHT = 80;
 
+        private readonly Box background;
+
         public Header(ScreenStack stack)
         {
             RelativeSizeAxes = Axes.X;
@@ -33,10 +35,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
             Children = new Drawable[]
             {
-                new Box
+                background = new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Colour = Color4Extensions.FromHex(@"#1f1921"),
                 },
                 new Container
                 {
@@ -67,6 +68,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             };
 
             breadcrumbs.Current.TriggerChange();
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(OverlayColourProvider colourProvider)
+        {
+            background.Colour = colourProvider.Background5;
         }
 
         private class LyricImporterHeaderTitle : CompositeDrawable

@@ -75,7 +75,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             Add(new KaraokeEditInputManager(new KaraokeRuleset().RulesetInfo)
             {
                 RelativeSizeAxes = Axes.Both,
-                Padding = new MarginPadding(10),
                 Child = lyricEditor = new FullScreenLyricEditor
                 {
                     RelativeSizeAxes = Axes.Both,

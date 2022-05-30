@@ -8,7 +8,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -116,7 +115,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         {
                             RelativeSizeAxes = Axes.Both,
                         },
-                        new Box(),
                         lyricEditorGridContainer = new GridContainer
                         {
                             RelativeSizeAxes = Axes.Both,
@@ -127,6 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                     new SkinProvidingContainer(skin = new LyricEditorSkin(null))
                                     {
                                         RelativeSizeAxes = Axes.Both,
+                                        Padding = new MarginPadding(spacing),
                                         Child = container = new DrawableLyricEditList
                                         {
                                             RelativeSizeAxes = Axes.Both,
@@ -140,7 +139,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                 }
                             }
                         },
-                        new Box(),
                         rightSideExtendArea = new Container
                         {
                             RelativeSizeAxes = Axes.Both,
@@ -199,9 +197,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             gridContainer.ColumnDimensions = new[]
             {
                 new Dimension(GridSizeMode.Absolute, direction == ExtendDirection.Left ? width : 0),
-                new Dimension(GridSizeMode.Absolute, direction == ExtendDirection.Left ? spacing : 0),
                 new Dimension(),
-                new Dimension(GridSizeMode.Absolute, direction == ExtendDirection.Right ? spacing : 0),
                 new Dimension(GridSizeMode.Absolute, direction == ExtendDirection.Right ? width : 0),
             };
 
