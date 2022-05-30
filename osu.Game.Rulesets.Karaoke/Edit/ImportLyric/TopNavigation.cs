@@ -6,12 +6,12 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Graphics.Shapes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         protected LyricImporterStepScreen Screen { get; }
 
-        private readonly CornerBackground background;
+        private readonly Box background;
         private readonly NavigationTextContainer text;
         private readonly IconButton button;
 
@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             RelativeSizeAxes = Axes.Both;
             InternalChildren = new Drawable[]
             {
-                background = new CornerBackground
+                background = new Box
                 {
                     RelativeSizeAxes = Axes.Both,
                 },
