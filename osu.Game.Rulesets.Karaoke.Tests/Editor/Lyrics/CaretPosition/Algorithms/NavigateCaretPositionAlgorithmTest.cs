@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestPositionMovable(string sourceName, int lyricIndex, bool movable)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
+            var caretPosition = createNavigateCaretPosition(lyrics, lyricIndex);
 
             // Check is movable, will always be true in this algorithm.
             TestPositionMovable(lyrics, caretPosition, movable);
@@ -30,8 +30,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveUp(string sourceName, int lyricIndex, int newLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
-            var newCaretPosition = createEditNoteCaretPosition(lyrics, newLyricIndex);
+            var caretPosition = createNavigateCaretPosition(lyrics, lyricIndex);
+            var newCaretPosition = createNavigateCaretPosition(lyrics, newLyricIndex);
 
             // Check is movable
             TestMoveUp(lyrics, caretPosition, newCaretPosition);
@@ -44,8 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveDown(string sourceName, int lyricIndex, int newLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
-            var newCaretPosition = createEditNoteCaretPosition(lyrics, newLyricIndex);
+            var caretPosition = createNavigateCaretPosition(lyrics, lyricIndex);
+            var newCaretPosition = createNavigateCaretPosition(lyrics, newLyricIndex);
 
             // Check is movable
             TestMoveDown(lyrics, caretPosition, newCaretPosition);
@@ -58,8 +58,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveLeft(string sourceName, int lyricIndex, int newLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
-            var newCaretPosition = createEditNoteCaretPosition(lyrics, newLyricIndex);
+            var caretPosition = createNavigateCaretPosition(lyrics, lyricIndex);
+            var newCaretPosition = createNavigateCaretPosition(lyrics, newLyricIndex);
 
             // Check is movable
             TestMoveLeft(lyrics, caretPosition, newCaretPosition);
@@ -72,8 +72,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveRight(string sourceName, int lyricIndex, int newLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
-            var newCaretPosition = createEditNoteCaretPosition(lyrics, newLyricIndex);
+            var caretPosition = createNavigateCaretPosition(lyrics, lyricIndex);
+            var newCaretPosition = createNavigateCaretPosition(lyrics, newLyricIndex);
 
             // Check is movable
             TestMoveRight(lyrics, caretPosition, newCaretPosition);
@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveToFirst(string sourceName, int lyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
+            var caretPosition = createNavigateCaretPosition(lyrics, lyricIndex);
 
             // Check first position
             TestMoveToFirst(lyrics, caretPosition);
@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveToLast(string sourceName, int lyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
+            var caretPosition = createNavigateCaretPosition(lyrics, lyricIndex);
 
             // Check last position
             TestMoveToLast(lyrics, caretPosition);
@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var lyric = lyrics[lyricIndex];
-            var caretPosition = createEditNoteCaretPosition(lyrics, lyricIndex);
+            var caretPosition = createNavigateCaretPosition(lyrics, lyricIndex);
 
             // Check move to target position.
             TestMoveToTarget(lyrics, lyric, caretPosition);
@@ -129,7 +129,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             }
         }
 
-        private static NavigateCaretPosition createEditNoteCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex)
+        private static NavigateCaretPosition createNavigateCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex)
         {
             if (lyricIndex == NOT_EXIST)
                 return null;
