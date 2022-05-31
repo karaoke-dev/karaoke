@@ -3,11 +3,13 @@
 
 using System.Linq;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
@@ -19,6 +21,35 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class DrawableLyricEditList : OrderRearrangeableListContainer<Lyric>
     {
+        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+        private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
+        private readonly IBindable<bool> bindableAutoFocusToEditLyric = new Bindable<bool>();
+        private readonly IBindable<int> bindableAutoFocusToEditLyricSkipRows = new Bindable<int>();
+
+        public DrawableLyricEditList()
+        {
+            // update selected style to child
+            bindableCaretPosition.BindValueChanged(e =>
+            {
+                var oldLyric = e.OldValue?.Lyric;
+                var newLyric = e.NewValue?.Lyric;
+                if (newLyric == null)
+                    return;
+
+                // should not move the position in manage lyric mode.
+                if (bindableMode.Value == LyricEditorMode.Manage)
+                    return;
+
+                // move to target position if auto focus.
+                bool autoFocus = bindableAutoFocusToEditLyric.Value;
+                if (!autoFocus)
+                    return;
+
+                int skippingRows = bindableAutoFocusToEditLyricSkipRows.Value;
+                moveItemToTargetPosition(newLyric, oldLyric, skippingRows);
+            });
+        }
+
         protected override Vector2 Spacing => new(0, 2);
 
         protected override OsuRearrangeableListItem<Lyric> CreateOsuDrawable(Lyric item)
@@ -54,28 +85,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager, ILyricCaretState lyricCaretState, ILyricEditorState state)
+        private void load(ILyricEditorState state, ILyricCaretState lyricCaretState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
-            // update selected style to child
-            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
-            {
-                var oldLyric = e.OldValue?.Lyric;
-                var newLyric = e.NewValue?.Lyric;
-                if (newLyric == null)
-                    return;
+            bindableMode.BindTo(state.BindableMode);
+            bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
 
-                // should not move the position in manage lyric mode.
-                if (state.Mode == LyricEditorMode.Manage)
-                    return;
-
-                // move to target position if auto focus.
-                bool autoFocus = lyricEditorConfigManager.Get<bool>(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric);
-                if (!autoFocus)
-                    return;
-
-                int skippingRows = lyricEditorConfigManager.Get<int>(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows);
-                moveItemToTargetPosition(newLyric, oldLyric, skippingRows);
-            });
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric, bindableAutoFocusToEditLyric);
+            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, bindableAutoFocusToEditLyricSkipRows);
         }
 
         private bool moveItemToTargetPosition(Lyric newLyric, Lyric oldLyric, int skippingRows)
