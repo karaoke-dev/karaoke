@@ -36,6 +36,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 if (newLyric == null)
                     return;
 
+                // should not move the position if caret is only support clicking.
+                if (bindableCaretPosition.Value is ClickingCaretPosition)
+                    return;
+
                 // should not move the position in manage lyric mode.
                 if (bindableMode.Value == LyricEditorMode.Manage)
                     return;
