@@ -5,48 +5,48 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
-    public class ClickingCaretPositionAlgorithm : CaretPositionAlgorithm<NavigateCaretPosition>
+    public class ClickingCaretPositionAlgorithm : CaretPositionAlgorithm<ClickingCaretPosition>
     {
         public ClickingCaretPositionAlgorithm(Lyric[] lyrics)
             : base(lyrics)
         {
         }
 
-        public override bool PositionMovable(NavigateCaretPosition position)
+        public override bool PositionMovable(ClickingCaretPosition position)
         {
             return true;
         }
 
-        public override NavigateCaretPosition MoveUp(NavigateCaretPosition currentPosition)
+        public override ClickingCaretPosition MoveUp(ClickingCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override NavigateCaretPosition MoveDown(NavigateCaretPosition currentPosition)
+        public override ClickingCaretPosition MoveDown(ClickingCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override NavigateCaretPosition MoveLeft(NavigateCaretPosition currentPosition)
+        public override ClickingCaretPosition MoveLeft(ClickingCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override NavigateCaretPosition MoveRight(NavigateCaretPosition currentPosition)
+        public override ClickingCaretPosition MoveRight(ClickingCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override NavigateCaretPosition MoveToFirst()
+        public override ClickingCaretPosition MoveToFirst()
         {
             return null;
         }
 
-        public override NavigateCaretPosition MoveToLast()
+        public override ClickingCaretPosition MoveToLast()
         {
             return null;
         }
 
-        public override NavigateCaretPosition MoveToTarget(Lyric lyric) => new(lyric);
+        public override ClickingCaretPosition MoveToTarget(Lyric lyric) => new(lyric);
     }
 }
