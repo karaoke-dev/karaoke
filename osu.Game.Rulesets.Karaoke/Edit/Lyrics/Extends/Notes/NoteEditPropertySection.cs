@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
@@ -23,6 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         private readonly Bindable<Note[]> notes = new();
         private readonly Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode = new();
+        private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
 
         public NoteEditPropertySection()
         {
@@ -73,7 +75,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
         private void load(EditorBeatmap beatmap, ILyricCaretState lyricCaretState, IEditNoteModeState editNoteModeState)
         {
             bindableNoteEditPropertyMode.BindTo(editNoteModeState.NoteEditPropertyMode);
-            lyricCaretState.BindableCaretPosition.BindValueChanged(e =>
+            bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
+
+            bindableCaretPosition.BindValueChanged(e =>
             {
                 var lyric = e.NewValue?.Lyric;
                 notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray();
