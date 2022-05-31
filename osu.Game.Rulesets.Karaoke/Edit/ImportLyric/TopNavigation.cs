@@ -151,6 +151,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         protected virtual void CompleteClicked() => Screen.Complete();
 
+        protected override void Dispose(bool isDisposing)
+        {
+            base.Dispose(isDisposing);
+
+            editorBeatmap.TransactionEnded -= TriggerStateChange;
+        }
+
         public class NavigationTextContainer : CustomizableTextContainer
         {
             protected void AddLinkFactory(string name, string text, Action action)
