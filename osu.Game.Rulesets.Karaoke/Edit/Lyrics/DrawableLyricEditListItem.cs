@@ -188,13 +188,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 var mode = bindableMode.Value;
 
+                var defaultColour = colourProvider.Background5(mode);
+
                 if (bindableCaretPosition.Value?.Lyric == Model)
+                {
+                    if (bindableCaretPosition.Value is ClickingCaretPosition)
+                        return defaultColour;
+
                     return colourProvider.Background3(mode);
+                }
 
                 if (bindableHoverCaretPosition.Value?.Lyric == Model)
-                    return colourProvider.Background4(mode);
+                {
+                    if (bindableCaretPosition.Value is ClickingCaretPosition)
+                        return defaultColour;
 
-                return colourProvider.Background5(mode);
+                    return colourProvider.Background4(mode);
+                }
+
+                return defaultColour;
             }
         }
     }

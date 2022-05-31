@@ -128,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 LyricEditorMode.View => null,
                 LyricEditorMode.Manage => new CuttingCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.Typing => new TypingCaretPositionAlgorithm(lyrics),
-                LyricEditorMode.Language => null,
+                LyricEditorMode.Language => new ClickingCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.EditRuby => new NavigateCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.EditTimeTag => getTimeTagModeAlgorithm(),
