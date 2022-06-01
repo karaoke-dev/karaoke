@@ -14,6 +14,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RubyTags.Ja
     [TestFixture]
     public class JaRubyTagGeneratorTest
     {
+        [TestCase("花火大会", true)]
+        [TestCase("", false)] // will not able to generate the ruby if lyric is empty.
+        [TestCase("   ", false)]
+        [TestCase(null, false)]
+        public void TestCanGenerate(string text, bool canGenerate)
+        {
+            var config = generatorConfig(null);
+            runCanGenerateRubyCheckTest(text, canGenerate, config);
+        }
+
         [TestCase("花火大会", new[] { "[0,2]:はなび", "[2,4]:たいかい" })]
         [TestCase("はなび", new string[] { })]
         public void TestGenerate(string text, string[] expectedRubies)
@@ -39,6 +49,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RubyTags.Ja
         }
 
         #region test helper
+
+        private static void runCanGenerateRubyCheckTest(string text, bool canGenerate, JaRubyTagGeneratorConfig config)
+        {
+            var generator = new JaRubyTagGenerator(config);
+            var lyric = new Lyric { Text = text };
+
+            bool actual = generator.CanGenerate(lyric);
+            Assert.AreEqual(canGenerate, actual);
+        }
 
         private static void runRubyCheckTest(string text, IEnumerable<string> expectedRubies, JaRubyTagGeneratorConfig config)
         {
