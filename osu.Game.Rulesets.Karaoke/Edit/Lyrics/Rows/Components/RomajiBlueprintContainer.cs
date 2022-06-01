@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(IEditRomajiModeState editRomajiModeState)
+        private void load()
         {
             // Add romaji tag into blueprint container
             RegisterBindable(romajiTags);

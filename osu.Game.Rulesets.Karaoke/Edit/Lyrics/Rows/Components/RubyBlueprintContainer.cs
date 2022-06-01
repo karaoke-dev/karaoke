@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(IEditRubyModeState editRubyModeState)
+        private void load()
         {
             // Add ruby tag into blueprint container
             RegisterBindable(rubyTags);

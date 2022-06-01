@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
             timeTagsBindable.BindCollectionChanged((_, _) => updateTimeTags());
             rubyTagsVersion.BindValueChanged(_ => updateRubies());
             rubyTagsBindable.BindCollectionChanged((_, _) => updateRubies());
-            romajiTagsVersion.BindValueChanged(_ => updateRubies());
+            romajiTagsVersion.BindValueChanged(_ => updateRomajies());
             romajiTagsBindable.BindCollectionChanged((_, _) => updateRomajies());
 
             textBindable.BindTo(lyric.TextBindable);
