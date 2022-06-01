@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
             }
         }
 
-        public CultureInfo DetectLanguage(Lyric lyric)
+        public CultureInfo Detect(Lyric lyric)
         {
             var result = detector.DetectAll(lyric.Text);
             string languageCode = result.FirstOrDefault()?.Language;

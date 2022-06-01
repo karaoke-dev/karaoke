@@ -16,12 +16,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
         [TestCase("Testing", "en")]
         [TestCase("ハナビ", "ja")]
         [TestCase("はなび", "ja")]
-        public void TestDetectLanguage(string text, string language)
+        public void TestDetect(string text, string language)
         {
             var detector = new LanguageDetector(generateConfig());
 
             var expected = new CultureInfo(language);
-            var actual = detector.DetectLanguage(new Lyric { Text = text });
+            var actual = detector.Detect(new Lyric { Text = text });
             Assert.AreEqual(expected, actual);
         }
 
