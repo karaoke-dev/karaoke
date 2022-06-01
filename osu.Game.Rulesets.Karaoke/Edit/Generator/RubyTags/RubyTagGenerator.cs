@@ -17,6 +17,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags
 
     public abstract class RubyTagGenerator
     {
-        public abstract RubyTag[] CreateRubyTags(Lyric lyric);
+        public abstract RubyTag[] Generate(Lyric lyric);
     }
 }
