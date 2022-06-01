@@ -4,11 +4,12 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
 {
-    public class LanguageDetector
+    public class LanguageDetector : ILyricPropertyDetector<CultureInfo>
     {
         private readonly LanguageDetection.LanguageDetector detector = new();
 
@@ -25,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
                 detector.AddAllLanguages();
             }
         }
+
+        public bool CanDetect(Lyric lyric)
+            => !string.IsNullOrWhiteSpace(lyric.Text);
 
         public CultureInfo Detect(Lyric lyric)
         {

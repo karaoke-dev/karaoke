@@ -11,6 +11,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
     [TestFixture]
     public class LanguageDetectorTest
     {
+        [TestCase("花火大会", true)]
+        [TestCase("", false)] // will not able to detect the language if lyric is empty.
+        [TestCase("   ", false)]
+        [TestCase(null, false)]
+        public void TestCanDetect(string text, bool canDetect)
+        {
+            var detector = new LanguageDetector(generateConfig());
+
+            bool actual = detector.CanDetect(new Lyric { Text = text });
+            Assert.AreEqual(canDetect, actual);
+        }
+
         [TestCase("花火大会", "zh-CN")]
         [TestCase("花火大會", "zh-TW")]
         [TestCase("Testing", "en")]
