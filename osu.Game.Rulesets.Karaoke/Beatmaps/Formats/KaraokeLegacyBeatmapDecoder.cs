@@ -106,12 +106,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 // Create default note if not exist
                 if (string.IsNullOrEmpty(line))
                 {
-                    beatmap.HitObjects.AddRange(noteGenerator.CreateNotes(lyric));
+                    beatmap.HitObjects.AddRange(noteGenerator.Generate(lyric));
                     continue;
                 }
 
                 string[] notes = line.Split(',');
-                var defaultNotes = noteGenerator.CreateNotes(lyric).ToList();
+                var defaultNotes = noteGenerator.Generate(lyric).ToList();
                 int minNoteNumber = Math.Min(notes.Length, defaultNotes.Count);
 
                 // Process each note

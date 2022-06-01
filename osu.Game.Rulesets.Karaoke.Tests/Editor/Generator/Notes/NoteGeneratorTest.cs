@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Notes
         [TestCase(new[] { "[0,start]:", "[1,start]:1000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "ラ", "オ", "ケ" })]
         [TestCase(new[] { "[0,start]:1000" }, new string[] { })]
         [TestCase(new[] { "[0,start]:" }, new string[] { })]
-        public void TestCreateNotes(string[] timeTags, string[] expected)
+        public void TestGenerate(string[] timeTags, string[] expected)
         {
             var generator = new NoteGenerator(new NoteGeneratorConfig());
             var lyric = new Lyric
@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Notes
                 Text = "カラオケ",
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             };
-            var notes = generator.CreateNotes(lyric);
+            var notes = generator.Generate(lyric);
 
             string[] actual = notes.Select(x => x.Text).ToArray();
             Assert.AreEqual(expected, actual);

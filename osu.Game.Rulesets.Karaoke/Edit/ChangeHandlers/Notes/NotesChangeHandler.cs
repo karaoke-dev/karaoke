@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
                 var matchedNotes = HitObjects.Where(x => x.ParentLyric == lyric).ToArray();
                 RemoveRange(matchedNotes);
 
-                var notes = generator.CreateNotes(lyric);
+                var notes = generator.Generate(lyric);
                 AddRange(notes);
             });
         }

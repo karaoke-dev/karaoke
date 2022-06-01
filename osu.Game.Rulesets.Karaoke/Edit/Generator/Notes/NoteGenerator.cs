@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
             Config = config;
         }
 
-        public Note[] CreateNotes(Lyric lyric)
+        public Note[] Generate(Lyric lyric)
         {
             var timeTags = TimeTagsUtils.ToTimeBasedDictionary(lyric.TimeTags);
             var notes = new List<Note>();
