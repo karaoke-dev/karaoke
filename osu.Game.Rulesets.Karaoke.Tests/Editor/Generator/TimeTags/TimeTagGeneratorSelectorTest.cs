@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
         [TestCase(1041, "か", new[] { "[0,start]:", "[0,end]:" })] // Japanese
         [TestCase(1028, "喵", new[] { "[0,start]:" })] // Chinese
         [TestCase(3081, "hello", null)] // English
-        public void TestCreateTimeTag(int lcid, string text, string[] expectedTimeTags)
+        public void TestGenerate(int lcid, string text, string[] expectedTimeTags)
         {
             var selector = CreateSelector();
             var lyric = new Lyric
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
             };
 
             var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
-            var actual = selector.GenerateTimeTags(lyric);
+            var actual = selector.Generate(lyric);
             TimeTagAssert.ArePropertyEqual(expected, actual);
         }
     }

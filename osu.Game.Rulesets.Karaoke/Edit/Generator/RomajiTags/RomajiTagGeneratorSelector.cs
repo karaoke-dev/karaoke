@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags
 {
-    public class RomajiTagGeneratorSelector : GeneratorSelector<RomajiTagGenerator, RomajiTagGeneratorConfig>
+    public class RomajiTagGeneratorSelector : GeneratorSelector<RomajiTag[], RomajiTagGeneratorConfig>
     {
         public RomajiTagGeneratorSelector(KaraokeRulesetEditGeneratorConfigManager generatorConfigManager)
             : base(generatorConfigManager)
@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags
             RegisterGenerator<JaRomajiTagGenerator, JaRomajiTagGeneratorConfig>(new CultureInfo(1041));
         }
 
-        public RomajiTag[] GenerateRomajiTags(Lyric lyric)
+        public override RomajiTag[] Generate(Lyric lyric)
         {
             if (lyric.Language == null)
                 return null;
@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags
             if (!Generator.TryGetValue(lyric.Language, out var generator))
                 return null;
 
-            return generator.Value.CreateRomajiTags(lyric);
+            return generator.Value.Generate(lyric);
         }
 
         protected override KaraokeRulesetEditGeneratorSetting GetGeneratorConfigSetting(CultureInfo info)

@@ -4,12 +4,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
 {
-    public class NoteGenerator
+    public class NoteGenerator : ILyricPropertyGenerator<Note[]>
     {
         protected NoteGeneratorConfig Config { get; }
 
@@ -18,7 +19,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
             Config = config;
         }
 
-        public Note[] CreateNotes(Lyric lyric)
+        public bool CanGenerate(Lyric lyric)
+            => lyric.TimeTags.Count(x => x.Time != null) >= 2;
+
+        public Note[] Generate(Lyric lyric)
         {
             var timeTags = TimeTagsUtils.ToTimeBasedDictionary(lyric.TimeTags);
             var notes = new List<Note>();

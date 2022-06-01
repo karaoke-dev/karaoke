@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
@@ -12,19 +13,28 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
     public abstract class BaseTimeTagGeneratorTest<TTimeTagGenerator, TConfig>
         where TTimeTagGenerator : TimeTagGenerator<TConfig> where TConfig : TimeTagGeneratorConfig, new()
     {
-        protected void RunTimeTagCheckTest(string text, string[] expectedTimeTags, TConfig config)
+        protected static void RunCanGenerateTimeTagCheckTest(string text, bool canGenerate, TConfig config)
+        {
+            var generator = Activator.CreateInstance(typeof(TTimeTagGenerator), config) as TTimeTagGenerator;
+            var lyric = new Lyric { Text = text };
+
+            bool? actual = generator?.CanGenerate(lyric);
+            Assert.AreEqual(canGenerate, actual);
+        }
+
+        protected static void RunTimeTagCheckTest(string text, string[] expectedTimeTags, TConfig config)
         {
             var lyric = new Lyric { Text = text };
             RunTimeTagCheckTest(lyric, expectedTimeTags, config);
         }
 
-        protected void RunTimeTagCheckTest(Lyric lyric, string[] expectedTimeTags, TConfig config)
+        protected static void RunTimeTagCheckTest(Lyric lyric, string[] expectedTimeTags, TConfig config)
         {
             var generator = Activator.CreateInstance(typeof(TTimeTagGenerator), config) as TTimeTagGenerator;
 
             // create time tag and actually time tag.
             var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
-            var actual = generator?.CreateTimeTags(lyric);
+            var actual = generator?.Generate(lyric);
             TimeTagAssert.ArePropertyEqual(expected, actual);
         }
 

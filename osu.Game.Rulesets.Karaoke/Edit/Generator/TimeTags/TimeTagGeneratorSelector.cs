@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
 {
-    public class TimeTagGeneratorSelector : GeneratorSelector<TimeTagGenerator, TimeTagGeneratorConfig>
+    public class TimeTagGeneratorSelector : GeneratorSelector<TimeTag[], TimeTagGeneratorConfig>
     {
         public TimeTagGeneratorSelector(KaraokeRulesetEditGeneratorConfigManager generatorConfigManager)
             : base(generatorConfigManager)
@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
             RegisterGenerator<ZhTimeTagGenerator, ZhTimeTagGeneratorConfig>(new CultureInfo(1028));
         }
 
-        public TimeTag[] GenerateTimeTags(Lyric lyric)
+        public override TimeTag[] Generate(Lyric lyric)
         {
             if (lyric.Language == null)
                 return null;
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
             if (!Generator.TryGetValue(lyric.Language, out var generator))
                 return null;
 
-            return generator.Value.CreateTimeTags(lyric);
+            return generator.Value.Generate(lyric);
         }
 
         protected override KaraokeRulesetEditGeneratorSetting GetGeneratorConfigSetting(CultureInfo info) =>

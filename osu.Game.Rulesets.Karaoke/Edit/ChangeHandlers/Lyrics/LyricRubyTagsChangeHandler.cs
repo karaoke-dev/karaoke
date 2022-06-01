@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                var rubyTags = selector.GenerateRubyTags(lyric);
+                var rubyTags = selector.Generate(lyric);
                 lyric.RubyTags = rubyTags ?? Array.Empty<RubyTag>();
             });
         }

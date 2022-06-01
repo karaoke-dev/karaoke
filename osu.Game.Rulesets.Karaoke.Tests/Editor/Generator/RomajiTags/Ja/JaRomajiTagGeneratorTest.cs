@@ -13,10 +13,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags.Ja
 {
     public class JaRomajiTagGeneratorTest
     {
+        [TestCase("花火大会", true)]
+        [TestCase("", false)] // will not able to generate the romaji if lyric is empty.
+        [TestCase("   ", false)]
+        [TestCase(null, false)]
+        public void TestCanGenerate(string text, bool canGenerate)
+        {
+            var config = generatorConfig(null);
+            runCanGenerateRomajiCheckTest(text, canGenerate, config);
+        }
+
         [TestCase("花火大会", new[] { "[0,2]:hanabi", "[2,4]:taikai" })]
         [TestCase("はなび", new[] { "[0,3]:hanabi" })]
         [TestCase("枯れた世界に輝く", new[] { "[0,3]:kareta", "[3,6]:sekaini", "[6,8]:kagayaku" })]
-        public void TestCreateRomajiTags(string text, string[] expectedRomajies)
+        public void TestGenerate(string text, string[] expectedRomajies)
         {
             var config = generatorConfig(null);
             runRomajiCheckTest(text, expectedRomajies, config);
@@ -24,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags.Ja
 
         [TestCase("花火大会", new[] { "[0,2]:HANABI", "[2,4]:TAIKAI" })]
         [TestCase("はなび", new[] { "[0,3]:HANABI" })]
-        public void TestCreateRomajiTagsWithUppercase(string text, string[] expectedRomajies)
+        public void TestGenerateWithUppercase(string text, string[] expectedRomajies)
         {
             var config = generatorConfig(nameof(JaRomajiTagGeneratorConfig.Uppercase));
             runRomajiCheckTest(text, expectedRomajies, config);
@@ -32,13 +42,22 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags.Ja
 
         #region test helper
 
+        private static void runCanGenerateRomajiCheckTest(string text, bool canGenerate, JaRomajiTagGeneratorConfig config)
+        {
+            var generator = new JaRomajiTagGenerator(config);
+            var lyric = new Lyric { Text = text };
+
+            bool actual = generator.CanGenerate(lyric);
+            Assert.AreEqual(canGenerate, actual);
+        }
+
         private static void runRomajiCheckTest(string text, IEnumerable<string> expectedRomajies, JaRomajiTagGeneratorConfig config)
         {
             var generator = new JaRomajiTagGenerator(config);
             var lyric = new Lyric { Text = text };
 
             var expected = TestCaseTagHelper.ParseRomajiTags(expectedRomajies);
-            var actual = generator.CreateRomajiTags(lyric);
+            var actual = generator.Generate(lyric);
             TextTagAssert.ArePropertyEqual(expected, actual);
         }
 

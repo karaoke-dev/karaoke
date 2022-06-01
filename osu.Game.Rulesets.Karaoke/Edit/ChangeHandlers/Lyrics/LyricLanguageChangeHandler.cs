@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
             PerformOnSelection(lyric =>
             {
-                var detectedLanguage = detector.DetectLanguage(lyric);
+                var detectedLanguage = detector.Detect(lyric);
                 lyric.Language = detectedLanguage;
             });
         }

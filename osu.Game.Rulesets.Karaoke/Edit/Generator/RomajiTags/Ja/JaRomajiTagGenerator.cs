@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
             });
         }
 
-        public override RomajiTag[] CreateRomajiTags(Lyric lyric)
+        public override RomajiTag[] Generate(Lyric lyric)
         {
             string text = lyric.Text;
             var processingTags = new List<RomajiTagGeneratorParameter>();
