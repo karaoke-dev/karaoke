@@ -10,6 +10,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags.Ja
     [TestFixture]
     public class JaTimeTagGeneratorTest : BaseTimeTagGeneratorTest<JaTimeTagGenerator, JaTimeTagGeneratorConfig>
     {
+        [TestCase("花火大会", true)]
+        [TestCase("！", true)]
+        [TestCase("   ", true)]
+        [TestCase("", false)] // will not able to generate the romaji if lyric is empty.
+        [TestCase(null, false)]
+        public void TestCanGenerate(string text, bool canGenerate)
+        {
+            var config = GeneratorConfig(null);
+            RunCanGenerateTimeTagCheckTest(text, canGenerate, config);
+        }
+
         [TestCase("か", new[] { "[0,start]:" }, false)]
         [TestCase("か", new[] { "[0,start]:", "[0,end]:" }, true)]
         public void TestGenerateWithCheckLineEndKeyUp(string lyric, string[] expectedTimeTags, bool applyConfig)

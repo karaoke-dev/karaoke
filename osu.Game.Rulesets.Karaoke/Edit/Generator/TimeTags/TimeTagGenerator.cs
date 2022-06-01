@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
@@ -18,9 +19,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
         }
     }
 
-    public abstract class TimeTagGenerator
+    public abstract class TimeTagGenerator : ILyricPropertyGenerator<TimeTag[]>
     {
         protected TimeTagGeneratorConfig Config { get; set; }
+
+        public bool CanGenerate(Lyric lyric)
+            => !string.IsNullOrEmpty(lyric.Text);
 
         public virtual TimeTag[] Generate(Lyric lyric)
         {
