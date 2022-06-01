@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator
         protected abstract KaraokeRulesetEditGeneratorSetting GetGeneratorConfigSetting(CultureInfo info);
 
         public bool CanGenerate(Lyric lyric)
-            => Generator.Keys.Any(k => EqualityComparer<CultureInfo>.Default.Equals(k, lyric.Language));
+            => Generator.Any(g => EqualityComparer<CultureInfo>.Default.Equals(g.Key, lyric.Language) && g.Value.Value.CanGenerate(lyric));
 
         public abstract TProperty Generate(Lyric lyric);
     }
