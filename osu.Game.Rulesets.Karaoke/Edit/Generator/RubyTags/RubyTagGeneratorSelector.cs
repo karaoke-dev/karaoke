@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags
             RegisterGenerator<JaRubyTagGenerator, JaRubyTagGeneratorConfig>(new CultureInfo(1041));
         }
 
-        public RubyTag[] Generate(Lyric lyric)
+        public override RubyTag[] Generate(Lyric lyric)
         {
             if (lyric.Language == null)
                 return null;

@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags
             RegisterGenerator<JaRomajiTagGenerator, JaRomajiTagGeneratorConfig>(new CultureInfo(1041));
         }
 
-        public RomajiTag[] Generate(Lyric lyric)
+        public override RomajiTag[] Generate(Lyric lyric)
         {
             if (lyric.Language == null)
                 return null;

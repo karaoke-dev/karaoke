@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
             RegisterGenerator<ZhTimeTagGenerator, ZhTimeTagGeneratorConfig>(new CultureInfo(1028));
         }
 
-        public TimeTag[] Generate(Lyric lyric)
+        public override TimeTag[] Generate(Lyric lyric)
         {
             if (lyric.Language == null)
                 return null;

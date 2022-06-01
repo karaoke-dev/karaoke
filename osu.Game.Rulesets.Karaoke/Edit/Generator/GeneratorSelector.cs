@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator
 {
-    public abstract class GeneratorSelector<TProperty, TBaseConfig>
+    public abstract class GeneratorSelector<TProperty, TBaseConfig> : ILyricPropertyGenerator<TProperty>
     {
         protected Dictionary<CultureInfo, Lazy<ILyricPropertyGenerator<TProperty>>> Generator { get; } = new();
 
@@ -37,5 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator
 
         public bool CanGenerate(Lyric lyric)
             => Generator.Keys.Any(k => EqualityComparer<CultureInfo>.Default.Equals(k, lyric.Language));
+
+        public abstract TProperty Generate(Lyric lyric);
     }
 }
