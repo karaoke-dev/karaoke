@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags.Ja
         [TestCase("花火大会", new[] { "[0,2]:hanabi", "[2,4]:taikai" })]
         [TestCase("はなび", new[] { "[0,3]:hanabi" })]
         [TestCase("枯れた世界に輝く", new[] { "[0,3]:kareta", "[3,6]:sekaini", "[6,8]:kagayaku" })]
-        public void TestCreateRomajiTags(string text, string[] expectedRomajies)
+        public void TestGenerate(string text, string[] expectedRomajies)
         {
             var config = generatorConfig(null);
             runRomajiCheckTest(text, expectedRomajies, config);
@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags.Ja
 
         [TestCase("花火大会", new[] { "[0,2]:HANABI", "[2,4]:TAIKAI" })]
         [TestCase("はなび", new[] { "[0,3]:HANABI" })]
-        public void TestCreateRomajiTagsWithUppercase(string text, string[] expectedRomajies)
+        public void TestGenerateWithUppercase(string text, string[] expectedRomajies)
         {
             var config = generatorConfig(nameof(JaRomajiTagGeneratorConfig.Uppercase));
             runRomajiCheckTest(text, expectedRomajies, config);
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags.Ja
             var lyric = new Lyric { Text = text };
 
             var expected = TestCaseTagHelper.ParseRomajiTags(expectedRomajies);
-            var actual = generator.CreateRomajiTags(lyric);
+            var actual = generator.Generate(lyric);
             TextTagAssert.ArePropertyEqual(expected, actual);
         }
 

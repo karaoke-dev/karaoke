@@ -17,6 +17,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags
 
     public abstract class RomajiTagGenerator
     {
-        public abstract RomajiTag[] CreateRomajiTags(Lyric lyric);
+        public abstract RomajiTag[] Generate(Lyric lyric);
     }
 }
