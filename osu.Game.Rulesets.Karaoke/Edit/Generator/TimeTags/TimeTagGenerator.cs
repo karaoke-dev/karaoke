@@ -9,19 +9,14 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
 {
-    public abstract class TimeTagGenerator<T> : TimeTagGenerator where T : TimeTagGeneratorConfig
+    public abstract class TimeTagGenerator<T> : ILyricPropertyGenerator<TimeTag[]> where T : TimeTagGeneratorConfig
     {
-        protected new T Config => base.Config as T;
+        protected T Config { get; }
 
         protected TimeTagGenerator(T config)
         {
-            base.Config = config;
+            Config = config;
         }
-    }
-
-    public abstract class TimeTagGenerator : ILyricPropertyGenerator<TimeTag[]>
-    {
-        protected TimeTagGeneratorConfig Config { get; set; }
 
         public bool CanGenerate(Lyric lyric)
             => !string.IsNullOrEmpty(lyric.Text);

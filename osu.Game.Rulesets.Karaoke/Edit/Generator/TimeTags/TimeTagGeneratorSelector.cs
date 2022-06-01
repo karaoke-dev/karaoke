@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
 {
-    public class TimeTagGeneratorSelector : GeneratorSelector<TimeTagGenerator, TimeTagGeneratorConfig>
+    public class TimeTagGeneratorSelector : GeneratorSelector<TimeTag[], TimeTagGeneratorConfig>
     {
         public TimeTagGeneratorSelector(KaraokeRulesetEditGeneratorConfigManager generatorConfigManager)
             : base(generatorConfigManager)

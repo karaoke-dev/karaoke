@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags
 {
-    public class RubyTagGeneratorSelector : GeneratorSelector<RubyTagGenerator, RubyTagGeneratorConfig>
+    public class RubyTagGeneratorSelector : GeneratorSelector<RubyTag[], RubyTagGeneratorConfig>
     {
         public RubyTagGeneratorSelector(KaraokeRulesetEditGeneratorConfigManager generatorConfigManager)
             : base(generatorConfigManager)
