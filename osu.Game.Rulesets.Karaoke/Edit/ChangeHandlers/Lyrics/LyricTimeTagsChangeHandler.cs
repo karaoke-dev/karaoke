@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             PerformOnSelection(lyric =>
             {
-                var timeTags = selector.GenerateTimeTags(lyric);
+                var timeTags = selector.Generate(lyric);
                 lyric.TimeTags = timeTags ?? Array.Empty<TimeTag>();
             });
         }

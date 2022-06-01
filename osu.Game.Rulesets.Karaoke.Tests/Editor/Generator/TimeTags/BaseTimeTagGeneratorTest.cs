@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
 
             // create time tag and actually time tag.
             var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
-            var actual = generator?.CreateTimeTags(lyric);
+            var actual = generator?.Generate(lyric);
             TimeTagAssert.ArePropertyEqual(expected, actual);
         }
 

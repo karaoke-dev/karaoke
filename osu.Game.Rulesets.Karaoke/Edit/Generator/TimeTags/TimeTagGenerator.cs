@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
     {
         protected TimeTagGeneratorConfig Config { get; set; }
 
-        public virtual TimeTag[] CreateTimeTags(Lyric lyric)
+        public virtual TimeTag[] Generate(Lyric lyric)
         {
             var timeTags = new List<TimeTag>();
             string text = lyric.Text;
