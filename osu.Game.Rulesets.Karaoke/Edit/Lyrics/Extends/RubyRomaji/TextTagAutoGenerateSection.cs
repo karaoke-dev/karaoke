@@ -12,6 +12,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
         protected abstract class TextTagAutoGenerateSubsection : AutoGenerateSubsection
         {
+            protected TextTagAutoGenerateSubsection(LyricAutoGenerateProperty autoGenerateProperty)
+                : base(autoGenerateProperty)
+            {
+            }
+
             protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
                 => new InvalidLyricLanguageAlertTextContainer();
 

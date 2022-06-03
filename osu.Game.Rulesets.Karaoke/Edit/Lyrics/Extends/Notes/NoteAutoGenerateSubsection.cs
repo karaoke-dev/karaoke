@@ -1,12 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System.Collections.Generic;
-using System.Linq;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
-using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
@@ -22,18 +17,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
     /// </summary>
     public class NoteAutoGenerateSubsection : AutoGenerateSubsection
     {
-        [Resolved]
-        private INotesChangeHandler notesChangeHandler { get; set; }
-
-        [Resolved]
-        private LyricCheckerManager lyricCheckerManager { get; set; }
-
-        protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(IEnumerable<Lyric> lyrics)
-            => lyricCheckerManager.BindableReports.Where(x => x.Value.OfType<TimeTagIssue>().Any())
-                                  .ToDictionary(k => k.Key, _ => "Before generate time-tag, need to assign language first.");
-
-        protected override void Apply()
-            => notesChangeHandler.AutoGenerate();
+        public NoteAutoGenerateSubsection()
+            : base(LyricAutoGenerateProperty.AutoGenerateNotes)
+        {
+        }
 
         protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
             => new InvalidLyricTimeTagAlertTextContainer();

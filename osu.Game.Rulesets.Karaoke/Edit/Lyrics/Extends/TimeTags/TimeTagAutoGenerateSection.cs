@@ -3,16 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Zh;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 {
@@ -30,15 +26,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
         private class TimeTageAutoGenerateSubsection : AutoGenerateSubsection
         {
-            [Resolved]
-            private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
-
-            protected override Dictionary<Lyric, string> GetDisableSelectingLyrics(IEnumerable<Lyric> lyrics)
-                => lyrics.Where(x => x.Language == null)
-                         .ToDictionary(k => k, _ => "Before generate time-tag, need to assign language first.");
-
-            protected override void Apply()
-                => lyricTimeTagsChangeHandler.AutoGenerate();
+            public TimeTageAutoGenerateSubsection()
+                : base(LyricAutoGenerateProperty.AutoGenerateTimeTags)
+            {
+            }
 
             protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
                 => new InvalidLyricLanguageAlertTextContainer();
