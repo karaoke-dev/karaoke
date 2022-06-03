@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -19,8 +20,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
             Config = config;
         }
 
-        public bool CanGenerate(Lyric lyric)
-            => lyric.TimeTags.Count(x => x.Time != null) >= 2;
+        public LocalisableString? GetInvalidMessage(Lyric lyric)
+        {
+            var timeTags = lyric.TimeTags;
+
+            if (lyric.TimeTags.Count < 2)
+                return "Sorry, lyric must have at least two time-tags.";
+
+            if (timeTags.Any(x => x.Time == null))
+                return "All time-tag should have the time.";
+
+            return null;
+        }
 
         public Note[] Generate(Lyric lyric)
         {

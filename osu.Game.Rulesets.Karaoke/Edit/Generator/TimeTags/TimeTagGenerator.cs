@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -18,8 +19,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
             Config = config;
         }
 
-        public bool CanGenerate(Lyric lyric)
-            => !string.IsNullOrEmpty(lyric.Text);
+        public LocalisableString? GetInvalidMessage(Lyric lyric)
+        {
+            if (string.IsNullOrEmpty(lyric.Text))
+                return "Lyric should not be empty.";
+
+            return null;
+        }
 
         public virtual TimeTag[] Generate(Lyric lyric)
         {
