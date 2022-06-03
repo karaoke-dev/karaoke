@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
         {
             var detector = new LanguageDetector(generateConfig());
 
-            bool actual = detector.CanDetect(new Lyric { Text = text });
+            bool actual = detector.GetInvalidMessage(new Lyric { Text = text }) == null;
             Assert.AreEqual(canDetect, actual);
         }
 

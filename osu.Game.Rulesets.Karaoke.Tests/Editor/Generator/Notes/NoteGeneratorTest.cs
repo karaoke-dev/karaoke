@@ -14,6 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Notes
     {
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, true)]
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000" }, true)]
+        [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:" }, false)] // all time-tag should with time.
         [TestCase(new[] { "[0,start]:1000", "[1,start]:" }, false)] // should have at least two time-tags with time.
         [TestCase(new[] { "[0,start]:1000" }, false)]
         [TestCase(new string[] { }, false)]
@@ -25,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Notes
                 Text = "カラオケ",
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             };
-            bool actual = generator.CanGenerate(lyric);
+            bool actual = generator.GetInvalidMessage(lyric) == null;
 
             Assert.AreEqual(canGenerate, actual);
         }

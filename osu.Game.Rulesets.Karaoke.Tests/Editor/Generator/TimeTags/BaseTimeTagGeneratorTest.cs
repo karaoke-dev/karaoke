@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
             var generator = Activator.CreateInstance(typeof(TTimeTagGenerator), config) as TTimeTagGenerator;
             var lyric = new Lyric { Text = text };
 
-            bool? actual = generator?.CanGenerate(lyric);
+            bool? actual = generator?.GetInvalidMessage(lyric) == null;
             Assert.AreEqual(canGenerate, actual);
         }
 

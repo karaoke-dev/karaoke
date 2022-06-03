@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RubyTags.Ja
             var generator = new JaRubyTagGenerator(config);
             var lyric = new Lyric { Text = text };
 
-            bool actual = generator.CanGenerate(lyric);
+            bool actual = generator.GetInvalidMessage(lyric) == null;
             Assert.AreEqual(canGenerate, actual);
         }
 
