@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
-using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
@@ -10,53 +8,24 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
 {
-    public abstract class BaseTimeTagGeneratorTest<TTimeTagGenerator, TConfig>
+    public abstract class BaseTimeTagGeneratorTest<TTimeTagGenerator, TConfig> : BaseGeneratorTest<TTimeTagGenerator, TimeTag[], TConfig>
         where TTimeTagGenerator : TimeTagGenerator<TConfig> where TConfig : TimeTagGeneratorConfig, new()
     {
-        protected static void RunCanGenerateTimeTagCheckTest(string text, bool canGenerate, TConfig config)
+        protected void CheckGenerateResult(string text, string[] expectedTimeTags, TConfig config)
         {
-            var generator = Activator.CreateInstance(typeof(TTimeTagGenerator), config) as TTimeTagGenerator;
-            var lyric = new Lyric { Text = text };
-
-            bool? actual = generator?.GetInvalidMessage(lyric) == null;
-            Assert.AreEqual(canGenerate, actual);
-        }
-
-        protected static void RunTimeTagCheckTest(string text, string[] expectedTimeTags, TConfig config)
-        {
-            var lyric = new Lyric { Text = text };
-            RunTimeTagCheckTest(lyric, expectedTimeTags, config);
-        }
-
-        protected static void RunTimeTagCheckTest(Lyric lyric, string[] expectedTimeTags, TConfig config)
-        {
-            var generator = Activator.CreateInstance(typeof(TTimeTagGenerator), config) as TTimeTagGenerator;
-
-            // create time tag and actually time tag.
             var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
-            var actual = generator?.Generate(lyric);
-            TimeTagAssert.ArePropertyEqual(expected, actual);
+            CheckGenerateResult(text, expected, config);
         }
 
-        protected TConfig GeneratorConfig(params string[] properties)
+        protected void CheckGenerateResult(Lyric lyric, string[] expectedTimeTags, TConfig config)
         {
-            var config = new TConfig();
-            if (properties == null)
-                return config;
+            var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
+            CheckGenerateResult(lyric, expected, config);
+        }
 
-            foreach (string propertyName in properties)
-            {
-                if (propertyName == null)
-                    continue;
-
-                var theMethod = config.GetType().GetProperty(propertyName);
-                if (theMethod == null)
-                    throw new MissingMethodException("Config is not exist.");
-
-                theMethod.SetValue(config, true);
-            }
-
-            return config;
+        protected override void AssertEqual(TimeTag[] expected, TimeTag[] actual)
+        {
+            TimeTagAssert.ArePropertyEqual(expected, actual);
         }
     }
 }

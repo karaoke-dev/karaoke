@@ -16,8 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags.Zh
         [TestCase(null, false)]
         public void TestCanGenerate(string text, bool canGenerate)
         {
-            var config = GeneratorConfig(null);
-            RunCanGenerateTimeTagCheckTest(text, canGenerate, config);
+            var config = GeneratorConfig();
+            CheckCanGenerate(text, canGenerate, config);
         }
 
         [TestCase("測試一些歌詞", new[] { "[0,start]:", "[1,start]:", "[2,start]:", "[3,start]:", "[4,start]:", "[5,start]:", "[5,end]:" })]
@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags.Zh
         public void TestGenerateWithCheckLineEndKeyUp(string lyric, string[] expectedTimeTags)
         {
             var config = GeneratorConfig(nameof(ZhTimeTagGeneratorConfig.CheckLineEndKeyUp));
-            RunTimeTagCheckTest(lyric, expectedTimeTags, config);
+            CheckGenerateResult(lyric, expectedTimeTags, config);
         }
     }
 }
