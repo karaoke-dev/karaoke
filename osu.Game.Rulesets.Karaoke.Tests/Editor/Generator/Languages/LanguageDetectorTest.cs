@@ -4,12 +4,11 @@
 using System.Globalization;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
-using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
 {
     [TestFixture]
-    public class LanguageDetectorTest
+    public class LanguageDetectorTest : BaseDetectorTest<LanguageDetector, CultureInfo, LanguageDetectorConfig>
     {
         [TestCase("花火大会", true)]
         [TestCase("", false)] // will not able to detect the language if lyric is empty.
@@ -17,10 +16,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
         [TestCase(null, false)]
         public void TestCanDetect(string text, bool canDetect)
         {
-            var detector = new LanguageDetector(generateConfig());
-
-            bool actual = detector.GetInvalidMessage(new Lyric { Text = text }) == null;
-            Assert.AreEqual(canDetect, actual);
+            var config = GeneratorConfig();
+            CheckCanDetect(text, canDetect, config);
         }
 
         [TestCase("花火大会", "zh-CN")]
@@ -30,13 +27,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
         [TestCase("はなび", "ja")]
         public void TestDetect(string text, string language)
         {
-            var detector = new LanguageDetector(generateConfig());
-
+            var config = GeneratorConfig();
             var expected = new CultureInfo(language);
-            var actual = detector.Detect(new Lyric { Text = text });
-            Assert.AreEqual(expected, actual);
+            CheckDetectResult(text, expected, config);
         }
 
-        private static LanguageDetectorConfig generateConfig() => new();
+        protected override void AssertEqual(CultureInfo expected, CultureInfo actual)
+        {
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

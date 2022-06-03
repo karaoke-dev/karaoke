@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Tests.Helper;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Notes
 {
     [TestFixture]
-    public class NoteGeneratorTest
+    public class NoteGeneratorTest : BaseGeneratorTest<NoteGenerator, Note[], NoteGeneratorConfig>
     {
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, true)]
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000" }, true)]
@@ -20,15 +20,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Notes
         [TestCase(new string[] { }, false)]
         public void TestCanGenerate(string[] timeTags, bool canGenerate)
         {
-            var generator = new NoteGenerator(new NoteGeneratorConfig());
+            var config = GeneratorConfig();
             var lyric = new Lyric
             {
                 Text = "カラオケ",
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             };
-            bool actual = generator.GetInvalidMessage(lyric) == null;
 
-            Assert.AreEqual(canGenerate, actual);
+            CheckCanGenerate(lyric, canGenerate, config);
         }
 
         [TestCase(new[] { "[0,start]:1000", "[1,start]:2000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "カ", "ラ", "オ", "ケ" })]
@@ -38,18 +37,29 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Notes
         [TestCase(new[] { "[0,start]:", "[1,start]:1000", "[2,start]:3000", "[3,start]:4000", "[3,end]:5000" }, new[] { "ラ", "オ", "ケ" })]
         [TestCase(new[] { "[0,start]:1000" }, new string[] { })]
         [TestCase(new[] { "[0,start]:" }, new string[] { })]
-        public void TestGenerate(string[] timeTags, string[] expected)
+        public void TestGenerate(string[] timeTags, string[] expectedNotes)
         {
-            var generator = new NoteGenerator(new NoteGeneratorConfig());
+            var config = GeneratorConfig();
             var lyric = new Lyric
             {
                 Text = "カラオケ",
                 TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             };
-            var notes = generator.Generate(lyric);
+            CheckGenerateResult(lyric, expectedNotes, config);
+        }
 
-            string[] actual = notes.Select(x => x.Text).ToArray();
-            Assert.AreEqual(expected, actual);
+        protected void CheckGenerateResult(Lyric lyric, string[] expectedNotes, NoteGeneratorConfig config)
+        {
+            var expected = expectedNotes.Select(x => new Note
+            {
+                Text = x
+            }).ToArray();
+            CheckGenerateResult(lyric, expected, config);
+        }
+
+        protected override void AssertEqual(Note[] expected, Note[] actual)
+        {
+            Assert.AreEqual(expected.Select(x => x.Text), actual.Select(x => x.Text));
         }
     }
 }
