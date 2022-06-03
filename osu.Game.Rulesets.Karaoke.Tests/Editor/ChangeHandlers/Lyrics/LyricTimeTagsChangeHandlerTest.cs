@@ -2,12 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
@@ -16,68 +14,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
     public class LyricTimeTagsChangeHandlerTest : BaseHitObjectChangeHandlerTest<LyricTimeTagsChangeHandler, Lyric>
     {
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            var baseDependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-            baseDependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
-            return baseDependencies;
-        }
-
-        [Test]
-        public void TestAutoGenerateSupportedLyric()
-        {
-            PrepareHitObject(new Lyric
-            {
-                Text = "カラオケ",
-                Language = new CultureInfo(17)
-            });
-
-            TriggerHandlerChanged(c => c.AutoGenerate());
-
-            AssertSelectedHitObject(h =>
-            {
-                Assert.AreEqual(5, h.TimeTags.Count);
-            });
-        }
-
-        [Test]
-        public void TestAutoGenerateNonSupportedLyric()
-        {
-            PrepareHitObjects(new[]
-            {
-                new Lyric
-                {
-                    Text = "カラオケ",
-                },
-                new Lyric
-                {
-                    Text = "",
-                },
-                new Lyric
-                {
-                    Text = null,
-                },
-                new Lyric
-                {
-                    Text = "",
-                    Language = new CultureInfo(17)
-                },
-                new Lyric
-                {
-                    Text = null,
-                    Language = new CultureInfo(17)
-                }
-            });
-
-            TriggerHandlerChanged(c => c.AutoGenerate());
-
-            AssertSelectedHitObject(h =>
-            {
-                // should not able to generate time-tag if lyric text is empty, or did not have language.
-                Assert.IsEmpty(h.TimeTags);
-            });
-        }
-
         [Test]
         public void TestSetTimeTagTime()
         {
