@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -63,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         {
             private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
             private readonly IBindable<bool> selecting = new Bindable<bool>();
-            private readonly IBindableDictionary<Lyric, string> disableSelectingLyrics = new BindableDictionary<Lyric, string>();
+            private readonly IBindableDictionary<Lyric, LocalisableString> disableSelectingLyrics = new BindableDictionary<Lyric, LocalisableString>();
             private readonly IBindableList<Lyric> selectedLyrics = new BindableList<Lyric>();
 
             private readonly Box background;
@@ -141,7 +142,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                 {
                     bool disabled = disableSelectingLyrics.Keys.Contains(lyric);
                     selectedCheckbox.Current.Disabled = disabled;
-                    selectedCheckbox.TooltipText = disabled ? disableSelectingLyrics[lyric] : null;
+                    selectedCheckbox.TooltipText = disabled ? disableSelectingLyrics[lyric] : default;
                 });
 
                 selectedCheckbox.Current.BindValueChanged(e =>

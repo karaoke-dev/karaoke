@@ -3,9 +3,6 @@
 
 using System.Linq;
 using NUnit.Framework;
-using osu.Framework.Allocation;
-using osu.Framework.Graphics.Sprites;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -13,56 +10,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
 {
     public class NotesChangeHandlerTest : BaseHitObjectChangeHandlerTest<NotesChangeHandler, Note>
     {
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-        {
-            var baseDependencies = new DependencyContainer(base.CreateChildDependencies(parent));
-            baseDependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
-            return baseDependencies;
-        }
-
-        [Test]
-        public void TestAutoGenerateSupportedLyric()
-        {
-            PrepareHitObject(new Lyric
-            {
-                Text = "カラオケ",
-                TimeTags = new[]
-                {
-                    new TimeTag(new TextIndex(0), 0),
-                    new TimeTag(new TextIndex(1), 1000),
-                    new TimeTag(new TextIndex(2), 2000),
-                    new TimeTag(new TextIndex(3), 3000),
-                    new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
-                }
-            });
-
-            TriggerHandlerChanged(c => c.AutoGenerate());
-
-            AssertHitObjects(notes =>
-            {
-                var actualNotes = notes.ToArray();
-                Assert.AreEqual(4, actualNotes.Length);
-
-                Assert.AreEqual("カ", actualNotes[0].Text);
-                Assert.AreEqual("ラ", actualNotes[1].Text);
-                Assert.AreEqual("オ", actualNotes[2].Text);
-                Assert.AreEqual("ケ", actualNotes[3].Text);
-            });
-        }
-
-        [Test]
-        public void TestAutoGenerateNonSupportedLyric()
-        {
-            PrepareHitObject(new Lyric
-            {
-                Text = "カラオケ",
-            });
-
-            TriggerHandlerChanged(c => c.AutoGenerate());
-
-            AssertHitObjects(Assert.IsEmpty);
-        }
-
         [Test]
         public void TestSplit()
         {

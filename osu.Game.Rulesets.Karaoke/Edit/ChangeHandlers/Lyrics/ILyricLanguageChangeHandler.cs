@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public interface ILyricLanguageChangeHandler : IAutoGenerateChangeHandler
+    public interface ILyricLanguageChangeHandler
     {
         void SetLanguage(CultureInfo language);
     }

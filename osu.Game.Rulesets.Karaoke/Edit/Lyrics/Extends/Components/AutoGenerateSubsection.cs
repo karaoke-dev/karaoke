@@ -12,33 +12,41 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Configuration;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Screens.Edit;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
     public abstract class AutoGenerateSubsection : FillFlowContainer
     {
-        protected AutoGenerateSubsection()
+        [Resolved]
+        private ILyricAutoGenerateChangeHandler lyricAutoGenerateChangeHandler { get; set; }
+
+        private readonly LyricAutoGenerateProperty autoGenerateProperty;
+
+        protected AutoGenerateSubsection(LyricAutoGenerateProperty autoGenerateProperty)
         {
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
+
+            this.autoGenerateProperty = autoGenerateProperty;
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, ILyricSelectionState lyricSelectionState, OsuColour colours)
+        private void load(ILyricSelectionState lyricSelectionState, OsuColour colours)
         {
             // should wait until BDL in the parent class has been loaded.
             Schedule(() =>
             {
-                var disableSelectingLyrics = GetDisableSelectingLyrics(beatmap.HitObjects.OfType<Lyric>());
+                var disableSelectingLyrics = GetDisableSelectingLyrics(autoGenerateProperty);
 
                 Children = new Drawable[]
                 {
@@ -90,13 +98,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 if (e != LyricEditorSelectingAction.Apply)
                     return;
 
-                Apply();
+                Apply(autoGenerateProperty);
             };
         }
 
-        protected abstract Dictionary<Lyric, string> GetDisableSelectingLyrics(IEnumerable<Lyric> lyrics);
+        protected virtual IDictionary<Lyric, LocalisableString> GetDisableSelectingLyrics(LyricAutoGenerateProperty autoGenerateProperty)
+        {
+            return lyricAutoGenerateChangeHandler.GetNotGeneratableLyrics(autoGenerateProperty);
+        }
 
-        protected abstract void Apply();
+        protected virtual void Apply(LyricAutoGenerateProperty autoGenerateProperty)
+        {
+            lyricAutoGenerateChangeHandler.AutoGenerate(autoGenerateProperty);
+        }
 
         protected abstract InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer();
 

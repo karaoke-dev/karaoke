@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -21,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected virtual string SelectingText => "Cancel selecting";
 
-        public Func<Dictionary<Lyric, string>> StartSelecting { get; set; }
+        public Func<IDictionary<Lyric, LocalisableString>> StartSelecting { get; set; }
 
         [Resolved]
         private ILyricSelectionState lyricSelectionState { get; set; }

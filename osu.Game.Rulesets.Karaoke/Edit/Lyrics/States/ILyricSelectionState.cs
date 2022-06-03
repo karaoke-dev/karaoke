@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using osu.Framework.Bindables;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
@@ -12,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
     {
         IBindable<bool> Selecting { get; }
 
-        IBindableDictionary<Lyric, string> DisableSelectingLyric { get; }
+        IBindableDictionary<Lyric, LocalisableString> DisableSelectingLyric { get; }
 
         IBindableList<Lyric> SelectedLyrics { get; }
 
@@ -30,6 +31,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         void UnSelectAll();
 
-        void UpdateDisableLyricList(IDictionary<Lyric, string> disableLyrics);
+        void UpdateDisableLyricList(IDictionary<Lyric, LocalisableString> disableLyrics);
     }
 }

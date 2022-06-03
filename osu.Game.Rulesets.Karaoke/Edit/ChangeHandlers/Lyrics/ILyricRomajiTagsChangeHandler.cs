@@ -5,8 +5,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public interface ILyricRomajiTagsChangeHandler : ILyricTextTagsChangeHandler<RomajiTag>, IAutoGenerateChangeHandler
+    public interface ILyricRomajiTagsChangeHandler : ILyricTextTagsChangeHandler<RomajiTag>
     {
-        bool CanGenerate();
     }
 }
