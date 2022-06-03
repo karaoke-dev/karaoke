@@ -33,27 +33,33 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             {
                 case LyricAutoGenerateProperty.DetectLanguage:
                     var languageDetector = createLyricDetector<CultureInfo>();
-                    return HitObjects.Any(x => languageDetector.CanDetect(x));
+                    return canDetect(languageDetector);
 
                 case LyricAutoGenerateProperty.AutoGenerateRubyTags:
                     var rubyGenerator = createLyricGenerator<RubyTag[]>();
-                    return HitObjects.Any(x => rubyGenerator.CanGenerate(x));
+                    return canGenerate(rubyGenerator);
 
                 case LyricAutoGenerateProperty.AutoGenerateRomajiTags:
                     var romajiGenerator = createLyricGenerator<RomajiTag[]>();
-                    return HitObjects.Any(x => romajiGenerator.CanGenerate(x));
+                    return canGenerate(romajiGenerator);
 
                 case LyricAutoGenerateProperty.AutoGenerateTimeTags:
                     var timeTagGenerator = createLyricGenerator<TimeTag[]>();
-                    return HitObjects.Any(x => timeTagGenerator.CanGenerate(x));
+                    return canGenerate(timeTagGenerator);
 
                 case LyricAutoGenerateProperty.AutoGenerateNotes:
                     var noteGenerator = createLyricGenerator<Note[]>();
-                    return HitObjects.Any(x => noteGenerator.CanGenerate(x));
+                    return canGenerate(noteGenerator);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(autoGenerateProperty));
             }
+
+            bool canDetect<T>(ILyricPropertyDetector<T> detector)
+                => HitObjects.Any(detector.CanDetect);
+
+            bool canGenerate<T>(ILyricPropertyGenerator<T> generator)
+                => HitObjects.Any(generator.CanGenerate);
         }
 
         public IDictionary<Lyric, LocalisableString> GetNotGeneratableLyrics(LyricAutoGenerateProperty autoGenerateProperty)
@@ -62,32 +68,37 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             {
                 case LyricAutoGenerateProperty.DetectLanguage:
                     var languageDetector = createLyricDetector<CultureInfo>();
-                    return HitObjects.Where(x => !languageDetector.CanDetect(x))
-                                     .ToDictionary(k => k, _ => new LocalisableString("Should have text in lyric."));
+                    return getInvalidMessageFromDetector(languageDetector);
 
                 case LyricAutoGenerateProperty.AutoGenerateRubyTags:
                     var rubyGenerator = createLyricGenerator<RubyTag[]>();
-                    return HitObjects.Where(x => !rubyGenerator.CanGenerate(x))
-                                     .ToDictionary(k => k, _ => new LocalisableString("Before generate ruby-tag, need to assign language first."));
+                    return getInvalidMessageFromGenerator(rubyGenerator);
 
                 case LyricAutoGenerateProperty.AutoGenerateRomajiTags:
                     var romajiGenerator = createLyricGenerator<RomajiTag[]>();
-                    return HitObjects.Where(x => !romajiGenerator.CanGenerate(x))
-                                     .ToDictionary(k => k, _ => new LocalisableString("Before generate romaji-tag, need to assign language first."));
+                    return getInvalidMessageFromGenerator(romajiGenerator);
 
                 case LyricAutoGenerateProperty.AutoGenerateTimeTags:
                     var timeTagGenerator = createLyricGenerator<TimeTag[]>();
-                    return HitObjects.Where(x => !timeTagGenerator.CanGenerate(x))
-                                     .ToDictionary(k => k, _ => new LocalisableString("Before generate time-tag, need to assign language first."));
+                    return getInvalidMessageFromGenerator(timeTagGenerator);
 
                 case LyricAutoGenerateProperty.AutoGenerateNotes:
                     var noteGenerator = createLyricGenerator<Note[]>();
-                    return HitObjects.Where(x => !noteGenerator.CanGenerate(x))
-                                     .ToDictionary(k => k, _ => new LocalisableString("Check the time-tag first."));
+                    return getInvalidMessageFromGenerator(noteGenerator);
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(autoGenerateProperty));
             }
+
+            IDictionary<Lyric, LocalisableString> getInvalidMessageFromDetector<T>(ILyricPropertyDetector<T> detector)
+                => HitObjects.Select(x => new KeyValuePair<Lyric, LocalisableString?>(x, detector.GetInvalidMessage(x)))
+                             .Where(x => x.Value != null)
+                             .ToDictionary(k => k.Key, v => v.Value!.Value);
+
+            IDictionary<Lyric, LocalisableString> getInvalidMessageFromGenerator<T>(ILyricPropertyGenerator<T> generator)
+                => HitObjects.Select(x => new KeyValuePair<Lyric, LocalisableString?>(x, generator.GetInvalidMessage(x)))
+                             .Where(x => x.Value != null)
+                             .ToDictionary(k => k.Key, v => v.Value!.Value);
         }
 
         public void AutoGenerate(LyricAutoGenerateProperty autoGenerateProperty)
