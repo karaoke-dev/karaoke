@@ -4,8 +4,6 @@
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
@@ -16,25 +14,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
     {
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
-
-        [Resolved]
-        private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
-
-        public void AutoGenerate()
-        {
-            var config = generatorConfigManager.Get<NoteGeneratorConfig>(KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig);
-            var generator = new NoteGenerator(config);
-
-            PerformOnLyricSelection(lyric =>
-            {
-                // clear exist notes if from those
-                var matchedNotes = HitObjects.Where(x => x.ParentLyric == lyric).ToArray();
-                RemoveRange(matchedNotes);
-
-                var notes = generator.Generate(lyric);
-                AddRange(notes);
-            });
-        }
 
         public void Split(float percentage = 0.5f)
         {

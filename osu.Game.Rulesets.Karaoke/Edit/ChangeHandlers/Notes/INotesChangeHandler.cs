@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 {
-    public interface INotesChangeHandler : IAutoGenerateChangeHandler
+    public interface INotesChangeHandler
     {
         void Split(float percentage = 0.5f);
 
