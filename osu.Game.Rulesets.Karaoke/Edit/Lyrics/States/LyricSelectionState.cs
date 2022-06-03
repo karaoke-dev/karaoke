@@ -7,6 +7,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -16,10 +17,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
     {
         public IBindable<bool> Selecting => selecting;
 
-        private readonly BindableDictionary<Lyric, string> bindableDisableSelectingLyric = new();
+        private readonly BindableDictionary<Lyric, LocalisableString> bindableDisableSelectingLyric = new();
         private readonly BindableList<Lyric> bindableSelectedLyrics = new();
 
-        public IBindableDictionary<Lyric, string> DisableSelectingLyric => bindableDisableSelectingLyric;
+        public IBindableDictionary<Lyric, LocalisableString> DisableSelectingLyric => bindableDisableSelectingLyric;
 
         public IBindableList<Lyric> SelectedLyrics => bindableSelectedLyrics;
 
@@ -109,7 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             bindableSelectedLyrics.Clear();
         }
 
-        public void UpdateDisableLyricList(IDictionary<Lyric, string> disableLyrics)
+        public void UpdateDisableLyricList(IDictionary<Lyric, LocalisableString> disableLyrics)
         {
             if (selecting.Value)
                 throw new NotSupportedException("Should not update the disable lyric list while selecting.");
@@ -119,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (disableLyrics == null)
                 return;
 
-            foreach ((var lyric, string reason) in disableLyrics)
+            foreach ((var lyric, LocalisableString reason) in disableLyrics)
                 bindableDisableSelectingLyric.Add(lyric, reason);
         }
     }

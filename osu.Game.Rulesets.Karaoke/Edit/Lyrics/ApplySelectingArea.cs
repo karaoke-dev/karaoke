@@ -8,6 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
@@ -131,7 +132,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public class SelectArea : CompositeDrawable
         {
             private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-            private readonly IBindableDictionary<Lyric, string> disableSelectingLyrics = new BindableDictionary<Lyric, string>();
+            private readonly IBindableDictionary<Lyric, LocalisableString> disableSelectingLyrics = new BindableDictionary<Lyric, LocalisableString>();
             private readonly IBindableList<Lyric> selectedLyrics = new BindableList<Lyric>();
 
             private readonly Box background;
