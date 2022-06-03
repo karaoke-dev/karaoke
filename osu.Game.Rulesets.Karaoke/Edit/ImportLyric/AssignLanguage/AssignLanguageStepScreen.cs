@@ -19,6 +19,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 
         public override IconUsage Icon => FontAwesome.Solid.Globe;
 
+        [Cached(typeof(ILyricAutoGenerateChangeHandler))]
+        private readonly LyricAutoGenerateChangeHandler lyricAutoGenerateChangeHandler;
+
         [Cached(typeof(ILyricLanguageChangeHandler))]
         private readonly LyricLanguageChangeHandler lyricLanguageChangeHandler;
 
@@ -30,6 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
 
         public AssignLanguageStepScreen()
         {
+            AddInternal(lyricAutoGenerateChangeHandler = new LyricAutoGenerateChangeHandler());
             AddInternal(lyricLanguageChangeHandler = new LyricLanguageChangeHandler());
             AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
             AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());
@@ -53,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
         public override void Complete()
         {
             // Check is need to go to generate ruby/romaji step or just skip.
-            if (lyricRubyTagsChangeHandler.CanGenerate() || lyricRomajiTagsChangeHandler.CanGenerate())
+            if (lyricAutoGenerateChangeHandler.CanGenerate(LyricAutoGenerateProperty.AutoGenerateRubyTags) || lyricAutoGenerateChangeHandler.CanGenerate(LyricAutoGenerateProperty.AutoGenerateRomajiTags))
             {
                 ScreenStack.Push(LyricImporterStep.GenerateRuby);
             }
