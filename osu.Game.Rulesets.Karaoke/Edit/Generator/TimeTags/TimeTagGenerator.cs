@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Localisation;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
 {
@@ -22,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
         public LocalisableString? GetInvalidMessage(Lyric lyric)
         {
             if (string.IsNullOrEmpty(lyric.Text))
-                return "Lyric should not be empty.";
+                return TimeTagGeneratorStrings.LyricShouldNotBeEmpty;
 
             return null;
         }
