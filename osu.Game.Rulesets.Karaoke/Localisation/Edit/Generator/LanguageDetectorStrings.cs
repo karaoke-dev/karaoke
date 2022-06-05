@@ -1,6 +1,6 @@
 ﻿using osu.Framework.Localisation;
 
-namespace osu.Game.Rulesets.Karaoke.Localisation
+namespace osu.Game.Rulesets.Karaoke.Localisation.Edit.Generator
 {
     public static class LanguageDetectorStrings
     {

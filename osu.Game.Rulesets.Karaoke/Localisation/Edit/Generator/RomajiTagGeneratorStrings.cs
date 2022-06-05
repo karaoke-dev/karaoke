@@ -1,10 +1,10 @@
 ﻿using osu.Framework.Localisation;
 
-namespace osu.Game.Rulesets.Karaoke.Localisation
+namespace osu.Game.Rulesets.Karaoke.Localisation.Edit.Generator
 {
-    public static class RubyTagGeneratorStrings
+    public static class RomajiTagGeneratorStrings
     {
-        private const string prefix = @"osu.Game.Rulesets.Karaoke.Localisation.RubyTagGenerator";
+        private const string prefix = @"osu.Game.Rulesets.Karaoke.Localisation.RomajiTagGenerator";
 
         /// <summary>
         /// "Lyric should not be empty."

@@ -8,7 +8,7 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
-using osu.Game.Rulesets.Karaoke.Localisation;
+using osu.Game.Rulesets.Karaoke.Localisation.Edit.Generator;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
 {
