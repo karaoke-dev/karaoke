@@ -13,11 +13,11 @@
     <PackageReference Include="Octokit" Version="0.51.0" />
     <PackageReference Include="osu.Framework.KaraokeFont" Version="2022.601.0" />
     <PackageReference Include="osu.Framework.Microphone" Version="2022.522.0" />
-    <PackageReference Include="ppy.LocalisationAnalyser" Version="2022.417.0">
+    <PackageReference Include="ppy.LocalisationAnalyser" Version="2022.605.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="ppy.osu.Game" Version="2022.605.0" />
+    <PackageReference Include="ppy.osu.Game" Version="2022.605.1" />
     <PackageReference Include="Lucene.Net" Version="4.8.0-beta00016" />
     <PackageReference Include="Lucene.Net.Analysis.Kuromoji" Version="4.8.0-beta00016" />
     <PackageReference Include="NicoKaraParser" Version="1.1.0" />
