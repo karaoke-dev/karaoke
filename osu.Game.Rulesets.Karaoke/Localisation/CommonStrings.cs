@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Localisation
 {
     public static class CommonStrings
     {
-        private const string prefix = @"osu.Game.Rulesets.Karaoke.Localisation.Common";
+        private const string prefix = @"osu.Game.Rulesets.Karaoke.Resources.Localisation.Common";
 
         /// <summary>
         /// "karaoke!"
