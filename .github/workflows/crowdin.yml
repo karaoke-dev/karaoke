@@ -22,18 +22,17 @@ jobs:
         run: dotnet localisation to-resx ./osu.Game.Rulesets.Karaoke/osu.Game.Rulesets.Karaoke.csproj --output ${{github.workspace}}\crowdin
 
   synchronize-with-crowdin:
+    name: Upload the localization into crowdin
     runs-on: ubuntu-latest
-
+    needs: [generate-localization-file]
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v2
-
       - name: crowdin action
         uses: crowdin/github-action@1.4.9
         with:
           upload_translations: true
-          download_translations: true
+          download_translations: false
+          source: ${{github.workspace}}\crowdin\*.resx
+          translation: ${{github.workspace}}\crowdin\%file_name%.%locale%.%file_extension%
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
