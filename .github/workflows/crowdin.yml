@@ -19,20 +19,28 @@ jobs:
       - name: Install the localization tools.
         run: dotnet tool restore
       - name: Generate the localization file
-        run: dotnet localisation to-resx ./osu.Game.Rulesets.Karaoke/osu.Game.Rulesets.Karaoke.csproj --output ${{github.workspace}}\crowdin
+        run: dotnet localisation to-resx ./osu.Game.Rulesets.Karaoke/osu.Game.Rulesets.Karaoke.csproj --output ./crowdin
 
-  synchronize-with-crowdin:
-    name: Upload the localization into crowdin
-    runs-on: ubuntu-latest
-    needs: [generate-localization-file]
-    steps:
-      - name: crowdin action
+      - name: Upload the localization into crowdin
         uses: crowdin/github-action@1.4.9
         with:
-          upload_translations: true
+          # upload the source to the target path of the https://github.com/karaoke-dev/karaoke-resources
+          # see the document in the https://support.crowdin.com/configuration-file/?q=dest
+          upload_sources: true
+          upload_sources_args: '--dest master/osu.Game.Rulesets.Karaoke.Resources/Localisation/%file_name%.%file_extension%'
+          # there's no translation can be uploaded in this repo.
+          upload_translations: false
           download_translations: false
-          source: ${{github.workspace}}\crowdin\*.resx
-          translation: ${{github.workspace}}\crowdin\%file_name%.%locale%.%file_extension%
+          # it should be like that but seems the crowdin has the problem on parsing the path.
+          # source: ${{github.workspace}}/crowdin/*.resx
+          source: crowdin/*.resx
+          translation: crowdin/%file_name%.%locale%.%file_extension%
+          # This is a numeric id, not to be confused with Crowdin API v1 "project identifier" string
+          # See "API v2" on https://crowdin.com/project/<your-project>/settings#api
+          project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
+          # A personal access token, not to be confused with Crowdin API v1 "API key"
+          # See https://crowdin.com/settings#api-key to generate a token
+          token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
