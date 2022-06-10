@@ -28,18 +28,14 @@ jobs:
           # see the document in the https://support.crowdin.com/configuration-file/?q=dest
           upload_sources: true
           upload_sources_args: '--dest master/osu.Game.Rulesets.Karaoke.Resources/Localisation/%file_name%.%file_extension%'
-          # there's no translation can be uploaded in this repo.
-          upload_translations: false
-          download_translations: false
-          # it should be like that but seems the crowdin has the problem on parsing the path.
-          # source: ${{github.workspace}}/crowdin/*.resx
           source: crowdin/*.resx
+          # there's no translation can be uploaded in this repo, but we still need to give it a value.
           translation: crowdin/%file_name%.%locale%.%file_extension%
-          # This is a numeric id, not to be confused with Crowdin API v1 "project identifier" string
+          # This is a numeric id, not to be confused with Crowdin API v1 "project identifier" string.
           # See "API v2" on https://crowdin.com/project/<your-project>/settings#api
           project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
-          # A personal access token, not to be confused with Crowdin API v1 "API key"
-          # See https://crowdin.com/settings#api-key to generate a token
+          # A personal access token, not to be confused with Crowdin API v1 "API key".
+          # See https://crowdin.com/settings#api-key to generate a token.
           token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
