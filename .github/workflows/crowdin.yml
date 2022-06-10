@@ -3,6 +3,8 @@ name: Crowdin Action
 on:
   push:
     branches: [ master ]
+    paths:
+      - 'osu.Game.Rulesets.Karaoke/Localisation/**'
 
 jobs:
   synchronize-with-crowdin:
