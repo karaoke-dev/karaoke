@@ -7,6 +7,20 @@ on:
       - 'osu.Game.Rulesets.Karaoke/Localisation/**'
 
 jobs:
+  generate-localization-file:
+    name: Generate the localization file
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Install the localization tools.
+        run: dotnet tool restore
+      - name: Generate the localization file
+        run: dotnet localisation to-resx ./osu.Game.Rulesets.Karaoke/osu.Game.Rulesets.Karaoke.csproj --output ${{github.workspace}}\crowdin
+
   synchronize-with-crowdin:
     runs-on: ubuntu-latest
 
