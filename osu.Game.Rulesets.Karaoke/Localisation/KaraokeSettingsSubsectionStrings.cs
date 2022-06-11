@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Localisation
 {
     public static class KaraokeSettingsSubsectionStrings
     {
-        private const string prefix = @"osu.Game.Rulesets.Karaoke.Localisation.KaraokeSettingsSubsection";
+        private const string prefix = @"osu.Game.Rulesets.Karaoke.Resources.Localisation.KaraokeSettingsSubsection";
 
         /// <summary>
         /// "Scroll speed"

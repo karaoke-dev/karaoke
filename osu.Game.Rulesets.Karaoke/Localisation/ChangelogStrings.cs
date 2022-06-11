@@ -7,7 +7,7 @@ namespace osu.Game.Rulesets.Karaoke.Localisation
 {
     public static class ChangelogStrings
     {
-        private const string prefix = @"osu.Game.Rulesets.Karaoke.Localisation.ChangelogSection";
+        private const string prefix = @"osu.Game.Rulesets.Karaoke.Resources.Localisation.ChangelogSection";
 
         /// <summary>
         /// "View current changelog"

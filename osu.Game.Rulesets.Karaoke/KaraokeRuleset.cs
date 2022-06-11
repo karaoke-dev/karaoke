@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
@@ -25,6 +24,7 @@ using osu.Game.Rulesets.Karaoke.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Setup;
 using osu.Game.Rulesets.Karaoke.Mods;
 using osu.Game.Rulesets.Karaoke.Replays;
+using osu.Game.Rulesets.Karaoke.Resources;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Skinning.Legacy;
 using osu.Game.Rulesets.Karaoke.Statistics;
@@ -182,23 +182,16 @@ namespace osu.Game.Rulesets.Karaoke
         {
             var store = new ResourceStore<byte[]>();
 
-            // add ruleset store
-            store.AddStore(getRulesetStore());
+            // add resource in the current dll.
+            store.AddStore(base.CreateResourceStore());
+
+            // add resource dll, it only works in the local because the resource will be packed into main dll in the resource build.
+            store.AddStore(new DllResourceStore(KaraokeResources.ResourceAssembly));
 
             // add shader resource from font package.
             store.AddStore(new NamespacedResourceStore<byte[]>(new ShaderResourceStore(), "Resources"));
 
             return store;
-
-            IResourceStore<byte[]> getRulesetStore()
-            {
-                var rulesetStore = base.CreateResourceStore();
-                if (rulesetStore.GetAvailableResources().Any())
-                    return rulesetStore;
-
-                // IRMerge might change the assembly name, which will cause resource not found.
-                return new NamespacedResourceStore<byte[]>(new DllResourceStore("osu.Game.Rulesets.Karaoke.dll"), @"Resources");
-            }
         }
 
         public override DifficultyCalculator CreateDifficultyCalculator(IWorkingBeatmap beatmap) => new KaraokeDifficultyCalculator(RulesetInfo, beatmap);

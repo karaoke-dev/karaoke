@@ -3,6 +3,7 @@
     <Target Name="ILRepacker" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
         <ItemGroup>
             <InputAssemblies Include="$(OutputPath)\osu.Game.Rulesets.Karaoke.dll"/>
+            <InputAssemblies Include="$(OutputPath)\osu.Game.Rulesets.Karaoke.Resources.dll"/>
             <InputAssemblies Include="$(OutputPath)\LanguageDetection.dll"/>
             <InputAssemblies Include="$(OutputPath)\LrcParser.dll"/>
             <InputAssemblies Include="$(OutputPath)\Octokit.dll"/>
