@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -19,6 +20,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
         private const int avatar_size = 60;
         private const int main_text_size = 24;
         private const int sub_text_size = 12;
+
+        private readonly IBindable<string> bindableAvatar = new Bindable<string>();
+        private readonly IBindable<string> bindableName = new Bindable<string>();
+        private readonly IBindable<string> bindableRomajiName = new Bindable<string>();
+        private readonly IBindable<string> bindableEnglishName = new Bindable<string>();
+        private readonly IBindable<string> bindableDescription = new Bindable<string>();
 
         private readonly DrawableSingerAvatar avatar;
         private readonly OsuSpriteText singerName;
@@ -110,6 +117,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                     }
                 }
             };
+
+            bindableAvatar.BindValueChanged(_ => avatar.Singer = lastSinger, true);
+            bindableName.BindValueChanged(e => singerName.Text = e.NewValue, true);
+            bindableRomajiName.BindValueChanged(e => singerRomajiName.Text = string.IsNullOrEmpty(e.NewValue) ? "" : $"({e.NewValue})", true);
+            bindableEnglishName.BindValueChanged(e => singerEnglishName.Text = e.NewValue, true);
+            bindableDescription.BindValueChanged(e => singerDescription.Text = string.IsNullOrEmpty(e.NewValue) ? "<No description>" : e.NewValue, true);
         }
 
         private ISinger lastSinger;
@@ -121,15 +134,21 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
             lastSinger = singer;
 
+            // todo: other type of singer(e.g: sub-singer) might display different info.
             if (singer is not Singer s)
                 return;
 
-            // todo: other type of singer(e.g: sub-singer) might display different info.
-            avatar.Singer = s;
-            singerName.Text = s.Name;
-            singerRomajiName.Text = s.RomajiName != null ? $"({s.RomajiName})" : "";
-            singerEnglishName.Text = s.EnglishName;
-            singerDescription.Text = s.Description ?? "<No description>";
+            bindableAvatar.UnbindBindings();
+            bindableName.UnbindBindings();
+            bindableRomajiName.UnbindBindings();
+            bindableEnglishName.UnbindBindings();
+            bindableDescription.UnbindBindings();
+
+            bindableAvatar.BindTo(s.AvatarBindable);
+            bindableName.BindTo(s.NameBindable);
+            bindableRomajiName.BindTo(s.RomajiNameBindable);
+            bindableEnglishName.BindTo(s.EnglishNameBindable);
+            bindableDescription.BindTo(s.DescriptionBindable);
         }
     }
 }
