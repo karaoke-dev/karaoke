@@ -1,0 +1,19 @@
+name: Pull Request Labeler
+
+on:
+  pull_request:
+    branches: [ '*' ]
+    paths:
+      # we only add use this action for add the localization label for now, so run this action if localization changed.
+      - 'osu.Game.Rulesets.Karaoke/Localisation/**'
+
+jobs:
+  triage:
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/labeler@v4
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
