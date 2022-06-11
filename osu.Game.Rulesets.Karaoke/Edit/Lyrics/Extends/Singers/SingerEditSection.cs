@@ -99,12 +99,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
         {
             private const float avatar_size = 40f;
 
+            private readonly IBindable<string> bindableName = new Bindable<string>();
+            private readonly IBindable<string> bindableEnglishName = new Bindable<string>();
+
             public LabelledSingerSwitchButton(Singer singer)
             {
                 TooltipContent = singer;
 
-                Label = singer.Name;
-                Description = singer.Description;
+                bindableName.BindTo(singer.NameBindable);
+                bindableEnglishName.BindTo(singer.EnglishNameBindable);
 
                 if (InternalChildren[1] is FillFlowContainer fillFlowContainer)
                 {
@@ -128,6 +131,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
                         Left = CONTENT_PADDING_HORIZONTAL,
                     }
                 });
+
+                bindableName.BindValueChanged(e => Label = e.NewValue, true);
+                bindableEnglishName.BindValueChanged(e => Description = e.NewValue, true);
             }
 
             public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
