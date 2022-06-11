@@ -40,6 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 // Scrolling
                 new SettingsEnumDropdown<KaraokeScrollingDirection>
                 {
+                    ClassicDefault = KaraokeScrollingDirection.Left,
                     LabelText = KaraokeSettingsSubsectionStrings.ScrollingDirection,
                     TooltipText = KaraokeSettingsSubsectionStrings.ScrollingDirectionTooltip,
                     Current = config.GetBindable<KaraokeScrollingDirection>(KaraokeRulesetSetting.ScrollDirection)
@@ -72,6 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 // Device
                 new SettingsMicrophoneDeviceDropdown
                 {
+                    ClassicDefault = null,
                     LabelText = KaraokeSettingsSubsectionStrings.MicrophoneDevice,
                     Current = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
                 },
