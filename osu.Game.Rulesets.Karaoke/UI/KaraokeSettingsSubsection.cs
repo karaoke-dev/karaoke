@@ -38,31 +38,43 @@ namespace osu.Game.Rulesets.Karaoke.UI
             Children = new Drawable[]
             {
                 // Scrolling
+                new SettingsEnumDropdown<KaraokeScrollingDirection>
+                {
+                    ClassicDefault = KaraokeScrollingDirection.Left,
+                    LabelText = KaraokeSettingsSubsectionStrings.ScrollingDirection,
+                    TooltipText = KaraokeSettingsSubsectionStrings.ScrollingDirectionTooltip,
+                    Current = config.GetBindable<KaraokeScrollingDirection>(KaraokeRulesetSetting.ScrollDirection)
+                },
                 new SettingsSlider<double, TimeSlider>
                 {
                     LabelText = KaraokeSettingsSubsectionStrings.ScrollSpeed,
                     Current = config.GetBindable<double>(KaraokeRulesetSetting.ScrollTime)
                 },
+                // Gameplay
                 new SettingsCheckbox
                 {
                     LabelText = KaraokeSettingsSubsectionStrings.ShowCursorWhilePlaying,
+                    TooltipText = KaraokeSettingsSubsectionStrings.ShowCursorWhilePlayingTooltip,
                     Current = config.GetBindable<bool>(KaraokeRulesetSetting.ShowCursor)
                 },
                 // Translate
                 new SettingsCheckbox
                 {
                     LabelText = KaraokeSettingsSubsectionStrings.Translate,
+                    TooltipText = KaraokeSettingsSubsectionStrings.TranslateTooltip,
                     Current = config.GetBindable<bool>(KaraokeRulesetSetting.UseTranslate)
                 },
                 new SettingsLanguage
                 {
                     LabelText = KaraokeSettingsSubsectionStrings.PreferLanguage,
-                    TooltipText = KaraokeSettingsSubsectionStrings.SelectPreferTranslateLanguage,
+                    TooltipText = KaraokeSettingsSubsectionStrings.PreferLanguageTooltip,
                     Current = config.GetBindable<CultureInfo>(KaraokeRulesetSetting.PreferLanguage)
                 },
+                // Device
                 new SettingsMicrophoneDeviceDropdown
                 {
-                    LabelText = KaraokeSettingsSubsectionStrings.MicrophoneDevices,
+                    ClassicDefault = null,
+                    LabelText = KaraokeSettingsSubsectionStrings.MicrophoneDevice,
                     Current = config.GetBindable<string>(KaraokeRulesetSetting.MicrophoneDevice)
                 },
                 // Practice
@@ -74,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 new DangerousSettingsButton
                 {
                     Text = KaraokeSettingsSubsectionStrings.OpenRulesetSettings,
-                    TooltipText = KaraokeSettingsSubsectionStrings.OpenRulesetSettingsForAdjustingMoreConfigs,
+                    TooltipText = KaraokeSettingsSubsectionStrings.OpenRulesetSettingsTooltip,
                     Action = () =>
                     {
                         try
@@ -92,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 new SettingsButton
                 {
                     Text = KaraokeSettingsSubsectionStrings.ChangeLog,
-                    TooltipText = KaraokeSettingsSubsectionStrings.LetsSeeWhatKaraokeChanged,
+                    TooltipText = KaraokeSettingsSubsectionStrings.ChangeLogTooltip,
                     Action = () =>
                     {
                         try

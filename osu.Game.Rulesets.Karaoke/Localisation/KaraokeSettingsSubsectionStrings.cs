@@ -10,6 +10,19 @@ namespace osu.Game.Rulesets.Karaoke.Localisation
         private const string prefix = @"osu.Game.Rulesets.Karaoke.Resources.Localisation.KaraokeSettingsSubsection";
 
         /// <summary>
+        /// "Scrolling direction"
+        /// </summary>
+        public static LocalisableString ScrollingDirection => new TranslatableString(getKey(@"scrolling_direction"), @"Scrolling direction");
+
+        /// <summary>
+        /// "Adjust the scroll direction in the scoring area. Will show that in the gameplay if the beatmap is support the scoring."
+        /// </summary>
+        public static LocalisableString ScrollingDirectionTooltip => new TranslatableString(
+            getKey(@"scrolling_direction_tooltip"),
+            @"Adjust the scroll direction in the scoring area. Will show that in the gameplay if the beatmap is support the scoring."
+        );
+
+        /// <summary>
         /// "Scroll speed"
         /// </summary>
         public static LocalisableString ScrollSpeed => new TranslatableString(getKey(@"scroll_speed"), @"Scroll speed");
@@ -20,9 +33,19 @@ namespace osu.Game.Rulesets.Karaoke.Localisation
         public static LocalisableString ShowCursorWhilePlaying => new TranslatableString(getKey(@"show_cursor_while_playing"), @"Show cursor while playing");
 
         /// <summary>
+        /// "Will not showing the cursor while gameplay if not select this option."
+        /// </summary>
+        public static LocalisableString ShowCursorWhilePlayingTooltip => new TranslatableString(getKey(@"show_cursor_while_playing_tooltip"), @"Will not showing the cursor while gameplay if not select this option.");
+
+        /// <summary>
         /// "Translate"
         /// </summary>
         public static LocalisableString Translate => new TranslatableString(getKey(@"translate"), @"Translate");
+
+        /// <summary>
+        /// "Show the translation under the lyric if contains in the beatmap."
+        /// </summary>
+        public static LocalisableString TranslateTooltip => new TranslatableString(getKey(@"translate_tooltip"), @"Show the translation under the lyric if contains in the beatmap.");
 
         /// <summary>
         /// "Prefer language"
@@ -32,12 +55,12 @@ namespace osu.Game.Rulesets.Karaoke.Localisation
         /// <summary>
         /// "Select prefer translate language."
         /// </summary>
-        public static LocalisableString SelectPreferTranslateLanguage => new TranslatableString(getKey(@"select_prefer_translate_language"), @"Select prefer translate language.");
+        public static LocalisableString PreferLanguageTooltip => new TranslatableString(getKey(@"prefer_language_tooltip"), @"Select prefer translate language.");
 
         /// <summary>
-        /// "Microphone devices"
+        /// "Microphone device"
         /// </summary>
-        public static LocalisableString MicrophoneDevices => new TranslatableString(getKey(@"microphone_devices"), @"Microphone devices");
+        public static LocalisableString MicrophoneDevice => new TranslatableString(getKey(@"microphone_device"), @"Microphone device");
 
         /// <summary>
         /// "Practice preempt time"
@@ -52,8 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Localisation
         /// <summary>
         /// "Open ruleset settings for adjusting more configs."
         /// </summary>
-        public static LocalisableString OpenRulesetSettingsForAdjustingMoreConfigs =>
-            new TranslatableString(getKey(@"open_ruleset_settings_for_adjusting_more_configs"), @"Open ruleset settings for adjusting more configs.");
+        public static LocalisableString OpenRulesetSettingsTooltip => new TranslatableString(getKey(@"open_ruleset_settings_tooltip"), @"Open ruleset settings for adjusting more configs.");
 
         /// <summary>
         /// "Change log"
@@ -63,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Localisation
         /// <summary>
         /// "Let&#39;s see what karaoke! changed."
         /// </summary>
-        public static LocalisableString LetsSeeWhatKaraokeChanged => new TranslatableString(getKey(@"lets_see_what_karaoke_changed"), @"Let's see what karaoke! changed.");
+        public static LocalisableString ChangeLogTooltip => new TranslatableString(getKey(@"change_log_tooltip"), @"Let's see what karaoke! changed.");
 
         private static string getKey(string key) => $@"{prefix}:{key}";
     }
