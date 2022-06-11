@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
 
         public class LabelledSingerSwitchButton : LabelledSwitchButton, IHasCustomTooltip<Singer>
         {
-            private const float avatar_size = 40f;
+            private const float avatar_size = 48f;
 
             private readonly IBindable<string> bindableName = new Bindable<string>();
             private readonly IBindable<string> bindableEnglishName = new Bindable<string>();
@@ -111,6 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
 
                 if (InternalChildren[1] is FillFlowContainer fillFlowContainer)
                 {
+                    fillFlowContainer.Spacing = new Vector2(0, 6);
                     fillFlowContainer.Padding
                         = new MarginPadding
                         {
@@ -133,7 +134,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
                 });
 
                 bindableName.BindValueChanged(e => Label = e.NewValue, true);
-                bindableEnglishName.BindValueChanged(e => Description = e.NewValue, true);
+                bindableEnglishName.BindValueChanged(e => Description = string.IsNullOrEmpty(e.NewValue) ? "<No english name>" : e.NewValue, true);
             }
 
             public ITooltip<Singer> GetCustomTooltip() => new SingerToolTip();
