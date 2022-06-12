@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Detail
                 {
                     Label = "Avatar",
                     Description = "Select image to set avatar.",
-                    Current = singer.AvatarBindable,
+                    Current = singer.AvatarFileBindable,
                 },
                 new LabelledHueSelector
                 {
