@@ -3,7 +3,7 @@
   "isRoot": true,
   "tools": {
     "ppy.localisationanalyser.tools": {
-      "version": "2022.605.2",
+      "version": "2022.607.0",
       "commands": [
         "localisation"
       ]
