@@ -26,8 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         {
             Item = item;
 
-            // apply current text from text-tag.
-            Component.Text = GetFieldValue(item);
+            // apply current value from the field in the item.
+            Current.Value = GetFieldValue(item);
 
             // should change preview text box if selected ruby/romaji changed.
             OnCommit += (sender, edited) =>
