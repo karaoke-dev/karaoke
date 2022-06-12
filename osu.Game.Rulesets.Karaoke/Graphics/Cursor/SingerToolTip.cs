@@ -21,7 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
         private const int main_text_size = 24;
         private const int sub_text_size = 12;
 
-        private readonly IBindable<string> bindableAvatar = new Bindable<string>();
         private readonly IBindable<string> bindableName = new Bindable<string>();
         private readonly IBindable<string> bindableRomajiName = new Bindable<string>();
         private readonly IBindable<string> bindableEnglishName = new Bindable<string>();
@@ -118,7 +117,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
                 }
             };
 
-            bindableAvatar.BindValueChanged(_ => avatar.Singer = lastSinger, true);
             bindableName.BindValueChanged(e => singerName.Text = e.NewValue, true);
             bindableRomajiName.BindValueChanged(e => singerRomajiName.Text = string.IsNullOrEmpty(e.NewValue) ? "" : $"({e.NewValue})", true);
             bindableEnglishName.BindValueChanged(e => singerEnglishName.Text = e.NewValue, true);
@@ -132,19 +130,19 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             if (singer == lastSinger)
                 return;
 
+            avatar.Singer = singer;
+
             lastSinger = singer;
 
             // todo: other type of singer(e.g: sub-singer) might display different info.
             if (singer is not Singer s)
                 return;
 
-            bindableAvatar.UnbindBindings();
             bindableName.UnbindBindings();
             bindableRomajiName.UnbindBindings();
             bindableEnglishName.UnbindBindings();
             bindableDescription.UnbindBindings();
 
-            bindableAvatar.BindTo(s.AvatarBindable);
             bindableName.BindTo(s.NameBindable);
             bindableRomajiName.BindTo(s.RomajiNameBindable);
             bindableEnglishName.BindTo(s.EnglishNameBindable);
