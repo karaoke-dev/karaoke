@@ -26,13 +26,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         {
             this.item = item;
 
-            // apply current text from text-tag.
-            Component.Value = GetFieldValue(item);
+            // apply current value from the field in the item.
+            Current.Value = GetFieldValue(item);
 
             // should change preview text box if selected ruby/romaji changed.
-            Component.OnCommit += (sender, value) =>
+            Component.OnCommit += (sender, edited) =>
             {
-                ApplyValue(item, value);
+                if (!edited)
+                    return;
+
+                ApplyValue(item, sender.Value);
             };
 
             // change style if focus.
@@ -82,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         {
             public Action<bool> Selected;
 
-            public Action<SwitchButton, bool> OnCommit;
+            public Action<ObjectFieldSwitchButton, bool> OnCommit;
 
             protected override bool OnHover(HoverEvent e)
             {
@@ -99,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             protected override void OnUserChange(bool value)
             {
                 base.OnUserChange(value);
-                OnCommit?.Invoke(this, value);
+                OnCommit?.Invoke(this, true);
             }
 
             private Color4 highLightColour;
@@ -116,6 +119,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
             public bool Value
             {
+                get => Current.Value;
                 set => Current.Value = value;
             }
 
