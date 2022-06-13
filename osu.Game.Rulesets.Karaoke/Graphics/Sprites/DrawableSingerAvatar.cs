@@ -1,35 +1,50 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
 {
-    public class DrawableSingerAvatar : Container
+    public class DrawableSingerAvatar : CompositeDrawable
     {
-        [BackgroundDependencyLoader]
-        private void load(LargeTextureStore textures)
+        private readonly IBindable<string> binsableAvatarFile = new Bindable<string>();
+
+        private readonly Sprite avatar;
+
+        public DrawableSingerAvatar()
         {
-            if (textures == null)
-                throw new ArgumentNullException(nameof(textures));
-
-            // todo : get real texture from beatmap
-            var texture = textures.Get(@"Online/avatar-guest");
-
-            Add(new Sprite
+            InternalChild = avatar = new Sprite
             {
                 RelativeSizeAxes = Axes.Both,
-                Texture = texture,
                 FillMode = FillMode.Fit,
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre
-            });
+            };
+        }
+
+        [BackgroundDependencyLoader(true)]
+        private void load(LargeTextureStore textures, IKaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider)
+        {
+            binsableAvatarFile.BindValueChanged(_ =>
+            {
+                if (singer == null)
+                    avatar.Texture = getDefaultAvatar();
+                else
+                    avatar.Texture = karaokeBeatmapResourcesProvider?.GetSingerAvatar(singer) ?? getDefaultAvatar();
+
+                avatar.FadeInFromZero(500);
+            }, true);
+
+            Texture getDefaultAvatar()
+                => textures.Get(@"Online/avatar-guest");
         }
 
         private ISinger singer;
@@ -40,7 +55,12 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
             set
             {
                 singer = value;
-                // todo : update texture.
+
+                if (singer is not Singer s)
+                    return;
+
+                binsableAvatarFile.UnbindBindings();
+                binsableAvatarFile.BindTo(s.AvatarFileBindable);
             }
         }
     }
