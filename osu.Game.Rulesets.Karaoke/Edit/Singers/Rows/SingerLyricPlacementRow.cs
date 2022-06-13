@@ -19,7 +19,6 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
-using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
@@ -95,11 +94,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                             {
                                 new Drawable[]
                                 {
-                                    new DrawableSingerAvatar
+                                    new SingerAvatar(singer)
                                     {
                                         Name = "Avatar",
                                         Size = new Vector2(avatar_size),
-                                        Singer = singer,
                                     },
                                     new FillFlowContainer
                                     {
