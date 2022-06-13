@@ -7,6 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
@@ -41,6 +42,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly FontManager fontManager;
 
+        [Cached(typeof(IKaraokeBeatmapResourcesProvider))]
+        private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
+
         [Cached(typeof(ILyricsProvider))]
         private readonly LyricsProvider lyricsProvider;
 
@@ -65,6 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
             // Duplicated registration because selection handler need to use it.
             AddInternal(fontManager = new FontManager());
+            AddInternal(karaokeBeatmapResourcesProvider = new KaraokeBeatmapResourcesProvider());
 
             AddInternal(exportLyricManager = new ExportLyricManager());
             AddInternal(lyricsProvider = new LyricsProvider());

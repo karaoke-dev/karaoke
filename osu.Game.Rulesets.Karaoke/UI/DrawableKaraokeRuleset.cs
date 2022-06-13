@@ -38,6 +38,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [Cached]
         private readonly FontManager fontManager;
 
+        [Cached(typeof(IKaraokeBeatmapResourcesProvider))]
+        private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
+
         protected virtual bool DisplayNotePlayfield => Beatmap.IsScorable();
 
         public DrawableKaraokeRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods)
@@ -45,6 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             AddInternal(positionCalculator = new NotePositionInfo());
             AddInternal(fontManager = new FontManager());
+            AddInternal(karaokeBeatmapResourcesProvider = new KaraokeBeatmapResourcesProvider());
         }
 
         protected override Playfield CreatePlayfield() => new KaraokePlayfield();

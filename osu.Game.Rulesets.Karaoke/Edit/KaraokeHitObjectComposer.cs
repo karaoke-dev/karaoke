@@ -11,6 +11,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Tools;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
@@ -44,6 +45,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [Cached]
         private readonly FontManager fontManager;
 
+        [Cached(typeof(IKaraokeBeatmapResourcesProvider))]
+        private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
+
         [Cached(typeof(ILyricRubyTagsChangeHandler))]
         private readonly LyricRubyTagsChangeHandler lyricRubyTagsChangeHandler;
 
@@ -76,6 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
             // Duplicated registration because selection handler need to use it.
             AddInternal(fontManager = new FontManager());
+            AddInternal(karaokeBeatmapResourcesProvider = new KaraokeBeatmapResourcesProvider());
 
             AddInternal(lyricRubyTagsChangeHandler = new LyricRubyTagsChangeHandler());
             AddInternal(lyricRomajiTagsChangeHandler = new LyricRomajiTagsChangeHandler());

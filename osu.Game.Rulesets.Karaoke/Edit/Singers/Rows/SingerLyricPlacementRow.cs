@@ -19,7 +19,6 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Detail;
 using osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
-using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
@@ -52,7 +51,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 
             private readonly IBindable<int> bindableOrder = new Bindable<int>();
             private readonly IBindable<float> bindableHue = new Bindable<float>();
-            private readonly IBindable<string> bindableAvatar = new Bindable<string>();
             private readonly IBindable<string> bindableSingerName = new Bindable<string>();
             private readonly IBindable<string> bindableEnglishName = new Bindable<string>();
 
@@ -64,12 +62,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
 
                 bindableOrder.BindTo(singer.OrderBindable);
                 bindableHue.BindTo(singer.HueBindable);
-                bindableAvatar.BindTo(singer.AvatarBindable);
                 bindableSingerName.BindTo(singer.NameBindable);
                 bindableEnglishName.BindTo(singer.EnglishNameBindable);
 
                 Box background;
-                DrawableSingerAvatar avatar;
                 OsuSpriteText singerName;
                 OsuSpriteText singerEnglishName;
 
@@ -98,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                             {
                                 new Drawable[]
                                 {
-                                    avatar = new DrawableSingerAvatar
+                                    new SingerAvatar(singer)
                                     {
                                         Name = "Avatar",
                                         Size = new Vector2(avatar_size),
@@ -144,12 +140,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows
                 {
                     // background
                     background.Colour = SingerUtils.GetBackgroundColour(singer);
-                }, true);
-
-                bindableAvatar.BindValueChanged(_ =>
-                {
-                    // avatar
-                    avatar.Singer = singer;
                 }, true);
 
                 bindableSingerName.BindValueChanged(_ =>

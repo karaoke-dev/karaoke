@@ -33,12 +33,12 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas
         }
 
         [JsonIgnore]
-        public readonly Bindable<string> AvatarBindable = new();
+        public readonly Bindable<string> AvatarFileBindable = new();
 
-        public string Avatar
+        public string AvatarFile
         {
-            get => AvatarBindable.Value;
-            set => AvatarBindable.Value = value;
+            get => AvatarFileBindable.Value;
+            set => AvatarFileBindable.Value = value;
         }
 
         [JsonIgnore]
