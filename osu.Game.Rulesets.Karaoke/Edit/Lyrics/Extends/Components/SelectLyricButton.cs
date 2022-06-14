@@ -18,9 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
     {
         private IBindable<bool> selecting;
 
-        protected virtual string StandardText => "Select lyric";
+        protected abstract LocalisableString StandardText { get; }
 
-        protected virtual string SelectingText => "Cancel selecting";
+        protected abstract LocalisableString SelectingText { get; }
 
         public Func<IDictionary<Lyric, LocalisableString>> StartSelecting { get; set; }
 
