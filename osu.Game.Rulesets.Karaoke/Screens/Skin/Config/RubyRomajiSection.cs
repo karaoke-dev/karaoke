@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
@@ -17,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
         private LabelledRealTimeSliderBar<int> rubyMarginSliderBar;
         private LabelledRealTimeSliderBar<int> romajiMarginSliderBar;
 
-        protected override string Title => "Ruby/Romaji";
+        protected override LocalisableString Title => "Ruby/Romaji";
 
         [BackgroundDependencyLoader]
         private void load(LyricConfigManager manager)

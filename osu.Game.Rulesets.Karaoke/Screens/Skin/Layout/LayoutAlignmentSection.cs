@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
@@ -15,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
         private LabelledRealTimeSliderBar<int> horizontalMarginSliderBar;
         private LabelledRealTimeSliderBar<int> verticalMarginSliderBar;
 
-        protected override string Title => "Layout";
+        protected override LocalisableString Title => "Layout";
 
         [BackgroundDependencyLoader]
         private void load(LayoutManager manager)

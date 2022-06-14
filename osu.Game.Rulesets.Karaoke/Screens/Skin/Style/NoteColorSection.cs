@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Skinning;
 
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
         private LabelledColourSelector noteColorPicker;
         private LabelledColourSelector blinkColorPicker;
 
-        protected override string Title => "Color";
+        protected override LocalisableString Title => "Color";
 
         [BackgroundDependencyLoader]
         private void load(SkinManager manager)

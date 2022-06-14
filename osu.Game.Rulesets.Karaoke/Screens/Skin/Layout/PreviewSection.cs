@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
         private LabelledEnumDropdown<PreviewSample> previewSampleDropdown;
         private StyleLabelledDropdown previewStyleDropdown;
 
-        protected override string Title => "Preview (Won't be saved)";
+        protected override LocalisableString Title => "Preview (Won't be saved)";
 
         [BackgroundDependencyLoader]
         private void load(LayoutManager manager)

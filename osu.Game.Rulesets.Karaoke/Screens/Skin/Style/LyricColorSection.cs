@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
         private LabelledEnumDropdown<ColorArea> colorAreaDropdown;
         private LabelledColourSelector colorPicker;
 
-        protected override string Title => "Color";
+        protected override LocalisableString Title => "Color";
 
         [BackgroundDependencyLoader]
         private void load(StyleManager manager)
