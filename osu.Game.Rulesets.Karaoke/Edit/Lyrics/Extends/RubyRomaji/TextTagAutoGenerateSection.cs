@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 
@@ -8,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
     public abstract class TextTagAutoGenerateSection : Section
     {
-        protected sealed override string Title => "Auto generate";
+        protected sealed override LocalisableString Title => "Auto generate";
 
         protected abstract class TextTagAutoGenerateSubsection : AutoGenerateSubsection
         {

@@ -4,6 +4,7 @@
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
     public abstract class SpecialActionSection<TAction> : Section where TAction : struct, Enum
     {
-        protected sealed override string Title => "Action";
+        protected sealed override LocalisableString Title => "Action";
 
         private readonly Bindable<TAction> bindableModeSpecialAction = new();
 

@@ -5,6 +5,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
     {
         private LabelledEnumDropdown<KaraokeTextSmartHorizon> smartHorizonDropdown;
 
-        protected override string Title => "Position";
+        protected override LocalisableString Title => "Position";
 
         [BackgroundDependencyLoader]
         private void load(LyricConfigManager manager)

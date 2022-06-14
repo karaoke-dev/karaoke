@@ -9,6 +9,7 @@ using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
@@ -23,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 {
     public class LanguageMissingSection : Section
     {
-        protected override string Title => "Invalid lyric (missing language)";
+        protected override LocalisableString Title => "Invalid lyric (missing language)";
 
         private BindableDictionary<Lyric, Issue[]> bindableReports;
 

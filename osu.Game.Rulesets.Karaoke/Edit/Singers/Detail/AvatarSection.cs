@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
@@ -9,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Detail
 {
     internal class AvatarSection : EditSingerSection
     {
-        protected override string Title => "Avatar";
+        protected override LocalisableString Title => "Avatar";
 
         public AvatarSection(Singer singer)
         {

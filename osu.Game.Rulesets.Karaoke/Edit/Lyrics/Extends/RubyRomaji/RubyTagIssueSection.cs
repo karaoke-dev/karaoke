@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
@@ -17,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
     public class RubyTagIssueSection : Section
     {
-        protected override string Title => "Invalid ruby-tag";
+        protected override LocalisableString Title => "Invalid ruby-tag";
 
         private BindableDictionary<Lyric, Issue[]> bindableReports;
 

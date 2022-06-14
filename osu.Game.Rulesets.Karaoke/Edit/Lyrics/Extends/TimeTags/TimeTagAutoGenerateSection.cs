@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja;
@@ -14,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 {
     public class TimeTagAutoGenerateSection : Section
     {
-        protected override string Title => "Auto generate";
+        protected override LocalisableString Title => "Auto generate";
 
         public TimeTagAutoGenerateSection()
         {

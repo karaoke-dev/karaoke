@@ -10,6 +10,7 @@ using osu.Framework.Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
@@ -31,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 {
     public class TimeTagIssueSection : Section
     {
-        protected override string Title => "Invalid time-tag";
+        protected override LocalisableString Title => "Invalid time-tag";
 
         private BindableDictionary<Lyric, Issue[]> bindableReports;
 

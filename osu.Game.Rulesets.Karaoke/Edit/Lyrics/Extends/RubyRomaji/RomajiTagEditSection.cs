@@ -4,6 +4,7 @@
 using System.Diagnostics;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
     public class RomajiTagEditSection : TextTagEditSection<RomajiTag>
     {
-        protected override string Title => "Romaji";
+        protected override LocalisableString Title => "Romaji";
 
         [Resolved]
         private ILyricRomajiTagsChangeHandler romajiTagsChangeHandler { get; set; }

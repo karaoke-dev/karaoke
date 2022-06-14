@@ -4,6 +4,7 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Skinning;
@@ -16,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Style
         private LabelledRealTimeSliderBar<float> shadowXSliderBar;
         private LabelledRealTimeSliderBar<float> shadowYSliderBar;
 
-        protected override string Title => "Shadow";
+        protected override LocalisableString Title => "Shadow";
 
         [BackgroundDependencyLoader]
         private void load(SkinManager manager)

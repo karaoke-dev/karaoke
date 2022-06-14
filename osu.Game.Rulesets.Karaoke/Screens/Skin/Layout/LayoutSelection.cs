@@ -7,6 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
@@ -25,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 
         private const float layout_setting_vertical_spacing = 15;
 
-        protected override string Title => "Layout";
+        protected override LocalisableString Title => "Layout";
 
         public LayoutSelection()
         {

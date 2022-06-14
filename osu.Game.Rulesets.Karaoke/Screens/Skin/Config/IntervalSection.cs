@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Config
         private LabelledRealTimeSliderBar<int> rubyIntervalSliderBar;
         private LabelledRealTimeSliderBar<int> romajiIntervalSliderBar;
 
-        protected override string Title => "Interval";
+        protected override LocalisableString Title => "Interval";
 
         [BackgroundDependencyLoader]
         private void load(LyricConfigManager manager)
