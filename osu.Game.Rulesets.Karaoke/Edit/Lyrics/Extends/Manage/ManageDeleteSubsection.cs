@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -10,9 +11,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage
 {
     public class ManageDeleteSubsection : SelectLyricButton
     {
-        protected override string StandardText => "Delete";
+        protected override LocalisableString StandardText => "Delete";
 
-        protected override string SelectingText => "Cancel delete";
+        protected override LocalisableString SelectingText => "Cancel delete";
 
         [BackgroundDependencyLoader]
         private void load(ILyricSelectionState lyricSelectionState, ILyricsChangeHandler lyricsChangeHandler)

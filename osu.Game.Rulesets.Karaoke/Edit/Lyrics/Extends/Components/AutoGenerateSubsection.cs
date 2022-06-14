@@ -118,9 +118,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         private class AutoGenerateButton : SelectLyricButton
         {
-            protected override string StandardText => "Generate";
+            protected override LocalisableString StandardText => "Generate";
 
-            protected override string SelectingText => "Cancel generate";
+            protected override LocalisableString SelectingText => "Cancel generate";
         }
 
         protected abstract class ConfigButton : IconButton, IHasPopover

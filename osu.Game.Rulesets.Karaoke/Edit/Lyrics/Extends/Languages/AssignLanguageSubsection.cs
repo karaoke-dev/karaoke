@@ -7,6 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
@@ -17,9 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 {
     public class AssignLanguageSubsection : SelectLyricButton, IHasPopover
     {
-        protected override string StandardText => "Change language";
+        protected override LocalisableString StandardText => "Change language";
 
-        protected override string SelectingText => $"Cancel change language({CultureInfoUtils.GetLanguageDisplayText(bindableLanguage.Value)})";
+        protected override LocalisableString SelectingText => $"Cancel change language({CultureInfoUtils.GetLanguageDisplayText(bindableLanguage.Value)})";
 
         private readonly Bindable<CultureInfo> bindableLanguage = new();
 
