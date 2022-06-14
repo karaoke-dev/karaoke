@@ -3,6 +3,7 @@
 
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osuTK;
@@ -19,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Containers
 
         protected override Container<Drawable> Content => flow;
 
-        protected abstract string Title { get; }
+        protected abstract LocalisableString Title { get; }
 
         protected Section()
         {
