@@ -10,6 +10,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
@@ -182,7 +183,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                 };
             }
 
-            private string getTextTagLabel()
+            private LocalisableString getTextTagLabel()
             {
                 if (typeof(TTextTag) == typeof(RubyTag))
                     return "Ruby";
@@ -193,7 +194,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                 return "Text";
             }
 
-            private string getTextTagDescription()
+            private LocalisableString getTextTagDescription()
             {
                 if (typeof(TTextTag) == typeof(RubyTag))
                     return "Please enter the ruby.";
@@ -204,7 +205,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                 return "Text";
             }
 
-            private string getPlaceholderText()
+            private LocalisableString getPlaceholderText()
             {
                 if (typeof(TTextTag) == typeof(RubyTag))
                     return "Ruby";

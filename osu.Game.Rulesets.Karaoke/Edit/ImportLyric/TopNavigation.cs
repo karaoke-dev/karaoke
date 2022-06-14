@@ -9,6 +9,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
+using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
@@ -144,7 +145,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         protected abstract NavigationState GetState(Lyric[] lyrics);
 
-        protected abstract string GetNavigationText(NavigationState value);
+        protected abstract LocalisableString GetNavigationText(NavigationState value);
 
         protected virtual bool AbleToNextStep(NavigationState value)
             => value == NavigationState.Done;

@@ -9,6 +9,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Containers.Markdown;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.Containers.Markdown;
 using osu.Game.Graphics.Sprites;
 using osuTK;
@@ -61,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
                     icon.Icon = saitenable ? FontAwesome.Regular.DotCircle : FontAwesome.Regular.PauseCircle;
                     icon.Colour = saitenable ? Color4.Red : Color4.LightGray;
 
-                    string text = GetSaitenStatusText(statusMode);
+                    string text = GetSaitenStatusText(statusMode).ToString();
                     var block = Markdown.Parse(text).OfType<ParagraphBlock>().FirstOrDefault();
 
                     messageText.Clear();
@@ -71,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             }
         }
 
-        protected virtual string GetSaitenStatusText(SaitenStatusMode statusMode)
+        protected virtual LocalisableString GetSaitenStatusText(SaitenStatusMode statusMode)
         {
             return statusMode switch
             {

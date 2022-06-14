@@ -4,6 +4,7 @@
 using System.ComponentModel;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -38,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         protected override NavigationState GetState(Lyric[] lyrics)
             => NavigationState.Working;
 
-        protected override string GetNavigationText(NavigationState value)
+        protected override LocalisableString GetNavigationText(NavigationState value)
         {
             switch (value)
             {
