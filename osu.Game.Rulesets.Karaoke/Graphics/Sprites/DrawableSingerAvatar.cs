@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
             };
         }
 
-        [BackgroundDependencyLoader(true)]
+        [BackgroundDependencyLoader]
         private void load(LargeTextureStore textures, IKaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider)
         {
             binsableAvatarFile.BindValueChanged(_ =>
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
                 if (singer == null)
                     avatar.Texture = getDefaultAvatar();
                 else
-                    avatar.Texture = karaokeBeatmapResourcesProvider?.GetSingerAvatar(singer) ?? getDefaultAvatar();
+                    avatar.Texture = karaokeBeatmapResourcesProvider.GetSingerAvatar(singer) ?? getDefaultAvatar();
 
                 avatar.FadeInFromZero(500);
             }, true);

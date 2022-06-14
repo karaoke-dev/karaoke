@@ -1,12 +1,14 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
@@ -26,6 +28,9 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
         private readonly IBindable<string> bindableEnglishName = new Bindable<string>();
         private readonly IBindable<string> bindableDescription = new Bindable<string>();
 
+        [Cached(typeof(IKaraokeBeatmapResourcesProvider))]
+        private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
+
         private readonly DrawableSingerAvatar avatar;
         private readonly OsuSpriteText singerName;
         private readonly OsuSpriteText singerEnglishName;
@@ -34,6 +39,10 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
 
         public SingerToolTip()
         {
+            // we need to inject this provide in the tooltip because in will need in the drawable singer avatar.
+            // and it's not able to get in the BDL due to tooltip container is in the osu.game level.
+            AddInternal(karaokeBeatmapResourcesProvider = new KaraokeBeatmapResourcesProvider());
+
             Child = new FillFlowContainer
             {
                 AutoSizeAxes = Axes.Y,
