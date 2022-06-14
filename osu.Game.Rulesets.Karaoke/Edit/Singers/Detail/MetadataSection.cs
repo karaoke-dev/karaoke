@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
@@ -9,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Detail
 {
     internal class MetadataSection : EditSingerSection
     {
-        protected override string Title => "Metadata";
+        protected override LocalisableString Title => "Metadata";
 
         public MetadataSection(Singer singer)
         {
