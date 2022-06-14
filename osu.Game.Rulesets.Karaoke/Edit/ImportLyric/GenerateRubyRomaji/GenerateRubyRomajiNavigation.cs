@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
@@ -39,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
                 => lyric.RubyTags != null && lyric.RubyTags.Any();
         }
 
-        protected override string GetNavigationText(NavigationState value) =>
+        protected override LocalisableString GetNavigationText(NavigationState value) =>
             value switch
             {
                 NavigationState.Initial => $"Lazy to typing ruby? Press [{auto_generate_ruby}] or [{auto_generate_romaji}] to auto-generate ruby and romaji. It's very easy.",

@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
@@ -30,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.AssignLanguage
             return NavigationState.Initial;
         }
 
-        protected override string GetNavigationText(NavigationState value) =>
+        protected override LocalisableString GetNavigationText(NavigationState value) =>
             value switch
             {
                 NavigationState.Initial => $"Try to select left side to mark lyric's language, or click [{auto_assign_language}] to let system auto detect lyric language.",

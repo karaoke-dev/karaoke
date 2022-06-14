@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
@@ -33,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
                 => lyric.TimeTags != null && lyric.TimeTags.Any();
         }
 
-        protected override string GetNavigationText(NavigationState value) =>
+        protected override LocalisableString GetNavigationText(NavigationState value) =>
             value switch
             {
                 NavigationState.Initial => $"Press [{auto_generate_time_tag}] to auto-generate time tag. It's very easy.",
