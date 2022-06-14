@@ -7,6 +7,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -25,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
         private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
         private readonly IBindableList<Singer> bindableSingers = new BindableList<Singer>();
         private readonly IBindableList<int> singerIndexes = new BindableList<int>();
-        protected override string Title => "Singer";
+        protected override LocalisableString Title => "Singer";
 
         [Resolved]
         private ISingersChangeHandler singersChangeHandler { get; set; }

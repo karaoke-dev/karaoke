@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.UI.Scrolling;
@@ -11,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
     public class NoteConfigSection : Section
     {
-        protected override string Title => "Config";
+        protected override LocalisableString Title => "Config";
 
         [BackgroundDependencyLoader]
         private void load(IScrollingInfo scrollingInfo)

@@ -6,6 +6,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
@@ -20,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
     public class NoteEditPropertySection : Section
     {
-        protected override string Title => "Properties";
+        protected override LocalisableString Title => "Properties";
 
         private readonly Bindable<Note[]> notes = new();
         private readonly Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode = new();

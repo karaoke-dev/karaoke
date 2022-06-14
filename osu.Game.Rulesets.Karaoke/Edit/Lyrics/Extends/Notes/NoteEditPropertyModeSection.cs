@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
@@ -11,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
     public class NoteEditPropertyModeSection : Section
     {
-        protected override string Title => "Edit property";
+        protected override LocalisableString Title => "Edit property";
 
         [BackgroundDependencyLoader]
         private void load(IEditNoteModeState editNoteModeState)

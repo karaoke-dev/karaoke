@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
     public abstract class EditModeSection<T> : Section where T : Enum
     {
-        protected sealed override string Title => "Edit mode";
+        protected sealed override LocalisableString Title => "Edit mode";
 
         [Cached]
         private readonly OverlayColourProvider overlayColourProvider;
