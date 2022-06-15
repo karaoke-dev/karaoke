@@ -8,5 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
     public interface IBeatmapChangeHandler
     {
         void Import(IBeatmap newBeatmap);
+
+        void SetScorable(bool scorable);
     }
 }
