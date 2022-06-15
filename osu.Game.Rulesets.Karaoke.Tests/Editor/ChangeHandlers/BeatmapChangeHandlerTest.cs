@@ -43,5 +43,24 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
                 Assert.AreEqual(karaokeBeatmap.HitObjects.Count, 2);
             });
         }
+
+        [Test]
+        public void TestSetScorable()
+        {
+            SetUpKaraokeBeatmap(karaokeBeatmap =>
+            {
+                karaokeBeatmap.Scorable = true;
+            });
+
+            TriggerHandlerChanged(c =>
+            {
+                c.SetScorable(false);
+            });
+
+            AssertKaraokeBeatmap(karaokeBeatmap =>
+            {
+                Assert.AreEqual(karaokeBeatmap.Scorable, false);
+            });
+        }
     }
 }

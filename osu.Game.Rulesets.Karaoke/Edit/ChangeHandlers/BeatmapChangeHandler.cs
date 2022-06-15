@@ -5,6 +5,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
+using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -14,6 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
     {
         [Resolved]
         private EditorBeatmap beatmap { get; set; }
+
+        private KaraokeBeatmap karaokeBeatmap => beatmap.PlayableBeatmap as KaraokeBeatmap;
 
         public void Import(IBeatmap newBeatmap)
         {
@@ -32,6 +35,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 
                 beatmap.AddRange(lyrics);
             }
+
+            beatmap.EndChange();
+        }
+
+        public void SetScorable(bool scorable)
+        {
+            beatmap.BeginChange();
+
+            karaokeBeatmap.Scorable = scorable;
 
             beatmap.EndChange();
         }

@@ -33,8 +33,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         [Cached(typeof(INotePositionInfo))]
         private readonly PreviewNotePositionInfo notePositionInfo = new();
 
-        protected override Ruleset CreateRulesetForSkinProvider() => new KaraokeRuleset();
-
         protected KaraokeSkinnableColumnTestScene()
         {
             scrollingInfo.Direction.Value = ScrollingDirection.Left;

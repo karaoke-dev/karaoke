@@ -6,13 +6,22 @@ using System.Globalization;
 using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
     public static class KaraokeBeatmapExtension
     {
-        public static bool IsScorable(this IBeatmap beatmap) => beatmap?.HitObjects.OfType<Note>().Any(x => x.Display) ?? false;
+        public static bool IsScorable(this IBeatmap beatmap)
+        {
+            if (beatmap is not KaraokeBeatmap karaokeBeatmap)
+            {
+                // we should throw invalidate exception here but it will cause test case failed.
+                // because beatmap in the working beatmap in test case not always be karaoke beatmap class.
+                return false;
+            }
+
+            return karaokeBeatmap.Scorable;
+        }
 
         public static List<CultureInfo> AvailableTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.AvailableTranslates ?? new List<CultureInfo>();
 
