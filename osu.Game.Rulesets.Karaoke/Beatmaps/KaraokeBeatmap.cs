@@ -17,6 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         public List<Singer> Singers { get; set; } = new();
 
+        public bool Scorable { get; set; }
+
         public int TotalColumns { get; set; } = 9;
 
         public override IEnumerable<BeatmapStatistic> GetStatistics()
@@ -40,9 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
                 },
             };
 
-            bool scorable = this.IsScorable();
-
-            if (scorable)
+            if (Scorable)
             {
                 int notes = HitObjects.Count(s => s is Note { Display: true });
                 defaultStatistic.Add(new BeatmapStatistic
