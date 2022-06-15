@@ -36,11 +36,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
             AssertKaraokeBeatmap(karaokeBeatmap =>
             {
                 // should not change the property in the karaoke beatmap.
-                Assert.AreEqual(karaokeBeatmap.TotalColumns, 10);
+                Assert.AreEqual(10, karaokeBeatmap.TotalColumns);
 
                 // check the hit objects.
                 // and notice that we only import the lyric from other beatmap.
-                Assert.AreEqual(karaokeBeatmap.HitObjects.Count, 2);
+                Assert.AreEqual(2, karaokeBeatmap.HitObjects.Count);
             });
         }
 
@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
 
             AssertKaraokeBeatmap(karaokeBeatmap =>
             {
-                Assert.AreEqual(karaokeBeatmap.Scorable, false);
+                Assert.AreEqual(false, karaokeBeatmap.Scorable);
             });
         }
     }
