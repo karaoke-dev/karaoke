@@ -78,6 +78,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
 
         protected override void OnItemRemoved(Singer item)
         {
+            // Should re-sort the order
+            OrderUtils.ShiftingOrder(Singers.Where(x => x.Order > item.Order), -1);
+
             // should clear removed singer ids in singer editor.
             Lyrics.ForEach(x =>
             {
