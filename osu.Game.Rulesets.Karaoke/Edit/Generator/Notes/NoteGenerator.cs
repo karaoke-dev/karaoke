@@ -8,6 +8,7 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
+using osu.Game.Rulesets.Karaoke.Localisation.Edit.Generator;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
 {
@@ -25,10 +26,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
             var timeTags = lyric.TimeTags;
 
             if (lyric.TimeTags.Count < 2)
-                return "Sorry, lyric must have at least two time-tags.";
+                return NoteGeneratorStrings.SorryLyricMustHaveAtLeastTwoTimeTags;
 
             if (timeTags.Any(x => x.Time == null))
-                return "All time-tag should have the time.";
+                return NoteGeneratorStrings.AllTimeTagShouldHaveTheTime;
 
             return null;
         }

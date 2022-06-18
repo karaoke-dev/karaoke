@@ -4,6 +4,7 @@
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Localisation.Edit.Generator;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags
 {
@@ -19,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags
         public LocalisableString? GetInvalidMessage(Lyric lyric)
         {
             if (string.IsNullOrWhiteSpace(lyric.Text))
-                return "Lyric should not be empty.";
+                return RomajiTagGeneratorStrings.LyricShouldNotBeEmpty;
 
             return null;
         }

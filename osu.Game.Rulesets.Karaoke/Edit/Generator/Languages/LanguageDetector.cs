@@ -7,6 +7,7 @@ using System.Linq;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Localisation.Edit.Generator;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
 {
@@ -31,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
         public LocalisableString? GetInvalidMessage(Lyric lyric)
         {
             if (string.IsNullOrWhiteSpace(lyric.Text))
-                return "Lyric should not be empty.";
+                return LanguageDetectorStrings.LyricShouldNotBeEmpty;
 
             return null;
         }
