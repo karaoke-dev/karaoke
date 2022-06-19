@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
                 createNote(2800, 100, 4);
                 createBar(true, 2900);
             });
-            AddStep("saiten", () =>
+            AddStep("scoring", () =>
             {
                 createBar(true);
                 createNote(2000, 100, 4, true);
@@ -106,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
             AddStep("major bar", () => createBar(true));
         }
 
-        private void createNote(double increaseTime = 2000, double duration = 1000, int tone = 0, bool saiten = false)
+        private void createNote(double increaseTime = 2000, double duration = 1000, int tone = 0, bool scoring = false)
         {
             notePlayfields.ForEach(x =>
             {
@@ -124,11 +124,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
                 x.Add(new DrawableNote(note));
             });
 
-            if (saiten)
-                createSaitenPath(increaseTime, duration, tone);
+            if (scoring)
+                createScoringPath(increaseTime, duration, tone);
         }
 
-        private void createSaitenPath(double increaseTime = 2000, double duration = 1000, int scale = 0)
+        private void createScoringPath(double increaseTime = 2000, double duration = 1000, int scale = 0)
         {
             notePlayfields.ForEach(x =>
             {

@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         // Practice
         SingingLyrics,
 
-        // Saiten status
+        // Scoring status
         ScoringStatus,
     }
 }

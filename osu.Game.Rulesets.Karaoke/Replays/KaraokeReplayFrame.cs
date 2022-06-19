@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
     public class KaraokeReplayFrame : ReplayFrame, IConvertibleReplayFrame
     {
         /// <summary>
-        /// Use for Saiten playfield
+        /// Use for Scoring playfield
         /// Maybe format will be changed, but i have no idea now.
         /// </summary>
         public float Scale { get; private set; }

@@ -47,13 +47,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup
         {
             base.LoadComplete();
 
-            saitenable.Current.BindValueChanged(_ => updateBeatmap());
+            scorable.Current.BindValueChanged(_ => updateBeatmap());
         }
 
         private void updateBeatmap()
         {
             // todo: update the value.
-            // karaokeBeatmap.Saitenable = saitenable.Current.Value;
+            // karaokeBeatmap.Scorable = scorable.Current.Value;
         }
     }
 }

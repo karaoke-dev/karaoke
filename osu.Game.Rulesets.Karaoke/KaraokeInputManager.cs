@@ -53,9 +53,9 @@ namespace osu.Game.Rulesets.Karaoke
                 return;
             }
 
-            bool beatmapSaitenable = beatmap.Value.Beatmap.IsScorable();
+            bool scorable = beatmap.Value.Beatmap.IsScorable();
 
-            if (!beatmapSaitenable)
+            if (!scorable)
             {
                 session.SetValue(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.NotScoring);
                 return;
