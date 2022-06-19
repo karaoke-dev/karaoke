@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             TextBindable.BindValueChanged(_ => { changeText(HitObject); });
             RubyTextBindable.BindValueChanged(_ => { changeText(HitObject); });
             SingersBindable.BindCollectionChanged((_, _) => { ApplySkin(CurrentSkin, false); });
-            DisplayBindable.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue; });
+            DisplayBindable.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Scorable = e.NewValue; });
             ToneBindable.BindValueChanged(_ => updateNotePositionAndHeight());
 
             void updateNotePositionAndHeight()

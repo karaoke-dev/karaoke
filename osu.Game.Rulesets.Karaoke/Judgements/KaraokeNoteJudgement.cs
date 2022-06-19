@@ -7,11 +7,11 @@ namespace osu.Game.Rulesets.Karaoke.Judgements
 {
     public class KaraokeNoteJudgement : KaraokeJudgement
     {
-        public bool Saitenable { get; set; }
+        public bool Scorable { get; set; }
 
         protected override double HealthIncreaseFor(HitResult result)
         {
-            if (!Saitenable)
+            if (!Scorable)
                 return 0;
 
             return result switch
