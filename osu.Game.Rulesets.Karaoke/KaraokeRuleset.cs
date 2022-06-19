@@ -273,7 +273,7 @@ namespace osu.Game.Rulesets.Karaoke
                 {
                     Columns = new[]
                     {
-                        new StatisticItem("Scoring Result", () => new SaitenResultGraph(score, playableBeatmap)
+                        new StatisticItem("Scoring Result", () => new ScoringResultGraph(score, playableBeatmap)
                         {
                             RelativeSizeAxes = Axes.X,
                             Height = remain_height - text_size - spacing

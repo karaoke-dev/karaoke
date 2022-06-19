@@ -22,13 +22,13 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Statistics
 {
-    public class SaitenResultGraph : CompositeDrawable
+    public class ScoringResultGraph : CompositeDrawable
     {
         private readonly Box background;
-        private readonly SaitenResultLyricPreview lyricGraph;
+        private readonly ScoringResultLyricPreview lyricGraph;
         private readonly NoteGraph noteGraph;
 
-        public SaitenResultGraph(ScoreInfo score, IBeatmap beatmap)
+        public ScoringResultGraph(ScoreInfo score, IBeatmap beatmap)
         {
             InternalChildren = new Drawable[]
             {
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
                             Origin = Anchor.Centre,
                             RelativeSizeAxes = Axes.Both,
                         },
-                        lyricGraph = new SaitenResultLyricPreview(beatmap)
+                        lyricGraph = new ScoringResultLyricPreview(beatmap)
                         {
                             RelativeSizeAxes = Axes.Both,
                             Spacing = new Vector2(5),
@@ -202,19 +202,19 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
             }
         }
 
-        private class SaitenResultLyricPreview : LyricPreview
+        private class ScoringResultLyricPreview : LyricPreview
         {
-            public SaitenResultLyricPreview(IBeatmap beatmap)
+            public ScoringResultLyricPreview(IBeatmap beatmap)
                 : base(beatmap.HitObjects.OfType<Lyric>())
             {
             }
 
             protected override ClickableLyric CreateLyricContainer(Lyric lyric)
-                => new SaitenResultClickableLyric(lyric);
+                => new ScoringResultClickableLyric(lyric);
 
-            private class SaitenResultClickableLyric : ClickableLyric
+            private class ScoringResultClickableLyric : ClickableLyric
             {
-                public SaitenResultClickableLyric(Lyric lyric)
+                public ScoringResultClickableLyric(Lyric lyric)
                     : base(lyric)
                 {
                 }

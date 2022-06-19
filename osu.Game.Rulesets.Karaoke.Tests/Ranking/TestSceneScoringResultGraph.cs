@@ -14,7 +14,7 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
 {
-    public class TestSceneSaitenResultGraph : OsuTestScene
+    public class TestSceneScoringResultGraph : OsuTestScene
     {
         [Test]
         public void TestManyDistributedEvents()
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
                     RelativeSizeAxes = Axes.Both,
                     Colour = Color4Extensions.FromHex("#333")
                 },
-                new SaitenResultGraph(score, beatmap)
+                new ScoringResultGraph(score, beatmap)
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
