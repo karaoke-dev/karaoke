@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly ScoringMarker scoringMarker;
 
         private readonly RealTimeSaitenVisualization realTimeSaitenVisualization;
-        private readonly ReplaySaitenVisualization replaySaitenVisualization;
+        private readonly ReplayScoringVisualization replayScoringVisualization;
 
         private readonly ScoringStatus scoringStatus;
 
@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             HitObjectArea.AddRange(new Drawable[]
             {
                 // todo : generate this only if in auto-play mode.
-                replaySaitenVisualization = new ReplaySaitenVisualization(null)
+                replayScoringVisualization = new ReplayScoringVisualization(null)
                 {
                     Name = "Saiten Visualization",
                     RelativeSizeAxes = Axes.Both,
@@ -169,12 +169,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public void ClearReplay()
         {
-            replaySaitenVisualization.Clear();
+            replayScoringVisualization.Clear();
         }
 
         public void AddReplay(KaraokeReplayFrame frame)
         {
-            replaySaitenVisualization.Add(frame);
+            replayScoringVisualization.Add(frame);
         }
 
         internal void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)

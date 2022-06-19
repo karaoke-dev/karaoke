@@ -12,14 +12,14 @@ using osu.Game.Rulesets.Karaoke.UI.Position;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class ReplaySaitenVisualization : VoiceVisualization<KaraokeReplayFrame>
+    public class ReplayScoringVisualization : VoiceVisualization<KaraokeReplayFrame>
     {
         protected override float PathRadius => 1.5f;
 
         [Resolved]
         private INotePositionInfo notePositionInfo { get; set; }
 
-        public ReplaySaitenVisualization(Replay replay)
+        public ReplayScoringVisualization(Replay replay)
         {
             var frames = replay?.Frames.OfType<KaraokeReplayFrame>();
             frames?.ForEach(Add);
