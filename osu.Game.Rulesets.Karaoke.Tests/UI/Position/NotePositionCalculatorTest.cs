@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI.Position
         [TestCase(0f, 0)]
         [TestCase(1f, -21f)]
         [TestCase(-1f, 21f)]
-        public void TestPositionAtSaitenAction(float scale, float expected)
+        public void TestPositionAtScoringAction(float scale, float expected)
         {
             var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
             var action = new KaraokeScoringAction
