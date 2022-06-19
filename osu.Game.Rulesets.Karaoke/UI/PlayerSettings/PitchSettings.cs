@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
         {
             pitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.Pitch);
             vocalPitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.VocalPitch);
-            saitenPitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.SaitenPitch);
+            saitenPitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.ScoringPitch);
         }
     }
 }

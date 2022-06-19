@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 {
     public class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<KaraokeScoringAction>
     {
-        private readonly BindableInt saitenPitch = new();
+        private readonly BindableInt scoringPitch = new();
 
         private readonly CenterLine centerLine;
 
@@ -153,7 +153,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             NewResult += OnNewResult;
 
-            saitenPitch.BindValueChanged(value =>
+            scoringPitch.BindValueChanged(value =>
             {
                 int newValue = value.NewValue;
                 var targetTone = new Tone((newValue < 0 ? newValue - 1 : newValue) / 2, newValue % 2 != 0);
@@ -214,9 +214,9 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [BackgroundDependencyLoader(true)]
         private void load([CanBeNull] KaraokeSessionStatics session)
         {
-            session?.BindWith(KaraokeRulesetSession.SaitenPitch, saitenPitch);
+            session?.BindWith(KaraokeRulesetSession.ScoringPitch, scoringPitch);
 
-            session?.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
+            session?.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.ScoringStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
         }
 
         public bool OnPressed(KeyBindingPressEvent<KaraokeScoringAction> e)

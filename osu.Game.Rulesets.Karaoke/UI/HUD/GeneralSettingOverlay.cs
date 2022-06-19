@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
     {
         private readonly BindableInt bindablePitch = new();
         private readonly BindableInt bindableVocalPitch = new();
-        private readonly BindableInt bindableSaitenPitch = new();
+        private readonly BindableInt bindableScoringPitch = new();
 
         protected override OverlayColourScheme OverlayColourScheme => OverlayColourScheme.Blue;
 
@@ -102,15 +102,15 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
                 // Scoring pitch
                 case KaraokeAction.IncreaseScoringPitch:
-                    bindableSaitenPitch.TriggerIncrease();
+                    bindableScoringPitch.TriggerIncrease();
                     break;
 
                 case KaraokeAction.DecreaseScoringPitch:
-                    bindableSaitenPitch.TriggerDecrease();
+                    bindableScoringPitch.TriggerDecrease();
                     break;
 
                 case KaraokeAction.ResetScoringPitch:
-                    bindableSaitenPitch.SetDefault();
+                    bindableScoringPitch.SetDefault();
                     break;
 
                 default:
@@ -141,7 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
 
             session.BindWith(KaraokeRulesetSession.Pitch, bindablePitch);
             session.BindWith(KaraokeRulesetSession.VocalPitch, bindableVocalPitch);
-            session.BindWith(KaraokeRulesetSession.SaitenPitch, bindableSaitenPitch);
+            session.BindWith(KaraokeRulesetSession.ScoringPitch, bindableScoringPitch);
         }
     }
 }
