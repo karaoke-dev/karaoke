@@ -101,15 +101,15 @@ namespace osu.Game.Rulesets.Karaoke.UI.HUD
                     break;
 
                 // Scoring pitch
-                case KaraokeAction.IncreaseSaitenPitch:
+                case KaraokeAction.IncreaseScoringPitch:
                     bindableSaitenPitch.TriggerIncrease();
                     break;
 
-                case KaraokeAction.DecreaseSaitenPitch:
+                case KaraokeAction.DecreaseScoringPitch:
                     bindableSaitenPitch.TriggerDecrease();
                     break;
 
-                case KaraokeAction.ResetSaitenPitch:
+                case KaraokeAction.ResetScoringPitch:
                     bindableSaitenPitch.SetDefault();
                     break;
 
