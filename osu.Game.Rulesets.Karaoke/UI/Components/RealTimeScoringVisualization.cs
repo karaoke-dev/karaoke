@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.UI.Position;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class RealTimeSaitenVisualization : VoiceVisualization<KeyValuePair<double, KaraokeScoringAction>>
+    public class RealTimeScoringVisualization : VoiceVisualization<KeyValuePair<double, KaraokeScoringAction>>
     {
         private readonly Cached addStateCache = new();
 
@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         [Resolved]
         private INotePositionInfo notePositionInfo { get; set; }
 
-        public RealTimeSaitenVisualization()
+        public RealTimeScoringVisualization()
         {
             Masking = true;
         }

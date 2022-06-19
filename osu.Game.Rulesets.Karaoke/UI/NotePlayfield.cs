@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly Drawable judgementLine;
         private readonly ScoringMarker scoringMarker;
 
-        private readonly RealTimeSaitenVisualization realTimeSaitenVisualization;
+        private readonly RealTimeScoringVisualization realTimeScoringVisualization;
         private readonly ReplayScoringVisualization replayScoringVisualization;
 
         private readonly ScoringStatus scoringStatus;
@@ -110,13 +110,13 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 // todo : generate this only if in auto-play mode.
                 replayScoringVisualization = new ReplayScoringVisualization(null)
                 {
-                    Name = "Saiten Visualization",
+                    Name = "Replay scoring Visualization",
                     RelativeSizeAxes = Axes.Both,
                     Alpha = 0.6f
                 },
-                realTimeSaitenVisualization = new RealTimeSaitenVisualization
+                realTimeScoringVisualization = new RealTimeScoringVisualization
                 {
-                    Name = "Saiten Visualization",
+                    Name = "Scoring Visualization",
                     RelativeSizeAxes = Axes.Both,
                 },
             });
@@ -143,8 +143,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
             judgements.Anchor = judgements.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
             judgements.X = left ? -judgementPadding : judgementPadding;
 
-            realTimeSaitenVisualization.Anchor = left ? Anchor.CentreLeft : Anchor.CentreRight;
-            realTimeSaitenVisualization.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
+            realTimeScoringVisualization.Anchor = left ? Anchor.CentreLeft : Anchor.CentreRight;
+            realTimeScoringVisualization.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
         }
 
         protected override void LoadComplete()
@@ -226,7 +226,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             scoringMarker.Alpha = 1;
 
             // Mark as singing
-            realTimeSaitenVisualization.AddAction(e.Action);
+            realTimeScoringVisualization.AddAction(e.Action);
 
             return true;
         }
@@ -237,7 +237,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             scoringMarker.Alpha = 0;
 
             // Stop singing
-            realTimeSaitenVisualization.Release();
+            realTimeScoringVisualization.Release();
         }
     }
 }
