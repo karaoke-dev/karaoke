@@ -24,7 +24,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke
 {
-    public class KaraokeInputManager : RulesetInputManager<KaraokeSaitenAction>
+    public class KaraokeInputManager : RulesetInputManager<KaraokeScoringAction>
     {
         public KaraokeInputManager(RulesetInfo ruleset)
             : base(ruleset, 0, SimultaneousBindingMode.All)
@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke
         {
             if (editorBeatmap != null)
             {
-                session.SetValue(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.Edit);
+                session.SetValue(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.Edit);
                 return;
             }
 
@@ -49,15 +49,15 @@ namespace osu.Game.Rulesets.Karaoke
 
             if (disableMicrophoneDeviceByMod)
             {
-                session.SetValue(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.AutoPlay);
+                session.SetValue(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.AutoPlay);
                 return;
             }
 
-            bool beatmapSaitenable = beatmap.Value.Beatmap.IsScorable();
+            bool scorable = beatmap.Value.Beatmap.IsScorable();
 
-            if (!beatmapSaitenable)
+            if (!scorable)
             {
-                session.SetValue(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.NotSaitening);
+                session.SetValue(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.NotScoring);
                 return;
             }
 
@@ -70,24 +70,24 @@ namespace osu.Game.Rulesets.Karaoke
                 int deviceIndex = microphoneList.IndexOf(selectedDevice);
                 AddHandler(new MicrophoneHandler(deviceIndex));
 
-                session.SetValue(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.Saitening);
+                session.SetValue(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.Scoring);
             }
             catch (Exception ex)
             {
                 Logger.Error(ex, "Microphone initialize error.");
                 // todo : set real error by exception
-                session.SetValue(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.WindowsMicrophonePermissionDeclined);
+                session.SetValue(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.WindowsMicrophonePermissionDeclined);
             }
         }
 
         protected override InputState CreateInitialState()
-            => new KaraokeRulesetInputManagerInputState<KaraokeSaitenAction>(base.CreateInitialState());
+            => new KaraokeRulesetInputManagerInputState<KaraokeScoringAction>(base.CreateInitialState());
 
         public override void HandleInputStateChange(InputStateChangeEvent inputStateChange)
         {
             switch (inputStateChange)
             {
-                case ReplayInputHandler.ReplayStateChangeEvent<KaraokeSaitenAction> { Input: ReplayInputHandler.ReplayState<KaraokeSaitenAction> replayState } replayStateChanged:
+                case ReplayInputHandler.ReplayStateChangeEvent<KaraokeScoringAction> { Input: ReplayInputHandler.ReplayState<KaraokeScoringAction> replayState } replayStateChanged:
                 {
                     // Deal with replay event
                     // Release event should be trigger first
@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke
                     // TODO : adjust scale by
                     scale += 5;
 
-                    var action = new KaraokeSaitenAction
+                    var action = new KaraokeScoringAction
                     {
                         Scale = scale
                     };
@@ -154,7 +154,7 @@ namespace osu.Game.Rulesets.Karaoke
         }
     }
 
-    public struct KaraokeSaitenAction
+    public struct KaraokeScoringAction
     {
         public float Scale { get; set; }
     }

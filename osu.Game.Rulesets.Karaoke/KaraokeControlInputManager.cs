@@ -59,13 +59,13 @@ namespace osu.Game.Rulesets.Karaoke
         [Description("Reset vocal pitch")]
         ResetVocalPitch,
 
-        [Description("Increase saiten pitch")]
-        IncreaseSaitenPitch,
+        [Description("Increase scoring pitch")]
+        IncreaseScoringPitch,
 
-        [Description("Decrease saiten pitch")]
-        DecreaseSaitenPitch,
+        [Description("Decrease scoring pitch")]
+        DecreaseScoringPitch,
 
-        [Description("Reset saiten pitch")]
-        ResetSaitenPitch,
+        [Description("Reset scoring pitch")]
+        ResetScoringPitch,
     }
 }

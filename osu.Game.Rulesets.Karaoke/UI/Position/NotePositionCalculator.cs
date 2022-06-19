@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Position
 
         public float YPositionAt(Tone tone) => YPositionAt(toFloat(tone));
 
-        public float YPositionAt(KaraokeSaitenAction action) => YPositionAt(action.Scale);
+        public float YPositionAt(KaraokeScoringAction action) => YPositionAt(action.Scale);
 
         public float YPositionAt(KaraokeReplayFrame frame) => YPositionAt(frame.Scale);
 

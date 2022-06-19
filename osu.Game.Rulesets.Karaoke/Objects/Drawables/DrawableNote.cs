@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
     /// <summary>
     /// Visualises a <see cref="Note"/> hit object.
     /// </summary>
-    public class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKeyBindingHandler<KaraokeSaitenAction>
+    public class DrawableNote : DrawableKaraokeScrollingHitObject<Note>, IKeyBindingHandler<KaraokeScoringAction>
     {
         private readonly SkinnableDrawable background;
         private readonly OsuSpriteText textPiece;
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             TextBindable.BindValueChanged(_ => { changeText(HitObject); });
             RubyTextBindable.BindValueChanged(_ => { changeText(HitObject); });
             SingersBindable.BindCollectionChanged((_, _) => { ApplySkin(CurrentSkin, false); });
-            DisplayBindable.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Saitenable = e.NewValue; });
+            DisplayBindable.BindValueChanged(e => { (Result.Judgement as KaraokeNoteJudgement).Scorable = e.NewValue; });
             ToneBindable.BindValueChanged(_ => updateNotePositionAndHeight());
 
             void updateNotePositionAndHeight()
@@ -177,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             ApplyResult(r => r.Type = result);
         }
 
-        public bool OnPressed(KeyBindingPressEvent<KaraokeSaitenAction> e)
+        public bool OnPressed(KeyBindingPressEvent<KaraokeScoringAction> e)
         {
             // Make sure the action happened within the body of the hold note
             if (Time.Current < HitObject.StartTime && holdStartTime == null || Time.Current > HitObject.EndTime && holdStartTime == null)
@@ -197,7 +197,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
             return false;
         }
 
-        public void OnReleased(KeyBindingReleaseEvent<KaraokeSaitenAction> e)
+        public void OnReleased(KeyBindingReleaseEvent<KaraokeScoringAction> e)
         {
             // Make sure that the user started holding the key during the hold note
             if (!holdStartTime.HasValue)

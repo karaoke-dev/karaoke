@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
     {
         private readonly ClickablePlayerSliderBar pitchSliderBar;
         private readonly ClickablePlayerSliderBar vocalPitchSliderBar;
-        private readonly ClickablePlayerSliderBar saitenPitchSliderBar;
+        private readonly ClickablePlayerSliderBar scoringPitchSliderBar;
 
         public PitchSettings()
             : base("Pitch")
@@ -32,9 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 vocalPitchSliderBar = new ClickablePlayerSliderBar(),
                 new OsuSpriteText
                 {
-                    Text = "Saiten pitch:"
+                    Text = "Scoring pitch:"
                 },
-                saitenPitchSliderBar = new ClickablePlayerSliderBar()
+                scoringPitchSliderBar = new ClickablePlayerSliderBar()
             };
         }
 
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
         {
             pitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.Pitch);
             vocalPitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.VocalPitch);
-            saitenPitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.SaitenPitch);
+            scoringPitchSliderBar.Current = session.GetBindable<int>(KaraokeRulesetSession.ScoringPitch);
         }
     }
 }

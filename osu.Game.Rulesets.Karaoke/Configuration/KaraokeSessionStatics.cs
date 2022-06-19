@@ -42,9 +42,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             int vocalPitchValue = getValue<int>(KaraokeRulesetSetting.VocalPitch);
             SetDefault(KaraokeRulesetSession.VocalPitch, overrideVocalPitch ? vocalPitchValue : 0, -10, 10);
 
-            bool overrideSaitenPitch = getValue<bool>(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay);
-            int saitenPitchValue = getValue<int>(KaraokeRulesetSetting.SaitenPitch);
-            SetDefault(KaraokeRulesetSession.SaitenPitch, overrideSaitenPitch ? saitenPitchValue : 0, -8, 8);
+            bool overrideScoringPitch = getValue<bool>(KaraokeRulesetSetting.OverrideScoringPitchAtGameplay);
+            int scoringPitchValue = getValue<int>(KaraokeRulesetSetting.ScoringPitch);
+            SetDefault(KaraokeRulesetSession.ScoringPitch, overrideScoringPitch ? scoringPitchValue : 0, -8, 8);
 
             // Playback
             bool overridePlaybackSpeed = getValue<bool>(KaraokeRulesetSetting.OverridePlaybackSpeedAtGameplay);
@@ -54,8 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             // Practice
             SetDefault<Lyric[]>(KaraokeRulesetSession.SingingLyrics, null);
 
-            // Saiten status
-            SetDefault(KaraokeRulesetSession.SaitenStatus, SaitenStatusMode.NotInitialized);
+            // Scoring status
+            SetDefault(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.NotInitialized);
         }
 
         private T getValue<T>(KaraokeRulesetSetting setting) => rulesetConfigManager.Get<T>(setting);
@@ -74,7 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         // Pitch
         Pitch,
         VocalPitch,
-        SaitenPitch,
+        ScoringPitch,
 
         // Playback
         PlaybackSpeed,
@@ -82,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         // Practice
         SingingLyrics,
 
-        // Saiten status
-        SaitenStatus,
+        // Scoring status
+        ScoringStatus,
     }
 }

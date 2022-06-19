@@ -17,7 +17,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class SaitenStatus : FillFlowContainer, IMarkdownTextComponent
+    public class ScoringStatus : FillFlowContainer, IMarkdownTextComponent
     {
         private const float size = 22;
 
@@ -26,12 +26,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         public SpriteText CreateSpriteText() => new OsuSpriteText();
 
-        public SaitenStatus(SaitenStatusMode statusMode)
+        public ScoringStatus(ScoringStatusMode statusMode)
         {
             Spacing = new Vector2(5);
             Direction = FillDirection.Horizontal;
             AutoSizeAxes = Axes.Both;
-            SaitenStatusMode = statusMode;
+            ScoringStatusMode = statusMode;
 
             Children = new Drawable[]
             {
@@ -47,9 +47,9 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             };
         }
 
-        private SaitenStatusMode statusMode;
+        private ScoringStatusMode statusMode;
 
-        public SaitenStatusMode SaitenStatusMode
+        public ScoringStatusMode ScoringStatusMode
         {
             get => statusMode;
             set
@@ -58,11 +58,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
                 Schedule(() =>
                 {
-                    bool saitenable = statusMode == SaitenStatusMode.Saitening;
-                    icon.Icon = saitenable ? FontAwesome.Regular.DotCircle : FontAwesome.Regular.PauseCircle;
-                    icon.Colour = saitenable ? Color4.Red : Color4.LightGray;
+                    bool scorable = statusMode == ScoringStatusMode.Scoring;
+                    icon.Icon = scorable ? FontAwesome.Regular.DotCircle : FontAwesome.Regular.PauseCircle;
+                    icon.Colour = scorable ? Color4.Red : Color4.LightGray;
 
-                    string text = GetSaitenStatusText(statusMode).ToString();
+                    string text = GetScoringStatusText(statusMode).ToString();
                     var block = Markdown.Parse(text).OfType<ParagraphBlock>().FirstOrDefault();
 
                     messageText.Clear();
@@ -72,28 +72,28 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             }
         }
 
-        protected virtual LocalisableString GetSaitenStatusText(SaitenStatusMode statusMode)
+        protected virtual LocalisableString GetScoringStatusText(ScoringStatusMode statusMode)
         {
             return statusMode switch
             {
-                SaitenStatusMode.AndroidMicrophonePermissionDeclined => "Go to setting to open permission for lazer.",
-                SaitenStatusMode.AndroidDoesNotSupported => "Android device haven't support saiten system yet :(",
-                SaitenStatusMode.IOSMicrophonePermissionDeclined => "Go to setting to open permission for lazer.",
-                SaitenStatusMode.IOSDoesNotSupported => "iOS device haven't support saiten system yet :(",
-                SaitenStatusMode.OSXMicrophonePermissionDeclined => "Go to setting to open permission for lazer.",
-                SaitenStatusMode.OSXDoesNotSupported => "Osx device haven't support saiten system yet :(",
-                SaitenStatusMode.WindowsMicrophonePermissionDeclined => "Open lazer with admin permission to enable saiten system.",
-                SaitenStatusMode.NotSaitening => "This beatmap is not saitenable.",
-                SaitenStatusMode.AutoPlay => "Auto play mode.",
-                SaitenStatusMode.Edit => "Edit mode.",
-                SaitenStatusMode.Saitening => "Saitening...",
-                SaitenStatusMode.NotInitialized => "Seems microphone device is not ready.",
+                ScoringStatusMode.AndroidMicrophonePermissionDeclined => "Go to setting to open permission for lazer.",
+                ScoringStatusMode.AndroidDoesNotSupported => "Android device haven't support scoring system yet :(",
+                ScoringStatusMode.IOSMicrophonePermissionDeclined => "Go to setting to open permission for lazer.",
+                ScoringStatusMode.IOSDoesNotSupported => "iOS device haven't support scoring system yet :(",
+                ScoringStatusMode.OSXMicrophonePermissionDeclined => "Go to setting to open permission for lazer.",
+                ScoringStatusMode.OSXDoesNotSupported => "Osx device haven't support scoring system yet :(",
+                ScoringStatusMode.WindowsMicrophonePermissionDeclined => "Open lazer with admin permission to enable scoring system.",
+                ScoringStatusMode.NotScoring => "This beatmap is not scorable.",
+                ScoringStatusMode.AutoPlay => "Auto play mode.",
+                ScoringStatusMode.Edit => "Edit mode.",
+                ScoringStatusMode.Scoring => "Scoring...",
+                ScoringStatusMode.NotInitialized => "Seems microphone device is not ready.",
                 _ => "Weird... Should not goes to here either :oops:"
             };
         }
     }
 
-    public enum SaitenStatusMode
+    public enum ScoringStatusMode
     {
         /// <summary>
         /// Due to android device does not authorize microphone access.
@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         AndroidMicrophonePermissionDeclined,
 
         /// <summary>
-        /// Saiten system does not support android device.
+        /// Scoring system does not support android device.
         /// Will throw this if osu.framework.microphone does not support it yet.
         /// Or official client does not open this permission.
         /// </summary>
@@ -116,7 +116,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         IOSMicrophonePermissionDeclined,
 
         /// <summary>
-        /// Saiten system does not support iOS device.
+        /// Scoring system does not support iOS device.
         /// Will throw this if osu.framework.microphone does not support it yet.
         /// Or official client does not open this permission.
         /// </summary>
@@ -130,7 +130,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         OSXMicrophonePermissionDeclined,
 
         /// <summary>
-        /// Saiten system does not support osx device.
+        /// Scoring system does not support osx device.
         /// Will throw this if osu.framework.microphone does not support it yet.
         /// Or official client does not open this permission.
         /// </summary>
@@ -154,8 +154,8 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         /// <summary>
         /// Beatmap is not scoring.
         /// </summary>
-        [Description("No saitening.")]
-        NotSaitening,
+        [Description("No scoring.")]
+        NotScoring,
 
         /// <summary>
         /// Beatmap is not scoring.
@@ -172,11 +172,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         /// <summary>
         /// Everything works well.
         /// </summary>
-        [Description("Saitening...")]
-        Saitening,
+        [Description("Scoring...")]
+        Scoring,
 
         /// <summary>
-        /// Microphone saiten is not initialized.
+        /// Microphone scoring is not initialized.
         /// </summary>
         [Description("Not initialized.")]
         NotInitialized,

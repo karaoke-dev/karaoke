@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.UI.Position;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class RealTimeSaitenVisualization : VoiceVisualization<KeyValuePair<double, KaraokeSaitenAction>>
+    public class RealTimeScoringVisualization : VoiceVisualization<KeyValuePair<double, KaraokeScoringAction>>
     {
         private readonly Cached addStateCache = new();
 
@@ -21,20 +21,20 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         [Resolved]
         private INotePositionInfo notePositionInfo { get; set; }
 
-        public RealTimeSaitenVisualization()
+        public RealTimeScoringVisualization()
         {
             Masking = true;
         }
 
-        protected override double GetTime(KeyValuePair<double, KaraokeSaitenAction> frame) => frame.Key;
+        protected override double GetTime(KeyValuePair<double, KaraokeScoringAction> frame) => frame.Key;
 
-        protected override float GetPosition(KeyValuePair<double, KaraokeSaitenAction> frame) => notePositionInfo.Calculator.YPositionAt(frame.Value);
+        protected override float GetPosition(KeyValuePair<double, KaraokeScoringAction> frame) => notePositionInfo.Calculator.YPositionAt(frame.Value);
 
         private bool createNew = true;
 
         private double minAvailableTime;
 
-        public void AddAction(KaraokeSaitenAction action)
+        public void AddAction(KaraokeScoringAction action)
         {
             if (Time.Current <= minAvailableTime)
                 return;
@@ -45,11 +45,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             {
                 createNew = false;
 
-                CreateNew(new KeyValuePair<double, KaraokeSaitenAction>(Time.Current, action));
+                CreateNew(new KeyValuePair<double, KaraokeScoringAction>(Time.Current, action));
             }
             else
             {
-                Append(new KeyValuePair<double, KaraokeSaitenAction>(Time.Current, action));
+                Append(new KeyValuePair<double, KaraokeScoringAction>(Time.Current, action));
             }
 
             // Trigger update last frame

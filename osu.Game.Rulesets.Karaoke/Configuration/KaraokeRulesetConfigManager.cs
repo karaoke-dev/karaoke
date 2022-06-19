@@ -45,8 +45,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetSetting.Pitch, 0, -10, 10);
             SetDefault(KaraokeRulesetSetting.OverrideVocalPitchAtGameplay, false);
             SetDefault(KaraokeRulesetSetting.VocalPitch, 0, -10, 10);
-            SetDefault(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay, false);
-            SetDefault(KaraokeRulesetSetting.SaitenPitch, 0, -10, 10);
+            SetDefault(KaraokeRulesetSetting.OverrideScoringPitchAtGameplay, false);
+            SetDefault(KaraokeRulesetSetting.ScoringPitch, 0, -10, 10);
 
             // Playback
             SetDefault(KaraokeRulesetSetting.OverridePlaybackSpeedAtGameplay, false);
@@ -147,8 +147,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         Pitch,
         OverrideVocalPitchAtGameplay,
         VocalPitch,
-        OverrideSaitenPitchAtGameplay,
-        SaitenPitch,
+        OverrideScoringPitchAtGameplay,
+        ScoringPitch,
 
         // Playback
         OverridePlaybackSpeedAtGameplay,

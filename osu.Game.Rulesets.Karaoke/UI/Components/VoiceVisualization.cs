@@ -31,11 +31,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         private readonly LayoutValue initialStateCache = new(Invalidation.RequiredParentSizeToFit | Invalidation.DrawInfo);
 
-        private readonly IDictionary<SaitenPath, IList<T>> frames = new Dictionary<SaitenPath, IList<T>>();
-        private readonly IDictionary<SaitenPath, Cached> pathInitialStateCache = new Dictionary<SaitenPath, Cached>();
+        private readonly IDictionary<ScoringPath, IList<T>> frames = new Dictionary<ScoringPath, IList<T>>();
+        private readonly IDictionary<ScoringPath, Cached> pathInitialStateCache = new Dictionary<ScoringPath, Cached>();
 
-        protected IEnumerable<SaitenPath> Paths => InternalChildren.OfType<SaitenPath>();
-        protected IEnumerable<SaitenPath> AlivePaths => AliveInternalChildren.OfType<SaitenPath>();
+        protected IEnumerable<ScoringPath> Paths => InternalChildren.OfType<ScoringPath>();
+        protected IEnumerable<ScoringPath> AlivePaths => AliveInternalChildren.OfType<ScoringPath>();
 
         protected virtual float PathRadius => 2;
 
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         protected void CreateNew(T point)
         {
-            var path = new SaitenPath
+            var path = new ScoringPath
             {
                 PathRadius = PathRadius,
             };
@@ -110,11 +110,11 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             AlivePaths.ForEach(computePath);
         }
 
-        protected void MarkAsInvalid(SaitenPath path) => pathInitialStateCache[path].Invalidate();
+        protected void MarkAsInvalid(ScoringPath path) => pathInitialStateCache[path].Invalidate();
 
         protected void Invalid() => initialStateCache.Invalidate();
 
-        private void computeLifetime(SaitenPath path)
+        private void computeLifetime(ScoringPath path)
         {
             var firstFrameInPath = frames[path].FirstOrDefault();
             var lastFrameInPath = frames[path].LastOrDefault();
@@ -137,7 +137,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         }
 
         // Cant use AddOnce() since the delegate is re-constructed every invocation
-        private void computePath(SaitenPath path) => path.Schedule(() =>
+        private void computePath(ScoringPath path) => path.Schedule(() =>
         {
             var firstFrameInPath = frames[path].FirstOrDefault();
             if (firstFrameInPath == null)
@@ -178,7 +178,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
         protected override void OnChildLifetimeBoundaryCrossed(LifetimeBoundaryCrossedEvent e)
         {
             // Recalculate path if appear
-            if (e.Kind == LifetimeBoundaryKind.Start && e.Child is SaitenPath path)
+            if (e.Kind == LifetimeBoundaryKind.Start && e.Child is ScoringPath path)
                 computePath(path);
 
             base.OnChildLifetimeBoundaryCrossed(e);
@@ -186,7 +186,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
 
         protected virtual float Offset => 0;
 
-        private void updatePosition(SaitenPath path, double currentTime)
+        private void updatePosition(ScoringPath path, double currentTime)
         {
             var firstFrameInPath = frames[path].FirstOrDefault();
             if (firstFrameInPath == null)
@@ -198,12 +198,12 @@ namespace osu.Game.Rulesets.Karaoke.UI.Components
             path.X = (x + Offset) * multiple;
         }
 
-        protected class SaitenPath : Path
+        protected class ScoringPath : Path
         {
             public override bool RemoveWhenNotAlive => false;
 
             /// <summary>
-            /// Schedules an <see cref="Action"/> to this <see cref="SaitenPath"/>.
+            /// Schedules an <see cref="Action"/> to this <see cref="ScoringPath"/>.
             /// todo : might move this?
             /// </summary>
             protected internal new ScheduledDelegate Schedule(Action action) => base.Schedule(action);

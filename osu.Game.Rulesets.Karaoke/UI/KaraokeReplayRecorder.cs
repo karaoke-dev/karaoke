@@ -11,14 +11,14 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class KaraokeReplayRecorder : ReplayRecorder<KaraokeSaitenAction>
+    public class KaraokeReplayRecorder : ReplayRecorder<KaraokeScoringAction>
     {
         public KaraokeReplayRecorder(Score score)
             : base(score)
         {
         }
 
-        protected override ReplayFrame HandleFrame(Vector2 mousePosition, List<KaraokeSaitenAction> actions, ReplayFrame previousFrame)
+        protected override ReplayFrame HandleFrame(Vector2 mousePosition, List<KaraokeScoringAction> actions, ReplayFrame previousFrame)
         {
             if (actions.Any())
                 return new KaraokeReplayFrame(Time.Current, actions.FirstOrDefault().Scale);

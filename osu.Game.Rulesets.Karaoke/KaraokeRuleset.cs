@@ -86,9 +86,9 @@ namespace osu.Game.Rulesets.Karaoke
                     new KeyBinding(InputKey.E, KaraokeAction.IncreaseVocalPitch),
                     new KeyBinding(InputKey.D, KaraokeAction.DecreaseVocalPitch),
                     new KeyBinding(InputKey.C, KaraokeAction.ResetVocalPitch),
-                    new KeyBinding(InputKey.R, KaraokeAction.IncreaseSaitenPitch),
-                    new KeyBinding(InputKey.F, KaraokeAction.DecreaseSaitenPitch),
-                    new KeyBinding(InputKey.V, KaraokeAction.ResetSaitenPitch),
+                    new KeyBinding(InputKey.R, KaraokeAction.IncreaseScoringPitch),
+                    new KeyBinding(InputKey.F, KaraokeAction.DecreaseScoringPitch),
+                    new KeyBinding(InputKey.V, KaraokeAction.ResetScoringPitch),
                 },
                 EDIT_INPUT_VARIANT => new[]
                 {
@@ -273,7 +273,7 @@ namespace osu.Game.Rulesets.Karaoke
                 {
                     Columns = new[]
                     {
-                        new StatisticItem("Saiten Result", () => new SaitenResultGraph(score, playableBeatmap)
+                        new StatisticItem("Scoring Result", () => new ScoringResultGraph(score, playableBeatmap)
                         {
                             RelativeSizeAxes = Axes.X,
                             Height = remain_height - text_size - spacing

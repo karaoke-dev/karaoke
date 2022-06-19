@@ -26,21 +26,21 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<KaraokeSaitenAction>
+    public class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<KaraokeScoringAction>
     {
-        private readonly BindableInt saitenPitch = new();
+        private readonly BindableInt scoringPitch = new();
 
         private readonly CenterLine centerLine;
 
         private readonly Container judgementArea;
         private readonly JudgementContainer<DrawableNoteJudgement> judgements;
         private readonly Drawable judgementLine;
-        private readonly SaitenMarker saitenMarker;
+        private readonly ScoringMarker scoringMarker;
 
-        private readonly RealTimeSaitenVisualization realTimeSaitenVisualization;
-        private readonly ReplaySaitenVisualization replaySaitenVisualization;
+        private readonly RealTimeScoringVisualization realTimeScoringVisualization;
+        private readonly ReplayScoringVisualization replayScoringVisualization;
 
-        private readonly SaitenStatus saitenStatus;
+        private readonly ScoringStatus scoringStatus;
 
         // Note playfield should be present even being hidden.
         public override bool IsPresent => true;
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                     },
-                    saitenMarker = new SaitenMarker
+                    scoringMarker = new ScoringMarker
                     {
                         Alpha = 0
                     }
@@ -108,20 +108,20 @@ namespace osu.Game.Rulesets.Karaoke.UI
             HitObjectArea.AddRange(new Drawable[]
             {
                 // todo : generate this only if in auto-play mode.
-                replaySaitenVisualization = new ReplaySaitenVisualization(null)
+                replayScoringVisualization = new ReplayScoringVisualization(null)
                 {
-                    Name = "Saiten Visualization",
+                    Name = "Replay scoring Visualization",
                     RelativeSizeAxes = Axes.Both,
                     Alpha = 0.6f
                 },
-                realTimeSaitenVisualization = new RealTimeSaitenVisualization
+                realTimeScoringVisualization = new RealTimeScoringVisualization
                 {
-                    Name = "Saiten Visualization",
+                    Name = "Scoring Visualization",
                     RelativeSizeAxes = Axes.Both,
                 },
             });
 
-            AddInternal(saitenStatus = new SaitenStatus(SaitenStatusMode.NotInitialized));
+            AddInternal(scoringStatus = new ScoringStatus(ScoringStatusMode.NotInitialized));
         }
 
         protected override void OnDirectionChanged(KaraokeScrollingDirection direction, float judgementAreaPercentage)
@@ -137,14 +137,14 @@ namespace osu.Game.Rulesets.Karaoke.UI
             judgementArea.X = left ? 0 : 1 - judgementAreaPercentage;
 
             judgementLine.Anchor = left ? Anchor.CentreRight : Anchor.CentreLeft;
-            saitenMarker.Anchor = saitenMarker.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
-            saitenMarker.Scale = left ? new Vector2(1, 1) : new Vector2(-1, 1);
+            scoringMarker.Anchor = scoringMarker.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
+            scoringMarker.Scale = left ? new Vector2(1, 1) : new Vector2(-1, 1);
 
             judgements.Anchor = judgements.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
             judgements.X = left ? -judgementPadding : judgementPadding;
 
-            realTimeSaitenVisualization.Anchor = left ? Anchor.CentreLeft : Anchor.CentreRight;
-            realTimeSaitenVisualization.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
+            realTimeScoringVisualization.Anchor = left ? Anchor.CentreLeft : Anchor.CentreRight;
+            realTimeScoringVisualization.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
         }
 
         protected override void LoadComplete()
@@ -153,7 +153,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
             NewResult += OnNewResult;
 
-            saitenPitch.BindValueChanged(value =>
+            scoringPitch.BindValueChanged(value =>
             {
                 int newValue = value.NewValue;
                 var targetTone = new Tone((newValue < 0 ? newValue - 1 : newValue) / 2, newValue % 2 != 0);
@@ -169,12 +169,12 @@ namespace osu.Game.Rulesets.Karaoke.UI
 
         public void ClearReplay()
         {
-            replaySaitenVisualization.Clear();
+            replayScoringVisualization.Clear();
         }
 
         public void AddReplay(KaraokeReplayFrame frame)
         {
-            replaySaitenVisualization.Add(frame);
+            replayScoringVisualization.Add(frame);
         }
 
         internal void OnNewResult(DrawableHitObject judgedObject, JudgementResult result)
@@ -214,30 +214,30 @@ namespace osu.Game.Rulesets.Karaoke.UI
         [BackgroundDependencyLoader(true)]
         private void load([CanBeNull] KaraokeSessionStatics session)
         {
-            session?.BindWith(KaraokeRulesetSession.SaitenPitch, saitenPitch);
+            session?.BindWith(KaraokeRulesetSession.ScoringPitch, scoringPitch);
 
-            session?.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
+            session?.GetBindable<ScoringStatusMode>(KaraokeRulesetSession.ScoringStatus).BindValueChanged(e => { scoringStatus.ScoringStatusMode = e.NewValue; });
         }
 
-        public bool OnPressed(KeyBindingPressEvent<KaraokeSaitenAction> e)
+        public bool OnPressed(KeyBindingPressEvent<KaraokeScoringAction> e)
         {
             // TODO : appear marker and move position with delay time
-            saitenMarker.Y = notePositionInfo.Calculator.YPositionAt(e.Action);
-            saitenMarker.Alpha = 1;
+            scoringMarker.Y = notePositionInfo.Calculator.YPositionAt(e.Action);
+            scoringMarker.Alpha = 1;
 
             // Mark as singing
-            realTimeSaitenVisualization.AddAction(e.Action);
+            realTimeScoringVisualization.AddAction(e.Action);
 
             return true;
         }
 
-        public void OnReleased(KeyBindingReleaseEvent<KaraokeSaitenAction> e)
+        public void OnReleased(KeyBindingReleaseEvent<KaraokeScoringAction> e)
         {
             // TODO : disappear marker
-            saitenMarker.Alpha = 0;
+            scoringMarker.Alpha = 0;
 
             // Stop singing
-            realTimeSaitenVisualization.Release();
+            realTimeScoringVisualization.Release();
         }
     }
 }
