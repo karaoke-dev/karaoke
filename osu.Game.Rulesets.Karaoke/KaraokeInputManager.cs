@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke
         {
             if (editorBeatmap != null)
             {
-                session.SetValue(KaraokeRulesetSession.ScoringStatus, SaitenStatusMode.Edit);
+                session.SetValue(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.Edit);
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke
 
             if (disableMicrophoneDeviceByMod)
             {
-                session.SetValue(KaraokeRulesetSession.ScoringStatus, SaitenStatusMode.AutoPlay);
+                session.SetValue(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.AutoPlay);
                 return;
             }
 
@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke
 
             if (!beatmapSaitenable)
             {
-                session.SetValue(KaraokeRulesetSession.ScoringStatus, SaitenStatusMode.NotSaitening);
+                session.SetValue(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.NotScoring);
                 return;
             }
 
@@ -70,13 +70,13 @@ namespace osu.Game.Rulesets.Karaoke
                 int deviceIndex = microphoneList.IndexOf(selectedDevice);
                 AddHandler(new MicrophoneHandler(deviceIndex));
 
-                session.SetValue(KaraokeRulesetSession.ScoringStatus, SaitenStatusMode.Saitening);
+                session.SetValue(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.Scoring);
             }
             catch (Exception ex)
             {
                 Logger.Error(ex, "Microphone initialize error.");
                 // todo : set real error by exception
-                session.SetValue(KaraokeRulesetSession.ScoringStatus, SaitenStatusMode.WindowsMicrophonePermissionDeclined);
+                session.SetValue(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.WindowsMicrophonePermissionDeclined);
             }
         }
 

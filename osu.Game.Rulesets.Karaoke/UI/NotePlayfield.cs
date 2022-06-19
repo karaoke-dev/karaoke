@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly RealTimeSaitenVisualization realTimeSaitenVisualization;
         private readonly ReplaySaitenVisualization replaySaitenVisualization;
 
-        private readonly SaitenStatus saitenStatus;
+        private readonly ScoringStatus scoringStatus;
 
         // Note playfield should be present even being hidden.
         public override bool IsPresent => true;
@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                 },
             });
 
-            AddInternal(saitenStatus = new SaitenStatus(SaitenStatusMode.NotInitialized));
+            AddInternal(scoringStatus = new ScoringStatus(ScoringStatusMode.NotInitialized));
         }
 
         protected override void OnDirectionChanged(KaraokeScrollingDirection direction, float judgementAreaPercentage)
@@ -216,7 +216,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         {
             session?.BindWith(KaraokeRulesetSession.ScoringPitch, scoringPitch);
 
-            session?.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.ScoringStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
+            session?.GetBindable<ScoringStatusMode>(KaraokeRulesetSession.ScoringStatus).BindValueChanged(e => { scoringStatus.ScoringStatusMode = e.NewValue; });
         }
 
         public bool OnPressed(KeyBindingPressEvent<KaraokeScoringAction> e)

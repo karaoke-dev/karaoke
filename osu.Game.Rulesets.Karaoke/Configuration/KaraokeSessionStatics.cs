@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault<Lyric[]>(KaraokeRulesetSession.SingingLyrics, null);
 
             // Scoring status
-            SetDefault(KaraokeRulesetSession.ScoringStatus, SaitenStatusMode.NotInitialized);
+            SetDefault(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.NotInitialized);
         }
 
         private T getValue<T>(KaraokeRulesetSetting setting) => rulesetConfigManager.Get<T>(setting);
