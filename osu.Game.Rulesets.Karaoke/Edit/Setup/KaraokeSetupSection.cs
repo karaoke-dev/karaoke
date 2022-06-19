@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup
     {
         private KaraokeBeatmap karaokeBeatmap => Beatmap.PlayableBeatmap as KaraokeBeatmap;
 
-        private LabelledSwitchButton saitenable;
+        private LabelledSwitchButton scorable;
         private LabelledSingerList singerList;
 
         public KaraokeSetupSection()
@@ -27,10 +27,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Setup
         {
             Children = new Drawable[]
             {
-                saitenable = new LabelledSwitchButton
+                scorable = new LabelledSwitchButton
                 {
-                    Label = "Saitenable",
-                    Description = "Will not show saiten playfield if the option is unchecked.",
+                    Label = "Scorable",
+                    Description = "Will not show score playfield if the option is unchecked.",
                     Current = { Value = true }
                 },
                 singerList = new LabelledSingerList

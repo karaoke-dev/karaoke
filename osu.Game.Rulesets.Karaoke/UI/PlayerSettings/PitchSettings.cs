@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
                 vocalPitchSliderBar = new ClickablePlayerSliderBar(),
                 new OsuSpriteText
                 {
-                    Text = "Saiten pitch:"
+                    Text = "Scoring pitch:"
                 },
                 saitenPitchSliderBar = new ClickablePlayerSliderBar()
             };

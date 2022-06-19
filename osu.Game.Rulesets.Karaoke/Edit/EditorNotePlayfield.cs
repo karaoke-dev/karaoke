@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
             HitObjectArea.Add(singerVoiceVisualization = new SingerVoiceVisualization
             {
-                Name = "Saiten Visualization",
+                Name = "Scoring Visualization",
                 RelativeSizeAxes = Axes.Both,
                 Alpha = 0.6f
             });
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         [BackgroundDependencyLoader(true)]
         private void load()
         {
-            // todo : load data from saiten manager.
+            // todo : load data from scoring manager.
         }
 
         public class SingerVoiceVisualization : VoiceVisualization<KeyValuePair<double, float?>>
