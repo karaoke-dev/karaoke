@@ -42,8 +42,8 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             int vocalPitchValue = getValue<int>(KaraokeRulesetSetting.VocalPitch);
             SetDefault(KaraokeRulesetSession.VocalPitch, overrideVocalPitch ? vocalPitchValue : 0, -10, 10);
 
-            bool overrideScoringPitch = getValue<bool>(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay);
-            int scoringPitchValue = getValue<int>(KaraokeRulesetSetting.SaitenPitch);
+            bool overrideScoringPitch = getValue<bool>(KaraokeRulesetSetting.OverrideScoringPitchAtGameplay);
+            int scoringPitchValue = getValue<int>(KaraokeRulesetSetting.ScoringPitch);
             SetDefault(KaraokeRulesetSession.ScoringPitch, overrideScoringPitch ? scoringPitchValue : 0, -8, 8);
 
             // Playback

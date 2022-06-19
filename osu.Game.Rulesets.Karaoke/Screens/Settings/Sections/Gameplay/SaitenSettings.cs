@@ -43,12 +43,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
                 new SettingsCheckbox
                 {
                     LabelText = "Override saiten pitch at gameplay",
-                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.OverrideSaitenPitchAtGameplay)
+                    Current = Config.GetBindable<bool>(KaraokeRulesetSetting.OverrideScoringPitchAtGameplay)
                 },
                 new SettingsSlider<int, PitchSlider>
                 {
                     LabelText = "Saiten pitch",
-                    Current = Config.GetBindable<int>(KaraokeRulesetSetting.SaitenPitch)
+                    Current = Config.GetBindable<int>(KaraokeRulesetSetting.ScoringPitch)
                 },
             };
         }
