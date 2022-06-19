@@ -10,14 +10,14 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 
 namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
 {
-    public class SaitenSettings : KaraokeSettingsSubsection
+    public class ScoringSettings : KaraokeSettingsSubsection
     {
-        protected override LocalisableString Header => "Saiten";
+        protected override LocalisableString Header => "Scoring";
 
         [BackgroundDependencyLoader]
         private void load()
         {
-            // todo : should separate saiten and pitch part?
+            // todo : should separate scoring and pitch part?
             Children = new Drawable[]
             {
                 new SettingsCheckbox
@@ -42,12 +42,12 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections.Gameplay
                 },
                 new SettingsCheckbox
                 {
-                    LabelText = "Override saiten pitch at gameplay",
+                    LabelText = "Override scoring pitch at gameplay",
                     Current = Config.GetBindable<bool>(KaraokeRulesetSetting.OverrideScoringPitchAtGameplay)
                 },
                 new SettingsSlider<int, PitchSlider>
                 {
-                    LabelText = "Saiten pitch",
+                    LabelText = "scoring pitch",
                     Current = Config.GetBindable<int>(KaraokeRulesetSetting.ScoringPitch)
                 },
             };

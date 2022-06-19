@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Sections
             Children = new Drawable[]
             {
                 new MicrophoneSettings(),
-                new SaitenSettings(),
+                new ScoringSettings(),
             };
         }
     }
