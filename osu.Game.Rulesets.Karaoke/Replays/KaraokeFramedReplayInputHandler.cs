@@ -19,17 +19,17 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
         protected override void CollectReplayInputs(List<IInput> inputs)
         {
-            inputs.Add(new ReplayState<KaraokeSaitenAction>
+            inputs.Add(new ReplayState<KaraokeScoringAction>
             {
                 PressedActions = CurrentFrame?.Sound ?? false
-                    ? new List<KaraokeSaitenAction>
+                    ? new List<KaraokeScoringAction>
                     {
                         new()
                         {
                             Scale = CurrentFrame.Scale
                         }
                     }
-                    : new List<KaraokeSaitenAction>()
+                    : new List<KaraokeScoringAction>()
             });
         }
     }

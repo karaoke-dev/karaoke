@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI.Position
         public void TestPositionAtSaitenAction(float scale, float expected)
         {
             var calculator = new NotePositionCalculator(default_columns, default_column_height, default_spacing);
-            var action = new KaraokeSaitenAction
+            var action = new KaraokeScoringAction
             {
                 Scale = scale
             };

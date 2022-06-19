@@ -24,7 +24,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke
 {
-    public class KaraokeInputManager : RulesetInputManager<KaraokeSaitenAction>
+    public class KaraokeInputManager : RulesetInputManager<KaraokeScoringAction>
     {
         public KaraokeInputManager(RulesetInfo ruleset)
             : base(ruleset, 0, SimultaneousBindingMode.All)
@@ -81,13 +81,13 @@ namespace osu.Game.Rulesets.Karaoke
         }
 
         protected override InputState CreateInitialState()
-            => new KaraokeRulesetInputManagerInputState<KaraokeSaitenAction>(base.CreateInitialState());
+            => new KaraokeRulesetInputManagerInputState<KaraokeScoringAction>(base.CreateInitialState());
 
         public override void HandleInputStateChange(InputStateChangeEvent inputStateChange)
         {
             switch (inputStateChange)
             {
-                case ReplayInputHandler.ReplayStateChangeEvent<KaraokeSaitenAction> { Input: ReplayInputHandler.ReplayState<KaraokeSaitenAction> replayState } replayStateChanged:
+                case ReplayInputHandler.ReplayStateChangeEvent<KaraokeScoringAction> { Input: ReplayInputHandler.ReplayState<KaraokeScoringAction> replayState } replayStateChanged:
                 {
                     // Deal with replay event
                     // Release event should be trigger first
@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke
                     // TODO : adjust scale by
                     scale += 5;
 
-                    var action = new KaraokeSaitenAction
+                    var action = new KaraokeScoringAction
                     {
                         Scale = scale
                     };
@@ -154,7 +154,7 @@ namespace osu.Game.Rulesets.Karaoke
         }
     }
 
-    public struct KaraokeSaitenAction
+    public struct KaraokeScoringAction
     {
         public float Scale { get; set; }
     }

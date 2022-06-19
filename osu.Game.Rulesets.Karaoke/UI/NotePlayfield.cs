@@ -26,7 +26,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.UI
 {
-    public class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<KaraokeSaitenAction>
+    public class NotePlayfield : ScrollingNotePlayfield, IKeyBindingHandler<KaraokeScoringAction>
     {
         private readonly BindableInt saitenPitch = new();
 
@@ -219,7 +219,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             session?.GetBindable<SaitenStatusMode>(KaraokeRulesetSession.SaitenStatus).BindValueChanged(e => { saitenStatus.SaitenStatusMode = e.NewValue; });
         }
 
-        public bool OnPressed(KeyBindingPressEvent<KaraokeSaitenAction> e)
+        public bool OnPressed(KeyBindingPressEvent<KaraokeScoringAction> e)
         {
             // TODO : appear marker and move position with delay time
             saitenMarker.Y = notePositionInfo.Calculator.YPositionAt(e.Action);
@@ -231,7 +231,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
             return true;
         }
 
-        public void OnReleased(KeyBindingReleaseEvent<KaraokeSaitenAction> e)
+        public void OnReleased(KeyBindingReleaseEvent<KaraokeScoringAction> e)
         {
             // TODO : disappear marker
             saitenMarker.Alpha = 0;
