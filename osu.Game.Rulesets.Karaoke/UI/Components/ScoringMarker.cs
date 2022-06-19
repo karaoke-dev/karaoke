@@ -10,12 +10,12 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.UI.Components
 {
-    public class SaitenMarker : CompositeDrawable
+    public class ScoringMarker : CompositeDrawable
     {
         private const float triangle_width = 20;
         private const float triangle_height = 20;
 
-        public SaitenMarker()
+        public ScoringMarker()
         {
             AutoSizeAxes = Axes.Both;
             InternalChildren = new Drawable[]

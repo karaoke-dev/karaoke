@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         private readonly Container judgementArea;
         private readonly JudgementContainer<DrawableNoteJudgement> judgements;
         private readonly Drawable judgementLine;
-        private readonly SaitenMarker saitenMarker;
+        private readonly ScoringMarker scoringMarker;
 
         private readonly RealTimeSaitenVisualization realTimeSaitenVisualization;
         private readonly ReplaySaitenVisualization replaySaitenVisualization;
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
                     },
-                    saitenMarker = new SaitenMarker
+                    scoringMarker = new ScoringMarker
                     {
                         Alpha = 0
                     }
@@ -137,8 +137,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
             judgementArea.X = left ? 0 : 1 - judgementAreaPercentage;
 
             judgementLine.Anchor = left ? Anchor.CentreRight : Anchor.CentreLeft;
-            saitenMarker.Anchor = saitenMarker.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
-            saitenMarker.Scale = left ? new Vector2(1, 1) : new Vector2(-1, 1);
+            scoringMarker.Anchor = scoringMarker.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
+            scoringMarker.Scale = left ? new Vector2(1, 1) : new Vector2(-1, 1);
 
             judgements.Anchor = judgements.Origin = left ? Anchor.CentreRight : Anchor.CentreLeft;
             judgements.X = left ? -judgementPadding : judgementPadding;
@@ -222,8 +222,8 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public bool OnPressed(KeyBindingPressEvent<KaraokeScoringAction> e)
         {
             // TODO : appear marker and move position with delay time
-            saitenMarker.Y = notePositionInfo.Calculator.YPositionAt(e.Action);
-            saitenMarker.Alpha = 1;
+            scoringMarker.Y = notePositionInfo.Calculator.YPositionAt(e.Action);
+            scoringMarker.Alpha = 1;
 
             // Mark as singing
             realTimeSaitenVisualization.AddAction(e.Action);
@@ -234,7 +234,7 @@ namespace osu.Game.Rulesets.Karaoke.UI
         public void OnReleased(KeyBindingReleaseEvent<KaraokeScoringAction> e)
         {
             // TODO : disappear marker
-            saitenMarker.Alpha = 0;
+            scoringMarker.Alpha = 0;
 
             // Stop singing
             realTimeSaitenVisualization.Release();
