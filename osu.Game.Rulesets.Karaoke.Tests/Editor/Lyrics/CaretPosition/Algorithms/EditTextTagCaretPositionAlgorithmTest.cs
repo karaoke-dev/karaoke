@@ -124,15 +124,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
         protected override void AssertEqual(EditTextTagCaretPosition expected, EditTextTagCaretPosition actual)
         {
-            if (expected == null)
-            {
-                Assert.IsNull(actual);
-            }
-            else
-            {
-                Assert.AreEqual(expected.Lyric, actual.Lyric);
-                Assert.AreEqual(expected.TextTag, actual.TextTag);
-            }
+            Assert.AreEqual(expected.Lyric, actual.Lyric);
+            Assert.AreEqual(expected.TextTag, actual.TextTag);
         }
 
         private static EditTextTagCaretPosition createEditTextTagCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int timeTagIndex)

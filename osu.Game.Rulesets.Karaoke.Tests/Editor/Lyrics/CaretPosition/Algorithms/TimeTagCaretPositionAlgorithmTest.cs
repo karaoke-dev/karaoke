@@ -167,15 +167,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
         protected override void AssertEqual(TimeTagCaretPosition expected, TimeTagCaretPosition actual)
         {
-            if (expected == null)
-            {
-                Assert.IsNull(actual);
-            }
-            else
-            {
-                Assert.AreEqual(expected.Lyric, actual.Lyric);
-                Assert.AreEqual(expected.TimeTag, actual.TimeTag);
-            }
+            Assert.AreEqual(expected.Lyric, actual.Lyric);
+            Assert.AreEqual(expected.TimeTag, actual.TimeTag);
         }
 
         private static TimeTagCaretPosition createTimeTagCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int timeTagIndex)

@@ -119,14 +119,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
         protected override void AssertEqual(ClickingCaretPosition expected, ClickingCaretPosition actual)
         {
-            if (expected == null)
-            {
-                Assert.IsNull(actual);
-            }
-            else
-            {
-                Assert.AreEqual(expected.Lyric, actual.Lyric);
-            }
+            Assert.AreEqual(expected.Lyric, actual.Lyric);
         }
 
         private static ClickingCaretPosition createClickingCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex)
