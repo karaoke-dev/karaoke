@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return true;
         }
 
-        public override NavigateCaretPosition MoveUp(NavigateCaretPosition currentPosition)
+        public override NavigateCaretPosition? MoveUp(NavigateCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetPrevious(currentPosition.Lyric);
             if (lyric == null)
@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new NavigateCaretPosition(lyric);
         }
 
-        public override NavigateCaretPosition MoveDown(NavigateCaretPosition currentPosition)
+        public override NavigateCaretPosition? MoveDown(NavigateCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetNext(currentPosition.Lyric);
             if (lyric == null)
@@ -37,17 +37,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new NavigateCaretPosition(lyric);
         }
 
-        public override NavigateCaretPosition MoveLeft(NavigateCaretPosition currentPosition)
+        public override NavigateCaretPosition? MoveLeft(NavigateCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override NavigateCaretPosition MoveRight(NavigateCaretPosition currentPosition)
+        public override NavigateCaretPosition? MoveRight(NavigateCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override NavigateCaretPosition MoveToFirst()
+        public override NavigateCaretPosition? MoveToFirst()
         {
             var lyric = Lyrics.FirstOrDefault();
             if (lyric == null)
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new NavigateCaretPosition(lyric);
         }
 
-        public override NavigateCaretPosition MoveToLast()
+        public override NavigateCaretPosition? MoveToLast()
         {
             var lyric = Lyrics.LastOrDefault();
             if (lyric == null)

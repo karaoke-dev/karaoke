@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return textIndexMovable(textIndex);
         }
 
-        public override TimeTagIndexCaretPosition MoveUp(TimeTagIndexCaretPosition currentPosition)
+        public override TimeTagIndexCaretPosition? MoveUp(TimeTagIndexCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetPreviousMatch(currentPosition.Lyric, l => !string.IsNullOrEmpty(l.Text));
             if (lyric == null)
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new TimeTagIndexCaretPosition(lyric, new TextIndex(index, state));
         }
 
-        public override TimeTagIndexCaretPosition MoveDown(TimeTagIndexCaretPosition currentPosition)
+        public override TimeTagIndexCaretPosition? MoveDown(TimeTagIndexCaretPosition currentPosition)
         {
             var lyric = Lyrics.GetNextMatch(currentPosition.Lyric, l => !string.IsNullOrEmpty(l.Text));
             if (lyric == null)
@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new TimeTagIndexCaretPosition(lyric, new TextIndex(index, state));
         }
 
-        public override TimeTagIndexCaretPosition MoveLeft(TimeTagIndexCaretPosition currentPosition)
+        public override TimeTagIndexCaretPosition? MoveLeft(TimeTagIndexCaretPosition currentPosition)
         {
             // get previous caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
@@ -72,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new TimeTagIndexCaretPosition(currentPosition.Lyric, index);
         }
 
-        public override TimeTagIndexCaretPosition MoveRight(TimeTagIndexCaretPosition currentPosition)
+        public override TimeTagIndexCaretPosition? MoveRight(TimeTagIndexCaretPosition currentPosition)
         {
             // get next caret and make a check is need to change line.
             var lyric = currentPosition.Lyric;
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new TimeTagIndexCaretPosition(currentPosition.Lyric, index);
         }
 
-        public override TimeTagIndexCaretPosition MoveToFirst()
+        public override TimeTagIndexCaretPosition? MoveToFirst()
         {
             var lyric = Lyrics.FirstOrDefault(l => !string.IsNullOrEmpty(l.Text));
             if (lyric == null)
@@ -97,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new TimeTagIndexCaretPosition(lyric, index);
         }
 
-        public override TimeTagIndexCaretPosition MoveToLast()
+        public override TimeTagIndexCaretPosition? MoveToLast()
         {
             var lyric = Lyrics.LastOrDefault(l => !string.IsNullOrEmpty(l.Text));
             if (lyric == null)
