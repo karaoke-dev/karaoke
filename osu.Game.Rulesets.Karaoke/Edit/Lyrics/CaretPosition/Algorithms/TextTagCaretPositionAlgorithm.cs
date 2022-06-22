@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             };
         }
 
-        public override T MoveUp(T currentPosition)
+        public override T? MoveUp(T currentPosition)
         {
             if (!IsTextTagTypeValid(currentPosition))
                 throw new InvalidCastException(nameof(currentPosition.TextTag));
@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return null;
         }
 
-        public override T MoveDown(T currentPosition)
+        public override T? MoveDown(T currentPosition)
         {
             if (!IsTextTagTypeValid(currentPosition))
                 throw new InvalidCastException(nameof(currentPosition.TextTag));
@@ -46,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return null;
         }
 
-        public override T MoveLeft(T currentPosition)
+        public override T? MoveLeft(T currentPosition)
         {
             if (!IsTextTagTypeValid(currentPosition))
                 throw new InvalidCastException(nameof(currentPosition.TextTag));
@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return null;
         }
 
-        public override T MoveRight(T currentPosition)
+        public override T? MoveRight(T currentPosition)
         {
             if (!IsTextTagTypeValid(currentPosition))
                 throw new InvalidCastException(nameof(currentPosition.TextTag));
