@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -71,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             public float SnowSize { get; set; }
 
             // Texture path
-            public string TexturePath { get; set; }
+            public string TexturePath { get; set; } = null!;
 
             protected override void Update()
             {

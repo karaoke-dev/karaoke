@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 
         public override IconUsage? Icon => KaraokeIcon.ModAutoPlayBySinger;
 
-        private Stream trackData;
+        private Stream? trackData;
 
         public override ModReplayData CreateReplayData(IBeatmap beatmap, IReadOnlyList<Mod> mods)
             => new(new KaraokeAutoGeneratorBySinger(beatmap, trackData).Generate(), new ModCreatedUser { Username = "karaoke!singer" });
@@ -38,13 +36,13 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 return;
 
             var workingBeatmap = karaokePlayfield.WorkingBeatmap;
-            string path = getPathForFile(workingBeatmap.BeatmapInfo);
+            string? path = getPathForFile(workingBeatmap.BeatmapInfo);
             trackData = workingBeatmap.GetStream(path);
 
             base.ApplyToDrawableRuleset(drawableRuleset);
         }
 
-        private string getPathForFile(BeatmapInfo beatmapInfo)
+        private string? getPathForFile(BeatmapInfo beatmapInfo)
         {
             var beatmapSetInfo = beatmapInfo.BeatmapSet;
             string audioFile = beatmapInfo.Metadata.AudioFile;
