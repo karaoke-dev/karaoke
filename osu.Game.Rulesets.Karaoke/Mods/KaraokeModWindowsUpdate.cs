@@ -25,8 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public override IconUsage? Icon => FontAwesome.Brands.Windows;
         public override string Description => "Once you missed, windows will upppppdate your osu!";
 
-        private HUDOverlay overlay;
-        private WindowsUpdateContainer windowsUpdateContainer;
+        private HUDOverlay overlay = null!;
+        private WindowsUpdateContainer? windowsUpdateContainer;
 
         public void ApplyToHUD(HUDOverlay overlay)
         {

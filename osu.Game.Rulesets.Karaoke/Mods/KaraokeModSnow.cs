@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
             public float SnowSize { get; set; }
 
             // Texture path
-            public string TexturePath { get; set; }
+            public string TexturePath { get; set; } = null!;
 
             protected override void Update()
             {
