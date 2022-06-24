@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -57,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
                     continue;
 
                 string text = lyric.Text[startIndex..endIndex];
-                string ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
+                string? ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
 
                 if (!string.IsNullOrEmpty(text))
                 {

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -12,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
 {
-    public class LanguageDetector : ILyricPropertyDetector<CultureInfo>
+    public class LanguageDetector : ILyricPropertyDetector<CultureInfo?>
     {
         private readonly LanguageDetection.LanguageDetector detector = new();
 
@@ -38,10 +36,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
             return null;
         }
 
-        public CultureInfo Detect(Lyric lyric)
+        public CultureInfo? Detect(Lyric lyric)
         {
             var result = detector.DetectAll(lyric.Text);
-            string languageCode = result.FirstOrDefault()?.Language;
+            string? languageCode = result.FirstOrDefault()?.Language;
 
             return languageCode == null ? null : new CultureInfo(languageCode);
         }

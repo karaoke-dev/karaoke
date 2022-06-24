@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Globalization;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags;
@@ -17,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
         [TestCase(17, "か", new[] { "[0,start]:", "[0,end]:" })] // Japanese
         [TestCase(1041, "か", new[] { "[0,start]:", "[0,end]:" })] // Japanese
         [TestCase(1028, "喵", new[] { "[0,start]:" })] // Chinese
-        [TestCase(3081, "hello", null)] // English
+        [TestCase(3081, "hello", new string[] { })] // English
         public void TestGenerate(int lcid, string text, string[] expectedTimeTags)
         {
             var selector = CreateSelector();

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Globalization;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -25,13 +23,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags
         public override TimeTag[] Generate(Lyric lyric)
         {
             if (lyric.Language == null)
-                return null;
+                return Array.Empty<TimeTag>();
 
             if (string.IsNullOrEmpty(lyric.Text))
-                return null;
+                return Array.Empty<TimeTag>();
 
             if (!Generator.TryGetValue(lyric.Language, out var generator))
-                return null;
+                return Array.Empty<TimeTag>();
 
             return generator.Value.Generate(lyric);
         }

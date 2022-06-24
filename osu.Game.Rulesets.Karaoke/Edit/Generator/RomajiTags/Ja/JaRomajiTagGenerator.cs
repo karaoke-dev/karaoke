@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.IO;
 using Lucene.Net.Analysis;
@@ -106,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
         {
             public bool FromKanji { get; set; }
 
-            public RomajiTag RomajiTag { get; set; }
+            public RomajiTag RomajiTag { get; set; } = null!;
         }
     }
 }

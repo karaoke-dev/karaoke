@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -31,7 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator
             {
                 var generatorSetting = GetGeneratorConfigSetting(info);
                 var config = generatorConfigManager.Get<TConfig>(generatorSetting);
-                var generator = Activator.CreateInstance(typeof(TGenerator), config) as ILyricPropertyGenerator<TProperty>;
+                if (Activator.CreateInstance(typeof(TGenerator), config) is not ILyricPropertyGenerator<TProperty> generator)
+                    throw new InvalidCastException();
+
                 return generator;
             }));
         }
