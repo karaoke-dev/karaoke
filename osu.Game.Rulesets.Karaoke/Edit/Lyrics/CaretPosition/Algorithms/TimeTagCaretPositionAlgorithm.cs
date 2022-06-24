@@ -20,7 +20,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         public override bool PositionMovable(TimeTagCaretPosition position)
         {
-            return timeTagMovable(position.TimeTag);
+            var lyric = position.Lyric;
+            var timeTag = position.TimeTag;
+
+            return lyric.TimeTags.Contains(timeTag)
+                   && timeTagMovable(timeTag);
         }
 
         public override TimeTagCaretPosition? MoveUp(TimeTagCaretPosition currentPosition)
