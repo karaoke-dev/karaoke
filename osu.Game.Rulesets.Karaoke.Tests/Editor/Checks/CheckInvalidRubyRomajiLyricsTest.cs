@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
     [TestFixture]
     public class CheckInvalidRubyRomajiLyricsTest
     {
-        private CheckInvalidRubyRomajiLyrics check;
+        private CheckInvalidRubyRomajiLyrics check = null!;
 
         [SetUp]
         public void Setup()

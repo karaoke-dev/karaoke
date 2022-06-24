@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
     [TestFixture]
     public class CheckInvalidTimeLyricsTest
     {
-        private CheckInvalidTimeLyrics check;
+        private CheckInvalidTimeLyrics check = null!;
 
         [SetUp]
         public void Setup()

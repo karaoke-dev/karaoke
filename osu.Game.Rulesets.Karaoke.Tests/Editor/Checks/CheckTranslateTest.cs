@@ -18,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
     [TestFixture]
     public class CheckTranslateTest
     {
-        private CheckTranslate check;
+        private CheckTranslate check = null!;
 
         [SetUp]
         public void Setup()
@@ -112,7 +112,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             });
             Assert.AreEqual(1, check.Run(getContext(beatmap6)).Count());
 
-            static Lyric createLyric(CultureInfo cultureInfo = null, string translate = null)
+            static Lyric createLyric(CultureInfo? cultureInfo = null, string? translate = null)
             {
                 var lyric = new Lyric();
                 if (cultureInfo == null)
@@ -123,7 +123,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             }
         }
 
-        private static IBeatmap createTestingBeatmap(List<CultureInfo> translateLanguage, IEnumerable<Lyric> lyrics)
+        private static IBeatmap createTestingBeatmap(List<CultureInfo>? translateLanguage, IEnumerable<Lyric>? lyrics)
         {
             var karaokeBeatmap = new KaraokeBeatmap
             {
@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 {
                     Ruleset = new KaraokeRuleset().RulesetInfo,
                 },
-                AvailableTranslates = translateLanguage,
+                AvailableTranslates = translateLanguage ?? new List<CultureInfo>(),
                 HitObjects = lyrics?.OfType<KaraokeHitObject>().ToList() ?? new List<KaraokeHitObject>()
             };
             return new EditorBeatmap(karaokeBeatmap);
