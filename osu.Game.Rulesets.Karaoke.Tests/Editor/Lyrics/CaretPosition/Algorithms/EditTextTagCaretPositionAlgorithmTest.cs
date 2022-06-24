@@ -31,11 +31,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(twoLyricsWithText), 1, 1, 0, 1)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 0, 0, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 1, 0, 1)]
-        public void TestMoveUp(string sourceName, int lyricIndex, int index, int? newLyricIndex, int? newIndex)
+        public void TestMoveUp(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caret = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedEditTextTagCaretPosition(lyrics, newLyricIndex, newIndex);
+            var expected = createExpectedEditTextTagCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveUp(lyrics, caret, expected);
@@ -46,11 +46,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(twoLyricsWithText), 0, 3, 1, 1)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 0, 2, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 3, 2, 1)]
-        public void TestMoveDown(string sourceName, int lyricIndex, int index, int? newLyricIndex, int? newIndex)
+        public void TestMoveDown(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caret = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedEditTextTagCaretPosition(lyrics, newLyricIndex, newIndex);
+            var expected = createExpectedEditTextTagCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveDown(lyrics, caret, expected);
@@ -59,11 +59,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyric), 0, 0, null, null)]
         [TestCase(nameof(twoLyricsWithText), 1, 0, 0, 3)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 0, 0, 3)]
-        public void TestMoveLeft(string sourceName, int lyricIndex, int index, int? newLyricIndex, int? newIndex)
+        public void TestMoveLeft(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caret = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedEditTextTagCaretPosition(lyrics, newLyricIndex, newIndex);
+            var expected = createExpectedEditTextTagCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveLeft(lyrics, caret, expected);
@@ -72,11 +72,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyric), 0, 3, null, null)]
         [TestCase(nameof(twoLyricsWithText), 0, 3, 1, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 3, 2, 0)]
-        public void TestMoveRight(string sourceName, int lyricIndex, int index, int? newLyricIndex, int? newIndex)
+        public void TestMoveRight(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var caret = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedEditTextTagCaretPosition(lyrics, newLyricIndex, newIndex);
+            var expected = createExpectedEditTextTagCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveRight(lyrics, caret, expected);
@@ -87,10 +87,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyricWithNoText), null, null)]
         [TestCase(nameof(twoLyricsWithText), 0, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 0)]
-        public void TestMoveToFirst(string sourceName, int? lyricIndex, int? index)
+        public void TestMoveToFirst(string sourceName, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var expected = createExpectedEditTextTagCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedEditTextTagCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveToFirst(lyrics, expected);
@@ -101,10 +101,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         [TestCase(nameof(singleLyricWithNoText), null, null)]
         [TestCase(nameof(twoLyricsWithText), 0, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 0)]
-        public void TestMoveToLast(string sourceName, int? lyricIndex, int? index)
+        public void TestMoveToLast(string sourceName, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var expected = createExpectedEditTextTagCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedEditTextTagCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveToLast(lyrics, expected);
@@ -112,10 +112,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
         [TestCase(nameof(singleLyric), 0)]
         [TestCase(nameof(singleLyricWithNoText), 0)]
-        public void TestMoveToTarget(string sourceName, int lyricIndex)
+        public void TestMoveToTarget(string sourceName, int expectedLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var lyric = lyrics[lyricIndex];
+            var lyric = lyrics[expectedLyricIndex];
 
             // lazy to implement this algorithm because this algorithm haven't being used.
             TestMoveToTarget(lyrics, lyric, null);
