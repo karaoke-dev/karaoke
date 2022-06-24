@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja
         {
             public bool FromKanji { get; set; }
 
-            public RomajiTag RomajiTag { get; set; }
+            public RomajiTag RomajiTag { get; set; } = null!;
         }
     }
 }

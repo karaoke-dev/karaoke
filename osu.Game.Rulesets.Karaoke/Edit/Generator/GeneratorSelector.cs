@@ -29,7 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator
             {
                 var generatorSetting = GetGeneratorConfigSetting(info);
                 var config = generatorConfigManager.Get<TConfig>(generatorSetting);
-                var generator = Activator.CreateInstance(typeof(TGenerator), config) as ILyricPropertyGenerator<TProperty>;
+                if (Activator.CreateInstance(typeof(TGenerator), config) is not ILyricPropertyGenerator<TProperty> generator)
+                    throw new InvalidCastException();
+
                 return generator;
             }));
         }

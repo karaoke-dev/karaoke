@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
                     continue;
 
                 string text = lyric.Text[startIndex..endIndex];
-                string ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
+                string? ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
 
                 if (!string.IsNullOrEmpty(text))
                 {
