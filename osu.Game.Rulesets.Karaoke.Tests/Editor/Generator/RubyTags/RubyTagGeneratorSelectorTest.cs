@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RubyTags
     {
         [TestCase(17, "花火大会", new[] { "[0,2]:はなび", "[2,4]:たいかい" })] // Japanese
         [TestCase(1041, "はなび", new string[] { })] // Japanese
-        [TestCase(1028, "はなび", null)] // Chinese(should not supported)
+        [TestCase(1028, "はなび", new string[] { })] // Chinese(should not supported)
         public void TestGenerate(int lcid, string text, string[] expectedRubies)
         {
             var selector = CreateSelector();
