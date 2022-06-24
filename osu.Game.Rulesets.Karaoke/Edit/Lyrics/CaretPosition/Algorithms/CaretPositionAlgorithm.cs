@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -21,19 +19,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         public abstract bool PositionMovable(TCaretPosition position);
 
-        public abstract TCaretPosition MoveUp(TCaretPosition currentPosition);
+        public abstract TCaretPosition? MoveUp(TCaretPosition currentPosition);
 
-        public abstract TCaretPosition MoveDown(TCaretPosition currentPosition);
+        public abstract TCaretPosition? MoveDown(TCaretPosition currentPosition);
 
-        public abstract TCaretPosition MoveLeft(TCaretPosition currentPosition);
+        public abstract TCaretPosition? MoveLeft(TCaretPosition currentPosition);
 
-        public abstract TCaretPosition MoveRight(TCaretPosition currentPosition);
+        public abstract TCaretPosition? MoveRight(TCaretPosition currentPosition);
 
-        public abstract TCaretPosition MoveToFirst();
+        public abstract TCaretPosition? MoveToFirst();
 
-        public abstract TCaretPosition MoveToLast();
+        public abstract TCaretPosition? MoveToLast();
 
-        public abstract TCaretPosition MoveToTarget(Lyric lyric);
+        public abstract TCaretPosition? MoveToTarget(Lyric lyric);
 
         public bool PositionMovable(ICaretPosition position)
         {
@@ -43,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return PositionMovable(tCaretPosition);
         }
 
-        public ICaretPosition MoveUp(ICaretPosition currentPosition)
+        public ICaretPosition? MoveUp(ICaretPosition currentPosition)
         {
             if (currentPosition is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(currentPosition));
@@ -51,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return MoveUp(tCaretPosition);
         }
 
-        public ICaretPosition MoveDown(ICaretPosition currentPosition)
+        public ICaretPosition? MoveDown(ICaretPosition currentPosition)
         {
             if (currentPosition is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(currentPosition));
@@ -59,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return MoveDown(tCaretPosition);
         }
 
-        public ICaretPosition MoveLeft(ICaretPosition currentPosition)
+        public ICaretPosition? MoveLeft(ICaretPosition currentPosition)
         {
             if (currentPosition is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(currentPosition));
@@ -67,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return MoveLeft(tCaretPosition);
         }
 
-        public ICaretPosition MoveRight(ICaretPosition currentPosition)
+        public ICaretPosition? MoveRight(ICaretPosition currentPosition)
         {
             if (currentPosition is not TCaretPosition tCaretPosition)
                 throw new InvalidCastException(nameof(currentPosition));
@@ -75,13 +73,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return MoveRight(tCaretPosition);
         }
 
-        ICaretPosition ICaretPositionAlgorithm.MoveToFirst()
+        ICaretPosition? ICaretPositionAlgorithm.MoveToFirst()
             => MoveToFirst();
 
-        ICaretPosition ICaretPositionAlgorithm.MoveToLast()
+        ICaretPosition? ICaretPositionAlgorithm.MoveToLast()
             => MoveToLast();
 
-        ICaretPosition ICaretPositionAlgorithm.MoveToTarget(Lyric lyric)
+        ICaretPosition? ICaretPositionAlgorithm.MoveToTarget(Lyric lyric)
             => MoveToTarget(lyric);
     }
 }

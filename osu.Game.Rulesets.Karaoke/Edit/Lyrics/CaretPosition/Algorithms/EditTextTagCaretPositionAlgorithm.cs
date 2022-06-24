@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
@@ -23,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         {
         }
 
-        public override EditTextTagCaretPosition MoveUp(EditTextTagCaretPosition currentPosition)
+        public override EditTextTagCaretPosition? MoveUp(EditTextTagCaretPosition currentPosition)
         {
             base.MoveUp(currentPosition);
 
@@ -45,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new EditTextTagCaretPosition(previousLyric, upTextTag);
         }
 
-        public override EditTextTagCaretPosition MoveDown(EditTextTagCaretPosition currentPosition)
+        public override EditTextTagCaretPosition? MoveDown(EditTextTagCaretPosition currentPosition)
         {
             base.MoveDown(currentPosition);
 
@@ -67,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new EditTextTagCaretPosition(nextLyric, downTextTag);
         }
 
-        public override EditTextTagCaretPosition MoveLeft(EditTextTagCaretPosition currentPosition)
+        public override EditTextTagCaretPosition? MoveLeft(EditTextTagCaretPosition currentPosition)
         {
             base.MoveLeft(currentPosition);
 
@@ -87,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new EditTextTagCaretPosition(previousLyric, previousTextTag);
         }
 
-        public override EditTextTagCaretPosition MoveRight(EditTextTagCaretPosition currentPosition)
+        public override EditTextTagCaretPosition? MoveRight(EditTextTagCaretPosition currentPosition)
         {
             base.MoveRight(currentPosition);
 
@@ -107,19 +105,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new EditTextTagCaretPosition(nextLyric, nextTextTag);
         }
 
-        public override EditTextTagCaretPosition MoveToFirst()
+        public override EditTextTagCaretPosition? MoveToFirst()
         {
             // might need to move to first ruby/romaji, but it can un-supported now.
             return null;
         }
 
-        public override EditTextTagCaretPosition MoveToLast()
+        public override EditTextTagCaretPosition? MoveToLast()
         {
             // might need to move to first ruby/romaji, but it can un-supported now.
             return null;
         }
 
-        public override EditTextTagCaretPosition MoveToTarget(Lyric lyric)
+        public override EditTextTagCaretPosition? MoveToTarget(Lyric lyric)
         {
             // lazy to implement this algorithm because this algorithm haven't being used.
             return null;
@@ -130,10 +128,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return Lyrics.FirstOrDefault(x => getRelatedTypeTextTag(x, textTag)?.Contains(textTag) ?? false);
         }
 
-        private ITextTag[] getRelatedTypeTextTag(Lyric lyric, EditTextTagCaretPosition sample)
+        private ITextTag[]? getRelatedTypeTextTag(Lyric lyric, EditTextTagCaretPosition sample)
             => getRelatedTypeTextTag(lyric, sample.TextTag);
 
-        private ITextTag[] getRelatedTypeTextTag(Lyric lyric, ITextTag sample) =>
+        private ITextTag[]? getRelatedTypeTextTag(Lyric lyric, ITextTag sample) =>
             sample switch
             {
                 RubyTag => lyric.RubyTags?.OfType<ITextTag>().ToArray(),

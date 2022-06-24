@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
@@ -19,32 +17,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return true;
         }
 
-        public override ClickingCaretPosition MoveUp(ClickingCaretPosition currentPosition)
+        public override ClickingCaretPosition? MoveUp(ClickingCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override ClickingCaretPosition MoveDown(ClickingCaretPosition currentPosition)
+        public override ClickingCaretPosition? MoveDown(ClickingCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override ClickingCaretPosition MoveLeft(ClickingCaretPosition currentPosition)
+        public override ClickingCaretPosition? MoveLeft(ClickingCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override ClickingCaretPosition MoveRight(ClickingCaretPosition currentPosition)
+        public override ClickingCaretPosition? MoveRight(ClickingCaretPosition currentPosition)
         {
             return null;
         }
 
-        public override ClickingCaretPosition MoveToFirst()
+        public override ClickingCaretPosition? MoveToFirst()
         {
             return null;
         }
 
-        public override ClickingCaretPosition MoveToLast()
+        public override ClickingCaretPosition? MoveToLast()
         {
             return null;
         }

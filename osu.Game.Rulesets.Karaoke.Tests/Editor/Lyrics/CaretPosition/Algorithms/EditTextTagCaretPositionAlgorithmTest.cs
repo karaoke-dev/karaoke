@@ -1,8 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -16,109 +15,107 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
     [TestFixture]
     public class EditTextTagCaretPositionAlgorithmTest : BaseCaretPositionAlgorithmTest<EditTextTagCaretPositionAlgorithm, EditTextTagCaretPosition>
     {
-        private const int not_exist_tag = -1;
-
         [TestCase(nameof(singleLyric), 0, 0, true)]
         [TestCase(nameof(singleLyric), 0, 3, true)]
         public void TestPositionMovable(string sourceName, int lyricIndex, int textTagIndex, bool movable)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditTextTagCaretPosition(lyrics, lyricIndex, textTagIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, textTagIndex);
 
             // Check is movable
-            TestPositionMovable(lyrics, caretPosition, movable);
+            TestPositionMovable(lyrics, caret, movable);
         }
 
-        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, not_exist_tag)]
+        [TestCase(nameof(singleLyric), 0, 0, null, null)]
         [TestCase(nameof(twoLyricsWithText), 1, 0, 0, 0)]
         [TestCase(nameof(twoLyricsWithText), 1, 1, 0, 1)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 0, 0, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 1, 0, 1)]
-        public void TestMoveUp(string sourceName, int lyricIndex, int index, int newLyricIndex, int newIndex)
+        public void TestMoveUp(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
-            var newCaretPosition = createEditTextTagCaretPosition(lyrics, newLyricIndex, newIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
-            TestMoveUp(lyrics, caretPosition, newCaretPosition);
+            TestMoveUp(lyrics, caret, expected);
         }
 
-        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, not_exist_tag)]
+        [TestCase(nameof(singleLyric), 0, 0, null, null)]
         [TestCase(nameof(twoLyricsWithText), 0, 0, 1, 0)]
         [TestCase(nameof(twoLyricsWithText), 0, 3, 1, 1)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 0, 2, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 3, 2, 1)]
-        public void TestMoveDown(string sourceName, int lyricIndex, int index, int newLyricIndex, int newIndex)
+        public void TestMoveDown(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
-            var newCaretPosition = createEditTextTagCaretPosition(lyrics, newLyricIndex, newIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
-            TestMoveDown(lyrics, caretPosition, newCaretPosition);
+            TestMoveDown(lyrics, caret, expected);
         }
 
-        [TestCase(nameof(singleLyric), 0, 0, NOT_EXIST, not_exist_tag)]
+        [TestCase(nameof(singleLyric), 0, 0, null, null)]
         [TestCase(nameof(twoLyricsWithText), 1, 0, 0, 3)]
         [TestCase(nameof(threeLyricsWithSpacing), 2, 0, 0, 3)]
-        public void TestMoveLeft(string sourceName, int lyricIndex, int index, int newLyricIndex, int newIndex)
+        public void TestMoveLeft(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
-            var newCaretPosition = createEditTextTagCaretPosition(lyrics, newLyricIndex, newIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
-            TestMoveLeft(lyrics, caretPosition, newCaretPosition);
+            TestMoveLeft(lyrics, caret, expected);
         }
 
-        [TestCase(nameof(singleLyric), 0, 3, NOT_EXIST, not_exist_tag)]
+        [TestCase(nameof(singleLyric), 0, 3, null, null)]
         [TestCase(nameof(twoLyricsWithText), 0, 3, 1, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 3, 2, 0)]
-        public void TestMoveRight(string sourceName, int lyricIndex, int index, int newLyricIndex, int newIndex)
+        public void TestMoveRight(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
-            var newCaretPosition = createEditTextTagCaretPosition(lyrics, newLyricIndex, newIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
-            TestMoveRight(lyrics, caretPosition, newCaretPosition);
+            TestMoveRight(lyrics, caret, expected);
         }
 
         [Ignore("Not that important for now.")]
         [TestCase(nameof(singleLyric), 0, 0)]
-        [TestCase(nameof(singleLyricWithNoText), NOT_EXIST, not_exist_tag)]
+        [TestCase(nameof(singleLyricWithNoText), null, null)]
         [TestCase(nameof(twoLyricsWithText), 0, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 0)]
-        public void TestMoveToFirst(string sourceName, int lyricIndex, int index)
+        public void TestMoveToFirst(string sourceName, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
-            TestMoveToFirst(lyrics, caretPosition);
+            TestMoveToFirst(lyrics, expected);
         }
 
         [Ignore("Not that important for now.")]
         [TestCase(nameof(singleLyric), 0, 0)]
-        [TestCase(nameof(singleLyricWithNoText), NOT_EXIST, not_exist_tag)]
+        [TestCase(nameof(singleLyricWithNoText), null, null)]
         [TestCase(nameof(twoLyricsWithText), 0, 0)]
         [TestCase(nameof(threeLyricsWithSpacing), 0, 0)]
-        public void TestMoveToLast(string sourceName, int lyricIndex, int index)
+        public void TestMoveToLast(string sourceName, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caretPosition = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
-            TestMoveToLast(lyrics, caretPosition);
+            TestMoveToLast(lyrics, expected);
         }
 
         [TestCase(nameof(singleLyric), 0)]
         [TestCase(nameof(singleLyricWithNoText), 0)]
-        public void TestMoveToTarget(string sourceName, int lyricIndex)
+        public void TestMoveToTarget(string sourceName, int expectedLyricIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var lyric = lyrics[lyricIndex];
+            var lyric = lyrics[expectedLyricIndex];
 
             // lazy to implement this algorithm because this algorithm haven't being used.
             TestMoveToTarget(lyrics, lyric, null);
@@ -126,27 +123,29 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
 
         protected override void AssertEqual(EditTextTagCaretPosition expected, EditTextTagCaretPosition actual)
         {
-            if (expected == null)
-            {
-                Assert.IsNull(actual);
-            }
-            else
-            {
-                Assert.AreEqual(expected.Lyric, actual.Lyric);
-                Assert.AreEqual(expected.TextTag, actual.TextTag);
-            }
+            Assert.AreEqual(expected.Lyric, actual.Lyric);
+            Assert.AreEqual(expected.TextTag, actual.TextTag);
         }
 
-        private static EditTextTagCaretPosition createEditTextTagCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int timeTagIndex)
+        private static EditTextTagCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int timeTagIndex)
         {
-            if (lyricIndex == NOT_EXIST)
-                return null;
-
             var lyric = lyrics.ElementAtOrDefault(lyricIndex);
 
             // todo : need to able to switch between ruby or romaji.
             var ruby = lyric?.RubyTags.ElementAtOrDefault(timeTagIndex);
+
+            if (lyric == null || ruby == null)
+                throw new ArgumentNullException();
+
             return new EditTextTagCaretPosition(lyric, ruby);
+        }
+
+        private static EditTextTagCaretPosition? createExpectedCaretPosition(IEnumerable<Lyric> lyrics, int? lyricIndex, int? timeTagIndex)
+        {
+            if (lyricIndex == null || timeTagIndex == null)
+                return null;
+
+            return createCaretPosition(lyrics, lyricIndex.Value, timeTagIndex.Value);
         }
 
         #region source

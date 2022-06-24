@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
@@ -11,18 +9,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
     {
         public bool PositionMovable(ICaretPosition position);
 
-        public ICaretPosition MoveUp(ICaretPosition currentPosition);
+        public ICaretPosition? MoveUp(ICaretPosition currentPosition);
 
-        public ICaretPosition MoveDown(ICaretPosition currentPosition);
+        public ICaretPosition? MoveDown(ICaretPosition currentPosition);
 
-        public ICaretPosition MoveLeft(ICaretPosition currentPosition);
+        public ICaretPosition? MoveLeft(ICaretPosition currentPosition);
 
-        public ICaretPosition MoveRight(ICaretPosition currentPosition);
+        public ICaretPosition? MoveRight(ICaretPosition currentPosition);
 
-        public ICaretPosition MoveToFirst();
+        public ICaretPosition? MoveToFirst();
 
-        public ICaretPosition MoveToLast();
+        public ICaretPosition? MoveToLast();
 
-        public ICaretPosition MoveToTarget(Lyric lyric);
+        public ICaretPosition? MoveToTarget(Lyric lyric);
     }
 }
