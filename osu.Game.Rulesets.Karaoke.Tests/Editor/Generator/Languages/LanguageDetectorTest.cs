@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
 {
     [TestFixture]
-    public class LanguageDetectorTest : BaseDetectorTest<LanguageDetector, CultureInfo, LanguageDetectorConfig>
+    public class LanguageDetectorTest : BaseDetectorTest<LanguageDetector, CultureInfo?, LanguageDetectorConfig>
     {
         [TestCase("花火大会", true)]
         [TestCase("", false)] // will not able to detect the language if lyric is empty.
@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
             CheckDetectResult(text, expected, config);
         }
 
-        protected override void AssertEqual(CultureInfo expected, CultureInfo actual)
+        protected override void AssertEqual(CultureInfo? expected, CultureInfo? actual)
         {
             Assert.AreEqual(expected, actual);
         }

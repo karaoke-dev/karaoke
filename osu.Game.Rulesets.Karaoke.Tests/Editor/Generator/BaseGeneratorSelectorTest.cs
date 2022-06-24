@@ -11,7 +11,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
         protected TSelector CreateSelector()
         {
             var configManager = new KaraokeRulesetEditGeneratorConfigManager();
-            return Activator.CreateInstance(typeof(TSelector), configManager) as TSelector;
+            if (Activator.CreateInstance(typeof(TSelector), configManager) is not TSelector selector)
+                throw new InvalidCastException();
+
+            return selector;
         }
     }
 }
