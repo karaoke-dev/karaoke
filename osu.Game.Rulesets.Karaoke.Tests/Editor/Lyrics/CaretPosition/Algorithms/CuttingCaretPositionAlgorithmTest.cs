@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestPositionMovable(string sourceName, int lyricIndex, int index, bool movable)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createTextCaretPosition(lyrics, lyricIndex, index);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
 
             // Check is movable
             TestPositionMovable(lyrics, caret, movable);
@@ -39,8 +39,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveUp(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createTextCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedTextCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveUp(lyrics, caret, expected);
@@ -54,8 +54,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveDown(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createTextCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedTextCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveDown(lyrics, caret, expected);
@@ -68,8 +68,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveLeft(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createTextCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedTextCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveLeft(lyrics, caret, expected);
@@ -82,8 +82,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveRight(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createTextCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedTextCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveRight(lyrics, caret, expected);
@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveToFirst(string sourceName, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var expected = createExpectedTextCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check first position
             TestMoveToFirst(lyrics, expected);
@@ -109,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveToLast(string sourceName, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var expected = createExpectedTextCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check last position
             TestMoveToLast(lyrics, expected);
@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         {
             var lyrics = GetLyricsByMethodName(sourceName);
             var lyric = lyrics[expectedLyricIndex];
-            var expected = createExpectedTextCaretPosition(lyrics, expectedLyricIndex, 1);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, 1);
 
             // Check move to target position.
             TestMoveToTarget(lyrics, lyric, expected);
@@ -133,7 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             Assert.AreEqual(expected.Index, actual.Index);
         }
 
-        private static TextCaretPosition createTextCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int index)
+        private static TextCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int index)
         {
             var lyric = lyrics.ElementAtOrDefault(lyricIndex);
             if (lyric == null)
@@ -142,12 +142,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             return new TextCaretPosition(lyric, index);
         }
 
-        private static TextCaretPosition? createExpectedTextCaretPosition(IEnumerable<Lyric> lyrics, int? lyricIndex, int? index)
+        private static TextCaretPosition? createExpectedCaretPosition(IEnumerable<Lyric> lyrics, int? lyricIndex, int? index)
         {
             if (lyricIndex == null || index == null)
                 return null;
 
-            return createTextCaretPosition(lyrics, lyricIndex.Value, index.Value);
+            return createCaretPosition(lyrics, lyricIndex.Value, index.Value);
         }
 
         #region source

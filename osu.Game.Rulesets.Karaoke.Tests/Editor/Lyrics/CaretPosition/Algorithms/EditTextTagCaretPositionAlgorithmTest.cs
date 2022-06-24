@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestPositionMovable(string sourceName, int lyricIndex, int textTagIndex, bool movable)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createEditTextTagCaretPosition(lyrics, lyricIndex, textTagIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, textTagIndex);
 
             // Check is movable
             TestPositionMovable(lyrics, caret, movable);
@@ -34,8 +34,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveUp(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedEditTextTagCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveUp(lyrics, caret, expected);
@@ -49,8 +49,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveDown(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedEditTextTagCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveDown(lyrics, caret, expected);
@@ -62,8 +62,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveLeft(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedEditTextTagCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveLeft(lyrics, caret, expected);
@@ -75,8 +75,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveRight(string sourceName, int lyricIndex, int index, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var caret = createEditTextTagCaretPosition(lyrics, lyricIndex, index);
-            var expected = createExpectedEditTextTagCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var caret = createCaretPosition(lyrics, lyricIndex, index);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveRight(lyrics, caret, expected);
@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveToFirst(string sourceName, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var expected = createExpectedEditTextTagCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveToFirst(lyrics, expected);
@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
         public void TestMoveToLast(string sourceName, int? expectedLyricIndex, int? expectedIndex)
         {
             var lyrics = GetLyricsByMethodName(sourceName);
-            var expected = createExpectedEditTextTagCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
+            var expected = createExpectedCaretPosition(lyrics, expectedLyricIndex, expectedIndex);
 
             // Check is movable
             TestMoveToLast(lyrics, expected);
@@ -127,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             Assert.AreEqual(expected.TextTag, actual.TextTag);
         }
 
-        private static EditTextTagCaretPosition createEditTextTagCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int timeTagIndex)
+        private static EditTextTagCaretPosition createCaretPosition(IEnumerable<Lyric> lyrics, int lyricIndex, int timeTagIndex)
         {
             var lyric = lyrics.ElementAtOrDefault(lyricIndex);
 
@@ -140,12 +140,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             return new EditTextTagCaretPosition(lyric, ruby);
         }
 
-        private static EditTextTagCaretPosition? createExpectedEditTextTagCaretPosition(IEnumerable<Lyric> lyrics, int? lyricIndex, int? timeTagIndex)
+        private static EditTextTagCaretPosition? createExpectedCaretPosition(IEnumerable<Lyric> lyrics, int? lyricIndex, int? timeTagIndex)
         {
             if (lyricIndex == null || timeTagIndex == null)
                 return null;
 
-            return createEditTextTagCaretPosition(lyrics, lyricIndex.Value, timeTagIndex.Value);
+            return createCaretPosition(lyrics, lyricIndex.Value, timeTagIndex.Value);
         }
 
         #region source
