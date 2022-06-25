@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
     /// </summary>
     public static class TrickyCompositeDrawableExtension
     {
-        public static IReadOnlyList<Drawable> GetInternalChildren(this CompositeDrawable compositeDrawable)
+        public static IReadOnlyList<Drawable>? GetInternalChildren(this CompositeDrawable compositeDrawable)
         {
             // see this shit to access internal property.
             // https://stackoverflow.com/a/7575615/4105113
