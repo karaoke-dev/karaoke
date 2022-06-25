@@ -172,7 +172,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[4,5]:", "カラオケ", "")]
         [TestCase("[4,0]:karaoke", "カラオケ", "カラオケ")] // should not have those state but still give it a value.
         [TestCase("[0,4]:karaoke", "", "")]
-        [TestCase("[0,4]:karaoke", null, null)]
         public void TestGetTextFromLyric(string textTag, string lyric, string expected)
         {
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);

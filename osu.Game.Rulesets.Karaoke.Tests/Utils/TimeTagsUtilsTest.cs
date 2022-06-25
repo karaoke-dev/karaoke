@@ -90,7 +90,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("カラオケ", new[] { "[3,end]:1000" }, false)]
         [TestCase("カラオケ", new[] { "[-1,start]:1000", "[3,end]:2000" }, false)] // out of range end time-tag should be count as missing.
         [TestCase("", new[] { "[0,start]:1000", "[0,end]:2000" }, false)] // empty lyric should always count as missing.
-        [TestCase("カラオケ", null, false)] // empty time-tag should always count as missing.
+        [TestCase("カラオケ", new string[] { }, false)] // empty time-tag should always count as missing.
         public void TestHasStartTimeTagInLyric(string text, string[] timeTagTexts, bool expected)
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);

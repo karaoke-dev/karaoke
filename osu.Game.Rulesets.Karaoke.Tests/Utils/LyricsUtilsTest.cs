@@ -325,16 +325,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         [TestCase(new[] { LockState.Full, LockState.Partial, LockState.None }, 1)]
         [TestCase(new LockState[] { }, 0)]
-        [TestCase(null, null)]
         public void TestFindUnlockLyrics(LockState[] lockStates, int? expected)
         {
-            var lyrics = lockStates?.Select(x => new Lyric
+            var lyrics = lockStates.Select(x => new Lyric
             {
                 Text = "karaoke",
                 Lock = x
             });
 
-            int? actual = LyricsUtils.FindUnlockLyrics(lyrics)?.Length;
+            int actual = LyricsUtils.FindUnlockLyrics(lyrics).Length;
             Assert.AreEqual(expected, actual);
         }
 

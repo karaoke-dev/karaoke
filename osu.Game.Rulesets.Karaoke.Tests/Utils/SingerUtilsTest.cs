@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
     [TestFixture]
     public class SingerUtilsTest
     {
-        [TestCase(null, 0)]
+        [TestCase(new int[] { }, 0)]
         [TestCase(new[] { 1 }, 1)]
         [TestCase(new[] { 1, 2, 3 }, 7)]
         [TestCase(new[] { 1, 4, 5 }, 25)]

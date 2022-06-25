@@ -53,13 +53,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 4, 3, 2, 1 }, new[] { 1, 2, 3, 4 })]
         [TestCase(new[] { 4, 4, 2, 2 }, new[] { 2, 2, 4, 4 })] // should not happen but still make a order.
         [TestCase(new int[] { }, new int[] { })]
-        [TestCase(null, null)]
         public void TestSorted(int[] orders, int[] expected)
         {
-            var objects = orders?.Select(x => new TestOrderObject { Order = x });
+            var objects = orders.Select(x => new TestOrderObject { Order = x });
             var orderedArray = OrderUtils.Sorted(objects);
 
-            int[] actual = orderedArray?.Select(x => x.Order).ToArray();
+            int[] actual = orderedArray.Select(x => x.Order).ToArray();
             Assert.AreEqual(expected, actual);
         }
 
