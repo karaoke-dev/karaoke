@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -20,7 +18,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new double[] { 1000, 5000 }, 3, null, null)]
         [TestCase(new double[] { 1000, 5000 }, 0, null, null)] // should not be 0 or 1.
         [TestCase(new double[] { 1000, 5000 }, 1, null, null)]
-        public void TestSplitNoteTime(double[] time, double percentage, double[] firstTime, double[] secondTime)
+        public void TestSplitNoteTime(double[] time, double percentage, double[]? firstTime, double[]? secondTime)
         {
             var note = new Note
             {
@@ -28,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 Duration = time[1],
             };
 
-            try
+            if (firstTime != null && secondTime != null)
             {
                 var (firstNote, secondNote) = NotesUtils.SplitNote(note, percentage);
                 Assert.AreEqual(firstTime[0], firstNote.StartTime);
@@ -37,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 Assert.AreEqual(secondTime[0], secondNote.StartTime);
                 Assert.AreEqual(secondTime[1], secondNote.Duration);
             }
-            catch
+            else
             {
                 Assert.IsNull(firstTime);
                 Assert.IsNull(secondTime);

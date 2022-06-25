@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -48,9 +46,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             static IList<T> processTags<T>(IList<T> tags, int position, int count) where T : class, ITextTag
             {
-                if (tags == null)
-                    return null;
-
                 // shifting index.
                 foreach (var tag in tags)
                 {
@@ -77,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             static IList<TimeTag> processTimeTags(IEnumerable<TimeTag> timeTags, int position, int count)
             {
                 int endPosition = position + count;
-                return timeTags?.Where(x => !(x.Index.Index >= position && x.Index.Index < endPosition))
+                return timeTags.Where(x => !(x.Index.Index >= position && x.Index.Index < endPosition))
                                .Select(t => t.Index.Index > position ? TimeTagUtils.ShiftingTimeTag(t, -count) : t)
                                .ToArray();
             }
@@ -93,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             int lyricTextLength = lyricText?.Length ?? 0;
             position = Math.Clamp(position, 0, lyricTextLength);
 
-            int offset = text?.Length ?? 0;
+            int offset = text.Length;
             if (offset == 0)
                 return;
 
@@ -107,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             lyric.Text = newLyricText;
 
             static T[] processTags<T>(IEnumerable<T> tags, int position, int offset) where T : ITextTag =>
-                tags?.Select(x =>
+                tags.Select(x =>
                     {
                         if (x.StartIndex >= position)
                             x.StartIndex += offset;
@@ -118,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     .ToArray();
 
             static TimeTag[] processTimeTags(IEnumerable<TimeTag> timeTags, int startPosition, int offset)
-                => timeTags?.Select(t => t.Index.Index >= startPosition ? TimeTagUtils.ShiftingTimeTag(t, offset) : t).ToArray();
+                => timeTags.Select(t => t.Index.Index >= startPosition ? TimeTagUtils.ShiftingTimeTag(t, offset) : t).ToArray();
         }
 
         #endregion
@@ -126,9 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         #region Time tag
 
         public static bool HasTimedTimeTags(Lyric lyric)
-        {
-            return lyric?.TimeTags?.Any(x => x.Time.HasValue) ?? false;
-        }
+            => lyric.TimeTags.Any(x => x.Time.HasValue);
 
         public static string GetTimeTagIndexDisplayText(Lyric lyric, TextIndex index)
         {
@@ -184,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var state = timeTag.Index.State;
 
             // should check has ruby in target lyric with target index.
-            var matchRuby = lyric?.RubyTags.Where(x =>
+            var matchRuby = lyric.RubyTags.Where(x =>
             {
                 int stringIndex = TextIndexUtils.ToStringIndex(timeTag.Index);
 
@@ -248,9 +241,9 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (lyric == null)
                 throw new ArgumentNullException(nameof(lyric));
 
-            var availableTimeTags = lyric.TimeTags?.Where(x => x.Time != null).ToArray();
-            var minTimeTag = availableTimeTags?.OrderBy(x => x.Time).FirstOrDefault();
-            var maxTimeTag = availableTimeTags?.OrderByDescending(x => x.Time).FirstOrDefault();
+            var availableTimeTags = lyric.TimeTags.Where(x => x.Time != null).ToArray();
+            var minTimeTag = availableTimeTags.OrderBy(x => x.Time).FirstOrDefault();
+            var maxTimeTag = availableTimeTags.OrderByDescending(x => x.Time).FirstOrDefault();
 
             string startTime = TimeTagUtils.FormattedString(minTimeTag);
             string endTime = TimeTagUtils.FormattedString(maxTimeTag);

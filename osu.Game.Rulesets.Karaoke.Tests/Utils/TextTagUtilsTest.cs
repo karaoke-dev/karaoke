@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -53,8 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[0,1]:", "karaoke", 1, "[1,2]:")]
         [TestCase("[0,1]:ka", "karaoke", -1, "[0,0]:ka")]
         [TestCase("[0,1]:ka", "", -1, "[0,0]:ka")]
-        [TestCase("[0,1]:ka", null, -1, "[0,0]:ka")]
-        [TestCase("[0,1]:ka", null, 1, "[0,0]:ka")]
+        [TestCase("[0,1]:ka", "", 1, "[0,0]:ka")]
         [TestCase("[1,0]:ka", "karaoke", 0, "[0,1]:ka")] // will auto fix the position
         [TestCase("[1,0]:ka", "karaoke", 1, "[1,2]:ka")]
         public void TestGetShiftingIndex(string textTag, string lyric, int offset, string actualTag)
@@ -87,11 +84,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         [TestCase("[0,1]:ka", "karaoke", false)]
         [TestCase("[0,1]:ka", "", true)]
-        [TestCase("[0,1]:ka", null, true)]
         [TestCase("[0,-1]:ka", "karaoke", true)]
         [TestCase("[1,0]:ka", "karaoke", false)] // should not be counted as out of range if index is not ordered.
         [TestCase("[0,0]:ka", "", true)] // should be counted as out of range if lyric is empty
-        [TestCase("[0,0]:ka", null, true)] // should be counted as out of range if lyric is null
         public void TestOutOfRange(string textTag, string lyric, bool expected)
         {
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);
@@ -172,7 +167,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[4,5]:", "カラオケ", "")]
         [TestCase("[4,0]:karaoke", "カラオケ", "カラオケ")] // should not have those state but still give it a value.
         [TestCase("[0,4]:karaoke", "", "")]
-        [TestCase("[0,4]:karaoke", null, null)]
         public void TestGetTextFromLyric(string textTag, string lyric, string expected)
         {
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);

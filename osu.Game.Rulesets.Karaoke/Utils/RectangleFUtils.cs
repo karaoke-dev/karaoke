@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using osu.Framework.Graphics.Primitives;
 
@@ -16,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <filterpriority>1</filterpriority>
         public static RectangleF Union(params RectangleF[] rectangles)
         {
-            if (rectangles == null || rectangles.Length == 0)
+            if (rectangles.Length == 0)
                 return new RectangleF();
 
             var result = rectangles.FirstOrDefault();

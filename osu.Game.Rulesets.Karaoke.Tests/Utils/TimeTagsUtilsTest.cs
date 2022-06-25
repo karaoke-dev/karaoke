@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -24,12 +22,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[0,start]:", "[0,start]:", 0, "[0,start]:")] // edge case, but it's valid.
         [TestCase("[1,start]:", "[3,start]:", 10, null)] // new index should be in the range.
         [TestCase("[10,start]:", "[3,start]:", 10, null)] // start index should be smaller then end index.
-        [TestCase(null, "[3,start]:", 10, null)] // should not be null.
         [TestCase("[1,start]:", null, 2, null)] // should not be null.
-        [TestCase(null, null, 2, null)] // should not be null.
-        public void GenerateTimeTag(string startTag, string endTag, int index, string result)
+        public void GenerateTimeTag(string startTag, string? endTag, int index, string? result)
         {
-            try
+            if (result != null)
             {
                 var expectedTimeTag = TestCaseTagHelper.ParseTimeTag(result);
                 var actualTimeTag = TimeTagsUtils.GenerateCenterTimeTag(
@@ -40,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 Assert.AreEqual(expectedTimeTag.Index, actualTimeTag.Index);
                 Assert.AreEqual(expectedTimeTag.Time, actualTimeTag.Time);
             }
-            catch
+            else
             {
                 Assert.IsNull(result);
             }
@@ -90,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("カラオケ", new[] { "[3,end]:1000" }, false)]
         [TestCase("カラオケ", new[] { "[-1,start]:1000", "[3,end]:2000" }, false)] // out of range end time-tag should be count as missing.
         [TestCase("", new[] { "[0,start]:1000", "[0,end]:2000" }, false)] // empty lyric should always count as missing.
-        [TestCase("カラオケ", null, false)] // empty time-tag should always count as missing.
+        [TestCase("カラオケ", new string[] { }, false)] // empty time-tag should always count as missing.
         public void TestHasStartTimeTagInLyric(string text, string[] timeTagTexts, bool expected)
         {
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -11,7 +9,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
     [TestFixture]
     public class SingerUtilsTest
     {
-        [TestCase(null, 0)]
+        [TestCase(new int[] { }, 0)]
         [TestCase(new[] { 1 }, 1)]
         [TestCase(new[] { 1, 2, 3 }, 7)]
         [TestCase(new[] { 1, 4, 5 }, 25)]

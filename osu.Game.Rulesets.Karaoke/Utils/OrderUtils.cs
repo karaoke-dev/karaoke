@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns>sorted result</returns>
         public static T[] Sorted<T>(IEnumerable<T> objects) where T : IHasOrder
         {
-            return objects?.OrderBy(x => x.Order).ToArray();
+            return objects.OrderBy(x => x.Order).ToArray();
         }
 
         /// <summary>
@@ -90,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="objects">objects</param>
         /// <param name="startFrom">start order should from</param>
         /// <param name="changeOrderAction">has call-back if order has been changed.</param>
-        public static void ResortOrder<T>(T[] objects, int startFrom = 1, Action<T, int, int> changeOrderAction = null) where T : IHasOrder
+        public static void ResortOrder<T>(T[] objects, int startFrom = 1, Action<T, int, int>? changeOrderAction = null) where T : IHasOrder
         {
             int minOrderNumber = GetMinOrderNumber(objects.ToArray());
             int maxOrderNumber = GetMaxOrderNumber(objects.ToArray());
@@ -127,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <param name="oldOrder">old order</param>
         /// <param name="newOrder">new oder</param>
         /// <param name="changeOrderAction">has call-back if order has been changed.</param>
-        public static void ChangeOrder<T>(T[] objects, int oldOrder, int newOrder, Action<T, int, int> changeOrderAction = null) where T : IHasOrder
+        public static void ChangeOrder<T>(T[] objects, int oldOrder, int newOrder, Action<T, int, int>? changeOrderAction = null) where T : IHasOrder
         {
             if (oldOrder == newOrder)
                 return;
@@ -151,6 +149,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             // get order order object info
             const int old_order_temp_id = -1;
             var oldOrderObject = objects.FirstOrDefault(x => x.Order == oldOrder);
+            if (oldOrderObject == null)
+                return;
 
             // set old order to -1 for order duplicated issue
             changeOrder(oldOrderObject, old_order_temp_id);

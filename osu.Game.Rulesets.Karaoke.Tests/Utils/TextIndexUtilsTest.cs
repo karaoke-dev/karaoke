@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -87,8 +85,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(-1, TextIndex.IndexState.End, "karaoke", true)]
         [TestCase(0, TextIndex.IndexState.Start, "", true)] // should be counted as out of range if lyric is empty
         [TestCase(0, TextIndex.IndexState.End, "", true)]
-        [TestCase(0, TextIndex.IndexState.Start, null, true)] // should be counted as out of range if lyric is null
-        [TestCase(0, TextIndex.IndexState.End, null, true)]
         public void TestOutOfRange(int index, TextIndex.IndexState state, string lyric, bool expected)
         {
             var textIndex = new TextIndex(index, state);

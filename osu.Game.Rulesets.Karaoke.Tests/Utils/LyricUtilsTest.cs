@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -23,16 +21,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("カラオケ", 0, -1, null)] // test end position not in the range
         [TestCase("カラオケ", 0, 100, "")] // test end position not in the range
         [TestCase("", 0, 0, "")]
-        [TestCase(null, 0, 0, null)]
-        public void TestRemoveText(string text, int position, int count, string expected)
+        public void TestRemoveText(string text, int position, int count, string? expected)
         {
-            try
+            if (expected != null)
             {
                 var lyric = new Lyric { Text = text };
                 LyricUtils.RemoveText(lyric, position, count);
                 Assert.AreEqual(expected, lyric.Text);
             }
-            catch
+            else
             {
                 Assert.IsNull(expected);
             }
@@ -96,7 +93,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("オケ", -1, "カラ", "カラオケ")] // test start position not in the range, but it's valid.
         [TestCase("カラ", 4, "オケ", "カラオケ")] // test start position not in the range, but it's valid.
         [TestCase("", 0, "カラオケ", "カラオケ")]
-        [TestCase(null, 0, "カラオケ", "カラオケ")]
         public void TestAddTextText(string text, int position, string addedText, string expected)
         {
             var lyric = new Lyric { Text = text };
@@ -212,7 +208,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         {
             var lyric = TestCaseTagHelper.ParseLyricWithTimeTag(text);
             var textIndex = TestCaseTagHelper.ParseTextIndex(textIndexStr);
-            var timeTag = lyric.TimeTags?.Where(x => x.Index == textIndex).FirstOrDefault();
+            var timeTag = lyric.TimeTags.First(x => x.Index == textIndex);
 
             string actual = LyricUtils.GetTimeTagDisplayText(lyric, timeTag);
             Assert.AreEqual(expected, actual);
@@ -267,7 +263,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("からおけ", -1, false)]
         [TestCase("からおけ", 5, false)]
         [TestCase("", 0, true)]
-        [TestCase(null, 0, true)]
         public void TestAbleToInsertTextTagAtIndex(string text, int index, bool expected)
         {
             var lyric = TestCaseTagHelper.ParseLyricWithTimeTag(text);
@@ -325,7 +320,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var singer = TestCaseTagHelper.ParseSinger(compareSinger);
             var lyric = new Lyric
             {
-                Singers = TestCaseTagHelper.ParseSingers(existSingers)?.Select(x => x.ID).ToArray()
+                Singers = TestCaseTagHelper.ParseSingers(existSingers).Select(x => x.ID).ToArray()
             };
 
             bool actual = LyricUtils.ContainsSinger(lyric, singer);
@@ -341,7 +336,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var singers = TestCaseTagHelper.ParseSingers(compareSingers).ToList();
             var lyric = new Lyric
             {
-                Singers = TestCaseTagHelper.ParseSingers(existSingers)?.Select(x => x.ID).ToArray()
+                Singers = TestCaseTagHelper.ParseSingers(existSingers).Select(x => x.ID).ToArray()
             };
 
             bool actual = LyricUtils.OnlyContainsSingers(lyric, singers);

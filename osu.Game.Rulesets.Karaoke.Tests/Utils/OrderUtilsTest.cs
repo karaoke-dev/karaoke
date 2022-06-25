@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -53,13 +51,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 4, 3, 2, 1 }, new[] { 1, 2, 3, 4 })]
         [TestCase(new[] { 4, 4, 2, 2 }, new[] { 2, 2, 4, 4 })] // should not happen but still make a order.
         [TestCase(new int[] { }, new int[] { })]
-        [TestCase(null, null)]
         public void TestSorted(int[] orders, int[] expected)
         {
-            var objects = orders?.Select(x => new TestOrderObject { Order = x });
+            var objects = orders.Select(x => new TestOrderObject { Order = x });
             var orderedArray = OrderUtils.Sorted(objects);
 
-            int[] actual = orderedArray?.Select(x => x.Order).ToArray();
+            int[] actual = orderedArray.Select(x => x.Order).ToArray();
             Assert.AreEqual(expected, actual);
         }
 
@@ -69,11 +66,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 4, 3, 2, 1 }, 1, new[] { 5, 4, 3, 2 })] // Not care order in objects and just doing shifting job.
         public void TestShiftingOrder(int[] orders, int offset, int[] expected)
         {
-            var objects = orders?.Select(x => new TestOrderObject { Order = x }).ToArray();
+            var objects = orders.Select(x => new TestOrderObject { Order = x }).ToArray();
             OrderUtils.ShiftingOrder(objects, offset);
 
             // convert order result.
-            int[] actual = objects?.Select(x => x.Order).ToArray();
+            int[] actual = objects.Select(x => x.Order).ToArray();
             Assert.AreEqual(expected, actual);
         }
 
@@ -85,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 1, 1, 1, 1 }, 1, new[] { 1, 1, 1 }, new[] { 1, 2, 3, 4 })] // invalid input might cause some of id mapping will be lost.
         public void TestResortOrder(int[] orders, int startFrom, int[] expectedMovingOrders, int[] expectedNewOrder)
         {
-            var objects = orders?.Select(x => new TestOrderObject { Order = x }).ToArray();
+            var objects = orders.Select(x => new TestOrderObject { Order = x }).ToArray();
 
             var movingStepResult = new List<int>();
             OrderUtils.ResortOrder(objects, startFrom, (_, o, _) =>
@@ -94,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             });
 
             // convert order result.
-            int[] result = objects?.Select(x => x.Order).ToArray();
+            int[] result = objects.Select(x => x.Order).ToArray();
             Assert.AreEqual(expectedNewOrder, result);
 
             // should check moving order step also.
@@ -107,30 +104,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new[] { 1, 2, 3, 4 }, 4, 1, new[] { 4, 3, 2, 1, -1 }, new[] { 2, 3, 4, 1 })]
         public void TestChangeOrder(int[] orders, int oldOrder, int nowOrder, int[] expectedMovingOrders, int[] expectedNewOrder)
         {
-            try
+            var objects = orders.Select(x => new TestOrderObject { Order = x }).ToArray();
+
+            // record order index change step.
+            var movingStepResult = new List<int>();
+
+            // This utils only change order property.
+            OrderUtils.ChangeOrder(objects, oldOrder, nowOrder, (_, o, _) =>
             {
-                var objects = orders?.Select(x => new TestOrderObject { Order = x }).ToArray();
+                movingStepResult.Add(o);
+            });
 
-                // record order index change step.
-                var movingStepResult = new List<int>();
+            // change order result.
+            int[] result = objects.Select(x => x.Order).ToArray();
+            Assert.AreEqual(expectedNewOrder, result);
 
-                // This utils only change order property.
-                OrderUtils.ChangeOrder(objects, oldOrder, nowOrder, (_, o, _) =>
-                {
-                    movingStepResult.Add(o);
-                });
-
-                // change order result.
-                int[] result = objects?.Select(x => x.Order).ToArray();
-                Assert.AreEqual(expectedNewOrder, result);
-
-                // should check moving order step also.
-                Assert.AreEqual(expectedMovingOrders, movingStepResult.ToArray());
-            }
-            catch
-            {
-                Assert.IsNull(expectedNewOrder);
-            }
+            // should check moving order step also.
+            Assert.AreEqual(expectedMovingOrders, movingStepResult.ToArray());
         }
 
         internal class TestOrderObject : IHasOrder
