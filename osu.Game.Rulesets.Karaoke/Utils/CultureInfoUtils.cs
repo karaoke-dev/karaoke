@@ -20,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static bool IsLanguage(CultureInfo cultureInfo)
             => (cultureInfo.CultureTypes & CultureTypes.NeutralCultures) != 0;
 
-        public static string GetLanguageDisplayText(CultureInfo cultureInfo)
+        public static string GetLanguageDisplayText(CultureInfo? cultureInfo)
             => cultureInfo?.NativeName ?? "None";
     }
 }

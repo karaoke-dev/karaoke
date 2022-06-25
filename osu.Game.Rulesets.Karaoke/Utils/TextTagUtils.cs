@@ -75,9 +75,6 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static string GetTextFromLyric<T>(T textTag, string lyric) where T : ITextTag
         {
-            if (textTag == null || lyric == null)
-                return null;
-
             (int startIndex, int endIndex) = GetFixedIndex(textTag, lyric);
             return lyric.Substring(startIndex, endIndex - startIndex);
         }

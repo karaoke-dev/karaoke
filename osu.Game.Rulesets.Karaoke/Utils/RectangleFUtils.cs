@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <filterpriority>1</filterpriority>
         public static RectangleF Union(params RectangleF[] rectangles)
         {
-            if (rectangles == null || rectangles.Length == 0)
+            if (rectangles.Length == 0)
                 return new RectangleF();
 
             var result = rectangles.FirstOrDefault();

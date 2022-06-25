@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (!textIndexMovable(index))
                 return MoveLeft(new TimeTagIndexCaretPosition(currentPosition.Lyric, index));
 
-            if (TextIndexUtils.OutOfRange(index, lyric?.Text))
+            if (TextIndexUtils.OutOfRange(index, lyric.Text))
                 return MoveUp(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MaxValue, index.State)));
 
             return new TimeTagIndexCaretPosition(currentPosition.Lyric, index);
@@ -81,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (!textIndexMovable(index))
                 return MoveRight(new TimeTagIndexCaretPosition(currentPosition.Lyric, index));
 
-            if (TextIndexUtils.OutOfRange(index, lyric?.Text))
+            if (TextIndexUtils.OutOfRange(index, lyric.Text))
                 return MoveDown(new TimeTagIndexCaretPosition(currentPosition.Lyric, new TextIndex(int.MinValue, index.State)));
 
             return new TimeTagIndexCaretPosition(currentPosition.Lyric, index);

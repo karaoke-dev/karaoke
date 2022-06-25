@@ -15,20 +15,20 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static T[] Sort<T>(IEnumerable<T> textTags, Sorting sorting = Sorting.Asc) where T : ITextTag =>
             sorting switch
             {
-                Sorting.Asc => textTags?.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray(),
-                Sorting.Desc => textTags?.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray(),
+                Sorting.Asc => textTags.OrderBy(x => x.StartIndex).ThenBy(x => x.EndIndex).ToArray(),
+                Sorting.Desc => textTags.OrderByDescending(x => x.EndIndex).ThenByDescending(x => x.StartIndex).ToArray(),
                 _ => throw new InvalidEnumArgumentException(nameof(sorting))
             };
 
         public static T[] FindOutOfRange<T>(IEnumerable<T> textTags, string lyric) where T : ITextTag
         {
-            return textTags?.Where(x => TextTagUtils.OutOfRange(x, lyric)).ToArray();
+            return textTags.Where(x => TextTagUtils.OutOfRange(x, lyric)).ToArray();
         }
 
         public static T[] FindOverlapping<T>(IList<T> textTags, Sorting sorting = Sorting.Asc) where T : ITextTag
         {
             // check is null or empty
-            if (textTags == null || !textTags.Any())
+            if (!textTags.Any())
                 return Array.Empty<T>();
 
             // todo : need to make sure is need to sort in here?
@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static T[] FindEmptyText<T>(IEnumerable<T> textTags) where T : ITextTag
         {
-            return textTags?.Where(TextTagUtils.EmptyText).ToArray();
+            return textTags.Where(TextTagUtils.EmptyText).ToArray();
         }
 
         public static T Combine<T>(T textTagA, T textTagB) where T : ITextTag, new()
