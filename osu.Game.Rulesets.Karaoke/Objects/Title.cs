@@ -8,7 +8,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 {
     public class Title : KaraokeHitObject, IHasDuration
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         public int KaraokeLayoutIndex { get; set; }
 
@@ -20,6 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public bool ShowRuby { get; set; }
 
-        public List<TitlePart> TitleParts { get; set; }
+        public IList<TitlePart> TitleParts { get; set; } = new List<TitlePart>();
     }
 }

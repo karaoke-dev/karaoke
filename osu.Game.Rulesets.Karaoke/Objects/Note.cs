@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public int EndIndex { get; set; }
 
-        private Lyric parentLyric;
+        private Lyric parentLyric = null!;
 
         /// <summary>
         /// Relative lyric.

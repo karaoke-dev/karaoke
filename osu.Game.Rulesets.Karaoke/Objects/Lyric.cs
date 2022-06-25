@@ -162,12 +162,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<CultureInfo> LanguageBindable = new();
+        public readonly Bindable<CultureInfo?> LanguageBindable = new();
 
         /// <summary>
         /// Language
         /// </summary>
-        public CultureInfo Language
+        public CultureInfo? Language
         {
             get => LanguageBindable.Value;
             set => LanguageBindable.Value = value;

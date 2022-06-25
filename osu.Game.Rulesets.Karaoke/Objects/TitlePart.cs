@@ -5,7 +5,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 {
     public class TitlePart
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = null!;
 
         public int KaraokeFontIndex { get; set; }
 

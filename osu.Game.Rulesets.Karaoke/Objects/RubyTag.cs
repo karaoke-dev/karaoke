@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <summary>
         /// Invoked when any property of this <see cref="RubyTag"/> is changed.
         /// </summary>
-        public event Action Changed;
+        public event Action? Changed;
 
         public RubyTag()
         {
