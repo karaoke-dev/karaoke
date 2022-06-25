@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
     public class LrcEncoderTest
     {
         private static IEnumerable<string> allLrcFileNames => TestResources.GetStore().GetAvailableResources()
-                                                                           .Where(res => res.EndsWith(".lrc", StringComparison.Ordinal)).Select(Path.GetFileNameWithoutExtension);
+                                                                           .Where(res => res.EndsWith(".lrc", StringComparison.Ordinal)).Select(x => Path.GetFileNameWithoutExtension(x!));
 
         [TestCaseSource(nameof(allLrcFileNames))]
         public void TestDecodeEncodedBeatmap(string fileName)

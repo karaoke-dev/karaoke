@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var skin = decoder.Decode(stream);
 
                 // Testing layout
-                var firstLayout = skin.Layouts.FirstOrDefault();
+                var firstLayout = skin.Layouts.FirstOrDefault()!;
                 Assert.IsNotNull(firstLayout);
                 Assert.AreEqual("下-1", firstLayout.Name);
                 Assert.AreEqual(Anchor.BottomRight, firstLayout.Alignment);
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.AreEqual(45, firstLayout.VerticalMargin);
 
                 // Testing style
-                var firstFont = skin.LyricStyles.FirstOrDefault();
+                var firstFont = skin.LyricStyles.FirstOrDefault()!;
                 Assert.IsNotNull(firstFont);
                 Assert.AreEqual("標準配色", firstFont.Name);
 
@@ -51,13 +51,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 Assert.IsNotNull(shaders);
 
                 // Test outline shader.
-                var outlineShader = shaders.FirstOrDefault() as OutlineShader;
+                var outlineShader = (OutlineShader)shaders.FirstOrDefault()!;
                 Assert.IsNotNull(outlineShader);
                 Assert.AreEqual(new Color4(255, 255, 255, 255), outlineShader.OutlineColour);
                 Assert.AreEqual(3, outlineShader.Radius);
 
                 // Test shader convert result.
-                var shadowShader = shaders.LastOrDefault() as ShadowShader;
+                var shadowShader = (ShadowShader)shaders.LastOrDefault()!;
                 Assert.IsNotNull(shadowShader);
                 Assert.AreEqual(new Vector2(3), shadowShader.ShadowOffset);
 

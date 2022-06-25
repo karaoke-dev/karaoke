@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             var beatmap = decodeLrcLine(lyricText);
 
             // Get first lyric from beatmap
-            var actual = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
+            var actual = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault()!;
             Assert.IsNotNull(actual);
             Assert.AreEqual(expectedText, actual.Text);
             Assert.AreEqual(expectedStartTime, actual.StartTime);

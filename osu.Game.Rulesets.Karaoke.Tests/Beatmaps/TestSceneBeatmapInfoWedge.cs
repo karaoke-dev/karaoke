@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
     [TestFixture]
     public class TestSceneBeatmapInfoWedge : OsuTestScene
     {
-        private TestBeatmapInfoWedge infoWedge;
+        private TestBeatmapInfoWedge infoWedge = null!;
 
         protected override void LoadComplete()
         {
@@ -53,9 +53,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
 
         private void selectBeatmap(IBeatmap b, string fileName)
         {
-            BeatmapInfoWedge.WedgeInfoText infoBefore = null;
+            BeatmapInfoWedge.WedgeInfoText infoBefore = null!;
 
-            AddStep($"select {b?.Metadata.Title ?? fileName} beatmap", () =>
+            AddStep($"select {b.Metadata.Title ?? fileName} beatmap", () =>
             {
                 infoBefore = infoWedge.Info;
                 infoWedge.Beatmap = Beatmap.Value = b == null ? Beatmap.Default : CreateWorkingBeatmap(b);
