@@ -7,14 +7,14 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Bindables
 {
-    public class BindableCultureInfo : Bindable<CultureInfo>
+    public class BindableCultureInfo : Bindable<CultureInfo?>
     {
-        public BindableCultureInfo(CultureInfo value = default)
+        public BindableCultureInfo(CultureInfo? value = default)
             : base(value)
         {
         }
 
-        public override void Parse(object input)
+        public override void Parse(object? input)
         {
             if (input == null)
             {
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Bindables
             }
         }
 
-        protected override Bindable<CultureInfo> CreateInstance() => new BindableCultureInfo();
+        protected override Bindable<CultureInfo?> CreateInstance() => new BindableCultureInfo();
 
         public override string ToString() => CultureInfoUtils.GetLanguageDisplayText(Value);
     }
