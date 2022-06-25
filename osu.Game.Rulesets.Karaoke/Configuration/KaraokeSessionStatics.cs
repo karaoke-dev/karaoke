@@ -1,8 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -54,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetSession.PlaybackSpeed, overridePlaybackSpeed ? playbackSpeedValue : 0, -10, 10);
 
             // Practice
-            SetDefault<Lyric[]>(KaraokeRulesetSession.SingingLyrics, null);
+            SetDefault(KaraokeRulesetSession.SingingLyrics, Array.Empty<Lyric>());
 
             // Scoring status
             SetDefault(KaraokeRulesetSession.ScoringStatus, ScoringStatusMode.NotInitialized);
