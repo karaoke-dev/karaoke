@@ -51,8 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[0,1]:", "karaoke", 1, "[1,2]:")]
         [TestCase("[0,1]:ka", "karaoke", -1, "[0,0]:ka")]
         [TestCase("[0,1]:ka", "", -1, "[0,0]:ka")]
-        [TestCase("[0,1]:ka", null, -1, "[0,0]:ka")]
-        [TestCase("[0,1]:ka", null, 1, "[0,0]:ka")]
+        [TestCase("[0,1]:ka", "", 1, "[0,0]:ka")]
         [TestCase("[1,0]:ka", "karaoke", 0, "[0,1]:ka")] // will auto fix the position
         [TestCase("[1,0]:ka", "karaoke", 1, "[1,2]:ka")]
         public void TestGetShiftingIndex(string textTag, string lyric, int offset, string actualTag)
@@ -85,11 +84,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         [TestCase("[0,1]:ka", "karaoke", false)]
         [TestCase("[0,1]:ka", "", true)]
-        [TestCase("[0,1]:ka", null, true)]
         [TestCase("[0,-1]:ka", "karaoke", true)]
         [TestCase("[1,0]:ka", "karaoke", false)] // should not be counted as out of range if index is not ordered.
         [TestCase("[0,0]:ka", "", true)] // should be counted as out of range if lyric is empty
-        [TestCase("[0,0]:ka", null, true)] // should be counted as out of range if lyric is null
         public void TestOutOfRange(string textTag, string lyric, bool expected)
         {
             var rubyTag = TestCaseTagHelper.ParseRubyTag(textTag);

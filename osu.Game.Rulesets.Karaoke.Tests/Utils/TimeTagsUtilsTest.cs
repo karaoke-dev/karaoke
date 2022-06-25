@@ -22,12 +22,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("[0,start]:", "[0,start]:", 0, "[0,start]:")] // edge case, but it's valid.
         [TestCase("[1,start]:", "[3,start]:", 10, null)] // new index should be in the range.
         [TestCase("[10,start]:", "[3,start]:", 10, null)] // start index should be smaller then end index.
-        [TestCase(null, "[3,start]:", 10, null)] // should not be null.
         [TestCase("[1,start]:", null, 2, null)] // should not be null.
-        [TestCase(null, null, 2, null)] // should not be null.
-        public void GenerateTimeTag(string startTag, string endTag, int index, string result)
+        public void GenerateTimeTag(string startTag, string? endTag, int index, string? result)
         {
-            try
+            if (result != null)
             {
                 var expectedTimeTag = TestCaseTagHelper.ParseTimeTag(result);
                 var actualTimeTag = TimeTagsUtils.GenerateCenterTimeTag(
@@ -38,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 Assert.AreEqual(expectedTimeTag.Index, actualTimeTag.Index);
                 Assert.AreEqual(expectedTimeTag.Time, actualTimeTag.Time);
             }
-            catch
+            else
             {
                 Assert.IsNull(result);
             }

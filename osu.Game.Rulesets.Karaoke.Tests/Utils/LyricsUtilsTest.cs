@@ -20,21 +20,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase("karaoke", 4, "kara", "oke")]
         [TestCase("カラオケ", 2, "カラ", "オケ")]
         [TestCase("", 0, null, null)] // Test error
-        [TestCase(null, 0, null, null)]
         [TestCase("karaoke", 100, null, null)]
         [TestCase("", 100, null, null)]
-        [TestCase(null, 100, null, null)]
-        public void TestSeparateLyricText(string text, int splitIndex, string expectedFirstText, string expectedSecondText)
+        public void TestSeparateLyricText(string text, int splitIndex, string? expectedFirstText, string? expectedSecondText)
         {
             var lyric = new Lyric { Text = text };
 
-            try
+            if (expectedFirstText != null && expectedSecondText != null)
             {
                 var (firstLyric, secondLyric) = LyricsUtils.SplitLyric(lyric, splitIndex);
                 Assert.AreEqual(expectedFirstText, firstLyric.Text);
                 Assert.AreEqual(expectedSecondText, secondLyric.Text);
             }
-            catch
+            else
             {
                 Assert.IsNull(expectedFirstText);
                 Assert.IsNull(expectedSecondText);
@@ -130,9 +128,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             Assert.AreEqual(expectedFirstSingerIndexes, firstLyric.Singers);
             Assert.AreEqual(expectedSecondSingerIndexes, secondLyric.Singers);
 
-            if (lyric.Singers == null)
-                return;
-
             // also should check is not same object as origin lyric for safety purpose.
             Assert.AreNotSame(lyric.Singers, firstLyric.Singers);
             Assert.AreNotSame(lyric.Singers, secondLyric.Singers);
@@ -166,9 +161,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
         [TestCase("Kara", "oke", "Karaoke")]
         [TestCase("", "oke", "oke")]
-        [TestCase(null, "oke", "oke")]
         [TestCase("Kara", "", "Kara")]
-        [TestCase("Kara", null, "Kara")]
         public void TestCombineLyricText(string firstText, string secondText, string expected)
         {
             var lyric1 = new Lyric { Text = firstText };

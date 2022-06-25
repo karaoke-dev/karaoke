@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new string[] { }, "")]
         public void TestUnion(string[] positions, string expectedRectangle)
         {
-            var objects = positions?.Select(convertTestCaseToValue).ToArray();
+            var objects = positions.Select(convertTestCaseToValue).ToArray();
 
             var expected = convertTestCaseToValue(expectedRectangle);
             var actual = RectangleFUtils.Union(objects);
