@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 
 namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
@@ -46,12 +44,12 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
         /// <summary>
         /// The base URL for all root-relative links.
         /// </summary>
-        public string RootUrl { get; set; }
+        public string RootUrl { get; set; } = null!;
 
         /// <summary>
         /// Path of the project
         /// </summary>
-        public string Path { get; set; }
+        public string Path { get; set; } = null!;
 
         /// <summary>
         /// Path to download readme url
@@ -61,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
         /// <summary>
         /// Display version
         /// </summary>
-        public string DisplayVersion { get; set; }
+        public string DisplayVersion { get; set; } = null!;
 
         /// <summary>
         /// Version
@@ -78,12 +76,12 @@ namespace osu.Game.Rulesets.Karaoke.Online.API.Requests.Responses
             /// <summary>
             /// Next version
             /// </summary>
-            public APIChangelogBuild Next { get; set; }
+            public APIChangelogBuild? Next { get; set; }
 
             /// <summary>
             /// Previous version
             /// </summary>
-            public APIChangelogBuild Previous { get; set; }
+            public APIChangelogBuild? Previous { get; set; }
         }
     }
 }
