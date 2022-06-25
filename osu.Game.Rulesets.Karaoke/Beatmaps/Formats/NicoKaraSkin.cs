@@ -10,8 +10,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
     {
         public LyricConfig DefaultLyricConfig { get; set; } = LyricConfig.CreateDefault();
 
-        public List<LyricLayout> Layouts { get; set; }
+        public List<LyricLayout> Layouts { get; set; } = new();
 
-        public List<LyricStyle> LyricStyles { get; set; }
+        public List<LyricStyle> LyricStyles { get; set; } = new();
     }
 }
