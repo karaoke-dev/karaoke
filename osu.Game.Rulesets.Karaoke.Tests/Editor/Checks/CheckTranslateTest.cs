@@ -112,7 +112,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             });
             Assert.AreEqual(1, check.Run(getContext(beatmap6)).Count());
 
-            static Lyric createLyric(CultureInfo? cultureInfo = null, string? translate = null)
+            static Lyric createLyric(CultureInfo? cultureInfo = null, string translate = null!)
             {
                 var lyric = new Lyric();
                 if (cultureInfo == null)

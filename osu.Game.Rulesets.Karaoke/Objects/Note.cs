@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<string> RubyTextBindable = new();
+        public readonly Bindable<string?> RubyTextBindable = new();
 
         /// <summary>
         /// Ruby text.
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <example>
         /// はな
         /// </example>
-        public string RubyText
+        public string? RubyText
         {
             get => RubyTextBindable.Value;
             set => RubyTextBindable.Value = value;
