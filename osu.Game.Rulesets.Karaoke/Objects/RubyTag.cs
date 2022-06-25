@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
@@ -15,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <summary>
         /// Invoked when any property of this <see cref="RubyTag"/> is changed.
         /// </summary>
-        public event Action Changed;
+        public event Action? Changed;
 
         public RubyTag()
         {

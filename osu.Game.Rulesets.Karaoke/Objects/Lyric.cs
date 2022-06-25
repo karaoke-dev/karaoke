@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
@@ -164,12 +162,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<CultureInfo> LanguageBindable = new();
+        public readonly Bindable<CultureInfo?> LanguageBindable = new();
 
         /// <summary>
         /// Language
         /// </summary>
-        public CultureInfo Language
+        public CultureInfo? Language
         {
             get => LanguageBindable.Value;
             set => LanguageBindable.Value = value;

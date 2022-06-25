@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Judgements;
@@ -33,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<string> RubyTextBindable = new();
+        public readonly Bindable<string?> RubyTextBindable = new();
 
         /// <summary>
         /// Ruby text.
@@ -43,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <example>
         /// はな
         /// </example>
-        public string RubyText
+        public string? RubyText
         {
             get => RubyTextBindable.Value;
             set => RubyTextBindable.Value = value;
@@ -89,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public int EndIndex { get; set; }
 
-        private Lyric parentLyric;
+        private Lyric parentLyric = null!;
 
         /// <summary>
         /// Relative lyric.
