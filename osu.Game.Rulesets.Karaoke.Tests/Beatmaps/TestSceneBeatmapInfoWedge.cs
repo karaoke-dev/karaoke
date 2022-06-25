@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Game.Beatmaps;
@@ -18,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
     [TestFixture]
     public class TestSceneBeatmapInfoWedge : OsuTestScene
     {
-        private TestBeatmapInfoWedge infoWedge;
+        private TestBeatmapInfoWedge infoWedge = null!;
 
         protected override void LoadComplete()
         {
@@ -55,9 +53,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
 
         private void selectBeatmap(IBeatmap b, string fileName)
         {
-            BeatmapInfoWedge.WedgeInfoText infoBefore = null;
+            BeatmapInfoWedge.WedgeInfoText infoBefore = null!;
 
-            AddStep($"select {b?.Metadata.Title ?? fileName} beatmap", () =>
+            AddStep($"select {b.Metadata.Title ?? fileName} beatmap", () =>
             {
                 infoBefore = infoWedge.Info;
                 infoWedge.Beatmap = Beatmap.Value = b == null ? Beatmap.Default : CreateWorkingBeatmap(b);

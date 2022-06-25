@@ -1,11 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
-using JetBrains.Annotations;
 using NUnit.Framework;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
@@ -122,15 +119,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
                 var beatmap = lrcDecoder.Decode(stream);
 
                 // Convert to karaoke beatmap
-                return new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert() as KaraokeBeatmap;
+                return (KaraokeBeatmap)new KaraokeBeatmapConverter(beatmap, new KaraokeRuleset()).Convert();
             }
         }
 
-        private static void testNote(string expectedText, int expectedTone, bool expectedHalf = false, [NotNull] Note actualNote = default!)
+        private static void testNote(string expectedText, int expectedTone, bool expectedHalf = false, Note actualNote = default!)
         {
-            Assert.AreEqual(expectedText, actualNote?.Text);
-            Assert.AreEqual(expectedTone, actualNote?.Tone.Scale);
-            Assert.AreEqual(expectedHalf, actualNote?.Tone.Half);
+            Assert.AreEqual(expectedText, actualNote.Text);
+            Assert.AreEqual(expectedTone, actualNote.Tone.Scale);
+            Assert.AreEqual(expectedHalf, actualNote.Tone.Half);
         }
     }
 }

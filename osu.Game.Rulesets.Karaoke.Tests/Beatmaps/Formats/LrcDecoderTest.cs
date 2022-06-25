@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.IO;
 using System.Linq;
@@ -25,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
             var beatmap = decodeLrcLine(lyricText);
 
             // Get first lyric from beatmap
-            var actual = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault();
+            var actual = beatmap.HitObjects.OfType<Lyric>().FirstOrDefault()!;
             Assert.IsNotNull(actual);
             Assert.AreEqual(expectedText, actual.Text);
             Assert.AreEqual(expectedStartTime, actual.StartTime);

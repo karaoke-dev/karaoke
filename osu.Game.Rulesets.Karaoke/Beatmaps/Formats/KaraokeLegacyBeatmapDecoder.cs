@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -103,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             for (int l = 0; l < lyrics.Count; l++)
             {
                 var lyric = lyrics[l];
-                string line = lines.ElementAtOrDefault(l)?.Split('=').Last();
+                string? line = lines.ElementAtOrDefault(l)?.Split('=').Last();
 
                 // Create default note if not exist
                 if (string.IsNullOrEmpty(line))
@@ -140,7 +138,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
                             string tone;
                             float percentage = (float)Math.Round((float)1 / rubyNotes.Length, 2, MidpointRounding.AwayFromZero);
-                            string ruby = defaultNote.RubyText?.ElementAtOrDefault(j).ToString();
+                            string? ruby = defaultNote.RubyText?.ElementAtOrDefault(j).ToString();
 
                             // Format like [1;0.5;か]
                             if (note.StartsWith("[", StringComparison.Ordinal) && note.EndsWith("]", StringComparison.Ordinal))
@@ -177,7 +175,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 }
             }
 
-            static void applyNote(Note note, string noteStr, string ruby = null, double? duration = null)
+            static void applyNote(Note note, string noteStr, string? ruby = null, double? duration = null)
             {
                 if (noteStr == "-")
                     note.Display = false;
@@ -203,7 +201,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                         half = true;
 
                         // only get digit part
-                        tone = tone.Split('.').FirstOrDefault()?.Split('#').FirstOrDefault();
+                        tone = tone.Split('.').FirstOrDefault()?.Split('#').FirstOrDefault() ?? string.Empty;
                     }
 
                     if (!int.TryParse(tone, out int scale))
@@ -232,7 +230,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             foreach (var translation in translations)
             {
                 // get culture and translate
-                string languageCode = translation.Key;
+                string? languageCode = translation.Key;
+                if (string.IsNullOrEmpty(languageCode))
+                    continue;
+
                 var cultureInfo = new CultureInfo(languageCode);
                 var values = translation.ToList();
 
