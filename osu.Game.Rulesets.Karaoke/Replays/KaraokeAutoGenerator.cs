@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Beatmaps;
@@ -15,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 {
     public class KaraokeAutoGenerator : AutoGenerator
     {
-        public KaraokeAutoGenerator(IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
+        public KaraokeAutoGenerator(IBeatmap beatmap, IReadOnlyList<Mod>? mods = null)
             : base(beatmap)
         {
         }
@@ -29,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
             };
         }
 
-        private IEnumerable<ReplayFrame> getReplayFrames(Note note, Note next)
+        private IEnumerable<ReplayFrame> getReplayFrames(Note note, Note? next)
         {
             double startTime = note.StartTime;
             double endTime = note.EndTime;

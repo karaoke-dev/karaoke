@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
     public class KaraokeAutoGeneratorBySinger : AutoGenerator
     {
         private readonly CancellationTokenSource cancelSource = new();
-        private readonly Task<Dictionary<double, float?>> readTask;
+        private readonly Task<Dictionary<double, float?>> readTask = null!;
 
         /// <summary>
         /// Using audio's voice to generate replay frames
@@ -31,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
         /// </summary>
         /// <param name="beatmap"></param>
         /// <param name="data"></param>
-        public KaraokeAutoGeneratorBySinger(IBeatmap beatmap, Stream data)
+        public KaraokeAutoGeneratorBySinger(IBeatmap beatmap, Stream? data)
             : base(beatmap)
         {
             if (data == null)
