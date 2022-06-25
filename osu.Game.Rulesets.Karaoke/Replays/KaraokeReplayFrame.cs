@@ -37,7 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 
         public override string ToString() => $"{Time}, {Scale}";
 
-        public void FromLegacy(LegacyReplayFrame currentFrame, IBeatmap beatmap, ReplayFrame lastFrame = null)
+        public void FromLegacy(LegacyReplayFrame currentFrame, IBeatmap beatmap, ReplayFrame? lastFrame = null)
         {
             Sound = currentFrame.MouseY.HasValue;
             Scale = currentFrame.MouseY.GetValueOrDefault();

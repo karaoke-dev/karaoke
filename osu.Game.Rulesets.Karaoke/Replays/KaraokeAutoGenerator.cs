@@ -13,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
 {
     public class KaraokeAutoGenerator : AutoGenerator
     {
-        public KaraokeAutoGenerator(IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
+        public KaraokeAutoGenerator(IBeatmap beatmap, IReadOnlyList<Mod>? mods = null)
             : base(beatmap)
         {
         }
@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Replays
             };
         }
 
-        private IEnumerable<ReplayFrame> getReplayFrames(Note note, Note next)
+        private IEnumerable<ReplayFrame> getReplayFrames(Note note, Note? next)
         {
             double startTime = note.StartTime;
             double endTime = note.EndTime;
