@@ -9,10 +9,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 {
     public class LegacyKaraokeColumnElement : LegacyKaraokeElement
     {
-        protected ScrollingNotePlayfield NotePlayfield => Playfield?.NotePlayfield;
+        protected ScrollingNotePlayfield? NotePlayfield => Playfield?.NotePlayfield;
 
         // TODO : get current index
-        protected override IBindable<T> GetKaraokeSkinConfig<T>(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, int? index = null)
+        protected override IBindable<T>? GetKaraokeSkinConfig<T>(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, int? index = null)
             => base.GetKaraokeSkinConfig<T>(skin, lookup, index);
     }
 }

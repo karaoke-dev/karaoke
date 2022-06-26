@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
     {
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
 
-        private Drawable explosion;
+        private Drawable? explosion;
 
         public LegacyHitExplosion()
         {

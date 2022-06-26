@@ -18,8 +18,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
     {
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
 
-        private Container lightContainer;
-        private Sprite light;
+        private Container lightContainer = null!;
+        private Sprite light = null!;
 
         public LegacyColumnBackground()
         {

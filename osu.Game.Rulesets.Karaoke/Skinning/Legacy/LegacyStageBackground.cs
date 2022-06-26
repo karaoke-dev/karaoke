@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             Scale = direction.NewValue == ScrollingDirection.Left ? Vector2.One : new Vector2(-1, 1);
         }
 
-        private Texture getTexture(ISkinSource skin) => skin.GetTexture(GetTextureName());
+        private Texture? getTexture(ISkinSource skin) => skin.GetTexture(GetTextureName());
 
         public static string GetTextureName() => "karaoke-stage-background";
     }
