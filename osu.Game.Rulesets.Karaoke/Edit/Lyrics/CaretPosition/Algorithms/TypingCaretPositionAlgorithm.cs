@@ -103,6 +103,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         protected virtual int GetMinIndex(string text) => 0;
 
-        protected virtual int GetMaxIndex(string text) => text?.Length ?? 0;
+        protected virtual int GetMaxIndex(string text) => text.Length;
     }
 }

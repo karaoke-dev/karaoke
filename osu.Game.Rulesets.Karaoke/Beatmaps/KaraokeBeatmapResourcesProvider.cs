@@ -1,6 +1,8 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+#nullable disable
+
 using System;
 using System.Reflection;
 using osu.Framework.Allocation;
@@ -10,8 +12,6 @@ using osu.Framework.Graphics.Textures;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas.Types;
-
-# nullable disable
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {

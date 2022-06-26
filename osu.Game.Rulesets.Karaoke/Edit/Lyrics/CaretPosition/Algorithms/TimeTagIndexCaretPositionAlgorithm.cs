@@ -21,9 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         public override bool PositionMovable(TimeTagIndexCaretPosition position)
         {
-            if (position.Lyric == null)
-                return false;
-
             if (TextIndexUtils.OutOfRange(position.Index, position.Lyric.Text))
                 return false;
 
@@ -37,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (lyric == null)
                 return null;
 
-            int lyricTextLength = lyric.Text?.Length ?? 0;
+            int lyricTextLength = lyric.Text.Length;
             int index = Math.Clamp(currentPosition.Index.Index, 0, lyricTextLength - 1);
             var state = suitableState(currentPosition.Index);
 
@@ -50,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (lyric == null)
                 return null;
 
-            int lyricTextLength = lyric.Text?.Length ?? 0;
+            int lyricTextLength = lyric.Text.Length;
             int index = Math.Clamp(currentPosition.Index.Index, 0, lyricTextLength - 1);
             var state = suitableState(currentPosition.Index);
 
@@ -103,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (lyric == null)
                 return null;
 
-            int textLength = lyric.Text?.Length ?? 0;
+            int textLength = lyric.Text.Length;
             var index = new TextIndex(textLength - 1, suitableState(TextIndex.IndexState.End));
             return new TimeTagIndexCaretPosition(lyric, index);
         }
