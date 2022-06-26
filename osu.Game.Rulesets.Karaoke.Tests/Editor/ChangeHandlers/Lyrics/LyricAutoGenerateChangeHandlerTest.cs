@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
                 new Lyric
                 {
-                    Text = "",
+                    Text = string.Empty,
                 },
                 new Lyric
                 {
@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
                 new Lyric
                 {
-                    Text = "",
+                    Text = string.Empty,
                     Language = new CultureInfo(17)
                 },
                 new Lyric
@@ -153,7 +153,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
                 new Lyric
                 {
-                    Text = "",
+                    Text = string.Empty,
                 },
                 new Lyric
                 {
@@ -161,7 +161,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
                 new Lyric
                 {
-                    Text = "",
+                    Text = string.Empty,
                     Language = new CultureInfo(17)
                 },
                 new Lyric
@@ -212,7 +212,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
                 new Lyric
                 {
-                    Text = "",
+                    Text = string.Empty,
                 },
                 new Lyric
                 {
@@ -220,7 +220,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
                 new Lyric
                 {
-                    Text = "",
+                    Text = string.Empty,
                     Language = new CultureInfo(17)
                 },
                 new Lyric
