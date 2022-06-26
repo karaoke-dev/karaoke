@@ -40,6 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             // todo : might check is default struct
             var textTags = getRelatedTypeTextTag(previousLyric, currentPosition);
             var upTextTag = textTags.FirstOrDefault(x => x.StartIndex >= currentTextTag.StartIndex) ?? textTags.LastOrDefault();
+            if (upTextTag == null)
+                return null;
+
             return new EditTextTagCaretPosition(previousLyric, upTextTag);
         }
 
@@ -62,6 +65,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             // todo : might check is default struct
             var textTags = getRelatedTypeTextTag(nextLyric, currentPosition);
             var downTextTag = textTags.FirstOrDefault(x => x.StartIndex >= currentTextTag.StartIndex) ?? textTags.LastOrDefault();
+            if (downTextTag == null)
+                return null;
+
             return new EditTextTagCaretPosition(nextLyric, downTextTag);
         }
 
@@ -71,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
             var currentTextTag = currentPosition.TextTag;
 
-            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition) ?? Array.Empty<ITextTag>()).ToArray();
+            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition)).ToArray();
             var previousTextTag = textTags.GetPrevious(currentTextTag);
 
             var currentLyric = currentPosition.Lyric;
@@ -91,7 +97,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
             var currentTextTag = currentPosition.TextTag;
 
-            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition) ?? Array.Empty<ITextTag>()).ToArray();
+            var textTags = Lyrics.SelectMany(x => getRelatedTypeTextTag(x, currentPosition)).ToArray();
             var nextTextTag = textTags.GetNext(currentTextTag);
 
             var currentLyric = currentPosition.Lyric;
@@ -123,26 +129,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return null;
         }
 
-        private Lyric tagInLyric(ITextTag textTag)
+        private Lyric? tagInLyric(ITextTag textTag)
         {
-            return Lyrics.FirstOrDefault(x => getRelatedTypeTextTag(x, textTag)?.Contains(textTag) ?? false);
+            return Lyrics.FirstOrDefault(x => getRelatedTypeTextTag(x, textTag).Contains(textTag));
         }
 
-        private ITextTag[]? getRelatedTypeTextTag(Lyric lyric, EditTextTagCaretPosition sample)
+        private ITextTag[] getRelatedTypeTextTag(Lyric lyric, EditTextTagCaretPosition sample)
             => getRelatedTypeTextTag(lyric, sample.TextTag);
 
-        private ITextTag[]? getRelatedTypeTextTag(Lyric lyric, ITextTag sample) =>
+        private ITextTag[] getRelatedTypeTextTag(Lyric lyric, ITextTag sample) =>
             sample switch
             {
-                RubyTag => lyric.RubyTags?.OfType<ITextTag>().ToArray(),
-                RomajiTag => lyric.RomajiTags?.OfType<ITextTag>().ToArray(),
+                RubyTag => lyric.RubyTags.OfType<ITextTag>().ToArray(),
+                RomajiTag => lyric.RomajiTags.OfType<ITextTag>().ToArray(),
                 _ => throw new InvalidCastException(nameof(sample))
             };
 
-        private Lyric getPreviousLyricWithTextTag(Lyric current, ITextTag textTag)
-            => Lyrics.GetPreviousMatch(current, x => getRelatedTypeTextTag(x, textTag)?.Any() ?? false);
+        private Lyric? getPreviousLyricWithTextTag(Lyric current, ITextTag textTag)
+            => Lyrics.GetPreviousMatch(current, x => getRelatedTypeTextTag(x, textTag).Any());
 
-        private Lyric getNextLyricWithTextTag(Lyric current, ITextTag textTag)
-            => Lyrics.GetNextMatch(current, x => getRelatedTypeTextTag(x, textTag)?.Any() ?? false);
+        private Lyric? getNextLyricWithTextTag(Lyric current, ITextTag textTag)
+            => Lyrics.GetNextMatch(current, x => getRelatedTypeTextTag(x, textTag).Any());
     }
 }
