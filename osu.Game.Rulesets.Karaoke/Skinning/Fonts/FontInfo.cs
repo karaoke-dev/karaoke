@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         public string Family { get; }
 
-        public string Weight { get; }
+        public string? Weight { get; }
 
         public FontFormat FontFormat { get; }
 
