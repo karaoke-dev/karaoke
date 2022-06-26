@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.UI.PlayerSettings
             private readonly ToolTipButton decreaseButton;
             private readonly ToolTipButton increaseButton;
 
-            public override LocalisableString TooltipText => (Current.Value >= 0 ? "+" : "") + Current.Value.ToString("N0");
+            public override LocalisableString TooltipText => (Current.Value >= 0 ? "+" : string.Empty) + Current.Value.ToString("N0");
 
             public ClickableSliderBar()
             {

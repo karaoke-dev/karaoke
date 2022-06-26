@@ -96,7 +96,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             {
                 StartIndex = firstValue.StartIndex,
                 EndIndex = lastValue.EndIndex,
-                Text = string.Join("", sortingValue.Select(x => x.Text))
+                Text = string.Join(string.Empty, sortingValue.Select(x => x.Text))
             };
         }
 

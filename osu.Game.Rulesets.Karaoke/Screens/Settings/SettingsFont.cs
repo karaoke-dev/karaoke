@@ -135,7 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings
                     var font = e.NewValue;
                     string fontName = font.FontName;
                     string size = FontUtils.GetText(font.Size);
-                    string fixedWidthText = font.FixedWidth ? "(fixed width)" : "";
+                    string fixedWidthText = font.FixedWidth ? "(fixed width)" : string.Empty;
                     string displayText = $"{fontName}, {size} {fixedWidthText}";
                     fontButton.Text = displayText;
                 });

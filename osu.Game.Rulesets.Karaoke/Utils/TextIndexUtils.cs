@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         public static string PositionFormattedString(TextIndex textIndex)
         {
             int index = textIndex.Index;
-            string state = GetValueByState(textIndex, "", "(end)");
+            string state = GetValueByState(textIndex, string.Empty, "(end)");
             return $"{index}{state}";
         }
     }

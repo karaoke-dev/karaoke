@@ -54,7 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 return convertTone(note.Tone);
 
                 // Convert tone to string
-                static string convertTone(Tone tone) => tone.Scale + (tone.Half ? "#" : "");
+                static string convertTone(Tone tone) => tone.Scale + (tone.Half ? "#" : string.Empty);
             }
         }
 
@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             {
                 foreach (var lyric in lyrics)
                 {
-                    string translateString = lyric.Translates.TryGetValue(translate, out string value) ? value : "";
+                    string translateString = lyric.Translates.TryGetValue(translate, out string value) ? value : string.Empty;
                     yield return $"@tr[{translate.Name}]={translateString}";
                 }
             }

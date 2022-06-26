@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 }
             });
 
-            TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), ""));
+            TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), string.Empty));
 
             AssertSelectedHitObject(h =>
             {

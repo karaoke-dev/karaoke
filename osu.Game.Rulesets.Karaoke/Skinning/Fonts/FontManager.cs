@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 string extension = getExtensionByFontType(fontFormat);
 
                 var fontFiles = storage.GetStorageForDirectory(path)
-                                       .GetFiles("", $"*.{extension}").ToList();
+                                       .GetFiles(string.Empty, $"*.{extension}").ToList();
 
                 foreach (string fontFile in fontFiles)
                 {
@@ -95,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 }
             }
 
-            watcher = new FileSystemWatcher(storage.GetFullPath(""))
+            watcher = new FileSystemWatcher(storage.GetFullPath(string.Empty))
             {
                 EnableRaisingEvents = true,
                 IncludeSubdirectories = true,

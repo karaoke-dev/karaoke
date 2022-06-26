@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
             var beatmap3 = createTestingBeatmap(translateLanguages, new[]
             {
                 createLyric(new CultureInfo("Ja-jp")),
-                createLyric(new CultureInfo("Ja-jp"), ""),
+                createLyric(new CultureInfo("Ja-jp"), string.Empty),
             });
             Assert.AreEqual(1, check.Run(getContext(beatmap3)).Count());
 

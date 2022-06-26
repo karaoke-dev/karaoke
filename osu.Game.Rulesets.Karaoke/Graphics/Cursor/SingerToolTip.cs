@@ -129,7 +129,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Cursor
             };
 
             bindableName.BindValueChanged(e => singerName.Text = e.NewValue, true);
-            bindableRomajiName.BindValueChanged(e => singerRomajiName.Text = string.IsNullOrEmpty(e.NewValue) ? "" : $"({e.NewValue})", true);
+            bindableRomajiName.BindValueChanged(e => singerRomajiName.Text = string.IsNullOrEmpty(e.NewValue) ? string.Empty : $"({e.NewValue})", true);
             bindableEnglishName.BindValueChanged(e => singerEnglishName.Text = e.NewValue, true);
             bindableDescription.BindValueChanged(e => singerDescription.Text = string.IsNullOrEmpty(e.NewValue) ? "<No description>" : e.NewValue, true);
         }
