@@ -13,23 +13,23 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Tools
     // it's the temp logic to collect logic.
     public static class SkinConvertorTool
     {
-        public static ICustomizedShader[] ConvertLeftSideShader(ShaderManager shaderManager, LyricStyle lyricStyle)
+        public static ICustomizedShader[] ConvertLeftSideShader(ShaderManager? shaderManager, LyricStyle lyricStyle)
         {
             if (shaderManager == null)
-                return null;
+                return Array.Empty<ICustomizedShader>();
 
-            var shaders = lyricStyle.LeftLyricTextShaders?.ToArray() ?? Array.Empty<ICustomizedShader>();
+            var shaders = lyricStyle.LeftLyricTextShaders.ToArray();
             attachShaders(shaderManager, shaders);
 
             return shaders;
         }
 
-        public static ICustomizedShader[] ConvertRightSideShader(ShaderManager shaderManager, LyricStyle lyricStyle)
+        public static ICustomizedShader[] ConvertRightSideShader(ShaderManager? shaderManager, LyricStyle lyricStyle)
         {
             if (shaderManager == null)
-                return null;
+                return Array.Empty<ICustomizedShader>();
 
-            var shaders = lyricStyle.RightLyricTextShaders?.ToArray() ?? Array.Empty<ICustomizedShader>();
+            var shaders = lyricStyle.RightLyricTextShaders.ToArray();
             attachShaders(shaderManager, shaders);
 
             return shaders;

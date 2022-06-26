@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         public readonly List<IGroup> Groups = new();
         public readonly List<IMappingRole> DefaultMappingRoles = new();
 
-        public KaraokeBeatmapSkin(SkinInfo skin, IStorageResourceProvider resources, IResourceStore<byte[]> storage = null)
+        public KaraokeBeatmapSkin(SkinInfo skin, IStorageResourceProvider resources, IResourceStore<byte[]>? storage = null)
             : base(skin, resources, storage)
         {
             SkinInfo.PerformRead(s =>
@@ -44,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     {
                         Elements.Add(skinnableTarget, new List<IKaraokeSkinElement>());
 
-                        string jsonContent = GetElementStringContentFromSkinInfo(s, filename);
+                        string? jsonContent = GetElementStringContentFromSkinInfo(s, filename);
                         if (string.IsNullOrEmpty(jsonContent))
                             return;
 
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                 try
                 {
-                    string jsonContent = GetElementStringContentFromSkinInfo(s, filename);
+                    string? jsonContent = GetElementStringContentFromSkinInfo(s, filename);
                     if (string.IsNullOrEmpty(jsonContent))
                         return;
 
@@ -102,7 +102,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                 try
                 {
-                    string jsonContent = GetElementStringContentFromSkinInfo(s, filename);
+                    string? jsonContent = GetElementStringContentFromSkinInfo(s, filename);
                     if (string.IsNullOrEmpty(jsonContent))
                         return;
 
@@ -121,7 +121,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             });
         }
 
-        public override IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
+        public override IBindable<TValue>? GetConfig<TLookup, TValue>(TLookup lookup)
         {
             switch (lookup)
             {
@@ -130,7 +130,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 {
                     var type = typeof(TValue);
                     var element = GetElementByHitObjectAndElementType(hitObject, type);
-                    return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element));
+                    return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element!));
                 }
 
                 // in some cases, we still need to get target of element by type and id.
@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                         return base.GetConfig<KaraokeSkinLookup, TValue>(skinLookup);
 
                     var element = Elements[type].FirstOrDefault(x => x.ID == lookupNumber);
-                    return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element));
+                    return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element!));
                 }
 
                 // Lookup list of name by type
@@ -168,7 +168,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         // todo: should move the logic outside if wants to support time-based roles.
         // because it's impossible to get the current time in skin.
-        protected override IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
+        protected override IKaraokeSkinElement? GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
         {
             var type = KaraokeSkinElementConvertor.GetElementType(elementType);
             var firstMatchedRole = DefaultMappingRoles.FirstOrDefault(x => x.CanApply(this, hitObject, type));

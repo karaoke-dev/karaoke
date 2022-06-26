@@ -26,8 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Default
         private readonly IBindable<bool> display = new Bindable<bool>();
         private readonly IBindableList<int> singer = new BindableList<int>();
 
-        protected Drawable Background { get; private set; }
-        protected Drawable Foreground { get; private set; }
+        protected Drawable Background { get; private set; } = null!;
+        protected Drawable Foreground { get; private set; } = null!;
 
         public DefaultBodyPiece()
         {
