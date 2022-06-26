@@ -61,7 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
             }
         }
 
-        private IReadOnlyList<CultureInfo> availableTranslateInBeatmap(IBeatmap beatmap)
+        private IList<CultureInfo> availableTranslateInBeatmap(IBeatmap beatmap)
         {
             if (beatmap is not EditorBeatmap editorBeatmap)
                 return Array.Empty<CultureInfo>();

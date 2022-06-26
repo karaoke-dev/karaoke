@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             return karaokeBeatmap.Scorable;
         }
 
-        public static List<CultureInfo> AvailableTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.AvailableTranslates ?? new List<CultureInfo>();
+        public static IList<CultureInfo> AvailableTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.AvailableTranslates ?? new List<CultureInfo>();
 
         public static bool AnyTranslate(this IBeatmap beatmap) => beatmap?.AvailableTranslates().Any() ?? false;
 
@@ -32,6 +32,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
             return pitch / 20 - 7;
         }
 
-        public static List<Singer> GetSingers(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.Singers ?? new List<Singer>();
+        public static IList<Singer> GetSingers(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.Singers ?? new List<Singer>();
     }
 }

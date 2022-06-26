@@ -15,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Languages
     {
         public IBindableList<CultureInfo> Languages => Items;
 
-        protected override List<CultureInfo> GetItemsFromBeatmap(KaraokeBeatmap beatmap)
+        protected override IList<CultureInfo> GetItemsFromBeatmap(KaraokeBeatmap beatmap)
             => beatmap.AvailableTranslates;
 
         protected override void OnItemAdded(CultureInfo item)
