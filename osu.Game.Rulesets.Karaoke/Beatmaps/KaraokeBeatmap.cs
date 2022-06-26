@@ -13,9 +13,9 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
     public class KaraokeBeatmap : Beatmap<KaraokeHitObject>
     {
-        public List<CultureInfo> AvailableTranslates { get; set; } = new();
+        public IList<CultureInfo> AvailableTranslates { get; set; } = new List<CultureInfo>();
 
-        public List<Singer> Singers { get; set; } = new();
+        public IList<Singer> Singers { get; set; } = new List<Singer>();
 
         public bool Scorable { get; set; }
 
