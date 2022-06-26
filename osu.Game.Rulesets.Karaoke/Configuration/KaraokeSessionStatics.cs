@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
     {
         private readonly KaraokeRulesetConfigManager rulesetConfigManager;
 
-        public KaraokeSessionStatics(KaraokeRulesetConfigManager config, IBeatmap beatmap)
+        public KaraokeSessionStatics(KaraokeRulesetConfigManager config, IBeatmap? beatmap)
         {
             rulesetConfigManager = config;
 
