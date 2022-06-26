@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
         /// <param name="pivot">The pivot value.</param>
         /// <param name="action">Match action</param>
         /// <returns>The item in <paramref name="collection"/> appearing after <paramref name="pivot"/>, or null if no such item exists.</returns>
-        public static T GetNextMatch<T>(this IEnumerable<T> collection, T pivot, Func<T, bool> action)
+        public static T? GetNextMatch<T>(this IEnumerable<T> collection, T pivot, Func<T, bool> action) where T : notnull
         {
             return collection.SkipWhile(i => !EqualityComparer<T>.Default.Equals(i, pivot)).Skip(1).SkipWhile(x => !action(x)).FirstOrDefault();
         }
@@ -32,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
         /// <param name="pivot">The pivot value.</param>
         /// <param name="action">Match action</param>
         /// <returns>The item in <paramref name="collection"/> appearing before <paramref name="pivot"/>, or null if no such item exists.</returns>
-        public static T GetPreviousMatch<T>(this IEnumerable<T> collection, T pivot, Func<T, bool> action)
+        public static T? GetPreviousMatch<T>(this IEnumerable<T> collection, T pivot, Func<T, bool> action) where T : notnull
         {
             return collection.Reverse().SkipWhile(i => !EqualityComparer<T>.Default.Equals(i, pivot)).Skip(1).SkipWhile(x => !action(x)).FirstOrDefault();
         }
@@ -61,15 +59,6 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
 
             return res;
         }
-
-        /// <summary>
-        /// Return empty list if null.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source)
-            => source ?? Enumerable.Empty<T>();
 
         public static int IndexOf<T>(this IEnumerable<T> array, T value)
         {
