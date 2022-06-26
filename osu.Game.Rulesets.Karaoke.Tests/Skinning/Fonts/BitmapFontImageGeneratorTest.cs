@@ -16,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
 {
     public class BitmapFontImageGeneratorTest
     {
-        private TestFntGlyphStore glyphStore;
+        private TestFntGlyphStore glyphStore = null!;
 
         private BitmapFont font => glyphStore.BitmapFont;
 

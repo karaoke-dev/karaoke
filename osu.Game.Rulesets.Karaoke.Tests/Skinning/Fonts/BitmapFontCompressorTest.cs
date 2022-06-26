@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
 {
     public class BitmapFontGeneratorTest
     {
-        private BitmapFont font;
+        private BitmapFont font = null!;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
