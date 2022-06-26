@@ -62,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 
         public int ID { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public IReadOnlyList<ICustomizedShader> LeftLyricTextShaders = Array.Empty<ICustomizedShader>();
 

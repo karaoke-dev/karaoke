@@ -11,12 +11,12 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Groups
     {
         public int ID { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public bool InTheGroup(KaraokeHitObject hitObject, ElementType elementType)
         {
             bool accepted = isTypeAccepted(hitObject, elementType);
-            return accepted && InTheGroup(hitObject as THitObject);
+            return accepted && InTheGroup((THitObject)hitObject);
         }
 
         protected abstract bool InTheGroup(THitObject hitObject);
