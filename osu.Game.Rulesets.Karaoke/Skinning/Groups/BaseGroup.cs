@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.ComponentModel;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
@@ -13,12 +11,12 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Groups
     {
         public int ID { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public bool InTheGroup(KaraokeHitObject hitObject, ElementType elementType)
         {
             bool accepted = isTypeAccepted(hitObject, elementType);
-            return accepted && InTheGroup(hitObject as THitObject);
+            return accepted && InTheGroup((THitObject)hitObject);
         }
 
         protected abstract bool InTheGroup(THitObject hitObject);

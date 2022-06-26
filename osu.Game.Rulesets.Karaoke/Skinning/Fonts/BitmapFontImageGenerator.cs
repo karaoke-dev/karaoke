@@ -1,12 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using osu.Framework.Graphics.Textures;
 using osu.Game.Rulesets.Karaoke.IO.Stores;
 using SharpFNT;
@@ -27,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 
         public TextureUpload[] Generate(BitmapFont bitmapFont)
         {
-            var pages = bitmapFont?.Characters?.GroupBy(x => x.Value.Page)
+            var pages = bitmapFont.Characters?.GroupBy(x => x.Value.Page)
                                   .ToDictionary(x => x.Key, x
                                       => x.ToDictionary(v => v.Key, v => v.Value));
 
@@ -37,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             return pages.Select(x => GeneratePage(bitmapFont.Info, bitmapFont.Common, x.Value)).ToArray();
         }
 
-        internal TextureUpload GeneratePage([NotNull] BitmapFontInfo originInfo, [NotNull] BitmapFontCommon common, IDictionary<int, Character> characters)
+        internal TextureUpload GeneratePage(BitmapFontInfo originInfo, BitmapFontCommon common, IDictionary<int, Character> characters)
         {
             int width = common.ScaleWidth;
             int height = common.ScaleHeight;

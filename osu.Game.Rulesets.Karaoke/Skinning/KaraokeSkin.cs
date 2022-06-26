@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -46,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         private readonly IStorageResourceProvider resources;
 
-        public KaraokeSkin(SkinInfo skin, IStorageResourceProvider resources, IResourceStore<byte[]> storage = null)
+        public KaraokeSkin(SkinInfo skin, IStorageResourceProvider resources, IResourceStore<byte[]>? storage = null)
             : base(skin, resources, storage)
         {
             this.resources = resources;
@@ -57,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
                 try
                 {
-                    string jsonContent = GetElementStringContentFromSkinInfo(s, filename);
+                    string? jsonContent = GetElementStringContentFromSkinInfo(s, filename);
                     if (string.IsNullOrEmpty(jsonContent))
                         return;
 
@@ -86,24 +84,24 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             return globalSetting;
         }
 
-        protected string GetElementStringContentFromSkinInfo(SkinInfo skinInfo, string filename)
+        protected string? GetElementStringContentFromSkinInfo(SkinInfo skinInfo, string filename)
         {
             // should get by file name if files is namespace resource store.
-            var files = resources?.Files;
+            var files = resources.Files;
             if (files == null)
                 return null;
 
-            byte[] bytes = files is NamespacedResourceStore<byte[]> ? getFileFromNamespaceStore(files, filename) : getFileFromSkinInfo(files, skinInfo, filename);
+            byte[]? bytes = files is NamespacedResourceStore<byte[]> ? getFileFromNamespaceStore(files, filename) : getFileFromSkinInfo(files, skinInfo, filename);
 
             if (bytes == null)
                 return null;
 
             return Encoding.UTF8.GetString(bytes);
 
-            static byte[] getFileFromNamespaceStore(IResourceStore<byte[]> files, string filename)
+            static byte[]? getFileFromNamespaceStore(IResourceStore<byte[]> files, string filename)
                 => files.Get(filename);
 
-            static byte[] getFileFromSkinInfo(IResourceStore<byte[]> files, SkinInfo skinInfo, string filename)
+            static byte[]? getFileFromSkinInfo(IResourceStore<byte[]> files, SkinInfo skinInfo, string filename)
             {
                 // skin element files may be null for default skin.
                 var fileInfo = skinInfo.Files.FirstOrDefault(f => f.Filename == filename);
@@ -115,13 +113,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
         }
 
-        public override ISample GetSample(ISampleInfo sampleInfo)
+        public override ISample? GetSample(ISampleInfo sampleInfo)
             => sampleInfo.LookupNames.Select(lookup => resources.AudioManager.Samples.Get(lookup)).FirstOrDefault(sample => sample != null);
 
-        public override Texture GetTexture(string componentName, WrapMode wrapModeS, WrapMode wrapModeT)
+        public override Texture? GetTexture(string componentName, WrapMode wrapModeS, WrapMode wrapModeT)
             => null;
 
-        public override IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
+        public override IBindable<TValue>? GetConfig<TLookup, TValue>(TLookup lookup)
         {
             switch (lookup)
             {
@@ -130,7 +128,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                 {
                     var type = typeof(TValue);
                     var element = GetElementByHitObjectAndElementType(hitObject, type);
-                    return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element));
+                    return SkinUtils.As<TValue>(new Bindable<TValue>((TValue)element!));
                 }
 
                 // in some cases, we still need to get target of element by type and id.
@@ -166,13 +164,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             }
         }
 
-        protected virtual IKaraokeSkinElement GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
+        protected virtual IKaraokeSkinElement? GetElementByHitObjectAndElementType(KaraokeHitObject hitObject, Type elementType)
         {
             var type = KaraokeSkinElementConvertor.GetElementType(elementType);
             return toElement(type);
         }
 
-        private IKaraokeSkinElement toElement(ElementType type)
+        private IKaraokeSkinElement? toElement(ElementType type)
             => type switch
             {
                 ElementType.LyricStyle or ElementType.LyricConfig or ElementType.NoteStyle => DefaultElement[type],
@@ -182,11 +180,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
 
         private class DefaultSkinFormat
         {
-            public LyricConfig LyricConfig { get; set; }
+            public LyricConfig LyricConfig { get; set; } = null!;
 
-            public LyricStyle LyricStyle { get; set; }
+            public LyricStyle LyricStyle { get; set; } = null!;
 
-            public NoteStyle NoteStyle { get; set; }
+            public NoteStyle NoteStyle { get; set; } = null!;
         }
     }
 }

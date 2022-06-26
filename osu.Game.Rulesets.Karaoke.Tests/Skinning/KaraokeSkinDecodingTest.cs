@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Skinning;
@@ -27,9 +25,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
             };
 
             // try to get default value from the skin.
-            var defaultLyricConfig = skin.GetConfig<Lyric, LyricConfig>(testingLyric).Value;
-            var defaultLyricStyle = skin.GetConfig<Lyric, LyricStyle>(testingLyric).Value;
-            var defaultNoteStyle = skin.GetConfig<Note, NoteStyle>(testingNote).Value;
+            var defaultLyricConfig = skin.GetConfig<Lyric, LyricConfig>(testingLyric)!.Value;
+            var defaultLyricStyle = skin.GetConfig<Lyric, LyricStyle>(testingLyric)!.Value;
+            var defaultNoteStyle = skin.GetConfig<Note, NoteStyle>(testingNote)!.Value;
 
             // should be able to get the default value.
             Assert.IsNotNull(defaultLyricConfig);

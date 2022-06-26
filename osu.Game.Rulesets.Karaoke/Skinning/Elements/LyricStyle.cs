@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
@@ -64,7 +62,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 
         public int ID { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public IReadOnlyList<ICustomizedShader> LeftLyricTextShaders = Array.Empty<ICustomizedShader>();
 

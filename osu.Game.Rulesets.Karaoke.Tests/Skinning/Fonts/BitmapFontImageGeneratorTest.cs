@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 using NUnit.Framework;
@@ -18,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
 {
     public class BitmapFontImageGeneratorTest
     {
-        private TestFntGlyphStore glyphStore;
+        private TestFntGlyphStore glyphStore = null!;
 
         private BitmapFont font => glyphStore.BitmapFont;
 

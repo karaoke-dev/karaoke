@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -30,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             AddLayout(subtractionCache);
         }
 
-        private Sprite judgementLineBodySprite;
+        private Sprite judgementLineBodySprite = null!;
 
         [BackgroundDependencyLoader]
         private void load(ISkinSource skin, IScrollingInfo scrollingInfo)
@@ -90,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             static float getWidth(Sprite s) => s.Texture?.DisplayWidth ?? 0;
         }
 
-        private static Texture getTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup)
+        private static Texture? getTextureFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup)
             => skin.GetTexture(getTextureNameFromLookup(lookup));
 
         private static string getTextureNameFromLookup(LegacyKaraokeSkinConfigurationLookups lookup)

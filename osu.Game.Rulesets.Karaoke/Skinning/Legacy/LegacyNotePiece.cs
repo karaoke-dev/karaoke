@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,9 +44,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             AddLayout(subtractionCache);
         }
 
-        private LayerContainer background;
-        private LayerContainer foreground;
-        private LayerContainer border;
+        private LayerContainer background = null!;
+        private LayerContainer foreground = null!;
+        private LayerContainer border = null!;
 
         [BackgroundDependencyLoader]
         private void load(DrawableHitObject drawableObject, ISkinSource skin, IScrollingInfo scrollingInfo)
@@ -177,7 +175,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 }
             };
 
-        private static Sprite getSpriteFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
+        private static Sprite? getSpriteFromLookup(ISkin skin, LegacyKaraokeSkinConfigurationLookups lookup, LegacyKaraokeSkinNoteLayer layer)
         {
             string name = getTextureNameFromLookup(lookup, layer);
 
@@ -196,7 +194,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     return null;
             }
 
-            Sprite getSpriteByName(string spriteName) => (Sprite)skin.GetAnimation(spriteName, true, true).With(d =>
+            Sprite? getSpriteByName(string spriteName) => (Sprite?)skin.GetAnimation(spriteName, true, true).With(d =>
             {
                 switch (d)
                 {

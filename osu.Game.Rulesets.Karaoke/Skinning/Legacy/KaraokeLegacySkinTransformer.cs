@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.ComponentModel;
 using osu.Framework.Audio;
@@ -33,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             isLegacySkin = new Lazy<bool>(() => GetConfig<SkinConfiguration.LegacySetting, decimal>(SkinConfiguration.LegacySetting.Version) != null);
         }
 
-        public override Drawable GetDrawableComponent(ISkinComponent component)
+        public override Drawable? GetDrawableComponent(ISkinComponent component)
         {
             switch (component)
             {
@@ -42,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     {
                         case SkinnableTarget.MainHUDComponents:
                             var components = base.GetDrawableComponent(component) as SkinnableTargetComponentsContainer ?? getTargetComponentsContainerFromOtherPlace();
-                            components.Add(new SettingButtonsDisplay
+                            components?.Add(new SettingButtonsDisplay
                             {
                                 Anchor = Anchor.CentreRight,
                                 Origin = Anchor.CentreRight,
@@ -74,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                     return base.GetDrawableComponent(component);
             }
 
-            SkinnableTargetComponentsContainer getTargetComponentsContainerFromOtherPlace() =>
+            SkinnableTargetComponentsContainer? getTargetComponentsContainerFromOtherPlace() =>
                 Skin switch
                 {
                     LegacySkin legacySkin => new TempLegacySkin(legacySkin.SkinInfo.Value).GetDrawableComponent(component) as SkinnableTargetComponentsContainer,
@@ -82,13 +80,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 };
         }
 
-        private Drawable getResult(HitResult result)
+        private Drawable? getResult(HitResult result)
         {
             // todo : get real component
             return null;
         }
 
-        public override IBindable<TValue> GetConfig<TLookup, TValue>(TLookup lookup)
+        public override IBindable<TValue>? GetConfig<TLookup, TValue>(TLookup lookup)
         {
             var config = defaultKaraokeSkin.GetConfig<TLookup, TValue>(lookup);
             return config ?? base.GetConfig<TLookup, TValue>(lookup);
@@ -111,12 +109,12 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 Files = Resources = new NamespacedResourceStore<byte[]>(store, $"Skin/{skinName}");
             }
 
-            public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
+            public IResourceStore<TextureUpload>? CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
 
-            public AudioManager AudioManager => null;
+            public AudioManager? AudioManager => null;
             public IResourceStore<byte[]> Files { get; }
             public IResourceStore<byte[]> Resources { get; }
-            public RealmAccess RealmAccess => null;
+            public RealmAccess? RealmAccess => null;
         }
     }
 }

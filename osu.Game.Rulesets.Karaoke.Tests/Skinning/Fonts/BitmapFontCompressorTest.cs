@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 using NUnit.Framework;
@@ -19,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
 {
     public class BitmapFontGeneratorTest
     {
-        private BitmapFont font;
+        private BitmapFont font = null!;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
@@ -39,10 +37,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [TestCase("A", 1)]
         [TestCase("a", 1)]
         [TestCase("カラオケ", 0)]
-        [TestCase(null, 1)]
+        [TestCase("", 1)]
         public void TestCompress(string chars, int charAmount)
         {
-            var result = BitmapFontCompressor.Compress(font, chars?.ToArray());
+            var result = BitmapFontCompressor.Compress(font, chars.ToArray());
 
             // info and common should just copy.
             ObjectAssert.ArePropertyEqual(font.Info, result.Info);
@@ -218,7 +216,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         }
 
         [TestCase("", 0)]
-        [TestCase(null, 0)]
         [TestCase("a", 0)] // should not have any kerning pair if has zero or one char.
         [TestCase("aaaaa", 0)] // same char should not have kerning pair.
         [TestCase("ab", 0)] // don't worry. some of pairs does not have kerning pair.
@@ -226,7 +223,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning.Fonts
         [TestCase("ABC", 3)]
         public void TestGenerateKerningPairs(string chars, int expected)
         {
-            var result = BitmapFontCompressor.GenerateKerningPairs(font.KerningPairs, chars?.ToArray());
+            var result = BitmapFontCompressor.GenerateKerningPairs(font.KerningPairs, chars.ToArray());
 
             int actual = result.Count;
             Assert.AreEqual(expected, actual);

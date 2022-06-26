@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -20,8 +18,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
     {
         private readonly IBindable<ScrollingDirection> direction = new Bindable<ScrollingDirection>();
 
-        private Container lightContainer;
-        private Sprite light;
+        private Container lightContainer = null!;
+        private Sprite light = null!;
 
         public LegacyColumnBackground()
         {

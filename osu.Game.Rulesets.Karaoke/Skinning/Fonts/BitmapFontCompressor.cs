@@ -1,12 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 using SharpFNT;
 
@@ -14,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
 {
     public static class BitmapFontCompressor
     {
-        public static BitmapFont Compress([NotNull] BitmapFont bitmapFont, char[] chars)
+        public static BitmapFont Compress(BitmapFont bitmapFont, char[] chars)
         {
             if (bitmapFont == null)
                 throw new ArgumentNullException(nameof(bitmapFont));
@@ -31,9 +28,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             };
         }
 
-        internal static IDictionary<int, string> GeneratePages([NotNull] IDictionary<int, string> originPages, Character[] characters)
+        internal static IDictionary<int, string> GeneratePages(IDictionary<int, string> originPages, Character[] characters)
         {
-            if (characters == null || characters.Length == 0)
+            if (characters.Length == 0)
                 return new Dictionary<int, string>();
 
             int maxStorePage = originPages.Max(x => x.Key);
@@ -46,11 +43,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                    .ToDictionary(x => x.Key, x => x.Value);
         }
 
-        internal static IDictionary<int, Character> GenerateCharacters([NotNull] BitmapFontInfo originInfo, [NotNull] BitmapFontCommon originCommon,
-                                                                       [NotNull] IDictionary<int, Character> originCharacters, char[] chars)
+        internal static IDictionary<int, Character> GenerateCharacters(BitmapFontInfo originInfo, BitmapFontCommon originCommon,
+                                                                       IDictionary<int, Character> originCharacters, char[] chars)
         {
-            chars = chars?.Distinct().ToArray();
-            if (chars == null || chars.Length < 1)
+            chars = chars.Distinct().ToArray();
+            if (chars.Length < 1)
                 return new Dictionary<int, Character>();
 
             // got the characters need to be precessed.
@@ -129,10 +126,10 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             return processingCharacters.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
         }
 
-        internal static IDictionary<KerningPair, int> GenerateKerningPairs([NotNull] IDictionary<KerningPair, int> originKerningPairs, char[] chars)
+        internal static IDictionary<KerningPair, int> GenerateKerningPairs(IDictionary<KerningPair, int> originKerningPairs, char[] chars)
         {
-            chars = chars?.Distinct().ToArray();
-            if (chars == null || chars.Length < 2)
+            chars = chars.Distinct().ToArray();
+            if (chars.Length < 2)
                 return new Dictionary<KerningPair, int>();
 
             // kerning pairs is the spacing between two chars.
@@ -146,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
         private static T copyObject<T>(T obj)
         {
             string str = JsonConvert.SerializeObject(obj);
-            return JsonConvert.DeserializeObject<T>(str);
+            return JsonConvert.DeserializeObject<T>(str)!;
         }
     }
 }

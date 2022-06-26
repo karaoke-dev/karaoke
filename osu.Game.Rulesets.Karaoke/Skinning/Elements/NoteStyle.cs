@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
@@ -24,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Elements
 
         public int ID { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public Color4 NoteColor { get; set; }
 

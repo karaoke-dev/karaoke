@@ -1,9 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -22,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
     {
         public const string FONT_BASE_PATH = @"fonts";
 
-        [Resolved]
+        [Resolved, AllowNull]
         private GameHost host { get; set; }
 
         private Storage storage => host.Storage.GetStorageForDirectory(FONT_BASE_PATH);
@@ -76,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             });
         }
 
-        private FileSystemWatcher watcher;
+        private FileSystemWatcher watcher = null!;
 
         [BackgroundDependencyLoader]
         private void load()
@@ -177,7 +176,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             return Fonts.FirstOrDefault(x => x.FontName == fontName).FontFormat;
         }
 
-        public IResourceStore<TextureUpload> GetGlyphStore(FontInfo fontInfo)
+        public IResourceStore<TextureUpload>? GetGlyphStore(FontInfo fontInfo)
         {
             // do not import if this font is system font.
             var fontFormat = fontInfo.FontFormat;
@@ -193,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             };
         }
 
-        private FntGlyphStore getFntGlyphStore(string fontName)
+        private FntGlyphStore? getFntGlyphStore(string fontName)
         {
             string path = Path.Combine(getPathByFontType(FontFormat.Fnt), fontName);
             string pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontFormat.Fnt));
@@ -205,7 +204,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
             return new FntGlyphStore(new ResourceStore<byte[]>(resources), $"{fontName}", host.CreateTextureLoaderStore(resources));
         }
 
-        private TtfGlyphStore getTtfGlyphStore(string fontName)
+        private TtfGlyphStore? getTtfGlyphStore(string fontName)
         {
             string path = Path.Combine(getPathByFontType(FontFormat.Ttf), fontName);
             string pathWithExtension = Path.ChangeExtension(path, getExtensionByFontType(FontFormat.Ttf));
