@@ -92,22 +92,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
                 new Lyric
                 {
-                    Text = "",
+                    Text = string.Empty,
                 },
                 new Lyric
                 {
-                    Text = null,
-                },
-                new Lyric
-                {
-                    Text = "",
+                    Text = string.Empty,
                     Language = new CultureInfo(17)
                 },
-                new Lyric
-                {
-                    Text = null,
-                    Language = new CultureInfo(17)
-                }
             });
 
             TriggerHandlerChanged(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateRubyTags));
@@ -153,22 +144,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
                 new Lyric
                 {
-                    Text = "",
+                    Text = string.Empty,
                 },
                 new Lyric
                 {
-                    Text = null,
-                },
-                new Lyric
-                {
-                    Text = "",
+                    Text = string.Empty,
                     Language = new CultureInfo(17)
                 },
-                new Lyric
-                {
-                    Text = null,
-                    Language = new CultureInfo(17)
-                }
             });
 
             TriggerHandlerChanged(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateRomajiTags));
@@ -212,22 +194,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 },
                 new Lyric
                 {
-                    Text = "",
+                    Text = string.Empty,
                 },
                 new Lyric
                 {
-                    Text = null,
-                },
-                new Lyric
-                {
-                    Text = "",
+                    Text = string.Empty,
                     Language = new CultureInfo(17)
                 },
-                new Lyric
-                {
-                    Text = null,
-                    Language = new CultureInfo(17)
-                }
             });
 
             TriggerHandlerChanged(c => c.AutoGenerate(LyricAutoGenerateProperty.AutoGenerateTimeTags));

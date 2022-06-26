@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public int ID { get; set; }
 
         [JsonIgnore]
-        public readonly Bindable<string> TextBindable = new("");
+        public readonly Bindable<string> TextBindable = new(string.Empty);
 
         /// <summary>
         /// Text of the lyric
