@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 
@@ -23,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
         /// </remarks>
         public static string GetInvariantInstantiationInfo(this Type type)
         {
-            string assemblyQualifiedName = type.AssemblyQualifiedName;
+            string? assemblyQualifiedName = type.AssemblyQualifiedName;
             if (assemblyQualifiedName == null)
                 throw new ArgumentException($"{type}'s assembly-qualified name is null. Ensure that it is a concrete type and not a generic type parameter.", nameof(type));
 

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Reflection;
 using osu.Framework.Graphics;
@@ -16,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Extensions
     /// </summary>
     public static class TrickyCompositeDrawableExtension
     {
-        public static IReadOnlyList<Drawable> GetInternalChildren(this CompositeDrawable compositeDrawable)
+        public static IReadOnlyList<Drawable>? GetInternalChildren(this CompositeDrawable compositeDrawable)
         {
             // see this shit to access internal property.
             // https://stackoverflow.com/a/7575615/4105113
