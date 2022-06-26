@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
             SetDefault(KaraokeRulesetSetting.PracticePreemptTime, 3000.0, 0.0, 5000.0, 100.0);
 
             // Device
-            SetDefault(KaraokeRulesetSetting.MicrophoneDevice, "");
+            SetDefault(KaraokeRulesetSetting.MicrophoneDevice, string.Empty);
 
             // Font
             SetDefault(KaraokeRulesetSetting.LyricScale, 2, 1, 4, 0.01);

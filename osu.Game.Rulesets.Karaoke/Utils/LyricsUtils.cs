@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             var firstLyric = new Lyric
             {
-                Text = lyric.Text[..splitIndex] ?? "",
+                Text = lyric.Text[..splitIndex],
                 TimeTags = firstTimeTag.ToArray(),
                 RubyTags = lyric.RubyTags.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray(),
                 RomajiTags = lyric.RomajiTags.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray(),

@@ -130,7 +130,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     else
                     {
                         float startPercentage = 0;
-                        string[] rubyNotes = note.Replace("(", "").Replace(")", "").Split('|');
+                        string[] rubyNotes = note.Replace("(", string.Empty).Replace(")", string.Empty).Split('|');
 
                         for (int j = 0; j < rubyNotes.Length; j++)
                         {
@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                             // Format like [1;0.5;か]
                             if (note.StartsWith("[", StringComparison.Ordinal) && note.EndsWith("]", StringComparison.Ordinal))
                             {
-                                string[] rubyNoteProperty = note.Replace("[", "").Replace("]", "").Split(';');
+                                string[] rubyNoteProperty = note.Replace("[", string.Empty).Replace("]", string.Empty).Split(';');
 
                                 // Copy tome property
                                 tone = rubyNoteProperty[0];

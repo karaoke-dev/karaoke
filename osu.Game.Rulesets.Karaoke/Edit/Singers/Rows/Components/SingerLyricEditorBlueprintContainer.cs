@@ -99,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Singers.Rows.Components
 
             protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<Lyric>> selection)
             {
-                var contextMenu = new SingerContextMenu(beatmap, lyricSingerChangeHandler, "", () =>
+                var contextMenu = new SingerContextMenu(beatmap, lyricSingerChangeHandler, string.Empty, () =>
                 {
                     selectedLyrics.Clear();
                 });
