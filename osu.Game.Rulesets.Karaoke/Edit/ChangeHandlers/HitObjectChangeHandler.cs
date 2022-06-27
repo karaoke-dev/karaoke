@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Caching;
@@ -16,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
     {
         private readonly Cached changingCache = new();
 
-        [Resolved]
+        [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
 
         protected IEnumerable<THitObject> HitObjects => beatmap.HitObjects.OfType<THitObject>();

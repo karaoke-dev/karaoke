@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -12,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 {
     public class NotesChangeHandler : HitObjectChangeHandler<Note>, INotesChangeHandler
     {
-        [Resolved]
+        [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
 
         public void Split(float percentage = 0.5f)
@@ -65,7 +66,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 
             PerformOnSelection(note =>
             {
-                note.RubyText = ruby;
+                // Should change ruby text as null if remove all words.
+                note.RubyText = string.IsNullOrEmpty(ruby) ? null : ruby;
             });
         }
 
