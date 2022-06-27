@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Framework.Extensions.Color4Extensions;
