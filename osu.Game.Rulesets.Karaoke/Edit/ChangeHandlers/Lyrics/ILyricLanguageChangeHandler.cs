@@ -7,6 +7,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
     public interface ILyricLanguageChangeHandler
     {
-        void SetLanguage(CultureInfo language);
+        void SetLanguage(CultureInfo? language);
     }
 }

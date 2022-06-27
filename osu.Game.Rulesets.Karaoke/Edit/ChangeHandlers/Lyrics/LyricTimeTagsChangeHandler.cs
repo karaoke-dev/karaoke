@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
             PerformOnSelection(lyric =>
             {
-                bool containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
+                bool containsInLyric = lyric.TimeTags.Contains(timeTag);
                 if (!containsInLyric)
                     throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
             PerformOnSelection(lyric =>
             {
-                bool containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
+                bool containsInLyric = lyric.TimeTags.Contains(timeTag);
                 if (!containsInLyric)
                     throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
@@ -93,11 +93,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             CheckExactlySelectedOneHitObject();
 
-            TimeTag newTimeTag = null;
+            TimeTag newTimeTag = null!;
 
             PerformOnSelection(lyric =>
             {
-                bool containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
+                bool containsInLyric = lyric.TimeTags.Contains(timeTag);
                 if (!containsInLyric)
                     throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 

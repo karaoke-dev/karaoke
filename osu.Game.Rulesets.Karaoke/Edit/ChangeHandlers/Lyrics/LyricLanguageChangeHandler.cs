@@ -9,11 +9,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
     public class LyricLanguageChangeHandler : HitObjectChangeHandler<Lyric>, ILyricLanguageChangeHandler
     {
-        public void SetLanguage(CultureInfo language)
+        public void SetLanguage(CultureInfo? language)
         {
             PerformOnSelection(lyric =>
             {
-                if (EqualityComparer<CultureInfo>.Default.Equals(language, lyric.Language))
+                if (EqualityComparer<CultureInfo?>.Default.Equals(language, lyric.Language))
                     return;
 
                 lyric.Language = language;
