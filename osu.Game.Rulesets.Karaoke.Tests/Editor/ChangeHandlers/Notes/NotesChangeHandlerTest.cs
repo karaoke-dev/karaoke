@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
@@ -76,8 +74,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
                 var actualNotes = notes.ToArray();
                 Assert.AreEqual(1, actualNotes.Length);
 
-                var combinedNote = actualNotes.FirstOrDefault();
-                Assert.IsNotNull(combinedNote);
+                var combinedNote = actualNotes.First();
                 Assert.AreEqual("カラ", combinedNote.Text);
                 Assert.AreEqual(null, combinedNote.RubyText);
                 Assert.AreEqual(1000, combinedNote.StartTime);

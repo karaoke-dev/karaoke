@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,10 +17,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
     public class SingersChangeHandler : BeatmapPropertyChangeHandler<Singer>, ISingersChangeHandler
     {
         [Resolved(canBeNull: true)]
-        private BeatmapManager beatmapManager { get; set; }
+        private BeatmapManager? beatmapManager { get; set; }
 
         [Resolved(canBeNull: true)]
-        private IBindable<WorkingBeatmap> working { get; set; }
+        private IBindable<WorkingBeatmap>? working { get; set; }
 
         public BindableList<Singer> Singers => Items;
 

@@ -1,8 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -15,10 +14,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 {
     public class BeatmapChangeHandler : Component, IBeatmapChangeHandler
     {
-        [Resolved]
+        [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
 
-        private KaraokeBeatmap karaokeBeatmap => beatmap.PlayableBeatmap as KaraokeBeatmap;
+        private KaraokeBeatmap karaokeBeatmap => (KaraokeBeatmap)beatmap.PlayableBeatmap;
 
         public void Import(IBeatmap newBeatmap)
         {

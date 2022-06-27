@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -86,8 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Singers
                 var singers = karaokeBeatmap.Singers;
                 Assert.AreEqual(3, singers.Count);
 
-                var lastSinger = singers.LastOrDefault();
-                Assert.IsNotNull(lastSinger);
+                var lastSinger = singers.Last();
                 Assert.AreEqual(2, lastSinger.ID);
                 Assert.AreEqual(3, lastSinger.Order);
             });

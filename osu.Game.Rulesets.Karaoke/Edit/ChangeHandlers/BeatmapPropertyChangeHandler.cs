@@ -1,10 +1,9 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -17,10 +16,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 {
     public abstract class BeatmapPropertyChangeHandler<TItem> : Component
     {
-        [Resolved]
+        [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
 
-        private KaraokeBeatmap karaokeBeatmap => beatmap.PlayableBeatmap as KaraokeBeatmap;
+        private KaraokeBeatmap karaokeBeatmap => (KaraokeBeatmap)beatmap.PlayableBeatmap;
 
         protected IEnumerable<Lyric> Lyrics => karaokeBeatmap.HitObjects.OfType<Lyric>();
 
@@ -49,12 +48,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
             }
         }
 
-        protected void PerformObjectChanged(TItem item, Action<TItem> action)
+        protected void PerformObjectChanged(TItem item, Action<TItem>? action)
         {
             // should call change from editor beatmap because there's only way to trigger transaction ended.
-            beatmap?.BeginChange();
+            beatmap.BeginChange();
             action?.Invoke(item);
-            beatmap?.EndChange();
+            beatmap.EndChange();
         }
 
         protected abstract IList<TItem> GetItemsFromBeatmap(KaraokeBeatmap beatmap);

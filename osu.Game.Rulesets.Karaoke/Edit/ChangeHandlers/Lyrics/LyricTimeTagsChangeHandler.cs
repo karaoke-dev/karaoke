@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
@@ -19,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
             PerformOnSelection(lyric =>
             {
-                bool containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
+                bool containsInLyric = lyric.TimeTags.Contains(timeTag);
                 if (!containsInLyric)
                     throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
@@ -33,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
             PerformOnSelection(lyric =>
             {
-                bool containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
+                bool containsInLyric = lyric.TimeTags.Contains(timeTag);
                 if (!containsInLyric)
                     throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 
@@ -95,11 +93,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             CheckExactlySelectedOneHitObject();
 
-            TimeTag newTimeTag = null;
+            TimeTag newTimeTag = null!;
 
             PerformOnSelection(lyric =>
             {
-                bool containsInLyric = lyric.TimeTags?.Contains(timeTag) ?? false;
+                bool containsInLyric = lyric.TimeTags.Contains(timeTag);
                 if (!containsInLyric)
                     throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
 

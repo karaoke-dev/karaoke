@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Globalization;
 using NUnit.Framework;
@@ -83,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 }
             });
 
-            TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), null));
+            TriggerHandlerChanged(c => c.UpdateTranslate(new CultureInfo(17), ""));
 
             AssertSelectedHitObject(h =>
             {

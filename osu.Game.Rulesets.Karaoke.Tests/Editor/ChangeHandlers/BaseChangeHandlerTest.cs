@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using NUnit.Framework;
 using osu.Framework.Allocation;
@@ -21,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
     [HeadlessTest]
     public abstract class BaseChangeHandlerTest<TChangeHandler> : OsuTestScene where TChangeHandler : Component, new()
     {
-        private TChangeHandler changeHandler;
+        private TChangeHandler changeHandler = null!;
 
         private int transactionCount;
 
@@ -50,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
             AddStep("Prepare testing beatmap", () =>
             {
                 var editorBeatmap = Dependencies.Get<EditorBeatmap>();
-                action?.Invoke(editorBeatmap);
+                action.Invoke(editorBeatmap);
             });
         }
 
@@ -61,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
                 if (editorBeatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
                     throw new InvalidCastException();
 
-                assert?.Invoke(karaokeBeatmap);
+                assert.Invoke(karaokeBeatmap);
             });
         }
 
@@ -96,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
                 if (editorBeatmap.PlayableBeatmap is not KaraokeBeatmap karaokeBeatmap)
                     throw new InvalidCastException();
 
-                assert?.Invoke(karaokeBeatmap);
+                assert.Invoke(karaokeBeatmap);
             });
         }
 

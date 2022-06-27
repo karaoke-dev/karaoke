@@ -1,10 +1,9 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -23,10 +22,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
     public class LyricAutoGenerateChangeHandler : HitObjectChangeHandler<Lyric>, ILyricAutoGenerateChangeHandler
     {
-        [Resolved]
+        [Resolved, AllowNull]
         private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
 
-        [Resolved]
+        [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
 
         public bool CanGenerate(LyricAutoGenerateProperty autoGenerateProperty)
@@ -120,8 +119,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     var rubyGenerator = createLyricGenerator<RubyTag[]>();
                     PerformOnSelection(lyric =>
                     {
-                        var rubyTags = rubyGenerator.Generate(lyric);
-                        lyric.RubyTags = rubyTags ?? Array.Empty<RubyTag>();
+                        lyric.RubyTags = rubyGenerator.Generate(lyric);
                     });
                     break;
 
@@ -129,8 +127,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     var romajiGenerator = createLyricGenerator<RomajiTag[]>();
                     PerformOnSelection(lyric =>
                     {
-                        var romajiTags = romajiGenerator.Generate(lyric);
-                        lyric.RomajiTags = romajiTags ?? Array.Empty<RomajiTag>();
+                        lyric.RomajiTags = romajiGenerator.Generate(lyric);
                     });
                     break;
 
@@ -138,8 +135,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     var timeTagGenerator = createLyricGenerator<TimeTag[]>();
                     PerformOnSelection(lyric =>
                     {
-                        var timeTags = timeTagGenerator.Generate(lyric);
-                        lyric.TimeTags = timeTags ?? Array.Empty<TimeTag>();
+                        lyric.TimeTags = timeTagGenerator.Generate(lyric);
                     });
                     break;
 
@@ -167,7 +163,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             {
                 case Type t when t == typeof(CultureInfo):
                     var config = generatorConfigManager.Get<LanguageDetectorConfig>(KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig);
-                    return new LanguageDetector(config) as ILyricPropertyDetector<T>;
+                    return (ILyricPropertyDetector<T>)new LanguageDetector(config);
 
                 default:
                     throw new NotSupportedException();
@@ -179,17 +175,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             switch (typeof(T))
             {
                 case Type t when t == typeof(RubyTag[]):
-                    return new RubyTagGeneratorSelector(generatorConfigManager) as ILyricPropertyGenerator<T>;
+                    return (ILyricPropertyGenerator<T>)new RubyTagGeneratorSelector(generatorConfigManager);
 
                 case Type t when t == typeof(RomajiTag[]):
-                    return new RomajiTagGeneratorSelector(generatorConfigManager) as ILyricPropertyGenerator<T>;
+                    return (ILyricPropertyGenerator<T>)new RomajiTagGeneratorSelector(generatorConfigManager);
 
                 case Type t when t == typeof(TimeTag[]):
-                    return new TimeTagGeneratorSelector(generatorConfigManager) as ILyricPropertyGenerator<T>;
+                    return (ILyricPropertyGenerator<T>)new TimeTagGeneratorSelector(generatorConfigManager);
 
                 case Type t when t == typeof(Note[]):
                     var config = generatorConfigManager.Get<NoteGeneratorConfig>(KaraokeRulesetEditGeneratorSetting.NoteGeneratorConfig);
-                    return new NoteGenerator(config) as ILyricPropertyGenerator<T>;
+                    return (ILyricPropertyGenerator<T>)new NoteGenerator(config);
 
                 default:
                     throw new NotSupportedException();
