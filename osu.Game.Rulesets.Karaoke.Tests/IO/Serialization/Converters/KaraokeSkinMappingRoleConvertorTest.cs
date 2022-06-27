@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
@@ -41,8 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 ElementId = 1,
                 GroupId = 2,
             };
-            var actual = JsonConvert.DeserializeObject<IMappingRole>(json, CreateSettings()) as DefaultMappingRole;
-            Assert.IsNotNull(actual);
+            var actual = (DefaultMappingRole)JsonConvert.DeserializeObject<IMappingRole>(json, CreateSettings())!;
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.ElementType, actual.ElementType);
             Assert.AreEqual(expected.ElementId, actual.ElementId);

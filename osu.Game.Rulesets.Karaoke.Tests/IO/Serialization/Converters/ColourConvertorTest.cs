@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Framework.Extensions.Color4Extensions;
@@ -29,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase("#AAAAAAAA", "#AAAAAAAA")]
         [TestCase("", null)] // should throw exception
         [TestCase(null, null)] // should throw exception
-        public void TestDeserialize(string json, string hex)
+        public void TestDeserialize(string? json, string? hex)
         {
             try
             {

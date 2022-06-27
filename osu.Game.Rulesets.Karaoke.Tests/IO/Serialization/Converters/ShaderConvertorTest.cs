@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Linq;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -46,8 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 ShadowOffset = new Vector2(3),
                 ShadowColour = new Color4(0.5f, 0.5f, 0.5f, 0.5f),
             };
-            var actual = JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings()) as ShadowShader;
-            Assert.IsNotNull(actual);
+            var actual = (ShadowShader)JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings())!;
             Assert.AreEqual(expected.ShadowOffset, actual.ShadowOffset);
             Assert.AreEqual(expected.ShadowColour.ToHex(), actual.ShadowColour.ToHex());
         }
@@ -92,17 +89,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                     }
                 }
             };
-            var actual = JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings()) as StepShader;
+            var actual = (StepShader)JsonConvert.DeserializeObject<ICustomizedShader>(json, CreateSettings())!;
 
             // test step shader.
-            Assert.IsNotNull(actual);
             Assert.AreEqual(expected.StepShaders.Count, actual.StepShaders.Count);
 
             // test shadow shader inside.
-            var expectedShadowShader = expected.StepShaders.FirstOrDefault() as ShadowShader;
-            var actualShadowShader = actual.StepShaders.FirstOrDefault() as ShadowShader;
-            Assert.IsNotNull(expectedShadowShader);
-            Assert.IsNotNull(actualShadowShader);
+            var expectedShadowShader = (ShadowShader)expected.StepShaders.First();
+            var actualShadowShader = (ShadowShader)actual.StepShaders.First();
             Assert.AreEqual(expectedShadowShader.ShadowOffset, actualShadowShader.ShadowOffset);
             Assert.AreEqual(expectedShadowShader.ShadowColour.ToHex(), actualShadowShader.ShadowColour.ToHex());
         }

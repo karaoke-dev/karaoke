@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
@@ -38,8 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 Name = "Singer 1 and 2",
                 SingerIds = new[] { 1, 2 }
             };
-            var actual = JsonConvert.DeserializeObject<IGroup>(json, CreateSettings()) as GroupBySingerIds;
-            Assert.IsNotNull(actual);
+            var actual = (GroupBySingerIds)JsonConvert.DeserializeObject<IGroup>(json, CreateSettings())!;
             Assert.AreEqual(expected.ID, actual.ID);
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.SingerIds, actual.SingerIds);
@@ -71,8 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 Name = "Two singers",
                 SingerNumber = 2,
             };
-            var actual = JsonConvert.DeserializeObject<IGroup>(json, CreateSettings()) as GroupBySingerNumber;
-            Assert.IsNotNull(actual);
+            var actual = (GroupBySingerNumber)JsonConvert.DeserializeObject<IGroup>(json, CreateSettings())!;
             Assert.AreEqual(expected.ID, actual.ID);
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.SingerNumber, actual.SingerNumber);
@@ -104,8 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 Name = "Lyric 1 and 2",
                 LyricIds = new[] { 1, 2 }
             };
-            var actual = JsonConvert.DeserializeObject<IGroup>(json, CreateSettings()) as GroupByLyricIds;
-            Assert.IsNotNull(actual);
+            var actual = (GroupByLyricIds)JsonConvert.DeserializeObject<IGroup>(json, CreateSettings())!;
             Assert.AreEqual(expected.ID, actual.ID);
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.LyricIds, actual.LyricIds);

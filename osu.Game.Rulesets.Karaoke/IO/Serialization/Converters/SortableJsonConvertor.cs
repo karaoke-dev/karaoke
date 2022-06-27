@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +11,18 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
     public abstract class SortableJsonConvertor<TObject> : JsonConverter<IEnumerable<TObject>>
     {
-        public sealed override IEnumerable<TObject> ReadJson(JsonReader reader, Type objectType, IEnumerable<TObject> existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public sealed override IEnumerable<TObject> ReadJson(JsonReader reader, Type objectType, IEnumerable<TObject>? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JArray.Load(reader);
-            var timeTags = obj.Select(x => serializer.Deserialize<TObject>(x.CreateReader()));
+            var timeTags = obj.Select(x => serializer.Deserialize<TObject>(x.CreateReader())!);
             return GetSortedValue(timeTags);
         }
 
-        public override void WriteJson(JsonWriter writer, IEnumerable<TObject> value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, IEnumerable<TObject>? value, JsonSerializer serializer)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             // see: https://stackoverflow.com/questions/3330989/order-of-serialized-fields-using-json-net
             var sortedTimeTags = GetSortedValue(value);
 

@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<string> TextBindable = new();
+        public readonly Bindable<string> TextBindable = new(string.Empty);
 
         /// <summary>
         /// If kanji Matched, then apply ruby

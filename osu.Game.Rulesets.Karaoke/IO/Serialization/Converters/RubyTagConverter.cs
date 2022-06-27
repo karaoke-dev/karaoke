@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
@@ -14,10 +12,10 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
     public class RubyTagConverter : JsonConverter<RubyTag>
     {
-        public override RubyTag ReadJson(JsonReader reader, Type objectType, RubyTag existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override RubyTag ReadJson(JsonReader reader, Type objectType, RubyTag? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JToken.Load(reader);
-            string value = obj.Value<string>();
+            string? value = obj.Value<string>();
 
             if (string.IsNullOrEmpty(value))
                 return new RubyTag();
@@ -35,8 +33,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             };
         }
 
-        public override void WriteJson(JsonWriter writer, RubyTag value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, RubyTag? value, JsonSerializer serializer)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             string str = $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
             writer.WriteValue(str);
         }

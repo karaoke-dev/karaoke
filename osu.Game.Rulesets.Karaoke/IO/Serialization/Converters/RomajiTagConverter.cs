@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
@@ -14,10 +12,10 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
     public class RomajiTagConverter : JsonConverter<RomajiTag>
     {
-        public override RomajiTag ReadJson(JsonReader reader, Type objectType, RomajiTag existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override RomajiTag ReadJson(JsonReader reader, Type objectType, RomajiTag? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JToken.Load(reader);
-            string value = obj.Value<string>();
+            string? value = obj.Value<string>();
 
             if (string.IsNullOrEmpty(value))
                 return new RomajiTag();
@@ -35,8 +33,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             };
         }
 
-        public override void WriteJson(JsonWriter writer, RomajiTag value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, RomajiTag? value, JsonSerializer serializer)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             string str = $"[{value.StartIndex},{value.EndIndex}]:{value.Text}";
             writer.WriteValue(str);
         }

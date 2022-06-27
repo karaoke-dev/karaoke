@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Framework.Graphics;
@@ -31,8 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 "{\"$type\":0,\"name\":\"Default\",\"smart_horizon\":2,\"lyrics_interval\":4,\"ruby_interval\":2,\"romaji_interval\":2,\"ruby_alignment\":2,\"romaji_alignment\":2,\"ruby_margin\":4,\"romaji_margin\":4,\"main_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\",\"size\":48.0},\"ruby_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"},\"romaji_text_font\":{\"family\":\"Torus\",\"weight\":\"Bold\"}}";
 
             var expected = LyricConfig.CreateDefault();
-            var actual = JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings()) as LyricConfig;
-            Assert.IsNotNull(actual);
+            var actual = (LyricConfig)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.SmartHorizon, actual.SmartHorizon);
         }
@@ -67,8 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 HorizontalMargin = 10,
                 VerticalMargin = 20,
             };
-            var actual = JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings()) as LyricLayout;
-            Assert.IsNotNull(actual);
+            var actual = (LyricLayout)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.Alignment, actual.Alignment);
         }
@@ -91,8 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 "{\"$type\":2,\"left_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"radius\":3.0,\"outline_colour\":\"#CCA532\"},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#6B5B2D\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"right_lyric_text_shaders\":[{\"$type\":\"StepShader\",\"name\":\"Step shader\",\"draw\":true,\"step_shaders\":[{\"$type\":\"OutlineShader\",\"radius\":3.0,\"outline_colour\":\"#5932CC\"},{\"$type\":\"ShadowShader\",\"shadow_colour\":\"#3D2D6B\",\"shadow_offset\":{\"x\":3.0,\"y\":3.0}}]}],\"name\":\"Default\"}";
 
             var expected = LyricStyle.CreateDefault();
-            var actual = JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings()) as LyricStyle;
-            Assert.IsNotNull(actual);
+            var actual = (LyricStyle)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.ID, actual.ID);
             Assert.AreEqual(expected.LeftLyricTextShaders.Count, actual.LeftLyricTextShaders.Count);
@@ -115,8 +110,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
             const string json = "{\"$type\":3,\"name\":\"Default\",\"note_color\":\"#44AADD\",\"blink_color\":\"#FF66AA\",\"text_color\":\"#FFFFFF\",\"bold_text\":true}";
 
             var expected = NoteStyle.CreateDefault();
-            var actual = JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings()) as NoteStyle;
-            Assert.IsNotNull(actual);
+            var actual = (NoteStyle)JsonConvert.DeserializeObject<IKaraokeSkinElement>(json, CreateSettings())!;
             Assert.AreEqual(expected.Name, actual.Name);
             Assert.AreEqual(expected.ID, actual.ID);
             Assert.AreEqual(expected.BlinkColor, actual.BlinkColor);
