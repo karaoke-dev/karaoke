@@ -84,8 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Singers
                 var singers = karaokeBeatmap.Singers;
                 Assert.AreEqual(3, singers.Count);
 
-                var lastSinger = singers.LastOrDefault();
-                Assert.IsNotNull(lastSinger);
+                var lastSinger = singers.Last();
                 Assert.AreEqual(2, lastSinger.ID);
                 Assert.AreEqual(3, lastSinger.Order);
             });
