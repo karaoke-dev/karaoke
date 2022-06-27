@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         [TestCase("#AAAAAAAA", "#AAAAAAAA")]
         [TestCase("", null)] // should throw exception
         [TestCase(null, null)] // should throw exception
-        public void TestDeserialize(string json, string hex)
+        public void TestDeserialize(string? json, string? hex)
         {
             try
             {

@@ -39,8 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
         public void TestDeserialize(string json, int index, TextIndex.IndexState state, int? time)
         {
             var expected = new TimeTag(new TextIndex(index, state), time);
-            var actual = JsonConvert.DeserializeObject<TimeTag>($"\"{json}\"", CreateSettings());
-            Assert.IsNotNull(actual);
+            var actual = JsonConvert.DeserializeObject<TimeTag>($"\"{json}\"", CreateSettings())!;
             Assert.AreEqual(expected.Index, actual.Index);
             Assert.AreEqual(expected.Time, actual.Time);
         }
