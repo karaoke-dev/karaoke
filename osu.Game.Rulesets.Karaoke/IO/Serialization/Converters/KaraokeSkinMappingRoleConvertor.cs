@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             localSerializer = JsonSerializer.Create(settings);
         }
 
-        public override IMappingRole ReadJson(JsonReader reader, Type objectType, IMappingRole existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override IMappingRole? ReadJson(JsonReader reader, Type objectType, IMappingRole? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var jObject = JObject.Load(reader);
             var properties = jObject.Children().OfType<JProperty>().ToArray();
@@ -35,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             static Type getTypeByProperties(IEnumerable<JProperty> properties)
             {
-                string elementType = properties.FirstOrDefault(x => x.Name == "$type")?.Value.ToObject<string>();
+                string? elementType = properties.FirstOrDefault(x => x.Name == "$type")?.Value.ToObject<string>();
                 if (elementType == null)
                     throw new ArgumentNullException(nameof(elementType));
 
@@ -43,8 +43,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             }
         }
 
-        public override void WriteJson(JsonWriter writer, IMappingRole value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, IMappingRole? value, JsonSerializer serializer)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             var jObject = JObject.FromObject(value, localSerializer);
 
             // should get type from enum instead of class type because change class name might cause resource not found.

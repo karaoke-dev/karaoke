@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             localSerializer = JsonSerializer.Create(settings);
         }
 
-        public override ICustomizedShader ReadJson(JsonReader reader, Type objectType, ICustomizedShader existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override ICustomizedShader? ReadJson(JsonReader reader, Type objectType, ICustomizedShader? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             // if not knows the type, then should get the type from type field and re-deserializer again.
             var jObject = JObject.Load(reader);
@@ -54,13 +54,16 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             return shader;
 
-            static Type getTypeByProperties(IEnumerable<JProperty> properties)
+            static Type? getTypeByProperties(IEnumerable<JProperty> properties)
             {
-                string typeString = properties.FirstOrDefault(x => x.Name == "$type")?.Value.ToObject<string>();
+                string? typeString = properties.FirstOrDefault(x => x.Name == "$type")?.Value.ToObject<string>();
+                if (string.IsNullOrEmpty(typeString))
+                    return default;
+
                 return getTypeByName(typeString);
             }
 
-            static ICustomizedShader[] getShadersFromProperties(IEnumerable<JProperty> properties, JsonSerializer serializer)
+            static ICustomizedShader[]? getShadersFromProperties(IEnumerable<JProperty> properties, JsonSerializer serializer)
             {
                 // deserialize step shaders if process step shaders.
                 var stepShaders = properties.FirstOrDefault(x => x.Name == "step_shaders");
@@ -74,8 +77,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             }
         }
 
-        public override void WriteJson(JsonWriter writer, ICustomizedShader value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, ICustomizedShader? value, JsonSerializer serializer)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             var jObject = JObject.FromObject(value, localSerializer);
             jObject.AddFirst(new JProperty("$type", getNameByType(value.GetType())));
 
@@ -89,7 +95,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             jObject.WriteTo(writer);
 
-            static JArray getShadersFromParent(ICustomizedShader shader, JsonSerializer serializer)
+            static JArray? getShadersFromParent(ICustomizedShader shader, JsonSerializer serializer)
             {
                 if (shader is not StepShader stepShader)
                     return null;
@@ -98,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             }
         }
 
-        private static Type getTypeByName(string name)
+        private static Type? getTypeByName(string name)
         {
             // only get name from font
             var assembly = AssemblyUtils.GetAssemblyByName("osu.Framework.KaraokeFont");

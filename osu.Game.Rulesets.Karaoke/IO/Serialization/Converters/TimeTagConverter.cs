@@ -14,10 +14,10 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
     public class TimeTagConverter : JsonConverter<TimeTag>
     {
-        public override TimeTag ReadJson(JsonReader reader, Type objectType, TimeTag existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override TimeTag ReadJson(JsonReader reader, Type objectType, TimeTag? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JToken.Load(reader);
-            string value = obj.Value<string>();
+            string? value = obj.Value<string>();
 
             if (string.IsNullOrEmpty(value))
                 return new TimeTag(new TextIndex());
@@ -34,8 +34,11 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             return new TimeTag(new TextIndex(index, state), time);
         }
 
-        public override void WriteJson(JsonWriter writer, TimeTag value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, TimeTag? value, JsonSerializer serializer)
         {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
             var index = value.Index;
             string state = TextIndexUtils.GetValueByState(index, "start", "end");
             double? time = value.Time;

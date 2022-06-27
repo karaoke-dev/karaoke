@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
         public override Color4 ReadJson(JsonReader reader, Type objectType, Color4 existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var obj = JToken.Load(reader);
-            string value = obj.Value<string>();
+            string? value = obj.Value<string>();
 
             if (value == null)
                 return new Color4();
