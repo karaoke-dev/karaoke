@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             if (glyphStore == null)
                 return;
 
-            AddStore(glyphStore);
+            AddTextureSource(glyphStore);
             fontInfos.Add(fontInfo, glyphStore);
         }
 
@@ -60,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
             if (!fontInfos.TryGetValue(fontInfo, out var glyphStore))
                 return;
 
-            RemoveStore(glyphStore);
+            RemoveTextureStore(glyphStore);
             fontInfos.Remove(fontInfo);
         }
 
