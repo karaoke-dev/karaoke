@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         IBindableList<Lyric> SelectedLyrics { get; }
 
-        Action<LyricEditorSelectingAction> Action { get; set; }
+        Action<LyricEditorSelectingAction>? Action { get; set; }
 
         void StartSelecting();
 

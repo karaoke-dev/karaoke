@@ -10,11 +10,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
     public interface ILyricCaretState
     {
-        IBindable<ICaretPosition> BindableHoverCaretPosition { get; }
+        IBindable<ICaretPosition?> BindableHoverCaretPosition { get; }
 
-        IBindable<ICaretPosition> BindableCaretPosition { get; }
+        IBindable<ICaretPosition?> BindableCaretPosition { get; }
 
-        IBindable<ICaretPositionAlgorithm> BindableCaretPositionAlgorithm { get; }
+        IBindable<ICaretPositionAlgorithm?> BindableCaretPositionAlgorithm { get; }
 
         bool MoveCaret(MovingCaretAction action);
 
