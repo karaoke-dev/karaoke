@@ -26,8 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
     public class LyricCaretStateTest : OsuTestScene
     {
         private readonly IBeatmap beatmap;
-        private ILyricEditorState state;
-        private LyricCaretState lyricCaretState;
+        private ILyricEditorState state = null!;
+        private LyricCaretState lyricCaretState = null!;
 
         public LyricCaretStateTest()
         {
@@ -237,11 +237,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
 
             // because switch to the singer lyric, so current caret position will at the first lyric.
             assertCaretPosition(Assert.IsInstanceOf<NavigateCaretPosition>);
-            assertCaretPosition(x => Assert.AreEqual(firstLyric, x.Lyric));
+            assertCaretPosition(x => Assert.AreEqual(firstLyric, x?.Lyric));
 
             // yes, should change the position if contains algorithm.
             assertHoverCaretPosition(Assert.IsInstanceOf<NavigateCaretPosition>);
-            assertHoverCaretPosition(x => Assert.AreEqual(targetLyric, x.Lyric));
+            assertHoverCaretPosition(x => Assert.AreEqual(targetLyric, x?.Lyric));
         }
 
         [Test]
@@ -316,9 +316,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         }
 
         private Lyric getLyricFromBeatmap(int index)
-            => beatmap.HitObjects[index] as Lyric;
+            => (Lyric)beatmap.HitObjects[index];
 
-        private void assertCaretPosition(Action<ICaretPosition> caretPosition)
+        private void assertCaretPosition(Action<ICaretPosition?> caretPosition)
         {
             AddStep("Assert caret position", () =>
             {
@@ -326,7 +326,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             });
         }
 
-        private void assertHoverCaretPosition(Action<ICaretPosition> caretPosition)
+        private void assertHoverCaretPosition(Action<ICaretPosition?> caretPosition)
         {
             AddStep("Assert hover caret position", () =>
             {
