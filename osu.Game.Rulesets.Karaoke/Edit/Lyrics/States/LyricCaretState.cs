@@ -1,10 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -21,16 +20,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 {
     public class LyricCaretState : Component, ILyricCaretState
     {
-        public IBindable<ICaretPosition> BindableHoverCaretPosition => bindableHoverCaretPosition;
-        public IBindable<ICaretPosition> BindableCaretPosition => bindableCaretPosition;
+        public IBindable<ICaretPosition?> BindableHoverCaretPosition => bindableHoverCaretPosition;
+        public IBindable<ICaretPosition?> BindableCaretPosition => bindableCaretPosition;
 
-        public IBindable<ICaretPositionAlgorithm> BindableCaretPositionAlgorithm => bindableCaretPositionAlgorithm;
+        public IBindable<ICaretPositionAlgorithm?> BindableCaretPositionAlgorithm => bindableCaretPositionAlgorithm;
 
-        private readonly Bindable<ICaretPosition> bindableHoverCaretPosition = new();
-        private readonly Bindable<ICaretPosition> bindableCaretPosition = new();
-        private readonly Bindable<ICaretPositionAlgorithm> bindableCaretPositionAlgorithm = new();
+        private readonly Bindable<ICaretPosition?> bindableHoverCaretPosition = new();
+        private readonly Bindable<ICaretPosition?> bindableCaretPosition = new();
+        private readonly Bindable<ICaretPositionAlgorithm?> bindableCaretPositionAlgorithm = new();
 
-        private ICaretPositionAlgorithm algorithm => bindableCaretPositionAlgorithm.Value;
+        private ICaretPositionAlgorithm? algorithm => bindableCaretPositionAlgorithm.Value;
 
         private readonly IBindableList<Lyric> bindableLyrics = new BindableList<Lyric>();
 
@@ -44,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         private readonly IBindable<MovingTimeTagCaretMode> bindableRecordingMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
         private readonly IBindable<bool> bindableRecordingChangeTimeWhileMovingTheCaret = new Bindable<bool>();
 
-        [Resolved]
+        [Resolved, AllowNull]
         private EditorClock editorClock { get; set; }
 
         public LyricCaretState()
@@ -109,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             // should update selection if selected lyric changed.
             postProcess();
 
-            static ICaretPosition getCaretPosition(ICaretPositionAlgorithm algorithm, Lyric lyric)
+            static ICaretPosition? getCaretPosition(ICaretPositionAlgorithm? algorithm, Lyric? lyric)
             {
                 if (algorithm == null)
                     return null;
@@ -121,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             }
         }
 
-        private ICaretPositionAlgorithm getAlgorithmByMode()
+        private ICaretPositionAlgorithm? getAlgorithmByMode()
         {
             var lyrics = bindableLyrics.ToArray();
             var lyricEditorMode = bindableMode.Value;
@@ -187,10 +186,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             var position = action switch
             {
-                MovingCaretAction.Up => algorithm.MoveUp(currentPosition),
-                MovingCaretAction.Down => algorithm.MoveDown(currentPosition),
-                MovingCaretAction.Left => algorithm.MoveLeft(currentPosition),
-                MovingCaretAction.Right => algorithm.MoveRight(currentPosition),
+                MovingCaretAction.Up => moveIfNotNull(currentPosition, algorithm.MoveUp),
+                MovingCaretAction.Down => moveIfNotNull(currentPosition, algorithm.MoveDown),
+                MovingCaretAction.Left => moveIfNotNull(currentPosition, algorithm.MoveLeft),
+                MovingCaretAction.Right => moveIfNotNull(currentPosition, algorithm.MoveRight),
                 MovingCaretAction.First => algorithm.MoveToFirst(),
                 MovingCaretAction.Last => algorithm.MoveToLast(),
                 _ => throw new InvalidEnumArgumentException(nameof(action))
@@ -201,6 +200,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             MoveCaretToTargetPosition(position);
             return true;
+
+            static ICaretPosition? moveIfNotNull(ICaretPosition? caretPosition, Func<ICaretPosition, ICaretPosition?> action)
+                => caretPosition != null ? action.Invoke(caretPosition) : caretPosition;
         }
 
         public void MoveCaretToTargetPosition(Lyric lyric)
@@ -220,9 +222,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             if (position == null)
                 throw new ArgumentNullException(nameof(position));
 
-            if (position.Lyric == null)
-                return;
-
             bool movable = CaretPositionMovable(position);
 
             // stop moving the caret if forbidden by algorithm calculation.
@@ -239,9 +238,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         {
             if (position == null)
                 throw new ArgumentNullException(nameof(position));
-
-            if (position.Lyric == null)
-                return;
 
             if (!CaretPositionMovable(position))
                 return;
@@ -275,7 +271,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             var caretPosition = bindableCaretPosition.Value;
             navigateToTimeByCaretPosition(caretPosition);
 
-            void navigateToTimeByCaretPosition(ICaretPosition position)
+            void navigateToTimeByCaretPosition(ICaretPosition? position)
             {
                 if (position is not TimeTagCaretPosition timeTagCaretPosition)
                     return;

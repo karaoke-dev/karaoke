@@ -1,10 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -26,12 +25,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
         public IBindableList<Lyric> SelectedLyrics => bindableSelectedLyrics;
 
-        public Action<LyricEditorSelectingAction> Action { get; set; }
+        public Action<LyricEditorSelectingAction>? Action { get; set; }
 
-        [Resolved]
+        [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
 
-        [Resolved]
+        [Resolved, AllowNull]
         private ILyricCaretState lyricCaretState { get; set; }
 
         private readonly BindableBool selecting = new();
@@ -118,9 +117,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 throw new NotSupportedException("Should not update the disable lyric list while selecting.");
 
             bindableDisableSelectingLyric.Clear();
-
-            if (disableLyrics == null)
-                return;
 
             foreach ((var lyric, LocalisableString reason) in disableLyrics)
                 bindableDisableSelectingLyric.Add(lyric, reason);
