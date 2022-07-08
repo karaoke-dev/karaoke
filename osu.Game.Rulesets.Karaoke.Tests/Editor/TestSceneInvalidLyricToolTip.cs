@@ -1,12 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Cursor;
@@ -18,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
     [TestFixture]
     public class TestSceneInvalidLyricToolTip : OsuTestScene
     {
-        private InvalidLyricToolTip toolTip;
+        private InvalidLyricToolTip toolTip = null!;
 
         [SetUp]
         public void SetUp() => Schedule(() =>
@@ -197,9 +196,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 }
             }));
 
-            setTooltip("missing start time-tag", new TestTimeTagIssue(null, true));
-            setTooltip("missing end time-tag", new TestTimeTagIssue(null, false, true));
-            setTooltip("missing start and end time-tag", new TestTimeTagIssue(null, true, true));
+            setTooltip("missing start time-tag", new TestTimeTagIssue(new Dictionary<TimeTagInvalid, TimeTag[]>(), true));
+            setTooltip("missing end time-tag", new TestTimeTagIssue(new Dictionary<TimeTagInvalid, TimeTag[]>(), false, true));
+            setTooltip("missing start and end time-tag", new TestTimeTagIssue(new Dictionary<TimeTagInvalid, TimeTag[]>(), true, true));
         }
 
         [Test]
@@ -281,10 +280,30 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             });
         }
 
+        internal class Check : ICheck
+        {
+            public IEnumerable<Issue> Run(BeatmapVerifierContext context)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public CheckMetadata Metadata { get; } = null!;
+
+            public IEnumerable<IssueTemplate> PossibleTemplates { get; } = null!;
+        }
+
+        internal class TestIssueTemplate : IssueTemplate
+        {
+            public TestIssueTemplate()
+                : base(new Check(), IssueType.Error, string.Empty)
+            {
+            }
+        }
+
         internal class TestLyricTimeIssue : LyricTimeIssue
         {
             public TestLyricTimeIssue(TimeInvalid[] invalidLyricTime)
-                : base(new Lyric(), null, invalidLyricTime)
+                : base(new Lyric(), new TestIssueTemplate(), invalidLyricTime)
             {
             }
         }
@@ -292,7 +311,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         internal class TestRubyTagIssue : RubyTagIssue
         {
             public TestRubyTagIssue(Dictionary<RubyTagInvalid, RubyTag[]> invalidRubyTags)
-                : base(new Lyric(), null, invalidRubyTags)
+                : base(new Lyric(), new TestIssueTemplate(), invalidRubyTags)
             {
             }
         }
@@ -300,7 +319,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         internal class TestRomajiTagIssue : RomajiTagIssue
         {
             public TestRomajiTagIssue(Dictionary<RomajiTagInvalid, RomajiTag[]> invalidRomajiTags)
-                : base(new Lyric(), null, invalidRomajiTags)
+                : base(new Lyric(), new TestIssueTemplate(), invalidRomajiTags)
             {
             }
         }
@@ -308,7 +327,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         internal class TestTimeTagIssue : TimeTagIssue
         {
             public TestTimeTagIssue(Dictionary<TimeTagInvalid, TimeTag[]> invalidTimeTags, bool missingStartTimeTag = false, bool missingEndTimeTag = false)
-                : base(new Lyric(), null, invalidTimeTags, missingStartTimeTag, missingEndTimeTag)
+                : base(new Lyric(), new TestIssueTemplate(), invalidTimeTags, missingStartTimeTag, missingEndTimeTag)
             {
             }
         }
