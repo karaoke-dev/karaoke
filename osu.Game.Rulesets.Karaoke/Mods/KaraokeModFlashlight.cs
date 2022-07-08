@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -88,8 +87,8 @@ namespace osu.Game.Rulesets.Karaoke.Mods
                 flashlightProperties.Validate();
             }
 
-            [BackgroundDependencyLoader(true)]
-            private void load([NotNull] IScrollingInfo scrollingInfo)
+            [BackgroundDependencyLoader]
+            private void load(IScrollingInfo scrollingInfo)
             {
                 direction.BindTo(scrollingInfo.Direction);
                 direction.BindValueChanged(OnDirectionChanged, true);
