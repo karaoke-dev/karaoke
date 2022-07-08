@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
 
             // Check time tag
             var expected = TestCaseTagHelper.ParseTimeTags(timeTags);
-            var actual = lyric?.TimeTags;
+            var actual = lyric?.TimeTags ?? throw new ArgumentNullException(nameof(lyric));
             TimeTagAssert.ArePropertyEqual(expected, actual);
         }
 
