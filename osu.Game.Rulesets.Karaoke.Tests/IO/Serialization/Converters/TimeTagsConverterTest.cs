@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Framework.Graphics.Sprites;
@@ -43,7 +44,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 new TimeTag(new TextIndex(0), 0),
                 new TimeTag(new TextIndex(0, TextIndex.IndexState.End), 1000),
             };
-            var actual = JsonConvert.DeserializeObject<TimeTag[]>(json, CreateSettings());
+            var actual = JsonConvert.DeserializeObject<TimeTag[]>(json, CreateSettings()) ?? throw new InvalidCastException();
             TimeTagAssert.ArePropertyEqual(expected, actual);
         }
     }
