@@ -8,6 +8,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 {
     public interface IKaraokeBeatmapResourcesProvider
     {
-        Texture GetSingerAvatar(ISinger singer);
+        Texture? GetSingerAvatar(ISinger singer);
     }
 }
