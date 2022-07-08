@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                         {
                             StartIndex = 2,
                             EndIndex = 3,
-                            Text = null,
+                            Text = string.Empty,
                         }
                     }
                 }
@@ -153,7 +153,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                         {
                             StartIndex = 2,
                             EndIndex = 3,
-                            Text = null,
+                            Text = string.Empty,
                         }
                     }
                 }
