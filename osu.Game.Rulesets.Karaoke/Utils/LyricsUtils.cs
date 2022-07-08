@@ -40,20 +40,23 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 var firstTag = firstTimeTag.LastOrDefault();
                 var secondTag = secondTimeTag.FirstOrDefault();
 
-                // add end tag at end of first lyric if does not have tag in there.
-                if (!firstTimeTag.Any(x => x.Index.Index == splitIndex - 1 && x.Index.State == TextIndex.IndexState.End))
+                if (firstTag != null && secondTag != null)
                 {
-                    var endTagIndex = new TextIndex(splitIndex - 1, TextIndex.IndexState.End);
-                    var endTag = TimeTagsUtils.GenerateCenterTimeTag(firstTag, secondTag, endTagIndex);
-                    firstTimeTag.Add(endTag);
-                }
+                    // add end tag at end of first lyric if does not have tag in there.
+                    if (!firstTimeTag.Any(x => x.Index.Index == splitIndex - 1 && x.Index.State == TextIndex.IndexState.End))
+                    {
+                        var endTagIndex = new TextIndex(splitIndex - 1, TextIndex.IndexState.End);
+                        var endTag = TimeTagsUtils.GenerateCenterTimeTag(firstTag, secondTag, endTagIndex);
+                        firstTimeTag.Add(endTag);
+                    }
 
-                // add start tag at start of second lyric if does not have tag in there.
-                if (!secondTimeTag.Any(x => x.Index.Index == splitIndex && x.Index.State == TextIndex.IndexState.Start))
-                {
-                    var endTagIndex = new TextIndex(splitIndex);
-                    var startTag = TimeTagsUtils.GenerateCenterTimeTag(firstTag, secondTag, endTagIndex);
-                    secondTimeTag.Add(startTag);
+                    // add start tag at start of second lyric if does not have tag in there.
+                    if (!secondTimeTag.Any(x => x.Index.Index == splitIndex && x.Index.State == TextIndex.IndexState.Start))
+                    {
+                        var endTagIndex = new TextIndex(splitIndex);
+                        var startTag = TimeTagsUtils.GenerateCenterTimeTag(firstTag, secondTag, endTagIndex);
+                        secondTimeTag.Add(startTag);
+                    }
                 }
             }
 
@@ -68,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 Language = lyric.Language,
             };
 
-            string secondLyricText = lyric.Text?[splitIndex..] ?? string.Empty;
+            string secondLyricText = lyric.Text[splitIndex..];
             var secondLyric = new Lyric
             {
                 Text = secondLyricText,
@@ -91,7 +94,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (secondLyric == null)
                 throw new ArgumentNullException(nameof(secondLyric));
 
-            int offsetIndexForSecondLyric = firstLyric.Text?.Length ?? 0;
+            int offsetIndexForSecondLyric = firstLyric.Text.Length;
             string lyricText = firstLyric.Text + secondLyric.Text;
 
             var timeTags = new List<TimeTag>();
@@ -149,7 +152,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         #region Time tags
 
         public static bool HasTimedTimeTags(IEnumerable<Lyric> lyrics)
-            => lyrics?.Any(LyricUtils.HasTimedTimeTags) ?? false;
+            => lyrics.Any(LyricUtils.HasTimedTimeTags);
 
         #endregion
 
