@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
         protected Vector2 GetPosition(TextCaretPosition caret)
         {
             float textHeight = karaokeSpriteText.LineBaseHeight;
-            bool end = caret.Index == caret.Lyric?.Text?.Length;
+            bool end = caret.Index == caret.Lyric.Text.Length;
             var originPosition = karaokeSpriteText.GetTextIndexPosition(TextIndexUtils.FromStringIndex(caret.Index, end));
             return new Vector2(originPosition.X, originPosition.Y - textHeight);
         }

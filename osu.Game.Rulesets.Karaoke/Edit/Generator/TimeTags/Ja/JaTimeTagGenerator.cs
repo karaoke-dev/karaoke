@@ -24,9 +24,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja
         {
             timeTags.AddRange(generateTimeTagByText(lyric.Text));
 
-            if (lyric.RubyTags == null)
-                return;
-
             foreach (var ruby in lyric.RubyTags)
             {
                 // remove exist time tag

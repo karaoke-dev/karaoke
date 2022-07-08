@@ -244,7 +244,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
         {
             base.Dispose(isDisposing);
 
-            watcher?.Dispose();
+            watcher.Dispose();
         }
     }
 }

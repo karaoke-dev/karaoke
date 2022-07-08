@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using NUnit.Framework;
 using osu.Framework.Allocation;
@@ -64,9 +62,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
             return karaokeBeatmap;
         }
 
-        private DialogOverlay dialogOverlay;
-        private LyricsProvider lyricsProvider;
-        private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider;
+        private DialogOverlay dialogOverlay = null!;
+        private LyricsProvider lyricsProvider = null!;
+        private KaraokeBeatmapResourcesProvider karaokeBeatmapResourcesProvider = null!;
 
         [BackgroundDependencyLoader]
         private void load()

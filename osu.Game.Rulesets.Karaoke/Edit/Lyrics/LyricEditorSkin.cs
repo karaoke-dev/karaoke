@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -36,13 +34,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             InstantiationInfo = typeof(DefaultKaraokeSkin).GetInvariantInstantiationInfo(),
         };
 
-        public LyricEditorSkin(IStorageResourceProvider resources)
+        public LyricEditorSkin(IStorageResourceProvider? resources)
             : this(CreateInfo(), resources)
         {
         }
 
         [UsedImplicitly(ImplicitUseKindFlags.InstantiatedWithFixedConstructorSignature)]
-        public LyricEditorSkin(SkinInfo skin, IStorageResourceProvider resources)
+        public LyricEditorSkin(SkinInfo skin, IStorageResourceProvider? resources)
             : base(skin, resources)
         {
             DefaultElement[ElementType.LyricConfig] = LyricConfig.CreateDefault();
@@ -73,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             FontSize = 26;
         }
 
-        protected LyricConfig LyricConfig => DefaultElement[ElementType.LyricConfig] as LyricConfig;
+        protected LyricConfig LyricConfig => (LyricConfig)DefaultElement[ElementType.LyricConfig];
 
         public float FontSize
         {

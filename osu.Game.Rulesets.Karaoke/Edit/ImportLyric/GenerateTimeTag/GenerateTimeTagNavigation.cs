@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateTimeTag
             return NavigationState.Initial;
 
             static bool hasTimeTag(Lyric lyric)
-                => lyric.TimeTags != null && lyric.TimeTags.Any();
+                => lyric.TimeTags.Any();
         }
 
         protected override LocalisableString GetNavigationText(NavigationState value) =>

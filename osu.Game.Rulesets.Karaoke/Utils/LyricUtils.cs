@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             // make position is at the range.
             string lyricText = lyric.Text;
-            int lyricTextLength = lyricText?.Length ?? 0;
+            int lyricTextLength = lyricText.Length;
             position = Math.Clamp(position, 0, lyricTextLength);
 
             int offset = text.Length;
@@ -98,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             lyric.TimeTags = processTimeTags(lyric.TimeTags, position, offset);
 
             // deal with text
-            string newLyricText = lyricText?[..position] + text + lyricText?[position..];
+            string newLyricText = lyricText[..position] + text + lyricText[position..];
             lyric.Text = newLyricText;
 
             static T[] processTags<T>(IEnumerable<T> tags, int position, int offset) where T : ITextTag =>
@@ -220,7 +220,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         #region Ruby/romaji tag
 
         public static bool AbleToInsertTextTagAtIndex(Lyric lyric, int index)
-            => index >= 0 && index <= (lyric.Text?.Length ?? 0);
+            => index >= 0 && index <= lyric.Text.Length;
 
         #endregion
 
@@ -245,8 +245,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             var minTimeTag = availableTimeTags.OrderBy(x => x.Time).FirstOrDefault();
             var maxTimeTag = availableTimeTags.OrderByDescending(x => x.Time).FirstOrDefault();
 
-            string startTime = TimeTagUtils.FormattedString(minTimeTag);
-            string endTime = TimeTagUtils.FormattedString(maxTimeTag);
+            string startTime = TimeTagUtils.FormattedString(minTimeTag ?? new TimeTag(new TextIndex()));
+            string endTime = TimeTagUtils.FormattedString(maxTimeTag ?? new TimeTag(new TextIndex()));
             return $"{startTime} - {endTime}";
         }
 
@@ -262,7 +262,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (singer == null)
                 throw new ArgumentNullException(nameof(singer));
 
-            return lyric.Singers?.Contains(singer.ID) ?? false;
+            return lyric.Singers.Contains(singer.ID);
         }
 
         public static bool OnlyContainsSingers(Lyric lyric, List<Singer> singers)
@@ -271,7 +271,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 throw new ArgumentNullException(nameof(singers));
 
             var singerIds = singers.Select(x => x.ID);
-            return lyric.Singers?.All(x => singerIds.Contains(x)) ?? true;
+            return lyric.Singers.All(x => singerIds.Contains(x));
         }
 
         #endregion
@@ -295,7 +295,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static bool CheckIsStartTimeInvalid(Lyric lyric)
         {
-            if (lyric.TimeTags == null || !lyric.TimeTags.Any())
+            if (!lyric.TimeTags.Any())
                 return false;
 
             return lyric.StartTime > TimeTagsUtils.GetStartTime(lyric.TimeTags);
@@ -308,7 +308,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static bool CheckIsEndTimeInvalid(Lyric lyric)
         {
-            if (lyric.TimeTags == null || !lyric.TimeTags.Any())
+            if (!lyric.TimeTags.Any())
                 return false;
 
             return lyric.EndTime < TimeTagsUtils.GetEndTime(lyric.TimeTags);

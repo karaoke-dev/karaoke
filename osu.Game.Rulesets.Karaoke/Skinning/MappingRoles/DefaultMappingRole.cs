@@ -18,11 +18,11 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.MappingRoles
                 return false;
 
             var group = getGroupById(beatmapSkin, GroupId);
-            bool inTheGroup = group.InTheGroup(hitObject, elementType);
+            bool inTheGroup = group?.InTheGroup(hitObject, elementType) ?? false;
             return inTheGroup;
         }
 
-        private static IGroup getGroupById(KaraokeBeatmapSkin beatmapSkin, int groupId)
+        private static IGroup? getGroupById(KaraokeBeatmapSkin beatmapSkin, int groupId)
             => beatmapSkin.Groups.FirstOrDefault(x => x.ID == groupId);
     }
 }

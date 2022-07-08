@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -19,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
     public class TestSceneLayoutToolTip : OsuTestScene
     {
         private readonly ISkin skin = new DefaultKaraokeSkin(null);
-        private LayoutToolTip toolTip;
+        private LayoutToolTip toolTip = null!;
 
         [SetUp]
         public void SetUp() => Schedule(() =>
@@ -60,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 {
                     Text = "karaoke!"
                 };
-                callBack?.Invoke(singer);
+                callBack.Invoke(singer);
                 toolTip.SetContent(singer);
             });
         }

@@ -147,7 +147,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Helper
                 TimeTags = new[]
                 {
                     new TimeTag(new TextIndex(0), startTime),
-                    new TimeTag(new TextIndex((text?.Length ?? 0) - 1, TextIndex.IndexState.End), endTime)
+                    new TimeTag(new TextIndex(text.Length - 1, TextIndex.IndexState.End), endTime)
                 }
             };
         }

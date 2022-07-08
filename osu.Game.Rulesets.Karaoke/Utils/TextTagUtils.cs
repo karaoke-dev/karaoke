@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static Tuple<int, int> GetShiftingIndex<T>(T textTag, string lyric, int offset) where T : ITextTag
         {
-            int lyricLength = lyric?.Length ?? 0;
+            int lyricLength = lyric.Length;
             int newStartIndex = Math.Clamp(textTag.StartIndex + offset, 0, lyricLength);
             int newEndIndex = Math.Clamp(textTag.EndIndex + offset, 0, lyricLength);
             return new Tuple<int, int>(Math.Min(newStartIndex, newEndIndex), Math.Max(newStartIndex, newEndIndex));

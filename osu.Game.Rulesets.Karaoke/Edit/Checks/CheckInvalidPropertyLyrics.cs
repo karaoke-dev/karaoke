@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
                 if (string.IsNullOrWhiteSpace(lyric.Text))
                     yield return new IssueTemplateNoText(this).Create(lyric);
 
-                if (lyric.Singers == null || !lyric.Singers.Any())
+                if (!lyric.Singers.Any())
                     yield return new IssueTemplateNoSinger(this).Create(lyric);
 
                 // todo : check is singer in singer list.

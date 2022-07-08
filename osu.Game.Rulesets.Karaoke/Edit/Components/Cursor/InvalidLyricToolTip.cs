@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                 {
                     // Print time invalid message
                     case LyricTimeIssue lyricTimeIssue:
-                        lyricTimeIssue.InvalidLyricTime?.ForEach(createTimeInvalidMessage);
+                        lyricTimeIssue.InvalidLyricTime.ForEach(createTimeInvalidMessage);
                         break;
 
                     // Print time-tag invalid message
@@ -64,17 +64,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Cursor
                         if (timeTagIssue.MissingEndTimeTag)
                             invalidMessage.AddAlertParagraph("Missing end time tag at the end of lyric.");
 
-                        timeTagIssue.InvalidTimeTags?.ForEach(x => createTimeTagInvalidMessage(x.Key, x.Value));
+                        timeTagIssue.InvalidTimeTags.ForEach(x => createTimeTagInvalidMessage(x.Key, x.Value));
                         break;
 
                     // Print ruby invalid message
                     case RubyTagIssue rubyTagIssue:
-                        rubyTagIssue.InvalidRubyTags?.ForEach(x => createRubyInvalidMessage(x.Key, x.Value));
+                        rubyTagIssue.InvalidRubyTags.ForEach(x => createRubyInvalidMessage(x.Key, x.Value));
                         break;
 
                     // Print romaji invalid message
                     case RomajiTagIssue romajiTagIssue:
-                        romajiTagIssue.InvalidRomajiTags?.ForEach(x => createRomajiInvalidMessage(x.Key, x.Value));
+                        romajiTagIssue.InvalidRomajiTags.ForEach(x => createRomajiInvalidMessage(x.Key, x.Value));
                         break;
 
                     // print normal message

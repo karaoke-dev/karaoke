@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 string noteGroupStr = string.Join(",", noteGroup.Select(x =>
                 {
                     if (x.Count() == 1)
-                        return convertNote(x.FirstOrDefault());
+                        return convertNote(x.First());
 
                     return "(" + string.Join("|", x.Select(convertNote)) + ")";
                 }));

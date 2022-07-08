@@ -36,10 +36,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.GenerateRubyRomaji
             return NavigationState.Initial;
 
             static bool hasRuby(Lyric lyric)
-                => lyric.RubyTags != null && lyric.RubyTags.Any();
+                => lyric.RubyTags.Any();
 
             static bool hasRomaji(Lyric lyric)
-                => lyric.RubyTags != null && lyric.RubyTags.Any();
+                => lyric.RubyTags.Any();
         }
 
         protected override LocalisableString GetNavigationText(NavigationState value) =>

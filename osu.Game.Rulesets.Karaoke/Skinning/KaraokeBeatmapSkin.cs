@@ -28,7 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         public readonly List<IGroup> Groups = new();
         public readonly List<IMappingRole> DefaultMappingRoles = new();
 
-        public KaraokeBeatmapSkin(SkinInfo skin, IStorageResourceProvider resources, IResourceStore<byte[]>? storage = null)
+        public KaraokeBeatmapSkin(SkinInfo skin, IStorageResourceProvider? resources, IResourceStore<byte[]>? storage = null)
             : base(skin, resources, storage)
         {
             SkinInfo.PerformRead(s =>

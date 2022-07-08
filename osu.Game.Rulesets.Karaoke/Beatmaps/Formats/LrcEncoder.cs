@@ -69,9 +69,6 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         internal static IReadOnlyDictionary<TextIndex, double> ToDictionary(IList<TimeTag> timeTags, bool applyFix = true, GroupCheck other = GroupCheck.Asc,
                                                                             SelfCheck self = SelfCheck.BasedOnStart)
         {
-            if (timeTags == null)
-                return new Dictionary<TextIndex, double>();
-
             // sorted value
             var sortedTimeTags = applyFix ? TimeTagsUtils.FixOverlapping(timeTags, other, self) : TimeTagsUtils.Sort(timeTags);
 

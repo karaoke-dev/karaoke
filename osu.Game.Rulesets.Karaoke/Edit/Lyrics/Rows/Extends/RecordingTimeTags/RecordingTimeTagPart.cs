@@ -41,9 +41,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags
         {
             base.LoadBeatmap(beatmap);
 
-            if (lyric.TimeTags == null)
-                return;
-
             foreach (var timeTag in lyric.TimeTags)
             {
                 Add(new RecordingTimeTagVisualization(lyric, timeTag));

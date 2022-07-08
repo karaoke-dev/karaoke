@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Sprites
 
                 // Set preview width
                 const float text_size = 20;
-                previewLyric.Width = (Lyric?.Text?.Length ?? 10) * text_size * scale;
+                previewLyric.Width = (Lyric?.Text.Length ?? 10) * text_size * scale;
                 previewLyric.Height = text_size * 1.5f * scale;
 
                 // Set relative position

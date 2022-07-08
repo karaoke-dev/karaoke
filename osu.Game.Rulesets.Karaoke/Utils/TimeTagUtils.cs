@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// <returns></returns>
         public static string FormattedString(TimeTag timeTag)
         {
-            return timeTag?.Time?.ToEditorFormattedString() ?? "--:--:---";
+            return timeTag.Time?.ToEditorFormattedString() ?? "--:--:---";
         }
     }
 }

@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
                     Icon = FontAwesome.Solid.ChevronLeft,
                     SelectBuild = b => SelectBuild(b)
                 });
-                fill.Insert(1, new NavigationIconButton(Build.Versions?.Previous)
+                fill.Insert(1, new NavigationIconButton(Build.Versions.Previous)
                 {
                     Icon = FontAwesome.Solid.ChevronRight,
                     SelectBuild = b => SelectBuild(b)
