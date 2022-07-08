@@ -23,13 +23,13 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
             InstantiationInfo = typeof(DefaultKaraokeSkin).GetInvariantInstantiationInfo()
         };
 
-        public DefaultKaraokeSkin(IStorageResourceProvider resources)
+        public DefaultKaraokeSkin(IStorageResourceProvider? resources)
             : this(CreateInfo(), resources)
         {
         }
 
         [UsedImplicitly(ImplicitUseKindFlags.InstantiatedWithFixedConstructorSignature)]
-        public DefaultKaraokeSkin(SkinInfo skin, IStorageResourceProvider resources)
+        public DefaultKaraokeSkin(SkinInfo skin, IStorageResourceProvider? resources)
             : base(skin, resources)
         {
             DefaultElement[ElementType.LyricConfig] = LyricConfig.CreateDefault();

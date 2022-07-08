@@ -42,9 +42,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         private readonly Bindable<float> bindableColumnHeight = new(DefaultColumnBackground.COLUMN_HEIGHT);
         private readonly Bindable<float> bindableColumnSpacing = new(ScrollingNotePlayfield.COLUMN_SPACING);
 
-        private readonly IStorageResourceProvider resources;
+        private readonly IStorageResourceProvider? resources;
 
-        public KaraokeSkin(SkinInfo skin, IStorageResourceProvider resources, IResourceStore<byte[]>? storage = null)
+        public KaraokeSkin(SkinInfo skin, IStorageResourceProvider? resources, IResourceStore<byte[]>? storage = null)
             : base(skin, resources, storage)
         {
             this.resources = resources;
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         protected string? GetElementStringContentFromSkinInfo(SkinInfo skinInfo, string filename)
         {
             // should get by file name if files is namespace resource store.
-            var files = resources.Files;
+            var files = resources?.Files;
             if (files == null)
                 return null;
 
@@ -114,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         }
 
         public override ISample? GetSample(ISampleInfo sampleInfo)
-            => sampleInfo.LookupNames.Select(lookup => resources.AudioManager.Samples.Get(lookup)).FirstOrDefault(sample => sample != null);
+            => sampleInfo.LookupNames.Select(lookup => resources?.AudioManager.Samples.Get(lookup)).FirstOrDefault(sample => sample != null);
 
         public override Texture? GetTexture(string componentName, WrapMode wrapModeS, WrapMode wrapModeT)
             => null;
