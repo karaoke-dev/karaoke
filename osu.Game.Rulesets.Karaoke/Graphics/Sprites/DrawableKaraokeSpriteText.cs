@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
         {
             if (chunkIndex == whole_chunk_index)
             {
-                Rubies = DisplayRuby ? rubyTagsBindable?.Select(TextTagUtils.ToPositionText).ToArray() : null;
+                Rubies = DisplayRuby ? rubyTagsBindable.Select(TextTagUtils.ToPositionText).ToArray() : Array.Empty<PositionText>();
             }
             else
             {
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
         {
             if (chunkIndex == whole_chunk_index)
             {
-                Romajies = DisplayRomaji ? romajiTagsBindable?.Select(TextTagUtils.ToPositionText).ToArray() : null;
+                Romajies = DisplayRomaji ? romajiTagsBindable.Select(TextTagUtils.ToPositionText).ToArray() : Array.Empty<PositionText>();
             }
             else
             {
