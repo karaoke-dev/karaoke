@@ -120,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog.Sidebar
 
             var allPosts = metadata.Changelogs;
 
-            if (allPosts?.Any() != true)
+            if (allPosts.Any() != true)
                 return;
 
             var lookup = metadata.Changelogs.ToLookup(post => post.PublishedAt.Year);
