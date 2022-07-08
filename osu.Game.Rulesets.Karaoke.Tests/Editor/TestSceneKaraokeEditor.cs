@@ -1,8 +1,6 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -31,8 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         protected override KaraokeEditor CreateScreen() => new();
 
-        private DialogOverlay dialogOverlay;
-        private LyricCheckerManager lyricCheckerManager;
+        private DialogOverlay dialogOverlay = null!;
+        private LyricCheckerManager lyricCheckerManager = null!;
 
         public TestSceneKaraokeEditor()
         {

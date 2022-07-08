@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
@@ -15,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
     [TestFixture]
     public class TestSceneTimeTagTooltip : OsuTestScene
     {
-        private TimeTagTooltip toolTip;
+        private TimeTagTooltip toolTip = null!;
 
         [SetUp]
         public void SetUp() => Schedule(() =>

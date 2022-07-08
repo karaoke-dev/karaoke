@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Linq;
 using NUnit.Framework;
@@ -31,9 +29,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
 
         protected override LyricEditorScreen CreateEditorScreen() => new();
 
-        private DialogOverlay dialogOverlay;
-        private LyricsProvider lyricsProvider;
-        private LyricCheckerManager lyricCheckManager;
+        private DialogOverlay dialogOverlay = null!;
+        private LyricsProvider lyricsProvider = null!;
+        private LyricCheckerManager lyricCheckManager = null!;
 
         [BackgroundDependencyLoader]
         private void load()
