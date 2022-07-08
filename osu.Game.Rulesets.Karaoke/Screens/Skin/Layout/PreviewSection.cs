@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,9 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
 {
     internal class PreviewSection : LayoutSection
     {
-        private LabelledEnumDropdown<PreviewRatio> previewRatioDropdown;
-        private LabelledEnumDropdown<PreviewSample> previewSampleDropdown;
-        private StyleLabelledDropdown previewStyleDropdown;
+        private LabelledEnumDropdown<PreviewRatio> previewRatioDropdown = null!;
+        private LabelledEnumDropdown<PreviewSample> previewSampleDropdown = null!;
+        private StyleLabelledDropdown previewStyleDropdown = null!;
 
         protected override LocalisableString Title => "Preview (Won't be saved)";
 
@@ -74,7 +72,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
             }, true);
         }
 
-        private Lyric getLyricSampleBySelection(PreviewSample previewSample) =>
+        private Lyric? getLyricSampleBySelection(PreviewSample previewSample) =>
             previewSample switch
             {
                 PreviewSample.SampleSmall => createDefaultLyric("@カラオケ",
@@ -115,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
                 _ => null
             };
 
-        private Lyric createDefaultLyric(string text, string[] ruby, string[] romaji, string translate)
+        private Lyric createDefaultLyric(string text, IEnumerable<string> ruby, IEnumerable<string> romaji, string translate)
         {
             double startTime = Time.Current;
             const double duration = 1000000;
@@ -128,8 +126,8 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Skin.Layout
                 writer.WriteLine("[HitObjects]");
 
                 writer.WriteLine(text);
-                ruby?.ForEach(x => writer.WriteLine(x));
-                romaji?.ForEach(x => writer.WriteLine(x));
+                ruby.ForEach(x => writer.WriteLine(x));
+                romaji.ForEach(x => writer.WriteLine(x));
 
                 writer.WriteLine("end");
                 writer.Flush();
