@@ -11,13 +11,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
     public abstract class BaseDetectorTest<TDetector, TObject, TConfig>
         where TDetector : class, ILyricPropertyDetector<TObject> where TConfig : new()
     {
-        protected static TConfig GeneratorConfig(params string[] properties)
+        protected static TConfig GeneratorConfig(params string?[] properties)
         {
             var config = new TConfig();
-            if (properties == null)
-                return config;
 
-            foreach (string propertyName in properties)
+            foreach (string? propertyName in properties)
             {
                 if (propertyName == null)
                     continue;
