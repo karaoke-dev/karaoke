@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
@@ -49,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
                 EndIndex = endIndex,
                 Text = text
             };
-            var actual = JsonConvert.DeserializeObject<RubyTag>($"\"{json}\"", CreateSettings());
+            var actual = JsonConvert.DeserializeObject<RubyTag>($"\"{json}\"", CreateSettings()) ?? throw new InvalidCastException();
             TextTagAssert.ArePropertyEqual(expected, actual);
         }
     }
