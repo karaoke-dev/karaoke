@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
             // todo : check out of range.
             var outOfRangeTags = TimeTagsUtils.FindOutOfRange(lyric.TimeTags, lyric.Text);
-            if (outOfRangeTags?.Length > 0)
+            if (outOfRangeTags.Length > 0)
                 result.Add(TimeTagInvalid.OutOfRange, outOfRangeTags);
 
             // Check overlapping.
@@ -79,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
             // Check time-tag should have time.
             var noTimeTimeTags = TimeTagsUtils.FindNoneTime(lyric.TimeTags);
-            if (noTimeTimeTags?.Length > 0)
+            if (noTimeTimeTags.Length > 0)
                 result.Add(TimeTagInvalid.EmptyTime, noTimeTimeTags);
 
             return result;

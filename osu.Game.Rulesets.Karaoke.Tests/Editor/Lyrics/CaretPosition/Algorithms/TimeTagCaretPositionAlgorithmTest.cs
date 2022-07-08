@@ -178,7 +178,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
             var lyric = lyrics.ElementAtOrDefault(lyricIndex);
             var timeTag = timeTagIndex == not_exist_tag
                 ? new TimeTag(new TextIndex(not_exist_tag))
-                : lyric?.TimeTags?.ElementAtOrDefault(timeTagIndex);
+                : lyric?.TimeTags.ElementAtOrDefault(timeTagIndex);
 
             if (lyric == null || timeTag == null)
                 throw new ArgumentNullException();

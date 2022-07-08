@@ -101,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
 
         private void applySingerStyle(ISkinSource skin, Note note)
         {
-            var noteSkin = skin?.GetConfig<Note, NoteStyle>(note)?.Value;
+            var noteSkin = skin.GetConfig<Note, NoteStyle>(note)?.Value;
             if (noteSkin == null)
                 return;
 

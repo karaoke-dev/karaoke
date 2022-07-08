@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps
 
         public static IList<CultureInfo> AvailableTranslates(this IBeatmap beatmap) => (beatmap as KaraokeBeatmap)?.AvailableTranslates ?? new List<CultureInfo>();
 
-        public static bool AnyTranslate(this IBeatmap beatmap) => beatmap?.AvailableTranslates().Any() ?? false;
+        public static bool AnyTranslate(this IBeatmap beatmap) => beatmap.AvailableTranslates().Any();
 
         public static float PitchToScale(this IBeatmap beatmap, float pitch)
         {

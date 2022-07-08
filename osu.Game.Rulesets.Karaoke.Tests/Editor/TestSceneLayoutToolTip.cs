@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
                 {
                     Text = "karaoke!"
                 };
-                callBack?.Invoke(singer);
+                callBack.Invoke(singer);
                 toolTip.SetContent(singer);
             });
         }
