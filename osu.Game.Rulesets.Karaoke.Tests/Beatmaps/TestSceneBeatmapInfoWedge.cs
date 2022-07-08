@@ -55,10 +55,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps
         {
             BeatmapInfoWedge.WedgeInfoText infoBefore = null!;
 
-            AddStep($"select {b.Metadata.Title ?? fileName} beatmap", () =>
+            string title = string.IsNullOrEmpty(b.Metadata.Title) ? fileName : b.Metadata.Title;
+            AddStep($"select {title} beatmap", () =>
             {
                 infoBefore = infoWedge.Info;
-                infoWedge.Beatmap = Beatmap.Value = b == null ? Beatmap.Default : CreateWorkingBeatmap(b);
+                infoWedge.Beatmap = Beatmap.Value = CreateWorkingBeatmap(b);
             });
 
             AddUntilStep("wait for async load", () => infoWedge.Info != infoBefore);
