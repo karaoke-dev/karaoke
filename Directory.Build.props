@@ -3,6 +3,7 @@
   <PropertyGroup Label="C#">
     <LangVersion>9.0</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup Label="License">
     <None Include="$(MSBuildThisFileDirectory)osu.licenseheader">
