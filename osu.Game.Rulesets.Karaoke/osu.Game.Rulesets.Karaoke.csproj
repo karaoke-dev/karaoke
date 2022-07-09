@@ -5,7 +5,6 @@
     <OutputType>Library</OutputType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <RootNamespace>osu.Game.Rulesets.Karaoke</RootNamespace>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="ILRepack.Lib.MSBuild" Version="2.1.18" />
