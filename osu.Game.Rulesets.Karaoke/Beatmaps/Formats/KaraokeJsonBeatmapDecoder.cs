@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             globalSetting.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
 
             // should not let json decoder to read this line.
-            if (stream.PeekLine().Contains("// karaoke json file format v"))
+            if (stream.PeekLine()?.Contains("// karaoke json file format v") ?? false)
             {
                 stream.ReadLine();
             }
