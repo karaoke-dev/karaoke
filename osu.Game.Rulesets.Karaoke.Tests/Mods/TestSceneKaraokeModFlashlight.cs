@@ -20,6 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Mods
             PassCondition = () =>
             {
                 var drawableRuleset = Player.GetDrawableRuleset();
+                if (drawableRuleset == null)
+                    return false;
 
                 // Should has at least one flashlight
                 return drawableRuleset.KeyBindingInputManager.Children.OfType<KaraokeModFlashlight.KaraokeFlashlight>().Any();
