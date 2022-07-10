@@ -1,8 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System;
 using NUnit.Framework;
 using osu.Framework.Extensions;
 using osu.Framework.Graphics.Textures;
@@ -15,11 +14,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
     /// Use <see cref="GlyphStore"/> as test case actual result for comparing.
     /// </summary>
     /// <typeparam name="TGlyphStore"></typeparam>
-    public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : IGlyphStore
+    public abstract class BaseGlyphStoreTest<TGlyphStore> where TGlyphStore : class, IGlyphStore
     {
-        protected TGlyphStore CustomizeGlyphStore { get; private set; }
+        protected TGlyphStore CustomizeGlyphStore { get; private set; } = null!;
 
-        protected GlyphStore GlyphStore { get; private set; }
+        protected GlyphStore GlyphStore { get; private set; } = null!;
 
         [OneTimeSetUp]
         protected void OneTimeSetUp()
@@ -113,8 +112,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Stores
             var expected = GlyphStore.Get(new string(new[] { c }));
             var actual = (CustomizeGlyphStore as IResourceStore<TextureUpload>)?.Get(new string(new[] { c }));
 
-            Assert.IsNotNull(expected);
-            Assert.IsNotNull(actual);
+            if (expected == null || actual == null)
+                throw new ArgumentNullException();
 
             // todo : should test with pixel perfect, but it's ok to pass if size is almost the same.
             Assert.AreEqual(expected.Width, actual.Width);
