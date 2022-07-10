@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -19,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
     {
         protected override Container<Drawable> Content { get; } = new Container { RelativeSizeAxes = Axes.Both };
 
-        private FontManager fontManager;
+        private FontManager fontManager = null!;
 
         [BackgroundDependencyLoader]
         private void load()

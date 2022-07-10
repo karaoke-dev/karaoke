@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using NUnit.Framework;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
@@ -14,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
     [TestFixture]
     public class TestSceneMessageContainer : OsuTestScene
     {
-        private MessageContainer messageContainer;
+        private MessageContainer messageContainer = null!;
 
         [SetUp]
         public void SetUp() => Schedule(() =>

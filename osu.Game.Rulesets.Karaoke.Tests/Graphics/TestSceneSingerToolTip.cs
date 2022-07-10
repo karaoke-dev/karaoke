@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using NUnit.Framework;
 using osu.Framework.Graphics;
@@ -15,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
     [TestFixture]
     public class TestSceneSingerToolTip : OsuTestScene
     {
-        private SingerToolTip toolTip;
+        private SingerToolTip toolTip = null!;
 
         [SetUp]
         public void SetUp() => Schedule(() =>
