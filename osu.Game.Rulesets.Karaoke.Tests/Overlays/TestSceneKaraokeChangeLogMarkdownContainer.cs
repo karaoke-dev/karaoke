@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -18,7 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
     [TestFixture]
     public class TestSceneKaraokeChangeLogMarkdownContainer : OsuTestScene
     {
-        private ChangeLogMarkdownContainer markdownContainer;
+        private ChangeLogMarkdownContainer markdownContainer = null!;
 
         [Cached]
         private readonly OverlayColourProvider overlayColour = new(OverlayColourScheme.Orange);
