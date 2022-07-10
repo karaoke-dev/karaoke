@@ -1,9 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NUnit.Framework;
 using osu.Framework.Allocation;
@@ -69,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 
                     return colourName.Select(c =>
                     {
-                        object value = provider.GetType().GetProperty(c)?.GetValue(provider);
+                        object? value = provider.GetType().GetProperty(c)?.GetValue(provider);
                         if (value == null)
                             throw new ArgumentNullException(nameof(value));
 
@@ -102,7 +101,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Overlays
 
         private class PreviewColourDrawable : CompositeDrawable
         {
-            [Resolved]
+            [Resolved, AllowNull]
             private GameHost host { get; set; }
 
             private readonly Color4 color;

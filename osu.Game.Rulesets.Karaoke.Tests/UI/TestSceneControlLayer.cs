@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
@@ -16,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
     [TestFixture]
     public class TestSceneControlLayer : OsuTestScene
     {
-        public SettingOverlayContainer SettingOverlayContainer { get; set; }
+        public SettingOverlayContainer SettingOverlayContainer { get; set; } = null!;
 
         protected override Ruleset CreateRuleset() => new KaraokeRuleset();
 

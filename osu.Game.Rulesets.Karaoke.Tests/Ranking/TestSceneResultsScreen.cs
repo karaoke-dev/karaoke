@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,13 +36,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
         [Test]
         public void TestShowStatisticsAndClickOtherPanel()
         {
-            TestResultsScreen screen = null;
+            TestResultsScreen screen = null!;
 
             AddStep("load results", () => Child = new TestResultsContainer(screen = createResultsScreen()));
             AddUntilStep("wait for loaded", () => screen.IsLoaded);
 
-            ScorePanel expandedPanel = null;
-            ScorePanel contractedPanel = null;
+            ScorePanel expandedPanel = null!;
+            ScorePanel contractedPanel = null!;
 
             AddStep("click expanded panel then contracted panel", () =>
             {
@@ -89,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
             {
             }
 
-            protected override APIRequest FetchScores(Action<IEnumerable<ScoreInfo>> scoresCallback)
+            protected override APIRequest? FetchScores(Action<IEnumerable<ScoreInfo>> scoresCallback)
             {
                 var scores = new List<ScoreInfo>();
 
@@ -100,7 +98,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Ranking
                     scores.Add(score);
                 }
 
-                scoresCallback?.Invoke(scores);
+                scoresCallback.Invoke(scores);
 
                 return null;
             }
