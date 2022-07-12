@@ -13,34 +13,19 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
 {
     public class AssignLanguageSubsection : SelectLyricButton, IHasPopover
     {
-        protected override LocalisableString StandardText => "Change language";
-
-        protected override LocalisableString SelectingText => $"Cancel change language({CultureInfoUtils.GetLanguageDisplayText(bindableLanguage.Value)})";
-
         private readonly Bindable<CultureInfo> bindableLanguage = new();
 
-        [BackgroundDependencyLoader]
-        private void load(ILyricSelectionState lyricSelectionState, ILyricLanguageChangeHandler lyricLanguageChangeHandler)
+        [Resolved]
+        private ILyricLanguageChangeHandler lyricLanguageChangeHandler { get; set; }
+
+        public AssignLanguageSubsection()
         {
-            lyricSelectionState.Action = e =>
-            {
-                if (e != LyricEditorSelectingAction.Apply)
-                {
-                    bindableLanguage.Value = null;
-                    return;
-                }
-
-                lyricLanguageChangeHandler.SetLanguage(bindableLanguage.Value);
-                bindableLanguage.Value = null;
-            };
-
             bindableLanguage.BindValueChanged(e =>
             {
                 var language = e.NewValue;
@@ -50,6 +35,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
                 this.HidePopover();
                 StartSelectingLyrics();
             });
+        }
+
+        protected override LocalisableString StandardText => "Change language";
+
+        protected override LocalisableString SelectingText => $"Cancel change language({CultureInfoUtils.GetLanguageDisplayText(bindableLanguage.Value)})";
+
+        protected override void Apply()
+        {
+            lyricLanguageChangeHandler.SetLanguage(bindableLanguage.Value);
+            bindableLanguage.Value = null;
+        }
+
+        protected override void Cancel()
+        {
+            bindableLanguage.Value = null;
         }
 
         protected override void StartSelectingLyrics()
