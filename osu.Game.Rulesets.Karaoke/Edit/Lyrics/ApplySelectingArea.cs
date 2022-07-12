@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private ActionButton applyButton;
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, ILyricSelectionState lyricSelectionState)
+        private void load(OsuColour colours, ILyricEditorState state, ILyricSelectionState lyricSelectionState)
         {
             RelativeSizeAxes = Axes.X;
             Height = 45;
@@ -49,6 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     RelativeSizeAxes = Axes.Both,
                     ColumnDimensions = new[]
                     {
+                        new Dimension(GridSizeMode.Absolute, getPrefixSpacing()),
                         new Dimension(GridSizeMode.Absolute, LyricEditorRow.SELECT_AREA_WIDTH),
                         new Dimension(),
                         new Dimension(GridSizeMode.Absolute, spacing),
@@ -63,6 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     {
                         new Drawable[]
                         {
+                            new Box(),
                             new SelectArea
                             {
                                 RelativeSizeAxes = Axes.Both,
@@ -126,6 +128,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 bool selectAny = selectedLyrics.Any();
                 applyButton.Enabled.Value = selectAny;
             }, true);
+
+            float getPrefixSpacing()
+            {
+                bool containsHandler = state.Mode == LyricEditorMode.Manage;
+                return LyricEditor.LYRIC_LIST_PADDING + (containsHandler ? DrawableLyricEditListItem.HANDLER_WIDTH : 0);
+            }
         }
 
         public class SelectArea : CompositeDrawable
