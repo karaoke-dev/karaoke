@@ -37,9 +37,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             RelativeSizeAxes = Axes.X;
             Height = 45;
 
-            Masking = true;
-            CornerRadius = 5;
-
             InternalChildren = new Drawable[]
             {
                 new Box
