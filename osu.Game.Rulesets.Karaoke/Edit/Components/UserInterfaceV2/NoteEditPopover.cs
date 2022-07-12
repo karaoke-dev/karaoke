@@ -57,12 +57,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
 
             text.OnCommit += (sender, newText) =>
             {
+                if (!newText)
+                    return;
+
                 string text = sender.Text.Trim();
                 notesChangeHandler?.ChangeText(text);
             };
 
             rubyText.OnCommit += (sender, newText) =>
             {
+                if (!newText)
+                    return;
+
                 string text = sender.Text.Trim();
                 notesChangeHandler?.ChangeRubyText(text);
             };

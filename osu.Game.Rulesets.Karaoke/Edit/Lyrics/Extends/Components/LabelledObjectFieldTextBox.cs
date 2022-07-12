@@ -32,9 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             Current.Value = GetFieldValue(item);
 
             // should change preview text box if selected ruby/romaji changed.
-            OnCommit += (sender, edited) =>
+            OnCommit += (sender, newText) =>
             {
-                if (!edited)
+                if (!newText)
                     return;
 
                 ApplyValue(item, sender.Text);
