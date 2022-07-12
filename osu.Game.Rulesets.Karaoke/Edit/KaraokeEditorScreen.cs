@@ -23,9 +23,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit
         {
             base.PopIn();
 
-            // for prevent accidentally change the property in the hit object that is not expected,
-            // should clear all selected hit object if user change to the different tab.
-            beatmap.SelectedHitObjects.Clear();
+            // should wait until current change handler done.
+            // not a good way but ok for now.
+            ScheduleAfterChildren(() =>
+            {
+                // for prevent accidentally change the property in the hit object that is not expected,
+                // should clear all selected hit object if user change to the different tab.
+                beatmap.SelectedHitObjects.Clear();
+            });
         }
     }
 }
