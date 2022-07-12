@@ -141,19 +141,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
 
             public InputCaretTextBox()
             {
-                OnCommit += submitMessage;
-
-                void submitMessage(TextBox textBox, bool newText)
+                OnCommit += (sender, newText) =>
                 {
-                    string text = textBox.Text;
+                    string text = sender.Text;
 
                     if (string.IsNullOrEmpty(text))
                         return;
 
                     NewCommitText?.Invoke(text);
 
-                    textBox.Text = string.Empty;
-                }
+                    sender.Text = string.Empty;
+                };
             }
 
             public override bool OnPressed(KeyBindingPressEvent<PlatformAction> e)
