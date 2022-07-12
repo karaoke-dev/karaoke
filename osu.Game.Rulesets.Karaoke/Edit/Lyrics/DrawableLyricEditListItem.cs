@@ -26,6 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public class DrawableLyricEditListItem : OsuRearrangeableListItem<Lyric>
     {
+        public const float HANDLER_WIDTH = 22;
+
         private Box background;
         private FillFlowContainer content;
 

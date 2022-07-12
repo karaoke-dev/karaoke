@@ -32,13 +32,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private ActionButton applyButton;
 
         [BackgroundDependencyLoader]
-        private void load(OsuColour colours, ILyricSelectionState lyricSelectionState)
+        private void load(OsuColour colours, ILyricEditorState state, ILyricSelectionState lyricSelectionState)
         {
             RelativeSizeAxes = Axes.X;
             Height = 45;
-
-            Masking = true;
-            CornerRadius = 5;
 
             InternalChildren = new Drawable[]
             {
@@ -52,6 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     RelativeSizeAxes = Axes.Both,
                     ColumnDimensions = new[]
                     {
+                        new Dimension(GridSizeMode.Absolute, getPrefixSpacing()),
                         new Dimension(GridSizeMode.Absolute, LyricEditorRow.SELECT_AREA_WIDTH),
                         new Dimension(),
                         new Dimension(GridSizeMode.Absolute, spacing),
@@ -66,7 +64,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     {
                         new Drawable[]
                         {
-                            new SelectArea
+                            new Box(),
+                            new SelectAllArea
                             {
                                 RelativeSizeAxes = Axes.Both,
                             },
@@ -129,9 +128,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 bool selectAny = selectedLyrics.Any();
                 applyButton.Enabled.Value = selectAny;
             }, true);
+
+            float getPrefixSpacing()
+            {
+                bool containsHandler = state.Mode == LyricEditorMode.Manage;
+                return LyricEditor.LYRIC_LIST_PADDING + (containsHandler ? DrawableLyricEditListItem.HANDLER_WIDTH : 0);
+            }
         }
 
-        public class SelectArea : CompositeDrawable
+        public class SelectAllArea : CompositeDrawable
         {
             private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
             private readonly IBindableDictionary<Lyric, LocalisableString> disableSelectingLyrics = new BindableDictionary<Lyric, LocalisableString>();
@@ -140,7 +145,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             private readonly Box background;
             private readonly CircleCheckbox allSelectedCheckbox;
 
-            public SelectArea()
+            public SelectAllArea()
             {
                 InternalChildren = new Drawable[]
                 {

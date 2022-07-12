@@ -37,6 +37,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     [Cached(typeof(ILyricEditorState))]
     public class LyricEditor : Container, ILyricEditorState, IKeyBindingHandler<KaraokeEditAction>
     {
+        public const float LYRIC_LIST_PADDING = 10;
+
         [Resolved(canBeNull: true)]
         private ILyricsChangeHandler lyricsChangeHandler { get; set; }
 
@@ -90,8 +92,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private readonly LyricEditorSkin skin;
         private readonly DrawableLyricEditList container;
 
-        private const int spacing = 10;
-
         public LyricEditor()
         {
             // global state
@@ -127,14 +127,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                     new SkinProvidingContainer(skin = new LyricEditorSkin(null))
                                     {
                                         RelativeSizeAxes = Axes.Both,
-                                        Padding = new MarginPadding(spacing),
+                                        Padding = new MarginPadding(LYRIC_LIST_PADDING),
                                         Child = container = new DrawableLyricEditList
                                         {
                                             RelativeSizeAxes = Axes.Both,
                                         }
                                     },
                                 },
-                                Array.Empty<Drawable>(),
                                 new Drawable[]
                                 {
                                     new ApplySelectingArea(),
@@ -248,11 +247,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private void initializeApplySelectingArea()
         {
-            bool show = bindableSelecting.Value;
             lyricEditorGridContainer.RowDimensions = new[]
             {
                 new Dimension(),
-                new Dimension(GridSizeMode.Absolute, show ? spacing : 0),
                 new Dimension(GridSizeMode.AutoSize),
             };
         }
