@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         new Drawable[]
                         {
                             new Box(),
-                            new SelectArea
+                            new SelectAllArea
                             {
                                 RelativeSizeAxes = Axes.Both,
                             },
@@ -136,7 +136,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        public class SelectArea : CompositeDrawable
+        public class SelectAllArea : CompositeDrawable
         {
             private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
             private readonly IBindableDictionary<Lyric, LocalisableString> disableSelectingLyrics = new BindableDictionary<Lyric, LocalisableString>();
@@ -145,7 +145,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             private readonly Box background;
             private readonly CircleCheckbox allSelectedCheckbox;
 
-            public SelectArea()
+            public SelectAllArea()
             {
                 InternalChildren = new Drawable[]
                 {
