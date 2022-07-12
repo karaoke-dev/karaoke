@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             {
                 RelativeSizeAxes = Axes.X,
                 Height = 75,
-                Padding = new MarginPadding { Left = 22 },
+                Padding = new MarginPadding { Left = DrawableLyricEditListItem.HANDLER_WIDTH },
                 Child = new Container
                 {
                     Masking = true,
