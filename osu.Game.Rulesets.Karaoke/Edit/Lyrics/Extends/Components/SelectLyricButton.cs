@@ -24,7 +24,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected abstract LocalisableString SelectingText { get; }
 
-        protected abstract IDictionary<Lyric, LocalisableString> GetDisableSelectingLyrics();
+        protected virtual IDictionary<Lyric, LocalisableString> GetDisableSelectingLyrics()
+        {
+            return new Dictionary<Lyric, LocalisableString>();
+        }
 
         protected abstract void Apply();
 
