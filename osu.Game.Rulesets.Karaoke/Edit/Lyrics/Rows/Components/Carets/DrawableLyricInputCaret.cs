@@ -143,6 +143,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
             {
                 OnCommit += (sender, newText) =>
                 {
+                    if (!newText)
+                        return;
+
                     string text = sender.Text;
 
                     if (string.IsNullOrEmpty(text))

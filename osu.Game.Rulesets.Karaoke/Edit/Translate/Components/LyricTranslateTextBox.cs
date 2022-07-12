@@ -45,8 +45,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Translate.Components
                 });
             }, true);
 
-            OnCommit += (t, _) =>
+            OnCommit += (t, newText) =>
             {
+                if (!newText)
+                    return;
+
                 string text = t.Text.Trim();
 
                 var cultureInfo = currentLanguage.Value;
