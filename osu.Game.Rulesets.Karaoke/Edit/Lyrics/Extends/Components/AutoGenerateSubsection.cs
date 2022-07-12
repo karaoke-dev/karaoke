@@ -21,7 +21,6 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
@@ -29,9 +28,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
     public abstract class AutoGenerateSubsection : FillFlowContainer
     {
-        [Resolved]
-        private ILyricAutoGenerateChangeHandler lyricAutoGenerateChangeHandler { get; set; }
-
         private readonly LyricAutoGenerateProperty autoGenerateProperty;
 
         protected AutoGenerateSubsection(LyricAutoGenerateProperty autoGenerateProperty)
@@ -43,13 +39,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load(ILyricSelectionState lyricSelectionState, OsuColour colours)
+        private void load(ILyricAutoGenerateChangeHandler lyricAutoGenerateChangeHandler, OsuColour colours)
         {
             // should wait until BDL in the parent class has been loaded.
             Schedule(() =>
             {
-                var disableSelectingLyrics = GetDisableSelectingLyrics(autoGenerateProperty);
-
                 Children = new Drawable[]
                 {
                     new GridContainer
@@ -70,10 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                         {
                             new Drawable[]
                             {
-                                new AutoGenerateButton
-                                {
-                                    StartSelecting = () => disableSelectingLyrics
-                                },
+                                new AutoGenerateButton(autoGenerateProperty),
                                 null,
                                 CreateConfigButton().With(x =>
                                 {
@@ -89,29 +80,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                         t.RelativeSizeAxes = Axes.X;
                         t.AutoSizeAxes = Axes.Y;
                         t.Colour = colours.GrayF;
-                        t.Alpha = disableSelectingLyrics.Any() ? 1 : 0;
+                        t.Alpha = lyricAutoGenerateChangeHandler.GetNotGeneratableLyrics(autoGenerateProperty).Any() ? 1 : 0;
                         t.Padding = new MarginPadding { Horizontal = 20 };
                     })
                 };
             });
-
-            lyricSelectionState.Action = e =>
-            {
-                if (e != LyricEditorSelectingAction.Apply)
-                    return;
-
-                Apply(autoGenerateProperty);
-            };
-        }
-
-        protected virtual IDictionary<Lyric, LocalisableString> GetDisableSelectingLyrics(LyricAutoGenerateProperty autoGenerateProperty)
-        {
-            return lyricAutoGenerateChangeHandler.GetNotGeneratableLyrics(autoGenerateProperty);
-        }
-
-        protected virtual void Apply(LyricAutoGenerateProperty autoGenerateProperty)
-        {
-            lyricAutoGenerateChangeHandler.AutoGenerate(autoGenerateProperty);
         }
 
         protected abstract InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer();
@@ -120,9 +93,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         private class AutoGenerateButton : SelectLyricButton
         {
+            [Resolved]
+            private ILyricAutoGenerateChangeHandler lyricAutoGenerateChangeHandler { get; set; }
+
+            private readonly LyricAutoGenerateProperty autoGenerateProperty;
+
+            public AutoGenerateButton(LyricAutoGenerateProperty autoGenerateProperty)
+            {
+                this.autoGenerateProperty = autoGenerateProperty;
+            }
+
             protected override LocalisableString StandardText => "Generate";
 
             protected override LocalisableString SelectingText => "Cancel generate";
+
+            protected override IDictionary<Lyric, LocalisableString> GetDisableSelectingLyrics()
+            {
+                return lyricAutoGenerateChangeHandler.GetNotGeneratableLyrics(autoGenerateProperty);
+            }
+
+            protected override void Apply()
+            {
+                lyricAutoGenerateChangeHandler.AutoGenerate(autoGenerateProperty);
+            }
         }
 
         protected abstract class ConfigButton : IconButton, IHasPopover

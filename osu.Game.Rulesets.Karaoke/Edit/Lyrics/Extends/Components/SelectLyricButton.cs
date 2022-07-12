@@ -24,7 +24,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected abstract LocalisableString SelectingText { get; }
 
-        public Func<IDictionary<Lyric, LocalisableString>> StartSelecting { get; set; }
+        protected virtual IDictionary<Lyric, LocalisableString> GetDisableSelectingLyrics()
+        {
+            return new Dictionary<Lyric, LocalisableString>();
+        }
+
+        protected abstract void Apply();
+
+        protected virtual void Cancel() { }
 
         [Resolved]
         private ILyricSelectionState lyricSelectionState { get; set; }
@@ -57,12 +64,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                     EndSelectingLyrics();
                 }
             };
+
+            lyricSelectionState.Action = e =>
+            {
+                switch (e)
+                {
+                    case LyricEditorSelectingAction.Apply:
+                        Apply();
+                        return;
+
+                    case LyricEditorSelectingAction.Cancel:
+                        Cancel();
+                        return;
+
+                    default:
+                        throw new InvalidOperationException();
+                }
+            };
         }
 
         protected virtual void StartSelectingLyrics()
         {
             // update disabled lyrics list.
-            var disableLyrics = StartSelecting?.Invoke();
+            var disableLyrics = GetDisableSelectingLyrics();
             lyricSelectionState.UpdateDisableLyricList(disableLyrics);
 
             // then start selecting.

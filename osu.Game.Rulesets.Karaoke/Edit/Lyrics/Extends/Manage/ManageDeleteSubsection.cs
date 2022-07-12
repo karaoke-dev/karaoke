@@ -7,26 +7,21 @@ using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage
 {
     public class ManageDeleteSubsection : SelectLyricButton
     {
+        [Resolved]
+        private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+
         protected override LocalisableString StandardText => "Delete";
 
         protected override LocalisableString SelectingText => "Cancel delete";
 
-        [BackgroundDependencyLoader]
-        private void load(ILyricSelectionState lyricSelectionState, ILyricsChangeHandler lyricsChangeHandler)
+        protected override void Apply()
         {
-            lyricSelectionState.Action = e =>
-            {
-                if (e != LyricEditorSelectingAction.Apply)
-                    return;
-
-                lyricsChangeHandler.Remove();
-            };
+            lyricsChangeHandler.Remove();
         }
     }
 }
