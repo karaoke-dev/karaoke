@@ -10,6 +10,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Input;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Configuration;
@@ -35,7 +36,7 @@ using osu.Game.Skinning;
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     [Cached(typeof(ILyricEditorState))]
-    public class LyricEditor : Container, ILyricEditorState, IKeyBindingHandler<KaraokeEditAction>
+    public class LyricEditor : Container, ILyricEditorState, IKeyBindingHandler<KaraokeEditAction>, IKeyBindingHandler<PlatformAction>
     {
         public const float LYRIC_LIST_PADDING = 10;
 
@@ -72,6 +73,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(IEditNoteModeState))]
         private readonly EditNoteModeState editNoteModeState;
 
+        [Cached(typeof(ILyricEditorClipboard))]
+        private readonly LyricEditorClipboard lyricEditorClipboard;
+
         [Cached(typeof(IScrollingInfo))]
         private readonly LocalScrollingInfo scrollingInfo = new();
 
@@ -105,6 +109,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             AddInternal(editRomajiModeState = new EditRomajiModeState());
             AddInternal(timeTagModeState = new TimeTagModeState());
             AddInternal(editNoteModeState = new EditNoteModeState());
+
+            // Separated feature.
+            AddInternal(lyricEditorClipboard = new LyricEditorClipboard());
 
             Add(gridContainer = new GridContainer
             {
@@ -287,6 +294,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             };
 
         public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
+        {
+        }
+
+        public bool OnPressed(KeyBindingPressEvent<PlatformAction> e)
+        {
+            switch (e.Action)
+            {
+                case PlatformAction.Cut:
+                    lyricEditorClipboard.Cut();
+                    return true;
+
+                case PlatformAction.Copy:
+                    lyricEditorClipboard.Copy();
+                    return true;
+
+                case PlatformAction.Paste:
+                    lyricEditorClipboard.Paste();
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void OnReleased(KeyBindingReleaseEvent<PlatformAction> e)
         {
         }
 
