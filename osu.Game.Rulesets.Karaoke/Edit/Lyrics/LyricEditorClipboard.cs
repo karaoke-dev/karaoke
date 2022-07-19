@@ -55,107 +55,110 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved, AllowNull]
         private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
 
-        public void Cut()
+        public bool Cut()
         {
-            Copy();
+            bool copied = Copy();
+            if (!copied)
+                return false;
 
             switch (state.Mode)
             {
                 case LyricEditorMode.View:
-                    break;
+                    return false;
 
                 case LyricEditorMode.Manage:
                     lyricsChangeHandler.Remove();
-                    break;
+                    return true;
 
                 case LyricEditorMode.Typing:
                     // cut, copy or paste event should be handled in the caret.
-                    break;
+                    return false;
 
                 case LyricEditorMode.Language:
                     languageChangeHandler.SetLanguage(null);
-                    break;
+                    return true;
 
                 case LyricEditorMode.EditRuby:
                     var rubies = editRubyModeState.SelectedItems;
                     lyricRubyTagsChangeHandler.RemoveAll(rubies);
-                    break;
+                    return true;
 
                 case LyricEditorMode.EditRomaji:
                     var romajies = editRomajiModeState.SelectedItems;
                     lyricRomajiTagsChangeHandler.RemoveAll(romajies);
-                    break;
+                    return true;
 
                 case LyricEditorMode.EditTimeTag:
                     var timeTags = timeTagModeState.SelectedItems;
                     // todo: implement
                     // lyricTimeTagsChangeHandler.Clear();
-                    break;
+                    return true;
 
                 case LyricEditorMode.EditNote:
-
-                    break;
+                    return false;
 
                 case LyricEditorMode.Singer:
                     lyricSingerChangeHandler.Clear();
-                    break;
+                    return true;
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        public void Copy()
+        public bool Copy()
         {
             var selectedLyric = getSelectedLyric();
             if (selectedLyric == null)
-                return;
+                return false;
 
             // deserializer the lyric.
             var settings = KaraokeJsonSerializableExtensions.CreateGlobalSettings();
             string text = JsonConvert.SerializeObject(selectedLyric, settings);
 
             host.GetClipboard()?.SetText(text);
+
+            return true;
         }
 
-        public void Paste()
+        public bool Paste()
         {
             string? text = host.GetClipboard()?.GetText();
             if (string.IsNullOrEmpty(text))
-                return;
+                return false;
 
             var selectedLyric = getSelectedLyric();
             if (selectedLyric == null)
-                return;
+                return false;
 
             switch (state.Mode)
             {
                 case LyricEditorMode.View:
-                    return;
+                    return false;
 
                 case LyricEditorMode.Manage:
-                    break;
+                    return false;
 
                 case LyricEditorMode.Typing:
-                    break;
+                    return false;
 
                 case LyricEditorMode.Language:
-                    break;
+                    return false;
 
                 case LyricEditorMode.EditRuby:
-                    break;
+                    return false;
 
                 case LyricEditorMode.EditRomaji:
-                    break;
+                    return false;
 
                 case LyricEditorMode.EditTimeTag:
-                    break;
+                    return false;
 
                 case LyricEditorMode.EditNote:
-                    break;
+                    return false;
 
                 case LyricEditorMode.Singer:
-                    break;
+                    return false;
 
                 default:
                     throw new ArgumentOutOfRangeException();

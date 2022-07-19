@@ -5,10 +5,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     public interface ILyricEditorClipboard
     {
-        void Cut();
+        bool Cut();
 
-        void Copy();
+        bool Copy();
 
-        void Paste();
+        bool Paste();
     }
 }
