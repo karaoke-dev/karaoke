@@ -55,6 +55,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved, AllowNull]
         private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
 
+        private string clipboardContent = string.Empty;
+
         public bool Cut()
         {
             bool copied = Copy();
@@ -112,19 +114,60 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (selectedLyric == null)
                 return false;
 
-            // deserializer the lyric.
+            // we should save the serialized lyric object into here instead of save into the clipboard for some reason:
+            // 1. It's hard to know which ruby/romaji or time-tag being copied.
+            // 2. Maybe user did not want to copy the full json content?
             var settings = KaraokeJsonSerializableExtensions.CreateGlobalSettings();
-            string text = JsonConvert.SerializeObject(selectedLyric, settings);
+            clipboardContent = JsonConvert.SerializeObject(selectedLyric, settings);
 
-            host.GetClipboard()?.SetText(text);
+            switch (state.Mode)
+            {
+                case LyricEditorMode.View:
+                    copyObjectToClipboard(selectedLyric.Text);
+                    break;
+
+                case LyricEditorMode.Manage:
+                    copyObjectToClipboard(selectedLyric.Text);
+                    break;
+
+                case LyricEditorMode.Typing:
+                    // cut, copy or paste event should be handled in the caret.
+                    break;
+
+                case LyricEditorMode.Language:
+                    copyObjectToClipboard(selectedLyric.Language);
+                    break;
+
+                case LyricEditorMode.EditRuby:
+                    copyObjectToClipboard(editRubyModeState.SelectedItems);
+                    break;
+
+                case LyricEditorMode.EditRomaji:
+                    copyObjectToClipboard(editRomajiModeState.SelectedItems);
+                    break;
+
+                case LyricEditorMode.EditTimeTag:
+                    copyObjectToClipboard(timeTagModeState.SelectedItems);
+                    break;
+
+                case LyricEditorMode.EditNote:
+                    break;
+
+                case LyricEditorMode.Singer:
+                    // todo: should get all singer infos.
+                    copyObjectToClipboard(selectedLyric.Singers);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
             return true;
         }
 
         public bool Paste()
         {
-            string? text = host.GetClipboard()?.GetText();
-            if (string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(clipboardContent))
                 return false;
 
             var selectedLyric = getSelectedLyric();
@@ -163,6 +206,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        void copyObjectToClipboard<T>(T obj)
+        {
+            var settings = KaraokeJsonSerializableExtensions.CreateGlobalSettings();
+            string text = JsonConvert.SerializeObject(obj, settings);
+
+            host.GetClipboard()?.SetText(text);
+        }
+
+        T? getObjectFromClipboard<T>()
+        {
+            string? text = host.GetClipboard()?.GetText();
+            if (string.IsNullOrEmpty(text))
+                return default;
+
+            var settings = KaraokeJsonSerializableExtensions.CreateGlobalSettings();
+            return JsonConvert.DeserializeObject<T>(text, settings);
         }
     }
 }
