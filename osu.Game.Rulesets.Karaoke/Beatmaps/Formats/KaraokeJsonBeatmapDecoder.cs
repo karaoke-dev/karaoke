@@ -10,7 +10,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.Formats;
 using osu.Game.IO;
 using osu.Game.IO.Serialization;
-using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
+using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
@@ -27,16 +27,8 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
 
         protected override void ParseStreamInto(LineBufferedReader stream, Beatmap output)
         {
-            var globalSetting = JsonSerializableExtensions.CreateGlobalSettings();
+            var globalSetting = KaraokeJsonSerializableExtensions.CreateGlobalSettings();
             globalSetting.ContractResolver = new KaraokeBeatmapContractResolver();
-            globalSetting.Converters.Add(new CultureInfoConverter());
-            globalSetting.Converters.Add(new RomajiTagConverter());
-            globalSetting.Converters.Add(new RomajiTagsConverter());
-            globalSetting.Converters.Add(new RubyTagConverter());
-            globalSetting.Converters.Add(new RubyTagsConverter());
-            globalSetting.Converters.Add(new TimeTagConverter());
-            globalSetting.Converters.Add(new TimeTagsConverter());
-            globalSetting.Converters.Add(new ToneConverter());
 
             // create id if object is by reference.
             globalSetting.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
