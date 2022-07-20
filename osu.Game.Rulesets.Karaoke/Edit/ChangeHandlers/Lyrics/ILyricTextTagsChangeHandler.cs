@@ -6,14 +6,8 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public interface ILyricTextTagsChangeHandler<in TTextTag> where TTextTag : ITextTag
+    public interface ILyricTextTagsChangeHandler<in TTextTag> : ILyricListPropertyChangeHandler<TTextTag> where TTextTag : ITextTag
     {
-        void Add(TTextTag textTag);
-
-        void Remove(TTextTag textTag);
-
-        void RemoveAll(IEnumerable<TTextTag> textTags);
-
         void SetIndex(TTextTag textTag, int? startIndex, int? endIndex);
 
         void ShiftingIndex(IEnumerable<TTextTag> textTags, int offset);

@@ -6,15 +6,11 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public interface ILyricTimeTagsChangeHandler
+    public interface ILyricTimeTagsChangeHandler : ILyricListPropertyChangeHandler<TimeTag>
     {
         void SetTimeTagTime(TimeTag timeTag, double time);
 
         void ClearTimeTagTime(TimeTag timeTag);
-
-        void Add(TimeTag timeTag);
-
-        void Remove(TimeTag timeTag);
 
         void AddByPosition(TextIndex index);
 
