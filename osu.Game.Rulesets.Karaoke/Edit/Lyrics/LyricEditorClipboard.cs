@@ -57,6 +57,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private string clipboardContent = string.Empty;
 
+        public LyricEditorClipboard()
+        {
+            bindableMode.BindValueChanged(_ =>
+            {
+                clipboardContent = string.Empty;
+            });
+        }
+
         [BackgroundDependencyLoader]
         private void load(ILyricEditorState state)
         {
