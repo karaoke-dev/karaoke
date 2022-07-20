@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Platform;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -19,9 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         [Resolved, AllowNull]
         private GameHost host { get; set; }
-
-        [Resolved, AllowNull]
-        private ILyricEditorState state { get; set; }
 
         [Resolved, AllowNull]
         private ILyricCaretState lyricCaretState { get; set; }
@@ -55,7 +53,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved, AllowNull]
         private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
 
+        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
+
         private string clipboardContent = string.Empty;
+
+        [BackgroundDependencyLoader]
+        private void load(ILyricEditorState state)
+        {
+            bindableMode.BindTo(state.BindableMode);
+        }
 
         public bool Cut()
         {
@@ -63,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (!copied)
                 return false;
 
-            switch (state.Mode)
+            switch (bindableMode.Value)
             {
                 case LyricEditorMode.View:
                     return false;
@@ -119,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             var settings = KaraokeJsonSerializableExtensions.CreateGlobalSettings();
             clipboardContent = JsonConvert.SerializeObject(selectedLyric, settings);
 
-            switch (state.Mode)
+            switch (bindableMode.Value)
             {
                 case LyricEditorMode.View:
                     copyObjectToClipboard(selectedLyric.Text);
@@ -173,7 +179,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (selectedLyric == null)
                 return false;
 
-            switch (state.Mode)
+            switch (bindableMode.Value)
             {
                 case LyricEditorMode.View:
                     return false;
