@@ -147,11 +147,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
 
             protected override void DeleteItems(IEnumerable<TimeTag> items)
             {
-                // todo : delete time-line
-                foreach (var item in items)
-                {
-                    lyricTimeTagsChangeHandler.Remove(item);
-                }
+                lyricTimeTagsChangeHandler.RemoveAll(items);
             }
 
             protected override IEnumerable<MenuItem> GetContextMenuItemsForSelection(IEnumerable<SelectionBlueprint<TimeTag>> selection)

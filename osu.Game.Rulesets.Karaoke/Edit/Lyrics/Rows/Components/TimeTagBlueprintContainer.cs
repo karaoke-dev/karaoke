@@ -9,6 +9,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Edit;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -55,6 +56,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
         protected class TimeTagSelectionHandler : ExtendSelectionHandler<TimeTag>
         {
+            [Resolved]
+            private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+
             [BackgroundDependencyLoader]
             private void load(ITimeTagModeState timeTagModeState)
             {
@@ -66,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
             protected override void DeleteItems(IEnumerable<TimeTag> items)
             {
-                // todo : delete time-tag
+                lyricTimeTagsChangeHandler.RemoveAll(items);
             }
         }
     }
