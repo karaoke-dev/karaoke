@@ -92,8 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 case LyricEditorMode.EditTimeTag:
                     var timeTags = timeTagModeState.SelectedItems;
-                    // todo: implement
-                    // lyricTimeTagsChangeHandler.Clear();
+                    lyricTimeTagsChangeHandler.RemoveAll(timeTags);
                     return true;
 
                 case LyricEditorMode.EditNote:
