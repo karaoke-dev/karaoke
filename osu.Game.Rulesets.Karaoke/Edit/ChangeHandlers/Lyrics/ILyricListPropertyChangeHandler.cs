@@ -9,6 +9,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
     {
         void Add(TItem item);
 
+        void AddRange(IEnumerable<TItem> items);
+
         void Remove(TItem item);
 
         void RemoveAll(IEnumerable<TItem> items);

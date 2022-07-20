@@ -36,6 +36,33 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         [Test]
+        public void TestAddRange()
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "風",
+                Language = new CultureInfo(17)
+            });
+
+            TriggerHandlerChanged(c => c.AddRange(new[]
+            {
+                new RomajiTag
+                {
+                    StartIndex = 0,
+                    EndIndex = 1,
+                    Text = "kaze",
+                }
+            }));
+
+            AssertSelectedHitObject(h =>
+            {
+                var romajiTags = h.RomajiTags;
+                Assert.AreEqual(1, romajiTags.Count);
+                Assert.AreEqual("kaze", romajiTags[0].Text);
+            });
+        }
+
+        [Test]
         public void TestRemove()
         {
             var removedTag = new RomajiTag
