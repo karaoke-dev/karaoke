@@ -98,9 +98,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (selectedLyric == null)
                 return false;
 
-            var settings = KaraokeJsonSerializableExtensions.CreateGlobalSettings();
-            clipboardContent = JsonConvert.SerializeObject(selectedLyric, settings);
-
             bool copy = performCopy(selectedLyric);
             if (!copy)
                 return false;
@@ -179,46 +176,51 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             switch (bindableMode.Value)
             {
                 case LyricEditorMode.View:
+                    // for letting user to copy the lyric as plain text.
                     copyObjectToClipboard(lyric.Text);
-                    break;
+                    return true;
 
                 case LyricEditorMode.Manage:
+                    saveObjectToTheClipboardContent(lyric);
                     copyObjectToClipboard(lyric.Text);
-                    break;
+                    return true;
 
                 case LyricEditorMode.Typing:
                     // cut, copy or paste event should be handled in the caret.
                     return false;
 
                 case LyricEditorMode.Language:
+                    saveObjectToTheClipboardContent(lyric.Language);
                     copyObjectToClipboard(lyric.Language);
-                    break;
+                    return true;
 
                 case LyricEditorMode.EditRuby:
+                    saveObjectToTheClipboardContent(editRubyModeState.SelectedItems);
                     copyObjectToClipboard(editRubyModeState.SelectedItems);
-                    break;
+                    return true;
 
                 case LyricEditorMode.EditRomaji:
+                    saveObjectToTheClipboardContent(editRomajiModeState.SelectedItems);
                     copyObjectToClipboard(editRomajiModeState.SelectedItems);
-                    break;
+                    return true;
 
                 case LyricEditorMode.EditTimeTag:
+                    saveObjectToTheClipboardContent(timeTagModeState.SelectedItems);
                     copyObjectToClipboard(timeTagModeState.SelectedItems);
-                    break;
+                    return true;
 
                 case LyricEditorMode.EditNote:
                     return false;
 
                 case LyricEditorMode.Singer:
+                    saveObjectToTheClipboardContent(lyric.Singers);
                     // todo: should get all singer infos.
                     copyObjectToClipboard(lyric.Singers);
-                    break;
+                    return true;
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            return true;
         }
 
         private bool performPaste(Lyric lyric)
@@ -265,14 +267,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             host.GetClipboard()?.SetText(text);
         }
 
-        private T? getObjectFromClipboard<T>()
+        private void saveObjectToTheClipboardContent<T>(T obj)
         {
-            string? text = host.GetClipboard()?.GetText();
-            if (string.IsNullOrEmpty(text))
+            var settings = KaraokeJsonSerializableExtensions.CreateGlobalSettings();
+            clipboardContent = JsonConvert.SerializeObject(obj, settings);
+        }
+
+        private T? getObjectFromClipboardContent<T>()
+        {
+            if (string.IsNullOrEmpty(clipboardContent))
                 return default;
 
             var settings = KaraokeJsonSerializableExtensions.CreateGlobalSettings();
-            return JsonConvert.DeserializeObject<T>(text, settings);
+            return JsonConvert.DeserializeObject<T>(clipboardContent, settings);
         }
 
         #endregion
