@@ -96,6 +96,28 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         [Test]
+        public void TestRemoveAll()
+        {
+            var removedTag = new TimeTag(new TextIndex(), 1000);
+
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = new[]
+                {
+                    removedTag,
+                }
+            });
+
+            TriggerHandlerChanged(c => c.RemoveAll(new[] { removedTag }));
+
+            AssertSelectedHitObject(h =>
+            {
+                Assert.IsEmpty(h.TimeTags);
+            });
+        }
+
+        [Test]
         public void TestAddByPosition()
         {
             PrepareHitObject(new Lyric
