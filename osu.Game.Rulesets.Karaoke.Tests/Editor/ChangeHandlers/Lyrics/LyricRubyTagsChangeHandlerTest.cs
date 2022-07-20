@@ -36,6 +36,33 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         [Test]
+        public void TestAddRange()
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "風",
+                Language = new CultureInfo(17)
+            });
+
+            TriggerHandlerChanged(c => c.AddRange(new[]
+            {
+                new RubyTag
+                {
+                    StartIndex = 0,
+                    EndIndex = 1,
+                    Text = "かぜ",
+                }
+            }));
+
+            AssertSelectedHitObject(h =>
+            {
+                var rubyTags = h.RubyTags;
+                Assert.AreEqual(1, rubyTags.Count);
+                Assert.AreEqual("かぜ", rubyTags[0].Text);
+            });
+        }
+
+        [Test]
         public void TestRemove()
         {
             var removedTag = new RubyTag

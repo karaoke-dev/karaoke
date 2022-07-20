@@ -26,6 +26,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
+        public void AddRange(IEnumerable<TTextTag> textTags)
+        {
+            CheckExactlySelectedOneHitObject();
+
+            PerformOnSelection(lyric =>
+            {
+                // should convert to array because enumerable might change while deleting.
+                foreach (var textTag in textTags.ToArray())
+                {
+                    bool containsInLyric = ContainsInLyric(lyric, textTag);
+                    if (containsInLyric)
+                        throw new InvalidOperationException($"{nameof(textTag)} already in the lyric");
+
+                    AddToLyric(lyric, textTag);
+                }
+            });
+        }
+
         public void Remove(TTextTag textTag)
         {
             CheckExactlySelectedOneHitObject();

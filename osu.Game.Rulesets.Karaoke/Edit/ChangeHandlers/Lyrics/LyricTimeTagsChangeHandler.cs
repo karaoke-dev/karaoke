@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -53,6 +54,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
+        public void AddRange(IEnumerable<TimeTag> timeTags)
+        {
+            CheckExactlySelectedOneHitObject();
+
+            PerformOnSelection(lyric =>
+            {
+                // should convert to array because enumerable might change while deleting.
+                foreach (var timeTag in timeTags.ToArray())
+                {
+                    bool containsInLyric = lyric.TimeTags.Contains(timeTag);
+                    if (containsInLyric)
+                        throw new InvalidOperationException($"{nameof(timeTag)} already in the lyric");
+
+                    insertTimeTag(lyric, timeTag, InsertDirection.End);
+                }
+            });
+        }
+
         public void Remove(TimeTag timeTag)
         {
             CheckExactlySelectedOneHitObject();
@@ -61,6 +80,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             {
                 // delete time tag from list
                 lyric.TimeTags.Remove(timeTag);
+            });
+        }
+
+        public void RemoveAll(IEnumerable<TimeTag> timeTags)
+        {
+            CheckExactlySelectedOneHitObject();
+
+            PerformOnSelection(lyric =>
+            {
+                // should convert to array because enumerable might change while deleting.
+                foreach (var timeTag in timeTags.ToArray())
+                {
+                    bool containsInLyric = lyric.TimeTags.Remove(timeTag);
+                    if (!containsInLyric)
+                        throw new InvalidOperationException($"{nameof(timeTag)} is not in the lyric");
+                }
             });
         }
 

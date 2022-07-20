@@ -74,6 +74,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         [Test]
+        public void TestAddRange()
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+            });
+
+            TriggerHandlerChanged(c => c.AddRange(new[] { new TimeTag(new TextIndex(), 1000) }));
+
+            AssertSelectedHitObject(h =>
+            {
+                Assert.AreEqual(1, h.TimeTags.Count);
+                Assert.AreEqual(1000, h.TimeTags[0].Time);
+            });
+        }
+
+        [Test]
         public void TestRemove()
         {
             var removedTag = new TimeTag(new TextIndex(), 1000);
@@ -88,6 +105,28 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             });
 
             TriggerHandlerChanged(c => c.Remove(removedTag));
+
+            AssertSelectedHitObject(h =>
+            {
+                Assert.IsEmpty(h.TimeTags);
+            });
+        }
+
+        [Test]
+        public void TestRemoveAll()
+        {
+            var removedTag = new TimeTag(new TextIndex(), 1000);
+
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = new[]
+                {
+                    removedTag,
+                }
+            });
+
+            TriggerHandlerChanged(c => c.RemoveAll(new[] { removedTag }));
 
             AssertSelectedHitObject(h =>
             {
