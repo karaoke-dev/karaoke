@@ -5,12 +5,8 @@ using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public interface ILyricSingerChangeHandler
+    public interface ILyricSingerChangeHandler : ILyricListPropertyChangeHandler<Singer>
     {
-        void Add(Singer singer);
-
-        void Remove(Singer singer);
-
         void Clear();
     }
 }
