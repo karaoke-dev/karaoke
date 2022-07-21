@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Allocation;
@@ -238,28 +239,59 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return false;
 
                 case LyricEditorMode.Manage:
+                    var pasteLyric = getObjectFromClipboardContent<Lyric>();
+                    if (pasteLyric == null)
+                        return false;
+
+                    lyricsChangeHandler.AddBelowToSelection(pasteLyric);
                     return false;
 
                 case LyricEditorMode.Typing:
                     return false;
 
                 case LyricEditorMode.Language:
-                    return false;
+                    var pasteLanguage = getObjectFromClipboardContent<CultureInfo>();
+                    if (pasteLanguage == null)
+                        return false;
+
+                    languageChangeHandler.SetLanguage(pasteLanguage);
+                    return true;
 
                 case LyricEditorMode.EditRuby:
-                    return false;
+                    var pasteRubies = getObjectFromClipboardContent<RubyTag[]>();
+                    if (pasteRubies == null)
+                        return false;
+
+                    lyricRubyTagsChangeHandler.AddRange(pasteRubies);
+                    return true;
 
                 case LyricEditorMode.EditRomaji:
-                    return false;
+                    var pasteRomajies = getObjectFromClipboardContent<RomajiTag[]>();
+                    if (pasteRomajies == null)
+                        return false;
+
+                    lyricRomajiTagsChangeHandler.AddRange(pasteRomajies);
+                    return true;
 
                 case LyricEditorMode.EditTimeTag:
-                    return false;
+                    var pasteTimeTags = getObjectFromClipboardContent<TimeTag[]>();
+                    if (pasteTimeTags == null)
+                        return false;
+
+                    lyricTimeTagsChangeHandler.AddRange(pasteTimeTags);
+                    return true;
 
                 case LyricEditorMode.EditNote:
                     return false;
 
                 case LyricEditorMode.Singer:
-                    return false;
+                    int[]? pasteSingerIds = getObjectFromClipboardContent<int[]>();
+                    if (pasteSingerIds == null)
+                        return false;
+
+                    var singers = getMatchedSinges(pasteSingerIds);
+                    lyricSingerChangeHandler.AddRange(singers);
+                    return true;
 
                 default:
                     throw new ArgumentOutOfRangeException();
