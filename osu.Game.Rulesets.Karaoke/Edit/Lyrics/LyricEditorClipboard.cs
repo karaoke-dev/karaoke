@@ -2,13 +2,17 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Platform;
+using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.IO.Serialization;
@@ -52,6 +56,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         [Resolved, AllowNull]
         private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
+
+        [Resolved, AllowNull]
+        private ISingersChangeHandler singersChangeHandler { get; set; }
 
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
@@ -214,8 +221,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 case LyricEditorMode.Singer:
                     saveObjectToTheClipboardContent(lyric.Singers);
-                    // todo: should get all singer infos.
-                    copyObjectToClipboard(lyric.Singers);
+                    var singers = getMatchedSinges(lyric.Singers);
+                    copyObjectToClipboard(singers);
                     return true;
 
                 default:
@@ -258,6 +265,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        private IEnumerable<Singer> getMatchedSinges(IEnumerable<int> singerIds)
+            => singersChangeHandler.Singers.Where(x => singerIds.Contains(x.ID));
 
         private void copyObjectToClipboard<T>(T obj)
         {
