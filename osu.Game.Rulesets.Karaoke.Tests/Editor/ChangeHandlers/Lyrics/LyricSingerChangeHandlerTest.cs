@@ -31,6 +31,25 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         [Test]
+        public void TestAddRange()
+        {
+            var singer = new Singer(1)
+            {
+                Name = "Singer1",
+            };
+            PrepareHitObject(new Lyric());
+
+            TriggerHandlerChanged(c => c.AddRange(new[] { singer }));
+
+            AssertSelectedHitObject(h =>
+            {
+                var singers = h.Singers;
+                Assert.AreEqual(1, singers.Count);
+                Assert.AreEqual(singer.ID, singers.FirstOrDefault());
+            });
+        }
+
+        [Test]
         public void TestRemove()
         {
             var singer = new Singer(1)
@@ -51,6 +70,41 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             });
 
             TriggerHandlerChanged(c => c.Remove(singer));
+
+            AssertSelectedHitObject(h =>
+            {
+                var singers = h.Singers;
+
+                // should not contains removed singer.
+                Assert.IsFalse(singers.Contains(singer.ID));
+
+                // should only contain remain singer.
+                Assert.AreEqual(1, singers.Count);
+                Assert.IsTrue(singers.Contains(anotherSinger.ID));
+            });
+        }
+
+        [Test]
+        public void TestRemoveRange()
+        {
+            var singer = new Singer(1)
+            {
+                Name = "Singer1",
+            };
+            var anotherSinger = new Singer(2)
+            {
+                Name = "Another singer",
+            };
+            PrepareHitObject(new Lyric
+            {
+                Singers = new[]
+                {
+                    singer.ID,
+                    anotherSinger.ID,
+                }
+            });
+
+            TriggerHandlerChanged(c => c.RemoveAll(new[] { singer }));
 
             AssertSelectedHitObject(h =>
             {
