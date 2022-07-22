@@ -173,6 +173,75 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         [Test]
+        public void TestAddBelowToSelection()
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                ID = 0,
+                Order = 1,
+            });
+
+            PrepareHitObject(new Lyric
+            {
+                Text = "Last lyric",
+                ID = 1,
+                Order = 2,
+            }, false);
+
+            TriggerHandlerChanged(c => c.AddBelowToSelection(new Lyric
+            {
+                Text = "New lyric"
+            }));
+
+            AssertHitObjects(hitObjects =>
+            {
+                var lyrics = hitObjects.ToArray();
+                Assert.AreEqual(3, lyrics.Length);
+
+                var addedLyric = lyrics.First(x => x.Text == "New lyric");
+                Assert.AreEqual(2, addedLyric.ID);
+                Assert.AreEqual(2, addedLyric.Order);
+            });
+        }
+
+        [Test]
+        public void TestAddRangeBelowToSelection()
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                ID = 0,
+                Order = 1,
+            });
+
+            PrepareHitObject(new Lyric
+            {
+                Text = "Last lyric",
+                ID = 1,
+                Order = 2,
+            }, false);
+
+            TriggerHandlerChanged(c => c.AddRangeBelowToSelection(new[]
+            {
+                new Lyric
+                {
+                    Text = "New lyric"
+                }
+            }));
+
+            AssertHitObjects(hitObjects =>
+            {
+                var lyrics = hitObjects.ToArray();
+                Assert.AreEqual(3, lyrics.Length);
+
+                var addedLyric = lyrics.First(x => x.Text == "New lyric");
+                Assert.AreEqual(2, addedLyric.ID);
+                Assert.AreEqual(2, addedLyric.Order);
+            });
+        }
+
+        [Test]
         public void TestRemove()
         {
             PrepareHitObject(new Lyric

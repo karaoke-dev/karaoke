@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -61,22 +62,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void CreateAtPosition()
         {
-            CheckExactlySelectedOneHitObject();
-
-            PerformOnSelection(lyric =>
+            AddBelowToSelection(new Lyric
             {
-                int order = lyric.Order;
-
-                // Shifting order that order is larger than current lyric.
-                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > order), 1);
-
-                // Add new lyric to target order.
-                var createLyric = new Lyric
-                {
-                    Text = "New lyric",
-                    Order = order + 1,
-                };
-                Add(createLyric);
+                Text = "New lyric",
             });
         }
 
@@ -89,6 +77,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             {
                 Text = "New lyric",
                 Order = order + 1,
+            });
+        }
+
+        public void AddBelowToSelection(Lyric newLyric)
+        {
+            AddRangeBelowToSelection(new[] { newLyric });
+        }
+
+        public void AddRangeBelowToSelection(IEnumerable<Lyric> newlyrics)
+        {
+            CheckExactlySelectedOneHitObject();
+
+            PerformOnSelection(lyric =>
+            {
+                int order = lyric.Order;
+
+                // Shifting order that order is larger than current lyric.
+                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > order), newlyrics.Count());
+
+                foreach (var newlyric in newlyrics)
+                {
+                    newlyric.Order = ++order;
+                    Add(newlyric);
+                }
             });
         }
 
@@ -114,13 +126,35 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        protected override void Add(Lyric hitObject)
+        protected override void Add<T>(T hitObject)
         {
-            hitObject.ID = getId();
-
-            int index = HitObjects.ToList().FindIndex(x => x.Order == hitObject.Order - 1) + 1;
-            Insert(index, hitObject);
+            if (hitObject is Lyric lyric)
+            {
+                int index = getInsertIndex(lyric.Order);
+                Insert(index, lyric);
+            }
+            else
+            {
+                base.Add(hitObject);
+            }
         }
+
+        protected override void Insert<T>(int index, T hitObject)
+        {
+            if (hitObject is Lyric lyric)
+            {
+                lyric.ID = getId();
+
+                base.Insert(index, lyric);
+            }
+            else
+            {
+                base.Add(hitObject);
+            }
+        }
+
+        private int getInsertIndex(int order)
+            => HitObjects.ToList().FindIndex(x => x.Order == order - 1) + 1;
 
         private int getId()
             => HitObjects.Any() ? HitObjects.Max(x => x.ID) + 1 : 1;
