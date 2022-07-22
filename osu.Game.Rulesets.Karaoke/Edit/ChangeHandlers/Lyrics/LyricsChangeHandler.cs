@@ -114,13 +114,35 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        protected override void Add(Lyric hitObject)
+        protected override void Add<T>(T hitObject)
         {
-            hitObject.ID = getId();
-
-            int index = HitObjects.ToList().FindIndex(x => x.Order == hitObject.Order - 1) + 1;
-            Insert(index, hitObject);
+            if (hitObject is Lyric lyric)
+            {
+                int index = getInsertIndex(lyric.Order);
+                Insert(index, lyric);
+            }
+            else
+            {
+                base.Add(hitObject);
+            }
         }
+
+        protected override void Insert<T>(int index, T hitObject)
+        {
+            if (hitObject is Lyric lyric)
+            {
+                lyric.ID = getId();
+
+                base.Insert(index, lyric);
+            }
+            else
+            {
+                base.Add(hitObject);
+            }
+        }
+
+        private int getInsertIndex(int order)
+            => HitObjects.ToList().FindIndex(x => x.Order == order - 1) + 1;
 
         private int getId()
             => HitObjects.Any() ? HitObjects.Max(x => x.ID) + 1 : 1;

@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Caching;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
@@ -57,14 +58,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
             }
         }
 
-        protected void AddRange(IEnumerable<HitObject> hitObjects) => beatmap.AddRange(hitObjects);
+        protected void AddRange<T>(IEnumerable<T> hitObjects) where T : HitObject => hitObjects.ForEach(Add);
 
-        protected virtual void Add(THitObject hitObject) => beatmap.Add(hitObject);
+        protected virtual void Add<T>(T hitObject) where T : HitObject
+        {
+            bool containsInBeatmap = HitObjects.Any(x => x == hitObject);
+            if (containsInBeatmap)
+                throw new InvalidOperationException("Seems lyric is already in the beatmap.");
 
-        protected void Insert(int index, THitObject hitObject) => beatmap.Insert(index, hitObject);
+            beatmap.Add(hitObject);
+        }
 
-        protected void Remove(THitObject hitObject) => beatmap.Remove(hitObject);
+        protected virtual void Insert<T>(int index, T hitObject) where T : HitObject
+        {
+            bool containsInBeatmap = HitObjects.Any(x => x == hitObject);
+            if (containsInBeatmap)
+                throw new InvalidOperationException("Seems lyric is already in the beatmap.");
 
-        protected void RemoveRange(IEnumerable<HitObject> hitObjects) => beatmap.RemoveRange(hitObjects);
+            beatmap.Insert(index, hitObject);
+        }
+
+        protected void Remove<T>(T hitObject) where T : HitObject => beatmap.Remove(hitObject);
+
+        protected void RemoveRange<T>(IEnumerable<T> hitObjects) where T : HitObject => beatmap.RemoveRange(hitObjects);
     }
 }
