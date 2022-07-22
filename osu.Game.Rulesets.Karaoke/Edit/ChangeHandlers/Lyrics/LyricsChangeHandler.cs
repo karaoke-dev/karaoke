@@ -62,22 +62,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         public void CreateAtPosition()
         {
-            CheckExactlySelectedOneHitObject();
-
-            PerformOnSelection(lyric =>
+            AddBelowToSelection(new Lyric
             {
-                int order = lyric.Order;
-
-                // Shifting order that order is larger than current lyric.
-                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > order), 1);
-
-                // Add new lyric to target order.
-                var createLyric = new Lyric
-                {
-                    Text = "New lyric",
-                    Order = order + 1,
-                };
-                Add(createLyric);
+                Text = "New lyric",
             });
         }
 
