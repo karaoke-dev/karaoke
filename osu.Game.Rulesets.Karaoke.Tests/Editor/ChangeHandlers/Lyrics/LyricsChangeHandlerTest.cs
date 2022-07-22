@@ -177,8 +177,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         {
             PrepareHitObject(new Lyric
             {
-                Text = "カラオケ"
+                Text = "カラオケ",
+                ID = 0,
+                Order = 1,
             });
+
+            PrepareHitObject(new Lyric
+            {
+                Text = "Last lyric",
+                ID = 1,
+                Order = 2,
+            }, false);
 
             TriggerHandlerChanged(c => c.AddBelowToSelection(new Lyric
             {
@@ -188,11 +197,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             AssertHitObjects(hitObjects =>
             {
                 var lyrics = hitObjects.ToArray();
-                Assert.AreEqual(2, lyrics.Length);
+                Assert.AreEqual(3, lyrics.Length);
 
                 var addedLyric = lyrics.First(x => x.Text == "New lyric");
-                Assert.AreEqual(1, addedLyric.ID);
-                Assert.AreEqual(1, addedLyric.Order);
+                Assert.AreEqual(2, addedLyric.ID);
+                Assert.AreEqual(2, addedLyric.Order);
             });
         }
 
@@ -201,8 +210,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         {
             PrepareHitObject(new Lyric
             {
-                Text = "カラオケ"
+                Text = "カラオケ",
+                ID = 0,
+                Order = 1,
             });
+
+            PrepareHitObject(new Lyric
+            {
+                Text = "Last lyric",
+                ID = 1,
+                Order = 2,
+            }, false);
 
             TriggerHandlerChanged(c => c.AddRangeBelowToSelection(new[]
             {
@@ -215,11 +233,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             AssertHitObjects(hitObjects =>
             {
                 var lyrics = hitObjects.ToArray();
-                Assert.AreEqual(2, lyrics.Length);
+                Assert.AreEqual(3, lyrics.Length);
 
                 var addedLyric = lyrics.First(x => x.Text == "New lyric");
-                Assert.AreEqual(1, addedLyric.ID);
-                Assert.AreEqual(1, addedLyric.Order);
+                Assert.AreEqual(2, addedLyric.ID);
+                Assert.AreEqual(2, addedLyric.Order);
             });
         }
 
