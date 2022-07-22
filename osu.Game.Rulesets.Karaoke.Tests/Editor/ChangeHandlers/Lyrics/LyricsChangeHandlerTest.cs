@@ -173,6 +173,57 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         [Test]
+        public void TestAddBelowToSelection()
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ"
+            });
+
+            TriggerHandlerChanged(c => c.AddBelowToSelection(new Lyric
+            {
+                Text = "New lyric"
+            }));
+
+            AssertHitObjects(hitObjects =>
+            {
+                var lyrics = hitObjects.ToArray();
+                Assert.AreEqual(2, lyrics.Length);
+
+                var addedLyric = lyrics.First(x => x.Text == "New lyric");
+                Assert.AreEqual(1, addedLyric.ID);
+                Assert.AreEqual(1, addedLyric.Order);
+            });
+        }
+
+        [Test]
+        public void TestAddRangeBelowToSelection()
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ"
+            });
+
+            TriggerHandlerChanged(c => c.AddRangeBelowToSelection(new[]
+            {
+                new Lyric
+                {
+                    Text = "New lyric"
+                }
+            }));
+
+            AssertHitObjects(hitObjects =>
+            {
+                var lyrics = hitObjects.ToArray();
+                Assert.AreEqual(2, lyrics.Length);
+
+                var addedLyric = lyrics.First(x => x.Text == "New lyric");
+                Assert.AreEqual(1, addedLyric.ID);
+                Assert.AreEqual(1, addedLyric.Order);
+            });
+        }
+
+        [Test]
         public void TestRemove()
         {
             PrepareHitObject(new Lyric

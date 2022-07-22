@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -89,6 +90,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             {
                 Text = "New lyric",
                 Order = order + 1,
+            });
+        }
+
+        public void AddBelowToSelection(Lyric newLyric)
+        {
+            AddRangeBelowToSelection(new[] { newLyric });
+        }
+
+        public void AddRangeBelowToSelection(IEnumerable<Lyric> newlyrics)
+        {
+            CheckExactlySelectedOneHitObject();
+
+            PerformOnSelection(lyric =>
+            {
+                int order = lyric.Order;
+
+                // Shifting order that order is larger than current lyric.
+                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > order), newlyrics.Count());
+
+                foreach (var newlyric in newlyrics)
+                {
+                    newlyric.Order = ++order;
+                    Add(newlyric);
+                }
             });
         }
 
