@@ -248,7 +248,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         return false;
 
                     lyricsChangeHandler.AddBelowToSelection(pasteLyric);
-                    return false;
+                    return true;
 
                 case LyricEditorMode.Typing:
                     return false;
