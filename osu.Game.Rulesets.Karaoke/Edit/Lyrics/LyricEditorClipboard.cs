@@ -11,6 +11,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Platform;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
@@ -25,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         [Resolved, AllowNull]
         private GameHost host { get; set; }
+
+        [Resolved(canBeNull: true)]
+        private OnScreenDisplay? onScreenDisplay { get; set; }
 
         [Resolved, AllowNull]
         private ILyricCaretState lyricCaretState { get; set; }
@@ -96,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (!cut)
                 return false;
 
-            // todo: show the toast.
+            onScreenDisplay?.Display(new ClipboardToast(bindableMode.Value, ClipboardAction.Cut));
             return true;
         }
 
@@ -110,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (!copy)
                 return false;
 
-            // todo: show the toast.
+            onScreenDisplay?.Display(new ClipboardToast(bindableMode.Value, ClipboardAction.Copy));
             return true;
         }
 
@@ -127,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (!paste)
                 return false;
 
-            // todo: show the toast.
+            onScreenDisplay?.Display(new ClipboardToast(bindableMode.Value, ClipboardAction.Paste));
             return true;
         }
 
