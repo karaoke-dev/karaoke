@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions;
@@ -141,30 +140,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public class LyricEditorEditModeToast : Toast
         {
             public LyricEditorEditModeToast(LyricEditorMode mode)
-                : base(getDescription(mode), getValue(mode), getShortcut())
+                : base(getDescription(), getValue(mode), getShortcut(mode))
             {
             }
 
-            private static LocalisableString getDescription(LyricEditorMode mode) =>
-                mode switch
-                {
-                    LyricEditorMode.View => "View the lyric",
-                    LyricEditorMode.Manage => "Manage the lyric",
-                    LyricEditorMode.Typing => "Typing...",
-                    LyricEditorMode.Language => "Manage the language in the lyric.",
-                    LyricEditorMode.EditRuby => "Create/edit/delete the ruby",
-                    LyricEditorMode.EditRomaji => "Create/edit/delete the romaji",
-                    LyricEditorMode.EditTimeTag => "Create/edit/delete the time-tag.",
-                    LyricEditorMode.EditNote => "Create the notes for scoring.",
-                    LyricEditorMode.Singer => "Assign the singer to lyric.",
-                    _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
-                };
+            private static LocalisableString getDescription()
+                => "Lyric editor";
 
             private static LocalisableString getValue(LyricEditorMode mode)
-                => mode.GetDescription();
+                => $"{mode.GetDescription()} Mode";
 
-            private static LocalisableString getShortcut()
-                => "Switch edit mode";
+            private static LocalisableString getShortcut(LyricEditorMode mode)
+                => $"Switch to the {mode.GetDescription()} mode";
         }
     }
 }
