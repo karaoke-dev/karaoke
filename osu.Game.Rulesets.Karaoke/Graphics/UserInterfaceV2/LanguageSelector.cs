@@ -1,13 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
 using System.Globalization;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.Containers;
 using osu.Game.Graphics.UserInterface;
@@ -19,6 +18,8 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
     public class LanguageSelector : CompositeDrawable
     {
+        private readonly LanguageSelectionSearchTextBox filter;
+
         private readonly BindableWithCurrent<CultureInfo> current = new();
 
         public Bindable<CultureInfo> Current
@@ -27,11 +28,14 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
             set => current.Current = value;
         }
 
+        public override bool AcceptsFocus => true;
+
+        public override bool RequestsFocus => true;
+
         public LanguageSelector()
         {
             var languages = new BindableList<CultureInfo>(CultureInfoUtils.GetAvailableLanguages());
 
-            LanguageSelectionSearchTextBox filter;
             RearrangeableLanguageListContainer languageList;
             InternalChild = new GridContainer
             {
@@ -67,6 +71,13 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 
             filter.Current.BindValueChanged(e => languageList.Filter(e.NewValue));
             Current.BindValueChanged(e => languageList.SelectedSet.Value = e.NewValue);
+        }
+
+        protected override void OnFocus(FocusEvent e)
+        {
+            base.OnFocus(e);
+
+            GetContainingInputManager().ChangeFocus(filter);
         }
 
         private class LanguageSelectionSearchTextBox : SearchTextBox
