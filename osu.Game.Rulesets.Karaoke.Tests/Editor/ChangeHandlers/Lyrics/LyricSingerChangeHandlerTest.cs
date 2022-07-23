@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 }
             });
 
-            TriggerHandlerChanged(c => c.RemoveAll(new[] { singer }));
+            TriggerHandlerChanged(c => c.RemoveRange(new[] { singer }));
 
             AssertSelectedHitObject(h =>
             {

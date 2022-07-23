@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void RemoveAll(IEnumerable<TimeTag> timeTags)
+        public void RemoveRange(IEnumerable<TimeTag> timeTags)
         {
             CheckExactlySelectedOneHitObject();
 

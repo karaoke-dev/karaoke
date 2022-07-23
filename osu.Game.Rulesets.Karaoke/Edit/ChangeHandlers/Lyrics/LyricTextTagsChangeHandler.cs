@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void RemoveAll(IEnumerable<TTextTag> textTags)
+        public void RemoveRange(IEnumerable<TTextTag> textTags)
         {
             CheckExactlySelectedOneHitObject();
 

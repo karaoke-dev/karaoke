@@ -38,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        public void RemoveAll(IEnumerable<Singer> singers)
+        public void RemoveRange(IEnumerable<Singer> singers)
         {
             PerformOnSelection(lyric =>
             {

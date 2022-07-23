@@ -91,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         [Test]
-        public void TestRemoveAll()
+        public void TestRemoveRange()
         {
             var removedTag = new RubyTag
             {
@@ -116,7 +116,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 }
             });
 
-            TriggerHandlerChanged(c => c.RemoveAll(new[] { removedTag }));
+            TriggerHandlerChanged(c => c.RemoveRange(new[] { removedTag }));
 
             AssertSelectedHitObject(h =>
             {
