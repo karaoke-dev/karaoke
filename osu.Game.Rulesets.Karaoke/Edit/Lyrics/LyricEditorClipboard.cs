@@ -158,16 +158,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 case LyricEditorMode.EditRuby:
                     var rubies = editRubyModeState.SelectedItems;
+                    if (!rubies.Any())
+                        return false;
+
                     lyricRubyTagsChangeHandler.RemoveAll(rubies);
                     return true;
 
                 case LyricEditorMode.EditRomaji:
                     var romajies = editRomajiModeState.SelectedItems;
+                    if (!romajies.Any())
+                        return false;
+
                     lyricRomajiTagsChangeHandler.RemoveAll(romajies);
                     return true;
 
                 case LyricEditorMode.EditTimeTag:
                     var timeTags = timeTagModeState.SelectedItems;
+                    if (!timeTags.Any())
+                        return false;
+
                     lyricTimeTagsChangeHandler.RemoveAll(timeTags);
                     return true;
 
@@ -207,18 +216,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return true;
 
                 case LyricEditorMode.EditRuby:
-                    saveObjectToTheClipboardContent(editRubyModeState.SelectedItems);
-                    copyObjectToClipboard(editRubyModeState.SelectedItems);
+                    var rubies = editRubyModeState.SelectedItems;
+                    if (!rubies.Any())
+                        return false;
+
+                    saveObjectToTheClipboardContent(rubies);
+                    copyObjectToClipboard(rubies);
                     return true;
 
                 case LyricEditorMode.EditRomaji:
-                    saveObjectToTheClipboardContent(editRomajiModeState.SelectedItems);
-                    copyObjectToClipboard(editRomajiModeState.SelectedItems);
+                    var romajies = editRomajiModeState.SelectedItems;
+                    if (!romajies.Any())
+                        return false;
+
+                    saveObjectToTheClipboardContent(romajies);
+                    copyObjectToClipboard(romajies);
                     return true;
 
                 case LyricEditorMode.EditTimeTag:
-                    saveObjectToTheClipboardContent(timeTagModeState.SelectedItems);
-                    copyObjectToClipboard(timeTagModeState.SelectedItems);
+                    var timeTags = timeTagModeState.SelectedItems;
+                    if (!timeTags.Any())
+                        return false;
+
+                    saveObjectToTheClipboardContent(timeTags);
+                    copyObjectToClipboard(timeTags);
                     return true;
 
                 case LyricEditorMode.EditNote:
