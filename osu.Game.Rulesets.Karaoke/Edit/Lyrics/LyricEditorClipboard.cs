@@ -161,7 +161,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     if (!rubies.Any())
                         return false;
 
-                    lyricRubyTagsChangeHandler.RemoveAll(rubies);
+                    lyricRubyTagsChangeHandler.RemoveRange(rubies);
                     return true;
 
                 case LyricEditorMode.EditRomaji:
@@ -169,7 +169,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     if (!romajies.Any())
                         return false;
 
-                    lyricRomajiTagsChangeHandler.RemoveAll(romajies);
+                    lyricRomajiTagsChangeHandler.RemoveRange(romajies);
                     return true;
 
                 case LyricEditorMode.EditTimeTag:
@@ -177,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     if (!timeTags.Any())
                         return false;
 
-                    lyricTimeTagsChangeHandler.RemoveAll(timeTags);
+                    lyricTimeTagsChangeHandler.RemoveRange(timeTags);
                     return true;
 
                 case LyricEditorMode.EditNote:
