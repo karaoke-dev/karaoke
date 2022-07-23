@@ -11,6 +11,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Platform;
+using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
@@ -25,6 +26,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
     {
         [Resolved, AllowNull]
         private GameHost host { get; set; }
+
+        [Resolved(canBeNull: true)]
+        private OnScreenDisplay? onScreenDisplay { get; set; }
 
         [Resolved, AllowNull]
         private ILyricCaretState lyricCaretState { get; set; }
@@ -96,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (!cut)
                 return false;
 
-            // todo: show the toast.
+            onScreenDisplay?.Display(new ClipboardToast(bindableMode.Value, ClipboardAction.Cut));
             return true;
         }
 
@@ -110,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (!copy)
                 return false;
 
-            // todo: show the toast.
+            onScreenDisplay?.Display(new ClipboardToast(bindableMode.Value, ClipboardAction.Copy));
             return true;
         }
 
@@ -127,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             if (!paste)
                 return false;
 
-            // todo: show the toast.
+            onScreenDisplay?.Display(new ClipboardToast(bindableMode.Value, ClipboardAction.Paste));
             return true;
         }
 
@@ -154,16 +158,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
                 case LyricEditorMode.EditRuby:
                     var rubies = editRubyModeState.SelectedItems;
+                    if (!rubies.Any())
+                        return false;
+
                     lyricRubyTagsChangeHandler.RemoveAll(rubies);
                     return true;
 
                 case LyricEditorMode.EditRomaji:
                     var romajies = editRomajiModeState.SelectedItems;
+                    if (!romajies.Any())
+                        return false;
+
                     lyricRomajiTagsChangeHandler.RemoveAll(romajies);
                     return true;
 
                 case LyricEditorMode.EditTimeTag:
                     var timeTags = timeTagModeState.SelectedItems;
+                    if (!timeTags.Any())
+                        return false;
+
                     lyricTimeTagsChangeHandler.RemoveAll(timeTags);
                     return true;
 
@@ -203,18 +216,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return true;
 
                 case LyricEditorMode.EditRuby:
-                    saveObjectToTheClipboardContent(editRubyModeState.SelectedItems);
-                    copyObjectToClipboard(editRubyModeState.SelectedItems);
+                    var rubies = editRubyModeState.SelectedItems;
+                    if (!rubies.Any())
+                        return false;
+
+                    saveObjectToTheClipboardContent(rubies);
+                    copyObjectToClipboard(rubies);
                     return true;
 
                 case LyricEditorMode.EditRomaji:
-                    saveObjectToTheClipboardContent(editRomajiModeState.SelectedItems);
-                    copyObjectToClipboard(editRomajiModeState.SelectedItems);
+                    var romajies = editRomajiModeState.SelectedItems;
+                    if (!romajies.Any())
+                        return false;
+
+                    saveObjectToTheClipboardContent(romajies);
+                    copyObjectToClipboard(romajies);
                     return true;
 
                 case LyricEditorMode.EditTimeTag:
-                    saveObjectToTheClipboardContent(timeTagModeState.SelectedItems);
-                    copyObjectToClipboard(timeTagModeState.SelectedItems);
+                    var timeTags = timeTagModeState.SelectedItems;
+                    if (!timeTags.Any())
+                        return false;
+
+                    saveObjectToTheClipboardContent(timeTags);
+                    copyObjectToClipboard(timeTags);
                     return true;
 
                 case LyricEditorMode.EditNote:
@@ -244,7 +269,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         return false;
 
                     lyricsChangeHandler.AddBelowToSelection(pasteLyric);
-                    return false;
+                    return true;
 
                 case LyricEditorMode.Typing:
                     return false;
