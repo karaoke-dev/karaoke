@@ -113,7 +113,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         [Test]
-        public void TestRemoveAll()
+        public void TestRemoveRange()
         {
             var removedTag = new TimeTag(new TextIndex(), 1000);
 
@@ -126,7 +126,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 }
             });
 
-            TriggerHandlerChanged(c => c.RemoveAll(new[] { removedTag }));
+            TriggerHandlerChanged(c => c.RemoveRange(new[] { removedTag }));
 
             AssertSelectedHitObject(h =>
             {

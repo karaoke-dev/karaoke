@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
 
             protected override void DeleteItems(IEnumerable<TimeTag> items)
             {
-                lyricTimeTagsChangeHandler.RemoveAll(items);
+                lyricTimeTagsChangeHandler.RemoveRange(items);
             }
         }
     }

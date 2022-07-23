@@ -13,6 +13,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         void Remove(TItem item);
 
-        void RemoveAll(IEnumerable<TItem> items);
+        void RemoveRange(IEnumerable<TItem> items);
     }
 }
