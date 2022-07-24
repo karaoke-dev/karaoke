@@ -11,10 +11,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RomajiTags
     public abstract class BaseRomajiTagGeneratorTest<TRomajiTagGenerator, TConfig> : BaseGeneratorTest<TRomajiTagGenerator, RomajiTag[], TConfig>
         where TRomajiTagGenerator : RomajiTagGenerator<TConfig> where TConfig : RomajiTagGeneratorConfig, new()
     {
+        protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
+        {
+            var lyric = new Lyric { Text = text };
+            CheckCanGenerate(lyric, canGenerate, config);
+        }
+
         protected void CheckGenerateResult(string text, string[] expectedRubies, TConfig config)
         {
             var expected = TestCaseTagHelper.ParseRomajiTags(expectedRubies);
-            CheckGenerateResult(text, expected, config);
+            var lyric = new Lyric { Text = text };
+            CheckGenerateResult(lyric, expected, config);
         }
 
         protected override void AssertEqual(RomajiTag[] expected, RomajiTag[] actual)

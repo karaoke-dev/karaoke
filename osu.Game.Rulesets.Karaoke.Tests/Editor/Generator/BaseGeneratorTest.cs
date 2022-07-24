@@ -38,12 +38,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
             return generator;
         }
 
-        protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
-        {
-            var lyric = new Lyric { Text = text };
-            CheckCanGenerate(lyric, canGenerate, config);
-        }
-
         protected static void CheckCanGenerate(Lyric lyric, bool canGenerate, TConfig config)
         {
             var generator = GenerateGenerator(config);
@@ -55,12 +49,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
         {
             bool actual = generator.CanGenerate(lyric);
             Assert.AreEqual(canGenerate, actual);
-        }
-
-        protected void CheckGenerateResult(string text, TObject expected, TConfig config)
-        {
-            var lyric = new Lyric { Text = text };
-            CheckGenerateResult(lyric, expected, config);
         }
 
         protected void CheckGenerateResult(Lyric lyric, TObject expected, TConfig config)
