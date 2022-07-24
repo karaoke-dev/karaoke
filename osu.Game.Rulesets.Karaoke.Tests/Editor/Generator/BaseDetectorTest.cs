@@ -30,6 +30,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
             return config;
         }
 
+        protected static TDetector GenerateDetector(TConfig config)
+        {
+            if (Activator.CreateInstance(typeof(TDetector), config) is not TDetector detector)
+                throw new ArgumentNullException(nameof(detector));
+
+            return detector;
+        }
+
         protected static void CheckCanDetect(string text, bool canDetect, TConfig config)
         {
             var lyric = new Lyric { Text = text };
@@ -38,8 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
 
         protected static void CheckCanDetect(Lyric lyric, bool canDetect, TConfig config)
         {
-            if (Activator.CreateInstance(typeof(TDetector), config) is not TDetector detector)
-                throw new ArgumentNullException(nameof(detector));
+            var detector = GenerateDetector(config);
 
             bool actual = detector.CanDetect(lyric);
             Assert.AreEqual(canDetect, actual);
@@ -53,8 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
 
         protected void CheckDetectResult(Lyric lyric, TObject expected, TConfig config)
         {
-            if (Activator.CreateInstance(typeof(TDetector), config) is not TDetector detector)
-                throw new ArgumentNullException(nameof(detector));
+            var detector = GenerateDetector(config);
 
             // create time tag and actually time tag.
             var actual = detector.Detect(lyric);

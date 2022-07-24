@@ -30,6 +30,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
             return config;
         }
 
+        protected static TGenerator GenerateGenerator(TConfig config)
+        {
+            if (Activator.CreateInstance(typeof(TGenerator), config) is not TGenerator generator)
+                throw new ArgumentNullException(nameof(generator));
+
+            return generator;
+        }
+
         protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
         {
             var lyric = new Lyric { Text = text };
@@ -38,8 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
 
         protected static void CheckCanGenerate(Lyric lyric, bool canGenerate, TConfig config)
         {
-            if (Activator.CreateInstance(typeof(TGenerator), config) is not TGenerator generator)
-                throw new ArgumentNullException(nameof(generator));
+            var generator = GenerateGenerator(config);
 
             bool actual = generator.CanGenerate(lyric);
             Assert.AreEqual(canGenerate, actual);
@@ -53,8 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
 
         protected void CheckGenerateResult(Lyric lyric, TObject expected, TConfig config)
         {
-            if (Activator.CreateInstance(typeof(TGenerator), config) is not TGenerator generator)
-                throw new ArgumentNullException(nameof(generator));
+            var generator = GenerateGenerator(config);
 
             // create time tag and actually time tag.
             var actual = generator.Generate(lyric);
