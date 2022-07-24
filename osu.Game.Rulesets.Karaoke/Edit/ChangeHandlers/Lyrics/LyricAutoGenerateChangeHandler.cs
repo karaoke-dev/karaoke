@@ -11,6 +11,7 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.ReferenceLyric;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags;
@@ -32,6 +33,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             switch (autoGenerateProperty)
             {
+                case LyricAutoGenerateProperty.DetectReferenceLyric:
+                    var referenceLyricDetector = createLyricDetector<Lyric>();
+                    return canDetect(referenceLyricDetector);
+
                 case LyricAutoGenerateProperty.DetectLanguage:
                     var languageDetector = createLyricDetector<CultureInfo>();
                     return canDetect(languageDetector);
@@ -67,6 +72,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             switch (autoGenerateProperty)
             {
+                case LyricAutoGenerateProperty.DetectReferenceLyric:
+                    var referenceLyricDetector = createLyricDetector<Lyric>();
+                    return getInvalidMessageFromDetector(referenceLyricDetector);
+
                 case LyricAutoGenerateProperty.DetectLanguage:
                     var languageDetector = createLyricDetector<CultureInfo>();
                     return getInvalidMessageFromDetector(languageDetector);
@@ -106,6 +115,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             switch (autoGenerateProperty)
             {
+                case LyricAutoGenerateProperty.DetectReferenceLyric:
+                    var referenceLyricDetector = createLyricDetector<Lyric>();
+                    PerformOnSelection(lyric =>
+                    {
+                        var detectedLanguage = referenceLyricDetector.Detect(lyric);
+                        lyric.ReferenceLyric = detectedLanguage;
+                    });
+                    break;
+
                 case LyricAutoGenerateProperty.DetectLanguage:
                     var languageDetector = createLyricDetector<CultureInfo>();
                     PerformOnSelection(lyric =>
@@ -161,9 +179,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         {
             switch (typeof(T))
             {
+                case Type t when t == typeof(Lyric):
+                    var lyrics = beatmap.HitObjects.OfType<Lyric>().ToArray();
+                    var referenceLyricDetectorConfig = generatorConfigManager.Get<ReferenceLyricDetectorConfig>(KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig);
+                    return (ILyricPropertyDetector<T>)new ReferenceLyricDetector(lyrics, referenceLyricDetectorConfig);
+
                 case Type t when t == typeof(CultureInfo):
-                    var config = generatorConfigManager.Get<LanguageDetectorConfig>(KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig);
-                    return (ILyricPropertyDetector<T>)new LanguageDetector(config);
+                    var languageDetectorConfig = generatorConfigManager.Get<LanguageDetectorConfig>(KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig);
+                    return (ILyricPropertyDetector<T>)new LanguageDetector(languageDetectorConfig);
 
                 default:
                     throw new NotSupportedException();
