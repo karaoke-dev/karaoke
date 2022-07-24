@@ -2,7 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Game.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;

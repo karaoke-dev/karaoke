@@ -11,10 +11,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.RubyTags
     public abstract class BaseRubyTagGeneratorTest<TRubyTagGenerator, TConfig> : BaseGeneratorTest<TRubyTagGenerator, RubyTag[], TConfig>
         where TRubyTagGenerator : RubyTagGenerator<TConfig> where TConfig : RubyTagGeneratorConfig, new()
     {
+        protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
+        {
+            var lyric = new Lyric { Text = text };
+            CheckCanGenerate(lyric, canGenerate, config);
+        }
+
         protected void CheckGenerateResult(string text, string[] expectedRubies, TConfig config)
         {
             var expected = TestCaseTagHelper.ParseRubyTags(expectedRubies);
-            CheckGenerateResult(text, expected, config);
+            var lyric = new Lyric { Text = text };
+            CheckGenerateResult(lyric, expected, config);
         }
 
         protected override void AssertEqual(RubyTag[] expected, RubyTag[] actual)

@@ -11,10 +11,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.TimeTags
     public abstract class BaseTimeTagGeneratorTest<TTimeTagGenerator, TConfig> : BaseGeneratorTest<TTimeTagGenerator, TimeTag[], TConfig>
         where TTimeTagGenerator : TimeTagGenerator<TConfig> where TConfig : TimeTagGeneratorConfig, new()
     {
+        protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
+        {
+            var lyric = new Lyric { Text = text };
+            CheckCanGenerate(lyric, canGenerate, config);
+        }
+
         protected void CheckGenerateResult(string text, string[] expectedTimeTags, TConfig config)
         {
             var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
-            CheckGenerateResult(text, expected, config);
+            var lyric = new Lyric { Text = text };
+            CheckGenerateResult(lyric, expected, config);
         }
 
         protected void CheckGenerateResult(Lyric lyric, string[] expectedTimeTags, TConfig config)

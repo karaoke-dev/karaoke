@@ -30,32 +30,36 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
             return config;
         }
 
-        protected static void CheckCanGenerate(string text, bool canGenerate, TConfig config)
+        protected static TGenerator GenerateGenerator(TConfig config)
         {
-            var lyric = new Lyric { Text = text };
-            CheckCanGenerate(lyric, canGenerate, config);
+            if (Activator.CreateInstance(typeof(TGenerator), config) is not TGenerator generator)
+                throw new ArgumentNullException(nameof(generator));
+
+            return generator;
         }
 
         protected static void CheckCanGenerate(Lyric lyric, bool canGenerate, TConfig config)
         {
-            if (Activator.CreateInstance(typeof(TGenerator), config) is not TGenerator generator)
-                throw new ArgumentNullException(nameof(generator));
+            var generator = GenerateGenerator(config);
 
+            CheckCanGenerate(lyric, canGenerate, generator);
+        }
+
+        protected static void CheckCanGenerate(Lyric lyric, bool canGenerate, TGenerator generator)
+        {
             bool actual = generator.CanGenerate(lyric);
             Assert.AreEqual(canGenerate, actual);
         }
 
-        protected void CheckGenerateResult(string text, TObject expected, TConfig config)
-        {
-            var lyric = new Lyric { Text = text };
-            CheckGenerateResult(lyric, expected, config);
-        }
-
         protected void CheckGenerateResult(Lyric lyric, TObject expected, TConfig config)
         {
-            if (Activator.CreateInstance(typeof(TGenerator), config) is not TGenerator generator)
-                throw new ArgumentNullException(nameof(generator));
+            var generator = GenerateGenerator(config);
 
+            CheckGenerateResult(lyric, expected, generator);
+        }
+
+        protected void CheckGenerateResult(Lyric lyric, TObject expected, TGenerator generator)
+        {
             // create time tag and actually time tag.
             var actual = generator.Generate(lyric);
             AssertEqual(expected, actual);

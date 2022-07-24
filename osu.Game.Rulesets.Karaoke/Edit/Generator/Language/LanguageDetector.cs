@@ -7,7 +7,7 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Language
 {
     public class LanguageDetector : ILyricPropertyDetector<CultureInfo?>
     {

@@ -9,7 +9,7 @@ using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags;

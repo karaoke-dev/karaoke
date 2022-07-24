@@ -3,9 +3,10 @@
 
 using System.Globalization;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Language;
+using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Language
 {
     [TestFixture]
     public class LanguageDetectorTest : BaseDetectorTest<LanguageDetector, CultureInfo?, LanguageDetectorConfig>
@@ -16,8 +17,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
         [TestCase(null, false)]
         public void TestCanDetect(string text, bool canDetect)
         {
+            var lyric = new Lyric { Text = text };
             var config = GeneratorConfig();
-            CheckCanDetect(text, canDetect, config);
+            CheckCanDetect(lyric, canDetect, config);
         }
 
         [TestCase("花火大会", "zh-CN")]
@@ -27,9 +29,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
         [TestCase("はなび", "ja")]
         public void TestDetect(string text, string language)
         {
+            var lyric = new Lyric { Text = text };
             var config = GeneratorConfig();
             var expected = new CultureInfo(language);
-            CheckDetectResult(text, expected, config);
+            CheckDetectResult(lyric, expected, config);
         }
 
         protected override void AssertEqual(CultureInfo? expected, CultureInfo? actual)
