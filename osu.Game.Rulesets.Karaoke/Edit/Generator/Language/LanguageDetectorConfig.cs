@@ -5,7 +5,7 @@ using System;
 using System.Globalization;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Languages
+namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Language
 {
     public class LanguageDetectorConfig : IHasConfig<LanguageDetectorConfig>
     {

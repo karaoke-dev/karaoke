@@ -3,9 +3,9 @@
 
 using System.Globalization;
 using NUnit.Framework;
-using osu.Game.Rulesets.Karaoke.Edit.Generator.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.Language;
 
-namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Languages
+namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator.Language
 {
     [TestFixture]
     public class LanguageDetectorTest : BaseDetectorTest<LanguageDetector, CultureInfo?, LanguageDetectorConfig>
