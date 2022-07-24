@@ -51,9 +51,6 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         // Language detection
         LanguageDetectorConfig,
 
-        // Layout generator
-        LayoutGeneratorConfig,
-
         // Note generator
         NoteGeneratorConfig,
 
