@@ -48,6 +48,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
         {
             var generator = GenerateGenerator(config);
 
+            CheckCanGenerate(lyric, canGenerate, generator);
+        }
+
+        protected static void CheckCanGenerate(Lyric lyric, bool canGenerate, TGenerator generator)
+        {
             bool actual = generator.CanGenerate(lyric);
             Assert.AreEqual(canGenerate, actual);
         }
@@ -62,6 +67,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
         {
             var generator = GenerateGenerator(config);
 
+            CheckGenerateResult(lyric, expected, generator);
+        }
+
+        protected void CheckGenerateResult(Lyric lyric, TObject expected, TGenerator generator)
+        {
             // create time tag and actually time tag.
             var actual = generator.Generate(lyric);
             AssertEqual(expected, actual);

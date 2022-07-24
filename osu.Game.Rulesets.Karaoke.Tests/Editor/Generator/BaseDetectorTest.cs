@@ -48,6 +48,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
         {
             var detector = GenerateDetector(config);
 
+            CheckCanDetect(lyric, canDetect, detector);
+        }
+
+        protected static void CheckCanDetect(Lyric lyric, bool canDetect, TDetector detector)
+        {
             bool actual = detector.CanDetect(lyric);
             Assert.AreEqual(canDetect, actual);
         }
@@ -62,6 +67,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Generator
         {
             var detector = GenerateDetector(config);
 
+            CheckDetectResult(lyric, expected, detector);
+        }
+
+        protected void CheckDetectResult(Lyric lyric, TObject expected, TDetector detector)
+        {
             // create time tag and actually time tag.
             var actual = detector.Detect(lyric);
             AssertEqual(expected, actual);
