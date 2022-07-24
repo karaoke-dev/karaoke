@@ -197,6 +197,20 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => LockBindable.Value = value;
         }
 
+        [JsonIgnore]
+        public readonly Bindable<Lyric?> ReferenceLyricBindable = new();
+
+        /// <summary>
+        /// Reference lyric.
+        /// Link the same or similar lyric for reference or sync the properties.
+        /// </summary>
+        [JsonProperty(IsReference = true)]
+        public Lyric? ReferenceLyric
+        {
+            get => ReferenceLyricBindable.Value;
+            set => ReferenceLyricBindable.Value = value;
+        }
+
         public Lyric()
         {
             TimeTagsBindable.CollectionChanged += (_, args) =>
