@@ -19,6 +19,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
 public enum LyricAutoGenerateProperty
 {
+    DetectReferenceLyric,
+
     DetectLanguage,
 
     AutoGenerateRubyTags,

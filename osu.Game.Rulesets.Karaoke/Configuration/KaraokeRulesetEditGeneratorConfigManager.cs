@@ -4,6 +4,7 @@
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Generator.ReferenceLyric;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags.Ja;
@@ -17,6 +18,9 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
         protected override void InitialiseDefaults()
         {
             base.InitialiseDefaults();
+
+            // Language detection
+            SetDefault(KaraokeRulesetEditGeneratorSetting.ReferenceLyricDetectorConfig, CreateDefaultConfig<ReferenceLyricDetectorConfig>());
 
             // Language detection
             SetDefault(KaraokeRulesetEditGeneratorSetting.LanguageDetectorConfig, CreateDefaultConfig<LanguageDetectorConfig>());
@@ -41,11 +45,11 @@ namespace osu.Game.Rulesets.Karaoke.Configuration
 
     public enum KaraokeRulesetEditGeneratorSetting
     {
+        // Reference lyric detection.
+        ReferenceLyricDetectorConfig,
+
         // Language detection
         LanguageDetectorConfig,
-
-        // Layout generator
-        LayoutGeneratorConfig,
 
         // Note generator
         NoteGeneratorConfig,
