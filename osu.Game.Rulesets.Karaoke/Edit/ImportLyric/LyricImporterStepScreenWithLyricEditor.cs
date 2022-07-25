@@ -116,7 +116,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             {
                 switch (mode)
                 {
-                    case LyricEditorMode.Manage:
+                    case LyricEditorMode.Texting:
                         screenStack.Pop(LyricImporterStep.EditLyric);
                         break;
 

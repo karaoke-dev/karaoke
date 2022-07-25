@@ -48,7 +48,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             bindableMode.BindValueChanged(e =>
             {
                 // Only draggable in edit mode.
-                ShowDragHandle.Value = e.NewValue == LyricEditorMode.Manage;
+                ShowDragHandle.Value = e.NewValue == LyricEditorMode.Texting;
 
                 // should remove extend when switch mode.
                 removeExtend();

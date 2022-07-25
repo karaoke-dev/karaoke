@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
         protected override IEnumerable<LyricEditorMode> ValidEnums => new[]
         {
             LyricEditorMode.View,
-            LyricEditorMode.Manage,
+            LyricEditorMode.Texting,
             LyricEditorMode.Language,
             LyricEditorMode.EditRuby,
             LyricEditorMode.EditRomaji,

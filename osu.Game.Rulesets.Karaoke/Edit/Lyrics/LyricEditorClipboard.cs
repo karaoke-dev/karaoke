@@ -147,7 +147,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.View:
                     return false;
 
-                case LyricEditorMode.Manage:
+                case LyricEditorMode.Texting:
                     switch (manageModeState.EditMode)
                     {
                         case TextingEditMode.Manage:
@@ -211,7 +211,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     copyObjectToClipboard(lyric.Text);
                     return true;
 
-                case LyricEditorMode.Manage:
+                case LyricEditorMode.Texting:
                     switch (manageModeState.EditMode)
                     {
                         case TextingEditMode.Manage:
@@ -280,7 +280,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.View:
                     return false;
 
-                case LyricEditorMode.Manage:
+                case LyricEditorMode.Texting:
                     switch (manageModeState.EditMode)
                     {
                         case TextingEditMode.Manage:

@@ -214,7 +214,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     switch (mode)
                     {
                         case LyricEditorMode.View:
-                        case LyricEditorMode.Manage:
+                        case LyricEditorMode.Texting:
                             return null;
 
                         case LyricEditorMode.Language:
@@ -261,7 +261,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             {
                 get
                 {
-                    if (bindableMode.Value != LyricEditorMode.Manage)
+                    if (bindableMode.Value != LyricEditorMode.Texting)
                         return null;
 
                     // should select lyric if trying to interact with context menu.
