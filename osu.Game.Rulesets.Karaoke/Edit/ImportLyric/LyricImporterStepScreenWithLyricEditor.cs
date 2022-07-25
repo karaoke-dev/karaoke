@@ -10,6 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 {
@@ -37,8 +38,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
         public LyricEditorMode LyricEditorMode
             => lyricEditor.Mode;
 
+        public T GetLyricEditorModeState<T>() where T : Enum
+            => lyricEditor.GetLyricEditorModeState<T>();
+
         public virtual void SwitchLyricEditorMode(LyricEditorMode mode)
             => lyricEditor.SwitchMode(mode);
+
+        public void SwitchToEditModeState<T>(T mode) where T : Enum
+            => lyricEditor.SwitchToEditModeState(mode);
 
         protected void PrepareAutoGenerate()
         {
@@ -51,6 +58,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             private LyricImporterSubScreenStack screenStack { get; set; }
 
             private ILyricSelectionState lyricSelectionState { get; set; }
+
+            private IManageModeState manageModeState { get; set; }
             private ILanguageModeState languageModeState { get; set; }
             private IEditRubyModeState editRubyModeState { get; set; }
             private IEditRomajiModeState editRomajiModeState { get; set; }
@@ -71,17 +80,43 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             {
                 var dependencies = base.CreateChildDependencies(parent);
                 lyricSelectionState = dependencies.Get<ILyricSelectionState>();
+                manageModeState = dependencies.Get<IManageModeState>();
                 languageModeState = dependencies.Get<ILanguageModeState>();
                 editRubyModeState = dependencies.Get<IEditRubyModeState>();
                 editRomajiModeState = dependencies.Get<IEditRomajiModeState>();
                 return dependencies;
             }
 
+            public T GetLyricEditorModeState<T>() where T : Enum
+            {
+                switch (typeof(T))
+                {
+                    case Type t when t == typeof(TextingEditMode):
+                        return EnumUtils.Casting<T>(manageModeState.EditMode);
+
+                    default:
+                        throw new NotSupportedException();
+                }
+            }
+
+            public void SwitchToEditModeState<T>(T mode) where T : Enum
+            {
+                switch (typeof(T))
+                {
+                    case Type t when t == typeof(TextingEditMode):
+                        manageModeState.ChangeEditMode(EnumUtils.Casting<TextingEditMode>(mode));
+                        break;
+
+                    default:
+                        throw new NotSupportedException();
+                }
+            }
+
             public override void NavigateToFix(LyricEditorMode mode)
             {
                 switch (mode)
                 {
-                    case LyricEditorMode.Typing:
+                    case LyricEditorMode.Manage:
                         screenStack.Pop(LyricImporterStep.EditLyric);
                         break;
 
