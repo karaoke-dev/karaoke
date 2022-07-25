@@ -23,6 +23,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         Texting,
 
         /// <summary>
+        /// Mark the lyric is "similar" to another lyric.
+        /// </summary>
+        [Description("Reference")]
+        Reference,
+
+        /// <summary>
         /// Can edit each lyric's language.
         /// </summary>
         [Description("Select language")]

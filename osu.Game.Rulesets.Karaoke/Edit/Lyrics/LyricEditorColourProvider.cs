@@ -47,6 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return 200 / 360f; // blue
 
                 case LyricEditorMode.Texting:
+                case LyricEditorMode.Reference:
                     return 0 / 360f; // red
 
                 case LyricEditorMode.Language:
