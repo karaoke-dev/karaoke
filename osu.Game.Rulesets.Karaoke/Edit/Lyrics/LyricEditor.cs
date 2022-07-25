@@ -17,10 +17,10 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
@@ -229,7 +229,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             EditExtend getExtendArea() =>
                 Mode switch
                 {
-                    LyricEditorMode.Texting => new ManageExtend(),
+                    LyricEditorMode.Texting => new TextingExtend(),
                     LyricEditorMode.Language => new LanguageExtend(),
                     LyricEditorMode.EditRuby => new RubyTagExtend(),
                     LyricEditorMode.EditRomaji => new RomajiTagExtend(),

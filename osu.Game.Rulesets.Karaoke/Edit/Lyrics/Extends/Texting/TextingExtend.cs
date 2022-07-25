@@ -3,15 +3,15 @@
 
 #nullable disable
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
 {
-    public class ManageExtend : EditExtend
+    public class TextingExtend : EditExtend
     {
         public override ExtendDirection Direction => ExtendDirection.Right;
 
         public override float ExtendWidth => 300;
 
-        public ManageExtend()
+        public TextingExtend()
         {
             Children = new[]
             {
