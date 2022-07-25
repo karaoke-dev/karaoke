@@ -325,7 +325,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             switch (mode)
             {
-                case LyricEditorMode.Typing:
+                case LyricEditorMode.Manage:
                 case LyricEditorMode.Language:
                 case LyricEditorMode.EditTimeTag:
                     SwitchMode(mode);
