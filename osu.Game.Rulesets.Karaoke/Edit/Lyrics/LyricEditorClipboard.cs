@@ -36,6 +36,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private Lyric? getSelectedLyric() => lyricCaretState.BindableCaretPosition.Value?.Lyric;
 
         [Resolved, AllowNull]
+        private ITextingModeState textingModeState { get; set; }
+
+        [Resolved, AllowNull]
         private IEditRubyModeState editRubyModeState { get; set; }
 
         [Resolved, AllowNull]
@@ -144,13 +147,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.View:
                     return false;
 
-                case LyricEditorMode.Manage:
-                    lyricsChangeHandler.Remove();
-                    return true;
+                case LyricEditorMode.Texting:
+                    switch (textingModeState.EditMode)
+                    {
+                        case TextingEditMode.Manage:
+                            lyricsChangeHandler.Remove();
+                            return true;
 
-                case LyricEditorMode.Typing:
-                    // cut, copy or paste event should be handled in the caret.
-                    return false;
+                        case TextingEditMode.Typing:
+                            // cut, copy or paste event should be handled in the caret.
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
 
                 case LyricEditorMode.Language:
                     languageChangeHandler.SetLanguage(null);
@@ -201,14 +211,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     copyObjectToClipboard(lyric.Text);
                     return true;
 
-                case LyricEditorMode.Manage:
-                    saveObjectToTheClipboardContent(lyric);
-                    copyObjectToClipboard(lyric.Text);
-                    return true;
+                case LyricEditorMode.Texting:
+                    switch (textingModeState.EditMode)
+                    {
+                        case TextingEditMode.Manage:
+                            saveObjectToTheClipboardContent(lyric);
+                            copyObjectToClipboard(lyric.Text);
+                            return true;
 
-                case LyricEditorMode.Typing:
-                    // cut, copy or paste event should be handled in the caret.
-                    return false;
+                        case TextingEditMode.Typing:
+                            // cut, copy or paste event should be handled in the caret.
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
 
                 case LyricEditorMode.Language:
                     saveObjectToTheClipboardContent(lyric.Language);
@@ -263,16 +280,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.View:
                     return false;
 
-                case LyricEditorMode.Manage:
-                    var pasteLyric = getObjectFromClipboardContent<Lyric>();
-                    if (pasteLyric == null)
-                        return false;
+                case LyricEditorMode.Texting:
+                    switch (textingModeState.EditMode)
+                    {
+                        case TextingEditMode.Manage:
+                            var pasteLyric = getObjectFromClipboardContent<Lyric>();
+                            if (pasteLyric == null)
+                                return false;
 
-                    lyricsChangeHandler.AddBelowToSelection(pasteLyric);
-                    return true;
+                            lyricsChangeHandler.AddBelowToSelection(pasteLyric);
+                            return true;
 
-                case LyricEditorMode.Typing:
-                    return false;
+                        case TextingEditMode.Typing:
+                            // cut, copy or paste event should be handled in the caret.
+                            return false;
+
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
 
                 case LyricEditorMode.Language:
                     var pasteLanguage = getObjectFromClipboardContent<CultureInfo>();

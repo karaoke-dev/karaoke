@@ -8,7 +8,7 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
 {
     public class ManageDeleteSubsection : SelectLyricButton
     {

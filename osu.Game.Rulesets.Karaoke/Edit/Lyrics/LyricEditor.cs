@@ -17,10 +17,10 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
@@ -55,8 +55,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(ILyricCaretState))]
         private readonly LyricCaretState lyricCaretState;
 
-        [Cached(typeof(IManageModeState))]
-        private readonly ManageModeState manageModeState;
+        [Cached(typeof(ITextingModeState))]
+        private readonly TextingModeState textingModeState;
 
         [Cached(typeof(ILanguageModeState))]
         private readonly LanguageModeState languageModeState;
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             AddInternal(lyricCaretState = new LyricCaretState());
 
             // state for target mode only.
-            AddInternal(manageModeState = new ManageModeState());
+            AddInternal(textingModeState = new TextingModeState());
             AddInternal(languageModeState = new LanguageModeState());
             AddInternal(editRubyModeState = new EditRubyModeState());
             AddInternal(editRomajiModeState = new EditRomajiModeState());
@@ -186,7 +186,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private void updateAddLyricState()
         {
             // display add new lyric only with edit mode.
-            bool disableBottomDrawable = BindableMode.Value == LyricEditorMode.Manage && !bindableSelecting.Value;
+            bool disableBottomDrawable = BindableMode.Value == LyricEditorMode.Texting && !bindableSelecting.Value;
             container.DisplayBottomDrawable = disableBottomDrawable;
         }
 
@@ -229,7 +229,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             EditExtend getExtendArea() =>
                 Mode switch
                 {
-                    LyricEditorMode.Manage => new ManageExtend(),
+                    LyricEditorMode.Texting => new TextingExtend(),
                     LyricEditorMode.Language => new LanguageExtend(),
                     LyricEditorMode.EditRuby => new RubyTagExtend(),
                     LyricEditorMode.EditRomaji => new RomajiTagExtend(),
@@ -325,7 +325,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         {
             switch (mode)
             {
-                case LyricEditorMode.Typing:
+                case LyricEditorMode.Texting:
                 case LyricEditorMode.Language:
                 case LyricEditorMode.EditTimeTag:
                     SwitchMode(mode);

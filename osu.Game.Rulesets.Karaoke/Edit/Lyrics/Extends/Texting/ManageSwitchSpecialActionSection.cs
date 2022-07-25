@@ -7,7 +7,7 @@ using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
 {
     public class ManageSwitchSpecialActionSection : SpecialActionSection<ManageEditModeSpecialAction>
     {
@@ -16,9 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage
         protected override string SwitchActionDescription => "Copy, delete or move the lyrics.";
 
         [BackgroundDependencyLoader]
-        private void load(IManageModeState manageModeState)
+        private void load(ITextingModeState textingModeState)
         {
-            BindTo(manageModeState);
+            BindTo(textingModeState);
         }
 
         protected override void UpdateActionArea(ManageEditModeSpecialAction action)

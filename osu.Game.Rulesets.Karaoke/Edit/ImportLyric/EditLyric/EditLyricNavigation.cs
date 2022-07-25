@@ -8,6 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
@@ -50,12 +51,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 
                 case NavigationState.Working:
                 case NavigationState.Done:
-                    var mode = Screen.LyricEditorMode;
+                    var mode = Screen.GetLyricEditorModeState<TextingEditMode>();
 
                     return mode switch
                     {
-                        LyricEditorMode.Manage => $"Cool! Try switching to [{typing_mode}] if you want to edit lyric.",
-                        LyricEditorMode.Typing => $"Cool! Try switching to [{cutting_mode}] if you want to cut or combine lyric.",
+                        TextingEditMode.Manage => $"Cool! Try switching to [{typing_mode}] if you want to edit lyric.",
+                        TextingEditMode.Typing => $"Cool! Try switching to [{cutting_mode}] if you want to cut or combine lyric.",
                         _ => throw new InvalidEnumArgumentException(nameof(mode))
                     };
 
@@ -74,8 +75,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         {
             public EditLyricTextFlowContainer(EditLyricStepScreen screen)
             {
-                AddLinkFactory(cutting_mode, "cutting mode", () => screen.SwitchLyricEditorMode(LyricEditorMode.Manage));
-                AddLinkFactory(typing_mode, "typing mode", () => screen.SwitchLyricEditorMode(LyricEditorMode.Typing));
+                AddLinkFactory(cutting_mode, "cutting mode", () => screen.SwitchToEditModeState(TextingEditMode.Manage));
+                AddLinkFactory(typing_mode, "typing mode", () => screen.SwitchToEditModeState(TextingEditMode.Typing));
             }
         }
     }

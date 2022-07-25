@@ -40,7 +40,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
             => base.CreateContent().With(_ =>
             {
                 // todo : will cause text update because has ScheduleAfterChildren in lyric editor.
-                SwitchLyricEditorMode(LyricEditorMode.Manage);
+                SwitchLyricEditorMode(LyricEditorMode.Texting);
             });
 
         public override void Complete()

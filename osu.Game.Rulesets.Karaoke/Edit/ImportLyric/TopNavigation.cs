@@ -94,8 +94,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
         protected void TriggerStateChange()
         {
-            state = GetState(editorBeatmap.HitObjects.OfType<Lyric>().ToArray());
-            updateNavigationDisplayInfo(state);
+            // wait for a bit until lyric editor's all property loaded.
+            ScheduleAfterChildren(() =>
+            {
+                state = GetState(editorBeatmap.HitObjects.OfType<Lyric>().ToArray());
+                updateNavigationDisplayInfo(state);
+            });
         }
 
         private void updateNavigationDisplayInfo(NavigationState value)

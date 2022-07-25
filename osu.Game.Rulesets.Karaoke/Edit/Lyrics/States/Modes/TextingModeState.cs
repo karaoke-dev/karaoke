@@ -3,12 +3,19 @@
 
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 {
-    public class ManageModeState : Component, IManageModeState
+    public class TextingModeState : Component, ITextingModeState
     {
+        private readonly Bindable<TextingEditMode> bindableEditMode = new();
+
+        public IBindable<TextingEditMode> BindableEditMode => bindableEditMode;
+
+        public void ChangeEditMode(TextingEditMode mode)
+            => bindableEditMode.Value = mode;
+
         public Bindable<ManageEditModeSpecialAction> BindableSpecialAction { get; } = new();
     }
 }

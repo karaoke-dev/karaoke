@@ -16,16 +16,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         View,
 
         /// <summary>
-        /// Can create/delete/mode/split/combine lyric.
+        /// Can create/delete/move/split/combine lyric.
+        /// And typing the lyric.
         /// </summary>
-        [Description("Manage lyrics")]
-        Manage,
-
-        /// <summary>
-        /// Able to typing lyric.
-        /// </summary>
-        [Description("Typing")]
-        Typing,
+        [Description("Texting")]
+        Texting,
 
         /// <summary>
         /// Can edit each lyric's language.

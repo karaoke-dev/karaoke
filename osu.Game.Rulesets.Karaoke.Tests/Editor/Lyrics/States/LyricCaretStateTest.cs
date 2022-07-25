@@ -61,6 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             Dependencies.Cache(new EditorBeatmap(beatmap));
             Dependencies.Cache(new EditorClock());
             Dependencies.CacheAs(state = new TestLyricEditorState());
+            Dependencies.CacheAs<ITextingModeState>(new TextingModeState());
             Dependencies.CacheAs<ITimeTagModeState>(new TimeTagModeState());
             Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
 
@@ -81,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         {
             // change from view mode to another mode that contains algorithm.
             changeMode(LyricEditorMode.View);
-            changeMode(LyricEditorMode.Manage);
+            changeMode(LyricEditorMode.Texting);
 
             // get the action
             assertCaretPosition(Assert.IsNotNull);
@@ -92,7 +93,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         public void TestChangeFromEditModeToViewMode()
         {
             // change from edit mode to view mode for checking that caret position should be clear.
-            changeMode(LyricEditorMode.Manage);
+            changeMode(LyricEditorMode.Texting);
             changeMode(LyricEditorMode.View);
 
             // get the action
@@ -104,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         public void TestChangeFromEditModeToEditMode()
         {
             // change from edit mode to view mode for checking that caret position should be clear.
-            changeMode(LyricEditorMode.Manage);
+            changeMode(LyricEditorMode.Texting);
             changeMode(LyricEditorMode.EditRuby);
 
             // get the action
@@ -130,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         [Test]
         public void MovingCaretWithEditMode()
         {
-            changeMode(LyricEditorMode.Manage);
+            changeMode(LyricEditorMode.Texting);
             movingCaret(MovingCaretAction.First);
 
             // get the action
@@ -158,7 +159,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         [Test]
         public void MovingCaretByLyricWithEditMode()
         {
-            changeMode(LyricEditorMode.Manage);
+            changeMode(LyricEditorMode.Texting);
 
             var targetLyric = getLyricFromBeatmap(1);
             movingCaretByLyric(targetLyric);
@@ -201,7 +202,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         [Test]
         public void MovingCaretByCaretPositionWithWrongCaretPosition()
         {
-            changeMode(LyricEditorMode.Manage);
+            changeMode(LyricEditorMode.Texting);
 
             var targetLyric = getLyricFromBeatmap(1);
 
@@ -247,7 +248,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
         [Test]
         public void MovingHoverCaretByCaretPositionWithWrongCaretPosition()
         {
-            changeMode(LyricEditorMode.Manage);
+            changeMode(LyricEditorMode.Texting);
 
             var targetLyric = getLyricFromBeatmap(1);
 

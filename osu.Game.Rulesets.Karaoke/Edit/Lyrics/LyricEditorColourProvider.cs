@@ -46,10 +46,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.View:
                     return 200 / 360f; // blue
 
-                case LyricEditorMode.Manage:
+                case LyricEditorMode.Texting:
                     return 0 / 360f; // red
 
-                case LyricEditorMode.Typing:
                 case LyricEditorMode.Language:
                 case LyricEditorMode.EditRuby:
                 case LyricEditorMode.EditRomaji:

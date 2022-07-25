@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return;
 
                 // should not move the position in manage lyric mode.
-                if (bindableMode.Value == LyricEditorMode.Manage)
+                if (bindableMode.Value == LyricEditorMode.Texting)
                     return;
 
                 // move to target position if auto focus.

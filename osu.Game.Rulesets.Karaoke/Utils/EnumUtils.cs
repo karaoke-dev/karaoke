@@ -17,5 +17,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static T GetNextValue<T>(T v) where T : Enum
             => GetValues<T>().Concat(new[] { default(T)! }).SkipWhile(e => !EqualityComparer<T>.Default.Equals(v, e)).Skip(1).First();
+
+        public static T Casting<T>(Enum mode)
+            => (T)(object)mode;
     }
 }

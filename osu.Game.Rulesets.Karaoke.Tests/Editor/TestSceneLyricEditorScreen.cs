@@ -58,15 +58,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         }
 
         [Test]
-        public void TestManageMode()
+        public void TestTextingMode()
         {
-            switchToMode(LyricEditorMode.Manage);
-        }
-
-        [Test]
-        public void TestTypingMode()
-        {
-            switchToMode(LyricEditorMode.Typing);
+            switchToMode(LyricEditorMode.Texting);
+            clickEditModeButtons<TextingEditMode>();
         }
 
         [Test]

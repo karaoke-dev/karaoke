@@ -157,7 +157,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             switch (position)
             {
                 case TextCaretPosition textCaretPosition:
-                    if (mode == LyricEditorMode.Manage)
+                    if (mode == LyricEditorMode.Texting)
                         lyricsChangeHandler.Split(textCaretPosition.Index);
                     return true;
 
