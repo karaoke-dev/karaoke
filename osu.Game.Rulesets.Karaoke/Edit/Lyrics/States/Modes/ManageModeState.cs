@@ -9,6 +9,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 {
     public class ManageModeState : Component, IManageModeState
     {
+        private readonly Bindable<TextingEditMode> bindableEditMode = new();
+
+        public IBindable<TextingEditMode> BindableEditMode => bindableEditMode;
+
+        public void ChangeEditMode(TextingEditMode mode)
+            => bindableEditMode.Value = mode;
+
         public Bindable<ManageEditModeSpecialAction> BindableSpecialAction { get; } = new();
     }
 }
