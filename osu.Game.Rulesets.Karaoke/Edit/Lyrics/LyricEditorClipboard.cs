@@ -162,6 +162,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                             throw new ArgumentOutOfRangeException();
                     }
 
+                case LyricEditorMode.Reference:
+                    return false;
+
                 case LyricEditorMode.Language:
                     languageChangeHandler.SetLanguage(null);
                     return true;
@@ -226,6 +229,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
+
+                case LyricEditorMode.Reference:
+                    return false;
 
                 case LyricEditorMode.Language:
                     saveObjectToTheClipboardContent(lyric.Language);
@@ -298,6 +304,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
+
+                case LyricEditorMode.Reference:
+                    return false;
 
                 case LyricEditorMode.Language:
                     var pasteLanguage = getObjectFromClipboardContent<CultureInfo>();
