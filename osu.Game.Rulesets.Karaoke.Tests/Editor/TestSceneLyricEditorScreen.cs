@@ -65,6 +65,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor
         }
 
         [Test]
+        public void TestReferenceMode()
+        {
+            switchToMode(LyricEditorMode.Reference);
+        }
+
+        [Test]
         public void TestLanguageMode()
         {
             switchToMode(LyricEditorMode.Language);
