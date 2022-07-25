@@ -215,7 +215,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     {
                         case LyricEditorMode.View:
                         case LyricEditorMode.Manage:
-                        case LyricEditorMode.Typing:
                             return null;
 
                         case LyricEditorMode.Language:

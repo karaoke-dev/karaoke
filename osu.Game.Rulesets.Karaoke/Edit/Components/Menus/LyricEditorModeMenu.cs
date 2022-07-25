@@ -20,7 +20,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Menus
         {
             LyricEditorMode.View,
             LyricEditorMode.Manage,
-            LyricEditorMode.Typing,
             LyricEditorMode.Language,
             LyricEditorMode.EditRuby,
             LyricEditorMode.EditRomaji,
