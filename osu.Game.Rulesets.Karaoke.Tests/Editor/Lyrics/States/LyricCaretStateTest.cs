@@ -61,6 +61,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.States
             Dependencies.Cache(new EditorBeatmap(beatmap));
             Dependencies.Cache(new EditorClock());
             Dependencies.CacheAs(state = new TestLyricEditorState());
+            Dependencies.CacheAs<IManageModeState>(new ManageModeState());
             Dependencies.CacheAs<ITimeTagModeState>(new TimeTagModeState());
             Dependencies.Cache(new KaraokeRulesetLyricEditorConfigManager());
 
