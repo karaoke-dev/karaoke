@@ -55,8 +55,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Cached(typeof(ILyricCaretState))]
         private readonly LyricCaretState lyricCaretState;
 
-        [Cached(typeof(IManageModeState))]
-        private readonly ManageModeState manageModeState;
+        [Cached(typeof(ITextingModeState))]
+        private readonly TextingModeState textingModeState;
 
         [Cached(typeof(ILanguageModeState))]
         private readonly LanguageModeState languageModeState;
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             AddInternal(lyricCaretState = new LyricCaretState());
 
             // state for target mode only.
-            AddInternal(manageModeState = new ManageModeState());
+            AddInternal(textingModeState = new TextingModeState());
             AddInternal(languageModeState = new LanguageModeState());
             AddInternal(editRubyModeState = new EditRubyModeState());
             AddInternal(editRomajiModeState = new EditRomajiModeState());

@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private Lyric? getSelectedLyric() => lyricCaretState.BindableCaretPosition.Value?.Lyric;
 
         [Resolved, AllowNull]
-        private IManageModeState manageModeState { get; set; }
+        private ITextingModeState textingModeState { get; set; }
 
         [Resolved, AllowNull]
         private IEditRubyModeState editRubyModeState { get; set; }
@@ -148,7 +148,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return false;
 
                 case LyricEditorMode.Texting:
-                    switch (manageModeState.EditMode)
+                    switch (textingModeState.EditMode)
                     {
                         case TextingEditMode.Manage:
                             lyricsChangeHandler.Remove();
@@ -212,7 +212,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return true;
 
                 case LyricEditorMode.Texting:
-                    switch (manageModeState.EditMode)
+                    switch (textingModeState.EditMode)
                     {
                         case TextingEditMode.Manage:
                             saveObjectToTheClipboardContent(lyric);
@@ -281,7 +281,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return false;
 
                 case LyricEditorMode.Texting:
-                    switch (manageModeState.EditMode)
+                    switch (textingModeState.EditMode)
                     {
                         case TextingEditMode.Manage:
                             var pasteLyric = getObjectFromClipboardContent<Lyric>();

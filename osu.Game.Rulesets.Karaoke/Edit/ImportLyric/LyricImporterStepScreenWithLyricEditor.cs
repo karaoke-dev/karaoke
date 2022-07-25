@@ -59,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
 
             private ILyricSelectionState lyricSelectionState { get; set; }
 
-            private IManageModeState manageModeState { get; set; }
+            private ITextingModeState textingModeState { get; set; }
             private ILanguageModeState languageModeState { get; set; }
             private IEditRubyModeState editRubyModeState { get; set; }
             private IEditRomajiModeState editRomajiModeState { get; set; }
@@ -80,7 +80,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
             {
                 var dependencies = base.CreateChildDependencies(parent);
                 lyricSelectionState = dependencies.Get<ILyricSelectionState>();
-                manageModeState = dependencies.Get<IManageModeState>();
+                textingModeState = dependencies.Get<ITextingModeState>();
                 languageModeState = dependencies.Get<ILanguageModeState>();
                 editRubyModeState = dependencies.Get<IEditRubyModeState>();
                 editRomajiModeState = dependencies.Get<IEditRomajiModeState>();
@@ -92,7 +92,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 switch (typeof(T))
                 {
                     case Type t when t == typeof(TextingEditMode):
-                        return EnumUtils.Casting<T>(manageModeState.EditMode);
+                        return EnumUtils.Casting<T>(textingModeState.EditMode);
 
                     default:
                         throw new NotSupportedException();
@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 switch (typeof(T))
                 {
                     case Type t when t == typeof(TextingEditMode):
-                        manageModeState.ChangeEditMode(EnumUtils.Casting<TextingEditMode>(mode));
+                        textingModeState.ChangeEditMode(EnumUtils.Casting<TextingEditMode>(mode));
                         break;
 
                     default:

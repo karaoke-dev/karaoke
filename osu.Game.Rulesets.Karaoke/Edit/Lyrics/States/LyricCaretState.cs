@@ -176,7 +176,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, ILyricsProvider lyricsProvider, ILyricEditorState state, IManageModeState manageModeState, ITimeTagModeState timeTagModeState,
+        private void load(EditorBeatmap beatmap, ILyricsProvider lyricsProvider, ILyricEditorState state, ITextingModeState textingModeState, ITimeTagModeState timeTagModeState,
                           KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
             selectedHitObjects.BindTo(beatmap.SelectedHitObjects);
@@ -185,7 +185,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             bindableMode.BindTo(state.BindableMode);
 
-            bindableTextingEditMode.BindTo(manageModeState.BindableEditMode);
+            bindableTextingEditMode.BindTo(textingModeState.BindableEditMode);
             bindableTimeTagEditMode.BindTo(timeTagModeState.BindableEditMode);
 
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode, bindableCreateTimeTagEditMode);

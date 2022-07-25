@@ -16,9 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage
         protected override string SwitchActionDescription => "Copy, delete or move the lyrics.";
 
         [BackgroundDependencyLoader]
-        private void load(IManageModeState manageModeState)
+        private void load(ITextingModeState textingModeState)
         {
-            BindTo(manageModeState);
+            BindTo(textingModeState);
         }
 
         protected override void UpdateActionArea(ManageEditModeSpecialAction action)

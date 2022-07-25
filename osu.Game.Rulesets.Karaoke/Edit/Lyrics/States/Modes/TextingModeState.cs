@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Manage;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 {
-    public class ManageModeState : Component, IManageModeState
+    public class TextingModeState : Component, ITextingModeState
     {
         private readonly Bindable<TextingEditMode> bindableEditMode = new();
 
