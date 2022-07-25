@@ -18,6 +18,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting;
@@ -230,6 +231,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 Mode switch
                 {
                     LyricEditorMode.Texting => new TextingExtend(),
+                    LyricEditorMode.Reference => new ReferenceExtend(),
                     LyricEditorMode.Language => new LanguageExtend(),
                     LyricEditorMode.EditRuby => new RubyTagExtend(),
                     LyricEditorMode.EditRomaji => new RomajiTagExtend(),
