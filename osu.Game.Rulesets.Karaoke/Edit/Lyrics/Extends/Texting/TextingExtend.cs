@@ -3,6 +3,11 @@
 
 #nullable disable
 
+using osu.Framework.Allocation;
+using osu.Framework.Bindables;
+using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
+
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
 {
     public class TextingExtend : EditExtend
@@ -11,12 +16,39 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
 
         public override float ExtendWidth => 300;
 
+        private readonly IBindable<TextingEditMode> bindableMode = new Bindable<TextingEditMode>();
+
         public TextingExtend()
         {
-            Children = new[]
+            bindableMode.BindValueChanged(e =>
             {
-                new ManageSwitchSpecialActionSection()
-            };
+                switch (e.NewValue)
+                {
+                    case TextingEditMode.Typing:
+                        Children = new[]
+                        {
+                            new TextingEditModeSection(),
+                        };
+                        break;
+
+                    case TextingEditMode.Manage:
+                        Children = new Drawable[]
+                        {
+                            new TextingEditModeSection(),
+                            new ManageSwitchSpecialActionSection()
+                        };
+                        break;
+
+                    default:
+                        return;
+                }
+            }, true);
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(ITextingModeState textingModeState)
+        {
+            bindableMode.BindTo(textingModeState.BindableEditMode);
         }
     }
 }
