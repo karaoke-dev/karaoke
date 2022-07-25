@@ -37,6 +37,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
         // it might be special for create time-tag mode.
+        private readonly IBindable<TextingEditMode> bindableTextingEditMode = new Bindable<TextingEditMode>();
         private readonly IBindable<TimeTagEditMode> bindableTimeTagEditMode = new Bindable<TimeTagEditMode>();
         private readonly IBindable<CreateTimeTagEditMode> bindableCreateTimeTagEditMode = new Bindable<CreateTimeTagEditMode>();
         private readonly IBindable<MovingTimeTagCaretMode> bindableCreateMovingCaretMode = new Bindable<MovingTimeTagCaretMode>();
@@ -67,6 +68,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             {
                 // Should refresh algorithm until all component loaded.
                 Schedule(refreshAlgorithmAndCaretPosition);
+            });
+
+            bindableTextingEditMode.BindValueChanged(e =>
+            {
+                refreshAlgorithmAndCaretPosition();
             });
 
             bindableTimeTagEditMode.BindValueChanged(e =>
@@ -127,8 +133,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
             return lyricEditorMode switch
             {
                 LyricEditorMode.View => null,
-                LyricEditorMode.Manage => new CuttingCaretPositionAlgorithm(lyrics),
-                LyricEditorMode.Typing => new TypingCaretPositionAlgorithm(lyrics),
+                LyricEditorMode.Manage => getTextingmodeAlgorithm(),
                 LyricEditorMode.Language => new ClickingCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.EditRuby => new NavigateCaretPositionAlgorithm(lyrics),
                 LyricEditorMode.EditRomaji => new NavigateCaretPositionAlgorithm(lyrics),
@@ -137,6 +142,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
                 LyricEditorMode.Singer => new NavigateCaretPositionAlgorithm(lyrics),
                 _ => throw new InvalidOperationException(nameof(lyricEditorMode))
             };
+
+            ICaretPositionAlgorithm getTextingmodeAlgorithm()
+            {
+                var textingEditMode = bindableTextingEditMode.Value;
+                return textingEditMode switch
+                {
+                    TextingEditMode.Typing => new TypingCaretPositionAlgorithm(lyrics),
+                    TextingEditMode.Manage => new CuttingCaretPositionAlgorithm(lyrics),
+                    _ => throw new InvalidOperationException(nameof(textingEditMode))
+                };
+            }
 
             ICaretPositionAlgorithm getTimeTagModeAlgorithm()
             {
@@ -160,7 +176,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, ILyricsProvider lyricsProvider, ILyricEditorState state, ITimeTagModeState timeTagModeState,
+        private void load(EditorBeatmap beatmap, ILyricsProvider lyricsProvider, ILyricEditorState state, IManageModeState manageModeState, ITimeTagModeState timeTagModeState,
                           KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
         {
             selectedHitObjects.BindTo(beatmap.SelectedHitObjects);
@@ -169,6 +185,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States
 
             bindableMode.BindTo(state.BindableMode);
 
+            bindableTextingEditMode.BindTo(manageModeState.BindableEditMode);
             bindableTimeTagEditMode.BindTo(timeTagModeState.BindableEditMode);
 
             lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.CreateTimeTagEditMode, bindableCreateTimeTagEditMode);
