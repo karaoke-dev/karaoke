@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 {
-    public interface ITextingModeState : IHasEditModeState<TextingEditMode>, IHasSpecialAction<ManageEditModeSpecialAction>
+    public interface ITextingModeState : IHasEditModeState<TextingEditMode>, IHasSpecialAction<TextingEditModeSpecialAction>
     {
     }
 }

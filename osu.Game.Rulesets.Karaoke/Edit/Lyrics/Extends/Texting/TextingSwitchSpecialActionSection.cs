@@ -1,15 +1,13 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
 {
-    public class ManageSwitchSpecialActionSection : SpecialActionSection<ManageEditModeSpecialAction>
+    public class TextingSwitchSpecialActionSection : SpecialActionSection<TextingEditModeSpecialAction>
     {
         protected override string SwitchActionTitle => "Special actions";
 
@@ -21,21 +19,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
             BindTo(textingModeState);
         }
 
-        protected override void UpdateActionArea(ManageEditModeSpecialAction action)
+        protected override void UpdateActionArea(TextingEditModeSpecialAction action)
         {
-            RemoveAll(x => x is ManageDeleteSubsection);
+            RemoveAll(x => x is TextingDeleteSubsection);
 
             switch (action)
             {
-                case ManageEditModeSpecialAction.Copy:
+                case TextingEditModeSpecialAction.Copy:
                     // todo: implement
                     break;
 
-                case ManageEditModeSpecialAction.Delete:
-                    Add(new ManageDeleteSubsection());
+                case TextingEditModeSpecialAction.Delete:
+                    Add(new TextingDeleteSubsection());
                     break;
 
-                case ManageEditModeSpecialAction.Move:
+                case TextingEditModeSpecialAction.Move:
                     // todo: implement
                     break;
 
