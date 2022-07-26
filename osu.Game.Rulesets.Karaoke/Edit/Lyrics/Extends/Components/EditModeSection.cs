@@ -17,10 +17,27 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
+    public abstract class EditModeSection<TEditModeState, TEditMode> : EditModeSection<TEditMode>
+        where TEditModeState : IHasEditModeState<TEditMode> where TEditMode : Enum
+    {
+        [Resolved]
+        private TEditModeState tEditModeState { get; set; }
+
+        protected override TEditMode DefaultMode() => tEditModeState.EditMode;
+
+        internal override void UpdateEditMode(TEditMode mode)
+        {
+            tEditModeState.ChangeEditMode(mode);
+
+            base.UpdateEditMode(mode);
+        }
+    }
+
     public abstract class EditModeSection<T> : Section where T : Enum
     {
         protected sealed override LocalisableString Title => "Edit mode";
