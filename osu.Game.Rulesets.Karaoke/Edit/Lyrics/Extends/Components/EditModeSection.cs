@@ -17,11 +17,28 @@ using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
-    public abstract class EditModeSection<T> : Section where T : Enum
+    public abstract class EditModeSection<TEditModeState, TEditMode> : EditModeSection<TEditMode>
+        where TEditModeState : IHasEditModeState<TEditMode> where TEditMode : Enum
+    {
+        [Resolved]
+        private TEditModeState tEditModeState { get; set; }
+
+        protected override TEditMode DefaultMode() => tEditModeState.EditMode;
+
+        internal override void UpdateEditMode(TEditMode mode)
+        {
+            tEditModeState.ChangeEditMode(mode);
+
+            base.UpdateEditMode(mode);
+        }
+    }
+
+    public abstract class EditModeSection<TEditMode> : Section where TEditMode : Enum
     {
         protected sealed override LocalisableString Title => "Edit mode";
 
@@ -74,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             });
         }
 
-        internal virtual void UpdateEditMode(T mode)
+        internal virtual void UpdateEditMode(TEditMode mode)
         {
             // should cancel the selection after change to the new edit mode.
             lyricSelectionState?.EndSelecting(LyricEditorSelectingAction.Cancel);
@@ -82,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             // update button style.
             foreach (var button in buttons)
             {
-                bool highLight = EqualityComparer<T>.Default.Equals(button.Mode, mode);
+                bool highLight = EqualityComparer<TEditMode>.Default.Equals(button.Mode, mode);
                 button.Alpha = highLight ? 0.8f : 0.4f;
                 button.BackgroundColour = GetColour(colours, button.Mode, highLight);
 
@@ -100,21 +117,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected abstract OverlayColourScheme CreateColourScheme();
 
-        protected abstract T DefaultMode();
+        protected abstract TEditMode DefaultMode();
 
-        protected abstract Dictionary<T, EditModeSelectionItem> CreateSelections();
+        protected abstract Dictionary<TEditMode, EditModeSelectionItem> CreateSelections();
 
-        protected abstract Color4 GetColour(OsuColour colours, T mode, bool active);
+        protected abstract Color4 GetColour(OsuColour colours, TEditMode mode, bool active);
 
         private class EditModeButton : OsuButton
         {
-            public new Action<T> Action;
+            public new Action<TEditMode> Action;
 
-            public T Mode { get; }
+            public TEditMode Mode { get; }
 
             public EditModeSelectionItem Item { get; }
 
-            public EditModeButton(T mode, EditModeSelectionItem item)
+            public EditModeButton(TEditMode mode, EditModeSelectionItem item)
             {
                 Mode = mode;
                 Item = item;

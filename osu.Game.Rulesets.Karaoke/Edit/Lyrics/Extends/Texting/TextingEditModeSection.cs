@@ -1,11 +1,8 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
-using osu.Framework.Allocation;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
@@ -14,16 +11,10 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
 {
-    public class TextingEditModeSection : EditModeSection<TextingEditMode>
+    public class TextingEditModeSection : EditModeSection<ITextingModeState, TextingEditMode>
     {
-        [Resolved]
-        private ITextingModeState textingModeState { get; set; }
-
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Red;
-
-        protected override TextingEditMode DefaultMode()
-            => textingModeState.EditMode;
 
         protected override Dictionary<TextingEditMode, EditModeSelectionItem> CreateSelections()
             => new()
@@ -44,13 +35,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
                 TextingEditMode.Manage => active ? colours.Yellow : colours.YellowDarker,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
-        }
-
-        internal override void UpdateEditMode(TextingEditMode mode)
-        {
-            textingModeState.ChangeEditMode(mode);
-
-            base.UpdateEditMode(mode);
         }
     }
 }

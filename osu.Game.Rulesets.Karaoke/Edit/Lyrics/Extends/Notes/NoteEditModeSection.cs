@@ -1,11 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
-using osu.Framework.Allocation;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
@@ -14,16 +11,10 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
-    public class NoteEditModeSection : EditModeSection<NoteEditMode>
+    public class NoteEditModeSection : EditModeSection<IEditNoteModeState, NoteEditMode>
     {
-        [Resolved]
-        private IEditNoteModeState editNoteModeState { get; set; }
-
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Blue;
-
-        protected override NoteEditMode DefaultMode()
-            => editNoteModeState.EditMode;
 
         protected override Dictionary<NoteEditMode, EditModeSelectionItem> CreateSelections()
             => new()
@@ -47,12 +38,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
                 NoteEditMode.Verify => active ? colours.Yellow : colours.YellowDarker,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
-
-        internal override void UpdateEditMode(NoteEditMode mode)
-        {
-            editNoteModeState.ChangeEditMode(mode);
-
-            base.UpdateEditMode(mode);
-        }
     }
 }
