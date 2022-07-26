@@ -1,9 +1,12 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Input.Events;
 using osu.Game.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
@@ -11,6 +14,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
     public class ReferenceLyricInfo : SubInfo
     {
         private readonly IBindable<Lyric?> bindableReferenceLyric;
+
+        [Resolved, AllowNull]
+        private ILyricCaretState lyricCaretState { get; set; }
 
         public ReferenceLyricInfo(Lyric lyric)
             : base(lyric)
@@ -37,6 +43,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
                     BadgeText = $"Ref: #{e.NewValue.Order}";
                 }
             }, true);
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            if (bindableReferenceLyric.Value != null)
+            {
+                lyricCaretState.MoveCaretToTargetPosition(bindableReferenceLyric.Value);
+                return true;
+            }
+
+            return base.OnClick(e);
         }
     }
 }
