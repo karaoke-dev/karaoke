@@ -31,7 +31,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
                         };
                         break;
 
-                    case TextingEditMode.Manage:
+                    case TextingEditMode.Split:
                         Children = new Drawable[]
                         {
                             new TextingEditModeSection(),

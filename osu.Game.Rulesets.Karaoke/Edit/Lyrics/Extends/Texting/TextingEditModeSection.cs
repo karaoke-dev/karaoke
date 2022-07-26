@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
                     TextingEditMode.Typing, new EditModeSelectionItem("Typing", "Edit the lyric text.")
                 },
                 {
-                    TextingEditMode.Manage, new EditModeSelectionItem("Manage", "Create/delete or split/combine the lyric.")
+                    TextingEditMode.Split, new EditModeSelectionItem("Split", "Create/delete or split/combine the lyric.")
                 }
             };
 
@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
             return mode switch
             {
                 TextingEditMode.Typing => active ? colours.Blue : colours.BlueDarker,
-                TextingEditMode.Manage => active ? colours.Yellow : colours.YellowDarker,
+                TextingEditMode.Split => active ? colours.Yellow : colours.YellowDarker,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
         }

@@ -150,13 +150,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.Texting:
                     switch (textingModeState.EditMode)
                     {
-                        case TextingEditMode.Manage:
-                            lyricsChangeHandler.Remove();
-                            return true;
-
                         case TextingEditMode.Typing:
                             // cut, copy or paste event should be handled in the caret.
                             return false;
+
+                        case TextingEditMode.Split:
+                            lyricsChangeHandler.Remove();
+                            return true;
 
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -217,14 +217,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.Texting:
                     switch (textingModeState.EditMode)
                     {
-                        case TextingEditMode.Manage:
-                            saveObjectToTheClipboardContent(lyric);
-                            copyObjectToClipboard(lyric.Text);
-                            return true;
-
                         case TextingEditMode.Typing:
                             // cut, copy or paste event should be handled in the caret.
                             return false;
+
+                        case TextingEditMode.Split:
+                            saveObjectToTheClipboardContent(lyric);
+                            copyObjectToClipboard(lyric.Text);
+                            return true;
 
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -289,17 +289,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 case LyricEditorMode.Texting:
                     switch (textingModeState.EditMode)
                     {
-                        case TextingEditMode.Manage:
+                        case TextingEditMode.Typing:
+                            // cut, copy or paste event should be handled in the caret.
+                            return false;
+
+                        case TextingEditMode.Split:
                             var pasteLyric = getObjectFromClipboardContent<Lyric>();
                             if (pasteLyric == null)
                                 return false;
 
                             lyricsChangeHandler.AddBelowToSelection(pasteLyric);
                             return true;
-
-                        case TextingEditMode.Typing:
-                            // cut, copy or paste event should be handled in the caret.
-                            return false;
 
                         default:
                             throw new ArgumentOutOfRangeException();
