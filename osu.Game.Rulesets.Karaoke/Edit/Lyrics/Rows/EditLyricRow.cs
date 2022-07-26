@@ -218,8 +218,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                             return null;
 
                         case LyricEditorMode.Reference:
-                            // todo: add the reference info.
-                            return null;
+                            return new ReferenceLyricInfo(Lyric);
 
                         case LyricEditorMode.Language:
                             return new LanguageInfo(Lyric);
