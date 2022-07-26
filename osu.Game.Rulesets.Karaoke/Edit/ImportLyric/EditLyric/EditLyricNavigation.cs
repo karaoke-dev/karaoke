@@ -15,8 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 {
     public class EditLyricNavigation : TopNavigation<EditLyricStepScreen>
     {
-        private const string cutting_mode = "CUTTING_MODE";
         private const string typing_mode = "TYPING_MODE";
+        private const string split_mode = "SPLIT_MODE";
 
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
@@ -47,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
             switch (value)
             {
                 case NavigationState.Initial:
-                    return $"Does something looks weird? Try switching [{cutting_mode}] or [{typing_mode}] to edit your lyric.";
+                    return $"Does something looks weird? Try switching [{typing_mode}] or [{split_mode}] to edit your lyric.";
 
                 case NavigationState.Working:
                 case NavigationState.Done:
@@ -55,8 +55,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
 
                     return mode switch
                     {
-                        TextingEditMode.Manage => $"Cool! Try switching to [{typing_mode}] if you want to edit lyric.",
-                        TextingEditMode.Typing => $"Cool! Try switching to [{cutting_mode}] if you want to cut or combine lyric.",
+                        TextingEditMode.Typing => $"Cool! Try switching to [{split_mode}] if you want to cut or combine lyric.",
+                        TextingEditMode.Split => $"Cool! Try switching to [{typing_mode}] if you want to edit lyric.",
                         _ => throw new InvalidEnumArgumentException(nameof(mode))
                     };
 
@@ -75,8 +75,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric.EditLyric
         {
             public EditLyricTextFlowContainer(EditLyricStepScreen screen)
             {
-                AddLinkFactory(cutting_mode, "cutting mode", () => screen.SwitchToEditModeState(TextingEditMode.Manage));
                 AddLinkFactory(typing_mode, "typing mode", () => screen.SwitchToEditModeState(TextingEditMode.Typing));
+                AddLinkFactory(split_mode, "split mode", () => screen.SwitchToEditModeState(TextingEditMode.Split));
             }
         }
     }

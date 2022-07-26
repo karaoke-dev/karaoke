@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
 {
-    public class ManageDeleteSubsection : SelectLyricButton
+    public class TextingDeleteSubsection : SelectLyricButton
     {
         [Resolved]
         private ILyricsChangeHandler lyricsChangeHandler { get; set; }

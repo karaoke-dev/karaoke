@@ -16,6 +16,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
         public void ChangeEditMode(TextingEditMode mode)
             => bindableEditMode.Value = mode;
 
-        public Bindable<ManageEditModeSpecialAction> BindableSpecialAction { get; } = new();
+        public Bindable<TextingEditModeSpecialAction> BindableSpecialAction { get; } = new();
     }
 }
