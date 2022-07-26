@@ -10,7 +10,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
 {
     public class ReferenceLyricInfo : SubInfo
     {
-        private readonly IBindable<int> bindableReferenceLyricOrder = new Bindable<int>();
         private readonly IBindable<Lyric?> bindableReferenceLyric;
 
         public ReferenceLyricInfo(Lyric lyric)
@@ -24,15 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
         {
             BadgeColour = colours.Red;
 
-            bindableReferenceLyricOrder.BindValueChanged(e =>
-            {
-                BadgeText = $"Ref: #{e.NewValue}";
-            });
-
             bindableReferenceLyric.BindValueChanged(e =>
             {
-                bindableReferenceLyricOrder.UnbindBindings();
-
                 if (e.NewValue == null)
                 {
                     Hide();
@@ -40,7 +32,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
                 else
                 {
                     Show();
-                    bindableReferenceLyricOrder.BindTo(e.NewValue.OrderBindable);
+
+                    // note: there's no need to worry about referenced lyric change the order because there's no possible to change hhe order in reference lyric mode.
+                    BadgeText = $"Ref: #{e.NewValue.Order}";
                 }
             }, true);
         }
