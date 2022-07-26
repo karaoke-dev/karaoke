@@ -1,23 +1,14 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System.Collections.Generic;
-using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
-    public class RubyTagEditModeSection : TextTagEditModeSection
+    public class RubyTagEditModeSection : TextTagEditModeSection<IEditRubyModeState>
     {
-        [Resolved]
-        private IEditRubyModeState editRubyModeState { get; set; }
-
-        protected override TextTagEditMode DefaultMode()
-            => editRubyModeState.EditMode;
-
         protected override Dictionary<TextTagEditMode, EditModeSelectionItem> CreateSelections()
             => new()
             {
@@ -65,12 +56,5 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
                     TextTagEditMode.Verify, new EditModeSelectionItem("Verify", "Check invalid rubies in here.")
                 }
             };
-
-        internal override void UpdateEditMode(TextTagEditMode mode)
-        {
-            editRubyModeState.ChangeEditMode(mode);
-
-            base.UpdateEditMode(mode);
-        }
     }
 }

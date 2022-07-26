@@ -1,11 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
-using osu.Framework.Allocation;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
@@ -15,16 +12,10 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 {
-    public class TimeTagEditModeSection : EditModeSection<TimeTagEditMode>
+    public class TimeTagEditModeSection : EditModeSection<ITimeTagModeState, TimeTagEditMode>
     {
-        [Resolved]
-        private ITimeTagModeState timeTagModeState { get; set; }
-
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Orange;
-
-        protected override TimeTagEditMode DefaultMode()
-            => timeTagModeState.EditMode;
 
         protected override Dictionary<TimeTagEditMode, EditModeSelectionItem> CreateSelections()
             => new()
@@ -67,13 +58,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 TimeTagEditMode.Adjust => active ? colours.Yellow : colours.YellowDarker,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode))
             };
-        }
-
-        internal override void UpdateEditMode(TimeTagEditMode mode)
-        {
-            timeTagModeState.ChangeEditMode(mode);
-
-            base.UpdateEditMode(mode);
         }
     }
 }
