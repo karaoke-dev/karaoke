@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Generator.ReferenceLyric
 {
-    public class ReferenceLyricDetector : ILyricPropertyDetector<Lyric>
+    public class ReferenceLyricDetector : ILyricPropertyDetector<Lyric?>
     {
         private readonly Lyric[] lyrics;
         private readonly ReferenceLyricDetectorConfig config;
@@ -31,11 +31,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.ReferenceLyric
             return null;
         }
 
-        public Lyric Detect(Lyric lyric)
+        public Lyric? Detect(Lyric lyric)
         {
             var referencedLyric = getReferenceLyric(lyric);
             if (referencedLyric == null)
-                throw new NullReferenceException();
+                return null;
+
+            // prevent first lyric(referenced lyric) reference by other lyric.
+            if (referencedLyric.Order > lyric.Order)
+                return null;
 
             return referencedLyric;
         }
