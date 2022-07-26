@@ -21,6 +21,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 if (referenceLyric == lyric)
                     throw new InvalidOperationException($"{nameof(referenceLyric)} should not be the same instance as {nameof(lyric)}");
 
+                if (referenceLyric?.ReferenceLyric != null)
+                    throw new InvalidOperationException($"{nameof(referenceLyric)} should not contains another reference lyric.");
+
                 lyric.ReferenceLyric = referenceLyric;
             });
         }
