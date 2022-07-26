@@ -18,6 +18,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
@@ -70,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                     },
                     Content = new[]
                     {
-                        buttons = CreateSelections().Select(x => new EditModeButton(x.Key, x.Value)
+                        buttons = createSelections().Select(x => new EditModeButton(x.Key, x.Value)
                         {
                             Padding = new MarginPadding { Horizontal = 5 },
                             Action = UpdateEditMode,
@@ -89,6 +90,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             {
                 UpdateEditMode(DefaultMode());
             });
+        }
+
+        private Dictionary<TEditMode, EditModeSelectionItem> createSelections()
+        {
+            return EnumUtils.GetValues<TEditMode>().ToDictionary(k => k, CreateSelectionItem);
         }
 
         internal virtual void UpdateEditMode(TEditMode mode)
@@ -119,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected abstract TEditMode DefaultMode();
 
-        protected abstract Dictionary<TEditMode, EditModeSelectionItem> CreateSelections();
+        protected abstract EditModeSelectionItem CreateSelectionItem(TEditMode editMode);
 
         protected abstract Color4 GetColour(OsuColour colours, TEditMode mode, bool active);
 

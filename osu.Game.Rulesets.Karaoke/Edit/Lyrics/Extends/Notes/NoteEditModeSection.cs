@@ -2,7 +2,6 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using System.Collections.Generic;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
@@ -16,18 +15,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Blue;
 
-        protected override Dictionary<NoteEditMode, EditModeSelectionItem> CreateSelections()
-            => new()
+        protected override EditModeSelectionItem CreateSelectionItem(NoteEditMode editMode) =>
+            editMode switch
             {
-                {
-                    NoteEditMode.Generate, new EditModeSelectionItem("Generate", "Using time-tag to create default notes.")
-                },
-                {
-                    NoteEditMode.Edit, new EditModeSelectionItem("Edit", "Batch edit note property in here.")
-                },
-                {
-                    NoteEditMode.Verify, new EditModeSelectionItem("Verify", "Check invalid notes in here.")
-                }
+                NoteEditMode.Generate => new EditModeSelectionItem("Generate", "Using time-tag to create default notes."),
+                NoteEditMode.Edit => new EditModeSelectionItem("Edit", "Batch edit note property in here."),
+                NoteEditMode.Verify => new EditModeSelectionItem("Verify", "Check invalid notes in here."),
+                _ => throw new ArgumentOutOfRangeException(nameof(editMode), editMode, null)
             };
 
         protected override Color4 GetColour(OsuColour colours, NoteEditMode mode, bool active) =>
