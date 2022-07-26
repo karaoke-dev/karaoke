@@ -16,15 +16,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Red;
 
-        protected override Dictionary<TextingEditMode, EditModeSelectionItem> CreateSelections()
-            => new()
+        protected override EditModeSelectionItem CreateSelectionItem(TextingEditMode editMode) =>
+            editMode switch
             {
-                {
-                    TextingEditMode.Typing, new EditModeSelectionItem("Typing", "Edit the lyric text.")
-                },
-                {
-                    TextingEditMode.Split, new EditModeSelectionItem("Split", "Create/delete or split/combine the lyric.")
-                }
+                TextingEditMode.Typing => new EditModeSelectionItem("Typing", "Edit the lyric text."),
+                TextingEditMode.Split => new EditModeSelectionItem("Split", "Create/delete or split/combine the lyric."),
+                _ => throw new ArgumentOutOfRangeException(nameof(editMode), editMode, null)
             };
 
         protected override Color4 GetColour(OsuColour colours, TextingEditMode mode, bool active)

@@ -17,36 +17,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
         protected override OverlayColourScheme CreateColourScheme()
             => OverlayColourScheme.Orange;
 
-        protected override Dictionary<TimeTagEditMode, EditModeSelectionItem> CreateSelections()
-            => new()
+        protected override EditModeSelectionItem CreateSelectionItem(TimeTagEditMode editMode) =>
+            editMode switch
             {
+                TimeTagEditMode.Create => new EditModeSelectionItem("Adjust", "Create the time-tag or adjust the position."),
+                TimeTagEditMode.Recording => new EditModeSelectionItem("Recording", new DescriptionFormat
                 {
-                    TimeTagEditMode.Create, new EditModeSelectionItem("Adjust", "Create the time-tag or adjust the position.")
-                },
-                {
-                    TimeTagEditMode.Recording, new EditModeSelectionItem("Recording", new DescriptionFormat
+                    Text = "Press [key](set_time_tag_time) at the right time to set current time to time-tag. Press [key](clear_time_tag_time) to clear the time-tag time.",
+                    Keys = new Dictionary<string, InputKey>
                     {
-                        Text = "Press [key](set_time_tag_time) at the right time to set current time to time-tag. Press [key](clear_time_tag_time) to clear the time-tag time.",
-                        Keys = new Dictionary<string, InputKey>
                         {
+                            "set_time_tag_time", new InputKey
                             {
-                                "set_time_tag_time", new InputKey
-                                {
-                                    AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.SetTime }
-                                }
-                            },
+                                AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.SetTime }
+                            }
+                        },
+                        {
+                            "clear_time_tag_time", new InputKey
                             {
-                                "clear_time_tag_time", new InputKey
-                                {
-                                    AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.ClearTime }
-                                }
+                                AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.ClearTime }
                             }
                         }
-                    })
-                },
-                {
-                    TimeTagEditMode.Adjust, new EditModeSelectionItem("Adjust", "Drag to adjust time-tag time precisely.")
-                }
+                    }
+                }),
+                TimeTagEditMode.Adjust => new EditModeSelectionItem("Adjust", "Drag to adjust time-tag time precisely."),
+                _ => throw new ArgumentOutOfRangeException(nameof(editMode), editMode, null)
             };
 
         protected override Color4 GetColour(OsuColour colours, TimeTagEditMode mode, bool active)
