@@ -20,7 +20,7 @@ using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages
+namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Language
 {
     public class AcceptLanguagesSection : GeneratorConfigSection<LanguageDetectorConfig>
     {

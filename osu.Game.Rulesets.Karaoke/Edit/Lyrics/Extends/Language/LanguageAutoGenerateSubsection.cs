@@ -4,7 +4,7 @@
 #nullable disable
 
 using osu.Framework.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language
