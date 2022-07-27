@@ -15,7 +15,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Utils;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language
 {
     public class AssignLanguageSubsection : SelectLyricButton, IHasPopover
     {
