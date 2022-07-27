@@ -6,7 +6,7 @@ using NUnit.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.RomajiTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.RubyTags.Ja;

@@ -16,7 +16,7 @@ using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;

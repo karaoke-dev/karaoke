@@ -7,7 +7,7 @@ using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language
 {
     public class LanguageSwitchSpecialActionSection : SpecialActionSection<LanguageEditModeSpecialAction>
     {

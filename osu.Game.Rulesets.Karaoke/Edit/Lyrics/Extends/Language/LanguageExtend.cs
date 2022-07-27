@@ -8,7 +8,7 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language
 {
     public class LanguageExtend : EditExtend
     {

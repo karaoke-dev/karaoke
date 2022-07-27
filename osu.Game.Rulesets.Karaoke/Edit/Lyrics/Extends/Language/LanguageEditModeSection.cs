@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language
 {
     public class LanguageEditModeSection : EditModeSection<ILanguageModeState, LanguageEditMode>
     {

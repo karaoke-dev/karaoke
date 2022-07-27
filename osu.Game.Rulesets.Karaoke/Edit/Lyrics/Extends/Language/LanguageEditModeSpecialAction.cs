@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Languages
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language
 {
     public enum LanguageEditModeSpecialAction
     {
