@@ -28,8 +28,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Containers
             void assignZoomRange(float _)
             {
                 // we should make sure that will not cause error while assigning the size.
-                MaxZoom = Math.Max(BindableZoom.MaxValue, MinZoom);
-                MinZoom = Math.Min(BindableZoom.MinValue, MaxZoom);
+                SetupZoom(BindableZoom.Value, BindableZoom.MinValue, BindableZoom.MaxValue);
             }
 
             BindableZoom.BindValueChanged(e =>
