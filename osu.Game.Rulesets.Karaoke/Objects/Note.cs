@@ -3,6 +3,7 @@
 
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
+using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Judgements;
@@ -75,7 +76,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <summary>
         /// Duration
         /// </summary>
-        [JsonIgnore]
         public double Duration { get; set; }
 
         /// <summary>
@@ -114,19 +114,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public Note DeepClone()
         {
-            // (Note)MemberwiseClone();
+            string serializeString = this.Serialize();
+            var note = serializeString.Deserialize<Note>();
+            note.ParentLyric = ParentLyric;
 
-            return new()
-            {
-                Text = Text,
-                RubyText = RubyText,
-                Display = Display,
-                Tone = Tone,
-                Duration = Duration,
-                StartIndex = StartIndex,
-                EndIndex = EndIndex,
-                ParentLyric = ParentLyric
-            };
+            return note;
         }
     }
 }
