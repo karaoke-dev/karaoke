@@ -76,7 +76,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
 
                 var combinedNote = actualNotes.First();
                 Assert.AreEqual("カラ", combinedNote.Text);
-                Assert.AreEqual(null, combinedNote.RubyText);
+                Assert.AreEqual("から", combinedNote.RubyText);
                 Assert.AreEqual(1000, combinedNote.StartTime);
                 Assert.AreEqual(1000, combinedNote.Duration);
             });
