@@ -45,6 +45,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 
             var actual = JsonConvert.DeserializeObject<Dictionary<CultureInfo, string>>(json, CreateSettings()) ?? throw new InvalidCastException();
             CollectionAssert.AreEquivalent(expected, actual);
+
+            var actualWithInterface = JsonConvert.DeserializeObject<IDictionary<CultureInfo, string>>(json, CreateSettings()) ?? throw new InvalidCastException();
+            CollectionAssert.AreEquivalent(expected, actualWithInterface);
         }
     }
 }
