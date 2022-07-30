@@ -10,6 +10,7 @@ using osu.Framework.Bindables;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Extensions;
+using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Judgements;
@@ -18,10 +19,11 @@ using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Scoring;
+using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Lyric : KaraokeHitObject, IHasDuration, IHasSingers, IHasOrder, IHasLock, IHasPrimaryKey
+    public class Lyric : KaraokeHitObject, IHasDuration, IHasSingers, IHasOrder, IHasLock, IHasPrimaryKey, IDeepCloneable<Lyric>
     {
         /// <summary>
         /// Primary key.
@@ -291,5 +293,18 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         protected override HitWindows CreateHitWindows() => new KaraokeLyricHitWindows();
+
+        public Lyric DeepClone()
+        {
+            string serializeString = this.Serialize();
+            var lyric = serializeString.Deserialize<Lyric>();
+
+            // IDK why got the different value of `CultureInfo` if placing it as key of the dictionary.
+            // So make a copy in here.
+            lyric.Translates = Translates;
+            lyric.ReferenceLyric = ReferenceLyric;
+
+            return lyric;
+        }
     }
 }
