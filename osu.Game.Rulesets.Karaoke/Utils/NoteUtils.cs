@@ -19,18 +19,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             return CopyByTime(note, startTime, duration);
         }
 
-        public static Note CopyByTime(Note originNote, double startTime, double duration) =>
-            new()
-            {
-                StartTime = startTime,
-                Duration = duration,
-                StartIndex = originNote.StartIndex,
-                EndIndex = originNote.EndIndex,
-                Text = originNote.Text,
-                Display = originNote.Display,
-                Tone = originNote.Tone,
-                ParentLyric = originNote.ParentLyric
-            };
+        public static Note CopyByTime(Note originNote, double startTime, double duration)
+        {
+            var note = originNote.DeepClone();
+            note.StartTime = startTime;
+            note.Duration = duration;
+
+            return note;
+        }
 
         /// <summary>
         /// Get the display text while gameplay or in editor.

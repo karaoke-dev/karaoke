@@ -10,10 +10,11 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Scoring;
+using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Note : KaraokeHitObject, IHasDuration, IHasText
+    public class Note : KaraokeHitObject, IHasDuration, IHasText, IDeepCloneable<Note>
     {
         [JsonIgnore]
         public readonly Bindable<string> TextBindable = new();
@@ -110,5 +111,22 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();
 
         protected override HitWindows CreateHitWindows() => new KaraokeNoteHitWindows();
+
+        public Note DeepClone()
+        {
+            // (Note)MemberwiseClone();
+
+            return new()
+            {
+                Text = Text,
+                RubyText = RubyText,
+                Display = Display,
+                Tone = Tone,
+                Duration = Duration,
+                StartIndex = StartIndex,
+                EndIndex = EndIndex,
+                ParentLyric = ParentLyric
+            };
+        }
     }
 }
