@@ -10,9 +10,9 @@ using osu.Framework.Bindables;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Extensions;
-using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
+using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Judgements;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Scoring;
@@ -296,12 +296,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public Lyric DeepClone()
         {
-            string serializeString = this.Serialize();
-            var lyric = serializeString.Deserialize<Lyric>();
+            string serializeString = JsonConvert.SerializeObject(this, KaraokeJsonSerializableExtensions.CreateGlobalSettings());
+            var lyric = JsonConvert.DeserializeObject<Lyric>(serializeString, KaraokeJsonSerializableExtensions.CreateGlobalSettings())!;
 
-            // IDK why got the different value of `CultureInfo` if placing it as key of the dictionary.
-            // So make a copy in here.
-            lyric.Translates = Translates;
             lyric.ReferenceLyric = ReferenceLyric;
 
             return lyric;
