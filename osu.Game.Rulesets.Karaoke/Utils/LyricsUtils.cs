@@ -60,28 +60,20 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 }
             }
 
-            var firstLyric = new Lyric
-            {
-                Text = lyric.Text[..splitIndex],
-                TimeTags = firstTimeTag.ToArray(),
-                RubyTags = lyric.RubyTags.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray(),
-                RomajiTags = lyric.RomajiTags.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray(),
-                // todo : should implement time and duration
-                Singers = lyric.Singers,
-                Language = lyric.Language,
-            };
+            // todo : should implement time and duration
+            var firstLyric = lyric.DeepClone();
+            firstLyric.Text = lyric.Text[..splitIndex];
+            firstLyric.TimeTags = firstTimeTag.ToArray();
+            firstLyric.RubyTags = lyric.RubyTags.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray();
+            firstLyric.RomajiTags = lyric.RomajiTags.Where(x => x.StartIndex < splitIndex && x.EndIndex <= splitIndex).ToArray();
 
+            // todo : should implement time and duration
             string secondLyricText = lyric.Text[splitIndex..];
-            var secondLyric = new Lyric
-            {
-                Text = secondLyricText,
-                TimeTags = shiftingTimeTag(secondTimeTag.ToArray(), -splitIndex),
-                RubyTags = shiftingTextTag(lyric.RubyTags.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), secondLyricText, -splitIndex),
-                RomajiTags = shiftingTextTag(lyric.RomajiTags.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), secondLyricText, -splitIndex),
-                // todo : should implement time and duration
-                Singers = lyric.Singers,
-                Language = lyric.Language,
-            };
+            var secondLyric = lyric.DeepClone();
+            secondLyric.Text = secondLyricText;
+            secondLyric.TimeTags = shiftingTimeTag(secondTimeTag.ToArray(), -splitIndex);
+            secondLyric.RubyTags = shiftingTextTag(lyric.RubyTags.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), secondLyricText, -splitIndex);
+            secondLyric.RomajiTags = shiftingTextTag(lyric.RomajiTags.Where(x => x.StartIndex >= splitIndex && x.EndIndex > splitIndex).ToArray(), secondLyricText, -splitIndex);
 
             return new Tuple<Lyric, Lyric>(firstLyric, secondLyric);
         }
