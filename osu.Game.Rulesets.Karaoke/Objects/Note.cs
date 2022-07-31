@@ -3,6 +3,7 @@
 
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
+using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Judgements;
@@ -10,10 +11,11 @@ using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.Scoring;
+using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Note : KaraokeHitObject, IHasDuration, IHasText
+    public class Note : KaraokeHitObject, IHasDuration, IHasText, IDeepCloneable<Note>
     {
         [JsonIgnore]
         public readonly Bindable<string> TextBindable = new();
@@ -74,7 +76,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <summary>
         /// Duration
         /// </summary>
-        [JsonIgnore]
         public double Duration { get; set; }
 
         /// <summary>
@@ -110,5 +111,14 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();
 
         protected override HitWindows CreateHitWindows() => new KaraokeNoteHitWindows();
+
+        public Note DeepClone()
+        {
+            string serializeString = this.Serialize();
+            var note = serializeString.Deserialize<Note>();
+            note.ParentLyric = ParentLyric;
+
+            return note;
+        }
     }
 }
