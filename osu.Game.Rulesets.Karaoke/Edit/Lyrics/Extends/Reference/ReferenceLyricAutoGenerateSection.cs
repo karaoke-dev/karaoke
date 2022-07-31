@@ -36,12 +36,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
 
             protected class InvalidLyricLanguageAlertTextContainer : InvalidLyricAlertTextContainer
             {
-                private const string language_mode = "LANGUAGE_MODE";
-
                 public InvalidLyricLanguageAlertTextContainer()
                 {
-                    SwitchToEditorMode(language_mode, "edit language mode", LyricEditorMode.Language);
-                    Text = $"Seems some lyric missing language, go to [{language_mode}] to fill the language.";
+                    Text = $"Seems every lyrics in the songs are unique. But don't worry, reference lyric can still link by hands.";
                 }
             }
 
