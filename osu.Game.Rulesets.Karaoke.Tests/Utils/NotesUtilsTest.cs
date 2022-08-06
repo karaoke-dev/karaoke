@@ -4,6 +4,7 @@
 using System;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
@@ -22,8 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         {
             var note = new Note
             {
-                StartTime = time[0],
-                Duration = time[1],
+                ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("Lyric", time[0], time[1]),
             };
 
             if (firstTime != null && secondTime != null)
@@ -46,20 +46,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         public void TestSplitNoteOtherProperty()
         {
             const double percentage = 0.3;
-            var lyric = new Lyric
-            {
-                Singers = new[] { 0 },
-            };
+
+            var lyric = TestCaseNoteHelper.CreateLyricForNote("Lyric", 1000, 2000);
+            lyric.Singers = new[] { 0 };
 
             var note = new Note
             {
                 Text = "ka",
                 Display = false,
                 Tone = new Tone(-1, true),
-                StartTime = 1000,
-                Duration = 2000,
                 ReferenceLyric = lyric,
-                ReferenceTimeTagIndex = 1
+                ReferenceTimeTagIndex = 0
             };
 
             // create other property and make sure other class is applied value.
@@ -87,34 +84,31 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             }
         }
 
-        [TestCase(new double[] { 1000, 1000 }, new double[] { 2000, 4000 }, new double[] { 1000, 5000 })]
-        [TestCase(new double[] { 1000, 2500 }, new double[] { 3500, 2500 }, new double[] { 1000, 5000 })]
+        [TestCase(new double[] { 1000, -1000 }, new double[] { 2000, -4000 }, new double[] { 1000, -1000 })]
         [TestCase(new double[] { 1000, 0 }, new double[] { 1000, 0 }, new double[] { 1000, 0 })] // it's ok to combine if duration is 0.
-        public void TestCombineNoteTime(double[] firstTime, double[] secondTime, double[] expected)
+        public void TestCombineNoteTime(double[] firstOffset, double[] secondOffset, double[] expectedOffset)
         {
-            const int reference_time_tag_index = 3;
-
-            var lyric = new Lyric();
+            var lyric = TestCaseNoteHelper.CreateLyricForNote("Lyric", 1000, 5000);
 
             var firstNote = new Note
             {
-                StartTime = firstTime[0],
-                Duration = firstTime[1],
                 ReferenceLyric = lyric,
-                ReferenceTimeTagIndex = reference_time_tag_index,
+                StartTimeOffset = firstOffset[0],
+                EndTimeOffset = firstOffset[1],
+                ReferenceTimeTagIndex = 0,
             };
 
             var secondNote = new Note
             {
-                StartTime = secondTime[0],
-                Duration = secondTime[1],
                 ReferenceLyric = lyric,
-                ReferenceTimeTagIndex = reference_time_tag_index,
+                StartTimeOffset = secondOffset[0],
+                EndTimeOffset = secondOffset[1],
+                ReferenceTimeTagIndex = 0,
             };
 
             var combineNote = NotesUtils.CombineNote(firstNote, secondNote);
-            Assert.AreEqual(expected[0], combineNote.StartTime);
-            Assert.AreEqual(expected[1], combineNote.Duration);
+            Assert.AreEqual(expectedOffset[0], combineNote.StartTimeOffset);
+            Assert.AreEqual(expectedOffset[1], combineNote.EndTimeOffset);
         }
     }
 }
