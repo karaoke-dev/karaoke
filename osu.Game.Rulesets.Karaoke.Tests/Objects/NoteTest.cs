@@ -20,6 +20,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
                 Display = true,
                 StartTime = 1000,
                 Duration = 500,
+                StartTimeOffset = 100,
+                EndTimeOffset = -100,
                 ParentLyric = parentLyric
             };
 
@@ -37,10 +39,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
             Assert.AreNotSame(clonedNote.ToneBindable, note.ToneBindable);
             Assert.AreEqual(clonedNote.Tone, note.Tone);
 
+            // note time will not being copied because the time is based on the time-tag in the lyric.
             Assert.AreNotSame(clonedNote.StartTimeBindable, note.StartTimeBindable);
-            Assert.AreEqual(clonedNote.StartTime, note.StartTime);
+            Assert.AreEqual(clonedNote.StartTime, 0);
 
-            Assert.AreEqual(clonedNote.Duration, note.Duration);
+            // note time will not being copied because the time is based on the time-tag in the lyric.
+            Assert.AreEqual(clonedNote.Duration, 0);
+
+            // note time will not being copied because the time is based on the time-tag in the lyric.
+            Assert.AreEqual(clonedNote.EndTime, 0);
+
+            Assert.AreEqual(clonedNote.StartTimeOffset, note.StartTimeOffset);
+
+            Assert.AreEqual(clonedNote.EndTimeOffset, note.EndTimeOffset);
 
             Assert.AreEqual(clonedNote.StartIndex, note.StartIndex);
 
