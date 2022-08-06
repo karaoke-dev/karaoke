@@ -109,10 +109,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// </summary>
         public double EndTimeOffset { get; set; }
 
-        public int StartIndex { get; set; }
-
-        public int EndIndex { get; set; }
-
         private Lyric parentLyric = null!;
 
         /// <summary>
@@ -131,6 +127,15 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
                 parentLyric = value;
             }
+        }
+
+        [JsonIgnore]
+        public readonly Bindable<int> ReferenceTimeTagIndexBindable = new();
+
+        public int ReferenceTimeTagIndex
+        {
+            get => ReferenceTimeTagIndexBindable.Value;
+            set => ReferenceTimeTagIndexBindable.Value = value;
         }
 
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();
