@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             return notes.GroupBy(x => x.ParentLyric).Select(g =>
             {
                 // Get note group
-                var noteGroup = g.ToList().GroupBy(n => n.StartIndex);
+                var noteGroup = g.ToList().GroupBy(n => n.ReferenceTimeTagIndex);
 
                 // Convert to group format
                 string noteGroupStr = string.Join(",", noteGroup.Select(x =>

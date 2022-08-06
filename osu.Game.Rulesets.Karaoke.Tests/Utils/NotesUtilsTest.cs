@@ -53,14 +53,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             var note = new Note
             {
-                StartTime = 1000,
-                Duration = 2000,
-                StartIndex = 1,
-                EndIndex = 2,
                 Text = "ka",
                 Display = false,
                 Tone = new Tone(-1, true),
-                ParentLyric = lyric
+                StartTime = 1000,
+                Duration = 2000,
+                ParentLyric = lyric,
+                ReferenceTimeTagIndex = 1
             };
 
             // create other property and make sure other class is applied value.
@@ -77,13 +76,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 
             static void testRemainProperty(Note expect, Note actual)
             {
-                Assert.AreEqual(expect.StartIndex, actual.StartIndex);
-                Assert.AreEqual(expect.EndIndex, actual.EndIndex);
                 Assert.AreEqual(expect.Text, actual.Text);
-
                 Assert.AreEqual(expect.Display, actual.Display);
                 Assert.AreEqual(expect.Tone, actual.Tone);
+
                 Assert.AreEqual(expect.ParentLyric, actual.ParentLyric);
+                Assert.AreEqual(expect.ReferenceTimeTagIndex, actual.ReferenceTimeTagIndex);
 
                 Assert.AreEqual(expect.ParentLyric.Singers, actual.ParentLyric.Singers);
             }
@@ -94,27 +92,24 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
         [TestCase(new double[] { 1000, 0 }, new double[] { 1000, 0 }, new double[] { 1000, 0 })] // it's ok to combine if duration is 0.
         public void TestCombineNoteTime(double[] firstTime, double[] secondTime, double[] expected)
         {
-            const int start_index = 3;
-            const int end_index = 5;
+            const int reference_time_tag_index = 3;
 
             var lyric = new Lyric();
 
             var firstNote = new Note
             {
-                StartIndex = start_index,
-                EndIndex = end_index,
-                ParentLyric = lyric,
                 StartTime = firstTime[0],
                 Duration = firstTime[1],
+                ParentLyric = lyric,
+                ReferenceTimeTagIndex = reference_time_tag_index,
             };
 
             var secondNote = new Note
             {
-                StartIndex = start_index,
-                EndIndex = end_index,
-                ParentLyric = lyric,
                 StartTime = secondTime[0],
                 Duration = secondTime[1],
+                ParentLyric = lyric,
+                ReferenceTimeTagIndex = reference_time_tag_index,
             };
 
             var combineNote = NotesUtils.CombineNote(firstNote, secondNote);
