@@ -21,9 +21,13 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static Note CopyByTime(Note originNote, double startTime, double duration)
         {
+            double fixedStartTime = originNote.StartTime - originNote.StartTimeOffset;
+            double fixedEndTime = originNote.EndTime - originNote.EndTimeOffset;
+            double endTime = startTime + duration;
+
             var note = originNote.DeepClone();
-            note.StartTime = startTime;
-            note.Duration = duration;
+            note.StartTimeOffset = startTime - fixedStartTime;
+            note.EndTimeOffset = endTime - fixedEndTime;
 
             return note;
         }

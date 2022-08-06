@@ -3,28 +3,36 @@
 
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Utils
 {
     public class NoteUtilsTest
     {
-        [TestCase(new double[] { 1000, 3000 }, 0, 1, new double[] { 1000, 3000 })]
-        [TestCase(new double[] { 1000, 3000 }, 0, 0.5, new double[] { 1000, 1500 })]
-        [TestCase(new double[] { 1000, 3000 }, 0.5, 0.5, new double[] { 2500, 1500 })]
-        [TestCase(new double[] { 1000, 3000 }, 0.3, 0.4, new double[] { 1900, 1200 })]
-        [TestCase(new double[] { 1000, 3000 }, 0.3, 1, null)] // start + duration should not exceed 1
-        public void TestSliceNoteTime(double[] time, double startPercentage, double durationPercentage, double[]? expected)
+        [TestCase(0, 1, new double[] { 1000, 3000 })]
+        [TestCase(0, 0.5, new double[] { 1000, 1500 })]
+        [TestCase(0.5, 0.5, new double[] { 2500, 1500 })]
+        [TestCase(0.3, 0.4, new double[] { 1900, 1200 })]
+        [TestCase(0.3, 1, null)] // start + duration should not exceed 1
+        public void TestSliceNoteTime(double startPercentage, double durationPercentage, double[]? expected)
         {
+            var lyric = new Lyric
+            {
+                TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1000", "[1,start]:4000" }),
+            };
+
+            // start time will be 1000, and duration will be 3000.
             var note = new Note
             {
-                StartTime = time[0],
-                Duration = time[1],
+                ReferenceLyric = lyric,
+                ReferenceTimeTagIndex = 0
             };
 
             if (expected != null)
             {
                 var sliceNote = NoteUtils.SliceNote(note, startPercentage, durationPercentage);
+
                 Assert.AreEqual(expected[0], sliceNote.StartTime);
                 Assert.AreEqual(expected[1], sliceNote.Duration);
             }
