@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.IO.Serialization;
@@ -138,6 +139,32 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         {
             get => ReferenceTimeTagIndexBindable.Value;
             set => ReferenceTimeTagIndexBindable.Value = value;
+        }
+
+        public Note()
+        {
+            ReferenceLyricBindable.ValueChanged += e =>
+            {
+                if (e.OldValue != null)
+                    e.OldValue.TimeTagsVersion.ValueChanged -= timeTagVersionChanged;
+
+                if (e.NewValue != null)
+                    e.NewValue.TimeTagsVersion.ValueChanged += timeTagVersionChanged;
+
+                syncStartTimeAndDurationFromTimeTag();
+            };
+            ReferenceTimeTagIndexBindable.ValueChanged += _ => syncStartTimeAndDurationFromTimeTag();
+
+            void timeTagVersionChanged(ValueChangedEvent<int> e) => syncStartTimeAndDurationFromTimeTag();
+
+            void syncStartTimeAndDurationFromTimeTag()
+            {
+                var currentTimeTag = ReferenceLyric?.TimeTags.ElementAtOrDefault(ReferenceTimeTagIndex);
+                var nextTimeTag = ReferenceLyric?.TimeTags.ElementAtOrDefault(ReferenceTimeTagIndex + 1);
+
+                StartTimeBindable.Value = currentTimeTag?.Time ?? 0;
+                DurationBindable.Value = (nextTimeTag?.Time ?? 0) - (currentTimeTag?.Time ?? 0);
+            }
         }
 
         public override Judgement CreateJudgement() => new KaraokeNoteJudgement();
