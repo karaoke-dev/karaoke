@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using NUnit.Framework;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Objects
@@ -57,6 +58,68 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
 
             Assert.AreNotSame(clonedNote.ReferenceTimeTagIndexBindable, note.ReferenceTimeTagIndexBindable);
             Assert.AreEqual(clonedNote.ReferenceTimeTagIndex, note.ReferenceTimeTagIndex);
+        }
+
+        [TestCase]
+        public void TestReferenceTime()
+        {
+            var note = new Note();
+
+            // Should not have the time.
+            Assert.AreEqual(0, note.StartTime);
+            Assert.AreEqual(0, note.Duration);
+            Assert.AreEqual(0, note.EndTime);
+
+            const double first_time_tag_time = 1000;
+            const double second_time_tag_time = 3000;
+            const double duration = second_time_tag_time - first_time_tag_time;
+            var lyric = TestCaseNoteHelper.CreateLyricForNote("Lyric", first_time_tag_time, duration);
+            note.ReferenceLyric = lyric;
+
+            // Should have calculated time.
+            Assert.AreEqual(first_time_tag_time, note.StartTime);
+            Assert.AreEqual(duration, note.Duration);
+
+            const double time_tag_offset_time = 500;
+            lyric.TimeTags.ForEach(x => x.Time += time_tag_offset_time);
+
+            // Should change the time if time-tag time has been changed.
+            Assert.AreEqual(first_time_tag_time + time_tag_offset_time, note.StartTime);
+            Assert.AreEqual(duration, note.Duration);
+
+            note.ReferenceTimeTagIndex = 1;
+
+            // Duration will be zero if there's no next time-tag.
+            Assert.AreEqual(second_time_tag_time + time_tag_offset_time, note.StartTime);
+            Assert.AreEqual(0, note.Duration);
+
+            note.ReferenceTimeTagIndex = 2;
+
+            // Time will be zero if there's no matched time-tag.
+            Assert.AreEqual(0, note.StartTime);
+            Assert.AreEqual(0, note.Duration);
+
+            const double note_start_offset_time = 500;
+            const double note_end_offset_time = 500;
+            note.ReferenceTimeTagIndex = 0;
+            note.StartTimeOffset = note_start_offset_time;
+            note.EndTimeOffset = note_end_offset_time;
+
+            // start time and end time will apply the offset time.
+            Assert.AreEqual(first_time_tag_time + time_tag_offset_time + note_start_offset_time, note.StartTime);
+            Assert.AreEqual(duration + time_tag_offset_time - note_end_offset_time, note.Duration);
+
+            note.EndTimeOffset = -100000;
+
+            // duration should not be empty.
+            Assert.AreEqual(first_time_tag_time + time_tag_offset_time + note_start_offset_time, note.StartTime);
+            Assert.AreEqual(0, note.Duration);
+
+            note.ReferenceLyric = null;
+
+            // time will be zero if lyric has been removed.
+            Assert.AreEqual(0, note.StartTime);
+            Assert.AreEqual(0, note.Duration);
         }
     }
 }
