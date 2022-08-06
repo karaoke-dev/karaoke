@@ -45,8 +45,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
                 if (timeTags.LastOrDefault().Key == timeTag.Key)
                     break;
 
-                (double time, var textIndex) = timeTag;
-                (double nextTime, var nextTextIndex) = timeTags.GetNext(timeTag);
+                (double _, var textIndex) = timeTag;
+                (double _, var nextTextIndex) = timeTags.GetNext(timeTag);
 
                 int startIndex = TextIndexUtils.ToStringIndex(textIndex);
                 int endIndex = TextIndexUtils.ToStringIndex(nextTextIndex);
@@ -65,8 +65,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
                     {
                         Text = text,
                         RubyText = ruby,
-                        StartTime = time,
-                        Duration = nextTime - time,
                         ReferenceLyric = lyric,
                         ReferenceTimeTagIndex = timeTagIndex
                     });
