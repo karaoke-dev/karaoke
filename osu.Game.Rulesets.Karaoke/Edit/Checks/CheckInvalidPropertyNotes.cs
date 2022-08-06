@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Checks
 
             foreach (var note in context.Beatmap.HitObjects.OfType<Note>())
             {
-                if (note.ParentLyric == null || !lyrics.Contains(note.ParentLyric))
+                if (note.ReferenceLyric == null || !lyrics.Contains(note.ReferenceLyric))
                     yield return new IssueTemplateInvalidParentLyric(this).Create(note);
             }
         }

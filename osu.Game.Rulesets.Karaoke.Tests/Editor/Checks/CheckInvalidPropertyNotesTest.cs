@@ -36,11 +36,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
 
             var note = new Note();
 
-            note.ParentLyric = lyricIndex switch
+            note.ReferenceLyric = lyricIndex switch
             {
                 0 => lyric,
                 1 => notInBeatmapLyric,
-                _ => note.ParentLyric
+                _ => note.ReferenceLyric
             };
 
             bool actual = run(lyric, note).Select(x => x.Template).OfType<IssueTemplateInvalidParentLyric>().Any();

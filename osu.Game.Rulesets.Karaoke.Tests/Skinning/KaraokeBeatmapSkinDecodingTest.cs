@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
             var testingLyric = new Lyric();
             var testingNote = new Note
             {
-                ParentLyric = testingLyric
+                ReferenceLyric = testingLyric
             };
 
             // try to get default value from the skin.

@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         {
             var notes = output.HitObjects.OfType<Note>().ToList();
             var lyrics = output.HitObjects.OfType<Lyric>().ToList();
-            return notes.GroupBy(x => x.ParentLyric).Select(g =>
+            return notes.GroupBy(x => x.ReferenceLyric).Select(g =>
             {
                 // Get note group
                 var noteGroup = g.ToList().GroupBy(n => n.ReferenceTimeTagIndex);

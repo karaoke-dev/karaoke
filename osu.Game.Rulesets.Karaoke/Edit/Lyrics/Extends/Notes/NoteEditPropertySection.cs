@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             bindableCaretPosition.BindValueChanged(e =>
             {
                 var lyric = e.NewValue?.Lyric;
-                notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray();
+                notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToArray();
             }, true);
         }
 

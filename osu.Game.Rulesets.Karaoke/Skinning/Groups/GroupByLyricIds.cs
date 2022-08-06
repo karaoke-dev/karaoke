@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Groups
             return hitObject switch
             {
                 Lyric lyric => LyricIds.Contains(lyric.ID),
-                Note note => LyricIds.Contains(note.ParentLyric.ID),
+                Note note => LyricIds.Contains(note.ReferenceLyric.ID),
                 _ => false
             };
         }

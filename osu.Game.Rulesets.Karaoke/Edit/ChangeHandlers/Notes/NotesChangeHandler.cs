@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
         {
             PerformOnLyricSelection(lyric =>
             {
-                var notes = beatmap.SelectedHitObjects.OfType<Note>().Where(n => n.ParentLyric == lyric).ToList();
+                var notes = beatmap.SelectedHitObjects.OfType<Note>().Where(n => n.ReferenceLyric == lyric).ToList();
 
                 if (notes.Count < 2)
                     throw new InvalidOperationException($"Should have select at lest two {nameof(notes)}.");
@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
         {
             PerformOnLyricSelection(lyric =>
             {
-                var notes = beatmap.HitObjects.OfType<Note>().Where(n => n.ParentLyric == lyric).ToList();
+                var notes = beatmap.HitObjects.OfType<Note>().Where(n => n.ReferenceLyric == lyric).ToList();
                 RemoveRange(notes);
             });
         }

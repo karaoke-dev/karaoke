@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
                     RubyText = "から",
                     StartTime = 1000,
                     Duration = 500,
-                    ParentLyric = lyric,
+                    ReferenceLyric = lyric,
                 },
                 new Note
                 {
@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
                     RubyText = "おけ",
                     StartTime = 1500,
                     Duration = 500,
-                    ParentLyric = lyric,
+                    ReferenceLyric = lyric,
                 }
             });
 
@@ -160,7 +160,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
                     RubyText = "から",
                     StartTime = 1000,
                     Duration = 500,
-                    ParentLyric = lyric,
+                    ReferenceLyric = lyric,
                 },
                 new Note
                 {
@@ -168,7 +168,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
                     RubyText = "おけ",
                     StartTime = 1500,
                     Duration = 500,
-                    ParentLyric = lyric,
+                    ReferenceLyric = lyric,
                 }
             }, false);
 

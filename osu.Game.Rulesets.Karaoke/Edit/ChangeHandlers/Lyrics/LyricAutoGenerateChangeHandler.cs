@@ -162,7 +162,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     PerformOnSelection(lyric =>
                     {
                         // clear exist notes if from those
-                        var matchedNotes = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray();
+                        var matchedNotes = beatmap.HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToArray();
                         RemoveRange(matchedNotes);
 
                         var notes = noteGenerator.Generate(lyric);

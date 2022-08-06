@@ -33,8 +33,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
         public static Note CombineNote(Note firstLyric, Note secondLyric)
         {
-            if (firstLyric.ParentLyric != secondLyric.ParentLyric)
-                throw new InvalidOperationException($"{nameof(firstLyric.ParentLyric)} and {nameof(secondLyric.ParentLyric)} should be same.");
+            if (firstLyric.ReferenceLyric != secondLyric.ReferenceLyric)
+                throw new InvalidOperationException($"{nameof(firstLyric.ReferenceLyric)} and {nameof(secondLyric.ReferenceLyric)} should be same.");
 
             if (firstLyric.ReferenceTimeTagIndex != secondLyric.ReferenceTimeTagIndex)
                 throw new InvalidOperationException($"{nameof(firstLyric.ReferenceTimeTagIndex)} and {nameof(secondLyric.ReferenceTimeTagIndex)} should be same.");

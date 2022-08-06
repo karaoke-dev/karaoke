@@ -116,7 +116,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
                     Duration = duration,
                     Tone = new Tone { Scale = tone },
                     Text = "Here",
-                    ParentLyric = new Lyric(),
+                    ReferenceLyric = new Lyric(),
                     Display = true
                 };
                 note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());

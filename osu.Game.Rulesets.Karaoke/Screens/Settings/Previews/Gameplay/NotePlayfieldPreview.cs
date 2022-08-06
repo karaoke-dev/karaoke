@@ -68,7 +68,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Settings.Previews.Gameplay
                 StartTime = startTime,
                 Duration = 1000,
                 Text = "Note",
-                ParentLyric = new Lyric(),
+                ReferenceLyric = new Lyric(),
                 HitWindows = new KaraokeNoteHitWindows(),
             });
 

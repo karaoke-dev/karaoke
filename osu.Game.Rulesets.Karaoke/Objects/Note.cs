@@ -117,7 +117,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// Technically parent lyric will not change after assign, but should not restrict in model layer.
         /// </summary>
         [JsonProperty(IsReference = true)]
-        public Lyric? ParentLyric
+        public Lyric? ReferenceLyric
         {
             get => ReferenceLyricBindable.Value;
             set => ReferenceLyricBindable.Value = value;
@@ -140,7 +140,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         {
             string serializeString = this.Serialize();
             var note = serializeString.Deserialize<Note>();
-            note.ParentLyric = ParentLyric;
+            note.ReferenceLyric = ReferenceLyric;
 
             return note;
         }
