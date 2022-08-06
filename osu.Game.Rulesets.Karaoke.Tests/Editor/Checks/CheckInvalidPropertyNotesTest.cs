@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
         [TestCase(0, false)]
         [TestCase(1, true)]
         [TestCase(null, true)]
-        public void TestCheckParentLyric(int? lyricIndex, bool expected)
+        public void TestCheckReferenceLyric(int? lyricIndex, bool expected)
         {
             var lyric = new Lyric();
             var notInBeatmapLyric = new Lyric();
@@ -43,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Checks
                 _ => note.ReferenceLyric
             };
 
-            bool actual = run(lyric, note).Select(x => x.Template).OfType<IssueTemplateInvalidParentLyric>().Any();
+            bool actual = run(lyric, note).Select(x => x.Template).OfType<IssueTemplateInvalidReferenceLyric>().Any();
             Assert.AreEqual(expected, actual);
         }
 
