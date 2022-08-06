@@ -75,6 +75,31 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => ToneBindable.Value = value;
         }
 
+        [JsonIgnore]
+        public readonly Bindable<double> StartTimeOffsetBindable = new BindableDouble();
+
+        /// <summary>
+        /// Offset time relative to the start time.
+        /// </summary>
+        public double StartTimeOffset
+        {
+            get => StartTimeOffsetBindable.Value;
+            set => StartTimeOffsetBindable.Value = value;
+        }
+
+        [JsonIgnore]
+        public readonly Bindable<double> EndTimeOffsetBindable = new BindableDouble();
+
+        /// <summary>
+        /// Offset time relative to the end time.
+        /// Negative value means the adjusted time is smaller than actual.
+        /// </summary>
+        public double EndTimeOffset
+        {
+            get => EndTimeOffsetBindable.Value;
+            set => EndTimeOffsetBindable.Value = value;
+        }
+
         /// <summary>
         /// Start time.
         /// There's no need to save the time because it's calculated by the <see cref="TimeTag"/>
@@ -106,17 +131,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// </summary>
         [JsonIgnore]
         public double EndTime => StartTime + Duration;
-
-        /// <summary>
-        /// Offset time relative to the start time.
-        /// </summary>
-        public double StartTimeOffset { get; set; }
-
-        /// <summary>
-        /// Offset time relative to the end time.
-        /// Negative value means the adjusted time is smaller than actual.
-        /// </summary>
-        public double EndTimeOffset { get; set; }
 
         [JsonIgnore]
         public readonly Bindable<Lyric?> ReferenceLyricBindable = new();
@@ -153,6 +167,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
                 syncStartTimeAndDurationFromTimeTag();
             };
+
+            StartTimeOffsetBindable.ValueChanged += _ => syncStartTimeAndDurationFromTimeTag();
+            EndTimeOffsetBindable.ValueChanged += _ => syncStartTimeAndDurationFromTimeTag();
             ReferenceTimeTagIndexBindable.ValueChanged += _ => syncStartTimeAndDurationFromTimeTag();
 
             void timeTagVersionChanged(ValueChangedEvent<int> e) => syncStartTimeAndDurationFromTimeTag();
@@ -162,8 +179,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 var currentTimeTag = ReferenceLyric?.TimeTags.ElementAtOrDefault(ReferenceTimeTagIndex);
                 var nextTimeTag = ReferenceLyric?.TimeTags.ElementAtOrDefault(ReferenceTimeTagIndex + 1);
 
-                StartTimeBindable.Value = currentTimeTag?.Time ?? 0;
-                DurationBindable.Value = (nextTimeTag?.Time ?? 0) - (currentTimeTag?.Time ?? 0);
+                double startTime = currentTimeTag?.Time ?? 0;
+                double endTime = nextTimeTag?.Time ?? 0;
+                double duration = endTime - startTime;
+
+                StartTimeBindable.Value = currentTimeTag == null ? 0 : startTime + StartTimeOffset;
+                DurationBindable.Value = nextTimeTag == null ? 0 : Math.Max(duration - StartTimeOffset + EndTimeOffset, 0);
             }
         }
 
