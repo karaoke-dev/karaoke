@@ -6,7 +6,6 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Objects.Drawables;
-using osu.Game.Rulesets.Objects.Types;
 using osu.Game.Rulesets.UI.Scrolling;
 using osuTK.Graphics;
 
@@ -45,11 +44,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                         {
                             c.Add(CreateHitObject().With(h =>
                             {
-                                h.HitObject.StartTime = START_TIME;
-
-                                if (h.HitObject is IHasDuration hasDurationHitObject)
-                                    hasDurationHitObject.Duration = DURATION;
-
                                 h.AccentColour.Value = Color4.Orange;
                             }));
                         })
