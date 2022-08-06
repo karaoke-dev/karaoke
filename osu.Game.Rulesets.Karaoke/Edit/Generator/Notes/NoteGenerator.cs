@@ -6,6 +6,7 @@ using System.Linq;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
+using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
@@ -54,6 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
                 if (startIndex >= endIndex)
                     continue;
 
+                int timeTagIndex = timeTags.IndexOf(timeTag);
                 string text = lyric.Text[startIndex..endIndex];
                 string? ruby = lyric.RubyTags?.Where(x => x.StartIndex == startIndex && x.EndIndex == endIndex).FirstOrDefault()?.Text;
 
@@ -61,13 +63,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
                 {
                     notes.Add(new Note
                     {
-                        StartTime = time,
-                        Duration = nextTime - time,
-                        StartIndex = startIndex,
-                        EndIndex = endIndex,
                         Text = text,
                         RubyText = ruby,
-                        ParentLyric = lyric
+                        StartTime = time,
+                        Duration = nextTime - time,
+                        ParentLyric = lyric,
+                        ReferenceTimeTagIndex = timeTagIndex
                     });
                 }
             }
