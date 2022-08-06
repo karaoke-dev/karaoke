@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit
 
                 // Combine multi note if they has same start and end index.
                 var firstObject = selectedObject.FirstOrDefault();
-                if (firstObject != null && selectedObject.All(x => x.StartIndex == firstObject.StartIndex && x.EndIndex == firstObject.EndIndex))
+                if (firstObject != null && selectedObject.All(x => x.ReferenceTimeTagIndex == firstObject.ReferenceTimeTagIndex))
                     menu.Add(createCombineNoteMenuItem());
 
                 return menu;

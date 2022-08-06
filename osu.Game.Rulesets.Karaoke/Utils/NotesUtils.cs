@@ -36,11 +36,8 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (firstLyric.ParentLyric != secondLyric.ParentLyric)
                 throw new InvalidOperationException($"{nameof(firstLyric.ParentLyric)} and {nameof(secondLyric.ParentLyric)} should be same.");
 
-            if (firstLyric.StartIndex != secondLyric.StartIndex)
-                throw new InvalidOperationException($"{nameof(firstLyric.StartIndex)} and {nameof(secondLyric.StartIndex)} should be same.");
-
-            if (firstLyric.EndIndex != secondLyric.EndIndex)
-                throw new InvalidOperationException($"{nameof(firstLyric.EndIndex)} and {nameof(secondLyric.EndIndex)} should be same.");
+            if (firstLyric.ReferenceTimeTagIndex != secondLyric.ReferenceTimeTagIndex)
+                throw new InvalidOperationException($"{nameof(firstLyric.ReferenceTimeTagIndex)} and {nameof(secondLyric.ReferenceTimeTagIndex)} should be same.");
 
             double startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
             double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
