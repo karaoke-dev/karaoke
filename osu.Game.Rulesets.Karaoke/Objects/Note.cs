@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.ComponentModel;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.IO.Serialization;
@@ -90,6 +91,19 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// </summary>
         [JsonIgnore]
         public double Duration { get; set; }
+
+        /// <summary>
+        /// Offset time relative to the start time.
+        /// </summary>
+        [DefaultValue(0)]
+        public double StartTimeOffset { get; set; }
+
+        /// <summary>
+        /// Offset time relative to the end time.
+        /// Negative value means the adjusted time is smaller than actual.
+        /// </summary>
+        [DefaultValue(0)]
+        public double EndTimeOffset { get; set; }
 
         /// <summary>
         /// End time.
