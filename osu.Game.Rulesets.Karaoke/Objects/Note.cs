@@ -93,6 +93,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public double Duration { get; set; }
 
         /// <summary>
+        /// End time.
+        /// There's no need to save the time because it's calculated by the <see cref="TimeTag"/>
+        /// </summary>
+        [JsonIgnore]
+        public double EndTime => StartTime + Duration;
+
+        /// <summary>
         /// Offset time relative to the start time.
         /// </summary>
         [DefaultValue(0)]
@@ -104,13 +111,6 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// </summary>
         [DefaultValue(0)]
         public double EndTimeOffset { get; set; }
-
-        /// <summary>
-        /// End time.
-        /// There's no need to save the time because it's calculated by the <see cref="TimeTag"/>
-        /// </summary>
-        [JsonIgnore]
-        public double EndTime => StartTime + Duration;
 
         public int StartIndex { get; set; }
 
