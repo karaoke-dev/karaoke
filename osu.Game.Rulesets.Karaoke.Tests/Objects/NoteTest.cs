@@ -53,11 +53,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
 
             Assert.AreEqual(clonedNote.EndTimeOffset, note.EndTimeOffset);
 
-            Assert.AreEqual(clonedNote.StartIndex, note.StartIndex);
-
-            Assert.AreEqual(clonedNote.EndIndex, note.EndIndex);
-
             Assert.AreSame(clonedNote.ParentLyric, note.ParentLyric);
+
+            Assert.AreNotSame(clonedNote.ReferenceTimeTagIndexBindable, note.ReferenceTimeTagIndexBindable);
+            Assert.AreEqual(clonedNote.ReferenceTimeTagIndex, note.ReferenceTimeTagIndex);
         }
     }
 }
