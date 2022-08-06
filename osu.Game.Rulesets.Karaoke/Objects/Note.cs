@@ -109,24 +109,18 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// </summary>
         public double EndTimeOffset { get; set; }
 
-        private Lyric parentLyric = null!;
+        [JsonIgnore]
+        public readonly Bindable<Lyric?> ReferenceLyricBindable = new();
 
         /// <summary>
         /// Relative lyric.
         /// Technically parent lyric will not change after assign, but should not restrict in model layer.
         /// </summary>
         [JsonProperty(IsReference = true)]
-        public Lyric ParentLyric
+        public Lyric? ParentLyric
         {
-            get => parentLyric;
-            set
-            {
-                // todo: will apply the check until fix the issue in the KaraokeJsonBeatmapDecoder.
-                //if (parentLyric != null)
-                //    throw new NotSupportedException("Cannot re-assign the parent lyric.");
-
-                parentLyric = value;
-            }
+            get => ReferenceLyricBindable.Value;
+            set => ReferenceLyricBindable.Value = value;
         }
 
         [JsonIgnore]
