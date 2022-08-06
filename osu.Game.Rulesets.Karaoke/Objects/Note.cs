@@ -74,12 +74,26 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         /// <summary>
-        /// Duration
+        /// Start time.
+        /// There's no need to save the time because it's calculated by the <see cref="TimeTag"/>
         /// </summary>
+        [JsonIgnore]
+        public override double StartTime
+        {
+            get => base.StartTime;
+            set => base.StartTime = value;
+        }
+
+        /// <summary>
+        /// Duration.
+        /// There's no need to save the time because it's calculated by the <see cref="TimeTag"/>
+        /// </summary>
+        [JsonIgnore]
         public double Duration { get; set; }
 
         /// <summary>
-        /// The time at which the HitObject end.
+        /// End time.
+        /// There's no need to save the time because it's calculated by the <see cref="TimeTag"/>
         /// </summary>
         [JsonIgnore]
         public double EndTime => StartTime + Duration;
