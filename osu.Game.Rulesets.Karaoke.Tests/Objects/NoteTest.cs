@@ -4,6 +4,7 @@
 using NUnit.Framework;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Objects
 {
@@ -12,18 +13,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
         [TestCase]
         public void TestClone()
         {
-            var referenceLyric = new Lyric();
-
             var note = new Note
             {
                 Text = "ノート",
                 RubyText = "Note",
                 Display = true,
-                StartTime = 1000,
-                Duration = 500,
                 StartTimeOffset = 100,
                 EndTimeOffset = -100,
-                ReferenceLyric = referenceLyric
+                ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("ノート", 1000, 1000),
+                ReferenceTimeTagIndex = 0,
             };
 
             var clonedNote = note.DeepClone();
@@ -42,13 +40,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
 
             // note time will not being copied because the time is based on the time-tag in the lyric.
             Assert.AreNotSame(clonedNote.StartTimeBindable, note.StartTimeBindable);
-            Assert.AreEqual(clonedNote.StartTime, 0);
+            Assert.AreEqual(clonedNote.StartTime, clonedNote.StartTime);
 
             // note time will not being copied because the time is based on the time-tag in the lyric.
-            Assert.AreEqual(clonedNote.Duration, 0);
+            Assert.AreEqual(clonedNote.Duration, clonedNote.Duration);
 
             // note time will not being copied because the time is based on the time-tag in the lyric.
-            Assert.AreEqual(clonedNote.EndTime, 0);
+            Assert.AreEqual(clonedNote.EndTime, clonedNote.EndTime);
 
             Assert.AreEqual(clonedNote.StartTimeOffset, note.StartTimeOffset);
 

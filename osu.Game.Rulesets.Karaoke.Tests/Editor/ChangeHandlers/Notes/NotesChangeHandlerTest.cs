@@ -1,10 +1,13 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
 {
@@ -16,8 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
             PrepareHitObject(new Note
             {
                 Text = "カラオケ",
-                StartTime = 1000,
-                Duration = 1000,
+                ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("カラオケ", 1000, 1000)
             });
 
             TriggerHandlerChanged(c => c.Split());
@@ -29,6 +31,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
 
                 var firstNote = actualNotes[0];
                 var secondNote = actualNotes[1];
+
+                Assert.AreSame(firstNote.ReferenceLyric, secondNote.ReferenceLyric);
 
                 Assert.AreEqual("カラオケ", firstNote.Text);
                 Assert.AreEqual(1000, firstNote.StartTime);
@@ -43,7 +47,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
         [Test]
         public void TestCombine()
         {
-            var lyric = new Lyric();
+            var lyric = TestCaseNoteHelper.CreateLyricForNote("カラオケ", 1000, 1000);
 
             // note that lyric and notes should in the selection.
             PrepareHitObject(lyric);
@@ -53,17 +57,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
                 {
                     Text = "カラ",
                     RubyText = "から",
-                    StartTime = 1000,
-                    Duration = 500,
                     ReferenceLyric = lyric,
+                    ReferenceTimeTagIndex = 0
                 },
                 new Note
                 {
                     Text = "オケ",
                     RubyText = "おけ",
-                    StartTime = 1500,
-                    Duration = 500,
                     ReferenceLyric = lyric,
+                    ReferenceTimeTagIndex = 0
                 }
             });
 
@@ -158,16 +160,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
                 {
                     Text = "カラ",
                     RubyText = "から",
-                    StartTime = 1000,
-                    Duration = 500,
                     ReferenceLyric = lyric,
                 },
                 new Note
                 {
                     Text = "オケ",
                     RubyText = "おけ",
-                    StartTime = 1500,
-                    Duration = 500,
                     ReferenceLyric = lyric,
                 }
             }, false);

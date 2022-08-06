@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
 using osu.Game.Rulesets.Karaoke.Replays;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Karaoke.UI;
 using osu.Game.Rulesets.Karaoke.UI.Components;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -112,12 +113,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.UI
             {
                 var note = new Note
                 {
-                    StartTime = Time.Current + increaseTime,
-                    Duration = duration,
-                    Tone = new Tone { Scale = tone },
                     Text = "Here",
-                    ReferenceLyric = new Lyric(),
-                    Display = true
+                    Display = true,
+                    Tone = new Tone { Scale = tone },
+                    ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("Here", Time.Current + increaseTime, duration),
+                    ReferenceTimeTagIndex = 0
                 };
                 note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 

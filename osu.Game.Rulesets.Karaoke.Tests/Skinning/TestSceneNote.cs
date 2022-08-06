@@ -8,6 +8,7 @@ using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Objects.Drawables;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
@@ -29,10 +30,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
         {
             var note = new Note
             {
-                StartTime = 100,
-                Duration = 800,
                 Text = "カラオケ",
-                ReferenceLyric = new Lyric()
+                ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("カラオケ", 100, 800),
             };
             note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 

@@ -6,6 +6,7 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Replays;
+using osu.Game.Rulesets.Karaoke.Tests.Helper;
 using osu.Game.Rulesets.Replays;
 using osu.Game.Tests.Visual;
 
@@ -23,11 +24,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
             var beatmap = new KaraokeBeatmap();
             beatmap.HitObjects.Add(new Note
             {
-                Display = true,
-                StartTime = 1000,
-                Duration = 50,
                 Text = "karaoke!",
-                Tone = new Tone(0, true)
+                Display = true,
+                Tone = new Tone(0, true),
+                ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("karaoke!", 1000, 50)
             });
 
             var generated = new KaraokeAutoGenerator(beatmap).Generate();
@@ -49,11 +49,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
             var beatmap = new KaraokeBeatmap();
             beatmap.HitObjects.Add(new Note
             {
-                Display = true,
-                StartTime = 1000,
-                Duration = 1000,
                 Text = "karaoke!",
-                Tone = new Tone(0, true)
+                Display = true,
+                Tone = new Tone(0, true),
+                ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("karaoke!", 1000, 1000)
             });
 
             var generated = new KaraokeAutoGenerator(beatmap).Generate();
@@ -75,19 +74,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Replays
             var beatmap = new KaraokeBeatmap();
             beatmap.HitObjects.Add(new Note
             {
-                Display = true,
-                StartTime = 1000,
-                Duration = 50,
                 Text = "kara",
-                Tone = new Tone(0, true)
+                Display = true,
+                Tone = new Tone(0, true),
+                ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("karaoke!", 1000, 50)
             });
             beatmap.HitObjects.Add(new Note
             {
-                Display = true,
-                StartTime = 1050,
-                Duration = 50,
                 Text = "oke!",
-                Tone = new Tone(1, true)
+                Display = true,
+                Tone = new Tone(1, true),
+                ReferenceLyric = TestCaseNoteHelper.CreateLyricForNote("karaoke!", 1050, 50)
             });
 
             var generated = new KaraokeAutoGenerator(beatmap).Generate();
