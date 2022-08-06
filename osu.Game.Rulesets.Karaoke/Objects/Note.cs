@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.ComponentModel;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.IO.Serialization;
@@ -74,12 +75,39 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         /// <summary>
-        /// Duration
+        /// Start time.
+        /// There's no need to save the time because it's calculated by the <see cref="TimeTag"/>
         /// </summary>
+        [JsonIgnore]
+        public override double StartTime
+        {
+            get => base.StartTime;
+            set => base.StartTime = value;
+        }
+
+        /// <summary>
+        /// Duration.
+        /// There's no need to save the time because it's calculated by the <see cref="TimeTag"/>
+        /// </summary>
+        [JsonIgnore]
         public double Duration { get; set; }
 
         /// <summary>
-        /// The time at which the HitObject end.
+        /// Offset time relative to the start time.
+        /// </summary>
+        [DefaultValue(0)]
+        public double StartTimeOffset { get; set; }
+
+        /// <summary>
+        /// Offset time relative to the end time.
+        /// Negative value means the adjusted time is smaller than actual.
+        /// </summary>
+        [DefaultValue(0)]
+        public double EndTimeOffset { get; set; }
+
+        /// <summary>
+        /// End time.
+        /// There's no need to save the time because it's calculated by the <see cref="TimeTag"/>
         /// </summary>
         [JsonIgnore]
         public double EndTime => StartTime + Duration;
