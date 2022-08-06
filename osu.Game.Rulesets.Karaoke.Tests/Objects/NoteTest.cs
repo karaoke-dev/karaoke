@@ -11,7 +11,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
         [TestCase]
         public void TestClone()
         {
-            var parentLyric = new Lyric();
+            var referenceLyric = new Lyric();
 
             var note = new Note
             {
@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
                 Duration = 500,
                 StartTimeOffset = 100,
                 EndTimeOffset = -100,
-                ParentLyric = parentLyric
+                ReferenceLyric = referenceLyric
             };
 
             var clonedNote = note.DeepClone();
@@ -53,7 +53,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
 
             Assert.AreEqual(clonedNote.EndTimeOffset, note.EndTimeOffset);
 
-            Assert.AreSame(clonedNote.ParentLyric, note.ParentLyric);
+            Assert.AreSame(clonedNote.ReferenceLyric, note.ReferenceLyric);
 
             Assert.AreNotSame(clonedNote.ReferenceTimeTagIndexBindable, note.ReferenceTimeTagIndexBindable);
             Assert.AreEqual(clonedNote.ReferenceTimeTagIndex, note.ReferenceTimeTagIndex);

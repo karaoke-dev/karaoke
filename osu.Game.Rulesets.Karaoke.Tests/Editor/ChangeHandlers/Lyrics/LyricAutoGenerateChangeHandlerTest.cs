@@ -261,7 +261,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         private Note[] getMatchedNotes(Lyric lyric)
-            => Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray();
+            => Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToArray();
 
         #endregion
     }

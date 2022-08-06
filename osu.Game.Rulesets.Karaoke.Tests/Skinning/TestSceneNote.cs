@@ -32,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Skinning
                 StartTime = 100,
                 Duration = 800,
                 Text = "カラオケ",
-                ParentLyric = new Lyric()
+                ReferenceLyric = new Lyric()
             };
             note.ApplyDefaults(new ControlPointInfo(), new BeatmapDifficulty());
 

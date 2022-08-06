@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Generator.Notes
                         RubyText = ruby,
                         StartTime = time,
                         Duration = nextTime - time,
-                        ParentLyric = lyric,
+                        ReferenceLyric = lyric,
                         ReferenceTimeTagIndex = timeTagIndex
                     });
                 }

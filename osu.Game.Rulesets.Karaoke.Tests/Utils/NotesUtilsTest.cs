@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 Tone = new Tone(-1, true),
                 StartTime = 1000,
                 Duration = 2000,
-                ParentLyric = lyric,
+                ReferenceLyric = lyric,
                 ReferenceTimeTagIndex = 1
             };
 
@@ -80,10 +80,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 Assert.AreEqual(expect.Display, actual.Display);
                 Assert.AreEqual(expect.Tone, actual.Tone);
 
-                Assert.AreEqual(expect.ParentLyric, actual.ParentLyric);
+                Assert.AreEqual(expect.ReferenceLyric, actual.ReferenceLyric);
                 Assert.AreEqual(expect.ReferenceTimeTagIndex, actual.ReferenceTimeTagIndex);
 
-                Assert.AreEqual(expect.ParentLyric.Singers, actual.ParentLyric.Singers);
+                Assert.AreEqual(expect.ReferenceLyric?.Singers, actual.ReferenceLyric?.Singers);
             }
         }
 
@@ -100,7 +100,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             {
                 StartTime = firstTime[0],
                 Duration = firstTime[1],
-                ParentLyric = lyric,
+                ReferenceLyric = lyric,
                 ReferenceTimeTagIndex = reference_time_tag_index,
             };
 
@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             {
                 StartTime = secondTime[0],
                 Duration = secondTime[1],
-                ParentLyric = lyric,
+                ReferenceLyric = lyric,
                 ReferenceTimeTagIndex = reference_time_tag_index,
             };
 

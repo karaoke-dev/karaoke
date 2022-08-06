@@ -39,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
         {
             // todo : might deal with the cause if create or delete notes.
             notes.Clear();
-            notes.AddRange(beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToArray());
+            notes.AddRange(beatmap.HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToArray());
 
             // Add time-tag into blueprint container
             RegisterBindable(notes);

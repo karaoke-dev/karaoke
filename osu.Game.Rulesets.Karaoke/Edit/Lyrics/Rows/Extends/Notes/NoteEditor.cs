@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             beatmap.HitObjectRemoved += removeHitObject;
 
             // add all matched notes into playfield
-            var notes = beatmap.HitObjects.OfType<Note>().Where(x => x.ParentLyric == lyric).ToList();
+            var notes = beatmap.HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToList();
 
             foreach (var note in notes)
             {
@@ -78,7 +78,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             if (hitObject is not Note note)
                 return;
 
-            if (note.ParentLyric != lyric)
+            if (note.ReferenceLyric != lyric)
                 return;
 
             Playfield.Add(note);
@@ -89,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             if (hitObject is not Note note)
                 return;
 
-            if (note.ParentLyric != lyric)
+            if (note.ReferenceLyric != lyric)
                 return;
 
             Playfield.Remove(note);
