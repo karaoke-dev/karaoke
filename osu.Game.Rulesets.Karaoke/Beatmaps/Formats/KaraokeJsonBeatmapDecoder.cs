@@ -49,7 +49,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                 {
                     // because of json serializer contains object reference issue with serialize/deserialize the beatmap.
                     // so should re-assign the lyric instance.
-                    note.ReferenceLyric = lyrics.FirstOrDefault(x => x.ID == note.ReferenceLyric.ID) ?? throw new InvalidOperationException();
+                    note.ReferenceLyric = lyrics.FirstOrDefault(x => x.ID == note.ReferenceLyric?.ID) ?? throw new InvalidOperationException();
                 }
 
                 hitObject.ApplyDefaults(output.ControlPointInfo, output.Difficulty);

@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
                 Assert.AreEqual(expect.ReferenceLyric, actual.ReferenceLyric);
                 Assert.AreEqual(expect.ReferenceTimeTagIndex, actual.ReferenceTimeTagIndex);
 
-                Assert.AreEqual(expect.ReferenceLyric.Singers, actual.ReferenceLyric.Singers);
+                Assert.AreEqual(expect.ReferenceLyric?.Singers, actual.ReferenceLyric?.Singers);
             }
         }
 

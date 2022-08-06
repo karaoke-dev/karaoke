@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Beatmaps;
@@ -29,6 +30,10 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             var lyrics = output.HitObjects.OfType<Lyric>().ToList();
             return notes.GroupBy(x => x.ReferenceLyric).Select(g =>
             {
+                var lyric = g.Key;
+                if (lyric == null)
+                    throw new NullReferenceException();
+
                 // Get note group
                 var noteGroup = g.ToList().GroupBy(n => n.ReferenceTimeTagIndex);
 
@@ -41,7 +46,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                     return "(" + string.Join("|", x.Select(convertNote)) + ")";
                 }));
 
-                return $"note{lyrics.IndexOf(g.Key) + 1}={noteGroupStr}";
+                return $"note{lyrics.IndexOf(lyric) + 1}={noteGroupStr}";
             }).ToList();
 
             // Convert single note
