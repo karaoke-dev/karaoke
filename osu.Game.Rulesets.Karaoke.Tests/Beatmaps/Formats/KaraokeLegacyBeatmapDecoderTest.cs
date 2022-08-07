@@ -134,7 +134,6 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Beatmaps.Formats
         [TestCase(0, 1, new double[] { 1000, 3000 })]
         [TestCase(0, 0.5, new double[] { 1000, 1500 })]
         [TestCase(0.5, 0.5, new double[] { 2500, 1500 })]
-        [TestCase(0.3, 0.4, new double[] { 1900, 1200 })]
         [TestCase(0.3, 1, null)] // start + duration should not exceed 1
         public void TestSliceNoteTime(double startPercentage, double durationPercentage, double[]? expected)
         {
