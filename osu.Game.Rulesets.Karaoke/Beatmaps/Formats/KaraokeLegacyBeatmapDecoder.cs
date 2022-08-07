@@ -162,7 +162,7 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
                             }
 
                             // Split note and apply them
-                            var splitDefaultNote = NoteUtils.SliceNote(defaultNote, startPercentage, percentage);
+                            var splitDefaultNote = SliceNote(defaultNote, startPercentage, percentage);
                             startPercentage += percentage;
                             if (!string.IsNullOrEmpty(ruby))
                                 splitDefaultNote.Text = ruby;
@@ -253,6 +253,22 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             };
 
             beatmap.HitObjects.Add(dictionary);
+        }
+
+        internal static Note SliceNote(Note note, double startPercentage, double durationPercentage)
+        {
+            if (startPercentage < 0 || startPercentage + durationPercentage > 1)
+                throw new ArgumentOutOfRangeException($"{nameof(Note)} cannot assign split range of start from {startPercentage} and duration {durationPercentage}");
+
+            double durationFromStartTime = note.Duration * startPercentage;
+            double secondNoteDuration = note.Duration * (1 - startPercentage - durationPercentage);
+
+            // todo: there's no need to create the new note.
+            var newNote = note.DeepClone();
+            newNote.StartTimeOffset = note.StartTimeOffset + durationFromStartTime;
+            newNote.EndTimeOffset = note.EndTimeOffset - secondNoteDuration;
+
+            return newNote;
         }
     }
 }

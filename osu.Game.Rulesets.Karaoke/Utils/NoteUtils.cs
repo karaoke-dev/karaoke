@@ -1,37 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Utils
 {
     public static class NoteUtils
     {
-        public static Note SliceNote(Note note, double startPercentage, double durationPercentage)
-        {
-            if (startPercentage < 0 || startPercentage + durationPercentage > 1)
-                throw new ArgumentOutOfRangeException($"{nameof(Note)} cannot assign split range of start from {startPercentage} and duration {durationPercentage}");
-
-            double startTime = note.StartTime + note.Duration * startPercentage;
-            double duration = note.Duration * durationPercentage;
-
-            return CopyByTime(note, startTime, duration);
-        }
-
-        public static Note CopyByTime(Note originNote, double startTime, double duration)
-        {
-            double fixedStartTime = originNote.StartTime - originNote.StartTimeOffset;
-            double fixedEndTime = originNote.EndTime - originNote.EndTimeOffset;
-            double endTime = startTime + duration;
-
-            var note = originNote.DeepClone();
-            note.StartTimeOffset = startTime - fixedStartTime;
-            note.EndTimeOffset = endTime - fixedEndTime;
-
-            return note;
-        }
-
         /// <summary>
         /// Get the display text while gameplay or in editor.
         /// </summary>
