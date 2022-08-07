@@ -19,14 +19,14 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                     throw new InvalidOperationException($"{nameof(percentage)} cannot be {0} or {1}.");
             }
 
-            double firstNoteStartTime = note.StartTime;
             double firstNoteDuration = note.Duration * percentage;
-
-            double secondNoteStartTime = firstNoteStartTime + firstNoteDuration;
             double secondNoteDuration = note.Duration * (1 - percentage);
 
-            var firstNote = NoteUtils.CopyByTime(note, firstNoteStartTime, firstNoteDuration);
-            var secondNote = NoteUtils.CopyByTime(note, secondNoteStartTime, secondNoteDuration);
+            var firstNote = note.DeepClone();
+            firstNote.EndTimeOffset = note.EndTimeOffset - secondNoteDuration;
+
+            var secondNote = note.DeepClone();
+            secondNote.StartTimeOffset = note.StartTimeOffset + firstNoteDuration;
 
             return new Tuple<Note, Note>(firstNote, secondNote);
         }
@@ -39,10 +39,11 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (firstLyric.ReferenceTimeTagIndex != secondLyric.ReferenceTimeTagIndex)
                 throw new InvalidOperationException($"{nameof(firstLyric.ReferenceTimeTagIndex)} and {nameof(secondLyric.ReferenceTimeTagIndex)} should be same.");
 
-            double startTime = Math.Min(firstLyric.StartTime, secondLyric.StartTime);
-            double endTime = Math.Max(firstLyric.EndTime, secondLyric.EndTime);
+            var combinedLyric = firstLyric.DeepClone();
+            combinedLyric.StartTimeOffset = Math.Min(firstLyric.StartTimeOffset, secondLyric.StartTimeOffset);
+            combinedLyric.EndTimeOffset = Math.Max(firstLyric.EndTimeOffset, secondLyric.EndTimeOffset);
 
-            return NoteUtils.CopyByTime(firstLyric, startTime, endTime - startTime);
+            return combinedLyric;
         }
     }
 }

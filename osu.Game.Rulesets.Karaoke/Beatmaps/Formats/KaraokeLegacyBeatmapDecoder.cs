@@ -260,10 +260,15 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
             if (startPercentage < 0 || startPercentage + durationPercentage > 1)
                 throw new ArgumentOutOfRangeException($"{nameof(Note)} cannot assign split range of start from {startPercentage} and duration {durationPercentage}");
 
-            double startTime = note.StartTime + note.Duration * startPercentage;
-            double duration = note.Duration * durationPercentage;
+            double durationFromStartTime = note.Duration * startPercentage;
+            double secondNoteDuration = note.Duration * (1 - startPercentage - durationPercentage);
 
-            return NoteUtils.CopyByTime(note, startTime, duration);
+            // todo: there's no need to create the new note.
+            var newNote = note.DeepClone();
+            newNote.StartTimeOffset = note.StartTimeOffset + durationFromStartTime;
+            newNote.EndTimeOffset = note.EndTimeOffset - secondNoteDuration;
+
+            return newNote;
         }
     }
 }
