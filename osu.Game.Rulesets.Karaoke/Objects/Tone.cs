@@ -79,10 +79,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public static Tone operator -(Tone tone) => negate(tone);
 
-        private static Tone negate(Tone tone) => new()
+        private static Tone negate(Tone tone) => tone with
         {
-            Scale = -tone.Scale + (tone.Half ? -1 : 0),
-            Half = tone.Half
+            Scale = -tone.Scale + (tone.Half ? -1 : 0)
         };
 
         public static bool operator ==(Tone tone1, Tone tone2) => tone1.Equals(tone2);

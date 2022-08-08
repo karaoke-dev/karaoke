@@ -117,9 +117,9 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Fonts
                 character.Y = currentTopLeftPosition.Y;
 
                 // assign next position for drawing.
-                currentTopLeftPosition = new
+                currentTopLeftPosition = currentTopLeftPosition with
                 {
-                    X = currentTopLeftPosition.X + character.Width + spacing.X, currentTopLeftPosition.Y,
+                    X = currentTopLeftPosition.X + character.Width + spacing.X
                 };
             }
 
