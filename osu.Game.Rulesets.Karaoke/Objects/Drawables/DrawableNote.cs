@@ -182,7 +182,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Drawables
         public bool OnPressed(KeyBindingPressEvent<KaraokeScoringAction> e)
         {
             // Make sure the action happened within the body of the hold note
-            if (Time.Current < HitObject.StartTime && holdStartTime == null || Time.Current > HitObject.EndTime && holdStartTime == null)
+            if ((Time.Current < HitObject.StartTime && holdStartTime == null) || (Time.Current > HitObject.EndTime && holdStartTime == null))
                 return false;
 
             if (holdStartTime == null)

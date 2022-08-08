@@ -87,17 +87,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ImportLyric
                 return dependencies;
             }
 
-            public T GetLyricEditorModeState<T>() where T : Enum
-            {
-                switch (typeof(T))
+            public T GetLyricEditorModeState<T>() where T : Enum =>
+                typeof(T) switch
                 {
-                    case Type t when t == typeof(TextingEditMode):
-                        return EnumUtils.Casting<T>(textingModeState.EditMode);
-
-                    default:
-                        throw new NotSupportedException();
-                }
-            }
+                    Type t when t == typeof(TextingEditMode) => EnumUtils.Casting<T>(textingModeState.EditMode),
+                    _ => throw new NotSupportedException()
+                };
 
             public void SwitchToEditModeState<T>(T mode) where T : Enum
             {
