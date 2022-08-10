@@ -1,15 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.OpenGL;
-using osu.Framework.Graphics.OpenGL.Vertices;
 using osu.Framework.Graphics.Primitives;
+using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Textures;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.Shapes
@@ -21,7 +18,15 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Shapes
         /// </summary>
         public RightTriangle()
         {
-            Texture = Texture.WhitePixel;
+            // Setting the texture would normally set a size of (1, 1), but since the texture is set from BDL it needs to be set here instead.
+            // RelativeSizeAxes may not behave as expected if this is not done.
+            Size = Vector2.One;
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(IRenderer renderer)
+        {
+            Texture ??= renderer.WhitePixel;
         }
 
         public override RectangleF BoundingBox => toTriangle(ToParentSpace(LayoutRectangle), RightAngleDirection).AABBFloat;
@@ -70,20 +75,26 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Shapes
                 rightAngleDirection = Source.RightAngleDirection;
             }
 
-            protected override void Blit(Action<TexturedVertex2D> vertexAction)
+            protected override void Blit(IRenderer renderer)
             {
-                DrawTriangle(Texture, toTriangle(ScreenSpaceDrawQuad, rightAngleDirection), DrawColourInfo.Colour, null, null,
+                if (DrawRectangle.Width == 0 || DrawRectangle.Height == 0)
+                    return;
+
+                renderer.DrawTriangle(Texture, toTriangle(ScreenSpaceDrawQuad, rightAngleDirection), DrawColourInfo.Colour, null, null,
                     new Vector2(InflationAmount.X / DrawRectangle.Width, InflationAmount.Y / DrawRectangle.Height), TextureCoords);
             }
 
-            protected override void BlitOpaqueInterior(Action<TexturedVertex2D> vertexAction)
+            protected override void BlitOpaqueInterior(IRenderer renderer)
             {
+                if (DrawRectangle.Width == 0 || DrawRectangle.Height == 0)
+                    return;
+
                 var triangle = toTriangle(ConservativeScreenSpaceDrawQuad, rightAngleDirection);
 
-                if (GLWrapper.IsMaskingActive)
-                    DrawClipped(ref triangle, Texture, DrawColourInfo.Colour, vertexAction: vertexAction);
+                if (renderer.IsMaskingActive)
+                    renderer.DrawClipped(ref triangle, Texture, DrawColourInfo.Colour);
                 else
-                    DrawTriangle(Texture, triangle, DrawColourInfo.Colour, vertexAction: vertexAction);
+                    renderer.DrawTriangle(Texture, triangle, DrawColourInfo.Colour);
             }
         }
     }
