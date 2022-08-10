@@ -5,6 +5,8 @@ using System.IO;
 using NUnit.Framework;
 using osu.Framework.Audio;
 using osu.Framework.Audio.Track;
+using osu.Framework.Graphics.Rendering;
+using osu.Framework.Graphics.Rendering.Dummy;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Game.Database;
@@ -44,6 +46,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Resources
 
         public static IStorageResourceProvider CreateSkinStorageResourceProvider(string skinName = "special-skin") => new TestStorageResourceProvider(skinName);
 
+#nullable disable
+
         private class TestStorageResourceProvider : IStorageResourceProvider
         {
             public TestStorageResourceProvider(string skinName)
@@ -51,12 +55,16 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Resources
                 Files = Resources = new NamespacedResourceStore<byte[]>(new DllResourceStore(GetType().Assembly), $"Resources/{skinName}");
             }
 
-            public IResourceStore<TextureUpload>? CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
+            public IRenderer Renderer => new DummyRenderer();
 
-            public AudioManager? AudioManager => null;
+            public AudioManager AudioManager => null;
             public IResourceStore<byte[]> Files { get; }
             public IResourceStore<byte[]> Resources { get; }
-            public RealmAccess? RealmAccess => null;
+            public RealmAccess RealmAccess => null;
+
+            public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
         }
+
+#nullable enable
     }
 }
