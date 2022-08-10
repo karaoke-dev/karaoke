@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved, AllowNull]
         private GameHost host { get; set; }
 
-        [Resolved(canBeNull: true)]
+        [Resolved]
         private OnScreenDisplay? onScreenDisplay { get; set; }
 
         [Resolved, AllowNull]

@@ -16,10 +16,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers
 {
     public class SingersChangeHandler : BeatmapPropertyChangeHandler<Singer>, ISingersChangeHandler
     {
-        [Resolved(canBeNull: true)]
+        [Resolved]
         private BeatmapManager? beatmapManager { get; set; }
 
-        [Resolved(canBeNull: true)]
+        [Resolved]
         private IBindable<WorkingBeatmap>? working { get; set; }
 
         public BindableList<Singer> Singers => Items;
