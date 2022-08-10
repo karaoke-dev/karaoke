@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
@@ -15,19 +16,18 @@ namespace osu.Game.Rulesets.Karaoke.IO.Stores
     public class KaraokeLocalFontStore : FontStore
     {
         private readonly Dictionary<FontInfo, IResourceStore<TextureUpload>> fontInfos = new();
-        private readonly IResourceStore<TextureUpload> store;
         private readonly FontManager fontManager;
 
         /// <summary>
         /// Construct a font store to be added to a parent font store via <see cref="AddFont"/>.
         /// </summary>
         /// <param name="fontManager">font manager.</param>
+        /// <param name="renderer">The renderer to create textures with.</param>
         /// <param name="store">The texture source.</param>
         /// <param name="scaleAdjust">The raw pixel height of the font. Can be used to apply a global scale or metric to font usages.</param>
-        public KaraokeLocalFontStore(FontManager fontManager, IResourceStore<TextureUpload> store = null, float scaleAdjust = 100)
-            : base(store, scaleAdjust)
+        public KaraokeLocalFontStore(FontManager fontManager, IRenderer renderer, IResourceStore<TextureUpload> store = null, float scaleAdjust = 100)
+            : base(renderer, store, scaleAdjust)
         {
-            this.store = store;
             this.fontManager = fontManager;
         }
 

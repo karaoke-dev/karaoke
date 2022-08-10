@@ -6,6 +6,8 @@ using System.ComponentModel;
 using osu.Framework.Audio;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Rendering;
+using osu.Framework.Graphics.Rendering.Dummy;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Game.Beatmaps;
@@ -101,6 +103,8 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
             }
         }
 
+#nullable disable
+
         private class InternalSkinStorageResourceProvider : IStorageResourceProvider
         {
             public InternalSkinStorageResourceProvider(string skinName)
@@ -109,12 +113,15 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
                 Files = Resources = new NamespacedResourceStore<byte[]>(store, $"Skin/{skinName}");
             }
 
-            public IResourceStore<TextureUpload>? CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
+            public IRenderer Renderer => new DummyRenderer();
 
-            public AudioManager? AudioManager => null;
+            public AudioManager AudioManager => null;
             public IResourceStore<byte[]> Files { get; }
             public IResourceStore<byte[]> Resources { get; }
-            public RealmAccess? RealmAccess => null;
+            public RealmAccess RealmAccess => null;
+            public IResourceStore<TextureUpload> CreateTextureLoaderStore(IResourceStore<byte[]> underlyingStore) => null;
         }
+
+#nullable enable
     }
 }

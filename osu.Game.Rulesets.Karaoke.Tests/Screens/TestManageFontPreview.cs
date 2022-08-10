@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Screens
         private void load(GameHost host)
         {
             var resources = new KaraokeRuleset().CreateResourceStore();
-            var textureStore = new TextureStore(host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(resources, @"Textures")));
+            var textureStore = new TextureStore(host.Renderer, host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(resources, @"Textures")));
             Dependencies.CacheAs(textureStore);
 
             Add(new ManageFontPreview
