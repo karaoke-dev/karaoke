@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning.Legacy
     /// </summary>
     public class LegacyKaraokeElement : CompositeDrawable
     {
-        [Resolved(CanBeNull = true)]
+        [Resolved]
         protected KaraokePlayfield? Playfield { get; private set; }
 
         /// <summary>
