@@ -5,8 +5,10 @@
 
 using System;
 using System.Collections.Generic;
+using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
@@ -158,27 +160,7 @@ namespace osu.Game.Rulesets.Karaoke
                 _ => Array.Empty<Mod>()
             };
 
-        public override Drawable CreateIcon() => new Container
-        {
-            AutoSizeAxes = Axes.Both,
-            Children = new Drawable[]
-            {
-                new Sprite
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Scale = new Vector2(0.9f),
-                    Texture = new TextureStore(new TextureLoaderStore(CreateResourceStore()), false).Get("Textures/logo"),
-                },
-                new SpriteIcon
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
-                    Scale = new Vector2(45f),
-                    Icon = FontAwesome.Regular.Circle,
-                },
-            }
-        };
+        public override Drawable CreateIcon() => new KaraokeIcon(this);
 
         public override IResourceStore<byte[]> CreateResourceStore()
         {
@@ -311,6 +293,39 @@ namespace osu.Game.Rulesets.Karaoke
 
             // it's a tricky way for loading customized karaoke beatmap.
             RulesetInfo.OnlineID = 111;
+        }
+
+        private class KaraokeIcon : CompositeDrawable
+        {
+            private readonly KaraokeRuleset ruleset;
+
+            public KaraokeIcon(KaraokeRuleset ruleset)
+            {
+                this.ruleset = ruleset;
+                AutoSizeAxes = Axes.Both;
+            }
+
+            [BackgroundDependencyLoader]
+            private void load(IRenderer renderer)
+            {
+                InternalChildren = new Drawable[]
+                {
+                    new Sprite
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(0.9f),
+                        Texture = new TextureStore(renderer, new TextureLoaderStore(ruleset.CreateResourceStore()), false).Get("Textures/logo"),
+                    },
+                    new SpriteIcon
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre,
+                        Scale = new Vector2(45f),
+                        Icon = FontAwesome.Regular.Circle,
+                    },
+                };
+            }
         }
     }
 }
