@@ -47,26 +47,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         [Resolved, AllowNull]
         private ITimeTagModeState timeTagModeState { get; set; }
 
-        [Resolved, AllowNull]
-        private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+        [Resolved]
+        private ILyricsChangeHandler? lyricsChangeHandler { get; set; }
 
-        [Resolved, AllowNull]
-        private ILyricLanguageChangeHandler languageChangeHandler { get; set; }
+        [Resolved]
+        private ILyricLanguageChangeHandler? languageChangeHandler { get; set; }
 
-        [Resolved, AllowNull]
-        private ILyricRubyTagsChangeHandler lyricRubyTagsChangeHandler { get; set; }
+        [Resolved]
+        private ILyricRubyTagsChangeHandler? lyricRubyTagsChangeHandler { get; set; }
 
-        [Resolved, AllowNull]
-        private ILyricRomajiTagsChangeHandler lyricRomajiTagsChangeHandler { get; set; }
+        [Resolved]
+        private ILyricRomajiTagsChangeHandler? lyricRomajiTagsChangeHandler { get; set; }
 
-        [Resolved, AllowNull]
-        private ILyricTimeTagsChangeHandler lyricTimeTagsChangeHandler { get; set; }
+        [Resolved]
+        private ILyricTimeTagsChangeHandler? lyricTimeTagsChangeHandler { get; set; }
 
-        [Resolved, AllowNull]
-        private ILyricSingerChangeHandler lyricSingerChangeHandler { get; set; }
+        [Resolved]
+        private ILyricSingerChangeHandler? lyricSingerChangeHandler { get; set; }
 
-        [Resolved, AllowNull]
-        private ISingersChangeHandler singersChangeHandler { get; set; }
+        [Resolved]
+        private ISingersChangeHandler? singersChangeHandler { get; set; }
 
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
 
@@ -155,6 +155,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                             return false;
 
                         case TextingEditMode.Split:
+                            if (lyricsChangeHandler == null)
+                                throw new NullDependencyException($"Missing {nameof(lyricsChangeHandler)}");
+
                             lyricsChangeHandler.Remove();
                             return true;
 
@@ -166,13 +169,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return false;
 
                 case LyricEditorMode.Language:
-                    languageChangeHandler.SetLanguage(null);
+                    languageChangeHandler?.SetLanguage(null);
                     return true;
 
                 case LyricEditorMode.EditRuby:
                     var rubies = editRubyModeState.SelectedItems;
                     if (!rubies.Any())
                         return false;
+
+                    if (lyricRubyTagsChangeHandler == null)
+                        throw new NullDependencyException($"Missing {nameof(lyricRubyTagsChangeHandler)}");
 
                     lyricRubyTagsChangeHandler.RemoveRange(rubies);
                     return true;
@@ -182,6 +188,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     if (!romajies.Any())
                         return false;
 
+                    if (lyricRomajiTagsChangeHandler == null)
+                        throw new NullDependencyException($"Missing {nameof(lyricRomajiTagsChangeHandler)}");
+
                     lyricRomajiTagsChangeHandler.RemoveRange(romajies);
                     return true;
 
@@ -190,6 +199,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     if (!timeTags.Any())
                         return false;
 
+                    if (lyricTimeTagsChangeHandler == null)
+                        throw new NullDependencyException($"Missing {nameof(lyricTimeTagsChangeHandler)}");
+
                     lyricTimeTagsChangeHandler.RemoveRange(timeTags);
                     return true;
 
@@ -197,6 +209,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return false;
 
                 case LyricEditorMode.Singer:
+                    if (lyricSingerChangeHandler == null)
+                        throw new NullDependencyException($"Missing {nameof(lyricSingerChangeHandler)}");
+
                     lyricSingerChangeHandler.Clear();
                     return true;
 
@@ -298,6 +313,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                             if (pasteLyric == null)
                                 return false;
 
+                            if (lyricsChangeHandler == null)
+                                throw new NullDependencyException($"Missing {nameof(lyricsChangeHandler)}");
+
                             lyricsChangeHandler.AddBelowToSelection(pasteLyric);
                             return true;
 
@@ -313,6 +331,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     if (pasteLanguage == null)
                         return false;
 
+                    if (languageChangeHandler == null)
+                        throw new NullDependencyException($"Missing {nameof(languageChangeHandler)}");
+
                     languageChangeHandler.SetLanguage(pasteLanguage);
                     return true;
 
@@ -320,6 +341,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     var pasteRubies = getObjectFromClipboardContent<RubyTag[]>();
                     if (pasteRubies == null)
                         return false;
+
+                    if (lyricRubyTagsChangeHandler == null)
+                        throw new NullDependencyException($"Missing {nameof(lyricRubyTagsChangeHandler)}");
 
                     lyricRubyTagsChangeHandler.AddRange(pasteRubies);
                     return true;
@@ -329,6 +353,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     if (pasteRomajies == null)
                         return false;
 
+                    if (lyricRomajiTagsChangeHandler == null)
+                        throw new NullDependencyException($"Missing {nameof(lyricRomajiTagsChangeHandler)}");
+
                     lyricRomajiTagsChangeHandler.AddRange(pasteRomajies);
                     return true;
 
@@ -336,6 +363,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     var pasteTimeTags = getObjectFromClipboardContent<TimeTag[]>();
                     if (pasteTimeTags == null)
                         return false;
+
+                    if (lyricTimeTagsChangeHandler == null)
+                        throw new NullDependencyException($"Missing {nameof(lyricTimeTagsChangeHandler)}");
 
                     lyricTimeTagsChangeHandler.AddRange(pasteTimeTags);
                     return true;
@@ -348,6 +378,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     if (pasteSingerIds == null)
                         return false;
 
+                    if (lyricSingerChangeHandler == null)
+                        throw new NullDependencyException($"Missing {nameof(lyricSingerChangeHandler)}");
+
                     var singers = getMatchedSinges(pasteSingerIds);
                     lyricSingerChangeHandler.AddRange(singers);
                     return true;
@@ -358,7 +391,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         private IEnumerable<Singer> getMatchedSinges(IEnumerable<int> singerIds)
-            => singersChangeHandler.Singers.Where(x => singerIds.Contains(x.ID));
+        {
+            return singersChangeHandler == null ? throw new NullDependencyException($"Missing {nameof(singersChangeHandler)}") : singersChangeHandler.Singers.Where(x => singerIds.Contains(x.ID));
+        }
 
         private void copyObjectToClipboard<T>(T obj)
         {
