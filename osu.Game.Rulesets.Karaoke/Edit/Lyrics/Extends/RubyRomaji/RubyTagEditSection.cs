@@ -24,8 +24,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         protected override IBindableList<RubyTag> GetBindableTextTags(Lyric lyric)
             => lyric.RubyTagsBindable;
 
-        protected override LabelledTextTagTextBox<RubyTag> CreateLabelledTextTagTextBox(RubyTag textTag)
-            => new LabelledRubyTagTextBox(Lyric, textTag);
+        protected override LabelledTextTagTextBox<RubyTag> CreateLabelledTextTagTextBox(Lyric lyric, RubyTag textTag)
+            => new LabelledRubyTagTextBox(lyric, textTag);
 
         protected override void AddTextTag(RubyTag textTag)
             => rubyTagsChangeHandler.Add(textTag);
