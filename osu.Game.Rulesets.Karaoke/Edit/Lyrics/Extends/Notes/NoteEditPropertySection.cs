@@ -11,23 +11,22 @@ using osu.Framework.Graphics;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
-    public class NoteEditPropertySection : Section
+    public class NoteEditPropertySection : LyricPropertySection
     {
         protected override LocalisableString Title => "Properties";
 
         private readonly Bindable<Note[]> notes = new();
         private readonly Bindable<NoteEditPropertyMode> bindableNoteEditPropertyMode = new();
-        private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
+
+        [Resolved]
+        private EditorBeatmap beatmap { get; set; }
 
         public NoteEditPropertySection()
         {
@@ -75,16 +74,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, ILyricCaretState lyricCaretState, IEditNoteModeState editNoteModeState)
+        private void load(IEditNoteModeState editNoteModeState)
         {
             bindableNoteEditPropertyMode.BindTo(editNoteModeState.NoteEditPropertyMode);
-            bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
+        }
 
-            bindableCaretPosition.BindValueChanged(e =>
-            {
-                var lyric = e.NewValue?.Lyric;
-                notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToArray();
-            }, true);
+        protected override void OnLyricChanged(Lyric lyric)
+        {
+            notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToArray();
         }
 
         private class LabelledNoteTextTextBox : LabelledObjectFieldTextBox<Note>

@@ -15,8 +15,6 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -26,66 +24,37 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
-    public abstract class TextTagEditSection<TTextTag> : Section where TTextTag : class, ITextTag, new()
+    public abstract class TextTagEditSection<TTextTag> : LyricPropertySection where TTextTag : class, ITextTag, new()
     {
-        private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
-        protected readonly IBindableList<TTextTag> TextTags = new BindableList<TTextTag>();
-
-        protected Lyric Lyric { get; private set; }
-
         protected TextTagEditSection()
         {
-            bindableCaretPosition.BindValueChanged(e =>
-            {
-                Lyric = e.NewValue?.Lyric;
-
-                if (e.OldValue?.Lyric != null)
-                {
-                    TextTags.UnbindFrom(GetBindableTextTags(e.OldValue.Lyric));
-                }
-
-                if (e.NewValue?.Lyric != null)
-                {
-                    TextTags.BindTo(GetBindableTextTags(e.NewValue.Lyric));
-                }
-
-                Schedule(() =>
-                {
-                    var firstTextTagTextBox = Children.OfType<LabelledTextTagTextBox<TTextTag>>().FirstOrDefault();
-                    if (firstTextTagTextBox == null)
-                        return;
-
-                    // should auto-focus to the first time-tag if change the lyric.
-                    firstTextTagTextBox.Focus();
-                });
-            });
-
-            // create list of text-tag text-box if bindable changed.
-            TextTags.BindCollectionChanged((_, _) =>
-            {
-                RemoveAll(x => x is LabelledTextTagTextBox<TTextTag>);
-                AddRange(TextTags.Select(x =>
-                {
-                    string relativeToLyricText = TextTagUtils.GetTextFromLyric(x, Lyric?.Text);
-                    string range = TextTagUtils.PositionFormattedString(x);
-
-                    return CreateLabelledTextTagTextBox(x).With(t =>
-                    {
-                        t.Label = relativeToLyricText;
-                        t.Description = range;
-                        t.TabbableContentContainer = this;
-                    });
-                }));
-            });
-
             // add create button.
             addCreateButton();
         }
 
-        [BackgroundDependencyLoader]
-        private void load(ILyricCaretState lyricCaretState)
+        protected override void OnLyricChanged(Lyric lyric)
         {
-            bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
+            RemoveAll(x => x is LabelledTextTagTextBox<TTextTag>);
+
+            if (lyric == null)
+                return;
+
+            AddRange(GetBindableTextTags(lyric).Select(x =>
+            {
+                string relativeToLyricText = TextTagUtils.GetTextFromLyric(x, lyric.Text);
+                string range = TextTagUtils.PositionFormattedString(x);
+
+                return CreateLabelledTextTagTextBox(lyric, x).With(t =>
+                {
+                    t.Label = relativeToLyricText;
+                    t.Description = range;
+                    t.TabbableContentContainer = this;
+                });
+            }));
+
+            // should auto-focus to the first time-tag if change the lyric.
+            var firstTextTagTextBox = Children.OfType<LabelledTextTagTextBox<TTextTag>>().FirstOrDefault();
+            firstTextTagTextBox?.Focus();
         }
 
         private void addCreateButton()
@@ -102,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
         protected abstract IBindableList<TTextTag> GetBindableTextTags(Lyric lyric);
 
-        protected abstract LabelledTextTagTextBox<TTextTag> CreateLabelledTextTagTextBox(TTextTag textTag);
+        protected abstract LabelledTextTagTextBox<TTextTag> CreateLabelledTextTagTextBox(Lyric lyric, TTextTag textTag);
 
         protected abstract void AddTextTag(TTextTag textTag);
 
@@ -122,7 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
             public Popover GetPopover()
             {
-                var lyric = lyricCaretState.BindableCaretPosition.Value.Lyric;
+                var lyric = lyricCaretState.BindableCaretPosition.Value?.Lyric;
                 return new CreateNewPopover(lyric)
                 {
                     Action = textTag =>
