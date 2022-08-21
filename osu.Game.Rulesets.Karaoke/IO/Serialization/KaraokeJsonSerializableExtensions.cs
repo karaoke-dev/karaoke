@@ -21,6 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization
             globalSetting.Converters.Add(new TimeTagsConverter());
             globalSetting.Converters.Add(new ToneConverter());
             globalSetting.Converters.Add(new TranslatesConvertor());
+            globalSetting.Converters.Add(new ReferenceLyricPropertyConfigConvertor());
 
             return globalSetting;
         }
