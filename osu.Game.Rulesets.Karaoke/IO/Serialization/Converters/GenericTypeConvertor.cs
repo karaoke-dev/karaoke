@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,6 +12,31 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
     public abstract class GenericTypeConvertor<TType> : JsonConverter<TType>
     {
+        public sealed override TType ReadJson(JsonReader reader, Type objectType, TType? existingValue, bool hasExistingValue, JsonSerializer serializer)
+        {
+            var jObject = JObject.Load(reader);
+            var jProperties = jObject.Children().OfType<JProperty>().ToArray();
+            var type = objectType != typeof(TType) ? objectType : getTypeByProperties(jProperties);
+
+            var newReader = jObject.CreateReader();
+
+            var instance = (TType)Activator.CreateInstance(type);
+            InteractWithJObject(jObject, objectType, existingValue, hasExistingValue, serializer);
+            serializer.Populate(newReader, instance);
+            return instance;
+
+            Type getTypeByProperties(IEnumerable<JProperty> properties)
+            {
+                string? elementType = properties.FirstOrDefault(x => x.Name == "$type")?.Value.ToObject<string>();
+                if (elementType == null)
+                    throw new ArgumentNullException(nameof(elementType));
+
+                return GetTypeByName(elementType);
+            }
+        }
+
+        protected virtual void InteractWithJObject(JObject jObject, Type objectType, TType? existingValue, bool hasExistingValue, JsonSerializer serializer) { }
+
         public sealed override void WriteJson(JsonWriter writer, TType? value, JsonSerializer serializer)
         {
             if (value == null)
