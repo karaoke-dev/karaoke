@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Skinning.MappingRoles;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public class KaraokeSkinMappingRoleConvertor : JsonConverter<IMappingRole>
+    public class KaraokeSkinMappingRoleConvertor : GenericTypeConvertor<IMappingRole>
     {
         // because we wants serializer that containers some common convertors except this one, so make a local one.
         private readonly JsonSerializer localSerializer;

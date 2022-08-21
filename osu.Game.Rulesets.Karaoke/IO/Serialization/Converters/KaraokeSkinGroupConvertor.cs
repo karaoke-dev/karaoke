@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Skinning.Groups;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public class KaraokeSkinGroupConvertor : JsonConverter<IGroup>
+    public class KaraokeSkinGroupConvertor : GenericTypeConvertor<IGroup>
     {
         // because we wants serializer that containers some common convertors except this one, so make a local one.
         private readonly JsonSerializer localSerializer;
