@@ -14,6 +14,7 @@ using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Karaoke.Beatmaps;
 using osu.Game.Rulesets.Karaoke.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Judgements;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Scoring;
 using osu.Game.Rulesets.Karaoke.Utils;
@@ -211,6 +212,18 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         {
             get => ReferenceLyricBindable.Value;
             set => ReferenceLyricBindable.Value = value;
+        }
+
+        [JsonIgnore]
+        public readonly Bindable<IReferenceLyricPropertyConfig> ReferenceLyricConfigBindable = new();
+
+        /// <summary>
+        /// Config for define the strategy to sync the property from the lyric.
+        /// </summary>
+        public IReferenceLyricPropertyConfig ReferenceLyricConfig
+        {
+            get => ReferenceLyricConfigBindable.Value;
+            set => ReferenceLyricConfigBindable.Value = value;
         }
 
         public Lyric()
