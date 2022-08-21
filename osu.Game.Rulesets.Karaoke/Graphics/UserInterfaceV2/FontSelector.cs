@@ -12,6 +12,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Rendering;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.UserInterface;
 using osu.Framework.IO.Stores;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Containers;
@@ -27,7 +28,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
-    public class FontSelector : CompositeDrawable
+    public class FontSelector : CompositeDrawable, IHasCurrentValue<FontUsage>
     {
         private readonly SpriteText previewText;
         private readonly FontFamilyPropertyList familyProperty;
