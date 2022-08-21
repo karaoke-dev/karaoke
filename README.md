@@ -8,7 +8,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/karaoke-dev/karaoke)](https://github.com/karaoke-dev/karaoke/releases)
 [![Tagged Release](https://github.com/karaoke-dev/karaoke/workflows/Tagged%20Release/badge.svg)](https://github.com/karaoke-dev/karaoke/releases)
 [![dev chat](https://discordapp.com/api/guilds/299006062323826688/widget.png?style=shield)](https://discord.gg/ga2xZXk)
-[![](https://tokei.rs/b1/github/karaoke-dev/karaoke)](https://github.com/karaoke-dev/karaoke)
+[![Total lines](https://tokei.rs/b1/github/karaoke-dev/karaoke)](https://github.com/karaoke-dev/karaoke)
 [![Star History Chart](https://img.shields.io/badge/Stars-0.1k-yellow.svg)](https://seladb.github.io/StarTrack-js/#/preload?r=karaoke-dev,karaoke)
 [![airpods pro](https://img.shields.io/badge/Andy's%20airpods%20pro-missing-red.svg)](https://github.com/karaoke-dev/karaoke/issues/1514)
 [![airpods 2](https://img.shields.io/badge/Andy's%20airpods%202-missing-red)](https://github.com/karaoke-dev/karaoke/issues/1513)
