@@ -4,6 +4,7 @@
 using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Framework.Graphics;
+using osu.Framework.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.IO.Serialization.Converters;
 using osu.Game.Rulesets.Karaoke.Skinning.Elements;
 
@@ -11,6 +12,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.IO.Serialization.Converters
 {
     public class KaraokeSkinElementConvertorTest : BaseSingleConverterTest<KaraokeSkinElementConvertor>
     {
+        protected override JsonConverter[] CreateExtraConverts()
+            => new JsonConverter[]
+            {
+                new ColourConvertor(),
+                new Vector2Converter(),
+                new ShaderConvertor(),
+                new FontUsageConvertor()
+            };
+
         [Test]
         public void TestLyricConfigSerializer()
         {
