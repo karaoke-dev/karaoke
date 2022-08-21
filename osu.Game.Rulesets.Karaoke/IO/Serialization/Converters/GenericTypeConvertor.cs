@@ -42,13 +42,17 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
 
+            var resolver = serializer.ContractResolver;
+
             // follow: https://stackoverflow.com/a/59329703
             // not a good way but seems there's no better choice.
             serializer.Converters.Remove(this);
+            serializer.ContractResolver = new KaraokeSkinContractResolver();
 
             var jObject = JObject.FromObject(value, serializer);
 
             serializer.Converters.Add(this);
+            serializer.ContractResolver = resolver;
 
             InteractWithJObject(jObject, writer, value, serializer);
             jObject.AddFirst(new JProperty("$type", GetNameByType(value.GetType())));
