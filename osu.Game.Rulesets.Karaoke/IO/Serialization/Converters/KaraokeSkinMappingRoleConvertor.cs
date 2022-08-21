@@ -7,23 +7,12 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using osu.Game.IO.Serialization;
 using osu.Game.Rulesets.Karaoke.Skinning.MappingRoles;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
     public class KaraokeSkinMappingRoleConvertor : GenericTypeConvertor<IMappingRole>
     {
-        // because we wants serializer that containers some common convertors except this one, so make a local one.
-        private readonly JsonSerializer localSerializer;
-
-        public KaraokeSkinMappingRoleConvertor()
-        {
-            var settings = JsonSerializableExtensions.CreateGlobalSettings();
-            settings.ContractResolver = new KaraokeSkinContractResolver();
-            localSerializer = JsonSerializer.Create(settings);
-        }
-
         public override IMappingRole? ReadJson(JsonReader reader, Type objectType, IMappingRole? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var jObject = JObject.Load(reader);
@@ -31,7 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             var type = objectType != typeof(IMappingRole) ? objectType : getTypeByProperties(properties);
             var newReader = jObject.CreateReader();
-            return localSerializer.Deserialize(newReader, type) as IMappingRole;
+            var instance = (IMappingRole)Activator.CreateInstance(type);
+            serializer.Populate(newReader, instance);
+            return instance;
 
             Type getTypeByProperties(IEnumerable<JProperty> properties)
             {
@@ -41,18 +32,6 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
                 return GetTypeByName(elementType);
             }
-        }
-
-        public override void WriteJson(JsonWriter writer, IMappingRole? value, JsonSerializer serializer)
-        {
-            if (value == null)
-                throw new ArgumentNullException(nameof(value));
-
-            var jObject = JObject.FromObject(value, localSerializer);
-
-            // should get type from enum instead of class type because change class name might cause resource not found.
-            jObject.AddFirst(new JProperty("$type", GetNameByType(value.GetType())));
-            jObject.WriteTo(writer);
         }
 
         protected override Type GetTypeByName(string name)
