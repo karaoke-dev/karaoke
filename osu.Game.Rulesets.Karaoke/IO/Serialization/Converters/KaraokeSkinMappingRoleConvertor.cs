@@ -33,13 +33,13 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             var newReader = jObject.CreateReader();
             return localSerializer.Deserialize(newReader, type) as IMappingRole;
 
-            static Type getTypeByProperties(IEnumerable<JProperty> properties)
+            Type getTypeByProperties(IEnumerable<JProperty> properties)
             {
                 string? elementType = properties.FirstOrDefault(x => x.Name == "$type")?.Value.ToObject<string>();
                 if (elementType == null)
                     throw new ArgumentNullException(nameof(elementType));
 
-                return getTypeByName(elementType);
+                return GetTypeByName(elementType);
             }
         }
 
@@ -51,18 +51,15 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             var jObject = JObject.FromObject(value, localSerializer);
 
             // should get type from enum instead of class type because change class name might cause resource not found.
-            jObject.AddFirst(new JProperty("$type", getNameByType(value.GetType())));
+            jObject.AddFirst(new JProperty("$type", GetNameByType(value.GetType())));
             jObject.WriteTo(writer);
         }
 
-        private static Type getTypeByName(string name)
+        protected override Type GetTypeByName(string name)
         {
             // only get name from font
             var assembly = Assembly.GetExecutingAssembly();
             return assembly.GetType($"osu.Game.Rulesets.Karaoke.Skinning.MappingRoles.{name}");
         }
-
-        private static string getNameByType(MemberInfo type)
-            => type.Name;
     }
 }

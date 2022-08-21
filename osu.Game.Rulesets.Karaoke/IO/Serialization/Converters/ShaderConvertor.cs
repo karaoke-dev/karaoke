@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using osu.Framework.Graphics.Shaders;
@@ -54,13 +54,13 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             return shader;
 
-            static Type? getTypeByProperties(IEnumerable<JProperty> properties)
+            Type? getTypeByProperties(IEnumerable<JProperty> properties)
             {
                 string? typeString = properties.FirstOrDefault(x => x.Name == "$type")?.Value.ToObject<string>();
                 if (string.IsNullOrEmpty(typeString))
                     return default;
 
-                return getTypeByName(typeString);
+                return GetTypeByName(typeString);
             }
 
             static ICustomizedShader[]? getShadersFromProperties(IEnumerable<JProperty> properties, JsonSerializer serializer)
@@ -83,7 +83,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
                 throw new ArgumentNullException(nameof(value));
 
             var jObject = JObject.FromObject(value, localSerializer);
-            jObject.AddFirst(new JProperty("$type", getNameByType(value.GetType())));
+            jObject.AddFirst(new JProperty("$type", GetNameByType(value.GetType())));
 
             var childShader = getShadersFromParent(value, serializer);
 
@@ -104,14 +104,12 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             }
         }
 
-        private static Type? getTypeByName(string name)
+        protected override Type GetTypeByName(string name)
         {
             // only get name from font
             var assembly = AssemblyUtils.GetAssemblyByName("osu.Framework.KaraokeFont");
-            return assembly?.GetType($"osu.Framework.Graphics.Shaders.{name}");
+            Debug.Assert(assembly != null);
+            return assembly.GetType($"osu.Framework.Graphics.Shaders.{name}");
         }
-
-        private static string getNameByType(MemberInfo type)
-            => type.Name;
     }
 }
