@@ -6,6 +6,7 @@ using System.Globalization;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.Containers;
@@ -16,7 +17,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
 {
-    public class LanguageSelector : CompositeDrawable
+    public class LanguageSelector : CompositeDrawable, IHasCurrentValue<CultureInfo>
     {
         private readonly LanguageSelectionSearchTextBox filter;
 

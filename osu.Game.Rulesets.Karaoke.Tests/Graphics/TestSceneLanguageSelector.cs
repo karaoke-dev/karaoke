@@ -14,9 +14,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Graphics
     public class TestSceneLanguageSelector : OsuManualInputManagerTestScene
     {
         [Test]
-        public void TestAllFiles()
+        public void TestAllLanguages()
         {
-            AddStep("create", () =>
+            AddStep("show the selector", () =>
             {
                 var language = new Bindable<CultureInfo>(new CultureInfo("ja"));
                 Child = new LanguageSelector
