@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
             // follow: https://stackoverflow.com/a/59329703
             // not a good way but seems there's no better choice.
             serializer.Converters.Remove(this);
-            serializer.ContractResolver = new KaraokeSkinContractResolver();
+            serializer.ContractResolver = new WritablePropertiesOnlyResolver();
 
             var jObject = JObject.FromObject(value, serializer);
 

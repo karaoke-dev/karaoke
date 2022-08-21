@@ -14,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization
     /// <summary>
     /// This contract resolver is for save and load data from <see cref="KaraokeSkin"/>
     /// </summary>
-    public class KaraokeSkinContractResolver : SnakeCaseKeyContractResolver
+    public class WritablePropertiesOnlyResolver : SnakeCaseKeyContractResolver
     {
         // we only wants to save properties that only writable.
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
