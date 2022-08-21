@@ -10,7 +10,13 @@ using Newtonsoft.Json.Linq;
 
 namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 {
-    public abstract class GenericTypeConvertor<TType> : JsonConverter<TType>
+    public abstract class GenericTypeConvertor<TType> : GenericTypeConvertor<TType, string>
+    {
+        protected override string GetNameByType(MemberInfo type)
+            => type.Name;
+    }
+
+    public abstract class GenericTypeConvertor<TType, TTypeName> : JsonConverter<TType> where TTypeName : notnull
     {
         public sealed override TType ReadJson(JsonReader reader, Type objectType, TType? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
@@ -27,9 +33,13 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
             Type getTypeByProperties(IEnumerable<JProperty> properties)
             {
-                string? elementType = properties.FirstOrDefault(x => x.Name == "$type")?.Value.ToObject<string>();
+                var value = properties.FirstOrDefault(x => x.Name == "$type")?.Value;
+                if (value == null)
+                    throw new ArgumentNullException(nameof(value));
+
+                TTypeName? elementType = value.ToObject<TTypeName>();
                 if (elementType == null)
-                    throw new ArgumentNullException(nameof(elementType));
+                    throw new InvalidCastException(nameof(elementType));
 
                 return GetTypeByName(elementType);
             }
@@ -61,9 +71,8 @@ namespace osu.Game.Rulesets.Karaoke.IO.Serialization.Converters
 
         protected virtual void InteractWithJObject(JObject jObject, JsonWriter writer, TType value, JsonSerializer serializer) { }
 
-        protected abstract Type GetTypeByName(string name);
+        protected abstract Type GetTypeByName(TTypeName name);
 
-        protected virtual string GetNameByType(MemberInfo type)
-            => type.Name;
+        protected abstract TTypeName GetNameByType(MemberInfo type);
     }
 }
