@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
     public class LyricReferenceChangeHandlerTest : BaseHitObjectChangeHandlerTest<LyricReferenceChangeHandler, Lyric>
     {
         [Test]
-        public void TestSetLanguageToJapanese()
+        public void TestUpdateReferenceLyric()
         {
             var lyric = new Lyric
             {
