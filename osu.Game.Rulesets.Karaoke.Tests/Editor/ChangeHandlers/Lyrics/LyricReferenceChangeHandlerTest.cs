@@ -4,6 +4,7 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
@@ -29,6 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             AssertSelectedHitObject(h =>
             {
                 Assert.AreEqual(lyric, h.ReferenceLyric);
+                Assert.IsTrue(h.ReferenceLyricConfig is ReferenceLyricConfig);
             });
         }
     }

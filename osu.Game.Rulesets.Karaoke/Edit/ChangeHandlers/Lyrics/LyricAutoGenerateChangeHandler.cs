@@ -17,6 +17,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
@@ -121,6 +122,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     {
                         var detectedLanguage = referenceLyricDetector.Detect(lyric);
                         lyric.ReferenceLyric = detectedLanguage;
+
+                        if (lyric.ReferenceLyric != null && lyric.ReferenceLyricConfig is not SyncLyricConfig)
+                            lyric.ReferenceLyricConfig = new SyncLyricConfig();
                     });
                     break;
 

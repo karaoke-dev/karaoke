@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
@@ -23,6 +24,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     throw new InvalidOperationException($"{nameof(referenceLyric)} should not contains another reference lyric.");
 
                 lyric.ReferenceLyric = referenceLyric;
+
+                if (lyric.ReferenceLyric == null)
+                {
+                    lyric.ReferenceLyricConfig = null;
+                }
+                else if (lyric.ReferenceLyricConfig == null)
+                {
+                    // todo: not really sure should use sync config if lyric text are similar.
+                    lyric.ReferenceLyricConfig = new ReferenceLyricConfig();
+                }
             });
         }
     }
