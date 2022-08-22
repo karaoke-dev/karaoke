@@ -33,5 +33,80 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 Assert.IsTrue(h.ReferenceLyricConfig is ReferenceLyricConfig);
             });
         }
+
+        [Test]
+        public void TestSwitchToReferenceLyricConfig()
+        {
+            var lyric = new Lyric
+            {
+                Text = "Referenced lyric"
+            };
+
+            PrepareHitObject(new Lyric
+            {
+                Text = "Lyric",
+                ReferenceLyric = lyric
+            });
+
+            TriggerHandlerChanged(c => c.SwitchToReferenceLyricConfig());
+
+            AssertSelectedHitObject(h =>
+            {
+                Assert.AreEqual(lyric, h.ReferenceLyric);
+                Assert.IsTrue(h.ReferenceLyricConfig is ReferenceLyricConfig);
+            });
+        }
+
+        [Test]
+        public void TestSwitchToSyncLyricConfig()
+        {
+            var lyric = new Lyric
+            {
+                Text = "Referenced lyric"
+            };
+
+            PrepareHitObject(new Lyric
+            {
+                Text = "Lyric",
+                ReferenceLyric = lyric
+            });
+
+            TriggerHandlerChanged(c => c.SwitchToSyncLyricConfig());
+
+            AssertSelectedHitObject(h =>
+            {
+                Assert.AreEqual(lyric, h.ReferenceLyric);
+                Assert.IsTrue(h.ReferenceLyricConfig is SyncLyricConfig);
+            });
+        }
+
+        [Test]
+        public void TestAdjustLyricConfig()
+        {
+            var lyric = new Lyric
+            {
+                Text = "Referenced lyric"
+            };
+
+            PrepareHitObject(new Lyric
+            {
+                Text = "Lyric",
+                ReferenceLyric = lyric,
+                ReferenceLyricConfig = new SyncLyricConfig(),
+            });
+
+            TriggerHandlerChanged(c => c.AdjustLyricConfig<SyncLyricConfig>(x =>
+            {
+                x.OffsetTime = 100;
+                x.SyncSingerProperty = false;
+            }));
+
+            AssertSelectedHitObject(h =>
+            {
+                var config = (h.ReferenceLyricConfig as SyncLyricConfig)!;
+                Assert.AreEqual(100, config.OffsetTime);
+                Assert.AreEqual(false, config.SyncSingerProperty);
+            });
+        }
     }
 }

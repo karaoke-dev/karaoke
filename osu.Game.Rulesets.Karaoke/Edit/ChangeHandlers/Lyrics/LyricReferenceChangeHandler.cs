@@ -36,5 +36,38 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 }
             });
         }
+
+        public void SwitchToReferenceLyricConfig()
+        {
+            PerformOnSelection(lyric =>
+            {
+                if (lyric == null)
+                    throw new InvalidOperationException($"{nameof(lyric)} must have reference lyric.");
+
+                lyric.ReferenceLyricConfig = new ReferenceLyricConfig();
+            });
+        }
+
+        public void SwitchToSyncLyricConfig()
+        {
+            PerformOnSelection(lyric =>
+            {
+                if (lyric == null)
+                    throw new InvalidOperationException($"{nameof(lyric)} must have reference lyric.");
+
+                lyric.ReferenceLyricConfig = new SyncLyricConfig();
+            });
+        }
+
+        public void AdjustLyricConfig<TConfig>(Action<TConfig> action) where TConfig : IReferenceLyricPropertyConfig
+        {
+            PerformOnSelection(lyric =>
+            {
+                if (lyric.ReferenceLyricConfig is not TConfig config)
+                    throw new InvalidOperationException($"{nameof(config)} must be the type of ${typeof(TConfig)}.");
+
+                action.Invoke(config);
+            });
+        }
     }
 }
