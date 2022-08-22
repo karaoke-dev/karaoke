@@ -14,8 +14,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             if (referenceLyric != null && !HitObjects.Contains(referenceLyric))
                 throw new InvalidOperationException($"{nameof(referenceLyric)} should in the beatmap.");
 
-            CheckExactlySelectedOneHitObject();
-
             PerformOnSelection(lyric =>
             {
                 if (referenceLyric == lyric)
