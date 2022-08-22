@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 using osu.Game.Rulesets.Karaoke.Tests.Asserts;
 using osu.Game.Rulesets.Karaoke.Tests.Helper;
@@ -35,7 +36,11 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
                 Language = new CultureInfo("ja-JP"),
                 Order = 1,
                 Lock = LockState.None,
-                ReferenceLyric = referencedLyric
+                ReferenceLyric = referencedLyric,
+                ReferenceLyricConfig = new ReferenceLyricConfig
+                {
+                    OffsetTime = 100
+                }
             };
 
             var clonedLyric = lyric.DeepClone();
@@ -79,6 +84,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
 
             Assert.AreNotSame(clonedLyric.ReferenceLyricBindable, lyric.ReferenceLyricBindable);
             Assert.AreSame(clonedLyric.ReferenceLyric, lyric.ReferenceLyric);
+
+            Assert.AreNotSame(clonedLyric.ReferenceLyricConfigBindable, lyric.ReferenceLyricConfigBindable);
+            Assert.AreNotSame(clonedLyric.ReferenceLyricConfig, lyric.ReferenceLyricConfig);
+            Assert.AreEqual(clonedLyric.ReferenceLyricConfig.OffsetTime, lyric.ReferenceLyricConfig.OffsetTime);
         }
     }
 }
