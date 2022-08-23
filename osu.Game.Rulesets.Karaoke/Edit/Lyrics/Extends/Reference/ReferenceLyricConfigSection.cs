@@ -127,10 +127,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
             switch (config)
             {
                 case ReferenceLyricConfig:
+                    labelledReferenceLyricConfig.Current.Value = reference;
                     labelledReferenceLyricConfig.Show();
                     break;
 
                 case SyncLyricConfig syncLyricConfig:
+                    labelledReferenceLyricConfig.Current.Value = sync;
                     labelledSyncSinger.Current = syncLyricConfig.SyncSingerPropertyBindable;
                     labelledSyncTimeTag.Current = syncLyricConfig.SyncTimeTagPropertyBindable;
 
