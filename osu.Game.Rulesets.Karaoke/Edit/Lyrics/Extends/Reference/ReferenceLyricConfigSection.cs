@@ -54,6 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                     Description = "Sync most property.",
                     Current =
                     {
+                        Value = true,
                         Disabled = true
                     }
                 },
