@@ -215,12 +215,12 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
-        public readonly Bindable<IReferenceLyricPropertyConfig> ReferenceLyricConfigBindable = new();
+        public readonly Bindable<IReferenceLyricPropertyConfig?> ReferenceLyricConfigBindable = new();
 
         /// <summary>
         /// Config for define the strategy to sync the property from the lyric.
         /// </summary>
-        public IReferenceLyricPropertyConfig ReferenceLyricConfig
+        public IReferenceLyricPropertyConfig? ReferenceLyricConfig
         {
             get => ReferenceLyricConfigBindable.Value;
             set => ReferenceLyricConfigBindable.Value = value;

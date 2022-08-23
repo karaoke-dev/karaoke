@@ -87,7 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
 
             Assert.AreNotSame(clonedLyric.ReferenceLyricConfigBindable, lyric.ReferenceLyricConfigBindable);
             Assert.AreNotSame(clonedLyric.ReferenceLyricConfig, lyric.ReferenceLyricConfig);
-            Assert.AreEqual(clonedLyric.ReferenceLyricConfig.OffsetTime, lyric.ReferenceLyricConfig.OffsetTime);
+            Assert.AreEqual(clonedLyric.ReferenceLyricConfig?.OffsetTime, lyric.ReferenceLyricConfig?.OffsetTime);
         }
     }
 }

@@ -9,6 +9,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
@@ -21,6 +22,54 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             baseDependencies.Cache(new KaraokeRulesetEditGeneratorConfigManager());
             return baseDependencies;
         }
+
+        #region Reference lyric
+
+        [Test]
+        public void TestDetectReferenceLyric()
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ"
+            }, false);
+
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ"
+            });
+
+            TriggerHandlerChanged(c => c.AutoGenerate(LyricAutoGenerateProperty.DetectReferenceLyric));
+
+            AssertSelectedHitObject(h =>
+            {
+                Assert.IsNotNull(h.ReferenceLyric);
+                Assert.IsTrue(h.ReferenceLyricConfig is SyncLyricConfig);
+            });
+        }
+
+        [Test]
+        public void TestDetectReferenceLyricWithNonSupportedLyric()
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ"
+            }, false);
+
+            PrepareHitObject(new Lyric
+            {
+                Text = "???"
+            });
+
+            TriggerHandlerChanged(c => c.AutoGenerate(LyricAutoGenerateProperty.DetectReferenceLyric));
+
+            AssertSelectedHitObject(h =>
+            {
+                Assert.IsNull(h.ReferenceLyric);
+                Assert.IsNull(h.ReferenceLyricConfig);
+            });
+        }
+
+        #endregion
 
         #region Language
 

@@ -17,6 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
             {
                 new ReferenceLyricAutoGenerateSection(),
                 new ReferenceLyricSection(),
+                new ReferenceLyricConfigSection()
             };
         }
     }
