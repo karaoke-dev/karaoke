@@ -32,6 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
         private readonly LabelledSwitchButton labelledSyncSinger;
         private readonly LabelledSwitchButton labelledSyncTimeTag;
 
+        private bool isConfigChanging;
+
         public ReferenceLyricConfigSection()
         {
             Children = new Drawable[]
@@ -52,6 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                     Description = "Sync most property.",
                     Current =
                     {
+                        Value = true,
                         Disabled = true
                     }
                 },
@@ -74,7 +77,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
 
             labelledReferenceLyricConfig.Current.BindValueChanged(x =>
             {
-                if (IsRebinding)
+                if (IsRebinding || isConfigChanging)
                     return;
 
                 switch (x.NewValue)
@@ -94,13 +97,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
 
             labelledSyncSinger.Current.BindValueChanged(x =>
             {
-                if (!IsRebinding)
+                if (!IsRebinding && !isConfigChanging)
                     lyricReferenceChangeHandler.AdjustLyricConfig<SyncLyricConfig>(config => config.SyncSingerProperty = x.NewValue);
             });
 
             labelledSyncTimeTag.Current.BindValueChanged(x =>
             {
-                if (!IsRebinding)
+                if (!IsRebinding && !isConfigChanging)
                     lyricReferenceChangeHandler.AdjustLyricConfig<SyncLyricConfig>(config => config.SyncTimeTagProperty = x.NewValue);
             });
         }
@@ -115,6 +118,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
 
         private void onConfigChanged()
         {
+            isConfigChanging = true;
+
             Children.ForEach(x => x.Hide());
             Show();
 
@@ -123,10 +128,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
             switch (config)
             {
                 case ReferenceLyricConfig:
+                    labelledReferenceLyricConfig.Current.Value = reference;
                     labelledReferenceLyricConfig.Show();
                     break;
 
                 case SyncLyricConfig syncLyricConfig:
+                    labelledReferenceLyricConfig.Current.Value = sync;
                     labelledSyncSinger.Current = syncLyricConfig.SyncSingerPropertyBindable;
                     labelledSyncTimeTag.Current = syncLyricConfig.SyncTimeTagPropertyBindable;
 
@@ -143,6 +150,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                 default:
                     throw new IndexOutOfRangeException();
             }
+
+            isConfigChanging = false;
         }
     }
 }
