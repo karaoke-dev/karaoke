@@ -55,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Components
             {
                 descriptionTextFlowContainer.Description = new DescriptionFormat
                 {
-                    Text = "Test description with [key](set_time)",
+                    Text = $"Test description with [{DescriptionFormat.LINK_KEY_INPUT}](set_time)",
                     Keys = new Dictionary<string, InputKey>
                     {
                         {
@@ -75,7 +75,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Components
             {
                 descriptionTextFlowContainer.Description = new DescriptionFormat
                 {
-                    Text = "Test description with [key](set_time)",
+                    Text = $"Test description with [{DescriptionFormat.LINK_KEY_INPUT}](set_time)",
                     Keys = new Dictionary<string, InputKey>
                     {
                         {

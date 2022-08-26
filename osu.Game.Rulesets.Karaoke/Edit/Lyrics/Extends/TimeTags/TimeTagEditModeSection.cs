@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 TimeTagEditMode.Create => new EditModeSelectionItem("Adjust", "Create the time-tag or adjust the position."),
                 TimeTagEditMode.Recording => new EditModeSelectionItem("Recording", new DescriptionFormat
                 {
-                    Text = "Press [key](set_time_tag_time) at the right time to set current time to time-tag. Press [key](clear_time_tag_time) to clear the time-tag time.",
+                    Text = $"Press [{DescriptionFormat.LINK_KEY_INPUT}](set_time_tag_time) at the right time to set current time to time-tag. Press [{DescriptionFormat.LINK_KEY_INPUT}](clear_time_tag_time) to clear the time-tag time.",
                     Keys = new Dictionary<string, InputKey>
                     {
                         {

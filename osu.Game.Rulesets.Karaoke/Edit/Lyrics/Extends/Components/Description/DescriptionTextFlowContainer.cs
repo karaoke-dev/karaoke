@@ -64,7 +64,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description
 
             protected override void AddLinkText(string text, LinkInline linkInline)
             {
-                if (text == "key")
+                if (text == DescriptionFormat.LINK_KEY_INPUT)
                 {
                     var keys = descriptionTextFlowContainer.Description.Keys;
                     string key = linkInline.Url;
