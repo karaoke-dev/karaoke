@@ -11,10 +11,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description
     public struct DescriptionFormat
     {
         public const string LINK_KEY_INPUT = "input_key";
+        public const string LINK_KEY_EDIT_MODE = "edit_mode";
 
         public LocalisableString Text { get; set; }
 
         public IDictionary<string, InputKey> Keys { get; set; }
+
+        public IDictionary<string, SwitchMode> EditModes { get; set; }
+    }
+
+    public struct SwitchMode
+    {
+        public LocalisableString Text { get; set; }
+
+        public LyricEditorMode Mode { get; set; }
     }
 
     public struct InputKey

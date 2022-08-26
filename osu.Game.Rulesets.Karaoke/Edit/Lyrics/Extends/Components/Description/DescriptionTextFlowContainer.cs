@@ -64,18 +64,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description
 
             protected override void AddLinkText(string text, LinkInline linkInline)
             {
-                if (text == DescriptionFormat.LINK_KEY_INPUT)
+                switch (text)
                 {
-                    var keys = descriptionTextFlowContainer.Description.Keys;
-                    string key = linkInline.Url;
-                    if (keys == null || !keys.TryGetValue(key, out InputKey inputKey))
-                        throw new ArgumentNullException(nameof(keys));
+                    case DescriptionFormat.LINK_KEY_INPUT:
+                    {
+                        var keys = descriptionTextFlowContainer.Description.Keys;
+                        string key = linkInline.Url;
+                        if (keys == null || !keys.TryGetValue(key, out InputKey inputKey))
+                            throw new ArgumentNullException(nameof(keys));
 
-                    AddDrawable(new InputKeyText(inputKey));
-                    return;
+                        AddDrawable(new InputKeyText(inputKey));
+                        return;
+                    }
+
+                    case DescriptionFormat.LINK_KEY_EDIT_MODE:
+                    {
+                        var editModes = descriptionTextFlowContainer.Description.EditModes;
+                        string key = linkInline.Url;
+                        if (editModes == null || !editModes.TryGetValue(key, out SwitchMode mode))
+                            throw new ArgumentNullException(nameof(editModes));
+
+                        AddDrawable(new SwitchMoteText(mode));
+                        return;
+                    }
+
+                    default:
+                        base.AddLinkText(text, linkInline);
+                        break;
                 }
-
-                base.AddLinkText(text, linkInline);
             }
         }
     }

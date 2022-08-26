@@ -7,6 +7,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Cursor;
 using osu.Game.Overlays;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
 using osu.Game.Tests.Visual;
 using osuTK;
@@ -86,6 +87,28 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Components
                                 {
                                     KaraokeEditAction.SetTime
                                 }
+                            }
+                        }
+                    }
+                };
+            });
+        }
+
+        [Test]
+        public void TestDisplayDescriptionWithEditMode()
+        {
+            AddStep("Markdown description", () =>
+            {
+                descriptionTextFlowContainer.Description = new DescriptionFormat
+                {
+                    Text = $"Test description with [{DescriptionFormat.LINK_KEY_EDIT_MODE}](singer_mode)",
+                    EditModes = new Dictionary<string, SwitchMode>
+                    {
+                        {
+                            "singer_mode", new SwitchMode
+                            {
+                                Text = "edit text mode",
+                                Mode = LyricEditorMode.Singer
                             }
                         }
                     }
