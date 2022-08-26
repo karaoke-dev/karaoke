@@ -3,35 +3,41 @@
 
 #nullable disable
 
+using J2N.Collections.Generic;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language
 {
     public class LanguageAutoGenerateSubsection : AutoGenerateSubsection
     {
+        private const string typing_mode = "TYPING_MODE";
+
         public LanguageAutoGenerateSubsection()
             : base(LyricAutoGenerateProperty.DetectLanguage)
         {
         }
 
-        protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
-            => new InvalidLyricTextAlertTextContainer();
+        protected override DescriptionFormat CreateInvalidLyricDescriptionFormat()
+            => new()
+            {
+                Text = $"Seems some lyric has no texts, go to [{DescriptionFormat.LINK_KEY_EDIT_MODE}]({typing_mode}) to fill the text.",
+                EditModes = new Dictionary<string, SwitchMode>
+                {
+                    {
+                        typing_mode, new SwitchMode
+                        {
+                            Text = "typing mode",
+                            Mode = LyricEditorMode.Texting
+                        }
+                    }
+                }
+            };
 
         protected override ConfigButton CreateConfigButton()
             => new LanguageAutoGenerateConfigButton();
-
-        protected class InvalidLyricTextAlertTextContainer : InvalidLyricAlertTextContainer
-        {
-            private const string edit_mode = "TYPING_MODE";
-
-            public InvalidLyricTextAlertTextContainer()
-            {
-                SwitchToEditorMode(edit_mode, "typing mode", LyricEditorMode.Texting);
-                Text = $"Seems some lyric has no texts, go to [{edit_mode}] to fill the text.";
-            }
-        }
 
         protected class LanguageAutoGenerateConfigButton : ConfigButton
         {

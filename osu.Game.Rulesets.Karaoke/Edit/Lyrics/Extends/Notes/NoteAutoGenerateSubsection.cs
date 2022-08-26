@@ -3,10 +3,12 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
@@ -19,27 +21,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
     /// </summary>
     public class NoteAutoGenerateSubsection : AutoGenerateSubsection
     {
+        private const string create_time_tag_mode = "CREATE_TIME_TAG_MODE";
+
         public NoteAutoGenerateSubsection()
             : base(LyricAutoGenerateProperty.AutoGenerateNotes)
         {
         }
 
-        protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
-            => new InvalidLyricTimeTagAlertTextContainer();
+        protected override DescriptionFormat CreateInvalidLyricDescriptionFormat()
+            => new()
+            {
+                Text = $"Seems some lyric contains invalid time-tag, go to [{DescriptionFormat.LINK_KEY_EDIT_MODE}]({create_time_tag_mode}) to fix those issue.",
+                EditModes = new Dictionary<string, SwitchMode>
+                {
+                    {
+                        create_time_tag_mode, new SwitchMode
+                        {
+                            Text = "adjust time-tag mode",
+                            Mode = LyricEditorMode.EditTimeTag
+                        }
+                    }
+                }
+            };
 
         protected override ConfigButton CreateConfigButton()
             => new NoteAutoGenerateConfigButton();
-
-        protected class InvalidLyricTimeTagAlertTextContainer : InvalidLyricAlertTextContainer
-        {
-            private const string create_time_tag_mode = "CREATE_TIME_TAG_MODE";
-
-            public InvalidLyricTimeTagAlertTextContainer()
-            {
-                SwitchToEditorMode(create_time_tag_mode, "adjust time-tag mode", LyricEditorMode.EditTimeTag);
-                Text = $"Seems some lyric contains invalid time-tag, go to [{create_time_tag_mode}] to fix those issue.";
-            }
-        }
 
         protected class NoteAutoGenerateConfigButton : ConfigButton
         {

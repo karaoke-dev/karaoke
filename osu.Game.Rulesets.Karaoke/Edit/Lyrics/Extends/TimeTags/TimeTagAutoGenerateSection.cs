@@ -12,6 +12,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Zh;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 {
@@ -29,27 +30,31 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 
         private class TimeTageAutoGenerateSubsection : AutoGenerateSubsection
         {
+            private const string language_mode = "LANGUAGE_MODE";
+
             public TimeTageAutoGenerateSubsection()
                 : base(LyricAutoGenerateProperty.AutoGenerateTimeTags)
             {
             }
 
-            protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
-                => new InvalidLyricLanguageAlertTextContainer();
+            protected override DescriptionFormat CreateInvalidLyricDescriptionFormat()
+                => new()
+                {
+                    Text = $"Seems some lyric missing language, go to [{DescriptionFormat.LINK_KEY_EDIT_MODE}]({language_mode}) to fill the language.",
+                    EditModes = new Dictionary<string, SwitchMode>
+                    {
+                        {
+                            language_mode, new SwitchMode
+                            {
+                                Text = "edit language mode",
+                                Mode = LyricEditorMode.Language
+                            }
+                        }
+                    }
+                };
 
             protected override ConfigButton CreateConfigButton()
                 => new TimeTagAutoGenerateConfigButton();
-
-            protected class InvalidLyricLanguageAlertTextContainer : InvalidLyricAlertTextContainer
-            {
-                private const string language_mode = "LANGUAGE_MODE";
-
-                public InvalidLyricLanguageAlertTextContainer()
-                {
-                    SwitchToEditorMode(language_mode, "edit language mode", LyricEditorMode.Language);
-                    Text = $"Seems some lyric missing language, go to [{language_mode}] to fill the language.";
-                }
-            }
 
             protected class TimeTagAutoGenerateConfigButton : MultiConfigButton
             {

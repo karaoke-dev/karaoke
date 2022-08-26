@@ -6,6 +6,7 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.ReferenceLyric;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
 {
@@ -28,19 +29,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
             {
             }
 
-            protected override InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer()
-                => new InvalidLyricLanguageAlertTextContainer();
+            protected override DescriptionFormat CreateInvalidLyricDescriptionFormat()
+                => new()
+                {
+                    Text = "Seems every lyrics in the songs are unique. But don't worry, reference lyric can still link by hands."
+                };
 
             protected override ConfigButton CreateConfigButton()
                 => new ReferenceLyricAutoGenerateConfigButton();
-
-            protected class InvalidLyricLanguageAlertTextContainer : InvalidLyricAlertTextContainer
-            {
-                public InvalidLyricLanguageAlertTextContainer()
-                {
-                    Text = $"Seems every lyrics in the songs are unique. But don't worry, reference lyric can still link by hands.";
-                }
-            }
 
             protected class ReferenceLyricAutoGenerateConfigButton : ConfigButton
             {
