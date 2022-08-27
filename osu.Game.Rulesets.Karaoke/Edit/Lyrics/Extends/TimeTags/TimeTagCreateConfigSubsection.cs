@@ -88,9 +88,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 },
                 description = new DescriptionTextFlowContainer
                 {
-                    Padding = new MarginPadding { Horizontal = horizontal_padding },
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
+                    Padding = new MarginPadding { Horizontal = horizontal_padding },
                 }
             };
 

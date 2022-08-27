@@ -41,6 +41,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
     public abstract class EditModeSection<TEditMode> : Section where TEditMode : Enum
     {
+        private const int horizontal_padding = 20;
+
         protected sealed override LocalisableString Title => "Edit mode";
 
         [Cached]
@@ -82,6 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                 {
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
+                    Padding = new MarginPadding { Horizontal = horizontal_padding },
                 }
             };
 
