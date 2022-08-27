@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using osu.Framework.Localisation;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown
 {
     public struct DescriptionFormat
     {

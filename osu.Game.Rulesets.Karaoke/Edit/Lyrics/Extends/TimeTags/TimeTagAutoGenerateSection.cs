@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Ja;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.TimeTags.Zh;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
 {

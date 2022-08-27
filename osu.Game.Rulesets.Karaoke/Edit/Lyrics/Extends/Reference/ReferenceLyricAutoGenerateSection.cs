@@ -6,7 +6,7 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.ReferenceLyric;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
 {

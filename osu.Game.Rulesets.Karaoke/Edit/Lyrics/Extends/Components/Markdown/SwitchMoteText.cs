@@ -12,7 +12,7 @@ using osu.Game.Graphics.Containers.Markdown;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Overlays;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown
 {
     public class SwitchMoteText : OsuMarkdownLinkText
     {

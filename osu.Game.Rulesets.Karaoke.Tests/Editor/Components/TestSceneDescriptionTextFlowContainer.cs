@@ -8,7 +8,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Cursor;
 using osu.Game.Overlays;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown;
 using osu.Game.Tests.Visual;
 using osuTK;
 

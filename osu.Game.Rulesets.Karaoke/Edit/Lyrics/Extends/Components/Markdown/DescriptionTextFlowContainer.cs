@@ -5,7 +5,6 @@
 
 using System;
 using System.Linq;
-using Markdig;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using osu.Framework.Graphics;
@@ -16,7 +15,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers.Markdown;
 using osu.Game.Graphics.Sprites;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown
 {
     public class DescriptionTextFlowContainer : Container, IMarkdownTextComponent
     {
@@ -40,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description
             {
                 descriptionFormat = value;
 
-                var markdownDocument = Markdown.Parse(descriptionFormat.Text.ToString());
+                var markdownDocument = Markdig.Markdown.Parse(descriptionFormat.Text.ToString());
                 description.Clear();
 
                 if (markdownDocument.FirstOrDefault() is ParagraphBlock paragraphBlock)

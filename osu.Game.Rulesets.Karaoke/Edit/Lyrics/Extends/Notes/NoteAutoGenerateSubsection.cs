@@ -8,7 +8,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 

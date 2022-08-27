@@ -7,7 +7,7 @@ using J2N.Collections.Generic;
 using osu.Framework.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Language;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language
 {
