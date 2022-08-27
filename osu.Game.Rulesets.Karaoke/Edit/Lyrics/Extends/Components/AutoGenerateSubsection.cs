@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
@@ -13,14 +12,13 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
-using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
@@ -28,6 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 {
     public abstract class AutoGenerateSubsection : FillFlowContainer
     {
+        private const int horizontal_padding = 20;
+
         private readonly LyricAutoGenerateProperty autoGenerateProperty;
 
         protected AutoGenerateSubsection(LyricAutoGenerateProperty autoGenerateProperty)
@@ -75,19 +75,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                             }
                         },
                     },
-                    CreateInvalidLyricAlertTextContainer().With(t =>
+                    new DescriptionTextFlowContainer
                     {
-                        t.RelativeSizeAxes = Axes.X;
-                        t.AutoSizeAxes = Axes.Y;
-                        t.Colour = colours.GrayF;
-                        t.Alpha = lyricAutoGenerateChangeHandler.GetNotGeneratableLyrics(autoGenerateProperty).Any() ? 1 : 0;
-                        t.Padding = new MarginPadding { Horizontal = 20 };
-                    })
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Padding = new MarginPadding { Horizontal = horizontal_padding },
+                        Description = CreateInvalidLyricDescriptionFormat()
+                    }
                 };
             });
         }
 
-        protected abstract InvalidLyricAlertTextContainer CreateInvalidLyricAlertTextContainer();
+        protected abstract DescriptionFormat CreateInvalidLyricDescriptionFormat();
 
         protected abstract ConfigButton CreateConfigButton();
 
@@ -182,41 +181,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
                         }).ToList()
                     }
                 };
-        }
-
-        protected abstract class InvalidLyricAlertTextContainer : CustomizableTextContainer
-        {
-            [Resolved]
-            private ILyricEditorState state { get; set; }
-
-            protected void SwitchToEditorMode(string name, string text, LyricEditorMode targetMode)
-            {
-                AddIconFactory(name, () => new ClickableSpriteText
-                {
-                    Text = text,
-                    Action = () => state.NavigateToFix(targetMode),
-                });
-            }
-
-            protected override SpriteText CreateSpriteText()
-                => base.CreateSpriteText().With(x => x.Font = x.Font.With(size: 16));
-
-            internal class ClickableSpriteText : OsuSpriteText
-            {
-                public Action Action { get; set; }
-
-                protected override bool OnClick(ClickEvent e)
-                {
-                    Action?.Invoke();
-                    return base.OnClick(e);
-                }
-
-                [BackgroundDependencyLoader]
-                private void load(OsuColour colours)
-                {
-                    Colour = colours.Yellow;
-                }
-            }
         }
     }
 }

@@ -5,7 +5,6 @@
 
 using System;
 using System.Linq;
-using Markdig;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using osu.Framework.Graphics;
@@ -16,7 +15,7 @@ using osu.Game.Graphics;
 using osu.Game.Graphics.Containers.Markdown;
 using osu.Game.Graphics.Sprites;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown
 {
     public class DescriptionTextFlowContainer : Container, IMarkdownTextComponent
     {
@@ -40,7 +39,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description
             {
                 descriptionFormat = value;
 
-                var markdownDocument = Markdown.Parse(descriptionFormat.Text.ToString());
+                var markdownDocument = Markdig.Markdown.Parse(descriptionFormat.Text.ToString());
                 description.Clear();
 
                 if (markdownDocument.FirstOrDefault() is ParagraphBlock paragraphBlock)
@@ -64,18 +63,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description
 
             protected override void AddLinkText(string text, LinkInline linkInline)
             {
-                if (text == "key")
+                switch (text)
                 {
-                    var keys = descriptionTextFlowContainer.Description.Keys;
-                    string key = linkInline.Url;
-                    if (keys == null || !keys.TryGetValue(key, out InputKey inputKey))
-                        throw new ArgumentNullException(nameof(keys));
+                    case DescriptionFormat.LINK_KEY_INPUT:
+                    {
+                        var keys = descriptionTextFlowContainer.Description.Keys;
+                        string key = linkInline.Url;
+                        if (keys == null || !keys.TryGetValue(key, out InputKey inputKey))
+                            throw new ArgumentNullException(nameof(keys));
 
-                    AddDrawable(new InputKeyText(inputKey));
-                    return;
+                        AddDrawable(new InputKeyText(inputKey));
+                        return;
+                    }
+
+                    case DescriptionFormat.LINK_KEY_EDIT_MODE:
+                    {
+                        var editModes = descriptionTextFlowContainer.Description.EditModes;
+                        string key = linkInline.Url;
+                        if (editModes == null || !editModes.TryGetValue(key, out SwitchMode mode))
+                            throw new ArgumentNullException(nameof(editModes));
+
+                        AddDrawable(new SwitchMoteText(mode));
+                        return;
+                    }
+
+                    default:
+                        base.AddLinkText(text, linkInline);
+                        break;
                 }
-
-                base.AddLinkText(text, linkInline);
             }
         }
     }

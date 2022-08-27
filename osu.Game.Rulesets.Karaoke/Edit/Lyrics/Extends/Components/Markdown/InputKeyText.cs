@@ -24,7 +24,7 @@ using osu.Game.Input.Bindings;
 using osu.Game.Overlays;
 using osu.Game.Overlays.Settings.Sections.Input;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown
 {
     /// <summary>
     /// For showing the key and adjust the key binding.

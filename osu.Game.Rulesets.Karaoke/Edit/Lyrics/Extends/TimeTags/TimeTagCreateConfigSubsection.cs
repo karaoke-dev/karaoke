@@ -15,7 +15,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Description;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
@@ -88,9 +88,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 },
                 description = new DescriptionTextFlowContainer
                 {
-                    Padding = new MarginPadding { Horizontal = horizontal_padding },
                     RelativeSizeAxes = Axes.X,
                     AutoSizeAxes = Axes.Y,
+                    Padding = new MarginPadding { Horizontal = horizontal_padding },
                 }
             };
 
@@ -144,7 +144,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
             {
                 CreateTimeTagEditMode.Create => new DescriptionFormat
                 {
-                    Text = "Use keyboard to control caret position, press [key](create_time_tag) to create new time-tag and press [key](remove_time_tag) to delete exist time-tag.",
+                    Text = $"Use keyboard to control caret position, press [{DescriptionFormat.LINK_KEY_INPUT}](create_time_tag) to create new time-tag and press [{DescriptionFormat.LINK_KEY_INPUT}](remove_time_tag) to delete exist time-tag.",
                     Keys = new Dictionary<string, InputKey>
                     {
                         { "create_time_tag", new InputKey { AdjustableActions = new List<KaraokeEditAction> { KaraokeEditAction.Create } } },
@@ -154,7 +154,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags
                 CreateTimeTagEditMode.Modify => new DescriptionFormat
                 {
                     Text =
-                        "Press [key](move_time_tag_position) to move the time-tag position. Press press [key](create_time_tag) to create new time-tag and [key](remove_time_tag) to delete exist time-tag.",
+                        $"Press [{DescriptionFormat.LINK_KEY_INPUT}](move_time_tag_position) to move the time-tag position. Press press [{DescriptionFormat.LINK_KEY_INPUT}](create_time_tag) to create new time-tag and [{DescriptionFormat.LINK_KEY_INPUT}](remove_time_tag) to delete exist time-tag.",
                     Keys = new Dictionary<string, InputKey>
                     {
                         {
