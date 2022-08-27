@@ -196,29 +196,41 @@ namespace osu.Game.Rulesets.Karaoke.Overlays
                 var tcs = new TaskCompletionSource<bool>();
 
                 var client = new GitHubClient(new ProductHeaderValue(organizationName));
-                var reposAscending = await client.Repository.Content.GetAllContentsByRef(organizationName, projectName, "content/changelog", branchName).ConfigureAwait(false);
 
-                if (reposAscending.Any())
+                try
                 {
-                    builds = reposAscending.Reverse().Where(x => x.Type == ContentType.Dir).Select(x => new APIChangelogBuild(organizationName, projectName, branchName)
-                    {
-                        RootUrl = x.HtmlUrl,
-                        Path = x.Path,
-                        DisplayVersion = x.Name,
-                        PublishedAt = getPublishDateFromName(x.Name)
-                    }).ToList();
+                    var reposAscending = await client.Repository.Content.GetAllContentsByRef(organizationName, projectName, "content/changelog", branchName).ConfigureAwait(false);
 
-                    foreach (var build in builds)
+                    if (reposAscending.Any())
                     {
-                        build.Versions.Previous = builds.GetPrevious(build);
-                        build.Versions.Next = builds.GetNext(build);
+                        builds = reposAscending.Reverse().Where(x => x.Type == ContentType.Dir).Select(x => new APIChangelogBuild(organizationName, projectName, branchName)
+                        {
+                            RootUrl = x.HtmlUrl,
+                            Path = x.Path,
+                            DisplayVersion = x.Name,
+                            PublishedAt = getPublishDateFromName(x.Name)
+                        }).ToList();
+
+                        foreach (var build in builds)
+                        {
+                            build.Versions.Previous = builds.GetPrevious(build);
+                            build.Versions.Next = builds.GetNext(build);
+                        }
+
+                        tcs.SetResult(true);
                     }
-
-                    tcs.SetResult(true);
+                    else
+                    {
+                        tcs.SetResult(false);
+                    }
                 }
-                else
+                catch (RateLimitExceededException)
                 {
-                    tcs.SetResult(false);
+                    // todo: maybe show something?
+                }
+                catch (Exception)
+                {
+                    // todo: maybe show something?
                 }
 
                 await tcs.Task.ConfigureAwait(false);
