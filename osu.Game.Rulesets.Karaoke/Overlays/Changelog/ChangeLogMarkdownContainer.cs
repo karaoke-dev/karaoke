@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +29,14 @@ namespace osu.Game.Rulesets.Karaoke.Overlays.Changelog
 
             using (var httpClient = new HttpClient())
             {
-                Text = httpClient.GetStringAsync(build.ReadmeDownloadUrl).GetResultSafely();
+                try
+                {
+                    Text = httpClient.GetStringAsync(build.ReadmeDownloadUrl).GetResultSafely();
+                }
+                catch (Exception)
+                {
+                    Text = "Oops, seems there's something wrong with network.";
+                }
             }
         }
 
