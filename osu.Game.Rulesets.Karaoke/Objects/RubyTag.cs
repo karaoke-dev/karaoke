@@ -5,10 +5,11 @@ using System;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class RubyTag : ITextTag
+    public class RubyTag : ITextTag, IDeepCloneable<RubyTag>
     {
         /// <summary>
         /// Invoked when any property of this <see cref="RubyTag"/> is changed.
@@ -57,5 +58,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             get => EndIndexBindable.Value;
             set => EndIndexBindable.Value = value;
         }
+
+        public RubyTag DeepClone()
+            => new()
+            {
+                Text = Text,
+                StartIndex = StartIndex,
+                EndIndex = EndIndex,
+            };
     }
 }
