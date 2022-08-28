@@ -130,6 +130,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         /// <summary>
         /// The time at which the HitObject end.
         /// </summary>
+        [JsonIgnore]
         public double EndTime => StartTime + Duration;
 
         [JsonIgnore]
