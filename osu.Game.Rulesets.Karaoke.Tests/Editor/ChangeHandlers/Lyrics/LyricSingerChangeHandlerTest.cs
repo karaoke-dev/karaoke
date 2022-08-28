@@ -6,10 +6,11 @@ using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricSingerChangeHandlerTest : BaseHitObjectChangeHandlerTest<LyricSingerChangeHandler, Lyric>
+    public class LyricSingerChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricSingerChangeHandler>
     {
         [Test]
         public void TestAdd()
@@ -140,6 +141,32 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             {
                 Assert.IsEmpty(h.Singers);
             });
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void TestWithReferenceLyric(bool syncSinger)
+        {
+            var singer = new Singer(1)
+            {
+                Name = "Singer1",
+            };
+            PrepareLyricWithSyncConfig(new Lyric
+            {
+                ReferenceLyricConfig = new SyncLyricConfig
+                {
+                    SyncSingerProperty = syncSinger
+                }
+            });
+
+            if (syncSinger)
+            {
+                TriggerHandlerChangedWithChangeForbiddenException(c => c.Add(singer));
+            }
+            else
+            {
+                TriggerHandlerChanged(c => c.Add(singer));
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricTextChangeHandlerTest : BaseHitObjectChangeHandlerTest<LyricTextChangeHandler, Lyric>
+    public class LyricTextChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricTextChangeHandler>
     {
         [Test]
         public void TestInsertText()
@@ -52,6 +52,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             TriggerHandlerChanged(c => c.DeleteLyricText(1));
 
             AssertHitObjects(Assert.IsEmpty);
+        }
+
+        [Test]
+        public void TestWithReferenceLyric()
+        {
+            PrepareLyricWithSyncConfig(new Lyric
+            {
+                Text = "カラ"
+            });
+
+            TriggerHandlerChangedWithChangeForbiddenException(c => c.InsertText(2, "オケ"));
         }
     }
 }

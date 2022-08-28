@@ -8,11 +8,12 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricTimeTagsChangeHandlerTest : BaseHitObjectChangeHandlerTest<LyricTimeTagsChangeHandler, Lyric>
+    public class LyricTimeTagsChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricTimeTagsChangeHandler>
     {
         [Test]
         public void TestSetTimeTagTime()
@@ -413,6 +414,34 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                     c.Shifting(targetTimeTag, direction, type);
                 });
             });
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void TestWithReferenceLyric(bool syncTimeTag)
+        {
+            var timeTag = new TimeTag(new TextIndex(), 1000);
+            PrepareLyricWithSyncConfig(new Lyric
+            {
+                Text = "カラオケ",
+                TimeTags = new[]
+                {
+                    timeTag
+                },
+                ReferenceLyricConfig = new SyncLyricConfig
+                {
+                    SyncTimeTagProperty = syncTimeTag
+                }
+            });
+
+            if (syncTimeTag)
+            {
+                TriggerHandlerChangedWithChangeForbiddenException(c => c.SetTimeTagTime(timeTag, 2000));
+            }
+            else
+            {
+                TriggerHandlerChanged(c => c.SetTimeTagTime(timeTag, 2000));
+            }
         }
     }
 }

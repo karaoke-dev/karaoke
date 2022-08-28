@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricLanguageChangeHandlerTest : BaseHitObjectChangeHandlerTest<LyricLanguageChangeHandler, Lyric>
+    public class LyricLanguageChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricLanguageChangeHandler>
     {
         [Test]
         public void TestSetLanguageToJapanese()
@@ -38,6 +38,13 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             {
                 Assert.IsNull(h.Language);
             });
+        }
+
+        [Test]
+        public void TestSetLanguageWithReferenceLyric()
+        {
+            PrepareLyricWithSyncConfig(new Lyric());
+            TriggerHandlerChangedWithChangeForbiddenException(c => c.SetLanguage(new CultureInfo("ja")));
         }
     }
 }

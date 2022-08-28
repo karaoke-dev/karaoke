@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricTranslateChangeHandlerTest : BaseHitObjectChangeHandlerTest<LyricTranslateChangeHandler, Lyric>
+    public class LyricTranslateChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricTranslateChangeHandler>
     {
         [Test]
         public void TestUpdateTranslateWithNewLanguage()
@@ -87,6 +87,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             {
                 Assert.IsEmpty(h.Translates);
             });
+        }
+
+        [Test]
+        public void TestWithReferenceLyric()
+        {
+            PrepareLyricWithSyncConfig(new Lyric
+            {
+                Text = "カラオケ",
+            });
+
+            TriggerHandlerChangedWithChangeForbiddenException(c => c.UpdateTranslate(new CultureInfo(17), "からおけ"));
         }
     }
 }
