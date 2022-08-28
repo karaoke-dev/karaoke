@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public abstract class LyricTextTagsChangeHandler<TTextTag> : HitObjectChangeHandler<Lyric>, ILyricTextTagsChangeHandler<TTextTag> where TTextTag : class, ITextTag, new()
+    public abstract class LyricTextTagsChangeHandler<TTextTag> : LyricPropertyChangeHandler, ILyricTextTagsChangeHandler<TTextTag> where TTextTag : class, ITextTag, new()
     {
         public void Add(TTextTag textTag)
         {

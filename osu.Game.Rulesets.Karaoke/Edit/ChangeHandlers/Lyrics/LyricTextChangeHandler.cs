@@ -2,12 +2,11 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricTextChangeHandler : HitObjectChangeHandler<Lyric>, ILyricTextChangeHandler
+    public class LyricTextChangeHandler : LyricPropertyChangeHandler, ILyricTextChangeHandler
     {
         public void InsertText(int index, string text)
         {

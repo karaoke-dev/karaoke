@@ -3,11 +3,10 @@
 
 using System.Collections.Generic;
 using System.Globalization;
-using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricLanguageChangeHandler : HitObjectChangeHandler<Lyric>, ILyricLanguageChangeHandler
+    public class LyricLanguageChangeHandler : LyricPropertyChangeHandler, ILyricLanguageChangeHandler
     {
         public void SetLanguage(CultureInfo? language)
         {
