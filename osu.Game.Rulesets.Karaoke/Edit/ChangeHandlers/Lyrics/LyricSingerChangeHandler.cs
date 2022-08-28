@@ -4,11 +4,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricSingerChangeHandler : HitObjectChangeHandler<Lyric>, ILyricSingerChangeHandler
+    public class LyricSingerChangeHandler : LyricPropertyChangeHandler, ILyricSingerChangeHandler
     {
         public void Add(Singer singer)
         {
@@ -56,6 +56,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             {
                 lyric.Singers.Clear();
             });
+        }
+
+        protected override bool AllowToEditIfHasReferenceLyric(IReferenceLyricPropertyConfig? config)
+        {
+            if (config is SyncLyricConfig syncLyricConfig && !syncLyricConfig.SyncSingerProperty)
+                return true;
+
+            return base.AllowToEditIfHasReferenceLyric(config);
         }
     }
 }

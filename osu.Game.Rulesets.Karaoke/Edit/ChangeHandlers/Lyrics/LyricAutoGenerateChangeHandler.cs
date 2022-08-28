@@ -22,7 +22,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricAutoGenerateChangeHandler : HitObjectChangeHandler<Lyric>, ILyricAutoGenerateChangeHandler
+    public class LyricAutoGenerateChangeHandler : LyricPropertyChangeHandler, ILyricAutoGenerateChangeHandler
     {
         [Resolved, AllowNull]
         private KaraokeRulesetEditGeneratorConfigManager generatorConfigManager { get; set; }
@@ -30,8 +30,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         [Resolved, AllowNull]
         private EditorBeatmap beatmap { get; set; }
 
+        // should change this flag if wants to change property in the lyrics.
+        // Not a good to waite a global property for that but there's no better choice.
+        private LyricAutoGenerateProperty? currentAutoGenerateProperty;
+
         public bool CanGenerate(LyricAutoGenerateProperty autoGenerateProperty)
         {
+            currentAutoGenerateProperty = autoGenerateProperty;
+
             switch (autoGenerateProperty)
             {
                 case LyricAutoGenerateProperty.DetectReferenceLyric:
@@ -63,14 +69,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             }
 
             bool canDetect<T>(ILyricPropertyDetector<T> detector)
-                => HitObjects.Any(detector.CanDetect);
+                => HitObjects.Where(x => AllowToEditIfHasReferenceLyric(x.ReferenceLyricConfig)).Any(detector.CanDetect);
 
             bool canGenerate<T>(ILyricPropertyGenerator<T> generator)
-                => HitObjects.Any(generator.CanGenerate);
+                => HitObjects.Where(x => AllowToEditIfHasReferenceLyric(x.ReferenceLyricConfig)).Any(generator.CanGenerate);
         }
 
         public IDictionary<Lyric, LocalisableString> GetNotGeneratableLyrics(LyricAutoGenerateProperty autoGenerateProperty)
         {
+            currentAutoGenerateProperty = autoGenerateProperty;
+
             switch (autoGenerateProperty)
             {
                 case LyricAutoGenerateProperty.DetectReferenceLyric:
@@ -102,18 +110,26 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             }
 
             IDictionary<Lyric, LocalisableString> getInvalidMessageFromDetector<T>(ILyricPropertyDetector<T> detector)
-                => HitObjects.Select(x => new KeyValuePair<Lyric, LocalisableString?>(x, detector.GetInvalidMessage(x)))
+                => HitObjects.Select(x => new KeyValuePair<Lyric, LocalisableString?>(x, detector.GetInvalidMessage(x) ?? getReferenceLyricInvalidMessage(x)))
                              .Where(x => x.Value != null)
                              .ToDictionary(k => k.Key, v => v.Value!.Value);
 
             IDictionary<Lyric, LocalisableString> getInvalidMessageFromGenerator<T>(ILyricPropertyGenerator<T> generator)
-                => HitObjects.Select(x => new KeyValuePair<Lyric, LocalisableString?>(x, generator.GetInvalidMessage(x)))
+                => HitObjects.Select(x => new KeyValuePair<Lyric, LocalisableString?>(x, generator.GetInvalidMessage(x) ?? getReferenceLyricInvalidMessage(x)))
                              .Where(x => x.Value != null)
                              .ToDictionary(k => k.Key, v => v.Value!.Value);
+
+            LocalisableString? getReferenceLyricInvalidMessage(Lyric lyric)
+            {
+                bool allowEdit = AllowToEditIfHasReferenceLyric(lyric.ReferenceLyricConfig);
+                return allowEdit ? default(LocalisableString?) : "Cannot modify property because has reference lyric.";
+            }
         }
 
         public void AutoGenerate(LyricAutoGenerateProperty autoGenerateProperty)
         {
+            currentAutoGenerateProperty = autoGenerateProperty;
+
             switch (autoGenerateProperty)
             {
                 case LyricAutoGenerateProperty.DetectReferenceLyric:
@@ -217,6 +233,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 default:
                     throw new NotSupportedException();
             }
+        }
+
+        protected override bool AllowToEditIfHasReferenceLyric(IReferenceLyricPropertyConfig? config)
+        {
+            if (currentAutoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
+                return true;
+
+            return base.AllowToEditIfHasReferenceLyric(config);
         }
     }
 }

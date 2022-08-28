@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricReferenceChangeHandlerTest : BaseHitObjectChangeHandlerTest<LyricReferenceChangeHandler, Lyric>
+    public class LyricReferenceChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricReferenceChangeHandler>
     {
         [Test]
         public void TestUpdateReferenceLyric()
@@ -107,6 +107,24 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
                 Assert.AreEqual(100, config.OffsetTime);
                 Assert.AreEqual(false, config.SyncSingerProperty);
             });
+        }
+
+        [Test]
+        public void TestWithReferenceLyric()
+        {
+            var lyric = new Lyric
+            {
+                Text = "Referenced lyric"
+            };
+
+            PrepareHitObject(lyric, false);
+            PrepareLyricWithSyncConfig(new Lyric());
+
+            // should not block the reference language change.
+            TriggerHandlerChanged(c => c.UpdateReferenceLyric(lyric));
+            TriggerHandlerChanged(c => c.SwitchToReferenceLyricConfig());
+            TriggerHandlerChanged(c => c.SwitchToSyncLyricConfig());
+            TriggerHandlerChanged(c => c.AdjustLyricConfig<SyncLyricConfig>(syncLyricConfig => syncLyricConfig.OffsetTime = 1000));
         }
     }
 }

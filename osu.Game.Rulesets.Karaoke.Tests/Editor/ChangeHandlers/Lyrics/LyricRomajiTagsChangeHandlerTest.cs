@@ -9,7 +9,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricRomajiTagsChangeHandlerTest : BaseHitObjectChangeHandlerTest<LyricRomajiTagsChangeHandler, Lyric>
+    public class LyricRomajiTagsChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricRomajiTagsChangeHandler>
     {
         [Test]
         public void TestAdd()
@@ -208,6 +208,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             {
                 Assert.AreEqual("karaoke", targetTag.Text);
             });
+        }
+
+        [Test]
+        public void TestWithReferenceLyric()
+        {
+            PrepareLyricWithSyncConfig(new Lyric
+            {
+                Text = "風",
+                Language = new CultureInfo(17)
+            });
+
+            TriggerHandlerChangedWithChangeForbiddenException(c => c.Add(new RomajiTag
+            {
+                StartIndex = 0,
+                EndIndex = 1,
+                Text = "kaze",
+            }));
         }
     }
 }

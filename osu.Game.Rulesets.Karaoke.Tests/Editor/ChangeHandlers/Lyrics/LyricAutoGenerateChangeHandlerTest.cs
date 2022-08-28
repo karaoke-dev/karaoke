@@ -14,7 +14,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 {
-    public class LyricAutoGenerateChangeHandlerTest : BaseHitObjectChangeHandlerTest<LyricAutoGenerateChangeHandler, Lyric>
+    public class LyricAutoGenerateChangeHandlerTest : LyricPropertyChangeHandlerTest<LyricAutoGenerateChangeHandler>
     {
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
@@ -311,6 +311,123 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
 
         private Note[] getMatchedNotes(Lyric lyric)
             => Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToArray();
+
+        #endregion
+
+        # region With reference lyric
+
+        [TestCase(LyricAutoGenerateProperty.DetectReferenceLyric, true)]
+        [TestCase(LyricAutoGenerateProperty.DetectLanguage, false)]
+        [TestCase(LyricAutoGenerateProperty.AutoGenerateRubyTags, false)]
+        [TestCase(LyricAutoGenerateProperty.AutoGenerateRomajiTags, false)]
+        [TestCase(LyricAutoGenerateProperty.AutoGenerateTimeTags, false)]
+        [TestCase(LyricAutoGenerateProperty.AutoGenerateNotes, false)]
+        public void TestCanGenerateWithReferenceLyric(LyricAutoGenerateProperty autoGenerateProperty, bool generatable)
+        {
+            if (autoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
+            {
+                PrepareHitObject(new Lyric
+                {
+                    Text = "karaoke"
+                }, false);
+            }
+
+            PrepareLyricWithSyncConfig(new Lyric
+            {
+                Text = "karaoke",
+                Language = new CultureInfo(17), // for auto-generate ruby and romaji.
+                TimeTags = new[] // for auto-generate notes.
+                {
+                    new TimeTag(new TextIndex(0), 0),
+                    new TimeTag(new TextIndex(1), 1000),
+                    new TimeTag(new TextIndex(2), 2000),
+                    new TimeTag(new TextIndex(3), 3000),
+                    new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
+                }
+            });
+
+            TriggerHandlerChanged(c =>
+            {
+                Assert.AreEqual(generatable, c.CanGenerate(autoGenerateProperty));
+            });
+        }
+
+        [TestCase(LyricAutoGenerateProperty.DetectReferenceLyric, true)]
+        [TestCase(LyricAutoGenerateProperty.DetectLanguage, false)]
+        [TestCase(LyricAutoGenerateProperty.AutoGenerateRubyTags, false)]
+        [TestCase(LyricAutoGenerateProperty.AutoGenerateRomajiTags, false)]
+        [TestCase(LyricAutoGenerateProperty.AutoGenerateTimeTags, false)]
+        [TestCase(LyricAutoGenerateProperty.AutoGenerateNotes, false)]
+        public void TestGetNotGeneratableLyricsWithReferenceLyric(LyricAutoGenerateProperty autoGenerateProperty, bool generatable)
+        {
+            if (autoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
+            {
+                PrepareHitObject(new Lyric
+                {
+                    Text = "karaoke"
+                }, false);
+            }
+
+            PrepareLyricWithSyncConfig(new Lyric
+            {
+                Text = "karaoke",
+                Language = new CultureInfo(17), // for auto-generate ruby and romaji.
+                TimeTags = new[] // for auto-generate notes.
+                {
+                    new TimeTag(new TextIndex(0), 0),
+                    new TimeTag(new TextIndex(1), 1000),
+                    new TimeTag(new TextIndex(2), 2000),
+                    new TimeTag(new TextIndex(3), 3000),
+                    new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
+                }
+            });
+
+            TriggerHandlerChanged(c =>
+            {
+                bool notGeneratable = c.GetNotGeneratableLyrics(autoGenerateProperty).Any();
+                Assert.AreEqual(generatable, !notGeneratable);
+            });
+        }
+
+        [TestCase(LyricAutoGenerateProperty.DetectReferenceLyric, true)]
+        [TestCase(LyricAutoGenerateProperty.DetectLanguage, false)]
+        [TestCase(LyricAutoGenerateProperty.AutoGenerateRubyTags, false)]
+        [TestCase(LyricAutoGenerateProperty.AutoGenerateRomajiTags, false)]
+        [TestCase(LyricAutoGenerateProperty.AutoGenerateTimeTags, false)]
+        [TestCase(LyricAutoGenerateProperty.AutoGenerateNotes, false)]
+        public void TestAutoGenerate(LyricAutoGenerateProperty autoGenerateProperty, bool generatable)
+        {
+            if (autoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
+            {
+                PrepareHitObject(new Lyric
+                {
+                    Text = "karaoke"
+                }, false);
+            }
+
+            PrepareLyricWithSyncConfig(new Lyric
+            {
+                Text = "karaoke",
+                Language = new CultureInfo(17), // for auto-generate ruby and romaji.
+                TimeTags = new[] // for auto-generate notes.
+                {
+                    new TimeTag(new TextIndex(0), 0),
+                    new TimeTag(new TextIndex(1), 1000),
+                    new TimeTag(new TextIndex(2), 2000),
+                    new TimeTag(new TextIndex(3), 3000),
+                    new TimeTag(new TextIndex(3, TextIndex.IndexState.End), 4000),
+                }
+            });
+
+            if (generatable)
+            {
+                TriggerHandlerChanged(c => c.AutoGenerate(autoGenerateProperty));
+            }
+            else
+            {
+                TriggerHandlerChangedWithChangeForbiddenException(c => c.AutoGenerate(autoGenerateProperty));
+            }
+        }
 
         #endregion
     }
