@@ -5,10 +5,11 @@ using System;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Sprites;
+using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class TimeTag
+    public class TimeTag : IDeepCloneable<TimeTag>
     {
         /// <summary>
         /// Invoked when any property of this <see cref="RubyTag"/> is changed.
@@ -39,6 +40,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         {
             get => TimeBindable.Value;
             set => TimeBindable.Value = value;
+        }
+
+        public TimeTag DeepClone()
+        {
+            return new TimeTag(Index, Time);
         }
     }
 }
