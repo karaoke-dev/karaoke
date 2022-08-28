@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricTimeTagsChangeHandler : HitObjectChangeHandler<Lyric>, ILyricTimeTagsChangeHandler
+    public class LyricTimeTagsChangeHandler : LyricPropertyChangeHandler, ILyricTimeTagsChangeHandler
     {
         public void SetTimeTagTime(TimeTag timeTag, double time)
         {
@@ -222,6 +223,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                         throw new InvalidOperationException();
                 }
             }
+        }
+
+        protected override bool AllowToEditIfHasReferenceLyric(IReferenceLyricPropertyConfig? config)
+        {
+            if (config is SyncLyricConfig syncLyricConfig && !syncLyricConfig.SyncTimeTagProperty)
+                return true;
+
+            return base.AllowToEditIfHasReferenceLyric(config);
         }
 
         /// <summary>

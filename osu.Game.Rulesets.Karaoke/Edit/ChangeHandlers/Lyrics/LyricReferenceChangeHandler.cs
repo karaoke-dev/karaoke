@@ -8,7 +8,7 @@ using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricReferenceChangeHandler : HitObjectChangeHandler<Lyric>, ILyricReferenceChangeHandler
+    public class LyricReferenceChangeHandler : LyricPropertyChangeHandler, ILyricReferenceChangeHandler
     {
         public void UpdateReferenceLyric(Lyric? referenceLyric)
         {
@@ -68,6 +68,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
                 action.Invoke(config);
             });
+        }
+
+        protected override bool AllowToEditIfHasReferenceLyric(IReferenceLyricPropertyConfig? config)
+        {
+            // should always able to adjust the reference lyric.
+            return true;
         }
     }
 }
