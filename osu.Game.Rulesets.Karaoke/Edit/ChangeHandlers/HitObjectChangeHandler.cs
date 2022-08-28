@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
                 throw new InvalidOperationException($"Should be exactly one {nameof(THitObject)} being selected.");
         }
 
-        protected void PerformOnSelection(Action<THitObject> action)
+        protected virtual void PerformOnSelection(Action<THitObject> action)
         {
             if (!changingCache.IsValid)
                 throw new NotSupportedException("Cannot trigger the change while applying another change.");
