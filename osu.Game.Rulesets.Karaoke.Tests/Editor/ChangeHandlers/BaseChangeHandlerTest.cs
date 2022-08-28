@@ -73,6 +73,14 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
             });
         }
 
+        protected void TriggerHandlerChangedWithException<T>(Action<TChangeHandler> c) where T : Exception
+        {
+            TriggerHandlerChanged(ch =>
+            {
+                Assert.Catch<T>(() => c(ch));
+            });
+        }
+
         protected void AssertEditorBeatmap(Action<EditorBeatmap> assert)
         {
             AddStep("Is result matched", () =>
