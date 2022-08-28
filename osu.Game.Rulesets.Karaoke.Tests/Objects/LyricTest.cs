@@ -14,6 +14,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
 {
     public class LyricTest
     {
+        #region Clone
+
         [TestCase]
         public void TestClone()
         {
@@ -89,5 +91,173 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
             Assert.AreNotSame(clonedLyric.ReferenceLyricConfig, lyric.ReferenceLyricConfig);
             Assert.AreEqual(clonedLyric.ReferenceLyricConfig?.OffsetTime, lyric.ReferenceLyricConfig?.OffsetTime);
         }
+
+        #endregion
+
+        #region Reference lyric
+
+        [Test]
+        public void TestSyncFromReferenceLyric()
+        {
+            var referencedLyric = new Lyric
+            {
+                Text = "karaoke",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" }),
+                RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0,1]:か" }),
+                RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0,1]:ka" }),
+                Singers = new[] { 1 },
+                Translates = new Dictionary<CultureInfo, string>
+                {
+                    { new CultureInfo(17), "からおけ" }
+                },
+                Language = new CultureInfo(17)
+            };
+
+            var lyric = new Lyric
+            {
+                ReferenceLyric = referencedLyric,
+                ReferenceLyricConfig = new SyncLyricConfig(),
+            };
+
+            Assert.AreEqual(referencedLyric.Text, lyric.Text);
+            TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
+            TextTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
+            TextTagAssert.ArePropertyEqual(referencedLyric.RomajiTags, lyric.RomajiTags);
+            Assert.AreEqual(referencedLyric.Singers, lyric.Singers);
+            Assert.AreEqual(referencedLyric.Translates, lyric.Translates);
+            Assert.AreEqual(referencedLyric.Language, lyric.Language);
+        }
+
+        [Test]
+        public void TestReferenceLyricPropertyChanged()
+        {
+            var referencedLyric = new Lyric();
+
+            var lyric = new Lyric
+            {
+                ReferenceLyric = referencedLyric,
+                ReferenceLyricConfig = new SyncLyricConfig(),
+            };
+
+            referencedLyric.Text = "karaoke";
+            referencedLyric.TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" });
+            referencedLyric.RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0,1]:か" });
+            referencedLyric.RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0,1]:ka" });
+            referencedLyric.Singers = new[] { 1 };
+            referencedLyric.Translates = new Dictionary<CultureInfo, string>
+            {
+                { new CultureInfo(17), "からおけ" }
+            };
+            referencedLyric.Language = new CultureInfo(17);
+
+            Assert.AreEqual(referencedLyric.Text, lyric.Text);
+            TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
+            TextTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
+            TextTagAssert.ArePropertyEqual(referencedLyric.RomajiTags, lyric.RomajiTags);
+            Assert.AreEqual(referencedLyric.Singers, lyric.Singers);
+            Assert.AreEqual(referencedLyric.Translates, lyric.Translates);
+            Assert.AreEqual(referencedLyric.Language, lyric.Language);
+        }
+
+        [Test]
+        public void TestReferenceLyricListPropertyChanged()
+        {
+            // test modify property inside the list.
+            // ruby, romaji tag time-tag.
+            var timeTag = TestCaseTagHelper.ParseTimeTag("[0,start]:1100");
+            var rubyTag = TestCaseTagHelper.ParseRubyTag("[0,1]:か");
+            var romajiTag = TestCaseTagHelper.ParseRomajiTag("[0,1]:ka");
+
+            var referencedLyric = new Lyric
+            {
+                Text = "karaoke",
+                TimeTags = new[] { timeTag },
+                RubyTags = new[] { rubyTag },
+                RomajiTags = new[] { romajiTag },
+                Singers = new[] { 1 },
+                Translates = new Dictionary<CultureInfo, string>
+                {
+                    { new CultureInfo(17), "からおけ" }
+                },
+                Language = new CultureInfo(17)
+            };
+
+            var lyric = new Lyric
+            {
+                ReferenceLyric = referencedLyric,
+                ReferenceLyricConfig = new SyncLyricConfig(),
+            };
+
+            // property should be the same
+            TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
+            TextTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
+            TextTagAssert.ArePropertyEqual(referencedLyric.RomajiTags, lyric.RomajiTags);
+
+            // and because there's no change inside the tag, so there's version change.
+            Assert.AreEqual(0, lyric.TimeTagsVersion.Value);
+            Assert.AreEqual(0, lyric.RubyTagsVersion.Value);
+            Assert.AreEqual(0, lyric.RomajiTagsVersion.Value);
+
+            // it's time to change the property in the list.
+            timeTag.Time = 2000;
+            rubyTag.Text = "ruby";
+            romajiTag.Text = "romaji";
+
+            // property should be equal.
+            TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
+            TextTagAssert.ArePropertyEqual(referencedLyric.RubyTags, lyric.RubyTags);
+            TextTagAssert.ArePropertyEqual(referencedLyric.RomajiTags, lyric.RomajiTags);
+
+            // and note that because only one property is different, so version should change once.
+            Assert.AreEqual(1, lyric.TimeTagsVersion.Value);
+            Assert.AreEqual(1, lyric.RubyTagsVersion.Value);
+            Assert.AreEqual(1, lyric.RomajiTagsVersion.Value);
+        }
+
+        [Test]
+        public void TestConfigChange()
+        {
+            // change the config from reference lyric into sync lyric config.
+            // than, should auto sync the value.
+            var config = new SyncLyricConfig
+            {
+                SyncSingerProperty = false,
+                SyncTimeTagProperty = false,
+            };
+
+            var referencedLyric = new Lyric
+            {
+                Text = "karaoke",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[0,start]:1100" }),
+                RubyTags = TestCaseTagHelper.ParseRubyTags(new[] { "[0,1]:か" }),
+                RomajiTags = TestCaseTagHelper.ParseRomajiTags(new[] { "[0,1]:ka" }),
+                Singers = new[] { 1 },
+                Translates = new Dictionary<CultureInfo, string>
+                {
+                    { new CultureInfo(17), "からおけ" }
+                },
+                Language = new CultureInfo(17)
+            };
+
+            var lyric = new Lyric
+            {
+                ReferenceLyric = referencedLyric,
+                ReferenceLyricConfig = config
+            };
+
+            // the property should not same as the reference reference because those properties are not sync.
+            Assert.IsEmpty(lyric.TimeTags);
+            Assert.AreNotEqual(referencedLyric.Singers, lyric.Singers);
+
+            // it's time to open the config.
+            config.SyncSingerProperty = true;
+            config.SyncTimeTagProperty = true;
+
+            // after open the config, the property should sync from the reference lyric now.
+            TimeTagAssert.ArePropertyEqual(referencedLyric.TimeTags, lyric.TimeTags);
+            Assert.AreEqual(referencedLyric.Singers, lyric.Singers);
+        }
+
+        #endregion
     }
 }
