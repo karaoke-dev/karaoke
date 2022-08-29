@@ -11,13 +11,17 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
     public abstract class LyricPropertyChangeHandlerTest<TChangeHandler> : BaseHitObjectChangeHandlerTest<TChangeHandler, Lyric>
         where TChangeHandler : LyricPropertyChangeHandler, new()
     {
-        protected void PrepareLyricWithSyncConfig(Lyric hitObject, bool selected = true)
+        protected Lyric PrepareLyricWithSyncConfig(Lyric referencedLyric, IReferenceLyricPropertyConfig? config = null, bool selected = true)
         {
-            // allow to pre-assign the config.
-            hitObject.ReferenceLyric = new Lyric();
-            hitObject.ReferenceLyricConfig ??= new SyncLyricConfig();
+            var lyric = new Lyric
+            {
+                ReferenceLyric = referencedLyric,
+                ReferenceLyricConfig = config ?? new SyncLyricConfig()
+            };
 
-            PrepareHitObjects(new[] { hitObject }, selected);
+            PrepareHitObjects(new[] { lyric }, selected);
+
+            return lyric;
         }
 
         protected void TriggerHandlerChangedWithChangeForbiddenException(Action<TChangeHandler> c)

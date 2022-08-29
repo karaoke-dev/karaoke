@@ -420,19 +420,28 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         [TestCase(false)]
         public void TestWithReferenceLyric(bool syncTimeTag)
         {
-            var timeTag = new TimeTag(new TextIndex(), 1000);
-            PrepareLyricWithSyncConfig(new Lyric
+            var lyric = PrepareLyricWithSyncConfig(new Lyric
             {
                 Text = "カラオケ",
                 TimeTags = new[]
                 {
-                    timeTag
-                },
-                ReferenceLyricConfig = new SyncLyricConfig
-                {
-                    SyncTimeTagProperty = syncTimeTag
+                    new TimeTag(new TextIndex(), 1000)
                 }
+            }, new SyncLyricConfig
+            {
+                SyncTimeTagProperty = syncTimeTag
             });
+
+            // should add the time-tag by hand because it does not sync from thr referenced lyric.
+            if (!syncTimeTag)
+            {
+                lyric.TimeTags = new[]
+                {
+                    new TimeTag(new TextIndex(), 2000)
+                };
+            }
+
+            var timeTag = lyric.TimeTags.First();
 
             if (syncTimeTag)
             {

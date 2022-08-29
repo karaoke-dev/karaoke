@@ -231,6 +231,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         public Lyric()
         {
             initInternalBindingEvent();
+            initReferenceLyricEvent();
         }
 
         public override Judgement CreateJudgement() => new KaraokeLyricJudgement();
