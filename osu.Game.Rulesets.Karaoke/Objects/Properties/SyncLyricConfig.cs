@@ -1,6 +1,7 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 using osu.Framework.Bindables;
@@ -9,6 +10,15 @@ namespace osu.Game.Rulesets.Karaoke.Objects.Properties
 {
     public class SyncLyricConfig : IReferenceLyricPropertyConfig
     {
+        public event Action? Changed;
+
+        public SyncLyricConfig()
+        {
+            OffsetTimeBindable.ValueChanged += _ => Changed?.Invoke();
+            SyncSingerPropertyBindable.ValueChanged += _ => Changed?.Invoke();
+            SyncTimeTagPropertyBindable.ValueChanged += _ => Changed?.Invoke();
+        }
+
         [JsonIgnore]
         public readonly Bindable<double> OffsetTimeBindable = new BindableDouble();
 

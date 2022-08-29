@@ -5,10 +5,11 @@ using System;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class RomajiTag : ITextTag
+    public class RomajiTag : ITextTag, IDeepCloneable<RomajiTag>
     {
         /// <summary>
         /// Invoked when any property of this <see cref="RomajiTag"/> is changed.
@@ -57,5 +58,13 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             get => EndIndexBindable.Value;
             set => EndIndexBindable.Value = value;
         }
+
+        public RomajiTag DeepClone()
+            => new()
+            {
+                Text = Text,
+                StartIndex = StartIndex,
+                EndIndex = EndIndex,
+            };
     }
 }

@@ -2,9 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Globalization;
-using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
 using osu.Game.Beatmaps;
@@ -24,7 +22,7 @@ using osu.Game.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Objects
 {
-    public class Lyric : KaraokeHitObject, IHasDuration, IHasSingers, IHasOrder, IHasLock, IHasPrimaryKey, IDeepCloneable<Lyric>
+    public partial class Lyric : KaraokeHitObject, IHasDuration, IHasSingers, IHasOrder, IHasLock, IHasPrimaryKey, IDeepCloneable<Lyric>
     {
         /// <summary>
         /// Primary key.
@@ -216,6 +214,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
+        public readonly Bindable<int> ReferenceLyricConfigVersion = new();
+
+        [JsonIgnore]
         public readonly Bindable<IReferenceLyricPropertyConfig?> ReferenceLyricConfigBindable = new();
 
         /// <summary>
@@ -229,62 +230,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
         public Lyric()
         {
-            TimeTagsBindable.CollectionChanged += (_, args) =>
-            {
-                switch (args.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
-                        foreach (var c in args.NewItems.Cast<TimeTag>())
-                            c.Changed += invalidate;
-                        break;
-
-                    case NotifyCollectionChangedAction.Reset:
-                    case NotifyCollectionChangedAction.Remove:
-                        foreach (var c in args.OldItems.Cast<TimeTag>())
-                            c.Changed -= invalidate;
-                        break;
-                }
-
-                void invalidate() => TimeTagsVersion.Value++;
-            };
-
-            RubyTagsBindable.CollectionChanged += (_, args) =>
-            {
-                switch (args.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
-                        foreach (var c in args.NewItems.Cast<RubyTag>())
-                            c.Changed += invalidate;
-                        break;
-
-                    case NotifyCollectionChangedAction.Reset:
-                    case NotifyCollectionChangedAction.Remove:
-                        foreach (var c in args.OldItems.Cast<RubyTag>())
-                            c.Changed -= invalidate;
-                        break;
-                }
-
-                void invalidate() => RubyTagsVersion.Value++;
-            };
-
-            RomajiTagsBindable.CollectionChanged += (_, args) =>
-            {
-                switch (args.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
-                        foreach (var c in args.NewItems.Cast<RomajiTag>())
-                            c.Changed += invalidate;
-                        break;
-
-                    case NotifyCollectionChangedAction.Reset:
-                    case NotifyCollectionChangedAction.Remove:
-                        foreach (var c in args.OldItems.Cast<RomajiTag>())
-                            c.Changed -= invalidate;
-                        break;
-                }
-
-                void invalidate() => RomajiTagsVersion.Value++;
-            };
+            initInternalBindingEvent();
         }
 
         public override Judgement CreateJudgement() => new KaraokeLyricJudgement();
