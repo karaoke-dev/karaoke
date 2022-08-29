@@ -151,12 +151,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
             {
                 Name = "Singer1",
             };
-            PrepareLyricWithSyncConfig(new Lyric
+            PrepareLyricWithSyncConfig(new Lyric(), new SyncLyricConfig
             {
-                ReferenceLyricConfig = new SyncLyricConfig
-                {
-                    SyncSingerProperty = syncSinger
-                }
+                SyncSingerProperty = syncSinger
             });
 
             if (syncSinger)
