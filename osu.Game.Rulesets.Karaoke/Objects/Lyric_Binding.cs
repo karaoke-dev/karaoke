@@ -66,6 +66,21 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
                 void invalidate() => RomajiTagsVersion.Value++;
             };
+
+            ReferenceLyricConfigBindable.ValueChanged += e =>
+            {
+                if (e.OldValue != null)
+                {
+                    e.OldValue.Changed -= invalidate;
+                }
+
+                if (e.NewValue != null)
+                {
+                    e.NewValue.Changed += invalidate;
+                }
+
+                void invalidate() => ReferenceLyricConfigVersion.Value++;
+            };
         }
     }
 }

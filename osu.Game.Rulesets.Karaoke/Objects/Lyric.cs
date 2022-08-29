@@ -214,6 +214,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
         }
 
         [JsonIgnore]
+        public readonly Bindable<int> ReferenceLyricConfigVersion = new();
+
+        [JsonIgnore]
         public readonly Bindable<IReferenceLyricPropertyConfig?> ReferenceLyricConfigBindable = new();
 
         /// <summary>
