@@ -125,7 +125,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                     }).ToArray();
                 });
 
-                bindValueChange(e, l => l.TimeTagsVersion, (lyric, config) =>
+                bindValueChange(e, l => l.TimeTagsVersion, (_, config) =>
                 {
                     if (config is not SyncLyricConfig syncLyricConfig || !syncLyricConfig.SyncTimeTagProperty)
                         return;
@@ -134,7 +134,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                     {
                         to.Time = from.Time;
                     });
-                });
+                }, false);
 
                 // todo: start time and end time?
 
@@ -147,7 +147,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                     RubyTags = lyric.RubyTags.Select(x => x.DeepClone()).ToArray();
                 });
 
-                bindValueChange(e, l => l.RubyTagsVersion, (lyric, config) =>
+                bindValueChange(e, l => l.RubyTagsVersion, (_, config) =>
                 {
                     if (config is not SyncLyricConfig)
                         return;
@@ -158,7 +158,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                         to.EndIndex = from.EndIndex;
                         to.Text = from.Text;
                     });
-                });
+                }, false);
 
                 // romaji-tags.
                 bindListValueChange(e, l => l.RomajiTagsBindable, (lyric, config) =>
@@ -169,7 +169,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                     RomajiTags = lyric.RomajiTags.Select(x => x.DeepClone()).ToArray();
                 });
 
-                bindValueChange(e, l => l.RomajiTagsVersion, (lyric, config) =>
+                bindValueChange(e, l => l.RomajiTagsVersion, (_, config) =>
                 {
                     if (config is not SyncLyricConfig)
                         return;
@@ -180,7 +180,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                         to.EndIndex = from.EndIndex;
                         to.Text = from.Text;
                     });
-                });
+                }, false);
 
                 // todo: start-time, end-time and offset.
 
@@ -213,7 +213,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             };
         }
 
-        private void bindValueChange<T>(ValueChangedEvent<Lyric?> e, Func<Lyric, IBindable<T>> getProperty, Action<Lyric, IReferenceLyricPropertyConfig> syncAction)
+        private void bindValueChange<T>(ValueChangedEvent<Lyric?> e, Func<Lyric, IBindable<T>> getProperty, Action<Lyric, IReferenceLyricPropertyConfig> syncAction, bool triggerChangeOnBind = true)
         {
             if (e.OldValue != null)
             {
@@ -224,7 +224,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             {
                 getProperty(e.NewValue).ValueChanged += propertyChanged;
 
-                triggerPropertyChanged();
+                if (triggerChangeOnBind)
+                    triggerPropertyChanged();
             }
 
             void propertyChanged(ValueChangedEvent<T> _) => triggerPropertyChanged();
@@ -239,7 +240,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             }
         }
 
-        private void bindListValueChange<T>(ValueChangedEvent<Lyric?> e, Func<Lyric, IBindableList<T>> getProperty, Action<Lyric, IReferenceLyricPropertyConfig> syncAction)
+        private void bindListValueChange<T>(ValueChangedEvent<Lyric?> e, Func<Lyric, IBindableList<T>> getProperty, Action<Lyric, IReferenceLyricPropertyConfig> syncAction, bool triggerChangeOnBind = true)
         {
             if (e.OldValue != null)
             {
@@ -250,7 +251,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             {
                 getProperty(e.NewValue).CollectionChanged += propertyChanged;
 
-                triggerPropertyChanged();
+                if (triggerChangeOnBind)
+                    triggerPropertyChanged();
             }
 
             void propertyChanged(object sender, NotifyCollectionChangedEventArgs _) => triggerPropertyChanged();
@@ -265,7 +267,7 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             }
         }
 
-        private void bindDictionaryValueChange<TKey, TValue>(ValueChangedEvent<Lyric?> e, Func<Lyric, IBindableDictionary<TKey, TValue>> getProperty, Action<Lyric, IReferenceLyricPropertyConfig> syncAction)
+        private void bindDictionaryValueChange<TKey, TValue>(ValueChangedEvent<Lyric?> e, Func<Lyric, IBindableDictionary<TKey, TValue>> getProperty, Action<Lyric, IReferenceLyricPropertyConfig> syncAction, bool triggerChangeOnBind = true)
             where TKey : notnull
         {
             if (e.OldValue != null)
@@ -277,7 +279,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             {
                 getProperty(e.NewValue).CollectionChanged += propertyChanged;
 
-                triggerPropertyChanged();
+                if (triggerChangeOnBind)
+                    triggerPropertyChanged();
             }
 
             void propertyChanged(object? sender, NotifyDictionaryChangedEventArgs<TKey, TValue> _) => triggerPropertyChanged();
