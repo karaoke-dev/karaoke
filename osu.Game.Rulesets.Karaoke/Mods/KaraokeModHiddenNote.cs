@@ -4,6 +4,7 @@
 using System;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Drawables;
@@ -14,7 +15,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
 {
     public class KaraokeModHiddenNote : ModHidden
     {
-        public override string Description => @"Notes fade out before you sing them!";
+        public override LocalisableString Description => @"Notes fade out before you sing them!";
         public override double ScoreMultiplier => 1.06;
         public override Type[] IncompatibleMods => new[] { typeof(ModFlashlight<KaraokeHitObject>) };
         public override IconUsage? Icon => KaraokeIcon.ModHiddenNote;

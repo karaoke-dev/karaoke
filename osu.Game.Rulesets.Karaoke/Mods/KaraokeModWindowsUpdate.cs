@@ -7,6 +7,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Judgements;
 using osu.Game.Rulesets.Mods;
@@ -23,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
         public override string Name => "Windows update";
         public override string Acronym => "WD";
         public override IconUsage? Icon => FontAwesome.Brands.Windows;
-        public override string Description => "Once you missed, windows will upppppdate your osu!";
+        public override LocalisableString Description => "Once you missed, windows will upppppdate your osu!";
 
         private HUDOverlay overlay = null!;
         private WindowsUpdateContainer? windowsUpdateContainer;

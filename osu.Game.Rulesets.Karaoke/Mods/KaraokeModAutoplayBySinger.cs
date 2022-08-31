@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Beatmaps;
 using osu.Game.Extensions;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
@@ -21,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
     {
         public override string Name => "Autoplay by singer";
         public override string Acronym => "ABS";
-        public override string Description => "Autoplay mode but replay's record is by singer's voice.";
+        public override LocalisableString Description => "Autoplay mode but replay's record is by singer's voice.";
 
         public override IconUsage? Icon => KaraokeIcon.ModAutoPlayBySinger;
 
