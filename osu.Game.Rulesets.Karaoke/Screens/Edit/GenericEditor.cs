@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Screens.Edit
         private void load(OsuColour colours, EditorBeatmap editorBeatmap, BindableBeatDivisor beatDivisor)
         {
             // todo: should re-inject editor clock because it will let track cannot change time because it's in another screen.
-            var clock = new EditorClock(editorBeatmap, beatDivisor) { IsCoupled = false };
+            var clock = new EditorClock(editorBeatmap, beatDivisor);
 
             var loadableBeatmap = Beatmap.Value;
             clock.ChangeSource(loadableBeatmap.Track);

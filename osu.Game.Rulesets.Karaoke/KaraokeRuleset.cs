@@ -13,6 +13,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Input.Bindings;
 using osu.Framework.IO.Stores;
+using osu.Framework.Localisation;
 using osu.Framework.Testing;
 using osu.Game.Beatmaps;
 using osu.Game.Configuration;
@@ -126,7 +127,7 @@ namespace osu.Game.Rulesets.Karaoke
                 _ => Array.Empty<KeyBinding>()
             };
 
-        public override string GetVariantName(int variant)
+        public override LocalisableString GetVariantName(int variant)
             => variant switch
             {
                 GAMEPLAY_INPUT_VARIANT => "Gameplay",
@@ -208,7 +209,7 @@ namespace osu.Game.Rulesets.Karaoke
             };
         }
 
-        public override string GetDisplayNameForHitResult(HitResult result)
+        public override LocalisableString GetDisplayNameForHitResult(HitResult result)
         {
             return result switch
             {

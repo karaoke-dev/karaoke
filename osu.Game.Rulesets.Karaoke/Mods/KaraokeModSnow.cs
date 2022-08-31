@@ -6,6 +6,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Framework.Timing;
 using osu.Framework.Utils;
 using osu.Game.Rulesets.Mods;
@@ -19,7 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
     {
         public override string Name => "Snow";
 
-        public override string Description => "Display some snow";
+        public override LocalisableString Description => "Display some snow";
         public override string Acronym => "SW";
         public override double ScoreMultiplier => 1.0f;
         public override IconUsage? Icon => FontAwesome.Regular.Snowflake;

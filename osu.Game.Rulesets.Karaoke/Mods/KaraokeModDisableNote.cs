@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Mods;
@@ -13,7 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Mods
     {
         public override string Name => "Disable note";
 
-        public override string Description => "Disable note";
+        public override LocalisableString Description => "Disable note";
         public override string Acronym => "DN";
         public override double ScoreMultiplier => 0;
         public override IconUsage? Icon => KaraokeIcon.ModDisableNote;
