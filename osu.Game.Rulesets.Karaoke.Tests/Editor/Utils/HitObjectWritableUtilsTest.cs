@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -62,6 +63,9 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
 
             foreach (var propertyInfo in allWriteableProperties)
             {
+                if (propertyInfo.CustomAttributes.Any(x => x.AttributeType == typeof(JsonIgnoreAttribute)))
+                    continue;
+
                 action(property, propertyInfo.Name);
             }
         }
