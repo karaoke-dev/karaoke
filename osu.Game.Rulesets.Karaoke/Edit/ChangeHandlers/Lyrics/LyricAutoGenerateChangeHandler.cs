@@ -16,6 +16,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Generator.RomajiTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.RubyTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Generator.Types;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Screens.Edit;
@@ -182,7 +183,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                     PerformOnSelection(lyric =>
                     {
                         // clear exist notes if from those
-                        var matchedNotes = beatmap.HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToArray();
+                        var matchedNotes = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric);
                         RemoveRange(matchedNotes);
 
                         var notes = noteGenerator.Generate(lyric);

@@ -4,13 +4,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 using osu.Game.Screens.Edit.Compose.Components;
@@ -39,7 +39,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
         {
             // todo : might deal with the cause if create or delete notes.
             notes.Clear();
-            notes.AddRange(beatmap.HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToArray());
+
+            var addedNotes = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric);
+            notes.AddRange(addedNotes);
 
             // Add time-tag into blueprint container
             RegisterBindable(notes);

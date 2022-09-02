@@ -13,6 +13,7 @@ using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
@@ -81,7 +82,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         protected override void OnLyricChanged(Lyric lyric)
         {
-            notes.Value = beatmap.HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToArray();
+            notes.Value = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric).ToArray();
         }
 
         private class LabelledNoteTextTextBox : LabelledObjectFieldTextBox<Note>

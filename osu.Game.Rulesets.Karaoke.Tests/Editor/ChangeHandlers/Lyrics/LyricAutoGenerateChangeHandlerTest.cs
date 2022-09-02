@@ -8,6 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Screens.Edit;
@@ -310,7 +311,10 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Lyrics
         }
 
         private Note[] getMatchedNotes(Lyric lyric)
-            => Dependencies.Get<EditorBeatmap>().HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToArray();
+        {
+            var editorBeatmap = Dependencies.Get<EditorBeatmap>();
+            return EditorBeatmapUtils.GetNotesByLyric(editorBeatmap, lyric).ToArray();
+        }
 
         #endregion
 

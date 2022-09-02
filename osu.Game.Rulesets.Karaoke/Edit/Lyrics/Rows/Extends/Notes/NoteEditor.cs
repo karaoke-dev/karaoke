@@ -3,11 +3,11 @@
 
 #nullable disable
 
-using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Timing;
 using osu.Game.Rulesets.Karaoke.UI.Position;
@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
             beatmap.HitObjectRemoved += removeHitObject;
 
             // add all matched notes into playfield
-            var notes = beatmap.HitObjects.OfType<Note>().Where(x => x.ReferenceLyric == lyric).ToList();
+            var notes = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric);
 
             foreach (var note in notes)
             {
