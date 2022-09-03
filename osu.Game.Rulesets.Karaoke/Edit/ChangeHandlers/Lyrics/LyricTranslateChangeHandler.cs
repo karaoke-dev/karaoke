@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 using System.Globalization;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
@@ -27,5 +29,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 }
             });
         }
+
+        protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
+            => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Translates));
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
@@ -70,10 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        protected override bool AllowToEditIfHasReferenceLyric(IReferenceLyricPropertyConfig? config)
-        {
-            // should always able to adjust the reference lyric.
-            return true;
-        }
+        protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
+            => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig));
     }
 }

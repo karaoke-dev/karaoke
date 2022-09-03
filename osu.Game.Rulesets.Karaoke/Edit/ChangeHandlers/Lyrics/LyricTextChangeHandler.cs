@@ -2,6 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Linq;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
@@ -33,5 +35,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 Remove(lyric);
             });
         }
+
+        protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
+            => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Text), nameof(Lyric.RubyTags), nameof(Lyric.RomajiTags), nameof(Lyric.TimeTags));
     }
 }
