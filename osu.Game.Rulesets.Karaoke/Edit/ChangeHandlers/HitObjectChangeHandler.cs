@@ -35,6 +35,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
         }
 
         protected virtual void PerformOnSelection(Action<THitObject> action)
+            => PerformOnSelection<THitObject>(action);
+
+        protected void PerformOnSelection<T>(Action<T> action) where T : HitObject
         {
             if (!changingCache.IsValid)
                 throw new NotSupportedException("Cannot trigger the change while applying another change.");
@@ -48,7 +51,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
             {
                 beatmap.PerformOnSelection(h =>
                 {
-                    if (h is THitObject tHitObject)
+                    if (h is T tHitObject)
                         action.Invoke(tHitObject);
                 });
             }
