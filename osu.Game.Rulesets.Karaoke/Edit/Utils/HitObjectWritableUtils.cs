@@ -24,8 +24,28 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
 
         public static bool IsWriteLyricPropertyLockedByState(LockState lockState, string propertyName)
         {
-            // todo: implement.
-            return false;
+            // partial lock will only lock some property change like texting because they are easy to be modified.
+            // fully lock will basically lock all lyric properties.
+            return propertyName switch
+            {
+                nameof(Lyric.ID) => false, // although the id is not changeable, but it's not locked by config.
+                nameof(Lyric.Text) => lockState > LockState.None,
+                nameof(Lyric.TimeTags) => lockState > LockState.None,
+                nameof(Lyric.RubyTags) => lockState > LockState.None,
+                nameof(Lyric.RomajiTags) => lockState > LockState.None,
+                nameof(Lyric.StartTime) => lockState > LockState.Partial,
+                nameof(Lyric.Duration) => lockState > LockState.Partial,
+                nameof(Lyric.Singers) => lockState > LockState.Partial,
+                nameof(Lyric.Translates) => lockState > LockState.Partial,
+                nameof(Lyric.Language) => lockState > LockState.Partial,
+                nameof(Lyric.Order) => false, // order can always be changed.
+                nameof(Lyric.Lock) => false, // order can always be changed.
+                nameof(Lyric.ReferenceLyric) => lockState > LockState.Partial,
+                nameof(Lyric.ReferenceLyricConfig) => lockState > LockState.Partial,
+                // base class
+                nameof(Lyric.Samples) => false,
+                _ => throw new NotSupportedException()
+            };
         }
 
         public static bool IsWriteLyricPropertyLockedByConfig(IReferenceLyricPropertyConfig? config, string propertyName)
