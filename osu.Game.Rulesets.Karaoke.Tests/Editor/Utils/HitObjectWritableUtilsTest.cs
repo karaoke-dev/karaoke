@@ -9,6 +9,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
 {
@@ -17,37 +18,47 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
         [Test]
         public void TestIsWriteLyricPropertyLocked()
         {
+            // standard.
             test(new Lyric());
+
+            // test lock state.
+            foreach (var lockState in EnumUtils.GetValues<LockState>())
+            {
+                test(new Lyric
+                {
+                    Lock = lockState
+                });
+            }
+
+            // reference lyric.
+            test(new Lyric
+            {
+                ReferenceLyricConfig = new ReferenceLyricConfig(),
+            });
+
+            test(new Lyric
+            {
+                ReferenceLyricConfig = new SyncLyricConfig(),
+            });
 
             void test(Lyric lyric)
                 => testEveryWritablePropertyInObject<Lyric, Lyric>(lyric, (l, propertyName) => HitObjectWritableUtils.IsWriteLyricPropertyLocked(l, propertyName));
         }
 
         [Test]
-        public void TestIsWriteLyricPropertyLockedByState()
+        public void TestGetLyricPropertyLockedReason()
         {
-            test(LockState.None);
-            test(LockState.Partial);
-            test(LockState.Full);
+            // standard.
+            test(new Lyric());
 
-            void test(LockState lockState)
-                => testEveryWritablePropertyInObject<Lyric, LockState>(lockState, (l, propertyName) => HitObjectWritableUtils.IsWriteLyricPropertyLockedByState(l, propertyName));
-        }
-
-        [Test]
-        public void TestIsWriteLyricPropertyLockedByConfig()
-        {
-            test(new SyncLyricConfig());
-            test(new ReferenceLyricConfig());
-            test(null);
-
-            void test(IReferenceLyricPropertyConfig? config)
-                => testEveryWritablePropertyInObject<Lyric, IReferenceLyricPropertyConfig?>(config, (c, propertyName) => HitObjectWritableUtils.IsWriteLyricPropertyLockedByConfig(c, propertyName));
+            void test(Lyric lyric)
+                => testEveryWritablePropertyInObject<Lyric, Lyric>(lyric, (l, propertyName) => HitObjectWritableUtils.GetLyricPropertyLockedReason(l, propertyName));
         }
 
         [Test]
         public void TestIsWriteNotePropertyLocked()
         {
+            // standard.
             test(new Note());
 
             void test(Note note)
@@ -55,12 +66,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
         }
 
         [Test]
-        public void TestIsWriteNotePropertyLockedByReferenceLyric()
+        public void TestGetNotePropertyLockedReason()
         {
-            test(new Lyric());
+            // standard.
+            test(new Note());
 
-            void test(Lyric lyric)
-                => testEveryWritablePropertyInObject<Note, Lyric>(lyric, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLockedByReferenceLyric(l, propertyName));
+            // test with reference lyric.
+            test(new Note
+            {
+                ReferenceLyric = new Lyric(),
+            });
+
+            void test(Note note)
+                => testEveryWritablePropertyInObject<Note, Note>(note, (l, propertyName) => HitObjectWritableUtils.GetNotePropertyLockedReason(l, propertyName));
         }
 
         private void testEveryWritablePropertyInObject<THitObject, TProperty>(TProperty property, Action<TProperty, string> action)
