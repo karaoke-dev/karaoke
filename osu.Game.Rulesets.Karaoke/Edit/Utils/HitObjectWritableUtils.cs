@@ -11,6 +11,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
 {
     public static class HitObjectWritableUtils
     {
+        #region Lyric property
+
         public static bool IsWriteLyricPropertyLocked(Lyric lyric, params string[] propertyNames)
             => propertyNames.All(x => IsWriteLyricPropertyLocked(lyric, x));
 
@@ -19,18 +21,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
 
         public static LockLyricPropertyBy? GetLyricPropertyLockedReason(Lyric lyric, string propertyName)
         {
-            bool lockedByConfig = IsWriteLyricPropertyLockedByConfig(lyric.ReferenceLyricConfig, propertyName);
+            bool lockedByConfig = isWriteLyricPropertyLockedByConfig(lyric.ReferenceLyricConfig, propertyName);
             if (lockedByConfig)
                 return LockLyricPropertyBy.ReferenceLyricConfig;
 
-            bool lockedByState = IsWriteLyricPropertyLockedByState(lyric.Lock, propertyName);
+            bool lockedByState = isWriteLyricPropertyLockedByState(lyric.Lock, propertyName);
             if (lockedByState)
                 return LockLyricPropertyBy.LockState;
 
             return null;
         }
 
-        public static bool IsWriteLyricPropertyLockedByState(LockState lockState, string propertyName)
+        private static bool isWriteLyricPropertyLockedByState(LockState lockState, string propertyName)
         {
             // partial lock will only lock some property change like texting because they are easy to be modified.
             // fully lock will basically lock all lyric properties.
@@ -56,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
             };
         }
 
-        public static bool IsWriteLyricPropertyLockedByConfig(IReferenceLyricPropertyConfig? config, string propertyName)
+        private static bool isWriteLyricPropertyLockedByConfig(IReferenceLyricPropertyConfig? config, string propertyName)
         {
             return config switch
             {
@@ -86,6 +88,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
             };
         }
 
+        #endregion
+
+        #region Create or remove notes.
+
         public static bool IsCreateOrRemoveNoteLocked(Lyric lyric)
         {
             return IsCreateOrRemoveNoteLocked(lyric.ReferenceLyricConfig);
@@ -103,6 +109,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
             };
         }
 
+        #endregion
+
+        #region Note property
+
         public static bool IsWriteNotePropertyLocked(Note note, params string[] propertyNames)
             => propertyNames.All(x => IsWriteNotePropertyLocked(note, x));
 
@@ -113,18 +123,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
         {
             var lyric = note.ReferenceLyric;
 
-            bool lockByReferenceLyricConfig = lyric != null && IsWriteNotePropertyLockedByReferenceLyric(lyric, propertyName);
+            bool lockByReferenceLyricConfig = lyric != null && isWriteNotePropertyLockedByReferenceLyric(lyric, propertyName);
             if (lockByReferenceLyricConfig)
                 return LockNotePropertyBy.ReferenceLyricConfig;
 
             return null;
         }
 
-        public static bool IsWriteNotePropertyLockedByReferenceLyric(Lyric lyric, string propertyName)
+        private static bool isWriteNotePropertyLockedByReferenceLyric(Lyric lyric, string propertyName)
         {
             // todo: implement.
             return false;
         }
+
+        #endregion
     }
 
     public enum LockLyricPropertyBy
