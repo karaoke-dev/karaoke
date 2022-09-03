@@ -60,8 +60,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
 
         public static bool IsCreateOrRemoveNoteLocked(Lyric lyric)
         {
+            return IsCreateOrRemoveNoteLocked(lyric.ReferenceLyricConfig);
+        }
+
+        public static bool IsCreateOrRemoveNoteLocked(IReferenceLyricPropertyConfig? config)
+        {
             // todo: implementation.
-            return false;
+            return config switch
+            {
+                ReferenceLyricConfig => false,
+                SyncLyricConfig => true,
+                null => false,
+                _ => throw new NotSupportedException()
+            };
         }
 
         public static bool IsWriteNotePropertyLocked(Note note, string propertyName)
