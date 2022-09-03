@@ -30,7 +30,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
+        protected override bool IsWritePropertyLocked(Lyric lyric)
             => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Translates));
     }
 }

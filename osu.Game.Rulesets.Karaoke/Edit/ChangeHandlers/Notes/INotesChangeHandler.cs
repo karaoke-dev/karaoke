@@ -9,12 +9,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 
         void Combine();
 
-        void ChangeText(string text);
-
-        void ChangeRubyText(string ruby);
-
-        void ChangeDisplayState(bool display);
-
         void Clear();
     }
 }

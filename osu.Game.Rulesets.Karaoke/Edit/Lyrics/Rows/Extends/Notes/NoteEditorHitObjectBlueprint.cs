@@ -40,6 +40,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
         private INotesChangeHandler notesChangeHandler { get; set; }
 
         [Resolved]
+        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+
+        [Resolved]
         private IScrollingInfo scrollingInfo { get; set; }
 
         [Resolved]
@@ -103,7 +106,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes
 
         public override MenuItem[] ContextMenuItems => new MenuItem[]
         {
-            new OsuMenuItem(Item.Display ? "Hide" : "Show", Item.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => notesChangeHandler.ChangeDisplayState(!Item.Display)),
+            new OsuMenuItem(Item.Display ? "Hide" : "Show", Item.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => notePropertyChangeHandler.ChangeDisplayState(!Item.Display)),
             new OsuMenuItem("Split", MenuItemType.Destructive, () => notesChangeHandler.Split()),
         };
 

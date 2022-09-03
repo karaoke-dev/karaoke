@@ -28,6 +28,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
         private INotesChangeHandler notesChangeHandler { get; set; }
 
         [Resolved]
+        private INotePropertyChangeHandler notePropertyChangeHandler { get; set; }
+
+        [Resolved]
         private Playfield playfield { get; set; }
 
         [Resolved]
@@ -66,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Blueprints.Notes
 
         public override MenuItem[] ContextMenuItems => new MenuItem[]
         {
-            new OsuMenuItem(HitObject.Display ? "Hide" : "Show", HitObject.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => notesChangeHandler.ChangeDisplayState(!HitObject.Display)),
+            new OsuMenuItem(HitObject.Display ? "Hide" : "Show", HitObject.Display ? MenuItemType.Destructive : MenuItemType.Standard, () => notePropertyChangeHandler.ChangeDisplayState(!HitObject.Display)),
             new OsuMenuItem("Split", MenuItemType.Destructive, () => notesChangeHandler.Split()),
         };
 
