@@ -54,6 +54,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
                 => testEveryWritablePropertyInObject<Note, Note>(note, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLocked(l, propertyName));
         }
 
+        [Test]
+        public void TestIsWriteNotePropertyLockedByReferenceLyric()
+        {
+            test(new Lyric());
+
+            void test(Lyric lyric)
+                => testEveryWritablePropertyInObject<Note, Lyric>(lyric, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLockedByReferenceLyric(l, propertyName));
+        }
+
         private void testEveryWritablePropertyInObject<THitObject, TProperty>(TProperty property, Action<TProperty, string> action)
         {
             // the purpose of this test case if focus on checking every property in the hit-object should be able to know the writable or not.
