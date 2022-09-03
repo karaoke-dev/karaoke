@@ -1,11 +1,12 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
 {
-    public class NotePropertyChangeHandler : HitObjectChangeHandler<Note>, INotePropertyChangeHandler
+    public class NotePropertyChangeHandler : HitObjectPropertyChangeHandler<Note>, INotePropertyChangeHandler
     {
         public void ChangeText(string text)
         {
@@ -39,5 +40,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
                     note.Tone = new Tone();
             });
         }
+
+        protected override bool IsWritePropertyLocked(Note note)
+            => HitObjectWritableUtils.IsWriteNotePropertyLocked(note, nameof(Note.Text) , nameof(Note.RubyText) , nameof(Note.Display));
     }
 }
