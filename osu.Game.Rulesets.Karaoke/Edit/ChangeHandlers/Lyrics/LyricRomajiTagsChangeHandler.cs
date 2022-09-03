@@ -17,7 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         protected override void RemoveFromLyric(Lyric lyric, RomajiTag textTag)
             => lyric.RomajiTags.Remove(textTag);
 
-        protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
+        protected override bool IsWritePropertyLocked(Lyric lyric)
             => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RomajiTags));
     }
 }

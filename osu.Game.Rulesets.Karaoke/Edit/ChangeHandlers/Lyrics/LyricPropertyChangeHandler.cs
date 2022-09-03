@@ -18,13 +18,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
         protected sealed override void PerformOnSelection(Action<Lyric> action)
         {
             // note: should not check lyric in the perform on selection because it will let change handler in lazer broken.
-            if (beatmap.SelectedHitObjects.OfType<Lyric>().Any(IsWriteLyricPropertyLocked))
+            if (beatmap.SelectedHitObjects.OfType<Lyric>().Any(IsWritePropertyLocked))
                 throw new ChangeForbiddenException();
 
             base.PerformOnSelection(action);
         }
 
-        protected abstract bool IsWriteLyricPropertyLocked(Lyric lyric);
+        protected abstract bool IsWritePropertyLocked(Lyric lyric);
 
         public class ChangeForbiddenException : Exception
         {

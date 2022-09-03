@@ -70,10 +70,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             }
 
             bool canDetect<T>(ILyricPropertyDetector<T> detector)
-                => HitObjects.Where(x => !IsWriteLyricPropertyLocked(x)).Any(detector.CanDetect);
+                => HitObjects.Where(x => !IsWritePropertyLocked(x)).Any(detector.CanDetect);
 
             bool canGenerate<T>(ILyricPropertyGenerator<T> generator)
-                => HitObjects.Where(x => !IsWriteLyricPropertyLocked(x)).Any(generator.CanGenerate);
+                => HitObjects.Where(x => !IsWritePropertyLocked(x)).Any(generator.CanGenerate);
         }
 
         public IDictionary<Lyric, LocalisableString> GetNotGeneratableLyrics(LyricAutoGenerateProperty autoGenerateProperty)
@@ -122,7 +122,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
             LocalisableString? getReferenceLyricInvalidMessage(Lyric lyric)
             {
-                bool locked = IsWriteLyricPropertyLocked(lyric);
+                bool locked = IsWritePropertyLocked(lyric);
                 return locked ? "Cannot modify property because has reference lyric." : default(LocalisableString?);
             }
         }
@@ -236,7 +236,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             }
         }
 
-        protected override bool IsWriteLyricPropertyLocked(Lyric lyric) =>
+        protected override bool IsWritePropertyLocked(Lyric lyric) =>
             currentAutoGenerateProperty switch
             {
                 LyricAutoGenerateProperty.DetectReferenceLyric => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig)),
