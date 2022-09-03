@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
             base.PerformOnSelection(action);
         }
 
-        protected abstract bool IsWritePropertyLocked(THitObject lyric);
+        protected abstract bool IsWritePropertyLocked(THitObject hitObject);
 
         public class ChangeForbiddenException : Exception
         {
