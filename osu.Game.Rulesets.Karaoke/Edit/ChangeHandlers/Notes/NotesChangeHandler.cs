@@ -50,39 +50,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes
             });
         }
 
-        public void ChangeText(string text)
-        {
-            CheckExactlySelectedOneHitObject();
-
-            PerformOnSelection(note =>
-            {
-                note.Text = text;
-            });
-        }
-
-        public void ChangeRubyText(string ruby)
-        {
-            CheckExactlySelectedOneHitObject();
-
-            PerformOnSelection(note =>
-            {
-                // Should change ruby text as null if remove all words.
-                note.RubyText = string.IsNullOrEmpty(ruby) ? null : ruby;
-            });
-        }
-
-        public void ChangeDisplayState(bool display)
-        {
-            PerformOnSelection(note =>
-            {
-                note.Display = display;
-
-                // Move to center if note is not display
-                if (!note.Display)
-                    note.Tone = new Tone();
-            });
-        }
-
         public void Clear()
         {
             PerformOnSelection<Lyric>(lyric =>
