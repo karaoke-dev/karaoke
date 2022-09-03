@@ -24,6 +24,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
         }
 
         [Test]
+        public void TestGetLyricPropertyLockedReason()
+        {
+            test(new Lyric());
+
+            void test(Lyric lyric)
+                => testEveryWritablePropertyInObject<Lyric, Lyric>(lyric, (l, propertyName) => HitObjectWritableUtils.GetLyricPropertyLockedReason(l, propertyName));
+        }
+
+        [Test]
         public void TestIsWriteLyricPropertyLockedByState()
         {
             test(LockState.None);
@@ -52,6 +61,15 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
 
             void test(Note note)
                 => testEveryWritablePropertyInObject<Note, Note>(note, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLocked(l, propertyName));
+        }
+
+        [Test]
+        public void TestGetNotePropertyLockedReason()
+        {
+            test(new Note());
+
+            void test(Note note)
+                => testEveryWritablePropertyInObject<Note, Note>(note, (l, propertyName) => HitObjectWritableUtils.GetNotePropertyLockedReason(l, propertyName));
         }
 
         [Test]
