@@ -70,10 +70,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             }
 
             bool canDetect<T>(ILyricPropertyDetector<T> detector)
-                => HitObjects.Where(x => AllowToEditIfHasReferenceLyric(x.ReferenceLyricConfig)).Any(detector.CanDetect);
+                => HitObjects.Where(x => !IsWriteLyricPropertyLocked(x)).Any(detector.CanDetect);
 
             bool canGenerate<T>(ILyricPropertyGenerator<T> generator)
-                => HitObjects.Where(x => AllowToEditIfHasReferenceLyric(x.ReferenceLyricConfig)).Any(generator.CanGenerate);
+                => HitObjects.Where(x => !IsWriteLyricPropertyLocked(x)).Any(generator.CanGenerate);
         }
 
         public IDictionary<Lyric, LocalisableString> GetNotGeneratableLyrics(LyricAutoGenerateProperty autoGenerateProperty)
@@ -122,8 +122,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
             LocalisableString? getReferenceLyricInvalidMessage(Lyric lyric)
             {
-                bool allowEdit = AllowToEditIfHasReferenceLyric(lyric.ReferenceLyricConfig);
-                return allowEdit ? default(LocalisableString?) : "Cannot modify property because has reference lyric.";
+                bool locked = IsWriteLyricPropertyLocked(lyric);
+                return locked ? "Cannot modify property because has reference lyric." : default(LocalisableString?);
             }
         }
 
@@ -236,12 +236,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             }
         }
 
-        protected override bool AllowToEditIfHasReferenceLyric(IReferenceLyricPropertyConfig? config)
-        {
-            if (currentAutoGenerateProperty == LyricAutoGenerateProperty.DetectReferenceLyric)
-                return true;
-
-            return base.AllowToEditIfHasReferenceLyric(config);
-        }
+        protected override bool IsWriteLyricPropertyLocked(Lyric lyric) =>
+            currentAutoGenerateProperty switch
+            {
+                LyricAutoGenerateProperty.DetectReferenceLyric => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig)),
+                LyricAutoGenerateProperty.DetectLanguage => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Language)),
+                LyricAutoGenerateProperty.AutoGenerateRubyTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RubyTags)),
+                LyricAutoGenerateProperty.AutoGenerateRomajiTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RomajiTags)),
+                LyricAutoGenerateProperty.AutoGenerateTimeTags => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.TimeTags)),
+                LyricAutoGenerateProperty.AutoGenerateNotes => HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(lyric),
+                _ => throw new ArgumentOutOfRangeException()
+            };
     }
 }

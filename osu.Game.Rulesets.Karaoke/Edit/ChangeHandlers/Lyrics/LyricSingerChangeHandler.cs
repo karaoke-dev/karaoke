@@ -4,7 +4,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
-using osu.Game.Rulesets.Karaoke.Objects.Properties;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
+using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
@@ -58,12 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             });
         }
 
-        protected override bool AllowToEditIfHasReferenceLyric(IReferenceLyricPropertyConfig? config)
-        {
-            if (config is SyncLyricConfig syncLyricConfig && !syncLyricConfig.SyncSingerProperty)
-                return true;
-
-            return base.AllowToEditIfHasReferenceLyric(config);
-        }
+        protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
+            => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Singers));
     }
 }
