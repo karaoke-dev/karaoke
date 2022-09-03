@@ -58,6 +58,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
             };
         }
 
+        public static bool IsCreateOrRemoveNoteLocked(Lyric lyric)
+        {
+            // todo: implementation.
+            return false;
+        }
+
         public static bool IsWriteNotePropertyLocked(Note note, string propertyName)
         {
             var lyric = note.ReferenceLyric;
