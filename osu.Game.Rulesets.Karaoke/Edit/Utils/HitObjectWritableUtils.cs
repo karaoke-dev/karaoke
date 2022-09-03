@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -10,6 +11,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
 {
     public static class HitObjectWritableUtils
     {
+        public static bool IsWriteLyricPropertyLocked(Lyric lyric, params string[] propertyNames)
+            => propertyNames.All(x => IsWriteLyricPropertyLocked(lyric, x));
+
         public static bool IsWriteLyricPropertyLocked(Lyric lyric, string propertyName)
         {
             bool checkByState = IsWriteLyricPropertyLockedByState(lyric.Lock, propertyName);
