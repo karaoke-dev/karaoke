@@ -42,6 +42,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
 
         public class SelectLyricButton : OsuButton, IHasCurrentValue<Lyric?>, IHasPopover
         {
+            [Resolved, AllowNull]
+            private EditorBeatmap editorBeatmap { get; set; }
+
             private readonly BindableWithCurrent<Lyric?> current = new();
 
             public Bindable<Lyric?> Current
@@ -50,7 +53,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                 set => current.Current = value;
             }
 
-            public Lyric? IgnoredLyric { get; set; }
+            private Lyric? ignoredLyric;
+
+            public Lyric? IgnoredLyric
+            {
+                get => ignoredLyric;
+                set
+                {
+                    ignoredLyric = value;
+
+                    // should not enable the selection if current lyric is being referenced.
+                    Enabled.Value = ignoredLyric != null && !EditorBeatmapUtils.GetAllReferenceLyrics(editorBeatmap, ignoredLyric).Any();
+                }
+            }
 
             public SelectLyricButton()
             {
