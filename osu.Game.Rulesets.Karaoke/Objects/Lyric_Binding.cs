@@ -72,6 +72,11 @@ namespace osu.Game.Rulesets.Karaoke.Objects
                 void invalidate() => RomajiTagsVersion.Value++;
             };
 
+            LockBindable.ValueChanged += e =>
+            {
+                LyricPropertyWritableVersion.Value++;
+            };
+
             ReferenceLyricConfigBindable.ValueChanged += e =>
             {
                 if (e.OldValue != null)
@@ -102,6 +107,8 @@ namespace osu.Game.Rulesets.Karaoke.Objects
 
             ReferenceLyricBindable.ValueChanged += e =>
             {
+                LyricPropertyWritableVersion.Value++;
+
                 // text.
                 bindValueChange(e, l => l.TextBindable, (lyric, config) =>
                 {

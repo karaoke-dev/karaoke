@@ -228,6 +228,9 @@ namespace osu.Game.Rulesets.Karaoke.Objects
             set => ReferenceLyricConfigBindable.Value = value;
         }
 
+        [JsonIgnore]
+        public readonly Bindable<int> LyricPropertyWritableVersion = new();
+
         public Lyric()
         {
             initInternalBindingEvent();
