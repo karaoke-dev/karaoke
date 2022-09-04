@@ -19,6 +19,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
         public static bool IsWriteLyricPropertyLocked(Lyric lyric, string propertyName)
             => GetLyricPropertyLockedReason(lyric, propertyName) != null;
 
+        public static LockLyricPropertyBy? GetLyricPropertyLockedReasons(Lyric lyric, params string[] propertyNames)
+        {
+            var reasons = propertyNames.Select(x => GetLyricPropertyLockedReason(lyric, x))
+                                       .Where(x => x != null)
+                                       .OfType<LockLyricPropertyBy>()
+                                       .ToArray();
+
+            if (reasons.Contains(LockLyricPropertyBy.ReferenceLyricConfig))
+                return LockLyricPropertyBy.ReferenceLyricConfig;
+
+            if (reasons.Contains(LockLyricPropertyBy.LockState))
+                return LockLyricPropertyBy.LockState;
+
+            return null;
+        }
+
         public static LockLyricPropertyBy? GetLyricPropertyLockedReason(Lyric lyric, string propertyName)
         {
             bool lockedByConfig = isWriteLyricPropertyLockedByConfig(lyric.ReferenceLyricConfig, propertyName);
@@ -93,11 +109,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
         #region Create or remove notes.
 
         public static bool IsCreateOrRemoveNoteLocked(Lyric lyric)
+            => GetCreateOrRemoveNoteLockedReason(lyric) != null;
+
+        public static LockLyricPropertyBy? GetCreateOrRemoveNoteLockedReason(Lyric lyric)
         {
-            return IsCreateOrRemoveNoteLocked(lyric.ReferenceLyricConfig);
+            bool lockedByConfig = isCreateOrRemoveNoteLocked(lyric.ReferenceLyricConfig);
+            if (lockedByConfig)
+                return LockLyricPropertyBy.ReferenceLyricConfig;
+
+            return null;
         }
 
-        public static bool IsCreateOrRemoveNoteLocked(IReferenceLyricPropertyConfig? config)
+        private static bool isCreateOrRemoveNoteLocked(IReferenceLyricPropertyConfig? config)
         {
             // todo: implementation.
             return config switch
@@ -139,6 +162,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
         #endregion
     }
 
+    [Flags]
     public enum LockLyricPropertyBy
     {
         ReferenceLyricConfig,

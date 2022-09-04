@@ -15,6 +15,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
 {
     public class HitObjectWritableUtilsTest
     {
+        #region Lyric property
+
         [Test]
         public void TestIsWriteLyricPropertyLocked()
         {
@@ -55,18 +57,12 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
                 => testEveryWritablePropertyInObject<Lyric, Lyric>(lyric, (l, propertyName) => HitObjectWritableUtils.GetLyricPropertyLockedReason(l, propertyName));
         }
 
+        #endregion
+
+        #region Note property
+
         [Test]
         public void TestIsWriteNotePropertyLocked()
-        {
-            // standard.
-            test(new Note());
-
-            void test(Note note)
-                => testEveryWritablePropertyInObject<Note, Note>(note, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLocked(l, propertyName));
-        }
-
-        [Test]
-        public void TestGetNotePropertyLockedReason()
         {
             // standard.
             test(new Note());
@@ -78,8 +74,20 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
             });
 
             void test(Note note)
+                => testEveryWritablePropertyInObject<Note, Note>(note, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLocked(l, propertyName));
+        }
+
+        [Test]
+        public void TestGetNotePropertyLockedReason()
+        {
+            // standard.
+            test(new Note());
+
+            void test(Note note)
                 => testEveryWritablePropertyInObject<Note, Note>(note, (l, propertyName) => HitObjectWritableUtils.GetNotePropertyLockedReason(l, propertyName));
         }
+
+        #endregion
 
         private void testEveryWritablePropertyInObject<THitObject, TProperty>(TProperty property, Action<TProperty, string> action)
         {
