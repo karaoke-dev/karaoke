@@ -42,6 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                 return;
 
             labelledReferenceLyricSelector.Current = lyric.ReferenceLyricBindable;
+            labelledReferenceLyricSelector.IgnoredLyric = lyric;
         }
     }
 }

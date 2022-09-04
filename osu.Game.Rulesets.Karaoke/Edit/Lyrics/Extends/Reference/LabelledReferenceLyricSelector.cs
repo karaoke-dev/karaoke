@@ -34,6 +34,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                 RelativeSizeAxes = Axes.X
             };
 
+        public Lyric? IgnoredLyric
+        {
+            get => Component.IgnoredLyric;
+            set => Component.IgnoredLyric = value;
+        }
+
         public class SelectLyricButton : OsuButton, IHasCurrentValue<Lyric?>, IHasPopover
         {
             private readonly BindableWithCurrent<Lyric?> current = new();
@@ -43,6 +49,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                 get => current.Current;
                 set => current.Current = value;
             }
+
+            public Lyric? IgnoredLyric { get; set; }
 
             public SelectLyricButton()
             {
@@ -57,15 +65,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
             }
 
             public Popover GetPopover()
-                => new LyricSelectorPopover(Current);
+                => new LyricSelectorPopover(Current, IgnoredLyric);
         }
 
         private class LyricSelectorPopover : OsuPopover
         {
             private readonly ReferenceLyricSelector lyricSelector;
 
-            public LyricSelectorPopover(Bindable<Lyric?> bindable)
+            [Cached]
+            private readonly Lyric? ignoreLyric;
+
+            public LyricSelectorPopover(Bindable<Lyric?> bindable, Lyric? ignoreLyric)
             {
+                this.ignoreLyric = ignoreLyric;
+
                 Child = lyricSelector = new ReferenceLyricSelector
                 {
                     Width = 400,
@@ -100,6 +113,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                     [Resolved, AllowNull]
                     private EditorBeatmap editorBeatmap { get; set; }
 
+                    [Resolved]
+                    private Lyric? ignoredLyric { get; set; }
+
                     public DrawableReferenceLyricListItem(Lyric? item)
                         : base(item)
                     {
@@ -118,14 +134,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                     {
                         base.CreateDisplayContent(textFlowContainer, model);
 
-                        // should have disable style if lyric is not selectable.
-                        textFlowContainer.Alpha = selectable(model) ? 1 : 0.5f;
-
                         if (model == null)
                             return;
 
                         Schedule(() =>
                         {
+                            // should have disable style if lyric is not selectable.
+                            textFlowContainer.Alpha = selectable(model) ? 1 : 0.5f;
+
                             // add reference text at the end of the text.
                             int referenceLyricsAmount = EditorBeatmapUtils.GetAllReferenceLyrics(editorBeatmap, model).Count();
 
@@ -136,7 +152,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                         });
                     }
 
-                    private static bool selectable(Lyric? lyric) => lyric?.ReferenceLyric == null;
+                    private bool selectable(Lyric? lyric)
+                        => lyric != ignoredLyric && lyric?.ReferenceLyric == null;
                 }
             }
         }
