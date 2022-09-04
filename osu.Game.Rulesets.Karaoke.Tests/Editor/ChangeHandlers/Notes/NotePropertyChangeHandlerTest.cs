@@ -4,6 +4,7 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Notes;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
 {
@@ -70,6 +71,23 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers.Notes
                 Assert.IsFalse(h.Display);
                 Assert.AreEqual(new Tone(), h.Tone);
             });
+        }
+
+        [Test]
+        [Ignore("Waiting to implement the lock rules.")]
+        public void TestWithReferenceLyric()
+        {
+            PrepareHitObject(new Note
+            {
+                Text = "カラオケ",
+                ReferenceLyric = new Lyric
+                {
+                    ReferenceLyric = new Lyric(),
+                    ReferenceLyricConfig = new ReferenceLyricConfig()
+                }
+            });
+
+            TriggerHandlerChangedWithChangeForbiddenException(c => c.ChangeText("からおけ"));
         }
     }
 }
