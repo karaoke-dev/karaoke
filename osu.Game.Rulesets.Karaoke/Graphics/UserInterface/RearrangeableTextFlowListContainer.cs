@@ -95,7 +95,14 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
             {
                 RelativeSizeAxes = Axes.X,
                 AutoSizeAxes = Axes.Y,
-            }.With(x => CreateDisplayContent(x, Model));
+            }.With(x =>
+            {
+                Schedule(() =>
+                {
+                    // should create the text after BDL loaded.
+                    CreateDisplayContent(x, Model);
+                });
+            });
 
             protected override bool OnClick(ClickEvent e)
             {

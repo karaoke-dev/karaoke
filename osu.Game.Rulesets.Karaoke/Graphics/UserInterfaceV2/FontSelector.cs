@@ -271,21 +271,18 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                     protected override void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, string model)
                     {
                         textFlowContainer.TextAnchor = Anchor.BottomLeft;
-                        Schedule(() =>
+                        textFlowContainer.AddText(model);
+
+                        var matchedFormat = fontManager.Fonts
+                                                       .Where(x => x.Family == Model).Select(x => x.FontFormat)
+                                                       .Distinct()
+                                                       .ToArray();
+
+                        foreach (var format in matchedFormat)
                         {
-                            textFlowContainer.AddText(model);
-
-                            var matchedFormat = fontManager.Fonts
-                                                           .Where(x => x.Family == Model).Select(x => x.FontFormat)
-                                                           .Distinct()
-                                                           .ToArray();
-
-                            foreach (var format in matchedFormat)
-                            {
-                                textFlowContainer.AddText(" ");
-                                textFlowContainer.AddArbitraryDrawable(new FontFormatBadge(format));
-                            }
-                        });
+                            textFlowContainer.AddText(" ");
+                            textFlowContainer.AddArbitraryDrawable(new FontFormatBadge(format));
+                        }
                     }
                 }
             }

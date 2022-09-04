@@ -147,24 +147,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
 
                     protected override void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, Lyric? model)
                     {
+                        // should have disable style if lyric is not selectable.
+                        textFlowContainer.Alpha = selectable(model) ? 1 : 0.5f;
+
                         base.CreateDisplayContent(textFlowContainer, model);
 
                         if (model == null)
                             return;
 
-                        Schedule(() =>
+                        // add reference text at the end of the text.
+                        int referenceLyricsAmount = EditorBeatmapUtils.GetAllReferenceLyrics(editorBeatmap, model).Count();
+
+                        if (referenceLyricsAmount > 0)
                         {
-                            // should have disable style if lyric is not selectable.
-                            textFlowContainer.Alpha = selectable(model) ? 1 : 0.5f;
-
-                            // add reference text at the end of the text.
-                            int referenceLyricsAmount = EditorBeatmapUtils.GetAllReferenceLyrics(editorBeatmap, model).Count();
-
-                            if (referenceLyricsAmount > 0)
-                            {
-                                textFlowContainer.AddText($"({referenceLyricsAmount} reference)", x => x.Colour = colours.Red);
-                            }
-                        });
+                            textFlowContainer.AddText($"({referenceLyricsAmount} reference)", x => x.Colour = colours.Red);
+                        }
                     }
 
                     private bool selectable(Lyric? lyric)
