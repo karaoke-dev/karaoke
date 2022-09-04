@@ -60,14 +60,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
                     },
                     new Drawable[]
                     {
-                        lyricList = new RearrangeableLyricListContainer
+                        lyricList = CreateRearrangeableLyricListContainer().With(x =>
                         {
-                            RelativeSizeAxes = Axes.Both,
-                            RequestSelection = item =>
+                            x.RelativeSizeAxes = Axes.Both;
+                            x.RequestSelection = item =>
                             {
                                 Current.Value = item;
-                            },
-                        }
+                            };
+                        })
                     }
                 }
             };
@@ -75,6 +75,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
             filter.Current.BindValueChanged(e => lyricList.Filter(e.NewValue));
             Current.BindValueChanged(e => lyricList.SelectedSet.Value = e.NewValue);
         }
+
+        protected virtual RearrangeableLyricListContainer CreateRearrangeableLyricListContainer() => new();
 
         [BackgroundDependencyLoader]
         private void load(EditorBeatmap editorBeatmap)
