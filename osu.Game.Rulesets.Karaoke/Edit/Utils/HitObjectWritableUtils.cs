@@ -19,7 +19,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
         public static bool IsWriteLyricPropertyLocked(Lyric lyric, string propertyName)
             => GetLyricPropertyLockedReason(lyric, propertyName) != null;
 
-        public static LockLyricPropertyBy? GetLyricPropertyLockedReasons(Lyric lyric, params string[] propertyNames)
+        public static LockLyricPropertyBy? GetLyricPropertyLockedReason(Lyric lyric, params string[] propertyNames)
         {
             var reasons = propertyNames.Select(x => GetLyricPropertyLockedReason(lyric, x))
                                        .Where(x => x != null)

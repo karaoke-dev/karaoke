@@ -378,8 +378,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             return mode switch
             {
                 LyricEditorMode.View => null,
-                LyricEditorMode.Texting => HitObjectWritableUtils.GetLyricPropertyLockedReasons(lyric, nameof(Lyric.Text), nameof(Lyric.RubyTags), nameof(Lyric.RomajiTags), nameof(Lyric.TimeTags)),
-                LyricEditorMode.Reference => HitObjectWritableUtils.GetLyricPropertyLockedReasons(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig)),
+                LyricEditorMode.Texting => HitObjectWritableUtils.GetLyricPropertyLockedReason(lyric, nameof(Lyric.Text), nameof(Lyric.RubyTags), nameof(Lyric.RomajiTags), nameof(Lyric.TimeTags)),
+                LyricEditorMode.Reference => HitObjectWritableUtils.GetLyricPropertyLockedReason(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig)),
                 LyricEditorMode.Language => HitObjectWritableUtils.GetLyricPropertyLockedReason(lyric, nameof(Lyric.Language)),
                 LyricEditorMode.EditRuby => HitObjectWritableUtils.GetLyricPropertyLockedReason(lyric, nameof(Lyric.RubyTags)),
                 LyricEditorMode.EditRomaji => HitObjectWritableUtils.GetLyricPropertyLockedReason(lyric, nameof(Lyric.RomajiTags)),
