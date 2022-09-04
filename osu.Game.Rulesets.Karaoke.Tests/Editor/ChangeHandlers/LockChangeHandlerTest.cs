@@ -4,11 +4,12 @@
 using NUnit.Framework;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
 namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
 {
-    public class LockChangeHandlerTest : BaseHitObjectChangeHandlerTest<LockChangeHandler, KaraokeHitObject>
+    public class LockChangeHandlerTest : BaseHitObjectPropertyChangeHandlerTest<LockChangeHandler, KaraokeHitObject>
     {
         [Test]
         public void TestLock()
@@ -54,6 +55,19 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.ChangeHandlers
                 if (h is IHasLock hasLock)
                     Assert.AreEqual(LockState.None, hasLock.Lock);
             });
+        }
+
+        [Test]
+        public void TestLockToReferenceLyric()
+        {
+            PrepareHitObject(new Lyric
+            {
+                Text = "カラオケ",
+                ReferenceLyric = new Lyric(),
+                ReferenceLyricConfig = new SyncLyricConfig(),
+            });
+
+            TriggerHandlerChangedWithChangeForbiddenException(c => c.Lock(LockState.Full));
         }
     }
 }

@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
 
@@ -25,11 +26,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 
         protected override bool IsWritePropertyLocked(KaraokeHitObject hitObject)
         {
-            // todo: implement.
             return hitObject switch
             {
-                Lyric => false,
-                Note => false,
+                Lyric lyric => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.Lock)),
+                Note note => HitObjectWritableUtils.IsWriteNotePropertyLocked(note, nameof(Lyric.Lock)),
                 _ => throw new NotSupportedException()
             };
         }
