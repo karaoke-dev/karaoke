@@ -123,7 +123,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
                 {
                     if (model == null)
                     {
-                        // todo: show the empty text to let user select.
+                        textFlowContainer.AddText("<Empty>");
                     }
                     else
                     {
