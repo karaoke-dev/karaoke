@@ -101,7 +101,6 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2
                 public DrawableLanguageListItem(CultureInfo item)
                     : base(item)
                 {
-                    Padding = new MarginPadding { Left = 5 };
                 }
 
                 public override IEnumerable<LocalisableString> FilterTerms => new[]
