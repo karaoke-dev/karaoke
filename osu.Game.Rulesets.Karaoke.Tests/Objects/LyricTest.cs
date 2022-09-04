@@ -259,5 +259,33 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Objects
         }
 
         #endregion
+
+        #region MyRegion
+
+        [Test]
+        public void TestLyricPropertyWritableVersion()
+        {
+            var lyric = new Lyric();
+            Assert.AreEqual(0, lyric.LyricPropertyWritableVersion.Value);
+
+            lyric.Lock = LockState.Partial;
+            Assert.AreEqual(1, lyric.LyricPropertyWritableVersion.Value);
+
+            lyric.ReferenceLyric = new Lyric();
+            Assert.AreEqual(2, lyric.LyricPropertyWritableVersion.Value);
+
+            lyric.ReferenceLyricConfig = new SyncLyricConfig();
+            Assert.AreEqual(3, lyric.LyricPropertyWritableVersion.Value);
+
+            (lyric.ReferenceLyricConfig as SyncLyricConfig)!.OffsetTime = 200;
+            Assert.AreEqual(4, lyric.LyricPropertyWritableVersion.Value);
+
+            // version number will not increase if change not related property or assign the same value.
+            lyric.Lock = LockState.Partial;
+            lyric.Text = "karaoke";
+            Assert.AreEqual(4, lyric.LyricPropertyWritableVersion.Value);
+        }
+
+        #endregion
     }
 }
