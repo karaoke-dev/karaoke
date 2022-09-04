@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                 => new LyricSelectorPopover(Current);
         }
 
-        public class LyricSelectorPopover : OsuPopover
+        private class LyricSelectorPopover : OsuPopover
         {
             private readonly LyricSelector lyricSelector;
 
