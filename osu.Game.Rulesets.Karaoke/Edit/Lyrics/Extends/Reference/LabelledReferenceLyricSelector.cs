@@ -21,9 +21,9 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
 {
-    public class LabelledLyricSelector : LabelledComponent<LabelledLyricSelector.SelectLyricButton, Lyric?>
+    public class LabelledReferenceLyricSelector : LabelledComponent<LabelledReferenceLyricSelector.SelectLyricButton, Lyric?>
     {
-        public LabelledLyricSelector()
+        public LabelledReferenceLyricSelector()
             : base(true)
         {
         }
