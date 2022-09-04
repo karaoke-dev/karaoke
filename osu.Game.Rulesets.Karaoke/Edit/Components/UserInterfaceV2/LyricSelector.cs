@@ -112,7 +112,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
                 public DrawableLyricListItem(Lyric? item)
                     : base(item)
                 {
-                    Padding = new MarginPadding { Left = 5 };
                 }
 
                 public override IEnumerable<LocalisableString> FilterTerms => new[]

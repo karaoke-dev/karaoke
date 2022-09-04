@@ -66,6 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.UserInterface
                 : base(item)
             {
                 Padding = new MarginPadding { Left = 5 };
+                ShowDragHandle.Value = false;
             }
 
             [BackgroundDependencyLoader]
