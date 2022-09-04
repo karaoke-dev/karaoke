@@ -129,16 +129,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
                     }
                     else
                     {
-                        Schedule(() =>
-                        {
-                            // display the lyric order.
-                            textFlowContainer.AddText($"#{model.Order}", x => x.Colour = colours.Yellow);
-                            textFlowContainer.AddText("  ");
+                        // display the lyric order.
+                        textFlowContainer.AddText($"#{model.Order}", x => x.Colour = colours.Yellow);
+                        textFlowContainer.AddText("  ");
 
-                            // main text
-                            textFlowContainer.AddText(model.Text);
-                            textFlowContainer.AddText(" ");
-                        });
+                        // main text
+                        textFlowContainer.AddText(model.Text);
+                        textFlowContainer.AddText(" ");
                     }
                 }
             }

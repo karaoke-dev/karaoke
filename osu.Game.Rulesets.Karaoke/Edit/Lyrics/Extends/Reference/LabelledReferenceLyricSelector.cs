@@ -21,9 +21,9 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
 {
-    public class LabelledLyricSelector : LabelledComponent<LabelledLyricSelector.SelectLyricButton, Lyric?>
+    public class LabelledReferenceLyricSelector : LabelledComponent<LabelledReferenceLyricSelector.SelectLyricButton, Lyric?>
     {
-        public LabelledLyricSelector()
+        public LabelledReferenceLyricSelector()
             : base(true)
         {
         }
@@ -34,14 +34,37 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                 RelativeSizeAxes = Axes.X
             };
 
+        public Lyric? IgnoredLyric
+        {
+            get => Component.IgnoredLyric;
+            set => Component.IgnoredLyric = value;
+        }
+
         public class SelectLyricButton : OsuButton, IHasCurrentValue<Lyric?>, IHasPopover
         {
+            [Resolved, AllowNull]
+            private EditorBeatmap editorBeatmap { get; set; }
+
             private readonly BindableWithCurrent<Lyric?> current = new();
 
             public Bindable<Lyric?> Current
             {
                 get => current.Current;
                 set => current.Current = value;
+            }
+
+            private Lyric? ignoredLyric;
+
+            public Lyric? IgnoredLyric
+            {
+                get => ignoredLyric;
+                set
+                {
+                    ignoredLyric = value;
+
+                    // should not enable the selection if current lyric is being referenced.
+                    Enabled.Value = ignoredLyric != null && !EditorBeatmapUtils.GetAllReferenceLyrics(editorBeatmap, ignoredLyric).Any();
+                }
             }
 
             public SelectLyricButton()
@@ -57,15 +80,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
             }
 
             public Popover GetPopover()
-                => new LyricSelectorPopover(Current);
+                => new LyricSelectorPopover(Current, IgnoredLyric);
         }
 
         private class LyricSelectorPopover : OsuPopover
         {
             private readonly ReferenceLyricSelector lyricSelector;
 
-            public LyricSelectorPopover(Bindable<Lyric?> bindable)
+            [Cached]
+            private readonly Lyric? ignoreLyric;
+
+            public LyricSelectorPopover(Bindable<Lyric?> bindable, Lyric? ignoreLyric)
             {
+                this.ignoreLyric = ignoreLyric;
+
                 Child = lyricSelector = new ReferenceLyricSelector
                 {
                     Width = 400,
@@ -100,6 +128,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
                     [Resolved, AllowNull]
                     private EditorBeatmap editorBeatmap { get; set; }
 
+                    [Resolved]
+                    private Lyric? ignoredLyric { get; set; }
+
                     public DrawableReferenceLyricListItem(Lyric? item)
                         : base(item)
                     {
@@ -116,27 +147,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
 
                     protected override void CreateDisplayContent(OsuTextFlowContainer textFlowContainer, Lyric? model)
                     {
-                        base.CreateDisplayContent(textFlowContainer, model);
-
                         // should have disable style if lyric is not selectable.
                         textFlowContainer.Alpha = selectable(model) ? 1 : 0.5f;
+
+                        base.CreateDisplayContent(textFlowContainer, model);
 
                         if (model == null)
                             return;
 
-                        Schedule(() =>
-                        {
-                            // add reference text at the end of the text.
-                            int referenceLyricsAmount = EditorBeatmapUtils.GetAllReferenceLyrics(editorBeatmap, model).Count();
+                        // add reference text at the end of the text.
+                        int referenceLyricsAmount = EditorBeatmapUtils.GetAllReferenceLyrics(editorBeatmap, model).Count();
 
-                            if (referenceLyricsAmount > 0)
-                            {
-                                textFlowContainer.AddText($"({referenceLyricsAmount} reference)", x => x.Colour = colours.Red);
-                            }
-                        });
+                        if (referenceLyricsAmount > 0)
+                        {
+                            textFlowContainer.AddText($"({referenceLyricsAmount} reference)", x => x.Colour = colours.Red);
+                        }
                     }
 
-                    private static bool selectable(Lyric? lyric) => lyric?.ReferenceLyric == null;
+                    private bool selectable(Lyric? lyric)
+                        => lyric != ignoredLyric && lyric?.ReferenceLyric == null;
                 }
             }
         }

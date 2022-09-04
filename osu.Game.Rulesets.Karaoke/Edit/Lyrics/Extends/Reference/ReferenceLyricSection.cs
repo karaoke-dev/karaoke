@@ -16,20 +16,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
         [Resolved, AllowNull]
         private ILyricReferenceChangeHandler lyricReferenceChangeHandler { get; set; }
 
-        private readonly LabelledLyricSelector labelledLyricSelector;
+        private readonly LabelledReferenceLyricSelector labelledReferenceLyricSelector;
 
         public ReferenceLyricSection()
         {
             Children = new[]
             {
-                labelledLyricSelector = new LabelledLyricSelector
+                labelledReferenceLyricSelector = new LabelledReferenceLyricSelector
                 {
                     Label = "Referenced lyric",
                     Description = "Select the similar lyric that want to reference or sync the property."
                 }
             };
 
-            labelledLyricSelector.Current.BindValueChanged(x =>
+            labelledReferenceLyricSelector.Current.BindValueChanged(x =>
             {
                 if (!IsRebinding)
                     lyricReferenceChangeHandler.UpdateReferenceLyric(x.NewValue);
@@ -41,7 +41,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
             if (lyric == null)
                 return;
 
-            labelledLyricSelector.Current = lyric.ReferenceLyricBindable;
+            labelledReferenceLyricSelector.Current = lyric.ReferenceLyricBindable;
+            labelledReferenceLyricSelector.IgnoredLyric = lyric;
         }
     }
 }
