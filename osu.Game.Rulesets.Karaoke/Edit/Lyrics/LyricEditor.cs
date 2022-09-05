@@ -13,7 +13,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Input;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
-using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
@@ -26,9 +25,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
-using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Extensions;
-using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Timing;
 using osu.Game.Rulesets.UI;
 using osu.Game.Rulesets.UI.Scrolling;
@@ -358,36 +355,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             };
 
             public IScrollAlgorithm Algorithm { get; } = new SequentialScrollAlgorithm(new List<MultiplierControlPoint>());
-        }
-
-        public static LocalisableString? GetLyricPropertyLockedReason(Lyric lyric, LyricEditorMode mode)
-        {
-            var reasons = getLyricPropertyLockedReasons(lyric, mode);
-
-            return reasons switch
-            {
-                LockLyricPropertyBy.ReferenceLyricConfig => "Cannot modify this property due to this lyric is property is sync from another lyric.",
-                LockLyricPropertyBy.LockState => "This property is locked and not editable",
-                null => null,
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
-
-        private static LockLyricPropertyBy? getLyricPropertyLockedReasons(Lyric lyric, LyricEditorMode mode)
-        {
-            return mode switch
-            {
-                LyricEditorMode.View => null,
-                LyricEditorMode.Texting => HitObjectWritableUtils.GetLyricPropertyLockedReason(lyric, nameof(Lyric.Text), nameof(Lyric.RubyTags), nameof(Lyric.RomajiTags), nameof(Lyric.TimeTags)),
-                LyricEditorMode.Reference => HitObjectWritableUtils.GetLyricPropertyLockedReason(lyric, nameof(Lyric.ReferenceLyric), nameof(Lyric.ReferenceLyricConfig)),
-                LyricEditorMode.Language => HitObjectWritableUtils.GetLyricPropertyLockedReason(lyric, nameof(Lyric.Language)),
-                LyricEditorMode.EditRuby => HitObjectWritableUtils.GetLyricPropertyLockedReason(lyric, nameof(Lyric.RubyTags)),
-                LyricEditorMode.EditRomaji => HitObjectWritableUtils.GetLyricPropertyLockedReason(lyric, nameof(Lyric.RomajiTags)),
-                LyricEditorMode.EditTimeTag => HitObjectWritableUtils.GetLyricPropertyLockedReason(lyric, nameof(Lyric.TimeTags)),
-                LyricEditorMode.EditNote => HitObjectWritableUtils.GetCreateOrRemoveNoteLockedReason(lyric),
-                LyricEditorMode.Singer => HitObjectWritableUtils.GetLyricPropertyLockedReason(lyric, nameof(Lyric.Singers)),
-                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
-            };
         }
     }
 }
