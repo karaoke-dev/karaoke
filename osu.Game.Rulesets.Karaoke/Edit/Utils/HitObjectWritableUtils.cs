@@ -160,18 +160,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
         }
 
         #endregion
-    }
 
-    [Flags]
-    public enum LockLyricPropertyBy
-    {
-        ReferenceLyricConfig,
+        public enum LockLyricPropertyBy
+        {
+            ReferenceLyricConfig,
 
-        LockState,
-    }
+            LockState,
+        }
 
-    public enum LockNotePropertyBy
-    {
-        ReferenceLyricConfig,
+        public enum LockNotePropertyBy
+        {
+            ReferenceLyricConfig,
+        }
     }
 }
