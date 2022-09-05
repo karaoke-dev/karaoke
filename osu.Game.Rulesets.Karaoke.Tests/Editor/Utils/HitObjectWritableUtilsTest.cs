@@ -44,17 +44,50 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
             });
 
             void test(Lyric lyric)
-                => testEveryWritablePropertyInObject<Lyric, Lyric>(lyric, (l, propertyName) => HitObjectWritableUtils.IsWriteLyricPropertyLocked(l, propertyName));
+            {
+                testEveryWritablePropertiesInObjectAtTheSameTime(lyric, (l, propertyName) => HitObjectWritableUtils.IsWriteLyricPropertyLocked(l, propertyName));
+                testEveryWritablePropertiesInObject(lyric, (l, propertyName) => HitObjectWritableUtils.IsWriteLyricPropertyLocked(l, propertyName));
+
+                testEveryWritablePropertiesInObjectAtTheSameTime(lyric, (l, propertyName) => HitObjectWritableUtils.GetLyricPropertyLockedReason(l, propertyName));
+                testEveryWritablePropertiesInObject(lyric, (l, propertyName) => HitObjectWritableUtils.GetLyricPropertyLockedReason(l, propertyName));
+            }
         }
 
+        #endregion
+
+        #region Create or remove notes.
+
         [Test]
-        public void TestGetLyricPropertyLockedReason()
+        public void TestIsCreateOrRemoveNoteLocked()
         {
             // standard.
             test(new Lyric());
 
+            // test lock state.
+            foreach (var lockState in EnumUtils.GetValues<LockState>())
+            {
+                test(new Lyric
+                {
+                    Lock = lockState
+                });
+            }
+
+            // reference lyric.
+            test(new Lyric
+            {
+                ReferenceLyricConfig = new ReferenceLyricConfig(),
+            });
+
+            test(new Lyric
+            {
+                ReferenceLyricConfig = new SyncLyricConfig(),
+            });
+
             void test(Lyric lyric)
-                => testEveryWritablePropertyInObject<Lyric, Lyric>(lyric, (l, propertyName) => HitObjectWritableUtils.GetLyricPropertyLockedReason(l, propertyName));
+            {
+                HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(lyric);
+                HitObjectWritableUtils.GetCreateOrRemoveNoteLockedReason(lyric);
+            }
         }
 
         #endregion
@@ -74,35 +107,38 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
             });
 
             void test(Note note)
-                => testEveryWritablePropertyInObject<Note, Note>(note, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLocked(l, propertyName));
-        }
+            {
+                testEveryWritablePropertiesInObjectAtTheSameTime(note, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLocked(l, propertyName));
+                testEveryWritablePropertiesInObject(note, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLocked(l, propertyName));
 
-        [Test]
-        public void TestGetNotePropertyLockedReason()
-        {
-            // standard.
-            test(new Note());
-
-            void test(Note note)
-                => testEveryWritablePropertyInObject<Note, Note>(note, (l, propertyName) => HitObjectWritableUtils.GetNotePropertyLockedReason(l, propertyName));
+                testEveryWritablePropertiesInObjectAtTheSameTime(note, (l, propertyName) => HitObjectWritableUtils.GetNotePropertyLockedReason(l, propertyName));
+                testEveryWritablePropertiesInObject(note, (l, propertyName) => HitObjectWritableUtils.GetNotePropertyLockedReason(l, propertyName));
+            }
         }
 
         #endregion
 
-        private void testEveryWritablePropertyInObject<THitObject, TProperty>(TProperty property, Action<TProperty, string> action)
+        private static void testEveryWritablePropertiesInObjectAtTheSameTime<THitObject>(THitObject hitObject, Action<THitObject, string[]> action)
         {
             // the purpose of this test case if focus on checking every property in the hit-object should be able to know the writable or not.
             // return value is not in the test scope.
+            string[] allWriteableProperties = typeof(THitObject).GetProperties()
+                                                                .Where(x => x.CanRead && x.CanWrite)
+                                                                .Where(x => x.CustomAttributes.All(customAttributeData => customAttributeData.AttributeType != typeof(JsonIgnoreAttribute)))
+                                                                .Select(x => x.Name)
+                                                                .ToArray();
+            action(hitObject, allWriteableProperties);
+        }
 
-            var allWriteableProperties = typeof(THitObject).GetProperties().Where(x => x.CanRead && x.CanWrite);
-
-            foreach (var propertyInfo in allWriteableProperties)
+        private static void testEveryWritablePropertiesInObject<THitObject>(THitObject hitObject, Action<THitObject, string> action)
+        {
+            testEveryWritablePropertiesInObjectAtTheSameTime(hitObject, (l, propertyNames) =>
             {
-                if (propertyInfo.CustomAttributes.Any(x => x.AttributeType == typeof(JsonIgnoreAttribute)))
-                    continue;
-
-                action(property, propertyInfo.Name);
-            }
+                foreach (string propertyName in propertyNames)
+                {
+                    action(hitObject, propertyName);
+                }
+            });
         }
     }
 }
