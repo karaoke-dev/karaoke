@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -14,6 +15,7 @@ using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Beatmaps.Metadatas;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Singers;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Graphics.Cursor;
 using osu.Game.Rulesets.Karaoke.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -88,6 +90,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers
             // singer index might be able to change from other place like singer editor.
             singerIndexes.BindTo(lyric.SingersBindable);
         }
+
+        protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
+            => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.Singers));
+
+        protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
+            lockLyricPropertyBy switch
+            {
+                LockLyricPropertyBy.ReferenceLyricConfig => "Singers is sync to another notes.",
+                LockLyricPropertyBy.LockState => "Singers is locked.",
+                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            };
+
+        protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
+            lockLyricPropertyBy switch
+            {
+                LockLyricPropertyBy.ReferenceLyricConfig => "Cannot edit the singers because it's sync to another lyric's singers.",
+                LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the singers.",
+                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            };
 
         public class LabelledSingerSwitchButton : LabelledSwitchButton, IHasCustomTooltip<Singer>
         {

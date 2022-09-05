@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Diagnostics;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -10,6 +11,7 @@ using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
@@ -29,6 +31,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 
         protected override void AddTextTag(RubyTag textTag)
             => rubyTagsChangeHandler.Add(textTag);
+
+        protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
+            => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.RubyTags));
+
+        protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
+            lockLyricPropertyBy switch
+            {
+                LockLyricPropertyBy.ReferenceLyricConfig => "Ruby is sync to another ruby.",
+                LockLyricPropertyBy.LockState => "Ruby is locked.",
+                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            };
+
+        protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
+            lockLyricPropertyBy switch
+            {
+                LockLyricPropertyBy.ReferenceLyricConfig => "Cannot edit the ruby because it's sync to another lyric's text.",
+                LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the ruby.",
+                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            };
 
         protected class LabelledRubyTagTextBox : LabelledTextTagTextBox<RubyTag>
         {

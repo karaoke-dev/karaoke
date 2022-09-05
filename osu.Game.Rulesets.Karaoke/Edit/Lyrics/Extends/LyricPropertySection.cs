@@ -1,11 +1,18 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
@@ -13,6 +20,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
     public abstract class LyricPropertySection : Section
     {
         private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
+        private readonly IBindable<int> bindablePropertyWritableVersion = new Bindable<int>();
 
         protected bool IsRebinding { get; private set; }
 
@@ -28,8 +36,68 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 
                 OnLyricChanged(lyric);
 
+                bindablePropertyWritableVersion.UnbindBindings();
+
+                if (lyric != null)
+                {
+                    bindablePropertyWritableVersion.BindTo(lyric.LyricPropertyWritableVersion);
+                    updateDisableStatus();
+                }
+
                 IsRebinding = false;
             }, true);
+
+            bindablePropertyWritableVersion.BindValueChanged(x =>
+            {
+                updateDisableStatus();
+            });
+
+            updateDisableStatus();
+        }
+
+        private void updateDisableStatus()
+        {
+            var lyric = bindableCaretPosition.Value?.Lyric;
+            var propertyLocked = lyric != null ? IsWriteLyricPropertyLocked(lyric) : null;
+
+            // should show the block section and make the children looks not editable if disable edit.
+            Content.FadeTo(propertyLocked == null ? 1 : 0.5f, 300);
+            updateBlockSectionMessage(propertyLocked);
+        }
+
+        private void updateBlockSectionMessage(LockLyricPropertyBy? propertyLocked)
+        {
+            var blockMaskingWrapper = InternalChildren.OfType<BlockSectionWrapper>().FirstOrDefault();
+
+            if (blockMaskingWrapper == null && propertyLocked != null)
+            {
+                var icon = getWriteLyricPropertyLockedIcon(propertyLocked.Value);
+                var title = getWriteLyricPropertyLockedDescriptionTitle(propertyLocked.Value);
+                var description = GetWriteLyricPropertyLockedDescription(propertyLocked.Value);
+                var tooltip = GetWriteLyricPropertyLockedTooltip(propertyLocked.Value);
+
+                AddInternal(new BlockSectionWrapper(icon, title, description, tooltip));
+            }
+            else if (blockMaskingWrapper != null && propertyLocked == null)
+            {
+                RemoveInternal(blockMaskingWrapper);
+            }
+
+            static IconUsage getWriteLyricPropertyLockedIcon(LockLyricPropertyBy lockLyricPropertyBy) =>
+                lockLyricPropertyBy switch
+                {
+                    LockLyricPropertyBy.ReferenceLyricConfig => FontAwesome.Solid.Chair,
+                    LockLyricPropertyBy.LockState => FontAwesome.Solid.Lock,
+                    _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+                };
+
+            static LocalisableString getWriteLyricPropertyLockedDescriptionTitle(LockLyricPropertyBy lockLyricPropertyBy) =>
+                lockLyricPropertyBy switch
+                {
+                    LockLyricPropertyBy.ReferenceLyricConfig => "Sync",
+                    LockLyricPropertyBy.LockState => "Locked",
+                    _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+                };
         }
 
         [BackgroundDependencyLoader]
@@ -39,5 +107,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
         }
 
         protected abstract void OnLyricChanged(Lyric? lyric);
+
+        protected abstract LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric);
+
+        protected abstract LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy);
+
+        protected abstract LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy);
     }
 }

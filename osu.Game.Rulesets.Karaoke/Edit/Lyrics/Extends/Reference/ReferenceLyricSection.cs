@@ -1,10 +1,12 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
@@ -44,5 +46,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
             labelledReferenceLyricSelector.Current = lyric.ReferenceLyricBindable;
             labelledReferenceLyricSelector.IgnoredLyric = lyric;
         }
+
+        protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
+            => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.ReferenceLyric), nameof(lyric.ReferenceLyricConfig));
+
+        protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
+            lockLyricPropertyBy switch
+            {
+                // technically the property is always editable.
+                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            };
+
+        protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
+            lockLyricPropertyBy switch
+            {
+                // technically the property is always editable.
+                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            };
     }
 }
