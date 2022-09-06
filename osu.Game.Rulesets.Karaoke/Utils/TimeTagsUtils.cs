@@ -60,10 +60,10 @@ namespace osu.Game.Rulesets.Karaoke.Utils
         /// </summary>
         /// <param name="timeTags">Time tags</param>
         /// <returns>Sorted time tags</returns>
-        public static IList<TimeTag> Sort(IEnumerable<TimeTag> timeTags)
+        public static IEnumerable<TimeTag> Sort(IEnumerable<TimeTag> timeTags)
         {
             return timeTags.OrderBy(x => x.Index)
-                           .ThenBy(x => x.Time).ToArray();
+                           .ThenBy(x => x.Time);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
                 }
             }
 
-            return Sort(overlappingTimeTagList.Distinct());
+            return Sort(overlappingTimeTagList.Distinct()).ToArray();
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             if (!timeTags.Any())
                 return timeTags;
 
-            var sortedTimeTags = Sort(timeTags);
+            var sortedTimeTags = Sort(timeTags).ToArray();
             var groupedTimeTags = sortedTimeTags.GroupBy(x => x.Index.Index).ToArray();
 
             var overlappingTimeTags = FindOverlapping(timeTags, other, self);
@@ -200,7 +200,7 @@ namespace osu.Game.Rulesets.Karaoke.Utils
 
             foreach (var overlappingTimeTag in overlappingTimeTags)
             {
-                int listIndex = sortedTimeTags.IndexOf(overlappingTimeTag);
+                int listIndex = Array.IndexOf(sortedTimeTags, overlappingTimeTag);
                 var timeTag = overlappingTimeTag.Index;
 
                 // fix self-overlapping

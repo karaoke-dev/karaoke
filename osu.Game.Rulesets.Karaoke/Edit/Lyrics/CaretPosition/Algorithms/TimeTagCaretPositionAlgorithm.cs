@@ -2,10 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Extensions;
 using osu.Game.Rulesets.Karaoke.Objects;
+using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
@@ -41,7 +43,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (previousLyric == null)
                 return null;
 
-            var timeTags = previousLyric.TimeTags.Where(timeTagMovable).ToArray();
+            var timeTags = sortTimeTag(previousLyric.TimeTags.Where(timeTagMovable)).ToArray();
             var upTimeTag = timeTags.FirstOrDefault(x => x.Index >= currentTimeTag.Index)
                             ?? timeTags.LastOrDefault();
 
@@ -65,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             if (nextLyric == null)
                 return null;
 
-            var timeTags = nextLyric.TimeTags.Where(timeTagMovable).ToArray();
+            var timeTags = sortTimeTag(nextLyric.TimeTags.Where(timeTagMovable)).ToArray();
             var downTimeTag = timeTags.FirstOrDefault(x => x.Index >= currentTimeTag.Index)
                               ?? timeTags.LastOrDefault();
 
@@ -77,7 +79,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         public override TimeTagCaretPosition? MoveLeft(TimeTagCaretPosition currentPosition)
         {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
+            var timeTags = getAllSortedTimeTag();
             var previousTimeTag = timeTags.GetPreviousMatch(currentPosition.TimeTag, timeTagMovable);
             if (previousTimeTag == null)
                 return null;
@@ -87,7 +89,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         public override TimeTagCaretPosition? MoveRight(TimeTagCaretPosition currentPosition)
         {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
+            var timeTags = getAllSortedTimeTag();
             var nextTimeTag = timeTags.GetNextMatch(currentPosition.TimeTag, timeTagMovable);
             if (nextTimeTag == null)
                 return null;
@@ -97,7 +99,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         public override TimeTagCaretPosition? MoveToFirst()
         {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
+            var timeTags = getAllSortedTimeTag();
             var firstTimeTag = timeTags.FirstOrDefault(timeTagMovable);
             if (firstTimeTag == null)
                 return null;
@@ -107,7 +109,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         public override TimeTagCaretPosition? MoveToLast()
         {
-            var timeTags = Lyrics.SelectMany(x => x.TimeTags).ToArray();
+            var timeTags = getAllSortedTimeTag();
             var lastTimeTag = timeTags.LastOrDefault(timeTagMovable);
             if (lastTimeTag == null)
                 return null;
@@ -122,6 +124,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             // should not move to lyric if contains no time-tag.
             return targetTimeTag == null ? null : new TimeTagCaretPosition(lyric, targetTimeTag);
         }
+
+        private IEnumerable<TimeTag> sortTimeTag(IEnumerable<TimeTag> timeTags)
+            => TimeTagsUtils.Sort(timeTags);
+
+        private IEnumerable<TimeTag> getAllSortedTimeTag()
+            => sortTimeTag(Lyrics.SelectMany(x => x.TimeTags));
 
         private TimeTagCaretPosition? timeTagToPosition(TimeTag timeTag)
         {

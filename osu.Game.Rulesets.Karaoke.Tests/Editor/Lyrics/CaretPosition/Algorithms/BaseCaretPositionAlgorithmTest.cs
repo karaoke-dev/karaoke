@@ -115,6 +115,18 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Lyrics.CaretPosition.Algorithms
                 throw new MissingMethodException("Test method is not exist.");
 
             return (Lyric[])theMethod.GetValue(this)!;
+
+            /*
+            var lyrics = theMethod.GetValue(this) as Lyric[] ?? Array.Empty<Lyric>();
+
+            foreach (var lyric in lyrics)
+            {
+                // because time-tag will not always sort by order, so we need to shuffle the time-tag in the list for testing.
+                lyric.TimeTags = TestCaseListHelper.Shuffle(lyric.TimeTags);
+            }
+
+            return lyrics;
+            */
         }
     }
 }

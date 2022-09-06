@@ -52,7 +52,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Utils
             var timeTags = TestCaseTagHelper.ParseTimeTags(timeTagTexts);
 
             var expected = TestCaseTagHelper.ParseTimeTags(expectedTimeTags);
-            var actual = TimeTagsUtils.Sort(timeTags);
+            var actual = TimeTagsUtils.Sort(timeTags).ToArray();
             TimeTagAssert.ArePropertyEqual(expected, actual);
         }
 
