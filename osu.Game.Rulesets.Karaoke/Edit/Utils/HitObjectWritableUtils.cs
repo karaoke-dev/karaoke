@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -15,31 +14,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
         #region Lyric property
 
         public static bool IsWriteLyricPropertyLocked(Lyric lyric, params string[] propertyNames)
-            => getLyricPropertyLockedBy(lyric, propertyNames) != null;
+            => GetLyricPropertyLockedBy(lyric, propertyNames) != null;
 
         public static bool IsWriteLyricPropertyLocked(Lyric lyric, string propertyName)
-            => getLyricPropertyLockedBy(lyric, propertyName) != null;
+            => GetLyricPropertyLockedBy(lyric, propertyName) != null;
 
-        public static LocalisableString? GetLyricPropertyLockedReason(Lyric lyric, params string[] propertyNames)
-            => getLyricPropertyLockedMessage(getLyricPropertyLockedBy(lyric, propertyNames));
-
-        public static LocalisableString? GetLyricPropertyLockedReason(Lyric lyric, string propertyName)
-            => getLyricPropertyLockedMessage(getLyricPropertyLockedBy(lyric, propertyName));
-
-        private static LocalisableString? getLyricPropertyLockedMessage(LockLyricPropertyBy? reasons)
+        public static LockLyricPropertyBy? GetLyricPropertyLockedBy(Lyric lyric, params string[] propertyNames)
         {
-            return reasons switch
-            {
-                LockLyricPropertyBy.ReferenceLyricConfig => "Cannot modify this property due to this lyric is property is sync from another lyric.",
-                LockLyricPropertyBy.LockState => "This property is locked and not editable",
-                null => default(LocalisableString?),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
-
-        private static LockLyricPropertyBy? getLyricPropertyLockedBy(Lyric lyric, params string[] propertyNames)
-        {
-            var reasons = propertyNames.Select(x => getLyricPropertyLockedBy(lyric, x))
+            var reasons = propertyNames.Select(x => GetLyricPropertyLockedBy(lyric, x))
                                        .Where(x => x != null)
                                        .OfType<LockLyricPropertyBy>()
                                        .ToArray();
@@ -53,7 +35,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
             return null;
         }
 
-        private static LockLyricPropertyBy? getLyricPropertyLockedBy(Lyric lyric, string propertyName)
+        public static LockLyricPropertyBy? GetLyricPropertyLockedBy(Lyric lyric, string propertyName)
         {
             bool lockedByConfig = isWriteLyricPropertyLockedByConfig(lyric.ReferenceLyricConfig, propertyName);
             if (lockedByConfig)
@@ -127,23 +109,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
         #region Create or remove notes.
 
         public static bool IsCreateOrRemoveNoteLocked(Lyric lyric)
-            => GetCreateOrRemoveNoteLockedReason(lyric) != null;
+            => GetCreateOrRemoveNoteLockedBy(lyric) != null;
 
-        public static LocalisableString? GetCreateOrRemoveNoteLockedReason(Lyric lyric)
-            => getCreateOrRemoveNoteLockedMessage(getCreateOrRemoveNoteLockedBy(lyric));
-
-        private static LocalisableString? getCreateOrRemoveNoteLockedMessage(LockLyricPropertyBy? reasons)
-        {
-            return reasons switch
-            {
-                LockLyricPropertyBy.ReferenceLyricConfig => "Cannot modify this property due to this lyric is property is sync from another lyric.",
-                LockLyricPropertyBy.LockState => "This property is locked and not editable",
-                null => default(LocalisableString?),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
-
-        private static LockLyricPropertyBy? getCreateOrRemoveNoteLockedBy(Lyric lyric, params string[] propertyNames)
+        public static LockLyricPropertyBy? GetCreateOrRemoveNoteLockedBy(Lyric lyric, params string[] propertyNames)
         {
             bool lockedByConfig = isCreateOrRemoveNoteLocked(lyric.ReferenceLyricConfig);
             if (lockedByConfig)
@@ -169,30 +137,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
         #region Note property
 
         public static bool IsWriteNotePropertyLocked(Note note, params string[] propertyNames)
-            => getNotePropertyLockedBy(note, propertyNames) != null;
+            => GetNotePropertyLockedBy(note, propertyNames) != null;
 
         public static bool IsWriteNotePropertyLocked(Note note, string propertyName)
-            => getNotePropertyLockedBy(note, propertyName) != null;
+            => GetNotePropertyLockedBy(note, propertyName) != null;
 
-        public static LocalisableString? GetNotePropertyLockedReason(Note note, params string[] propertyNames)
-            => getNotePropertyLockedMessage(getNotePropertyLockedBy(note, propertyNames));
-
-        public static LocalisableString? GetNotePropertyLockedReason(Note note, string propertyName)
-            => getNotePropertyLockedMessage(getNotePropertyLockedBy(note, propertyName));
-
-        private static LocalisableString? getNotePropertyLockedMessage(LockNotePropertyBy? reasons)
+        public static LockNotePropertyBy? GetNotePropertyLockedBy(Note note, params string[] propertyNames)
         {
-            return reasons switch
-            {
-                LockNotePropertyBy.ReferenceLyricConfig => "Cannot modify this property due to this note's lyric is property is sync from another lyric.",
-                null => default(LocalisableString?),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
-
-        private static LockNotePropertyBy? getNotePropertyLockedBy(Note note, params string[] propertyNames)
-        {
-            var reasons = propertyNames.Select(x => getNotePropertyLockedBy(note, x))
+            var reasons = propertyNames.Select(x => GetNotePropertyLockedBy(note, x))
                                        .Where(x => x != null)
                                        .OfType<LockNotePropertyBy>()
                                        .ToArray();
@@ -203,7 +155,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
             return null;
         }
 
-        private static LockNotePropertyBy? getNotePropertyLockedBy(Note note, string propertyName)
+        public static LockNotePropertyBy? GetNotePropertyLockedBy(Note note, string propertyName)
         {
             var lyric = note.ReferenceLyric;
 
@@ -221,17 +173,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
         }
 
         #endregion
+    }
 
-        private enum LockLyricPropertyBy
-        {
-            ReferenceLyricConfig,
+    public enum LockLyricPropertyBy
+    {
+        ReferenceLyricConfig,
 
-            LockState,
-        }
+        LockState,
+    }
 
-        private enum LockNotePropertyBy
-        {
-            ReferenceLyricConfig,
-        }
+    public enum LockNotePropertyBy
+    {
+        ReferenceLyricConfig,
     }
 }
