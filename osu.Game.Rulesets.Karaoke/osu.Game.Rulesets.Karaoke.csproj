@@ -7,7 +7,7 @@
     <RootNamespace>osu.Game.Rulesets.Karaoke</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ILRepack.Lib.MSBuild" Version="2.1.18" />
+    <PackageReference Include="ILRepack" Version="2.0.18" />
     <PackageReference Include="osu.Game.Rulesets.Karaoke.Resources" Version="2022.611.0" />
     <PackageReference Include="LanguageDetection.karaoke-dev" Version="1.3.3-alpha" />
     <PackageReference Include="LrcParser" Version="2022.529.1" />
@@ -42,5 +42,41 @@
   <PropertyGroup Condition=" '$(Configuration)'=='Release' ">
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
-  
+  <Target Name="ILRepack" Condition=" '$(Configuration)'=='Release' ">
+    <Exec WorkingDirectory="$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)" Command="$(ILRepack) /out:$(OutputPath)123.dll $(OutputPath)$(AssemblyName).dll $(OutputPath)Octokit.dll" />
+  </Target>
+
+  <!--
+  <Target Name="ILRepack">
+    <Exec Command="&quot;$(ILRepack)&quot; /out:$(OutputPath)$(AssemblyName).exe $(OutputPath)$(AssemblyName).exe $(OutputPath)Ben.Demystifier.dll $(OutputPath)System.Collections.Immutable.dll $(OutputPath)System.Reflection.Metadata.dll" />
+  </Target>
+
+  <Target Name="ILRepack" AfterTargets="Build" Condition=" '$(Configuration)'=='Release' ">
+    <PropertyGroup>
+      <WorkingDirectory>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)</WorkingDirectory>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <InputAssemblies Include="LanguageDetection.dll" />
+      <InputAssemblies Include="Octokit.dll" />
+      <InputAssemblies Include="osu.Framework.KaraokeFont.dll" />
+      <InputAssemblies Include="osu.Framework.Microphone.dll" />
+      <InputAssemblies Include="NWaves.dll" />
+      <InputAssemblies Include="LyricMaker.dll" />
+      <InputAssemblies Include="NicoKaraParser.dll" />
+      <InputAssemblies Include="SixLabors.Fonts.dll" />
+      <InputAssemblies Include="SixLabors.ImageSharp.Drawing.dll" />
+      <InputAssemblies Include="WanaKanaSharp.dll" />
+      <InputAssemblies Include="Zipangu.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <InternalizeExcludeAssemblies Include="osu.Game.dll" />
+      <InternalizeExcludeAssemblies Include="osu.Framework.dll" />
+    </ItemGroup>
+
+    <ILRepack OutputType="$(OutputType)" MainAssembly="$(AssemblyName).dll" OutputAssembly="$(AssemblyName).Packed.dll" InputAssemblies="@(InputAssemblies)" InternalizeExcludeAssemblies="@(InternalizeExcludeAssemblies)" WorkingDirectory="$(WorkingDirectory)" />
+
+  </Target>
+  -->
 </Project>
