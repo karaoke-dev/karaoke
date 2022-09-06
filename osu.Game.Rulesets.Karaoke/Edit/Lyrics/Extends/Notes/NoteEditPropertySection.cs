@@ -74,6 +74,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             }
         }
 
+        protected override void UpdateDisabledState(bool disabled)
+        {
+            if (disabled)
+                return;
+
+            // should auto-focus to the first note property if change the lyric.
+            var firstTextTagTextBox = Children.OfType<LabelledObjectFieldTextBox<Note>>().FirstOrDefault();
+            firstTextTagTextBox?.Focus();
+        }
+
         [BackgroundDependencyLoader]
         private void load(IEditNoteModeState editNoteModeState)
         {
