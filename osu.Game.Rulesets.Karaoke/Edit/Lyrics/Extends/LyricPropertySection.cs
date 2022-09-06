@@ -22,6 +22,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
         private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
         private readonly IBindable<int> bindablePropertyWritableVersion = new Bindable<int>();
 
+        public override bool PropagateNonPositionalInputSubTree => base.PropagateNonPositionalInputSubTree && !Disabled;
+        public override bool PropagatePositionalInputSubTree => base.PropagatePositionalInputSubTree && !Disabled;
+
         protected bool IsRebinding { get; private set; }
 
         protected bool Disabled { get; private set; }

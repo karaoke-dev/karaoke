@@ -7,7 +7,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
@@ -48,11 +47,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         }
 
         public LocalisableString TooltipText { get; }
-
-        protected override bool OnMouseDown(MouseDownEvent e)
-        {
-            return true;
-        }
 
         public class BlockSectionMessage : CompositeDrawable
         {
