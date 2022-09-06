@@ -24,6 +24,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 
         protected bool IsRebinding { get; private set; }
 
+        protected bool Disabled { get; private set; }
+
         protected override void LoadComplete()
         {
             base.LoadComplete();
@@ -59,12 +61,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
         {
             var lyric = bindableCaretPosition.Value?.Lyric;
             var propertyLocked = lyric != null ? IsWriteLyricPropertyLocked(lyric) : null;
-            bool disabled = propertyLocked != null;
+            Disabled = propertyLocked != null;
 
-            UpdateDisabledState(disabled);
+            UpdateDisabledState(Disabled);
 
             // should show the block section and make the children looks not editable if disable edit.
-            Content.FadeTo(disabled ? 0.5f : 1, 300);
+            Content.FadeTo(Disabled ? 0.5f : 1, 300);
             updateBlockSectionMessage(propertyLocked);
         }
 
