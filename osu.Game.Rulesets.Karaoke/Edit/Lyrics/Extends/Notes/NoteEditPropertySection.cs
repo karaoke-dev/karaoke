@@ -85,6 +85,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
             notes.Value = EditorBeatmapUtils.GetNotesByLyric(beatmap, lyric).ToArray();
         }
 
+        protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
+            => HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric); //todo: should reference by another utils.
+
+        protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
+            lockLyricPropertyBy switch
+            {
+                LockLyricPropertyBy.ReferenceLyricConfig => "Notes is sync to another notes.",
+                LockLyricPropertyBy.LockState => "Notes is locked.",
+                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            };
+
+        protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
+            lockLyricPropertyBy switch
+            {
+                LockLyricPropertyBy.ReferenceLyricConfig => "Cannot edit the notes because it's sync to another lyric's notes.",
+                LockLyricPropertyBy.LockState => "The lyric is locked, so cannot edit the note.",
+                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            };
+
         private class LabelledNoteTextTextBox : LabelledObjectFieldTextBox<Note>
         {
             [Resolved]

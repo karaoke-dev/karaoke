@@ -48,8 +48,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
                 testEveryWritablePropertiesInObjectAtTheSameTime(lyric, (l, propertyName) => HitObjectWritableUtils.IsWriteLyricPropertyLocked(l, propertyName));
                 testEveryWritablePropertiesInObject(lyric, (l, propertyName) => HitObjectWritableUtils.IsWriteLyricPropertyLocked(l, propertyName));
 
-                testEveryWritablePropertiesInObjectAtTheSameTime(lyric, (l, propertyName) => HitObjectWritableUtils.GetLyricPropertyLockedReason(l, propertyName));
-                testEveryWritablePropertiesInObject(lyric, (l, propertyName) => HitObjectWritableUtils.GetLyricPropertyLockedReason(l, propertyName));
+                testEveryWritablePropertiesInObjectAtTheSameTime(lyric, (l, propertyName) => HitObjectWritableUtils.GetLyricPropertyLockedBy(l, propertyName));
+                testEveryWritablePropertiesInObject(lyric, (l, propertyName) => HitObjectWritableUtils.GetLyricPropertyLockedBy(l, propertyName));
             }
         }
 
@@ -86,7 +86,7 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
             void test(Lyric lyric)
             {
                 HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(lyric);
-                HitObjectWritableUtils.GetCreateOrRemoveNoteLockedReason(lyric);
+                HitObjectWritableUtils.GetCreateOrRemoveNoteLockedBy(lyric);
             }
         }
 
@@ -111,8 +111,8 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
                 testEveryWritablePropertiesInObjectAtTheSameTime(note, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLocked(l, propertyName));
                 testEveryWritablePropertiesInObject(note, (l, propertyName) => HitObjectWritableUtils.IsWriteNotePropertyLocked(l, propertyName));
 
-                testEveryWritablePropertiesInObjectAtTheSameTime(note, (l, propertyName) => HitObjectWritableUtils.GetNotePropertyLockedReason(l, propertyName));
-                testEveryWritablePropertiesInObject(note, (l, propertyName) => HitObjectWritableUtils.GetNotePropertyLockedReason(l, propertyName));
+                testEveryWritablePropertiesInObjectAtTheSameTime(note, (l, propertyName) => HitObjectWritableUtils.GetNotePropertyLockedBy(l, propertyName));
+                testEveryWritablePropertiesInObject(note, (l, propertyName) => HitObjectWritableUtils.GetNotePropertyLockedBy(l, propertyName));
             }
         }
 

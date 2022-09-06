@@ -10,6 +10,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Localisation;
 using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Properties;
 
@@ -115,6 +116,23 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
             if (lyric != null)
                 bindableReferenceLyricPropertyConfig.BindTo(lyric.ReferenceLyricConfigBindable);
         }
+
+        protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
+            => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.ReferenceLyric), nameof(lyric.ReferenceLyricConfig));
+
+        protected override LocalisableString GetWriteLyricPropertyLockedDescription(LockLyricPropertyBy lockLyricPropertyBy) =>
+            lockLyricPropertyBy switch
+            {
+                // technically the property is always editable.
+                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            };
+
+        protected override LocalisableString GetWriteLyricPropertyLockedTooltip(LockLyricPropertyBy lockLyricPropertyBy) =>
+            lockLyricPropertyBy switch
+            {
+                // technically the property is always editable.
+                _ => throw new ArgumentOutOfRangeException(nameof(lockLyricPropertyBy), lockLyricPropertyBy, null)
+            };
 
         private void onConfigChanged()
         {
