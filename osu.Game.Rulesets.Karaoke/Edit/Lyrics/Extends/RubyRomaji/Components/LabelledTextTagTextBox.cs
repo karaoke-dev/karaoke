@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                         if (hover)
                         {
                             // trigger selected if hover on delete button.
-                            SelectedItems.Add(textTag);
+                            TriggerSelect();
                         }
                         else
                         {
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                             if (Component.HasFocus)
                                 return;
 
-                            SelectedItems.Remove(textTag);
+                            TriggerUnselect();
                         }
                     }
                 }
@@ -96,17 +96,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                     {
                         if (selected)
                         {
-                            // not trigger again if already focus.
-                            if (SelectedItems.Contains(Item) && SelectedItems.Count == 1)
-                                return;
-
-                            // trigger selected.
-                            SelectedItems.Clear();
-                            SelectedItems.Add(Item);
+                            TriggerSelect();
                         }
                         else
                         {
-                            SelectedItems.Remove(Item);
+                            TriggerUnselect();
                         }
                     },
                     Action = (indexType, action) =>

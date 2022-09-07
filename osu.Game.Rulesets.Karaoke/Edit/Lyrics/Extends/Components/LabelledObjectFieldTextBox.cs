@@ -22,11 +22,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected new ObjectFieldTextBox Component => (ObjectFieldTextBox)base.Component;
 
-        protected readonly T Item;
+        private readonly T item;
 
         protected LabelledObjectFieldTextBox(T item)
         {
-            Item = item;
+            this.item = item;
 
             // apply current value from the field in the item.
             Current.Value = GetFieldValue(item);
@@ -59,6 +59,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             };
         }
 
+        protected void TriggerSelect()
+        {
+            // not trigger again if already focus.
+            if (SelectedItems.Contains(item) && SelectedItems.Count == 1)
+                return;
+
+            // trigger selected.
+            SelectedItems.Clear();
+            SelectedItems.Add(item);
+        }
+
+        protected void TriggerUnselect()
+        {
+            SelectedItems.Remove(item);
+        }
+
         protected abstract string GetFieldValue(T item);
 
         protected abstract void ApplyValue(T item, string value);
@@ -74,17 +90,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             {
                 if (selected)
                 {
-                    // not trigger again if already focus.
-                    if (SelectedItems.Contains(Item) && SelectedItems.Count == 1)
-                        return;
-
-                    // trigger selected.
-                    SelectedItems.Clear();
-                    SelectedItems.Add(Item);
+                    TriggerSelect();
                 }
                 else
                 {
-                    SelectedItems.Remove(Item);
+                    TriggerUnselect();
                 }
             }
         };
