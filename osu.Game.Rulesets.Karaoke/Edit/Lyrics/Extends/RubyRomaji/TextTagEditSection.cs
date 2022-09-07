@@ -17,31 +17,44 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
     public abstract class TextTagEditSection<TTextTag> : LyricPropertySection where TTextTag : class, ITextTag, new()
     {
+        protected readonly IBindableList<TTextTag> TextTags = new BindableList<TTextTag>();
+
+        private Lyric lyric;
+
         protected TextTagEditSection()
         {
             // add create button.
             addCreateButton();
+
+            // create list of text-tag text-box if bindable changed.
+            TextTags.BindCollectionChanged((_, _) =>
+            {
+                RemoveAll(x => x is LabelledTextTagTextBox<TTextTag>);
+                AddRange(TextTags.Select(x =>
+                {
+                    string relativeToLyricText = TextTagUtils.GetTextFromLyric(x, lyric.Text);
+                    string range = TextTagUtils.PositionFormattedString(x);
+
+                    return CreateLabelledTextTagTextBox(lyric, x).With(t =>
+                    {
+                        t.Label = relativeToLyricText;
+                        t.Description = range;
+                        t.TabbableContentContainer = this;
+                    });
+                }));
+            });
         }
 
         protected override void OnLyricChanged(Lyric lyric)
         {
-            RemoveAll(x => x is LabelledTextTagTextBox<TTextTag>);
+            TextTags.UnbindBindings();
 
             if (lyric == null)
                 return;
 
-            AddRange(GetBindableTextTags(lyric).Select(x =>
-            {
-                string relativeToLyricText = TextTagUtils.GetTextFromLyric(x, lyric.Text);
-                string range = TextTagUtils.PositionFormattedString(x);
+            this.lyric = lyric;
 
-                return CreateLabelledTextTagTextBox(lyric, x).With(t =>
-                {
-                    t.Label = relativeToLyricText;
-                    t.Description = range;
-                    t.TabbableContentContainer = this;
-                });
-            }));
+            TextTags.BindTo(GetBindableTextTags(lyric));
         }
 
         protected override void UpdateDisabledState(bool disabled)
