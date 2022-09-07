@@ -22,7 +22,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
         private readonly IBindable<ICaretPosition?> bindableCaretPosition = new Bindable<ICaretPosition?>();
         private readonly IBindable<int> bindablePropertyWritableVersion = new Bindable<int>();
 
+        public override bool PropagateNonPositionalInputSubTree => base.PropagateNonPositionalInputSubTree && !Disabled;
+        public override bool PropagatePositionalInputSubTree => base.PropagatePositionalInputSubTree && !Disabled;
+
         protected bool IsRebinding { get; private set; }
+
+        protected bool Disabled { get; private set; }
 
         protected override void LoadComplete()
         {
@@ -59,9 +64,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
         {
             var lyric = bindableCaretPosition.Value?.Lyric;
             var propertyLocked = lyric != null ? IsWriteLyricPropertyLocked(lyric) : null;
+            Disabled = propertyLocked != null;
+
+            UpdateDisabledState(Disabled);
 
             // should show the block section and make the children looks not editable if disable edit.
-            Content.FadeTo(propertyLocked == null ? 1 : 0.5f, 300);
+            Content.FadeTo(Disabled ? 0.5f : 1, 300);
             updateBlockSectionMessage(propertyLocked);
         }
 
@@ -107,6 +115,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
         }
 
         protected abstract void OnLyricChanged(Lyric? lyric);
+
+        protected virtual void UpdateDisabledState(bool disabled)
+        {
+        }
 
         protected abstract LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric);
 
