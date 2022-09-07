@@ -63,16 +63,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
 
         protected abstract void ApplyValue(T item, string value);
 
-        protected override void OnFocus(FocusEvent e)
-        {
-            // do not trigger origin focus event if this drawable has been removed.
-            // usually cause by user clicking the delete button.
-            if (Parent == null)
-                return;
-
-            base.OnFocus(e);
-        }
-
         protected override OsuTextBox CreateTextBox() => new ObjectFieldTextBox
         {
             CommitOnFocusLost = true,
