@@ -32,6 +32,15 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         protected override void AddTextTag(RubyTag textTag)
             => rubyTagsChangeHandler.Add(textTag);
 
+        protected override LocalisableString CreateNewTextTagButtonText()
+            => "Create new ruby";
+
+        protected override LocalisableString CreateNewTextTagTitle()
+            => "Ruby";
+
+        protected override LocalisableString CreateNewTextTagDescription()
+            => "Please enter the ruby.";
+
         protected override LockLyricPropertyBy? IsWriteLyricPropertyLocked(Lyric lyric)
             => HitObjectWritableUtils.GetLyricPropertyLockedBy(lyric, nameof(Lyric.RubyTags));
 

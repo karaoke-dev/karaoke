@@ -28,6 +28,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
         [Resolved]
         private ILyricCaretState lyricCaretState { get; set; }
 
+        public LocalisableString LabelledTextBoxLabel { get; set; }
+
+        public LocalisableString LabelledTextBoxDescription { get; set; }
+
         public CreateNewTextTagButton()
         {
             RelativeSizeAxes = Axes.X;
@@ -40,6 +44,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
             var lyric = lyricCaretState.BindableCaretPosition.Value?.Lyric;
             return new CreateNewPopover(lyric)
             {
+                LabelledTextBoxLabel = LabelledTextBoxLabel,
+                LabelledTextBoxDescription = LabelledTextBoxDescription,
                 Action = textTag =>
                 {
                     this.HidePopover();
@@ -85,9 +91,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                         },
                         labelledTagTextBox = new LabelledTextBox
                         {
-                            Label = getTextTagLabel(),
-                            Description = getTextTagDescription(),
-                            PlaceholderText = getPlaceholderText(),
+                            PlaceholderText = "Text",
                             TabbableContentContainer = this,
                         },
                         new AddButton
@@ -99,37 +103,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                 };
             }
 
-            private LocalisableString getTextTagLabel()
+            public LocalisableString LabelledTextBoxLabel
             {
-                if (typeof(TTextTag) == typeof(RubyTag))
-                    return "Ruby";
-
-                if (typeof(TTextTag) == typeof(RomajiTag))
-                    return "Romaji";
-
-                return "Text";
+                set => labelledTagTextBox.Label = value;
             }
 
-            private LocalisableString getTextTagDescription()
+            public LocalisableString LabelledTextBoxDescription
             {
-                if (typeof(TTextTag) == typeof(RubyTag))
-                    return "Please enter the ruby.";
-
-                if (typeof(TTextTag) == typeof(RomajiTag))
-                    return "Please enter the romaji.";
-
-                return "Text";
-            }
-
-            private LocalisableString getPlaceholderText()
-            {
-                if (typeof(TTextTag) == typeof(RubyTag))
-                    return "Ruby";
-
-                if (typeof(TTextTag) == typeof(RomajiTag))
-                    return "Romaji";
-
-                return "Text";
+                set => labelledTagTextBox.Description = value;
             }
 
             private void submit()

@@ -7,6 +7,7 @@ using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -60,7 +61,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             // create new button.
             fillFlowContainer?.Insert(int.MaxValue, new CreateNewTextTagButton<TTextTag>
             {
-                Text = "Create new",
+                Text = CreateNewTextTagButtonText(),
+                LabelledTextBoxLabel = CreateNewTextTagTitle(),
+                LabelledTextBoxDescription = CreateNewTextTagDescription(),
                 Action = AddTextTag
             });
         }
@@ -70,5 +73,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
         protected abstract LabelledTextTagTextBox<TTextTag> CreateLabelledTextTagTextBox(Lyric lyric, TTextTag textTag);
 
         protected abstract void AddTextTag(TTextTag textTag);
+
+        protected abstract LocalisableString CreateNewTextTagButtonText();
+
+        protected abstract LocalisableString CreateNewTextTagTitle();
+
+        protected abstract LocalisableString CreateNewTextTagDescription();
     }
 }
