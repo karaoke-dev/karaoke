@@ -263,27 +263,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                 if (!HasFocus)
                     return false;
 
-                switch (e.Action)
+                return e.Action switch
                 {
-                    case KaraokeEditAction.EditTextTagReduceStartIndex:
-                        reduceStartIndexButton.TriggerClick();
-                        return true;
-
-                    case KaraokeEditAction.EditTextTagIncreaseStartIndex:
-                        increaseStartIndexButton.TriggerClick();
-                        return true;
-
-                    case KaraokeEditAction.EditTextTagReduceEndIndex:
-                        reduceEndIndexButton.TriggerClick();
-                        return true;
-
-                    case KaraokeEditAction.EditTextTagIncreaseEndIndex:
-                        increaseEndIndexButton.TriggerClick();
-                        return true;
-
-                    default:
-                        return false;
-                }
+                    KaraokeEditAction.EditTextTagReduceStartIndex => reduceStartIndexButton.TriggerClick(),
+                    KaraokeEditAction.EditTextTagIncreaseStartIndex => increaseStartIndexButton.TriggerClick(),
+                    KaraokeEditAction.EditTextTagReduceEndIndex => reduceEndIndexButton.TriggerClick(),
+                    KaraokeEditAction.EditTextTagIncreaseEndIndex => increaseEndIndexButton.TriggerClick(),
+                    _ => false
+                };
             }
 
             public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)
