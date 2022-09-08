@@ -63,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                         if (hover)
                         {
                             // trigger selected if hover on delete button.
-                            SelectedItems.Add(textTag);
+                            TriggerSelect();
                         }
                         else
                         {
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                             if (Component.HasFocus)
                                 return;
 
-                            SelectedItems.Remove(textTag);
+                            TriggerUnselect();
                         }
                     }
                 }
@@ -96,17 +96,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                     {
                         if (selected)
                         {
-                            // not trigger again if already focus.
-                            if (SelectedItems.Contains(Item) && SelectedItems.Count == 1)
-                                return;
-
-                            // trigger selected.
-                            SelectedItems.Clear();
-                            SelectedItems.Add(Item);
+                            TriggerSelect();
                         }
                         else
                         {
-                            SelectedItems.Remove(Item);
+                            TriggerUnselect();
                         }
                     },
                     Action = (indexType, action) =>
@@ -158,16 +152,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
         protected abstract void SetIndex(T item, int? startIndex, int? endIndex);
 
         protected abstract void RemoveTextTag(T item);
-
-        protected override void OnFocus(FocusEvent e)
-        {
-            // do not trigger origin focus event if this drawable has been removed.
-            // usually cause by user clicking the delete button.
-            if (Parent == null)
-                return;
-
-            base.OnFocus(e);
-        }
 
         public new CompositeDrawable TabbableContentContainer
         {
@@ -279,27 +263,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                 if (!HasFocus)
                     return false;
 
-                switch (e.Action)
+                return e.Action switch
                 {
-                    case KaraokeEditAction.EditTextTagReduceStartIndex:
-                        reduceStartIndexButton.TriggerClick();
-                        return true;
-
-                    case KaraokeEditAction.EditTextTagIncreaseStartIndex:
-                        increaseStartIndexButton.TriggerClick();
-                        return true;
-
-                    case KaraokeEditAction.EditTextTagReduceEndIndex:
-                        reduceEndIndexButton.TriggerClick();
-                        return true;
-
-                    case KaraokeEditAction.EditTextTagIncreaseEndIndex:
-                        increaseEndIndexButton.TriggerClick();
-                        return true;
-
-                    default:
-                        return false;
-                }
+                    KaraokeEditAction.EditTextTagReduceStartIndex => reduceStartIndexButton.TriggerClick(),
+                    KaraokeEditAction.EditTextTagIncreaseStartIndex => increaseStartIndexButton.TriggerClick(),
+                    KaraokeEditAction.EditTextTagReduceEndIndex => reduceEndIndexButton.TriggerClick(),
+                    KaraokeEditAction.EditTextTagIncreaseEndIndex => increaseEndIndexButton.TriggerClick(),
+                    _ => false
+                };
             }
 
             public void OnReleased(KeyBindingReleaseEvent<KaraokeEditAction> e)

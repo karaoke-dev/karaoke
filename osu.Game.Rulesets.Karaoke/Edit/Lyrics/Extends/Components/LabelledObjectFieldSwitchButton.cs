@@ -48,19 +48,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             });
         }
 
+        protected void TriggerSelect()
+        {
+            // not trigger again if already focus.
+            if (SelectedItems.Contains(item) && SelectedItems.Count == 1)
+                return;
+
+            // trigger selected.
+            SelectedItems.Clear();
+            SelectedItems.Add(item);
+        }
+
+        protected void TriggerUnselect()
+        {
+            SelectedItems.Remove(item);
+        }
+
         protected abstract bool GetFieldValue(T item);
 
         protected abstract void ApplyValue(T item, bool value);
-
-        protected override void OnFocus(FocusEvent e)
-        {
-            // do not trigger origin focus event if this drawable has been removed.
-            // usually cause by user clicking the delete button.
-            if (Parent == null)
-                return;
-
-            base.OnFocus(e);
-        }
 
         protected override SwitchButton CreateComponent() => new ObjectFieldSwitchButton
         {
@@ -68,17 +74,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             {
                 if (selected)
                 {
-                    // not trigger again if already focus.
-                    if (SelectedItems.Contains(item) && SelectedItems.Count == 1)
-                        return;
-
-                    // trigger selected.
-                    SelectedItems.Clear();
-                    SelectedItems.Add(item);
+                    TriggerSelect();
                 }
                 else
                 {
-                    SelectedItems.Remove(item);
+                    TriggerUnselect();
                 }
             }
         };
