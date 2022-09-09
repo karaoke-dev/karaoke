@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             // create list of text-tag text-box if bindable changed.
             TextTags.BindCollectionChanged((_, _) =>
             {
-                RemoveAll(x => x is LabelledTextTagTextBox<TTextTag>);
+                RemoveAll(x => x is LabelledTextTagTextBox<TTextTag>, true);
                 AddRange(TextTags.Select(x =>
                 {
                     string relativeToLyricText = TextTagUtils.GetTextFromLyric(x, lyric.Text);
