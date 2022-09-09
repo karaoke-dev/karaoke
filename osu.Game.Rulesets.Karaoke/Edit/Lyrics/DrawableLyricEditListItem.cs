@@ -111,7 +111,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     return;
 
                 // todo : might remove component until Extend effect end.
-                content.Remove(existExtend);
+                content.Remove(existExtend, true);
             }
         }
 

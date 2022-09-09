@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.Language
         {
             bindableCultureInfo.BindValueChanged(e =>
             {
-                RemoveAll(x => x is SelectedLanguage);
+                RemoveAll(x => x is SelectedLanguage, true);
 
                 for (int i = 0; i < e.NewValue.Length; i++)
                 {

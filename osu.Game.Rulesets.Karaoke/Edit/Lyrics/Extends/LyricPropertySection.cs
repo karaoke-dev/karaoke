@@ -88,7 +88,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
             }
             else if (blockMaskingWrapper != null && propertyLocked == null)
             {
-                RemoveInternal(blockMaskingWrapper);
+                RemoveInternal(blockMaskingWrapper, true);
             }
 
             static IconUsage getWriteLyricPropertyLockedIcon(LockLyricPropertyBy lockLyricPropertyBy) =>

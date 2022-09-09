@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language
 
         protected override void UpdateActionArea(LanguageEditModeSpecialAction action)
         {
-            RemoveAll(x => x is LanguageAutoGenerateSubsection or AssignLanguageSubsection);
+            RemoveAll(x => x is LanguageAutoGenerateSubsection or AssignLanguageSubsection, true);
 
             switch (action)
             {

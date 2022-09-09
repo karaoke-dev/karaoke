@@ -22,7 +22,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
         protected override void UpdateActionArea(NoteEditModeSpecialAction action)
         {
-            RemoveAll(x => x is NoteAutoGenerateSubsection or NoteClearSubsection);
+            RemoveAll(x => x is NoteAutoGenerateSubsection or NoteClearSubsection, true);
 
             switch (action)
             {

@@ -43,8 +43,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 
             void reCreateEditComponents()
             {
-                RemoveAll(x => x is LabelledObjectFieldTextBox<Note>);
-                RemoveAll(x => x is LabelledSwitchButton);
+                RemoveAll(x => x is LabelledObjectFieldTextBox<Note>, true);
+                RemoveAll(x => x is LabelledSwitchButton, true);
 
                 if (notes.Value == null)
                     return;

@@ -21,7 +21,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
 
         protected override void UpdateActionArea(TextingEditModeSpecialAction action)
         {
-            RemoveAll(x => x is TextingDeleteSubsection);
+            RemoveAll(x => x is TextingDeleteSubsection, true);
 
             switch (action)
             {

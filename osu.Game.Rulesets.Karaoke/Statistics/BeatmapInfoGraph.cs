@@ -65,7 +65,7 @@ namespace osu.Game.Rulesets.Karaoke.Statistics
 
                 var shouldBeRemovedLabel = InfoLabelContainer.Children.OfType<InfoLabel>()
                                                              .Where(x => x.TooltipText == "Note" || x.TooltipText == "This beatmap is not scorable.").ToList();
-                InfoLabelContainer.RemoveRange(shouldBeRemovedLabel);
+                InfoLabelContainer.RemoveRange(shouldBeRemovedLabel, true);
             }
 
             protected FillFlowContainer InfoLabelContainer

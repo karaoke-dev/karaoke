@@ -73,7 +73,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Containers
                         return;
 
                     ListContainer.Margin = new MarginPadding();
-                    ScrollContainer.Remove(bottomDrawable);
+                    ScrollContainer.Remove(bottomDrawable, true);
                 }
             }
         }
