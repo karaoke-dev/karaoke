@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Info.Badge
 {
     public class SingerInfo : Container
     {

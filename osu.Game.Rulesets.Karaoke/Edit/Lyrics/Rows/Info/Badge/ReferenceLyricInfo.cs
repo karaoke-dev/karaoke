@@ -9,7 +9,7 @@ using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Info.Badge
 {
     public class ReferenceLyricInfo : SubInfo
     {

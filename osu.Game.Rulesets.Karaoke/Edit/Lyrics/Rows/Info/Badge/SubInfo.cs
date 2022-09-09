@@ -14,7 +14,7 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.SubInfo
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Info.Badge
 {
     public abstract class SubInfo : Container
     {
