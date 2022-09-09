@@ -8,7 +8,7 @@ using osu.Framework.Bindables;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.FixedInfo
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Info.FixedInfo
 {
     public class OrderInfo : OsuSpriteText
     {
