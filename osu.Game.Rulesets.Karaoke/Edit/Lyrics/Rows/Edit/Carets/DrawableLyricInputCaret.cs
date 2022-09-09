@@ -12,11 +12,12 @@ using osu.Framework.Input;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osuTK;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
 {
     public class DrawableLyricInputCaret : DrawableLyricTextCaret
     {

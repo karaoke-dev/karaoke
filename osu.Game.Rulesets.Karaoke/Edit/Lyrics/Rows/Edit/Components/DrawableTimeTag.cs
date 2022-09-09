@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Parts
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Components
 {
     public class DrawableTimeTag : CompositeDrawable, IHasCustomTooltip<TimeTag>
     {

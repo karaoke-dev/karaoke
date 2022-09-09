@@ -5,10 +5,11 @@
 
 using osu.Framework.Allocation;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Carets
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
 {
     public abstract class DrawableLyricTextCaret : DrawableCaret<TextCaretPosition>
     {
