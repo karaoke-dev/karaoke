@@ -11,7 +11,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 {
     public class BlueprintLayer : CompositeDrawable
     {
