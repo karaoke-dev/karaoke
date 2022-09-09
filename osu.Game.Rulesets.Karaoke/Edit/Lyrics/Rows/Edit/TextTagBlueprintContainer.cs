@@ -12,6 +12,7 @@ using osu.Framework.Input.Events;
 using osu.Framework.Logging;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Components;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Objects.Types;
@@ -19,7 +20,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Screens.Edit.Compose.Components;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 {
     public abstract class TextTagBlueprintContainer<T> : ExtendBlueprintContainer<T> where T : class, ITextTag
     {

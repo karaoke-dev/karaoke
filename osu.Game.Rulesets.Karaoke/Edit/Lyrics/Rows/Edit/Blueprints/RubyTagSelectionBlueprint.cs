@@ -8,7 +8,7 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Blueprints
 {
     public class RubyTagSelectionBlueprint : TextTagSelectionBlueprint<RubyTag>
     {

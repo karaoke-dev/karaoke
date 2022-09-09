@@ -9,12 +9,12 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components.Blueprints;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Blueprints;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit.Compose.Components;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 {
     public class RomajiBlueprintContainer : TextTagBlueprintContainer<RomajiTag>
     {
