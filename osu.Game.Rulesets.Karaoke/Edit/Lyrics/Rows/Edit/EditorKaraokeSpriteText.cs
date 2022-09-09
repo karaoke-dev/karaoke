@@ -20,7 +20,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Skinning;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 {
     public class EditorKaraokeSpriteText : DrawableKaraokeSpriteText<EditorKaraokeSpriteText.EditorLyricSpriteText>
     {
