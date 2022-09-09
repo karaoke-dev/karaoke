@@ -4,13 +4,12 @@
 using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 {
-    public class TimeTagLayer : CompositeDrawable
+    public class TimeTagLayer : BaseLayer
     {
         [Resolved, AllowNull]
         private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
@@ -18,6 +17,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
         private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();
 
         public TimeTagLayer(Lyric lyric)
+            : base(lyric)
         {
             timeTagsBindable.BindCollectionChanged((_, _) =>
             {

@@ -4,23 +4,19 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 {
-    public class BlueprintLayer : CompositeDrawable
+    public class BlueprintLayer : BaseLayer
     {
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<TimeTagEditMode> bindableTimeTagEditMode = new Bindable<TimeTagEditMode>();
 
-        private readonly Lyric lyric;
-
         public BlueprintLayer(Lyric lyric)
+            : base(lyric)
         {
-            this.lyric = lyric;
-
             bindableMode.BindValueChanged(_ =>
             {
                 // Initial blueprint container.
@@ -49,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
             // create preview and real caret
             var mode = bindableMode.Value;
             var timeTagEditMode = bindableTimeTagEditMode.Value;
-            var blueprintContainer = createBlueprintContainer(mode, timeTagEditMode, lyric);
+            var blueprintContainer = createBlueprintContainer(mode, timeTagEditMode, Lyric);
             if (blueprintContainer == null)
                 return;
 
