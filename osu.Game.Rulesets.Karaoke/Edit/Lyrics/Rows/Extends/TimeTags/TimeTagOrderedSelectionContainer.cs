@@ -23,9 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags
             bindStartTime(drawable);
         }
 
-        public override bool Remove(SelectionBlueprint<TimeTag> drawable)
+        public override bool Remove(SelectionBlueprint<TimeTag> drawable, bool disposeImmediately)
         {
-            if (!base.Remove(drawable))
+            if (!base.Remove(drawable, disposeImmediately))
                 return false;
 
             unbindStartTime(drawable);
