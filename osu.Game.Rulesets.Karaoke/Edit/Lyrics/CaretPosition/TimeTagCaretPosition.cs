@@ -7,14 +7,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition
 {
     public class TimeTagCaretPosition : ICaretPosition
     {
-        public TimeTagCaretPosition(Lyric lyric, TimeTag timeTag)
+        public TimeTagCaretPosition(Lyric lyric, TimeTag timeTag, CaretGenerateType generateType = CaretGenerateType.Action)
         {
             Lyric = lyric;
             TimeTag = timeTag;
+            GenerateType = generateType;
         }
 
         public Lyric Lyric { get; }
 
         public TimeTag TimeTag { get; }
+
+        public CaretGenerateType GenerateType { get; }
     }
 }

@@ -120,7 +120,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             var targetTimeTag = lyric.TimeTags.FirstOrDefault(timeTagMovable);
 
             // should not move to lyric if contains no time-tag.
-            return targetTimeTag == null ? null : new TimeTagCaretPosition(lyric, targetTimeTag);
+            return targetTimeTag == null ? null : new TimeTagCaretPosition(lyric, targetTimeTag, CaretGenerateType.TargetLyric);
         }
 
         private TimeTagCaretPosition? timeTagToPosition(TimeTag timeTag)

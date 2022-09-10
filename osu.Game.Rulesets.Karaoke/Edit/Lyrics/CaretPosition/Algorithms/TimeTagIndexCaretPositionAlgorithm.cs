@@ -108,7 +108,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
         public override TimeTagIndexCaretPosition MoveToTarget(Lyric lyric)
         {
             var index = new TextIndex(0, suitableState(TextIndex.IndexState.Start));
-            return new TimeTagIndexCaretPosition(lyric, index);
+            return new TimeTagIndexCaretPosition(lyric, index, CaretGenerateType.TargetLyric);
         }
 
         private bool textIndexMovable(TextIndex textIndex)
