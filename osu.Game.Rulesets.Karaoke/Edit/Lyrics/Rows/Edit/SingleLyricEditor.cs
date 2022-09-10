@@ -38,18 +38,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
             Children = new Drawable[]
             {
                 karaokeSpriteText = new EditorKaraokeSpriteText(lyric),
-                new TimeTagLayer(lyric)
-                {
-                    RelativeSizeAxes = Axes.Both,
-                },
-                new CaretLayer(lyric)
-                {
-                    RelativeSizeAxes = Axes.Both,
-                },
-                new BlueprintLayer(lyric)
-                {
-                    RelativeSizeAxes = Axes.Both,
-                }
+                new TimeTagLayer(lyric),
+                new CaretLayer(lyric),
+                new BlueprintLayer(lyric),
             };
 
             bindableMode.BindValueChanged(x =>
