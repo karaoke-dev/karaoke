@@ -147,12 +147,5 @@ namespace osu.Game.Rulesets.Karaoke.Utils
             => lyrics.Any(LyricUtils.HasTimedTimeTags);
 
         #endregion
-
-        #region Lock
-
-        public static Lyric[] FindUnlockLyrics(IEnumerable<Lyric> lyrics)
-            => lyrics.Where(x => x.Lock == LockState.None).ToArray();
-
-        #endregion
     }
 }

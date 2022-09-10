@@ -3,7 +3,6 @@
 
 using System;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 {
@@ -14,7 +13,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
 
         protected CaretPositionAlgorithm(Lyric[] lyrics)
         {
-            Lyrics = LyricsUtils.FindUnlockLyrics(lyrics);
+            Lyrics = lyrics;
         }
 
         public abstract bool PositionMovable(TCaretPosition position);
