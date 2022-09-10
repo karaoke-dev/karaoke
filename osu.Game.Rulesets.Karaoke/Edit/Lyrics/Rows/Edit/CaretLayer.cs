@@ -1,12 +1,11 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
@@ -18,26 +17,23 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 {
-    public class CaretLayer : CompositeDrawable
+    public class CaretLayer : BaseLayer
     {
-        [Resolved]
+        [Resolved, AllowNull]
         private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
-        [Resolved]
+        [Resolved, AllowNull]
         private ILyricCaretState lyricCaretState { get; set; }
 
-        [Resolved]
+        [Resolved, AllowNull]
         private ILyricsChangeHandler lyricsChangeHandler { get; set; }
 
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-        private readonly IBindable<ICaretPositionAlgorithm> bindableCaretPositionAlgorithm = new Bindable<ICaretPositionAlgorithm>();
-
-        private readonly Lyric lyric;
+        private readonly IBindable<ICaretPositionAlgorithm?> bindableCaretPositionAlgorithm = new Bindable<ICaretPositionAlgorithm?>();
 
         public CaretLayer(Lyric lyric)
+            : base(lyric)
         {
-            this.lyric = lyric;
-
             bindableCaretPositionAlgorithm.BindValueChanged(e =>
             {
                 // initial default caret.
@@ -64,7 +60,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
                 AddInternal(caret);
             }
 
-            static DrawableCaret createCaret(ICaretPositionAlgorithm caretPositionAlgorithm, bool isPreview) =>
+            static DrawableCaret? createCaret(ICaretPositionAlgorithm? caretPositionAlgorithm, bool isPreview) =>
                 caretPositionAlgorithm switch
                 {
                     // cutting lyric
@@ -96,27 +92,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
             switch (bindableCaretPositionAlgorithm.Value)
             {
                 case CuttingCaretPositionAlgorithm:
-                    int cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position)), 0, lyric.Text.Length - 1);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new TextCaretPosition(lyric, cuttingLyricStringIndex));
+                    int cuttingLyricStringIndex = Math.Clamp(TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position)), 0, Lyric.Text.Length - 1);
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, cuttingLyricStringIndex));
                     break;
 
                 case TypingCaretPositionAlgorithm:
                     int typingStringIndex = TextIndexUtils.ToStringIndex(karaokeSpriteText.GetHoverIndex(position));
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new TextCaretPosition(lyric, typingStringIndex));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new TextCaretPosition(Lyric, typingStringIndex));
                     break;
 
                 case NavigateCaretPositionAlgorithm:
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(lyric));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new NavigateCaretPosition(Lyric));
                     break;
 
                 case TimeTagIndexCaretPositionAlgorithm:
                     var textIndex = karaokeSpriteText.GetHoverIndex(position);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(lyric, textIndex));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagIndexCaretPosition(Lyric, textIndex));
                     break;
 
                 case TimeTagCaretPositionAlgorithm:
                     var timeTag = karaokeSpriteText.GetHoverTimeTag(position);
-                    lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(lyric, timeTag));
+                    lyricCaretState.MoveHoverCaretToTargetPosition(new TimeTagCaretPosition(Lyric, timeTag));
                     break;
             }
 
@@ -163,6 +159,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
                 default:
                     return false;
             }
+        }
+
+        public override void UpdateDisableEditState(bool editable)
+        {
+            this.FadeTo(editable ? 1 : 0.7f, 100);
         }
     }
 }

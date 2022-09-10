@@ -2,8 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
@@ -14,7 +16,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 {
-    public class SingleLyricEditor : Container, IHasTooltip
+    public class SingleLyricEditor : CompositeDrawable, IHasTooltip
     {
         [Cached]
         private readonly EditorKaraokeSpriteText karaokeSpriteText;
@@ -22,30 +24,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<int> bindableLyricPropertyWritableVersion;
 
+        private readonly Lyric lyric;
         private LocalisableString? lockReason;
 
         public SingleLyricEditor(Lyric lyric)
         {
+            this.lyric = lyric;
             bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
 
             CornerRadius = 5;
-            AutoSizeAxes = Axes.Y;
             Padding = new MarginPadding { Bottom = 10 };
-            Children = new Drawable[]
+            InternalChildren = new Drawable[]
             {
-                karaokeSpriteText = new EditorKaraokeSpriteText(lyric),
-                new TimeTagLayer(lyric)
-                {
-                    RelativeSizeAxes = Axes.Both,
-                },
-                new CaretLayer(lyric)
-                {
-                    RelativeSizeAxes = Axes.Both,
-                },
-                new BlueprintLayer(lyric)
-                {
-                    RelativeSizeAxes = Axes.Both,
-                }
+                new LyricLayer(lyric, karaokeSpriteText = new EditorKaraokeSpriteText(lyric)),
+                new TimeTagLayer(lyric),
+                new CaretLayer(lyric),
+                new BlueprintLayer(lyric),
+            };
+
+            karaokeSpriteText.SizeChanged = () =>
+            {
+                Height = karaokeSpriteText.DrawHeight;
             };
 
             bindableMode.BindValueChanged(x =>
@@ -59,15 +58,16 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
             });
 
             updateLockReasonAndStyle();
+        }
 
-            void updateLockReasonAndStyle()
-            {
-                var loadReason = GetLyricPropertyLockedReason(lyric, bindableMode.Value);
-                lockReason = loadReason;
+        private void updateLockReasonAndStyle()
+        {
+            var loadReason = GetLyricPropertyLockedReason(lyric, bindableMode.Value);
+            lockReason = loadReason;
 
-                // adjust the style.
-                Alpha = loadReason == null ? 1 : 0.5f;
-            }
+            // adjust the style.
+            bool editable = lockReason == null;
+            InternalChildren.OfType<BaseLayer>().ForEach(x => x.UpdateDisableEditState(editable));
         }
 
         [BackgroundDependencyLoader]

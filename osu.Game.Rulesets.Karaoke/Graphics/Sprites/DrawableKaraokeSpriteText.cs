@@ -28,13 +28,13 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
         {
             this.chunkIndex = chunkIndex;
 
-            textBindable.BindValueChanged(_ => updateText(), true);
-            timeTagsVersion.BindValueChanged(_ => updateTimeTags());
-            timeTagsBindable.BindCollectionChanged((_, _) => updateTimeTags());
-            rubyTagsVersion.BindValueChanged(_ => updateRubies());
-            rubyTagsBindable.BindCollectionChanged((_, _) => updateRubies());
-            romajiTagsVersion.BindValueChanged(_ => updateRomajies());
-            romajiTagsBindable.BindCollectionChanged((_, _) => updateRomajies());
+            textBindable.BindValueChanged(_ => UpdateText(), true);
+            timeTagsVersion.BindValueChanged(_ => UpdateTimeTags());
+            timeTagsBindable.BindCollectionChanged((_, _) => UpdateTimeTags());
+            rubyTagsVersion.BindValueChanged(_ => UpdateRubies());
+            rubyTagsBindable.BindCollectionChanged((_, _) => UpdateRubies());
+            romajiTagsVersion.BindValueChanged(_ => UpdateRomajies());
+            romajiTagsBindable.BindCollectionChanged((_, _) => UpdateRomajies());
 
             textBindable.BindTo(lyric.TextBindable);
             timeTagsVersion.BindTo(lyric.TimeTagsVersion);
@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
             romajiTagsBindable.BindTo(lyric.RomajiTagsBindable);
         }
 
-        private void updateText()
+        protected virtual void UpdateText()
         {
             if (chunkIndex == whole_chunk_index)
             {
@@ -57,7 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
             }
         }
 
-        private void updateTimeTags()
+        protected virtual void UpdateTimeTags()
         {
             if (chunkIndex == whole_chunk_index)
             {
@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
             }
         }
 
-        private void updateRubies()
+        protected virtual void UpdateRubies()
         {
             if (chunkIndex == whole_chunk_index)
             {
@@ -81,7 +81,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
             }
         }
 
-        private void updateRomajies()
+        protected virtual void UpdateRomajies()
         {
             if (chunkIndex == whole_chunk_index)
             {
@@ -104,7 +104,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
                     return;
 
                 displayRuby = value;
-                Schedule(updateRubies);
+                Schedule(UpdateRubies);
             }
         }
 
@@ -119,7 +119,7 @@ namespace osu.Game.Rulesets.Karaoke.Graphics.Sprites
                     return;
 
                 displayRomaji = value;
-                Schedule(updateRomajies);
+                Schedule(UpdateRomajies);
             }
         }
     }
