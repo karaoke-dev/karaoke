@@ -16,7 +16,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 {
-    public class SingleLyricEditor : Container, IHasTooltip
+    public class SingleLyricEditor : CompositeDrawable, IHasTooltip
     {
         [Cached]
         private readonly EditorKaraokeSpriteText karaokeSpriteText;
@@ -34,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 
             CornerRadius = 5;
             Padding = new MarginPadding { Bottom = 10 };
-            Children = new Drawable[]
+            InternalChildren = new Drawable[]
             {
                 new LyricLayer(lyric, karaokeSpriteText = new EditorKaraokeSpriteText(lyric)),
                 new TimeTagLayer(lyric),
@@ -67,7 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 
             // adjust the style.
             bool editable = lockReason == null;
-            Children.OfType<BaseLayer>().ForEach(x => x.UpdateDisableEditState(editable));
+            InternalChildren.OfType<BaseLayer>().ForEach(x => x.UpdateDisableEditState(editable));
         }
 
         [BackgroundDependencyLoader]
