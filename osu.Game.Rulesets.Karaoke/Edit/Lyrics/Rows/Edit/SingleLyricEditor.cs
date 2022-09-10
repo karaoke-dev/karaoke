@@ -33,14 +33,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
             bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
 
             CornerRadius = 5;
-            AutoSizeAxes = Axes.Y;
             Padding = new MarginPadding { Bottom = 10 };
             Children = new Drawable[]
             {
-                karaokeSpriteText = new EditorKaraokeSpriteText(lyric),
+                new LyricLayer(lyric, karaokeSpriteText = new EditorKaraokeSpriteText(lyric)),
                 new TimeTagLayer(lyric),
                 new CaretLayer(lyric),
                 new BlueprintLayer(lyric),
+            };
+
+            karaokeSpriteText.SizeChanged = () =>
+            {
+                Height = karaokeSpriteText.DrawHeight;
             };
 
             bindableMode.BindValueChanged(x =>
@@ -61,10 +65,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
             var loadReason = GetLyricPropertyLockedReason(lyric, bindableMode.Value);
             lockReason = loadReason;
 
-            bool editable = lockReason == null;
-
             // adjust the style.
-            karaokeSpriteText.FadeTo(editable ? 1 : 0.5f, 300);
+            bool editable = lockReason == null;
             Children.OfType<BaseLayer>().ForEach(x => x.UpdateDisableEditState(editable));
         }
 
