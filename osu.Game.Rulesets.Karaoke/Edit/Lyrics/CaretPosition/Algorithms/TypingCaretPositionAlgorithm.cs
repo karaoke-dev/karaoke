@@ -84,7 +84,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition.Algorithms
             return new TextCaretPosition(lyric, GetMaxIndex(lyric.Text));
         }
 
-        public override TextCaretPosition MoveToTarget(Lyric lyric) => new(lyric, GetMinIndex(lyric.Text));
+        public override TextCaretPosition MoveToTarget(Lyric lyric) => new(lyric, GetMinIndex(lyric.Text), CaretGenerateType.TargetLyric);
 
         private bool lyricMovable(Lyric lyric)
         {
