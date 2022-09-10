@@ -3,8 +3,8 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osu.Game.Rulesets.Objects;
@@ -12,7 +12,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 {
-    public class EditNoteModeState : Component, IEditNoteModeState
+    public class EditNoteModeState : ModeStateWithBlueprintContainer<Note>, IEditNoteModeState
     {
         private readonly Bindable<NoteEditMode> bindableEditMode = new();
         private readonly BindableList<HitObject> selectedHitObjects = new();
@@ -21,8 +21,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 
         public void ChangeEditMode(NoteEditMode mode)
             => bindableEditMode.Value = mode;
-
-        public BindableList<Note> SelectedItems { get; } = new();
 
         public Bindable<NoteEditModeSpecialAction> BindableSpecialAction { get; } = new();
 
@@ -34,5 +32,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
             BindablesUtils.Sync(SelectedItems, selectedHitObjects);
             selectedHitObjects.BindTo(editorBeatmap.SelectedHitObjects);
         }
+
+        protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
+            => HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(lyric);
     }
 }

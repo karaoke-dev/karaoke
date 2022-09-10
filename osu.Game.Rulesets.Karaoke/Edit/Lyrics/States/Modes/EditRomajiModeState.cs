@@ -2,12 +2,12 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
 using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 {
-    public class EditRomajiModeState : Component, IEditRomajiModeState
+    public class EditRomajiModeState : ModeStateWithBlueprintContainer<RomajiTag>, IEditRomajiModeState
     {
         private readonly Bindable<TextTagEditMode> bindableEditMode = new();
 
@@ -16,6 +16,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
         public void ChangeEditMode(TextTagEditMode mode)
             => bindableEditMode.Value = mode;
 
-        public BindableList<RomajiTag> SelectedItems { get; } = new();
+        protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
+            => HitObjectWritableUtils.IsWriteLyricPropertyLocked(lyric, nameof(Lyric.RomajiTags));
     }
 }
