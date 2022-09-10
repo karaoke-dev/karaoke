@@ -14,6 +14,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<TimeTagEditMode> bindableTimeTagEditMode = new Bindable<TimeTagEditMode>();
 
+        // should block all blueprint action if not editable.
+        public override bool PropagatePositionalInputSubTree => base.PropagatePositionalInputSubTree && editable;
+
+        private bool editable = true;
+
         public BlueprintLayer(Lyric lyric)
             : base(lyric)
         {
@@ -59,6 +64,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
                     LyricEditorMode.EditTimeTag => timeTagEditMode == TimeTagEditMode.Adjust ? new TimeTagBlueprintContainer(lyric) : null,
                     _ => null
                 };
+        }
+
+        public override void UpdateDisableEditState(bool editable)
+        {
+            this.editable = editable;
         }
     }
 }

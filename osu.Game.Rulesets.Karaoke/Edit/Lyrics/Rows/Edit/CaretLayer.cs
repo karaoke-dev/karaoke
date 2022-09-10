@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
@@ -158,6 +159,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
                 default:
                     return false;
             }
+        }
+
+        public override void UpdateDisableEditState(bool editable)
+        {
+            this.FadeTo(editable ? 1 : 0.7f, 100);
         }
     }
 }

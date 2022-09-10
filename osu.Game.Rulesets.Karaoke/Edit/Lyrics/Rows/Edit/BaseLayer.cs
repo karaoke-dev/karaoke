@@ -14,5 +14,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
         {
             Lyric = lyric;
         }
+
+        public abstract void UpdateDisableEditState(bool editable);
     }
 }

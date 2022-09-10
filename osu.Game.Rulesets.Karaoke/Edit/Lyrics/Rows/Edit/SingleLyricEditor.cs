@@ -2,8 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Cursor;
@@ -22,10 +24,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<int> bindableLyricPropertyWritableVersion;
 
+        private readonly Lyric lyric;
         private LocalisableString? lockReason;
 
         public SingleLyricEditor(Lyric lyric)
         {
+            this.lyric = lyric;
             bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
 
             CornerRadius = 5;
@@ -59,15 +63,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
             });
 
             updateLockReasonAndStyle();
+        }
 
-            void updateLockReasonAndStyle()
-            {
-                var loadReason = GetLyricPropertyLockedReason(lyric, bindableMode.Value);
-                lockReason = loadReason;
+        private void updateLockReasonAndStyle()
+        {
+            var loadReason = GetLyricPropertyLockedReason(lyric, bindableMode.Value);
+            lockReason = loadReason;
 
-                // adjust the style.
-                Alpha = loadReason == null ? 1 : 0.5f;
-            }
+            bool editable = lockReason == null;
+
+            // adjust the style.
+            karaokeSpriteText.FadeTo(editable ? 1 : 0.5f, 300);
+            Children.OfType<BaseLayer>().ForEach(x => x.UpdateDisableEditState(editable));
         }
 
         [BackgroundDependencyLoader]
