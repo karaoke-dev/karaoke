@@ -1,8 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Containers;
@@ -13,7 +12,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 {
     public class TimeTagLayer : CompositeDrawable
     {
-        [Resolved]
+        [Resolved, AllowNull]
         private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
         private readonly IBindableList<TimeTag> timeTagsBindable = new BindableList<TimeTag>();

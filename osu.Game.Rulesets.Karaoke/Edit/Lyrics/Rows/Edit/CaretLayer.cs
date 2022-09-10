@@ -1,9 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using System;
+using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Containers;
@@ -20,17 +19,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 {
     public class CaretLayer : CompositeDrawable
     {
-        [Resolved]
+        [Resolved, AllowNull]
         private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
-        [Resolved]
+        [Resolved, AllowNull]
         private ILyricCaretState lyricCaretState { get; set; }
 
-        [Resolved]
+        [Resolved, AllowNull]
         private ILyricsChangeHandler lyricsChangeHandler { get; set; }
 
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-        private readonly IBindable<ICaretPositionAlgorithm> bindableCaretPositionAlgorithm = new Bindable<ICaretPositionAlgorithm>();
+        private readonly IBindable<ICaretPositionAlgorithm?> bindableCaretPositionAlgorithm = new Bindable<ICaretPositionAlgorithm?>();
 
         private readonly Lyric lyric;
 
@@ -64,7 +63,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
                 AddInternal(caret);
             }
 
-            static DrawableCaret createCaret(ICaretPositionAlgorithm caretPositionAlgorithm, bool isPreview) =>
+            static DrawableCaret? createCaret(ICaretPositionAlgorithm? caretPositionAlgorithm, bool isPreview) =>
                 caretPositionAlgorithm switch
                 {
                     // cutting lyric

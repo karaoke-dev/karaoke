@@ -1,8 +1,6 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -57,7 +55,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 
             AddInternal(blueprintContainer);
 
-            static Drawable createBlueprintContainer(LyricEditorMode mode, TimeTagEditMode timeTagEditMode, Lyric lyric) =>
+            static Drawable? createBlueprintContainer(LyricEditorMode mode, TimeTagEditMode timeTagEditMode, Lyric lyric) =>
                 mode switch
                 {
                     LyricEditorMode.EditRuby => new RubyBlueprintContainer(lyric),
