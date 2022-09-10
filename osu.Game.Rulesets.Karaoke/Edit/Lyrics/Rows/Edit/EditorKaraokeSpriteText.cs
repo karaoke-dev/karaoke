@@ -28,6 +28,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 
         public Lyric HitObject;
 
+        public Action SizeChanged;
+
         public EditorKaraokeSpriteText(Lyric lyric)
             : base(lyric)
         {
@@ -139,6 +141,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
 
                 LeftLyricTextShaders = SkinConvertorTool.ConvertLeftSideShader(shaderManager, newStyle);
                 RightLyricTextShaders = SkinConvertorTool.ConvertRightSideShader(shaderManager, newStyle);
+
+                triggerSizeChangedEvent();
             }, true);
 
             skin.GetConfig<Lyric, LyricConfig>(HitObject)?.BindValueChanged(lyricConfig =>
@@ -156,9 +160,40 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
                 RubyFont = getFont(rubyFont.Size);
                 RomajiFont = getFont(romajiFont.Size);
 
+                triggerSizeChangedEvent();
+
                 static FontUsage getFont(float? charSize = null)
                     => FontUsage.Default.With(size: charSize * 2);
             }, true);
+        }
+
+        protected override void UpdateText()
+        {
+            base.UpdateText();
+
+            triggerSizeChangedEvent();
+        }
+
+        protected override void UpdateRubies()
+        {
+            base.UpdateRubies();
+
+            triggerSizeChangedEvent();
+        }
+
+        protected override void UpdateRomajies()
+        {
+            base.UpdateRomajies();
+
+            triggerSizeChangedEvent();
+        }
+
+        private void triggerSizeChangedEvent()
+        {
+            ScheduleAfterChildren(() =>
+            {
+                SizeChanged?.Invoke();
+            });
         }
 
         public override bool RemoveCompletedTransforms => false;
