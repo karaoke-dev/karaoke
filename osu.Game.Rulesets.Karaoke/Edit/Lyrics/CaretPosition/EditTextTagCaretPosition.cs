@@ -8,14 +8,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition
 {
     public class EditTextTagCaretPosition : ITextTagCaretPosition
     {
-        public EditTextTagCaretPosition(Lyric lyric, ITextTag textTag)
+        public EditTextTagCaretPosition(Lyric lyric, ITextTag textTag, CaretGenerateType generateType = CaretGenerateType.Action)
         {
             Lyric = lyric;
             TextTag = textTag;
+            GenerateType = generateType;
         }
 
         public Lyric Lyric { get; }
 
         public ITextTag TextTag { get; }
+
+        public CaretGenerateType GenerateType { get; }
     }
 }

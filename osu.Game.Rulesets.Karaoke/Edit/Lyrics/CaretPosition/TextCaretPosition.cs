@@ -7,14 +7,17 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition
 {
     public class TextCaretPosition : ICaretPosition
     {
-        public TextCaretPosition(Lyric lyric, int index)
+        public TextCaretPosition(Lyric lyric, int index, CaretGenerateType generateType = CaretGenerateType.Action)
         {
             Lyric = lyric;
             Index = index;
+            GenerateType = generateType;
         }
 
         public Lyric Lyric { get; }
 
         public int Index { get; }
+
+        public CaretGenerateType GenerateType { get; }
     }
 }
