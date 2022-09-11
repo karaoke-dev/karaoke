@@ -77,11 +77,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Info.FixedInfo
 
         protected override bool OnClick(ClickEvent e)
         {
+            // should mark lyric as selected for able to apply the lock state.
+            lyricCaretState.MoveCaretToTargetPosition(lyric);
+
             if (bindableLockState.Value == LockState.None)
             {
-                // should mark lyric as selected for able to apply the lock state.
-                lyricCaretState.MoveCaretToTargetPosition(lyric);
-
                 // change the state by config.
                 var newLockState = configManager.Get<LockState>(KaraokeRulesetLyricEditorSetting.ClickToLockLyricState);
                 lockChangeHandler.Lock(newLockState);
