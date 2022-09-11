@@ -153,6 +153,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
 
         protected abstract void RemoveTextTag(T item);
 
+        protected override bool IsFocused(Drawable focusedDrawable)
+            => base.IsFocused(focusedDrawable) || focusedDrawable == indexShiftingPart;
+
         public new CompositeDrawable TabbableContentContainer
         {
             set

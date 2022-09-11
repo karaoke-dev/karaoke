@@ -45,6 +45,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             {
                 bool highLight = SelectedItems.Contains(item);
                 Component.HighLight = highLight;
+
+                if (SelectedItems.Contains(item) && SelectedItems.Count == 1)
+                    focus();
             });
 
             if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
@@ -99,13 +102,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             }
         };
 
-        public void Focus()
+        private void focus()
         {
             Schedule(() =>
             {
+                var focusedDrawable = GetContainingInputManager().FocusedDrawable;
+                if (focusedDrawable != null && IsFocused(focusedDrawable))
+                    return;
+
                 GetContainingInputManager().ChangeFocus(Component);
             });
         }
+
+        protected virtual bool IsFocused(Drawable focusedDrawable)
+            => focusedDrawable == Component;
 
         protected class ObjectFieldTextBox : OsuTextBox
         {
