@@ -57,16 +57,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
             TextTags.BindTo(GetBindableTextTags(lyric));
         }
 
-        protected override void UpdateDisabledState(bool disabled)
-        {
-            if (disabled)
-                return;
-
-            // should auto-focus to the first time-tag if change the lyric.
-            var firstTextTagTextBox = Children.OfType<LabelledTextTagTextBox<TTextTag>>().FirstOrDefault();
-            firstTextTagTextBox?.Focus();
-        }
-
         private void addCreateButton()
         {
             var fillFlowContainer = Content as FillFlowContainer;
