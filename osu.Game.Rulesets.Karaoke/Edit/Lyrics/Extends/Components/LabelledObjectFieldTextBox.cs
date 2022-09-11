@@ -45,6 +45,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             {
                 bool highLight = SelectedItems.Contains(item);
                 Component.HighLight = highLight;
+
+                if (SelectedItems.Contains(item) && SelectedItems.Count == 1)
+                    focus();
             });
 
             if (InternalChildren[1] is not FillFlowContainer fillFlowContainer)
@@ -70,11 +73,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             SelectedItems.Add(item);
         }
 
-        protected void TriggerUnselect()
-        {
-            SelectedItems.Remove(item);
-        }
-
         protected abstract string GetFieldValue(T item);
 
         protected abstract void ApplyValue(T item, string value);
@@ -89,23 +87,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             Selected = selected =>
             {
                 if (selected)
-                {
                     TriggerSelect();
-                }
-                else
-                {
-                    TriggerUnselect();
-                }
             }
         };
 
-        public void Focus()
+        private void focus()
         {
             Schedule(() =>
             {
+                var focusedDrawable = GetContainingInputManager().FocusedDrawable;
+                if (focusedDrawable != null && IsFocused(focusedDrawable))
+                    return;
+
                 GetContainingInputManager().ChangeFocus(Component);
             });
         }
+
+        protected virtual bool IsFocused(Drawable focusedDrawable)
+            => focusedDrawable == Component;
 
         protected class ObjectFieldTextBox : OsuTextBox
         {
@@ -123,6 +122,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             protected override void OnFocusLost(FocusLostEvent e)
             {
                 base.OnFocusLost(e);
+
+                // should not change the border size because still need to highlight the textarea without focus.
+                BorderThickness = 3f;
 
                 // note: should trigger commit event first in the base class.
                 Selected?.Invoke(false);

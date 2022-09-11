@@ -65,14 +65,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                             // trigger selected if hover on delete button.
                             TriggerSelect();
                         }
-                        else
-                        {
-                            // do not clear current selected if typing.
-                            if (Component.HasFocus)
-                                return;
-
-                            TriggerUnselect();
-                        }
                     }
                 }
             });
@@ -95,13 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
                     Selected = selected =>
                     {
                         if (selected)
-                        {
                             TriggerSelect();
-                        }
-                        else
-                        {
-                            TriggerUnselect();
-                        }
                     },
                     Action = (indexType, action) =>
                     {
@@ -152,6 +138,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji.Components
         protected abstract void SetIndex(T item, int? startIndex, int? endIndex);
 
         protected abstract void RemoveTextTag(T item);
+
+        protected override bool IsFocused(Drawable focusedDrawable)
+            => base.IsFocused(focusedDrawable) || focusedDrawable == indexShiftingPart;
 
         public new CompositeDrawable TabbableContentContainer
         {
