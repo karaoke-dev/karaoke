@@ -1,6 +1,8 @@
 // Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes;
@@ -17,6 +19,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
         private readonly Bindable<NoteEditMode> bindableEditMode = new();
         private readonly BindableList<HitObject> selectedHitObjects = new();
 
+        [Resolved, AllowNull]
+        private EditorBeatmap editorBeatmap { get; set; }
+
         public IBindable<NoteEditMode> BindableEditMode => bindableEditMode;
 
         public void ChangeEditMode(NoteEditMode mode)
@@ -27,7 +32,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
         public Bindable<NoteEditPropertyMode> NoteEditPropertyMode { get; } = new();
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap editorBeatmap)
+        private void load()
         {
             BindablesUtils.Sync(SelectedItems, selectedHitObjects);
             selectedHitObjects.BindTo(editorBeatmap.SelectedHitObjects);
@@ -35,5 +40,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 
         protected override bool IsWriteLyricPropertyLocked(Lyric lyric)
             => HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(lyric);
+
+        protected override bool SelectFirstProperty(Lyric lyric)
+            => BindableEditMode.Value == NoteEditMode.Edit;
+
+        protected override IEnumerable<Note> SelectableProperties(Lyric lyric)
+            => EditorBeatmapUtils.GetNotesByLyric(editorBeatmap, lyric);
     }
 }

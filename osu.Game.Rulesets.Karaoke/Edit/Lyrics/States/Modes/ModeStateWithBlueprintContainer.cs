@@ -1,6 +1,9 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -21,7 +24,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
         {
             bindableMode.BindValueChanged(e =>
             {
-                triggerDisableStateChanged();
+                TriggerDisableStateChanged();
             });
 
             bindableCaretPosition.BindValueChanged(e =>
@@ -34,27 +37,49 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
                     return;
 
                 bindableLyricPropertyWritableVersion.BindTo(lyric.LyricPropertyWritableVersion);
-                triggerDisableStateChanged();
+                TriggerDisableStateChanged();
             });
 
             bindableLyricPropertyWritableVersion.BindValueChanged(_ =>
             {
-                triggerDisableStateChanged();
+                TriggerDisableStateChanged();
             });
         }
 
-        private void triggerDisableStateChanged()
+        protected virtual void TriggerDisableStateChanged()
         {
-            var lyric = bindableCaretPosition.Value?.Lyric;
-            if (lyric == null)
+            var caret = bindableCaretPosition.Value;
+            if (caret == null)
                 return;
 
+            var lyric = caret.Lyric;
+            var generateType = caret.GenerateType;
+
+            SelectedItems.Clear();
             bool locked = IsWriteLyricPropertyLocked(lyric);
             if (locked)
-                SelectedItems.Clear();
+                return;
+
+            switch (generateType)
+            {
+                case CaretGenerateType.Action:
+                    if (SelectFirstProperty(lyric))
+                        SelectedItems.Add(SelectableProperties(lyric).FirstOrDefault());
+                    break;
+
+                case CaretGenerateType.TargetLyric:
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         protected abstract bool IsWriteLyricPropertyLocked(Lyric lyric);
+
+        protected abstract bool SelectFirstProperty(Lyric lyric);
+
+        protected abstract IEnumerable<TObject> SelectableProperties(Lyric lyric);
 
         [BackgroundDependencyLoader]
         private void load(ILyricEditorState state, ILyricCaretState lyricCaretState)
