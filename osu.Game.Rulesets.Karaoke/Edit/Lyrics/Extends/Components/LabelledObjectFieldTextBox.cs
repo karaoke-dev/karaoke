@@ -134,6 +134,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             {
                 base.OnFocusLost(e);
 
+                // should not change the border size because still need to highlight the textarea without focus.
+                BorderThickness = 3f;
+
                 // note: should trigger commit event first in the base class.
                 Selected?.Invoke(false);
             }
