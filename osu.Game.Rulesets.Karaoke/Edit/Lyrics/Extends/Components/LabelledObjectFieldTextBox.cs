@@ -73,11 +73,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             SelectedItems.Add(item);
         }
 
-        protected void TriggerUnselect()
-        {
-            SelectedItems.Remove(item);
-        }
-
         protected abstract string GetFieldValue(T item);
 
         protected abstract void ApplyValue(T item, string value);
@@ -92,13 +87,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
             Selected = selected =>
             {
                 if (selected)
-                {
                     TriggerSelect();
-                }
-                else
-                {
-                    TriggerUnselect();
-                }
             }
         };
 
