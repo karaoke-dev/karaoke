@@ -37,23 +37,30 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.UserInterfaceV2
                         {
                             Label = "Text",
                             Description = "The text display on the note.",
-                            Current = note.TextBindable
+                            Current = note.TextBindable,
+                            TabbableContentContainer = this
                         },
                         rubyText = new LabelledTextBox
                         {
                             Label = "Ruby text",
                             Description = "Should place something like ruby, 拼音 or ふりがな.",
-                            Current = note.RubyTextBindable
+                            Current = note.RubyTextBindable,
+                            TabbableContentContainer = this
                         },
                         display = new LabelledSwitchButton
                         {
                             Label = "Display",
                             Description = "This note will be hidden and not scorable if not display.",
-                            Current = note.DisplayBindable
+                            Current = note.DisplayBindable,
                         }
                     }
                 }
             };
+
+            ScheduleAfterChildren(() =>
+            {
+                GetContainingInputManager().ChangeFocus(text);
+            });
 
             text.OnCommit += (sender, newText) =>
             {
