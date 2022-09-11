@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -21,16 +20,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
         [Cached]
         private readonly EditorKaraokeSpriteText karaokeSpriteText;
 
-        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-        private readonly IBindable<int> bindableLyricPropertyWritableVersion;
-
         private readonly Lyric lyric;
         private LocalisableString? lockReason;
 
         public SingleLyricEditor(Lyric lyric)
         {
             this.lyric = lyric;
-            bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
 
             CornerRadius = 5;
             Padding = new MarginPadding { Bottom = 10 };
@@ -46,35 +41,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
             {
                 Height = karaokeSpriteText.DrawHeight;
             };
-
-            bindableMode.BindValueChanged(x =>
-            {
-                updateLockReasonAndStyle();
-            });
-
-            bindableLyricPropertyWritableVersion.BindValueChanged(_ =>
-            {
-                updateLockReasonAndStyle();
-            });
-
-            updateLockReasonAndStyle();
-        }
-
-        private void updateLockReasonAndStyle()
-        {
-            var loadReason = GetLyricPropertyLockedReason(lyric, bindableMode.Value);
-            lockReason = loadReason;
-
-            // adjust the style.
-            bool editable = lockReason == null;
-            InternalChildren.OfType<BaseLayer>().ForEach(x => x.UpdateDisableEditState(editable));
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorClock clock, ILyricEditorState state)
+        private void load(EditorClock clock, IEditLyricRowState editLyricRowState)
         {
             karaokeSpriteText.Clock = clock;
-            bindableMode.BindTo(state.BindableMode);
+
+            editLyricRowState.WritableVersionChanged += mode =>
+            {
+                var loadReason = GetLyricPropertyLockedReason(lyric, mode);
+                lockReason = loadReason;
+
+                // adjust the style.
+                bool editable = lockReason == null;
+                InternalChildren.OfType<BaseLayer>().ForEach(x => x.UpdateDisableEditState(editable));
+            };
         }
 
         public LocalisableString TooltipText => lockReason ?? string.Empty;
