@@ -8,5 +8,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
     public interface IEditLyricRowState
     {
         event Action<LyricEditorMode> WritableVersionChanged;
+
+        void TriggerDisallowEditEffect();
+
+        event Action<LyricEditorMode> DisallowEditEffectTriggered;
     }
 }

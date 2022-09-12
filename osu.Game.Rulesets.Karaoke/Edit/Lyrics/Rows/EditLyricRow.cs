@@ -23,6 +23,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
         public event Action<LyricEditorMode> WritableVersionChanged;
 
+        public event Action<LyricEditorMode> DisallowEditEffectTriggered;
+
         public EditLyricRow(Lyric lyric)
             : base(lyric)
         {
@@ -45,6 +47,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             {
                 WritableVersionChanged?.Invoke(bindableMode.Value);
             });
+        }
+
+        public void TriggerDisallowEditEffect()
+        {
+            DisallowEditEffectTriggered?.Invoke(bindableMode.Value);
         }
 
         protected override Drawable CreateLyricInfo(Lyric lyric)
