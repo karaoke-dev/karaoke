@@ -11,6 +11,41 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
 {
     public static class HitObjectWritableUtils
     {
+        #region Remove lyrics.
+
+        public static bool IsRemoveLyricLocked(Lyric lyric)
+            => GetRemoveLyricLockedBy(lyric) != null;
+
+        public static LockLyricPropertyBy? GetRemoveLyricLockedBy(Lyric lyric)
+        {
+            bool lockedByConfig = isRemoveLyricLocked(lyric.ReferenceLyricConfig);
+            if (lockedByConfig)
+                return LockLyricPropertyBy.ReferenceLyricConfig;
+
+            bool lockedByState = isRemoveLyricLockedByState(lyric.Lock);
+            if (lockedByState)
+                return LockLyricPropertyBy.LockState;
+
+            return null;
+        }
+
+        private static bool isRemoveLyricLockedByState(LockState lockState)
+            => lockState != LockState.None;
+
+        private static bool isRemoveLyricLocked(IReferenceLyricPropertyConfig? config)
+        {
+            // should not be able to delete the lyric if reference or sync by other lyric.
+            return config switch
+            {
+                ReferenceLyricConfig => true,
+                SyncLyricConfig => true,
+                null => false,
+                _ => throw new NotSupportedException()
+            };
+        }
+
+        #endregion
+
         #region Lyric property
 
         public static bool IsWriteLyricPropertyLocked(Lyric lyric, params string[] propertyNames)

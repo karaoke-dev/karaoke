@@ -15,6 +15,43 @@ namespace osu.Game.Rulesets.Karaoke.Tests.Editor.Utils
 {
     public class HitObjectWritableUtilsTest
     {
+        #region Remove lyrics.
+
+        [Test]
+        public void TestIsRemoveLyricLocked()
+        {
+            // standard.
+            test(new Lyric());
+
+            // test lock state.
+            foreach (var lockState in EnumUtils.GetValues<LockState>())
+            {
+                test(new Lyric
+                {
+                    Lock = lockState
+                });
+            }
+
+            // reference lyric.
+            test(new Lyric
+            {
+                ReferenceLyricConfig = new ReferenceLyricConfig(),
+            });
+
+            test(new Lyric
+            {
+                ReferenceLyricConfig = new SyncLyricConfig(),
+            });
+
+            void test(Lyric lyric)
+            {
+                HitObjectWritableUtils.IsRemoveLyricLocked(lyric);
+                HitObjectWritableUtils.GetRemoveLyricLockedBy(lyric);
+            }
+        }
+
+        #endregion
+
         #region Lyric property
 
         [Test]
