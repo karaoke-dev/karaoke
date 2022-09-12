@@ -16,9 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         void CreateAtLast();
 
-        void AddBelowToSelection(Lyric lyric);
+        void AddBelowToSelection(Lyric newLyric);
 
-        void AddRangeBelowToSelection(IEnumerable<Lyric> lyrics);
+        void AddRangeBelowToSelection(IEnumerable<Lyric> newLyrics);
 
         void Remove();
 
