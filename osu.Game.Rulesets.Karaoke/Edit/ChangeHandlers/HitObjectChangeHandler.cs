@@ -9,6 +9,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Caching;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Utils;
+using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Rulesets.Objects;
 using osu.Game.Screens.Edit;
 
@@ -67,7 +69,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
         {
             bool containsInBeatmap = HitObjects.Any(x => x == hitObject);
             if (containsInBeatmap)
-                throw new InvalidOperationException("Seems lyric is already in the beatmap.");
+                throw new InvalidOperationException("Seems this hit object is already in the beatmap.");
+
+            if (isCreateObjectLocked(hitObject))
+                throw new AddOrRemoveForbiddenException();
 
             beatmap.Add(hitObject);
         }
@@ -76,13 +81,50 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
         {
             bool containsInBeatmap = HitObjects.Any(x => x == hitObject);
             if (containsInBeatmap)
-                throw new InvalidOperationException("Seems lyric is already in the beatmap.");
+                throw new InvalidOperationException("Seems this hit object is already in the beatmap.");
+
+            if (isCreateObjectLocked(hitObject))
+                throw new AddOrRemoveForbiddenException();
 
             beatmap.Insert(index, hitObject);
         }
 
-        protected void Remove<T>(T hitObject) where T : HitObject => beatmap.Remove(hitObject);
+        protected void RemoveRange<T>(IEnumerable<T> hitObjects) where T : HitObject => hitObjects.ForEach(Remove);
 
-        protected void RemoveRange<T>(IEnumerable<T> hitObjects) where T : HitObject => beatmap.RemoveRange(hitObjects);
+        protected void Remove<T>(T hitObject) where T : HitObject
+        {
+            if (isRemoveObjectLocked(hitObject))
+                throw new AddOrRemoveForbiddenException();
+
+            beatmap.Remove(hitObject);
+        }
+
+        private bool isCreateObjectLocked<T>(T hitObject)
+        {
+            return hitObject switch
+            {
+                Lyric lyric => HitObjectWritableUtils.IsRemoveLyricLocked(lyric),
+                Note note => note.ReferenceLyric != null && HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(note.ReferenceLyric),
+                _ => throw new InvalidCastException()
+            };
+        }
+
+        private bool isRemoveObjectLocked<T>(T hitObject)
+        {
+            return hitObject switch
+            {
+                Lyric lyric => HitObjectWritableUtils.IsRemoveLyricLocked(lyric),
+                Note note => note.ReferenceLyric != null && HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(note.ReferenceLyric),
+                _ => throw new InvalidCastException()
+            };
+        }
+
+        public class AddOrRemoveForbiddenException : Exception
+        {
+            public AddOrRemoveForbiddenException()
+                : base("Should not add or remove the hit-object.")
+            {
+            }
+        }
     }
 }

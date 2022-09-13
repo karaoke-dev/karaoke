@@ -31,6 +31,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 if (!string.IsNullOrEmpty(lyric.Text))
                     return;
 
+                if (HitObjectWritableUtils.IsRemoveLyricLocked(lyric))
+                    return;
+
                 OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > lyric.Order), -1);
                 Remove(lyric);
             });
