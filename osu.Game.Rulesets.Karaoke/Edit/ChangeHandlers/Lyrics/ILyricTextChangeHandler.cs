@@ -3,7 +3,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public interface ILyricTextChangeHandler
+    public interface ILyricTextChangeHandler : ILyricPropertyChangeHandler
     {
         void InsertText(int index, string text);
 

@@ -236,6 +236,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             }
         }
 
+        public override bool IsSelectionsLocked()
+            => throw new InvalidOperationException("Auto-generator does not support this check method.");
+
         protected override bool IsWritePropertyLocked(Lyric lyric) =>
             currentAutoGenerateProperty switch
             {

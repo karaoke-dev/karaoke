@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public interface ILyricListPropertyChangeHandler<in TItem>
+    public interface ILyricListPropertyChangeHandler<in TItem> : ILyricPropertyChangeHandler
     {
         void Add(TItem item);
 
