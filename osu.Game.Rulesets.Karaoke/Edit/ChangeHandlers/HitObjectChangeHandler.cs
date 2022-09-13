@@ -111,12 +111,18 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
 
         private bool isRemoveObjectLocked<T>(T hitObject)
         {
-            return hitObject switch
+            switch (hitObject)
             {
-                Lyric lyric => HitObjectWritableUtils.IsRemoveLyricLocked(lyric),
-                Note note => note.ReferenceLyric != null && HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(note.ReferenceLyric),
-                _ => throw new InvalidCastException()
-            };
+                case Lyric lyric:
+                    bool hasReferenceLyric = EditorBeatmapUtils.GetAllReferenceLyrics(beatmap, lyric).Any();
+                    return hasReferenceLyric || HitObjectWritableUtils.IsRemoveLyricLocked(lyric);
+
+                case Note note:
+                    return note.ReferenceLyric != null && HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(note.ReferenceLyric);
+
+                default:
+                    throw new InvalidCastException();
+            }
         }
 
         public class AddOrRemoveForbiddenException : Exception
