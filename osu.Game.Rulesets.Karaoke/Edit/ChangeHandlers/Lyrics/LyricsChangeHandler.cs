@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Utils;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 {
-    public class LyricsChangeHandler : HitObjectChangeHandler<Lyric>, ILyricsChangeHandler
+    public class LyricsChangeHandler : HitObjectsChangeHandler<Lyric>, ILyricsChangeHandler
     {
         public void Split(int index)
         {
