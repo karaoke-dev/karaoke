@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers
         {
             return hitObject switch
             {
-                Lyric lyric => HitObjectWritableUtils.IsRemoveLyricLocked(lyric),
+                Lyric => false,
                 Note note => note.ReferenceLyric != null && HitObjectWritableUtils.IsCreateOrRemoveNoteLocked(note.ReferenceLyric),
                 _ => throw new InvalidCastException()
             };
