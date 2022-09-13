@@ -85,7 +85,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
             AddRangeBelowToSelection(new[] { newLyric });
         }
 
-        public void AddRangeBelowToSelection(IEnumerable<Lyric> newlyrics)
+        public void AddRangeBelowToSelection(IEnumerable<Lyric> newLyrics)
         {
             CheckExactlySelectedOneHitObject();
 
@@ -94,12 +94,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
                 int order = lyric.Order;
 
                 // Shifting order that order is larger than current lyric.
-                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > order), newlyrics.Count());
+                OrderUtils.ShiftingOrder(HitObjects.Where(x => x.Order > order), newLyrics.Count());
 
-                foreach (var newlyric in newlyrics)
+                foreach (var newLyric in newLyrics)
                 {
-                    newlyric.Order = ++order;
-                    Add(newlyric);
+                    newLyric.Order = ++order;
+                    Add(newLyric);
                 }
             });
         }

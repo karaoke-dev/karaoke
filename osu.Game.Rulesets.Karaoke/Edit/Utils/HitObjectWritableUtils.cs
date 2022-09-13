@@ -146,7 +146,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Utils
         public static bool IsCreateOrRemoveNoteLocked(Lyric lyric)
             => GetCreateOrRemoveNoteLockedBy(lyric) != null;
 
-        public static LockLyricPropertyBy? GetCreateOrRemoveNoteLockedBy(Lyric lyric, params string[] propertyNames)
+        public static LockLyricPropertyBy? GetCreateOrRemoveNoteLockedBy(Lyric lyric)
         {
             bool lockedByConfig = isCreateOrRemoveNoteLocked(lyric.ReferenceLyricConfig);
             if (lockedByConfig)
