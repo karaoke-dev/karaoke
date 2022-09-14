@@ -165,5 +165,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
         {
             this.FadeTo(editable ? 1 : 0.7f, 100);
         }
+
+        public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+        {
+            // todo: should call the effect function in the caret.
+        }
     }
 }
