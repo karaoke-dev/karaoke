@@ -57,6 +57,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
                 bool editable = lockReason == null;
                 InternalChildren.OfType<BaseLayer>().ForEach(x => x.UpdateDisableEditState(editable));
             };
+
+            editLyricRowState.DisallowEditEffectTriggered += mode =>
+            {
+                InternalChildren.OfType<BaseLayer>().ForEach(x => x.TriggerDisallowEditEffect(mode));
+            };
         }
 
         public LocalisableString TooltipText => lockReason ?? string.Empty;
