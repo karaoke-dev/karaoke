@@ -26,14 +26,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
         [Resolved]
         private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
-        [Resolved]
-        private ILyricTextChangeHandler lyricTextChangeHandler { get; set; }
-
-        [Resolved]
-        private ILyricCaretState lyricCaretState { get; set; }
-
-        private readonly Box drawableCaret;
-        private readonly InputCaretTextBox inputCaretTextBox;
+        private Box drawableCaret;
+        private InputCaretTextBox inputCaretTextBox;
 
         private TextCaretPosition caretPosition;
 
@@ -41,15 +35,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
             : base(preview)
         {
             Width = caret_width;
+        }
 
+        [BackgroundDependencyLoader]
+        private void load(ILyricTextChangeHandler lyricTextChangeHandler, ILyricCaretState lyricCaretState, IEditLyricRowState editLyricRowState)
+        {
             InternalChild = drawableCaret = new Box
             {
                 RelativeSizeAxes = Axes.Both,
                 Colour = Color4.White,
-                Alpha = preview ? 0.5f : 1,
+                Alpha = Preview ? 0.5f : 1,
             };
 
-            if (!preview)
+            if (!Preview)
             {
                 AddInternal(inputCaretTextBox = new InputCaretTextBox
                 {
@@ -60,6 +58,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
                     ReleaseFocusOnCommit = false,
                     NewCommitText = text =>
                     {
+                        if (lyricTextChangeHandler.IsSelectionsLocked())
+                        {
+                            editLyricRowState.TriggerDisallowEditEffect();
+                            return;
+                        }
+
                         if (caretPosition == null)
                             throw new ArgumentNullException(nameof(caretPosition));
 
@@ -70,6 +74,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
                     },
                     DeleteText = () =>
                     {
+                        if (lyricTextChangeHandler.IsSelectionsLocked())
+                        {
+                            editLyricRowState.TriggerDisallowEditEffect();
+                            return;
+                        }
+
                         if (caretPosition == null)
                             throw new ArgumentNullException(nameof(caretPosition));
 
