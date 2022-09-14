@@ -57,5 +57,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
         {
             Preview = preview;
         }
+
+        public abstract void TriggerDisallowEditEffect(LyricEditorMode editorMode);
     }
 }

@@ -10,6 +10,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input;
 using osu.Framework.Input.Events;
+using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -22,6 +23,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
     {
         private const float caret_move_time = 60;
         private const float caret_width = 3;
+
+        [Resolved]
+        private OsuColour colours { get; set; }
 
         [Resolved]
         private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
@@ -135,6 +139,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
                 inputCaretTextBox.Text = string.Empty;
                 GetContainingInputManager().ChangeFocus(inputCaretTextBox);
             });
+        }
+
+        public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+        {
+            throw new NotImplementedException();
         }
 
         private class InputCaretTextBox : BasicTextBox
