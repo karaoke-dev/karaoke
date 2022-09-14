@@ -10,6 +10,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input;
 using osu.Framework.Input.Events;
+using osu.Game.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -24,16 +25,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
         private const float caret_width = 3;
 
         [Resolved]
+        private OsuColour colours { get; set; }
+
+        [Resolved]
         private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
-        [Resolved]
-        private ILyricTextChangeHandler lyricTextChangeHandler { get; set; }
-
-        [Resolved]
-        private ILyricCaretState lyricCaretState { get; set; }
-
-        private readonly Box drawableCaret;
-        private readonly InputCaretTextBox inputCaretTextBox;
+        private Box drawableCaret;
+        private InputCaretTextBox inputCaretTextBox;
 
         private TextCaretPosition caretPosition;
 
@@ -41,15 +39,19 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
             : base(preview)
         {
             Width = caret_width;
+        }
 
+        [BackgroundDependencyLoader]
+        private void load(ILyricTextChangeHandler lyricTextChangeHandler, ILyricCaretState lyricCaretState, IEditLyricRowState editLyricRowState)
+        {
             InternalChild = drawableCaret = new Box
             {
                 RelativeSizeAxes = Axes.Both,
                 Colour = Color4.White,
-                Alpha = preview ? 0.5f : 1,
+                Alpha = Preview ? 0.5f : 1,
             };
 
-            if (!preview)
+            if (!Preview)
             {
                 AddInternal(inputCaretTextBox = new InputCaretTextBox
                 {
@@ -60,6 +62,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
                     ReleaseFocusOnCommit = false,
                     NewCommitText = text =>
                     {
+                        if (lyricTextChangeHandler.IsSelectionsLocked())
+                        {
+                            editLyricRowState.TriggerDisallowEditEffect();
+                            return;
+                        }
+
                         if (caretPosition == null)
                             throw new ArgumentNullException(nameof(caretPosition));
 
@@ -70,6 +78,12 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
                     },
                     DeleteText = () =>
                     {
+                        if (lyricTextChangeHandler.IsSelectionsLocked())
+                        {
+                            editLyricRowState.TriggerDisallowEditEffect();
+                            return;
+                        }
+
                         if (caretPosition == null)
                             throw new ArgumentNullException(nameof(caretPosition));
 
@@ -125,6 +139,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
                 inputCaretTextBox.Text = string.Empty;
                 GetContainingInputManager().ChangeFocus(inputCaretTextBox);
             });
+        }
+
+        public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+        {
+            throw new NotImplementedException();
         }
 
         private class InputCaretTextBox : BasicTextBox

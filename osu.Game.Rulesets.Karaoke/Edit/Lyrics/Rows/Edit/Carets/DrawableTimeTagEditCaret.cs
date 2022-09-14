@@ -47,5 +47,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
             drawableTextIndex.State = textIndex.State;
             drawableTextIndex.Colour = colours.GetEditTimeTagCaretColour();
         }
+
+        public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+        {
+            this.FlashColour(colours.Red, 200);
+        }
     }
 }

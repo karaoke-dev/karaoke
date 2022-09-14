@@ -20,6 +20,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
         private readonly SpriteIcon splitIcon;
 
         [Resolved]
+        private OsuColour colours { get; set; }
+
+        [Resolved]
         private EditorKaraokeSpriteText karaokeSpriteText { get; set; }
 
         public DrawableLyricSplitterCaret(bool preview)
@@ -78,6 +81,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
         {
             Position = GetPosition(caret);
             Height = karaokeSpriteText.LineBaseHeight;
+        }
+
+        public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+        {
+            this.FlashColour(colours.Red, 200);
         }
     }
 }

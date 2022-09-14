@@ -3,8 +3,10 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
+using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
@@ -164,6 +166,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit
         public override void UpdateDisableEditState(bool editable)
         {
             this.FadeTo(editable ? 1 : 0.7f, 100);
+        }
+
+        public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
+        {
+            InternalChildren.OfType<DrawableCaret>().ForEach(x => x.TriggerDisallowEditEffect(editorMode));
         }
     }
 }
