@@ -143,7 +143,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Edit.Carets
 
         public override void TriggerDisallowEditEffect(LyricEditorMode editorMode)
         {
-            throw new NotImplementedException();
+            this.FlashColour(colours.Red, 200);
         }
 
         private class InputCaretTextBox : BasicTextBox
