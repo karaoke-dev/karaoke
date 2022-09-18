@@ -13,8 +13,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Input;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
-using osu.Game.Rulesets.Karaoke.Configuration;
-using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
@@ -26,21 +24,12 @@ using osu.Game.Rulesets.UI.Scrolling;
 using osu.Game.Rulesets.UI.Scrolling.Algorithms;
 using osu.Game.Screens;
 using osu.Game.Screens.Edit;
-using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 {
     [Cached(typeof(ILyricEditorState))]
     public class LyricEditor : Container, ILyricEditorState, IKeyBindingHandler<KaraokeEditAction>, IKeyBindingHandler<PlatformAction>
     {
-        public const float LYRIC_LIST_PADDING = 10;
-
-        [Resolved(canBeNull: true)]
-        private ILyricsChangeHandler lyricsChangeHandler { get; set; }
-
-        [Resolved]
-        private KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager { get; set; }
-
         [Cached]
         private readonly LyricEditorColourProvider colourProvider = new();
 
@@ -78,18 +67,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private readonly BindableBeatDivisor beatDivisor = new();
 
         private readonly Bindable<LyricEditorMode> bindableMode = new();
-        private IBindable<bool> bindableSelecting => lyricSelectionState.Selecting;
 
         public IBindable<LyricEditorMode> BindableMode => bindableMode;
 
-        private readonly Bindable<float> bindableFontSize = new();
-
         private readonly GridContainer gridContainer;
-        private readonly GridContainer lyricEditorGridContainer;
+        private readonly LyricList lyricList;
         private readonly Container leftSideSettings;
         private readonly Container rightSideSettings;
-        private readonly LyricEditorSkin skin;
-        private readonly DrawableLyricEditList container;
 
         public LyricEditor()
         {
@@ -119,28 +103,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         {
                             RelativeSizeAxes = Axes.Both,
                         },
-                        lyricEditorGridContainer = new GridContainer
+                        lyricList = new LyricList
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Content = new[]
-                            {
-                                new Drawable[]
-                                {
-                                    new SkinProvidingContainer(skin = new LyricEditorSkin(null))
-                                    {
-                                        RelativeSizeAxes = Axes.Both,
-                                        Padding = new MarginPadding(LYRIC_LIST_PADDING),
-                                        Child = container = new DrawableLyricEditList
-                                        {
-                                            RelativeSizeAxes = Axes.Both,
-                                        }
-                                    },
-                                },
-                                new Drawable[]
-                                {
-                                    new ApplySelectingArea(),
-                                }
-                            }
                         },
                         rightSideSettings = new Container
                         {
@@ -150,39 +115,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 }
             });
 
-            container.OnOrderChanged += (x, nowOrder) =>
-            {
-                lyricsChangeHandler?.ChangeOrder(nowOrder);
-            };
-
             BindableMode.BindValueChanged(e =>
             {
-                updateAddLyricState();
-
                 // should control grid container spacing and place some component.
                 initializeSettingsArea();
 
                 // cancel selecting if switch mode.
                 lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
             }, true);
-
-            bindableSelecting.BindValueChanged(e =>
-            {
-                updateAddLyricState();
-                initializeApplySelectingArea();
-            }, true);
-
-            bindableFontSize.BindValueChanged(e =>
-            {
-                skin.FontSize = e.NewValue;
-            });
-        }
-
-        private void updateAddLyricState()
-        {
-            // display add new lyric only with edit mode.
-            bool disableBottomDrawable = BindableMode.Value == LyricEditorMode.Texting && !bindableSelecting.Value;
-            container.DisplayBottomDrawable = disableBottomDrawable;
         }
 
         private void initializeSettingsArea()
@@ -248,15 +188,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             }
         }
 
-        private void initializeApplySelectingArea()
-        {
-            lyricEditorGridContainer.RowDimensions = new[]
-            {
-                new Dimension(),
-                new Dimension(GridSizeMode.AutoSize),
-            };
-        }
-
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
         {
             var baseDependencies = new DependencyContainer(base.CreateChildDependencies(parent));
@@ -267,14 +198,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         }
 
         [BackgroundDependencyLoader]
-        private void load(EditorBeatmap beatmap, ILyricsProvider lyricsProvider)
+        private void load(EditorBeatmap beatmap)
         {
-            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
-
             // set-up divisor.
             beatDivisor.Value = beatmap.BeatmapInfo.BeatDivisor;
-
-            container.Items.BindTo(lyricsProvider.BindableLyrics);
         }
 
         public virtual bool OnPressed(KeyBindingPressEvent<KaraokeEditAction> e) =>

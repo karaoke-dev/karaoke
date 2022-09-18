@@ -13,13 +13,12 @@ using osu.Framework.Input.Events;
 using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osu.Game.Screens.Edit;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 {
     public class ApplySelectingArea : CompositeDrawable
     {
@@ -132,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             float getPrefixSpacing()
             {
                 bool containsHandler = state.Mode == LyricEditorMode.Texting;
-                return LyricEditor.LYRIC_LIST_PADDING + (containsHandler ? DrawableLyricEditListItem.HANDLER_WIDTH : 0);
+                return LyricList.LYRIC_LIST_PADDING + (containsHandler ? DrawableLyricEditListItem.HANDLER_WIDTH : 0);
             }
         }
 
