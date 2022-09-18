@@ -20,14 +20,14 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 {
-    public class DrawableLyricEditList : OrderRearrangeableListContainer<Lyric>
+    public class DrawableLyricList : OrderRearrangeableListContainer<Lyric>
     {
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
         private readonly IBindable<bool> bindableAutoFocusToEditLyric = new Bindable<bool>();
         private readonly IBindable<int> bindableAutoFocusToEditLyricSkipRows = new Bindable<int>();
 
-        public DrawableLyricEditList()
+        public DrawableLyricList()
         {
             // update selected style to child
             bindableCaretPosition.BindValueChanged(e =>
@@ -58,7 +58,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         protected override Vector2 Spacing => new(0, 2);
 
         protected override OsuRearrangeableListItem<Lyric> CreateOsuDrawable(Lyric item)
-            => new DrawableLyricEditListItem(item);
+            => new DrawableLyricListItem(item);
 
         protected override Drawable CreateBottomDrawable()
         {
@@ -66,7 +66,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             {
                 RelativeSizeAxes = Axes.X,
                 Height = 75,
-                Padding = new MarginPadding { Left = DrawableLyricEditListItem.HANDLER_WIDTH },
+                Padding = new MarginPadding { Left = DrawableLyricListItem.HANDLER_WIDTH },
                 Child = new Container
                 {
                     Masking = true,
@@ -125,10 +125,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             ScrollContainer.ScrollTo(scrollPosition - spacing + getOffsetPosition(newItem, oldItem));
             return true;
 
-            DrawableLyricEditListItem getListItem(Lyric lyric)
-                => ListContainer.Children.FirstOrDefault(x => x.Model == lyric) as DrawableLyricEditListItem;
+            DrawableLyricListItem getListItem(Lyric lyric)
+                => ListContainer.Children.FirstOrDefault(x => x.Model == lyric) as DrawableLyricListItem;
 
-            float getOffsetPosition(DrawableLyricEditListItem newItem, DrawableLyricEditListItem oldItem)
+            float getOffsetPosition(DrawableLyricListItem newItem, DrawableLyricListItem oldItem)
             {
                 if (oldItem == null)
                     return 0;

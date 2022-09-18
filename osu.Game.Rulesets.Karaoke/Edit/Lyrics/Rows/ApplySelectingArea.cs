@@ -131,7 +131,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             float getPrefixSpacing()
             {
                 bool containsHandler = state.Mode == LyricEditorMode.Texting;
-                return LyricList.LYRIC_LIST_PADDING + (containsHandler ? DrawableLyricEditListItem.HANDLER_WIDTH : 0);
+                return LyricList.LYRIC_LIST_PADDING + (containsHandler ? DrawableLyricListItem.HANDLER_WIDTH : 0);
             }
         }
 

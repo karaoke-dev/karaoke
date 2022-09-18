@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
         private readonly GridContainer lyricEditorGridContainer;
         private readonly LyricEditorSkin skin;
-        private readonly DrawableLyricEditList container;
+        private readonly DrawableLyricList container;
 
         public LyricList()
         {
@@ -42,7 +42,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                         {
                             RelativeSizeAxes = Axes.Both,
                             Padding = new MarginPadding(LYRIC_LIST_PADDING),
-                            Child = container = new DrawableLyricEditList
+                            Child = container = new DrawableLyricList
                             {
                                 RelativeSizeAxes = Axes.Both,
                             }

@@ -23,7 +23,7 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 {
-    public class DrawableLyricEditListItem : OsuRearrangeableListItem<Lyric>
+    public class DrawableLyricListItem : OsuRearrangeableListItem<Lyric>
     {
         public const float HANDLER_WIDTH = 22;
 
@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
         private readonly IBindable<ICaretPosition> bindableHoverCaretPosition = new Bindable<ICaretPosition>();
         private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
 
-        public DrawableLyricEditListItem(Lyric item)
+        public DrawableLyricListItem(Lyric item)
             : base(item)
         {
             bindableMode.BindValueChanged(e =>
