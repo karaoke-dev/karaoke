@@ -1,11 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
-using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Testing;
@@ -19,19 +16,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 
         public abstract float ExtendWidth { get; }
 
-        protected override IReadOnlyList<Drawable> CreateSections() => Array.Empty<Drawable>();
-
-        protected IReadOnlyList<Drawable> Children
+        protected void ReloadSections()
         {
-            get => this.ChildrenOfType<FillFlowContainer>().First().Children;
-            set
-            {
-                // should delay assign the children after loaded.
-                Schedule(() =>
-                {
-                    this.ChildrenOfType<FillFlowContainer>().First().Children = value;
-                });
-            }
+            this.ChildrenOfType<FillFlowContainer>().First().Children = CreateSections();
         }
 
         [BackgroundDependencyLoader]

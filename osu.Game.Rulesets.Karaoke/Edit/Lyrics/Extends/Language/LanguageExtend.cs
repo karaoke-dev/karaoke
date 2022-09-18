@@ -1,8 +1,8 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System;
+using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -18,38 +18,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language
 
         private readonly IBindable<LanguageEditMode> bindableMode = new Bindable<LanguageEditMode>();
 
-        public LanguageExtend()
-        {
-            bindableMode.BindValueChanged(e =>
-            {
-                switch (e.NewValue)
-                {
-                    case LanguageEditMode.Generate:
-                        Children = new Drawable[]
-                        {
-                            new LanguageEditModeSection(),
-                            new LanguageSwitchSpecialActionSection(),
-                        };
-                        break;
-
-                    case LanguageEditMode.Verify:
-                        Children = new Drawable[]
-                        {
-                            new LanguageEditModeSection(),
-                            new LanguageMissingSection(),
-                        };
-                        break;
-
-                    default:
-                        return;
-                }
-            }, true);
-        }
-
         [BackgroundDependencyLoader]
         private void load(ILanguageModeState languageModeState)
         {
             bindableMode.BindTo(languageModeState.BindableEditMode);
+            bindableMode.BindValueChanged(e =>
+            {
+                ReloadSections();
+            }, true);
         }
+
+        protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
+        {
+            LanguageEditMode.Generate => new Drawable[]
+            {
+                new LanguageEditModeSection(),
+                new LanguageSwitchSpecialActionSection(),
+            },
+            LanguageEditMode.Verify => new Drawable[]
+            {
+                new LanguageEditModeSection(),
+                new LanguageMissingSection(),
+            },
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 }
