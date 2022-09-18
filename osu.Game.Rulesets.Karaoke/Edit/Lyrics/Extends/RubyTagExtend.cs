@@ -5,9 +5,10 @@ using System;
 using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
     public class RubyTagExtend : TextTagExtend
     {

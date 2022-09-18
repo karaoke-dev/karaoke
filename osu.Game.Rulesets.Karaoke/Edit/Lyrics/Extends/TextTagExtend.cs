@@ -4,7 +4,7 @@
 using osu.Framework.Bindables;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
     public abstract class TextTagExtend : EditExtend
     {

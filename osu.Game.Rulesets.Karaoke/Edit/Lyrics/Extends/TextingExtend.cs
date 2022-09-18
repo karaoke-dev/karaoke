@@ -3,8 +3,9 @@
 
 using System.Collections.Generic;
 using osu.Framework.Graphics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
     public class TextingExtend : EditExtend
     {
