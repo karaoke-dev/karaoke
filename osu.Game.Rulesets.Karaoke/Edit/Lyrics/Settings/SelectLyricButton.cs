@@ -14,7 +14,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Objects;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 {
     public abstract class SelectLyricButton : OsuButton
     {

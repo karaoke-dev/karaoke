@@ -20,7 +20,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Utils;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 {
     public abstract class EditModeSection<TEditModeState, TEditMode> : EditModeSection<TEditMode>
         where TEditModeState : IHasEditModeState<TEditMode> where TEditMode : Enum

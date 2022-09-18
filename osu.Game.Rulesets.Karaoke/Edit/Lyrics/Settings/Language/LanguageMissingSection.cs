@@ -17,7 +17,6 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 

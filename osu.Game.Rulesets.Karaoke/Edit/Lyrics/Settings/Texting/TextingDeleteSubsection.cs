@@ -6,7 +6,6 @@
 using osu.Framework.Allocation;
 using osu.Framework.Localisation;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Texting
 {

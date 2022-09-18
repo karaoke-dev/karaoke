@@ -22,7 +22,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 {
     public abstract class AutoGenerateSubsection : FillFlowContainer
     {

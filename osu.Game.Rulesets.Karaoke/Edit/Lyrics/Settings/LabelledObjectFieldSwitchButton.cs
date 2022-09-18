@@ -14,7 +14,7 @@ using osu.Game.Graphics.UserInterfaceV2;
 using osu.Game.Overlays;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 {
     public abstract class LabelledObjectFieldSwitchButton<T> : LabelledSwitchButton where T : class
     {

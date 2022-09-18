@@ -14,7 +14,7 @@ using osu.Game.Graphics.UserInterface;
 using osu.Game.Graphics.UserInterfaceV2;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings
 {
     public abstract class LabelledObjectFieldTextBox<T> : LabelledTextBox where T : class
     {

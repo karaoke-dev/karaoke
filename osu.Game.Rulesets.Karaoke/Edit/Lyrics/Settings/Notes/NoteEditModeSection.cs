@@ -4,7 +4,6 @@
 using System;
 using osu.Game.Graphics;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osuTK.Graphics;
 
