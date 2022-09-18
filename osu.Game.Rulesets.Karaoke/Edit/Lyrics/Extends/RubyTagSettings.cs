@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
-    public class RubyTagExtend : TextTagExtend
+    public class RubyTagSettings : TextTagSettings
     {
         [BackgroundDependencyLoader]
         private void load(IEditRubyModeState editRubyModeState)

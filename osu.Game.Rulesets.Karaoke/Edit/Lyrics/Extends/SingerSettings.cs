@@ -7,7 +7,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
-    public class SingerExtend : EditExtend
+    public class SingerSettings : LyricEditorSettings
     {
         public override ExtendDirection Direction => ExtendDirection.Left;
 

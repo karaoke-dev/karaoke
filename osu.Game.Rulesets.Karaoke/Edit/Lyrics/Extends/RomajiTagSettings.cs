@@ -10,7 +10,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
-    public class RomajiTagExtend : TextTagExtend
+    public class RomajiTagSettings : TextTagSettings
     {
         [BackgroundDependencyLoader]
         private void load(IEditRomajiModeState romajiModeState)

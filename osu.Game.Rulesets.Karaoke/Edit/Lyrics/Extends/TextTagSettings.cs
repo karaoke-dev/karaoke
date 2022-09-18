@@ -6,7 +6,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
-    public abstract class TextTagExtend : EditExtend
+    public abstract class TextTagSettings : LyricEditorSettings
     {
         public override ExtendDirection Direction => ExtendDirection.Right;
 

@@ -6,23 +6,23 @@ using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
-    public class LanguageExtend : EditExtend
+    public class NoteSettings : LyricEditorSettings
     {
         public override ExtendDirection Direction => ExtendDirection.Right;
 
         public override float ExtendWidth => 300;
 
-        private readonly IBindable<LanguageEditMode> bindableMode = new Bindable<LanguageEditMode>();
+        private readonly IBindable<NoteEditMode> bindableMode = new Bindable<NoteEditMode>();
 
         [BackgroundDependencyLoader]
-        private void load(ILanguageModeState languageModeState)
+        private void load(IEditNoteModeState editNoteModeState)
         {
-            bindableMode.BindTo(languageModeState.BindableEditMode);
+            bindableMode.BindTo(editNoteModeState.BindableEditMode);
             bindableMode.BindValueChanged(e =>
             {
                 ReloadSections();
@@ -31,15 +31,22 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 
         protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
         {
-            LanguageEditMode.Generate => new Drawable[]
+            NoteEditMode.Generate => new Drawable[]
             {
-                new LanguageEditModeSection(),
-                new LanguageSwitchSpecialActionSection(),
+                new NoteEditModeSection(),
+                new NoteConfigSection(),
+                new NoteSwitchSpecialActionSection(),
             },
-            LanguageEditMode.Verify => new Drawable[]
+            NoteEditMode.Edit => new Drawable[]
             {
-                new LanguageEditModeSection(),
-                new LanguageMissingSection(),
+                new NoteEditModeSection(),
+                new NoteEditPropertyModeSection(),
+                new NoteEditPropertySection(),
+            },
+            NoteEditMode.Verify => new Drawable[]
+            {
+                new NoteEditModeSection(),
+                new NoteIssueSection()
             },
             _ => throw new ArgumentOutOfRangeException()
         };

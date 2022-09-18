@@ -6,23 +6,22 @@ using System.Collections.Generic;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
-    public class NoteExtend : EditExtend
+    public class TimeTagSettings : LyricEditorSettings
     {
         public override ExtendDirection Direction => ExtendDirection.Right;
-
         public override float ExtendWidth => 300;
 
-        private readonly IBindable<NoteEditMode> bindableMode = new Bindable<NoteEditMode>();
+        private readonly IBindable<TimeTagEditMode> bindableMode = new Bindable<TimeTagEditMode>();
 
         [BackgroundDependencyLoader]
-        private void load(IEditNoteModeState editNoteModeState)
+        private void load(ITimeTagModeState timeTagModeState)
         {
-            bindableMode.BindTo(editNoteModeState.BindableEditMode);
+            bindableMode.BindTo(timeTagModeState.BindableEditMode);
             bindableMode.BindValueChanged(e =>
             {
                 ReloadSections();
@@ -31,22 +30,24 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 
         protected override IReadOnlyList<Drawable> CreateSections() => bindableMode.Value switch
         {
-            NoteEditMode.Generate => new Drawable[]
+            TimeTagEditMode.Create => new Drawable[]
             {
-                new NoteEditModeSection(),
-                new NoteConfigSection(),
-                new NoteSwitchSpecialActionSection(),
+                new TimeTagEditModeSection(),
+                new TimeTagAutoGenerateSection(),
+                new TimeTagCreateConfigSection(),
+                new CreateTimeTagActionReceiver()
             },
-            NoteEditMode.Edit => new Drawable[]
+            TimeTagEditMode.Recording => new Drawable[]
             {
-                new NoteEditModeSection(),
-                new NoteEditPropertyModeSection(),
-                new NoteEditPropertySection(),
+                new TimeTagEditModeSection(),
+                new TimeTagRecordingConfigSection(),
+                new RecordTimeTagActionReceiver()
             },
-            NoteEditMode.Verify => new Drawable[]
+            TimeTagEditMode.Adjust => new Drawable[]
             {
-                new NoteEditModeSection(),
-                new NoteIssueSection()
+                new TimeTagEditModeSection(),
+                new TimeTagAdjustConfigSection(),
+                new TimeTagIssueSection(),
             },
             _ => throw new ArgumentOutOfRangeException()
         };

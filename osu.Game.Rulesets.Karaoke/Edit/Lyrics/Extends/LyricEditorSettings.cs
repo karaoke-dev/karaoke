@@ -10,7 +10,7 @@ using osu.Game.Screens.Edit;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
-    public abstract class EditExtend : EditorRoundedScreenSettings
+    public abstract class LyricEditorSettings : EditorRoundedScreenSettings
     {
         public abstract ExtendDirection Direction { get; }
 

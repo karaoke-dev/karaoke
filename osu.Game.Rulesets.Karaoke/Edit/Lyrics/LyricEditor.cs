@@ -220,21 +220,21 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                     throw new ArgumentOutOfRangeException(nameof(extendArea.Direction));
             }
 
-            EditExtend getExtendArea() =>
+            LyricEditorSettings getExtendArea() =>
                 Mode switch
                 {
-                    LyricEditorMode.Texting => new TextingExtend(),
-                    LyricEditorMode.Reference => new ReferenceExtend(),
-                    LyricEditorMode.Language => new LanguageExtend(),
-                    LyricEditorMode.EditRuby => new RubyTagExtend(),
-                    LyricEditorMode.EditRomaji => new RomajiTagExtend(),
-                    LyricEditorMode.EditTimeTag => new TimeTagExtend(),
-                    LyricEditorMode.EditNote => new NoteExtend(),
-                    LyricEditorMode.Singer => new SingerExtend(),
+                    LyricEditorMode.Texting => new TextingSettings(),
+                    LyricEditorMode.Reference => new ReferenceSettings(),
+                    LyricEditorMode.Language => new LanguageSettings(),
+                    LyricEditorMode.EditRuby => new RubyTagSettings(),
+                    LyricEditorMode.EditRomaji => new RomajiTagSettings(),
+                    LyricEditorMode.EditTimeTag => new TimeTagSettings(),
+                    LyricEditorMode.EditNote => new NoteSettings(),
+                    LyricEditorMode.Singer => new SingerSettings(),
                     _ => null
                 };
 
-            bool checkDuplicatedWithExistExtend(EditExtend extend)
+            bool checkDuplicatedWithExistExtend(LyricEditorSettings extend)
             {
                 var type = extendArea.GetType();
                 if (leftSideExtendArea.Children?.FirstOrDefault()?.GetType() == type)
