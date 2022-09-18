@@ -12,7 +12,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags;
@@ -22,9 +21,9 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 {
-    public class DrawableLyricEditListItem : OsuRearrangeableListItem<Lyric>
+    public class DrawableLyricListItem : OsuRearrangeableListItem<Lyric>
     {
         public const float HANDLER_WIDTH = 22;
 
@@ -42,7 +41,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         private readonly IBindable<ICaretPosition> bindableHoverCaretPosition = new Bindable<ICaretPosition>();
         private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
 
-        public DrawableLyricEditListItem(Lyric item)
+        public DrawableLyricListItem(Lyric item)
             : base(item)
         {
             bindableMode.BindValueChanged(e =>
