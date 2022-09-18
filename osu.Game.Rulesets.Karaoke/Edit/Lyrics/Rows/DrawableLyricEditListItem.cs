@@ -12,7 +12,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Input.Events;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags;
@@ -22,7 +21,7 @@ using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK.Graphics;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 {
     public class DrawableLyricEditListItem : OsuRearrangeableListItem<Lyric>
     {

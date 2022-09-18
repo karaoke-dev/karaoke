@@ -15,6 +15,7 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
