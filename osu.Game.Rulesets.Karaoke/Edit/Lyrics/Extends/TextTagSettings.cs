@@ -8,9 +8,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
     public abstract class TextTagSettings : LyricEditorSettings
     {
-        public override ExtendDirection Direction => ExtendDirection.Right;
+        public override SettingsDirection Direction => SettingsDirection.Right;
 
-        public override float ExtendWidth => 350;
+        public override float SettingsWidth => 350;
 
         protected readonly IBindable<TextTagEditMode> EditMode = new Bindable<TextTagEditMode>();
     }

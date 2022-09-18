@@ -12,9 +12,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
     public abstract class LyricEditorSettings : EditorRoundedScreenSettings
     {
-        public abstract ExtendDirection Direction { get; }
+        public abstract SettingsDirection Direction { get; }
 
-        public abstract float ExtendWidth { get; }
+        public abstract float SettingsWidth { get; }
 
         protected void ReloadSections()
         {

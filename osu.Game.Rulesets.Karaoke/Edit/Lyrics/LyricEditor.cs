@@ -194,13 +194,13 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             rightSideSettings.Clear();
 
             var direction = settings?.Direction;
-            float width = settings?.ExtendWidth ?? 0;
+            float width = settings?.SettingsWidth ?? 0;
 
             gridContainer.ColumnDimensions = new[]
             {
-                new Dimension(GridSizeMode.Absolute, direction == ExtendDirection.Left ? width : 0),
+                new Dimension(GridSizeMode.Absolute, direction == SettingsDirection.Left ? width : 0),
                 new Dimension(),
-                new Dimension(GridSizeMode.Absolute, direction == ExtendDirection.Right ? width : 0),
+                new Dimension(GridSizeMode.Absolute, direction == SettingsDirection.Right ? width : 0),
             };
 
             if (settings == null)
@@ -208,11 +208,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
             switch (settings.Direction)
             {
-                case ExtendDirection.Left:
+                case SettingsDirection.Left:
                     leftSideSettings.Add(settings);
                     break;
 
-                case ExtendDirection.Right:
+                case SettingsDirection.Right:
                     rightSideSettings.Add(settings);
                     break;
 

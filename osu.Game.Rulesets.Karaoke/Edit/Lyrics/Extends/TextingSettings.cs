@@ -9,9 +9,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
     public class TextingSettings : LyricEditorSettings
     {
-        public override ExtendDirection Direction => ExtendDirection.Right;
+        public override SettingsDirection Direction => SettingsDirection.Right;
 
-        public override float ExtendWidth => 300;
+        public override float SettingsWidth => 300;
 
         protected override IReadOnlyList<Drawable> CreateSections() => new Drawable[]
         {

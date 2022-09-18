@@ -5,7 +5,7 @@
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
-    public enum ExtendDirection
+    public enum SettingsDirection
     {
         /// <summary>
         /// At the right side of the main lyric editor.

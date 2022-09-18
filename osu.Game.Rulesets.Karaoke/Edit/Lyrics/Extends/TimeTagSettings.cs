@@ -13,8 +13,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends
 {
     public class TimeTagSettings : LyricEditorSettings
     {
-        public override ExtendDirection Direction => ExtendDirection.Right;
-        public override float ExtendWidth => 300;
+        public override SettingsDirection Direction => SettingsDirection.Right;
+        public override float SettingsWidth => 300;
 
         private readonly IBindable<TimeTagEditMode> bindableMode = new Bindable<TimeTagEditMode>();
 
