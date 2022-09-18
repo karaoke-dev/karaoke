@@ -6,13 +6,12 @@
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Localisation;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Graphics.UserInterfaceV2;
 using osu.Game.Rulesets.UI.Scrolling;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
-    public class NoteConfigSection : Section
+    public class NoteConfigSection : LyricEditorSection
     {
         protected override LocalisableString Title => "Config";
 

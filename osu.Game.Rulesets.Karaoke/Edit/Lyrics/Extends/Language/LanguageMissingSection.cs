@@ -17,14 +17,13 @@ using osu.Game.Graphics.Sprites;
 using osu.Game.Rulesets.Edit.Checks.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Checker;
 using osu.Game.Rulesets.Karaoke.Edit.Checks;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Objects;
 using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language
 {
-    public class LanguageMissingSection : Section
+    public class LanguageMissingSection : LyricEditorSection
     {
         protected override LocalisableString Title => "Invalid lyric (missing language)";
 
