@@ -15,14 +15,7 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Singers;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Texting;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.TimeTags;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Extensions;
@@ -92,8 +85,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
 
         private readonly GridContainer gridContainer;
         private readonly GridContainer lyricEditorGridContainer;
-        private readonly Container leftSideExtendArea;
-        private readonly Container rightSideExtendArea;
+        private readonly Container leftSideSettings;
+        private readonly Container rightSideSettings;
         private readonly LyricEditorSkin skin;
         private readonly DrawableLyricEditList container;
 
@@ -121,7 +114,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 {
                     new Drawable[]
                     {
-                        leftSideExtendArea = new Container
+                        leftSideSettings = new Container
                         {
                             RelativeSizeAxes = Axes.Both,
                         },
@@ -148,7 +141,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                                 }
                             }
                         },
-                        rightSideExtendArea = new Container
+                        rightSideSettings = new Container
                         {
                             RelativeSizeAxes = Axes.Both,
                         },
@@ -166,7 +159,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                 updateAddLyricState();
 
                 // should control grid container spacing and place some component.
-                initializeExtendArea();
+                initializeSettingsArea();
 
                 // cancel selecting if switch mode.
                 lyricSelectionState.EndSelecting(LyricEditorSelectingAction.Cancel);
@@ -191,63 +184,63 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
             container.DisplayBottomDrawable = disableBottomDrawable;
         }
 
-        private void initializeExtendArea()
+        private void initializeSettingsArea()
         {
-            var extendArea = getExtendArea();
-            if (extendArea != null && checkDuplicatedWithExistExtend(extendArea))
+            var settings = getSettings();
+            if (settings != null && checkDuplicatedWithExistSettings(settings))
                 return;
 
-            leftSideExtendArea.Clear();
-            rightSideExtendArea.Clear();
+            leftSideSettings.Clear();
+            rightSideSettings.Clear();
 
-            var direction = extendArea?.Direction;
-            float width = extendArea?.ExtendWidth ?? 0;
+            var direction = settings?.Direction;
+            float width = settings?.SettingsWidth ?? 0;
 
             gridContainer.ColumnDimensions = new[]
             {
-                new Dimension(GridSizeMode.Absolute, direction == ExtendDirection.Left ? width : 0),
+                new Dimension(GridSizeMode.Absolute, direction == SettingsDirection.Left ? width : 0),
                 new Dimension(),
-                new Dimension(GridSizeMode.Absolute, direction == ExtendDirection.Right ? width : 0),
+                new Dimension(GridSizeMode.Absolute, direction == SettingsDirection.Right ? width : 0),
             };
 
-            if (extendArea == null)
+            if (settings == null)
                 return;
 
-            switch (extendArea.Direction)
+            switch (settings.Direction)
             {
-                case ExtendDirection.Left:
-                    leftSideExtendArea.Add(extendArea);
+                case SettingsDirection.Left:
+                    leftSideSettings.Add(settings);
                     break;
 
-                case ExtendDirection.Right:
-                    rightSideExtendArea.Add(extendArea);
+                case SettingsDirection.Right:
+                    rightSideSettings.Add(settings);
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(extendArea.Direction));
+                    throw new ArgumentOutOfRangeException(nameof(settings.Direction));
             }
 
-            EditExtend getExtendArea() =>
+            LyricEditorSettings getSettings() =>
                 Mode switch
                 {
-                    LyricEditorMode.Texting => new TextingExtend(),
-                    LyricEditorMode.Reference => new ReferenceExtend(),
-                    LyricEditorMode.Language => new LanguageExtend(),
-                    LyricEditorMode.EditRuby => new RubyTagExtend(),
-                    LyricEditorMode.EditRomaji => new RomajiTagExtend(),
-                    LyricEditorMode.EditTimeTag => new TimeTagExtend(),
-                    LyricEditorMode.EditNote => new NoteExtend(),
-                    LyricEditorMode.Singer => new SingerExtend(),
+                    LyricEditorMode.Texting => new TextingSettings(),
+                    LyricEditorMode.Reference => new ReferenceSettings(),
+                    LyricEditorMode.Language => new LanguageSettings(),
+                    LyricEditorMode.EditRuby => new RubyTagSettings(),
+                    LyricEditorMode.EditRomaji => new RomajiTagSettings(),
+                    LyricEditorMode.EditTimeTag => new TimeTagSettings(),
+                    LyricEditorMode.EditNote => new NoteSettings(),
+                    LyricEditorMode.Singer => new SingerSettings(),
                     _ => null
                 };
 
-            bool checkDuplicatedWithExistExtend(EditExtend extend)
+            bool checkDuplicatedWithExistSettings(LyricEditorSettings settings)
             {
-                var type = extendArea.GetType();
-                if (leftSideExtendArea.Children?.FirstOrDefault()?.GetType() == type)
+                var type = settings.GetType();
+                if (leftSideSettings.Children?.FirstOrDefault()?.GetType() == type)
                     return true;
 
-                if (rightSideExtendArea.Children?.FirstOrDefault()?.GetType() == type)
+                if (rightSideSettings.Children?.FirstOrDefault()?.GetType() == type)
                     return true;
 
                 return false;
