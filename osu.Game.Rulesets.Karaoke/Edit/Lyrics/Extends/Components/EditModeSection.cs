@@ -14,7 +14,6 @@ using osu.Framework.Localisation;
 using osu.Game.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
@@ -39,7 +38,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components
         }
     }
 
-    public abstract class EditModeSection<TEditMode> : Section where TEditMode : Enum
+    public abstract class EditModeSection<TEditMode> : LyricEditorSection where TEditMode : Enum
     {
         private const int horizontal_padding = 20;
 

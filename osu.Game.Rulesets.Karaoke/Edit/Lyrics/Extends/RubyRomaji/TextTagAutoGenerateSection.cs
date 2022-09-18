@@ -5,13 +5,12 @@
 
 using J2N.Collections.Generic;
 using osu.Framework.Localisation;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.RubyRomaji
 {
-    public abstract class TextTagAutoGenerateSection : Section
+    public abstract class TextTagAutoGenerateSection : LyricEditorSection
     {
         protected sealed override LocalisableString Title => "Auto generate";
 

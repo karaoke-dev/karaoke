@@ -3,14 +3,13 @@
 
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Localisation;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Configs.Generator.ReferenceLyric;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Components.Markdown;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Reference
 {
-    public class ReferenceLyricAutoGenerateSection : Section
+    public class ReferenceLyricAutoGenerateSection : LyricEditorSection
     {
         protected override LocalisableString Title => "Auto generate";
 

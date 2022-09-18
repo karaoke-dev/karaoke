@@ -4,11 +4,10 @@
 #nullable disable
 
 using osu.Framework.Localisation;
-using osu.Game.Rulesets.Karaoke.Edit.Components.Containers;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Notes
 {
-    public class NoteIssueSection : Section
+    public class NoteIssueSection : LyricEditorSection
     {
         protected override LocalisableString Title => "Invalid notes";
     }
