@@ -3,7 +3,7 @@
 
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Extends.Language;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings.Language;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes
 {
