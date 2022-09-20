@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
@@ -27,7 +28,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Components.Containers
             void assignZoomRange(float _)
             {
                 // we should make sure that will not cause error while assigning the size.
-                SetupZoom(BindableZoom.Value, BindableZoom.MinValue, BindableZoom.MaxValue);
+                float initial = Math.Clamp(BindableZoom.Value, BindableZoom.MinValue, BindableZoom.MaxValue);
+                float minimum = BindableZoom.MinValue;
+                float maximum = BindableZoom.MaxValue;
+                SetupZoom(initial, minimum, maximum);
             }
 
             BindableZoom.BindValueChanged(e =>
