@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using Newtonsoft.Json;
 using osu.Framework.Bindables;
+using osu.Framework.IO.Serialization;
 using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using osu.Game.IO;
@@ -33,7 +34,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
         {
             SkinInfo.PerformRead(s =>
             {
-                var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinElementConvertor());
+                var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinElementConvertor(), new ShaderConvertor(), new Vector2Converter(), new ColourConvertor());
 
                 // we may want to move this to some kind of async operation in the future.
                 foreach (ElementType skinnableTarget in Enum.GetValues(typeof(ElementType)))

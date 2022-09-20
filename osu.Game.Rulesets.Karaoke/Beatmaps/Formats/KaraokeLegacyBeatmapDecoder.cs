@@ -39,6 +39,13 @@ namespace osu.Game.Rulesets.Karaoke.Beatmaps.Formats
         {
             if (section != Section.HitObjects)
             {
+                // should not let base.ParseLine read the line like "Mode: 111"
+                if (line.StartsWith("Mode", StringComparison.Ordinal))
+                {
+                    beatmap.BeatmapInfo.Ruleset = new KaraokeRuleset().RulesetInfo;
+                    return;
+                }
+
                 base.ParseLine(beatmap, section, line);
                 return;
             }

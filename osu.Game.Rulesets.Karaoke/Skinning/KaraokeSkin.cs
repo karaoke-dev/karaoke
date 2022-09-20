@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using osu.Framework.Audio.Sample;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics.Textures;
+using osu.Framework.IO.Serialization;
 using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using osu.Game.Audio;
@@ -58,7 +59,7 @@ namespace osu.Game.Rulesets.Karaoke.Skinning
                     if (string.IsNullOrEmpty(jsonContent))
                         return;
 
-                    var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinElementConvertor());
+                    var globalSetting = CreateJsonSerializerSettings(new KaraokeSkinElementConvertor(), new ShaderConvertor(), new Vector2Converter(), new ColourConvertor());
                     var deserializedContent = JsonConvert.DeserializeObject<DefaultSkinFormat>(jsonContent, globalSetting);
 
                     if (deserializedContent == null)
