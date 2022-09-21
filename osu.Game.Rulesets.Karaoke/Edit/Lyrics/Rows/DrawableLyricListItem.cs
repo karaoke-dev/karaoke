@@ -9,7 +9,6 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends;
@@ -103,6 +102,14 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
                     };
             });
 
+            DragActive.BindValueChanged(e =>
+            {
+                // should mark object as selecting while dragging.
+                lyricCaretState.MoveCaretToTargetPosition(Model);
+
+                updateBackgroundColour();
+            });
+
             void removeExtend()
             {
                 var existExtend = getExtend();
@@ -161,26 +168,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
             bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
 
             updateBackgroundColour();
-        }
-
-        protected override bool OnDragStart(DragStartEvent e)
-        {
-            if (!base.OnDragStart(e))
-                return false;
-
-            updateBackgroundColour();
-
-            // should mark object as selecting while dragging.
-            lyricCaretState.MoveCaretToTargetPosition(Model);
-
-            return true;
-        }
-
-        protected override void OnDragEnd(DragEndEvent e)
-        {
-            updateBackgroundColour();
-
-            base.OnDragEnd(e);
         }
 
         private void updateBackgroundColour()
