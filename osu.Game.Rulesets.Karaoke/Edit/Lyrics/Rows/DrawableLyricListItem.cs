@@ -180,23 +180,25 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
 
                 var defaultColour = colourProvider.Background5(mode);
 
-                if (bindableCaretPosition.Value?.Lyric == Model)
-                {
-                    if (bindableCaretPosition.Value is ClickingCaretPosition)
-                        return defaultColour;
-
+                if (isCurrentLyricAndShowHightlightBackground(bindableCaretPosition.Value))
                     return colourProvider.Background3(mode);
-                }
 
-                if (bindableHoverCaretPosition.Value?.Lyric == Model)
-                {
-                    if (bindableCaretPosition.Value is ClickingCaretPosition)
-                        return defaultColour;
-
+                if (isCurrentLyricAndShowHightlightBackground(bindableHoverCaretPosition.Value))
                     return colourProvider.Background4(mode);
-                }
 
                 return defaultColour;
+            }
+
+            bool isCurrentLyricAndShowHightlightBackground(ICaretPosition caret)
+            {
+                if (caret?.Lyric != Model)
+                    return false;
+
+                // should not show the background in the assign language mode.
+                if (caret is ClickingCaretPosition)
+                    return false;
+
+                return true;
             }
         }
     }
