@@ -14,7 +14,7 @@ using osu.Game.Skinning;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
 {
-    public class LyricList : CompositeDrawable
+    public abstract class BaseLyricList : CompositeDrawable
     {
         public const float LYRIC_LIST_PADDING = 10;
 
@@ -29,7 +29,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
         private readonly LyricEditorSkin skin;
         private readonly DrawableLyricList container;
 
-        public LyricList()
+        protected BaseLyricList()
         {
             InternalChild = lyricEditorGridContainer = new GridContainer
             {
@@ -42,10 +42,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
                         {
                             RelativeSizeAxes = Axes.Both,
                             Padding = new MarginPadding(LYRIC_LIST_PADDING),
-                            Child = container = new DrawableLyricList
+                            Child = container = CreateDrawableLyricList().With(x =>
                             {
-                                RelativeSizeAxes = Axes.Both,
-                            }
+                                x.RelativeSizeAxes = Axes.Both;
+                            })
                         },
                     },
                     new Drawable[]
@@ -76,6 +76,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
                 skin.FontSize = e.NewValue;
             });
         }
+
+        protected abstract DrawableLyricList CreateDrawableLyricList();
 
         private void initializeApplySelectingArea()
         {
