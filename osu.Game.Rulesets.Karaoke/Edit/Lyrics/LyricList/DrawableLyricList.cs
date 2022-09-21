@@ -6,29 +6,19 @@
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
-using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
-using osu.Game.Rulesets.Karaoke.Configuration;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Objects;
-using osuTK;
-using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
 {
-    public class DrawableLyricList : OrderRearrangeableListContainer<Lyric>
+    public abstract class DrawableLyricList : OrderRearrangeableListContainer<Lyric>
     {
-        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
-        private readonly IBindable<bool> bindableAutoFocusToEditLyric = new Bindable<bool>();
-        private readonly IBindable<int> bindableAutoFocusToEditLyricSkipRows = new Bindable<int>();
 
-        public DrawableLyricList()
+        protected DrawableLyricList()
         {
             // update selected style to child
             bindableCaretPosition.BindValueChanged(e =>
@@ -38,66 +28,27 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
                 if (newLyric == null)
                     return;
 
-                // should not move the position if caret is only support clicking.
-                if (bindableCaretPosition.Value is ClickingCaretPosition)
+                if (!ScrollToPosition(bindableCaretPosition.Value))
                     return;
 
-                // should not move the position in manage lyric mode.
-                if (bindableMode.Value == LyricEditorMode.Texting)
-                    return;
-
-                // move to target position if auto focus.
-                bool autoFocus = bindableAutoFocusToEditLyric.Value;
-                if (!autoFocus)
-                    return;
-
-                int skippingRows = bindableAutoFocusToEditLyricSkipRows.Value;
+                int skippingRows = SkipRows();
                 moveItemToTargetPosition(newLyric, oldLyric, skippingRows);
             });
         }
 
-        protected override Vector2 Spacing => new(0, 2);
+        protected abstract bool ScrollToPosition(ICaretPosition caret);
 
-        protected override OsuRearrangeableListItem<Lyric> CreateOsuDrawable(Lyric item)
-            => new DrawableLyricListItem(item);
+        protected abstract int SkipRows();
 
-        protected override Drawable CreateBottomDrawable()
-        {
-            return new Container
-            {
-                RelativeSizeAxes = Axes.X,
-                Height = 75,
-                Padding = new MarginPadding { Left = DrawableLyricListItem.HANDLER_WIDTH },
-                Child = new Container
-                {
-                    Masking = true,
-                    CornerRadius = 5,
-                    RelativeSizeAxes = Axes.Both,
-                    Children = new Drawable[]
-                    {
-                        new Box
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                            Alpha = 0.5f,
-                            Colour = Color4.Black
-                        },
-                        new CreateNewLyricRow
-                        {
-                            RelativeSizeAxes = Axes.Both,
-                        }
-                    }
-                }
-            };
-        }
+        protected abstract DrawableLyricListItem CreateLyricListItem(Lyric item);
+
+        protected sealed override OsuRearrangeableListItem<Lyric> CreateOsuDrawable(Lyric item)
+            => CreateLyricListItem(item);
 
         [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state, ILyricCaretState lyricCaretState, KaraokeRulesetLyricEditorConfigManager lyricEditorConfigManager)
+        private void load(ILyricCaretState lyricCaretState)
         {
-            bindableMode.BindTo(state.BindableMode);
             bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
-
-            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyric, bindableAutoFocusToEditLyric);
-            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.AutoFocusToEditLyricSkipRows, bindableAutoFocusToEditLyricSkipRows);
         }
 
         private bool moveItemToTargetPosition(Lyric newLyric, Lyric oldLyric, int skippingRows)
