@@ -12,7 +12,7 @@ using osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Skinning;
 
-namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows
+namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
 {
     public class LyricList : CompositeDrawable
     {
