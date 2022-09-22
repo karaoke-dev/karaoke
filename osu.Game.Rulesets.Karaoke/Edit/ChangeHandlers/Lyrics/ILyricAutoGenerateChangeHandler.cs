@@ -15,19 +15,20 @@ namespace osu.Game.Rulesets.Karaoke.Edit.ChangeHandlers.Lyrics
 
         void AutoGenerate(LyricAutoGenerateProperty autoGenerateProperty);
     }
+
+    public enum LyricAutoGenerateProperty
+    {
+        DetectReferenceLyric,
+
+        DetectLanguage,
+
+        AutoGenerateRubyTags,
+
+        AutoGenerateRomajiTags,
+
+        AutoGenerateTimeTags,
+
+        AutoGenerateNotes,
+    }
 }
 
-public enum LyricAutoGenerateProperty
-{
-    DetectReferenceLyric,
-
-    DetectLanguage,
-
-    AutoGenerateRubyTags,
-
-    AutoGenerateRomajiTags,
-
-    AutoGenerateTimeTags,
-
-    AutoGenerateNotes,
-}
