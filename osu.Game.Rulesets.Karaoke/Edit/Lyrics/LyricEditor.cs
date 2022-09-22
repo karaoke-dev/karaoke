@@ -13,7 +13,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Input;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
+using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Settings;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
@@ -71,7 +71,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
         public IBindable<LyricEditorMode> BindableMode => bindableMode;
 
         private readonly GridContainer gridContainer;
-        private readonly LyricList lyricList;
+        private readonly PreviewLyricList lyricList;
         private readonly Container leftSideSettings;
         private readonly Container rightSideSettings;
 
@@ -103,7 +103,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics
                         {
                             RelativeSizeAxes = Axes.Both,
                         },
-                        lyricList = new LyricList
+                        lyricList = new PreviewLyricList
                         {
                             RelativeSizeAxes = Axes.Both,
                         },
