@@ -105,7 +105,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
                 AutoSizeAxes = Axes.Y,
                 Children = new Drawable[]
                 {
-                    new EditLyricRow(Model)
+                    new EditLyricPreviewRow(Model)
                     {
                         RelativeSizeAxes = Axes.X
                     }

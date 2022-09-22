@@ -14,12 +14,12 @@ using osuTK;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 {
-    public class CreateNewLyricRow : LyricEditorRow
+    public class CreateNewLyricPreviewRow : PreviewRow
     {
         [Resolved]
         private ILyricsChangeHandler lyricsChangeHandler { get; set; }
 
-        public CreateNewLyricRow()
+        public CreateNewLyricPreviewRow()
             : base(new Lyric { Text = "New lyric" })
         {
         }

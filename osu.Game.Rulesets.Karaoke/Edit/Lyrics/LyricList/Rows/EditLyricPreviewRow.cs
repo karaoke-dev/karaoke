@@ -14,7 +14,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 {
     [Cached(typeof(IEditLyricRowState))]
-    public class EditLyricRow : LyricEditorRow, IEditLyricRowState
+    public class EditLyricPreviewRow : PreviewRow, IEditLyricRowState
     {
         private const int min_height = 75;
 
@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 
         public event Action<LyricEditorMode> DisallowEditEffectTriggered;
 
-        public EditLyricRow(Lyric lyric)
+        public EditLyricPreviewRow(Lyric lyric)
             : base(lyric)
         {
             AutoSizeAxes = Axes.Y;

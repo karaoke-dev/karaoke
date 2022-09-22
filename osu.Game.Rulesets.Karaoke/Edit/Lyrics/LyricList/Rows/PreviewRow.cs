@@ -17,7 +17,7 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 {
-    public abstract class LyricEditorRow : CompositeDrawable
+    public abstract class PreviewRow : CompositeDrawable
     {
         public const int SELECT_AREA_WIDTH = 48;
 
@@ -27,7 +27,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 
         private readonly Lyric lyric;
 
-        protected LyricEditorRow(Lyric lyric)
+        protected PreviewRow(Lyric lyric)
         {
             this.lyric = lyric;
         }

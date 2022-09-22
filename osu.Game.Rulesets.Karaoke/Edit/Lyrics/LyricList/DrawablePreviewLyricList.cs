@@ -69,7 +69,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
                             Alpha = 0.5f,
                             Colour = Color4.Black
                         },
-                        new CreateNewLyricRow
+                        new CreateNewLyricPreviewRow
                         {
                             RelativeSizeAxes = Axes.Both,
                         }
