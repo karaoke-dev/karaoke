@@ -3,7 +3,7 @@
 
 #nullable disable
 
-using System.Linq;
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -11,11 +11,6 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Game.Graphics.Containers;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.CaretPosition;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.Notes;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.RecordingTimeTags;
-using osu.Game.Rulesets.Karaoke.Edit.Lyrics.Rows.Extends.TimeTags;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.States.Modes;
 using osu.Game.Rulesets.Karaoke.Objects;
@@ -23,12 +18,11 @@ using osuTK.Graphics;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
 {
-    public class DrawableLyricListItem : OsuRearrangeableListItem<Lyric>
+    public abstract class DrawableLyricListItem : OsuRearrangeableListItem<Lyric>
     {
         public const float HANDLER_WIDTH = 22;
 
         private Box background;
-        private FillFlowContainer content;
 
         [Resolved]
         private LyricEditorColourProvider colourProvider { get; set; }
@@ -37,11 +31,10 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
         private ILyricCaretState lyricCaretState { get; set; }
 
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-        private readonly IBindable<TimeTagEditMode> bindableTimeTagEditMode = new Bindable<TimeTagEditMode>();
         private readonly IBindable<ICaretPosition> bindableHoverCaretPosition = new Bindable<ICaretPosition>();
         private readonly IBindable<ICaretPosition> bindableCaretPosition = new Bindable<ICaretPosition>();
 
-        public DrawableLyricListItem(Lyric item)
+        protected DrawableLyricListItem(Lyric item)
             : base(item)
         {
             bindableMode.BindValueChanged(e =>
@@ -49,15 +42,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
                 // Only draggable in edit mode.
                 ShowDragHandle.Value = e.NewValue == LyricEditorMode.Texting;
 
-                // should remove extend when switch mode.
-                removeExtend();
+                OnModeChanged();
             }, true);
-
-            bindableTimeTagEditMode.BindValueChanged(_ =>
-            {
-                // should remove extend when switch mode.
-                removeExtend();
-            });
 
             bindableHoverCaretPosition.BindValueChanged(_ =>
             {
@@ -68,39 +54,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
             {
                 updateBackgroundColour();
 
-                // should wait until time-tag edit mode value updated.
-                Schedule(() =>
-                {
-                    // should remove the extend area if caret position does not focus to current lyric row.
-                    if (e.NewValue?.Lyric != Model)
-                    {
-                        removeExtend();
-                        return;
-                    }
-
-                    // show not create again if contains same extend.
-                    var existExtend = getExtend();
-                    if (existExtend != null)
-                        return;
-
-                    // show extra extend if hover to current lyric.
-                    var editExtend = createExtend(bindableMode.Value, bindableTimeTagEditMode.Value, Model);
-                    if (editExtend == null)
-                        return;
-
-                    editExtend.RelativeSizeAxes = Axes.X;
-                    content.Add(editExtend);
-                    editExtend.Show();
-                });
-
-                static EditRowExtend createExtend(LyricEditorMode mode, TimeTagEditMode timeTagEditMode, Lyric lyric) =>
-                    mode switch
-                    {
-                        LyricEditorMode.EditNote => new NoteRowExtend(lyric),
-                        LyricEditorMode.EditTimeTag when timeTagEditMode == TimeTagEditMode.Recording => new RecordingTimeTagRowExtend(lyric),
-                        LyricEditorMode.EditTimeTag when timeTagEditMode == TimeTagEditMode.Adjust => new TimeTagRowExtend(lyric),
-                        _ => null
-                    };
+                OnCaretPositionChanged(e.NewValue);
             });
 
             DragActive.BindValueChanged(e =>
@@ -110,26 +64,9 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
 
                 updateBackgroundColour();
             });
-
-            void removeExtend()
-            {
-                var existExtend = getExtend();
-                if (existExtend == null)
-                    return;
-
-                // todo : might remove component until Extend effect end.
-                content.Remove(existExtend, true);
-            }
         }
 
-        private EditRowExtend getExtend()
-        {
-            return content?.Children.OfType<EditRowExtend>().FirstOrDefault();
-        }
-
-        public float ExtendHeight => getExtend()?.ContentHeight ?? 0;
-
-        protected override Drawable CreateContent()
+        protected sealed override Drawable CreateContent()
         {
             return new Container
             {
@@ -144,27 +81,34 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
                         RelativeSizeAxes = Axes.Both,
                         Alpha = 0.9f
                     },
-                    content = new FillFlowContainer
-                    {
-                        RelativeSizeAxes = Axes.X,
-                        AutoSizeAxes = Axes.Y,
-                        Children = new Drawable[]
-                        {
-                            new EditLyricRow(Model)
-                            {
-                                RelativeSizeAxes = Axes.X
-                            }
-                        }
-                    }
+                    CreateRowContent()
                 }
             };
         }
+
+        protected LyricEditorMode EditorMode => bindableMode.Value;
+
+        protected virtual void OnModeChanged()
+        {
+        }
+
+        protected virtual void OnCaretPositionChanged(ICaretPosition caretPosition)
+        {
+        }
+
+        protected abstract CompositeDrawable CreateRowContent();
+
+        // todo: might be removed because will not have extend area after.
+        public virtual float ExtendHeight => 0;
+
+        protected abstract bool HighlightBackgroundWhenSelected(ICaretPosition caretPosition);
+
+        protected abstract Func<LyricEditorMode, Color4> GetBackgroundColour(BackgroundStyle style, LyricEditorColourProvider colourProvider);
 
         [BackgroundDependencyLoader]
         private void load(ILyricEditorState state, ITimeTagModeState timeTagModeState)
         {
             bindableMode.BindTo(state.BindableMode);
-            bindableTimeTagEditMode.BindTo(timeTagModeState.BindableEditMode);
             bindableHoverCaretPosition.BindTo(lyricCaretState.BindableHoverCaretPosition);
             bindableCaretPosition.BindTo(lyricCaretState.BindableCaretPosition);
 
@@ -173,34 +117,29 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
 
         private void updateBackgroundColour()
         {
-            background.Colour = getColour();
+            var mode = bindableMode.Value;
+            var backgroundStyle = getBackgroundStyle();
+            var colour = GetBackgroundColour(backgroundStyle, colourProvider).Invoke(mode);
 
-            Color4 getColour()
+            background.Colour = colour;
+
+            BackgroundStyle getBackgroundStyle()
             {
-                var mode = bindableMode.Value;
+                if (HighlightBackgroundWhenSelected(bindableCaretPosition.Value))
+                    return BackgroundStyle.Hover;
 
-                var defaultColour = colourProvider.Background5(mode);
+                if (HighlightBackgroundWhenSelected(bindableHoverCaretPosition.Value))
+                    return BackgroundStyle.Focus;
 
-                if (isCurrentLyricAndShowHightlightBackground(bindableCaretPosition.Value))
-                    return colourProvider.Background3(mode);
-
-                if (isCurrentLyricAndShowHightlightBackground(bindableHoverCaretPosition.Value))
-                    return colourProvider.Background4(mode);
-
-                return defaultColour;
+                return BackgroundStyle.Idle;
             }
+        }
 
-            bool isCurrentLyricAndShowHightlightBackground(ICaretPosition caret)
-            {
-                if (caret?.Lyric != Model)
-                    return false;
-
-                // should not show the background in the assign language mode.
-                if (caret is ClickingCaretPosition)
-                    return false;
-
-                return true;
-            }
+        protected enum BackgroundStyle
+        {
+            Idle,
+            Hover,
+            Focus
         }
     }
 }
