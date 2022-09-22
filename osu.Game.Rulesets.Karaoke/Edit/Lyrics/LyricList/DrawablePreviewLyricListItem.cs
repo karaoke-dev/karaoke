@@ -106,9 +106,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
                 Children = new Drawable[]
                 {
                     new EditLyricPreviewRow(Model)
-                    {
-                        RelativeSizeAxes = Axes.X
-                    }
                 }
             };
         }

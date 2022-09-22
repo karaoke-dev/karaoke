@@ -25,6 +25,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
         protected Row(Lyric lyric)
         {
             this.lyric = lyric;
+
+            RelativeSizeAxes = Axes.X;
         }
 
         [BackgroundDependencyLoader]
