@@ -50,7 +50,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
                     ColumnDimensions = new[]
                     {
                         new Dimension(GridSizeMode.Absolute, getPrefixSpacing()),
-                        new Dimension(GridSizeMode.Absolute, PreviewRow.SELECT_AREA_WIDTH),
+                        new Dimension(GridSizeMode.Absolute, Row.SELECT_AREA_WIDTH),
                         new Dimension(),
                         new Dimension(GridSizeMode.Absolute, spacing),
                         new Dimension(GridSizeMode.Absolute, button_width),
