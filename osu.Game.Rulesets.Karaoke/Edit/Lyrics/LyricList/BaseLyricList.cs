@@ -1,8 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-#nullable disable
-
+using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -18,8 +17,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
     {
         public const float LYRIC_LIST_PADDING = 10;
 
-        [Resolved(canBeNull: true)]
-        private ILyricsChangeHandler lyricsChangeHandler { get; set; }
+        [Resolved]
+        private ILyricsChangeHandler? lyricsChangeHandler { get; set; }
+
+        [Resolved, AllowNull]
+        private LyricEditorColourProvider colourProvider { get; set; }
 
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<bool> bindableSelecting = new Bindable<bool>();
@@ -28,6 +30,8 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
         private readonly GridContainer lyricEditorGridContainer;
         private readonly LyricEditorSkin skin;
         private readonly DrawableLyricList container;
+
+        private Drawable? background;
 
         protected BaseLyricList()
         {
@@ -63,6 +67,7 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
             bindableMode.BindValueChanged(e =>
             {
                 updateAddLyricState();
+                Schedule(redrawBackground);
             }, true);
 
             bindableSelecting.BindValueChanged(e =>
@@ -77,7 +82,32 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
             });
         }
 
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+
+            redrawBackground();
+        }
+
+        private void redrawBackground()
+        {
+            if (background != null)
+                RemoveInternal(background, true);
+
+            background = CreateBackground(colourProvider, bindableMode.Value);
+            if (background == null)
+                return;
+
+            AddInternal(background.With(x =>
+            {
+                x.RelativeSizeAxes = Axes.Both;
+                x.Depth = int.MaxValue;
+            }));
+        }
+
         protected abstract DrawableLyricList CreateDrawableLyricList();
+
+        protected virtual Drawable? CreateBackground(LyricEditorColourProvider colourProvider, LyricEditorMode mode) => null;
 
         private void initializeApplySelectingArea()
         {
