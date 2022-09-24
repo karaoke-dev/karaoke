@@ -3,9 +3,6 @@
 
 #nullable disable
 
-using System;
-using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Edit;
 using osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows.Info;
@@ -13,43 +10,13 @@ using osu.Game.Rulesets.Karaoke.Objects;
 
 namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 {
-    [Cached(typeof(IEditLyricRowState))]
-    public class EditLyricPreviewRow : PreviewRow, IEditLyricRowState
+    public class EditLyricPreviewRow : PreviewRow
     {
         private const int min_height = 75;
-
-        private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
-        private readonly IBindable<int> bindableLyricPropertyWritableVersion;
-
-        public event Action<LyricEditorMode> WritableVersionChanged;
-
-        public event Action<LyricEditorMode> DisallowEditEffectTriggered;
 
         public EditLyricPreviewRow(Lyric lyric)
             : base(lyric)
         {
-            bindableLyricPropertyWritableVersion = lyric.LyricPropertyWritableVersion.GetBoundCopy();
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(ILyricEditorState state)
-        {
-            bindableMode.BindTo(state.BindableMode);
-
-            bindableMode.BindValueChanged(x =>
-            {
-                WritableVersionChanged?.Invoke(bindableMode.Value);
-            });
-
-            bindableLyricPropertyWritableVersion.BindValueChanged(_ =>
-            {
-                WritableVersionChanged?.Invoke(bindableMode.Value);
-            });
-        }
-
-        public void TriggerDisallowEditEffect()
-        {
-            DisallowEditEffectTriggered?.Invoke(bindableMode.Value);
         }
 
         protected override Drawable CreateLyricInfo(Lyric lyric)
