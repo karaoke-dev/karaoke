@@ -44,9 +44,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList.Rows
 
         protected override bool HighlightBackgroundWhenSelected(ICaretPosition caretPosition)
         {
-            if (caretPosition?.Lyric != Lyric)
-                return false;
-
             // should not show the background in the assign language mode.
             if (caretPosition is ClickingCaretPosition)
                 return false;
