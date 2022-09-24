@@ -1,6 +1,7 @@
 ﻿// Copyright (c) andy840119 <andy840119@gmail.com>. Licensed under the GPL Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -25,7 +26,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
 
         private readonly IBindable<LyricEditorMode> bindableMode = new Bindable<LyricEditorMode>();
         private readonly IBindable<bool> bindableSelecting = new Bindable<bool>();
-        private readonly IBindable<float> bindableFontSize = new Bindable<float>();
 
         private readonly GridContainer lyricEditorGridContainer;
         private readonly LyricEditorSkin skin;
@@ -75,11 +75,11 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
                 updateAddLyricState();
                 initializeApplySelectingArea();
             }, true);
+        }
 
-            bindableFontSize.BindValueChanged(e =>
-            {
-                skin.FontSize = e.NewValue;
-            });
+        protected void AdjustSkin(Action<LyricEditorSkin> action)
+        {
+            action.Invoke(skin);
         }
 
         protected override void LoadComplete()
@@ -131,7 +131,6 @@ namespace osu.Game.Rulesets.Karaoke.Edit.Lyrics.LyricList
         {
             bindableMode.BindTo(state.BindableMode);
             bindableSelecting.BindTo(lyricSelectionState.Selecting);
-            lyricEditorConfigManager.BindWith(KaraokeRulesetLyricEditorSetting.LyricEditorFontSize, bindableFontSize);
 
             container.Items.BindTo(lyricsProvider.BindableLyrics);
         }
